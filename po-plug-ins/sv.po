@@ -1,19 +1,19 @@
 # Swedish messages for GIMP plugins.
-# Copyright © 1999-2021 Free Software Foundation, Inc.
+# Copyright © 1999-2022 Free Software Foundation, Inc.
 # Tomas Ögren <stric@ing.umu.se>, 1999.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002.
 # Jan Morén <jan.moren@lucs.lu.se>, 2002, 2003.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2011, 2012.
 # Påvel Nicklasson <pavel@frimix.se>, 2014.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018, 2019, 2020, 2021.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2014, 2018, 2019, 2020, 2021, 2022.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2016, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-25 16:36+0000\n"
-"PO-Revision-Date: 2021-10-25 20:34+0200\n"
+"POT-Creation-Date: 2022-01-19 16:20+0000\n"
+"PO-Revision-Date: 2022-01-21 21:21+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -52,7 +52,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1891
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1896
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
@@ -72,7 +72,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1356 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1958
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -104,7 +104,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/metadata/metadata-editor.c:952
 #: ../plug-ins/metadata/metadata-editor.c:4626
 #: ../plug-ins/metadata/metadata-editor.c:4661
-#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
+#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:491
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "A_vbryt"
@@ -117,7 +117,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1892
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1897
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -130,7 +130,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1357 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1364 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -441,25 +441,25 @@ msgstr "_Vertikal"
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
-#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:670
-#: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1394
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1108
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2016 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
 #: ../plug-ins/file-tiff/file-tiff-load.c:1334
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:646
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:646
 msgid "Background"
 msgstr "Bakgrund"
 
@@ -1046,12 +1046,12 @@ msgid "Save CML Explorer Parameters"
 msgstr "Spara parametrar för CML-utforskare"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-dicom.c:1470 ../plug-ins/common/file-mng.c:648
+#: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -1076,7 +1076,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
-#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:346
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3349
@@ -2089,7 +2089,7 @@ msgid "Text"
 msgstr "Text"
 
 # src/sidebar.c:115
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2009
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Format:"
 msgstr "_Format:"
 
@@ -2144,9 +2144,9 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:337
-#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
-#: ../plug-ins/common/file-heif.c:696 ../plug-ins/common/file-jp2-load.c:1077
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
+#: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
+#: ../plug-ins/common/file-heif.c:697 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1063
@@ -2238,7 +2238,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1213
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:312
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -2334,29 +2334,34 @@ msgstr "Skrivbordslänk"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Fel vid inläsning av skrivbordsfilen ”%s”: %s"
 
-#: ../plug-ins/common/file-dicom.c:140
+#: ../plug-ins/common/file-dicom.c:141
 msgid "DICOM image"
 msgstr "DICOM-bild"
 
-#: ../plug-ins/common/file-dicom.c:165
+#: ../plug-ins/common/file-dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Digital Imaging and Communications in Medicine-bild"
 
-#: ../plug-ins/common/file-dicom.c:371
+#: ../plug-ins/common/file-dicom.c:372
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "”%s” är inte en DICOM-fil."
 
-#: ../plug-ins/common/file-dicom.c:544
+#: ../plug-ins/common/file-dicom.c:545
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "Överföringssyntax %s stöds inte av GIMP."
 
-#: ../plug-ins/common/file-dicom.c:1435
+#: ../plug-ins/common/file-dicom.c:600
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr "%s stöds inte av GIMP i kombination med sampel per bildpunkt: %d"
+
+#: ../plug-ins/common/file-dicom.c:1489
 msgid "Cannot save images with alpha channel."
 msgstr "Kan inte spara bilder med en alfakanal."
 
-#: ../plug-ins/common/file-dicom.c:1454 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1508 ../plug-ins/common/file-ps.c:1232
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2380,15 +2385,15 @@ msgid "_Spacing:"
 msgstr "_Mellanrum:"
 
 # Programvaran Radiance. https://www.radiance-online.org/about
-#: ../plug-ins/common/file-gegl.c:73
+#: ../plug-ins/common/file-gegl.c:77
 msgid "Radiance RGBE"
 msgstr "Radiance RGBE"
 
-#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
+#: ../plug-ins/common/file-gegl.c:93 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "OpenEXR-bild"
 
-#: ../plug-ins/common/file-gegl.c:336
+#: ../plug-ins/common/file-gegl.c:346
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Kunde inte öppna ”%s”"
@@ -2607,74 +2612,74 @@ msgstr "Exporterar AVIF-bilder"
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Spara bild i AV1 Image File-format (AVIF)."
 
-#: ../plug-ins/common/file-heif.c:734 ../plug-ins/common/file-heif.c:767
-#: ../plug-ins/common/file-heif.c:806 ../plug-ins/common/file-heif.c:872
+#: ../plug-ins/common/file-heif.c:736 ../plug-ins/common/file-heif.c:769
+#: ../plug-ins/common/file-heif.c:808 ../plug-ins/common/file-heif.c:874
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Inläsning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:756
+#: ../plug-ins/common/file-heif.c:758
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Inläsning av HEIF-bild misslyckades: Indatafil innehåller inga läsbara bilder"
 
-#: ../plug-ins/common/file-heif.c:999
+#: ../plug-ins/common/file-heif.c:1001
 msgid "image content"
 msgstr "bildinnehåll"
 
-#: ../plug-ins/common/file-heif.c:1312
+#: ../plug-ins/common/file-heif.c:1316
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Exporterar ”%s” med %s-kodare"
 
-#: ../plug-ins/common/file-heif.c:1362 ../plug-ins/common/file-heif.c:1616
+#: ../plug-ins/common/file-heif.c:1367 ../plug-ins/common/file-heif.c:1621
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:1653
+#: ../plug-ins/common/file-heif.c:1658
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:1742
+#: ../plug-ins/common/file-heif.c:1747
 msgid "primary"
 msgstr "primär"
 
-#: ../plug-ins/common/file-heif.c:1887
+#: ../plug-ins/common/file-heif.c:1892
 msgid "Load HEIF Image"
 msgstr "Läs in HEIF-bild"
 
-#: ../plug-ins/common/file-heif.c:1901
+#: ../plug-ins/common/file-heif.c:1906
 msgid "Select Image"
 msgstr "Välj bild"
 
-#: ../plug-ins/common/file-heif.c:2067
+#: ../plug-ins/common/file-heif.c:2072
 msgid "Nearly _lossless"
 msgstr "Nästan _förlustfri"
 
-#: ../plug-ins/common/file-heif.c:2071 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2076 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Kvalitet:"
 
-#: ../plug-ins/common/file-heif.c:2114
+#: ../plug-ins/common/file-heif.c:2119
 msgid "Bit depth:"
 msgstr "Bitdjup:"
 
-#: ../plug-ins/common/file-heif.c:2120
+#: ../plug-ins/common/file-heif.c:2125
 msgid "8 bit/channel"
 msgstr "8 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2121
+#: ../plug-ins/common/file-heif.c:2126
 msgid "10 bit/channel"
 msgstr "10 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2122
+#: ../plug-ins/common/file-heif.c:2127
 msgid "12 bit/channel"
 msgstr "12 bitar/kanal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2131 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2136 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -4207,24 +4212,24 @@ msgstr "Kan inte läsa ändelse från ”%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Kan inte läsa huvud från ”%s”"
 
-#: ../plug-ins/common/file-tga.c:1428
+#: ../plug-ins/common/file-tga.c:1434
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1437 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "_RLE-komprimeringsnivå"
 
-#: ../plug-ins/common/file-tga.c:1451
+#: ../plug-ins/common/file-tga.c:1457
 msgid "Or_igin:"
 msgstr "Urspr_ung:"
 
-#: ../plug-ins/common/file-tga.c:1455
+#: ../plug-ins/common/file-tga.c:1461
 msgid "Bottom left"
 msgstr "Nedre vänster"
 
-#: ../plug-ins/common/file-tga.c:1456
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Top left"
 msgstr "Övre vänster"
 
@@ -6689,77 +6694,77 @@ msgstr "Avkoda YCoCg (skalad)"
 msgid "Decode Alpha exponent"
 msgstr "Avkoda alfaexponent"
 
-#: ../plug-ins/file-dds/ddsread.c:1354
+#: ../plug-ins/file-dds/ddsread.c:1361
 msgid "Load DDS"
 msgstr "Läs in DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1373
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Load mipmaps"
 msgstr "_Läs in mipmap-bilder"
 
-#: ../plug-ins/file-dds/ddsread.c:1380
+#: ../plug-ins/file-dds/ddsread.c:1387
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Avkoda automatiskt YCoCg/AExp-bilder då de påträffas"
 
-#: ../plug-ins/file-dds/ddswrite.c:1954
+#: ../plug-ins/file-dds/ddswrite.c:1956
 msgid "Export as DDS"
 msgstr "Exportera som DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1957
+#: ../plug-ins/file-dds/ddswrite.c:1959
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "_Exportera"
 
-#: ../plug-ins/file-dds/ddswrite.c:1984
+#: ../plug-ins/file-dds/ddswrite.c:1986
 msgid "_Compression:"
 msgstr "_Komprimering:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1994
+#: ../plug-ins/file-dds/ddswrite.c:1996
 msgid "Use _perceptual error metric"
 msgstr "Använd _perceptuell felmetrik"
 
 # src/menus.c:280
-#: ../plug-ins/file-dds/ddswrite.c:2023
+#: ../plug-ins/file-dds/ddswrite.c:2025
 msgid "_Save:"
 msgstr "_Spara:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2037
+#: ../plug-ins/file-dds/ddswrite.c:2039
 msgid "_Mipmaps:"
 msgstr "_Mipmap-bilder:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2060
+#: ../plug-ins/file-dds/ddswrite.c:2062
 msgid "Transparent index:"
 msgstr "Transparent index:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2104
+#: ../plug-ins/file-dds/ddswrite.c:2106
 msgid "Mipmap Options"
 msgstr "Mipmap-alternativ"
 
-#: ../plug-ins/file-dds/ddswrite.c:2117
+#: ../plug-ins/file-dds/ddswrite.c:2119
 msgid "F_ilter:"
 msgstr "F_ilter:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2130
+#: ../plug-ins/file-dds/ddswrite.c:2132
 msgid "_Wrap mode:"
 msgstr "Ö_vergångsläge:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2140
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Appl_y gamma correction"
 msgstr "_Tillämpa gammakorrigering"
 
-#: ../plug-ins/file-dds/ddswrite.c:2154
+#: ../plug-ins/file-dds/ddswrite.c:2156
 msgid "Use s_RGB colorspace"
 msgstr "Använd s_RGB-färgrymd"
 
-#: ../plug-ins/file-dds/ddswrite.c:2173 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2183
+#: ../plug-ins/file-dds/ddswrite.c:2185
 msgid "Preserve alpha _test coverage"
 msgstr "Behåll alfa_testtäckning"
 
-#: ../plug-ins/file-dds/ddswrite.c:2202
+#: ../plug-ins/file-dds/ddswrite.c:2204
 msgid "_Alpha test threshold:"
 msgstr "_Alfatesttröskelvärde:"
 
@@ -7094,7 +7099,7 @@ msgstr "Flyttal"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1238
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "_Läs in standardvärden"
@@ -7148,7 +7153,7 @@ msgid "Unsupported bit depth: %d"
 msgstr "Bitdjupet stöds inte: %d"
 
 #: ../plug-ins/file-psd/psd-load.c:409 ../plug-ins/file-psd/psd-load.c:419
-#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:908
+#: ../plug-ins/file-psd/psd-load.c:630 ../plug-ins/file-psd/psd-load.c:912
 #, c-format
 msgid "The file is corrupt!"
 msgstr "Filen är skadad!"
@@ -7178,36 +7183,36 @@ msgstr "Lagrets storlek är ogiltig eller stöds inte: %dx%d"
 msgid "Unsupported or invalid mask info size: %d"
 msgstr "Maskinfons storlek är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:819
+#: ../plug-ins/file-psd/psd-load.c:837
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Lagermaskens höjd är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:827
+#: ../plug-ins/file-psd/psd-load.c:845
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:836
+#: ../plug-ins/file-psd/psd-load.c:854
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1473 ../plug-ins/file-psd/psd-load.c:1990
+#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2008
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2121
+#: ../plug-ins/file-psd/psd-load.c:2155
 msgid "Extra"
 msgstr "Extra"
 
-#: ../plug-ins/file-psd/psd-load.c:2299
+#: ../plug-ins/file-psd/psd-load.c:2333
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: ../plug-ins/file-psd/psd-load.c:2365
+#: ../plug-ins/file-psd/psd-load.c:2399
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
@@ -9572,7 +9577,7 @@ msgid "Save color _values from transparent pixels"
 msgstr "Spara färg_värden från transparenta bildpunkter"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:8
 msgid "S_ave Defaults"
 msgstr "S_para standardvärden"
 
@@ -9649,10 +9654,14 @@ msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Planär (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
+msgid "Palette Type"
+msgstr "Palettyp"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (normal)"
 
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (BMP-stil)"
 
@@ -12504,112 +12513,112 @@ msgstr "Ett fel inträffade vid försök att skriva ut:"
 msgid "Printing"
 msgstr "Skriver ut"
 
-#: ../plug-ins/screenshot/screenshot.c:128
+#: ../plug-ins/screenshot/screenshot.c:127
 msgid "Create an image from an area of the screen"
 msgstr "Skapa en bild från ett område på skärmen"
 
-#: ../plug-ins/screenshot/screenshot.c:149
+#: ../plug-ins/screenshot/screenshot.c:148
 msgid "_Screenshot..."
 msgstr "_Skärmbild…"
 
-#: ../plug-ins/screenshot/screenshot.c:495
+#: ../plug-ins/screenshot/screenshot.c:487
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Skärmbild"
 
-#: ../plug-ins/screenshot/screenshot.c:500
+#: ../plug-ins/screenshot/screenshot.c:492
 msgid "S_nap"
 msgstr "_Ta bild"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:527
+#: ../plug-ins/screenshot/screenshot.c:519
 msgid "Area"
 msgstr "Område"
 
-#: ../plug-ins/screenshot/screenshot.c:539
+#: ../plug-ins/screenshot/screenshot.c:531
 msgid "Take a screenshot of a single _window"
 msgstr "Ta en skärmbild av ett enstaka _fönster"
 
-#: ../plug-ins/screenshot/screenshot.c:562
+#: ../plug-ins/screenshot/screenshot.c:554
 msgid "Include window _decoration"
 msgstr "Inkludera fönster_dekoration"
 
-#: ../plug-ins/screenshot/screenshot.c:583
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:575
+#: ../plug-ins/screenshot/screenshot.c:620
 msgid "Include _mouse pointer"
 msgstr "Inkludera _muspekare"
 
-#: ../plug-ins/screenshot/screenshot.c:605
+#: ../plug-ins/screenshot/screenshot.c:597
 msgid "Take a screenshot of the entire _screen"
 msgstr "Ta en skärmbild av hela _skärmen"
 
-#: ../plug-ins/screenshot/screenshot.c:656
+#: ../plug-ins/screenshot/screenshot.c:648
 msgid "Select a _region to grab"
 msgstr "Välj en _region att fånga"
 
-#: ../plug-ins/screenshot/screenshot.c:674
+#: ../plug-ins/screenshot/screenshot.c:666
 msgid "Delay"
 msgstr "Fördröjning"
 
-#: ../plug-ins/screenshot/screenshot.c:694
+#: ../plug-ins/screenshot/screenshot.c:686
 msgid "Selection delay: "
 msgstr "Markeringsfördröjning: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:713
-#: ../plug-ins/screenshot/screenshot.c:777
+#: ../plug-ins/screenshot/screenshot.c:705
+#: ../plug-ins/screenshot/screenshot.c:769
 msgid "seconds"
 msgstr "sekunder"
 
-#: ../plug-ins/screenshot/screenshot.c:727
+#: ../plug-ins/screenshot/screenshot.c:719
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Dra musen, efter fördröjningen, för att markera regionen för skärmbilden."
 
-#: ../plug-ins/screenshot/screenshot.c:731
+#: ../plug-ins/screenshot/screenshot.c:723
 msgid "Click in a window to snap it after delay."
 msgstr "Klicka i ett fönster för att fästa det efter fördröjning."
 
-#: ../plug-ins/screenshot/screenshot.c:736
+#: ../plug-ins/screenshot/screenshot.c:728
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Vid slutet av fördröjningen, klicka i ett fönster för att fästa det."
 
-#: ../plug-ins/screenshot/screenshot.c:757
+#: ../plug-ins/screenshot/screenshot.c:749
 msgid "Screenshot dela_y: "
 msgstr "Skärmbildsfördrö_jning: "
 
-#: ../plug-ins/screenshot/screenshot.c:789
+#: ../plug-ins/screenshot/screenshot.c:781
 msgid "After the delay, the screenshot is taken."
 msgstr "Skärmbilden tas efter fördröjningen."
 
-#: ../plug-ins/screenshot/screenshot.c:791
+#: ../plug-ins/screenshot/screenshot.c:783
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr ""
 "När ett område är markerat kommer det att fångas in efter denna fördröjning."
 
-#: ../plug-ins/screenshot/screenshot.c:796
+#: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr ""
 "När ett fönster är markera kommer det att fångas in efter denna fördröjning."
 
-#: ../plug-ins/screenshot/screenshot.c:802
+#: ../plug-ins/screenshot/screenshot.c:794
 msgid "After the delay, the active window will be captured."
 msgstr "Efter fördröjningen kommer det aktiva fönstret att fångas in."
 
-#: ../plug-ins/screenshot/screenshot.c:809
+#: ../plug-ins/screenshot/screenshot.c:801
 msgid "Color Profile"
 msgstr "Färgprofil"
 
-#: ../plug-ins/screenshot/screenshot.c:814
+#: ../plug-ins/screenshot/screenshot.c:806
 msgid "Tag image with _monitor profile"
 msgstr "Tagga bilden med _skärmprofil"
 
-#: ../plug-ins/screenshot/screenshot.c:818
+#: ../plug-ins/screenshot/screenshot.c:810
 msgid "Convert image to sR_GB"
 msgstr "Konvertera bild till sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "Inga data fångade"
 
@@ -12899,2445 +12908,3 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
-
-#~ msgid "HEIF"
-#~ msgstr "HEIF"
-
-#~ msgid "10 bit/channel (HDR)"
-#~ msgstr "10 bitar/kanal (HDR)"
-
-#~ msgid "12 bit/channel (HDR)"
-#~ msgstr "12 bitar/kanal (HDR)"
-
-#~ msgid "Creator keyword data not nul-terminated"
-#~ msgstr "Data för upphovsmansnyckelord är inte null-terminerad"
-
-#~ msgid "Invalid bitmap type %d in channel information chunk"
-#~ msgstr "Ogiltig bildtyp %d i kanalinformationsblock"
-
-#~ msgid "CMY"
-#~ msgstr "CMY"
-
-#~ msgid "cyan-k"
-#~ msgstr "cyan-k"
-
-#~ msgid "magenta-k"
-#~ msgstr "magenta-k"
-
-#~ msgid "yellow-k"
-#~ msgstr "gul-k"
-
-#~ msgid "Cyan_K"
-#~ msgstr "Cyan_K"
-
-#~ msgid "Magenta_K"
-#~ msgstr "Magenta_K"
-
-#~ msgid "Yellow_K"
-#~ msgstr "Gul_K"
-
-#~ msgid "Save background color"
-#~ msgstr "Spara bakgrundsfärg"
-
-#~ msgid "Save creation time"
-#~ msgstr "Spara skapad tid"
-
-#~ msgid "Raw"
-#~ msgstr "Rå"
-
-#~ msgid "RunLength Encoded"
-#~ msgstr "RunLengthkodad"
-
-#~ msgid "Cancel"
-#~ msgstr "Avbryt"
-
-#~ msgid "OK"
-#~ msgstr "OK"
-
-#~ msgctxt "composing"
-#~ msgid "None"
-#~ msgstr "Ingen"
-
-#~ msgctxt "frame-range"
-#~ msgid "From:"
-#~ msgstr "Från:"
-
-#~ msgctxt "frame-range"
-#~ msgid "To:"
-#~ msgstr "Till:"
-
-#~ msgid "RLE compression"
-#~ msgstr "RLE-komprimering"
-
-#~ msgid "Lossless"
-#~ msgstr "Förlustfri"
-
-#~ msgid "Save color values from transparent pixels"
-#~ msgstr "Spara färgvärden från transparenta bildpunkter"
-
-#~ msgid "Adding checkerboard"
-#~ msgstr "Lägger till schackrutor"
-
-#~ msgid "Stretch brightness values to cover the full range"
-#~ msgstr "Dra ut värden för ljusstyrka för att täcka in hela intervallet"
-
-#~ msgid "Normalizing"
-#~ msgstr "Normaliserar"
-
-#~ msgid "Simulate the glowing boundary of a neon light"
-#~ msgstr "Simulera en glödande avgränsning för ett neonljus"
-
-#~ msgid "_Neon (legacy)..."
-#~ msgstr "_Neon (föråldrad)…"
-
-#~ msgid "Neon"
-#~ msgstr "Neon"
-
-#~ msgid "Neon Detection"
-#~ msgstr "Neonidentifiering"
-
-#~ msgid "_Amount:"
-#~ msgstr "_Mängd:"
-
-#~ msgid "Quality:"
-#~ msgstr "Kvalitet:"
-
-#~ msgid "Round"
-#~ msgstr "Runda"
-
-#~ msgid "Line"
-#~ msgstr "Rad"
-
-#~ msgid "PS Square (Euclidean Dot)"
-#~ msgstr "PS kvadrat (Euklidisk punkt)"
-
-#~ msgid "PS Diamond"
-#~ msgstr "PS romb"
-
-#~ msgid "_Grey"
-#~ msgstr "_Grått"
-
-#~ msgid "R_ed"
-#~ msgstr "R_öd"
-
-#~ msgid "_Green"
-#~ msgstr "_Grön"
-
-#~ msgid "_Blue"
-#~ msgstr "_Blå"
-
-#~ msgid "C_yan"
-#~ msgstr "C_yan"
-
-#~ msgid "Magen_ta"
-#~ msgstr "Magen_ta"
-
-#~ msgid "_Yellow"
-#~ msgstr "G_ul"
-
-#~ msgid "Luminance"
-#~ msgstr "Luminans"
-
-#~ msgid "Halftone the image to give newspaper-like effect"
-#~ msgstr "Halvtona bilden för att ge en dagstidningseffekt"
-
-#~ msgid "Newsprin_t..."
-#~ msgstr "_Tidningstryck…"
-
-#~ msgid "Newsprint"
-#~ msgstr "Tidningstryck"
-
-#~ msgid "_Angle:"
-#~ msgstr "_Vinkel:"
-
-#~ msgid "_Spot function:"
-#~ msgstr "_Fläckfunktion:"
-
-#~ msgid "Resolution"
-#~ msgstr "Upplösning"
-
-#~ msgid "_Input SPI:"
-#~ msgstr "_Ingående SPI:"
-
-#~ msgid "O_utput LPI:"
-#~ msgstr "U_tgående LPI:"
-
-#~ msgid "C_ell size:"
-#~ msgstr "C_ellstorlek:"
-
-#~ msgid "B_lack pullout (%):"
-#~ msgstr "S_vartseparation (%):"
-
-#~ msgid "Separate to:"
-#~ msgstr "Separera till:"
-
-#~ msgid "_RGB"
-#~ msgstr "_RGB"
-
-#~ msgid "C_MYK"
-#~ msgstr "C_MYK"
-
-#~ msgid "I_ntensity"
-#~ msgstr "I_ntensitet"
-
-#~ msgid "_Lock channels"
-#~ msgstr "_Lås kanaler"
-
-#~ msgid "_Factory Defaults"
-#~ msgstr "_Standardvärden"
-
-#~ msgid "O_versample:"
-#~ msgstr "Ö_versampla:"
-
-#~ msgid "Smear colors to simulate an oil painting"
-#~ msgstr "Smeta ut färger för att simulera en oljemålning"
-
-#~ msgid "Oili_fy (legacy)..."
-#~ msgstr "_Oljifiera (föråldrad)…"
-
-#~ msgid "Oil painting"
-#~ msgstr "Oljemålning"
-
-#~ msgid "Oilify"
-#~ msgstr "Oljifiera"
-
-#~ msgid "_Mask size:"
-#~ msgstr "_Maskstorlek:"
-
-#~ msgid "Use m_ask-size map:"
-#~ msgstr "Använd m_askstorlekskarta:"
-
-#~ msgid "_Exponent:"
-#~ msgstr "_Exponent:"
-
-#~ msgid "Use e_xponent map:"
-#~ msgstr "Använd e_xponentkarta:"
-
-#~ msgid "_Use intensity algorithm"
-#~ msgstr "_Använd intensitetsalgoritm"
-
-# src/sidebar.c:115
-#~ msgid "Format:"
-#~ msgstr "Format:"
-
-# src/menus.c:280
-#~ msgid "Save:"
-#~ msgstr "Spara:"
-
-#~ msgid "<b>Advanced Options</b>"
-#~ msgstr "<b>Avancerade inställningar</b>"
-
-#~ msgid "Mipmaps"
-#~ msgstr "Mipmap-bilder"
-
-#~ msgid "Flame works only on RGB drawables."
-#~ msgstr "Flamma fungerar endast på RGB-ritytor."
-
-#~ msgid "Borderaverage"
-#~ msgstr "Kantmedelvärde"
-
-#~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-#~ msgstr "Ogiltig huvuddata i ”%s”: bredd=%lu, höjd=%lu, byte=%lu"
-
-#~ msgid "Unsupported brush format"
-#~ msgstr "Penselformat stöds inte"
-
-#~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
-#~ msgstr "Ogiltig huvuddata i ”%s”: Penselnamnet är för långt: %lu"
-
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "Fel i GIMP-penselfilen ”%s”"
-
-#~ msgid "Invalid UTF-8 string in brush file '%s'."
-#~ msgstr "Ogiltig UTF-8-sträng i penselfilen ”%s”."
-
-#~ msgid "Brush name is too long: %lu"
-#~ msgstr "Penselnamnet är för långt: %lu"
-
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "GIMP-penselfilen verkar vara skadad."
-
-#~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-#~ msgstr "Ogiltig huvuddata i ”%s”: Mönsternamnet är för långt: %lu"
-
-#~ msgid "Invalid UTF-8 string in pattern file '%s'."
-#~ msgstr "Ogiltig UTF-8-sträng i mönsterfilen ”%s”."
-
-#~ msgid "TIFF export cannot handle indexed images with an alpha channel."
-#~ msgstr ""
-#~ "Exportering av TIFF kan inte hantera indexerade bilder med en alfakanal."
-
-#~ msgid "_Guillotine"
-#~ msgstr "_Pappersskärare"
-
-#~ msgid "Advanced"
-#~ msgstr "Avancerat"
-
-#~ msgid "save Exif data"
-#~ msgstr "spara Exif-data"
-
-#~ msgid "save XMP data"
-#~ msgstr "spara XMP-data"
-
-#~ msgid "save IPTC data"
-#~ msgstr "spara IPTC-data"
-
-#~ msgid "save thumbnail"
-#~ msgstr "spara miniatyrbild"
-
-#~ msgid "The most widely useful method for sharpening an image"
-#~ msgstr "Den mest användbara metoden för att öka skärpan i en bild"
-
-#~ msgid "_Unsharp Mask (legacy)..."
-#~ msgstr "_Oskarp mask (föråldrad)…"
-
-#~ msgid "Merging"
-#~ msgstr "Sammanfogar"
-
-#~ msgid "Unsharp Mask"
-#~ msgstr "Oskarp mask"
-
-#~ msgid "Displace pixels in a ripple pattern"
-#~ msgstr "Förskjut bildpunkter i ett krusmönster"
-
-#~ msgid "_Ripple..."
-#~ msgstr "_Krusar…"
-
-#~ msgid "Rippling"
-#~ msgstr "Krusar"
-
-#~ msgid "Ripple"
-#~ msgstr "Krusning"
-
-#~ msgid "_Retain tilability"
-#~ msgstr "_Bevara upprepningsbarhet"
-
-#~ msgid "Edges"
-#~ msgstr "Kanter"
-
-#~ msgid "_Smear"
-#~ msgstr "_Smeta ut"
-
-#~ msgid "_Blank"
-#~ msgstr "_Blank"
-
-#~ msgid "Wave Type"
-#~ msgstr "Vågtyp"
-
-#~ msgid "Saw_tooth"
-#~ msgstr "Såg_tand"
-
-#~ msgid "S_ine"
-#~ msgstr "S_inus"
-
-#~ msgid "_Period:"
-#~ msgstr "_Period:"
-
-#~ msgid "A_mplitude:"
-#~ msgstr "A_mplitud:"
-
-#~ msgid "Phase _shift:"
-#~ msgstr "Fas_skifte:"
-
-#~ msgid ""
-#~ "The image '%s' is in grayscale but does not contain any gray component."
-#~ msgstr "Bilden ”%s” är i gråskala men innehåller ingen grå komponent."
-
-#~ msgid "The image '%s' is in RGB, but is missing some of the components."
-#~ msgstr "Bilden ”%s” är i RGB men saknar några av komponenterna."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIEXYZ color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "Bilden ”%s” är i färgrymden CIEXYZ, men det finns ingen tillgänglig kod "
-#~ "för att konvertera den till RGB."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIELAB color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "Bilden ”%s” är i färgrymden CIELAB, men det finns ingen tillgänglig kod "
-#~ "för att konvertera den till RGB."
-
-#~ msgid ""
-#~ "The image '%s' is in the YCbCr color space, but there is no code in place "
-#~ "to convert it to RGB."
-#~ msgstr ""
-#~ "Bilden ”%s” är i färgrymden YCbCr, men det finns ingen tillgänglig kod "
-#~ "för att konvertera den till RGB."
-
-#~ msgid "The image '%s' is in an unknown color space."
-#~ msgstr "Bilden ”%s” har en okänd färgrymd."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have the same size as the "
-#~ "image. This is currently not supported."
-#~ msgstr ""
-#~ "Bildkomponent %d av bild ”%s” har inte samma storlek som bilden. Detta "
-#~ "stöds för närvarande inte."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have both a hstep and vstep."
-#~ msgstr "Bildkomponent %d av bild ”%s” har inte både ett hstep och vstep."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' is signed. This is currently not "
-#~ "supported."
-#~ msgstr ""
-#~ "Bildkomponent %d av bild ”%s” är signerad. Detta stöds för närvarande "
-#~ "inte."
-
-#~ msgid "PDF document"
-#~ msgstr "PDF-dokument"
-
-#~ msgid "This image has no metadata attached to it."
-#~ msgstr "Denna bild har ingen metadata bifogad."
-
-#~ msgid "_Create"
-#~ msgstr "S_kapa"
-
-#~ msgid ""
-#~ "Unable to export layer with mode '%s'.  Either the PSD file format or the "
-#~ "export plug-in does not support that, using normal mode instead."
-#~ msgstr ""
-#~ "Kunde inte exportera lager med läget ”%s”.  Varken PSD-filformatet eller "
-#~ "insticksmodulen för exportering har stöd för det, använder normalt läge "
-#~ "istället."
-
-#~ msgid "Caption"
-#~ msgstr "Beskrivning"
-
-#~ msgid "Captionwriter"
-#~ msgstr "Beskrivningsförfattare"
-
-#~ msgid "Keywords/Categories"
-#~ msgstr "Nyckelord/kategorier"
-
-#~ msgid ""
-#~ "Transmission\n"
-#~ "reference"
-#~ msgstr "Överföringsreferens"
-
-#~ msgid "Credits/Origin"
-#~ msgstr "Ära/ursprung"
-
-#~ msgid "Write IPTC Data"
-#~ msgstr "Skriv IPTC-data"
-
-#~ msgid "Indexed Palette Type"
-#~ msgstr "Indexerad palettyp"
-
-#~ msgid "Use the options below to customize the image."
-#~ msgstr "Använd alternativen nedan för att anpassa bilden."
-
-#~ msgid "Preset:"
-#~ msgstr "Förinställning:"
-
-#~ msgid "Use animation"
-#~ msgstr "Använd animation"
-
-#~ msgid "Loop infinitely"
-#~ msgstr "Loopa oändligt"
-
-#~ msgid "Grab"
-#~ msgstr "Fånga"
-
-#~ msgid "Grab a single window"
-#~ msgstr "Fånga ett fönster"
-
-#~ msgid "Grab the whole screen"
-#~ msgstr "Fånga hela skärmbilden"
-
-#~ msgid "after"
-#~ msgstr "efter"
-
-#~ msgid "Seconds delay"
-#~ msgstr "Sekunders fördröjning"
-
-#~ msgid "Include decorations"
-#~ msgstr "Ta med fönsterkanten"
-
-#~ msgid "Capture a window or desktop image"
-#~ msgstr "Fånga ett fönster eller skrivbordsbild"
-
-#~ msgid "_Screen Shot..."
-#~ msgstr "_Skärmbild…"
-
-#~ msgid "Canon raw"
-#~ msgstr "Canon rå"
-
-#~ msgid "Nikon raw"
-#~ msgstr "Nikon rå"
-
-#~ msgid "Sony raw"
-#~ msgstr "Sony rå"
-
-#~ msgid "Sinar raw"
-#~ msgstr "Sinar rå"
-
-#~ msgid "Kodak raw"
-#~ msgstr "Kodak rå"
-
-#~ msgid "NEF image"
-#~ msgstr "NEF-bild"
-
-#~ msgid "Error writing output file."
-#~ msgstr "Fel när filen sparades."
-
-#~ msgid "Blur neighboring pixels, but only in low-contrast areas"
-#~ msgstr ""
-#~ "Gör närliggande bildpunkter oskarpa, men endast i lågkontrastområden"
-
-#~ msgid "_Selective Gaussian Blur..."
-#~ msgstr "_Selektiv gaussisk oskärpa..."
-
-#~ msgid "Selective Gaussian Blur"
-#~ msgstr "Selektiv gaussisk oskärpa"
-
-#~ msgid "_Blur radius:"
-#~ msgstr "_Oskärperadie:"
-
-#~ msgid "_Max. delta:"
-#~ msgstr "_Max delta:"
-
-#~ msgid "Create an embossing effect using a bump map"
-#~ msgstr "Skapa en ciseleringseffekt med en bumpmap"
-
-#~ msgid "_Bump Map..."
-#~ msgstr "_Bumpmap..."
-
-#~ msgid "Bump-mapping"
-#~ msgstr "Bumpmappning"
-
-#~ msgid "Bump Map"
-#~ msgstr "Bumpmap"
-
-#~ msgid "_Bump map:"
-#~ msgstr "_Bumpmap:"
-
-#~ msgid "_Map type:"
-#~ msgstr "_Maptyp:"
-
-#~ msgid "Co_mpensate for darkening"
-#~ msgstr "Ko_mpensera för förmörkandet"
-
-#~ msgid "I_nvert bumpmap"
-#~ msgstr "I_nvertera bumpmap"
-
-# Osäker
-#~ msgid "_Tile bumpmap"
-#~ msgstr "_Plattlägg bumpmap"
-
-#~ msgid "_Elevation:"
-#~ msgstr "_Höjd:"
-
-#~ msgid ""
-#~ "The offset can be adjusted by dragging the preview using the middle mouse "
-#~ "button."
-#~ msgstr ""
-#~ "Positionen kan justeras genom att dra förhandsgranskningen med "
-#~ "mittenmusknappen."
-
-#~ msgid "_Waterlevel:"
-#~ msgstr "_Vattennivå:"
-
-#~ msgid "A_mbient:"
-#~ msgstr "O_mgivande:"
-
-#~ msgid "Generate diffraction patterns"
-#~ msgstr "Generera diffraktionsmönster"
-
-#~ msgid "_Diffraction Patterns..."
-#~ msgstr "_Diffraktionsmönster..."
-
-#~ msgid "Creating diffraction pattern"
-#~ msgstr "Skapar diffraktionsmönster"
-
-#~ msgid "Diffraction Patterns"
-#~ msgstr "Diffraktionsmönster"
-
-#~ msgid "Frequencies"
-#~ msgstr "Frekvenser"
-
-#~ msgid "Contours"
-#~ msgstr "Konturer"
-
-#~ msgid "Sharp Edges"
-#~ msgstr "Skarpa kanter"
-
-#~ msgid "Sc_attering:"
-#~ msgstr "S_pridning:"
-
-#~ msgid "Po_larization:"
-#~ msgstr "Po_larisation:"
-
-#~ msgid "Other Options"
-#~ msgstr "Övriga alternativ"
-
-#~ msgid "_X displacement"
-#~ msgstr "_X-förskjutning"
-
-#~ msgid "_Pinch"
-#~ msgstr "_Nyp"
-
-#~ msgid "_Y displacement"
-#~ msgstr "_Y-förskjutning"
-
-#~ msgid "_Whirl"
-#~ msgstr "_Virvla"
-
-#~ msgid "Displace pixels as indicated by displacement maps"
-#~ msgstr "Förskjut bildpunkter som indikerat av förskjutningskartor"
-
-#~ msgid "_Displace..."
-#~ msgstr "_Förskjut..."
-
-#~ msgid "Displacing"
-#~ msgstr "Förskjutning"
-
-#~ msgid "Displace"
-#~ msgstr "Förskjut"
-
-#~ msgid "_X displacement:"
-#~ msgstr "_X-förskjutning:"
-
-#~ msgid "_Y displacement:"
-#~ msgstr "_Y-förskjutning:"
-
-#~ msgid "Displacement Mode"
-#~ msgstr "Förskjutningsläge"
-
-#~ msgid "_Cartesian"
-#~ msgstr "_Kartesiskt"
-
-#~ msgid "_Polar"
-#~ msgstr "_Polärt"
-
-#~ msgid "Edge Behavior"
-#~ msgstr "Kantbeteende"
-
-#~ msgid "Several simple methods for detecting edges"
-#~ msgstr "Flera enkla metoder för att identifiera kanter"
-
-#~ msgid "_Edge..."
-#~ msgstr "_Kant..."
-
-#~ msgid "Edge detection"
-#~ msgstr "Kantidentifiering"
-
-#~ msgid "Edge Detection"
-#~ msgstr "Kantidentifiering"
-
-#~ msgid "Sobel"
-#~ msgstr "Sobel"
-
-#~ msgid "Prewitt compass"
-#~ msgstr "Prewitt-kompass"
-
-#~ msgid "Roberts"
-#~ msgstr "Roberts"
-
-# kanske "Differential" på svenska också, här
-#~ msgid "Differential"
-#~ msgstr "Differential"
-
-#~ msgid "Laplace"
-#~ msgstr "Laplace"
-
-#~ msgid "_Algorithm:"
-#~ msgstr "_Algoritm:"
-
-#~ msgid "A_mount:"
-#~ msgstr "M_ängd:"
-
-#~ msgid "Simulate an antique engraving"
-#~ msgstr "Simulera en antik gravering"
-
-#~ msgid "En_grave..."
-#~ msgstr "_Gravera..."
-
-#~ msgid "Engraving"
-#~ msgstr "Gravering"
-
-#~ msgid "Engrave"
-#~ msgstr "Gravera"
-
-#~ msgid "_Limit line width"
-#~ msgstr "_Begränsa linjebredd"
-
-#~ msgid "Error during writing indexed/gray image"
-#~ msgstr "Fel uppstod då indexerad/gråskalebild skrevs"
-
-#~ msgid "Error during writing rgb image"
-#~ msgstr "Fel uppstod då rgb-bild skrevs"
-
-#~ msgid "Set a color profile on the image"
-#~ msgstr "Ställ in en färgprofil på bilden"
-
-#~ msgid "_Assign Color Profile..."
-#~ msgstr "_Tilldela färgprofil..."
-
-#~ msgid "Assign default RGB Profile"
-#~ msgstr "Tilldela standard-RGB-profil"
-
-#~ msgid "Apply a color profile on the image"
-#~ msgstr "Tillämpa en färgprofil på bilden"
-
-#~ msgid "_Convert to Color Profile..."
-#~ msgstr "_Konvertera till färgprofil..."
-
-#~ msgid "Convert to default RGB Profile"
-#~ msgstr "Konvertera till standard-RGB-profil"
-
-#~ msgid "Image Color Profile Information"
-#~ msgstr "Information om bildfärgsprofil"
-
-#~ msgid "Color Profile Information"
-#~ msgstr "Information om färgprofil"
-
-#~ msgid "Color profile '%s' is not for RGB color space."
-#~ msgstr "Färgprofilen \"%s\" är inte för RGB-färgrymd."
-
-#~ msgid "Converting from '%s' to '%s'"
-#~ msgstr "Konverterar från \"%s\" till \"%s\""
-
-#~ msgid "The image '%s' has an embedded color profile:"
-#~ msgstr "Bilden \"%s\" har en inbäddad färgprofil:"
-
-#~ msgid "Convert the image to the RGB working space (%s)?"
-#~ msgstr "Konvertera bilden till RGB-arbetsrymden (%s)?"
-
-#~ msgid "Convert to RGB working space?"
-#~ msgstr "Konvertera till RGB-arbetsrymd?"
-
-#~ msgid "_Keep"
-#~ msgstr "_Behåll"
-
-#~ msgid "_Convert"
-#~ msgstr "_Konvertera"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "_Fråga mig inte igen"
-
-#~ msgid "Select destination profile"
-#~ msgstr "Välj målprofil"
-
-#~ msgid "RGB workspace (%s)"
-#~ msgstr "RGB-arbetsrymd (%s)"
-
-#~ msgid "Convert to ICC Color Profile"
-#~ msgstr "Konvertera till ICC-färgprofil"
-
-#~ msgid "Assign ICC Color Profile"
-#~ msgstr "Tilldela ICC-färgprofil"
-
-#~ msgid "_Assign"
-#~ msgstr "_Tilldela"
-
-#~ msgid "Current Color Profile"
-#~ msgstr "Aktuell färgprofil"
-
-#~ msgid "Convert to"
-#~ msgstr "Konvertera till"
-
-#~ msgid "Assign"
-#~ msgstr "Tilldela"
-
-# Klart osäker
-#~ msgid "_Rendering Intent:"
-#~ msgstr "_Renderingsintention:"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "Svartpunkts_kompensation"
-
-#~ msgid "Destination profile is not for RGB color space."
-#~ msgstr "Målprofilen är inte för RGB-färgrymd."
-
-#~ msgid "Add a lens flare effect"
-#~ msgstr "Lägg till en linsöverstrålningseffekt"
-
-#~ msgid "Lens _Flare..."
-#~ msgstr "Linsöverstr_ålning..."
-
-#~ msgid "Render lens flare"
-#~ msgstr "Rita ut linsöverstrålning"
-
-#~ msgid "Lens Flare"
-#~ msgstr "Linsöverstrålning"
-
-#~ msgid "Center of Flare Effect"
-#~ msgstr "Mittpunkt för överstrålning"
-
-#~ msgid "Show _position"
-#~ msgstr "Visa _position"
-
-#~ msgid "Paper Tile"
-#~ msgstr "Pappersplatta"
-
-#~ msgid "Division"
-#~ msgstr "Delning"
-
-#~ msgid "Fractional Pixels"
-#~ msgstr "Delade bildpunkter"
-
-#~ msgid "_Background"
-#~ msgstr "_Bakgrund"
-
-#~ msgid "_Ignore"
-#~ msgstr "_Ignorera"
-
-#~ msgid "_Force"
-#~ msgstr "_Kraft"
-
-#~ msgid "C_entering"
-#~ msgstr "M_ittpunkt"
-
-#~ msgid "Movement"
-#~ msgstr "Förflyttning"
-
-#~ msgid "_Max (%):"
-#~ msgstr "_Max (%):"
-
-#~ msgid "_Wrap around"
-#~ msgstr "_Slå runt"
-
-#~ msgid "Background Type"
-#~ msgstr "Bakgrundstyp"
-
-#~ msgid "I_nverted image"
-#~ msgstr "I_nverterad bild"
-
-#~ msgid "Im_age"
-#~ msgstr "B_ild"
-
-#~ msgid "Fo_reground color"
-#~ msgstr "Fö_rgrundsfärg"
-
-#~ msgid "Bac_kground color"
-#~ msgstr "Ba_kgrundsfärg"
-
-#~ msgid "S_elect here:"
-#~ msgstr "V_älj här:"
-
-#~ msgid "Background Color"
-#~ msgstr "Bakgrundsfärg"
-
-#~ msgid "Cut image into paper tiles, and slide them"
-#~ msgstr "Klipp bilden till pappersrutor och dra dem"
-
-#~ msgid "September 31, 1999"
-#~ msgstr "31 september, 1999"
-
-#~ msgid "_Paper Tile..."
-#~ msgstr "_Pappersplattor..."
-
-#~ msgid "More _white (larger value)"
-#~ msgstr "Mera _vitt (större värde)"
-
-#~ msgid "More blac_k (smaller value)"
-#~ msgstr "Mera _svart (mindre värde)"
-
-#~ msgid "_Middle value to peaks"
-#~ msgstr "_Mellanvärden till toppar"
-
-#~ msgid "_Foreground to peaks"
-#~ msgstr "_Förgrund till toppar"
-
-#~ msgid "O_nly foreground"
-#~ msgstr "_Endast förgrund"
-
-#~ msgid "Only b_ackground"
-#~ msgstr "Endast b_akgrund"
-
-#~ msgid "Mor_e opaque"
-#~ msgstr "M_er opak"
-
-#~ msgid "More t_ransparent"
-#~ msgstr "Mer t_ransparent"
-
-#~ msgid "Propagate certain colors to neighboring pixels"
-#~ msgstr "Propagera vissa färger till närliggande bildpunkter"
-
-#~ msgid "_Value Propagate..."
-#~ msgstr "Sprid _värden..."
-
-#~ msgid "Shrink lighter areas of the image"
-#~ msgstr "Förminska ljusare områden av bilden"
-
-#~ msgid "E_rode"
-#~ msgstr "E_rodera"
-
-#~ msgid "Grow lighter areas of the image"
-#~ msgstr "Förstora ljusare områden av bilden"
-
-#~ msgid "_Dilate"
-#~ msgstr "_Väx"
-
-#~ msgid "Value Propagate"
-#~ msgstr "Sprid värden"
-
-#~ msgid "Propagate"
-#~ msgstr "Sprid"
-
-#~ msgid "Lower t_hreshold:"
-#~ msgstr "_Undre tröskelvärde:"
-
-#~ msgid "_Upper threshold:"
-#~ msgstr "_Övre tröskelvärde:"
-
-#~ msgid "_Propagating rate:"
-#~ msgstr "_Spridningstakt:"
-
-#~ msgid "To l_eft"
-#~ msgstr "Åt _vänster"
-
-#~ msgid "To _right"
-#~ msgstr "Åt _höger"
-
-#~ msgid "To _top"
-#~ msgstr "U_ppåt"
-
-#~ msgid "Propagating _alpha channel"
-#~ msgstr "Sprider _alfakanal"
-
-#~ msgid "Propagating value channel"
-#~ msgstr "Sprider ljusstyrkekanal"
-
-#~ msgid "Smear image to give windblown effect"
-#~ msgstr "Smeta ut bilden för att ge den en vindeffekt"
-
-#~ msgid "Wi_nd..."
-#~ msgstr "Vi_nd..."
-
-#~ msgid "Rendering blast"
-#~ msgstr "Renderar vindstöt"
-
-#~ msgid "Wind"
-#~ msgstr "Vind"
-
-#~ msgid "Style"
-#~ msgstr "Typ"
-
-#~ msgid "_Wind"
-#~ msgstr "_Vind"
-
-#~ msgid "_Blast"
-#~ msgstr "_Vindstöt"
-
-#~ msgid "_Left"
-#~ msgstr "_Vänster"
-
-#~ msgid "_Right"
-#~ msgstr "_Höger"
-
-#~ msgid "Edge Affected"
-#~ msgstr "Påverkad kant"
-
-#~ msgid "L_eading"
-#~ msgstr "F_ramkant"
-
-#~ msgid "Tr_ailing"
-#~ msgstr "B_akkant"
-
-# src/dialogs.c:502 src/dialogs.c:600
-#~ msgid "Bot_h"
-#~ msgstr "B_åde och"
-
-#~ msgid "Higher values restrict the effect to fewer areas of the image"
-#~ msgstr "Högre värden begränsar effekten till färre delar av bilden"
-
-#~ msgid "Higher values increase the magnitude of the effect"
-#~ msgstr "Högre värden ökar magnituden av effekten"
-
-#~ msgid "The name `%s' is used already!"
-#~ msgstr "Namnet \"%s\" används redan!"
-
-#~ msgid "Constructing maze using Prim's Algorithm"
-#~ msgstr "Skapar labyrint med Prims algoritm"
-
-#~ msgid "Constructing tileable maze using Prim's Algorithm"
-#~ msgstr "Skapar upprepningsbar labyrint med Prims algoritm"
-
-#~ msgid "Maze"
-#~ msgstr "Labyrint"
-
-#~ msgid "Maze Size"
-#~ msgstr "Labyrintstorlek"
-
-#~ msgid "Pieces:"
-#~ msgstr "Delar:"
-
-#~ msgid "Height (pixels):"
-#~ msgstr "Höjd (bildpunkter):"
-
-#~ msgid "Algorithm"
-#~ msgstr "Algoritm"
-
-#~ msgid "Depth first"
-#~ msgstr "Djupet först"
-
-#~ msgid "Prim's algorithm"
-#~ msgstr "Prims algoritm"
-
-#~ msgid ""
-#~ "Selection size is not even.\n"
-#~ "Tileable maze won't work perfectly."
-#~ msgstr ""
-#~ "Urvalsstorleken är inte jämn.\n"
-#~ "Upprepningsbar labyrint kommer inte fungera bra."
-
-#~ msgid "Draw a labyrinth"
-#~ msgstr "Rita en labyrint"
-
-#~ msgid "_Maze..."
-#~ msgstr "_Labyrint..."
-
-#~ msgid "Drawing maze"
-#~ msgstr "Ritar labyrint"
-
-#~ msgid "Original"
-#~ msgstr "Original"
-
-#~ msgid "Rotated"
-#~ msgstr "Roterad"
-
-#~ msgid "Continuous update"
-#~ msgstr "Ständig uppdatering"
-
-#~ msgid "Area:"
-#~ msgstr "Område:"
-
-#~ msgid "Entire Layer"
-#~ msgstr "Hela lagret"
-
-#~ msgid "Context"
-#~ msgstr "Kontext"
-
-#~ msgctxt "color-range"
-#~ msgid "From:"
-#~ msgstr "Från:"
-
-#~ msgctxt "color-range"
-#~ msgid "To:"
-#~ msgstr "Till:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "From:"
-#~ msgstr "Från:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "To:"
-#~ msgstr "Till:"
-
-#~ msgid "Hue:"
-#~ msgstr "Nyans:"
-
-#~ msgid "Saturation:"
-#~ msgstr "Mättnad:"
-
-#~ msgid "Gray Mode"
-#~ msgstr "Gråskaleläge"
-
-#~ msgid "Treat as this"
-#~ msgstr "Behandla som detta"
-
-#~ msgid "Change to this"
-#~ msgstr "Ändra till detta"
-
-#~ msgid "Units"
-#~ msgstr "Enheter"
-
-#~ msgid "Radians/Pi"
-#~ msgstr "Radianer/pi"
-
-#~ msgid "Degrees"
-#~ msgstr "Grader"
-
-#~ msgid "Rotate Colors"
-#~ msgstr "Rotera färger"
-
-#~ msgid "Gray Options"
-#~ msgstr "Grå alternativ"
-
-#~ msgid "Switch to Clockwise"
-#~ msgstr "Växla till medurs"
-
-#~ msgid "Switch to C/Clockwise"
-#~ msgstr "Växla till moturs"
-
-#~ msgid "Change Order of Arrows"
-#~ msgstr "Ändra ordning på pilarna"
-
-#~ msgid "Replace a range of colors with another"
-#~ msgstr "Ersätt ett färgintervall med ett annat"
-
-#~ msgid "_Rotate Colors..."
-#~ msgstr "_Rotera färger..."
-
-#~ msgid "Rotating the colors"
-#~ msgstr "Roterar färgerna"
-
-#~ msgid "_Modify red channel"
-#~ msgstr "Ändra r_öd kanal"
-
-#~ msgid "_Modify hue channel"
-#~ msgstr "Ändra _nyanskanal"
-
-#~ msgid "Mo_dify green channel"
-#~ msgstr "Än_dra grön kanal"
-
-#~ msgid "Mo_dify saturation channel"
-#~ msgstr "Änd_ra mättnadskanal"
-
-#~ msgid "Mod_ify blue channel"
-#~ msgstr "Ändra _blå kanal"
-
-#~ msgid "Mod_ify luminosity channel"
-#~ msgstr "Änd_ra luminanskanal"
-
-#~ msgid "Red _frequency:"
-#~ msgstr "Röd _frekvens:"
-
-#~ msgid "Hue _frequency:"
-#~ msgstr "Nyans_frekvens:"
-
-#~ msgid "Green fr_equency:"
-#~ msgstr "Grön fr_ekvens:"
-
-#~ msgid "Saturation fr_equency:"
-#~ msgstr "Mättnads_frekvens:"
-
-#~ msgid "Blue freq_uency:"
-#~ msgstr "Blå fre_kvens:"
-
-#~ msgid "Luminosity freq_uency:"
-#~ msgstr "Luminansfre_kvens:"
-
-#~ msgid "Red _phaseshift:"
-#~ msgstr "Rött fas_skifte:"
-
-#~ msgid "Hue _phaseshift:"
-#~ msgstr "Nyansfas_skifte:"
-
-#~ msgid "Green ph_aseshift:"
-#~ msgstr "Grönt f_asskifte:"
-
-#~ msgid "Saturation ph_aseshift:"
-#~ msgstr "Mättnadsf_asskifte:"
-
-#~ msgid "Blue pha_seshift:"
-#~ msgstr "Blått fassk_ifte:"
-
-#~ msgid "Luminosity pha_seshift:"
-#~ msgstr "Luminansfassk_ifte:"
-
-#~ msgid "Alter colors in various psychedelic ways"
-#~ msgstr "Ändra färger på olika psykedeliska sätt"
-
-#~ msgid "_Alien Map..."
-#~ msgstr "Rymdka_rta..."
-
-#~ msgid "Alien Map: Transforming"
-#~ msgstr "Rymdkarta: Transformering"
-
-#~ msgid "Alien Map"
-#~ msgstr "Rymdkarta"
-
-#~ msgid "Number of cycles covering full value range"
-#~ msgstr "Antal cykler för att täcka hela omfånget av värden"
-
-#~ msgid "Phase angle, range 0-360"
-#~ msgstr "Fasvinkel, omfång 0-360"
-
-#~ msgid "_RGB color model"
-#~ msgstr "_RGB-färgmodell"
-
-#~ msgid "_HSL color model"
-#~ msgstr "_HSL-färgmodell"
-
-#~ msgid "Tried to display an invalid layer."
-#~ msgstr "Försökte visa ett ogiltigt lager."
-
-#~ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-#~ msgstr "Kantutjämna med kantextrapoleringsalgoritmen Scale3X"
-
-#~ msgid "_Antialias"
-#~ msgstr "_Kantutjämning"
-
-#~ msgid "Antialiasing..."
-#~ msgstr "Kantutjämnar..."
-
-#~ msgid "Add a canvas texture to the image"
-#~ msgstr "Lägg till en canvastextur till bilden"
-
-#~ msgid "_Apply Canvas..."
-#~ msgstr "_Tillämpa rityta..."
-
-#~ msgid "Applying canvas"
-#~ msgstr "Tillämpar rityta"
-
-#~ msgid "Apply Canvas"
-#~ msgstr "Tillämpa rityta"
-
-#~ msgid "_Top-right"
-#~ msgstr "_Överst till höger"
-
-#~ msgid "Top-_left"
-#~ msgstr "Överst till _vänster"
-
-#~ msgid "_Bottom-left"
-#~ msgstr "_Nere till vänster"
-
-#~ msgid "Bottom-_right"
-#~ msgstr "Nere till _höger"
-
-#~ msgid "Simplest, most commonly used way of blurring"
-#~ msgstr "Enklaste, mest använda sättet att göra oskarp"
-
-#~ msgid "_Gaussian Blur..."
-#~ msgstr "_Gaussisk oskärpa..."
-
-#~ msgid "Apply a gaussian blur"
-#~ msgstr "Tillämpa en gaussisk oskärpa"
-
-#~ msgid "Gaussian Blur"
-#~ msgstr "Gaussisk oskärpa"
-
-#~ msgid "Blur Radius"
-#~ msgstr "Oskärperadie"
-
-#~ msgid "Blur Method"
-#~ msgstr "Metod för oskärpa"
-
-#~ msgid "_IIR"
-#~ msgstr "_IIR"
-
-#~ msgid "_RLE"
-#~ msgstr "_RLE"
-
-#~ msgid "Simulate movement using directional blur"
-#~ msgstr "Simulera rörelse med riktad oskärpa"
-
-#~ msgid "_Motion Blur..."
-#~ msgstr "_Rörelseoskärpa..."
-
-#~ msgid "Motion blurring"
-#~ msgstr "Rörelseoskärpa"
-
-#~ msgid "Motion Blur"
-#~ msgstr "Rörelseoskärpa"
-
-#~ msgid "Blur Type"
-#~ msgstr "Oskärpetyp"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Linear"
-#~ msgstr "_Linjär"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Radial"
-#~ msgstr "_Radiell"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Zoom"
-#~ msgstr "_Zooma"
-
-#~ msgid "Blur Center"
-#~ msgstr "Mittpunkt för oskärpa"
-
-#~ msgid "Blur _outward"
-#~ msgstr "Gör oskarp _utåt"
-
-#~ msgid "Blur Parameters"
-#~ msgstr "Parametrar för oskärpa"
-
-#~ msgid "Alter colors by mixing RGB Channels"
-#~ msgstr "Ändra färger genom att blanda RGB-kanaler"
-
-#~ msgid "Channel Mi_xer..."
-#~ msgstr "Kanal_blandare..."
-
-#~ msgid "Channel Mixer"
-#~ msgstr "Kanalblandare"
-
-#~ msgid "O_utput channel:"
-#~ msgstr "_Ut-kanal:"
-
-#~ msgid "_Monochrome"
-#~ msgstr "_Enfärgad"
-
-#~ msgid "Preserve _luminosity"
-#~ msgstr "Bevara _luminans"
-
-#~ msgid "Load Channel Mixer Settings"
-#~ msgstr "Läs in kanalblandarinställningar"
-
-#~ msgid "Save Channel Mixer Settings"
-#~ msgstr "Spara kanalblandarinställningar"
-
-#~ msgid "Swap one color with another"
-#~ msgstr "Byt en färg med en annan"
-
-#~ msgid "_Color Exchange..."
-#~ msgstr "_Färgutbyte..."
-
-#~ msgid "Color Exchange"
-#~ msgstr "Färgutbyte"
-
-#~ msgid "Middle-Click Inside Preview to Pick \"From Color\""
-#~ msgstr ""
-#~ "Mittenklicka inne i förhandsgranskningen för att välja \"Från färg\""
-
-#~ msgid "To Color"
-#~ msgstr "Till färg"
-
-#~ msgid "From Color"
-#~ msgstr "Från färg"
-
-#~ msgid "Color Exchange: To Color"
-#~ msgstr "Färgutbyte: till färg"
-
-#~ msgid "Color Exchange: From Color"
-#~ msgstr "Färgutbyte: från färg"
-
-#~ msgid "R_ed threshold:"
-#~ msgstr "_Rött tröskelvärde:"
-
-#~ msgid "G_reen threshold:"
-#~ msgstr "_Grönt tröskelvärde:"
-
-#~ msgid "B_lue threshold:"
-#~ msgstr "_Blått tröskelvärde:"
-
-#~ msgid "Lock _thresholds"
-#~ msgstr "_Lås tröskelvärden"
-
-#~ msgid "Convert a specified color to transparency"
-#~ msgstr "Konvertera en angiven färg till transparens"
-
-#~ msgid "Color to _Alpha..."
-#~ msgstr "Färg till _Alfa..."
-
-#~ msgid "Removing color"
-#~ msgstr "Tar bort färg"
-
-#~ msgid "Color to Alpha"
-#~ msgstr "Färg till Alfa"
-
-#~ msgctxt "color-to-alpha"
-#~ msgid "From:"
-#~ msgstr "Från:"
-
-#~ msgid "Color to Alpha Color Picker"
-#~ msgstr "Färg till Alfa färghämtare"
-
-#~ msgid "to alpha"
-#~ msgstr "till Alfa"
-
-#~ msgid "_Luma y470f:"
-#~ msgstr "_Luma y470f:"
-
-#~ msgid "_Blueness cb470f:"
-#~ msgstr "_Blåton cb470f:"
-
-#~ msgid "_Redness cr470f:"
-#~ msgstr "_Rödton cr470f:"
-
-#~ msgid "_Luma y709f:"
-#~ msgstr "_Luma y709f:"
-
-#~ msgid "_Blueness cb709f:"
-#~ msgstr "_Blåton cb709f:"
-
-#~ msgid "_Redness cr709f:"
-#~ msgstr "_Rödton cr709f:"
-
-#~ msgid "Image is not a gray image (bpp=%d)"
-#~ msgstr "Bilden är inte en gråskalebild (bpp=%d)"
-
-#~ msgid "Stretch image contrast to cover the maximum possible range"
-#~ msgstr "Dra ut bildkontrasten för att täcka in maximalt tänkbara intervall"
-
-#~ msgid "Stretch _HSV"
-#~ msgstr "Sträck ut _NMI"
-
-#~ msgid "Auto-Stretching HSV"
-#~ msgstr "Sträcker automatiskt ut NMI"
-
-#~ msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-#~ msgstr "sträck ut_hsv: cmap var NULL! Avslutar...\n"
-
-#~ msgid "Stretch contrast to cover the maximum possible range"
-#~ msgstr "Dra ut kontrasten för att täcka in maximalt tänkbara intervall"
-
-#~ msgid "_Stretch Contrast"
-#~ msgstr "_Sträcker ut kontrast"
-
-#~ msgid "Auto-stretching contrast"
-#~ msgstr "Sträcker automatiskt ut kontrast"
-
-#~ msgid "c_astretch: cmap was NULL!  Quitting...\n"
-#~ msgstr "c_astretch: cmap var NULL! Avslutar...\n"
-
-#~ msgid "Gr_ey"
-#~ msgstr "Gr_å"
-
-#~ msgid "Re_d"
-#~ msgstr "R_öd"
-
-#~ msgid "_Alpha"
-#~ msgstr "_Alfa"
-
-#~ msgid "E_xtend"
-#~ msgstr "U_töka"
-
-#~ msgid "Cro_p"
-#~ msgstr "Be_skär"
-
-#~ msgid "Matrix"
-#~ msgstr "Matris"
-
-#~ msgid "D_ivisor:"
-#~ msgstr "N_ämnare:"
-
-#~ msgid "N_ormalise"
-#~ msgstr "_Normalisera"
-
-#~ msgid "A_lpha-weighting"
-#~ msgstr "A_lfa-viktning"
-
-#~ msgid "Border"
-#~ msgstr "Kant"
-
-#~ msgid "Remove empty borders from the image"
-#~ msgstr "Ta bort tomma ramar från bilden"
-
-#~ msgid "Autocrop Imag_e"
-#~ msgstr "Autobeskär bil_d"
-
-#~ msgid "Remove empty borders from the layer"
-#~ msgstr "Ta bort tomma ramar från lagret"
-
-#~ msgid "Autocrop Lay_er"
-#~ msgstr "Autobeskä_r lager"
-
-#~ msgid "Cropping"
-#~ msgstr "Beskär"
-
-#~ msgid "Convert the image into randomly rotated square blobs"
-#~ msgstr "Konvertera bilden till slumpmässigt roterade fyrkanter"
-
-#~ msgid "_Cubism..."
-#~ msgstr "_Kubism..."
-
-#~ msgid "Cubism"
-#~ msgstr "Kubism"
-
-#~ msgid "_Tile size:"
-#~ msgstr "_Platt-storlek:"
-
-#~ msgid "_Use background color"
-#~ msgstr "_Använd bakgrundsfärg"
-
-#~ msgid "Cubistic transformation"
-#~ msgstr "Kubistisk transformation"
-
-#~ msgid "hue_l"
-#~ msgstr "nyans_l"
-
-#~ msgid "saturation_l"
-#~ msgstr "mättnad_l"
-
-#~ msgid "luma-y470f"
-#~ msgstr "luma-y470f"
-
-#~ msgid "blueness-cb470f"
-#~ msgstr "blåton-cb470f"
-
-#~ msgid "redness-cr470f"
-#~ msgstr "rödton-cr470f"
-
-#~ msgid "luma-y709f"
-#~ msgstr "luma-y709f"
-
-#~ msgid "blueness-cb709f"
-#~ msgstr "blåton-cb709f"
-
-#~ msgid "redness-cr709f"
-#~ msgstr "rödton-cr709f"
-
-#~ msgid "Fix images where every other row is missing"
-#~ msgstr "Rätta till bilder där varannan rad saknas"
-
-#~ msgid "_Deinterlace..."
-#~ msgstr "A_vfläta..."
-
-#~ msgid "Deinterlace"
-#~ msgstr "Avfläta"
-
-#~ msgid "Keep o_dd fields"
-#~ msgstr "Behåll _udda fält"
-
-#~ msgid "Keep _even fields"
-#~ msgstr "Behåll _jämna fält"
-
-#~ msgid "High-resolution edge detection"
-#~ msgstr "Högupplöst kantidentifiering"
-
-#~ msgid "_Laplace"
-#~ msgstr "_Laplace"
-
-#~ msgid "Cleanup"
-#~ msgstr "Städa upp"
-
-#~ msgid "Specialized direction-dependent edge detection"
-#~ msgstr "Specialiserad riktningsberoende kantidentifiering"
-
-#~ msgid "_Sobel..."
-#~ msgstr "_Sobel..."
-
-#~ msgid "Sobel Edge Detection"
-#~ msgstr "Sobel kantidentifiering"
-
-#~ msgid "Sobel _horizontally"
-#~ msgstr "Sobel _horisontellt"
-
-#~ msgid "Sobel _vertically"
-#~ msgstr "Sobel _vertikalt"
-
-#~ msgid "_Keep sign of result (one direction only)"
-#~ msgstr "_Behåll tecken på resultatet (i endast en riktning)"
-
-#~ msgid "Sobel edge detecting"
-#~ msgstr "Sobel kantidentifiering"
-
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "GIMP-penslar är antingen GRÅSKALA eller RGBA"
-
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "Fel i GIMP-penselrörfilen."
-
-#~ msgid "Couldn't load one brush in the pipe, giving up."
-#~ msgstr "Kunde inte läsa in en pensel i röret; ger upp."
-
-#~ msgid "RGB565"
-#~ msgstr "RGB565"
-
-#~ msgid ""
-#~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
-#~ "bit, so it will be converted for you. Information will be lost because of "
-#~ "this conversion."
-#~ msgstr ""
-#~ "Varning:\n"
-#~ "Bilden du läser in har 16 bitar per kanal. GIMP kan endast hantera 8 "
-#~ "bitar så den blir konverterad åt dig. På grund av konverteringen kommer "
-#~ "information att förloras."
-
-#~ msgid "This plug-in can only handle RGBA image files with 8bit color depth."
-#~ msgstr "Denna insticksmodul kan bara hantera RGBA-bilder med 8bit färgdjup."
-
-#~ msgid "Superimpose many altered copies of the image"
-#~ msgstr "Lägg över många förändrade kopior av bilden"
-
-#~ msgid "_Illusion..."
-#~ msgstr "_Illusion..."
-
-#~ msgid "Illusion"
-#~ msgstr "Illusion"
-
-#~ msgid "_Divisions:"
-#~ msgstr "_Delning:"
-
-#~ msgid "Mode _2"
-#~ msgstr "Läge _2"
-
-#~ msgid "Use mouse control to warp image areas"
-#~ msgstr "Använd musstyrning för att förvrida bildområden"
-
-#~ msgid "_IWarp..."
-#~ msgstr "_IWarp..."
-
-#~ msgid "Warping"
-#~ msgstr "Förvridning"
-
-#~ msgid "Warping Frame %d"
-#~ msgstr "Förvrider bildruta %d"
-
-#~ msgid "Ping pong"
-#~ msgstr "Ping pong"
-
-#~ msgid "Region affected by plug-in is empty"
-#~ msgstr "Region påverkad av insticksmodul är tom"
-
-#~ msgid "A_nimate"
-#~ msgstr "A_nimera"
-
-#~ msgid "Number of _frames:"
-#~ msgstr "Antal _bildrutor:"
-
-#~ msgid "R_everse"
-#~ msgstr "B_aklänges"
-
-#~ msgid "_Ping pong"
-#~ msgstr "_Ping pong"
-
-#~ msgid "_Animate"
-#~ msgstr "_Animera"
-
-#~ msgid "Deform Mode"
-#~ msgstr "Deformationstyp"
-
-#~ msgid "_Move"
-#~ msgstr "_Flytta"
-
-#~ msgid "_Grow"
-#~ msgstr "_Väx"
-
-#~ msgid "S_wirl CCW"
-#~ msgstr "V_irvla moturs"
-
-#~ msgid "Remo_ve"
-#~ msgstr "Ta _bort"
-
-#~ msgid "S_hrink"
-#~ msgstr "K_rymp"
-
-#~ msgid "Sw_irl CW"
-#~ msgstr "Vi_rvla medurs"
-
-#~ msgid "_Deform radius:"
-#~ msgstr "_Deformationsradie:"
-
-#~ msgid "D_eform amount:"
-#~ msgstr "D_eformationsmängd:"
-
-#~ msgid "_Bilinear"
-#~ msgstr "_Bilinjär"
-
-#~ msgid "Adaptive s_upersample"
-#~ msgstr "Adaptiv s_upersampling"
-
-#~ msgid "Ma_x depth:"
-#~ msgstr "Ma_x djup:"
-
-#~ msgid "Thresho_ld:"
-#~ msgstr "Tröskel_värde:"
-
-#~ msgid "IWarp"
-#~ msgstr "IWarp"
-
-#~ msgid ""
-#~ "Click and drag in the preview to define the distortions to apply to the "
-#~ "image."
-#~ msgstr ""
-#~ "Klicka och dra i förhandsvisningen för att definiera förvrängningarna att "
-#~ "tillämpa på bilden."
-
-#~ msgid "Default RGB working space"
-#~ msgstr "Standard RGB-arbetsrymd"
-
-#~ msgid ""
-#~ "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-#~ msgstr "Data bifogat som \"icc-profile\" verkar inte vara en ICC-färgprofil"
-
-#~ msgid "'%s' does not appear to be an ICC color profile"
-#~ msgstr "\"%s\" verkar inte vara en ICC-färgprofil"
-
-#~ msgid "Could not load ICC profile from '%s'"
-#~ msgstr "Kunde inte läsa in ICC-profil från \"%s\""
-
-#~ msgid "All files (*.*)"
-#~ msgstr "Alla filer (*.*)"
-
-#~ msgid "ICC color profile (*.icc, *.icm)"
-#~ msgstr "ICC-färgprofil (*.icc, *.icm)"
-
-#~ msgid "Simulate an elliptical lens over the image"
-#~ msgstr "Simulera en elliptisk lins över bilden"
-
-#~ msgid "Apply _Lens..."
-#~ msgstr "Tillämpa _lins..."
-
-#~ msgid "Applying lens"
-#~ msgstr "Tillämpar lins"
-
-#~ msgid "Lens Effect"
-#~ msgstr "Linseffekt"
-
-#~ msgid "_Keep original surroundings"
-#~ msgstr "_Behåll ursprungliga omgivningen"
-
-#~ msgid "_Set surroundings to index 0"
-#~ msgstr "_Sätt omgivningen till index 0"
-
-#~ msgid "_Set surroundings to background color"
-#~ msgstr "_Sätt omgivningen till bakgrundsfärgen"
-
-#~ msgid "_Make surroundings transparent"
-#~ msgstr "_Gör omgivningen transparent"
-
-#~ msgid "_Lens refraction index:"
-#~ msgstr "Refraktionsindex för _lins:"
-
-#~ msgid "Corrects lens distortion"
-#~ msgstr "Rättar till linsförvrängning"
-
-#~ msgid "Lens Distortion..."
-#~ msgstr "Linsförvrängning..."
-
-#~ msgid "Lens distortion"
-#~ msgstr "Linsförvrängning"
-
-#~ msgid "Lens Distortion"
-#~ msgstr "Linsförvrängning"
-
-#~ msgid "_Main:"
-#~ msgstr "Ö_vergripande:"
-
-#~ msgid "_Edge:"
-#~ msgstr "_Kant:"
-
-#~ msgid "_Brighten:"
-#~ msgstr "_Ljusare:"
-
-#~ msgid "_X shift:"
-#~ msgstr "_X-skiftning:"
-
-#~ msgid "_Y shift:"
-#~ msgstr "_Y-skiftning:"
-
-#~ msgid "Convert the image into irregular tiles"
-#~ msgstr "Konvertera bilden till oregelbundna plattor"
-
-#~ msgid "_Mosaic..."
-#~ msgstr "_Mosaik..."
-
-#~ msgid "Finding edges"
-#~ msgstr "Hittar kanter"
-
-#~ msgid "Rendering tiles"
-#~ msgstr "Renderar plattor"
-
-#~ msgid "Mosaic"
-#~ msgstr "Mosaik"
-
-#~ msgid "Squares"
-#~ msgstr "Kvadrater"
-
-#~ msgid "Hexagons"
-#~ msgstr "Hexagoner"
-
-#~ msgid "Octagons & squares"
-#~ msgstr "Oktagoner och kvadrater"
-
-# Osäker!
-#~ msgid "Triangles"
-#~ msgstr "Trianglar"
-
-#~ msgid "_Tiling primitives:"
-#~ msgstr "_Plattläggningsprimitiver:"
-
-#~ msgid "Tile _size:"
-#~ msgstr "Platt_storlek:"
-
-#~ msgid "Tile _height:"
-#~ msgstr "Platt_höjd:"
-
-#~ msgid "Til_e spacing:"
-#~ msgstr "Pla_ttmellanrum:"
-
-#~ msgid "Tile _neatness:"
-#~ msgstr "Platt_ordning:"
-
-#~ msgid "Light _direction:"
-#~ msgstr "Ljus_riktning:"
-
-#~ msgid "Color _variation:"
-#~ msgstr "Färg_variation:"
-
-#~ msgid "Co_lor averaging"
-#~ msgstr "Fä_rgmedelvärda"
-
-#~ msgid "Allo_w tile splitting"
-#~ msgstr "Ti_llåt plattdelning"
-
-#~ msgid "_Pitted surfaces"
-#~ msgstr "_Gropiga ytor"
-
-#~ msgid "_FG/BG lighting"
-#~ msgstr "_FGBG ljussättning"
-
-#~ msgid "Randomize hue/saturation/value independently"
-#~ msgstr "Slumpa nyans/mättnad/ljusstyrka individuellt"
-
-#~ msgid "HSV Noise..."
-#~ msgstr "NMI-brus..."
-
-#~ msgid "HSV Noise"
-#~ msgstr "NMI-brus"
-
-#~ msgid "_Holdness:"
-#~ msgstr "_Låsningsgrad:"
-
-#~ msgid "H_ue:"
-#~ msgstr "N_yans:"
-
-#~ msgid "Random Hurl"
-#~ msgstr "Slumpsläng"
-
-#~ msgid "Random Pick"
-#~ msgstr "Slumpval"
-
-#~ msgid "Random Slur"
-#~ msgstr "Slumpsluddra"
-
-#~ msgid "Completely randomize a fraction of pixels"
-#~ msgstr "Slumpa fullständigt en del av bildpunkterna"
-
-#~ msgid "Randomly interchange some pixels with neighbors"
-#~ msgstr "Växla slumpmässigt vissa bildpunkter med närliggande"
-
-#~ msgid "Randomly slide some pixels downward (similar to melting)"
-#~ msgstr "Dra slumpmässigt ner vissa bildpunkter (liknande smältning)"
-
-#~ msgid "_Hurl..."
-#~ msgstr "_Släng..."
-
-#~ msgid "_Pick..."
-#~ msgstr "_Peta..."
-
-#~ msgid "_Slur..."
-#~ msgstr "S_luddra..."
-
-#~ msgid "_Random seed:"
-#~ msgstr "Slump_frö:"
-
-#~ msgid "R_andomization (%):"
-#~ msgstr "R_andomisering (%):"
-
-#~ msgid "Percentage of pixels to be filtered"
-#~ msgstr "Andel bildpunkter (i procent) att filtrera"
-
-#~ msgid "R_epeat:"
-#~ msgstr "_Upprepa:"
-
-#~ msgid "Number of times to apply filter"
-#~ msgstr "Antal gånger filtret skall tillämpas"
-
-#~ msgid "Distort colors by random amounts"
-#~ msgstr "Förvräng färger slumpmässigt"
-
-#~ msgid "_RGB Noise..."
-#~ msgstr "_RGB-brus..."
-
-#~ msgid "Adding noise"
-#~ msgstr "Lägger till brus"
-
-#~ msgid "RGB Noise"
-#~ msgstr "RGB-brus"
-
-#~ msgid "Co_rrelated noise"
-#~ msgstr "Ko_rrelerat brus"
-
-#~ msgid "_Independent RGB"
-#~ msgstr "_Oberoende RGB"
-
-#~ msgid "_Gray:"
-#~ msgstr "_Grått:"
-
-#~ msgid "Channel #%d:"
-#~ msgstr "Kanal %d:"
-
-#~ msgid "Create a random cloud-like texture"
-#~ msgstr "Skapa en slumpmässig molnliknande textur"
-
-#~ msgid "_Solid Noise..."
-#~ msgstr "_Fast brus..."
-
-#~ msgid "Solid Noise"
-#~ msgstr "Fast brus"
-
-#~ msgid "_Detail:"
-#~ msgstr "_Detalj:"
-
-#~ msgid "T_urbulent"
-#~ msgstr "T_urbulent"
-
-# Osäker!
-#~ msgid "T_ilable"
-#~ msgstr "U_pprepningsbar"
-
-#~ msgid "_X size:"
-#~ msgstr "_X-storlek:"
-
-#~ msgid "_Y size:"
-#~ msgstr "_Y-storlek:"
-
-#~ msgid "Move pixels around randomly"
-#~ msgstr "Flytta runt bildpunkter slumpmässigt"
-
-#~ msgid "Sp_read..."
-#~ msgstr "Sp_rider..."
-
-#~ msgid "Spreading"
-#~ msgstr "Sprider"
-
-#~ msgid "Spread"
-#~ msgstr "Sprid"
-
-#~ msgid "Spread Amount"
-#~ msgstr "Spridningsmängd"
-
-#~ msgid "Add a starburst to the image"
-#~ msgstr "Lägg till ett stjärnutbrott till bilden"
-
-#~ msgid "Super_nova..."
-#~ msgstr "Super_nova..."
-
-#~ msgid "Rendering supernova"
-#~ msgstr "Renderar supernova"
-
-#~ msgid "Supernova"
-#~ msgstr "Supernova"
-
-#~ msgid "Supernova Color Picker"
-#~ msgstr "Supernova färgväljare"
-
-#~ msgid "_Spokes:"
-#~ msgstr "_Ekrar:"
-
-#~ msgid "R_andom hue:"
-#~ msgstr "Slump_nyans:"
-
-#~ msgid "Center of Nova"
-#~ msgstr "Mittpunkt för nova"
-
-#~ msgid "Simplify image into an array of solid-colored squares"
-#~ msgstr "Förenkla bilden till en kedja av enfärgade rutor"
-
-#~ msgid "_Pixelize..."
-#~ msgstr "_Pixellera..."
-
-#~ msgid "Pixelizing"
-#~ msgstr "Pixellerar"
-
-#~ msgid "Pixelize"
-#~ msgstr "Pixellera"
-
-#~ msgid "Pixel _width:"
-#~ msgstr "Bildpunkts_bredd:"
-
-#~ msgid "Pixel _height:"
-#~ msgstr "Bildpunkts_höjd:"
-
-#~ msgid "Create a random plasma texture"
-#~ msgstr "Skapa en slumpmässig plasmatextur"
-
-#~ msgid "_Plasma..."
-#~ msgstr "_Plasma..."
-
-#~ msgid "Plasma"
-#~ msgstr "Plasma"
-
-#~ msgid "Random _seed:"
-#~ msgstr "Slump_frö:"
-
-#~ msgid "T_urbulence:"
-#~ msgstr "T_urbulens:"
-
-#~ msgid "Convert image to or from polar coordinates"
-#~ msgstr "Konvertera bild till eller från polära koordinater"
-
-#~ msgid "P_olar Coordinates..."
-#~ msgstr "P_olära koordinater..."
-
-#~ msgid "Polar coordinates"
-#~ msgstr "Polära koordinater"
-
-#~ msgid "Polar Coordinates"
-#~ msgstr "Polära koordinater"
-
-#~ msgid "Circle _depth in percent:"
-#~ msgstr "Cirkel_djup i procent:"
-
-#~ msgid "Offset _angle:"
-#~ msgstr "_Vinkelposition:"
-
-#~ msgid "_Map backwards"
-#~ msgstr "_Mappa baklänges"
-
-#~ msgid ""
-#~ "If checked the mapping will begin at the right side, as opposed to "
-#~ "beginning at the left."
-#~ msgstr ""
-#~ "Om vald börjar mappningen på höger sida istället för att börja på vänster "
-#~ "sida."
-
-#~ msgid "Map from _top"
-#~ msgstr "Mappa från _Överkant"
-
-#~ msgid ""
-#~ "If unchecked the mapping will put the bottom row in the middle and the "
-#~ "top row on the outside.  If checked it will be the opposite."
-#~ msgstr ""
-#~ "Om inte vald, läggs den understa raden i mitten och den översta raden ute "
-#~ "i kanten. Om vald blir det tvärtom."
-
-#~ msgid "To _polar"
-#~ msgstr "Till _polära"
-
-#~ msgid ""
-#~ "If unchecked the image will be circularly mapped onto a rectangle.  If "
-#~ "checked the image will be mapped onto a circle."
-#~ msgstr ""
-#~ "Om inte vald mappas bilden cirkulärt till en rektangel. Om vald mappas "
-#~ "bilden till en cirkel."
-
-#~ msgid "Remove the red eye effect caused by camera flashes"
-#~ msgstr "Ta bort röda ögon som orsakats av kamerablixtar"
-
-#~ msgid "_Red Eye Removal..."
-#~ msgstr "_Ta bort röda ögon..."
-
-#~ msgid "Red Eye Removal"
-#~ msgstr "Ta bort röda ögon"
-
-#~ msgid "Threshold for the red eye color to remove."
-#~ msgstr "Tröskelvärde för färg för röda ögon att ta bort."
-
-#~ msgid "Manually selecting the eyes may improve the results."
-#~ msgstr "Att manuellt markera ögonen kan förbättra resultatet."
-
-#~ msgid "Removing red eye"
-#~ msgstr "Tar bort röda ögon"
-
-#~ msgid "You can not rotate the whole image if there's a selection."
-#~ msgstr "Du kan inte rotera hela bilden om det finns en markering."
-
-#~ msgid "You can not rotate the whole image if there's a floating selection."
-#~ msgstr "Du kan inte rotera hela bilden om det finns en flytande markering."
-
-#~ msgid "Sorry, channels and masks can not be rotated."
-#~ msgstr "Tyvärr kan kanaler och masker inte roteras."
-
-#~ msgid "Replace partial transparency with the current background color"
-#~ msgstr "Ersätt delvis transparens med den aktuella bakgrundsfärgen"
-
-#~ msgid "_Semi-Flatten"
-#~ msgstr "_Delutplattning"
-
-#~ msgid "Semi-Flattening"
-#~ msgstr "Delutplattning"
-
-#~ msgid "Shift each row of pixels by a random amount"
-#~ msgstr "Skifta varje bildpunktsrad med ett slumpmässigt antal"
-
-#~ msgid "_Shift..."
-#~ msgstr "_Skifta..."
-
-#~ msgid "Shifting"
-#~ msgstr "Skiftar"
-
-#~ msgid "Shift"
-#~ msgstr "Skifta"
-
-#~ msgid "Shift _horizontally"
-#~ msgstr "Skifta _horisontellt"
-
-#~ msgid "Shift _vertically"
-#~ msgstr "Skifta _vertikalt"
-
-#~ msgid "Shift _amount:"
-#~ msgstr "Skift_mängd:"
-
-#~ msgid "Generate complex sinusoidal textures"
-#~ msgstr "Generera komplexa sinusformade texturer"
-
-#~ msgid "_Sinus..."
-#~ msgstr "_Sinus..."
-
-#~ msgid "Sinus: rendering"
-#~ msgstr "Sinus: renderar"
-
-#~ msgid "Sinus"
-#~ msgstr "Sinus"
-
-#~ msgid "Drawing Settings"
-#~ msgstr "Ritinställningar"
-
-#~ msgid "_X scale:"
-#~ msgstr "_X-skala:"
-
-#~ msgid "_Y scale:"
-#~ msgstr "_Y-skala:"
-
-# src/header_stuff.c:462
-#~ msgid "Co_mplexity:"
-#~ msgstr "Ko_mplexitet:"
-
-#~ msgid "Calculation Settings"
-#~ msgstr "Parameterinställningar"
-
-#~ msgid "R_andom seed:"
-#~ msgstr "Slump_frö:"
-
-#~ msgid "_Force tiling?"
-#~ msgstr "_Tvinga plattläggning?"
-
-#~ msgid "_Ideal"
-#~ msgstr "_Ideal"
-
-#~ msgid "_Distorted"
-#~ msgstr "_Förvrängd"
-
-#~ msgid "The colors are white and black."
-#~ msgstr "Färgerna är vitt och svart."
-
-#~ msgid "Bl_ack & white"
-#~ msgstr "Sv_art och vit"
-
-#~ msgid "_Foreground & background"
-#~ msgstr "_Förgrund och bakgrund"
-
-#~ msgid "C_hoose here:"
-#~ msgstr "V_älj här:"
-
-#~ msgid "First color"
-#~ msgstr "Första färgen"
-
-#~ msgid "Second color"
-#~ msgstr "Andra färgen"
-
-#~ msgid "F_irst color:"
-#~ msgstr "F_örsta färgen:"
-
-#~ msgid "S_econd color:"
-#~ msgstr "A_ndra färgen:"
-
-#~ msgid "Blend Settings"
-#~ msgstr "Blandningsinställningar"
-
-#~ msgid "L_inear"
-#~ msgstr "L_injär"
-
-#~ msgid "Bili_near"
-#~ msgstr "Bili_njär"
-
-#~ msgid "Sin_usoidal"
-#~ msgstr "Sin_usformad"
-
-#~ msgid "_Blend"
-#~ msgstr "_Blanda ihop"
-
-#~ msgid "Do _preview"
-#~ msgstr "_Förhandsgranska"
-
-#~ msgid "Make transparency all-or-nothing"
-#~ msgstr "Gör transparent allt-eller-inget"
-
-#~ msgid "_Threshold Alpha..."
-#~ msgstr "_Tröskla alfa..."
-
-#~ msgid "The layer has its alpha channel locked."
-#~ msgstr "Lagret har sin alfakanal låst."
-
-#~ msgid "RGBA/GRAYA drawable is not selected."
-#~ msgstr "RGBA/GRAYA rityta är inte vald."
-
-#~ msgid "Coloring transparency"
-#~ msgstr "Färglägger transparens"
-
-#~ msgid "Threshold Alpha"
-#~ msgstr "Tröskla alfa"
-
-#~ msgid "Simulate distortion caused by square glass tiles"
-#~ msgstr "Simulera förvridning orsakad av fyrkantiga glasrutor"
-
-#~ msgid "_Glass Tile..."
-#~ msgstr "_Glasplattor..."
-
-#~ msgid "Glass Tile"
-#~ msgstr "Glasplattor"
-
-#~ msgid "Tile _width:"
-#~ msgstr "Platt_bredd:"
-
-#~ msgid "Alters edges to make the image seamlessly tileable"
-#~ msgstr "Ändrar kanterna för att göra att bilden kan upprepas oändligt"
-
-#~ msgid "_Make Seamless"
-#~ msgstr "_Gör kantlös"
-
-# Osäker!
-#~ msgid "Tiler"
-#~ msgstr "Plattlägg"
-
-#~ msgid "Invert the brightness of each pixel"
-#~ msgstr "Invertera ljusstyrkan för varje bildpunkt"
-
-#~ msgid "_Value Invert"
-#~ msgstr "Invertera _värde"
-
-#~ msgid "Value Invert"
-#~ msgstr "Invertera värde"
-
-#~ msgid "_Staggered"
-#~ msgstr "_Omlott"
-
-#~ msgid "_Large staggered"
-#~ msgstr "_Stor omlott"
-
-#~ msgid "S_triped"
-#~ msgstr "R_andig"
-
-#~ msgid "_Wide-striped"
-#~ msgstr "_Bredrandig"
-
-#~ msgid "Lo_ng-staggered"
-#~ msgstr "L_ång omlott"
-
-#~ msgid "_3x3"
-#~ msgstr "_3x3"
-
-#~ msgid "Larg_e 3x3"
-#~ msgstr "Sto_r 3x3"
-
-#~ msgid "_Hex"
-#~ msgstr "_Hex"
-
-#~ msgid "_Dots"
-#~ msgstr "_Prickar"
-
-#~ msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-#~ msgstr ""
-#~ "Simulera förvrängning producerad av en oskarp eller lågupplöst skärm"
-
-#~ msgid "Vi_deo..."
-#~ msgstr "Vi_deo..."
-
-#~ msgid "Video"
-#~ msgstr "Video"
-
-#~ msgid "Video Pattern"
-#~ msgstr "Videomönster"
-
-#~ msgid "_Rotated"
-#~ msgstr "_Roterad"
-
-#~ msgid "Distort the image with waves"
-#~ msgstr "Förvräng bilden med vågor"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Vågor..."
-
-#~ msgid "_Reflective"
-#~ msgstr "_Reflektivitet"
-
-#~ msgid "_Amplitude:"
-#~ msgstr "_Våghöjd:"
-
-#~ msgid "_Phase:"
-#~ msgstr "_Fas:"
-
-#~ msgid "_Wavelength:"
-#~ msgstr "Våg_längd:"
-
-#~ msgid "Waving"
-#~ msgstr "Vågor"
-
-#~ msgid "Distort an image by whirling and pinching"
-#~ msgstr "Förvräng en bild med virvlar och nyp"
-
-#~ msgid "W_hirl and Pinch..."
-#~ msgstr "Vi_rvla och nypa..."
-
-#~ msgid "Whirling and pinching"
-#~ msgstr "Virvlar och nyper"
-
-#~ msgid "Whirl and Pinch"
-#~ msgstr "Virvla och nypa"
-
-#~ msgid "_Whirl angle:"
-#~ msgstr "_Virvlingsvinkel:"
-
-#~ msgid "_Pinch amount:"
-#~ msgstr "_Nypmängd:"
-
-#~ msgid "_Keep Orientation"
-#~ msgstr "_Behåll orientering"
-
-#~ msgid "According to the EXIF data, this image is rotated."
-#~ msgstr "Enligt EXIF-datat så är den här bilden roterad."
-
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
-#~ msgstr "Vill du att GIMP ska rotera den till standardorienteringen?"
-
-#~ msgid ""
-#~ "Warning\n"
-#~ "The layer mask is partly outside the layer boundary. The mask will be "
-#~ "cropped which may result in data loss."
-#~ msgstr ""
-#~ "Varning\n"
-#~ "Lagermasken är delvis utanför lagergränsen. Masken kommer att beskäras "
-#~ "vilket kan leda till dataförlust."
-
-#~ msgid "Downloading image (%s of %s)"
-#~ msgstr "Hämtar bild (%s av %s)"
-
-#~ msgid "Downloaded %s of image data"
-#~ msgstr "Hämtade %s bilddata"
-
-#~ msgid "Uploaded %s of image data"
-#~ msgstr "Skickade upp %s bilddata"
-
-#~ msgid "Connecting to server"
-#~ msgstr "Ansluter till server"
-
-#~ msgid "Could not initialize libcurl"
-#~ msgstr "Kunde inte initiera libcurl"
-
-#~ msgid "Downloading %s of image data"
-#~ msgstr "Hämtar %s bilddata"
-
-#~ msgid "Opening '%s' for reading resulted in %s response code: %ld"
-#~ msgstr "Öppnandet av \"%s\" för läsning resulterade i %s-svarskod: %ld"
-
-#~ msgid "wget exited abnormally on URI '%s'"
-#~ msgstr "wget avslutades onormalt för URI:n \"%s\""
-
-#~ msgid "(timeout is %d second)"
-#~ msgid_plural "(timeout is %d seconds)"
-#~ msgstr[0] "(tidsgräns är %d sekund)"
-#~ msgstr[1] "(tidsgräns är %d sekunder)"
-
-#~ msgid "Opening URI"
-#~ msgstr "Öppnar URI"
-
-#~ msgid "A network error occurred: %s"
-#~ msgstr "Ett nätverksfel inträffade: %s"
-
-#~ msgid "Downloading unknown amount of image data"
-#~ msgstr "Hämtar okänd mängd bilddata"
-
-#~ msgid "URI"
-#~ msgstr "URI"
-
-#~ msgid "Failed to save to temporary file '%s'"
-#~ msgstr "Misslyckades med att spara till temporär fil \"%s\""
-
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "GIMP komprimerad XJT-bild"
-
-#~ msgid "XJT file contains unknown layermode %d"
-#~ msgstr "XJT-fil innehåller okänt lagerläge %d"
-
-#~ msgid "Warning: unsupported layermode %d saved to XJT"
-#~ msgstr "Varning: lagerläge %d, som inte stöds, sparad till XJT"
-
-#~ msgid "XJT file contains unknown pathtype %d"
-#~ msgstr "XJT-fil innehåller okänd bantyp %d"
-
-#~ msgid "Warning: unsupported pathtype %d saved to XJT"
-#~ msgstr "Varning: bantyp %d, som inte stöds, sparad till XJT"
-
-#~ msgid "XJT file contains unknown unittype %d"
-#~ msgstr "XJT-fil innehåller okänd enhetstyp %d"
-
-#~ msgid "Warning: unsupported unittype %d saved to XJT"
-#~ msgstr "Varning: ej stödd enhetstyp %d sparad till XJT"
-
-#~ msgid "XJT"
-#~ msgstr "XJT"
-
-#~ msgid "Optimize"
-#~ msgstr "Optimera"
-
-#~ msgid "Clear transparent"
-#~ msgstr "Rensa transparent"
-
-#~ msgid "Smoothing:"
-#~ msgstr "Utjämnande:"
-
-#~ msgid "Could not create working folder '%s': %s"
-#~ msgstr "Kan inte skapa arbetskatalog \"%s\": %s"
-
-#~ msgid "Error: Could not read XJT property file '%s'."
-#~ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
-
-#~ msgid "Error: XJT property file '%s' is empty."
-#~ msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
-
-#~ msgid "Property"
-#~ msgstr "Egenskap"
-
-#~ msgid "Empty"
-#~ msgstr "Tom"
-
-#~ msgid "Camera 1"
-#~ msgstr "Kamera 1"
-
-#~ msgid "Camera 2"
-#~ msgstr "Kamera 2"
-
-#~ msgid "Thumbnail"
-#~ msgstr "Miniatyrbild"
-
-#~ msgid "Cannot create file"
-#~ msgstr "Kunde inte skapa filen"
-
-#~ msgid "Some error occurred while saving"
-#~ msgstr "Ett fel inträffade vid sparning"
-
-#~ msgid "Image Properties"
-#~ msgstr "Bildegenskaper"
-
-#~ msgid "_Import XMP..."
-#~ msgstr "_Importera XMP..."
-
-#~ msgid "_Export XMP..."
-#~ msgstr "_Exportera XMP..."
-
-#~ msgid "Propert_ies"
-#~ msgstr "E_genskaper"
-
-#~ msgid "Error: No XMP packet found"
-#~ msgstr "Fel: Inget XMP-paket hittades"
-
-#~ msgid "Error on line %d char %d: %s"
-#~ msgstr "Fel på rad %d, tecken %d: %s"
-
-#~ msgid "Expected text or optional element <%s>, found <%s> instead"
-#~ msgstr "Förväntade text eller valfria elementet <%s>, hittade <%s> istället"
-
-#~ msgid "Expected element <%s>, found <%s> instead"
-#~ msgstr "Förväntade elementet <%s>, hittade <%s> istället"
-
-#~ msgid "Unknown element <%s>"
-#~ msgstr "Okänt element <%s>"
-
-#~ msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-#~ msgstr "Okänt attribut \"%s\"=\"%s\" i elementet <%s>"
-
-#~ msgid "Required attribute rdf:about missing in <%s>"
-#~ msgstr "Nödvändigt attribut rdf:about saknas i <%s>"
-
-#~ msgid "Nested elements (<%s>) are not allowed in this context"
-#~ msgstr "Nästlade element (<%s>) tillåts inte i denna kontext"
-
-#~ msgid "End of element <%s> not expected in this context"
-#~ msgstr "Slut på elementet <%s> förväntades inte i denna kontext"
-
-#~ msgid "The current element (<%s>) cannot contain text"
-#~ msgstr "Det aktuella elementet (<%s>) får inte innehålla text"
-
-#~ msgid "XMP packets must start with <?xpacket begin=...?>"
-#~ msgstr "XMP-paket måste börja med <?xpacket begin=...?>"
-
-#~ msgid "XMP packets must end with <?xpacket end=...?>"
-#~ msgstr "XMP-paket måste sluta med <?xpacket end=...?>"
-
-#~ msgid "XMP cannot contain XML comments or processing instructions"
-#~ msgstr ""
-#~ "XMP kan inte innehålla XML-kommentarer eller behandlingsinstruktioner"
