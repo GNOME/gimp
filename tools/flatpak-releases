@@ -1,0 +1,134 @@
+#!/bin/bash
+
+# This is a very basic script for developper usage. It has a few known
+# limitations (feel free to send patches for these):
+# - It is targetted at GIMP usage primarily, hence able to check only
+#   Flathub (stable and beta remotes) and GNOME-nightly. Yet some
+#   generity is built-in so you can set your own application ID on
+#   command line and it should work.
+# - It assumes the remotes are named 'flathub', 'flathub-beta' and
+#   'gnome-nightly' (for stable, beta and nightly branches respectively)
+#   as these are the default names proposed by generated .flatpakref
+#   files (SuggestRemoteName field) when first installing software from
+#   this repository. So most people will have these remotes registered
+#   with these names. Yet it could technically be any name locally and
+#   this script is not verifying this.
+# - It also assumes the flathub remotes are installed at all (it can't
+#   search without them being installed and won't install these for
+#   you).
+# - It uses bash because I lazily didn't bother making it portable as
+#   it's really just a tool for core dev testing. Yet we of course
+#   welcome patches if some syntax needs to be rewritten for
+#   portability.
+
+install=-1
+appid=org.gimp.GIMP
+remote='flathub'
+branch='stable'
+prefix='--user'
+for var in "$@"
+do
+  if [[ $var =~ ^-([0-9]+)$ ]]; then
+    install=${BASH_REMATCH[1]}
+  elif [[ $var = '--beta' ]]; then
+    remote='flathub-beta'
+    branch='beta'
+  elif [[ $var = '--nightly' ]]; then
+    remote='gnome-nightly'
+    branch='master'
+  elif [[ $var = '--system' ]]; then
+    prefix='--system'
+  elif [[ $var =~ ^- ]]; then
+    echo "Usage: ./flathub-releases [--beta] [--system] [-X] [org.example.app]"
+    echo
+    echo "List all flatpak builds stored on Flathub or GNOME repository."
+    echo "The builds for org.gimp.GIMP are looked up by default unless"
+    echo "you provide explicitely another AppStream ID."
+    echo
+    echo "Adding a -X number as option install the numbered release"
+    echo "instead of listing them."
+    echo
+    echo "Options:"
+    echo
+    echo "-0: install the last build."
+    echo "-1: install the previous build."
+    echo "-2: install the before-previous build (and so on)."
+    echo
+    echo "--beta: list or install a beta release"
+    echo "--nightly: list or install a nightly release"
+    echo "--system: install as system flatpak (default to user install)"
+    exit 1
+  else
+    appid=$var
+  fi
+done
+
+package_info_cmd="flatpak remote-info $remote $appid"
+package_info=`$package_info_cmd 2>&1`
+got_info="$?"
+if [ "$got_info" -ne 0 ]; then
+  # By default flatpak will just use either the user or system install
+  # depending on what it finds. Funnily the command may fail if the
+  # remote is found not 0 or 1 but 2 times (both on user and system).
+  # Normally it would interactively ask to choose, but in this specific
+  # non-interactive case, it would just silently fail instead. So let's
+  # make a second try on user-installed remote (totally arbitrary
+  # choice).
+  package_info_cmd="flatpak remote-info --user $remote $appid"
+  package_info=`$package_info_cmd 2>&1`
+  got_info="$?"
+fi
+if [ "$got_info" -ne 0 ]; then
+  echo "Flathub query failed with the following error: $package_info"
+  exit 2
+fi
+
+release_number=0
+install_commit=
+while [ "$got_info" -eq 0 ]
+do
+  release_date=`echo "$package_info" | grep Date: |sed 's/^ *Date: //'`
+  release_commit=`echo "$package_info" | grep Commit: |sed 's/^ *Commit: //'`
+  release_subject=`echo "$package_info" | grep Subject: |sed 's/^ *Subject: //'`
+  if [ "$install" -eq -1 ]; then
+    # In non-install mode, just list the whole release.
+    printf "%2d: %s [%s]\n" $release_number "$release_subject" "$release_date"
+  elif [ "$install" -eq "$release_number" ]; then
+    install_commit=$release_commit
+    break
+  fi
+
+  parent_commit=`echo "$package_info" | grep Parent: |sed 's/^ *Parent: //'`
+  release_number=$(( $release_number + 1 ))
+
+  package_info=`$package_info_cmd --commit $parent_commit 2>&1`
+  got_info="$?"
+done
+
+if [ "$install" -ne -1 ]; then
+  if [ -n "$install_commit" ]; then
+    # Flatpak doesn't have a way to install directly a commit, but we
+    # can install then update. This will work whether the flatpak is
+    # already installed or not.
+
+    echo "[1/2] Installing $appid"
+    flatpak install -y $prefix $remote $appid//$branch
+
+    echo "[2/2] Updating to commit '$install_commit' ($release_number's previous build)"
+    flatpak update -y $prefix --commit=$install_commit $appid//$branch
+
+    if [ "$?" -eq 0 ]; then
+      echo "Build $release_number released on $release_date was installed."
+      echo "Build subject: $release_subject"
+      echo "Build commit on $remote: $release_commit"
+    else
+      echo "Failure to install build $release_number released on $release_date."
+      exit 2
+    fi
+  else
+    echo "There was no $release_number's build to install. Aborting."
+    exit 1
+  fi
+fi
+
+exit 0
