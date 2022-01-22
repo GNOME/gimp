@@ -1,4 +1,6 @@
-# Developers documentation
+---
+title: Developers documentation
+---
 
 This manual holds information that you will find useful if you
 develop a GIMP plug-in or want to contribute to the GIMP core.
@@ -7,7 +9,7 @@ People only interested into plug-ins can probably read just the
 [Plug-in development](#plug-in-development) section. If you wish to
 contribute to all parts of GIMP, the whole documentation is of interest.
 
-[[TOC]]
+[TOC]
 
 ## Plug-in development
 ### Concepts
@@ -144,6 +146,75 @@ Scheme mini-interpreter and therefore `Script-fu` scripts do not use
 
 ### Core Contributors
 
-### Directory structure of the GIMP source tree
+### Directory structure of GIMP source tree
+
+GIMP source tree can be divided into the main application, libraries, plug-ins,
+data files and some stuff that don't fit into these categories. Here are the
+top-level directories:
+
+| Folder          | Description |
+| ---             | ---         |
+| app/            | Source code of the main GIMP application             |
+| app-tools/      | Source code of distributed tools                     |
+| build/          | Scripts for creating binary packages                 |
+| cursors/        | Bitmaps used to construct cursors                    |
+| data/           | Data files: brushes, gradients, patterns, images…    |
+| desktop/        | Desktop integration files                            |
+| devel-docs/     | Developers documentation                             |
+| docs/           | Users documentation                                  |
+| etc/            | Configuration files installed with GIMP              |
+| extensions/     | Source code of extensions                            |
+| icons/          | Official icon themes                                 |
+| libgimp/        | Library for plug-ins (core does not link against)    |
+| libgimpbase/    | Basic functions shared by core and plug-ins          |
+| libgimpcolor/   | Color-related functions shared by core and plug-ins  |
+| libgimpconfig/  | Config functions shared by core and plug-ins         |
+| libgimpmath/    | Mathematic operations useful for core and plug-ins   |
+| libgimpmodule/  | Abstracts dynamic loading of modules (used to implement loadable color selectors and display filters) |
+| libgimpthumb/   | Thumbnail functions shared by core and plug-ins      |
+| libgimpwidgets/ | User interface elements (widgets) and utility functions shared by core and plug-ins                   |
+| m4macros/       | Scripts for autotools configuration                  |
+| menus/          | XML/XSL files used to generate menus                 |
+| modules/        | Color selectors and display filters loadable at run-time |
+| pdb/            | Scripts for PDB source code generation               |
+| plug-ins/       | Source code for plug-ins distributed with GIMP       |
+| po/             | Translations of strings used in the core application |
+| po-libgimp/     | Translations of strings used in libgimp              |
+| po-plug-ins/    | Translations of strings used in C plug-ins           |
+| po-python/      | Translations of strings used in Python plug-ins      |
+| po-script-fu/   | Translations of strings used in Script-Fu scripts    |
+| po-tags/        | Translations of strings used in tags                 |
+| po-tips/        | Translations of strings used in tips                 |
+| po-windows-installer/ | Translations of strings used in the Windows installer |
+| themes/         | Official themes                                      |
+| tools/          | Source code for non-distributed GIMP-related tools   |
+| .gitlab/        | Gitlab-related templates or scripts                  |
+
+The source code of the main GIMP application is found in the `app/` directory:
+
+| Folder          | Description |
+| ---             | ---         |
+| app/actions/    | Code of actions (`GimpAction*` defined in `app/widgets/`) (depends: GTK)         |
+| app/config/     | Config files handling: GimpConfig interface and GimpRc object (depends: GObject) |
+| app/core/       | Core of GIMP **core** (depends: GObject)                                         |
+| app/dialogs/    | Dialog widgets (depends: GTK)                                                    |
+| app/display/    | Handles displays (e.g. image windows) (depends: GTK)                             |
+| app/file/       | File handling routines in **core** (depends: GIO)                                |
+| app/file-data/  | GIMP file formats (gbr, gex, gih, pat) support (depends: GIO)                    |
+| app/gegl/       | Wrapper code for babl and GEGL API (depends: babl, GEGL)                         |
+| app/gui/        | Code that puts the user interface together (depends: GTK)                        |
+| app/menus/      | Code for menus (depends: GTK)                                                    |
+| app/operations/ | Custom GEGL operations (depends: GEGL)                                           |
+| app/paint/      | Paint core that provides different ways to paint strokes (depends: GEGL)         |
+| app/pdb/        | Core side of the Procedural Database, exposes internal functionality             |
+| app/plug-in/    | Plug-in handling in **core**                                                     |
+| app/propgui/    | Property widgets generated from config properties (depends: GTK)                 |
+| app/tests/      | Core unit testing framework                                                      |
+| app/text/       | Text handling in **core**                                                        |
+| app/tools/      | User interface part of the tools. Actual tool functionality is in core           |
+| app/vectors/    | Vectors framework in **core**                                                    |
+| app/widgets/    | Collection of widgets used in the application GUI                                |
+| app/xcf/        | XCF file handling in **core**                                                    |
+
 
 ### Advanced concepts
