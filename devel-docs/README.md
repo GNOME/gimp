@@ -141,6 +141,85 @@ Scheme mini-interpreter and therefore `Script-fu` scripts do not use
 
 ## GIMP extensions (*.gex*)
 
+## Continuous Integration
+
+For most of its continuous integration (macOS excepted), GIMP project
+uses Gitlab CI. We recommend looking the file
+[.gitlab-ci.yml](/.gitlab-ci.yml) which is the startup script.
+
+The main URL for our CI system is
+[build.gimp.org](https://build.gimp.org) which redirects to Gitlab
+pipelines page.
+
+Note that it is important to keep working CI jobs for a healthy code
+source. Therefore when you push some code which breaks the CI (you
+should receive a notification email when you do so), you are expected to
+look at the failed jobs' logs, try and understand the issue(s) and fix
+them (or ask for help). Don't just shrug this because it works locally
+(the point of the CI is to build in more conditions than developers
+usually do locally).
+
+Of course, sometimes CI failures are out of our control, for instance
+when downloaded dependencies have issues, or because of runner issues.
+You should still check that these were reported and that
+packagers/maintainers of these parts are aware and working on a fix.
+
+### Automatic pipelines
+
+At each commit pushed to the repository, several pipelines are currently
+running, such as:
+
+- Debian testing autotools and meson builds (autotools is still the
+  official build system while meson is experimental).
+- Windows builds (cross or natively compiled).
+
+Additionally, we test build with alternative tools or options (e.g. with
+`Clang` instead of `gcc` compiler) or jobs which may take much longer,
+such as package creation as scheduled pipelines (once every few days).
+
+The above listing is not necessarily exhaustive nor is it meant to be.
+Only the [.gitlab-ci.yml](/.gitlab-ci.yml) script is meant to be
+authoritative. The top comment in this file should stay as exhaustive
+as possible.
+
+### Manual pipelines
+
+It is possible to trigger pipelines manually, for instance with specific
+jobs, if you have the "*Developer*" Gitlab role:
+
+1. go to the [Pipelines](https://gitlab.gnome.org/GNOME/gimp/-/pipelines)
+   page.
+2. Hit the "*Run pipeline*" button.
+3. Choose the branch or tag you wish to build.
+4. Add relevant variables. A list of variables named `GIMP_CI_*` are
+   available (just set them to any value) and will trigger specific job
+   lists. These variables are listed in the top comment of
+   [.gitlab-ci.yml](/.gitlab-ci.yml).
+
+### Merge request pipelines
+
+Special pipelines happen for merge request code. For instance, these
+also include a (non-perfect) code style check.
+
+Additionally you can trigger Windows installer or flatpack standalone
+packages to be generated with the MR code as explained in
+[gitlab-mr.md](gitlab-mr.md).
+
+### Release pipeline
+
+Special pipelines happen when pushing git `tags`. These should be tested
+before a release to avoid unexpected release-time issues, as explained
+in [release-howto.txt](release-howto.txt).
+
+### Exception: macOS
+
+As an exception, macOS is currently built with the `Circle-CI` service.
+The whole CI scripts and documentation can be found in the dedicated
+[gimp-macos-build](https://gitlab.gnome.org/Infrastructure/gimp-macos-build)
+repository.
+
+Eventually we want to move this pipeline to Gitlab as well.
+
 ## Core development
 ### Newcomers
 
