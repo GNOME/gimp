@@ -221,9 +221,39 @@ repository.
 Eventually we want to move this pipeline to Gitlab as well.
 
 ## Core development
+
+When writing code, any core developer is expected to follow:
+
+- GIMP's [coding style](/CODING_STYLE.md);
+- the [directory structure](#directory-structure-of-gimp-source-tree)
+- our [include rules](includes.txt)
+
 ### Newcomers
 
 ### Core Contributors
+
+### Maintainers
+
+GIMP maintainers have a few more responsibilities, in particular
+regarding releases and coordination.
+
+Some of these duties include:
+
+- setting the version of GIMP as well as the API version. This is
+  explained in [libtool-instructions.txt](libtool-instructions.txt).
+- Making a release by followng accurately the process described in
+  [release-howto.txt](release-howto.txt).
+- Managing dependencies: except for core projects (such as `babl` and
+  `GEGL`), we should stay as conservative as possible for the stable
+  branch (otherwise distributions might end up getting stuck providing
+  very old GIMP versions). On development builds, we should verify any
+  mandatory dependency is at the very least available in Debian testing
+  and MSYS2; we may be a bit more adventurous for optional dependencies
+  yet stay reasonable (a feature is not so useful if nobody can build
+  it). In any case, any dependency bump must be carefully weighed within
+  reason, especially when getting close to make the development branch
+  into the new stable branch. See also [os-support.txt](os-support.txt).
+- Maintain [milestones](gitlab-milestones.txt).
 
 ### Directory structure of GIMP source tree
 
