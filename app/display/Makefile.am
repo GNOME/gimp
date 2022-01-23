@@ -1,11 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-if PLATFORM_OSX
-xobjective_c = "-xobjective-c"
-xobjective_cxx = "-xobjective-c++"
-xnone = "-xnone"
-endif
-
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp-Display\"	\
 	-I$(top_builddir)		\
@@ -15,15 +9,6 @@ AM_CPPFLAGS = \
 	$(GEGL_CFLAGS)			\
 	$(GTK_CFLAGS)			\
 	-I$(includedir)
-
-AM_CFLAGS = \
-	$(xobjective_c)
-
-AM_CXXFLAGS = \
-	$(xobjective_cxx)
-
-AM_LDFLAGS = \
-	$(xnone)
 
 noinst_LIBRARIES = libappdisplay.a
 

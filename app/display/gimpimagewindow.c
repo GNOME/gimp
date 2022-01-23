@@ -28,21 +28,6 @@
 #include <windows.h>
 #endif
 
-#ifdef GDK_WINDOWING_QUARTZ
-#import <AppKit/AppKit.h>
-#include <gdk/gdkquartz.h>
-
-#if GTK_CHECK_VERSION(3, 24, 31)
-#warning Using a workaround for older GTK versions.
-#warning If minimum requirement was bumped to 3.24.31 or over, remove it.
-#warning See MR !483
-#warning See also https://gitlab.gnome.org/GNOME/gtk/-/commit/7e732caa1e3dc72630704bc4908e8a165a5934c0
-#include "gdk/quartz/gdkquartz-cocoa-access.h"
-#else
-NSWindow *gdk_quartz_window_get_nswindow            (GdkWindow *window);
-#endif /* GTK_CHECK_VERSION(3, 24, 29) */
-#endif /* GDK_WINDOWING_QUARTZ */
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
@@ -189,7 +174,6 @@ static void      gimp_image_window_get_property        (GObject             *obj
                                                         GValue              *value,
                                                         GParamSpec          *pspec);
 
-static void      gimp_image_window_map                 (GtkWidget           *widget);
 static gboolean  gimp_image_window_delete_event        (GtkWidget           *widget,
                                                         GdkEventAny         *event);
 static gboolean  gimp_image_window_configure_event     (GtkWidget           *widget,
@@ -301,7 +285,6 @@ gimp_image_window_class_init (GimpImageWindowClass *klass)
   object_class->set_property       = gimp_image_window_set_property;
   object_class->get_property       = gimp_image_window_get_property;
 
-  widget_class->map                = gimp_image_window_map;
   widget_class->delete_event       = gimp_image_window_delete_event;
   widget_class->configure_event    = gimp_image_window_configure_event;
   widget_class->window_state_event = gimp_image_window_window_state_event;
@@ -600,29 +583,6 @@ gimp_image_window_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
-}
-
-static void
-gimp_image_window_map (GtkWidget *widget)
-{
-#ifdef GDK_WINDOWING_QUARTZ
-  GdkWindow *gdk_window;
-  NSWindow  *ns_window;
-#endif /* !GDK_WINDOWING_QUARTZ */
-
-  GTK_WIDGET_CLASS (parent_class)->map (widget);
-
-#ifdef GDK_WINDOWING_QUARTZ
-  gdk_window = gtk_widget_get_window (GTK_WIDGET (widget));
-  ns_window = gdk_quartz_window_get_nswindow (gdk_window);
-
-  /* Disable the new-style full screen mode. For now only the "old-style"
-   * full screen mode, via the "View" menu, is supported. In the future, and
-   * as soon as GTK+ has proper support for this, we will migrate to the
-   * new-style full screen mode.
-   */
-  ns_window.collectionBehavior |= NSWindowCollectionBehaviorFullScreenAuxiliary;
-#endif /* !GDK_WINDOWING_QUARTZ */
 }
 
 static gboolean
