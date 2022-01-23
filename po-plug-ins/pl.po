@@ -1,18 +1,18 @@
 # Polish translation for gimp-plug-ins.
-# Copyright © 1999-2021 the gimp authors.
+# Copyright © 1999-2022 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 # GNOME PL Team <translators@gnomepl.org>, 1999-2005.
 # Artur Polaczyński <artie@kmfms.com>, 1999.
 # Bartosz Kosiorek <gang65@poczta.onet.pl>, 2005-2011.
-# Piotr Drąg <piotrdrag@gmail.com>, 2011-2021.
-# Aviary.pl <community-poland@mozilla.org>, 2011-2021.
+# Piotr Drąg <piotrdrag@gmail.com>, 2011-2022.
+# Aviary.pl <community-poland@mozilla.org>, 2011-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-31 10:53+0100\n"
-"PO-Revision-Date: 2021-10-31 10:55+0200\n"
+"POT-Creation-Date: 2022-01-23 12:32+0100\n"
+"PO-Revision-Date: 2022-01-23 12:33+0100\n"
 "Last-Translator: Piotr Drąg <piotrdrag@gmail.com>\n"
 "Language-Team: Polish <community-poland@mozilla.org>\n"
 "Language: pl\n"
@@ -71,7 +71,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1356 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1958
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -103,7 +103,7 @@ msgstr "Wyrównanie widocznych warstw"
 #: ../plug-ins/metadata/metadata-editor.c:952
 #: ../plug-ins/metadata/metadata-editor.c:4626
 #: ../plug-ins/metadata/metadata-editor.c:4661
-#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
+#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:491
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "_Anuluj"
@@ -129,7 +129,7 @@ msgstr "_Anuluj"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1357 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1364 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -441,13 +441,13 @@ msgstr "P_ionowe"
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
-#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:670
-#: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1394
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1108
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -459,7 +459,7 @@ msgstr "P_ionowe"
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:646
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:646
 msgid "Background"
 msgstr "Tło"
 
@@ -1041,12 +1041,12 @@ msgid "Save CML Explorer Parameters"
 msgstr "Zapis parametrów przeglądarki CML"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-dicom.c:1470 ../plug-ins/common/file-mng.c:648
+#: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -1071,7 +1071,7 @@ msgstr "Wczytanie parametrów przeglądarki CML"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
-#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:346
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3349
@@ -2088,7 +2088,7 @@ msgstr "ASCII Art"
 msgid "Text"
 msgstr "Tekst"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2009
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Format:"
 msgstr "_Format:"
 
@@ -2143,8 +2143,8 @@ msgstr "Koniec pliku lub błąd podczas odczytywania nagłówka obrazu"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:337
-#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
+#: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:697 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
@@ -2202,17 +2202,17 @@ msgstr "Nieobsługiwana głębia bitowa (%d)."
 #: ../plug-ins/common/file-cel.c:642 ../plug-ins/common/file-cel.c:654
 #, c-format
 msgid "'%s': EOF or error while reading palette header"
-msgstr "„%s”: koniec pliku lub błąd podczas odczytywania nagłówka desenia"
+msgstr "„%s”: koniec pliku lub błąd podczas odczytywania nagłówka palety"
 
 #: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr "„%s”: nie jest plikiem desenia KCF"
+msgstr "„%s”: nie jest plikiem palety KCF"
 
 #: ../plug-ins/common/file-cel.c:672
 #, c-format
 msgid "'%s': illegal bpp value in palette: %hhu"
-msgstr "„%s”: niedozwolona wartość BPP w deseniu: %hhu"
+msgstr "„%s”: niedozwolona wartość BPP w palecie: %hhu"
 
 #: ../plug-ins/common/file-cel.c:681
 #, c-format
@@ -2223,7 +2223,7 @@ msgstr "„%s”: niedozwolona liczba kolorów: %u"
 #: ../plug-ins/common/file-cel.c:733
 #, c-format
 msgid "'%s': EOF or error while reading palette data"
-msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
+msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych palety"
 
 #. init the progress meter
 #.
@@ -2237,7 +2237,7 @@ msgstr "„%s”: koniec pliku lub błąd podczas odczytywania danych desenia"
 #: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1213
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:312
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -2332,29 +2332,36 @@ msgstr "Dowiązanie na pulpicie"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Błąd podczas wczytywania pliku .desktop „%s”: %s"
 
-#: ../plug-ins/common/file-dicom.c:140
+#: ../plug-ins/common/file-dicom.c:141
 msgid "DICOM image"
 msgstr "Obraz DICOM"
 
-#: ../plug-ins/common/file-dicom.c:165
+#: ../plug-ins/common/file-dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Obraz DICOM (Digital Imaging and Communications in Medicine)"
 
-#: ../plug-ins/common/file-dicom.c:371
+#: ../plug-ins/common/file-dicom.c:372
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "„%s” nie jest plikiem DICOM."
 
-#: ../plug-ins/common/file-dicom.c:544
+#: ../plug-ins/common/file-dicom.c:545
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "Składnia przesyłania %s nie jest obsługiwana przez program GIMP."
 
-#: ../plug-ins/common/file-dicom.c:1435
+#: ../plug-ins/common/file-dicom.c:600
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr ""
+"%s nie jest obsługiwane przez program GIMP w połączeniu z próbkami na "
+"piksel: %d"
+
+#: ../plug-ins/common/file-dicom.c:1489
 msgid "Cannot save images with alpha channel."
 msgstr "Nie można zapisać obrazów z kanałem alfa."
 
-#: ../plug-ins/common/file-dicom.c:1454 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1508 ../plug-ins/common/file-ps.c:1232
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2377,15 +2384,15 @@ msgstr "Op_is:"
 msgid "_Spacing:"
 msgstr "_Odstęp:"
 
-#: ../plug-ins/common/file-gegl.c:73
+#: ../plug-ins/common/file-gegl.c:77
 msgid "Radiance RGBE"
 msgstr "RGBE Radiance"
 
-#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
+#: ../plug-ins/common/file-gegl.c:93 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "Obraz OpenEXR"
 
-#: ../plug-ins/common/file-gegl.c:336
+#: ../plug-ins/common/file-gegl.c:346
 #, c-format
 msgid "Could not open '%s'"
 msgstr "Nie można otworzyć „%s”"
@@ -3983,7 +3990,7 @@ msgstr "_Typ obrazu:"
 
 #: ../plug-ins/common/file-raw-data.c:2021
 msgid "Palette"
-msgstr "Deseń"
+msgstr "Paleta"
 
 #: ../plug-ins/common/file-raw-data.c:2031
 msgid "R, G, B (normal)"
@@ -3995,7 +4002,7 @@ msgstr "B, G, R, X (format BMP)"
 
 #: ../plug-ins/common/file-raw-data.c:2037
 msgid "_Palette Type:"
-msgstr "Typ _desenia:"
+msgstr "Typ p_alety:"
 
 #: ../plug-ins/common/file-raw-data.c:2048
 msgid "Off_set:"
@@ -4003,11 +4010,11 @@ msgstr "Prze_sunięcie:"
 
 #: ../plug-ins/common/file-raw-data.c:2060
 msgid "Select Palette File"
-msgstr "Wybór pliku desenia"
+msgstr "Wybór pliku palety"
 
 #: ../plug-ins/common/file-raw-data.c:2066
 msgid "Pal_ette File:"
-msgstr "Plik d_esenia:"
+msgstr "Plik pal_ety:"
 
 #. Dialog init
 #: ../plug-ins/common/file-raw-data.c:2115
@@ -4211,24 +4218,24 @@ msgstr "Nie można odczytać rozszerzenia z pliku „%s”"
 msgid "Cannot read header from '%s'"
 msgstr "Nie można odczytać nagłówka z pliku „%s”"
 
-#: ../plug-ins/common/file-tga.c:1428
+#: ../plug-ins/common/file-tga.c:1434
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1437 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Kompresja _RLE"
 
-#: ../plug-ins/common/file-tga.c:1451
+#: ../plug-ins/common/file-tga.c:1457
 msgid "Or_igin:"
 msgstr "_Oryginał:"
 
-#: ../plug-ins/common/file-tga.c:1455
+#: ../plug-ins/common/file-tga.c:1461
 msgid "Bottom left"
 msgstr "Dolny lewy"
 
-#: ../plug-ins/common/file-tga.c:1456
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Top left"
 msgstr "Górny lewy"
 
@@ -6704,76 +6711,76 @@ msgstr "Dekodowanie YCoCg (przeskalowane)"
 msgid "Decode Alpha exponent"
 msgstr "Dekodowanie wykładnika alfy"
 
-#: ../plug-ins/file-dds/ddsread.c:1354
+#: ../plug-ins/file-dds/ddsread.c:1361
 msgid "Load DDS"
 msgstr "Wczytanie pliku DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1373
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Load mipmaps"
 msgstr "_Wczytanie mipmap"
 
-#: ../plug-ins/file-dds/ddsread.c:1380
+#: ../plug-ins/file-dds/ddsread.c:1387
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Automatyczne dekodowanie obrazów YCoCg/AExp po wykryciu"
 
-#: ../plug-ins/file-dds/ddswrite.c:1954
+#: ../plug-ins/file-dds/ddswrite.c:1956
 msgid "Export as DDS"
 msgstr "Eksport jako DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1957
+#: ../plug-ins/file-dds/ddswrite.c:1959
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "Wy_eksportuj"
 
-#: ../plug-ins/file-dds/ddswrite.c:1984
+#: ../plug-ins/file-dds/ddswrite.c:1986
 msgid "_Compression:"
 msgstr "_Kompresja:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1994
+#: ../plug-ins/file-dds/ddswrite.c:1996
 msgid "Use _perceptual error metric"
 msgstr "_Percepcyjne parametry błędu"
 
-#: ../plug-ins/file-dds/ddswrite.c:2023
+#: ../plug-ins/file-dds/ddswrite.c:2025
 msgid "_Save:"
 msgstr "_Zapis:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2037
+#: ../plug-ins/file-dds/ddswrite.c:2039
 msgid "_Mipmaps:"
 msgstr "_Mipmapy:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2060
+#: ../plug-ins/file-dds/ddswrite.c:2062
 msgid "Transparent index:"
 msgstr "Przezroczysty indeks:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2104
+#: ../plug-ins/file-dds/ddswrite.c:2106
 msgid "Mipmap Options"
 msgstr "Opcje mipmap"
 
-#: ../plug-ins/file-dds/ddswrite.c:2117
+#: ../plug-ins/file-dds/ddswrite.c:2119
 msgid "F_ilter:"
 msgstr "_Filtr:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2130
+#: ../plug-ins/file-dds/ddswrite.c:2132
 msgid "_Wrap mode:"
 msgstr "_Tryb zawijania:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2140
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Appl_y gamma correction"
 msgstr "_Korekcja gammy"
 
-#: ../plug-ins/file-dds/ddswrite.c:2154
+#: ../plug-ins/file-dds/ddswrite.c:2156
 msgid "Use s_RGB colorspace"
 msgstr "_Przestrzeń kolorów sRGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2173 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2183
+#: ../plug-ins/file-dds/ddswrite.c:2185
 msgid "Preserve alpha _test coverage"
 msgstr "_Zachowanie pokrycia testów alfy"
 
-#: ../plug-ins/file-dds/ddswrite.c:2202
+#: ../plug-ins/file-dds/ddswrite.c:2204
 msgid "_Alpha test threshold:"
 msgstr "_Próg testu alfy:"
 
@@ -7111,7 +7118,7 @@ msgstr "Zmiennoprzecinkowa"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1238
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "_Wczytaj domyślne"
@@ -9617,7 +9624,7 @@ msgid "Save color _values from transparent pixels"
 msgstr "Zapisanie _wartości kolorów dla przezroczystych pikseli"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:8
 msgid "S_ave Defaults"
 msgstr "Z_apisanie domyślnych"
 
@@ -9694,10 +9701,14 @@ msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Płaski (RRR,GGG,BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
+msgid "Palette Type"
+msgstr "Typ palety"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (zwykły)"
 
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (format BMP)"
 
@@ -12553,111 +12564,111 @@ msgstr "Wystąpił błąd podczas próby wydrukowania:"
 msgid "Printing"
 msgstr "Drukowanie"
 
-#: ../plug-ins/screenshot/screenshot.c:128
+#: ../plug-ins/screenshot/screenshot.c:127
 msgid "Create an image from an area of the screen"
 msgstr "Tworzy obraz z obszaru ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:149
+#: ../plug-ins/screenshot/screenshot.c:148
 msgid "_Screenshot..."
 msgstr "_Zrzut ekranu…"
 
-#: ../plug-ins/screenshot/screenshot.c:495
+#: ../plug-ins/screenshot/screenshot.c:487
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Zrzut ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:500
+#: ../plug-ins/screenshot/screenshot.c:492
 msgid "S_nap"
 msgstr "_Przechwyć"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:527
+#: ../plug-ins/screenshot/screenshot.c:519
 msgid "Area"
 msgstr "Obszar"
 
-#: ../plug-ins/screenshot/screenshot.c:539
+#: ../plug-ins/screenshot/screenshot.c:531
 msgid "Take a screenshot of a single _window"
 msgstr "Wykonanie zrzutu ekranu pojedynczego o_kna"
 
-#: ../plug-ins/screenshot/screenshot.c:562
+#: ../plug-ins/screenshot/screenshot.c:554
 msgid "Include window _decoration"
 msgstr "Wraz z _dekoracją okna"
 
-#: ../plug-ins/screenshot/screenshot.c:583
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:575
+#: ../plug-ins/screenshot/screenshot.c:620
 msgid "Include _mouse pointer"
 msgstr "Wraz z kursorem _myszy"
 
-#: ../plug-ins/screenshot/screenshot.c:605
+#: ../plug-ins/screenshot/screenshot.c:597
 msgid "Take a screenshot of the entire _screen"
 msgstr "Wykonanie zrzutu całego _ekranu"
 
-#: ../plug-ins/screenshot/screenshot.c:656
+#: ../plug-ins/screenshot/screenshot.c:648
 msgid "Select a _region to grab"
 msgstr "Wybór _obszaru do przechwycenia"
 
-#: ../plug-ins/screenshot/screenshot.c:674
+#: ../plug-ins/screenshot/screenshot.c:666
 msgid "Delay"
 msgstr "Opóźnienie"
 
-#: ../plug-ins/screenshot/screenshot.c:694
+#: ../plug-ins/screenshot/screenshot.c:686
 msgid "Selection delay: "
 msgstr "Opóźnienie zaznaczenia: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:713
-#: ../plug-ins/screenshot/screenshot.c:777
+#: ../plug-ins/screenshot/screenshot.c:705
+#: ../plug-ins/screenshot/screenshot.c:769
 msgid "seconds"
 msgstr "s"
 
-#: ../plug-ins/screenshot/screenshot.c:727
+#: ../plug-ins/screenshot/screenshot.c:719
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
 "Po podanym czasie należy przeciągnąć mysz, aby zaznaczyć obszar dla zrzutu "
 "ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:731
+#: ../plug-ins/screenshot/screenshot.c:723
 msgid "Click in a window to snap it after delay."
 msgstr "Należy kliknąć okno do przechwycenia po podanym czasie."
 
-#: ../plug-ins/screenshot/screenshot.c:736
+#: ../plug-ins/screenshot/screenshot.c:728
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po podanym czasie należy kliknąć okno do przechwycenia."
 
-#: ../plug-ins/screenshot/screenshot.c:757
+#: ../plug-ins/screenshot/screenshot.c:749
 msgid "Screenshot dela_y: "
 msgstr "Opóź_nienie zrzutu ekranu: "
 
-#: ../plug-ins/screenshot/screenshot.c:789
+#: ../plug-ins/screenshot/screenshot.c:781
 msgid "After the delay, the screenshot is taken."
 msgstr "Po podanym czasie zostanie wykonany zrzut ekranu."
 
-#: ../plug-ins/screenshot/screenshot.c:791
+#: ../plug-ins/screenshot/screenshot.c:783
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr "Po zaznaczeniu obszaru zostanie wykonany jego zrzut po tym czasie."
 
-#: ../plug-ins/screenshot/screenshot.c:796
+#: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr "Po wybraniu okna zostanie wykonany jego zrzut po tym czasie."
 
-#: ../plug-ins/screenshot/screenshot.c:802
+#: ../plug-ins/screenshot/screenshot.c:794
 msgid "After the delay, the active window will be captured."
 msgstr "Po podanym czasie zostanie wykonany zrzut aktywnego okna."
 
-#: ../plug-ins/screenshot/screenshot.c:809
+#: ../plug-ins/screenshot/screenshot.c:801
 msgid "Color Profile"
 msgstr "Profil kolorów"
 
-#: ../plug-ins/screenshot/screenshot.c:814
+#: ../plug-ins/screenshot/screenshot.c:806
 msgid "Tag image with _monitor profile"
 msgstr "O_znaczenie obrazu profilem monitora"
 
-#: ../plug-ins/screenshot/screenshot.c:818
+#: ../plug-ins/screenshot/screenshot.c:810
 msgid "Convert image to sR_GB"
 msgstr "Konwersja obrazu do sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "Nie pobrano danych"
 
