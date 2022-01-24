@@ -791,7 +791,7 @@ icons16_images = \
 	16/gimp-tool-offset.png					\
 	16/gimp-tool-options.png				\
 	16/gimp-tool-paintbrush.png				\
-	16/gimp-tool-paint-select.png			\
+	16/gimp-tool-paint-select.png				\
 	16/gimp-tool-path.png					\
 	16/gimp-tool-pencil.png					\
 	16/gimp-tool-perspective-clone.png			\
@@ -1007,7 +1007,7 @@ icons24_images = \
 	24/gimp-tool-n-point-deformation.png			\
 	24/gimp-tool-offset.png					\
 	24/gimp-tool-paintbrush.png				\
-	24/gimp-tool-paint-select.png			\
+	24/gimp-tool-paint-select.png				\
 	24/gimp-tool-path.png					\
 	24/gimp-tool-pencil.png					\
 	24/gimp-tool-perspective-clone.png			\
