@@ -406,6 +406,12 @@ gimp_macos_setenv (const char * progname)
       tmp = g_strdup_printf ("%s/share/libwmf/fonts", res_dir);
       g_setenv ("WMF_FONTDIR", tmp, TRUE);
       g_free (tmp);
+      if (g_getenv ("DYLD_LIBRARY_PATH"))
+        tmp = g_strdup_printf ("%s/lib:%s", res_dir, g_getenv ("DYLD_LIBRARY_PATH"));
+      else
+        tmp = g_strdup_printf ("%s/lib", res_dir);
+      g_setenv ("DYLD_LIBRARY_PATH", tmp, TRUE);
+      g_free (tmp);
       if (g_getenv ("XDG_DATA_DIRS"))
         tmp = g_strdup_printf ("%s/share:%s", res_dir, g_getenv ("XDG_DATA_DIRS"));
       else
