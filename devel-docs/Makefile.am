@@ -7,7 +7,7 @@ SUBDIRS = \
 	performance-logs
 
 EXTRA_DIST = \
-	README				\
+	README.md			\
 	contexts.txt			\
 	debug-plug-ins.txt		\
 	exif-handling.txt		\
@@ -16,8 +16,6 @@ EXTRA_DIST = \
 	libtool-instructions.txt	\
 	parasites.txt			\
 	release-howto.txt		\
-	structure.xml			\
-	submitting-patches.txt		\
 	tagging.txt			\
 	ui-framework.txt		\
 	undo.txt			\
