@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-11-14 23:29+0000\n"
-"PO-Revision-Date: 2021-11-20 17:19+0100\n"
+"POT-Creation-Date: 2022-01-21 20:26+0000\n"
+"PO-Revision-Date: 2022-01-22 10:31+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -73,7 +73,7 @@ msgstr "Poravnaj vidne plasti"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1356 ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1958
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
 #: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
@@ -105,7 +105,7 @@ msgstr "Poravnaj vidne plasti"
 #: ../plug-ins/metadata/metadata-editor.c:952
 #: ../plug-ins/metadata/metadata-editor.c:4626
 #: ../plug-ins/metadata/metadata-editor.c:4661
-#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:499
+#: ../plug-ins/pagecurl/pagecurl.c:438 ../plug-ins/screenshot/screenshot.c:491
 #: ../plug-ins/selection-to-path/selection-to-path.c:309
 msgid "_Cancel"
 msgstr "Pre_kliči"
@@ -131,7 +131,7 @@ msgstr "Pre_kliči"
 #: ../plug-ins/common/tile.c:439 ../plug-ins/common/tile-small.c:365
 #: ../plug-ins/common/van-gogh-lic.c:651 ../plug-ins/common/warp.c:369
 #: ../plug-ins/common/wavelet-decompose.c:355
-#: ../plug-ins/file-dds/ddsread.c:1357 ../plug-ins/flame/flame.c:658
+#: ../plug-ins/file-dds/ddsread.c:1364 ../plug-ins/flame/flame.c:658
 #: ../plug-ins/flame/flame.c:980
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1147
@@ -442,13 +442,13 @@ msgstr "_Navpične"
 #.
 #: ../plug-ins/common/blinds.c:277 ../plug-ins/common/compose.c:1011
 #: ../plug-ins/common/decompose.c:598 ../plug-ins/common/file-cel.c:446
-#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:670
-#: ../plug-ins/common/file-gegl.c:428 ../plug-ins/common/file-gif-load.c:992
+#: ../plug-ins/common/file-cel.c:451 ../plug-ins/common/file-dicom.c:715
+#: ../plug-ins/common/file-gegl.c:438 ../plug-ins/common/file-gif-load.c:992
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
 #: ../plug-ins/common/file-raw-data.c:1394
-#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1108
+#: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:267
@@ -460,7 +460,7 @@ msgstr "_Navpične"
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:646
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:646
 msgid "Background"
 msgstr "Ozadje"
 
@@ -1043,12 +1043,12 @@ msgid "Save CML Explorer Parameters"
 msgstr "Shrani parametre raziskovalca MZP"
 
 #: ../plug-ins/common/cml-explorer.c:2078 ../plug-ins/common/curve-bend.c:891
-#: ../plug-ins/common/file-dicom.c:1470 ../plug-ins/common/file-mng.c:648
+#: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
 #: ../plug-ins/common/file-raw-data.c:1192
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
-#: ../plug-ins/common/file-tga.c:1219 ../plug-ins/common/file-xmc.c:1504
+#: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
@@ -1073,7 +1073,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 
 #: ../plug-ins/common/cml-explorer.c:2251 ../plug-ins/common/curve-bend.c:944
 #: ../plug-ins/common/file-cel.c:300 ../plug-ins/common/file-cel.c:351
-#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:345
+#: ../plug-ins/common/file-cel.c:591 ../plug-ins/common/file-dicom.c:346
 #: ../plug-ins/common/file-gif-load.c:361 ../plug-ins/common/file-mng.c:1158
 #: ../plug-ins/common/file-pcx.c:378 ../plug-ins/common/file-png.c:941
 #: ../plug-ins/common/file-ps.c:1071 ../plug-ins/common/file-ps.c:3349
@@ -2088,7 +2088,7 @@ msgstr "ASCII art"
 msgid "Text"
 msgstr "Besedilo"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2009
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Format:"
 msgstr "_Oblika:"
 
@@ -2143,8 +2143,8 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:337
-#: ../plug-ins/common/file-gegl.c:312 ../plug-ins/common/file-gif-load.c:353
+#: ../plug-ins/common/file-cel.c:342 ../plug-ins/common/file-dicom.c:338
+#: ../plug-ins/common/file-gegl.c:322 ../plug-ins/common/file-gif-load.c:353
 #: ../plug-ins/common/file-heif.c:697 ../plug-ins/common/file-jp2-load.c:1077
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
@@ -2237,7 +2237,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: ../plug-ins/common/file-html-table.c:238 ../plug-ins/common/file-pcx.c:761
 #: ../plug-ins/common/file-pix.c:538 ../plug-ins/common/file-png.c:1611
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
-#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1213
+#: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
 #: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:312
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
@@ -2333,29 +2333,34 @@ msgstr "Namizna povezava"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Napaka pri nalaganju namizne datoteke »%s«: %s"
 
-#: ../plug-ins/common/file-dicom.c:140
+#: ../plug-ins/common/file-dicom.c:141
 msgid "DICOM image"
 msgstr "Slika DICOM"
 
-#: ../plug-ins/common/file-dicom.c:165
+#: ../plug-ins/common/file-dicom.c:166
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Slika Digital Imaging and Communications in Medicine"
 
-#: ../plug-ins/common/file-dicom.c:371
+#: ../plug-ins/common/file-dicom.c:372
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "»%s« ni datoteka DICOM."
 
-#: ../plug-ins/common/file-dicom.c:544
+#: ../plug-ins/common/file-dicom.c:545
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "GIMP ne podpira skladnje prenosa %s."
 
-#: ../plug-ins/common/file-dicom.c:1435
+#: ../plug-ins/common/file-dicom.c:600
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr "GIMP ne podpira %s v kombinaciji z vzorci na slikovno točko: %d"
+
+#: ../plug-ins/common/file-dicom.c:1489
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: ../plug-ins/common/file-dicom.c:1454 ../plug-ins/common/file-ps.c:1232
+#: ../plug-ins/common/file-dicom.c:1508 ../plug-ins/common/file-ps.c:1232
 #: ../plug-ins/common/file-xwd.c:647 ../plug-ins/file-fits/fits.c:468
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2378,15 +2383,15 @@ msgstr "_Opis:"
 msgid "_Spacing:"
 msgstr "_Razmik:"
 
-#: ../plug-ins/common/file-gegl.c:73
+#: ../plug-ins/common/file-gegl.c:77
 msgid "Radiance RGBE"
 msgstr "Sevanje RGBE"
 
-#: ../plug-ins/common/file-gegl.c:87 ../plug-ins/file-exr/file-exr.c:86
+#: ../plug-ins/common/file-gegl.c:93 ../plug-ins/file-exr/file-exr.c:86
 msgid "OpenEXR image"
 msgstr "Slika OpenEXR"
 
-#: ../plug-ins/common/file-gegl.c:336
+#: ../plug-ins/common/file-gegl.c:346
 #, c-format
 msgid "Could not open '%s'"
 msgstr "»%s« ni mogoče odpreti"
@@ -4204,24 +4209,24 @@ msgstr "Iz »%s« ni mogoče prebrati razširitve"
 msgid "Cannot read header from '%s'"
 msgstr "Glave datoteke »%s« ni mogoče prebrati"
 
-#: ../plug-ins/common/file-tga.c:1428
+#: ../plug-ins/common/file-tga.c:1434
 msgid "TGA"
 msgstr "TGA"
 
 #. rle
-#: ../plug-ins/common/file-tga.c:1437 ../plug-ins/file-sgi/sgi.c:683
+#: ../plug-ins/common/file-tga.c:1443 ../plug-ins/file-sgi/sgi.c:683
 msgid "_RLE compression"
 msgstr "Stiskanje _RLE"
 
-#: ../plug-ins/common/file-tga.c:1451
+#: ../plug-ins/common/file-tga.c:1457
 msgid "Or_igin:"
 msgstr "Izvi_rnik:"
 
-#: ../plug-ins/common/file-tga.c:1455
+#: ../plug-ins/common/file-tga.c:1461
 msgid "Bottom left"
 msgstr "Levo spodaj"
 
-#: ../plug-ins/common/file-tga.c:1456
+#: ../plug-ins/common/file-tga.c:1462
 msgid "Top left"
 msgstr "Levo zgoraj"
 
@@ -6684,76 +6689,76 @@ msgstr "Dekodiraj YCoCg (prilagojeno)"
 msgid "Decode Alpha exponent"
 msgstr "Dekodiraj eksponent alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:1354
+#: ../plug-ins/file-dds/ddsread.c:1361
 msgid "Load DDS"
 msgstr "Naloži DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1373
+#: ../plug-ins/file-dds/ddsread.c:1380
 msgid "_Load mipmaps"
 msgstr "_Naloži mipmapse"
 
-#: ../plug-ins/file-dds/ddsread.c:1380
+#: ../plug-ins/file-dds/ddsread.c:1387
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "S_amodejno dekodiraj zaznane slike YCoCg/AExp"
 
-#: ../plug-ins/file-dds/ddswrite.c:1954
+#: ../plug-ins/file-dds/ddswrite.c:1956
 msgid "Export as DDS"
 msgstr "Izvozi kot DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1957
+#: ../plug-ins/file-dds/ddswrite.c:1959
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "I_zvozi"
 
-#: ../plug-ins/file-dds/ddswrite.c:1984
+#: ../plug-ins/file-dds/ddswrite.c:1986
 msgid "_Compression:"
 msgstr "_Stiskanje:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1994
+#: ../plug-ins/file-dds/ddswrite.c:1996
 msgid "Use _perceptual error metric"
 msgstr "Uporabi _metriko zaznavne napake"
 
-#: ../plug-ins/file-dds/ddswrite.c:2023
+#: ../plug-ins/file-dds/ddswrite.c:2025
 msgid "_Save:"
 msgstr "_Shrani:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2037
+#: ../plug-ins/file-dds/ddswrite.c:2039
 msgid "_Mipmaps:"
 msgstr "_Mipmapi:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2060
+#: ../plug-ins/file-dds/ddswrite.c:2062
 msgid "Transparent index:"
 msgstr "Indeks prosojnosti:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2104
+#: ../plug-ins/file-dds/ddswrite.c:2106
 msgid "Mipmap Options"
 msgstr "Možnosti mipmapov"
 
-#: ../plug-ins/file-dds/ddswrite.c:2117
+#: ../plug-ins/file-dds/ddswrite.c:2119
 msgid "F_ilter:"
 msgstr "F_ilter:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2130
+#: ../plug-ins/file-dds/ddswrite.c:2132
 msgid "_Wrap mode:"
 msgstr "Način ob_livanja:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2140
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Appl_y gamma correction"
 msgstr "Uporabi poprave_k game"
 
-#: ../plug-ins/file-dds/ddswrite.c:2154
+#: ../plug-ins/file-dds/ddswrite.c:2156
 msgid "Use s_RGB colorspace"
 msgstr "Uporabi barvni prostor s_RGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2173 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2183
+#: ../plug-ins/file-dds/ddswrite.c:2185
 msgid "Preserve alpha _test coverage"
 msgstr "Ohrani pokritje preizkusa al_fe"
 
-#: ../plug-ins/file-dds/ddswrite.c:2202
+#: ../plug-ins/file-dds/ddswrite.c:2204
 msgid "_Alpha test threshold:"
 msgstr "Prag preizkusa _alfe:"
 
@@ -7088,7 +7093,7 @@ msgstr "plavajoča vejica"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:1238
 #: ../plug-ins/ui/plug-in-file-png.ui.h:10
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
 #: ../plug-ins/print/print-page-layout.c:335
 msgid "_Load Defaults"
 msgstr "_Naloži privzete vrednosti"
@@ -9571,7 +9576,7 @@ msgid "Save color _values from transparent pixels"
 msgstr "Shrani barvne _vrednosti iz prosojnih slikovnih točk"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:11
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:7
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:8
 msgid "S_ave Defaults"
 msgstr "S_hrani privzete vrednosti"
 
@@ -9648,10 +9653,14 @@ msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Planarno (RRR, GGG, BBB)"
 
 #: ../plug-ins/ui/plug-in-file-raw.ui.h:4
+msgid "Palette Type"
+msgstr "Vrsta palete"
+
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (navadno)"
 
-#: ../plug-ins/ui/plug-in-file-raw.ui.h:5
+#: ../plug-ins/ui/plug-in-file-raw.ui.h:6
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (slog BMP)"
 
@@ -12499,109 +12508,109 @@ msgstr "Pri poskusu tiskanja je prišlo do napake:"
 msgid "Printing"
 msgstr "Tiskanje"
 
-#: ../plug-ins/screenshot/screenshot.c:128
+#: ../plug-ins/screenshot/screenshot.c:127
 msgid "Create an image from an area of the screen"
 msgstr "Ustvari sliko iz področja zaslona"
 
-#: ../plug-ins/screenshot/screenshot.c:149
+#: ../plug-ins/screenshot/screenshot.c:148
 msgid "_Screenshot..."
 msgstr "_Posnetek namizja ..."
 
-#: ../plug-ins/screenshot/screenshot.c:495
+#: ../plug-ins/screenshot/screenshot.c:487
 #: ../plug-ins/screenshot/screenshot-x11.c:424
 msgid "Screenshot"
 msgstr "Posnetek namizja"
 
-#: ../plug-ins/screenshot/screenshot.c:500
+#: ../plug-ins/screenshot/screenshot.c:492
 msgid "S_nap"
 msgstr "_Pripni"
 
 #. Area
-#: ../plug-ins/screenshot/screenshot.c:527
+#: ../plug-ins/screenshot/screenshot.c:519
 msgid "Area"
 msgstr "Področje"
 
-#: ../plug-ins/screenshot/screenshot.c:539
+#: ../plug-ins/screenshot/screenshot.c:531
 msgid "Take a screenshot of a single _window"
 msgstr "Naredi posnetek posameznega _okna"
 
-#: ../plug-ins/screenshot/screenshot.c:562
+#: ../plug-ins/screenshot/screenshot.c:554
 msgid "Include window _decoration"
 msgstr "Vključi _okrasitev okna"
 
-#: ../plug-ins/screenshot/screenshot.c:583
-#: ../plug-ins/screenshot/screenshot.c:628
+#: ../plug-ins/screenshot/screenshot.c:575
+#: ../plug-ins/screenshot/screenshot.c:620
 msgid "Include _mouse pointer"
 msgstr "Vključi kazalec _miške"
 
-#: ../plug-ins/screenshot/screenshot.c:605
+#: ../plug-ins/screenshot/screenshot.c:597
 msgid "Take a screenshot of the entire _screen"
 msgstr "Naredi posnetek _celega zaslona"
 
-#: ../plug-ins/screenshot/screenshot.c:656
+#: ../plug-ins/screenshot/screenshot.c:648
 msgid "Select a _region to grab"
 msgstr "Izberi _področje za zajem"
 
-#: ../plug-ins/screenshot/screenshot.c:674
+#: ../plug-ins/screenshot/screenshot.c:666
 msgid "Delay"
 msgstr "Zakasni"
 
-#: ../plug-ins/screenshot/screenshot.c:694
+#: ../plug-ins/screenshot/screenshot.c:686
 msgid "Selection delay: "
 msgstr "Zakasnitev izbora: "
 
 #. translators: this is the unit label of a spinbutton
-#: ../plug-ins/screenshot/screenshot.c:713
-#: ../plug-ins/screenshot/screenshot.c:777
+#: ../plug-ins/screenshot/screenshot.c:705
+#: ../plug-ins/screenshot/screenshot.c:769
 msgid "seconds"
 msgstr "sekund"
 
-#: ../plug-ins/screenshot/screenshot.c:727
+#: ../plug-ins/screenshot/screenshot.c:719
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr "Po zamiku povlecite miško, da izberete področje posnetka namizja."
 
-#: ../plug-ins/screenshot/screenshot.c:731
+#: ../plug-ins/screenshot/screenshot.c:723
 msgid "Click in a window to snap it after delay."
 msgstr "Kliknite v okno, da ga po zamiku poslikate."
 
-#: ../plug-ins/screenshot/screenshot.c:736
+#: ../plug-ins/screenshot/screenshot.c:728
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Po koncu zamika kliknite v okno, da ga poslikate."
 
-#: ../plug-ins/screenshot/screenshot.c:757
+#: ../plug-ins/screenshot/screenshot.c:749
 msgid "Screenshot dela_y: "
 msgstr "Za_kasnitev zaslonske slike: "
 
-#: ../plug-ins/screenshot/screenshot.c:789
+#: ../plug-ins/screenshot/screenshot.c:781
 msgid "After the delay, the screenshot is taken."
 msgstr "Posnetek namizja nastane po zakasnitvi."
 
-#: ../plug-ins/screenshot/screenshot.c:791
+#: ../plug-ins/screenshot/screenshot.c:783
 msgid "Once the region is selected, it will be captured after this delay."
 msgstr "Ko je področje izbrano, se po tej zakasnitvi zajame."
 
-#: ../plug-ins/screenshot/screenshot.c:796
+#: ../plug-ins/screenshot/screenshot.c:788
 msgid "Once the window is selected, it will be captured after this delay."
 msgstr "Ko je okno izbrano, se po tej zakasnitvi zajame."
 
-#: ../plug-ins/screenshot/screenshot.c:802
+#: ../plug-ins/screenshot/screenshot.c:794
 msgid "After the delay, the active window will be captured."
 msgstr "Slika aktivnega okna bo zajeta po zakasnitvi."
 
-#: ../plug-ins/screenshot/screenshot.c:809
+#: ../plug-ins/screenshot/screenshot.c:801
 msgid "Color Profile"
 msgstr "Barvni profil"
 
-#: ../plug-ins/screenshot/screenshot.c:814
+#: ../plug-ins/screenshot/screenshot.c:806
 msgid "Tag image with _monitor profile"
 msgstr "Označi sliko s profilom _zaslona"
 
-#: ../plug-ins/screenshot/screenshot.c:818
+#: ../plug-ins/screenshot/screenshot.c:810
 msgid "Convert image to sR_GB"
 msgstr "Pretvori sliko v barvni prostor sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "Zajetih ni bilo nič podatkov"
 
