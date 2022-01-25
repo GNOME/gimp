@@ -95,8 +95,8 @@ header files installed.
   8. For metadata access GIMP requires the gexiv2 @GEXIV2_REQUIRED_VERSION@ or newer library.
      It is hosted at: https://wiki.gnome.org/Projects/gexiv2
 
-  9. libpng, libjpeg, libtiff and lcms are hard dependencies that can
-     not be disabled.
+  9. libpng, libjpeg, libtiff, librsvg and lcms are hard dependencies
+     that can not be disabled.
 
  10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used.
      The libmypaint repository is hosted at:
@@ -132,7 +132,7 @@ header files installed.
  12. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: openjpeg,
-     webkit, libmng, librsvg, libwmf, libaa and libgs (Ghostscript).
+     webkit, libmng, libwmf, libaa and libgs (Ghostscript).
 
  13. HEIF support depends on the libheif library. If you don't have
      access to pre-built packages, the code is available at:
@@ -317,9 +317,6 @@ These are:
   --without-webkit.  If for some reason you don't want to build the
      Help Browser plug-in, you can use --without-webkit to disable
      it explicitly.
-
-  --without-librsvg.  If for some reason you want to build GIMP without
-     SVG support, you can build --without-librsvg.
 
   --without-print.  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with --without-print.
