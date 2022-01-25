@@ -94,10 +94,6 @@
 /* Whether the window's maximized or not */
 #define GIMP_IMAGE_WINDOW_MAXIMIZED        "maximized"
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED < 1070
-#define NSWindowCollectionBehaviorFullScreenAuxiliary (1 << 8)
-#endif
-
 
 enum
 {

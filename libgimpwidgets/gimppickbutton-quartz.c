@@ -33,22 +33,6 @@
 #include <ApplicationServices/ApplicationServices.h>
 #endif
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED < 1070
-@interface NSWindow (GIMPExt)
-- (NSRect) convertRectToScreen: (NSRect)aRect;
-@end
-@implementation NSWindow (GIMPExt)
-- (NSRect) convertRectToScreen: (NSRect)aRect
-{
-  NSRect result = aRect;
-  NSPoint origin = result.origin;
-  result.origin = [self convertBaseToScreen:origin];
-  return result;
-}
-@end
-#endif
-
-
 @interface GimpPickWindowController : NSObject
 {
   GimpPickButton *button;
