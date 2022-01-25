@@ -223,6 +223,24 @@ Alternatively GIMP supports the SVG Gradient format.
 ### Themes
 ### Icon themes
 
+Icon sets (a.k.a. "icon themes") have been separated from themes since
+GIMP 2.10 so you can have any icon theme with any theme.
+
+We currently only support 2 such icon themes — Symbolic and Color — and
+we keep around the Legacy icons.
+
+We don't want too many alternative designs as official icon themes
+(people are welcome to publish their favorite designs as third-party
+icons) though we would welcome special-purpose icon themes (e.g. high
+contrast).
+
+We also welcome design updates as a whole (anyone willing to work on
+this should discuss with us and propose something) and obviously fixes
+on existing icons or adding missing icons.
+
+See the dedicated [icons.txt](icons.txt) document for more technical
+information.
+
 ### Tool presets
 
 
