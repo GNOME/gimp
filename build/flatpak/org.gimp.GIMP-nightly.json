@@ -8,6 +8,7 @@
     "separate-locales": false,
     "rename-desktop-file": "gimp.desktop",
     "rename-icon": "gimp",
+    "copy-icon": true,
     "finish-args": [
         "--share=ipc",
         "--share=network",
@@ -22,7 +23,9 @@
         "--filesystem=xdg-run/gvfsd",
         "--talk-name=org.gtk.vfs",
         "--talk-name=org.gtk.vfs.*",
-        "--talk-name=org.freedesktop.FileManager1"
+        "--talk-name=org.freedesktop.FileManager1",
+        "--talk-name=org.gnome.Shell.Screenshot",
+        "--talk-name=org.kde.kwin.Screenshot"
     ],
     "tags": [
         "GTK+3",
@@ -36,6 +39,7 @@
         "/share/aclocal",
         "/man",
         "/share/man",
+        "/share/gtk-doc",
         "/share/vala",
         "*.la",
         "*.a"
@@ -55,8 +59,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://exiv2.org/builds/exiv2-0.27.4-Source.tar.gz",
-                            "sha256": "84366dba7c162af9a7603bcd6c16f40fe0e9af294ba2fd2f66ffffb9fbec904e",
+                            "url": "https://exiv2.org/builds/exiv2-0.27.5-Source.tar.gz",
+                            "sha256": "35a58618ab236a901ca4928b0ad8b31007ebdc0386d904409d825024e45ea6e2",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
@@ -129,7 +133,13 @@
                         {
                             "type": "archive",
                             "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.7.tar.gz",
-                            "sha256": "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d"
+                            "sha256": "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d",
+                            "x-checker-data": {
+                                "type": "anitya",
+                                "project-id": 13289,
+                                "stable-only": true,
+                                "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
+                            }
                         },
                         {
                             "type": "shell",
@@ -214,8 +224,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-21.10.0.tar.xz",
-                    "sha256": "964b5b16290fbec3fae57c2a5bcdea49bb0736bd750c3a3711c47995c9efc394",
+                    "url": "https://poppler.freedesktop.org/poppler-22.01.0.tar.xz",
+                    "sha256": "7d3493056b5b86413e5c693c2cae02c5c06cd8e618d14c2c31e2c84b67b2313e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -457,8 +467,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.18.tar.gz",
-                            "sha256": "1632c1e8cca62d8bed064b37747e331a1796fc46f688626337362bf0d16aeadb",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.19.tar.gz",
+                            "sha256": "947f51bfe50c2a0749304fbe373e00e7637600b0a47b78a51382aeb30ca08562",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -767,8 +777,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/2.49.1/graphviz-2.49.1.tar.gz",
-                            "sha256": "f62f644aa9b9c03cb14f0dc351a28525c055cd7951614c0b7efa6af66d4a8fb7",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/2.50.0/graphviz-2.50.0.tar.gz",
+                            "sha256": "afa48581f764a35e148909cc96a0308ec2356b5225b64af12492f3392f20ef1c",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,
