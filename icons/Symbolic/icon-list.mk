@@ -10,18 +10,18 @@ scalable_images = \
 	scalable/document-revert-symbolic.svg				\
 	scalable/document-save-symbolic.svg				\
 	scalable/document-save-as-symbolic.svg				\
-	scalable/edit-clear-symbolic.svg					\
+	scalable/edit-clear-symbolic.svg				\
 	scalable/edit-copy-symbolic.svg					\
 	scalable/edit-cut-symbolic.svg					\
 	scalable/edit-delete-symbolic.svg				\
-	scalable/edit-paste-symbolic.svg					\
+	scalable/edit-paste-symbolic.svg				\
 	scalable/edit-redo-symbolic.svg					\
 	scalable/edit-undo-symbolic.svg					\
 	scalable/folder-symbolic.svg					\
-	scalable/folder-new-symbolic.svg					\
-	scalable/format-indent-more-symbolic.svg				\
-	scalable/format-justify-fill-symbolic.svg			\
+	scalable/folder-new-symbolic.svg				\
+	scalable/format-indent-more-symbolic.svg			\
 	scalable/format-justify-center-symbolic.svg			\
+	scalable/format-justify-fill-symbolic.svg			\
 	scalable/format-justify-left-symbolic.svg			\
 	scalable/format-justify-right-symbolic.svg			\
 	scalable/format-text-direction-ltr-symbolic.svg			\
@@ -35,7 +35,7 @@ scalable_images = \
 	scalable/go-previous-symbolic.svg				\
 	scalable/go-top-symbolic.svg					\
 	scalable/go-up-symbolic.svg					\
-	scalable/help-about-symbolic.svg					\
+	scalable/help-about-symbolic.svg				\
 	scalable/list-add-symbolic.svg					\
 	scalable/list-remove-symbolic.svg				\
 	scalable/media-floppy-symbolic.svg				\
@@ -45,23 +45,23 @@ scalable_images = \
 	scalable/media-record-symbolic.svg				\
 	scalable/media-seek-backward-symbolic.svg			\
 	scalable/media-skip-backward-symbolic.svg			\
-	scalable/media-skip-forward-symbolic.svg				\
+	scalable/media-skip-forward-symbolic.svg			\
 	scalable/object-flip-horizontal-symbolic.svg			\
 	scalable/object-flip-vertical-symbolic.svg			\
 	scalable/object-rotate-left-symbolic.svg			\
 	scalable/object-rotate-right-symbolic.svg			\
-	scalable/preferences-system-symbolic.svg				\
+	scalable/preferences-system-symbolic.svg			\
 	scalable/process-stop-symbolic.svg				\
-	scalable/system-run-symbolic.svg					\
+	scalable/system-run-symbolic.svg				\
 	scalable/view-fullscreen-symbolic.svg				\
 	scalable/view-refresh-symbolic.svg				\
-	scalable/window-new-symbolic.svg					\
+	scalable/window-new-symbolic.svg				\
 	scalable/zoom-fit-best-symbolic.svg				\
 	scalable/zoom-in-symbolic.svg					\
 	scalable/zoom-original-symbolic.svg				\
 	scalable/zoom-out-symbolic.svg					\
 	\
-	scalable/gtk-cancel-symbolic.svg					\
+	scalable/gtk-cancel-symbolic.svg				\
 	scalable/gtk-edit-symbolic.svg					\
 	scalable/gtk-no-symbolic.svg					\
 	scalable/gtk-ok-symbolic.svg					\
@@ -71,34 +71,34 @@ scalable_images = \
 	\
 	scalable/gimp-anchor-symbolic.svg				\
 	scalable/gimp-attach-symbolic.svg				\
-	scalable/gimp-business-card-symbolic.svg				\
+	scalable/gimp-business-card-symbolic.svg			\
 	scalable/gimp-cap-butt-symbolic.svg				\
 	scalable/gimp-cap-round-symbolic.svg				\
 	scalable/gimp-cap-square-symbolic.svg				\
 	scalable/gimp-center-symbolic.svg				\
-	scalable/gimp-channel-alpha-symbolic.svg				\
+	scalable/gimp-channel-symbolic.svg				\
+	scalable/gimp-channel-alpha-symbolic.svg			\
 	scalable/gimp-channel-blue-symbolic.svg				\
 	scalable/gimp-channel-gray-symbolic.svg				\
-	scalable/gimp-channel-green-symbolic.svg				\
+	scalable/gimp-channel-green-symbolic.svg			\
 	scalable/gimp-channel-indexed-symbolic.svg			\
 	scalable/gimp-channel-red-symbolic.svg				\
 	scalable/gimp-channels-symbolic.svg				\
-	scalable/gimp-channel-symbolic.svg				\
 	scalable/gimp-char-picker-symbolic.svg				\
 	scalable/gimp-clipboard-symbolic.svg				\
-	scalable/gimp-close-symbolic.svg					\
+	scalable/gimp-close-symbolic.svg				\
 	scalable/gimp-close-all-symbolic.svg				\
-	scalable/gimp-colormap-symbolic.svg				\
+	scalable/gimp-color-cmyk-symbolic.svg				\
+	scalable/gimp-color-pick-from-screen-symbolic.svg		\
 	scalable/gimp-color-picker-black-symbolic.svg			\
 	scalable/gimp-color-picker-gray-symbolic.svg			\
 	scalable/gimp-color-picker-white-symbolic.svg			\
-	scalable/gimp-color-pick-from-screen-symbolic.svg		\
-	scalable/gimp-color-cmyk-symbolic.svg				\
 	scalable/gimp-color-space-linear-symbolic.svg			\
 	scalable/gimp-color-space-non-linear-symbolic.svg		\
 	scalable/gimp-color-space-perceptual-symbolic.svg		\
 	scalable/gimp-color-triangle-symbolic.svg			\
 	scalable/gimp-color-water-symbolic.svg				\
+	scalable/gimp-colormap-symbolic.svg				\
 	scalable/gimp-controller-keyboard-symbolic.svg			\
 	scalable/gimp-controller-linux-input-symbolic.svg		\
 	scalable/gimp-controller-midi-symbolic.svg			\
@@ -115,7 +115,7 @@ scalable_images = \
 	scalable/gimp-dashboard-symbolic.svg				\
 	scalable/gimp-default-colors-symbolic.svg			\
 	scalable/gimp-detach-symbolic.svg				\
-	scalable/gimp-device-status-symbolic.svg				\
+	scalable/gimp-device-status-symbolic.svg			\
 	scalable/gimp-display-symbolic.svg				\
 	scalable/gimp-display-filter-clip-warning-symbolic.svg		\
 	scalable/gimp-display-filter-colorblind-symbolic.svg		\
@@ -136,45 +136,51 @@ scalable_images = \
 	scalable/gimp-gradient-radial-symbolic.svg			\
 	scalable/gimp-gradient-shapeburst-angular-symbolic.svg		\
 	scalable/gimp-gradient-shapeburst-dimpled-symbolic.svg		\
-	scalable/gimp-gradient-shapeburst-spherical-symbolic.svg		\
-	scalable/gimp-gradient-spiral-anticlockwise-symbolic.svg		\
+	scalable/gimp-gradient-shapeburst-spherical-symbolic.svg	\
+	scalable/gimp-gradient-spiral-anticlockwise-symbolic.svg	\
 	scalable/gimp-gradient-spiral-clockwise-symbolic.svg		\
 	scalable/gimp-gradient-square-symbolic.svg			\
 	scalable/gimp-gravity-east-symbolic.svg				\
 	scalable/gimp-gravity-north-east-symbolic.svg			\
-	scalable/gimp-gravity-north-symbolic.svg				\
+	scalable/gimp-gravity-north-symbolic.svg			\
 	scalable/gimp-gravity-north-west-symbolic.svg			\
 	scalable/gimp-gravity-south-east-symbolic.svg			\
-	scalable/gimp-gravity-south-symbolic.svg				\
+	scalable/gimp-gravity-south-symbolic.svg			\
 	scalable/gimp-gravity-south-west-symbolic.svg			\
 	scalable/gimp-gravity-west-symbolic.svg				\
 	scalable/gimp-grid-symbolic.svg					\
 	scalable/gimp-group-layer-symbolic.svg				\
 	scalable/gimp-hcenter-symbolic.svg				\
-	scalable/gimp-hchain-broken-symbolic.svg				\
+	scalable/gimp-hchain-broken-symbolic.svg			\
 	scalable/gimp-hchain-symbolic.svg				\
-	scalable/gimp-hfill-symbolic.svg					\
+	scalable/gimp-hfill-symbolic.svg				\
 	scalable/gimp-histogram-linear-symbolic.svg			\
-	scalable/gimp-histogram-logarithmic-symbolic.svg			\
+	scalable/gimp-histogram-logarithmic-symbolic.svg		\
 	scalable/gimp-histogram-symbolic.svg				\
-	scalable/gimp-images-symbolic.svg				\
-	scalable/gimp-image-symbolic.svg					\
+	scalable/gimp-image-symbolic.svg				\
 	scalable/gimp-image-open-symbolic.svg				\
 	scalable/gimp-image-reload-symbolic.svg				\
+	scalable/gimp-images-symbolic.svg				\
 	scalable/gimp-input-device-symbolic.svg				\
 	scalable/gimp-invert-symbolic.svg				\
 	scalable/gimp-join-bevel-symbolic.svg				\
 	scalable/gimp-join-miter-symbolic.svg				\
 	scalable/gimp-join-round-symbolic.svg				\
 	scalable/gimp-landscape-symbolic.svg				\
+	scalable/gimp-layer-symbolic.svg				\
 	scalable/gimp-layer-mask-symbolic.svg				\
-	scalable/gimp-layers-symbolic.svg				\
-	scalable/gimp-layer-symbolic.svg					\
 	scalable/gimp-layer-to-imagesize-symbolic.svg			\
+	scalable/gimp-layers-symbolic.svg				\
 	scalable/gimp-letter-spacing-symbolic.svg			\
 	scalable/gimp-line-spacing-symbolic.svg				\
 	scalable/gimp-linked-symbolic.svg				\
 	scalable/gimp-list-symbolic.svg					\
+	scalable/gimp-lock-symbolic.svg					\
+	scalable/gimp-lock-multi-symbolic.svg				\
+	scalable/gimp-lock-alpha-symbolic.svg				\
+	scalable/gimp-lock-content-symbolic.svg				\
+	scalable/gimp-lock-position-symbolic.svg			\
+	scalable/gimp-lock-visibility-symbolic.svg			\
 	scalable/gimp-marker-symbolic.svg				\
 	scalable/gimp-menu-left-symbolic.svg				\
 	scalable/gimp-menu-right-symbolic.svg				\
@@ -184,8 +190,8 @@ scalable_images = \
 	scalable/gimp-paste-as-new-symbolic.svg				\
 	scalable/gimp-paste-into-symbolic.svg				\
 	scalable/gimp-path-symbolic.svg					\
-	scalable/gimp-paths-symbolic.svg					\
 	scalable/gimp-path-stroke-symbolic.svg				\
+	scalable/gimp-paths-symbolic.svg				\
 	scalable/gimp-pattern-symbolic.svg				\
 	scalable/gimp-pivot-center-symbolic.svg				\
 	scalable/gimp-pivot-east-symbolic.svg				\
@@ -200,23 +206,23 @@ scalable_images = \
 	scalable/gimp-portrait-symbolic.svg				\
 	scalable/gimp-prefs-color-management-symbolic.svg		\
 	scalable/gimp-prefs-controllers-symbolic.svg			\
-	scalable/gimp-prefs-default-comment-symbolic.svg			\
+	scalable/gimp-prefs-default-comment-symbolic.svg		\
 	scalable/gimp-prefs-default-grid-symbolic.svg			\
-	scalable/gimp-prefs-display-symbolic.svg				\
-	scalable/gimp-prefs-folders-symbolic.svg				\
-	scalable/gimp-prefs-folders-brushes-symbolic.svg			\
+	scalable/gimp-prefs-display-symbolic.svg			\
+	scalable/gimp-prefs-folders-symbolic.svg			\
+	scalable/gimp-prefs-folders-brushes-symbolic.svg		\
 	scalable/gimp-prefs-folders-dynamics-symbolic.svg		\
-	scalable/gimp-prefs-folders-environ-symbolic.svg			\
+	scalable/gimp-prefs-folders-environ-symbolic.svg		\
 	scalable/gimp-prefs-folders-fonts-symbolic.svg			\
 	scalable/gimp-prefs-folders-gradients-symbolic.svg		\
 	scalable/gimp-prefs-folders-icon-themes-symbolic.svg		\
 	scalable/gimp-prefs-folders-interp-symbolic.svg			\
-	scalable/gimp-prefs-folders-modules-symbolic.svg			\
-	scalable/gimp-prefs-folders-mypaint-brushes-symbolic.svg		\
+	scalable/gimp-prefs-folders-modules-symbolic.svg		\
+	scalable/gimp-prefs-folders-mypaint-brushes-symbolic.svg	\
 	scalable/gimp-prefs-folders-palettes-symbolic.svg		\
 	scalable/gimp-prefs-folders-patterns-symbolic.svg		\
 	scalable/gimp-prefs-folders-plug-ins-symbolic.svg		\
-	scalable/gimp-prefs-folders-scripts-symbolic.svg			\
+	scalable/gimp-prefs-folders-scripts-symbolic.svg		\
 	scalable/gimp-prefs-folders-themes-symbolic.svg			\
 	scalable/gimp-prefs-folders-tool-plug-ins-symbolic.svg		\
 	scalable/gimp-prefs-folders-tool-presets-symbolic.svg		\
@@ -232,23 +238,23 @@ scalable_images = \
 	scalable/gimp-prefs-interface-symbolic.svg			\
 	scalable/gimp-prefs-new-image-symbolic.svg			\
 	scalable/gimp-prefs-playground-symbolic.svg			\
-	scalable/gimp-prefs-session-symbolic.svg				\
+	scalable/gimp-prefs-session-symbolic.svg			\
 	scalable/gimp-prefs-system-resources-symbolic.svg		\
 	scalable/gimp-prefs-theme-symbolic.svg				\
-	scalable/gimp-prefs-toolbox-symbolic.svg				\
 	scalable/gimp-prefs-tool-options-symbolic.svg			\
+	scalable/gimp-prefs-toolbox-symbolic.svg			\
 	scalable/gimp-prefs-window-management-symbolic.svg		\
 	scalable/gimp-quick-mask-off-symbolic.svg			\
-	scalable/gimp-quick-mask-on-symbolic.svg				\
-	scalable/gimp-reset-symbolic.svg					\
-	scalable/gimp-reshow-filter-symbolic.svg				\
+	scalable/gimp-quick-mask-on-symbolic.svg			\
+	scalable/gimp-reset-symbolic.svg				\
+	scalable/gimp-reshow-filter-symbolic.svg			\
 	scalable/gimp-resize-symbolic.svg				\
 	scalable/gimp-rotate-180-symbolic.svg				\
 	scalable/gimp-sample-point-symbolic.svg				\
-	scalable/gimp-scale-symbolic.svg					\
+	scalable/gimp-scale-symbolic.svg				\
 	scalable/gimp-selection-symbolic.svg				\
-	scalable/gimp-selection-add-symbolic.svg				\
-	scalable/gimp-selection-all-symbolic.svg				\
+	scalable/gimp-selection-add-symbolic.svg			\
+	scalable/gimp-selection-all-symbolic.svg			\
 	scalable/gimp-selection-border-symbolic.svg			\
 	scalable/gimp-selection-grow-symbolic.svg			\
 	scalable/gimp-selection-intersect-symbolic.svg			\
@@ -260,20 +266,20 @@ scalable_images = \
 	scalable/gimp-selection-to-channel-symbolic.svg			\
 	scalable/gimp-selection-to-path-symbolic.svg			\
 	scalable/gimp-shape-circle-symbolic.svg				\
-	scalable/gimp-shape-diamond-symbolic.svg				\
+	scalable/gimp-shape-diamond-symbolic.svg			\
 	scalable/gimp-shape-square-symbolic.svg				\
-	scalable/gimp-shred-symbolic.svg					\
+	scalable/gimp-shred-symbolic.svg				\
 	scalable/gimp-smartphone-symbolic.svg				\
 	scalable/gimp-swap-colors-symbolic.svg				\
 	scalable/gimp-symmetry-symbolic.svg				\
 	scalable/gimp-template-symbolic.svg				\
-	scalable/gimp-text-dir-ttb-rtl-symbolic.svg			\
-	scalable/gimp-text-dir-ttb-rtl-upright-symbolic.svg		\
 	scalable/gimp-text-dir-ttb-ltr-symbolic.svg			\
 	scalable/gimp-text-dir-ttb-ltr-upright-symbolic.svg		\
+	scalable/gimp-text-dir-ttb-rtl-symbolic.svg			\
+	scalable/gimp-text-dir-ttb-rtl-upright-symbolic.svg		\
 	scalable/gimp-text-layer-symbolic.svg				\
 	scalable/gimp-toilet-paper-symbolic.svg				\
-	scalable/gimp-tool-airbrush-symbolic.svg				\
+	scalable/gimp-tool-airbrush-symbolic.svg			\
 	scalable/gimp-tool-align-symbolic.svg				\
 	scalable/gimp-tool-blur-symbolic.svg				\
 	scalable/gimp-tool-brightness-contrast-symbolic.svg		\
@@ -282,22 +288,22 @@ scalable_images = \
 	scalable/gimp-tool-cage-symbolic.svg				\
 	scalable/gimp-tool-clone-symbolic.svg				\
 	scalable/gimp-tool-color-balance-symbolic.svg			\
-	scalable/gimp-tool-colorize-symbolic.svg				\
 	scalable/gimp-tool-color-picker-symbolic.svg			\
 	scalable/gimp-tool-color-temperature-symbolic.svg		\
+	scalable/gimp-tool-colorize-symbolic.svg			\
 	scalable/gimp-tool-crop-symbolic.svg				\
 	scalable/gimp-tool-curves-symbolic.svg				\
 	scalable/gimp-tool-desaturate-symbolic.svg			\
 	scalable/gimp-tool-dodge-symbolic.svg				\
 	scalable/gimp-tool-ellipse-select-symbolic.svg			\
 	scalable/gimp-tool-eraser-symbolic.svg				\
-	scalable/gimp-tool-exposure-symbolic.svg				\
+	scalable/gimp-tool-exposure-symbolic.svg			\
 	scalable/gimp-tool-flip-symbolic.svg				\
 	scalable/gimp-tool-foreground-select-symbolic.svg		\
 	scalable/gimp-tool-free-select-symbolic.svg			\
 	scalable/gimp-tool-fuzzy-select-symbolic.svg			\
-	scalable/gimp-tool-gradient-symbolic.svg				\
-	scalable/gimp-tool-handle-transform-symbolic.svg			\
+	scalable/gimp-tool-gradient-symbolic.svg			\
+	scalable/gimp-tool-handle-transform-symbolic.svg		\
 	scalable/gimp-tool-heal-symbolic.svg				\
 	scalable/gimp-tool-hue-saturation-symbolic.svg			\
 	scalable/gimp-tool-ink-symbolic.svg				\
@@ -310,7 +316,7 @@ scalable_images = \
 	scalable/gimp-tool-offset-symbolic.svg				\
 	scalable/gimp-tool-options-symbolic.svg				\
 	scalable/gimp-tool-paintbrush-symbolic.svg			\
-	scalable/gimp-tool-paint-select-symbolic.svg		\
+	scalable/gimp-tool-paint-select-symbolic.svg			\
 	scalable/gimp-tool-path-symbolic.svg				\
 	scalable/gimp-tool-pencil-symbolic.svg				\
 	scalable/gimp-tool-perspective-clone-symbolic.svg		\
@@ -324,13 +330,13 @@ scalable_images = \
 	scalable/gimp-tool-shadows-highlights-symbolic.svg		\
 	scalable/gimp-tool-shear-symbolic.svg				\
 	scalable/gimp-tool-smudge-symbolic.svg				\
-	scalable/gimp-tools-symbolic.svg					\
 	scalable/gimp-tool-text-symbolic.svg				\
 	scalable/gimp-tool-threshold-symbolic.svg			\
 	scalable/gimp-tool-transform-3d-symbolic.svg			\
 	scalable/gimp-tool-unified-transform-symbolic.svg		\
 	scalable/gimp-tool-warp-symbolic.svg				\
 	scalable/gimp-tool-zoom-symbolic.svg				\
+	scalable/gimp-tools-symbolic.svg				\
 	scalable/gimp-transform-3d-camera-symbolic.svg			\
 	scalable/gimp-transform-3d-move-symbolic.svg			\
 	scalable/gimp-transform-3d-rotate-symbolic.svg			\
@@ -339,9 +345,9 @@ scalable_images = \
 	scalable/gimp-user-manual-symbolic.svg				\
 	scalable/gimp-vcenter-symbolic.svg				\
 	scalable/gimp-vchain-symbolic.svg				\
-	scalable/gimp-vchain-broken-symbolic.svg				\
-	scalable/gimp-vfill-symbolic.svg					\
-	scalable/gimp-video-symbolic.svg					\
+	scalable/gimp-vchain-broken-symbolic.svg			\
+	scalable/gimp-vfill-symbolic.svg				\
+	scalable/gimp-video-symbolic.svg				\
 	scalable/gimp-visible-symbolic.svg				\
 	scalable/gimp-web-symbolic.svg					\
 	scalable/gimp-wilber-symbolic.svg				\
@@ -358,7 +364,7 @@ vector24_images = \
 	24/media-floppy-symbolic.svg 					\
 	24/media-optical-symbolic.svg					\
 	\
-	24/gtk-select-color-symbolic.svg					\
+	24/gtk-select-color-symbolic.svg				\
 	\
 	24/gimp-business-card-symbolic.svg				\
 	24/gimp-center-symbolic.svg					\
@@ -368,15 +374,15 @@ vector24_images = \
 	24/gimp-channel-gray-symbolic.svg				\
 	24/gimp-channel-green-symbolic.svg				\
 	24/gimp-channel-indexed-symbolic.svg				\
-	24/gimp-channel-red-symbolic.svg					\
+	24/gimp-channel-red-symbolic.svg				\
 	24/gimp-channels-symbolic.svg					\
-	24/gimp-char-picker-symbolic.svg					\
-	24/gimp-colormap-symbolic.svg					\
+	24/gimp-char-picker-symbolic.svg				\
 	24/gimp-color-space-linear-symbolic.svg				\
 	24/gimp-color-space-non-linear-symbolic.svg			\
 	24/gimp-color-space-perceptual-symbolic.svg			\
+	24/gimp-colormap-symbolic.svg					\
 	24/gimp-controller-symbolic.svg					\
-	24/gimp-controller-keyboard-symbolic.svg				\
+	24/gimp-controller-keyboard-symbolic.svg			\
 	24/gimp-controller-linux-input-symbolic.svg			\
 	24/gimp-controller-midi-symbolic.svg				\
 	24/gimp-controller-wheel-symbolic.svg				\
@@ -384,11 +390,11 @@ vector24_images = \
 	24/gimp-device-status-symbolic.svg				\
 	24/gimp-display-symbolic.svg					\
 	24/gimp-display-filter-symbolic.svg				\
-	24/gimp-display-filter-clip-warning-symbolic.svg			\
+	24/gimp-display-filter-clip-warning-symbolic.svg		\
 	24/gimp-display-filter-colorblind-symbolic.svg			\
 	24/gimp-display-filter-contrast-symbolic.svg			\
 	24/gimp-display-filter-gamma-symbolic.svg			\
-	24/gimp-display-filter-lcms-symbolic.svg				\
+	24/gimp-display-filter-lcms-symbolic.svg			\
 	24/gimp-display-filter-proof-symbolic.svg			\
 	24/gimp-dynamics-symbolic.svg					\
 	24/gimp-floating-selection-symbolic.svg				\
@@ -417,7 +423,7 @@ vector24_images = \
 	24/gimp-prefs-folders-brushes-symbolic.svg			\
 	24/gimp-prefs-folders-dynamics-symbolic.svg			\
 	24/gimp-prefs-folders-environ-symbolic.svg			\
-	24/gimp-prefs-folders-fonts-symbolic.svg				\
+	24/gimp-prefs-folders-fonts-symbolic.svg			\
 	24/gimp-prefs-folders-gradients-symbolic.svg			\
 	24/gimp-prefs-folders-icon-themes-symbolic.svg			\
 	24/gimp-prefs-folders-interp-symbolic.svg			\
@@ -428,25 +434,25 @@ vector24_images = \
 	24/gimp-prefs-folders-plug-ins-symbolic.svg			\
 	24/gimp-prefs-folders-scripts-symbolic.svg			\
 	24/gimp-prefs-folders-themes-symbolic.svg			\
-	24/gimp-prefs-folders-tool-plug-ins-symbolic.svg			\
+	24/gimp-prefs-folders-tool-plug-ins-symbolic.svg		\
 	24/gimp-prefs-folders-tool-presets-symbolic.svg			\
-	24/gimp-prefs-folders-tools-symbolic.svg				\
+	24/gimp-prefs-folders-tools-symbolic.svg			\
 	24/gimp-prefs-help-system-symbolic.svg				\
 	24/gimp-prefs-icon-theme-symbolic.svg				\
 	24/gimp-prefs-image-title-symbolic.svg				\
-	24/gimp-prefs-image-windows-symbolic.svg				\
+	24/gimp-prefs-image-windows-symbolic.svg			\
 	24/gimp-prefs-image-windows-appearance-symbolic.svg		\
 	24/gimp-prefs-image-windows-snapping-symbolic.svg		\
-	24/gimp-prefs-import-export-symbolic.svg				\
-	24/gimp-prefs-input-devices-symbolic.svg				\
+	24/gimp-prefs-import-export-symbolic.svg			\
+	24/gimp-prefs-input-devices-symbolic.svg			\
 	24/gimp-prefs-interface-symbolic.svg				\
 	24/gimp-prefs-new-image-symbolic.svg				\
 	24/gimp-prefs-playground-symbolic.svg				\
 	24/gimp-prefs-session-symbolic.svg				\
 	24/gimp-prefs-system-resources-symbolic.svg			\
-	24/gimp-prefs-theme-symbolic.svg					\
-	24/gimp-prefs-toolbox-symbolic.svg				\
+	24/gimp-prefs-theme-symbolic.svg				\
 	24/gimp-prefs-tool-options-symbolic.svg				\
+	24/gimp-prefs-toolbox-symbolic.svg				\
 	24/gimp-prefs-window-management-symbolic.svg			\
 	24/gimp-resize-symbolic.svg					\
 	24/gimp-sample-point-symbolic.svg				\
@@ -468,11 +474,11 @@ vector24_images = \
 	24/gimp-tool-color-picker-symbolic.svg				\
 	24/gimp-tool-colorize-symbolic.svg				\
 	24/gimp-tool-crop-symbolic.svg					\
-	24/gimp-tool-curves-symbolic.svg					\
+	24/gimp-tool-curves-symbolic.svg				\
 	24/gimp-tool-desaturate-symbolic.svg				\
 	24/gimp-tool-dodge-symbolic.svg					\
-	24/gimp-tool-eraser-symbolic.svg					\
-	24/gimp-tool-ellipse-select-symbolic.svg				\
+	24/gimp-tool-ellipse-select-symbolic.svg			\
+	24/gimp-tool-eraser-symbolic.svg				\
 	24/gimp-tool-exposure-symbolic.svg				\
 	24/gimp-tool-flip-symbolic.svg					\
 	24/gimp-tool-foreground-select-symbolic.svg			\
@@ -481,42 +487,42 @@ vector24_images = \
 	24/gimp-tool-gradient-symbolic.svg				\
 	24/gimp-tool-handle-transform-symbolic.svg			\
 	24/gimp-tool-heal-symbolic.svg					\
-	24/gimp-tool-hue-saturation-symbolic.svg				\
+	24/gimp-tool-hue-saturation-symbolic.svg			\
 	24/gimp-tool-ink-symbolic.svg					\
 	24/gimp-tool-iscissors-symbolic.svg				\
-	24/gimp-tool-levels-symbolic.svg					\
-	24/gimp-tool-mypaint-brush-symbolic.svg				\
+	24/gimp-tool-levels-symbolic.svg				\
 	24/gimp-tool-measure-symbolic.svg				\
+	24/gimp-tool-mypaint-brush-symbolic.svg				\
 	24/gimp-tool-n-point-deformation-symbolic.svg			\
 	24/gimp-tool-offset-symbolic.svg				\
 	24/gimp-tool-options-symbolic.svg				\
 	24/gimp-tool-paintbrush-symbolic.svg				\
-	24/gimp-tool-paint-select-symbolic.svg			\
+	24/gimp-tool-paint-select-symbolic.svg				\
 	24/gimp-tool-path-symbolic.svg					\
-	24/gimp-tool-pencil-symbolic.svg					\
+	24/gimp-tool-pencil-symbolic.svg				\
 	24/gimp-tool-perspective-symbolic.svg				\
 	24/gimp-tool-perspective-clone-symbolic.svg			\
 	24/gimp-tool-posterize-symbolic.svg				\
-	24/gimp-tool-preset-symbolic.svg					\
+	24/gimp-tool-preset-symbolic.svg				\
 	24/gimp-tool-rect-select-symbolic.svg				\
-	24/gimp-tool-rotate-symbolic.svg					\
-	24/gimp-tools-symbolic.svg					\
+	24/gimp-tool-rotate-symbolic.svg				\
 	24/gimp-tool-scale-symbolic.svg					\
-	24/gimp-tool-seamless-clone-symbolic.svg				\
+	24/gimp-tool-seamless-clone-symbolic.svg			\
 	24/gimp-tool-shadows-highlights-symbolic.svg			\
 	24/gimp-tool-shear-symbolic.svg					\
-	24/gimp-tool-smudge-symbolic.svg					\
+	24/gimp-tool-smudge-symbolic.svg				\
+	24/gimp-tool-text-symbolic.svg					\
 	24/gimp-tool-threshold-symbolic.svg				\
 	24/gimp-tool-transform-3d-symbolic.svg				\
 	24/gimp-tool-unified-transform-symbolic.svg			\
-	24/gimp-tool-text-symbolic.svg					\
 	24/gimp-tool-warp-symbolic.svg					\
 	24/gimp-tool-zoom-symbolic.svg					\
+	24/gimp-tools-symbolic.svg					\
 	24/gimp-transparency-symbolic.svg				\
 	24/gimp-undo-history-symbolic.svg				\
-	24/gimp-user-manual-symbolic.svg					\
+	24/gimp-user-manual-symbolic.svg				\
 	24/gimp-video-symbolic.svg					\
-	24/gimp-web-symbolic.svg						\
+	24/gimp-web-symbolic.svg					\
 	24/gimp-wilber-symbolic.svg
 
 icons12_images = \
@@ -623,15 +629,14 @@ icons16_images = \
 	16/gimp-char-picker-symbolic.symbolic.png				\
 	16/gimp-clipboard-symbolic.symbolic.png					\
 	16/gimp-close-all-symbolic.symbolic.png					\
-	16/gimp-color-pick-from-screen-symbolic.symbolic.png			\
 	16/gimp-color-cmyk-symbolic.symbolic.png				\
-	16/gimp-tool-color-temperature-symbolic.symbolic.png			\
-	16/gimp-color-triangle-symbolic.symbolic.png				\
-	16/gimp-color-water-symbolic.symbolic.png				\
-	16/gimp-colormap-symbolic.symbolic.png					\
+	16/gimp-color-pick-from-screen-symbolic.symbolic.png			\
 	16/gimp-color-space-linear-symbolic.symbolic.png			\
 	16/gimp-color-space-non-linear-symbolic.symbolic.png			\
 	16/gimp-color-space-perceptual-symbolic.symbolic.png			\
+	16/gimp-color-triangle-symbolic.symbolic.png				\
+	16/gimp-color-water-symbolic.symbolic.png				\
+	16/gimp-colormap-symbolic.symbolic.png					\
 	16/gimp-controller-keyboard-symbolic.symbolic.png			\
 	16/gimp-controller-linux-input-symbolic.symbolic.png			\
 	16/gimp-controller-midi-symbolic.symbolic.png				\
@@ -677,9 +682,9 @@ icons16_images = \
 	16/gimp-histogram-logarithmic-symbolic.symbolic.png			\
 	16/gimp-histogram-symbolic.symbolic.png					\
 	16/gimp-image-symbolic.symbolic.png					\
-	16/gimp-images-symbolic.symbolic.png					\
 	16/gimp-image-open-symbolic.symbolic.png				\
 	16/gimp-image-reload-symbolic.symbolic.png				\
+	16/gimp-images-symbolic.symbolic.png					\
 	16/gimp-input-device-symbolic.symbolic.png				\
 	16/gimp-invert-symbolic.symbolic.png					\
 	16/gimp-join-bevel-symbolic.symbolic.png				\
@@ -765,6 +770,7 @@ icons16_images = \
 	16/gimp-tool-clone-symbolic.symbolic.png				\
 	16/gimp-tool-color-balance-symbolic.symbolic.png			\
 	16/gimp-tool-color-picker-symbolic.symbolic.png				\
+	16/gimp-tool-color-temperature-symbolic.symbolic.png			\
 	16/gimp-tool-colorize-symbolic.symbolic.png				\
 	16/gimp-tool-crop-symbolic.symbolic.png					\
 	16/gimp-tool-curves-symbolic.symbolic.png				\
@@ -915,11 +921,10 @@ icons24_images = \
 	24/gimp-channel-red-symbolic.symbolic.png				\
 	24/gimp-channel-symbolic.symbolic.png					\
 	24/gimp-channels-symbolic.symbolic.png					\
-	24/gimp-colormap-symbolic.symbolic.png					\
 	24/gimp-color-space-linear-symbolic.symbolic.png			\
 	24/gimp-color-space-non-linear-symbolic.symbolic.png			\
 	24/gimp-color-space-perceptual-symbolic.symbolic.png			\
-	24/gimp-tool-color-temperature-symbolic.symbolic.png			\
+	24/gimp-colormap-symbolic.symbolic.png					\
 	24/gimp-controller-keyboard-symbolic.symbolic.png			\
 	24/gimp-controller-linux-input-symbolic.symbolic.png			\
 	24/gimp-controller-midi-symbolic.symbolic.png				\
@@ -930,16 +935,15 @@ icons24_images = \
 	24/gimp-detach-symbolic.symbolic.png					\
 	24/gimp-device-status-symbolic.symbolic.png				\
 	24/gimp-display-symbolic.symbolic.png					\
+	24/gimp-display-filter-symbolic.symbolic.png				\
 	24/gimp-display-filter-clip-warning-symbolic.symbolic.png		\
 	24/gimp-display-filter-colorblind-symbolic.symbolic.png			\
 	24/gimp-display-filter-contrast-symbolic.symbolic.png			\
 	24/gimp-display-filter-gamma-symbolic.symbolic.png			\
 	24/gimp-display-filter-lcms-symbolic.symbolic.png			\
 	24/gimp-display-filter-proof-symbolic.symbolic.png			\
-	24/gimp-display-filter-symbolic.symbolic.png				\
 	24/gimp-floating-selection-symbolic.symbolic.png			\
 	24/gimp-gegl-symbolic.symbolic.png					\
-	24/gimp-grid-symbolic.symbolic.png					\
 	24/gimp-gravity-east-symbolic.symbolic.png				\
 	24/gimp-gravity-north-east-symbolic.symbolic.png			\
 	24/gimp-gravity-north-west-symbolic.symbolic.png			\
@@ -948,14 +952,15 @@ icons24_images = \
 	24/gimp-gravity-south-west-symbolic.symbolic.png			\
 	24/gimp-gravity-south-symbolic.symbolic.png				\
 	24/gimp-gravity-west-symbolic.symbolic.png				\
+	24/gimp-grid-symbolic.symbolic.png					\
 	24/gimp-hcenter-symbolic.symbolic.png					\
 	24/gimp-hchain-broken-symbolic.symbolic.png				\
 	24/gimp-hchain-symbolic.symbolic.png					\
 	24/gimp-hfill-symbolic.symbolic.png					\
 	24/gimp-image-symbolic.symbolic.png					\
 	24/gimp-images-symbolic.symbolic.png					\
-	24/gimp-layer-mask-symbolic.symbolic.png				\
 	24/gimp-layer-symbolic.symbolic.png					\
+	24/gimp-layer-mask-symbolic.symbolic.png				\
 	24/gimp-layers-symbolic.symbolic.png					\
 	24/gimp-move-to-screen-symbolic.symbolic.png				\
 	24/gimp-navigation-symbolic.symbolic.png				\
@@ -982,6 +987,7 @@ icons24_images = \
 	24/gimp-tool-clone-symbolic.symbolic.png				\
 	24/gimp-tool-color-balance-symbolic.symbolic.png			\
 	24/gimp-tool-color-picker-symbolic.symbolic.png				\
+	24/gimp-tool-color-temperature-symbolic.symbolic.png			\
 	24/gimp-tool-colorize-symbolic.symbolic.png				\
 	24/gimp-tool-crop-symbolic.symbolic.png					\
 	24/gimp-tool-curves-symbolic.symbolic.png				\
@@ -1006,14 +1012,15 @@ icons24_images = \
 	24/gimp-tool-mypaint-brush-symbolic.symbolic.png			\
 	24/gimp-tool-n-point-deformation-symbolic.symbolic.png			\
 	24/gimp-tool-offset-symbolic.symbolic.png				\
+	24/gimp-tool-options-symbolic.symbolic.png				\
 	24/gimp-tool-paintbrush-symbolic.symbolic.png				\
 	24/gimp-tool-paint-select-symbolic.symbolic.png				\
 	24/gimp-tool-path-symbolic.symbolic.png					\
 	24/gimp-tool-pencil-symbolic.symbolic.png				\
 	24/gimp-tool-perspective-clone-symbolic.symbolic.png			\
 	24/gimp-tool-perspective-symbolic.symbolic.png				\
-	24/gimp-tool-preset-symbolic.symbolic.png				\
 	24/gimp-tool-posterize-symbolic.symbolic.png				\
+	24/gimp-tool-preset-symbolic.symbolic.png				\
 	24/gimp-tool-rect-select-symbolic.symbolic.png				\
 	24/gimp-tool-rotate-symbolic.symbolic.png				\
 	24/gimp-tool-scale-symbolic.symbolic.png				\
@@ -1027,7 +1034,6 @@ icons24_images = \
 	24/gimp-tool-unified-transform-symbolic.symbolic.png			\
 	24/gimp-tool-warp-symbolic.symbolic.png					\
 	24/gimp-tool-zoom-symbolic.symbolic.png					\
-	24/gimp-tool-options-symbolic.symbolic.png				\
 	24/gimp-tools-symbolic.symbolic.png					\
 	24/gimp-transparency-symbolic.symbolic.png				\
 	24/gimp-undo-history-symbolic.symbolic.png				\
@@ -1116,8 +1122,8 @@ icons64_images = \
 	64/gimp-frame.png							\
 	64/gimp-texture.png							\
 	64/gimp-user-manual-symbolic.symbolic.png				\
-	64/gimp-wilber-eek-symbolic.symbolic.png				\
 	64/gimp-wilber-symbolic.symbolic.png					\
+	64/gimp-wilber-eek-symbolic.symbolic.png				\
 	64/gimp-wilber-outline-symbolic.symbolic.png
 
 icons64_system_images = \

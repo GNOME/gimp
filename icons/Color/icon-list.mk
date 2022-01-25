@@ -20,8 +20,8 @@ scalable_images = \
 	scalable/folder.svg					\
 	scalable/folder-new.svg					\
 	scalable/format-indent-more.svg				\
-	scalable/format-justify-fill.svg			\
 	scalable/format-justify-center.svg			\
+	scalable/format-justify-fill.svg			\
 	scalable/format-justify-left.svg			\
 	scalable/format-justify-right.svg			\
 	scalable/format-text-direction-ltr.svg			\
@@ -76,6 +76,7 @@ scalable_images = \
 	scalable/gimp-cap-round.svg				\
 	scalable/gimp-cap-square.svg				\
 	scalable/gimp-center.svg				\
+	scalable/gimp-channel.svg				\
 	scalable/gimp-channel-alpha.svg				\
 	scalable/gimp-channel-blue.svg				\
 	scalable/gimp-channel-gray.svg				\
@@ -83,22 +84,21 @@ scalable_images = \
 	scalable/gimp-channel-indexed.svg			\
 	scalable/gimp-channel-red.svg				\
 	scalable/gimp-channels.svg				\
-	scalable/gimp-channel.svg				\
 	scalable/gimp-char-picker.svg				\
 	scalable/gimp-clipboard.svg				\
 	scalable/gimp-close.svg					\
 	scalable/gimp-close-all.svg				\
-	scalable/gimp-colormap.svg				\
+	scalable/gimp-color-cmyk.svg				\
+	scalable/gimp-color-pick-from-screen.svg		\
 	scalable/gimp-color-picker-black.svg			\
 	scalable/gimp-color-picker-gray.svg			\
 	scalable/gimp-color-picker-white.svg			\
-	scalable/gimp-color-pick-from-screen.svg		\
-	scalable/gimp-color-cmyk.svg				\
 	scalable/gimp-color-space-linear.svg			\
 	scalable/gimp-color-space-non-linear.svg		\
 	scalable/gimp-color-space-perceptual.svg		\
 	scalable/gimp-color-triangle.svg			\
 	scalable/gimp-color-water.svg				\
+	scalable/gimp-colormap.svg				\
 	scalable/gimp-controller-keyboard.svg			\
 	scalable/gimp-controller-linux-input.svg		\
 	scalable/gimp-controller-midi.svg			\
@@ -157,24 +157,30 @@ scalable_images = \
 	scalable/gimp-histogram-linear.svg			\
 	scalable/gimp-histogram-logarithmic.svg			\
 	scalable/gimp-histogram.svg				\
-	scalable/gimp-images.svg				\
 	scalable/gimp-image.svg					\
 	scalable/gimp-image-open.svg				\
 	scalable/gimp-image-reload.svg				\
+	scalable/gimp-images.svg				\
 	scalable/gimp-input-device.svg				\
 	scalable/gimp-invert.svg				\
 	scalable/gimp-join-bevel.svg				\
 	scalable/gimp-join-miter.svg				\
 	scalable/gimp-join-round.svg				\
 	scalable/gimp-landscape.svg				\
-	scalable/gimp-layer-mask.svg				\
-	scalable/gimp-layers.svg				\
 	scalable/gimp-layer.svg					\
+	scalable/gimp-layer-mask.svg				\
 	scalable/gimp-layer-to-imagesize.svg			\
+	scalable/gimp-layers.svg				\
 	scalable/gimp-letter-spacing.svg			\
 	scalable/gimp-line-spacing.svg				\
 	scalable/gimp-linked.svg				\
 	scalable/gimp-list.svg					\
+	scalable/gimp-lock.svg					\
+	scalable/gimp-lock-multi.svg				\
+	scalable/gimp-lock-alpha.svg				\
+	scalable/gimp-lock-content.svg				\
+	scalable/gimp-lock-position.svg				\
+	scalable/gimp-lock-visibility.svg			\
 	scalable/gimp-marker.svg				\
 	scalable/gimp-menu-left.svg				\
 	scalable/gimp-menu-right.svg				\
@@ -184,8 +190,8 @@ scalable_images = \
 	scalable/gimp-paste-as-new.svg				\
 	scalable/gimp-paste-into.svg				\
 	scalable/gimp-path.svg					\
-	scalable/gimp-paths.svg					\
 	scalable/gimp-path-stroke.svg				\
+	scalable/gimp-paths.svg					\
 	scalable/gimp-pattern.svg				\
 	scalable/gimp-pivot-center.svg				\
 	scalable/gimp-pivot-east.svg				\
@@ -235,8 +241,8 @@ scalable_images = \
 	scalable/gimp-prefs-session.svg				\
 	scalable/gimp-prefs-system-resources.svg		\
 	scalable/gimp-prefs-theme.svg				\
-	scalable/gimp-prefs-toolbox.svg				\
 	scalable/gimp-prefs-tool-options.svg			\
+	scalable/gimp-prefs-toolbox.svg				\
 	scalable/gimp-prefs-window-management.svg		\
 	scalable/gimp-quick-mask-off.svg			\
 	scalable/gimp-quick-mask-on.svg				\
@@ -267,10 +273,10 @@ scalable_images = \
 	scalable/gimp-swap-colors.svg				\
 	scalable/gimp-symmetry.svg				\
 	scalable/gimp-template.svg				\
-	scalable/gimp-text-dir-ttb-rtl.svg			\
-	scalable/gimp-text-dir-ttb-rtl-upright.svg		\
 	scalable/gimp-text-dir-ttb-ltr.svg			\
 	scalable/gimp-text-dir-ttb-ltr-upright.svg		\
+	scalable/gimp-text-dir-ttb-rtl.svg			\
+	scalable/gimp-text-dir-ttb-rtl-upright.svg		\
 	scalable/gimp-text-layer.svg				\
 	scalable/gimp-toilet-paper.svg				\
 	scalable/gimp-tool-airbrush.svg				\
@@ -282,9 +288,9 @@ scalable_images = \
 	scalable/gimp-tool-cage.svg				\
 	scalable/gimp-tool-clone.svg				\
 	scalable/gimp-tool-color-balance.svg			\
-	scalable/gimp-tool-colorize.svg				\
 	scalable/gimp-tool-color-picker.svg			\
 	scalable/gimp-tool-color-temperature.svg		\
+	scalable/gimp-tool-colorize.svg				\
 	scalable/gimp-tool-crop.svg				\
 	scalable/gimp-tool-curves.svg				\
 	scalable/gimp-tool-desaturate.svg			\
@@ -310,7 +316,7 @@ scalable_images = \
 	scalable/gimp-tool-offset.svg				\
 	scalable/gimp-tool-options.svg				\
 	scalable/gimp-tool-paintbrush.svg			\
-	scalable/gimp-tool-paint-select.svg		\
+	scalable/gimp-tool-paint-select.svg			\
 	scalable/gimp-tool-path.svg				\
 	scalable/gimp-tool-pencil.svg				\
 	scalable/gimp-tool-perspective-clone.svg		\
@@ -324,13 +330,13 @@ scalable_images = \
 	scalable/gimp-tool-shadows-highlights.svg		\
 	scalable/gimp-tool-shear.svg				\
 	scalable/gimp-tool-smudge.svg				\
-	scalable/gimp-tools.svg					\
 	scalable/gimp-tool-text.svg				\
 	scalable/gimp-tool-threshold.svg			\
 	scalable/gimp-tool-transform-3d.svg			\
 	scalable/gimp-tool-unified-transform.svg		\
 	scalable/gimp-tool-warp.svg				\
 	scalable/gimp-tool-zoom.svg				\
+	scalable/gimp-tools.svg					\
 	scalable/gimp-transform-3d-camera.svg			\
 	scalable/gimp-transform-3d-move.svg			\
 	scalable/gimp-transform-3d-rotate.svg			\
@@ -371,10 +377,10 @@ vector24_images = \
 	24/gimp-channel-red.svg					\
 	24/gimp-channels.svg					\
 	24/gimp-char-picker.svg					\
-	24/gimp-colormap.svg					\
 	24/gimp-color-space-linear.svg				\
 	24/gimp-color-space-non-linear.svg			\
 	24/gimp-color-space-perceptual.svg			\
+	24/gimp-colormap.svg					\
 	24/gimp-controller.svg					\
 	24/gimp-controller-keyboard.svg				\
 	24/gimp-controller-linux-input.svg			\
@@ -445,8 +451,8 @@ vector24_images = \
 	24/gimp-prefs-session.svg				\
 	24/gimp-prefs-system-resources.svg			\
 	24/gimp-prefs-theme.svg					\
-	24/gimp-prefs-toolbox.svg				\
 	24/gimp-prefs-tool-options.svg				\
+	24/gimp-prefs-toolbox.svg				\
 	24/gimp-prefs-window-management.svg			\
 	24/gimp-resize.svg					\
 	24/gimp-sample-point.svg				\
@@ -471,8 +477,8 @@ vector24_images = \
 	24/gimp-tool-curves.svg					\
 	24/gimp-tool-desaturate.svg				\
 	24/gimp-tool-dodge.svg					\
-	24/gimp-tool-eraser.svg					\
 	24/gimp-tool-ellipse-select.svg				\
+	24/gimp-tool-eraser.svg					\
 	24/gimp-tool-exposure.svg				\
 	24/gimp-tool-flip.svg					\
 	24/gimp-tool-foreground-select.svg			\
@@ -485,13 +491,13 @@ vector24_images = \
 	24/gimp-tool-ink.svg					\
 	24/gimp-tool-iscissors.svg				\
 	24/gimp-tool-levels.svg					\
-	24/gimp-tool-mypaint-brush.svg				\
 	24/gimp-tool-measure.svg				\
+	24/gimp-tool-mypaint-brush.svg				\
 	24/gimp-tool-n-point-deformation.svg			\
 	24/gimp-tool-offset.svg					\
 	24/gimp-tool-options.svg				\
 	24/gimp-tool-paintbrush.svg				\
-	24/gimp-tool-paint-select.svg			\
+	24/gimp-tool-paint-select.svg				\
 	24/gimp-tool-path.svg					\
 	24/gimp-tool-pencil.svg					\
 	24/gimp-tool-perspective.svg				\
@@ -500,18 +506,18 @@ vector24_images = \
 	24/gimp-tool-preset.svg					\
 	24/gimp-tool-rect-select.svg				\
 	24/gimp-tool-rotate.svg					\
-	24/gimp-tools.svg					\
 	24/gimp-tool-scale.svg					\
 	24/gimp-tool-seamless-clone.svg				\
 	24/gimp-tool-shadows-highlights.svg			\
 	24/gimp-tool-shear.svg					\
 	24/gimp-tool-smudge.svg					\
+	24/gimp-tool-text.svg					\
 	24/gimp-tool-threshold.svg				\
 	24/gimp-tool-transform-3d.svg				\
 	24/gimp-tool-unified-transform.svg			\
-	24/gimp-tool-text.svg					\
 	24/gimp-tool-warp.svg					\
 	24/gimp-tool-zoom.svg					\
+	24/gimp-tools.svg					\
 	24/gimp-transparency.svg				\
 	24/gimp-undo-history.svg				\
 	24/gimp-user-manual.svg					\
@@ -623,15 +629,14 @@ icons16_images = \
 	16/gimp-char-picker.png					\
 	16/gimp-clipboard.png					\
 	16/gimp-close-all.png					\
-	16/gimp-color-pick-from-screen.png			\
 	16/gimp-color-cmyk.png					\
-	16/gimp-tool-color-temperature.png			\
-	16/gimp-color-triangle.png				\
-	16/gimp-color-water.png					\
-	16/gimp-colormap.png					\
+	16/gimp-color-pick-from-screen.png			\
 	16/gimp-color-space-linear.png				\
 	16/gimp-color-space-non-linear.png			\
 	16/gimp-color-space-perceptual.png			\
+	16/gimp-color-triangle.png				\
+	16/gimp-color-water.png					\
+	16/gimp-colormap.png					\
 	16/gimp-controller-keyboard.png				\
 	16/gimp-controller-linux-input.png			\
 	16/gimp-controller-midi.png				\
@@ -677,9 +682,9 @@ icons16_images = \
 	16/gimp-histogram-logarithmic.png			\
 	16/gimp-histogram.png					\
 	16/gimp-image.png					\
-	16/gimp-images.png					\
 	16/gimp-image-open.png					\
 	16/gimp-image-reload.png				\
+	16/gimp-images.png					\
 	16/gimp-input-device.png				\
 	16/gimp-invert.png					\
 	16/gimp-join-bevel.png					\
@@ -765,6 +770,7 @@ icons16_images = \
 	16/gimp-tool-clone.png					\
 	16/gimp-tool-color-balance.png				\
 	16/gimp-tool-color-picker.png				\
+	16/gimp-tool-color-temperature.png			\
 	16/gimp-tool-colorize.png				\
 	16/gimp-tool-crop.png					\
 	16/gimp-tool-curves.png					\
@@ -812,10 +818,10 @@ icons16_images = \
 	16/gimp-tool-warp.png					\
 	16/gimp-tool-zoom.png					\
 	16/gimp-tools.png					\
-	16/gimp-transparency.png				\
 	16/gimp-transform-3d-camera.png				\
 	16/gimp-transform-3d-move.png				\
 	16/gimp-transform-3d-rotate.png				\
+	16/gimp-transparency.png				\
 	16/gimp-undo-history.png				\
 	16/gimp-user-manual.png					\
 	16/gimp-video.png					\
@@ -915,11 +921,10 @@ icons24_images = \
 	24/gimp-channel-red.png					\
 	24/gimp-channel.png					\
 	24/gimp-channels.png					\
-	24/gimp-colormap.png					\
 	24/gimp-color-space-linear.png				\
 	24/gimp-color-space-non-linear.png			\
 	24/gimp-color-space-perceptual.png			\
-	24/gimp-tool-color-temperature.png			\
+	24/gimp-colormap.png					\
 	24/gimp-controller-keyboard.png				\
 	24/gimp-controller-linux-input.png			\
 	24/gimp-controller-midi.png				\
@@ -930,16 +935,15 @@ icons24_images = \
 	24/gimp-detach.png					\
 	24/gimp-device-status.png				\
 	24/gimp-display.png					\
+	24/gimp-display-filter.png				\
 	24/gimp-display-filter-clip-warning.png			\
 	24/gimp-display-filter-colorblind.png			\
 	24/gimp-display-filter-contrast.png			\
 	24/gimp-display-filter-gamma.png			\
 	24/gimp-display-filter-lcms.png				\
 	24/gimp-display-filter-proof.png			\
-	24/gimp-display-filter.png				\
 	24/gimp-floating-selection.png				\
 	24/gimp-gegl.png					\
-	24/gimp-grid.png					\
 	24/gimp-gravity-east.png				\
 	24/gimp-gravity-north-east.png				\
 	24/gimp-gravity-north-west.png				\
@@ -948,14 +952,15 @@ icons24_images = \
 	24/gimp-gravity-south-west.png				\
 	24/gimp-gravity-south.png				\
 	24/gimp-gravity-west.png				\
+	24/gimp-grid.png					\
 	24/gimp-hcenter.png					\
 	24/gimp-hchain-broken.png				\
 	24/gimp-hchain.png					\
 	24/gimp-hfill.png					\
 	24/gimp-image.png					\
 	24/gimp-images.png					\
-	24/gimp-layer-mask.png					\
 	24/gimp-layer.png					\
+	24/gimp-layer-mask.png					\
 	24/gimp-layers.png					\
 	24/gimp-move-to-screen.png				\
 	24/gimp-navigation.png					\
@@ -982,6 +987,7 @@ icons24_images = \
 	24/gimp-tool-clone.png					\
 	24/gimp-tool-color-balance.png				\
 	24/gimp-tool-color-picker.png				\
+	24/gimp-tool-color-temperature.png			\
 	24/gimp-tool-colorize.png				\
 	24/gimp-tool-crop.png					\
 	24/gimp-tool-curves.png					\
@@ -1006,14 +1012,15 @@ icons24_images = \
 	24/gimp-tool-mypaint-brush.png				\
 	24/gimp-tool-n-point-deformation.png			\
 	24/gimp-tool-offset.png					\
+	24/gimp-tool-options.png				\
 	24/gimp-tool-paintbrush.png				\
 	24/gimp-tool-paint-select.png				\
 	24/gimp-tool-path.png					\
 	24/gimp-tool-pencil.png					\
 	24/gimp-tool-perspective-clone.png			\
 	24/gimp-tool-perspective.png				\
-	24/gimp-tool-preset.png					\
 	24/gimp-tool-posterize.png				\
+	24/gimp-tool-preset.png					\
 	24/gimp-tool-rect-select.png				\
 	24/gimp-tool-rotate.png					\
 	24/gimp-tool-scale.png					\
@@ -1027,7 +1034,6 @@ icons24_images = \
 	24/gimp-tool-unified-transform.png			\
 	24/gimp-tool-warp.png					\
 	24/gimp-tool-zoom.png					\
-	24/gimp-tool-options.png				\
 	24/gimp-tools.png					\
 	24/gimp-transparency.png				\
 	24/gimp-undo-history.png				\
@@ -1116,13 +1122,13 @@ icons64_images = \
 	64/gimp-frame.png					\
 	64/gimp-texture.png					\
 	64/gimp-user-manual.png					\
-	64/gimp-wilber-eek.png					\
 	64/gimp-wilber.png					\
+	64/gimp-wilber-eek.png					\
 	64/gimp-wilber-outline.png
 
 icons64_system_images = \
 	64/dialog-error.png					\
-	64/dialog-information.png					\
+	64/dialog-information.png				\
 	64/dialog-question.png					\
 	64/dialog-warning.png
 
