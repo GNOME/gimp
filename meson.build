@@ -87,7 +87,6 @@ i18n      = import('i18n')
 gnome     = import('gnome')
 pythonmod = import('python')
 simd      = import('unstable-simd')
-fs        = import('fs')
 
 cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')

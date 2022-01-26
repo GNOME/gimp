@@ -6,19 +6,6 @@ if have_vector_icons
     #'bitmap_64-system': [ '64x64',    '64',       '.png' ],
     'bitmap_64-always': [ '64x64',    '64',       '.png' ],
   }
-
-  foreach source, out : source_icons
-    outdir = out[0]
-    indir  = out[1]
-    suffix = out[2]
-
-    icon_list = '../icon-lists/@0@.list'.format(source)
-    cmd = run_command('python3', '-c',
-                      'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@")]))'.format(indir, suffix, icon_list),
-                      check: true)
-    source_icons = cmd.stdout().strip().split(',')
-    install_data(source_icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
-  endforeach
 else
   gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg')
 
@@ -33,12 +20,6 @@ else
     source_icons = cmd.stdout().strip().split(',')
 
     if size == '64'
-      icon_list = '../icon-lists/bitmap_64-always.list'
-      cmd = run_command('python3', '-c',
-                        'print(",".join([line.strip() for line in open("@0@")]))'.format(icon_list),
-                        check: true)
-      source_icons += cmd.stdout().strip().split(',')
-
       icon_list = '../icon-lists/bitmap_64-system.list'
       cmd = run_command('python3', '-c',
                         'print(",".join([line.strip() for line in open("@0@")]))'.format(icon_list),
@@ -54,11 +35,29 @@ else
     # meson.build as it also installs some non-symbolic images.
     subdir(size)
   endforeach
+
+  # Install these directly from PNG sources.
+  source_icons = {
+    'bitmap_64-always': [ '64x64', '64', '.png' ],
+  }
 endif
 
 install_data('index.theme',
   install_dir: gimpiconsdir / theme,
 )
+
+foreach source, out : source_icons
+  outdir = out[0]
+  indir  = out[1]
+  suffix = out[2]
+
+  icon_list = '../icon-lists/@0@.list'.format(source)
+  cmd = run_command('python3', '-c',
+                    'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@")]))'.format(indir, suffix, icon_list),
+                    check: true)
+  source_icons = cmd.stdout().strip().split(',')
+  install_data(source_icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+endforeach
 
 icons_core = [ '64/gimp-question.png', ]
 icons_imgs = [ '64/gimp-wilber-eek.png', ]
