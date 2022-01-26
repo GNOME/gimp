@@ -60,7 +60,6 @@ scalable_images = \
 	scalable/zoom-in.svg					\
 	scalable/zoom-original.svg				\
 	scalable/zoom-out.svg					\
-	\
 	scalable/gtk-cancel.svg					\
 	scalable/gtk-edit.svg					\
 	scalable/gtk-no.svg					\
@@ -68,7 +67,6 @@ scalable_images = \
 	scalable/gtk-select-color.svg				\
 	scalable/gtk-select-font.svg				\
 	scalable/gtk-yes.svg					\
-	\
 	scalable/gimp-anchor.svg				\
 	scalable/gimp-attach.svg				\
 	scalable/gimp-business-card.svg				\
@@ -361,11 +359,9 @@ vector24_images = \
 	24/dialog-question.svg					\
 	24/dialog-warning.svg					\
 	24/document-print.svg					\
-	24/media-floppy.svg 					\
+	24/media-floppy.svg					\
 	24/media-optical.svg					\
-	\
 	24/gtk-select-color.svg					\
-	\
 	24/gimp-business-card.svg				\
 	24/gimp-center.svg					\
 	24/gimp-channel.svg					\
@@ -603,7 +599,6 @@ icons16_images = \
 	16/zoom-in.png						\
 	16/zoom-original.png					\
 	16/zoom-out.png						\
-	\
 	16/gtk-cancel.png					\
 	16/gtk-edit.png						\
 	16/gtk-no.png						\
@@ -611,7 +606,6 @@ icons16_images = \
 	16/gtk-select-color.png					\
 	16/gtk-select-font.png					\
 	16/gtk-yes.png						\
-	\
 	16/gimp-anchor.png					\
 	16/gimp-business-card.png				\
 	16/gimp-cap-butt.png					\
@@ -844,7 +838,6 @@ icons22_images = \
 	22/format-justify-fill.png				\
 	22/format-justify-left.png				\
 	22/format-justify-right.png				\
-	\
 	22/gimp-char-picker.png					\
 	22/gimp-dynamics.png					\
 	22/gimp-histogram.png					\
@@ -906,10 +899,8 @@ icons24_images = \
 	24/format-text-direction-ltr.png			\
 	24/format-text-direction-rtl.png			\
 	24/media-floppy.png					\
-	24/media-optical.png 					\
-	\
+	24/media-optical.png					\
 	24/gtk-select-color.png					\
-	\
 	24/gimp-attach.png					\
 	24/gimp-business-card.png				\
 	24/gimp-center.png					\
@@ -1063,7 +1054,6 @@ icons32_images = \
 
 icons48_images = \
 	48/folder.png						\
-	\
 	48/gimp-channel-alpha.png				\
 	48/gimp-channel-blue.png				\
 	48/gimp-channel-gray.png				\
@@ -1136,7 +1126,7 @@ icons96_images = \
 	96/gimp-wilber.png					\
 	96/gimp-wilber-outline.png
 
-icons128_images = 						\
+icons128_images = \
 	128/folder.png						\
 	128/gimp-wilber.png					\
 	128/gimp-wilber-outline.png
