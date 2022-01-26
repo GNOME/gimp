@@ -57,7 +57,7 @@ option('gi-docgen',         type: 'feature', value: 'auto', description: 'Build 
 option('g-ir-doc',          type: 'boolean', value: false,  description: 'Build developer documentation for introspected API')
 
 option('linux-input',       type: 'feature', value: 'auto', description: 'Linux input event controller module')
-option('vec-icons',         type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
+option('vector-icons',      type: 'boolean', value: true,   description: 'Use vector icons rather than raster ones')
 
 option('vala-plugins',      type: 'feature', value: 'auto', description: 'Build VAPI and Vala plugins')
 

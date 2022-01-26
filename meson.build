@@ -1019,7 +1019,7 @@ if get_option('g-ir-doc')
 endif
 
 # Check for vector icons
-have_vector_icons = get_option('vec-icons')
+have_vector_icons = get_option('vector-icons')
 if have_vector_icons
   # shared-mime-info is needed to correctly detect SVG files
   # (except on Windows, apparently).
