@@ -1,11 +1,30 @@
 
 if have_vector_icons
-  all_icons = [
-    [ 'scalable', color_vector_scalable ],
-    [ '24x24',    color_vector_24 ],
-    [ '64x64',    bitmap_64_always + bitmap_64system ],
-  ]
+  source_icons = {
+    'scalable':         [ 'scalable', 'scalable', '.svg' ],
+    'vector_24':        [ '24x24',    '24',       '.svg' ],
+    'bitmap_64-system': [ '64x64',    '64',       '.png' ],
+    'bitmap_64-always': [ '64x64',    '64',       '.png' ],
+  }
 else
+  source_icons = {
+    'bitmap_12':        [ '12x12',   '12',  '.png' ],
+    'bitmap_16':        [ '16x16',   '16',  '.png' ],
+    'bitmap_18':        [ '18x18',   '18',  '.png' ],
+    'bitmap_20':        [ '20x20',   '20',  '.png' ],
+    'bitmap_22':        [ '22x22',   '22',  '.png' ],
+    'bitmap_24':        [ '24x24',   '24',  '.png' ],
+    'bitmap_32':        [ '32x32',   '32',  '.png' ],
+    'bitmap_48':        [ '48x48',   '48',  '.png' ],
+    'bitmap_64':        [ '64x64',   '64',  '.png' ],
+    'bitmap_96':        [ '96x96',   '96',  '.png' ],
+    'bitmap_128':       [ '128x128', '128', '.png' ],
+    'bitmap_192':       [ '192x192', '192', '.png' ],
+    'bitmap_256':       [ '256x256', '256', '.png' ],
+    'bitmap_64-system': [ '64x64',    '64', '.png' ],
+    'bitmap_64-always': [ '64x64',    '64', '.png' ],
+  }
+
   all_icons = [
     [ '12x12',    bitmap_12 ],
     [ '16x16',    bitmap_16 ],
@@ -23,19 +42,22 @@ else
   ]
 endif
 
-
 install_data('index.theme',
   install_dir: gimpiconsdir / theme,
 )
 
-foreach icon_info : all_icons
-  icons_dir = icon_info[0]
-  icons_list= icon_info[1]
-  install_data(icons_list,
-    install_dir: gimpiconsdir / theme / icons_dir / 'apps',
-  )
-endforeach
+foreach source, out : source_icons
+  outdir = out[0]
+  indir  = out[1]
+  suffix = out[2]
 
+  icon_list = '../icon-lists/@0@.list'.format(source)
+  cmd = run_command('python3', '-c',
+                    'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@")]))'.format(indir, suffix, icon_list),
+                    check: true)
+  source_icons = cmd.stdout().strip().split(',')
+  install_data(source_icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+endforeach
 
 icons_core = [ '64/dialog-question.png', ]
 icons_imgs = [ '64/gimp-wilber-eek.png', ]
