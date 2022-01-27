@@ -2,7 +2,6 @@
 if have_vector_icons
   source_icons = {
     'scalable':         [ 'scalable', 'scalable', '-symbolic.svg' ],
-    'vector_24':        [ '24x24',    '24',       '-symbolic.svg' ],
     #'bitmap_64-system': [ '64x64',    '64',       '.png' ],
     'bitmap_64-always': [ '64x64',    '64',       '.png' ],
   }

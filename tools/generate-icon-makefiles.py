@@ -99,12 +99,6 @@ if __name__ == "__main__":
     col_max_len = print_icons(list_dir, ['scalable.list'], None, "scalable/", ".svg", colorf)
     sym_max_len = print_icons(list_dir, ['scalable.list'], None, "scalable/", "-symbolic.svg", symbolicf)
 
-    # 24x24 vector
-    print("\nvector24_images = \\", file=colorf)
-    print("\nvector24_images = \\", file=symbolicf)
-    print_icons(list_dir, ['vector_24.list'], col_max_len, "24/", ".svg", colorf)
-    print_icons(list_dir, ['vector_24.list'], sym_max_len, "24/", "-symbolic.svg", symbolicf)
-
     # 12x12 bitmap
     print("\nicons12_images = \\", file=colorf)
     print("\nicons12_images = \\", file=symbolicf)

@@ -98,10 +98,10 @@ gimp-color-space-perceptual
 gimp-color-triangle
 gimp-color-water
 gimp-colormap
+gimp-controller
 gimp-controller-keyboard
 gimp-controller-linux-input
 gimp-controller-midi
-gimp-controller
 gimp-controller-wheel
 gimp-convert-grayscale
 gimp-convert-indexed
@@ -116,13 +116,13 @@ gimp-default-colors
 gimp-detach
 gimp-device-status
 gimp-display
+gimp-display-filter
 gimp-display-filter-clip-warning
 gimp-display-filter-colorblind
 gimp-display-filter-contrast
 gimp-display-filter-gamma
 gimp-display-filter-lcms
 gimp-display-filter-proof
-gimp-display-filter
 gimp-duplicate
 gimp-dynamics
 gimp-file-manager
@@ -153,9 +153,9 @@ gimp-hcenter
 gimp-hchain-broken
 gimp-hchain
 gimp-hfill
+gimp-histogram
 gimp-histogram-linear
 gimp-histogram-logarithmic
-gimp-histogram
 gimp-image
 gimp-image-open
 gimp-image-reload
@@ -318,8 +318,8 @@ gimp-tool-paintbrush
 gimp-tool-paint-select
 gimp-tool-path
 gimp-tool-pencil
-gimp-tool-perspective-clone
 gimp-tool-perspective
+gimp-tool-perspective-clone
 gimp-tool-posterize
 gimp-tool-preset
 gimp-tool-rect-select
