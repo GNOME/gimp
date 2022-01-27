@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-11 08:03+0000\n"
-"PO-Revision-Date: 2022-01-16 23:22+0100\n"
+"POT-Creation-Date: 2022-01-27 10:08+0000\n"
+"PO-Revision-Date: 2022-01-27 11:15+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -17536,7 +17536,7 @@ msgstr "Sugerencias del gestor de ventanas"
 
 #: ../app/dialogs/preferences-dialog.c:2821
 msgid "Hint for _docks and toolbox:"
-msgstr "Sugerencia para los _emprotables y la caja de herramientas:"
+msgstr "Sugerencia para los _empotrables y la caja de herramientas:"
 
 #: ../app/dialogs/preferences-dialog.c:2824
 msgid "Focus"
