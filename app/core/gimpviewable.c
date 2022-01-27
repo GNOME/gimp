@@ -1224,8 +1224,8 @@ gimp_viewable_get_icon_name (GimpViewable *viewable)
  * @viewable: viewable object to assign the specified icon name.
  * @icon_name: string containing an icon name identifier.
  *
- * Seta the object's icon name, for use in constructing iconic smbols
- * of the object.  The contents of @icon_name are copied, so you can
+ * Set the object's icon name, for use in constructing iconic symbols
+ * of the object. The contents of @icon_name are copied, so you can
  * free it when you are done with it.
  **/
 void
