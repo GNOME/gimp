@@ -59,14 +59,11 @@ Please make sure that you provide both the Symbolic as well as the Color
 icons. You are welcome to add a raster version for Legacy, but this is
 not mandatory anymore.
 
-- Add the icons in `icons/Symbolic/icon-list.mk` and
-  `icons/Color/icon-list.mk`.
-
-TODO: a single file used to be shared by the maintained icon themes
-(Symbolic and Color now) but this is not the case anymore because of how
-icons are handled in GTK3. We should bring back such logic of shared
-list, but also usable both in meson and autotools. Otherwise we are
-stuck in maintenance mess with inconsistent builds and installations.
+- Add the icons in relevant listing files in `icons/icon-lists/` then
+  run `tools/generate-icon-makefiles.py` which will regenerate files for
+  the autotools build integrating your new icons. The meson build also
+  use the same listing files so you only have to add your icon names in
+  the right categories and you are done.
 
 
 Pixel perfection
