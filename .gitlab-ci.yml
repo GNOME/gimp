@@ -24,6 +24,7 @@
 # - GIMP_CI_SOURCES: trigger the autotools/gcc build and the source tarball job.
 # - GIMP_CI_CPPCHECK: trigger cppcheck static analysis.
 # - GIMP_CI_FLATPAK: trigger the nightly flatpak build and publishing.
+# - GIMP_CI_RASTER_ICONS: trigger the autotools and meson builds without vector icons.
 
 include: 'https://gitlab.gnome.org/GNOME/citemplates/raw/master/flatpak/flatpak_ci_initiative.yml'
 
@@ -57,6 +58,7 @@ build-image:
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
+    - if: '$GIMP_CI_RASTER_ICONS != null'
   stage: prepare
   variables:
     GIT_STRATEGY: none
@@ -138,6 +140,7 @@ deps-debian:
     - if: '$GIMP_CI_SOURCES != null'
     - if: '$GIMP_CI_MESON_GCC != null'
     - if: '$GIMP_CI_MESON_CLANG != null'
+    - if: '$GIMP_CI_RASTER_ICONS != null'
   stage: dependencies
   image: $CI_REGISTRY_IMAGE:build-debian-latest
   cache:
@@ -248,6 +251,38 @@ gimp-clang-debian:
       --prefix="${INSTALL_PREFIX}"
     - ninja -C _build
     - ninja -C _build test
+
+gimp-meson-raster-icons:
+  rules:
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_RASTER_ICONS != null'
+  extends: .gimp-debian-base
+  script:
+    - meson _build
+       --prefix="${INSTALL_PREFIX}"
+       -Dvector-icons=false
+    - ninja -C _build
+    - ninja -C _build test
+
+gimp-autotools-raster-icons:
+  rules:
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_RASTER_ICONS != null'
+  extends: .gimp-debian-base
+  script:
+    - tools/generate-icon-makefiles.py
+    - diff="$(git diff)"
+    - if [ -n "$diff" ]; then
+        echo "Outdated icon-list.mk - please run tools/generate-icon-makefiles.py";
+        echo "$diff";
+        exit 1;
+      fi
+    - mkdir _build
+    - cd _build
+    - ../autogen.sh
+        --prefix="${INSTALL_PREFIX}"
+        --disable-vector-icons
+    - make -j "$(nproc)"
 
 ## WINDOWS 64-bit CI (native MSYS2) ##
 
