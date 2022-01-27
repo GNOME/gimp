@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-11 09:59+0000\n"
-"PO-Revision-Date: 2022-01-16 23:25+0100\n"
+"POT-Creation-Date: 2022-01-27 10:11+0000\n"
+"PO-Revision-Date: 2022-01-27 11:20+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1381,11 +1381,11 @@ msgstr "Mostrar una página de preferencias con características experimentales"
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar un submenú de imagen con acciones de depurado"
 
-#: ../app/main.c:710
+#: ../app/main.c:716
 msgid "[FILE|URI...]"
 msgstr "[ARCHIVO|URI…]"
 
-#: ../app/main.c:738
+#: ../app/main.c:744
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1393,20 +1393,20 @@ msgstr ""
 "GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
 "Asegúrese de que exista una instalación apropiada para su pantalla."
 
-#: ../app/main.c:757
+#: ../app/main.c:763
 msgid "Another GIMP instance is already running."
 msgstr "Ya se está ejecutando otra instancia de GIMP."
 
-#: ../app/main.c:844
+#: ../app/main.c:850
 msgid "GIMP output. Type any character to close this window."
 msgstr "Salida de GIMP. Teclee un carácter cualquiera para cerrar esta ventana."
 
-#: ../app/main.c:845
+#: ../app/main.c:851
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Teclee un carácter cualquiera para cerrar esta ventana)\n"
 
-#: ../app/main.c:862
+#: ../app/main.c:868
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Salida de GIMP. Puede minimizar esta ventana, pero no la cierre."
 
@@ -18366,11 +18366,11 @@ msgstr "Gestión de la ventana"
 
 #: ../app/dialogs/preferences-dialog.c:2842
 msgid "Window Manager Hints"
-msgstr "Hints del gestor de ventanas"
+msgstr "Sugerencias del gestor de ventanas"
 
 #: ../app/dialogs/preferences-dialog.c:2848
 msgid "Hint for _docks and toolbox:"
-msgstr "Pista para los emprotables y la caja de herramien_tas:"
+msgstr "Sugerencia para los _empotrables y la caja de herramientas:"
 
 #: ../app/dialogs/preferences-dialog.c:2851
 msgid "Focus"
