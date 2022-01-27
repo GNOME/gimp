@@ -7,7 +7,9 @@ format-text-direction-ltr
 format-text-direction-rtl
 media-floppy
 media-optical
+
 gtk-select-color
+
 gimp-attach
 gimp-business-card
 gimp-center

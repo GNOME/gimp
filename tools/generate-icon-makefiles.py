@@ -37,18 +37,32 @@ def print_icons(indir, filenames, max_len, prefix, suffix, outfile, endlist=True
     icon_list = os.path.join(indir, filename)
     with open(icon_list, mode='r') as f:
       icons += [line.strip() for line in f]
+    # Strip empty lines in extremities.
+    while icons[-1] == '':
+      icons.pop()
+    while icons[0] == '':
+      icons.pop(0)
 
   if max_len is None:
     max_len = len(max(icons, key=len)) + len(prefix + suffix)
+
+  prev_empty = False
 
   # Using tabs, displayed as 8 chars in our coding style. Computing
   # needed tabs for proper alignment.
   needed_tabs = int(max_len / 8) + (1 if max_len % 8 != 0 else 0)
   for icon in icons[:-1]:
-    icon_path = prefix + icon + suffix
-    tab_mult = needed_tabs - int(len(icon_path) / 8) + 1
-    icon_path = "\t{}{}\\".format(icon_path, "\t" * tab_mult)
-    print(icon_path, file=outfile)
+    if icon == '':
+      # Only keep one empty line.
+      if not prev_empty:
+        print("\t\\", file=outfile)
+        prev_empty = True
+    else:
+      icon_path = prefix + icon + suffix
+      tab_mult = needed_tabs - int(len(icon_path) / 8) + 1
+      icon_path = "\t{}{}\\".format(icon_path, "\t" * tab_mult)
+      print(icon_path, file=outfile)
+      prev_empty = False
   else:
     if endlist:
       icon_path = "\t{}".format(prefix) + icons[-1] + suffix

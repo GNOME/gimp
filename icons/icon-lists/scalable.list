@@ -59,6 +59,7 @@ zoom-fit-best
 zoom-in
 zoom-original
 zoom-out
+
 gtk-cancel
 gtk-edit
 gtk-no
@@ -66,6 +67,7 @@ gtk-ok
 gtk-select-color
 gtk-select-font
 gtk-yes
+
 gimp-anchor
 gimp-attach
 gimp-business-card

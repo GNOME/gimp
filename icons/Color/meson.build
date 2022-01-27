@@ -53,7 +53,7 @@ foreach source, out : source_icons
 
   icon_list = '../icon-lists/@0@.list'.format(source)
   cmd = run_command('python3', '-c',
-                    'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@")]))'.format(indir, suffix, icon_list),
+                    'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@") if line.strip() != ""]))'.format(indir, suffix, icon_list),
                     check: true)
   source_icons = cmd.stdout().strip().split(',')
   install_data(source_icons, install_dir: gimpiconsdir / theme / outdir / 'apps')

@@ -68,6 +68,7 @@ scalable_images = \
 	scalable/zoom-in-symbolic.svg						\
 	scalable/zoom-original-symbolic.svg					\
 	scalable/zoom-out-symbolic.svg						\
+	\
 	scalable/gtk-cancel-symbolic.svg					\
 	scalable/gtk-edit-symbolic.svg						\
 	scalable/gtk-no-symbolic.svg						\
@@ -75,6 +76,7 @@ scalable_images = \
 	scalable/gtk-select-color-symbolic.svg					\
 	scalable/gtk-select-font-symbolic.svg					\
 	scalable/gtk-yes-symbolic.svg						\
+	\
 	scalable/gimp-anchor-symbolic.svg					\
 	scalable/gimp-attach-symbolic.svg					\
 	scalable/gimp-business-card-symbolic.svg				\
@@ -369,7 +371,9 @@ vector24_images = \
 	24/document-print-symbolic.svg						\
 	24/media-floppy-symbolic.svg						\
 	24/media-optical-symbolic.svg						\
+	\
 	24/gtk-select-color-symbolic.svg					\
+	\
 	24/gimp-business-card-symbolic.svg					\
 	24/gimp-center-symbolic.svg						\
 	24/gimp-channel-symbolic.svg						\
@@ -607,6 +611,7 @@ icons16_images = \
 	16/zoom-in-symbolic.symbolic.png					\
 	16/zoom-original-symbolic.symbolic.png					\
 	16/zoom-out-symbolic.symbolic.png					\
+	\
 	16/gtk-cancel-symbolic.symbolic.png					\
 	16/gtk-edit-symbolic.symbolic.png					\
 	16/gtk-no-symbolic.symbolic.png						\
@@ -614,6 +619,7 @@ icons16_images = \
 	16/gtk-select-color-symbolic.symbolic.png				\
 	16/gtk-select-font-symbolic.symbolic.png				\
 	16/gtk-yes-symbolic.symbolic.png					\
+	\
 	16/gimp-anchor-symbolic.symbolic.png					\
 	16/gimp-business-card-symbolic.symbolic.png				\
 	16/gimp-cap-butt-symbolic.symbolic.png					\
@@ -846,6 +852,7 @@ icons22_images = \
 	22/format-justify-fill-symbolic.symbolic.png				\
 	22/format-justify-left-symbolic.symbolic.png				\
 	22/format-justify-right-symbolic.symbolic.png				\
+	\
 	22/gimp-char-picker-symbolic.symbolic.png				\
 	22/gimp-dynamics-symbolic.symbolic.png					\
 	22/gimp-histogram-symbolic.symbolic.png					\
@@ -908,7 +915,9 @@ icons24_images = \
 	24/format-text-direction-rtl-symbolic.symbolic.png			\
 	24/media-floppy-symbolic.symbolic.png					\
 	24/media-optical-symbolic.symbolic.png					\
+	\
 	24/gtk-select-color-symbolic.symbolic.png				\
+	\
 	24/gimp-attach-symbolic.symbolic.png					\
 	24/gimp-business-card-symbolic.symbolic.png				\
 	24/gimp-center-symbolic.symbolic.png					\
@@ -1062,6 +1071,7 @@ icons32_images = \
 
 icons48_images = \
 	48/folder-symbolic.symbolic.png						\
+	\
 	48/gimp-channel-alpha-symbolic.symbolic.png				\
 	48/gimp-channel-blue-symbolic.symbolic.png				\
 	48/gimp-channel-gray-symbolic.symbolic.png				\
@@ -1136,6 +1146,7 @@ icons96_images = \
 
 icons128_images = \
 	128/folder-symbolic.symbolic.png					\
+	\
 	128/gimp-wilber-symbolic.symbolic.png					\
 	128/gimp-wilber-outline-symbolic.symbolic.png
 
@@ -1145,6 +1156,7 @@ icons192_images = \
 
 icons256_images = \
 	256/folder-symbolic.symbolic.png					\
+	\
 	256/gimp-wilber-symbolic.symbolic.png					\
 	256/gimp-wilber-outline-symbolic.symbolic.png
 
