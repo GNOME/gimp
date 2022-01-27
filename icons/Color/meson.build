@@ -24,22 +24,6 @@ else
     'bitmap_64-system': [ '64x64',    '64', '.png' ],
     'bitmap_64-always': [ '64x64',    '64', '.png' ],
   }
-
-  all_icons = [
-    [ '12x12',    bitmap_12 ],
-    [ '16x16',    bitmap_16 ],
-    [ '18x18',    bitmap_18 ],
-    [ '20x20',    bitmap_20 ],
-    [ '22x22',    bitmap_22 ],
-    [ '24x24',    bitmap_24 ],
-    [ '32x32',    bitmap_32 ],
-    [ '48x48',    bitmap_48 ],
-    [ '64x64',    bitmap_64 + bitmap_64_always + bitmap_64system ],
-    [ '96x96',    bitmap_96 ],
-    [ '128x128',  bitmap_128 ],
-    [ '192x192',  bitmap_192 ],
-    [ '256x256',  bitmap_256 ],
-  ]
 endif
 
 install_data('index.theme',
