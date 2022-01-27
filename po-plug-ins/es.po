@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-11 10:00+0000\n"
-"PO-Revision-Date: 2022-01-11 19:15+0100\n"
+"POT-Creation-Date: 2022-01-25 00:24+0000\n"
+"PO-Revision-Date: 2022-01-27 11:08+0100\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -426,7 +426,7 @@ msgstr "_Vertical"
 #.
 #: ../plug-ins/common/blinds.c:352 ../plug-ins/common/compose.c:1128
 #: ../plug-ins/common/decompose.c:665 ../plug-ins/common/file-cel.c:498
-#: ../plug-ins/common/file-cel.c:503 ../plug-ins/common/file-dicom.c:701
+#: ../plug-ins/common/file-cel.c:503 ../plug-ins/common/file-dicom.c:746
 #: ../plug-ins/common/file-gegl.c:468 ../plug-ins/common/file-gif-load.c:1036
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
@@ -444,7 +444,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:660
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:660
 msgid "Background"
 msgstr "Fondo"
 
@@ -994,7 +994,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Guardar los parámetros del Examinador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1503 ../plug-ins/common/file-mng.c:873
+#: ../plug-ins/common/file-dicom.c:1557 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -1024,7 +1024,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2339 ../plug-ins/common/curve-bend.c:889
 #: ../plug-ins/common/file-cel.c:352 ../plug-ins/common/file-cel.c:403
-#: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:376
+#: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
 #: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
@@ -1959,7 +1959,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:394 ../plug-ins/common/file-dicom.c:368
+#: ../plug-ins/common/file-cel.c:394 ../plug-ins/common/file-dicom.c:369
 #: ../plug-ins/common/file-gegl.c:352 ../plug-ins/common/file-gif-load.c:395
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
@@ -2148,34 +2148,39 @@ msgstr "Enlace del escritorio"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Ocurrió un error al abrir el archivo de escritorio «%s»: %s"
 
-#: ../plug-ins/common/file-dicom.c:170
+#: ../plug-ins/common/file-dicom.c:171
 msgid "DICOM image"
 msgstr "Imagen DICOM"
 
-#: ../plug-ins/common/file-dicom.c:202
+#: ../plug-ins/common/file-dicom.c:203
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "Imagen «Digital Imaging and Communications in Medicine»"
 
-#: ../plug-ins/common/file-dicom.c:300
+#: ../plug-ins/common/file-dicom.c:301
 #, c-format
 msgid "Dicom format does not support multiple layers."
 msgstr "El formato Dicom no soporta múltiples capas."
 
-#: ../plug-ins/common/file-dicom.c:402
+#: ../plug-ins/common/file-dicom.c:403
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "«%s» no es un archivo DICOM."
 
-#: ../plug-ins/common/file-dicom.c:575
+#: ../plug-ins/common/file-dicom.c:576
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "GIMP no soporta la sintaxis de transferencia %s."
 
-#: ../plug-ins/common/file-dicom.c:1468
+#: ../plug-ins/common/file-dicom.c:631
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr "%s no es compatible con GIMP en combinación con muestras por píxel: %d"
+
+#: ../plug-ins/common/file-dicom.c:1522
 msgid "Cannot save images with alpha channel."
 msgstr "No se pueden guardar imágenes con canales alfa."
 
-#: ../plug-ins/common/file-dicom.c:1487 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -4352,23 +4357,23 @@ msgstr "No se puede leer la extensión de «%s»"
 msgid "Cannot read header from '%s'"
 msgstr "No se pudo leer la cabecera de «%s»"
 
-#: ../plug-ins/common/file-tga.c:1444
+#: ../plug-ins/common/file-tga.c:1447
 msgid "Export Image as TGA"
 msgstr "Exportar imagen como TGA"
 
-#: ../plug-ins/common/file-tga.c:1454
+#: ../plug-ins/common/file-tga.c:1457
 msgid "_RLE compression"
 msgstr "Compresión _RLE"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1465
 msgid "Or_igin:"
 msgstr "Or_iginal:"
 
-#: ../plug-ins/common/file-tga.c:1466
+#: ../plug-ins/common/file-tga.c:1469
 msgid "Bottom left"
 msgstr "Inferior izquierdo"
 
-#: ../plug-ins/common/file-tga.c:1467
+#: ../plug-ins/common/file-tga.c:1470
 msgid "Top left"
 msgstr "Arriba a la izquierda"
 
@@ -12318,7 +12323,7 @@ msgstr "Etiquetar la imagen con el perfil del _monitor"
 msgid "Convert image to sR_GB"
 msgstr "Convertir imagen a sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "No se capturó nada"
 
