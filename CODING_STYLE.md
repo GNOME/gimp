@@ -171,6 +171,10 @@ Even if two spaces for each indentation level allow deeper nesting, GIMP favors
 self-documenting function names that can be quite long. For this reason, you
 should avoid deeply nested code.
 
+*Note*: the only place where we use Tab indentation and alignment is the
+Makefiles. In there, Tab are expected to be displayed as 8 characters
+for proper display
+
 #### Vertical spaces (new lines)
 
 Except for one single newline at the end of the file, other empty lines (at the
