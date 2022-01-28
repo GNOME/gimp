@@ -1,53 +1,97 @@
 
 if have_vector_icons
-  source_icons = {
-    'scalable':         [ 'scalable', 'scalable', '.svg' ],
-    'bitmap_64-system': [ '64x64',    '64',       '.png' ],
-    'bitmap_64-always': [ '64x64',    '64',       '.png' ],
-  }
+  install_icons = [
+    {
+      'outdir': 'scalable',
+      'indir':  'scalable',
+      'suffix': '.svg',
+      'files':  [ 'scalable', 'prefs', ],
+    },
+    {
+      'outdir': '64x64',
+      'indir':  '64',
+      'suffix': '.png',
+      'files':  [ 'bitmap_64-always', 'bitmap_64-system', ],
+    },
+  ]
 else
-  sizes = [ '12', '16', '18', '20', '22', '24', '32',
-            '48', '64', '96', '128', '192', '256' ]
+  build_icons = {
+    '12':  [ 'bitmap_12', ],
+    '16':  [ 'bitmap_16', 'prefs', ],
+    '18':  [ 'bitmap_18', ],
+    '20':  [ 'bitmap_20', ],
+    '22':  [ 'bitmap_22', ],
+    '24':  [ 'bitmap_24', ],
+    '32':  [ 'bitmap_32', ],
+    '48':  [ 'bitmap_48', 'prefs' ],
+    '64':  [ 'bitmap_64', 'bitmap_64-system', ],
+    '96':  [ 'bitmap_96', ],
+    '128': [ 'bitmap_128', ],
+    '192': [ 'bitmap_192', ],
+    '256': [ 'bitmap_256', ],
+  }
 
-  foreach size : sizes
-    icon_list = '../icon-lists/bitmap_@0@.list'.format(size)
-    cmd = run_command('python3', '-c',
-                      'print(",".join([line.strip() for line in open("@0@") if line.strip() != ""]))'.format(icon_list),
-                      check: true)
-    source_icons = cmd.stdout().strip().split(',')
-
-    if size == '64'
-      icon_list = '../icon-lists/bitmap_64-system.list'
+  foreach size, inputs : build_icons
+    dup_icons = []
+    foreach input : inputs
+      icon_list = '../icon-lists/@0@.list'.format(input)
+      py_cmd = 'print(",".join([line.strip() for line in open("@0@") if line.strip() != "" and line.strip()[0] != "#"]))'
       cmd = run_command('python3', '-c',
-                        'print(",".join([line.strip() for line in open("@0@") if line.strip() != ""]))'.format(icon_list),
+                        py_cmd.format(icon_list),
                         check: true)
-      source_icons += cmd.stdout().strip().split(',')
-    endif
+      dup_icons += cmd.stdout().strip().split(',')
+    endforeach
+    source_icons = []
+    foreach icon : dup_icons
+      if not source_icons.contains(icon)
+        # remove duplicates.
+        source_icons += [icon]
+      endif
+    endforeach
 
     subdir(size)
   endforeach
 
   # These are available as PNG directly.
-  source_icons = {
-    'bitmap_64-always': [ '64x64', '64', '.png' ],
-  }
+  install_icons = [
+    {
+      'outdir': '64x64',
+      'indir':  '64',
+      'suffix': '.png',
+      'files':  [ 'bitmap_64-always', ],
+    },
+  ]
 endif
 
 install_data('index.theme',
   install_dir: gimpiconsdir / theme,
 )
 
-foreach source, out : source_icons
-  outdir = out[0]
-  indir  = out[1]
-  suffix = out[2]
+foreach install : install_icons
+  icons  = []
 
-  icon_list = '../icon-lists/@0@.list'.format(source)
-  cmd = run_command('python3', '-c',
-                    'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@") if line.strip() != ""]))'.format(indir, suffix, icon_list),
-                    check: true)
-  source_icons = cmd.stdout().strip().split(',')
-  install_data(source_icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
+  inputs = install['files']
+  outdir = install['outdir']
+  indir  = install['indir']
+  suffix = install['suffix']
+
+  py_cmd = 'print(",".join(["@0@/" + line.strip() + "@1@" for line in open("@2@") if line.strip() != "" and line.strip()[0] != "#"]))'
+  dup_icons = []
+  foreach input : inputs
+    input = '../icon-lists/@0@.list'.format(input)
+    cmd = run_command('python3', '-c',
+                      py_cmd.format(indir, suffix, input),
+                      check: true)
+    dup_icons += cmd.stdout().strip().split(',')
+  endforeach
+  foreach icon : dup_icons
+    if not icons.contains(icon)
+      # remove duplicates.
+      icons += [icon]
+    endif
+  endforeach
+
+  install_data(icons, install_dir: gimpiconsdir / theme / outdir / 'apps')
 endforeach
 
 icons_core = [ '64/dialog-question.png', ]

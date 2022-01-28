@@ -212,46 +212,6 @@ scalable_images = \
 	scalable/gimp-pivot-west-symbolic.svg					\
 	scalable/gimp-plugin-symbolic.svg					\
 	scalable/gimp-portrait-symbolic.svg					\
-	scalable/gimp-prefs-color-management-symbolic.svg			\
-	scalable/gimp-prefs-controllers-symbolic.svg				\
-	scalable/gimp-prefs-default-comment-symbolic.svg			\
-	scalable/gimp-prefs-default-grid-symbolic.svg				\
-	scalable/gimp-prefs-display-symbolic.svg				\
-	scalable/gimp-prefs-folders-symbolic.svg				\
-	scalable/gimp-prefs-folders-brushes-symbolic.svg			\
-	scalable/gimp-prefs-folders-dynamics-symbolic.svg			\
-	scalable/gimp-prefs-folders-environ-symbolic.svg			\
-	scalable/gimp-prefs-folders-fonts-symbolic.svg				\
-	scalable/gimp-prefs-folders-gradients-symbolic.svg			\
-	scalable/gimp-prefs-folders-icon-themes-symbolic.svg			\
-	scalable/gimp-prefs-folders-interp-symbolic.svg				\
-	scalable/gimp-prefs-folders-modules-symbolic.svg			\
-	scalable/gimp-prefs-folders-mypaint-brushes-symbolic.svg		\
-	scalable/gimp-prefs-folders-palettes-symbolic.svg			\
-	scalable/gimp-prefs-folders-patterns-symbolic.svg			\
-	scalable/gimp-prefs-folders-plug-ins-symbolic.svg			\
-	scalable/gimp-prefs-folders-scripts-symbolic.svg			\
-	scalable/gimp-prefs-folders-themes-symbolic.svg				\
-	scalable/gimp-prefs-folders-tool-plug-ins-symbolic.svg			\
-	scalable/gimp-prefs-folders-tool-presets-symbolic.svg			\
-	scalable/gimp-prefs-folders-tools-symbolic.svg				\
-	scalable/gimp-prefs-help-system-symbolic.svg				\
-	scalable/gimp-prefs-icon-theme-symbolic.svg				\
-	scalable/gimp-prefs-image-title-symbolic.svg				\
-	scalable/gimp-prefs-image-windows-symbolic.svg				\
-	scalable/gimp-prefs-image-windows-appearance-symbolic.svg		\
-	scalable/gimp-prefs-image-windows-snapping-symbolic.svg			\
-	scalable/gimp-prefs-import-export-symbolic.svg				\
-	scalable/gimp-prefs-input-devices-symbolic.svg				\
-	scalable/gimp-prefs-interface-symbolic.svg				\
-	scalable/gimp-prefs-new-image-symbolic.svg				\
-	scalable/gimp-prefs-playground-symbolic.svg				\
-	scalable/gimp-prefs-session-symbolic.svg				\
-	scalable/gimp-prefs-system-resources-symbolic.svg			\
-	scalable/gimp-prefs-theme-symbolic.svg					\
-	scalable/gimp-prefs-tool-options-symbolic.svg				\
-	scalable/gimp-prefs-toolbox-symbolic.svg				\
-	scalable/gimp-prefs-window-management-symbolic.svg			\
 	scalable/gimp-quick-mask-off-symbolic.svg				\
 	scalable/gimp-quick-mask-on-symbolic.svg				\
 	scalable/gimp-reset-symbolic.svg					\
@@ -361,7 +321,46 @@ scalable_images = \
 	scalable/gimp-wilber-symbolic.svg					\
 	scalable/gimp-wilber-eek-symbolic.svg					\
 	scalable/gimp-wilber-outline-symbolic.svg				\
-	scalable/gimp-zoom-follow-window-symbolic.svg
+	scalable/gimp-zoom-follow-window-symbolic.svg				\
+	\
+	scalable/gimp-prefs-color-management-symbolic.svg			\
+	\
+	scalable/gimp-prefs-controllers-symbolic.svg				\
+	scalable/gimp-prefs-default-grid-symbolic.svg				\
+	scalable/gimp-prefs-display-symbolic.svg				\
+	scalable/gimp-prefs-folders-symbolic.svg				\
+	scalable/gimp-prefs-help-system-symbolic.svg				\
+	scalable/gimp-prefs-icon-theme-symbolic.svg				\
+	scalable/gimp-prefs-image-title-symbolic.svg				\
+	scalable/gimp-prefs-image-windows-symbolic.svg				\
+	scalable/gimp-prefs-image-windows-appearance-symbolic.svg		\
+	scalable/gimp-prefs-image-windows-snapping-symbolic.svg			\
+	scalable/gimp-prefs-import-export-symbolic.svg				\
+	scalable/gimp-prefs-input-devices-symbolic.svg				\
+	scalable/gimp-prefs-interface-symbolic.svg				\
+	scalable/gimp-prefs-new-image-symbolic.svg				\
+	scalable/gimp-prefs-playground-symbolic.svg				\
+	scalable/gimp-prefs-system-resources-symbolic.svg			\
+	scalable/gimp-prefs-theme-symbolic.svg					\
+	scalable/gimp-prefs-tool-options-symbolic.svg				\
+	scalable/gimp-prefs-toolbox-symbolic.svg				\
+	scalable/gimp-prefs-window-management-symbolic.svg			\
+	\
+	scalable/gimp-prefs-folders-brushes-symbolic.svg			\
+	scalable/gimp-prefs-folders-dynamics-symbolic.svg			\
+	scalable/gimp-prefs-folders-environ-symbolic.svg			\
+	scalable/gimp-prefs-folders-fonts-symbolic.svg				\
+	scalable/gimp-prefs-folders-gradients-symbolic.svg			\
+	scalable/gimp-prefs-folders-icon-themes-symbolic.svg			\
+	scalable/gimp-prefs-folders-interp-symbolic.svg				\
+	scalable/gimp-prefs-folders-modules-symbolic.svg			\
+	scalable/gimp-prefs-folders-mypaint-brushes-symbolic.svg		\
+	scalable/gimp-prefs-folders-palettes-symbolic.svg			\
+	scalable/gimp-prefs-folders-patterns-symbolic.svg			\
+	scalable/gimp-prefs-folders-plug-ins-symbolic.svg			\
+	scalable/gimp-prefs-folders-scripts-symbolic.svg			\
+	scalable/gimp-prefs-folders-themes-symbolic.svg				\
+	scalable/gimp-prefs-folders-tool-presets-symbolic.svg
 
 icons12_images = \
 	12/gimp-attach-symbolic.symbolic.png					\
@@ -546,31 +545,6 @@ icons16_images = \
 	16/gimp-pattern-symbolic.symbolic.png					\
 	16/gimp-plugin-symbolic.symbolic.png					\
 	16/gimp-portrait-symbolic.symbolic.png					\
-	16/gimp-prefs-folders-brushes-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-dynamics-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-environ-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-fonts-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-gradients-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-icon-themes-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-interp-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-modules-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-mypaint-brushes-symbolic.symbolic.png		\
-	16/gimp-prefs-folders-palettes-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-patterns-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-plug-ins-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-scripts-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-themes-symbolic.symbolic.png			\
-	16/gimp-prefs-folders-tool-plug-ins-symbolic.symbolic.png		\
-	16/gimp-prefs-folders-tool-presets-symbolic.symbolic.png		\
-	16/gimp-prefs-folders-tools-symbolic.symbolic.png			\
-	16/gimp-prefs-icon-theme-symbolic.symbolic.png				\
-	16/gimp-prefs-image-windows-symbolic.symbolic.png			\
-	16/gimp-prefs-import-export-symbolic.symbolic.png			\
-	16/gimp-prefs-interface-symbolic.symbolic.png				\
-	16/gimp-prefs-playground-symbolic.symbolic.png				\
-	16/gimp-prefs-theme-symbolic.symbolic.png				\
-	16/gimp-prefs-toolbox-symbolic.symbolic.png				\
-	16/gimp-prefs-window-management-symbolic.symbolic.png			\
 	16/gimp-reset-symbolic.symbolic.png					\
 	16/gimp-reshow-filter-symbolic.symbolic.png				\
 	16/gimp-resize-symbolic.symbolic.png					\
@@ -665,7 +639,48 @@ icons16_images = \
 	16/gimp-user-manual-symbolic.symbolic.png				\
 	16/gimp-video-symbolic.symbolic.png					\
 	16/gimp-web-symbolic.symbolic.png					\
-	16/gimp-wilber-symbolic.symbolic.png
+	16/gimp-wilber-symbolic.symbolic.png					\
+	\
+	16/gimp-prefs-color-management-symbolic.symbolic.png			\
+	\
+	16/gimp-prefs-controllers-symbolic.symbolic.png				\
+	16/gimp-prefs-default-grid-symbolic.symbolic.png			\
+	16/gimp-prefs-display-symbolic.symbolic.png				\
+	16/gimp-prefs-folders-symbolic.symbolic.png				\
+	16/gimp-prefs-help-system-symbolic.symbolic.png				\
+	16/gimp-prefs-icon-theme-symbolic.symbolic.png				\
+	16/gimp-prefs-image-title-symbolic.symbolic.png				\
+	16/gimp-prefs-image-windows-symbolic.symbolic.png			\
+	16/gimp-prefs-image-windows-appearance-symbolic.symbolic.png		\
+	16/gimp-prefs-image-windows-snapping-symbolic.symbolic.png		\
+	16/gimp-prefs-import-export-symbolic.symbolic.png			\
+	16/gimp-prefs-input-devices-symbolic.symbolic.png			\
+	16/gimp-prefs-interface-symbolic.symbolic.png				\
+	16/gimp-prefs-new-image-symbolic.symbolic.png				\
+	16/gimp-prefs-playground-symbolic.symbolic.png				\
+	16/gimp-prefs-system-resources-symbolic.symbolic.png			\
+	16/gimp-prefs-theme-symbolic.symbolic.png				\
+	16/gimp-prefs-tool-options-symbolic.symbolic.png			\
+	16/gimp-prefs-toolbox-symbolic.symbolic.png				\
+	16/gimp-prefs-window-management-symbolic.symbolic.png			\
+	\
+	16/gimp-prefs-folders-brushes-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-dynamics-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-environ-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-fonts-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-gradients-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-icon-themes-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-interp-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-modules-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-mypaint-brushes-symbolic.symbolic.png		\
+	16/gimp-prefs-folders-palettes-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-patterns-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-plug-ins-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-scripts-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-themes-symbolic.symbolic.png			\
+	16/gimp-prefs-folders-tool-presets-symbolic.symbolic.png		\
+	\
+	16/gimp-wilber-eek-symbolic.symbolic.png
 
 icons18_images = \
 	18/gimp-color-picker-black-symbolic.symbolic.png			\
@@ -694,45 +709,6 @@ icons22_images = \
 	22/gimp-path-symbolic.symbolic.png					\
 	22/gimp-paths-symbolic.symbolic.png					\
 	22/gimp-portrait-symbolic.symbolic.png					\
-	22/gimp-prefs-color-management-symbolic.symbolic.png			\
-	22/gimp-prefs-controllers-symbolic.symbolic.png				\
-	22/gimp-prefs-default-grid-symbolic.symbolic.png			\
-	22/gimp-prefs-display-symbolic.symbolic.png				\
-	22/gimp-prefs-folders-symbolic.symbolic.png				\
-	22/gimp-prefs-folders-brushes-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-dynamics-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-environ-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-fonts-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-gradients-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-icon-themes-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-interp-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-modules-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-mypaint-brushes-symbolic.symbolic.png		\
-	22/gimp-prefs-folders-palettes-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-patterns-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-plug-ins-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-scripts-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-themes-symbolic.symbolic.png			\
-	22/gimp-prefs-folders-tool-plug-ins-symbolic.symbolic.png		\
-	22/gimp-prefs-folders-tool-presets-symbolic.symbolic.png		\
-	22/gimp-prefs-folders-tools-symbolic.symbolic.png			\
-	22/gimp-prefs-help-system-symbolic.symbolic.png				\
-	22/gimp-prefs-icon-theme-symbolic.symbolic.png				\
-	22/gimp-prefs-image-title-symbolic.symbolic.png				\
-	22/gimp-prefs-image-windows-symbolic.symbolic.png			\
-	22/gimp-prefs-image-windows-appearance-symbolic.symbolic.png		\
-	22/gimp-prefs-image-windows-snapping-symbolic.symbolic.png		\
-	22/gimp-prefs-import-export-symbolic.symbolic.png			\
-	22/gimp-prefs-input-devices-symbolic.symbolic.png			\
-	22/gimp-prefs-interface-symbolic.symbolic.png				\
-	22/gimp-prefs-new-image-symbolic.symbolic.png				\
-	22/gimp-prefs-playground-symbolic.symbolic.png				\
-	22/gimp-prefs-session-symbolic.symbolic.png				\
-	22/gimp-prefs-system-resources-symbolic.symbolic.png			\
-	22/gimp-prefs-theme-symbolic.symbolic.png				\
-	22/gimp-prefs-tool-options-symbolic.symbolic.png			\
-	22/gimp-prefs-toolbox-symbolic.symbolic.png				\
-	22/gimp-prefs-window-management-symbolic.symbolic.png			\
 	22/gimp-tool-preset-symbolic.symbolic.png				\
 	22/gimp-wilber-symbolic.symbolic.png
 
@@ -914,12 +890,32 @@ icons48_images = \
 	48/gimp-image-symbolic.symbolic.png					\
 	48/gimp-layer-mask-symbolic.symbolic.png				\
 	48/gimp-layer-symbolic.symbolic.png					\
+	48/gimp-text-layer-symbolic.symbolic.png				\
+	48/gimp-wilber-symbolic.symbolic.png					\
+	\
 	48/gimp-prefs-color-management-symbolic.symbolic.png			\
+	\
 	48/gimp-prefs-controllers-symbolic.symbolic.png				\
-	48/gimp-prefs-default-comment-symbolic.symbolic.png			\
 	48/gimp-prefs-default-grid-symbolic.symbolic.png			\
 	48/gimp-prefs-display-symbolic.symbolic.png				\
 	48/gimp-prefs-folders-symbolic.symbolic.png				\
+	48/gimp-prefs-help-system-symbolic.symbolic.png				\
+	48/gimp-prefs-icon-theme-symbolic.symbolic.png				\
+	48/gimp-prefs-image-title-symbolic.symbolic.png				\
+	48/gimp-prefs-image-windows-symbolic.symbolic.png			\
+	48/gimp-prefs-image-windows-appearance-symbolic.symbolic.png		\
+	48/gimp-prefs-image-windows-snapping-symbolic.symbolic.png		\
+	48/gimp-prefs-import-export-symbolic.symbolic.png			\
+	48/gimp-prefs-input-devices-symbolic.symbolic.png			\
+	48/gimp-prefs-interface-symbolic.symbolic.png				\
+	48/gimp-prefs-new-image-symbolic.symbolic.png				\
+	48/gimp-prefs-playground-symbolic.symbolic.png				\
+	48/gimp-prefs-system-resources-symbolic.symbolic.png			\
+	48/gimp-prefs-theme-symbolic.symbolic.png				\
+	48/gimp-prefs-tool-options-symbolic.symbolic.png			\
+	48/gimp-prefs-toolbox-symbolic.symbolic.png				\
+	48/gimp-prefs-window-management-symbolic.symbolic.png			\
+	\
 	48/gimp-prefs-folders-brushes-symbolic.symbolic.png			\
 	48/gimp-prefs-folders-dynamics-symbolic.symbolic.png			\
 	48/gimp-prefs-folders-environ-symbolic.symbolic.png			\
@@ -934,28 +930,9 @@ icons48_images = \
 	48/gimp-prefs-folders-plug-ins-symbolic.symbolic.png			\
 	48/gimp-prefs-folders-scripts-symbolic.symbolic.png			\
 	48/gimp-prefs-folders-themes-symbolic.symbolic.png			\
-	48/gimp-prefs-folders-tool-plug-ins-symbolic.symbolic.png		\
 	48/gimp-prefs-folders-tool-presets-symbolic.symbolic.png		\
-	48/gimp-prefs-folders-tools-symbolic.symbolic.png			\
-	48/gimp-prefs-help-system-symbolic.symbolic.png				\
-	48/gimp-prefs-icon-theme-symbolic.symbolic.png				\
-	48/gimp-prefs-image-title-symbolic.symbolic.png				\
-	48/gimp-prefs-image-windows-symbolic.symbolic.png			\
-	48/gimp-prefs-image-windows-appearance-symbolic.symbolic.png		\
-	48/gimp-prefs-image-windows-snapping-symbolic.symbolic.png		\
-	48/gimp-prefs-import-export-symbolic.symbolic.png			\
-	48/gimp-prefs-input-devices-symbolic.symbolic.png			\
-	48/gimp-prefs-interface-symbolic.symbolic.png				\
-	48/gimp-prefs-new-image-symbolic.symbolic.png				\
-	48/gimp-prefs-playground-symbolic.symbolic.png				\
-	48/gimp-prefs-session-symbolic.symbolic.png				\
-	48/gimp-prefs-system-resources-symbolic.symbolic.png			\
-	48/gimp-prefs-theme-symbolic.symbolic.png				\
-	48/gimp-prefs-tool-options-symbolic.symbolic.png			\
-	48/gimp-prefs-toolbox-symbolic.symbolic.png				\
-	48/gimp-prefs-window-management-symbolic.symbolic.png			\
-	48/gimp-text-layer-symbolic.symbolic.png				\
-	48/gimp-wilber-symbolic.symbolic.png
+	\
+	48/gimp-wilber-eek-symbolic.symbolic.png
 
 icons64_images = \
 	64/gimp-frame.png							\

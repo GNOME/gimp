@@ -212,46 +212,6 @@ scalable_images = \
 	scalable/gimp-pivot-west.svg				\
 	scalable/gimp-plugin.svg				\
 	scalable/gimp-portrait.svg				\
-	scalable/gimp-prefs-color-management.svg		\
-	scalable/gimp-prefs-controllers.svg			\
-	scalable/gimp-prefs-default-comment.svg			\
-	scalable/gimp-prefs-default-grid.svg			\
-	scalable/gimp-prefs-display.svg				\
-	scalable/gimp-prefs-folders.svg				\
-	scalable/gimp-prefs-folders-brushes.svg			\
-	scalable/gimp-prefs-folders-dynamics.svg		\
-	scalable/gimp-prefs-folders-environ.svg			\
-	scalable/gimp-prefs-folders-fonts.svg			\
-	scalable/gimp-prefs-folders-gradients.svg		\
-	scalable/gimp-prefs-folders-icon-themes.svg		\
-	scalable/gimp-prefs-folders-interp.svg			\
-	scalable/gimp-prefs-folders-modules.svg			\
-	scalable/gimp-prefs-folders-mypaint-brushes.svg		\
-	scalable/gimp-prefs-folders-palettes.svg		\
-	scalable/gimp-prefs-folders-patterns.svg		\
-	scalable/gimp-prefs-folders-plug-ins.svg		\
-	scalable/gimp-prefs-folders-scripts.svg			\
-	scalable/gimp-prefs-folders-themes.svg			\
-	scalable/gimp-prefs-folders-tool-plug-ins.svg		\
-	scalable/gimp-prefs-folders-tool-presets.svg		\
-	scalable/gimp-prefs-folders-tools.svg			\
-	scalable/gimp-prefs-help-system.svg			\
-	scalable/gimp-prefs-icon-theme.svg			\
-	scalable/gimp-prefs-image-title.svg			\
-	scalable/gimp-prefs-image-windows.svg			\
-	scalable/gimp-prefs-image-windows-appearance.svg	\
-	scalable/gimp-prefs-image-windows-snapping.svg		\
-	scalable/gimp-prefs-import-export.svg			\
-	scalable/gimp-prefs-input-devices.svg			\
-	scalable/gimp-prefs-interface.svg			\
-	scalable/gimp-prefs-new-image.svg			\
-	scalable/gimp-prefs-playground.svg			\
-	scalable/gimp-prefs-session.svg				\
-	scalable/gimp-prefs-system-resources.svg		\
-	scalable/gimp-prefs-theme.svg				\
-	scalable/gimp-prefs-tool-options.svg			\
-	scalable/gimp-prefs-toolbox.svg				\
-	scalable/gimp-prefs-window-management.svg		\
 	scalable/gimp-quick-mask-off.svg			\
 	scalable/gimp-quick-mask-on.svg				\
 	scalable/gimp-reset.svg					\
@@ -361,7 +321,46 @@ scalable_images = \
 	scalable/gimp-wilber.svg				\
 	scalable/gimp-wilber-eek.svg				\
 	scalable/gimp-wilber-outline.svg			\
-	scalable/gimp-zoom-follow-window.svg
+	scalable/gimp-zoom-follow-window.svg			\
+	\
+	scalable/gimp-prefs-color-management.svg		\
+	\
+	scalable/gimp-prefs-controllers.svg			\
+	scalable/gimp-prefs-default-grid.svg			\
+	scalable/gimp-prefs-display.svg				\
+	scalable/gimp-prefs-folders.svg				\
+	scalable/gimp-prefs-help-system.svg			\
+	scalable/gimp-prefs-icon-theme.svg			\
+	scalable/gimp-prefs-image-title.svg			\
+	scalable/gimp-prefs-image-windows.svg			\
+	scalable/gimp-prefs-image-windows-appearance.svg	\
+	scalable/gimp-prefs-image-windows-snapping.svg		\
+	scalable/gimp-prefs-import-export.svg			\
+	scalable/gimp-prefs-input-devices.svg			\
+	scalable/gimp-prefs-interface.svg			\
+	scalable/gimp-prefs-new-image.svg			\
+	scalable/gimp-prefs-playground.svg			\
+	scalable/gimp-prefs-system-resources.svg		\
+	scalable/gimp-prefs-theme.svg				\
+	scalable/gimp-prefs-tool-options.svg			\
+	scalable/gimp-prefs-toolbox.svg				\
+	scalable/gimp-prefs-window-management.svg		\
+	\
+	scalable/gimp-prefs-folders-brushes.svg			\
+	scalable/gimp-prefs-folders-dynamics.svg		\
+	scalable/gimp-prefs-folders-environ.svg			\
+	scalable/gimp-prefs-folders-fonts.svg			\
+	scalable/gimp-prefs-folders-gradients.svg		\
+	scalable/gimp-prefs-folders-icon-themes.svg		\
+	scalable/gimp-prefs-folders-interp.svg			\
+	scalable/gimp-prefs-folders-modules.svg			\
+	scalable/gimp-prefs-folders-mypaint-brushes.svg		\
+	scalable/gimp-prefs-folders-palettes.svg		\
+	scalable/gimp-prefs-folders-patterns.svg		\
+	scalable/gimp-prefs-folders-plug-ins.svg		\
+	scalable/gimp-prefs-folders-scripts.svg			\
+	scalable/gimp-prefs-folders-themes.svg			\
+	scalable/gimp-prefs-folders-tool-presets.svg
 
 icons12_images = \
 	12/gimp-attach.png					\
@@ -546,31 +545,6 @@ icons16_images = \
 	16/gimp-pattern.png					\
 	16/gimp-plugin.png					\
 	16/gimp-portrait.png					\
-	16/gimp-prefs-folders-brushes.png			\
-	16/gimp-prefs-folders-dynamics.png			\
-	16/gimp-prefs-folders-environ.png			\
-	16/gimp-prefs-folders-fonts.png				\
-	16/gimp-prefs-folders-gradients.png			\
-	16/gimp-prefs-folders-icon-themes.png			\
-	16/gimp-prefs-folders-interp.png			\
-	16/gimp-prefs-folders-modules.png			\
-	16/gimp-prefs-folders-mypaint-brushes.png		\
-	16/gimp-prefs-folders-palettes.png			\
-	16/gimp-prefs-folders-patterns.png			\
-	16/gimp-prefs-folders-plug-ins.png			\
-	16/gimp-prefs-folders-scripts.png			\
-	16/gimp-prefs-folders-themes.png			\
-	16/gimp-prefs-folders-tool-plug-ins.png			\
-	16/gimp-prefs-folders-tool-presets.png			\
-	16/gimp-prefs-folders-tools.png				\
-	16/gimp-prefs-icon-theme.png				\
-	16/gimp-prefs-image-windows.png				\
-	16/gimp-prefs-import-export.png				\
-	16/gimp-prefs-interface.png				\
-	16/gimp-prefs-playground.png				\
-	16/gimp-prefs-theme.png					\
-	16/gimp-prefs-toolbox.png				\
-	16/gimp-prefs-window-management.png			\
 	16/gimp-reset.png					\
 	16/gimp-reshow-filter.png				\
 	16/gimp-resize.png					\
@@ -665,7 +639,48 @@ icons16_images = \
 	16/gimp-user-manual.png					\
 	16/gimp-video.png					\
 	16/gimp-web.png						\
-	16/gimp-wilber.png
+	16/gimp-wilber.png					\
+	\
+	16/gimp-prefs-color-management.png			\
+	\
+	16/gimp-prefs-controllers.png				\
+	16/gimp-prefs-default-grid.png				\
+	16/gimp-prefs-display.png				\
+	16/gimp-prefs-folders.png				\
+	16/gimp-prefs-help-system.png				\
+	16/gimp-prefs-icon-theme.png				\
+	16/gimp-prefs-image-title.png				\
+	16/gimp-prefs-image-windows.png				\
+	16/gimp-prefs-image-windows-appearance.png		\
+	16/gimp-prefs-image-windows-snapping.png		\
+	16/gimp-prefs-import-export.png				\
+	16/gimp-prefs-input-devices.png				\
+	16/gimp-prefs-interface.png				\
+	16/gimp-prefs-new-image.png				\
+	16/gimp-prefs-playground.png				\
+	16/gimp-prefs-system-resources.png			\
+	16/gimp-prefs-theme.png					\
+	16/gimp-prefs-tool-options.png				\
+	16/gimp-prefs-toolbox.png				\
+	16/gimp-prefs-window-management.png			\
+	\
+	16/gimp-prefs-folders-brushes.png			\
+	16/gimp-prefs-folders-dynamics.png			\
+	16/gimp-prefs-folders-environ.png			\
+	16/gimp-prefs-folders-fonts.png				\
+	16/gimp-prefs-folders-gradients.png			\
+	16/gimp-prefs-folders-icon-themes.png			\
+	16/gimp-prefs-folders-interp.png			\
+	16/gimp-prefs-folders-modules.png			\
+	16/gimp-prefs-folders-mypaint-brushes.png		\
+	16/gimp-prefs-folders-palettes.png			\
+	16/gimp-prefs-folders-patterns.png			\
+	16/gimp-prefs-folders-plug-ins.png			\
+	16/gimp-prefs-folders-scripts.png			\
+	16/gimp-prefs-folders-themes.png			\
+	16/gimp-prefs-folders-tool-presets.png			\
+	\
+	16/gimp-wilber-eek.png
 
 icons18_images = \
 	18/gimp-color-picker-black.png				\
@@ -694,45 +709,6 @@ icons22_images = \
 	22/gimp-path.png					\
 	22/gimp-paths.png					\
 	22/gimp-portrait.png					\
-	22/gimp-prefs-color-management.png			\
-	22/gimp-prefs-controllers.png				\
-	22/gimp-prefs-default-grid.png				\
-	22/gimp-prefs-display.png				\
-	22/gimp-prefs-folders.png				\
-	22/gimp-prefs-folders-brushes.png			\
-	22/gimp-prefs-folders-dynamics.png			\
-	22/gimp-prefs-folders-environ.png			\
-	22/gimp-prefs-folders-fonts.png				\
-	22/gimp-prefs-folders-gradients.png			\
-	22/gimp-prefs-folders-icon-themes.png			\
-	22/gimp-prefs-folders-interp.png			\
-	22/gimp-prefs-folders-modules.png			\
-	22/gimp-prefs-folders-mypaint-brushes.png		\
-	22/gimp-prefs-folders-palettes.png			\
-	22/gimp-prefs-folders-patterns.png			\
-	22/gimp-prefs-folders-plug-ins.png			\
-	22/gimp-prefs-folders-scripts.png			\
-	22/gimp-prefs-folders-themes.png			\
-	22/gimp-prefs-folders-tool-plug-ins.png			\
-	22/gimp-prefs-folders-tool-presets.png			\
-	22/gimp-prefs-folders-tools.png				\
-	22/gimp-prefs-help-system.png				\
-	22/gimp-prefs-icon-theme.png				\
-	22/gimp-prefs-image-title.png				\
-	22/gimp-prefs-image-windows.png				\
-	22/gimp-prefs-image-windows-appearance.png		\
-	22/gimp-prefs-image-windows-snapping.png		\
-	22/gimp-prefs-import-export.png				\
-	22/gimp-prefs-input-devices.png				\
-	22/gimp-prefs-interface.png				\
-	22/gimp-prefs-new-image.png				\
-	22/gimp-prefs-playground.png				\
-	22/gimp-prefs-session.png				\
-	22/gimp-prefs-system-resources.png			\
-	22/gimp-prefs-theme.png					\
-	22/gimp-prefs-tool-options.png				\
-	22/gimp-prefs-toolbox.png				\
-	22/gimp-prefs-window-management.png			\
 	22/gimp-tool-preset.png					\
 	22/gimp-wilber.png
 
@@ -914,12 +890,32 @@ icons48_images = \
 	48/gimp-image.png					\
 	48/gimp-layer-mask.png					\
 	48/gimp-layer.png					\
+	48/gimp-text-layer.png					\
+	48/gimp-wilber.png					\
+	\
 	48/gimp-prefs-color-management.png			\
+	\
 	48/gimp-prefs-controllers.png				\
-	48/gimp-prefs-default-comment.png			\
 	48/gimp-prefs-default-grid.png				\
 	48/gimp-prefs-display.png				\
 	48/gimp-prefs-folders.png				\
+	48/gimp-prefs-help-system.png				\
+	48/gimp-prefs-icon-theme.png				\
+	48/gimp-prefs-image-title.png				\
+	48/gimp-prefs-image-windows.png				\
+	48/gimp-prefs-image-windows-appearance.png		\
+	48/gimp-prefs-image-windows-snapping.png		\
+	48/gimp-prefs-import-export.png				\
+	48/gimp-prefs-input-devices.png				\
+	48/gimp-prefs-interface.png				\
+	48/gimp-prefs-new-image.png				\
+	48/gimp-prefs-playground.png				\
+	48/gimp-prefs-system-resources.png			\
+	48/gimp-prefs-theme.png					\
+	48/gimp-prefs-tool-options.png				\
+	48/gimp-prefs-toolbox.png				\
+	48/gimp-prefs-window-management.png			\
+	\
 	48/gimp-prefs-folders-brushes.png			\
 	48/gimp-prefs-folders-dynamics.png			\
 	48/gimp-prefs-folders-environ.png			\
@@ -934,28 +930,9 @@ icons48_images = \
 	48/gimp-prefs-folders-plug-ins.png			\
 	48/gimp-prefs-folders-scripts.png			\
 	48/gimp-prefs-folders-themes.png			\
-	48/gimp-prefs-folders-tool-plug-ins.png			\
 	48/gimp-prefs-folders-tool-presets.png			\
-	48/gimp-prefs-folders-tools.png				\
-	48/gimp-prefs-help-system.png				\
-	48/gimp-prefs-icon-theme.png				\
-	48/gimp-prefs-image-title.png				\
-	48/gimp-prefs-image-windows.png				\
-	48/gimp-prefs-image-windows-appearance.png		\
-	48/gimp-prefs-image-windows-snapping.png		\
-	48/gimp-prefs-import-export.png				\
-	48/gimp-prefs-input-devices.png				\
-	48/gimp-prefs-interface.png				\
-	48/gimp-prefs-new-image.png				\
-	48/gimp-prefs-playground.png				\
-	48/gimp-prefs-session.png				\
-	48/gimp-prefs-system-resources.png			\
-	48/gimp-prefs-theme.png					\
-	48/gimp-prefs-tool-options.png				\
-	48/gimp-prefs-toolbox.png				\
-	48/gimp-prefs-window-management.png			\
-	48/gimp-text-layer.png					\
-	48/gimp-wilber.png
+	\
+	48/gimp-wilber-eek.png
 
 icons64_images = \
 	64/gimp-frame.png					\

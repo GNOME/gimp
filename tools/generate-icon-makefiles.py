@@ -37,6 +37,24 @@ def print_icons(indir, filenames, max_len, prefix, suffix, outfile, endlist=True
     icon_list = os.path.join(indir, filename)
     with open(icon_list, mode='r') as f:
       icons += [line.strip() for line in f]
+    # Replace comment lines with empty strings.
+    prev_blank = False
+    pop_list = []
+    for i, icon in enumerate(icons):
+      if icon != '' and icon[0] == '#':
+        icons[i] = ''
+      if icons[i] == '':
+        if prev_blank:
+          pop_list += [i]
+        prev_blank = True
+      else:
+        prev_blank = False
+        if icons[i] in icons[:i]:
+          pop_list += [i]
+    pop_list.reverse()
+    for i in pop_list:
+      # Remove successive blanks and duplicate icons.
+      icons.pop(i)
     # Strip empty lines in extremities.
     while icons[-1] == '':
       icons.pop()
@@ -96,8 +114,8 @@ if __name__ == "__main__":
     # Let's assume that scalable icons are the biggest list since it
     # should contain nearly all images. So we compute max_len once and
     # reuse this value on all lists.
-    col_max_len = print_icons(list_dir, ['scalable.list'], None, "scalable/", ".svg", colorf)
-    sym_max_len = print_icons(list_dir, ['scalable.list'], None, "scalable/", "-symbolic.svg", symbolicf)
+    col_max_len = print_icons(list_dir, ['scalable.list', 'prefs.list'], None, "scalable/", ".svg", colorf)
+    sym_max_len = print_icons(list_dir, ['scalable.list', 'prefs.list'], None, "scalable/", "-symbolic.svg", symbolicf)
 
     # 12x12 bitmap
     print("\nicons12_images = \\", file=colorf)
@@ -108,8 +126,8 @@ if __name__ == "__main__":
     # 16x16 bitmap
     print("\nicons16_images = \\", file=colorf)
     print("\nicons16_images = \\", file=symbolicf)
-    print_icons(list_dir, ['bitmap_16.list'], col_max_len, "16/", ".png", colorf)
-    print_icons(list_dir, ['bitmap_16.list'], sym_max_len, "16/", "-symbolic.symbolic.png", symbolicf)
+    print_icons(list_dir, ['bitmap_16.list', 'prefs.list'], col_max_len, "16/", ".png", colorf)
+    print_icons(list_dir, ['bitmap_16.list', 'prefs.list'], sym_max_len, "16/", "-symbolic.symbolic.png", symbolicf)
 
     # 18x18 bitmap
     print("\nicons18_images = \\", file=colorf)
@@ -144,8 +162,8 @@ if __name__ == "__main__":
     # 48x48 bitmap
     print("\nicons48_images = \\", file=colorf)
     print("\nicons48_images = \\", file=symbolicf)
-    print_icons(list_dir, ['bitmap_48.list'], col_max_len, "48/", ".png", colorf)
-    print_icons(list_dir, ['bitmap_48.list'], sym_max_len, "48/", "-symbolic.symbolic.png", symbolicf)
+    print_icons(list_dir, ['bitmap_48.list', 'prefs.list'], col_max_len, "48/", ".png", colorf)
+    print_icons(list_dir, ['bitmap_48.list', 'prefs.list'], sym_max_len, "48/", "-symbolic.symbolic.png", symbolicf)
 
     # 64x64 bitmap
     print("\nicons64_images = \\", file=colorf)
