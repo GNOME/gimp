@@ -1034,6 +1034,23 @@ if have_vector_icons
   else
     shared_mime_info = dependency('shared-mime-info')
   endif
+else
+  # The trick when disabling vector icons is that librsvg is still
+  # needed at compile time (on build machine) to generate PNG, even
+  # though it won't be needed at runtime for icon display.
+  #
+  # The tool gtk-encode-symbolic-svg also requires a SVG GdkPixbuf
+  # loader, which usually uses librsvg as well anyway.
+  vec_warning = '''
+    Vector icons are disabled. Be aware that librsvg is still
+    needed to create the PNG icons on the build machine, yet it
+    won't be needed for runtime icon display of distributed themes.
+  '''
+  warning(vec_warning)
+  warnings += vec_warning
+
+  native_glib = dependency('glib-2.0',    version: '>='+glib_minver, native: true)
+  native_rsvg = dependency('librsvg-2.0', version: '>='+rsvg_minver, native: true)
 endif
 
 # Running tests headless

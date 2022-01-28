@@ -6,22 +6,30 @@ if have_vector_icons
     'bitmap_64-always': [ '64x64',    '64',       '.png' ],
   }
 else
+  sizes = [ '12', '16', '18', '20', '22', '24', '32',
+            '48', '64', '96', '128', '192', '256' ]
+
+  foreach size : sizes
+    icon_list = '../icon-lists/bitmap_@0@.list'.format(size)
+    cmd = run_command('python3', '-c',
+                      'print(",".join([line.strip() for line in open("@0@") if line.strip() != ""]))'.format(icon_list),
+                      check: true)
+    source_icons = cmd.stdout().strip().split(',')
+
+    if size == '64'
+      icon_list = '../icon-lists/bitmap_64-system.list'
+      cmd = run_command('python3', '-c',
+                        'print(",".join([line.strip() for line in open("@0@") if line.strip() != ""]))'.format(icon_list),
+                        check: true)
+      source_icons += cmd.stdout().strip().split(',')
+    endif
+
+    subdir(size)
+  endforeach
+
+  # These are available as PNG directly.
   source_icons = {
-    'bitmap_12':        [ '12x12',   '12',  '.png' ],
-    'bitmap_16':        [ '16x16',   '16',  '.png' ],
-    'bitmap_18':        [ '18x18',   '18',  '.png' ],
-    'bitmap_20':        [ '20x20',   '20',  '.png' ],
-    'bitmap_22':        [ '22x22',   '22',  '.png' ],
-    'bitmap_24':        [ '24x24',   '24',  '.png' ],
-    'bitmap_32':        [ '32x32',   '32',  '.png' ],
-    'bitmap_48':        [ '48x48',   '48',  '.png' ],
-    'bitmap_64':        [ '64x64',   '64',  '.png' ],
-    'bitmap_96':        [ '96x96',   '96',  '.png' ],
-    'bitmap_128':       [ '128x128', '128', '.png' ],
-    'bitmap_192':       [ '192x192', '192', '.png' ],
-    'bitmap_256':       [ '256x256', '256', '.png' ],
-    'bitmap_64-system': [ '64x64',    '64', '.png' ],
-    'bitmap_64-always': [ '64x64',    '64', '.png' ],
+    'bitmap_64-always': [ '64x64', '64', '.png' ],
   }
 endif
 

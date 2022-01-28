@@ -35,3 +35,15 @@ executable('kernelgen',
   include_directories: rootInclude,
   install: false,
 )
+
+if not have_vector_icons
+  colorsvg2png = executable('colorsvg2png',
+    'colorsvg2png.c',
+    native: true,
+    dependencies: [
+      native_glib,
+      native_rsvg
+    ],
+    install: false,
+  )
+endif

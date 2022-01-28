@@ -2015,12 +2015,6 @@ PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,,
 
 MIME_TYPES="$MIME_TYPES;image/svg+xml"
 
-AC_CHECK_PROGS(GTK_ENCODE_SYMBOLIC_SVG, gtk-encode-symbolic-svg, no)
-
-if test "x$GTK_ENCODE_SYMBOLIC_SVG" = xno; then
-  add_deps_error([gtk-encode-symbolic-svg],
-                 [Could not find gtk-encode-symbolic-svg in your PATH.])
-fi
 
 ####################################
 # Allow to disable the print plug-in
@@ -2586,6 +2580,42 @@ WARNING: You enabled vector icons on Win32. Make sure to run:
     fi
   else
     enable_vector_icons="no (missing shared-mime-info)"
+  fi
+fi
+
+if test "x$enable_vector_icons" != "xyes"; then
+  # The trick when disabling vector icons is that librsvg is still
+  # needed at compile time (on build machine) to generate PNG, even
+  # though it won't be needed at runtime for icon display.
+  #
+  # The tool gtk-encode-symbolic-svg also requires a SVG GdkPixbuf
+  # loader, which usually uses librsvg as well anyway.
+  warning_vector_icons_windows="
+WARNING: vector icons are disabled. Be aware that librsvg is still
+         needed to create the PNG icons on the build machine, yet it
+         won't be needed for runtime icon display of distributed themes."
+
+  AC_CHECK_PROGS(GTK_ENCODE_SYMBOLIC_SVG, gtk-encode-symbolic-svg, no)
+
+  if test "x$GTK_ENCODE_SYMBOLIC_SVG" = xno; then
+    add_deps_error([gtk-encode-symbolic-svg],
+                   [Could not find gtk-encode-symbolic-svg in your PATH.])
+  fi
+
+  if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+     pkg-config gio-2.0; then
+    NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
+    NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+    if pkg-config --atleast-version=rsvg_required_version librsvg-2.0; then
+      NATIVE_SVG_LIBS=`pkg-config --libs librsvg-2.0`
+      NATIVE_SVG_CFLAGS=`pkg-config --cflags librsvg-2.0`
+      AC_SUBST(NATIVE_SVG_CFLAGS)
+      AC_SUBST(NATIVE_SVG_LIBS)
+    else
+      add_deps_error([native librsvg-2.0], [Could not find librsvg for the build system.])
+    fi
+  else
+    add_deps_error([native glib], [Could not find GLib for the build system.])
   fi
 fi
 

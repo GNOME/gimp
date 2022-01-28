@@ -23,6 +23,49 @@ endif
 #	SVG=`$(top_srcdir)/tools/extract-vector-icon.sh $< $*` && \
 #	echo $${SVG} > $@
 
+12/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+16/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+16/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+18/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+20/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+22/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+24/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+32/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+48/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+64/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+96/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+128/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+192/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+256/%.png: scalable/%.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
+
 ## Compiled-in icons for both the core and libgimpwidgets
 
 CORE_IMAGES = \

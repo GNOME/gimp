@@ -61,6 +61,20 @@ if ENABLE_VECTOR_ICONS
 #noinst_PROGRAMS = compute-svg-viewbox
 
 #DISTCLEANFILES = compute-svg-viewbox$(BUILD_EXEEXT)
+
+else
+colorsvg2png_SOURCES = colorsvg2png.c
+
+colorsvg2png_CFLAGS = $(NATIVE_GLIB_CFLAGS) $(NATIVE_SVG_CFLAGS)
+
+colorsvg2png_LDADD = $(NATIVE_GLIB_LIBS) $(NATIVE_SVG_LIBS)
+
+# Build tools which must be built for the build platform.
+all-local: colorsvg2png$(BUILD_EXEEXT)
+
+noinst_PROGRAMS = colorsvg2png
+
+DISTCLEANFILES = colorsvg2png$(BUILD_EXEEXT)
 endif
 
 AM_CPPFLAGS = \

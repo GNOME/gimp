@@ -567,6 +567,7 @@ icons16_images = \
 	16/gimp-prefs-image-windows.png				\
 	16/gimp-prefs-import-export.png				\
 	16/gimp-prefs-interface.png				\
+	16/gimp-prefs-playground.png				\
 	16/gimp-prefs-theme.png					\
 	16/gimp-prefs-toolbox.png				\
 	16/gimp-prefs-window-management.png			\
