@@ -2,13 +2,13 @@
 # Copyright (C) 2018 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 #
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed).
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed), 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-09-11 15:39+0000\n"
+"POT-Creation-Date: 2022-01-27 10:20+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 
 #: ../build/windows/installer/lang/setup.isl.in.h:1
 msgid "License Agreement"
@@ -178,26 +178,36 @@ msgstr ""
 "scriptingsproget Python."
 
 #: ../build/windows/installer/lang/setup.isl.in.h:33
+msgid "Lua scripting"
+msgstr "Lua-scripting"
+
+#: ../build/windows/installer/lang/setup.isl.in.h:34
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr ""
+"Giver mulighed for at bruge GIMP-udvidelsesmoduler, som er skrevet i "
+"scriptingsproget Lua."
+
+#: ../build/windows/installer/lang/setup.isl.in.h:35
 msgid "MyPaint brushes"
 msgstr "MyPaint-pensler"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
+#: ../build/windows/installer/lang/setup.isl.in.h:36
 msgid "Install the default set of MyPaint brushes"
 msgstr "Installer standardsættet af MyPaint-pensler"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:35
+#: ../build/windows/installer/lang/setup.isl.in.h:37
 msgid "PostScript support"
 msgstr "Understøttelse af PostScript"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:36
+#: ../build/windows/installer/lang/setup.isl.in.h:38
 msgid "Allow GIMP to load PostScript files"
 msgstr "Giver GIMP mulighed for at indlæse PostScript-filer"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:37
+#: ../build/windows/installer/lang/setup.isl.in.h:39
 msgid "Support for 32-bit plug-ins"
 msgstr "Understøttelse af 32-bit-udvidelsesmoduler"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
+#: ../build/windows/installer/lang/setup.isl.in.h:41
 #, no-c-format
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
@@ -206,23 +216,23 @@ msgstr ""
 "Inkluder filer der er nødvendige for at anvende 32-bit-udvidelsesmoduler."
 "%nPåkrævet for understøttelse af Python."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:40
+#: ../build/windows/installer/lang/setup.isl.in.h:42
 msgid "Additional icons:"
 msgstr "Yderligere ikoner:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
+#: ../build/windows/installer/lang/setup.isl.in.h:43
 msgid "Create a &desktop icon"
 msgstr "Opret ikon på &skrivebordet"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:42
+#: ../build/windows/installer/lang/setup.isl.in.h:44
 msgid "Create a &Quick Launch icon"
 msgstr "Opret ikon i &Hurtig start"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
+#: ../build/windows/installer/lang/setup.isl.in.h:45
 msgid "Remove previous GIMP version"
 msgstr "Fjern forrige GIMP-version"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
+#: ../build/windows/installer/lang/setup.isl.in.h:47
 #, no-c-format
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
@@ -232,72 +242,72 @@ msgstr ""
 "ved indlæsning af udvidelsesmoduler, så prøv at afinstallere og "
 "geninstallere GIMP."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:46
+#: ../build/windows/installer/lang/setup.isl.in.h:48
 msgid "Error extracting temporary data."
 msgstr "Fejl ved udtrækning af midlertidige data."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:47
+#: ../build/windows/installer/lang/setup.isl.in.h:49
 msgid "Error updating Python interpreter info."
 msgstr "Fejl ved opdatering af Python-fortolkerinformation."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
+#: ../build/windows/installer/lang/setup.isl.in.h:50
 msgid "Error updating MyPaint brushes info."
 msgstr "Fejl ved opdatering af MyPaint-penselinformation."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
+#: ../build/windows/installer/lang/setup.isl.in.h:52
 #, no-c-format
 msgid "There was an error updating %1."
 msgstr "Der opstod en fejl ved opdatering af %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
+#: ../build/windows/installer/lang/setup.isl.in.h:54
 #, no-c-format
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "Der opstod en fejl ved opdatering af GIMP's konfigurationsfil %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:53
+#: ../build/windows/installer/lang/setup.isl.in.h:55
 msgid "Edit with GIMP"
 msgstr "Rediger i GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: ../build/windows/installer/lang/setup.isl.in.h:56
 msgid "Select file associations"
 msgstr "Vælg filtilknytninger"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: ../build/windows/installer/lang/setup.isl.in.h:57
 msgid "Extensions:"
 msgstr "Filtyper:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: ../build/windows/installer/lang/setup.isl.in.h:58
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Vælg de filtyper som du vil have knyttet til GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: ../build/windows/installer/lang/setup.isl.in.h:59
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
 msgstr ""
 "Markerede filer åbnes i GIMP, når du dobbeltklikker på dem i Stifinder."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: ../build/windows/installer/lang/setup.isl.in.h:60
 msgid "Select &All"
 msgstr "Vælg &alle"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: ../build/windows/installer/lang/setup.isl.in.h:61
 msgid "Unselect &All"
 msgstr "Fravælg &alle"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: ../build/windows/installer/lang/setup.isl.in.h:62
 msgid "Select &Unused"
 msgstr "Vælg &ubrugte"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:61
+#: ../build/windows/installer/lang/setup.isl.in.h:63
 msgid "File types to associate with GIMP:"
 msgstr "Filtyper der skal tilknyttes GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
+#: ../build/windows/installer/lang/setup.isl.in.h:64
 msgid "Removing previous version of GIMP:"
 msgstr "Fjerner forrige version af GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
+#: ../build/windows/installer/lang/setup.isl.in.h:66
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -312,7 +322,7 @@ msgstr ""
 "installeres i %2, eller vælg Brugerdefineret installation, og vælg en anden "
 "installationsmappe.%n%nInstallationen vil nu blive afsluttet."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
+#: ../build/windows/installer/lang/setup.isl.in.h:68
 #, no-c-format
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
@@ -328,7 +338,7 @@ msgstr ""
 "Brugerdefineret installation, og vælg en anden installationsmappe.%n"
 "%nInstallationen vil nu blive afsluttet."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:68
+#: ../build/windows/installer/lang/setup.isl.in.h:70
 #, no-c-format
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
@@ -339,59 +349,59 @@ msgstr ""
 "installationen kan fortsætte.%n%nEfter computeren er blevet genstartet vil "
 "installationen fortsætte, næste gang en administrator logger på."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:70
+#: ../build/windows/installer/lang/setup.isl.in.h:72
 #, no-c-format
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Der opstod en fejl ved genstart af installationen. (%1)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:71
+#: ../build/windows/installer/lang/setup.isl.in.h:73
 msgid "Cleaning up old files..."
 msgstr "Rydder op i gamle filer …"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: ../build/windows/installer/lang/setup.isl.in.h:75
 #, no-c-format
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Husk: GIMP er fri software.%n%nBesøg venligst"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: ../build/windows/installer/lang/setup.isl.in.h:76
 msgid "for free updates."
 msgstr "for gratis opdateringer."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: ../build/windows/installer/lang/setup.isl.in.h:77
 msgid "Setting up file associations..."
 msgstr "Opsætter filtilknytninger …"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: ../build/windows/installer/lang/setup.isl.in.h:78
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Opsætter miljø til GIMP Python-udvidelse …"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: ../build/windows/installer/lang/setup.isl.in.h:79
 msgid "Setting up MyPaint brushes..."
 msgstr "Opsætter MyPaint-pensler …"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: ../build/windows/installer/lang/setup.isl.in.h:80
 msgid "Setting up GIMP environment..."
 msgstr "Opsætter GIMP-miljøet …"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:79
+#: ../build/windows/installer/lang/setup.isl.in.h:81
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr ""
 "Opsætter GIMP-konfiguration til understøttelse af 32-bit-udvidelsesmoduler …"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: ../build/windows/installer/lang/setup.isl.in.h:82
 msgid "Launch GIMP"
 msgstr "Start GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: ../build/windows/installer/lang/setup.isl.in.h:83
 msgid "Removing add-on"
 msgstr "Fjerner tilføjelse"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:83
+#: ../build/windows/installer/lang/setup.isl.in.h:85
 #, no-c-format
 msgid "Internal error (%1)."
 msgstr "Intern fejl (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:84
+#: ../build/windows/installer/lang/setup.isl.in.h:86
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
