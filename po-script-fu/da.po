@@ -10,14 +10,14 @@
 # Mads Lundby <lundbymads@gmail.com>, 2009.
 # Joe Hansen <joedalton2@yahoo.dk>, 2010, 2011.
 # scootergrisen, 2015, 2016.
-# Alan Mortensen, 2018 (gennemgået og oversat i sin helhed), 2019.
+# Alan Mortensen, 2018 (gennemgået og oversat i sin helhed), 2019-22.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-10 15:19+0000\n"
-"PO-Revision-Date: 2019-10-10 19:54+0200\n"
+"POT-Creation-Date: 2022-01-30 11:58+0000\n"
+"PO-Revision-Date: 2022-01-30 14:54+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -25,13 +25,13 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
-msgid "_Console"
-msgstr "_Konsol"
+msgid "Script-Fu _Console"
+msgstr "Script-Fu-_konsol"
 
 #: ../plug-ins/script-fu/script-fu.c:143
 msgid "Interactive console for Script-Fu development"
@@ -146,8 +146,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Gem konsoloutput fra Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:238
-#: ../plug-ins/script-fu/script-fu-server.c:829
+#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "_Annullér"
 
@@ -168,69 +168,69 @@ msgstr "An_vend"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu evalueringstilstand kan kun startes ikke-interaktivt"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:203
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan ikke behandle to programmer på samme tid."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:204
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kører allerede programmet \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:230
+#: ../plug-ins/script-fu/script-fu-interface.c:231
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 msgid "_Reset"
 msgstr "_Nulstil"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: ../plug-ins/script-fu/script-fu-interface.c:240
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:293
+#: ../plug-ins/script-fu/script-fu-interface.c:294
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:343
+#: ../plug-ins/script-fu/script-fu-interface.c:344
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-farvevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-skrifttypevælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-paletvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mønstervælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:505
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-farveovergangsvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:514
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselvælger"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:888
+#: ../plug-ins/script-fu/script-fu-interface.c:893
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fejl ved kørsel af %s:"
@@ -244,27 +244,27 @@ msgstr "For få argumenter til kaldet \"script-fu-register\""
 msgid "Error while loading %s:"
 msgstr "Fejl ved indlæsning af %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:825
+#: ../plug-ins/script-fu/script-fu-server.c:830
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serverindstillinger"
 
-#: ../plug-ins/script-fu/script-fu-server.c:830
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "_Start Server"
 msgstr "_Start server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:863
+#: ../plug-ins/script-fu/script-fu-server.c:868
 msgid "Listen on IP:"
 msgstr "Lyt på IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:870
+#: ../plug-ins/script-fu/script-fu-server.c:875
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:876
+#: ../plug-ins/script-fu/script-fu-server.c:881
 msgid "Server logfile:"
 msgstr "Serverlogfil:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:889
+#: ../plug-ins/script-fu/script-fu-server.c:894
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -291,7 +291,7 @@ msgstr "Tykkelse"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -558,14 +558,14 @@ msgid "No background (only for separate layer)"
 msgstr "Ingen baggrund (kun til separate lag)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/lava.scm:141
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "Behold markering"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/lava.scm:142
 #: ../plug-ins/script-fu/scripts/predator.scm:133
 msgid "Separate layer"
 msgstr "Separat lag"
@@ -676,7 +676,7 @@ msgstr "Forskydning y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "Sløringsradius"
 
@@ -696,49 +696,63 @@ msgstr "Uigennemsigtighed"
 msgid "Allow resizing"
 msgstr "Tillad størrelsesændring"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "Sl_et hver anden række …"
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Slet hver anden række eller kolonne"
+msgid "_Erase Every Nth Row..."
+msgstr "Sl_et hver n'te række …"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Slet hver n'te række eller kolonne"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Rækker/kolonner"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Rækker"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Kolonner"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Lige/ulige"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Lige"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Ulige"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Slet/udfyld"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Slet"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Udfyld med baggrund"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "Sl_et hver anden række …"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Slet hver anden række eller kolonne"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Lige/ulige"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Lige"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Ulige"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -1015,31 +1029,36 @@ msgstr "_Fjern alle hjælpelinjer"
 msgid "Remove all horizontal and vertical guides"
 msgstr "Fjern alle vandrette og lodrette hjælpelinjer"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: ../plug-ins/script-fu/scripts/lava.scm:123
+msgid "Lava works with exactly one selected layer"
+msgstr "Lava virker kun, når ét lag er valgt"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:129
 msgid "_Lava..."
 msgstr "_Lava …"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: ../plug-ins/script-fu/scripts/lava.scm:130
 msgid "Fill the current selection with lava"
 msgstr "Udfyld den aktuelle markering med lava"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: ../plug-ins/script-fu/scripts/lava.scm:137
 msgid "Seed"
 msgstr "Basistal for tilfældighedsgenerator"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: ../plug-ins/script-fu/scripts/lava.scm:138
 msgid "Size"
 msgstr "Størrelse"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: ../plug-ins/script-fu/scripts/lava.scm:139
 msgid "Roughness"
 msgstr "Ruhed"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/lava.scm:140
 msgid "Gradient"
 msgstr "Farveovergang"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: ../plug-ins/script-fu/scripts/lava.scm:143
 msgid "Use current gradient"
 msgstr "Brug aktuelle farveovergang"
 
@@ -1212,19 +1231,19 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "Indsæt udklipsholderens indhold i en ny pensel"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "_Penselnavn"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:146
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
 msgid "_File name"
 msgstr "_Filnavn"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "_Mellemrum"
 
@@ -1330,37 +1349,37 @@ msgstr "Udtvær"
 msgid "Black"
 msgstr "Sort"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "_Runde hjørner …"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "Afrund et billedes hjørner og tilføj valgfrit en skyggeeffekt og baggrund"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "Kantradius"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Tilføj skyggeeffekt"
 
 # "X-forskydning for skygge" / "Skyggeforskydning X" / "Vandret
 # forskydning for skygge"
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "Skygge x-forskydning"
 
 # "Y-forskydning for skygge" / "Skyggeforskydning Y" / "Lodret forskydning
 # for skygge"
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Skygge y-forskydning"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Tilføj baggrund"
 
@@ -1392,11 +1411,11 @@ msgstr "Ra_dius (%)"
 msgid "Co_ncave"
 msgstr "_Konkav"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:137
 msgid "To _Brush..."
 msgstr "Til _pensel …"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:138
 msgid "Convert a selection to a brush"
 msgstr "Konvertér en markering til en pensel"
 
@@ -1624,6 +1643,9 @@ msgstr "x-forskydning for skyggeeffekten"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "y-forskydning for skyggeeffekten"
+
+#~ msgid "_Console"
+#~ msgstr "_Konsol"
 
 #~ msgid "Rendering Spyro"
 #~ msgstr "Gengiver spyro"
