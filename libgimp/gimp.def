@@ -763,9 +763,9 @@ EXPORTS
 	gimp_pixel_rgns_process
 	gimp_pixel_rgns_register
 	gimp_pixel_rgns_register2
+	gimp_plug_in_error_quark
 	gimp_plugin_domain_register
 	gimp_plugin_enable_precision
-	gimp_plug_in_error_quark
 	gimp_plugin_get_pdb_error_handler
 	gimp_plugin_help_register
 	gimp_plugin_icon_register
