@@ -9,14 +9,14 @@
 # Ole Laursen <olau@hardworking.dk>, 2001, 02, 04.
 # Joe Hansen <joedalton2@yahoo.dk>, 2008, 2011.
 # scootergrisen, 2015, 2016.
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed), 2019-20.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed), 2019-22.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-14 00:03+0000\n"
-"PO-Revision-Date: 2020-02-16 13:21+0100\n"
+"POT-Creation-Date: 2022-01-27 10:19+0000\n"
+"PO-Revision-Date: 2022-01-27 19:18+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -24,7 +24,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
@@ -117,47 +117,47 @@ msgstr "Farveovergang at bruge"
 msgid "File Name"
 msgstr "Filnavn"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:88
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
 msgid "Exports the image histogram to a text file (CSV)"
 msgstr "Eksporterer billedhistogrammet til en tekstfil (CSV)"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:93
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
 msgid "_Export histogram..."
 msgstr "_Eksportér histogram …"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:95
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
 msgid "_Image"
 msgstr "_Billede"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
 msgid "_Drawable"
 msgstr "_Tegneobjekt"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
 msgid "Histogram _File"
 msgstr "_Histogramfil"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
 msgid "_Bucket Size"
 msgstr "_Spandstørrelse"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
 msgid "Sample _Average"
 msgstr "_Prøvegennemsnit"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
 msgid "Output format"
 msgstr "Outputformat"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
 msgid "Pixel count"
 msgstr "Antal pixels"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
 msgid "Normalized"
 msgstr "Normaliseret"
 
-#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
 msgid "Percent"
 msgstr "Procent"
 
@@ -574,11 +574,11 @@ msgstr "Epitrochoide"
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1395
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
 msgid "Curve Type"
 msgstr "Kurvetype"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1396
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
@@ -586,22 +586,22 @@ msgstr ""
 "Et epitrochoidemønster er, når det bevægelige tandhjul er uden på det faste "
 "tandhjul."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1401
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
 msgid "Tool"
 msgstr "Værktøj"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1402
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
 msgid ""
-"The tool with which to draw the pattern.The Preview tool just draws quickly."
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Værktøjet som mønsteret skal tegnes med. Værktøjet forhåndsvisning tegner "
 "bare hurtigt."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1407
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
 msgid "Long Gradient"
 msgstr "Lang farveovergang"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -612,11 +612,11 @@ msgstr ""
 "og gentagetilstanden fra værktøjet farveovergangs indstillinger, blive brugt "
 "til at matche mønsterets længde."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1429
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Angiv mønsteret ved brug af et af følgende faneblade:"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -627,7 +627,7 @@ msgstr ""
 "men bruger tandhjul og hulnumre, som findes i legetøjssæt. Følger du "
 "vejledningen i manualen til legetøjssættet, skulle resultatet være det samme."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1455
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
@@ -635,12 +635,12 @@ msgstr ""
 "Antal tænder på det fastlåste tandhjul. Størrelsen på det faste tandhjul er "
 "proportional med antallet af tænder."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1458
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1484
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
 msgid "Fixed Gear Teeth"
 msgstr "Tænder i fastlåst tandhjul."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1464
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -648,16 +648,16 @@ msgstr ""
 "Antal tænder på det roterende tandhjul. Størrelsen på det roterende tandhjul "
 "er proportional med antallet af tænder."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1467
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1489
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
 msgid "Moving Gear Teeth"
 msgstr "Tænder i roterende tandhjul."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1472
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
 msgid "Hole percent"
 msgstr "Hulprocent"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1473
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -665,11 +665,11 @@ msgstr ""
 "Hvor langt hullet er fra det roterende tandhjuls centrum. 100 % betyder, at "
 "hullet er i tandhjulets kant."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1494
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
 msgid "Hole Number"
 msgstr "Hulnummer"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1495
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -678,27 +678,27 @@ msgstr ""
 "største hulnummer er forskelligt for hvert tandhjul."
 
 # Flower er overflødigt, da petals er en del af blomsten
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "Flower Petals"
 msgstr "Kronblade"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1506
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
 msgid "The number of petals in the pattern."
 msgstr "Antal kronblade i mønsteret."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1511
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
 msgid "Petal Skip"
 msgstr "Overspring kronblade"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1512
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Antal kronblade der skal gås frem for at tegne det næste kronblad."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1517
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
 msgid "Hole Radius(%)"
 msgstr "Hulradius (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1518
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -707,11 +707,11 @@ msgstr ""
 "Radius af det centrale hul hvor intet tegnes. Givet som en procentdel af "
 "mønsterets størrelse. 0 giver intet hul og 99 giver en tynd linje på kanten."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1531
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
 msgid "Width(%)"
 msgstr "Bredde (%)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1532
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -720,24 +720,24 @@ msgstr ""
 "Mønsterets bredde som en procentdel af mønsterets størrelse. 1 giver et "
 "tyndt mønster og 100 vil udfylde hele det faste tandhjul."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1542
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
 msgid "Visual"
 msgstr "Visuel"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1547
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
 msgid "Toy Kit"
 msgstr "Legetøjssæt"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1552
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
 msgid "Gears"
 msgstr "Tandhjul"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1564
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation"
 msgstr "Rotation"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1565
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -745,11 +745,11 @@ msgstr ""
 "Rotation af mønsteret i grader. Udgangspunktet for det roterende tandhjul i "
 "det fastlåste tandhjul."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1588
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
 msgid "Shape"
 msgstr "Form"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1589
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -763,39 +763,39 @@ msgstr ""
 "tandhjulsnotation for at berøre grænsen. Markering vil omfavne den nuværende "
 "markerings grænser (prøv med noget som ikke er rektangulært)."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Sides"
 msgstr "Sider"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1598
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
 msgid "Number of sides of the shape."
 msgstr "Antal sider i formen."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph"
 msgstr "Omform"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1603
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Omform det fastlåste tandhjul. Påvirker kun nogle af formerne."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1608
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Rotation af det fastlåste tandhjul i grader"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin (px)"
 msgstr "Margen (px)"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1623
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
 msgid "Margin from edge of selection."
 msgstr "Margen fra markeringens kant."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1628
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
 msgid "Make width and height equal"
 msgstr "Gør højde og bredde ens"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -804,11 +804,11 @@ msgstr ""
 "Hvis markeret vil mønsterets højde og bredde være ens, og mønsteret vil være "
 "centreret."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1654
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
 msgid "Re_draw"
 msgstr "_Gentegn"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1655
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -816,19 +816,19 @@ msgstr ""
 "Ændrer du et værktøjs indstillinger, skifter farve eller ændrer markeringen, "
 "så tryk her for at se, hvordan mønsteret ser ud."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
 msgid "_Reset"
 msgstr "_Nulstil"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1658
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
 msgid "_Cancel"
 msgstr "_Annullér"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
 msgid "_OK"
 msgstr "_OK"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1665
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -836,36 +836,36 @@ msgstr ""
 "Vælg om der skal gemmes som et nyt lag, gentegnes på senest aktive lag eller "
 "gemmes som kurve"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1677
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1686
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2191
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Tegn spirografer med aktuelle værktøjsindstillinger og markering."
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1699
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
 msgid "Curve Pattern"
 msgstr "Kurvemønster"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1702
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
 msgid "Fixed Gear"
 msgstr "Fastlåst tandhjul"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1705
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
 msgid "Size"
 msgstr "Størrelse"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2039
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
 msgid "Rendering Pattern"
 msgstr "Gentegner mønster"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2051
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
 msgid "Please wait : Rendering Pattern"
 msgstr "Vent venligst: Mønsteret gentegnes"
 
-#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2160
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
 msgstr "Spyrogimp …"
 
