@@ -11,14 +11,14 @@
 # Per Kongstad <p_kongstad@op.pl>, 2009.
 # Joe Hansen <joedalton2@yahoo.dk>, 2011, 2015.
 # scootergrisen, 2015, 2016.
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed), 2019.
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2018 (oversat og gennemgået i sin helhed), 2019-22.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-10-10 13:11+0000\n"
-"PO-Revision-Date: 2019-10-10 19:15+0200\n"
+"POT-Creation-Date: 2022-01-27 10:19+0000\n"
+"PO-Revision-Date: 2022-01-27 19:16+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -26,7 +26,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
@@ -59,84 +59,84 @@ msgstr "Penselvalg"
 msgid "_Browse..."
 msgstr "G_ennemse …"
 
-#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Udvidelsesmodulet %s kan ikke håndtere lag"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Forén synlige lag"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Udvidelsesmodulet %s kan ikke håndtere lagforskydning, størrelse eller "
 "uigennemsigtighed"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Udvidelsesmodulet %s kan kun håndtere lag som animationsbilleder"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Gem som animation"
 
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Forén billedets lag (bevar gennemsigtighed)"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Udvidelsesmodulet %s kan ikke håndtere gennemsigtighed"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:349
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Udvidelsesmodulet %s kan ikke håndtere gennemsigtige lag"
 
-#: ../libgimp/gimpexport.c:341
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Udvidelsesmodulet %s kan ikke håndtere lagmasker"
 
 # Fra GIMP
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Påfør lagmasker"
 
-#: ../libgimp/gimpexport.c:350
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "Udvidelsesmodulet %s kan kun håndtere RGB-billeder"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Konvertér til RGB"
 
-#: ../libgimp/gimpexport.c:359
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "Udvidelsesmodulet %s kan kun håndtere gråtonebilleder"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Konvertér til gråtoner"
 
-#: ../libgimp/gimpexport.c:368
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "Udvidelsesmodulet %s kan kun håndtere indekserede billeder"
 
-#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
-#: ../libgimp/gimpexport.c:408
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -144,13 +144,13 @@ msgstr ""
 "Konvertér til indekseret vha. standardindstillingerne\n"
 "(gør det manuelt for at finindstille resultatet)"
 
-#: ../libgimp/gimpexport.c:378
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Udvidelsesmodulet %s kan kun håndtere bitmap-indekserede (tofarvede) billeder"
 
-#: ../libgimp/gimpexport.c:379
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -158,37 +158,51 @@ msgstr ""
 "Konvertér til indekseret vha. bitmap-standardindstillingerne\n"
 "(gør det manuelt for at finindstille resultatet)"
 
-#: ../libgimp/gimpexport.c:388
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "Udvidelsesmodulet %s kan kun håndtere RGB- eller gråtonebilleder"
 
-#: ../libgimp/gimpexport.c:397
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr "Udvidelsesmodulet %s kan kun håndtere RGB- eller indekserede billeder"
 
-#: ../libgimp/gimpexport.c:407
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Udvidelsesmodulet %s kan kun håndtere gråtone- eller indekserede billeder"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Udvidelsesmodulet %s kræver en alfakanal"
 
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Tilføj alfakanal"
 
-#: ../libgimp/gimpexport.c:478
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr ""
+"Udvidelsesmodulet %s har brug for at beskære lagene til billedets grænser"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Crop Layers"
+msgstr "Beskær lag"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Ændr billedets størrelse til lagene"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Bekræft gem"
 
-#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
-#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -197,24 +211,24 @@ msgstr "Bekræft gem"
 msgid "_Cancel"
 msgstr "_Annullér"
 
-#: ../libgimp/gimpexport.c:484
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "_Bekræft"
 
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Eksportér fil"
 
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Ignorér"
 
-#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Eksportér"
 
 #. the headline
-#: ../libgimp/gimpexport.c:596
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -224,11 +238,11 @@ msgstr ""
 "årsager:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "Eksportkonverteringen vil ikke ændre dit originale billede."
 
-#: ../libgimp/gimpexport.c:774
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -237,7 +251,7 @@ msgstr ""
 "Du er ved at gemme en lagmaske som %s.\n"
 "Dette vil ikke gemme de synlige lag."
 
-#: ../libgimp/gimpexport.c:780
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -247,7 +261,7 @@ msgstr ""
 "Dette vil ikke gemme de synlige lag."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1057
+#: ../libgimp/gimpexport.c:1119
 #, c-format
 msgid "Export Image as %s"
 msgstr "Eksportér billede som %s"
@@ -260,44 +274,44 @@ msgstr "Skrifttypevalg"
 msgid "Gradient Selection"
 msgstr "Farveovergangsvalg"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:687
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:878
 msgid "Background"
 msgstr "Baggrund"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1067
 #, c-format
 msgid "Rotate %s?"
 msgstr "Rotér %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1073
 msgid "_Keep Original"
 msgstr "_Behold oprindelig"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1074 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotér"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Original"
 msgstr "Oprindelig"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1131
 msgid "Rotated"
 msgstr "Roteret"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1149
 msgid "This image contains Exif orientation metadata."
 msgstr "Dette billede indeholder Exif-metadata om rotation."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1167
 msgid "Would you like to rotate the image?"
 msgstr "Vil du rotere billedet?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1179
 msgid "_Don't ask me again"
 msgstr "S_pørg mig ikke igen"
 
@@ -1478,37 +1492,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Beskær med forhold"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:961
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Kan kun indlæse metadata fra lokale filer"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Konvertering af filnavnet til systemets tegntabel mislykkedes."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1017
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Kan kun gemme metadata til lokale filer"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1065
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ugyldig Exif-datastørrelse."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1094
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Fortolkning af Exif-data mislykkedes."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1144
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Fortolkning af IPTC-data mislykkedes."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1192
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Fortolkning af XMP-data mislykkedes."
@@ -1669,7 +1678,7 @@ msgid ""
 msgstr ""
 "Farveprofilen der skal anvendes til skærmkorrektur fra dit billedes farverum "
 "til et andet farverum inklusive skærmkorrektur til en printer eller en anden "
-"outputenheds profil."
+"outputenheds profil. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1705,12 +1714,13 @@ msgid ""
 "the best. "
 msgstr ""
 "Hvordan farver konverteres fra dit billedes farverum til outputenheden "
-"(sædvanligvis din skærm). Prøv dem alle og vælg den, der ser bedst ud."
+"(sædvanligvis din skærm). Prøv dem alle og vælg den, der ser bedst ud. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
-msgstr "Prøv med og uden sortpunktskompensation og vælg det, der ser bedst ud."
+msgstr ""
+"Prøv med og uden sortpunktskompensation og vælg det, der ser bedst ud. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
@@ -1825,17 +1835,17 @@ msgstr "værdi for symbolet %s er ikke en gyldig UTF-8-streng"
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "forventede \"yes\" eller \"no\" for boolesk symbol %s, fik \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ugyldig værdi \"%s\" for symbolet %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:599
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ugyldig værdi \"%ld\" for symbolet %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:668
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "under fortolkning af symbolet \"%s\": %s"
@@ -2160,17 +2170,17 @@ msgstr "_Transformér"
 msgid "_Shear"
 msgstr "_Vrid"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "Kilobyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+msgid "Kibibyte"
+msgstr "Kibibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "Megabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+msgid "Mebibyte"
+msgstr "Mebibyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "Gigabyte"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+msgid "Gibibyte"
+msgstr "Gibibyte"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -2230,7 +2240,7 @@ msgid "Writable"
 msgstr "Skrivbar"
 
 # Eyedropper findes ikke mere og er erstattet af color picker
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:113
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2997,6 +3007,9 @@ msgstr "Kontrastcyklusser"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#~ msgid "Conversion of the filename to system codepage failed."
+#~ msgstr "Konvertering af filnavnet til systemets tegntabel mislykkedes."
 
 #~ msgctxt "select-criterion"
 #~ msgid "Hue (HSV)"
