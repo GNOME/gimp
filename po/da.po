@@ -14,10 +14,10 @@
 # Lars Christian Jensen <lars@jink.dk>, 2009 (review).
 # Joe Hansen <joedalton2@yahoo.dk>, 2010.
 # scootergrisen, 2015, 2016.
-# Alan Mortensen <alanmortensen.am@gmail.com>, 2017-20 (oversat og gennemgået i sin helhed i 2017).
+# Alan Mortensen <alanmortensen.am@gmail.com>, 2017-22 (oversat og gennemgået i sin helhed i 2017).
 #
 # Ordlisten på http://wiki.dansk-gruppen.dk/index.php/Gimp-move kunne godt trænge til en opdatering.
-# Jeg har valgt at skele meget til Adobe Photoshop for ikke selv at opfinde oversættelser, som kun jeg forstår (Alan, 2017)
+# Jeg har valgt at skele meget til Adobe Photoshop for ikke selv at opfinde oversættelser, som kun jeg forstår (Alan, 2017). Se https://helpx.adobe.com/dk/pdf/photoshop_reference.pdf
 #
 # Opslagsværker:
 # https://www.ddpff.dk/teknisk-support/grafisk-leksikon/alle (meget blandet, ikke kun grafisk)
@@ -56,8 +56,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-11 20:17+0000\n"
-"PO-Revision-Date: 2020-02-11 17:04+0100\n"
+"POT-Creation-Date: 2022-01-27 10:18+0000\n"
+"PO-Revision-Date: 2022-01-30 11:55+0100\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -65,7 +65,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 2.3\n"
 "X-Language: da_DK\n"
 "X-Source-Language: C\n"
 
@@ -103,8 +103,8 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:5
 msgid ""
-"GIMP is expandable and extensible. It is designed to be augmented with plug-"
-"ins and extensions to do just about anything. The advanced scripting "
+"GIMP is expandable and extensible. It is designed to be augmented with "
+"plug-ins and extensions to do just about anything. The advanced scripting "
 "interface allows everything from the simplest task to the most complex image "
 "manipulation procedures to be easily scripted. GIMP is available for Linux, "
 "Microsoft Windows and OS X."
@@ -154,8 +154,8 @@ msgstr "Værktøjet markér forgrund: ny \"gråtone\"-forhåndsvisningstilstand"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
-"Værktøjet markér forgrund: farve-/uigennemsigtighedsvælger til \"Farve\"-"
-"forhåndsvisning"
+"Værktøjet markér forgrund: farve-/uigennemsigtighedsvælger til "
+"\"Farve\"-forhåndsvisning"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Free Select tool: improved copy-paste interaction"
@@ -261,13 +261,13 @@ msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr ""
-"Værktøjet samlet transformering bevarer nu som standard højde-"
-"breddeforholdet, når der skaleres op eller ned"
+"Værktøjet samlet transformering bevarer nu som standard "
+"højde-breddeforholdet, når der skaleres op eller ned"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
-"Add \"Constrain handles\" and \"Around center\" options to the perspective-"
-"transform tool's GUI"
+"Add \"Constrain handles\" and \"Around center\" options to the "
+"perspective-transform tool's GUI"
 msgstr ""
 "Tilføj valgmulighederne “Begræns håndtag” og “Omkring centrum” til værktøjet "
 "perspektivtransformerings brugergrænseflade"
@@ -501,10 +501,10 @@ msgid ""
 "\"Recursive Transform\". These are nice examples of our relaxed feature "
 "policy in stable micro releases."
 msgstr ""
-"Den indeholder også et nyt udvidelsesmodul til understøttelse af HEIF-"
-"formatet, såvel import som eksport, og derudover to nye filtre: “Sfærisk "
-"effekt” og “Rekursiv transformering”. Dette er eksempler på vores mere "
-"afslappede politik angående nye funktioner i stabile mikroudgivelser."
+"Den indeholder også et nyt udvidelsesmodul til understøttelse af "
+"HEIF-formatet, såvel import som eksport, og derudover to nye filtre: "
+"“Sfærisk effekt” og “Rekursiv transformering”. Dette er eksempler på vores "
+"mere afslappede politik angående nye funktioner i stabile mikroudgivelser."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
@@ -610,7 +610,7 @@ msgid ""
 msgstr ""
 "Temaerne “Lys” og “Mørk” er genskrevet fra bunden for at slippe for "
 "forskellige problemer med brugervenlighed. Temaerne “Lysere” og “mørkere” er "
-"fjernet"
+"fjernet."
 
 # GimpToolGyroscope optræder kun her
 # Der er tale om drejning omkring de tre akser: https://en.wikipedia.org/wiki/Yaw_(rotation)
@@ -626,9 +626,9 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid ""
-"Plug-in debugging improved to output stack traces from plug-ins with --stack-"
-"trace-mode command line option not only on receiving signals but also on "
-"warnings and critical errors when \"fatal-warnings\" debug key is set"
+"Plug-in debugging improved to output stack traces from plug-ins with "
+"--stack-trace-mode command line option not only on receiving signals but "
+"also on warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
 "Fejlfinding af udvidelsesmoduler er forbedret til at udskrive stakspor fra "
 "udvidelsesmoduler med kommandolinjetilvalget --stack-trace-mode; ikke kun "
@@ -4834,7 +4834,8 @@ msgstr "Indtast et navn til skabelonen"
 
 #: ../app/actions/file-commands.c:407
 msgid "Revert failed. No file name associated with this image."
-msgstr "Genindlæsning mislykkedes. Billedet har ikke noget tilknyttet filnavn."
+msgstr ""
+"Genindlæsning mislykkedes. Billedet har ikke noget tilknyttet filnavn."
 
 #: ../app/actions/file-commands.c:419
 msgid "Revert Image"
@@ -5681,7 +5682,8 @@ msgstr "Genskan de installerede skrifttyper"
 
 #: ../app/actions/gimpgeglprocedure.c:284
 #, c-format
-msgid "There are no last settings for '%s', showing the filter dialog instead."
+msgid ""
+"There are no last settings for '%s', showing the filter dialog instead."
 msgstr ""
 "Der er ingen seneste indstillinger for \"%s\". Viser filterdialogen i stedet."
 
@@ -6639,7 +6641,8 @@ msgstr "Kan ikke beskære, fordi billedet ikke har noget indhold."
 
 #: ../app/actions/image-commands.c:912
 msgid "Cannot crop because the image is already cropped to its content."
-msgstr "Kan ikke beskære, fordi billedet allerede er beskåret til sit indhold."
+msgstr ""
+"Kan ikke beskære, fordi billedet allerede er beskåret til sit indhold."
 
 #: ../app/actions/image-commands.c:1078
 #, c-format
@@ -7072,7 +7075,7 @@ msgstr "Tilføj lag_maske …"
 msgctxt "layers-action"
 msgid "Add a mask that allows non-destructive editing of transparency"
 msgstr ""
-"Tilføj en maske der tillader ikke-destruktiv redigering af gennemsigtighed"
+"Tilføj en maske der tillader ikkedestruktiv redigering af gennemsigtighed"
 
 #: ../app/actions/layers-actions.c:279
 msgctxt "layers-action"
@@ -7589,7 +7592,8 @@ msgid "Cannot crop because the active layer has no content."
 msgstr "Kan ikke beskære, fordi det aktive lag ikke har noget indhold."
 
 #: ../app/actions/layers-commands.c:920
-msgid "Cannot crop because the active layer is already cropped to its content."
+msgid ""
+"Cannot crop because the active layer is already cropped to its content."
 msgstr ""
 "Kan ikke beskære, fordi det aktive lag allerede er beskåret til sit indhold."
 
@@ -8590,7 +8594,8 @@ msgstr "Nulstil alle værktøjsindstillinger"
 
 #: ../app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
-msgstr "Vil du nulstille alle værktøjsindstillinger til deres standardværdier?"
+msgstr ""
+"Vil du nulstille alle værktøjsindstillinger til deres standardværdier?"
 
 #: ../app/actions/tool-preset-editor-actions.c:44
 msgctxt "tool-preset-editor-action"
@@ -8674,7 +8679,8 @@ msgstr "Vis i _filhåndtering"
 #: ../app/actions/tool-presets-actions.c:69
 msgctxt "tool-presets-action"
 msgid "Show tool preset file location in the file manager"
-msgstr "Vis placering af filen med værktøjets forudindstilling i filhåndtering"
+msgstr ""
+"Vis placering af filen med værktøjets forudindstilling i filhåndtering"
 
 #: ../app/actions/tool-presets-actions.c:74
 msgctxt "tool-presets-action"
@@ -10853,8 +10859,8 @@ msgid ""
 "backup of your configuration has been created at '%s'."
 msgstr ""
 "Der opstod en fejl ved fortolkningen af filen \"%s\". Standardværdierne vil "
-"blive brugt. En sikkerhedskopi af din konfiguration er blevet oprettet i \"%s"
-"\"."
+"blive brugt. En sikkerhedskopi af din konfiguration er blevet oprettet i "
+"\"%s\"."
 
 #: ../app/config/gimpdialogconfig.c:307 ../app/core/gimplayer.c:432
 msgid "Layer"
@@ -10880,8 +10886,8 @@ msgstr "Kurve"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Når denne er aktiveret, vil et billede blive det aktive billede, når dets "
 "vindue modtager fokus. Dette er nyttigt med vindueshåndteringer, der bruger "
@@ -10961,7 +10967,8 @@ msgstr ""
 "afbildet til en pixel på skærmen."
 
 #: ../app/config/gimprc-blurbs.h:109
-msgid "This is the distance in pixels where Guide and Grid snapping activates."
+msgid ""
+"This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
 "Dette er afstanden målt i pixels, hvor det aktiveres, at der rettes ind "
 "efter hjælpelinjer og gitter."
@@ -11285,8 +11292,8 @@ msgstr ""
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
-"Husk det nuværende værktøj, mønster, farve og pensel på tværs af GIMP-"
-"sessioner."
+"Husk det nuværende værktøj, mønster, farve og pensel på tværs af "
+"GIMP-sessioner."
 
 #: ../app/config/gimprc-blurbs.h:377
 msgid ""
@@ -11531,8 +11538,8 @@ msgstr ""
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
-"Angiver standardgengivelsesmetoden for dialogen \"Konvertér til farveprofil"
-"\"."
+"Angiver standardgengivelsesmetoden for dialogen \"Konvertér til "
+"farveprofil\"."
 
 #: ../app/config/gimprc-blurbs.h:528
 msgid ""
@@ -11687,7 +11694,8 @@ msgstr "Angiver kanalens standardnavn for dialogen \"Ny kanal\"."
 
 #: ../app/config/gimprc-blurbs.h:610
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
-msgstr "Angiver standardfarve og -uigennemsigtighed for dialogen \"Ny kanal\"."
+msgstr ""
+"Angiver standardfarve og -uigennemsigtighed for dialogen \"Ny kanal\"."
 
 #: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default path name for the 'New Path' dialog."
@@ -11797,7 +11805,8 @@ msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Vis de aktuelle for- og baggrundsfarver i værktøjskassen."
 
 #: ../app/config/gimprc-blurbs.h:680
-msgid "Show the currently selected brush, pattern and gradient in the toolbox."
+msgid ""
+"Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "Vis den valgte pensel, mønster og farveovergang i værktøjskassen."
 
 #: ../app/config/gimprc-blurbs.h:683
@@ -11814,7 +11823,8 @@ msgstr "Angiver hvordan gennemsigtighed vises i billeder."
 
 #: ../app/config/gimprc-blurbs.h:695
 msgid "Sets the size of the checkerboard used to display transparency."
-msgstr "Angiver størrelsen af de tern, der bruges til at vise gennemsigtighed."
+msgstr ""
+"Angiver størrelsen af de tern, der bruges til at vise gennemsigtighed."
 
 #: ../app/config/gimprc-blurbs.h:698
 msgid ""
@@ -12933,22 +12943,22 @@ msgid ""
 msgstr ""
 
 #: ../app/core/gimpextension.c:773
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "'%s' is not a relative path."
 msgstr "Pensel \"%s\" er ikke en genereret pensel"
 
 #: ../app/core/gimpextension.c:807
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "'%s' is not a child of the extension."
 msgstr "'%s:' er ikke et gyldigt URI-skema"
 
 #: ../app/core/gimpextension.c:821
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "'%s' is not a directory."
 msgstr "Pensel \"%s\" kan ikke redigeres"
 
 #: ../app/core/gimpextension.c:835
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "'%s' is not a valid file."
 msgstr "'%s:' er ikke et gyldigt URI-skema"
 
@@ -13161,7 +13171,8 @@ msgstr "Kan ikke afkode abr-formatversion %d."
 #, c-format
 msgid "Fatal parse error in brush file: Brush size value corrupt."
 msgstr ""
-"Fatal fortolkningsfejl i penselfilen: Værdien for penselstørrelse er ødelagt."
+"Fatal fortolkningsfejl i penselfilen: Værdien for penselstørrelse er "
+"beskadiget."
 
 #: ../app/core/gimpbrush-load.c:724 ../app/core/gimpbrush-load.c:914
 #, c-format
@@ -13198,7 +13209,7 @@ msgstr ""
 msgid "Fatal parse error in brush file: RLE compressed brush data corrupt."
 msgstr ""
 "Fatal fortolkningsfejl i penselfilen: De RLE-komprimerede penseldata er "
-"ødelagte."
+"beskadigede."
 
 #: ../app/core/gimpbrush.c:156 ../app/paint/gimppaintoptions.c:225
 msgid "Brush Spacing"
@@ -13289,7 +13300,7 @@ msgstr "Penselvinkel"
 #: ../app/core/gimpbrushpipe-load.c:86 ../app/core/gimpbrushpipe-load.c:110
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
-msgstr "Fatal fortolkningsfejl i penselfilen \"%s\": Filen er ødelagt."
+msgstr "Fatal fortolkningsfejl i penselfilen \"%s\": Filen er beskadiget."
 
 #: ../app/core/gimpbrushpipe-load.c:142
 #, c-format
@@ -13792,14 +13803,14 @@ msgstr "Ugyldig UTF-8-streng i farveovergangsfil \"%s\"."
 #: ../app/core/gimpgradient-load.c:122
 #, c-format
 msgid "File is corrupt."
-msgstr "Filen er ødelagt."
+msgstr "Filen er beskadiget."
 
 #: ../app/core/gimpgradient-load.c:168 ../app/core/gimpgradient-load.c:183
 #: ../app/core/gimpgradient-load.c:193 ../app/core/gimpgradient-load.c:205
 #: ../app/core/gimpgradient-load.c:215 ../app/core/gimpgradient-load.c:223
 #, c-format
 msgid "Corrupt segment %d."
-msgstr "Ødelagt segment %d."
+msgstr "Beskadiget segment %d."
 
 #: ../app/core/gimpgradient-load.c:236 ../app/core/gimpgradient-load.c:246
 #, c-format
@@ -13959,7 +13970,7 @@ msgid "High bit-depth images were added in %s"
 msgstr "Billeder med høj bitdybde blev tilføjet i %s"
 
 #: ../app/core/gimpimage.c:2700
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Billeder med høj bitdybde blev tilføjet i %s"
 
@@ -14054,8 +14065,8 @@ msgstr "Deaktivér “Brug sRGB-profil”"
 #: ../app/core/gimpimage-color-profile.c:195
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
-"Validering af ICC-profil mislykkedes: Parasittens navn er ikke \"icc-profile"
-"\""
+"Validering af ICC-profil mislykkedes: Parasittens navn er ikke "
+"\"icc-profile\""
 
 #: ../app/core/gimpimage-color-profile.c:204
 msgid ""
@@ -14077,7 +14088,8 @@ msgstr ""
 "gråtonefarverum"
 
 #: ../app/core/gimpimage-color-profile.c:414
-msgid "ICC profile validation failed: Color profile is not for RGB color space"
+msgid ""
+"ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Validering af ICC-profil mislykkedes: Farveprofilen er ikke til RGB-farverum"
 
@@ -14152,7 +14164,7 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Konverterer til indekserede farver (trin 3)"
 
 #: ../app/core/gimpimage-convert-precision.c:79
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Konvertér billede til %s"
@@ -15134,7 +15146,7 @@ msgstr "Anvend gemt skrifttype"
 
 #: ../app/core/gimptoolpreset-load.c:64
 msgid "Tool preset file is corrupt."
-msgstr "Filen med forudindstillinger af værktøj er ødelagt."
+msgstr "Filen med forudindstillinger af værktøj er beskadiget."
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
@@ -16040,8 +16052,8 @@ msgstr "Niveau: %s,  liv: %s"
 #: ../app/dialogs/lebl-dialog.c:150
 msgid "Left/Right to move, Space to fire, 'p' to pause, 'q' to quit"
 msgstr ""
-"Venstre/hæjre for at flytte, mellemrum for at skyde, \"p\" for pause og \"q"
-"\" for at afslutte"
+"Venstre/hæjre for at flytte, mellemrum for at skyde, \"p\" for pause og "
+"\"q\" for at afslutte"
 
 #: ../app/dialogs/lebl-dialog.c:816
 msgid "Killer GEGLs from Outer Space"
@@ -16179,7 +16191,8 @@ msgid "Do you really want to reset all preferences to default values?"
 msgstr "Vil du nulstille alle indstillinger til deres standardværdier?"
 
 #: ../app/dialogs/preferences-dialog.c:381
-msgid "You will have to restart GIMP for the following changes to take effect:"
+msgid ""
+"You will have to restart GIMP for the following changes to take effect:"
 msgstr "Du skal genstarte GIMP, før de følgende ændringer træder i kraft:"
 
 #: ../app/dialogs/preferences-dialog.c:646
@@ -18320,7 +18333,8 @@ msgstr[1] ""
 
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
-msgid "If you don't save the image, changes from the last minute will be lost."
+msgid ""
+"If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
@@ -20561,7 +20575,8 @@ msgstr "Malemetode \"%s\" findes ikke"
 
 #: ../app/pdb/gimppdb-utils.c:442
 #, c-format
-msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
+msgid ""
+"Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
 "Elementet \"%s\" (%d) kan ikke bruges, da det ikke er blevet tilføjet et "
 "billede"
@@ -20621,7 +20636,8 @@ msgstr ""
 #: ../app/pdb/gimppdb-utils.c:620
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr "Elementet \"%s\" (%d) kan ikke bruges, da det ikke er et gruppeelement"
+msgstr ""
+"Elementet \"%s\" (%d) kan ikke bruges, da det ikke er et gruppeelement"
 
 #: ../app/pdb/gimppdb-utils.c:640
 #, c-format
@@ -20675,7 +20691,7 @@ msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "Vektorobjektet %d indeholder ikke optegning med id %d"
 
 #: ../app/pdb/gimppdb-utils.c:859
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "Proceduren \"%s\" blev ikke fundet"
 
@@ -20760,23 +20776,23 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"Proceduren \"%s\" returnerede en forkert værditype for returværdien \"%s"
-"\" (nr. %d). Forventede %s, modtog %s."
+"Proceduren \"%s\" returnerede en forkert værditype for returværdien \"%s\" "
+"(nr. %d). Forventede %s, modtog %s."
 
 #: ../app/pdb/gimpprocedure.c:854
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' "
+"(#%d). Expected %s, got %s."
 msgstr ""
-"Proceduren \"%s\" blev kaldt med en forkert værditype for parameteren \"%s"
-"\" (nr. %d). Forventede %s, modtog %s."
+"Proceduren \"%s\" blev kaldt med en forkert værditype for parameteren \"%s\" "
+"(nr. %d). Forventede %s, modtog %s."
 
 #: ../app/pdb/gimpprocedure.c:887
 #, c-format
 msgid ""
-"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
-"in is trying to work on a layer that doesn't exist any longer."
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a "
+"plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
 "Proceduren \"%s\" returnerede et ugyldigt id for parameteren \"%s\". Et "
 "udvidelsesmodul forsøger sandsynligvis at arbejde på et lag, som ikke findes "
@@ -20795,8 +20811,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:917
 #, c-format
 msgid ""
-"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
-"in is trying to work on an image that doesn't exist any longer."
+"Procedure '%s' returned an invalid ID for argument '%s'. Most likely a "
+"plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
 "Proceduren \"%s\" returnerede et ugyldigt id for parameteren \"%s\". Et "
 "udvidelsesmodul forsøger sandsynligvis at arbejde på et billede, som ikke "
@@ -20827,22 +20843,22 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"Proceduren \"%s\" er blevet kaldt med værdien \"%s\" for parameteren \"%s"
-"\" (nr. %d, typen %s). Denne værdi er uden for det gyldige interval."
+"Proceduren \"%s\" er blevet kaldt med værdien \"%s\" for parameteren \"%s\" "
+"(nr. %d, typen %s). Denne værdi er uden for det gyldige interval."
 
 #: ../app/pdb/gimpprocedure.c:1016
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Proceduren \"%s\" returnerede ingen returværdier"
 
 #: ../app/pdb/gimpprocedure.c:1026
-#, fuzzy, c-format
+#, c-format, fuzzy
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"Proceduren \"%s\" blev kaldt med en forkert værditype for parameteren \"%s"
-"\" (nr. %d). Forventede %s, modtog %s."
+"Proceduren \"%s\" blev kaldt med en forkert værditype for parameteren \"%s\" "
+"(nr. %d). Forventede %s, modtog %s."
 
 #: ../app/pdb/image-cmds.c:2310
 msgid ""
@@ -22464,7 +22480,8 @@ msgstr "Udfyld med"
 
 #: ../app/tools/gimpcropoptions.c:110
 msgid "How to fill new areas created by 'Allow growing'"
-msgstr "Hvordan nye områder oprettet med \"Tillad forstørrelse\" skal udfyldes"
+msgstr ""
+"Hvordan nye områder oprettet med \"Tillad forstørrelse\" skal udfyldes"
 
 #: ../app/tools/gimpcroptool.c:119
 msgid "Crop"
@@ -22659,7 +22676,8 @@ msgstr "_Elliptisk markering"
 
 #: ../app/tools/gimperasertool.c:72
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Værktøjet viskelæder: Visk ud med en pensel, så baggrunden træder frem"
+msgstr ""
+"Værktøjet viskelæder: Visk ud med en pensel, så baggrunden træder frem"
 
 #: ../app/tools/gimperasertool.c:73
 msgid "_Eraser"
@@ -23199,7 +23217,8 @@ msgid "Handle Transform"
 msgstr "Håndtagstransformering"
 
 #: ../app/tools/gimphandletransformtool.c:112
-msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
+msgid ""
+"Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
 "Værktøjet håndtagstransformering: Deformér laget, markeringen eller kurven "
 "med håndtag"
@@ -23607,7 +23626,8 @@ msgid "N-Point Deformation"
 msgstr "N-punktsdeformation"
 
 #: ../app/tools/gimpnpointdeformationtool.c:159
-msgid "N-Point Deformation Tool: Rubber-like deformation of image using points"
+msgid ""
+"N-Point Deformation Tool: Rubber-like deformation of image using points"
 msgstr ""
 "Værktøjet N-punktsdeformation: Gummi-lignende deformering af billeder med "
 "brug af punkter"
@@ -24404,7 +24424,8 @@ msgstr "Hjælpelinjer"
 
 #: ../app/tools/gimptransformgridoptions.c:156
 msgid "Size of a grid cell for variable number of composition guides"
-msgstr "Størrelse på gitterceller for variabelt antal kompositionshjælpelinjer"
+msgstr ""
+"Størrelse på gitterceller for variabelt antal kompositionshjælpelinjer"
 
 #: ../app/tools/gimptransformgridoptions.c:503
 #, c-format
@@ -26090,7 +26111,8 @@ msgstr "Træffere/forbiere"
 
 #: ../app/widgets/gimpdashboard.c:496
 msgid "Tile cache hit/miss ratio"
-msgstr "Forholdet mellem træffere og forbiere i flisebufferen (\"tile cache\")"
+msgstr ""
+"Forholdet mellem træffere og forbiere i flisebufferen (\"tile cache\")"
 
 #: ../app/widgets/gimpdashboard.c:509
 msgid "Swap file occupied size"
@@ -27053,10 +27075,10 @@ msgid_plural "Message repeated %d times."
 msgstr[0] "Meddelelse gentaget én gang."
 msgstr[1] "Meddelelse gentaget %d gange."
 
-# scootergrisen: bruges vist i parentes så skal nok være med småt
+# Optræder i parentes efter anden tekst og skal derfor med småt
 #: ../app/widgets/gimpopendialog.c:89
 msgid "Automatically Detected"
-msgstr "automatisk registrering"
+msgstr "automatisk registreret"
 
 #: ../app/widgets/gimpoverlaydialog.c:251
 msgid "Detach dialog from canvas"
@@ -27768,7 +27790,7 @@ msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
-"Ødelagt \"exif-data\"-parasit opdaget.\n"
+"Beskadiget \"exif-data\"-parasit opdaget.\n"
 "Exif-data kunne ikke migreres: %s"
 
 #: ../app/xcf/xcf-load.c:402
@@ -27776,7 +27798,7 @@ msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr ""
-"Ødelagt \"gimp-metadata\"-parasit opdaget.\n"
+"Beskadiget \"gimp-metadata\"-parasit opdaget.\n"
 "XMP-data kunne ikke migreres."
 
 #: ../app/xcf/xcf-load.c:422
@@ -27793,7 +27815,7 @@ msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
-"Denne XCF-fil er ødelagt! Jeg har indlæst så meget jeg kan, men den er "
+"Denne XCF-fil er beskadiget! Jeg har indlæst så meget jeg kan, men den er "
 "ufuldstændig."
 
 #: ../app/xcf/xcf-load.c:680
@@ -27801,7 +27823,7 @@ msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
-"Denne XCF-fil er ødelagt! Jeg kunne ikke engang redde brudstykker af "
+"Denne XCF-fil er beskadiget! Jeg kunne ikke engang redde brudstykker af "
 "billeddata fra den."
 
 #: ../app/xcf/xcf-load.c:772
@@ -27851,823 +27873,3 @@ msgstr "rund"
 msgid "fuzzy"
 msgstr "sløret"
 
-#~ msgid "You can drop dockable dialogs here"
-#~ msgstr "Her kan du slippe dokbare dialoger"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Paint Dynamics"
-#~ msgstr "Maledynamik"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Palette Editor"
-#~ msgstr "Paletredigering"
-
-#~ msgctxt "dialogs-action"
-#~ msgid "Tool presets"
-#~ msgstr "Forudindstillinger af værktøj"
-
-#~ msgctxt "image-convert-action"
-#~ msgid "Perceptual gamma (sRGB)"
-#~ msgstr "Perceptuel gamma (sRGB)"
-
-#~ msgctxt "view-action"
-#~ msgid "Sn_ap to Guides"
-#~ msgstr "Ret ind efter h_jælpelinjer"
-
-#~ msgctxt "view-action"
-#~ msgid "Flip Horizontally"
-#~ msgstr "Vend vandret"
-
-#~ msgctxt "view-action"
-#~ msgid "Flip Vertically"
-#~ msgstr "Vend lodret"
-
-#~ msgctxt "color-profile-policy"
-#~ msgid "Convert to preferred RGB color profile"
-#~ msgstr "Konvertér til den foretrukne RGB-farveprofil"
-
-#~ msgid "Convert the image to the RGB working space?"
-#~ msgstr "Konvertér billedet til RGB-arbejdsområdet?"
-
-#~ msgid "Properties"
-#~ msgstr "Egenskaber"
-
-#~ msgid "_Offset"
-#~ msgstr "_Forskyd"
-
-#, fuzzy
-#~ msgid "Linear/Preceptual"
-#~ msgstr "_Perceptuel"
-
-#~ msgid ""
-#~ "For more information, see https://www.gimp.org/news/2018/04/27/"
-#~ "gimp-2-10-0-released/"
-#~ msgstr ""
-#~ "Mere information kan findes på https://www.gimp.org/news/2018/04/27/"
-#~ "gimp-2-10-0-released/"
-
-#~ msgid ""
-#~ "For more information, see https://www.gimp.org/news/2018/04/17/"
-#~ "gimp-2-10-0-rc2-released/"
-#~ msgstr ""
-#~ "Mere information kan findes på https://www.gimp.org/news/2018/04/17/"
-#~ "gimp-2-10-0-rc2-released/"
-
-# Har tilladt mig at ændre linket
-#~ msgid ""
-#~ "For more information, see https://www.gimp.org/news/2018/03/26/"
-#~ "gimp-2-10-0-rc1-released/"
-#~ msgstr ""
-#~ "Mere information kan findes på https://www.gimp.org/news/2018/03/26/"
-#~ "gimp-2-10-0-rc1-released/"
-
-#~ msgid ""
-#~ "For more information, see https://www.gimp.org/news/2017/12/12/gimp-2-9-8-"
-#~ "released/"
-#~ msgstr ""
-#~ "Mere information kan findes på https://www.gimp.org/news/2017/12/12/"
-#~ "gimp-2-9-8-released/"
-
-#~ msgctxt "filters-action"
-#~ msgid "_Linear Invert"
-#~ msgstr "In_vertér lineært"
-
-#~ msgid ""
-#~ "Fatal parse error in brush file:\n"
-#~ "Unsupported brush depth %d\n"
-#~ "GIMP brushes must be GRAY or RGBA.\n"
-#~ "This might be an obsolete GIMP brush file, try loading it as image and "
-#~ "save it again."
-#~ msgstr ""
-#~ "Fatal fortolkningsfejl i penselfilen:\n"
-#~ "Penseldybden %d er ikke understøttet.\n"
-#~ "GIMP-pensler skal være gråtoner eller RGBA.\n"
-#~ "Dette kan være en forældet GIMP-penselfil. Prøv at indlæs den som et "
-#~ "billede og gem den igen."
-
-#~ msgid "Color _managed"
-#~ msgstr "Fa_rvestyret"
-
-#~ msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
-#~ msgstr ""
-#~ "Antag at pixels er indbygget sRGB (ignorér billedets faktiske farverum)"
-
-#~ msgctxt "undo-desc"
-#~ msgid "Flip"
-#~ msgstr "Vendning"
-
-#~ msgctxt "edit-action"
-#~ msgid "_Fade..."
-#~ msgstr "_Udton …"
-
-#~ msgctxt "edit-action"
-#~ msgid "Modify paint mode and opacity of the last pixel manipulation"
-#~ msgstr ""
-#~ "Ændr maletilstand og uigennemsigtighed for den seneste pixelmanipulation"
-
-#~ msgid "_Fade %s..."
-#~ msgstr "_Udton %s …"
-
-#~ msgid "_Fade..."
-#~ msgstr "_Udton …"
-
-#~ msgctxt "image-action"
-#~ msgid "_Enable Color Management"
-#~ msgstr "_Aktivér farvestyring"
-
-#~ msgctxt "image-action"
-#~ msgid ""
-#~ "Whether the image is color managed. Disabling color management is "
-#~ "equivalent to assigning a built-in sRGB color profile. Better leave color "
-#~ "management enabled."
-#~ msgstr ""
-#~ "Om billedet er farvestyret. Deaktivering af farvestyring svarer til at "
-#~ "tildele en indbygget sRGB-farveprofil. Lad hellere farvestyring være "
-#~ "aktiveret."
-
-#~ msgctxt "undo-type"
-#~ msgid "Change color managed state"
-#~ msgstr "Ændr farvestyringstilstand"
-
-#~ msgid "Color managed"
-#~ msgstr "Farvestyring"
-
-#~ msgid ""
-#~ "Whether the image is color managed. Disabling color management is "
-#~ "equivalent to choosing a built-in sRGB profile. Better leave color "
-#~ "management enabled."
-#~ msgstr ""
-#~ "Om billedet er farvestyret. Deaktivering af farvestyring svarer til at "
-#~ "vælge en indbygget sRGB-farveprofil. Lad hellere farvestyring være "
-#~ "aktiveret."
-
-#~ msgid "Fade %s"
-#~ msgstr "Udton %s"
-
-#~ msgid "_Fade"
-#~ msgstr "_Udton"
-
-#~ msgid "not color managed"
-#~ msgstr "ikke farvestyret"
-
-#~ msgid "The selection is empty."
-#~ msgstr "Markeringen er tom."
-
-#~ msgid "Color _manage this image"
-#~ msgstr "Farve_styring af billedet"
-
-# lettere omformulering af skønhedshensyn
-#~ msgid ""
-#~ "Foreground & background colors.\n"
-#~ "The black and white squares reset colors.\n"
-#~ "The arrows swap colors.\n"
-#~ "Click to open the color selection dialog."
-#~ msgstr ""
-#~ "Forgrunds- og baggrundsfarver.\n"
-#~ "De sorte og hvide firkanter nulstiller farver.\n"
-#~ "Pilene ombytter farver.\n"
-#~ "Klik for at åbne farvevælgeren."
-
-#~ msgctxt "dashboard-action"
-#~ msgid "Reset"
-#~ msgstr "Nulstil"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 8 bit linear integer"
-#~ msgstr "Konvertér billede til 8 bit heltal (lineær)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 8 bit gamma integer"
-#~ msgstr "Konvertér billede til 8 bit heltal (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit linear integer"
-#~ msgstr "Konvertér billede til 16 bit heltal (lineær)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit gamma integer"
-#~ msgstr "Konvertér billede til 16 bit heltal (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit linear integer"
-#~ msgstr "Konvertér billede til 32 bit heltal (lineær)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit gamma integer"
-#~ msgstr "Konvertér billede til 32 bit heltal (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit linear floating point"
-#~ msgstr "Konvertér billedet til 16 bit flydende tal (lineær)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit gamma floating point"
-#~ msgstr "Konvertér billedet til 16 bit flydende tal (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit linear floating point"
-#~ msgstr "Konvertér billedet til 32 bit flydende tal (lineær)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit gamma floating point"
-#~ msgstr "Konvertér billedet til 32 bit flydende tal (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 64 bit linear floating point"
-#~ msgstr "Konvertér billedet til 64 bit flydende tal (lineær)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 64 bit gamma floating point"
-#~ msgstr "Konvertér billedet til 64 bit flydende tal (gamma)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Hue (HSV) (legacy)"
-#~ msgstr "Farvetone (HSV) (forældet)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Hue (HSV) (l)"
-#~ msgstr "Farvetone (HSV) (f)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Saturation (HSV) (l)"
-#~ msgstr "Mætning (HSV) (f)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Color (HSL) (l)"
-#~ msgstr "Farve (HSL) (f)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Value (HSV) (l)"
-#~ msgstr "Lyshed (HSV) (f)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Chroma (LCH)"
-#~ msgstr "Farvestyrke (LCH)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Lightness (LCH)"
-#~ msgstr "Lyshed (LCH)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Hue (HSV)"
-#~ msgstr "Farvetone (HSV)"
-
-#~ msgctxt "layer-mode"
-#~ msgid "Color (HSL)"
-#~ msgstr "Farve (HSL)"
-
-#~ msgid "Pick Mode"
-#~ msgstr "Vælgertilstand"
-
-#~ msgid "Adjust curves in linear light"
-#~ msgstr "Justér kurver i lineært lys"
-
-#~ msgid "Adjust curves perceptually"
-#~ msgstr "Justér kurverne perceptuelt"
-
-#~ msgid "Adjust levels in linear light"
-#~ msgstr "Justér niveauer i lineært lys"
-
-#~ msgid "Adjust levels perceptually"
-#~ msgstr "Justér niveauerne perceptuelt"
-
-#~ msgctxt "dashboard-variable"
-#~ msgid "Reading"
-#~ msgstr "Læser"
-
-#~ msgctxt "dashboard-variable"
-#~ msgid "Writing"
-#~ msgstr "Skriver"
-
-#~ msgid "All images"
-#~ msgstr "Alle billeder"
-
-#~ msgid "Show values in linear space"
-#~ msgstr "Vis værdier i lineært rum"
-
-#~ msgid "Show values in perceptual space"
-#~ msgstr "Vis værdier i perceptuelt rum"
-
-#~ msgctxt "color-frame-mode"
-#~ msgid "HSV"
-#~ msgstr "HSV"
-
-#~ msgid "Show _tooltips"
-#~ msgstr "Vis værktøjs_tips"
-
-#~ msgid ""
-#~ "Hexadecimal color notation as used in HTML and CSS.  This entry also "
-#~ "accepts CSS color names."
-#~ msgstr ""
-#~ "Heksadecimal farvenotation som anvendt i HTML og CSS. Dette felt "
-#~ "accepterer også CSS-farvenavne."
-
-#~ msgctxt "dashboard-variable"
-#~ msgid "Busy"
-#~ msgstr "Optaget"
-
-#~ msgid "Columns:"
-#~ msgstr "Kolonner:"
-
-#~ msgctxt "tab-style"
-#~ msgid "Automatic"
-#~ msgstr "Automatisk"
-
-#~ msgctxt "icon-size"
-#~ msgid "Guess ideal size"
-#~ msgstr "Gæt ideel størrelse"
-
-#~ msgctxt "icon-size"
-#~ msgid "Theme-set size"
-#~ msgstr "Temabestemt størrelse"
-
-#~ msgctxt "icon-size"
-#~ msgid "Small size"
-#~ msgstr "Lille størrelse"
-
-#~ msgctxt "icon-size"
-#~ msgid "Medium size"
-#~ msgstr "Mellemstørrelse"
-
-#~ msgctxt "icon-size"
-#~ msgid "Large size"
-#~ msgstr "Stor størrelse"
-
-#~ msgctxt "icon-size"
-#~ msgid "Huge size"
-#~ msgstr "Enorm størrelse"
-
-#~ msgid "default:LTR"
-#~ msgstr "default:LTR"
-
-#~ msgid "Invert"
-#~ msgstr "Invertér"
-
-#~ msgid "Hue-Saturation"
-#~ msgstr "Farvetone/mætning"
-
-#~ msgid "Guess icon size from resolution"
-#~ msgstr "Gæt ikonstørrelse på basis af opløsningen"
-
-#~ msgid "Use icon size from the theme"
-#~ msgstr "Brug temaets ikonstørrelse"
-
-#~ msgid "Custom icon size"
-#~ msgstr "Brugerdefineret ikonstørrelse"
-
-#~ msgctxt "tab-style"
-#~ msgid "Undefined"
-#~ msgstr "Ikke defineret"
-
-#~ msgid ""
-#~ "Threading support is not yet stable.\n"
-#~ "Setting this to greater than one might\n"
-#~ "result in image errors or crashes."
-#~ msgstr ""
-#~ "Understøttelse af trådning er endnu ikke stabil.\n"
-#~ "Sættes denne til større end en, kan det\n"
-#~ "medføre billedfejl eller nedbrud."
-
-#~ msgid "Gradienting:"
-#~ msgstr "Farveovergang:"
-
-#~ msgctxt "layers-action"
-#~ msgid "Source Over"
-#~ msgstr "Kilde over"
-
-#~ msgctxt "layers-action"
-#~ msgid "Layer Composite Mode: Source Over"
-#~ msgstr "Lagets sammensætningstilstand: kilde over"
-
-#~ msgctxt "layers-action"
-#~ msgid "Source Atop"
-#~ msgstr "Kilde øverst"
-
-#~ msgctxt "layers-action"
-#~ msgid "Layer Composite Mode: Source Atop"
-#~ msgstr "Lagets sammensætningstilstand: kilde øverst"
-
-#~ msgctxt "layers-action"
-#~ msgid "Source In"
-#~ msgstr "Kilde ind"
-
-#~ msgctxt "layers-action"
-#~ msgid "Layer Composite Mode: Source In"
-#~ msgstr "Lagets sammensætningstilstand: kilde ind"
-
-#~ msgctxt "layers-action"
-#~ msgid "Destination Atop"
-#~ msgstr "Destination øverst"
-
-#~ msgctxt "layers-action"
-#~ msgid "Layer Composite Mode: Destination Atop"
-#~ msgstr "Lagets sammensætningstilstand: destination øverst"
-
-#~ msgctxt "undo-type"
-#~ msgid "Blend"
-#~ msgstr "Blanding"
-
-#~ msgid "Try generating debug data for bug reporting when appropriate"
-#~ msgstr "Prøv at oprette fejlfindingsdata til rapportering af fejl"
-
-#~ msgctxt "layer-composite-mode"
-#~ msgid "Source over"
-#~ msgstr "Kilde over"
-
-#~ msgctxt "layer-composite-mode"
-#~ msgid "Source atop"
-#~ msgstr "Kilde øverst"
-
-#~ msgctxt "layer-composite-mode"
-#~ msgid "Destination atop"
-#~ msgstr "Destination øverst"
-
-#~ msgctxt "layer-composite-mode"
-#~ msgid "Source in"
-#~ msgstr "Kilde ind"
-
-#~ msgid "Blending"
-#~ msgstr "Blander"
-
-#~ msgid "Blend"
-#~ msgstr "Blanding"
-
-#~ msgid "Blen_d"
-#~ msgstr "_Bland"
-
-#~ msgid "Blend: "
-#~ msgstr "Blanding: "
-
-#~ msgid "Blend Step"
-#~ msgstr "Blandingstrin"
-
-#~ msgctxt "channels-action"
-#~ msgid "_Visible"
-#~ msgstr "_Synlig"
-
-#~ msgctxt "channels-action"
-#~ msgid "_Linked"
-#~ msgstr "_Kædet"
-
-#~ msgctxt "channels-action"
-#~ msgid "L_ock pixels"
-#~ msgstr "_Lås pixels"
-
-#~ msgctxt "channels-action"
-#~ msgid "L_ock position"
-#~ msgstr "_Lås placering"
-
-#~ msgctxt "channels-action"
-#~ msgid "Color Tag: Set to  Red"
-#~ msgstr "Farvemærkat: Sæt til rød"
-
-#~ msgctxt "drawable-action"
-#~ msgid "_Visible"
-#~ msgstr "_Synlig"
-
-#~ msgctxt "drawable-action"
-#~ msgid "_Linked"
-#~ msgstr "_Kædet"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Visible"
-#~ msgstr "_Synlig"
-
-#~ msgctxt "layers-action"
-#~ msgid "_Linked"
-#~ msgstr "_Kædet"
-
-#~ msgctxt "layers-action"
-#~ msgid "L_ock position"
-#~ msgstr "_Lås placering"
-
-#~ msgctxt "layers-action"
-#~ msgid "Color Tag: Set to red"
-#~ msgstr "Farvemærkat: Sæt til rød"
-
-#~ msgctxt "layers-action"
-#~ msgid "Color Tag: Set to violet"
-#~ msgstr "Farvemærkat: Sæt til violet"
-
-#~ msgctxt "layers-action"
-#~ msgid "Color Tag: Set to gray"
-#~ msgstr "Farvemærkat: Sæt til grå"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Visible"
-#~ msgstr "_Synlig"
-
-#~ msgctxt "vectors-action"
-#~ msgid "_Linked"
-#~ msgstr "_Kædet"
-
-#~ msgctxt "vectors-action"
-#~ msgid "L_ock position"
-#~ msgstr "_Lås placering"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Color Tag: Set to gray"
-#~ msgstr "Farvemærkat: Sæt til grå"
-
-#~ msgctxt "view-action"
-#~ msgid "Othe_r..."
-#~ msgstr "A_nden …"
-
-#~ msgctxt "view-zoom-action"
-#~ msgid "Othe_r..."
-#~ msgstr "A_nden …"
-
-#~ msgid "Image Import"
-#~ msgstr "Import af billede"
-
-#~ msgid "Brush Zoom"
-#~ msgstr "Penselzoom"
-
-#~ msgid "Link brush size with canvas zoom"
-#~ msgstr "Sammenkæd penselstørrelse med lærredszoom"
-
-#~ msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-#~ msgstr "Værktøjet lysstyrke/kontrast: Justér lysstyrke og kontrast"
-
-#~ msgid "Curves Tool: Adjust color curves"
-#~ msgstr "Kurveværktøj: Justér farvekurver"
-
-#~ msgid "Levels Tool: Adjust color levels"
-#~ msgstr "Værktøjet niveauer: Justér farveniveauer"
-
-#~ msgid "X,Y:"
-#~ msgstr "X,Y:"
-
-#~ msgid "Value:"
-#~ msgstr "Værdi:"
-
-#~ msgid "Alpha:"
-#~ msgstr "Alfa:"
-
-#~ msgid "Green:"
-#~ msgstr "Grøn:"
-
-#~ msgid "Blue:"
-#~ msgstr "Blå:"
-
-#~ msgid "Hue:"
-#~ msgstr "Tone:"
-
-#~ msgid "Sat.:"
-#~ msgstr "Mæt.:"
-
-#~ msgid "Light.:"
-#~ msgstr "Lyshed:"
-
-# I betydningen farvestyrke (chroma el. chromaticity), men det skal vist holdes kort her
-#~ msgid "Chr.:"
-#~ msgstr "Styrke:"
-
-#~ msgid "Lab_a*:"
-#~ msgstr "Lab_a*:"
-
-#~ msgid "Lab_b*:"
-#~ msgstr "Lab_b*:"
-
-#~ msgid "Cyan:"
-#~ msgstr "Cyan:"
-
-#~ msgid "Magenta:"
-#~ msgstr "Magenta:"
-
-#~ msgid "Yellow:"
-#~ msgstr "Gul:"
-
-#, fuzzy
-#~ msgctxt "channels-action"
-#~ msgid "Clear color tag"
-#~ msgstr "Ryd alt tekst"
-
-#~ msgctxt "drawable-action"
-#~ msgid "Flip horizontally"
-#~ msgstr "Vend vandret"
-
-#~ msgctxt "drawable-action"
-#~ msgid "Flip vertically"
-#~ msgstr "Vend lodret"
-
-#, fuzzy
-#~ msgid "Linear Invert"
-#~ msgstr "In_vertér lineært"
-
-#, fuzzy
-#~ msgid "Value Invert"
-#~ msgstr "Invertér"
-
-#, fuzzy
-#~ msgctxt "filters-action"
-#~ msgid "_Antialias..."
-#~ msgstr "_Udjævning"
-
-#~ msgctxt "layers-action"
-#~ msgid "Te_xt Tool"
-#~ msgstr "Te_kstværktøj"
-
-#, fuzzy
-#~ msgctxt "layers-action"
-#~ msgid "Clear color tag"
-#~ msgstr "Ryd alt tekst"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Path _Tool"
-#~ msgstr "Bane_værktøj"
-
-#, fuzzy
-#~ msgctxt "vectors-action"
-#~ msgid "Clear color tag"
-#~ msgstr "Ryd alt tekst"
-
-#, fuzzy
-#~ msgctxt "view-action"
-#~ msgid "Rotate 15 degrees to the right"
-#~ msgstr "Rotér 90 grader til højre"
-
-#, fuzzy
-#~ msgctxt "view-action"
-#~ msgid "Rotate 90 degrees to the right"
-#~ msgstr "Rotér 90 grader til højre"
-
-#, fuzzy
-#~ msgctxt "view-action"
-#~ msgid "Turn upside-down"
-#~ msgstr "Vend op-ned"
-
-#, fuzzy
-#~ msgctxt "view-action"
-#~ msgid "Rotate 90 degrees to the left"
-#~ msgstr "Rotér 90 grader til venstre"
-
-#, fuzzy
-#~ msgctxt "view-action"
-#~ msgid "Rotate 15 degrees to the left"
-#~ msgstr "Rotér 90 grader til venstre"
-
-#, fuzzy
-#~ msgctxt "layer-mode"
-#~ msgid "Multiply (linear)"
-#~ msgstr "Multiplicér"
-
-#, fuzzy
-#~ msgid "Convert"
-#~ msgstr "K_onvertér"
-
-#, fuzzy
-#~ msgid "_Handle Transform tool"
-#~ msgstr "_Transformeringsværktøjer"
-
-#~ msgid ""
-#~ "Indexed color layers are always scaled without interpolation. The chosen "
-#~ "interpolation type will affect channels and layer masks only."
-#~ msgstr ""
-#~ "Indekserede farvelag bliver altid skaleret uden interpolering. Den valgte "
-#~ "interpoleringstype vil kun påvirke kanaler og lagmasker."
-
-#~ msgid "Import Brightness-Contrast settings"
-#~ msgstr "Importér indstillinger for lysstyrke/kontrast"
-
-#~ msgid "Export Brightness-Contrast settings"
-#~ msgstr "Eksportér indstillinger for lysstyrke/kontrast"
-
-#~ msgid "Import Color Balance Settings"
-#~ msgstr "Importér indstillinger for farvebalance"
-
-#~ msgid "Export Color Balance Settings"
-#~ msgstr "Eksportér indstillinger for farvebalance"
-
-#~ msgid "Color Balance operates only on RGB color layers."
-#~ msgstr "Farvebalance virker kun på lag med RGB-farver."
-
-#~ msgid "Adjust Color Balance"
-#~ msgstr "Justér farvebalance"
-
-#~ msgid "Colorize"
-#~ msgstr "Farvelæg"
-
-#~ msgid "Colorize Tool: Colorize the image"
-#~ msgstr "Farvelægningsværktøj: Farvelæg billedet"
-
-#~ msgid "Import Colorize Settings"
-#~ msgstr "Importér indstillinger for farvelægning"
-
-#~ msgid "Export Colorize Settings"
-#~ msgstr "Eksportér indstillinger for farvelægning"
-
-#, fuzzy
-#~ msgid "Colorize does not operate on grayscale layers."
-#~ msgstr "Posterisering virker ikke på indekserede lag."
-
-#~ msgid "Select Color"
-#~ msgstr "Markér farve"
-
-#, fuzzy
-#~ msgid "Colorize Color"
-#~ msgstr "Farvelæg"
-
-#, fuzzy
-#~ msgid "Pick color from image"
-#~ msgstr "Farvevælgerværktøj: Vælg farver fra billedpixels"
-
-#~ msgid "Import Curves"
-#~ msgstr "Importér kurver"
-
-#~ msgid "Export Curves"
-#~ msgstr "Eksportér kurver"
-
-#, fuzzy
-#~ msgid "Apply filter to the layer's raw pixels"
-#~ msgstr "Tag virkningen af lagmasken i anvendelse og fjern den"
-
-#~ msgid "Click to complete selection"
-#~ msgstr "Klik for at fuldføre markering"
-
-#~ msgid "Import Hue-Saturation Settings"
-#~ msgstr "Importér indstillinger for farvetone/mætning"
-
-#~ msgid "Export Hue-Saturation Settings"
-#~ msgstr "Eksportér indstillinger for farvetone/mætning"
-
-#~ msgid "Hue-Saturation operates only on RGB color layers."
-#~ msgstr "Farvetone/mætning virker kun på lag med RGB-farver."
-
-#~ msgid "Adjust Hue / Lightness / Saturation"
-#~ msgstr "Justér farvetone/lysstyrke/mætning"
-
-#~ msgid "Import Levels"
-#~ msgstr "Importér niveauer"
-
-#~ msgid "Export Levels"
-#~ msgstr "Eksportér niveauer"
-
-#~ msgid "Import Threshold Settings"
-#~ msgstr "Importér indstillinger for tærskel"
-
-#~ msgid "Export Threshold Settings"
-#~ msgstr "Eksportér indstillinger for tærskel"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Aspect ratio"
-#~ msgstr "Højde-bredde-forhold"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Width"
-#~ msgstr "Bredde"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Height"
-#~ msgstr "Højde"
-
-#~ msgctxt "rectangle-tool-fixed-rule"
-#~ msgid "Size"
-#~ msgstr "Størrelse"
-
-#~ msgid "Add settings to favorites"
-#~ msgstr "Tilføj indstillinger til foretrukne"
-
-#~ msgid "_Manage Settings..."
-#~ msgstr "_Håndtering af indstillinger..."
-
-#~ msgid "Add Settings to Favorites"
-#~ msgstr "Tilføj indstillinger som foretrukne"
-
-#~ msgid ""
-#~ "Fonts are still loading (this may take a while), text functionality is "
-#~ "not available yet."
-#~ msgstr ""
-#~ "Skrifttyper indlæses stadig (det kan tage et stykke tid). "
-#~ "Tekstfunktionaliteten er ikke tilgængelig endnu."
-
-#~ msgid "Whether data is transferred to or from the swap"
-#~ msgstr "Om data overføres til eller fra swap"
-
-#~ msgctxt "icon-size"
-#~ msgid "Small"
-#~ msgstr "Små"
-
-#~ msgctxt "icon-size"
-#~ msgid "Medium"
-#~ msgstr "Medium"
-
-#~ msgctxt "icon-size"
-#~ msgid "Large"
-#~ msgstr "Stor"
-
-#~ msgctxt "icon-size"
-#~ msgid "Huge"
-#~ msgstr "Kæmpestor"
-
-#~ msgid "When enabled, menus can be torn off."
-#~ msgstr "Når denne er aktiveret, kan menuer løsrives."
-
-#~ msgid "Convert pixels to built-in sRGB to apply filter (slow)"
-#~ msgstr "Konvertér pixels til indbygget sRGB for at anvende filter (langsom)"
-
-#~ msgid "Use compact style for sliders."
-#~ msgstr "Brug kompakt stil til skydere."
-
-#~ msgid "Use co_mpact sliders"
-#~ msgstr "_Brug kompakte skydere"
