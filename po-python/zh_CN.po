@@ -3,52 +3,55 @@
 # Yuheng Xie <elephant@linux.net.cn>, 2001-2004.
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 #    QA by Aron Xu <aronmalache@163.com>, 2008.
-#
+# Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
+# lumingzh <lumingzh@qq.com>, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2010-04-15 14:39+0000\n"
-"PO-Revision-Date: 2010-01-04 18:18+0800\n"
-"Last-Translator: 神州散人 <kappa8086@gmail.com>\n"
-"Language-Team: zh_CN <i18n-translation@lists.linux.net.cn>\n"
+"POT-Creation-Date: 2022-01-30 22:28+0000\n"
+"PO-Revision-Date: 2022-01-31 18:00+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
+"Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:394
+#: ../plug-ins/pygimp/gimpfu.py:395
 msgid "Missing exception information"
 msgstr "丢失异常信息"
 
-#: ../plug-ins/pygimp/gimpfu.py:403
+#: ../plug-ins/pygimp/gimpfu.py:404
 #, python-format
 msgid "An error occurred running %s"
 msgstr "运行 %s 出现一个错误"
 
-#: ../plug-ins/pygimp/gimpfu.py:414
+#: ../plug-ins/pygimp/gimpfu.py:415
 msgid "_More Information"
 msgstr "更多信息(_M)"
 
-#: ../plug-ins/pygimp/gimpfu.py:526 ../plug-ins/pygimp/gimpfu.py:538
-#: ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
+#: ../plug-ins/pygimp/gimpfu.py:546
 msgid "No"
 msgstr "否"
 
-#: ../plug-ins/pygimp/gimpfu.py:536 ../plug-ins/pygimp/gimpfu.py:544
+#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
 msgid "Yes"
 msgstr "是"
 
-#: ../plug-ins/pygimp/gimpfu.py:596 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu 文件选择"
 
-#: ../plug-ins/pygimp/gimpfu.py:607
+#: ../plug-ins/pygimp/gimpfu.py:648
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu 文件夹选择"
 
-#: ../plug-ins/pygimp/gimpfu.py:696
+#: ../plug-ins/pygimp/gimpfu.py:737
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "“%s” 的输入非法"
@@ -57,45 +60,102 @@ msgstr "“%s” 的输入非法"
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu 颜色选择"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:106
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:109
 msgid "Saving as colored XHTML"
 msgstr "正在保存为着色的 XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:183
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:186
+#| msgid "Saving as colored XHTML"
 msgid "Save as colored XHTML"
 msgstr "保存为着色的 XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:188
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:191
+#| msgid "Colored HTML text"
 msgid "Colored XHTML"
 msgstr "着色的 XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#| msgid "Characters"
 msgid "Character _source"
 msgstr "字符源(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Source code"
 msgstr "源代码"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+#| msgid "Text"
 msgid "Text file"
 msgstr "文本文件"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
 msgid "Entry box"
 msgstr "输入框"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "_File to read or characters to use"
 msgstr "要读取的文件或要使用的字符(_F)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:201
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:204
 msgid "Fo_nt size in pixels"
 msgstr "字体的像素大小(_N)"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:205
 msgid "_Write a separate CSS file"
 msgstr "写入单独的 CSS 文件(_W)"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:96
+msgid "Gradient to use"
+msgstr "要使用的渐变"
+
+#: ../plug-ins/pygimp/plug-ins/gradients-save-as-css.py:97
+#| msgid "File"
+msgid "File Name"
+msgstr "文件名称"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:89
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "将图像直方图导出到文本文件（CSV）"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:94
+msgid "_Export histogram..."
+msgstr "导出直方图(_E)…"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:96
+msgid "_Image"
+msgstr "图像(_I)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:97
+msgid "_Drawable"
+msgstr "可绘对象(_D)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:98
+msgid "Histogram _File"
+msgstr "直方图文件(_F)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:99
+msgid "_Bucket Size"
+msgstr "桶大小(_B)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:100
+msgid "Sample _Average"
+msgstr "样本平均(_A)"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:101
+msgid "Output format"
+msgstr "输出格式"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:102
+msgid "Pixel count"
+msgstr "像素计数"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:103
+msgid "Normalized"
+msgstr "已归一化"
+
+#: ../plug-ins/pygimp/plug-ins/histogram-export.py:104
+msgid "Percent"
+msgstr "百分比"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "Add a layer of fog"
@@ -106,6 +166,7 @@ msgid "_Fog..."
 msgstr "雾(_F)..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:66
+#| msgid "Layer name"
 msgid "_Layer name"
 msgstr "图层名(_L)"
 
@@ -114,14 +175,16 @@ msgid "Clouds"
 msgstr "云"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:67
+#| msgid "Fog color"
 msgid "_Fog color"
-msgstr "雾的颜色(_F)"
+msgstr "雾色(_F)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:68
 msgid "_Turbulence"
 msgstr "湍流(_T)"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:69
+#| msgid "Opacity"
 msgid "Op_acity"
 msgstr "不透明度(_A)"
 
@@ -134,9 +197,9 @@ msgid "_Offset Palette..."
 msgstr "偏移调色板(_O)..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
 msgstr "调色板"
 
@@ -144,143 +207,225 @@ msgstr "调色板"
 msgid "Off_set"
 msgstr "偏移(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:48
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Red"
+msgstr "红色"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Green"
+msgstr "绿色"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:25
+msgid "Blue"
+msgstr "蓝色"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:26
+msgid "Luma (Y)"
+msgstr "亮度 (Y, Luma)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Hue"
+msgstr "透明度"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Saturation"
+msgstr "饱和度"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:27
+msgid "Value"
+msgstr "明度"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+msgid "Saturation (HSL)"
+msgstr "饱和度 (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:28
+msgid "Lightness (HSL)"
+msgstr "亮度 (HSL)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:29
+msgid "Index"
+msgstr "索引"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:30
+msgid "Random"
+msgstr "随机"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:81
+msgid "Lightness (LAB)"
+msgstr "亮度 (LAB)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+msgid "A-color"
+msgstr "A 色"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:82
+msgid "B-color"
+msgstr "B 色"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:83
+msgid "Chroma (LCHab)"
+msgstr "色度 (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:84
+msgid "Hue (LCHab)"
+msgstr "色相 (LCHab)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
 msgid "Sort the colors in a palette"
 msgstr "排列调色板中颜色的顺序"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
 msgid "_Sort Palette..."
 msgstr "排序调色板(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-msgid "Color _model"
-msgstr "颜色模型(_M)"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+msgid "Se_lections"
+msgstr "选区(_L)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "RGB"
-msgstr "RGB"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "All"
+msgstr "全部"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
-msgid "HSV"
-msgstr "HSV"
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "Slice / Array"
+msgstr "切片 / 阵列"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+msgid "Autoslice (fg->bg)"
+msgstr "自动切片（前景→背景）"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+msgid "Partitioned"
+msgstr "已分区"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+msgid "Slice _expression"
+msgstr "切片表达式(_E)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Channel to _sort"
 msgstr "要排序的通道(_S)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Red or Hue"
-msgstr "红色或色调"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
-msgid "Green or Saturation"
-msgstr "绿色或饱合度"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-msgid "Blue or Value"
-msgstr "蓝色或明度"
-
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
 msgid "_Ascending"
 msgstr "升序(_A)..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:49
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+msgid "Secondary Channel to s_ort"
+msgstr "要排序的次要通道(_O)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+msgid "_Quantization"
+msgstr "颜色量化(_Q)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+msgid "_Partitioning channel"
+msgstr "通道分区(_P)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+msgid "Partition q_uantization"
+msgstr "分区量化(_P)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:52
 msgid "Create a repeating gradient using colors from the palette"
 msgstr "使用调色板中的颜色创建重复渐变"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:54
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
 msgid "Palette to _Repeating Gradient"
 msgstr "重复渐变的调色板(_R)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:71
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:74
 msgid "Create a gradient using colors from the palette"
 msgstr "使用调色板中的颜色创建渐变"
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:76
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette to _Gradient"
 msgstr "渐变的调色板(_G)"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:56
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:59
 msgid "Slice"
 msgstr "切片"
 
 #. table snippet means a small piece of HTML code here
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:417
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:421
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr "沿参考线切割图像，创建多幅图像及 HTML 表格片段"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:428
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "_Slice..."
 msgstr "切片(_S)..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Path for HTML export"
 msgstr "HTML 导出路径"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Filename for export"
 msgstr "导出的文件名"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Image name prefix"
 msgstr "图像名前缀"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#| msgid "Image format (gif, jpg, png)"
 msgid "Image format"
 msgstr "图像格式"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Separate image folder"
 msgstr "单独的图像文件夹"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Folder for image export"
 msgstr "图像导出的文件夹"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:444
 msgid "Space between table elements"
 msgstr "表格元素间的空间"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:446
 msgid "Javascript for onmouseover and clicked"
 msgstr "用于鼠标悬停及点击的 Javascript"
 
 #. table caps are table cells on the edge of the table
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:445
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:449
 msgid "Skip animation for table caps"
 msgstr "跳过表头动画"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:56
+#: ../plug-ins/pygimp/plug-ins/python-console.py:57
 msgid "Python Console"
 msgstr "Python 控制台"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:60
+#: ../plug-ins/pygimp/plug-ins/python-console.py:61
 msgid "_Browse..."
 msgstr "浏览(_B)..."
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:138
+#: ../plug-ins/pygimp/plug-ins/python-console.py:154
 msgid "Python Procedure Browser"
 msgstr "Python 过程浏览器"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:167
+#: ../plug-ins/pygimp/plug-ins/python-console.py:183
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "无法打开 “%s” 以写入：%s"
+msgstr "无法打开“%s”以供写入：%s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:182
+#: ../plug-ins/pygimp/plug-ins/python-console.py:198
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr "无法写入到 “%s”：%s"
+msgstr "无法写入到“%s”：%s"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:190
+#: ../plug-ins/pygimp/plug-ins/python-console.py:206
 msgid "Save Python-Fu Console Output"
 msgstr "保存 Python-Fu 控制台输出"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:216
+#: ../plug-ins/pygimp/plug-ins/python-console.py:232
 msgid "Interactive GIMP Python interpreter"
 msgstr "交互性 GIMP Python 解释器"
 
-#: ../plug-ins/pygimp/plug-ins/python-console.py:221
+#: ../plug-ins/pygimp/plug-ins/python-console.py:237
 msgid "_Console"
 msgstr "控制台(_C)"
 
@@ -312,22 +457,522 @@ msgstr "投影 _X 位移"
 msgid "Drop shadow _Y displacement"
 msgstr "投影 _Y 位移"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:75
-msgid "Create a new brush with characters from a text sequence"
-msgstr "从文字序列创建新的带字符的画笔"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:44
+msgid "Spyro Layer"
+msgstr "斯派罗图层"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:81
-msgid "New Brush from _Text..."
-msgstr "从文字创建画笔(_T)..."
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:45
+msgid "Spyro Path"
+msgstr "斯派罗路径"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:84
-msgid "Font"
-msgstr "字体"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:56
+#| msgid "As New Layer"
+msgid ""
+"Save\n"
+"as New Layer"
+msgstr ""
+"保存\n"
+"为新图层"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:85
-msgid "Pixel Size"
-msgstr "像素大小"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:57
+#| msgid "Redraw on last active layer"
+msgid ""
+"Redraw on\n"
+"Active layer"
+msgstr ""
+"重绘于\n"
+"活动图层上"
 
-#: ../plug-ins/pygimp/plug-ins/text-brush.py:86
-msgid "Text"
-msgstr "文字"
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:58
+#| msgid "As Path"
+msgid ""
+"Save\n"
+"as Path"
+msgstr ""
+"保存\n"
+"为路径"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:104
+msgid "Circle"
+msgstr "圆"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:140
+msgid "Polygon-Star"
+msgstr "多边星形"
+
+#. Sine wave on a circle ring.
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:156
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:947
+msgid "Sine"
+msgstr "正弦"
+
+#. Semi-circles, based on a polygon
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:166
+msgid "Bumps"
+msgstr "凹凸"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:271
+msgid "Rack"
+msgstr "齿条"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:315
+msgid "Frame"
+msgstr "框架"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:404
+msgid "Selection"
+msgstr "选区"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:494
+msgid "Pencil"
+msgstr "铅笔"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:510
+msgid "AirBrush"
+msgstr "喷枪"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:570
+msgid "Preview"
+msgstr "预览"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:575
+msgid "Stroke"
+msgstr "笔触"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:622
+msgid "PaintBrush"
+msgstr "绘画笔刷"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:624
+msgid "Ink"
+msgstr "墨水"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:625
+msgid "MyPaintBrush"
+msgstr "MyPaint 笔刷"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:933
+msgid "Spyrograph"
+msgstr "斯派罗图形"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:940
+msgid "Epitrochoid"
+msgstr "外旋轮线"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:967
+msgid "Lissajous"
+msgstr "利萨如曲线"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1397
+msgid "Curve Type"
+msgstr "曲线类型"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1398
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr "外旋轮线图案是当移动齿轮在固定齿轮外边时产生的。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1403
+msgid "Tool"
+msgstr "工具"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1404
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr "绘制图案使用的工具。预览工具绘制很快。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1409
+msgid "Long Gradient"
+msgstr "长渐变"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1411
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+"未选中时，将使用当前工具设置。选中时，将基于来自渐变工具设置的当前渐变和重复"
+"模式，使用长渐变以匹配图案长度。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1431
+msgid "Specify pattern using one of the following tabs:"
+msgstr "指定图案使用以下标签之一："
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1433
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+"图案仅通过激活的标签指定。玩具装备与齿轮相似，但它使用齿轮和玩具装备中的孔洞"
+"号码。如果您遵循玩具装备手册的说明，结果应该是相似的。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1457
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr "固定齿轮的齿数。固定齿轮的大小是与齿数成比例的。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1460
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1486
+msgid "Fixed Gear Teeth"
+msgstr "固定轮齿"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1466
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr "移动齿轮的齿数。移动齿轮的大小是与齿数成比例的。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1469
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1491
+msgid "Moving Gear Teeth"
+msgstr "移动轮齿"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1474
+msgid "Hole percent"
+msgstr "孔洞百分比"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1475
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr "孔洞与移动齿轮中心的距离。100% 表示孔洞在齿轮的边缘上。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1496
+msgid "Hole Number"
+msgstr "孔洞号码"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1497
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+"1# 孔洞在齿轮边缘。最大的孔洞号码在中心附近。对于每个齿轮最大的孔洞号码是不同"
+"的。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "Flower Petals"
+msgstr "花瓣"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1508
+msgid "The number of petals in the pattern."
+msgstr "图案中的花瓣数量。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1513
+msgid "Petal Skip"
+msgstr "跳过花瓣"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1514
+msgid "The number of petals to advance for drawing the next petal."
+msgstr "绘制下个花瓣前跳过的花瓣数量。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1519
+msgid "Hole Radius(%)"
+msgstr "孔洞半径（%）"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1520
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+"位于图案中心空白区域的孔洞的半径。按图案大小的百分比提供数值。数值为 0 将不产"
+"生任何孔洞。数值为 99 将产生位于边缘上的细线。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1533
+msgid "Width(%)"
+msgstr "宽度（%）"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1534
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+"按图案大小百分比指定的图案宽度。数值为 1 将仅绘制一个细小图案。数值为 100 将"
+"填充整个固定齿轮。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1544
+msgid "Visual"
+msgstr "视觉的"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1549
+msgid "Toy Kit"
+msgstr "玩具装备"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1554
+msgid "Gears"
+msgstr "齿轮"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1566
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation"
+msgstr "旋转"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1567
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr "图案的旋转（角度）。移动齿轮在固定齿轮中的起始位置。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1590
+msgid "Shape"
+msgstr "形状"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1591
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+"要在当前选区中使用的固定齿轮的形状。齿条是玩具装备中提供的长条圆边缘形状。框"
+"架与矩形选区边界契合，在齿轮号码中使用 孔洞=100 以达到边界。选区将与当前选区"
+"边界契合——尝试一些非矩形选区。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Sides"
+msgstr "边"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1600
+msgid "Number of sides of the shape."
+msgstr "形状的边数。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph"
+msgstr "变形"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1605
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr "变形固定齿轮。仅影响一部分形状。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1610
+msgid "Rotation of the fixed gear, in degrees"
+msgstr "固定齿轮的旋转（角度）"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin (px)"
+msgstr "边界（像素）"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1625
+msgid "Margin from edge of selection."
+msgstr "自选区边缘的边界。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1630
+msgid "Make width and height equal"
+msgstr "使宽度和高度相等"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1632
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+"未选中时，图案将填充当前图像或选区。选中时，图案将具有相等宽度和高度，且将置"
+"于中心。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1656
+msgid "Re_draw"
+msgstr "重新绘制(_D)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1657
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr "如果您改变工具设置，改变颜色或改变选区，点击这里以预览图案。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1659
+msgid "_Reset"
+msgstr "重置(_R)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1660
+msgid "_Cancel"
+msgstr "取消(_C)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1661
+msgid "_OK"
+msgstr "确认(_O)"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1667
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr "选择是否保存为新图层，在上个活动图层上重绘或保存到路径"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1679
+msgid "Spyrogimp"
+msgstr "斯派罗图案"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1688
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2195
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr "使用当前工具设置和选区绘制斯派罗图形。"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1701
+msgid "Curve Pattern"
+msgstr "曲线图案"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1704
+msgid "Fixed Gear"
+msgstr "固定齿轮"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:1707
+msgid "Size"
+msgstr "大小"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2047
+msgid "Rendering Pattern"
+msgstr "渲染图案"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2059
+msgid "Please wait : Rendering Pattern"
+msgstr "请稍等：正在渲染图案"
+
+#: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
+msgid "Spyrogimp..."
+msgstr "斯派罗图案…"
+
+#~ msgid "Save as colored HTML text..."
+#~ msgstr "保存为着色的 HTML 文字…"
+
+#~ msgid "Read characters from file..."
+#~ msgstr "从文件读取字符…"
+
+#~ msgid "Characters that will be used as colored pixels. "
+#~ msgstr "将被作为着色像素使用的字符。"
+
+#~ msgid "Characters or file location"
+#~ msgstr "字符或文件位置"
+
+#~ msgid "Read characters from file"
+#~ msgstr "从文件读取字符"
+
+#~ msgid ""
+#~ "If set, the Characters text entry will be used as a file name, from which "
+#~ "the characters will be read. Otherwise, the characters in the text entry "
+#~ "will be used to render the image."
+#~ msgstr ""
+#~ "如果设置，读取到的字符文本入口将被作为文件名使用。否则，文本入口的字符将被"
+#~ "用来渲染图像。"
+
+#~ msgid "Choose file"
+#~ msgstr "选择文件"
+
+#~ msgid "Font Size(px)"
+#~ msgstr "字体大小（像素）"
+
+#~ msgid "Write separate CSS file"
+#~ msgstr "写入单独的 CSS 文件"
+
+#~ msgid "_Read characters from file, if true, or use text entry"
+#~ msgstr "如果为 ture 从文件读取字符，或使用文本入口(_R)"
+
+#~ msgid "Save as colored HTML text"
+#~ msgstr "保存为着色的 HTML 文字"
+
+#~| msgid "Layer name"
+#~ msgid "Layer _name"
+#~ msgstr "图层名(_N)"
+
+#~ msgid "Turbulence"
+#~ msgstr "湍流"
+
+#~| msgid "Opacity"
+#~ msgid "O_pacity"
+#~ msgstr "不透明度(_P)"
+
+#~| msgid "Fog color"
+#~ msgid "Fog _color"
+#~ msgstr "雾色(_C)"
+
+#~ msgid "CSS file..."
+#~ msgstr "CSS 文件…"
+
+#~ msgid "File is either a directory or file name is empty."
+#~ msgstr "文件是目录或文件名为空。"
+
+#~ msgid "Directory not found."
+#~ msgstr "未找到目录。"
+
+#~ msgid "Histogram Export..."
+#~ msgstr "导出直方图…"
+
+#~ msgid "_File..."
+#~ msgstr "文件(_F)…"
+
+#~ msgid "Choose export file..."
+#~ msgstr "选择导出文件…"
+
+#~ msgid "Histogram Export file..."
+#~ msgstr "直方图导出文件…"
+
+#~ msgid ""
+#~ "If checked, the histogram is generated from merging all visible layers. "
+#~ "Otherwise, the histogram is only for the current layer."
+#~ msgstr ""
+#~ "若勾选，直方图将从合并所有可见图层中生成。否则，直方图将仅从当前图层中生"
+#~ "成。"
+
+#~ msgid "_Output Format"
+#~ msgstr "输出格式(_O)"
+
+#~ msgid "Offset"
+#~ msgstr "位移"
+
+#~ msgid "Offset Palette..."
+#~ msgstr "偏移调色板…"
+
+#~ msgid "Python _Console"
+#~ msgstr "Python 控制台(_C)"
+
+#~ msgid "Save"
+#~ msgstr "保存"
+
+#~ msgid "Exercise a goat (Python 3)"
+#~ msgstr "锻炼一只山羊（Python 3）"
+
+#~ msgid ""
+#~ "Keep\n"
+#~ "Layer"
+#~ msgstr ""
+#~ "保持\n"
+#~ "图层"
+
+#~ msgid ""
+#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
+#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
+#~ "pattern is redrawn on the layer that was active when the plugin was "
+#~ "launched."
+#~ msgstr ""
+#~ "如果选中，点击确认后，斯派罗图层会被保留，且该插件退出迅速。如果未选中，斯"
+#~ "派罗图层将被删除，插件启动时图案会被重新绘制在活动图层上。"
+
+#~ msgid "Color _model"
+#~ msgstr "颜色模型(_M)"
+
+#~ msgid "RGB"
+#~ msgstr "RGB"
+
+#~ msgid "HSV"
+#~ msgstr "HSV"
+
+#~ msgid "Red or Hue"
+#~ msgstr "红色或色调"
+
+#~ msgid "Blue or Value"
+#~ msgstr "蓝色或明度"
+
+#~ msgid "Create a new brush with characters from a text sequence"
+#~ msgstr "从文字序列创建新的带字符的画笔"
+
+#~ msgid "New Brush from _Text..."
+#~ msgstr "从文字创建画笔(_T)..."
+
+#~ msgid "Font"
+#~ msgstr "字体"
+
+#~ msgid "Pixel Size"
+#~ msgstr "像素大小"
