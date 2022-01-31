@@ -4,25 +4,24 @@
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 # Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
 # Aron Xu <aronxu@gnome.org>, 2008, 2019.
-# lumingzh <lumingzh@qq.com>, 2020.
+# lumingzh <lumingzh@qq.com>, 2020-2021.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:00+0000\n"
-"PO-Revision-Date: 2020-06-14 13:24+0800\n"
+"POT-Creation-Date: 2021-12-23 13:06+0000\n"
+"PO-Revision-Date: 2021-12-26 18:26+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Gtranslator 3.36.0\n"
+"X-Generator: Gtranslator 41.0\n"
 "Plural-Forms: nplurals=1; plural=0\n"
 
 #: ../plug-ins/script-fu/script-fu.c:138
-#| msgid "Script-Fu Console"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu 控制台(_C)"
 
@@ -138,7 +137,7 @@ msgid "Save Script-Fu Console Output"
 msgstr "保存 Script-Fu 控制台输出"
 
 #: ../plug-ins/script-fu/script-fu-console.c:280
-#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 #: ../plug-ins/script-fu/script-fu-server.c:834
 msgid "_Cancel"
 msgstr "取消(_C)"
@@ -160,69 +159,69 @@ msgstr "应用(_A)"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 求值模式只允许非交互式调用"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:203
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu 无法同时处理两个脚本。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:204
+#: ../plug-ins/script-fu/script-fu-interface.c:205
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "你已经正在运行 “%s” 脚本。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:230
+#: ../plug-ins/script-fu/script-fu-interface.c:231
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu：%s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:239
+#: ../plug-ins/script-fu/script-fu-interface.c:240
 msgid "_OK"
 msgstr "确定(_O)"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:293
+#: ../plug-ins/script-fu/script-fu-interface.c:294
 #, c-format
 msgid "%s:"
 msgstr "%s："
 
-#: ../plug-ins/script-fu/script-fu-interface.c:343
+#: ../plug-ins/script-fu/script-fu-interface.c:344
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:466
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件夹选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:475
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 字体选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:483
+#: ../plug-ins/script-fu/script-fu-interface.c:487
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu 色板选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:492
+#: ../plug-ins/script-fu/script-fu-interface.c:496
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 图案选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:501
+#: ../plug-ins/script-fu/script-fu-interface.c:505
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 渐变选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:510
+#: ../plug-ins/script-fu/script-fu-interface.c:514
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:888
+#: ../plug-ins/script-fu/script-fu-interface.c:893
 #, c-format
 msgid "Error while executing %s:"
 msgstr "执行 %s 时出错："
@@ -283,7 +282,7 @@ msgstr "厚度"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -530,14 +529,14 @@ msgid "No background (only for separate layer)"
 msgstr "没有背景（只对分离图层）"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
-#: ../plug-ins/script-fu/scripts/lava.scm:129
+#: ../plug-ins/script-fu/scripts/lava.scm:141
 #: ../plug-ins/script-fu/scripts/predator.scm:132
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:138
 msgid "Keep selection"
 msgstr "保持选区"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:139
-#: ../plug-ins/script-fu/scripts/lava.scm:130
+#: ../plug-ins/script-fu/scripts/lava.scm:142
 #: ../plug-ins/script-fu/scripts/predator.scm:133
 msgid "Separate layer"
 msgstr "分离图层"
@@ -648,7 +647,7 @@ msgstr "位移 Y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "模糊半径"
 
@@ -990,31 +989,36 @@ msgstr "删除所有参考线(_R)"
 msgid "Remove all horizontal and vertical guides"
 msgstr "移除所有水平及竖直参考线"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:117
+#. else
+#: ../plug-ins/script-fu/scripts/lava.scm:123
+msgid "Lava works with exactly one selected layer"
+msgstr "熔岩滤镜仅对单个选中图层有效"
+
+#: ../plug-ins/script-fu/scripts/lava.scm:129
 msgid "_Lava..."
 msgstr "熔岩(_L)…"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:118
+#: ../plug-ins/script-fu/scripts/lava.scm:130
 msgid "Fill the current selection with lava"
 msgstr "用熔岩填充当前选区"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:125
+#: ../plug-ins/script-fu/scripts/lava.scm:137
 msgid "Seed"
 msgstr "种子"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:126
+#: ../plug-ins/script-fu/scripts/lava.scm:138
 msgid "Size"
 msgstr "大小"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:127
+#: ../plug-ins/script-fu/scripts/lava.scm:139
 msgid "Roughness"
 msgstr "粗糙度"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:128
+#: ../plug-ins/script-fu/scripts/lava.scm:140
 msgid "Gradient"
 msgstr "渐变"
 
-#: ../plug-ins/script-fu/scripts/lava.scm:131
+#: ../plug-ins/script-fu/scripts/lava.scm:143
 msgid "Use current gradient"
 msgstr "使用当前渐变"
 
@@ -1177,19 +1181,19 @@ msgid "Paste the clipboard contents into a new brush"
 msgstr "将剪贴板中的内容粘贴到新画笔"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:145
 msgid "_Brush name"
 msgstr "画笔名字(_B)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:146
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
 msgid "_File name"
 msgstr "文件名(_F)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:147
 msgid "_Spacing"
 msgstr "间距(_S)"
 
@@ -1292,32 +1296,32 @@ msgstr "涂抹"
 msgid "Black"
 msgstr "黑色"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "圆角(_R)…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "使图像的边角圆滑并可选择地添加投影和背景"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "边缘半径"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "添加投影"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "阴影 X 偏移"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "阴影 Y 偏移"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "添加背景"
 
@@ -1349,11 +1353,11 @@ msgstr "半径（%）(_A)"
 msgid "Co_ncave"
 msgstr "凹陷(_N)"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:137
 msgid "To _Brush..."
 msgstr "到画笔(_B)…"
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm:138
 msgid "Convert a selection to a brush"
 msgstr "转换选区到画笔"
 
