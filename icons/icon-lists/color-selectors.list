@@ -1,0 +1,20 @@
+# grep -rI icon_name modules/color-selector-*
+#
+# Color selector modules whose icon is used in:
+# - GimpColorEditor as GTK_ICON_SIZE_MENU (16px)
+# - GimpColorNotebook:
+#   * tab-icon-size style tab label (button size both in
+#     DEFAULT_TAB_ICON_SIZE amd System theme, i.e. 16px.).
+#   * menu size (16px)
+#   * DEFAULT_TAB_ICON_SIZE (button, 16px)
+
+gimp-color-cmyk
+gimp-color-triangle
+gimp-color-water
+
+# GIMP_ICON_PALETTE, which is the default icon of GimpColorSelector.
+gtk-select-color
+# GIMP_ICON_WILBER, overriden by GimpColorSelect subclass.
+gimp-wilber
+# GIMP_ICON_DIALOG_TOOL_OPTIONS overriden by GimpColorScales subclass.
+gimp-tool-options

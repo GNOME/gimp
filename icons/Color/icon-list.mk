@@ -94,7 +94,6 @@ scalable_images = \
 	scalable/gimp-clipboard.svg				\
 	scalable/gimp-close.svg					\
 	scalable/gimp-close-all.svg				\
-	scalable/gimp-color-cmyk.svg				\
 	scalable/gimp-color-pick-from-screen.svg		\
 	scalable/gimp-color-picker-black.svg			\
 	scalable/gimp-color-picker-gray.svg			\
@@ -102,14 +101,7 @@ scalable_images = \
 	scalable/gimp-color-space-linear.svg			\
 	scalable/gimp-color-space-non-linear.svg		\
 	scalable/gimp-color-space-perceptual.svg		\
-	scalable/gimp-color-triangle.svg			\
-	scalable/gimp-color-water.svg				\
 	scalable/gimp-colormap.svg				\
-	scalable/gimp-controller.svg				\
-	scalable/gimp-controller-keyboard.svg			\
-	scalable/gimp-controller-linux-input.svg		\
-	scalable/gimp-controller-midi.svg			\
-	scalable/gimp-controller-wheel.svg			\
 	scalable/gimp-convert-grayscale.svg			\
 	scalable/gimp-convert-indexed.svg			\
 	scalable/gimp-convert-rgb.svg				\
@@ -122,13 +114,6 @@ scalable_images = \
 	scalable/gimp-default-colors.svg			\
 	scalable/gimp-detach.svg				\
 	scalable/gimp-device-status.svg				\
-	scalable/gimp-display-filter.svg			\
-	scalable/gimp-display-filter-clip-warning.svg		\
-	scalable/gimp-display-filter-colorblind.svg		\
-	scalable/gimp-display-filter-contrast.svg		\
-	scalable/gimp-display-filter-gamma.svg			\
-	scalable/gimp-display-filter-lcms.svg			\
-	scalable/gimp-display-filter-proof.svg			\
 	scalable/gimp-duplicate.svg				\
 	scalable/gimp-dynamics.svg				\
 	scalable/gimp-file-manager.svg				\
@@ -259,6 +244,28 @@ scalable_images = \
 	scalable/gimp-wilber-outline.svg			\
 	scalable/gimp-zoom-follow-window.svg			\
 	\
+	scalable/gimp-color-cmyk.svg				\
+	scalable/gimp-color-triangle.svg			\
+	scalable/gimp-color-water.svg				\
+	\
+	scalable/gimp-tool-options.svg				\
+	\
+	scalable/gimp-controller.svg				\
+	\
+	scalable/gimp-controller-keyboard.svg			\
+	scalable/gimp-controller-linux-input.svg		\
+	scalable/gimp-controller-midi.svg			\
+	scalable/gimp-controller-wheel.svg			\
+	\
+	scalable/gimp-display-filter.svg			\
+	\
+	scalable/gimp-display-filter-clip-warning.svg		\
+	scalable/gimp-display-filter-colorblind.svg		\
+	scalable/gimp-display-filter-contrast.svg		\
+	scalable/gimp-display-filter-gamma.svg			\
+	scalable/gimp-display-filter-lcms.svg			\
+	scalable/gimp-display-filter-proof.svg			\
+	\
 	scalable/gimp-prefs-color-management.svg		\
 	\
 	scalable/gimp-prefs-controllers.svg			\
@@ -341,7 +348,6 @@ scalable_images = \
 	scalable/gimp-tool-mypaint-brush.svg			\
 	scalable/gimp-tool-n-point-deformation.svg		\
 	scalable/gimp-tool-offset.svg				\
-	scalable/gimp-tool-options.svg				\
 	scalable/gimp-tool-paintbrush.svg			\
 	scalable/gimp-tool-paint-select.svg			\
 	scalable/gimp-tool-path.svg				\
@@ -445,6 +451,7 @@ icons16_images = \
 	16/gtk-edit.png						\
 	16/gtk-no.png						\
 	16/gtk-ok.png						\
+	\
 	16/gtk-select-color.png					\
 	16/gtk-select-font.png					\
 	16/gtk-yes.png						\
@@ -465,19 +472,11 @@ icons16_images = \
 	16/gimp-char-picker.png					\
 	16/gimp-clipboard.png					\
 	16/gimp-close-all.png					\
-	16/gimp-color-cmyk.png					\
 	16/gimp-color-pick-from-screen.png			\
 	16/gimp-color-space-linear.png				\
 	16/gimp-color-space-non-linear.png			\
 	16/gimp-color-space-perceptual.png			\
-	16/gimp-color-triangle.png				\
-	16/gimp-color-water.png					\
 	16/gimp-colormap.png					\
-	16/gimp-controller-keyboard.png				\
-	16/gimp-controller-linux-input.png			\
-	16/gimp-controller-midi.png				\
-	16/gimp-controller-wheel.png				\
-	16/gimp-controller.png					\
 	16/gimp-convert-grayscale.png				\
 	16/gimp-convert-indexed.png				\
 	16/gimp-convert-rgb.png					\
@@ -488,12 +487,7 @@ icons16_images = \
 	16/gimp-curve-smooth.png				\
 	16/gimp-dashboard.png					\
 	16/gimp-device-status.png				\
-	16/gimp-display-filter-clip-warning.png			\
-	16/gimp-display-filter-colorblind.png			\
-	16/gimp-display-filter-contrast.png			\
-	16/gimp-display-filter-gamma.png			\
-	16/gimp-display-filter-lcms.png				\
-	16/gimp-display-filter-proof.png			\
+	\
 	16/gimp-display-filter.png				\
 	16/gimp-duplicate.png					\
 	16/gimp-dynamics.png					\
@@ -580,6 +574,26 @@ icons16_images = \
 	16/gimp-web.png						\
 	16/gimp-wilber.png					\
 	\
+	16/gimp-color-cmyk.png					\
+	16/gimp-color-triangle.png				\
+	16/gimp-color-water.png					\
+	\
+	16/gimp-tool-options.png				\
+	\
+	16/gimp-controller.png					\
+	\
+	16/gimp-controller-keyboard.png				\
+	16/gimp-controller-linux-input.png			\
+	16/gimp-controller-midi.png				\
+	16/gimp-controller-wheel.png				\
+	\
+	16/gimp-display-filter-clip-warning.png			\
+	16/gimp-display-filter-colorblind.png			\
+	16/gimp-display-filter-contrast.png			\
+	16/gimp-display-filter-gamma.png			\
+	16/gimp-display-filter-lcms.png				\
+	16/gimp-display-filter-proof.png			\
+	\
 	16/gimp-prefs-color-management.png			\
 	\
 	16/gimp-prefs-controllers.png				\
@@ -663,7 +677,6 @@ icons16_images = \
 	16/gimp-tool-mypaint-brush.png				\
 	16/gimp-tool-n-point-deformation.png			\
 	16/gimp-tool-offset.png					\
-	16/gimp-tool-options.png				\
 	16/gimp-tool-paintbrush.png				\
 	16/gimp-tool-paint-select.png				\
 	16/gimp-tool-path.png					\
@@ -740,22 +753,12 @@ icons24_images = \
 	24/gimp-color-space-non-linear.png			\
 	24/gimp-color-space-perceptual.png			\
 	24/gimp-colormap.png					\
-	24/gimp-controller-keyboard.png				\
-	24/gimp-controller-linux-input.png			\
-	24/gimp-controller-midi.png				\
-	24/gimp-controller-wheel.png				\
-	24/gimp-controller.png					\
 	24/gimp-cursor.png					\
 	24/gimp-dashboard.png					\
 	24/gimp-detach.png					\
 	24/gimp-device-status.png				\
+	\
 	24/gimp-display-filter.png				\
-	24/gimp-display-filter-clip-warning.png			\
-	24/gimp-display-filter-colorblind.png			\
-	24/gimp-display-filter-contrast.png			\
-	24/gimp-display-filter-gamma.png			\
-	24/gimp-display-filter-lcms.png				\
-	24/gimp-display-filter-proof.png			\
 	24/gimp-floating-selection.png				\
 	24/gimp-gegl.png					\
 	24/gimp-gravity-east.png				\
@@ -873,13 +876,17 @@ icons32_images = \
 	32/gimp-channel-indexed.png				\
 	32/gimp-channel-red.png					\
 	32/gimp-channel.png					\
+	\
+	32/gimp-color-triangle.png				\
 	32/gimp-floating-selection.png				\
 	32/gimp-image.png					\
 	32/gimp-layer-mask.png					\
 	32/gimp-layer.png					\
 	32/gimp-text-layer.png					\
 	32/gimp-user-manual.png					\
-	32/gimp-wilber.png
+	32/gimp-wilber.png					\
+	\
+	32/gtk-select-color.png
 
 icons48_images = \
 	48/folder.png						\

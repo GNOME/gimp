@@ -86,7 +86,6 @@ gimp-char-picker
 gimp-clipboard
 gimp-close
 gimp-close-all
-gimp-color-cmyk
 gimp-color-pick-from-screen
 gimp-color-picker-black
 gimp-color-picker-gray
@@ -94,14 +93,7 @@ gimp-color-picker-white
 gimp-color-space-linear
 gimp-color-space-non-linear
 gimp-color-space-perceptual
-gimp-color-triangle
-gimp-color-water
 gimp-colormap
-gimp-controller
-gimp-controller-keyboard
-gimp-controller-linux-input
-gimp-controller-midi
-gimp-controller-wheel
 gimp-convert-grayscale
 gimp-convert-indexed
 gimp-convert-rgb
@@ -114,13 +106,6 @@ gimp-dashboard
 gimp-default-colors
 gimp-detach
 gimp-device-status
-gimp-display-filter
-gimp-display-filter-clip-warning
-gimp-display-filter-colorblind
-gimp-display-filter-contrast
-gimp-display-filter-gamma
-gimp-display-filter-lcms
-gimp-display-filter-proof
 gimp-duplicate
 gimp-dynamics
 gimp-file-manager

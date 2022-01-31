@@ -22,22 +22,13 @@ gimp-color-space-linear
 gimp-color-space-non-linear
 gimp-color-space-perceptual
 gimp-colormap
-gimp-controller-keyboard
-gimp-controller-linux-input
-gimp-controller-midi
-gimp-controller-wheel
-gimp-controller
 gimp-cursor
 gimp-dashboard
 gimp-detach
 gimp-device-status
+# Used as GimpViewableDialog icon in gimpdisplayshell-filter-dialog.c,
+# i.e. as GTK_ICON_SIZE_LARGE_TOOLBAR (24px).
 gimp-display-filter
-gimp-display-filter-clip-warning
-gimp-display-filter-colorblind
-gimp-display-filter-contrast
-gimp-display-filter-gamma
-gimp-display-filter-lcms
-gimp-display-filter-proof
 gimp-floating-selection
 gimp-gegl
 gimp-gravity-east

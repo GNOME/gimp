@@ -55,6 +55,7 @@ gtk-cancel
 gtk-edit
 gtk-no
 gtk-ok
+# Used for many action icons (GIMP_ICON_PALETTE)
 gtk-select-color
 gtk-select-font
 gtk-yes
@@ -75,19 +76,11 @@ gimp-channels
 gimp-char-picker
 gimp-clipboard
 gimp-close-all
-gimp-color-cmyk
 gimp-color-pick-from-screen
 gimp-color-space-linear
 gimp-color-space-non-linear
 gimp-color-space-perceptual
-gimp-color-triangle
-gimp-color-water
 gimp-colormap
-gimp-controller-keyboard
-gimp-controller-linux-input
-gimp-controller-midi
-gimp-controller-wheel
-gimp-controller
 gimp-convert-grayscale
 gimp-convert-indexed
 gimp-convert-rgb
@@ -98,12 +91,7 @@ gimp-curve-point-smooth
 gimp-curve-smooth
 gimp-dashboard
 gimp-device-status
-gimp-display-filter-clip-warning
-gimp-display-filter-colorblind
-gimp-display-filter-contrast
-gimp-display-filter-gamma
-gimp-display-filter-lcms
-gimp-display-filter-proof
+# Used as view-display-filters action (usually 16px).
 gimp-display-filter
 gimp-duplicate
 gimp-dynamics

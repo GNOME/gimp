@@ -5,7 +5,9 @@ if have_vector_icons
       'outdir': 'scalable',
       'indir':  'scalable',
       'suffix': '-symbolic.svg',
-      'files':  [ 'scalable', 'prefs', 'tools' ],
+      'files':  [ 'scalable',
+                  'color-selectors', 'controllers', 'display-filters',
+                  'prefs', 'templates', 'tools' ],
     },
     {
       'outdir': '64x64',
@@ -18,11 +20,11 @@ if have_vector_icons
 else
   gtk_encode_symbolic_svg = find_program('gtk-encode-symbolic-svg', native: true)
 
-  sizes = [ '12', '16', '18', '20', '22', '24', '32',
-            '48', '64', '96', '128', '192', '256' ]
   build_icons = {
     '12':  [ 'bitmap_12', ],
-    '16':  [ 'bitmap_16', 'prefs', 'tools' ],
+    '16':  [ 'bitmap_16',
+             'color-selectors', 'controllers', 'display-filters',
+             'prefs', 'templates', 'tools' ],
     '18':  [ 'bitmap_18', ],
     '20':  [ 'bitmap_20', ],
     '22':  [ 'bitmap_22', ],

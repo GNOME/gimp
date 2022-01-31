@@ -5,7 +5,9 @@ if have_vector_icons
       'outdir': 'scalable',
       'indir':  'scalable',
       'suffix': '.svg',
-      'files':  [ 'scalable', 'prefs', 'templates', 'tools' ],
+      'files':  [ 'scalable',
+                  'color-selectors', 'controllers', 'display-filters',
+                  'prefs', 'templates', 'tools' ],
     },
     {
       'outdir': '64x64',
@@ -17,7 +19,9 @@ if have_vector_icons
 else
   build_icons = {
     '12':  [ 'bitmap_12', ],
-    '16':  [ 'bitmap_16', 'prefs', 'templates', 'tools' ],
+    '16':  [ 'bitmap_16',
+             'color-selectors', 'controllers', 'display-filters',
+             'prefs', 'templates', 'tools' ],
     '18':  [ 'bitmap_18', ],
     '20':  [ 'bitmap_20', ],
     '22':  [ 'bitmap_22', ],
