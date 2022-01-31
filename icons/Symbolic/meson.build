@@ -14,7 +14,6 @@ if have_vector_icons
       'indir':  '64',
       'suffix': '.png',
       'files':  [ 'bitmap_64-always', ],
-      #'files':  [ 'bitmap_64-always', 'bitmap_64-system', ],
     },
   ]
 else

@@ -13,7 +13,7 @@ if have_vector_icons
       'outdir': '64x64',
       'indir':  '64',
       'suffix': '.png',
-      'files':  [ 'bitmap_64-always', 'bitmap_64-system', ],
+      'files':  [ 'bitmap_64-always', ],
     },
   ]
 else

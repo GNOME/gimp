@@ -8,9 +8,6 @@ icons_DATA = \
 include $(top_srcdir)/icons/Color/icon-list.mk
 
 if ENABLE_VECTOR_ICONS
-icons24_DATA = \
-	$(vector24_images)
-
 scalable_DATA = \
 	$(scalable_images)
 endif
@@ -91,7 +88,6 @@ EXTRA_DIST = \
 	$(icons192_images)		\
 	$(icons256_images)		\
 	$(scalable_images)	\
-	$(vector24_images)	\
 	color-scalable.svg
 
 noinst_DATA = \

@@ -1,10 +1,8 @@
 if ENABLE_VECTOR_ICONS
-icons24dir  = $(iconsdir)/24x24/apps
 icons64dir  = $(iconsdir)/64x64/apps
 scalabledir = $(iconsdir)/scalable/apps
 
 icons64_DATA = \
-	$(icons64_system_images)				\
 	64/gimp-frame.png					\
 	64/gimp-texture.png
 
