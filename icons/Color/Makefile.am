@@ -79,6 +79,10 @@ noinst_DATA = \
 	gimp-core-pixbufs.gresource.xml	\
 	gimp-icon-pixbufs.gresource.xml
 
+if ENABLE_VECTOR_ICONS
+noinst_DATA += $(CORE_IMAGES) $(ICON_IMAGES)
+endif
+
 CLEANFILES = $(noinst_DATA)
 
 

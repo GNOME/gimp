@@ -16,6 +16,9 @@ if have_vector_icons
       'files':  [ 'bitmap_64-always', ],
     },
   ]
+
+  # Only process the 64x64 icons for the 2 resource icons.
+  subdir('64')
 else
   build_icons = {
     '12':  [ 'bitmap_12', ],
