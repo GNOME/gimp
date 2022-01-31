@@ -4,14 +4,14 @@
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 # Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
 # Aron Xu <aronxu@gnome.org>, 2008, 2019.
-# lumingzh <lumingzh@qq.com>, 2020-2021.
+# lumingzh <lumingzh@qq.com>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-12-23 13:06+0000\n"
-"PO-Revision-Date: 2021-12-26 18:26+0800\n"
+"POT-Creation-Date: 2022-01-31 04:20+0000\n"
+"PO-Revision-Date: 2022-01-31 17:52+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1116,7 +1116,7 @@ msgstr "失焦模糊"
 #. and the 'minimum' value.
 #: ../plug-ins/script-fu/scripts/old-photo.scm:102
 msgid "Sepia"
-msgstr "乌贼墨"
+msgstr "深褐色"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
