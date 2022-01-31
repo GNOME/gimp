@@ -5,7 +5,7 @@ if have_vector_icons
       'outdir': 'scalable',
       'indir':  'scalable',
       'suffix': '-symbolic.svg',
-      'files':  [ 'scalable', 'prefs', ],
+      'files':  [ 'scalable', 'prefs', 'tools' ],
     },
     {
       'outdir': '64x64',
@@ -22,11 +22,11 @@ else
             '48', '64', '96', '128', '192', '256' ]
   build_icons = {
     '12':  [ 'bitmap_12', ],
-    '16':  [ 'bitmap_16', 'prefs', ],
+    '16':  [ 'bitmap_16', 'prefs', 'tools' ],
     '18':  [ 'bitmap_18', ],
     '20':  [ 'bitmap_20', ],
     '22':  [ 'bitmap_22', ],
-    '24':  [ 'bitmap_24', ],
+    '24':  [ 'bitmap_24', 'tools' ],
     '32':  [ 'bitmap_32', ],
     '48':  [ 'bitmap_48', 'prefs' ],
     '64':  [ 'bitmap_64', 'bitmap_64-system', ],
