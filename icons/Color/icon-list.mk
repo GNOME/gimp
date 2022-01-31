@@ -46,7 +46,6 @@ scalable_images = \
 	scalable/help-about.svg					\
 	scalable/list-add.svg					\
 	scalable/list-remove.svg				\
-	\
 	scalable/media-playback-pause.svg			\
 	scalable/media-playback-start.svg			\
 	scalable/media-record.svg				\

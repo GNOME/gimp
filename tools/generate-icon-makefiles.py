@@ -226,3 +226,10 @@ if __name__ == "__main__":
       for line in f:
         colorf.write(line)
         symbolicf.write(line)
+
+  # Touch the 2 meson.build to force-trigger their re-processing (hence
+  # re-configuration) at next build. Otherwise even with image list
+  # changed, meson might not see it as it uses the list from the last
+  # configuration.
+  os.utime(os.path.join(icons_dir, 'Color', 'meson.build'), times=None)
+  os.utime(os.path.join(icons_dir, 'Symbolic', 'meson.build'), times=None)

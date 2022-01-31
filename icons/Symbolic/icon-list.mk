@@ -46,7 +46,6 @@ scalable_images = \
 	scalable/help-about-symbolic.svg					\
 	scalable/list-add-symbolic.svg						\
 	scalable/list-remove-symbolic.svg					\
-	\
 	scalable/media-playback-pause-symbolic.svg				\
 	scalable/media-playback-start-symbolic.svg				\
 	scalable/media-record-symbolic.svg					\
