@@ -109,7 +109,7 @@ class Foggify (Gimp.PlugIn):
         "turbulence": (float,
                        _("_Turbulence"),
                        _("Turbulence"),
-                       0.0, 10.0, 1.0,
+                       0.0, 7.0, 1.0,
                        GObject.ParamFlags.READWRITE),
         "opacity": (float,
                     _("O_pacity"),
