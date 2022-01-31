@@ -65,7 +65,7 @@
                   <object class="GtkTreeViewColumn" id="exif_value_column">
                     <property name="resizable">True</property>
                     <property name="spacing">3</property>
-                    <property name="title" translatable="yes">Value</property>
+                    <property name="title" translatable="yes" context="A tag value">Value</property>
                     <child>
                       <object class="GtkCellRendererText" id="exif_value_cell_renderer"/>
                       <attributes>
@@ -124,7 +124,7 @@
                   <object class="GtkTreeViewColumn" id="xmp_value_column">
                     <property name="resizable">True</property>
                     <property name="spacing">3</property>
-                    <property name="title" translatable="yes">Value</property>
+                    <property name="title" translatable="yes" context="A tag value">Value</property>
                     <child>
                       <object class="GtkCellRendererText" id="xmp_value_cell_renderer"/>
                       <attributes>
@@ -186,7 +186,7 @@
                   <object class="GtkTreeViewColumn" id="iptc_value_column">
                     <property name="resizable">True</property>
                     <property name="spacing">3</property>
-                    <property name="title" translatable="yes">Value</property>
+                    <property name="title" translatable="yes" context="A tag value">Value</property>
                     <child>
                       <object class="GtkCellRendererText" id="iptc_value_cell_renderer"/>
                       <attributes>
