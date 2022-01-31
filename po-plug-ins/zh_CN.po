@@ -5,22 +5,22 @@
 # Aron <aronmalache@163.com>, 2008.
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 # YunQiang Su <wzssyqa@gmail.com>, 2011.
-# lumingzh <lumingzh@qq.com>, 2019-2021.
+# lumingzh <lumingzh@qq.com>, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-12-17 19:16+0000\n"
-"PO-Revision-Date: 2021-12-22 17:09-0500\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
+"POT-Creation-Date: 2022-01-31 04:19+0000\n"
+"PO-Revision-Date: 2022-01-31 17:01+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"X-Generator: Gtranslator 41.0\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -75,7 +75,7 @@ msgstr "锻炼一只山羊（C）"
 #: ../plug-ins/common/curve-bend.c:1220 ../plug-ins/common/curve-bend.c:1994
 #: ../plug-ins/common/curve-bend.c:2029 ../plug-ins/common/depth-merge.c:732
 #: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1003
-#: ../plug-ins/common/file-gif-save.c:1143 ../plug-ins/common/file-heif.c:2413
+#: ../plug-ins/common/file-gif-save.c:1143 ../plug-ins/common/file-heif.c:2459
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
@@ -180,7 +180,7 @@ msgstr "锻炼一只山羊（Python 3）"
 #: ../plug-ins/common/colormap-remap.c:666 ../plug-ins/common/compose.c:1183
 #: ../plug-ins/common/contrast-retinex.c:351
 #: ../plug-ins/common/curve-bend.c:1221 ../plug-ins/common/depth-merge.c:733
-#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2414
+#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2460
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:547 ../plug-ins/common/film.c:1315
 #: ../plug-ins/common/grid.c:761 ../plug-ins/common/hot.c:679
@@ -410,7 +410,7 @@ msgstr "垂直(_V)"
 #.
 #: ../plug-ins/common/blinds.c:352 ../plug-ins/common/compose.c:1128
 #: ../plug-ins/common/decompose.c:665 ../plug-ins/common/file-cel.c:498
-#: ../plug-ins/common/file-cel.c:503 ../plug-ins/common/file-dicom.c:701
+#: ../plug-ins/common/file-cel.c:503 ../plug-ins/common/file-dicom.c:746
 #: ../plug-ins/common/file-gegl.c:468 ../plug-ins/common/file-gif-load.c:1036
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
@@ -428,7 +428,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:660
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:660
 msgid "Background"
 msgstr "背景"
 
@@ -969,7 +969,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "保存 CML 探索器参数"
 
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1503 ../plug-ins/common/file-mng.c:873
+#: ../plug-ins/common/file-dicom.c:1557 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -999,7 +999,7 @@ msgstr "加载 CML 探索器参数"
 
 #: ../plug-ins/common/cml-explorer.c:2339 ../plug-ins/common/curve-bend.c:889
 #: ../plug-ins/common/file-cel.c:352 ../plug-ins/common/file-cel.c:403
-#: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:376
+#: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
 #: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
@@ -1218,7 +1218,7 @@ msgstr "红色差 cr709(_R)："
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2603 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2649 ../plug-ins/common/file-raw-data.c:1870
 msgid "RGB"
 msgstr "RGB"
 
@@ -1918,7 +1918,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #.
 #. * Open the file for reading...
 #.
-#: ../plug-ins/common/file-cel.c:394 ../plug-ins/common/file-dicom.c:368
+#: ../plug-ins/common/file-cel.c:394 ../plug-ins/common/file-dicom.c:369
 #: ../plug-ins/common/file-gegl.c:352 ../plug-ins/common/file-gif-load.c:395
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
@@ -2004,7 +2004,7 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #.
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:903
 #: ../plug-ins/common/file-html-table.c:361
-#: ../plug-ins/common/file-jpegxl.c:694 ../plug-ins/common/file-pcx.c:793
+#: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
@@ -2103,34 +2103,39 @@ msgstr "桌面链接"
 msgid "Error loading desktop file '%s': %s"
 msgstr "打开桌面文件“%s”出错：%s"
 
-#: ../plug-ins/common/file-dicom.c:170
+#: ../plug-ins/common/file-dicom.c:171
 msgid "DICOM image"
 msgstr "DICOM 图像"
 
-#: ../plug-ins/common/file-dicom.c:202
+#: ../plug-ins/common/file-dicom.c:203
 msgid "Digital Imaging and Communications in Medicine image"
 msgstr "医学数字成像和通信图像"
 
-#: ../plug-ins/common/file-dicom.c:300
+#: ../plug-ins/common/file-dicom.c:301
 #, c-format
 msgid "Dicom format does not support multiple layers."
 msgstr "Dicom 格式不支持多图层。"
 
-#: ../plug-ins/common/file-dicom.c:402
+#: ../plug-ins/common/file-dicom.c:403
 #, c-format
 msgid "'%s' is not a DICOM file."
 msgstr "“%s”不是 DICOM 文件。"
 
-#: ../plug-ins/common/file-dicom.c:575
+#: ../plug-ins/common/file-dicom.c:576
 #, c-format
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "GIMP 不支持转移语法 %s。"
 
-#: ../plug-ins/common/file-dicom.c:1468
+#: ../plug-ins/common/file-dicom.c:631
+#, c-format
+msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
+msgstr "在与每像素采样组合中 GIMP 不支持 %s：%d"
+
+#: ../plug-ins/common/file-dicom.c:1522
 msgid "Cannot save images with alpha channel."
 msgstr "无法保存带有 Alpha 通道的图像。"
 
-#: ../plug-ins/common/file-dicom.c:1487 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2458,102 +2463,102 @@ msgstr "加载 HEIF 图像失败：输入的文件未包含可读取图像"
 msgid "image content"
 msgstr "图像内容"
 
-#: ../plug-ins/common/file-heif.c:1527
+#: ../plug-ins/common/file-heif.c:1569
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "正在使用 %2$s 编码器导出“%1$s”"
 
-#: ../plug-ins/common/file-heif.c:1577 ../plug-ins/common/file-heif.c:1970
+#: ../plug-ins/common/file-heif.c:1619 ../plug-ins/common/file-heif.c:2012
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "编码 HEIF 图像失败：%s"
 
-#: ../plug-ins/common/file-heif.c:2175
+#: ../plug-ins/common/file-heif.c:2221
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "写入 HEIF 图像失败：%s"
 
-#: ../plug-ins/common/file-heif.c:2264
+#: ../plug-ins/common/file-heif.c:2310
 msgid "primary"
 msgstr "主要"
 
-#: ../plug-ins/common/file-heif.c:2409
+#: ../plug-ins/common/file-heif.c:2455
 msgid "Load HEIF Image"
 msgstr "载入 HEIF 图像"
 
-#: ../plug-ins/common/file-heif.c:2423
+#: ../plug-ins/common/file-heif.c:2469
 msgid "Select Image"
 msgstr "选择图像"
 
-#: ../plug-ins/common/file-heif.c:2568
+#: ../plug-ins/common/file-heif.c:2614
 msgid "Export Image as AVIF"
 msgstr "导出图像为 AVIF"
 
-#: ../plug-ins/common/file-heif.c:2568
+#: ../plug-ins/common/file-heif.c:2614
 msgid "Export Image as HEIF"
 msgstr "导出图像为 HEIF"
 
-#: ../plug-ins/common/file-heif.c:2581
+#: ../plug-ins/common/file-heif.c:2627
 msgid "_Lossless"
 msgstr "无损(_L)"
 
-#: ../plug-ins/common/file-heif.c:2599
+#: ../plug-ins/common/file-heif.c:2645
 msgid "_Quality"
 msgstr "质量(_Q)"
 
-#: ../plug-ins/common/file-heif.c:2604
+#: ../plug-ins/common/file-heif.c:2650
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2605
+#: ../plug-ins/common/file-heif.c:2651
 msgid "YUV420"
 msgstr "YUV420"
 
-#: ../plug-ins/common/file-heif.c:2612
+#: ../plug-ins/common/file-heif.c:2658
 msgid "Pixel format:"
 msgstr "像素格式："
 
-#: ../plug-ins/common/file-heif.c:2653 ../plug-ins/common/file-jpegxl.c:1088
+#: ../plug-ins/common/file-heif.c:2699 ../plug-ins/common/file-jpegxl.c:1122
 msgid "8 bit/channel"
 msgstr "8 位/通道"
 
-#: ../plug-ins/common/file-heif.c:2654
+#: ../plug-ins/common/file-heif.c:2700
 msgid "10 bit/channel"
 msgstr "10 位/通道"
 
-#: ../plug-ins/common/file-heif.c:2655
+#: ../plug-ins/common/file-heif.c:2701
 msgid "12 bit/channel"
 msgstr "12 位/通道"
 
-#: ../plug-ins/common/file-heif.c:2662
+#: ../plug-ins/common/file-heif.c:2708
 msgid "Bit depth:"
 msgstr "位深："
 
-#: ../plug-ins/common/file-heif.c:2665
+#: ../plug-ins/common/file-heif.c:2711
 msgid "Slow"
 msgstr "慢"
 
-#: ../plug-ins/common/file-heif.c:2666
+#: ../plug-ins/common/file-heif.c:2712
 msgid "Balanced"
 msgstr "平衡"
 
-#: ../plug-ins/common/file-heif.c:2667
+#: ../plug-ins/common/file-heif.c:2713
 msgid "Fast"
 msgstr "快"
 
-#: ../plug-ins/common/file-heif.c:2674
+#: ../plug-ins/common/file-heif.c:2720
 msgid "Speed:"
 msgstr "速度："
 
-#: ../plug-ins/common/file-heif.c:2680
+#: ../plug-ins/common/file-heif.c:2726
 msgid "Save color _profile"
 msgstr "保存色彩配置文件(_P)"
 
-#: ../plug-ins/common/file-heif.c:2687
+#: ../plug-ins/common/file-heif.c:2732
 msgid "_Save Exif data"
 msgstr "保存 Exif 数据(_S)"
 
-#: ../plug-ins/common/file-heif.c:2693
+#: ../plug-ins/common/file-heif.c:2737
 msgid "Save _XMP data"
 msgstr "保存 _XMP 数据"
 
@@ -2842,35 +2847,44 @@ msgstr "保存原始配置文件(_G)"
 msgid "Store ICC profile to exported JXL file"
 msgstr "存储 ICC 配置文件至导出的 JXL 文件"
 
-#: ../plug-ins/common/file-jpegxl.c:1075
+#: ../plug-ins/common/file-jpegxl.c:1107
+#| msgid "Lighting Effects"
+msgid "lightning (fastest)"
+msgstr "闪电（最快）"
+
+#: ../plug-ins/common/file-jpegxl.c:1108
+msgid "thunder"
+msgstr "雷声"
+
+#: ../plug-ins/common/file-jpegxl.c:1109
 msgid "falcon (faster)"
 msgstr "鹰隼（较快）"
 
-#: ../plug-ins/common/file-jpegxl.c:1076
+#: ../plug-ins/common/file-jpegxl.c:1110
 msgid "cheetah"
 msgstr "猎豹"
 
-#: ../plug-ins/common/file-jpegxl.c:1077
+#: ../plug-ins/common/file-jpegxl.c:1111
 msgid "hare"
 msgstr "野兔"
 
-#: ../plug-ins/common/file-jpegxl.c:1078
+#: ../plug-ins/common/file-jpegxl.c:1112
 msgid "wombat"
 msgstr "毛鼻袋熊"
 
-#: ../plug-ins/common/file-jpegxl.c:1079
+#: ../plug-ins/common/file-jpegxl.c:1113
 msgid "squirrel"
 msgstr "松鼠"
 
-#: ../plug-ins/common/file-jpegxl.c:1080
+#: ../plug-ins/common/file-jpegxl.c:1114
 msgid "kitten"
 msgstr "小猫"
 
-#: ../plug-ins/common/file-jpegxl.c:1081
+#: ../plug-ins/common/file-jpegxl.c:1115
 msgid "tortoise (slower)"
 msgstr "乌龟（较慢）"
 
-#: ../plug-ins/common/file-jpegxl.c:1089
+#: ../plug-ins/common/file-jpegxl.c:1123
 msgid "16 bit/channel"
 msgstr "16 位/通道"
 
@@ -4240,23 +4254,23 @@ msgstr "无法从“%s”读取扩展"
 msgid "Cannot read header from '%s'"
 msgstr "无法从“%s”读取文件头"
 
-#: ../plug-ins/common/file-tga.c:1444
+#: ../plug-ins/common/file-tga.c:1447
 msgid "Export Image as TGA"
 msgstr "导出图像为 TGA"
 
-#: ../plug-ins/common/file-tga.c:1454
+#: ../plug-ins/common/file-tga.c:1457
 msgid "_RLE compression"
 msgstr "RLE 压缩(_R)"
 
-#: ../plug-ins/common/file-tga.c:1462
+#: ../plug-ins/common/file-tga.c:1465
 msgid "Or_igin:"
 msgstr "原始(_I)"
 
-#: ../plug-ins/common/file-tga.c:1466
+#: ../plug-ins/common/file-tga.c:1469
 msgid "Bottom left"
 msgstr "左下"
 
-#: ../plug-ins/common/file-tga.c:1467
+#: ../plug-ins/common/file-tga.c:1470
 msgid "Top left"
 msgstr "左上"
 
@@ -12041,7 +12055,7 @@ msgstr "使用显示器配置文件标记图像(_M)"
 msgid "Convert image to sR_GB"
 msgstr "转换图像为 sRGB(_G)"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "没有取得数据"
 
