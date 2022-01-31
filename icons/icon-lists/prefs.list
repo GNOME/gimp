@@ -48,9 +48,3 @@ gimp-prefs-folders-tool-presets
 
 # Used for debugging preferences page (temporarily? TODO?)
 gimp-wilber-eek
-
-# Not used AFAICS.
-#gimp-prefs-default-comment
-#gimp-prefs-folders-tool-plug-ins
-#gimp-prefs-folders-tools
-#gimp-prefs-session

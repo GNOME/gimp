@@ -37,8 +37,6 @@ go-up
 help-about
 list-add
 list-remove
-# Unused.
-# media-floppy
 media-playback-pause
 media-playback-start
 media-record
