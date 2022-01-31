@@ -120,6 +120,8 @@ icons_core_sources = gnome.compile_resources(
   resourcename,
   xml_file,
   c_name: resourcename.underscorify(),
+  dependencies: icon_dialog_question,
+  source_dir: [meson.current_build_dir()]
 )
 
 
@@ -142,4 +144,6 @@ icons_imgs_sources = gnome.compile_resources(
   resourcename,
   xml_file,
   c_name: resourcename.underscorify(),
+  dependencies: icon_wilber_eek,
+  source_dir: [meson.current_build_dir()]
 )

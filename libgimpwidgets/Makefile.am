@@ -224,12 +224,12 @@ gimp-color-picker-cursors.c: gimp-color-picker-cursors.h
 
 gimp-icon-pixbufs.h: $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(top_srcdir)/icons/Color --generate-header \
+	  --sourcedir=$(top_builddir)/icons/Color --generate-header \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
 
 gimp-icon-pixbufs.c: gimp-icon-pixbufs.h
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(top_srcdir)/icons/Color --generate-source \
+	  --sourcedir=$(top_builddir)/icons/Color --generate-source \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-icon-pixbufs.gresource.xml
 
 

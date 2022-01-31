@@ -569,10 +569,10 @@ $(srcdir)/core-enums.c: xgen-cec
 
 gimp-core-pixbufs.h: $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(top_srcdir)/icons/Color --generate-header \
+	  --sourcedir=$(top_builddir)/icons/Color --generate-header \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
 
 gimp-core-pixbufs.c: gimp-core-pixbufs.h
 	$(AM_V_GEN) $(HOST_GLIB_COMPILE_RESOURCES) \
-	  --sourcedir=$(top_srcdir)/icons/Color --generate-source \
+	  --sourcedir=$(top_builddir)/icons/Color --generate-source \
 	  --target=$@ $(top_builddir)/icons/Color/gimp-core-pixbufs.gresource.xml
