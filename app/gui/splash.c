@@ -142,6 +142,12 @@ splash_create (gboolean   be_verbose,
                   "resizable",       FALSE,
                   NULL);
 
+  /* Don't remove this call, it's necessary to remove decorations on Windows
+   * (which is the natural state of splash-screens). Looks like the
+   * GDK_WINDOW_TYPE_HINT_SPLASHSCREEN hint is not used on some platforms.
+   */
+  gtk_window_set_decorated (GTK_WINDOW (splash->window), FALSE);
+
   g_signal_connect_swapped (splash->window, "delete-event",
                             G_CALLBACK (exit),
                             GINT_TO_POINTER (0));
