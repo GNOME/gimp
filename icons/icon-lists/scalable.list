@@ -37,8 +37,8 @@ go-up
 help-about
 list-add
 list-remove
-media-floppy
-media-optical
+# Unused.
+# media-floppy
 media-playback-pause
 media-playback-start
 media-record
@@ -70,7 +70,6 @@ gtk-yes
 
 gimp-anchor
 gimp-attach
-gimp-business-card
 gimp-cap-butt
 gimp-cap-round
 gimp-cap-square
@@ -115,7 +114,6 @@ gimp-dashboard
 gimp-default-colors
 gimp-detach
 gimp-device-status
-gimp-display
 gimp-display-filter
 gimp-display-filter-clip-warning
 gimp-display-filter-colorblind
@@ -228,7 +226,6 @@ gimp-shape-circle
 gimp-shape-diamond
 gimp-shape-square
 gimp-shred
-gimp-smartphone
 gimp-swap-colors
 gimp-symmetry
 gimp-template
@@ -237,7 +234,6 @@ gimp-text-dir-ttb-ltr-upright
 gimp-text-dir-ttb-rtl
 gimp-text-dir-ttb-rtl-upright
 gimp-text-layer
-gimp-toilet-paper
 gimp-tools
 gimp-transform-3d-camera
 gimp-transform-3d-move
@@ -249,9 +245,7 @@ gimp-vcenter
 gimp-vchain
 gimp-vchain-broken
 gimp-vfill
-gimp-video
 gimp-visible
-gimp-web
 gimp-wilber
 gimp-wilber-eek
 gimp-wilber-outline

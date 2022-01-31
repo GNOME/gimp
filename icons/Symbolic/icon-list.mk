@@ -46,8 +46,7 @@ scalable_images = \
 	scalable/help-about-symbolic.svg					\
 	scalable/list-add-symbolic.svg						\
 	scalable/list-remove-symbolic.svg					\
-	scalable/media-floppy-symbolic.svg					\
-	scalable/media-optical-symbolic.svg					\
+	\
 	scalable/media-playback-pause-symbolic.svg				\
 	scalable/media-playback-start-symbolic.svg				\
 	scalable/media-record-symbolic.svg					\
@@ -79,7 +78,6 @@ scalable_images = \
 	\
 	scalable/gimp-anchor-symbolic.svg					\
 	scalable/gimp-attach-symbolic.svg					\
-	scalable/gimp-business-card-symbolic.svg				\
 	scalable/gimp-cap-butt-symbolic.svg					\
 	scalable/gimp-cap-round-symbolic.svg					\
 	scalable/gimp-cap-square-symbolic.svg					\
@@ -124,7 +122,6 @@ scalable_images = \
 	scalable/gimp-default-colors-symbolic.svg				\
 	scalable/gimp-detach-symbolic.svg					\
 	scalable/gimp-device-status-symbolic.svg				\
-	scalable/gimp-display-symbolic.svg					\
 	scalable/gimp-display-filter-symbolic.svg				\
 	scalable/gimp-display-filter-clip-warning-symbolic.svg			\
 	scalable/gimp-display-filter-colorblind-symbolic.svg			\
@@ -237,7 +234,6 @@ scalable_images = \
 	scalable/gimp-shape-diamond-symbolic.svg				\
 	scalable/gimp-shape-square-symbolic.svg					\
 	scalable/gimp-shred-symbolic.svg					\
-	scalable/gimp-smartphone-symbolic.svg					\
 	scalable/gimp-swap-colors-symbolic.svg					\
 	scalable/gimp-symmetry-symbolic.svg					\
 	scalable/gimp-template-symbolic.svg					\
@@ -246,7 +242,6 @@ scalable_images = \
 	scalable/gimp-text-dir-ttb-rtl-symbolic.svg				\
 	scalable/gimp-text-dir-ttb-rtl-upright-symbolic.svg			\
 	scalable/gimp-text-layer-symbolic.svg					\
-	scalable/gimp-toilet-paper-symbolic.svg					\
 	scalable/gimp-tools-symbolic.svg					\
 	scalable/gimp-transform-3d-camera-symbolic.svg				\
 	scalable/gimp-transform-3d-move-symbolic.svg				\
@@ -258,9 +253,7 @@ scalable_images = \
 	scalable/gimp-vchain-symbolic.svg					\
 	scalable/gimp-vchain-broken-symbolic.svg				\
 	scalable/gimp-vfill-symbolic.svg					\
-	scalable/gimp-video-symbolic.svg					\
 	scalable/gimp-visible-symbolic.svg					\
-	scalable/gimp-web-symbolic.svg						\
 	scalable/gimp-wilber-symbolic.svg					\
 	scalable/gimp-wilber-eek-symbolic.svg					\
 	scalable/gimp-wilber-outline-symbolic.svg				\
@@ -304,6 +297,14 @@ scalable_images = \
 	scalable/gimp-prefs-folders-scripts-symbolic.svg			\
 	scalable/gimp-prefs-folders-themes-symbolic.svg				\
 	scalable/gimp-prefs-folders-tool-presets-symbolic.svg			\
+	\
+	scalable/gimp-business-card-symbolic.svg				\
+	scalable/gimp-display-symbolic.svg					\
+	scalable/gimp-smartphone-symbolic.svg					\
+	scalable/gimp-toilet-paper-symbolic.svg					\
+	scalable/gimp-video-symbolic.svg					\
+	scalable/gimp-web-symbolic.svg						\
+	scalable/media-optical-symbolic.svg					\
 	\
 	scalable/gimp-tool-airbrush-symbolic.svg				\
 	scalable/gimp-tool-align-symbolic.svg					\
@@ -419,8 +420,6 @@ icons16_images = \
 	16/help-about-symbolic.symbolic.png					\
 	16/list-add-symbolic.symbolic.png					\
 	16/list-remove-symbolic.symbolic.png					\
-	16/media-floppy-symbolic.symbolic.png					\
-	16/media-optical-symbolic.symbolic.png					\
 	16/media-playback-pause-symbolic.symbolic.png				\
 	16/media-playback-start-symbolic.symbolic.png				\
 	16/media-record-symbolic.symbolic.png					\
@@ -451,7 +450,6 @@ icons16_images = \
 	16/gtk-yes-symbolic.symbolic.png					\
 	\
 	16/gimp-anchor-symbolic.symbolic.png					\
-	16/gimp-business-card-symbolic.symbolic.png				\
 	16/gimp-cap-butt-symbolic.symbolic.png					\
 	16/gimp-cap-round-symbolic.symbolic.png					\
 	16/gimp-cap-square-symbolic.symbolic.png				\
@@ -490,7 +488,6 @@ icons16_images = \
 	16/gimp-curve-smooth-symbolic.symbolic.png				\
 	16/gimp-dashboard-symbolic.symbolic.png					\
 	16/gimp-device-status-symbolic.symbolic.png				\
-	16/gimp-display-symbolic.symbolic.png					\
 	16/gimp-display-filter-clip-warning-symbolic.symbolic.png		\
 	16/gimp-display-filter-colorblind-symbolic.symbolic.png			\
 	16/gimp-display-filter-contrast-symbolic.symbolic.png			\
@@ -569,11 +566,9 @@ icons16_images = \
 	16/gimp-shape-diamond-symbolic.symbolic.png				\
 	16/gimp-shape-square-symbolic.symbolic.png				\
 	16/gimp-shred-symbolic.symbolic.png					\
-	16/gimp-smartphone-symbolic.symbolic.png				\
 	16/gimp-symmetry-symbolic.symbolic.png					\
 	16/gimp-template-symbolic.symbolic.png					\
 	16/gimp-text-layer-symbolic.symbolic.png				\
-	16/gimp-toilet-paper-symbolic.symbolic.png				\
 	16/gimp-tools-symbolic.symbolic.png					\
 	16/gimp-transform-3d-camera-symbolic.symbolic.png			\
 	16/gimp-transform-3d-move-symbolic.symbolic.png				\
@@ -581,7 +576,7 @@ icons16_images = \
 	16/gimp-transparency-symbolic.symbolic.png				\
 	16/gimp-undo-history-symbolic.symbolic.png				\
 	16/gimp-user-manual-symbolic.symbolic.png				\
-	16/gimp-video-symbolic.symbolic.png					\
+	\
 	16/gimp-web-symbolic.symbolic.png					\
 	16/gimp-wilber-symbolic.symbolic.png					\
 	\
@@ -625,6 +620,13 @@ icons16_images = \
 	16/gimp-prefs-folders-tool-presets-symbolic.symbolic.png		\
 	\
 	16/gimp-wilber-eek-symbolic.symbolic.png				\
+	\
+	16/gimp-business-card-symbolic.symbolic.png				\
+	16/gimp-display-symbolic.symbolic.png					\
+	16/gimp-smartphone-symbolic.symbolic.png				\
+	16/gimp-toilet-paper-symbolic.symbolic.png				\
+	16/gimp-video-symbolic.symbolic.png					\
+	16/media-optical-symbolic.symbolic.png					\
 	\
 	16/gimp-tool-airbrush-symbolic.symbolic.png				\
 	16/gimp-tool-align-symbolic.symbolic.png				\
@@ -721,13 +723,10 @@ icons24_images = \
 	24/document-print-symbolic.symbolic.png					\
 	24/format-text-direction-ltr-symbolic.symbolic.png			\
 	24/format-text-direction-rtl-symbolic.symbolic.png			\
-	24/media-floppy-symbolic.symbolic.png					\
-	24/media-optical-symbolic.symbolic.png					\
 	\
 	24/gtk-select-color-symbolic.symbolic.png				\
 	\
 	24/gimp-attach-symbolic.symbolic.png					\
-	24/gimp-business-card-symbolic.symbolic.png				\
 	24/gimp-center-symbolic.symbolic.png					\
 	24/gimp-channel-alpha-symbolic.symbolic.png				\
 	24/gimp-channel-blue-symbolic.symbolic.png				\
@@ -750,7 +749,6 @@ icons24_images = \
 	24/gimp-dashboard-symbolic.symbolic.png					\
 	24/gimp-detach-symbolic.symbolic.png					\
 	24/gimp-device-status-symbolic.symbolic.png				\
-	24/gimp-display-symbolic.symbolic.png					\
 	24/gimp-display-filter-symbolic.symbolic.png				\
 	24/gimp-display-filter-clip-warning-symbolic.symbolic.png		\
 	24/gimp-display-filter-colorblind-symbolic.symbolic.png			\
@@ -784,7 +782,6 @@ icons24_images = \
 	24/gimp-sample-point-symbolic.symbolic.png				\
 	24/gimp-scale-symbolic.symbolic.png					\
 	24/gimp-selection-symbolic.symbolic.png					\
-	24/gimp-smartphone-symbolic.symbolic.png				\
 	24/gimp-symmetry-symbolic.symbolic.png					\
 	24/gimp-template-symbolic.symbolic.png					\
 	24/gimp-text-dir-ttb-rtl-symbolic.symbolic.png				\
@@ -792,6 +789,7 @@ icons24_images = \
 	24/gimp-text-dir-ttb-ltr-symbolic.symbolic.png				\
 	24/gimp-text-dir-ttb-ltr-upright-symbolic.symbolic.png			\
 	24/gimp-text-layer-symbolic.symbolic.png				\
+	\
 	24/gimp-toilet-paper-symbolic.symbolic.png				\
 	24/gimp-tools-symbolic.symbolic.png					\
 	24/gimp-transparency-symbolic.symbolic.png				\
@@ -801,8 +799,13 @@ icons24_images = \
 	24/gimp-vchain-broken-symbolic.symbolic.png				\
 	24/gimp-vchain-symbolic.symbolic.png					\
 	24/gimp-vfill-symbolic.symbolic.png					\
+	\
+	24/gimp-business-card-symbolic.symbolic.png				\
+	24/gimp-display-symbolic.symbolic.png					\
+	24/gimp-smartphone-symbolic.symbolic.png				\
 	24/gimp-video-symbolic.symbolic.png					\
 	24/gimp-web-symbolic.symbolic.png					\
+	24/media-optical-symbolic.symbolic.png					\
 	\
 	24/gimp-tool-airbrush-symbolic.symbolic.png				\
 	24/gimp-tool-align-symbolic.symbolic.png				\

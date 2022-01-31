@@ -5,13 +5,10 @@ dialog-warning
 document-print
 format-text-direction-ltr
 format-text-direction-rtl
-media-floppy
-media-optical
 
 gtk-select-color
 
 gimp-attach
-gimp-business-card
 gimp-center
 gimp-channel-alpha
 gimp-channel-blue
@@ -34,7 +31,6 @@ gimp-cursor
 gimp-dashboard
 gimp-detach
 gimp-device-status
-gimp-display
 gimp-display-filter
 gimp-display-filter-clip-warning
 gimp-display-filter-colorblind
@@ -68,7 +64,6 @@ gimp-resize
 gimp-sample-point
 gimp-scale
 gimp-selection
-gimp-smartphone
 gimp-symmetry
 gimp-template
 gimp-text-dir-ttb-rtl
@@ -76,6 +71,7 @@ gimp-text-dir-ttb-rtl-upright
 gimp-text-dir-ttb-ltr
 gimp-text-dir-ttb-ltr-upright
 gimp-text-layer
+# Default GimpIconPicker icon as GIMP_VIEW_SIZE_SMALL (24px) GimpView.
 gimp-toilet-paper
 gimp-tools
 gimp-transparency
@@ -85,5 +81,3 @@ gimp-vcenter
 gimp-vchain-broken
 gimp-vchain
 gimp-vfill
-gimp-video
-gimp-web

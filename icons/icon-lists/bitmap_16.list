@@ -30,8 +30,6 @@ go-up
 help-about
 list-add
 list-remove
-media-floppy
-media-optical
 media-playback-pause
 media-playback-start
 media-record
@@ -62,7 +60,6 @@ gtk-select-font
 gtk-yes
 
 gimp-anchor
-gimp-business-card
 gimp-cap-butt
 gimp-cap-round
 gimp-cap-square
@@ -101,7 +98,6 @@ gimp-curve-point-smooth
 gimp-curve-smooth
 gimp-dashboard
 gimp-device-status
-gimp-display
 gimp-display-filter-clip-warning
 gimp-display-filter-colorblind
 gimp-display-filter-contrast
@@ -180,11 +176,9 @@ gimp-shape-circle
 gimp-shape-diamond
 gimp-shape-square
 gimp-shred
-gimp-smartphone
 gimp-symmetry
 gimp-template
 gimp-text-layer
-gimp-toilet-paper
 gimp-tools
 gimp-transform-3d-camera
 gimp-transform-3d-move
@@ -192,6 +186,9 @@ gimp-transform-3d-rotate
 gimp-transparency
 gimp-undo-history
 gimp-user-manual
-gimp-video
+# - GTK_ICON_SIZE_BUTTON (16px) in file-open-location-dialog.c
+# - file-open-location action (menu, action search, etc. Usually 16px)
+# - GTK_ICON_SIZE_BUTTON in web-page plug-in.
+# - GTK_ICON_SIZE_MENU in imagemap plug-in.
 gimp-web
 gimp-wilber

@@ -115,10 +115,10 @@ if __name__ == "__main__":
     # should contain nearly all images. So we compute max_len once and
     # reuse this value on all lists.
     col_max_len = print_icons(list_dir,
-                              ['scalable.list', 'prefs.list', 'tools.list'],
+                              ['scalable.list', 'prefs.list', 'templates.list', 'tools.list'],
                               None, "scalable/", ".svg", colorf)
     sym_max_len = print_icons(list_dir,
-                              ['scalable.list', 'prefs.list', 'tools.list'],
+                              ['scalable.list', 'prefs.list', 'templates.list', 'tools.list'],
                               None, "scalable/", "-symbolic.svg", symbolicf)
 
     # 12x12 bitmap
@@ -130,9 +130,11 @@ if __name__ == "__main__":
     # 16x16 bitmap
     print("\nicons16_images = \\", file=colorf)
     print("\nicons16_images = \\", file=symbolicf)
-    print_icons(list_dir, ['bitmap_16.list', 'prefs.list', 'tools.list'],
+    print_icons(list_dir,
+                ['bitmap_16.list', 'prefs.list', 'templates.list', 'tools.list'],
                 col_max_len, "16/", ".png", colorf)
-    print_icons(list_dir, ['bitmap_16.list', 'prefs.list', 'tools.list'],
+    print_icons(list_dir,
+                ['bitmap_16.list', 'prefs.list', 'templates.list', 'tools.list'],
                 sym_max_len, "16/", "-symbolic.symbolic.png", symbolicf)
 
     # 18x18 bitmap
@@ -156,9 +158,9 @@ if __name__ == "__main__":
     # 24x24 bitmap
     print("\nicons24_images = \\", file=colorf)
     print("\nicons24_images = \\", file=symbolicf)
-    print_icons(list_dir, ['bitmap_24.list', 'tools.list'],
+    print_icons(list_dir, ['bitmap_24.list', 'templates.list', 'tools.list'],
                 col_max_len, "24/", ".png", colorf)
-    print_icons(list_dir, ['bitmap_24.list', 'tools.list'],
+    print_icons(list_dir, ['bitmap_24.list', 'templates.list', 'tools.list'],
                 sym_max_len, "24/", "-symbolic.symbolic.png", symbolicf)
 
     # 32x32 bitmap

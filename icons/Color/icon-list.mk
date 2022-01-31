@@ -46,8 +46,7 @@ scalable_images = \
 	scalable/help-about.svg					\
 	scalable/list-add.svg					\
 	scalable/list-remove.svg				\
-	scalable/media-floppy.svg				\
-	scalable/media-optical.svg				\
+	\
 	scalable/media-playback-pause.svg			\
 	scalable/media-playback-start.svg			\
 	scalable/media-record.svg				\
@@ -79,7 +78,6 @@ scalable_images = \
 	\
 	scalable/gimp-anchor.svg				\
 	scalable/gimp-attach.svg				\
-	scalable/gimp-business-card.svg				\
 	scalable/gimp-cap-butt.svg				\
 	scalable/gimp-cap-round.svg				\
 	scalable/gimp-cap-square.svg				\
@@ -124,7 +122,6 @@ scalable_images = \
 	scalable/gimp-default-colors.svg			\
 	scalable/gimp-detach.svg				\
 	scalable/gimp-device-status.svg				\
-	scalable/gimp-display.svg				\
 	scalable/gimp-display-filter.svg			\
 	scalable/gimp-display-filter-clip-warning.svg		\
 	scalable/gimp-display-filter-colorblind.svg		\
@@ -237,7 +234,6 @@ scalable_images = \
 	scalable/gimp-shape-diamond.svg				\
 	scalable/gimp-shape-square.svg				\
 	scalable/gimp-shred.svg					\
-	scalable/gimp-smartphone.svg				\
 	scalable/gimp-swap-colors.svg				\
 	scalable/gimp-symmetry.svg				\
 	scalable/gimp-template.svg				\
@@ -246,7 +242,6 @@ scalable_images = \
 	scalable/gimp-text-dir-ttb-rtl.svg			\
 	scalable/gimp-text-dir-ttb-rtl-upright.svg		\
 	scalable/gimp-text-layer.svg				\
-	scalable/gimp-toilet-paper.svg				\
 	scalable/gimp-tools.svg					\
 	scalable/gimp-transform-3d-camera.svg			\
 	scalable/gimp-transform-3d-move.svg			\
@@ -258,9 +253,7 @@ scalable_images = \
 	scalable/gimp-vchain.svg				\
 	scalable/gimp-vchain-broken.svg				\
 	scalable/gimp-vfill.svg					\
-	scalable/gimp-video.svg					\
 	scalable/gimp-visible.svg				\
-	scalable/gimp-web.svg					\
 	scalable/gimp-wilber.svg				\
 	scalable/gimp-wilber-eek.svg				\
 	scalable/gimp-wilber-outline.svg			\
@@ -304,6 +297,14 @@ scalable_images = \
 	scalable/gimp-prefs-folders-scripts.svg			\
 	scalable/gimp-prefs-folders-themes.svg			\
 	scalable/gimp-prefs-folders-tool-presets.svg		\
+	\
+	scalable/gimp-business-card.svg				\
+	scalable/gimp-display.svg				\
+	scalable/gimp-smartphone.svg				\
+	scalable/gimp-toilet-paper.svg				\
+	scalable/gimp-video.svg					\
+	scalable/gimp-web.svg					\
+	scalable/media-optical.svg				\
 	\
 	scalable/gimp-tool-airbrush.svg				\
 	scalable/gimp-tool-align.svg				\
@@ -419,8 +420,6 @@ icons16_images = \
 	16/help-about.png					\
 	16/list-add.png						\
 	16/list-remove.png					\
-	16/media-floppy.png					\
-	16/media-optical.png					\
 	16/media-playback-pause.png				\
 	16/media-playback-start.png				\
 	16/media-record.png					\
@@ -451,7 +450,6 @@ icons16_images = \
 	16/gtk-yes.png						\
 	\
 	16/gimp-anchor.png					\
-	16/gimp-business-card.png				\
 	16/gimp-cap-butt.png					\
 	16/gimp-cap-round.png					\
 	16/gimp-cap-square.png					\
@@ -490,7 +488,6 @@ icons16_images = \
 	16/gimp-curve-smooth.png				\
 	16/gimp-dashboard.png					\
 	16/gimp-device-status.png				\
-	16/gimp-display.png					\
 	16/gimp-display-filter-clip-warning.png			\
 	16/gimp-display-filter-colorblind.png			\
 	16/gimp-display-filter-contrast.png			\
@@ -569,11 +566,9 @@ icons16_images = \
 	16/gimp-shape-diamond.png				\
 	16/gimp-shape-square.png				\
 	16/gimp-shred.png					\
-	16/gimp-smartphone.png					\
 	16/gimp-symmetry.png					\
 	16/gimp-template.png					\
 	16/gimp-text-layer.png					\
-	16/gimp-toilet-paper.png				\
 	16/gimp-tools.png					\
 	16/gimp-transform-3d-camera.png				\
 	16/gimp-transform-3d-move.png				\
@@ -581,7 +576,7 @@ icons16_images = \
 	16/gimp-transparency.png				\
 	16/gimp-undo-history.png				\
 	16/gimp-user-manual.png					\
-	16/gimp-video.png					\
+	\
 	16/gimp-web.png						\
 	16/gimp-wilber.png					\
 	\
@@ -625,6 +620,13 @@ icons16_images = \
 	16/gimp-prefs-folders-tool-presets.png			\
 	\
 	16/gimp-wilber-eek.png					\
+	\
+	16/gimp-business-card.png				\
+	16/gimp-display.png					\
+	16/gimp-smartphone.png					\
+	16/gimp-toilet-paper.png				\
+	16/gimp-video.png					\
+	16/media-optical.png					\
 	\
 	16/gimp-tool-airbrush.png				\
 	16/gimp-tool-align.png					\
@@ -721,13 +723,10 @@ icons24_images = \
 	24/document-print.png					\
 	24/format-text-direction-ltr.png			\
 	24/format-text-direction-rtl.png			\
-	24/media-floppy.png					\
-	24/media-optical.png					\
 	\
 	24/gtk-select-color.png					\
 	\
 	24/gimp-attach.png					\
-	24/gimp-business-card.png				\
 	24/gimp-center.png					\
 	24/gimp-channel-alpha.png				\
 	24/gimp-channel-blue.png				\
@@ -750,7 +749,6 @@ icons24_images = \
 	24/gimp-dashboard.png					\
 	24/gimp-detach.png					\
 	24/gimp-device-status.png				\
-	24/gimp-display.png					\
 	24/gimp-display-filter.png				\
 	24/gimp-display-filter-clip-warning.png			\
 	24/gimp-display-filter-colorblind.png			\
@@ -784,7 +782,6 @@ icons24_images = \
 	24/gimp-sample-point.png				\
 	24/gimp-scale.png					\
 	24/gimp-selection.png					\
-	24/gimp-smartphone.png					\
 	24/gimp-symmetry.png					\
 	24/gimp-template.png					\
 	24/gimp-text-dir-ttb-rtl.png				\
@@ -792,6 +789,7 @@ icons24_images = \
 	24/gimp-text-dir-ttb-ltr.png				\
 	24/gimp-text-dir-ttb-ltr-upright.png			\
 	24/gimp-text-layer.png					\
+	\
 	24/gimp-toilet-paper.png				\
 	24/gimp-tools.png					\
 	24/gimp-transparency.png				\
@@ -801,8 +799,13 @@ icons24_images = \
 	24/gimp-vchain-broken.png				\
 	24/gimp-vchain.png					\
 	24/gimp-vfill.png					\
+	\
+	24/gimp-business-card.png				\
+	24/gimp-display.png					\
+	24/gimp-smartphone.png					\
 	24/gimp-video.png					\
 	24/gimp-web.png						\
+	24/media-optical.png					\
 	\
 	24/gimp-tool-airbrush.png				\
 	24/gimp-tool-align.png					\
