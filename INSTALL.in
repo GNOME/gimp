@@ -98,6 +98,24 @@ header files installed.
   9. libpng, libjpeg, libtiff, librsvg and lcms are hard dependencies
      that can not be disabled.
 
+     There might be some issues with librsvg, based on the fact newer
+     versions are in Rust which is not buildable on all platforms. Yet
+     SVG support was deemed too important to be considered "optional"
+     for a decent graphics activity. Nevertheless a packager really
+     intent to have GIMP running on an architecture with no Rust support
+     could still:
+
+     1) easily patch out the file-svg plug-in from build system;
+     2) build GIMP with --disable-vector-icons. Ironically librsvg is
+     needed at build time for this option, in order to create PNG
+     variants of icons (making librsvg unneeded at runtime). So all it
+     takes is to have a build machine with librsvg to create the PNG
+     icons, package and deliver them for machines without librsvg.
+
+     This is the compromise we came with, i.e. officially making SVG a
+     first-class file format, yet explaining how you could ignore it if
+     you really wanted or needed to.
+
  10. For MyPaint brushes, brushlib (libmypaint) @LIBMYPAINT_REQUIRED_VERSION@ is used.
      The libmypaint repository is hosted at:
 
