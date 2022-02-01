@@ -18,5 +18,4 @@ EXTRA_DIST = \
 	release-howto.txt		\
 	tagging.txt			\
 	ui-framework.txt		\
-	undo.txt			\
-	version.in
+	undo.txt
