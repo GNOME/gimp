@@ -236,7 +236,8 @@ contrast).
 
 We also welcome design updates as a whole (anyone willing to work on
 this should discuss with us and propose something) and obviously fixes
-on existing icons or adding missing icons.
+on existing icons or adding missing icons while keeping consistent
+styling.
 
 See the dedicated [icons documentation](icons.md) for more technical
 information.
