@@ -126,15 +126,23 @@ gimp_container_popup_context_changed (GimpContext        *context,
                                       GimpViewable       *viewable,
                                       GimpContainerPopup *popup)
 {
-  GdkEvent *current_event;
-  gboolean  confirm = FALSE;
+  GdkEvent  *current_event;
+  GtkWidget *current_widget = GTK_WIDGET (popup);
+  gboolean   confirm        = FALSE;
 
   current_event = gtk_get_current_event ();
 
-  if (current_event)
+  if (current_event && gtk_widget_get_window (current_widget))
     {
-      if (((GdkEventAny *) current_event)->type == GDK_BUTTON_PRESS ||
-          ((GdkEventAny *) current_event)->type == GDK_BUTTON_RELEASE)
+      GdkWindow *event_window = gdk_window_get_effective_toplevel (((GdkEventAny *) current_event)->window);
+      GdkWindow *popup_window = gdk_window_get_effective_toplevel (gtk_widget_get_window (current_widget));
+
+      /* We need to differentiate a context change as a consequence of
+       * an event on another widget.
+       */
+      if ((((GdkEventAny *) current_event)->type == GDK_BUTTON_PRESS ||
+           ((GdkEventAny *) current_event)->type == GDK_BUTTON_RELEASE) &&
+          event_window == popup_window)
         confirm = TRUE;
 
       gdk_event_free (current_event);
@@ -367,7 +375,7 @@ gimp_container_popup_create_view (GimpContainerPopup *popup)
       GimpObject *object;
       GList      *items = NULL;
 
-      object = gimp_context_get_by_type (popup->context, children_type);
+      object = gimp_context_get_by_type (popup->orig_context, children_type);
       if (object)
         items = g_list_prepend (NULL, object);
 
