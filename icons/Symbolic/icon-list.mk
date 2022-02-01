@@ -164,12 +164,6 @@ scalable_images = \
 	scalable/gimp-line-spacing-symbolic.svg					\
 	scalable/gimp-linked-symbolic.svg					\
 	scalable/gimp-list-symbolic.svg						\
-	scalable/gimp-lock-symbolic.svg						\
-	scalable/gimp-lock-multi-symbolic.svg					\
-	scalable/gimp-lock-alpha-symbolic.svg					\
-	scalable/gimp-lock-content-symbolic.svg					\
-	scalable/gimp-lock-position-symbolic.svg				\
-	scalable/gimp-lock-visibility-symbolic.svg				\
 	scalable/gimp-marker-symbolic.svg					\
 	scalable/gimp-menu-left-symbolic.svg					\
 	scalable/gimp-menu-right-symbolic.svg					\
@@ -264,6 +258,13 @@ scalable_images = \
 	scalable/gimp-display-filter-gamma-symbolic.svg				\
 	scalable/gimp-display-filter-lcms-symbolic.svg				\
 	scalable/gimp-display-filter-proof-symbolic.svg				\
+	\
+	scalable/gimp-lock-symbolic.svg						\
+	scalable/gimp-lock-multi-symbolic.svg					\
+	scalable/gimp-lock-alpha-symbolic.svg					\
+	scalable/gimp-lock-content-symbolic.svg					\
+	scalable/gimp-lock-position-symbolic.svg				\
+	scalable/gimp-lock-visibility-symbolic.svg				\
 	\
 	scalable/gimp-prefs-color-management-symbolic.svg			\
 	\
@@ -374,7 +375,6 @@ icons12_images = \
 	12/gimp-close-symbolic.symbolic.png					\
 	12/gimp-default-colors-symbolic.symbolic.png				\
 	12/gimp-detach-symbolic.symbolic.png					\
-	12/gimp-linked-symbolic.symbolic.png					\
 	12/gimp-menu-left-symbolic.symbolic.png					\
 	12/gimp-menu-right-symbolic.symbolic.png				\
 	12/gimp-pivot-center-symbolic.symbolic.png				\
@@ -389,7 +389,6 @@ icons12_images = \
 	12/gimp-quick-mask-off-symbolic.symbolic.png				\
 	12/gimp-quick-mask-on-symbolic.symbolic.png				\
 	12/gimp-swap-colors-symbolic.symbolic.png				\
-	12/gimp-visible-symbolic.symbolic.png					\
 	12/gimp-zoom-follow-window-symbolic.symbolic.png
 
 icons16_images = \
@@ -523,6 +522,8 @@ icons16_images = \
 	16/gimp-layer-to-imagesize-symbolic.symbolic.png			\
 	16/gimp-layer-symbolic.symbolic.png					\
 	16/gimp-layers-symbolic.symbolic.png					\
+	\
+	16/gimp-linked-symbolic.symbolic.png					\
 	16/gimp-list-symbolic.symbolic.png					\
 	16/gimp-marker-symbolic.symbolic.png					\
 	16/gimp-merge-down-symbolic.symbolic.png				\
@@ -570,6 +571,8 @@ icons16_images = \
 	16/gimp-undo-history-symbolic.symbolic.png				\
 	16/gimp-user-manual-symbolic.symbolic.png				\
 	\
+	16/gimp-visible-symbolic.symbolic.png					\
+	\
 	16/gimp-web-symbolic.symbolic.png					\
 	16/gimp-wilber-symbolic.symbolic.png					\
 	\
@@ -592,6 +595,13 @@ icons16_images = \
 	16/gimp-display-filter-gamma-symbolic.symbolic.png			\
 	16/gimp-display-filter-lcms-symbolic.symbolic.png			\
 	16/gimp-display-filter-proof-symbolic.symbolic.png			\
+	\
+	16/gimp-lock-symbolic.symbolic.png					\
+	16/gimp-lock-multi-symbolic.symbolic.png				\
+	16/gimp-lock-alpha-symbolic.symbolic.png				\
+	16/gimp-lock-content-symbolic.symbolic.png				\
+	16/gimp-lock-position-symbolic.symbolic.png				\
+	16/gimp-lock-visibility-symbolic.symbolic.png				\
 	\
 	16/gimp-prefs-color-management-symbolic.symbolic.png			\
 	\
@@ -702,10 +712,6 @@ icons18_images = \
 	18/gimp-color-picker-black-symbolic.symbolic.png			\
 	18/gimp-color-picker-gray-symbolic.symbolic.png				\
 	18/gimp-color-picker-white-symbolic.symbolic.png
-
-icons20_images = \
-	20/gimp-linked-symbolic.symbolic.png					\
-	20/gimp-visible-symbolic.symbolic.png
 
 icons22_images = \
 	22/folder-symbolic.symbolic.png						\
@@ -991,7 +997,6 @@ else
 icons12dir  = $(iconsdir)/12x12/apps
 icons16dir  = $(iconsdir)/16x16/apps
 icons18dir  = $(iconsdir)/18x18/apps
-icons20dir  = $(iconsdir)/20x20/apps
 icons22dir  = $(iconsdir)/22x22/apps
 icons24dir  = $(iconsdir)/24x24/apps
 icons32dir  = $(iconsdir)/32x32/apps
@@ -1010,9 +1015,6 @@ icons16_DATA = \
 
 icons18_DATA = \
 	$(icons18_images)
-
-icons20_DATA = \
-	$(icons20_images)
 
 icons22_DATA = \
 	$(icons22_images)

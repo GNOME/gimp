@@ -36,9 +36,6 @@ endif
 18/%.symbolic.png: scalable/%.svg
 	mkdir -p $(@D) && \
 	$(GTK_ENCODE_SYMBOLIC_SVG) -o $(@D) $< $(@D)x$(@D)
-20/%.symbolic.png: scalable/%.svg
-	mkdir -p $(@D) && \
-	$(GTK_ENCODE_SYMBOLIC_SVG) -o $(@D) $< $(@D)x$(@D)
 22/%.symbolic.png: scalable/%.svg
 	mkdir -p $(@D) && \
 	$(GTK_ENCODE_SYMBOLIC_SVG) -o $(@D) $< $(@D)x$(@D)

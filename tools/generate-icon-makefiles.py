@@ -117,12 +117,12 @@ if __name__ == "__main__":
     col_max_len = print_icons(list_dir,
                               ['scalable.list',
                                'color-selectors.list', 'controllers.list', 'display-filters.list',
-                               'prefs.list', 'templates.list', 'tools.list'],
+                               'locks.list', 'prefs.list', 'templates.list', 'tools.list'],
                               None, "scalable/", ".svg", colorf)
     sym_max_len = print_icons(list_dir,
                               ['scalable.list',
                                'color-selectors.list', 'controllers.list', 'display-filters.list',
-                               'prefs.list', 'templates.list', 'tools.list'],
+                               'locks.list', 'prefs.list', 'templates.list', 'tools.list'],
                               None, "scalable/", "-symbolic.svg", symbolicf)
 
     # 12x12 bitmap
@@ -137,12 +137,12 @@ if __name__ == "__main__":
     print_icons(list_dir,
                 ['bitmap_16.list',
                  'color-selectors.list', 'controllers.list', 'display-filters.list',
-                 'prefs.list', 'templates.list', 'tools.list'],
+                 'locks.list', 'prefs.list', 'templates.list', 'tools.list'],
                 col_max_len, "16/", ".png", colorf)
     print_icons(list_dir,
                 ['bitmap_16.list',
                  'color-selectors.list', 'controllers.list', 'display-filters.list',
-                 'prefs.list', 'templates.list', 'tools.list'],
+                 'locks.list', 'prefs.list', 'templates.list', 'tools.list'],
                 sym_max_len, "16/", "-symbolic.symbolic.png", symbolicf)
 
     # 18x18 bitmap
@@ -150,12 +150,6 @@ if __name__ == "__main__":
     print("\nicons18_images = \\", file=symbolicf)
     print_icons(list_dir, ['bitmap_18.list'], col_max_len, "18/", ".png", colorf)
     print_icons(list_dir, ['bitmap_18.list'], sym_max_len, "18/", "-symbolic.symbolic.png", symbolicf)
-
-    # 20x20 bitmap
-    print("\nicons20_images = \\", file=colorf)
-    print("\nicons20_images = \\", file=symbolicf)
-    print_icons(list_dir, ['bitmap_20.list'], col_max_len, "20/", ".png", colorf)
-    print_icons(list_dir, ['bitmap_20.list'], sym_max_len, "20/", "-symbolic.symbolic.png", symbolicf)
 
     # 22x22 bitmap
     print("\nicons22_images = \\", file=colorf)

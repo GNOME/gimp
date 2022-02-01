@@ -164,12 +164,6 @@ scalable_images = \
 	scalable/gimp-line-spacing.svg				\
 	scalable/gimp-linked.svg				\
 	scalable/gimp-list.svg					\
-	scalable/gimp-lock.svg					\
-	scalable/gimp-lock-multi.svg				\
-	scalable/gimp-lock-alpha.svg				\
-	scalable/gimp-lock-content.svg				\
-	scalable/gimp-lock-position.svg				\
-	scalable/gimp-lock-visibility.svg			\
 	scalable/gimp-marker.svg				\
 	scalable/gimp-menu-left.svg				\
 	scalable/gimp-menu-right.svg				\
@@ -264,6 +258,13 @@ scalable_images = \
 	scalable/gimp-display-filter-gamma.svg			\
 	scalable/gimp-display-filter-lcms.svg			\
 	scalable/gimp-display-filter-proof.svg			\
+	\
+	scalable/gimp-lock.svg					\
+	scalable/gimp-lock-multi.svg				\
+	scalable/gimp-lock-alpha.svg				\
+	scalable/gimp-lock-content.svg				\
+	scalable/gimp-lock-position.svg				\
+	scalable/gimp-lock-visibility.svg			\
 	\
 	scalable/gimp-prefs-color-management.svg		\
 	\
@@ -374,7 +375,6 @@ icons12_images = \
 	12/gimp-close.png					\
 	12/gimp-default-colors.png				\
 	12/gimp-detach.png					\
-	12/gimp-linked.png					\
 	12/gimp-menu-left.png					\
 	12/gimp-menu-right.png					\
 	12/gimp-pivot-center.png				\
@@ -389,7 +389,6 @@ icons12_images = \
 	12/gimp-quick-mask-off.png				\
 	12/gimp-quick-mask-on.png				\
 	12/gimp-swap-colors.png					\
-	12/gimp-visible.png					\
 	12/gimp-zoom-follow-window.png
 
 icons16_images = \
@@ -523,6 +522,8 @@ icons16_images = \
 	16/gimp-layer-to-imagesize.png				\
 	16/gimp-layer.png					\
 	16/gimp-layers.png					\
+	\
+	16/gimp-linked.png					\
 	16/gimp-list.png					\
 	16/gimp-marker.png					\
 	16/gimp-merge-down.png					\
@@ -570,6 +571,8 @@ icons16_images = \
 	16/gimp-undo-history.png				\
 	16/gimp-user-manual.png					\
 	\
+	16/gimp-visible.png					\
+	\
 	16/gimp-web.png						\
 	16/gimp-wilber.png					\
 	\
@@ -592,6 +595,13 @@ icons16_images = \
 	16/gimp-display-filter-gamma.png			\
 	16/gimp-display-filter-lcms.png				\
 	16/gimp-display-filter-proof.png			\
+	\
+	16/gimp-lock.png					\
+	16/gimp-lock-multi.png					\
+	16/gimp-lock-alpha.png					\
+	16/gimp-lock-content.png				\
+	16/gimp-lock-position.png				\
+	16/gimp-lock-visibility.png				\
 	\
 	16/gimp-prefs-color-management.png			\
 	\
@@ -702,10 +712,6 @@ icons18_images = \
 	18/gimp-color-picker-black.png				\
 	18/gimp-color-picker-gray.png				\
 	18/gimp-color-picker-white.png
-
-icons20_images = \
-	20/gimp-linked.png					\
-	20/gimp-visible.png
 
 icons22_images = \
 	22/folder.png						\
@@ -991,7 +997,6 @@ else
 icons12dir  = $(iconsdir)/12x12/apps
 icons16dir  = $(iconsdir)/16x16/apps
 icons18dir  = $(iconsdir)/18x18/apps
-icons20dir  = $(iconsdir)/20x20/apps
 icons22dir  = $(iconsdir)/22x22/apps
 icons24dir  = $(iconsdir)/24x24/apps
 icons32dir  = $(iconsdir)/32x32/apps
@@ -1010,9 +1015,6 @@ icons16_DATA = \
 
 icons18_DATA = \
 	$(icons18_images)
-
-icons20_DATA = \
-	$(icons20_images)
 
 icons22_DATA = \
 	$(icons22_images)

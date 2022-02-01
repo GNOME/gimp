@@ -29,9 +29,6 @@ endif
 18/%.png: scalable/%.svg ../../tools/colorsvg2png
 	mkdir -p $(@D) && \
 	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
-20/%.png: scalable/%.svg ../../tools/colorsvg2png
-	mkdir -p $(@D) && \
-	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
 22/%.png: scalable/%.svg ../../tools/colorsvg2png
 	mkdir -p $(@D) && \
 	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)

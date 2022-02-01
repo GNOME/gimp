@@ -32,7 +32,7 @@ foreach theme : themes
         'suffix': suffix,
         'files':  [ 'scalable',
                     'color-selectors', 'controllers', 'display-filters',
-                    'prefs', 'templates', 'tools' ],
+                    'locks', 'prefs', 'templates', 'tools' ],
       },
     ]
   else
@@ -40,9 +40,8 @@ foreach theme : themes
       '12':  [ 'bitmap_12', ],
       '16':  [ 'bitmap_16',
                'color-selectors', 'controllers', 'display-filters',
-               'prefs', 'templates', 'tools' ],
+               'locks', 'prefs', 'templates', 'tools' ],
       '18':  [ 'bitmap_18', ],
-      '20':  [ 'bitmap_20', ],
       '22':  [ 'bitmap_22', ],
       '24':  [ 'bitmap_24', 'templates', 'tools' ],
       '32':  [ 'bitmap_32', ],

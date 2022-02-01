@@ -2,7 +2,6 @@ gimp-attach
 gimp-close
 gimp-default-colors
 gimp-detach
-gimp-linked
 gimp-menu-left
 gimp-menu-right
 gimp-pivot-center
@@ -17,5 +16,4 @@ gimp-pivot-west
 gimp-quick-mask-off
 gimp-quick-mask-on
 gimp-swap-colors
-gimp-visible
 gimp-zoom-follow-window

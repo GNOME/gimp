@@ -128,6 +128,12 @@ gimp-layer-mask
 gimp-layer-to-imagesize
 gimp-layer
 gimp-layers
+# GIMP_ICON_LINKED used in:
+# - gimppaintoptions-gui.c as GTK_ICON_SIZE_MENU button (16px).
+# - gimplayertreeview.c as button-icon-size (in our system theme
+#   GimpEditor-button-icon-size is set to "menu", i.e. 16px) button.
+# - various action icons.
+gimp-linked
 gimp-list
 gimp-marker
 gimp-merge-down
@@ -174,6 +180,15 @@ gimp-transform-3d-rotate
 gimp-transparency
 gimp-undo-history
 gimp-user-manual
+# GIMP_ICON_VISIBLE used in:
+# - gimpitemtreeview.c as button-icon-size (in our system theme
+#   GimpEditor-button-icon-size is set to "menu", i.e. 16px) image and
+#   GimpCellRendererToggle (16px).
+# - gimptooleditor.c and gimpcomponenteditor.c as GimpCellRendererToggle (16px).
+# - gimpcolordisplayeditor.c as menu size image (16px).
+# - various action icons.
+# - item-options-dialog.c as GTK_ICON_SIZE_BUTTON check button (16px).
+gimp-visible
 # - GTK_ICON_SIZE_BUTTON (16px) in file-open-location-dialog.c
 # - file-open-location action (menu, action search, etc. Usually 16px)
 # - GTK_ICON_SIZE_BUTTON in web-page plug-in.
