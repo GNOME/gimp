@@ -61,6 +61,10 @@ static void   gimp_container_popup_view_type_toggled(GtkWidget          *button,
 static void   gimp_container_popup_dialog_clicked   (GtkWidget          *button,
                                                      GimpContainerPopup *popup);
 
+static void   gimp_container_popup_context_changed  (GimpContext        *context,
+                                                     GimpViewable       *viewable,
+                                                     GimpContainerPopup *popup);
+
 
 G_DEFINE_TYPE (GimpContainerPopup, gimp_container_popup, GIMP_TYPE_POPUP)
 
@@ -119,37 +123,6 @@ gimp_container_popup_confirm (GimpPopup *popup)
                             object);
 
   GIMP_POPUP_CLASS (parent_class)->confirm (popup);
-}
-
-static void
-gimp_container_popup_context_changed (GimpContext        *context,
-                                      GimpViewable       *viewable,
-                                      GimpContainerPopup *popup)
-{
-  GdkEvent  *current_event;
-  GtkWidget *current_widget = GTK_WIDGET (popup);
-  gboolean   confirm        = FALSE;
-
-  current_event = gtk_get_current_event ();
-
-  if (current_event && gtk_widget_get_window (current_widget))
-    {
-      GdkWindow *event_window = gdk_window_get_effective_toplevel (((GdkEventAny *) current_event)->window);
-      GdkWindow *popup_window = gdk_window_get_effective_toplevel (gtk_widget_get_window (current_widget));
-
-      /* We need to differentiate a context change as a consequence of
-       * an event on another widget.
-       */
-      if ((((GdkEventAny *) current_event)->type == GDK_BUTTON_PRESS ||
-           ((GdkEventAny *) current_event)->type == GDK_BUTTON_RELEASE) &&
-          event_window == popup_window)
-        confirm = TRUE;
-
-      gdk_event_free (current_event);
-    }
-
-  if (confirm)
-    g_signal_emit_by_name (popup, "confirm");
 }
 
 GtkWidget *
@@ -432,4 +405,35 @@ gimp_container_popup_dialog_clicked (GtkWidget          *button,
                                              gimp_widget_get_monitor (button),
                                              popup->dialog_identifier);
   g_signal_emit_by_name (popup, "confirm");
+}
+
+static void
+gimp_container_popup_context_changed (GimpContext        *context,
+                                      GimpViewable       *viewable,
+                                      GimpContainerPopup *popup)
+{
+  GdkEvent  *current_event;
+  GtkWidget *current_widget = GTK_WIDGET (popup);
+  gboolean   confirm        = FALSE;
+
+  current_event = gtk_get_current_event ();
+
+  if (current_event && gtk_widget_get_window (current_widget))
+    {
+      GdkWindow *event_window = gdk_window_get_effective_toplevel (((GdkEventAny *) current_event)->window);
+      GdkWindow *popup_window = gdk_window_get_effective_toplevel (gtk_widget_get_window (current_widget));
+
+      /* We need to differentiate a context change as a consequence of
+       * an event on another widget.
+       */
+      if ((((GdkEventAny *) current_event)->type == GDK_BUTTON_PRESS ||
+           ((GdkEventAny *) current_event)->type == GDK_BUTTON_RELEASE) &&
+          event_window == popup_window)
+        confirm = TRUE;
+
+      gdk_event_free (current_event);
+    }
+
+  if (confirm)
+    g_signal_emit_by_name (popup, "confirm");
 }
