@@ -8,21 +8,22 @@ Released Themes
 
 GIMP 3.0 comes with 3 icon themes:
 
-(1) Symbolic: the default icon theme which is vector and which will be
-automatically recolored to your theme colors.
+1. **Symbolic**: the default icon theme which is vector and which will
+   be automatically recolored to your theme colors.
 
-We follow GNOME guidelines when possible:
-https://developer.gnome.org/hig/guidelines/ui-icons.html
+We follow [GNOME
+guidelines](https://developer.gnome.org/hig/guidelines/ui-icons.html)
+when possible.
 
-(2) Color: the color icon theme, also designed with vector graphics, yet
-it won't be recolored.
+2. **Color**: the color icon theme, also designed with vector graphics,
+   yet it won't be recolored.
 
-(3) Legacy: icon theme which contains the old GIMP 2.8's raster icons.
-It is not maintained anymore and we are not expecting new icons for
-Legacy. Yet since we keep them in the source tree for now, we would
-accept updates.
+3. **Legacy**: icon theme which contains the old GIMP 2.8's raster
+   icons. It is not maintained anymore and we are not expecting new
+   icons for Legacy. Yet since we keep them in the source tree for now,
+   we would accept updates.
 
-The Symbolic icon theme are our main target since they are considered
+The Symbolic icon theme is our main target since they are considered
 better suited for graphics work (less visual distraction). Color icons
 are kept as fall-back since some users prefer them.
 
@@ -31,24 +32,26 @@ Adding new icons
 ----------------
 
 - Add new icons in the single SVG file inside their respective
-directories, i.e. `icons/Symbolic/symbolic-scalable.svg` for symbolic
-icons and `icons/Color/color-scalable.svg` for color icons.
+  directories, i.e.
+  [symbolic-scalable.svg](/icons/Symbolic/symbolic-scalable.svg) for
+  symbolic icons and
+  [color-scalable.svg](icons/Color/color-scalable.svg) for color icons.
 
-A single file allows easier reuse of material, and easy overview of all
-existing icons which simplifies consistent styling…
+  A single file allows easier reuse of material, and easy overview of
+  all existing icons which simplifies consistent styling…
 
 - The contents of the SVG file should be organized for easy management
-and easy contribution. You can visually group similar icons, make use
-of layers, whatever is necessary for organization.
+  and easy contribution. You can visually group similar icons, make use
+  of layers, whatever is necessary for organization.
 
 - You should group all parts of a single icon into a single object and
-id this object with the icon name. For instance the object containing
-the Move Tool icon should be id-ed: "gimp-tool-move".
+  id this object with the icon name. For instance the object containing
+  the Move Tool icon should be id-ed: "gimp-tool-move".
 
 - Make sure the object has the right expected size. A good trick is to
-group with a square of the right size, made invisible.
+  group with a square of the right size, made invisible.
 
-- Export the icon as PNG and SVG into the appropriate size directory.
+- Export the icon as SVG into the `scalable/` directory.
 
 Ideally this step should be done at build time, but we could not find
 yet a reliable way to extract icons out of the single SVG file without
@@ -61,9 +64,11 @@ not mandatory anymore.
 
 - Add the icons in relevant listing files in `icons/icon-lists/` then
   run `tools/generate-icon-makefiles.py` which will regenerate files for
-  the autotools build integrating your new icons. The meson build also
-  use the same listing files so you only have to add your icon names in
-  the right categories and you are done.
+  the autotools build integrating your new icons and `touch` the
+  `meson.build` files to make sure the next build will trigger a
+  reconfiguration. The meson build indeed also uses the same listing
+  files so you only have to add your icon names in the right categories,
+  run the script and you are done.
 
 
 Pixel perfection
