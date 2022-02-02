@@ -1353,8 +1353,16 @@ gimp_container_view_context_changed (GimpContext       *context,
   if (viewable)
     viewables = g_list_prepend (viewables, viewable);
 
+  g_signal_handlers_block_by_func (context,
+                                   gimp_container_view_context_changed,
+                                   view);
+
   if (! gimp_container_view_select_items (view, viewables))
     g_warning ("%s: select_items() failed (should not happen)", G_STRFUNC);
+
+  g_signal_handlers_unblock_by_func (context,
+                                     gimp_container_view_context_changed,
+                                     view);
 
   g_list_free (viewables);
 }

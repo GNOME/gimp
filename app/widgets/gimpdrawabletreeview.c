@@ -336,8 +336,15 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
   item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
 
   /*  update button states  */
+  g_signal_handlers_block_by_func (gimp_item_tree_view_get_image (view),
+                                   gimp_drawable_tree_view_floating_selection_changed,
+                                   view);
   gimp_container_view_select_item (GIMP_CONTAINER_VIEW (view),
                                    (GimpViewable *) item);
+  g_signal_handlers_unblock_by_func (gimp_item_tree_view_get_image (view),
+                                     gimp_drawable_tree_view_floating_selection_changed,
+                                     view);
+
 }
 
 static void
