@@ -404,13 +404,13 @@ if ENABLE_VAPIGEN
 
 -include $(VAPIGEN_MAKEFILE)
 
-gimp-@GIMP_API_MAJOR_VERSION@.vapi: Gimp-@GIMP_API_VERSION@.gir gimp-@GIMP_API_MAJOR_VERSION@.deps
-gimp-ui-@GIMP_API_MAJOR_VERSION@.vapi: GimpUi-@GIMP_API_VERSION@.gir GimpUi-@GIMP_API_VERSION@.metadata gimp-ui-@GIMP_API_MAJOR_VERSION@.deps gimp-@GIMP_API_MAJOR_VERSION@.vapi
+gimp-@GIMP_API_VERSION@.vapi: Gimp-@GIMP_API_VERSION@.gir gimp-@GIMP_API_VERSION@.deps
+gimp-ui-@GIMP_API_VERSION@.vapi: GimpUi-@GIMP_API_VERSION@.gir GimpUi-@GIMP_API_VERSION@.metadata gimp-ui-@GIMP_API_VERSION@.deps gimp-@GIMP_API_VERSION@.vapi
 
-VAPIGEN_VAPIS = gimp-@GIMP_API_MAJOR_VERSION@.vapi gimp-ui-@GIMP_API_MAJOR_VERSION@.vapi
+VAPIGEN_VAPIS = gimp-@GIMP_API_VERSION@.vapi gimp-ui-@GIMP_API_VERSION@.vapi
 
 # gimp VAPI
-gimp_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
+gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS = \
 	babl-@BABL_MAJOR_MINOR_VERSION@ \
 	cairo \
 	gdk-pixbuf-2.0 \
@@ -418,18 +418,18 @@ gimp_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
 	glib-2.0 \
 	gio-2.0 \
 	gtk+-3.0
-gimp_@GIMP_API_MAJOR_VERSION@_vapi_GIRDIRS = $(builddir)
-gimp_@GIMP_API_MAJOR_VERSION@_vapi_METADATADIRS = $(srcdir)
-gimp_@GIMP_API_MAJOR_VERSION@_vapi_VAPIDIRS = $(builddir)
-gimp_@GIMP_API_MAJOR_VERSION@_vapi_FILES = Gimp-@GIMP_API_VERSION@.gir
+gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_GIRDIRS = $(builddir)
+gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_METADATADIRS = $(srcdir)
+gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_VAPIDIRS = $(builddir)
+gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_FILES = Gimp-@GIMP_API_VERSION@.gir
 
-gimp-$(GIMP_API_MAJOR_VERSION).deps: Makefile.am
-	$(AM_V_GEN) for pkg in $(gimp_@GIMP_API_MAJOR_VERSION@_vapi_DEPS); do \
+gimp-$(GIMP_API_VERSION).deps: Makefile.am
+	$(AM_V_GEN) for pkg in $(gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS); do \
 		echo $$pkg >> $@; \
 	done
 
 # gimp-ui VAPI
-gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
+gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS = \
 	babl-@BABL_MAJOR_MINOR_VERSION@ \
 	cairo \
 	gdk-pixbuf-2.0 \
@@ -437,24 +437,24 @@ gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_DEPS = \
 	glib-2.0 \
 	gio-2.0 \
 	gtk+-3.0 \
-	gimp-@GIMP_API_MAJOR_VERSION@
+	gimp-@GIMP_API_VERSION@
 
-gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_GIRDIRS = $(builddir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_METADATADIRS = $(srcdir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_VAPIDIRS = $(builddir)
-gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_FILES = GimpUi-@GIMP_API_VERSION@.gir
+gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_GIRDIRS = $(builddir)
+gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_METADATADIRS = $(srcdir)
+gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_VAPIDIRS = $(builddir)
+gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_FILES = GimpUi-@GIMP_API_VERSION@.gir
 
-gimp-ui-$(GIMP_API_MAJOR_VERSION).deps: Makefile.am
-	$(AM_V_GEN) for pkg in $(gimp_ui_@GIMP_API_MAJOR_VERSION@_vapi_DEPS); do \
+gimp-ui-$(GIMP_API_VERSION).deps: Makefile.am
+	$(AM_V_GEN) for pkg in $(gimp_ui_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_vapi_DEPS); do \
 		echo $$pkg >> $@; \
 	done
 
 vapidir = $(datadir)/vala/vapi
 vapi_DATA = \
-	gimp-@GIMP_API_MAJOR_VERSION@.vapi \
-	gimp-@GIMP_API_MAJOR_VERSION@.deps \
-	gimp-ui-@GIMP_API_MAJOR_VERSION@.vapi \
-	gimp-ui-@GIMP_API_MAJOR_VERSION@.deps
+	gimp-@GIMP_API_VERSION@.vapi \
+	gimp-@GIMP_API_VERSION@.deps \
+	gimp-ui-@GIMP_API_VERSION@.vapi \
+	gimp-ui-@GIMP_API_VERSION@.deps
 
 CLEANFILES += $(vapi_DATA)
 
