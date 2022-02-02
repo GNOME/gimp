@@ -499,13 +499,13 @@ gimp_layer_tree_view_constructed (GObject *object)
 
   layer_view->priv->link_entry = gtk_entry_new ();
   gtk_entry_set_placeholder_text (GTK_ENTRY (layer_view->priv->link_entry),
-                                  _("Named Selection"));
+                                  _("New layer set's name"));
   gtk_grid_attach (GTK_GRID (grid),
                    layer_view->priv->link_entry,
                    0, 2, 1, 1);
   gtk_widget_show (layer_view->priv->link_entry);
 
-  button = gtk_button_new_from_icon_name (GIMP_ICON_DOCUMENT_SAVE, button_size);
+  button = gtk_button_new_from_icon_name (GIMP_ICON_LIST_ADD, button_size);
   gtk_grid_attach (GTK_GRID (grid),
                    button,
                    1, 2, 1, 1);
