@@ -4,13 +4,13 @@
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011, 2012.
 # Andriy Bandura <andriykopanytsia@gmail.com>, 2014.
 # Olexandr Pylypchuk <pilipchukap@rambler.ru>, 2016.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-12-23 13:03+0000\n"
-"PO-Revision-Date: 2021-12-23 20:32+0200\n"
+"POT-Creation-Date: 2022-02-02 15:20+0000\n"
+"PO-Revision-Date: 2022-02-02 18:46+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1374,11 +1374,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: ../app/main.c:710
+#: ../app/main.c:716
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: ../app/main.c:738
+#: ../app/main.c:744
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1386,20 +1386,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: ../app/main.c:757
+#: ../app/main.c:763
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: ../app/main.c:844
+#: ../app/main.c:850
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: ../app/main.c:845
+#: ../app/main.c:851
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: ../app/main.c:862
+#: ../app/main.c:868
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -1886,85 +1886,61 @@ msgid "Create a new channel with last used values"
 msgstr "Створити новий канал з останніми параметрами"
 
 #: ../app/actions/channels-actions.c:71
-#| msgctxt "channels-action"
-#| msgid "D_uplicate Channel"
 msgctxt "channels-action"
 msgid "D_uplicate Channels"
 msgstr "Д_ублювати канали"
 
 #: ../app/actions/channels-actions.c:73
-#| msgctxt "layers-action"
-#| msgid "Create duplicates of selected layers and add them to the image"
 msgctxt "channels-action"
 msgid "Create duplicates of selected channels and add them to the image"
 msgstr "Створити дублікати вибраних каналів і додати їх до зображення"
 
 #: ../app/actions/channels-actions.c:78
-#| msgctxt "channels-action"
-#| msgid "_Delete Channel"
 msgctxt "channels-action"
 msgid "_Delete Channels"
 msgstr "В_илучити канали"
 
 #: ../app/actions/channels-actions.c:79
-#| msgctxt "layers-action"
-#| msgid "Delete selected layers"
 msgctxt "channels-action"
 msgid "Delete selected channels"
 msgstr "Вилучити позначені канали"
 
 #: ../app/actions/channels-actions.c:84
-#| msgctxt "channels-action"
-#| msgid "_Raise Channel"
 msgctxt "channels-action"
 msgid "_Raise Channels"
 msgstr "_Підняти канали"
 
 #: ../app/actions/channels-actions.c:85
-#| msgctxt "channels-action"
-#| msgid "Raise this channel one step in the channel stack"
 msgctxt "channels-action"
 msgid "Raise these channels one step in the channel stack"
 msgstr "Підняти ці канали на один рівень"
 
 #: ../app/actions/channels-actions.c:90
-#| msgctxt "channels-action"
-#| msgid "Raise Channel to _Top"
 msgctxt "channels-action"
 msgid "Raise Channels to _Top"
 msgstr "Підняти канали до_гори"
 
 #: ../app/actions/channels-actions.c:92
-#| msgctxt "channels-action"
-#| msgid "Raise this channel to the top of the channel stack"
 msgctxt "channels-action"
 msgid "Raise these channels to the top of the channel stack"
 msgstr "Зробити ці канали верхніми"
 
 #: ../app/actions/channels-actions.c:97
-#| msgctxt "channels-action"
-#| msgid "_Lower Channel"
 msgctxt "channels-action"
 msgid "_Lower Channels"
 msgstr "_Опустити канали"
 
 #: ../app/actions/channels-actions.c:98
-#| msgctxt "channels-action"
-#| msgid "Lower this channel one step in the channel stack"
 msgctxt "channels-action"
 msgid "Lower these channels one step in the channel stack"
 msgstr "Опустить ці канали на один рівень"
 
 #: ../app/actions/channels-actions.c:103
-#| msgctxt "channels-action"
-#| msgid "Lower Channel to _Bottom"
 msgctxt "channels-action"
 msgid "Lower Channels to _Bottom"
 msgstr "Опустити канали _додолу"
 
 #: ../app/actions/channels-actions.c:105
-#| msgctxt "channels-action"
-#| msgid "Lower this channel to the bottom of the channel stack"
 msgctxt "channels-action"
 msgid "Lower these channels to the bottom of the channel stack"
 msgstr "Зробити ці канали нижніми"
@@ -2140,22 +2116,16 @@ msgid "Select _Previous Channel"
 msgstr "Позначити _попередній канал"
 
 #: ../app/actions/channels-actions.c:231
-#| msgctxt "channels-action"
-#| msgid "Select the channel above the current channel"
 msgctxt "channels-action"
 msgid "Select the channels above the selected channels"
 msgstr "Позначити канали над позначеними каналами"
 
 #: ../app/actions/channels-actions.c:236
-#| msgctxt "channels-action"
-#| msgid "Select _Next Channel"
 msgctxt "channels-action"
 msgid "Select _Next Channels"
 msgstr "Позначити _наступні канали"
 
 #: ../app/actions/channels-actions.c:237
-#| msgctxt "channels-action"
-#| msgid "Select the channel below the current channel"
 msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
 msgstr "Позначити канали під позначеними каналами"
@@ -2192,8 +2162,6 @@ msgid "New Channel Color"
 msgstr "Колір нового каналу"
 
 #: ../app/actions/channels-commands.c:231
-#| msgctxt "undo-type"
-#| msgid "Raise Channel"
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "Підняти канали"
@@ -2202,8 +2170,6 @@ msgstr[2] "Підняти канали"
 msgstr[3] "Підняти канал"
 
 #: ../app/actions/channels-commands.c:266
-#| msgctxt "undo-type"
-#| msgid "Raise Channel to Top"
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
 msgstr[0] "Підняти канали догори"
@@ -2212,8 +2178,6 @@ msgstr[2] "Підняти канали догори"
 msgstr[3] "Підняти канал догори"
 
 #: ../app/actions/channels-commands.c:303
-#| msgctxt "undo-type"
-#| msgid "Lower Channel"
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "Опустити канали"
@@ -2222,8 +2186,6 @@ msgstr[2] "Опустити канали"
 msgstr[3] "Опустити канал"
 
 #: ../app/actions/channels-commands.c:340
-#| msgctxt "undo-type"
-#| msgid "Lower Channel to Bottom"
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Опустити канали додолу"
@@ -2240,15 +2202,11 @@ msgid "%s Channel Copy"
 msgstr "%s копія каналу"
 
 #: ../app/actions/channels-commands.c:396
-#| msgctxt "channels-action"
-#| msgid "D_uplicate Channel"
 msgid "Duplicate channels"
 msgstr "Дублювати канали"
 
 #: ../app/actions/channels-commands.c:439
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Remove Channel"
 msgctxt "undo-type"
 msgid "Remove %d Channels"
 msgstr "Вилучити %d каналів"
@@ -3795,7 +3753,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2325
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2324
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:762 ../app/widgets/gimpdnd-xds.c:87
@@ -8010,29 +7968,21 @@ msgid "Intersect the layer's alpha channel with the current selection"
 msgstr "Перетнути альфа-канал з позначеним"
 
 #: ../app/actions/layers-actions.c:555
-#| msgctxt "layers-action"
-#| msgid "Select _Top Layers"
 msgctxt "layers-action"
 msgid "Select _Top Layer"
 msgstr "Позначити _верхній шар"
 
 #: ../app/actions/layers-actions.c:556
-#| msgctxt "layers-action"
-#| msgid "Select the topmost layers"
 msgctxt "layers-action"
 msgid "Select the topmost layer"
 msgstr "Позначити найвищий шар"
 
 #: ../app/actions/layers-actions.c:561
-#| msgctxt "layers-action"
-#| msgid "Select _Bottom Layers"
 msgctxt "layers-action"
 msgid "Select _Bottom Layer"
 msgstr "Позначити _нижній шар"
 
 #: ../app/actions/layers-actions.c:562
-#| msgctxt "layers-action"
-#| msgid "Select the bottommost layers"
 msgctxt "layers-action"
 msgid "Select the bottommost layer"
 msgstr "Позначити найнижчий шар"
@@ -8354,19 +8304,19 @@ msgstr "Встановити простір композиції шарів"
 msgid "Set layers' composite mode"
 msgstr "Встановити режим композиції шарів"
 
-#: ../app/actions/layers-commands.c:2061 ../app/widgets/gimpitemtreeview.c:521
+#: ../app/actions/layers-commands.c:2061 ../app/widgets/gimpitemtreeview.c:524
 msgid "Lock content"
 msgstr "Заблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:522
+#: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:525
 msgid "Unlock content"
 msgstr "Розблокувати вміст"
 
-#: ../app/actions/layers-commands.c:2110 ../app/widgets/gimpitemtreeview.c:537
+#: ../app/actions/layers-commands.c:2110 ../app/widgets/gimpitemtreeview.c:540
 msgid "Lock position"
 msgstr "Заблокувати позицію"
 
-#: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:538
+#: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:541
 msgid "Unlock position"
 msgstr "Розблокувати позицію"
 
@@ -9310,7 +9260,6 @@ msgstr "Вертикальна, зліва праворуч (орієнтаці�
 
 #: ../app/actions/text-tool-commands.c:188
 #, c-format
-#| msgid "Deleting \"%s\" failed: %s"
 msgid "Test along path failed: %s"
 msgstr "Не пройдено перевірку уздовж контуру: %s"
 
@@ -11675,6 +11624,10 @@ msgstr ""
 "Помилка зчитування файла «%s». Будуть використані типові значення. Резервна "
 "копія конфігурації створена у «%s»."
 
+#: ../app/config/gimpcoreconfig.c:851 ../app/dialogs/preferences-dialog.c:1899
+msgid "Pattern syntax for searching and selecting items:"
+msgstr "Синтаксис взірця для пошуку і позначення записів:"
+
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:433
 msgid "Layer"
 msgstr "Шар"
@@ -12440,7 +12393,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:580
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
-"Встановлює, як буде виконано пошук та позначення записів на основі текстового взірця."
+"Встановлює, як буде виконано пошук та позначення записів на основі "
+"текстового взірця."
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default layer name for the 'New Layer' dialog."
@@ -13334,8 +13288,6 @@ msgid "Lock/Unlock position"
 msgstr "Заблокувати/розблокувати позицію"
 
 #: ../app/core/core-enums.c:1286 ../app/core/core-enums.c:1333
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock position"
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Заблокувати/розблокувати видимість"
@@ -13401,8 +13353,6 @@ msgid "Set layers mode"
 msgstr "Встановлення режиму шарів"
 
 #: ../app/core/core-enums.c:1299
-#| msgctxt "undo-type"
-#| msgid "Add Channel"
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Додавання каналів"
@@ -13715,18 +13665,14 @@ msgstr "Перегляд таблицею"
 #: ../app/core/core-enums.c:1467
 msgctxt "select-method"
 msgid "Selection by basic text search"
-msgstr ""
-"Позначення за базовим текстовим пошуком"
+msgstr "Позначення за базовим текстовим пошуком"
 
 #: ../app/core/core-enums.c:1468
 msgctxt "select-method"
 msgid "Selection by regular expression search"
-msgstr ""
-"Позначення за пошуком за формальним виразом"
+msgstr "Позначення за пошуком за формальним виразом"
 
 #: ../app/core/core-enums.c:1469
-#| msgctxt "vectors-action"
-#| msgid "Selection to path"
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Позначення за пошуком за взірцем із замінниками"
@@ -14525,7 +14471,7 @@ msgstr "Помилка завантаження «%s»: "
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:343 ../app/file-data/file-data-gex.c:481
 #: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:102
-#: ../app/xcf/xcf.c:440
+#: ../app/xcf/xcf.c:441
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -14827,93 +14773,91 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Перетворити групу шарів"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:690 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Симетрія"
 
-#: ../app/core/gimpimage.c:2570
+#: ../app/core/gimpimage.c:2569
 msgid " (exported)"
 msgstr " (експортовано)"
 
-#: ../app/core/gimpimage.c:2574
+#: ../app/core/gimpimage.c:2573
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/core/gimpimage.c:2583
+#: ../app/core/gimpimage.c:2582
 msgid " (imported)"
 msgstr " (імпортовано)"
 
-#: ../app/core/gimpimage.c:2757 ../app/core/gimpimage.c:2771
-#: ../app/core/gimpimage.c:2814
+#: ../app/core/gimpimage.c:2756 ../app/core/gimpimage.c:2770
+#: ../app/core/gimpimage.c:2813
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим шару «%s» було додано у %s"
 
-#: ../app/core/gimpimage.c:2829
+#: ../app/core/gimpimage.c:2828
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групи шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2836
+#: ../app/core/gimpimage.c:2835
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски для груп шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2851
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: ../app/core/gimpimage.c:2860
+#: ../app/core/gimpimage.c:2859
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: ../app/core/gimpimage.c:2868
+#: ../app/core/gimpimage.c:2867
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: ../app/core/gimpimage.c:2885
+#: ../app/core/gimpimage.c:2884
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2891
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: ../app/core/gimpimage.c:2909
+#: ../app/core/gimpimage.c:2908
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: ../app/core/gimpimage.c:2920
+#: ../app/core/gimpimage.c:2919
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
-msgstr ""
-"Набір записів та пошук за взірцем у назві запису було додано у %s"
+msgstr "Набір записів та пошук за взірцем у назві запису було додано у %s"
 
-#: ../app/core/gimpimage.c:2926
+#: ../app/core/gimpimage.c:2925
 #, c-format
-#| msgid "Multiple layer selection was added in %s"
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: ../app/core/gimpimage.c:3029
+#: ../app/core/gimpimage.c:3028
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: ../app/core/gimpimage.c:3081
+#: ../app/core/gimpimage.c:3080
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: ../app/core/gimpimage.c:4128
+#: ../app/core/gimpimage.c:4127
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14921,47 +14865,47 @@ msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: ../app/core/gimpimage.c:4189
+#: ../app/core/gimpimage.c:4188
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: ../app/core/gimpimage.c:4231
+#: ../app/core/gimpimage.c:4230
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: ../app/core/gimpimage.c:5216
+#: ../app/core/gimpimage.c:5215
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: ../app/core/gimpimage.c:5260 ../app/core/gimpimage.c:5291
+#: ../app/core/gimpimage.c:5259 ../app/core/gimpimage.c:5290
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: ../app/core/gimpimage.c:5285
+#: ../app/core/gimpimage.c:5284
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: ../app/core/gimpimage.c:5809
+#: ../app/core/gimpimage.c:5808
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: ../app/core/gimpimage.c:5839 ../app/core/gimpimage.c:5864
+#: ../app/core/gimpimage.c:5838 ../app/core/gimpimage.c:5863
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: ../app/core/gimpimage.c:5923
+#: ../app/core/gimpimage.c:5922
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: ../app/core/gimpimage.c:5953 ../app/core/gimpimage.c:5961
+#: ../app/core/gimpimage.c:5952 ../app/core/gimpimage.c:5960
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -15317,7 +15261,6 @@ msgid "Remove Parasite from Item"
 msgstr "Вилучити шум з об'єкта"
 
 #: ../app/core/gimpitem-exclusive.c:65
-#| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Visibility"
 msgstr "Встановити виключну видимість запису"
 
@@ -17776,13 +17719,7 @@ msgstr "Розмір вікна _навігації:"
 #. Item
 #: ../app/dialogs/preferences-dialog.c:1896
 msgid "Item search"
-msgstr ""
-"Пошук запису"
-
-#: ../app/dialogs/preferences-dialog.c:1899
-msgid "Pattern syntax for searching and selecting items:"
-msgstr ""
-"Синтаксис взірця для пошуку і позначення записів:"
+msgstr "Пошук запису"
 
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1903
@@ -19384,7 +19321,7 @@ msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
 #: ../app/display/gimpdisplayshell-dnd.c:600
-#: ../app/widgets/gimpitemtreeview.c:1348
+#: ../app/widgets/gimpitemtreeview.c:1351
 #: ../app/widgets/gimplayertreeview.c:888
 msgid "Drop layers"
 msgstr "Перемістити шари"
@@ -24724,12 +24661,10 @@ msgid "_Move"
 msgstr "Пере_міщення"
 
 #: ../app/tools/gimpmovetool.c:292
-#| msgid "There is no path to move."
 msgid "There are no paths to move."
 msgstr "Немає контурів для переміщення."
 
 #: ../app/tools/gimpmovetool.c:305
-#| msgid "All selected layers' positions are locked."
 msgid "All selected path's position are locked."
 msgstr "Усі позиції позначеного шару заблоковано."
 
@@ -25546,23 +25481,17 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:2347
 msgid "Text is required."
-msgstr ""
-"Слід вказати текст."
+msgstr "Слід вказати текст."
 
 #: ../app/tools/gimptexttool.c:2350
-#| msgctxt "undo-type"
-#| msgid "Crop image"
 msgid "No image."
 msgstr "Немає зображення."
 
 #: ../app/tools/gimptexttool.c:2353
-#| msgid "New layer"
-#| msgid_plural "New layers"
 msgid "No layer."
 msgstr "Немає шару."
 
 #: ../app/tools/gimptexttool.c:2364
-#| msgid "No valid line art source selected."
 msgid "Exactly one path must be selected."
 msgstr "Слід позначити точно один контур."
 
@@ -26783,11 +26712,11 @@ msgctxt "compression"
 msgid "Best compression"
 msgstr "Найкраще стискання"
 
-#: ../app/widgets/gimpcontainerpopup.c:335
+#: ../app/widgets/gimpcontainerpopup.c:316
 msgid "Smaller Previews"
 msgstr "Зменшений перегляд"
 
-#: ../app/widgets/gimpcontainerpopup.c:340
+#: ../app/widgets/gimpcontainerpopup.c:321
 msgid "Larger Previews"
 msgstr "Збільшений перегляд"
 
@@ -27845,14 +27774,11 @@ msgid "Lock position and size"
 msgstr "Замкнути позицію і розмір"
 
 #: ../app/widgets/gimpdrawabletreeview.c:126
-#: ../app/widgets/gimpitemtreeview.c:553
-#| msgctxt "undo-type"
-#| msgid "Item visibility"
+#: ../app/widgets/gimpitemtreeview.c:556
 msgid "Lock visibility"
 msgstr "Заблокувати видимість"
 
 #: ../app/widgets/gimpdrawabletreeview.c:192
-#| msgid "Cannot select item while a floating selection is active."
 msgid "Cannot select items while a floating selection is active."
 msgstr "Неможливо позначати записи, доки активним є рухоме позначення."
 
@@ -28278,24 +28204,19 @@ msgstr[1] "Індексований колір (%d кольори)"
 msgstr[2] "Індексований колір (%d кольорів)"
 msgstr[3] "Індексований колір (монохромний)"
 
-#: ../app/widgets/gimpitemtreeview.c:523
-#| msgid "Set Item Exclusive Linked"
+#: ../app/widgets/gimpitemtreeview.c:526
 msgid "Set Item Exclusive Content Lock"
 msgstr "Встановлення блокування виключного вмісту запису"
 
-#: ../app/widgets/gimpitemtreeview.c:539
-#| msgid "Set Item Exclusive Linked"
+#: ../app/widgets/gimpitemtreeview.c:542
 msgid "Set Item Exclusive Position Lock"
 msgstr "Встановлення блокування виключної позиції запису"
 
-#: ../app/widgets/gimpitemtreeview.c:554
-#| msgctxt "undo-type"
-#| msgid "Item visibility"
+#: ../app/widgets/gimpitemtreeview.c:557
 msgid "Unlock visibility"
 msgstr "Розблокувати видимість"
 
-#: ../app/widgets/gimpitemtreeview.c:555
-#| msgid "Set Item Exclusive Visible"
+#: ../app/widgets/gimpitemtreeview.c:558
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Встановлення блокування виключної видимості запису"
 
@@ -28308,21 +28229,18 @@ msgid "Switch to another group of modes"
 msgstr "Перемкнутися на іншу групу режимів"
 
 #: ../app/widgets/gimplayertreeview.c:436
-#| msgctxt "layers-action"
-#| msgid "Select the layers below the current layers"
 msgid "Select layers by patterns and store layer sets"
 msgstr "Позначити шари за взірцями і зберегти набори шарів"
 
 #: ../app/widgets/gimplayertreeview.c:480
-#| msgid "No filter selected"
 msgid "No layer set stored"
 msgstr "Немає збережених наборів шарів"
 
 #: ../app/widgets/gimplayertreeview.c:502
-#| msgctxt "undo-type"
-#| msgid "Move Selection"
-msgid "Named Selection"
-msgstr "Іменоване позначення"
+#| msgctxt "layers-action"
+#| msgid "Edit the layer's name"
+msgid "New layer set's name"
+msgstr "Назва нового набору шарів"
 
 #: ../app/widgets/gimplayertreeview.c:540
 #: ../app/widgets/gimplayertreeview.c:543
@@ -28330,65 +28248,53 @@ msgid "Lock alpha channel"
 msgstr "Замкнути альфа-канал"
 
 #: ../app/widgets/gimplayertreeview.c:541
-#| msgid "Unlock alpha channels"
 msgid "Unlock alpha channel"
 msgstr "Розблокувати альфа-канал"
 
 #: ../app/widgets/gimplayertreeview.c:542
-#| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Встановлення блокування виключного каналу прозорості запису"
 
 #: ../app/widgets/gimplayertreeview.c:1131
-#| msgid "_Search:"
 msgid "search"
 msgstr "пошук"
 
 #: ../app/widgets/gimplayertreeview.c:1132
 msgid "glob"
-msgstr ""
-"замінник"
+msgstr "замінник"
 
 #: ../app/widgets/gimplayertreeview.c:1132
 msgid "regexp"
-msgstr ""
-"форм. вираз"
+msgstr "форм. вираз"
 
 #: ../app/widgets/gimplayertreeview.c:1236
 #: ../app/widgets/gimplayertreeview.c:1249
-#| msgid "Set layers' blend space"
 msgid "Select layers by text search"
 msgstr "Позначення шарів за текстовим пошуком"
 
 #: ../app/widgets/gimplayertreeview.c:1238
 #: ../app/widgets/gimplayertreeview.c:1251
-#| msgid "Text Layer"
 msgid "Text search"
 msgstr "Текстовий пошук"
 
 #: ../app/widgets/gimplayertreeview.c:1255
-#| msgid "Set layers' blend space"
 msgid "Select layers by glob patterns"
 msgstr "Позначення шарів за взірцями із замінниками"
 
 #: ../app/widgets/gimplayertreeview.c:1257
-#| msgid "_Lock patterns"
 msgid "Glob pattern search"
 msgstr "Пошук за взірцем із замінниками"
 
 #: ../app/widgets/gimplayertreeview.c:1261
 msgid "Select layers by regular expressions"
-msgstr ""
-"Позначення шарів за формальними виразами"
+msgstr "Позначення шарів за формальними виразами"
 
 #: ../app/widgets/gimplayertreeview.c:1263
 msgid "Regular Expression search"
-msgstr ""
-"Пошук за формальним виразом"
+msgstr "Пошук за формальним виразом"
 
 #: ../app/widgets/gimplayertreeview.c:1327
 #, c-format
-#| msgid "Invalid GIMP extension '%s': %s"
 msgid "Invalid regular expression: %s\n"
 msgstr "Некоректний формальний вираз: %s\n"
 
@@ -29075,40 +28981,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: ../app/xcf/xcf.c:117 ../app/xcf/xcf.c:185
+#: ../app/xcf/xcf.c:118 ../app/xcf/xcf.c:186
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: ../app/xcf/xcf.c:262 ../app/xcf/xcf.c:351
+#: ../app/xcf/xcf.c:263 ../app/xcf/xcf.c:352
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: ../app/xcf/xcf.c:273
+#: ../app/xcf/xcf.c:274
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: ../app/xcf/xcf.c:315
+#: ../app/xcf/xcf.c:316
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: ../app/xcf/xcf.c:374
+#: ../app/xcf/xcf.c:375
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: ../app/xcf/xcf.c:400
+#: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: ../app/xcf/xcf.c:488
+#: ../app/xcf/xcf.c:489
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
@@ -29148,20 +29054,14 @@ msgstr ""
 "Повідомлення про помилку: %s."
 
 #: ../app/xcf/xcf-load.c:699
-#| msgctxt "item-set"
-#| msgid "All linked layers"
 msgid "Linked Layers"
 msgstr "Пов'язані шари"
 
 #: ../app/xcf/xcf-load.c:709
-#| msgctxt "undo-type"
-#| msgid "Shrink Channel"
 msgid "Linked Channels"
 msgstr "Пов'язані канали"
 
 #: ../app/xcf/xcf-load.c:734
-#| msgctxt "undo-type"
-#| msgid "Raise Path"
 msgid "Linked Paths"
 msgstr "Пов'язані контури"
 
@@ -29225,6 +29125,11 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~| msgctxt "undo-type"
+#~| msgid "Move Selection"
+#~ msgid "Named Selection"
+#~ msgstr "Іменоване позначення"
 
 #~ msgctxt "channels-action"
 #~ msgid "Create a duplicate of this channel and add it to the image"
