@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-18 21:32+0000\n"
-"PO-Revision-Date: 2022-01-19 00:55+0200\n"
+"POT-Creation-Date: 2022-02-02 18:17+0000\n"
+"PO-Revision-Date: 2022-02-02 21:39+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -431,7 +431,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:660
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:660
 msgid "Background"
 msgstr "Тло"
 
@@ -723,7 +723,6 @@ msgstr "Насиченість"
 #: ../plug-ins/common/decompose.c:203
 #: ../plug-ins/gimpressionist/orientation.c:148
 #: ../plug-ins/gimpressionist/size.c:155
-#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Яскравість"
 
@@ -2151,7 +2150,8 @@ msgstr "У GIMP не передбачено підтримки перехідн�
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr ""
-"Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на піксель %d"
+"Підтримки %s у GIMP не передбачено при поєднанні із кількістю фрагментів на "
+"піксель %d"
 
 #: ../plug-ins/common/file-dicom.c:1522
 msgid "Cannot save images with alpha channel."
@@ -9720,6 +9720,12 @@ msgstr "DICOM"
 msgid "Exif Tag"
 msgstr "Мітка Exif"
 
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
+#| msgid "Value"
+msgctxt "A tag value"
+msgid "Value"
+msgstr "Значення"
+
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
 msgstr "Exif"
@@ -12235,7 +12241,7 @@ msgstr "Позначити зображення з профілем _моніт�
 msgid "Convert image to sR_GB"
 msgstr "Перетворити зображення на sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "Даних не захоплено"
 
