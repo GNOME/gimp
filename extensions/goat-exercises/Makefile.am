@@ -114,9 +114,9 @@ goat_exercise_vala_LDADD = \
 	$(goat_exercise_RC)
 
 goat_exercise_vala_VALAFLAGS = \
-	--vapidir=$(abs_top_builddir)/libgimp		\
-	--pkg gimp-@GIMP_API_MAJOR_VERSION@		\
-	--pkg gimp-ui-@GIMP_API_MAJOR_VERSION@
+	--vapidir=$(abs_top_builddir)/libgimp	\
+	--pkg gimp-@GIMP_API_VERSION@		\
+	--pkg gimp-ui-@GIMP_API_VERSION@
 
 endif
 
