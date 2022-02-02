@@ -105,6 +105,8 @@ Plug-ins:
     * Import in 8-bit and 16-bit integer precision now possible for
       lossless images. (GIMP used to import all JXL images as 32-bit float
       precision images).
+    * New very fast export settings: thunder and lightning (fastest).
+    * Compression slider is disabled for lossless.
   - Screenshot:
     * Remove KDE and GNOME screenshot portal in favor of Freedesktop
       portal. Security restrictions make them more and more unsuable on
@@ -114,6 +116,7 @@ Plug-ins:
       taking a screenshot, then only proposing options to try again).
       This is more consistent to how our non-D-Bus screenshot plug-in
       used to work.
+    * Windows: cursor capture option now available.
 
 Build:
 
@@ -123,6 +126,29 @@ Build:
   - GExiv2 dependency bumped to 0.12.2 (fixing bothersome warnings on
     some unknown metadata domains).
   - libjxl dependency bumped to 0.6.1.
+  - New meson option -Dcan-crosscompile-gir=true to force
+    GObject-Introspection generation even when cross-compiling (some
+    people manage to do it, e.g. with Yocto).
+  - Added .clang-format file and new CI pipeline to verify coding-style
+    issues in merge requests.
+  - New tool `flatpak-releases` to easily list and install specific
+    versions of our flatpak builds, which can be a great help when
+    debugging or trying to bisect with released binaries.
+  - Important refactoring of icon builds:
+    * Whether using meson or autotools, and whether installing vector
+      icons or raster ones (with --disable-vector-icons), the same lists
+      are always used and no icons are missing. The new custom tool
+      tools/generate-icon-makefiles.py makes sure the Makefile list is
+      in sync with the meson one.
+      The lists are committed in icons/icon-lists/ with a "usage
+      grouping" logics when possible.
+    * PNG versions for Color and Symbolic icon themes should not be
+      committed anymore. The Symbolic PNG version are generated with
+      GTK tool gtk-encode-symbolic-svg and the Color PNG version are
+      rendered with a new custom tool tools/colorsvg2png.c.
+    * New weekly CI to build with raster icons on meson and autotools
+      and making sure the build systems are well synced.
+    * Meson's -Dvec-icons option renamed to -Dvector-icons.
 
 API:
 
@@ -135,12 +161,17 @@ API:
     press events), which might be prefered in some cases. Other than
     this, it uses exactly the same conditions as its GDK counterpart.
   - Removed: gimp_item_set_linked() and gimp_item_get_linked().
+  - Vala bindings gimp-3.vapi and gimp-ui-3.vapi were renamed to
+    gimp-3.0.vapi and gimp-ui-3.0.vapi respectively in the autotools
+    build (now consistent with meson).
 
 Documentation:
 
   - API documentation is now built with `gi-docgen` instead of
     `gtk-doc`. The syntax for in-comment documentation is slightly
     changed.
+  - Important rework of the developer documentation has started in
+    devel-docs/.
 
 Translations:
   - Updated Basque, British English, Catalan, Chinese (China), Hungarian,
