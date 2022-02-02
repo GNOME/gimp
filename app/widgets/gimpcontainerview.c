@@ -147,9 +147,6 @@ static void  gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
                                                           GimpViewable *viewable,
                                                           gpointer      data);
 
-static gboolean gimp_container_view_are_selected_items (GimpContainerView    *view,
-                                                        GList                *items);
-
 
 G_DEFINE_INTERFACE (GimpContainerView, gimp_container_view, GTK_TYPE_WIDGET)
 
@@ -519,11 +516,8 @@ gimp_container_view_select_items (GimpContainerView *view,
   if (gimp_container_frozen (private->container))
     return TRUE;
 
-  if (gimp_container_view_are_selected_items (view, viewables))
-    success = TRUE;
-  else
-    g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
-                   viewables, NULL, &success);
+  g_signal_emit (view, view_signals[SELECT_ITEMS], 0,
+                 viewables, NULL, &success);
 
   return success;
 }
@@ -1414,33 +1408,4 @@ gimp_container_view_button_viewable_dropped (GtkWidget    *widget,
 
       gtk_button_clicked (GTK_BUTTON (widget));
     }
-}
-
-static gboolean
-gimp_container_view_are_selected_items (GimpContainerView *view,
-                                        GList             *items)
-{
-  GList    *selected;
-  gboolean  identical = FALSE;
-
-  gimp_container_view_get_selected (view, &selected, NULL);
-
-  if (g_list_length (items) == g_list_length (selected))
-    {
-      GList *iter;
-
-      identical = TRUE;
-      for (iter = items; iter; iter = iter->next)
-        {
-          if (g_list_find (selected, iter->data) == NULL)
-            {
-              identical = FALSE;
-              break;
-            }
-        }
-    }
-
-  g_list_free (selected);
-
-  return identical;
 }
