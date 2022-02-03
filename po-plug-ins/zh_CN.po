@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-31 04:19+0000\n"
-"PO-Revision-Date: 2022-01-31 17:01+0800\n"
+"POT-Creation-Date: 2022-02-02 21:46+0000\n"
+"PO-Revision-Date: 2022-02-03 11:29+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -718,7 +718,6 @@ msgstr "饱和度"
 #: ../plug-ins/common/decompose.c:203
 #: ../plug-ins/gimpressionist/orientation.c:148
 #: ../plug-ins/gimpressionist/size.c:155
-#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "明度"
 
@@ -913,7 +912,7 @@ msgstr "子范围 #："
 
 #: ../plug-ins/common/cml-explorer.c:1795
 msgid "P(ower factor):"
-msgstr "P (幂因子)："
+msgstr "P (幂系数)："
 
 #: ../plug-ins/common/cml-explorer.c:1803
 msgid "Parameter k:"
@@ -1132,7 +1131,7 @@ msgstr "蓝色(_B)："
 
 #: ../plug-ins/common/compose.c:206
 msgid "_Alpha:"
-msgstr "_Alpha："
+msgstr "透明(_A)："
 
 #: ../plug-ins/common/compose.c:208 ../plug-ins/common/compose.c:212
 msgid "_Hue:"
@@ -1499,12 +1498,12 @@ msgstr "曲线对应的边缘"
 #: ../plug-ins/common/curve-bend.c:1395
 msgctxt "curve-border"
 msgid "_Upper"
-msgstr "升高(_U)"
+msgstr "上边(_U)"
 
 #: ../plug-ins/common/curve-bend.c:1396
 msgctxt "curve-border"
 msgid "_Lower"
-msgstr "降低(_L)"
+msgstr "下边(_L)"
 
 #: ../plug-ins/common/curve-bend.c:1406
 msgid "Curve Type"
@@ -1581,7 +1580,7 @@ msgstr "蓝色"
 
 #: ../plug-ins/common/decompose.c:158
 msgid "alpha"
-msgstr "alpha"
+msgstr "透明"
 
 #: ../plug-ins/common/decompose.c:160 ../plug-ins/common/decompose.c:164
 msgid "hue"
@@ -1679,7 +1678,7 @@ msgstr "蓝色"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Alpha"
-msgstr "Alpha"
+msgstr "透明"
 
 #: ../plug-ins/common/decompose.c:206
 msgid "Hue (HSL)"
@@ -2057,7 +2056,7 @@ msgstr "使用单字节行程长度编码(_1)"
 
 #: ../plug-ins/common/file-csource.c:1022
 msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr "保存 Alpha 通道(RGBA/RGB)(_V)"
+msgstr "保存透明通道(RGBA/RGB)(_V)"
 
 #: ../plug-ins/common/file-csource.c:1033
 msgid "Save as _RGB565 (16-bit)"
@@ -2133,7 +2132,7 @@ msgstr "在与每像素采样组合中 GIMP 不支持 %s：%d"
 
 #: ../plug-ins/common/file-dicom.c:1522
 msgid "Cannot save images with alpha channel."
-msgstr "无法保存带有 Alpha 通道的图像。"
+msgstr "无法保存带有透明通道的图像。"
 
 #: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
@@ -2848,7 +2847,6 @@ msgid "Store ICC profile to exported JXL file"
 msgstr "存储 ICC 配置文件至导出的 JXL 文件"
 
 #: ../plug-ins/common/file-jpegxl.c:1107
-#| msgid "Lighting Effects"
 msgid "lightning (fastest)"
 msgstr "闪电（最快）"
 
@@ -2918,7 +2916,7 @@ msgstr "保存背景色(_B)"
 
 #: ../plug-ins/common/file-mng.c:1618
 msgid "Save _gamma"
-msgstr "保存 _Gamma"
+msgstr "保存伽马(_G)"
 
 #: ../plug-ins/common/file-mng.c:1622
 msgid "Save resolution"
@@ -2978,7 +2976,7 @@ msgstr "JPEG 压缩质量："
 
 #: ../plug-ins/common/file-mng.c:1696
 msgid "JPEG smoothing factor:"
-msgstr "JPEG 平滑因子："
+msgstr "JPEG 平滑系数："
 
 #: ../plug-ins/common/file-mng.c:1699
 msgid "Animated MNG Options"
@@ -3926,7 +3924,7 @@ msgstr "采样空间(_S)："
 
 #: ../plug-ins/common/file-raw-data.c:1871
 msgid "RGB Alpha"
-msgstr "RGB Alpha"
+msgstr "RGB 透明"
 
 #: ../plug-ins/common/file-raw-data.c:1872
 msgid "RGB565 Big Endian"
@@ -3970,7 +3968,7 @@ msgstr "索引"
 
 #: ../plug-ins/common/file-raw-data.c:1882
 msgid "Indexed Alpha"
-msgstr "索引 Alpha"
+msgstr "索引透明"
 
 #: ../plug-ins/common/file-raw-data.c:1883
 msgid "Gray unsigned 16 bit Big Endian"
@@ -4276,7 +4274,7 @@ msgstr "左上"
 
 #: ../plug-ins/common/file-wmf.c:151
 msgid "Microsoft WMF file"
-msgstr "Microsoft WMF 文件"
+msgstr "微软 WMF 文件"
 
 #: ../plug-ins/common/file-wmf.c:395
 msgid ""
@@ -4342,7 +4340,7 @@ msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
-"您不能对一幅没有 Alpha 通道的\n"
+"您不能对一幅没有透明通道的\n"
 "图像保存光标掩码。"
 
 #: ../plug-ins/common/file-xbm.c:1253
@@ -5043,7 +5041,7 @@ msgstr "发送为邮件(_M)..."
 
 #: ../plug-ins/common/mail.c:207
 msgid "Send the image by email"
-msgstr "用 email 发送图像"
+msgstr "用电子邮件发送图像"
 
 #: ../plug-ins/common/mail.c:564
 msgid "Send by Email"
@@ -5098,7 +5096,7 @@ msgstr "滤波器"
 
 #: ../plug-ins/common/nl-filter.c:1155
 msgid "_Alpha trimmed mean"
-msgstr "_Alpha 修整平均"
+msgstr "透明修整平均(_A)"
 
 #: ../plug-ins/common/nl-filter.c:1157
 msgid "Op_timal estimation"
@@ -5110,7 +5108,7 @@ msgstr "边缘增强(_E)"
 
 #: ../plug-ins/common/nl-filter.c:1183
 msgid "A_lpha:"
-msgstr "A_lpha："
+msgstr "透明(_L)："
 
 #: ../plug-ins/common/plugin-browser.c:167
 msgid "_Plug-In Browser"
@@ -5190,7 +5188,7 @@ msgstr "过程浏览器"
 
 #: ../plug-ins/common/qbist.c:183
 msgid "_Qbist..."
-msgstr "_Qbist..."
+msgstr "量子贝叶斯(_Q)…"
 
 #: ../plug-ins/common/qbist.c:188
 msgid "Generate a huge variety of abstract patterns"
@@ -5202,7 +5200,7 @@ msgstr "用来作为图案生成来源的任何文件"
 
 #: ../plug-ins/common/qbist.c:368
 msgid "Qbist"
-msgstr "Qbist"
+msgstr "量子贝叶斯"
 
 #: ../plug-ins/common/qbist.c:843
 msgid "Load QBE File"
@@ -5214,7 +5212,7 @@ msgstr "保存为 QBE 文件"
 
 #: ../plug-ins/common/qbist.c:939
 msgid "G-Qbist"
-msgstr "G-Qbist"
+msgstr "量子贝叶斯"
 
 #: ../plug-ins/common/qbist.c:979
 msgid "Pattern"
@@ -5779,7 +5777,7 @@ msgstr "这个字符串将在 GIMP 的配置文件中用于唯一识别一个单
 
 #: ../plug-ins/common/unit-editor.c:115
 msgid "Factor"
-msgstr "因子"
+msgstr "系数"
 
 #: ../plug-ins/common/unit-editor.c:115
 msgid "How many units make up an inch."
@@ -5856,11 +5854,11 @@ msgstr "添加新单位"
 
 #: ../plug-ins/common/unit-editor.c:266
 msgid "_ID:"
-msgstr "_ID："
+msgstr "标识(_I)："
 
 #: ../plug-ins/common/unit-editor.c:278
 msgid "_Factor:"
-msgstr "因子(_F)："
+msgstr "系数(_F)："
 
 #: ../plug-ins/common/unit-editor.c:289
 msgid "_Digits:"
@@ -6152,7 +6150,7 @@ msgstr "没有找到指定的路径。"
 #: ../plug-ins/common/web-browser.c:184
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
-msgstr "此 .exe 文件无效(非 Microsoft Win32 .exe 或 .exe 映像有错误)。"
+msgstr "此 .exe 文件无效(非微软 Win32 .exe 或 .exe 映像有错误)。"
 
 #: ../plug-ins/common/web-browser.c:187
 msgid "The operating system denied access to the specified file."
@@ -6192,7 +6190,7 @@ msgstr "发生共享冲突。"
 
 #: ../plug-ins/common/web-browser.c:214
 msgid "Unknown Microsoft Windows error."
-msgstr "未知的 Microsoft Windows 错误。"
+msgstr "未知的微软 Windows 错误。"
 
 #: ../plug-ins/common/web-browser.c:217
 #, c-format
@@ -6312,7 +6310,7 @@ msgstr "无法以 BMP 文件格式导出带有透明的索引图像。"
 
 #: ../plug-ins/file-bmp/bmp-save.c:200 ../plug-ins/file-bmp/bmp-save.c:233
 msgid "Alpha channel will be ignored."
-msgstr "Alpha 通道将被忽略。"
+msgstr "透明通道将被忽略。"
 
 #: ../plug-ins/file-bmp/bmp-save.c:990
 msgid "Export Image as BMP"
@@ -6440,7 +6438,7 @@ msgstr "打开 DDS"
 
 #: ../plug-ins/file-dds/ddsread.c:1439
 msgid "_Load mipmaps"
-msgstr "载入 mipmap(_L)"
+msgstr "载入多级纹理(_L)"
 
 #: ../plug-ins/file-dds/ddsread.c:1443
 msgid "_Automatically decode YCoCg/AExp images when detected"
@@ -6464,7 +6462,7 @@ msgstr "保存(_S)："
 
 #: ../plug-ins/file-dds/ddswrite.c:2044
 msgid "_Mipmaps:"
-msgstr "_Mipmaps："
+msgstr "多级纹理(_M)："
 
 #: ../plug-ins/file-dds/ddswrite.c:2062
 msgid "Transparent index:"
@@ -6472,7 +6470,7 @@ msgstr "透明索引："
 
 #: ../plug-ins/file-dds/ddswrite.c:2070
 msgid "Mipmap Options"
-msgstr "Mipmap 选项"
+msgstr "多级纹理选项"
 
 #: ../plug-ins/file-dds/ddswrite.c:2093
 msgid "F_ilter:"
@@ -6492,7 +6490,7 @@ msgstr "使用 sRGB 色彩空间(_R)"
 
 #: ../plug-ins/file-dds/ddswrite.c:2120 ../plug-ins/flame/flame.c:1160
 msgid "_Gamma:"
-msgstr "_Gamma："
+msgstr "伽马(_G)："
 
 #: ../plug-ins/file-dds/ddswrite.c:2125
 msgid "Preserve alpha _test coverage"
@@ -6651,23 +6649,23 @@ msgstr "并非所有程序都支持大图标和压缩。旧的应用程序可能
 
 #: ../plug-ins/file-ico/ico-dialog.c:166
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
-msgstr "1 bpp，1 位 alpha，2 个调色板项"
+msgstr "1 bpp，1 位透明，2 个调色板项"
 
 #: ../plug-ins/file-ico/ico-dialog.c:167
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
-msgstr "4 bpp，1 位 alpha，16 个调色板项"
+msgstr "4 bpp，1 位透明，16 个调色板项"
 
 #: ../plug-ins/file-ico/ico-dialog.c:168
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
-msgstr "8 bpp，1 位 alpha，256 个调色板项"
+msgstr "8 bpp，1 位透明，256 个调色板项"
 
 #: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "24 bpp，1 位 alpha，无调色板"
+msgstr "24 bpp，1 位透明，无调色板"
 
 #: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "32 bpp, 8-bit alpha, no palette"
-msgstr "32 bpp，8 位 alpha，无调色板"
+msgstr "32 bpp，8 位透明，无调色板"
 
 #: ../plug-ins/file-ico/ico-dialog.c:184
 msgid "Compressed (PNG)"
@@ -6700,7 +6698,7 @@ msgstr "打开“%s”的缩略图"
 
 #: ../plug-ins/file-ico/ico.c:127 ../plug-ins/file-ico/ico.c:172
 msgid "Microsoft Windows icon"
-msgstr "Microsoft Windows 图标"
+msgstr "微软 Windows 图标"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:218
 msgid "JPEG preview"
@@ -8520,7 +8518,7 @@ msgstr "伽马："
 
 #: ../plug-ins/gimpressionist/brush.c:577
 msgid "Changes the gamma (brightness) of the selected brush"
-msgstr "改变所选画笔的 Gamma (明亮度)"
+msgstr "改变所选画笔的伽马(明亮度)"
 
 #: ../plug-ins/gimpressionist/brush.c:585
 #: ../plug-ins/metadata/metadata-editor.c:621
@@ -8975,7 +8973,7 @@ msgstr "描述："
 
 #: ../plug-ins/gimpressionist/presets.c:893
 msgid "Gimpressionist Defaults"
-msgstr "GIMPressionist 默认值"
+msgstr "印象派艺术家默认值"
 
 #: ../plug-ins/gimpressionist/presets.c:1014
 msgid "_Presets"
@@ -9549,6 +9547,11 @@ msgstr "DICOM"
 msgid "Exif Tag"
 msgstr "Exif 标签"
 
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
+msgctxt "A tag value"
+msgid "Value"
+msgstr "值"
+
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
 msgstr "Exif"
@@ -9824,7 +9827,7 @@ msgstr "射线(_R)"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3950
 msgid "Size factor gradient:"
-msgstr "大小因子渐变："
+msgstr "大小系数渐变："
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:3954
 msgid "Probability gradient:"
