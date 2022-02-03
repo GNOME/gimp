@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-23 11:37+0000\n"
-"PO-Revision-Date: 2022-01-24 18:28+0800\n"
+"POT-Creation-Date: 2022-02-02 21:46+0000\n"
+"PO-Revision-Date: 2022-02-03 11:24+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1167,11 +1167,11 @@ msgstr "显示带有实验性特性的首选项页面"
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试动作的图像子菜单"
 
-#: ../app/main.c:710
+#: ../app/main.c:716
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: ../app/main.c:738
+#: ../app/main.c:744
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1179,20 +1179,20 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: ../app/main.c:757
+#: ../app/main.c:763
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: ../app/main.c:844
+#: ../app/main.c:850
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
 
-#: ../app/main.c:845
+#: ../app/main.c:851
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
 
-#: ../app/main.c:862
+#: ../app/main.c:868
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP 输出。您可以最小化该窗口，但请不要关闭窗口。"
 
@@ -7839,7 +7839,7 @@ msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
 #: ../app/actions/layers-commands.c:338
-#: ../app/widgets/gimpdrawabletreeview.c:352
+#: ../app/widgets/gimpdrawabletreeview.c:359
 #: ../app/widgets/gimplayertreeview.c:1026
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -18757,14 +18757,14 @@ msgstr "一个选中图层的像素已被锁定。"
 
 #: ../app/display/gimpdisplayshell-dnd.c:426
 #: ../app/widgets/gimpdrawabletreeview.c:267
-#: ../app/widgets/gimpdrawabletreeview.c:379
+#: ../app/widgets/gimpdrawabletreeview.c:386
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "将图案放置到图层"
 
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimpdrawabletreeview.c:298
-#: ../app/widgets/gimpdrawabletreeview.c:399
+#: ../app/widgets/gimpdrawabletreeview.c:406
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
@@ -18931,7 +18931,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "单击并拖动以旋转对焦"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
-#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:670
+#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:668
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s 可限定角度"
@@ -24260,16 +24260,16 @@ msgstr "无法在多个图层上绘制。仅选择一个图层。"
 msgid "Cannot paint on layer groups."
 msgstr "不能在图层组上绘画。"
 
-#: ../app/tools/gimppainttool.c:701
+#: ../app/tools/gimppainttool.c:699
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s 可画出直线"
 
-#: ../app/tools/gimppainttool.c:915
+#: ../app/tools/gimppainttool.c:921
 msgid "The active layer does not have an alpha channel."
 msgstr "激活图层没有透明通道。"
 
-#: ../app/tools/gimppainttool.c:925
+#: ../app/tools/gimppainttool.c:931
 msgid "The active layer's alpha channel is locked."
 msgstr "激活图层的透明通道已被锁定。"
 
@@ -26035,11 +26035,11 @@ msgctxt "compression"
 msgid "Best compression"
 msgstr "最好压缩"
 
-#: ../app/widgets/gimpcontainerpopup.c:335
+#: ../app/widgets/gimpcontainerpopup.c:316
 msgid "Smaller Previews"
 msgstr "减小预览"
 
-#: ../app/widgets/gimpcontainerpopup.c:340
+#: ../app/widgets/gimpcontainerpopup.c:321
 msgid "Larger Previews"
 msgstr "增大预览"
 
@@ -26720,11 +26720,11 @@ msgstr "物理内存大小"
 #: ../app/widgets/gimpdashboard.c:704
 msgctxt "dashboard-variable"
 msgid "Mipmapped"
-msgstr "多级映射"
+msgstr "多级纹理"
 
 #: ../app/widgets/gimpdashboard.c:705
 msgid "Total size of processed mipmapped data"
-msgstr "已处理多级纹理映射数据的全部大小"
+msgstr "已处理多级纹理数据的全部大小"
 
 #: ../app/widgets/gimpdashboard.c:713
 msgctxt "dashboard-variable"
@@ -27527,15 +27527,15 @@ msgstr "切换到另一组模式"
 
 #: ../app/widgets/gimplayertreeview.c:436
 msgid "Select layers by patterns and store layer sets"
-msgstr "通过模式选择图层并存储图层设置"
+msgstr "通过模式选择图层并存储图层集合"
 
 #: ../app/widgets/gimplayertreeview.c:480
 msgid "No layer set stored"
-msgstr "无图层设置存储"
+msgstr "未存储图层集合"
 
 #: ../app/widgets/gimplayertreeview.c:502
-msgid "Named Selection"
-msgstr "已命名选择"
+msgid "New layer set's name"
+msgstr "新图层集合的名字"
 
 #: ../app/widgets/gimplayertreeview.c:540
 #: ../app/widgets/gimplayertreeview.c:543
@@ -28405,6 +28405,9 @@ msgstr "圆"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "模糊"
+
+#~ msgid "Named Selection"
+#~ msgstr "已命名选择"
 
 #~ msgctxt "channels-action"
 #~ msgid "Create a duplicate of this channel and add it to the image"
