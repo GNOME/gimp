@@ -760,11 +760,12 @@ user_update_gimpressionist (const GMatchInfo *matched_value,
 }
 
 #define TOOL_PRESETS_UPDATE_PATTERN \
-  "GimpImageMapOptions"  "|" \
-  "GimpBlendOptions"     "|" \
-  "gimp-blend-tool"      "|" \
-  "gimp-tool-blend"      "|" \
-  "dynamics \"Dynamics Off\""
+  "GimpImageMapOptions"       "|" \
+  "GimpBlendOptions"          "|" \
+  "gimp-blend-tool"           "|" \
+  "gimp-tool-blend"           "|" \
+  "dynamics \"Dynamics Off\"" "|" \
+  "\\(dynamics-expanded yes\\)"
 
 static gboolean
 user_update_tool_presets (const GMatchInfo *matched_value,
@@ -793,6 +794,10 @@ user_update_tool_presets (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "dynamics-enabled no");
     }
+  else if (g_strcmp0 (match, "(dynamics-expanded yes)") == 0)
+    {
+      /* This option just doesn't exist anymore. */
+    }
   else
     {
       g_message ("(WARNING) %s: invalid match \"%s\"", G_STRFUNC, match);
@@ -808,8 +813,9 @@ user_update_tool_presets (const GMatchInfo *matched_value,
  * well as "toolrc" (but this one is skipped anyway).
  */
 #define CONTEXTRC_UPDATE_PATTERN \
-  "gimp-blend-tool" "|" \
-  "dynamics \"Dynamics Off\""
+  "gimp-blend-tool"           "|" \
+  "dynamics \"Dynamics Off\"" "|" \
+  "\\(dynamics-expanded yes\\)"
 
 static gboolean
 user_update_contextrc_over20 (const GMatchInfo *matched_value,
@@ -822,9 +828,13 @@ user_update_contextrc_over20 (const GMatchInfo *matched_value,
     {
       g_string_append (new_value, "gimp-gradient-tool");
     }
-  if (g_strcmp0 (match, "dynamics \"Dynamics Off\"") == 0)
+  else if (g_strcmp0 (match, "dynamics \"Dynamics Off\"") == 0)
     {
       g_string_append (new_value, "dynamics-enabled no");
+    }
+  else if (g_strcmp0 (match, "(dynamics-expanded yes)") == 0)
+    {
+      /* This option just doesn't exist anymore. */
     }
   else
     {
