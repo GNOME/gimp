@@ -529,7 +529,7 @@ class PencilTool():
     def draw(self, layer, strokes, color=None):
         if color:
             Gimp.context_push()
-            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_enable_dynamics(False)
             Gimp.context_set_foreground(color)
 
         Gimp.pencil(layer, strokes)
@@ -545,7 +545,7 @@ class AirBrushTool():
     def draw(self, layer, strokes, color=None):
         if color:
             Gimp.context_push()
-            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_enable_dynamics(False)
             Gimp.context_set_foreground(color)
 
         Gimp.airbrush_default(layer, strokes)
@@ -592,7 +592,7 @@ class PreviewTool:
         Gimp.context_push()
         Gimp.context_set_defaults()
         Gimp.context_set_foreground(foreground)
-        Gimp.context_set_dynamics('Dynamics Off')
+        Gimp.context_enable_dynamics(False)
         Gimp.context_set_brush('1. Pixel')
         Gimp.context_set_brush_size(1.0)
         Gimp.context_set_brush_spacing(3.0)
@@ -609,7 +609,7 @@ class StrokeTool(AbstractStrokeTool):
 
     def prepare_stroke_context(self, color):
         if color:
-            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_enable_dynamics(False)
             Gimp.context_set_foreground(color)
 
         Gimp.context_set_stroke_method(Gimp.StrokeMethod.LINE)
@@ -623,7 +623,7 @@ class StrokePaintTool(AbstractStrokeTool):
 
     def prepare_stroke_context(self, color):
         if self.can_color and color is not None:
-            Gimp.context_set_dynamics('Dynamics Off')
+            Gimp.context_enable_dynamics(False)
             Gimp.context_set_foreground(color)
 
         Gimp.context_set_stroke_method(Gimp.StrokeMethod.PAINT_METHOD)
