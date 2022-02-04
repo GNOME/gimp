@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-02 15:20+0000\n"
-"PO-Revision-Date: 2022-02-02 18:46+0200\n"
+"POT-Creation-Date: 2022-02-04 14:15+0000\n"
+"PO-Revision-Date: 2022-02-04 22:47+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3466,25 +3466,48 @@ msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
 msgstr "Кут пензля (редактор): повернути ліворуч на 15°"
 
-#: ../app/actions/context-commands.c:458
+#: ../app/actions/context-actions.c:1093
+#| msgctxt "dynamics-action"
+#| msgid "D_uplicate Dynamics"
+msgctxt "context-action"
+msgid "_Enable/Disable Dynamics"
+msgstr "_Увімкнути/Вимкнути динаміку"
+
+#: ../app/actions/context-actions.c:1094
+msgctxt "context-action"
+msgid "Apply or ignore the dynamics when painting"
+msgstr ""
+"Застосовувати чи ігнорувати динаміку під час малювання"
+
+#: ../app/actions/context-commands.c:459
 #, c-format
 msgid "Paint Mode: %s"
 msgstr "Режим малювання: %s"
 
-#: ../app/actions/context-commands.c:612
+#: ../app/actions/context-commands.c:613
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "Форма пензля: %s"
 
-#: ../app/actions/context-commands.c:675
+#: ../app/actions/context-commands.c:676
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "Радіус пензля: %2.2f"
 
-#: ../app/actions/context-commands.c:795
+#: ../app/actions/context-commands.c:796
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "Кут пензля: %2.2f"
+
+#: ../app/actions/context-commands.c:827
+#| msgid "Dynamics Folders"
+msgid "Dynamics disabled"
+msgstr "Динаміку вимкнено"
+
+#: ../app/actions/context-commands.c:830
+#| msgid "Dynamics Folders"
+msgid "Dynamics enabled"
+msgstr "Динаміку увімкнено"
 
 #: ../app/actions/cursor-info-actions.c:41
 msgctxt "cursor-info-action"
@@ -8090,7 +8113,7 @@ msgid "Edit Layer Attributes"
 msgstr "Зміна ознак шару"
 
 #: ../app/actions/layers-commands.c:338
-#: ../app/widgets/gimpdrawabletreeview.c:352
+#: ../app/widgets/gimpdrawabletreeview.c:359
 #: ../app/widgets/gimplayertreeview.c:1026
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -13724,7 +13747,7 @@ msgstr "Не вдалось вилучити «%s»: %s"
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:702
 #: ../app/dialogs/preferences-dialog.c:3326
-#: ../app/tools/gimppaintoptions-gui.c:218
+#: ../app/tools/gimppaintoptions-gui.c:311
 msgid "Dynamics"
 msgstr "Динаміка малювання"
 
@@ -18889,7 +18912,7 @@ msgstr "_Вертикальна:"
 msgid "Image Size"
 msgstr "Розмір зображення"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:429
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:430
 #: ../app/propgui/gimppropgui-newsprint.c:262
 msgid "Quality"
 msgstr "Якість"
@@ -19308,14 +19331,14 @@ msgstr "Точки растру позначеного шару заблоков
 
 #: ../app/display/gimpdisplayshell-dnd.c:426
 #: ../app/widgets/gimpdrawabletreeview.c:267
-#: ../app/widgets/gimpdrawabletreeview.c:379
+#: ../app/widgets/gimpdrawabletreeview.c:386
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Опустити текстуру на шар"
 
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimpdrawabletreeview.c:298
-#: ../app/widgets/gimpdrawabletreeview.c:399
+#: ../app/widgets/gimpdrawabletreeview.c:406
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
@@ -19482,7 +19505,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
-#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:670
+#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:668
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для обмеження кроку кута"
@@ -20950,11 +20973,11 @@ msgstr "Лише рух"
 msgid "Flow"
 msgstr "Потік"
 
-#: ../app/paint/gimpbrushcore.c:373
+#: ../app/paint/gimpbrushcore.c:383
 msgid "No brushes available for use with this tool."
 msgstr "Немає пензлів доступних для використання з цим інструментом."
 
-#: ../app/paint/gimpbrushcore.c:380
+#: ../app/paint/gimpbrushcore.c:390
 msgid "No paint dynamics available for use with this tool."
 msgstr "Немає динамік малювання для використання з цим інструментом."
 
@@ -21188,72 +21211,78 @@ msgstr "Тремтіння"
 msgid "Scatter brush as you paint"
 msgstr "Розкидати пензель протягом малювання "
 
-#: ../app/paint/gimppaintoptions.c:308
+#: ../app/paint/gimppaintoptions.c:309
+#| msgid "Paint dynamics"
+msgid "Enable dynamics"
+msgstr "Увімкнути динаміку"
+
+#: ../app/paint/gimppaintoptions.c:310
+msgid "Apply dynamics curves to paint settings"
+msgstr ""
+"Застосовувати криві динаміки до параметрів малювання"
+
+#: ../app/paint/gimppaintoptions.c:316
 msgid "Amount"
 msgstr "Об'єм"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:317
 msgid "Distance of scattering"
 msgstr "Відстань розкидання"
 
-#: ../app/paint/gimppaintoptions.c:315
-msgid "Dynamics Options"
-msgstr "Параметри динаміки"
-
-#: ../app/paint/gimppaintoptions.c:322
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Fade length"
 msgstr "Тривалість згасання"
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:324
 msgid "Distance over which strokes fade out"
 msgstr "Відстань, на якій зникатимуть обведення"
 
-#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Обернути"
 
-#: ../app/paint/gimppaintoptions.c:334
+#: ../app/paint/gimppaintoptions.c:335
 msgid "Reverse direction of fading"
 msgstr "Зворотний напрям згасання"
 
-#: ../app/paint/gimppaintoptions.c:339 ../app/paint/gimppaintoptions.c:359
+#: ../app/paint/gimppaintoptions.c:340 ../app/paint/gimppaintoptions.c:360
 #: ../app/tools/gimpgradientoptions.c:307
 #: ../app/tools/gimppaintoptions-gui.c:347
 msgid "Repeat"
 msgstr "Повторення"
 
-#: ../app/paint/gimppaintoptions.c:340
+#: ../app/paint/gimppaintoptions.c:341
 msgid "How fade is repeated as you paint"
 msgstr "Як повторюється зникнення протягом малювання"
 
-#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
+#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:282
 #: ../app/tools/gimppaintoptions-gui.c:380
 msgid "Blend Color Space"
 msgstr "Простір змішування кольорів"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:354
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr ""
 "Простір кольорів, яким слід скористатися під час злиття сегментів градієнта "
 "у RGB"
 
-#: ../app/paint/gimppaintoptions.c:423
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Smooth stroke"
 msgstr "Гладкий контур"
 
-#: ../app/paint/gimppaintoptions.c:424
+#: ../app/paint/gimppaintoptions.c:425
 msgid "Paint smoother strokes"
 msgstr "Малювати гладкі обведення"
 
-#: ../app/paint/gimppaintoptions.c:430
+#: ../app/paint/gimppaintoptions.c:431
 msgid "Depth of smoothing"
 msgstr "Глибина згладжування"
 
-#: ../app/paint/gimppaintoptions.c:435
+#: ../app/paint/gimppaintoptions.c:436
 msgid "Weight"
 msgstr "Вага"
 
-#: ../app/paint/gimppaintoptions.c:436
+#: ../app/paint/gimppaintoptions.c:437
 msgid "Gravity of the pen"
 msgstr "Тяжкість пера"
 
@@ -24840,7 +24869,7 @@ msgstr "Відновити початкову жорсткість пензля"
 msgid "Reset force to default"
 msgstr "Відновити типове зусилля"
 
-#: ../app/tools/gimppaintoptions-gui.c:222
+#: ../app/tools/gimppaintoptions-gui.c:315
 msgid "Edit this dynamics"
 msgstr "Змінити цю динаміку"
 
@@ -24918,16 +24947,16 @@ msgstr ""
 msgid "Cannot paint on layer groups."
 msgstr "Не вдалось малювати на групі шарів"
 
-#: ../app/tools/gimppainttool.c:701
+#: ../app/tools/gimppainttool.c:699
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для малювання прямої лінії"
 
-#: ../app/tools/gimppainttool.c:915
+#: ../app/tools/gimppainttool.c:921
 msgid "The active layer does not have an alpha channel."
 msgstr "У активному шарі немає каналу прозорості."
 
-#: ../app/tools/gimppainttool.c:925
+#: ../app/tools/gimppainttool.c:931
 msgid "The active layer's alpha channel is locked."
 msgstr "Канал прозорості активного шару заблоковано."
 
@@ -28237,8 +28266,6 @@ msgid "No layer set stored"
 msgstr "Немає збережених наборів шарів"
 
 #: ../app/widgets/gimplayertreeview.c:502
-#| msgctxt "layers-action"
-#| msgid "Edit the layer's name"
 msgid "New layer set's name"
 msgstr "Назва нового набору шарів"
 
@@ -29125,6 +29152,9 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid "Dynamics Options"
+#~ msgstr "Параметри динаміки"
 
 #~| msgctxt "undo-type"
 #~| msgid "Move Selection"
