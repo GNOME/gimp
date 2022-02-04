@@ -78,6 +78,16 @@ User Interface:
   - Channels and vectors are now multi-selectable (though actions may
     have not been all updated yet to handle multiple items).
 
+Tools:
+
+  - It is now possible to enable/disable dynamics in a single checkbox.
+    The dynamics "Dynamics Off" which used to be in the default list has
+    been removed as disabling dynamics is now equivalent and much faster
+    (it's also faster to get back to whatever dynamics you were using
+    before).
+  - A new action "context-dynamics-toggle" is available, allowing to
+    switch dynamics ON/OFF (see previous news item) with a shortcut.
+
 Plug-ins:
 
   - PSD:
@@ -164,6 +174,8 @@ API:
   - Vala bindings gimp-3.vapi and gimp-ui-3.vapi were renamed to
     gimp-3.0.vapi and gimp-ui-3.0.vapi respectively in the autotools
     build (now consistent with meson).
+  - New functions gimp_context_are_dynamics_enabled() and
+    gimp_context_enable_dynamics().
 
 Documentation:
 
