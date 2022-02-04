@@ -55,6 +55,8 @@ EXPORTS
 	gimp_check_type
 	gimp_clone
 	gimp_clone_default
+	gimp_context_are_dynamics_enabled
+	gimp_context_enable_dynamics
 	gimp_context_get_antialias
 	gimp_context_get_background
 	gimp_context_get_brush
