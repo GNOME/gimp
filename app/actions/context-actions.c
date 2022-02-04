@@ -1087,6 +1087,16 @@ static const GimpEnumActionEntry context_brush_angle_actions[] =
     NULL }
 };
 
+static const GimpToggleActionEntry context_toggle_actions[] =
+{
+  { "context-dynamics-toggle", NULL,
+    NC_("context-action", "_Enable/Disable Dynamics"), NULL,
+    NC_("context-action", "Apply or ignore the dynamics when painting"),
+    context_toggle_dynamics_cmd_callback,
+    FALSE,
+    NULL },
+};
+
 
 void
 context_actions_setup (GimpActionGroup *group)
@@ -1237,6 +1247,10 @@ context_actions_setup (GimpActionGroup *group)
                                       context_brush_angle_actions,
                                       G_N_ELEMENTS (context_brush_angle_actions),
                                       context_brush_angle_cmd_callback);
+
+  gimp_action_group_add_toggle_actions (group, "context-action",
+                                        context_toggle_actions,
+                                        G_N_ELEMENTS (context_toggle_actions));
 }
 
 void

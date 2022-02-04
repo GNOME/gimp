@@ -35,6 +35,7 @@
 #include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimplist.h"
+#include "core/gimppaintinfo.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -794,6 +795,39 @@ context_brush_angle_cmd_callback (GimpAction *action,
           action_message (action_data_get_display (data), G_OBJECT (brush),
                           _("Brush Angle: %2.2f"), angle);
         }
+    }
+}
+
+void
+context_toggle_dynamics_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
+{
+  GimpContext   *context;
+  GimpPaintInfo *paint_info;
+  gboolean       enabled;
+
+  return_if_no_context (context, data);
+
+  paint_info = gimp_context_get_paint_info (context);
+  if (paint_info)
+    {
+      GimpPaintOptions *paint_options;
+      GimpDisplay      *display;
+
+      paint_options = paint_info->paint_options;
+      enabled = gimp_paint_options_are_dynamics_enabled (paint_options);
+
+      gimp_paint_options_enable_dynamics (paint_options, ! enabled);
+
+      display = action_data_get_display (data);
+
+      if (enabled)
+        action_message (display, G_OBJECT (paint_options),
+                        _("Dynamics disabled"));
+      else
+        action_message (display, G_OBJECT (paint_options),
+                        _("Dynamics enabled"));
     }
 }
 

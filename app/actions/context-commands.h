@@ -136,5 +136,9 @@ void   context_brush_angle_cmd_callback           (GimpAction *action,
                                                    GVariant   *value,
                                                    gpointer    data);
 
+void   context_toggle_dynamics_cmd_callback       (GimpAction *action,
+                                                   GVariant   *value,
+                                                   gpointer    data);
+
 
 #endif /* __CONTEXT_COMMANDS_H__ */
