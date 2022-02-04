@@ -1839,8 +1839,12 @@ gimp_context_set_brush_force (gdouble force)
  * Retrieve the currently active paint dynamics.
  *
  * This procedure returns the name of the currently active paint
- * dynamics. All paint operations and stroke operations use this paint
- * dynamics to control the application of paint to the image.
+ * dynamics. If enabled, all paint operations and stroke operations use
+ * this paint dynamics to control the application of paint to the
+ * image. If disabled, the dynamics will be ignored during paint
+ * actions.
+ * See gimp_context_are_dynamics_enabled() to enquire whether dynamics
+ * are used or ignored.
  *
  * Returns: (transfer full): The name of the active paint dynamics.
  *          The returned value must be freed with g_free().
@@ -1881,7 +1885,8 @@ gimp_context_get_dynamics (void)
  * to one of the names of the installed paint dynamics. If there is no
  * matching paint dynamics found, this procedure will return an error.
  * Otherwise, the specified paint dynamics becomes active and will be
- * used in all subsequent paint operations.
+ * used in all subsequent paint operations as long as dynamics are
+ * enabled.
  *
  * Returns: TRUE on success.
  *
@@ -1900,6 +1905,78 @@ gimp_context_set_dynamics (const gchar *name)
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
                                               "gimp-context-set-dynamics",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_context_are_dynamics_enabled:
+ *
+ * Inform whether the currently active paint dynamics will be applied
+ * to painting.
+ *
+ * This procedure returns whether the currently active paint dynamics
+ * (as returned by gimp_context_get_dynamics()) is enabled.
+ *
+ * Returns: Whether dynamics enabled or disabled.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_context_are_dynamics_enabled (void)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean enabled = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-context-are-dynamics-enabled",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    enabled = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return enabled;
+}
+
+/**
+ * gimp_context_enable_dynamics:
+ * @enable: Whether to enable or disable dynamics.
+ *
+ * Set the specified paint dynamics as the active paint dynamics.
+ *
+ * This procedure enables the active paint dynamics to be used in all
+ * subsequent paint operations.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_context_enable_dynamics (gboolean enable)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_BOOLEAN, enable,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-context-enable-dynamics",
                                               args);
   gimp_value_array_unref (args);
 

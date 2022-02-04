@@ -166,12 +166,15 @@ void     gimp_paint_options_set_default_brush_hardness
                                                (GimpPaintOptions    *options,
                                                 GimpBrush           *brush);
 
+gboolean gimp_paint_options_are_dynamics_enabled (GimpPaintOptions *paint_options);
+void     gimp_paint_options_enable_dynamics      (GimpPaintOptions *paint_options,
+                                                  gboolean          enable);
+
 gboolean gimp_paint_options_is_prop            (const gchar         *prop_name,
                                                 GimpContextPropMask  prop_mask);
 void     gimp_paint_options_copy_props         (GimpPaintOptions    *src,
                                                 GimpPaintOptions    *dest,
                                                 GimpContextPropMask  prop_mask);
 
-gboolean gimp_paint_options_get_dynamics_enabled (GimpPaintOptions *paint_options);
 
 #endif  /*  __GIMP_PAINT_OPTIONS_H__  */

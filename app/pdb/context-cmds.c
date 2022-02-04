@@ -1399,6 +1399,65 @@ context_set_dynamics_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+context_are_dynamics_enabled_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  gboolean enabled = FALSE;
+
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    enabled = gimp_paint_options_are_dynamics_enabled (options);
+  else
+    success = FALSE;
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), enabled);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+context_enable_dynamics_invoker (GimpProcedure         *procedure,
+                                 Gimp                  *gimp,
+                                 GimpContext           *context,
+                                 GimpProgress          *progress,
+                                 const GimpValueArray  *args,
+                                 GError               **error)
+{
+  gboolean success = TRUE;
+  gboolean enable;
+
+  enable = g_value_get_boolean (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPaintOptions *options =
+        gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                            "gimp-paintbrush");
+
+      if (options)
+        gimp_paint_options_enable_dynamics (options, enable);
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 context_get_mypaint_brush_invoker (GimpProcedure         *procedure,
                                    Gimp                  *gimp,
                                    GimpContext           *context,
@@ -4165,7 +4224,8 @@ register_context_procs (GimpPDB *pdb)
                                "gimp-context-get-dynamics");
   gimp_procedure_set_static_help (procedure,
                                   "Retrieve the currently active paint dynamics.",
-                                  "This procedure returns the name of the currently active paint dynamics. All paint operations and stroke operations use this paint dynamics to control the application of paint to the image.",
+                                  "This procedure returns the name of the currently active paint dynamics. If enabled, all paint operations and stroke operations use this paint dynamics to control the application of paint to the image. If disabled, the dynamics will be ignored during paint actions.\n"
+                                     "See 'gimp-context-are-dynamics-enabled' to enquire whether dynamics are used or ignored.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4189,7 +4249,7 @@ register_context_procs (GimpPDB *pdb)
                                "gimp-context-set-dynamics");
   gimp_procedure_set_static_help (procedure,
                                   "Set the specified paint dynamics as the active paint dynamics.",
-                                  "This procedure allows the active paint dynamics to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed paint dynamics. If there is no matching paint dynamics found, this procedure will return an error. Otherwise, the specified paint dynamics becomes active and will be used in all subsequent paint operations.",
+                                  "This procedure allows the active paint dynamics to be set by specifying its name. The name is simply a string which corresponds to one of the names of the installed paint dynamics. If there is no matching paint dynamics found, this procedure will return an error. Otherwise, the specified paint dynamics becomes active and will be used in all subsequent paint operations as long as dynamics are enabled.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4202,6 +4262,52 @@ register_context_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-are-dynamics-enabled
+   */
+  procedure = gimp_procedure_new (context_are_dynamics_enabled_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-are-dynamics-enabled");
+  gimp_procedure_set_static_help (procedure,
+                                  "Inform whether the currently active paint dynamics will be applied to painting.",
+                                  "This procedure returns whether the currently active paint dynamics (as returned by 'gimp-context-get-dynamics') is enabled.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("enabled",
+                                                         "enabled",
+                                                         "Whether dynamics enabled or disabled",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-enable-dynamics
+   */
+  procedure = gimp_procedure_new (context_enable_dynamics_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-context-enable-dynamics");
+  gimp_procedure_set_static_help (procedure,
+                                  "Set the specified paint dynamics as the active paint dynamics.",
+                                  "This procedure enables the active paint dynamics to be used in all subsequent paint operations.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("enable",
+                                                     "enable",
+                                                     "Whether to enable or disable dynamics",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

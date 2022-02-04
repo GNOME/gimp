@@ -1459,8 +1459,12 @@ sub context_get_dynamics {
 
     $help = <<'HELP';
 This procedure returns the name of the currently active paint
-dynamics.  All paint operations and stroke operations use this paint
-dynamics to control the application of paint to the image.
+dynamics. If enabled, all paint operations and stroke operations use
+this paint dynamics to control the application of paint to the image.
+If disabled, the dynamics will be ignored during paint actions.
+
+See gimp_context_are_dynamics_enabled() to enquire whether dynamics are
+used or ignored.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -1493,7 +1497,7 @@ specifying its name.  The name is simply a string which corresponds to
 one of the names of the installed paint dynamics. If there is no
 matching paint dynamics found, this procedure will return an error.
 Otherwise, the specified paint dynamics becomes active and will be
-used in all subsequent paint operations.
+used in all subsequent paint operations as long as dynamics are enabled.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -1510,6 +1514,69 @@ HELP
 
   if (dynamics)
     gimp_context_set_dynamics (context, dynamics);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_are_dynamics_enabled {
+    $blurb = 'Inform whether the currently active paint dynamics will be applied to painting.';
+
+    $help = <<'HELP';
+This procedure returns whether the currently active paint dynamics (as
+returned by gimp_context_get_dynamics()) is enabled.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0');
+
+    @outargs = (
+	{ name => "enabled", type => 'boolean',
+	  desc => "Whether dynamics enabled or disabled" }
+    );
+
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    enabled = gimp_paint_options_are_dynamics_enabled (options);
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
+sub context_enable_dynamics {
+    $blurb = 'Set the specified paint dynamics as the active paint dynamics.';
+
+    $help = <<'HELP';
+This procedure enables the active paint dynamics to be used in all
+subsequent paint operations.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0');
+
+    @inargs = (
+	{ name => "enable", type => 'boolean',
+	  desc => "Whether to enable or disable dynamics" }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPaintOptions *options =
+    gimp_pdb_context_get_paint_options (GIMP_PDB_CONTEXT (context),
+                                        "gimp-paintbrush");
+
+  if (options)
+    gimp_paint_options_enable_dynamics (options, enable);
   else
     success = FALSE;
 }
@@ -3380,6 +3447,7 @@ CODE
             context_get_brush_force
             context_set_brush_force
             context_get_dynamics context_set_dynamics
+            context_are_dynamics_enabled context_enable_dynamics
             context_get_mypaint_brush context_set_mypaint_brush
             context_get_pattern context_set_pattern
             context_get_gradient context_set_gradient

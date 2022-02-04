@@ -984,12 +984,6 @@ gimp_paint_options_get_jitter (GimpPaintOptions *paint_options,
 }
 
 gboolean
-gimp_paint_options_get_dynamics_enabled (GimpPaintOptions *paint_options)
-{
-  return paint_options->dynamics_enabled;
-}
-
-gboolean
 gimp_paint_options_get_gradient_color (GimpPaintOptions *paint_options,
                                        GimpImage        *image,
                                        gdouble           grad_point,
@@ -1165,6 +1159,24 @@ gimp_paint_options_set_default_brush_hardness (GimpPaintOptions *paint_options,
     {
       g_object_set (paint_options,
                     "brush-hardness", DEFAULT_BRUSH_HARDNESS,
+                    NULL);
+    }
+}
+
+gboolean
+gimp_paint_options_are_dynamics_enabled (GimpPaintOptions *paint_options)
+{
+  return paint_options->dynamics_enabled;
+}
+
+void
+gimp_paint_options_enable_dynamics (GimpPaintOptions *paint_options,
+                                    gboolean          enable)
+{
+  if (paint_options->dynamics_enabled != enable)
+    {
+      g_object_set (paint_options,
+                    "dynamics-enabled", enable,
                     NULL);
     }
 }

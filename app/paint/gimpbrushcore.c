@@ -365,7 +365,7 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
 
   gimp_brush_core_set_brush (core, gimp_context_get_brush (context));
 
-  if (gimp_paint_options_get_dynamics_enabled (paint_options))
+  if (gimp_paint_options_are_dynamics_enabled (paint_options))
     {
       gimp_brush_core_set_dynamics (core, gimp_context_get_dynamics (context));
     }
