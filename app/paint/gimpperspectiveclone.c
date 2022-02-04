@@ -146,15 +146,19 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
-          g_object_set (options, "src-drawables", drawables, NULL);
+          gint src_x = floor (coords->x);
+          gint src_y = floor (coords->y);
 
-          source_core->src_x = floor (coords->x);
-          source_core->src_y = floor (coords->y);
+          g_object_set (options,
+                        "src-drawables", drawables,
+                        "src-x",         src_x,
+                        "src-y",         src_y,
+                        NULL);
 
           /* get source coordinates in front view perspective */
           gimp_matrix3_transform_point (&clone->transform_inv,
-                                        source_core->src_x,
-                                        source_core->src_y,
+                                        src_x,
+                                        src_y,
                                         &clone->src_x_fv,
                                         &clone->src_y_fv);
 
@@ -168,8 +172,10 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
 
           if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
             {
-              source_core->orig_src_x = source_core->src_x;
-              source_core->orig_src_y = source_core->src_y;
+              g_object_get (options,
+                            "src-x", &source_core->orig_src_x,
+                            "src-y", &source_core->orig_src_y,
+                            NULL);
 
               source_core->first_stroke = TRUE;
             }
@@ -294,15 +300,21 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_MOTION:
       if (source_core->set_source)
         {
+          gint src_x = floor (coords->x);
+          gint src_y = floor (coords->y);
+
           /*  If the control key is down, move the src target and return */
 
-          source_core->src_x = floor (coords->x);
-          source_core->src_y = floor (coords->y);
+          g_object_set (options,
+                        "src-drawables", drawables,
+                        "src-x",         src_x,
+                        "src-y",         src_y,
+                        NULL);
 
           /* get source coordinates in front view perspective */
           gimp_matrix3_transform_point (&clone->transform_inv,
-                                        source_core->src_x,
-                                        source_core->src_y,
+                                        src_x,
+                                        src_y,
                                         &clone->src_x_fv,
                                         &clone->src_y_fv);
 
@@ -312,10 +324,18 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
         {
           /*  otherwise, update the target  */
 
+          gint src_x;
+          gint src_y;
+
           gint dest_x;
           gint dest_y;
           gint n_strokes;
           gint i;
+
+          g_object_get (options,
+                        "src-x", &src_x,
+                        "src-y", &src_y,
+                        NULL);
 
           n_strokes = gimp_symmetry_get_size (sym);
           for (i = 0; i < n_strokes; i++)
@@ -332,13 +352,13 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                 }
               else if (options->align_mode == GIMP_SOURCE_ALIGN_FIXED)
                 {
-                  source_core->offset_x = source_core->src_x - dest_x;
-                  source_core->offset_y = source_core->src_y - dest_y;
+                  source_core->offset_x = src_x - dest_x;
+                  source_core->offset_y = src_y - dest_y;
                 }
               else if (source_core->first_stroke)
                 {
-                  source_core->offset_x = source_core->src_x - dest_x;
-                  source_core->offset_y = source_core->src_y - dest_y;
+                  source_core->offset_x = src_x - dest_x;
+                  source_core->offset_y = src_y - dest_y;
 
                   /* get destination coordinates in front view perspective */
                   gimp_matrix3_transform_point (&clone->transform_inv,
@@ -367,9 +387,6 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
     default:
       break;
     }
-
-  g_object_notify (G_OBJECT (clone), "src-x");
-  g_object_notify (G_OBJECT (clone), "src-y");
 }
 
 static gboolean

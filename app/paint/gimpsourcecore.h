@@ -38,9 +38,6 @@ struct _GimpSourceCore
 
   gboolean       set_source;
 
-  gint           src_x;
-  gint           src_y;
-
   gint           orig_src_x;
   gint           orig_src_y;
 

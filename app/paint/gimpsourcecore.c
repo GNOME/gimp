@@ -46,8 +46,6 @@
 enum
 {
   PROP_0,
-  PROP_SRC_X,
-  PROP_SRC_Y
 };
 
 
@@ -123,27 +121,12 @@ gimp_source_core_class_init (GimpSourceCoreClass *klass)
   klass->use_source                        = gimp_source_core_real_use_source;
   klass->get_source                        = gimp_source_core_real_get_source;
   klass->motion                            = NULL;
-
-  g_object_class_install_property (object_class, PROP_SRC_X,
-                                   g_param_spec_int ("src-x", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE,
-                                                     0,
-                                                     GIMP_PARAM_READWRITE));
-
-  g_object_class_install_property (object_class, PROP_SRC_Y,
-                                   g_param_spec_int ("src-y", NULL, NULL,
-                                                     0, GIMP_MAX_IMAGE_SIZE,
-                                                     0,
-                                                     GIMP_PARAM_READWRITE));
 }
 
 static void
 gimp_source_core_init (GimpSourceCore *source_core)
 {
   source_core->set_source    = FALSE;
-
-  source_core->src_x         = 0;
-  source_core->src_y         = 0;
 
   source_core->orig_src_x    = 0;
   source_core->orig_src_y    = 0;
@@ -163,12 +146,6 @@ gimp_source_core_set_property (GObject      *object,
 
   switch (property_id)
     {
-    case PROP_SRC_X:
-      source_core->src_x = g_value_get_int (value);
-      break;
-    case PROP_SRC_Y:
-      source_core->src_y = g_value_get_int (value);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -185,12 +162,6 @@ gimp_source_core_get_property (GObject    *object,
 
   switch (property_id)
     {
-    case PROP_SRC_X:
-      g_value_set_int (value, source_core->src_x);
-      break;
-    case PROP_SRC_Y:
-      g_value_set_int (value, source_core->src_y);
-      break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -265,18 +236,22 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
     case GIMP_PAINT_STATE_INIT:
       if (source_core->set_source)
         {
-          g_object_set (options, "src-drawables", drawables, NULL);
+          g_object_set (options,
+                        "src-drawables", drawables,
+                        "src-x",         (gint) floor (coords->x),
+                        "src-y",         (gint) floor (coords->y),
+                        NULL);
 
           /* FIXME(?): subpixel source sampling */
-          source_core->src_x = floor (coords->x);
-          source_core->src_y = floor (coords->y);
 
           source_core->first_stroke = TRUE;
         }
       else if (options->align_mode == GIMP_SOURCE_ALIGN_NO)
         {
-          source_core->orig_src_x = source_core->src_x;
-          source_core->orig_src_y = source_core->src_y;
+          g_object_get (options,
+                        "src-x", &source_core->orig_src_x,
+                        "src-y", &source_core->orig_src_y,
+                        NULL);
 
           source_core->first_stroke = TRUE;
         }
@@ -287,8 +262,11 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         {
           /*  If the control key is down, move the src target and return */
 
-          source_core->src_x = floor (coords->x);
-          source_core->src_y = floor (coords->y);
+          g_object_set (options,
+                        "src-drawables", drawables,
+                        "src-x",         (gint) floor (coords->x),
+                        "src-y",         (gint) floor (coords->y),
+                        NULL);
 
           source_core->first_stroke = TRUE;
         }
@@ -296,11 +274,19 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
         {
           /*  otherwise, update the target  */
 
+          gint src_x;
+          gint src_y;
+
           gint dest_x;
           gint dest_y;
 
           dest_x = floor (coords->x);
           dest_y = floor (coords->y);
+
+          g_object_get (options,
+                        "src-x", &src_x,
+                        "src-y", &src_y,
+                        NULL);
 
           if (options->align_mode == GIMP_SOURCE_ALIGN_REGISTERED)
             {
@@ -309,19 +295,22 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
             }
           else if (options->align_mode == GIMP_SOURCE_ALIGN_FIXED)
             {
-              source_core->offset_x = source_core->src_x - dest_x;
-              source_core->offset_y = source_core->src_y - dest_y;
+              source_core->offset_x = src_x - dest_x;
+              source_core->offset_y = src_y - dest_y;
             }
           else if (source_core->first_stroke)
             {
-              source_core->offset_x = source_core->src_x - dest_x;
-              source_core->offset_y = source_core->src_y - dest_y;
+              source_core->offset_x = src_x - dest_x;
+              source_core->offset_y = src_y - dest_y;
 
               source_core->first_stroke = FALSE;
             }
 
-          source_core->src_x = dest_x + source_core->offset_x;
-          source_core->src_y = dest_y + source_core->offset_y;
+          g_object_set (options,
+                        "src-x", dest_x + source_core->offset_x,
+                        "src-y", dest_y + source_core->offset_y,
+                        NULL);
+
 
           for (GList *iter = drawables; iter; iter = iter->next)
             gimp_source_core_motion (source_core, iter->data,
@@ -335,17 +324,17 @@ gimp_source_core_paint (GimpPaintCore    *paint_core,
       if (options->align_mode == GIMP_SOURCE_ALIGN_NO &&
           ! source_core->first_stroke)
         {
-          source_core->src_x = source_core->orig_src_x;
-          source_core->src_y = source_core->orig_src_y;
+          g_object_set (options,
+                        "src-x", source_core->orig_src_x,
+                        "src-y", source_core->orig_src_y,
+                        NULL);
+
         }
       break;
 
     default:
       break;
     }
-
-  g_object_notify (G_OBJECT (source_core), "src-x");
-  g_object_notify (G_OBJECT (source_core), "src-y");
 }
 
 void
@@ -383,6 +372,7 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
   GimpCoords         coords;
   gint               src_off_x = 0;
   gint               src_off_y = 0;
+  gint               src_x, src_y;
   gint               off_x, off_y;
   gint               n_strokes;
   gint               i;
@@ -436,6 +426,11 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
         gimp_item_get_offset (GIMP_ITEM (src_pickable),
                               &src_off_x, &src_off_y);
     }
+
+  g_object_get (options,
+                "src-x", &src_x,
+                "src-y", &src_y,
+                NULL);
 
   gimp_brush_core_eval_transform_dynamics (brush_core,
                                            image,
@@ -516,8 +511,8 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           translate_before = gegl_node_new_child (
             node,
             "operation", "gegl:translate",
-            "x",         -(source_core->src_x + 0.5),
-            "y",         -(source_core->src_y + 0.5),
+            "x",         -((gdouble) src_x + 0.5),
+            "y",         -((gdouble) src_y + 0.5),
             NULL);
 
           gegl_node_add_child (node, op);
@@ -525,9 +520,9 @@ gimp_source_core_motion (GimpSourceCore   *source_core,
           translate_after = gegl_node_new_child (
             node,
             "operation", "gegl:translate",
-            "x",         (source_core->src_x + 0.5) +
+            "x",         ((gdouble) src_x + 0.5) +
                          (paint_area_offset_x - src_rect.x),
-            "y",         (source_core->src_y + 0.5) +
+            "y",         ((gdouble) src_y + 0.5) +
                          (paint_area_offset_y - src_rect.y),
             NULL);
 

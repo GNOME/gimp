@@ -41,6 +41,8 @@ enum
 {
   PROP_0,
   PROP_SRC_DRAWABLES,
+  PROP_SRC_X,
+  PROP_SRC_Y,
   PROP_ALIGN_MODE,
   PROP_SAMPLE_MERGED
 };
@@ -83,6 +85,17 @@ gimp_source_options_class_init (GimpSourceOptionsClass *klass)
                                    g_param_spec_pointer ("src-drawables",
                                                          NULL, NULL,
                                                          GIMP_PARAM_READWRITE));
+
+  g_object_class_install_property (object_class, PROP_SRC_X,
+                                   g_param_spec_int ("src-x",
+                                                     NULL, NULL,
+                                                     G_MININT, G_MAXINT, 0,
+                                                     GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_SRC_Y,
+                                   g_param_spec_int ("src-y",
+                                                     NULL, NULL,
+                                                     G_MININT, G_MAXINT, 0,
+                                                     GIMP_PARAM_READWRITE));
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_MODE,
                          "align-mode",
@@ -131,6 +144,12 @@ gimp_source_options_set_property (GObject      *object,
       gimp_source_options_set_src_drawables (options,
                                              g_value_get_pointer (value));
       break;
+    case PROP_SRC_X:
+      options->src_x = g_value_get_int (value);
+      break;
+    case PROP_SRC_Y:
+      options->src_y = g_value_get_int (value);
+      break;
     case PROP_ALIGN_MODE:
       options->align_mode = g_value_get_enum (value);
       break;
@@ -155,6 +174,12 @@ gimp_source_options_get_property (GObject    *object,
     {
     case PROP_SRC_DRAWABLES:
       g_value_set_pointer (value, options->src_drawables);
+      break;
+    case PROP_SRC_X:
+      g_value_set_int (value, options->src_x);
+      break;
+    case PROP_SRC_Y:
+      g_value_set_int (value, options->src_y);
       break;
     case PROP_ALIGN_MODE:
       g_value_set_enum (value, options->align_mode);

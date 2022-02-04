@@ -630,8 +630,10 @@ gimp_perspective_clone_tool_oper_update (GimpTool         *tool,
             {
               gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-              clone_tool->src_x = source_core->src_x;
-              clone_tool->src_y = source_core->src_y;
+              g_object_get (options,
+                            "src-x", &clone_tool->src_x,
+                            "src-y", &clone_tool->src_y,
+                            NULL);
 
               if (! source_core->first_stroke)
                 {
