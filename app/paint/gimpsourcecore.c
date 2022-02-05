@@ -49,15 +49,6 @@ enum
 };
 
 
-static void     gimp_source_core_set_property    (GObject           *object,
-                                                  guint              property_id,
-                                                  const GValue      *value,
-                                                  GParamSpec        *pspec);
-static void     gimp_source_core_get_property    (GObject           *object,
-                                                  guint              property_id,
-                                                  GValue            *value,
-                                                  GParamSpec        *pspec);
-
 static gboolean gimp_source_core_start           (GimpPaintCore     *paint_core,
                                                   GList             *drawables,
                                                   GimpPaintOptions  *paint_options,
@@ -106,12 +97,8 @@ G_DEFINE_TYPE (GimpSourceCore, gimp_source_core, GIMP_TYPE_BRUSH_CORE)
 static void
 gimp_source_core_class_init (GimpSourceCoreClass *klass)
 {
-  GObjectClass       *object_class     = G_OBJECT_CLASS (klass);
   GimpPaintCoreClass *paint_core_class = GIMP_PAINT_CORE_CLASS (klass);
   GimpBrushCoreClass *brush_core_class = GIMP_BRUSH_CORE_CLASS (klass);
-
-  object_class->set_property               = gimp_source_core_set_property;
-  object_class->get_property               = gimp_source_core_get_property;
 
   paint_core_class->start                  = gimp_source_core_start;
   paint_core_class->paint                  = gimp_source_core_paint;
@@ -134,38 +121,6 @@ gimp_source_core_init (GimpSourceCore *source_core)
   source_core->offset_x      = 0;
   source_core->offset_y      = 0;
   source_core->first_stroke  = TRUE;
-}
-
-static void
-gimp_source_core_set_property (GObject      *object,
-                               guint         property_id,
-                               const GValue *value,
-                               GParamSpec   *pspec)
-{
-  GimpSourceCore *source_core = GIMP_SOURCE_CORE (object);
-
-  switch (property_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_source_core_get_property (GObject    *object,
-                               guint       property_id,
-                               GValue     *value,
-                               GParamSpec *pspec)
-{
-  GimpSourceCore *source_core = GIMP_SOURCE_CORE (object);
-
-  switch (property_id)
-    {
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
 }
 
 static gboolean
