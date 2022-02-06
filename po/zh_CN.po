@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-02 21:46+0000\n"
-"PO-Revision-Date: 2022-02-03 11:24+0800\n"
+"POT-Creation-Date: 2022-02-05 13:27+0000\n"
+"PO-Revision-Date: 2022-02-06 11:14+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -3245,25 +3245,47 @@ msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
 msgstr "笔刷角度(编辑器)：向左旋转 15°"
 
-#: ../app/actions/context-commands.c:458
+#: ../app/actions/context-actions.c:1093
+#| msgid "Enable dynamics"
+msgctxt "context-action"
+msgid "_Enable/Disable Dynamics"
+msgstr "启用/禁用动态(_E)"
+
+#: ../app/actions/context-actions.c:1094
+#| msgid "Apply dynamics curves to paint settings"
+msgctxt "context-action"
+msgid "Apply or ignore the dynamics when painting"
+msgstr "绘画时应用或忽略动态"
+
+#: ../app/actions/context-commands.c:459
 #, c-format
 msgid "Paint Mode: %s"
 msgstr "绘画模式：%s"
 
-#: ../app/actions/context-commands.c:612
+#: ../app/actions/context-commands.c:613
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "笔刷形状：%s"
 
-#: ../app/actions/context-commands.c:675
+#: ../app/actions/context-commands.c:676
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "笔刷半径：%2.2f"
 
-#: ../app/actions/context-commands.c:795
+#: ../app/actions/context-commands.c:796
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "笔刷角度：%2.2f"
+
+#: ../app/actions/context-commands.c:827
+#| msgid "Dynamics Folders"
+msgid "Dynamics disabled"
+msgstr "动态已禁用"
+
+#: ../app/actions/context-commands.c:830
+#| msgid "Dynamics Folders"
+msgid "Dynamics enabled"
+msgstr "动态已启用"
 
 #: ../app/actions/cursor-info-actions.c:41
 msgctxt "cursor-info-action"
@@ -13280,7 +13302,7 @@ msgstr "删除“%s”失败：%s"
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:702
 #: ../app/dialogs/preferences-dialog.c:3326
-#: ../app/tools/gimppaintoptions-gui.c:218
+#: ../app/tools/gimppaintoptions-gui.c:311
 msgid "Dynamics"
 msgstr "动态"
 
@@ -18367,7 +18389,7 @@ msgstr "竖直(_V)："
 msgid "Image Size"
 msgstr "图像大小"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:429
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:430
 #: ../app/propgui/gimppropgui-newsprint.c:262
 msgid "Quality"
 msgstr "质量"
@@ -20380,11 +20402,11 @@ msgstr "仅运动"
 msgid "Flow"
 msgstr "流量"
 
-#: ../app/paint/gimpbrushcore.c:373
+#: ../app/paint/gimpbrushcore.c:383
 msgid "No brushes available for use with this tool."
 msgstr "没有可供此工具使用的笔刷。"
 
-#: ../app/paint/gimpbrushcore.c:380
+#: ../app/paint/gimpbrushcore.c:390
 msgid "No paint dynamics available for use with this tool."
 msgstr "没有可供此工具使用的动态。"
 
@@ -20618,70 +20640,74 @@ msgstr "应用抖动"
 msgid "Scatter brush as you paint"
 msgstr "在绘画时散开笔刷"
 
-#: ../app/paint/gimppaintoptions.c:308
+#: ../app/paint/gimppaintoptions.c:309
+msgid "Enable dynamics"
+msgstr "启用动态"
+
+#: ../app/paint/gimppaintoptions.c:310
+msgid "Apply dynamics curves to paint settings"
+msgstr "应用动态曲线至绘画设置"
+
+#: ../app/paint/gimppaintoptions.c:316
 msgid "Amount"
 msgstr "数量"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:317
 msgid "Distance of scattering"
 msgstr "散开距离"
 
-#: ../app/paint/gimppaintoptions.c:315
-msgid "Dynamics Options"
-msgstr "动态选项"
-
-#: ../app/paint/gimppaintoptions.c:322
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Fade length"
 msgstr "淡出长度"
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:324
 msgid "Distance over which strokes fade out"
 msgstr "笔触淡出前的距离"
 
-#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "反向"
 
-#: ../app/paint/gimppaintoptions.c:334
+#: ../app/paint/gimppaintoptions.c:335
 msgid "Reverse direction of fading"
 msgstr "颠倒淡出的方向"
 
-#: ../app/paint/gimppaintoptions.c:339 ../app/paint/gimppaintoptions.c:359
+#: ../app/paint/gimppaintoptions.c:340 ../app/paint/gimppaintoptions.c:360
 #: ../app/tools/gimpgradientoptions.c:307
 #: ../app/tools/gimppaintoptions-gui.c:347
 msgid "Repeat"
 msgstr "重复"
 
-#: ../app/paint/gimppaintoptions.c:340
+#: ../app/paint/gimppaintoptions.c:341
 msgid "How fade is repeated as you paint"
 msgstr "绘画淡出的重复方式"
 
-#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
+#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:282
 #: ../app/tools/gimppaintoptions-gui.c:380
 msgid "Blend Color Space"
 msgstr "混合色彩空间"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:354
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr "混合 RGB 渐变片段时使用哪种色彩空间"
 
-#: ../app/paint/gimppaintoptions.c:423
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Smooth stroke"
 msgstr "平滑笔触"
 
-#: ../app/paint/gimppaintoptions.c:424
+#: ../app/paint/gimppaintoptions.c:425
 msgid "Paint smoother strokes"
 msgstr "绘制平滑笔触"
 
-#: ../app/paint/gimppaintoptions.c:430
+#: ../app/paint/gimppaintoptions.c:431
 msgid "Depth of smoothing"
 msgstr "平滑深度"
 
-#: ../app/paint/gimppaintoptions.c:435
+#: ../app/paint/gimppaintoptions.c:436
 msgid "Weight"
 msgstr "权重"
 
-#: ../app/paint/gimppaintoptions.c:436
+#: ../app/paint/gimppaintoptions.c:437
 msgid "Gravity of the pen"
 msgstr "笔刷的重量"
 
@@ -20721,22 +20747,22 @@ msgctxt "smudge-tool"
 msgid "No erasing effect"
 msgstr "没有擦除效果"
 
-#: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:97
+#: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:110
 #: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:135
 #: ../app/tools/gimpcoloroptions.c:70 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
 msgstr "位样合并"
 
-#: ../app/paint/gimpsourcecore.c:225
+#: ../app/paint/gimpsourcecore.c:151
 msgid "Set a source image first."
 msgstr "先设置源图像。"
 
-#: ../app/paint/gimpsourcecore.c:232
+#: ../app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr "“已登记”对齐无法在多个可绘区上绘画。"
 
-#: ../app/paint/gimpsourceoptions.c:89 ../app/tools/gimpaligntool.c:123
+#: ../app/paint/gimpsourceoptions.c:102 ../app/tools/gimpaligntool.c:123
 #: ../app/tools/gimpcloneoptions-gui.c:283 ../app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "对齐方式"
@@ -24188,7 +24214,7 @@ msgstr "重置为笔刷的原始硬度"
 msgid "Reset force to default"
 msgstr "重置力度为默认值"
 
-#: ../app/tools/gimppaintoptions-gui.c:222
+#: ../app/tools/gimppaintoptions-gui.c:315
 msgid "Edit this dynamics"
 msgstr "编辑该动态"
 
@@ -28405,6 +28431,9 @@ msgstr "圆"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "模糊"
+
+#~ msgid "Dynamics Options"
+#~ msgstr "动态选项"
 
 #~ msgid "Named Selection"
 #~ msgstr "已命名选择"
