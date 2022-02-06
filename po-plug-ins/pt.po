@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-19 15:39+0000\n"
-"PO-Revision-Date: 2022-01-19 16:07+0000\n"
+"POT-Creation-Date: 2022-02-03 22:11+0000\n"
+"PO-Revision-Date: 2022-02-06 21:51+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -727,7 +727,6 @@ msgstr "Saturação"
 #: ../plug-ins/common/decompose.c:203
 #: ../plug-ins/gimpressionist/orientation.c:148
 #: ../plug-ins/gimpressionist/size.c:155
-#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Valor"
 
@@ -9736,6 +9735,11 @@ msgstr "DICOM"
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
 msgid "Exif Tag"
 msgstr "Etiqueta Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
+msgctxt "A tag value"
+msgid "Value"
+msgstr "Valor"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
