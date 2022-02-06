@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-02 18:17+0000\n"
-"PO-Revision-Date: 2022-02-02 19:21+0100\n"
+"POT-Creation-Date: 2022-02-03 22:11+0000\n"
+"PO-Revision-Date: 2022-02-04 23:03+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -1404,7 +1404,7 @@ msgstr "Skal_delning:"
 
 #: ../plug-ins/common/contrast-retinex.c:421
 msgid "Dy_namic:"
-msgstr "Dy_namisk:"
+msgstr "Dy_namik:"
 
 #: ../plug-ins/common/contrast-retinex.c:709
 msgid "Retinex: filtering"
