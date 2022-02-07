@@ -1207,7 +1207,31 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
   GimpImage        *image;
   gchar             buffer[CURSOR_LEN];
 
+#ifdef GDK_WINDOWING_QUARTZ
+  /*
+   * This optimization dramatically improves drawing refresh speed on Macs with retina
+   * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
+   * running Big Sur (released Nov 2020) or higher.
+   * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
+   */
+  gint64            curr_time = g_get_monotonic_time ();
+#endif
+
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /*
+   * This optimization dramatically improves drawing refresh speed on Macs with retina
+   * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
+   * running Big Sur (released Nov 2020) or higher.
+   * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
+   */
+  /* only redraw max every 100ms */
+  if (curr_time - statusbar->last_frame_time < 1000 * 300)
+    return;
+
+  statusbar->last_frame_time = curr_time;
+#endif
 
   shell = statusbar->shell;
   image = gimp_display_get_image (shell->display);
