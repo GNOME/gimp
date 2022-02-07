@@ -44,6 +44,7 @@
 #include "gimpimagefile.h"
 #include "gimpgradient.h"
 #include "gimpimage.h"
+#include "gimplineart.h"
 #include "gimpmybrush.h"
 #include "gimppaintinfo.h"
 #include "gimppalette.h"
@@ -285,6 +286,10 @@ static void gimp_context_template_list_thaw  (GimpContainer    *container,
                                               GimpContext      *context);
 static void gimp_context_real_set_template   (GimpContext      *context,
                                               GimpTemplate     *template);
+
+
+/*  line art  */
+static gboolean gimp_context_free_line_art   (GimpContext      *context);
 
 
 /*  utilities  */
@@ -816,6 +821,9 @@ gimp_context_init (GimpContext *context)
 
   context->template        = NULL;
   context->template_name   = NULL;
+
+  context->line_art            = NULL;
+  context->line_art_timeout_id = 0;
 }
 
 static void
@@ -1011,6 +1019,8 @@ gimp_context_finalize (GObject *object)
   g_clear_pointer (&context->buffer_name,      g_free);
   g_clear_pointer (&context->imagefile_name,   g_free);
   g_clear_pointer (&context->template_name,    g_free);
+
+  g_clear_object (&context->line_art);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -3781,6 +3791,74 @@ gimp_context_real_set_template (GimpContext  *context,
 
   g_object_notify (G_OBJECT (context), "template");
   gimp_context_template_changed (context);
+}
+
+
+/*****************************************************************************/
+/*  Line Art  ****************************************************************/
+
+GimpLineArt *
+gimp_context_take_line_art (GimpContext *context)
+{
+  GimpLineArt *line_art;
+
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+
+  if (context->line_art)
+    {
+      g_source_remove (context->line_art_timeout_id);
+      context->line_art_timeout_id = 0;
+
+      line_art = context->line_art;
+      context->line_art = NULL;
+    }
+  else
+    {
+      line_art = gimp_line_art_new ();
+    }
+
+  return line_art;
+}
+
+/*
+ * gimp_context_store_line_art:
+ * @context:
+ * @line_art:
+ *
+ * The @context takes ownership of @line_art until the next time it is
+ * requested with gimp_context_take_line_art() or until 3 minutes have
+ * passed.
+ * This function allows to temporarily store the computed line art data
+ * in case it is needed very soon again, so that not to free and
+ * recompute all the time the data when quickly switching tools.
+ */
+void
+gimp_context_store_line_art (GimpContext *context,
+                             GimpLineArt *line_art)
+{
+  g_return_if_fail (GIMP_IS_CONTEXT (context));
+  g_return_if_fail (GIMP_IS_LINE_ART (line_art));
+
+  if (context->line_art)
+    {
+      g_source_remove (context->line_art_timeout_id);
+      context->line_art_timeout_id = 0;
+    }
+
+  context->line_art            = line_art;
+  context->line_art_timeout_id = g_timeout_add (180000,
+                                                (GSourceFunc) gimp_context_free_line_art,
+                                                context);
+}
+
+static gboolean
+gimp_context_free_line_art (GimpContext *context)
+{
+  g_clear_object (&context->line_art);
+
+  context->line_art_timeout_id = 0;
+
+  return G_SOURCE_REMOVE;
 }
 
 

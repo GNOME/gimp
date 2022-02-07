@@ -102,6 +102,9 @@ struct _GimpContext
 
   GimpTemplate         *template;
   gchar                *template_name;
+
+  GimpLineArt          *line_art;
+  guint                 line_art_timeout_id;
 };
 
 struct _GimpContextClass
@@ -355,6 +358,11 @@ GimpTemplate   * gimp_context_get_template        (GimpContext     *context);
 void             gimp_context_set_template        (GimpContext     *context,
                                                    GimpTemplate    *template);
 void             gimp_context_template_changed    (GimpContext     *context);
+
+/*  line art  */
+GimpLineArt    * gimp_context_take_line_art       (GimpContext     *context);
+void             gimp_context_store_line_art      (GimpContext     *context,
+                                                   GimpLineArt     *line_art);
 
 
 #endif /* __GIMP_CONTEXT_H__ */

@@ -70,6 +70,7 @@ struct _GimpBucketFillToolPrivate
   GimpLineArt        *line_art;
   GimpImage          *line_art_image;
   GimpDisplayShell   *line_art_shell;
+  GList              *line_art_bindings;
 
   /* For preview */
   GeglNode           *graph;
@@ -215,6 +216,8 @@ gimp_bucket_fill_tool_constructed (GObject *object)
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   Gimp                  *gimp        = GIMP_CONTEXT (options)->gimp;
   GimpContext           *context     = gimp_get_user_context (gimp);
+  GList                 *bindings    = NULL;
+  GBinding              *binding;
   GimpLineArt           *line_art;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -223,22 +226,27 @@ gimp_bucket_fill_tool_constructed (GObject *object)
                                      options->fill_area == GIMP_BUCKET_FILL_LINE_ART ?
                                      GIMP_MOTION_MODE_EXACT : GIMP_MOTION_MODE_COMPRESS);
 
-  line_art = gimp_line_art_new ();
-  g_object_bind_property (options,  "fill-transparent",
-                          line_art, "select-transparent",
-                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
-  g_object_bind_property (options,  "line-art-threshold",
-                          line_art, "threshold",
-                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
-  g_object_bind_property (options,  "line-art-max-grow",
-                          line_art, "max-grow",
-                          G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
-  g_object_bind_property (options,  "line-art-max-gap-length",
-                          line_art, "spline-max-length",
-                          G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
-  g_object_bind_property (options,  "line-art-max-gap-length",
-                          line_art, "segment-max-length",
-                          G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
+  line_art = gimp_context_take_line_art (context);
+  binding = g_object_bind_property (options,  "fill-transparent",
+                                    line_art, "select-transparent",
+                                    G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  bindings = g_list_prepend (bindings, binding);
+  binding = g_object_bind_property (options,  "line-art-threshold",
+                                    line_art, "threshold",
+                                    G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  bindings = g_list_prepend (bindings, binding);
+  binding = g_object_bind_property (options,  "line-art-max-grow",
+                                    line_art, "max-grow",
+                                    G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  bindings = g_list_prepend (bindings, binding);
+  binding = g_object_bind_property (options,  "line-art-max-gap-length",
+                                    line_art, "spline-max-length",
+                                    G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
+  bindings = g_list_prepend (bindings, binding);
+  binding = g_object_bind_property (options,  "line-art-max-gap-length",
+                                    line_art, "segment-max-length",
+                                    G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);
+  bindings = g_list_prepend (bindings, binding);
   g_signal_connect_swapped (line_art, "computing-start",
                             G_CALLBACK (gimp_bucket_fill_tool_line_art_computing_start),
                             tool);
@@ -247,6 +255,7 @@ gimp_bucket_fill_tool_constructed (GObject *object)
                             tool);
   gimp_line_art_bind_gap_length (line_art, TRUE);
   bucket_tool->priv->line_art = line_art;
+  bucket_tool->priv->line_art_bindings = bindings;
 
   gimp_bucket_fill_tool_reset_line_art (bucket_tool);
 
@@ -284,7 +293,19 @@ gimp_bucket_fill_tool_finalize (GObject *object)
         tool);
       tool->priv->line_art_shell = NULL;
     }
-  g_clear_object (&tool->priv->line_art);
+
+  /* We don't free the line art object, but gives temporary ownership to
+   * the user context which will free it if a timer runs out.
+   *
+   * This way, we allow people to not suffer a new computational delay
+   * if for instance they just needed to switch tools for a few seconds
+   * while the source layer stays the same.
+   */
+  g_signal_handlers_disconnect_by_data (tool->priv->line_art, tool);
+  g_list_free_full (tool->priv->line_art_bindings,
+                    (GDestroyNotify) g_binding_unbind);
+  gimp_context_store_line_art (context, tool->priv->line_art);
+  tool->priv->line_art = NULL;
 
   g_signal_handlers_disconnect_by_data (options, tool);
   g_signal_handlers_disconnect_by_data (context, tool);
