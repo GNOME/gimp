@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-19 20:46+0000\n"
-"PO-Revision-Date: 2022-01-22 10:32+0100\n"
+"POT-Creation-Date: 2022-02-03 22:11+0000\n"
+"PO-Revision-Date: 2022-02-05 00:07+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -723,7 +723,6 @@ msgstr "Nasičenost"
 #: ../plug-ins/common/decompose.c:203
 #: ../plug-ins/gimpressionist/orientation.c:148
 #: ../plug-ins/gimpressionist/size.c:155
-#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
 msgid "Value"
 msgstr "Vrednost"
 
@@ -9677,6 +9676,11 @@ msgstr "DICOM"
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:1
 msgid "Exif Tag"
 msgstr "Značka Exif"
+
+#: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
+msgctxt "A tag value"
+msgid "Value"
+msgstr "Vrednost"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:3
 msgid "Exif"
