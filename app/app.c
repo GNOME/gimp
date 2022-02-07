@@ -67,7 +67,10 @@
 
 #include "app.h"
 #include "errors.h"
-#include "gimpapp.h"
+#ifndef GIMP_CONSOLE_COMPILATION
+#include "gui/gimpapp.h"
+#endif
+#include "gimpconsoleapp.h"
 #include "language.h"
 #include "sanity.h"
 #include "gimp-debug.h"
@@ -85,7 +88,7 @@ static void       app_restore_after_callback (Gimp               *gimp,
                                               GimpInitStatusFunc  status_callback);
 static gboolean   app_exit_after_callback    (Gimp               *gimp,
                                               gboolean            kill_it,
-                                              GimpApp           **app);
+                                              GApplication      **app);
 
 #if 0
 /*  left here as documentation how to do compat enums  */
@@ -164,18 +167,25 @@ app_exit (gint status)
 }
 
 static void
-app_activate_callback (GApplication *gapp,
-                       gpointer      user_data)
+app_activate_callback (GimpCoreApp *app,
+                       gpointer     user_data)
 {
-  GimpApp            *app                = GIMP_APP (gapp);
   Gimp               *gimp               = NULL;
   GimpInitStatusFunc  update_status_func = NULL;
+  const gchar       **filenames;
+  const gchar        *current_language;
+  gchar              *prev_language      = NULL;
+  GError             *font_error         = NULL;
 
-  gimp = gimp_app_get_gimp (app);
+  g_return_if_fail (GIMP_IS_CORE_APP (app));
+
+  gimp = gimp_core_app_get_gimp (app);
+
+  gimp_core_app_set_exit_status (app, EXIT_SUCCESS);
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! gimp->no_interface)
-    update_status_func = gui_init (gimp, gimp_app_get_no_splash (app), gapp, NULL);
+    update_status_func = gui_init (gimp, gimp_app_get_no_splash (GIMP_APP (app)), GIMP_APP (app), NULL);
 #endif
 
   if (! update_status_func)
@@ -186,8 +196,19 @@ app_activate_callback (GApplication *gapp,
    */
   gimp_initialize (gimp, update_status_func);
 
+  g_object_get (gimp->edit_config,
+                "prev-language", &prev_language,
+                NULL);
+  /* Language was already initialized. I call this again only to get the
+   * actual language information.
+   */
+  current_language = language_init (NULL);
+  gimp->query_all = (prev_language == NULL ||
+                     g_strcmp0 (prev_language, current_language) != 0);
+  g_free (prev_language);
+
   /*  Load all data files */
-  gimp_restore (gimp, update_status_func, NULL);
+  gimp_restore (gimp, update_status_func, &font_error);
 
   /*  enable autosave late so we don't autosave when the
    *  monitor resolution is set in gui_init()
@@ -199,11 +220,12 @@ app_activate_callback (GApplication *gapp,
    */
   gimp_update_auto_check (gimp->edit_config, gimp);
 
-  /* Set this after gimp_update_auto_check(). This will be used for the
-   * next run.
-   */
+  /* Setting properties to be used for the next run.  */
   g_object_set (gimp->edit_config,
+                /* Set this after gimp_update_auto_check(). */
                 "config-version", GIMP_VERSION,
+                /* Set this after gimp_restore(). */
+                "prev-language",  current_language,
                 NULL);
 
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -232,7 +254,7 @@ app_activate_callback (GApplication *gapp,
                                               gimp_get_user_context (gimp),
                                               NULL,
                                               file,
-                                              gimp_app_get_as_new (app),
+                                              gimp_core_app_get_as_new (app),
                                               initial_monitor,
                                               &status, &error);
               if (image)
@@ -263,10 +285,9 @@ app_activate_callback (GApplication *gapp,
     }
 #endif
 
-  //XXX
-#if 0
   /*  Load the images given on the command-line. */
-  if (filenames)
+  filenames = gimp_core_app_get_filenames (app);
+  if (filenames != NULL)
     {
       gint i;
 
@@ -277,25 +298,48 @@ app_activate_callback (GApplication *gapp,
               GFile *file = g_file_new_for_commandline_arg (filenames[i]);
 
               file_open_from_command_line (gimp, file,
-                                           gimp_app_get_as_new (app),
+                                           gimp_core_app_get_as_new (app),
                                            initial_monitor);
 
               g_object_unref (file);
             }
         }
     }
-#endif
 
   /* The software is now fully loaded and ready to be used and get
    * external input.
    */
   gimp->initialized = TRUE;
 
+  if (font_error)
+    {
+      gimp_message_literal (gimp, NULL,
+                            GIMP_MESSAGE_INFO,
+                            font_error->message);
+      g_error_free (font_error);
+    }
+
   if (app)
     {
-      gimp_batch_run (gimp,
-                      gimp_app_get_batch_interpreter (app),
-                      gimp_app_get_batch_commands (app));
+      gint batch_retval;
+
+      batch_retval = gimp_batch_run (gimp,
+                      gimp_core_app_get_batch_interpreter (app),
+                      gimp_core_app_get_batch_commands (app));
+
+      if (gimp_core_app_get_quit (app))
+        {
+          /*  Only if we are in batch mode, we want to exit with the
+           *  return value of the batch command.
+           */
+            gimp_core_app_set_exit_status (app, batch_retval);
+
+          /* Return value, needed for the signal call; let's just ignore the
+          * result. */
+          gboolean cb_retval;
+
+          g_signal_emit_by_name (gimp, "exit", TRUE, &cb_retval);
+        }
     }
 }
 
@@ -324,12 +368,12 @@ app_run (const gchar         *full_prog_name,
          GimpPDBCompatMode    pdb_compat_mode,
          const gchar         *backtrace_file)
 {
-  Gimp               *gimp               = NULL;
-  GApplication       *app                = NULL;
-  GFile              *default_folder     = NULL;
-  GFile              *gimpdir            = NULL;
-  const gchar        *abort_message      = NULL;
-  gint                retval             = EXIT_SUCCESS;
+  Gimp               *gimp           = NULL;
+  GApplication       *app            = NULL;
+  GFile              *default_folder = NULL;
+  GFile              *gimpdir        = NULL;
+  const gchar        *abort_message  = NULL;
+  gint                retval         = EXIT_SUCCESS;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -371,7 +415,11 @@ app_run (const gchar         *full_prog_name,
 
   g_clear_object (&default_folder);
 
-  app = gimp_app_new (gimp, no_splash, as_new, batch_interpreter, batch_commands);
+#ifndef GIMP_CONSOLE_COMPILATION
+  app = gimp_app_new (gimp, no_splash, quit, as_new, filenames, batch_interpreter, batch_commands);
+#else
+  app = gimp_console_app_new (gimp, quit, as_new, filenames, batch_interpreter, batch_commands);
+#endif
 
   gimp_cpu_accel_set_use (use_cpu_accel);
 
@@ -433,30 +481,15 @@ app_run (const gchar         *full_prog_name,
 
   g_signal_connect_after (gimp, "exit",
                           G_CALLBACK (app_exit_after_callback),
-                          &run_loop);
+                          &app);
 
-#ifndef GIMP_CONSOLE_COMPILATION
-  if (run_loop && ! no_interface)
-    {
-      /* Before opening images from command line, check for salvaged images
-       * and query interactively to know if we should recover or discard
-       * them.
-       */
-      GList *recovered_files;
-      GList *iter;
+  g_signal_connect (app, "activate",
+                    G_CALLBACK (app_activate_callback),
+                    NULL);
+  retval = g_application_run (app, 0, NULL);
 
-      recovered_files = errors_recovered ();
-      if (recovered_files &&
-          gui_recover (g_list_length (recovered_files)))
-        {
-          for (iter = recovered_files; iter; iter = iter->next)
-            {
-              GFile             *file;
-              GimpImage         *image;
-              GError            *error = NULL;
-              GimpPDBStatusType  status;
-
-  g_application_run (app, 0, NULL);
+  if (! retval)
+    retval = gimp_core_app_get_exit_status (GIMP_CORE_APP (app));
 
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -505,9 +538,9 @@ app_restore_after_callback (Gimp               *gimp,
 }
 
 static gboolean
-app_exit_after_callback (Gimp       *gimp,
-                         gboolean    kill_it,
-                         GimpApp   **app)
+app_exit_after_callback (Gimp          *gimp,
+                         gboolean       kill_it,
+                         GApplication **app)
 {
   if (gimp->be_verbose)
     g_print ("EXIT: %s\n", G_STRFUNC);
@@ -524,7 +557,6 @@ app_exit_after_callback (Gimp       *gimp,
 #ifdef GIMP_UNSTABLE
 
   g_application_quit (G_APPLICATION (*app));
-  *app = NULL;
 
 #else
 
@@ -532,7 +564,7 @@ app_exit_after_callback (Gimp       *gimp,
 
   gegl_exit ();
 
-  exit (EXIT_SUCCESS);
+  exit (gimp_core_app_get_exit_status (GIMP_CORE_APP (*app)));
 
 #endif
 

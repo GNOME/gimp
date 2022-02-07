@@ -31,6 +31,8 @@ AM_LDFLAGS = \
 noinst_LIBRARIES = libappgui.a
 
 libappgui_a_sources = \
+	gimpapp.c		\
+	gimpapp.h		\
 	gimpdbusservice.c	\
 	gimpdbusservice.h	\
 	gimpuiconfigurer.c	\

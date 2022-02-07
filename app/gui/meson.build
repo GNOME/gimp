@@ -7,6 +7,7 @@ gimpdbusservice_gen = gnome.gdbus_codegen(
 )
 
 libappgui_sources = [
+  'gimpapp.c',
   'gimpdbusservice.c',
   'gimpuiconfigurer.c',
   'gui-message.c',

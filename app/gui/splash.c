@@ -112,7 +112,7 @@ void
 splash_create (Gimp         *gimp,
                gboolean      be_verbose,
                GdkMonitor   *monitor,
-               GApplication *app)
+               GimpApp      *app)
 {
   GtkWidget          *frame;
   GtkWidget          *vbox;
@@ -124,7 +124,7 @@ splash_create (Gimp         *gimp,
 
   g_return_if_fail (splash == NULL);
   g_return_if_fail (GDK_IS_MONITOR (monitor));
-  g_return_if_fail (G_IS_APPLICATION (app) || app == NULL);
+  g_return_if_fail (GIMP_IS_APP (app) || app == NULL);
 
   gdk_monitor_get_workarea (monitor, &workarea);
 
@@ -171,7 +171,7 @@ splash_create (Gimp         *gimp,
                   "role",            "gimp-startup",
                   "window-position", GTK_WIN_POS_CENTER,
                   "resizable",       FALSE,
-                  "application",     app,
+                  "application",     GTK_APPLICATION (app),
                   NULL);
 
   /* Don't remove this call, it's necessary to remove decorations on Windows

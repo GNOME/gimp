@@ -18,13 +18,14 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
+#include "gimpapp.h"
 
 void               gui_libs_init (GOptionContext *context);
 void               gui_abort     (const gchar    *abort_message);
 
 GimpInitStatusFunc gui_init      (Gimp           *gimp,
                                   gboolean        no_splash,
-                                  GApplication   *app,
+                                  GimpApp        *app,
                                   const gchar    *test_base_dir);
 
 gboolean           gui_recover   (gint            n_recoveries);

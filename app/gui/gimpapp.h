@@ -1,3 +1,4 @@
+
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
@@ -17,30 +18,21 @@
 #ifndef __GIMP_APP_H__
 #define __GIMP_APP_H__
 
-#include <gio/gio.h>
 #include <gtk/gtk.h>
 
-#include "core/core-types.h"
-#include "core/gimp.h"
+#include "gimpcoreapp.h"
 
 #define GIMP_TYPE_APP (gimp_app_get_type ())
 G_DECLARE_FINAL_TYPE (GimpApp, gimp_app, GIMP, APP, GtkApplication)
 
+GApplication * gimp_app_new                   (Gimp        *gimp,
+                                               gboolean     no_splash,
+                                               gboolean     quit,
+                                               gboolean     as_new,
+                                               const char **filenames,
+                                               const char  *batch_interpreter,
+                                               const char **batch_commands);
 
-GApplication  *    gimp_app_new                   (Gimp        *gimp,
-                                                   gboolean     no_splash,
-                                                   gboolean     as_new,
-                                                   const char  *batch_interpreter,
-                                                   const char **batch_commands);
-
-Gimp *             gimp_app_get_gimp              (GimpApp    *self);
-
-gboolean           gimp_app_get_no_splash         (GimpApp    *self);
-
-gboolean           gimp_app_get_as_new            (GimpApp    *self);
-
-const char *       gimp_app_get_batch_interpreter (GimpApp    *self);
-
-const char **      gimp_app_get_batch_commands    (GimpApp    *self);
+gboolean       gimp_app_get_no_splash         (GimpApp     *self);
 
 #endif /* __GIMP_APP_H__ */

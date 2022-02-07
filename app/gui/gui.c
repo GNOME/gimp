@@ -225,7 +225,7 @@ gui_abort (const gchar *abort_message)
 GimpInitStatusFunc
 gui_init (Gimp         *gimp,
           gboolean      no_splash,
-          GApplication *app,
+          GimpApp      *app,
           const gchar  *test_base_dir)
 {
   GimpInitStatusFunc  status_callback = NULL;
@@ -233,7 +233,7 @@ gui_init (Gimp         *gimp,
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (the_gui_gimp == NULL, NULL);
-  g_return_val_if_fail (G_IS_APPLICATION (app) || app == NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_APP (app) || app == NULL, NULL);
 
   abort_message = gui_sanity_check ();
   if (abort_message)

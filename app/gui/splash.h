@@ -18,11 +18,12 @@
 #ifndef __SPLASH_H__
 #define __SPLASH_H__
 
+#include "gimpapp.h"
 
 void   splash_create    (Gimp         *gimp,
                          gboolean      be_verbose,
-                         GdkMonitor   *mointor,
-                         GApplication *app);
+                         GdkMonitor   *monitor,
+                         GimpApp      *app);
 void   splash_destroy   (void);
 
 void   splash_update    (const gchar *label1,
