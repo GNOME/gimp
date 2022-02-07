@@ -24,16 +24,6 @@
 #include <gegl.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
-#ifdef G_OS_WIN32
-#include <shlobj.h>
-
-/* Constant available since Shell32.dll 5.0 */
-#ifndef CSIDL_LOCAL_APPDATA
-#define CSIDL_LOCAL_APPDATA 0x001c
-#endif
-
-#endif
-
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
@@ -170,34 +160,6 @@ G_DEFINE_TYPE (GimpCoreConfig, gimp_core_config, GIMP_TYPE_GEGL_CONFIG)
 
 #define parent_class gimp_core_config_parent_class
 
-#ifdef G_OS_WIN32
-/*
- * Taken from glib 2.35 code / gimpenv.c.
- * Only temporary until the user-font folder detection can go upstream
- * in fontconfig!
- * XXX
- */
-static gchar *
-get_special_folder (int csidl)
-{
-  wchar_t      path[MAX_PATH+1];
-  HRESULT      hr;
-  LPITEMIDLIST pidl = NULL;
-  BOOL         b;
-  gchar       *retval = NULL;
-
-  hr = SHGetSpecialFolderLocation (NULL, csidl, &pidl);
-  if (hr == S_OK)
-    {
-      b = SHGetPathFromIDListW (pidl, path);
-      if (b)
-        retval = g_utf16_to_utf8 (path, -1, NULL, NULL, NULL);
-      CoTaskMemFree (pidl);
-    }
-
-  return retval;
-}
-#endif
 
 static void
 gimp_core_config_class_init (GimpCoreConfigClass *klass)
@@ -431,36 +393,6 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
   g_free (path);
 
   path = gimp_config_build_data_path ("fonts");
-#if defined G_OS_WIN32
-  /* XXX: since a Windows 10 update, build 17704, Microsoft added the
-   * concept of user-installed fonts (until now it was only possible to
-   * have system-wide fonts! How weird is that?).
-   * A feature request at fontconfig is also done, but until this gets
-   * implemented upstream, let's add the folder ourselves in GIMP's
-   * default list of folders.
-   * See: https://gitlab.gnome.org/GNOME/gimp/issues/2949
-   * Also: https://gitlab.freedesktop.org/fontconfig/fontconfig/issues/144
-   */
-    {
-      gchar *user_fonts_dir = get_special_folder (CSIDL_LOCAL_APPDATA);
-
-      if (user_fonts_dir)
-        {
-          gchar *path2;
-          gchar *tmp;
-
-          path2 = g_build_filename (user_fonts_dir,
-                                    "Microsoft", "Windows", "Fonts", NULL);
-          g_free (user_fonts_dir);
-
-          /* G_SEARCHPATH_SEPARATOR-separated list of folders. */
-          tmp = g_strconcat (path2, G_SEARCHPATH_SEPARATOR_S, path, NULL);
-          g_free (path2);
-          g_free (path);
-          path = tmp;
-        }
-    }
-#endif
   GIMP_CONFIG_PROP_PATH (object_class, PROP_FONT_PATH,
                          "font-path",
                          "Font path",
