@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-12-23 13:03+0000\n"
-"PO-Revision-Date: 2021-12-24 00:51+0100\n"
+"POT-Creation-Date: 2022-02-04 14:15+0000\n"
+"PO-Revision-Date: 2022-02-05 00:06+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1308,11 +1308,11 @@ msgstr "Pokaži stran nastavitev s poskusnimi funkcionalnostmi"
 msgid "Show an image submenu with debug actions"
 msgstr "Pokaži podmeni slike z dejanji razhroščevanja"
 
-#: ../app/main.c:710
+#: ../app/main.c:716
 msgid "[FILE|URI...]"
 msgstr "[DATOTEKA|URI...]"
 
-#: ../app/main.c:738
+#: ../app/main.c:744
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1320,20 +1320,20 @@ msgstr ""
 "GIMP ne more inicializirati grafičnega uporabniškega vmesnika.\n"
 "Prepričajte se, da obstaja prava nastavitev za vaše zaslonsko okolje."
 
-#: ../app/main.c:757
+#: ../app/main.c:763
 msgid "Another GIMP instance is already running."
 msgstr "GIMP je že zagnan."
 
-#: ../app/main.c:844
+#: ../app/main.c:850
 msgid "GIMP output. Type any character to close this window."
 msgstr "Izhod GIMP. Pritisnite kateri koli znak, da se okno zapre."
 
-#: ../app/main.c:845
+#: ../app/main.c:851
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pritisnite katero koli tipko, da zaprete to okno)\n"
 
-#: ../app/main.c:862
+#: ../app/main.c:868
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Izhod programa GIMP. To okno lahko pomanjšate, vendar ga ne zapirajte."
 
@@ -3401,25 +3401,43 @@ msgctxt "context-action"
 msgid "Brush Angle (Editor): Rotate Left by 15°"
 msgstr "Kot čopiča (urejevalnik): zasukaj levo za 15°"
 
-#: ../app/actions/context-commands.c:458
+#: ../app/actions/context-actions.c:1093
+msgctxt "context-action"
+msgid "_Enable/Disable Dynamics"
+msgstr "_Omogoči/onemogoči dinamiko"
+
+#: ../app/actions/context-actions.c:1094
+msgctxt "context-action"
+msgid "Apply or ignore the dynamics when painting"
+msgstr "Uveljavi ali prezri dinamiko pri slikanju"
+
+#: ../app/actions/context-commands.c:459
 #, c-format
 msgid "Paint Mode: %s"
 msgstr "Risalni način: %s"
 
-#: ../app/actions/context-commands.c:612
+#: ../app/actions/context-commands.c:613
 #, c-format
 msgid "Brush Shape: %s"
 msgstr "Oblika čopiča: %s"
 
-#: ../app/actions/context-commands.c:675
+#: ../app/actions/context-commands.c:676
 #, c-format
 msgid "Brush Radius: %2.2f"
 msgstr "Radij čopiča: %2.2f"
 
-#: ../app/actions/context-commands.c:795
+#: ../app/actions/context-commands.c:796
 #, c-format
 msgid "Brush Angle: %2.2f"
 msgstr "Kot čopiča: %2.2f"
+
+#: ../app/actions/context-commands.c:827
+msgid "Dynamics disabled"
+msgstr "Dinamika onemogočena"
+
+#: ../app/actions/context-commands.c:830
+msgid "Dynamics enabled"
+msgstr "Dinamika omogočena"
 
 #: ../app/actions/cursor-info-actions.c:41
 msgctxt "cursor-info-action"
@@ -3687,7 +3705,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2325
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2324
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:762 ../app/widgets/gimpdnd-xds.c:87
@@ -8019,7 +8037,7 @@ msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
 #: ../app/actions/layers-commands.c:338
-#: ../app/widgets/gimpdrawabletreeview.c:352
+#: ../app/widgets/gimpdrawabletreeview.c:359
 #: ../app/widgets/gimplayertreeview.c:1026
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -8233,19 +8251,19 @@ msgstr "Nastavi prostor skladanja plasti"
 msgid "Set layers' composite mode"
 msgstr "Nastavi način skladanja plasti"
 
-#: ../app/actions/layers-commands.c:2061 ../app/widgets/gimpitemtreeview.c:521
+#: ../app/actions/layers-commands.c:2061 ../app/widgets/gimpitemtreeview.c:524
 msgid "Lock content"
 msgstr "Zakleni vsebino"
 
-#: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:522
+#: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:525
 msgid "Unlock content"
 msgstr "Odkleni vsebino"
 
-#: ../app/actions/layers-commands.c:2110 ../app/widgets/gimpitemtreeview.c:537
+#: ../app/actions/layers-commands.c:2110 ../app/widgets/gimpitemtreeview.c:540
 msgid "Lock position"
 msgstr "Zakleni položaj"
 
-#: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:538
+#: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:541
 msgid "Unlock position"
 msgstr "Odkleni položaj"
 
@@ -11546,6 +11564,10 @@ msgstr ""
 "Napaka pri razčlenjevanju datoteke »%s«. Uporabljene bodo privzete "
 "vrednosti. Varnostna kopija nastavitev je bila shranjena v »%s«."
 
+#: ../app/config/gimpcoreconfig.c:851 ../app/dialogs/preferences-dialog.c:1899
+msgid "Pattern syntax for searching and selecting items:"
+msgstr "Skladnja vzorca za iskanje in izbiranje elementov:"
+
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:433
 msgid "Layer"
 msgstr "Plast"
@@ -13627,7 +13649,7 @@ msgstr "Brisanje »%s« ni uspelo: %s"
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:702
 #: ../app/dialogs/preferences-dialog.c:3326
-#: ../app/tools/gimppaintoptions-gui.c:218
+#: ../app/tools/gimppaintoptions-gui.c:311
 msgid "Dynamics"
 msgstr "Dinamika"
 
@@ -14378,7 +14400,7 @@ msgstr "Napaka pri nalaganju »%s«"
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:343 ../app/file-data/file-data-gex.c:481
 #: ../app/file-data/file-data-gih.c:99 ../app/file-data/file-data-pat.c:102
-#: ../app/xcf/xcf.c:440
+#: ../app/xcf/xcf.c:441
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "»%s« ni mogoče odpreti za branje: "
@@ -14680,90 +14702,90 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Preoblikuj skupino plasti"
 
-#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:690 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Simetrija"
 
-#: ../app/core/gimpimage.c:2570
+#: ../app/core/gimpimage.c:2569
 msgid " (exported)"
 msgstr " (izvožena)"
 
-#: ../app/core/gimpimage.c:2574
+#: ../app/core/gimpimage.c:2573
 msgid " (overwritten)"
 msgstr " (prepisana)"
 
-#: ../app/core/gimpimage.c:2583
+#: ../app/core/gimpimage.c:2582
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: ../app/core/gimpimage.c:2757 ../app/core/gimpimage.c:2771
-#: ../app/core/gimpimage.c:2814
+#: ../app/core/gimpimage.c:2756 ../app/core/gimpimage.c:2770
+#: ../app/core/gimpimage.c:2813
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Način plasti »%s« je bil dodan v %s"
 
-#: ../app/core/gimpimage.c:2829
+#: ../app/core/gimpimage.c:2828
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Skupine plasti so bile dodane v %s"
 
-#: ../app/core/gimpimage.c:2836
+#: ../app/core/gimpimage.c:2835
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maske na skupinah plasti so bile dodane v %s"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2851
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: ../app/core/gimpimage.c:2860
+#: ../app/core/gimpimage.c:2859
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodiranje slik z visoko bitno globino je bilo popravljeno v %s"
 
-#: ../app/core/gimpimage.c:2868
+#: ../app/core/gimpimage.c:2867
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "V %s je bilo dodano notranje stiskanje zlib"
 
-#: ../app/core/gimpimage.c:2885
+#: ../app/core/gimpimage.c:2884
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2891
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: ../app/core/gimpimage.c:2909
+#: ../app/core/gimpimage.c:2908
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Vodila izven platna dodana v %s"
 
-#: ../app/core/gimpimage.c:2920
+#: ../app/core/gimpimage.c:2919
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Element določen in iskanje vzorca v imenu elementa so bili dodani v %s."
 
-#: ../app/core/gimpimage.c:2926
+#: ../app/core/gimpimage.c:2925
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Izbor več kanalov je bil dodan v %s"
 
-#: ../app/core/gimpimage.c:3029
+#: ../app/core/gimpimage.c:3028
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: ../app/core/gimpimage.c:3081
+#: ../app/core/gimpimage.c:3080
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: ../app/core/gimpimage.c:4128
+#: ../app/core/gimpimage.c:4127
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -14771,47 +14793,47 @@ msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: ../app/core/gimpimage.c:4189
+#: ../app/core/gimpimage.c:4188
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: ../app/core/gimpimage.c:4231
+#: ../app/core/gimpimage.c:4230
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: ../app/core/gimpimage.c:5216
+#: ../app/core/gimpimage.c:5215
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: ../app/core/gimpimage.c:5260 ../app/core/gimpimage.c:5291
+#: ../app/core/gimpimage.c:5259 ../app/core/gimpimage.c:5290
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: ../app/core/gimpimage.c:5285
+#: ../app/core/gimpimage.c:5284
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: ../app/core/gimpimage.c:5809
+#: ../app/core/gimpimage.c:5808
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: ../app/core/gimpimage.c:5839 ../app/core/gimpimage.c:5864
+#: ../app/core/gimpimage.c:5838 ../app/core/gimpimage.c:5863
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: ../app/core/gimpimage.c:5923
+#: ../app/core/gimpimage.c:5922
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: ../app/core/gimpimage.c:5953 ../app/core/gimpimage.c:5961
+#: ../app/core/gimpimage.c:5952 ../app/core/gimpimage.c:5960
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -17627,10 +17649,6 @@ msgstr "Velikost predogleda _krmarjenja:"
 msgid "Item search"
 msgstr "Iskanje elementov"
 
-#: ../app/dialogs/preferences-dialog.c:1899
-msgid "Pattern syntax for searching and selecting items:"
-msgstr "Skladnja vzorca za iskanje in izbiranje elementov:"
-
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1903
 msgid "Keyboard Shortcuts"
@@ -18799,7 +18817,7 @@ msgstr "_Navpično:"
 msgid "Image Size"
 msgstr "Velikost slike"
 
-#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:429
+#: ../app/dialogs/scale-dialog.c:181 ../app/paint/gimppaintoptions.c:430
 #: ../app/propgui/gimppropgui-newsprint.c:262
 msgid "Quality"
 msgstr "Kakovost"
@@ -19204,20 +19222,20 @@ msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
 #: ../app/display/gimpdisplayshell-dnd.c:426
 #: ../app/widgets/gimpdrawabletreeview.c:267
-#: ../app/widgets/gimpdrawabletreeview.c:379
+#: ../app/widgets/gimpdrawabletreeview.c:386
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Spusti vzorec na plast"
 
 #: ../app/display/gimpdisplayshell-dnd.c:448
 #: ../app/widgets/gimpdrawabletreeview.c:298
-#: ../app/widgets/gimpdrawabletreeview.c:399
+#: ../app/widgets/gimpdrawabletreeview.c:406
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
 #: ../app/display/gimpdisplayshell-dnd.c:600
-#: ../app/widgets/gimpitemtreeview.c:1348
+#: ../app/widgets/gimpitemtreeview.c:1351
 #: ../app/widgets/gimplayertreeview.c:888
 msgid "Drop layers"
 msgstr "Spusti plasti"
@@ -19378,7 +19396,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Kliknite-povlecite za vrtenje področja ostrine"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
-#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:670
+#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:668
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s za nespremenljive kote"
@@ -20843,11 +20861,11 @@ msgstr "Samo gibanje"
 msgid "Flow"
 msgstr "Potek"
 
-#: ../app/paint/gimpbrushcore.c:373
+#: ../app/paint/gimpbrushcore.c:383
 msgid "No brushes available for use with this tool."
 msgstr "Za to orodje čopiči niso na voljo."
 
-#: ../app/paint/gimpbrushcore.c:380
+#: ../app/paint/gimpbrushcore.c:390
 msgid "No paint dynamics available for use with this tool."
 msgstr "Za to orodje dinamika slikanja ni na voljo."
 
@@ -21081,70 +21099,74 @@ msgstr "Uporabi tresenje"
 msgid "Scatter brush as you paint"
 msgstr "Raztresi čopič med slikanjem"
 
-#: ../app/paint/gimppaintoptions.c:308
+#: ../app/paint/gimppaintoptions.c:309
+msgid "Enable dynamics"
+msgstr "Omogoči dinamiko"
+
+#: ../app/paint/gimppaintoptions.c:310
+msgid "Apply dynamics curves to paint settings"
+msgstr "Uveljavi krivulje dinamike na nastavitvah slikanja"
+
+#: ../app/paint/gimppaintoptions.c:316
 msgid "Amount"
 msgstr "Količina"
 
-#: ../app/paint/gimppaintoptions.c:309
+#: ../app/paint/gimppaintoptions.c:317
 msgid "Distance of scattering"
 msgstr "Razdalja raztresanja"
 
-#: ../app/paint/gimppaintoptions.c:315
-msgid "Dynamics Options"
-msgstr "Možnosti dinamike"
-
-#: ../app/paint/gimppaintoptions.c:322
+#: ../app/paint/gimppaintoptions.c:323
 msgid "Fade length"
 msgstr "Dolžina pojemanja"
 
-#: ../app/paint/gimppaintoptions.c:323
+#: ../app/paint/gimppaintoptions.c:324
 msgid "Distance over which strokes fade out"
 msgstr "Razdalja, na kateri poteze pojemajo"
 
-#: ../app/paint/gimppaintoptions.c:333 ../app/widgets/gimpviewablebox.c:385
+#: ../app/paint/gimppaintoptions.c:334 ../app/widgets/gimpviewablebox.c:385
 msgid "Reverse"
 msgstr "Obrnjeno"
 
-#: ../app/paint/gimppaintoptions.c:334
+#: ../app/paint/gimppaintoptions.c:335
 msgid "Reverse direction of fading"
 msgstr "Obratna smer navzkrižnega pojemanja"
 
-#: ../app/paint/gimppaintoptions.c:339 ../app/paint/gimppaintoptions.c:359
+#: ../app/paint/gimppaintoptions.c:340 ../app/paint/gimppaintoptions.c:360
 #: ../app/tools/gimpgradientoptions.c:307
 #: ../app/tools/gimppaintoptions-gui.c:347
 msgid "Repeat"
 msgstr "Ponovi"
 
-#: ../app/paint/gimppaintoptions.c:340
+#: ../app/paint/gimppaintoptions.c:341
 msgid "How fade is repeated as you paint"
 msgstr "Kako je prehod ponovljen pri slikanju"
 
-#: ../app/paint/gimppaintoptions.c:352 ../app/tools/gimpgradientoptions.c:282
+#: ../app/paint/gimppaintoptions.c:353 ../app/tools/gimpgradientoptions.c:282
 #: ../app/tools/gimppaintoptions-gui.c:380
 msgid "Blend Color Space"
 msgstr "Zlij barvni prostor"
 
-#: ../app/paint/gimppaintoptions.c:353
+#: ../app/paint/gimppaintoptions.c:354
 msgid "Which color space to use when blending RGB gradient segments"
 msgstr "Kateri barvni prostor uporabiti pri mešanju segmentov preliva RGB"
 
-#: ../app/paint/gimppaintoptions.c:423
+#: ../app/paint/gimppaintoptions.c:424
 msgid "Smooth stroke"
 msgstr "Zgladi potezo"
 
-#: ../app/paint/gimppaintoptions.c:424
+#: ../app/paint/gimppaintoptions.c:425
 msgid "Paint smoother strokes"
 msgstr "Riši bolj gladke poteze"
 
-#: ../app/paint/gimppaintoptions.c:430
+#: ../app/paint/gimppaintoptions.c:431
 msgid "Depth of smoothing"
 msgstr "Globina glajenja"
 
-#: ../app/paint/gimppaintoptions.c:435
+#: ../app/paint/gimppaintoptions.c:436
 msgid "Weight"
 msgstr "Teža"
 
-#: ../app/paint/gimppaintoptions.c:436
+#: ../app/paint/gimppaintoptions.c:437
 msgid "Gravity of the pen"
 msgstr "Težnost pisala"
 
@@ -24719,7 +24741,7 @@ msgstr "Ponastavi trdoto na čopičevo osnovno trdoto"
 msgid "Reset force to default"
 msgstr "Ponastavi silo na privzeto vrednost"
 
-#: ../app/tools/gimppaintoptions-gui.c:222
+#: ../app/tools/gimppaintoptions-gui.c:315
 msgid "Edit this dynamics"
 msgstr "Uredi to dinamiko"
 
@@ -24793,16 +24815,16 @@ msgstr "Slikanje po več plasteh ni možno. Izberite samo eno plast."
 msgid "Cannot paint on layer groups."
 msgstr "Na skupine plasti ni mogoče slikati."
 
-#: ../app/tools/gimppainttool.c:701
+#: ../app/tools/gimppainttool.c:699
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s za ravno črto"
 
-#: ../app/tools/gimppainttool.c:915
+#: ../app/tools/gimppainttool.c:921
 msgid "The active layer does not have an alpha channel."
 msgstr "Aktivna plast nima kanala alfa."
 
-#: ../app/tools/gimppainttool.c:925
+#: ../app/tools/gimppainttool.c:931
 msgid "The active layer's alpha channel is locked."
 msgstr "Kanal alfa aktivne plasti je zaklenjen."
 
@@ -26580,11 +26602,11 @@ msgctxt "compression"
 msgid "Best compression"
 msgstr "Najboljše stiskanje"
 
-#: ../app/widgets/gimpcontainerpopup.c:335
+#: ../app/widgets/gimpcontainerpopup.c:316
 msgid "Smaller Previews"
 msgstr "Manjši predogledi"
 
-#: ../app/widgets/gimpcontainerpopup.c:340
+#: ../app/widgets/gimpcontainerpopup.c:321
 msgid "Larger Previews"
 msgstr "Večji predogledi"
 
@@ -27644,7 +27666,7 @@ msgid "Lock position and size"
 msgstr "Zakleni položaj in velikost"
 
 #: ../app/widgets/gimpdrawabletreeview.c:126
-#: ../app/widgets/gimpitemtreeview.c:553
+#: ../app/widgets/gimpitemtreeview.c:556
 msgid "Lock visibility"
 msgstr "Zakleni vidljivost"
 
@@ -28075,19 +28097,19 @@ msgstr[1] "Indeksirane barve (%d barva, monokromatsko)"
 msgstr[2] "Indeksirane barve (%d barvi)"
 msgstr[3] "Indeksirane barve (%d barve)"
 
-#: ../app/widgets/gimpitemtreeview.c:523
+#: ../app/widgets/gimpitemtreeview.c:526
 msgid "Set Item Exclusive Content Lock"
 msgstr "Predmetu določite izključen zaklep vsebine"
 
-#: ../app/widgets/gimpitemtreeview.c:539
+#: ../app/widgets/gimpitemtreeview.c:542
 msgid "Set Item Exclusive Position Lock"
 msgstr "Predmetu določite izključen zaklep položaja"
 
-#: ../app/widgets/gimpitemtreeview.c:554
+#: ../app/widgets/gimpitemtreeview.c:557
 msgid "Unlock visibility"
 msgstr "Odkleni vidljivost"
 
-#: ../app/widgets/gimpitemtreeview.c:555
+#: ../app/widgets/gimpitemtreeview.c:558
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Predmetu določite izključen zaklep vidljivosti"
 
@@ -28108,8 +28130,8 @@ msgid "No layer set stored"
 msgstr "Nobena množica plasti ni shranjena"
 
 #: ../app/widgets/gimplayertreeview.c:502
-msgid "Named Selection"
-msgstr "Imenovani izbor"
+msgid "New layer set's name"
+msgstr "Ime novega nabora plasti"
 
 #: ../app/widgets/gimplayertreeview.c:540
 #: ../app/widgets/gimplayertreeview.c:543
@@ -28850,40 +28872,40 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stanje in opis"
 
-#: ../app/xcf/xcf.c:117 ../app/xcf/xcf.c:185
+#: ../app/xcf/xcf.c:118 ../app/xcf/xcf.c:186
 msgid "GIMP XCF image"
 msgstr "slika GIMP XCF"
 
-#: ../app/xcf/xcf.c:262 ../app/xcf/xcf.c:351
+#: ../app/xcf/xcf.c:263 ../app/xcf/xcf.c:352
 msgid "Memory Stream"
 msgstr "Pomnilniški tok"
 
-#: ../app/xcf/xcf.c:273
+#: ../app/xcf/xcf.c:274
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s«"
 
-#: ../app/xcf/xcf.c:315
+#: ../app/xcf/xcf.c:316
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Napaka XCF: nepodprta različica datoteke XCF %d"
 
-#: ../app/xcf/xcf.c:374
+#: ../app/xcf/xcf.c:375
 #, c-format
 msgid "Saving '%s'"
 msgstr "Shranjevanje »%s«"
 
-#: ../app/xcf/xcf.c:382
+#: ../app/xcf/xcf.c:383
 #, c-format
 msgid "Closing '%s'"
 msgstr "Zapiranje »%s«"
 
-#: ../app/xcf/xcf.c:400
+#: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Napaka pri pisanju »%s«: "
 
-#: ../app/xcf/xcf.c:488
+#: ../app/xcf/xcf.c:489
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Napaka pri ustvarjanju ‘%s’: "
