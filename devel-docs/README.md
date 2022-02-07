@@ -330,7 +330,7 @@ Eventually we want to move this pipeline to Gitlab as well.
 
 When writing code, any core developer is expected to follow:
 
-- GIMP's [coding style](/CODING_STYLE.md);
+- GIMP's [coding style](CODING_STYLE.md);
 - the [directory structure](#directory-structure-of-gimp-source-tree)
 - our [header file inclusion policy](includes.txt)
 
@@ -340,7 +340,12 @@ also contain various valuable resources.
 ### Newcomers
 
 If this is your first time contributing to GIMP, you might be interested
-by these [instructions on submitting
+by build instructions. The previously mentioned wiki in particular has a
+[Hacking:Building](https://wiki.gimp.org/wiki/Hacking:Building) page
+with various per-platform subpages. The [HACKING](HACKING.md) docs will
+also be of interest.
+
+You might also like to read these [instructions on submitting
 patches](https://gimp.org/bugs/howtos/submit-patch.html).
 
 If you are unsure what to work on, this [list of bugs for

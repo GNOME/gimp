@@ -12,8 +12,8 @@ If you think you found a bug in this version, please make sure that it
 hasn't been reported earlier and that it is not just new stuff that is
 still being worked on and obviously not quite finished yet.
 
-If you want to hack on GIMP, please read the file HACKING. For
-detailed installation instructions, see the file INSTALL.
+If you want to hack on GIMP, please read the file devel-docs/README.md.
+For detailed installation instructions, see the file INSTALL.
 
 
 1. Web Resources
@@ -76,11 +76,8 @@ gtk.css in particular) or by using "themes" (ready-made customizations).
 Additionally, GIMP reads `${XDG_CONFIG_HOME}/GIMP/2.99/gimp.css` so you
 can have settings that only apply to GIMP.
 
-Included is a set of keybindings similar to those in Adobe Photoshop.
-You can find them in the ps-menurc file.  To use them, copy this file
-to `${XDG_CONFIG_HOME}/GIMP/2.99/menurc`. You can also manually change
-the keybindings to any of your choice by editing:
-`${XDG_CONFIG_HOME}/GIMP/2.99/menurc`.
+You can also manually change the keybindings to any of your choice by
+editing: `${XDG_CONFIG_HOME}/GIMP/2.99/menurc`.
 
 
 Have fun,
