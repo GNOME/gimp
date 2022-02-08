@@ -813,20 +813,10 @@ gimp_display_shell_scale_drag (GimpDisplayShell *shell,
     {
       gimp_display_shell_push_zoom_focus_pointer_pos (shell, start_x, start_y);
 
-      if (delta_y > 0.0)
-        {
-          gimp_display_shell_scale (shell,
-                                    GIMP_ZOOM_TO,
-                                    scale * 1.1,
-                                    GIMP_ZOOM_FOCUS_POINTER);
-        }
-      else /* delta_y < 0.0 */
-        {
-          gimp_display_shell_scale (shell,
-                                    GIMP_ZOOM_TO,
-                                    scale * 0.9,
-                                    GIMP_ZOOM_FOCUS_POINTER);
-        }
+      gimp_display_shell_scale (shell,
+                                GIMP_ZOOM_TO,
+                                scale * exp (0.01 * delta_y),
+                                GIMP_ZOOM_FOCUS_POINTER);
 
       if (shell->zoom_focus_point)
         {
