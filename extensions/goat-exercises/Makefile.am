@@ -116,7 +116,8 @@ goat_exercise_vala_LDADD = \
 goat_exercise_vala_VALAFLAGS = \
 	--vapidir=$(abs_top_builddir)/libgimp	\
 	--pkg gimp-@GIMP_API_VERSION@		\
-	--pkg gimp-ui-@GIMP_API_VERSION@
+	--pkg gimp-ui-@GIMP_API_VERSION@	\
+	--disable-since-check
 
 endif
 
