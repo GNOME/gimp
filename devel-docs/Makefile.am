@@ -7,6 +7,8 @@ SUBDIRS = \
 	performance-logs
 
 EXTRA_DIST = \
+	CODING_STYLE.md			\
+	HACKING.md			\
 	README.md			\
 	contexts.txt			\
 	debug-plug-ins.txt		\
