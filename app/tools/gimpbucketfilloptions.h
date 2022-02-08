@@ -54,6 +54,9 @@ struct _GimpBucketFillOptions
   gint                          line_art_max_grow;
   gint                          line_art_max_gap_length;
 
+  gboolean                      fill_as_line_art;
+  gdouble                       fill_as_line_art_threshold;
+
   GimpSelectCriterion           fill_criterion;
 
   GimpBucketFillOptionsPrivate *priv;

@@ -48,6 +48,8 @@ GeglBuffer * gimp_drawable_get_line_art_fill_buffer (GimpDrawable         *drawa
                                                      GimpLineArt          *line_art,
                                                      GimpFillOptions      *options,
                                                      gboolean              sample_merged,
+                                                     gboolean              fill_color_as_line_art,
+                                                     gdouble               fill_color_threshold,
                                                      gdouble               seed_x,
                                                      gdouble               seed_y,
                                                      GeglBuffer          **mask_buffer,

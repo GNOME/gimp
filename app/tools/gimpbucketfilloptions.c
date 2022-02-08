@@ -60,7 +60,9 @@ enum
   PROP_LINE_ART_THRESHOLD,
   PROP_LINE_ART_MAX_GROW,
   PROP_LINE_ART_MAX_GAP_LENGTH,
-  PROP_FILL_CRITERION
+  PROP_FILL_CRITERION,
+  PROP_FILL_COLOR_AS_LINE_ART,
+  PROP_FILL_COLOR_AS_LINE_ART_THRESHOLD,
 };
 
 struct _GimpBucketFillOptionsPrivate
@@ -70,6 +72,7 @@ struct _GimpBucketFillOptionsPrivate
 
   GtkWidget *similar_color_frame;
   GtkWidget *line_art_frame;
+  GtkWidget *fill_as_line_art_frame;
 };
 
 static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
@@ -184,6 +187,20 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                          GIMP_LINE_ART_SOURCE_SAMPLE_MERGED,
                          GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_COLOR_AS_LINE_ART,
+                            "fill-color-as-line-art",
+                            _("Allow closing lines in selected layer"),
+                            _("Consider pixels of selected layer and filled with the fill color as line art closure"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_FILL_COLOR_AS_LINE_ART_THRESHOLD,
+                           "fill-color-as-line-art-threshold",
+                           _("Threshold"),
+                           _("Maximum color difference"),
+                           0.0, 255.0, 15.0,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_LINE_ART_THRESHOLD,
                            "line-art-threshold",
                            _("Line art detection threshold"),
@@ -240,6 +257,7 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     {
     case PROP_FILL_MODE:
       options->fill_mode = g_value_get_enum (value);
+      gimp_bucket_fill_options_update_area (options);
       break;
     case PROP_FILL_AREA:
       options->fill_area = g_value_get_enum (value);
@@ -268,6 +286,7 @@ gimp_bucket_fill_options_set_property (GObject      *object,
       break;
     case PROP_LINE_ART_SOURCE:
       options->line_art_source = g_value_get_enum (value);
+      gimp_bucket_fill_options_update_area (options);
       break;
     case PROP_LINE_ART_THRESHOLD:
       options->line_art_threshold = g_value_get_double (value);
@@ -280,6 +299,12 @@ gimp_bucket_fill_options_set_property (GObject      *object,
       break;
     case PROP_FILL_CRITERION:
       options->fill_criterion = g_value_get_enum (value);
+      break;
+    case PROP_FILL_COLOR_AS_LINE_ART:
+      options->fill_as_line_art = g_value_get_boolean (value);
+      break;
+    case PROP_FILL_COLOR_AS_LINE_ART_THRESHOLD:
+      options->fill_as_line_art_threshold = g_value_get_double (value);
       break;
 
     default:
@@ -340,6 +365,12 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_FILL_CRITERION:
       g_value_set_enum (value, options->fill_criterion);
       break;
+    case PROP_FILL_COLOR_AS_LINE_ART:
+      g_value_set_boolean (value, options->fill_as_line_art);
+      break;
+    case PROP_FILL_COLOR_AS_LINE_ART_THRESHOLD:
+      g_value_set_double (value, options->fill_as_line_art_threshold);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -375,6 +406,13 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
     case GIMP_BUCKET_FILL_LINE_ART:
       gtk_widget_hide (options->priv->similar_color_frame);
       gtk_widget_show (options->priv->line_art_frame);
+      if ((options->fill_mode == GIMP_BUCKET_FILL_FG ||
+           options->fill_mode == GIMP_BUCKET_FILL_BG) &&
+          (options->line_art_source == GIMP_LINE_ART_SOURCE_LOWER_LAYER ||
+           options->line_art_source == GIMP_LINE_ART_SOURCE_UPPER_LAYER))
+        gtk_widget_show (options->priv->fill_as_line_art_frame);
+      else
+        gtk_widget_hide (options->priv->fill_as_line_art_frame);
       break;
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
       gtk_widget_show (options->priv->similar_color_frame);
@@ -495,6 +533,15 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   combo = gimp_prop_enum_combo_box_new (config, "line-art-source", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
   gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
+
+  /*  Line Art: fill as line art  */
+  scale = gimp_prop_spin_scale_new (config, "fill-color-as-line-art-threshold", NULL,
+                                    1.0, 16.0, 1);
+
+  frame = gimp_prop_expanding_frame_new (config, "fill-color-as-line-art", NULL,
+                                         scale, NULL);
+  gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
+  options->priv->fill_as_line_art_frame = frame;
 
   /*  the fill transparent areas toggle  */
   widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);

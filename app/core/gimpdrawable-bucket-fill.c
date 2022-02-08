@@ -39,6 +39,7 @@
 #include "gimpdrawable-bucket-fill.h"
 #include "gimpfilloptions.h"
 #include "gimpimage.h"
+#include "gimplineart.h"
 #include "gimppickable.h"
 #include "gimppickable-contiguous-region.h"
 
@@ -315,6 +316,9 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
  * @line_art: the #GimpLineArt computed as fill source.
  * @options: the #GimpFillOptions.
  * @sample_merged:
+ * @fill_color_as_line_art: do we add pixels in @drawable filled with
+ *                          fill color to the line art?
+ * @fill_color_threshold: threshold value to determine fill color.
  * @seed_x: X coordinate to start the fill.
  * @seed_y: Y coordinate to start the fill.
  * @mask_buffer: mask of the fill in-progress when in an interactive
@@ -331,6 +335,12 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
  * returned. This fill mask can later be reused in successive calls to
  * gimp_drawable_get_bucket_fill_buffer() for interactive filling.
  *
+ * The @fill_color_as_line_art option is a special feature where we
+ * consider pixels in @drawable already in the fill color as part of the
+ * line art. This is a post-process, i.e. that this is not taken into
+ * account while @line_art is computed, making this a fast addition
+ * processing allowing to close some area manually.
+ *
  * Returns: a fill buffer which can be directly applied to @drawable, or
  *          used in a drawable filter as preview.
  */
@@ -339,6 +349,8 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
                                         GimpLineArt      *line_art,
                                         GimpFillOptions  *options,
                                         gboolean          sample_merged,
+                                        gboolean          fill_color_as_line_art,
+                                        gdouble           fill_color_threshold,
                                         gdouble           seed_x,
                                         gdouble           seed_y,
                                         GeglBuffer      **mask_buffer,
@@ -350,6 +362,10 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   GimpImage  *image;
   GeglBuffer *buffer;
   GeglBuffer *new_mask;
+  GeglBuffer *fill_buffer   = NULL;
+  GimpRGB     fill_color;
+  gint        fill_offset_x = 0;
+  gint        fill_offset_y = 0;
   gint        x, y, width, height;
   gint        mask_offset_x = 0;
   gint        mask_offset_y = 0;
@@ -384,7 +400,33 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   /*  Do a seed bucket fill...To do this, calculate a new
    *  contiguous region.
    */
+  if (fill_color_as_line_art)
+    {
+      GimpPickable *pickable = gimp_line_art_get_input (line_art);
+
+      /* This cannot be a pattern fill. */
+      g_return_val_if_fail (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID,
+                            NULL);
+      /* Meaningful only in above/below layer cases. */
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (pickable), NULL);
+
+      /* Fill options foreground color is the expected color (can be
+       * actual fg or bg in the user context).
+       */
+      gimp_context_get_foreground (GIMP_CONTEXT (options), &fill_color);
+
+      fill_buffer   = gimp_drawable_get_buffer (drawable);
+      fill_offset_x = gimp_item_get_offset_x (GIMP_ITEM (drawable)) -
+                      gimp_item_get_offset_x (GIMP_ITEM (pickable));
+      fill_offset_y = gimp_item_get_offset_y (GIMP_ITEM (drawable)) -
+                      gimp_item_get_offset_y (GIMP_ITEM (pickable));
+    }
   new_mask = gimp_pickable_contiguous_region_by_line_art (NULL, line_art,
+                                                          fill_buffer,
+                                                          &fill_color,
+                                                          fill_color_threshold,
+                                                          fill_offset_x,
+                                                          fill_offset_y,
                                                           (gint) seed_x,
                                                           (gint) seed_y);
   if (mask_buffer && *mask_buffer)

@@ -32,6 +32,7 @@ extern "C"
 #include "core-types.h"
 
 #include "gegl/gimp-babl.h"
+#include "gegl/gimp-gegl-utils.h"
 
 #include "gimp-parallel.h"
 #include "gimp-utils.h" /* GIMP_TIMER */
@@ -287,18 +288,24 @@ gimp_pickable_contiguous_region_by_color (GimpPickable        *pickable,
 }
 
 GeglBuffer *
-gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
-                                             GimpLineArt  *line_art,
-                                             gint          x,
-                                             gint          y)
+gimp_pickable_contiguous_region_by_line_art (GimpPickable  *pickable,
+                                             GimpLineArt   *line_art,
+                                             GeglBuffer    *fill_buffer,
+                                             const GimpRGB *fill_color,
+                                             gfloat         fill_threshold,
+                                             gint           fill_offset_x,
+                                             gint           fill_offset_y,
+                                             gint           x,
+                                             gint           y)
 {
   GeglBuffer    *src_buffer;
   GeglBuffer    *mask_buffer;
   const Babl    *format  = babl_format ("Y float");
   gfloat        *distmap = NULL;
   GeglRectangle  extent;
-  gboolean       free_line_art = FALSE;
-  gboolean       filled        = FALSE;
+  gboolean       free_line_art   = FALSE;
+  gboolean       free_src_buffer = FALSE;
+  gboolean       filled          = FALSE;
   guchar         start_col;
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable) || GIMP_IS_LINE_ART (line_art), NULL);
@@ -316,6 +323,65 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
 
   src_buffer = gimp_line_art_get (line_art, &distmap);
   g_return_val_if_fail (src_buffer && distmap, NULL);
+
+  if (fill_buffer != NULL)
+    {
+      GeglBufferIterator  *gi;
+      const Babl          *fill_format;
+      const GeglRectangle *fill_extent;
+      gfloat               fill_col[MAX_CHANNELS];
+      gboolean             has_alpha;
+      gint                 n_components;
+
+      fill_extent = gegl_buffer_get_extent (fill_buffer);
+      fill_format = choose_format (fill_buffer,
+                                   GIMP_SELECT_CRITERION_COMPOSITE,
+                                   &n_components, &has_alpha);
+      gimp_rgba_get_pixel (fill_color, fill_format, fill_col);
+
+      src_buffer = gimp_gegl_buffer_dup (src_buffer);
+      gi = gegl_buffer_iterator_new (src_buffer, NULL, 0, NULL,
+                                     GEGL_ACCESS_READWRITE, GEGL_ABYSS_NONE, 2);
+      gegl_buffer_iterator_add (gi, fill_buffer,
+                                GEGL_RECTANGLE (-fill_offset_x, -fill_offset_y,
+                                                fill_extent->width + fill_offset_x,
+                                                fill_extent->height + fill_offset_y),
+                                0, fill_format, GEGL_ACCESS_READ, GEGL_ABYSS_NONE);
+      while (gegl_buffer_iterator_next (gi))
+        {
+          guchar       *data = (guchar*) gi->items[0].data;
+          const gfloat *fill = (const gfloat *) gi->items[1].data;
+          gint          k;
+
+          for (k = 0; k < gi->length; k++)
+            {
+              /* Only consider if the line art source hasn't filled yet,
+               * and also if this the fill target has full opacity.
+               */
+              if (! *data &&
+                  ( ! has_alpha ||
+                   fill[n_components - 1] == 1.0))
+                {
+                  gfloat diff;
+
+                  diff = pixel_difference (fill, fill_col,
+                                           FALSE,
+                                           fill_threshold,
+                                           n_components, has_alpha, FALSE,
+                                           GIMP_SELECT_CRITERION_COMPOSITE);
+
+                  /* Make the additional fill pixel a closure pixel. */
+                  if (diff == 1.0)
+                    *data = 2;
+                }
+
+              data++;
+              fill += n_components;
+            }
+        }
+
+      free_src_buffer = TRUE;
+    }
 
   gegl_buffer_sample (src_buffer, x, y, NULL, &start_col, NULL,
                       GEGL_SAMPLER_NEAREST, GEGL_ABYSS_NONE);
@@ -616,6 +682,8 @@ gimp_pickable_contiguous_region_by_line_art (GimpPickable *pickable,
     }
   if (free_line_art)
     g_clear_object (&line_art);
+  if (free_src_buffer)
+    g_object_unref (src_buffer);
 
   return mask_buffer;
 }
