@@ -49,6 +49,16 @@ Core:
   - The debug dialog only gets a backtrace of the main thread now,
     because of some bugs in GDB locking GIMP when trying to get a full
     backtrace for all threads.
+  - The line art data is now stored for a few additional minutes in the
+    user context after closing the bucket fill tool. This allows quick
+    switch between tools without forcing a recomputation of the line
+    art.
+  - Stroking a path with source tools (Clone, Heal…) is now possible
+    when the tool is active and a source was selected.
+    Technically it's more of a bug fix because the GUI existed as though
+    it was meant to work, but since the report has existed for more than
+    13 years and I'm not sure it has ever worked, it's worth writing it
+    here.
 
 User Interface:
 
@@ -87,6 +97,11 @@ Tools:
     before).
   - A new action "context-dynamics-toggle" is available, allowing to
     switch dynamics ON/OFF (see previous news item) with a shortcut.
+  - New option "Allow closing lines in selected layer" in the "Fill by
+    line art detection" mode of bucket fill tool. Basically this allows
+    to use the fill color (foreground or background color) as closure
+    color in the drawable to be filled. This is an additional step after
+    the line art computation to allow fast usage.
 
 Plug-ins:
 
@@ -159,6 +174,11 @@ Build:
     * New weekly CI to build with raster icons on meson and autotools
       and making sure the build systems are well synced.
     * Meson's -Dvec-icons option renamed to -Dvector-icons.
+  - meson dependency bumped to 0.53.0.
+  - We recommend fontconfig 2.13.95 or over on Windows where support for
+    user-installed fonts (feature appeared in Windows 1809) was
+    implemented. GIMP had its own workaround until now, which got
+    removed in this version.
 
 API:
 
