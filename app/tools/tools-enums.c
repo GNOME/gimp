@@ -55,9 +55,9 @@ gimp_line_art_source_get_type (void)
   static const GimpEnumDesc descs[] =
   {
     { GIMP_LINE_ART_SOURCE_SAMPLE_MERGED, NC_("line-art-source", "All visible layers"), NULL },
-    { GIMP_LINE_ART_SOURCE_ACTIVE_LAYER, NC_("line-art-source", "Active layer"), NULL },
-    { GIMP_LINE_ART_SOURCE_LOWER_LAYER, NC_("line-art-source", "Layer below the active one"), NULL },
-    { GIMP_LINE_ART_SOURCE_UPPER_LAYER, NC_("line-art-source", "Layer above the active one"), NULL },
+    { GIMP_LINE_ART_SOURCE_ACTIVE_LAYER, NC_("line-art-source", "Selected layer"), NULL },
+    { GIMP_LINE_ART_SOURCE_LOWER_LAYER, NC_("line-art-source", "Layer below the selected one"), NULL },
+    { GIMP_LINE_ART_SOURCE_UPPER_LAYER, NC_("line-art-source", "Layer above the selected one"), NULL },
     { 0, NULL, NULL }
   };
 

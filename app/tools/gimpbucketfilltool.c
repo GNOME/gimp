@@ -1055,14 +1055,15 @@ gimp_bucket_fill_tool_reset_line_art (GimpBucketFillTool *tool)
   if (image)
     {
       GList        *drawables = gimp_image_get_selected_drawables (image);
-      GimpDrawable *drawable;
+      GimpDrawable *drawable  = NULL;
 
-      g_return_if_fail (g_list_length (drawables) == 1);
-      drawable = drawables->data;
+      if (g_list_length (drawables) == 1)
+        {
+          drawable = drawables->data;
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+            drawable = NULL;
+        }
       g_list_free (drawables);
-
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-        drawable = NULL;
 
       if (options->line_art_source == GIMP_LINE_ART_SOURCE_SAMPLE_MERGED)
         {

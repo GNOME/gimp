@@ -59,9 +59,9 @@ GType gimp_line_art_source_get_type (void) G_GNUC_CONST;
 typedef enum
 {
   GIMP_LINE_ART_SOURCE_SAMPLE_MERGED, /*< desc="All visible layers" >*/
-  GIMP_LINE_ART_SOURCE_ACTIVE_LAYER,  /*< desc="Active layer" >*/
-  GIMP_LINE_ART_SOURCE_LOWER_LAYER,   /*< desc="Layer below the active one" >*/
-  GIMP_LINE_ART_SOURCE_UPPER_LAYER    /*< desc="Layer above the active one" >*/
+  GIMP_LINE_ART_SOURCE_ACTIVE_LAYER,  /*< desc="Selected layer" >*/
+  GIMP_LINE_ART_SOURCE_LOWER_LAYER,   /*< desc="Layer below the selected one" >*/
+  GIMP_LINE_ART_SOURCE_UPPER_LAYER    /*< desc="Layer above the selected one" >*/
 } GimpLineArtSource;
 
 
