@@ -464,13 +464,10 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
 
       g_object_ref (imagefile);
 
-      /* don't pass the error, we're only interested in errors from
-       * actual thumbnail saving
-       */
       image = file_open_thumbnail (private->gimp, context, progress,
                                    private->file, size,
                                    &mime_type, &width, &height,
-                                   &format, &num_layers, NULL);
+                                   &format, &num_layers, error);
 
       if (image)
         {
@@ -482,13 +479,18 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
         {
           GimpPDBStatusType  status;
 
-          /* don't pass the error, we're only interested in errors
-           * from actual thumbnail saving
-           */
+          if (error && *error)
+            {
+              g_printerr ("Info: Thumbnail load procedure failed: %s\n"
+                          "      Falling back to file load procedure.\n",
+                          (*error)->message);
+              g_clear_error (error);
+            }
+
           image = file_open_image (private->gimp, context, progress,
                                    private->file,
                                    FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
-                                   &status, &mime_type, NULL);
+                                   &status, &mime_type, error);
 
           if (image)
             gimp_thumbnail_set_info_from_image (private->thumbnail,
@@ -505,10 +507,16 @@ gimp_imagefile_create_thumbnail (GimpImagefile  *imagefile,
         }
       else
         {
-          success = gimp_thumbnail_save_failure (thumbnail,
-                                                 "GIMP " GIMP_VERSION,
-                                                 error);
+          /* If the error object is already set (i.e. we have an error
+           * message for why the thumbnail creation failed), this is the
+           * error we want to return. Ignore any error from failed
+           * thumbnail saving.
+           */
+          gimp_thumbnail_save_failure (thumbnail,
+                                       "GIMP " GIMP_VERSION,
+                                       error && *error ? NULL : error);
           gimp_imagefile_update (imagefile);
+          success = FALSE;
         }
 
       g_object_unref (imagefile);
