@@ -354,8 +354,8 @@ file_open_thumbnail (Gimp           *gimp,
         gimp_pdb_execute_procedure_by_name (gimp->pdb,
                                             context, progress, error,
                                             gimp_object_get_name (procedure),
-                                            G_TYPE_STRING, uri,
-                                            G_TYPE_INT,    size,
+                                            G_TYPE_FILE, file,
+                                            G_TYPE_INT,  size,
                                             G_TYPE_NONE);
 
       g_free (uri);
