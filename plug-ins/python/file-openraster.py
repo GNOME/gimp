@@ -164,9 +164,10 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
     with open(tmp, 'wb') as fid:
         fid.write(orafile.read('Thumbnails/thumbnail.png'))
 
+    thumb_file = Gio.file_new_for_path(tmp)
     result = Gimp.get_pdb().run_procedure('file-png-load', [
         GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
-        GObject.Value(GObject.TYPE_STRING, tmp),
+        GObject.Value(Gio.File, thumb_file),
     ])
     os.remove(tmp)
     os.rmdir(tempdir)
@@ -184,10 +185,7 @@ def thumbnail_ora(procedure, file, thumb_size, args, data):
             GObject.Value(GObject.TYPE_INT, 1)
         ])
     else:
-        return Gimp.ValueArray.new_from_values([
-            GObject.Value(Gimp.PDBStatusType, result.index(0)),
-            GObject.Value(GObject.Error, result.index(1))
-        ])
+        return procedure.new_return_values(result.index(0), GLib.Error(result.index(1)))
 
 # We would expect the n_drawables parameter to not be there with introspection but
 # currently that isn't working, see issue #5312. Until that is resolved we keep
@@ -492,7 +490,6 @@ class FileOpenRaster (Gimp.PlugIn):
             procedure.set_documentation ('loads a thumbnail from an OpenRaster (.ora) file',
                                          'loads a thumbnail from an OpenRaster (.ora) file',
                                          name)
-            pass
         procedure.set_attribution('Jon Nordby', #author
                                   'Jon Nordby', #copyright
                                   '2009') #year
