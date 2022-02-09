@@ -1135,7 +1135,7 @@ HELP
 
     @inargs = (
         { name => 'load_proc', type => 'string', non_empty => 1,
-          desc => "The name of the procedure the thumbnail loader with." },
+          desc => "The name of the file load procedure." },
         { name => 'thumb_proc', type => 'string', non_empty => 1,
           desc => "The name of the thumbnail load procedure." }
     );
@@ -1150,7 +1150,7 @@ HELP
     {
       success = gimp_plug_in_set_file_proc_thumb_loader (plug_in,
                                                          load_proc, thumb_proc,
-                                                          error);
+                                                         error);
     }
   else
     success = FALSE;

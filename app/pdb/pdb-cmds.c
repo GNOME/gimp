@@ -1076,7 +1076,7 @@ pdb_set_file_proc_thumbnail_loader_invoker (GimpProcedure         *procedure,
         {
           success = gimp_plug_in_set_file_proc_thumb_loader (plug_in,
                                                              load_proc, thumb_proc,
-                                                              error);
+                                                             error);
         }
       else
         success = FALSE;
@@ -2140,7 +2140,7 @@ register_pdb_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("load-proc",
                                                        "load proc",
-                                                       "The name of the procedure the thumbnail loader with.",
+                                                       "The name of the file load procedure.",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

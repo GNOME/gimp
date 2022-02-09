@@ -1107,7 +1107,7 @@ _gimp_pdb_set_file_proc_handles_raw (const gchar *procedure_name)
 
 /**
  * _gimp_pdb_set_file_proc_thumbnail_loader:
- * @load_proc: The name of the procedure the thumbnail loader with.
+ * @load_proc: The name of the file load procedure.
  * @thumb_proc: The name of the thumbnail load procedure.
  *
  * Associates a thumbnail loader with a file load procedure.
