@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-31 23:30+0000\n"
-"PO-Revision-Date: 2022-02-03 11:31+0800\n"
+"POT-Creation-Date: 2022-02-03 03:48+0000\n"
+"PO-Revision-Date: 2022-02-08 19:01+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1491,7 +1491,7 @@ msgstr "上移通道(_R)"
 #: ../app/actions/channels-actions.c:85
 msgctxt "channels-action"
 msgid "Raise this channel one step in the channel stack"
-msgstr "在通道栈中使此通道上移一步"
+msgstr "在通道堆叠中使此通道上移一步"
 
 #: ../app/actions/channels-actions.c:90
 msgctxt "channels-action"
@@ -1501,7 +1501,7 @@ msgstr "通道移至顶部(_T)"
 #: ../app/actions/channels-actions.c:92
 msgctxt "channels-action"
 msgid "Raise this channel to the top of the channel stack"
-msgstr "上移此通道至通道栈的顶部"
+msgstr "上移此通道至通道堆叠的顶部"
 
 #: ../app/actions/channels-actions.c:97
 msgctxt "channels-action"
@@ -1511,7 +1511,7 @@ msgstr "下移通道(_L)"
 #: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
 msgid "Lower this channel one step in the channel stack"
-msgstr "在通道栈中使此通道下移一步"
+msgstr "在通道堆叠中使此通道下移一步"
 
 #: ../app/actions/channels-actions.c:103
 msgctxt "channels-action"
@@ -1521,7 +1521,7 @@ msgstr "通道移至底部(_B)"
 #: ../app/actions/channels-actions.c:105
 msgctxt "channels-action"
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "下移此通道至通道栈底部"
+msgstr "下移此通道至通道堆叠底部"
 
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
@@ -6788,7 +6788,7 @@ msgstr "图层(_L)"
 #: ../app/actions/layers-actions.c:74
 msgctxt "layers-action"
 msgid "Stac_k"
-msgstr "堆栈(_K)"
+msgstr "堆叠(_K)"
 
 #: ../app/actions/layers-actions.c:76
 msgctxt "layers-action"
@@ -6918,7 +6918,7 @@ msgstr "上移图层(_R)"
 #: ../app/actions/layers-actions.c:146
 msgctxt "layers-action"
 msgid "Raise this layer one step in the layer stack"
-msgstr "在图层栈中使此图层升高一步"
+msgstr "在图层堆叠中使此图层升高一步"
 
 #: ../app/actions/layers-actions.c:151
 msgctxt "layers-action"
@@ -6928,7 +6928,7 @@ msgstr "上移图层至顶部(_T)"
 #: ../app/actions/layers-actions.c:152
 msgctxt "layers-action"
 msgid "Move this layer to the top of the layer stack"
-msgstr "将此图层移动至图层栈的顶端"
+msgstr "将此图层移动至图层堆叠的顶端"
 
 #: ../app/actions/layers-actions.c:157
 msgctxt "layers-action"
@@ -6938,7 +6938,7 @@ msgstr "下移图层(_L)"
 #: ../app/actions/layers-actions.c:158
 msgctxt "layers-action"
 msgid "Lower this layer one step in the layer stack"
-msgstr "在图层栈中使此图层降低一步"
+msgstr "在图层堆叠中使此图层降低一步"
 
 #: ../app/actions/layers-actions.c:163
 msgctxt "layers-action"
@@ -6948,7 +6948,7 @@ msgstr "下移图层至底部(_B)"
 #: ../app/actions/layers-actions.c:164
 msgctxt "layers-action"
 msgid "Move this layer to the bottom of the layer stack"
-msgstr "将此图层移动至图层栈的底端"
+msgstr "将此图层移动至图层堆叠的底端"
 
 #: ../app/actions/layers-actions.c:169
 msgctxt "layers-action"
