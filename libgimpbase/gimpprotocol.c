@@ -1792,20 +1792,24 @@ _gp_params_write (GIOChannel *channel,
           break;
 
         case GP_PARAM_TYPE_STRV:
-          if (params[i].data.d_strv)
-            {
-              gint size = g_strv_length (params[i].data.d_strv);
+          {
+            gint size;
 
-              if (! _gimp_wire_write_int32 (channel,
-                                            (guint32*) &size, 1,
-                                            user_data) ||
-                  ! _gimp_wire_write_string (channel,
-                                             params[i].data.d_strv,
-                                             size,
-                                             user_data))
-                return;
-              break;
-            }
+            if (params[i].data.d_strv)
+              size = g_strv_length (params[i].data.d_strv);
+            else
+              size = 0;
+
+            if (! _gimp_wire_write_int32 (channel,
+                                          (guint32*) &size, 1,
+                                          user_data) ||
+                ! _gimp_wire_write_string (channel,
+                                           params[i].data.d_strv,
+                                           size,
+                                           user_data))
+              return;
+          }
+          break;
 
         case GP_PARAM_TYPE_ID_ARRAY:
           if (! _gimp_wire_write_string (channel,
