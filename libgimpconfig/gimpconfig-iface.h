@@ -40,6 +40,9 @@ struct _GimpConfigInterface
   gboolean     (* serialize)            (GimpConfig       *config,
                                          GimpConfigWriter *writer,
                                          gpointer          data);
+  /* TODO: we should add a GError** parameter to the deserialize()
+   * method in order to be able to report errors.
+   */
   gboolean     (* deserialize)          (GimpConfig       *config,
                                          GScanner         *scanner,
                                          gint              nest_level,
