@@ -142,6 +142,8 @@ Plug-ins:
       This is more consistent to how our non-D-Bus screenshot plug-in
       used to work.
     * Windows: cursor capture option now available.
+  - CUR: added load and export support for Microsoft Windows cursor
+    (.cur) files.
 
 Build:
 
