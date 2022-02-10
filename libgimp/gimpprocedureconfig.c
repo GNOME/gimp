@@ -981,8 +981,7 @@ gimp_procedure_config_load_last (GimpProcedureConfig  *config,
                                           file,
                                           NULL, error);
 
-  if (! success && error && *error &&
-      (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
+  if (! success && (*error)->code == GIMP_CONFIG_ERROR_OPEN_ENOENT)
     {
       g_clear_error (error);
     }

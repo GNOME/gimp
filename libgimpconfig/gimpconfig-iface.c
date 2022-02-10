@@ -494,6 +494,9 @@ gimp_config_deserialize_file (GimpConfig  *config,
 
   gimp_scanner_unref (scanner);
 
+  if (! success)
+    g_assert (error == NULL || *error != NULL);
+
   return success;
 }
 
