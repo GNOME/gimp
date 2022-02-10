@@ -153,7 +153,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ico");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+                                      "0,string,\\0\\0\\1\\0");
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
@@ -183,7 +183,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cur");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+                                      "0,string,\\0\\0\\2\\0");
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
