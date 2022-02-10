@@ -255,17 +255,25 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "cur");
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-x",
-                         "Hot spot X",
-                         "X coordinate of hot spot",
-                         0, G_MAXUINT16, 0,
+      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-x",
+                         "Number of hot spot's X coordinates",
+                         "Number of hot spot's X coordinates",
+                         0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-x",
+                                 "Hot spot X",
+                                 "X coordinates of hot spot (one per layer)",
+                                 G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "hot-spot-y",
-                         "Hot spot Y",
-                         "Y coordinate of hot spot",
-                         0, G_MAXUINT16, 0,
+      GIMP_PROC_ARG_INT (procedure, "n-hot-spot-y",
+                         "Number of hot spot's Y coordinates",
+                         "Number of hot spot's Y coordinates",
+                         0, G_MAXINT, 0,
                          G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT32_ARRAY (procedure, "hot-spot-y",
+                                 "Hot spot Y",
+                                 "Y coordinates of hot spot (one per layer)",
+                                 G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -374,9 +382,11 @@ cur_save (GimpProcedure        *procedure,
 {
   GimpProcedureConfig *config;
   GimpPDBStatusType    status;
-  GError              *error      = NULL;
-  gint                 hot_spot_x = 0;
-  gint                 hot_spot_y = 0;
+  GError              *error        = NULL;
+  gint32              *hot_spot_x   = NULL;
+  gint32              *hot_spot_y   = NULL;
+  gint                 n_hot_spot_x = 0;
+  gint                 n_hot_spot_y = 0;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -385,11 +395,32 @@ cur_save (GimpProcedure        *procedure,
   gimp_procedure_config_begin_run (config, image, run_mode, args);
 
   g_object_get (config,
-                "hot-spot-x",  &hot_spot_x,
-                "hot-spot-y",  &hot_spot_y,
+                "n-hot-spot-x", &n_hot_spot_x,
+                "n-hot-spot-y", &n_hot_spot_y,
+                "hot-spot-x",   &hot_spot_x,
+                "hot-spot-y",   &hot_spot_y,
                 NULL);
 
-  status = cur_save_image (file, image, run_mode, hot_spot_x, hot_spot_y, &error);
+  status = cur_save_image (file, image, run_mode,
+                           &n_hot_spot_x, &hot_spot_x,
+                           &n_hot_spot_y, &hot_spot_y,
+                           &error);
+
+  if (status == GIMP_PDB_SUCCESS)
+    {
+      /* XXX: seems libgimpconfig is not able to serialize
+       * GimpInt32Array args yet anyway. Still leave this here for now,
+       * as reminder of missing feature when we see the warnings.
+       */
+      g_object_set (config,
+                    "n-hot-spot-x", n_hot_spot_x,
+                    "n-hot-spot-y", n_hot_spot_y,
+                    /*"hot-spot-x",   hot_spot_x,*/
+                    /*"hot-spot-y",   hot_spot_y,*/
+                    NULL);
+      g_free (hot_spot_x);
+      g_free (hot_spot_y);
+    }
 
   gimp_procedure_config_end_run (config, status);
   g_object_unref (config);

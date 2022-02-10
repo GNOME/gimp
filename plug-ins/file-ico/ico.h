@@ -50,11 +50,11 @@ typedef struct _IcoFileHeader
 typedef struct _IcoFileEntry
 {
   guint8        width;      /* Width of icon in pixels */
-  guint8        height;    /* Height of icon in pixels */
+  guint8        height;     /* Height of icon in pixels */
   guint8        num_colors; /* Number of colors of paletted image */
   guint8        reserved;   /* Must be 0 */
-  guint16       planes;     /* Must be 1 */
-  guint16       bpp;        /* 1, 4, 8, 24 or 32 bits per pixel */
+  guint16       planes;     /* Must be 1 for ICO, x position of hot spot for CUR */
+  guint16       bpp;        /* 1, 4, 8, 24 or 32 bits per pixel for ICO, y position of hot spot for CUR */
   guint32       size;       /* Size of icon (including data header) */
   guint32       offset;     /* Absolute offset of data in a file */
  } IcoFileEntry;
@@ -93,8 +93,8 @@ typedef struct _IcoSaveInfo
     GList       *layers;
     gint         num_icons;
     gboolean     is_cursor;
-    gint         hot_spot_x;
-    gint         hot_spot_y;
+    gint        *hot_spot_x;
+    gint        *hot_spot_y;
 } IcoSaveInfo;
 
 

@@ -72,6 +72,25 @@ static void     ico_image_get_reduced_buf (GimpDrawable *layer,
                                            guchar      **cmap_out,
                                            guchar      **buf_out);
 
+static gboolean ico_save_init             (GimpImage    *image,
+                                           gint32        run_mode,
+                                           IcoSaveInfo  *info,
+                                           gint          n_hot_spot_x,
+                                           gint32       *hot_spot_x,
+                                           gint          n_hot_spot_y,
+                                           gint32       *hot_spot_y,
+                                           GError      **error);
+static GimpPDBStatusType
+                shared_save_image         (GFile         *file,
+                                           GimpImage     *image,
+                                           gint32         run_mode,
+                                           gint          *n_hot_spot_x,
+                                           gint32       **hot_spot_x,
+                                           gint          *n_hot_spot_y,
+                                           gint32       **hot_spot_y,
+                                           GError       **error,
+                                           IcoSaveInfo   *info);
+
 
 static gint
 ico_write_int32 (FILE     *fp,
@@ -155,9 +174,15 @@ ico_write_int8 (FILE     *fp,
 }
 
 
-static void
+static gboolean
 ico_save_init (GimpImage   *image,
-               IcoSaveInfo *info)
+               gint32       run_mode,
+               IcoSaveInfo *info,
+               gint         n_hot_spot_x,
+               gint32      *hot_spot_x,
+               gint         n_hot_spot_y,
+               gint32      *hot_spot_y,
+               GError     **error)
 {
   GList     *iter;
   gint       num_colors;
@@ -169,6 +194,51 @@ ico_save_init (GimpImage   *image,
   info->depths         = g_new (gint, info->num_icons);
   info->default_depths = g_new (gint, info->num_icons);
   info->compress       = g_new (gboolean, info->num_icons);
+  info->hot_spot_x     = g_new0 (gint, info->num_icons);
+  info->hot_spot_y     = g_new0 (gint, info->num_icons);
+
+  if (run_mode == GIMP_RUN_NONINTERACTIVE &&
+      (n_hot_spot_x != info->num_icons ||
+       n_hot_spot_y != info->num_icons))
+    {
+      /* While it is acceptable for interactive and last values run (in
+       * such case, we just drop the previous values), we expect
+       * non-interactive calls to have exactly the right numbers of
+       * hot-spot values set.
+       */
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Called non-interactively with %d and %d hotspot "
+                     "coordinates with an image of %d icons."),
+                   n_hot_spot_x, n_hot_spot_y, info->num_icons);
+
+      return FALSE;
+    }
+
+  /* Only use existing values if we have exactly the same number of
+   * icons. Drop previous/saved values otherwise.
+   */
+  if (hot_spot_x && n_hot_spot_x == info->num_icons)
+    {
+      /* XXX This is the limit of our array arguments not self-aware of
+       * their length (the separate args may be "lying" with a wrong
+       * call). We may end up with a segfault if the arg array was not
+       * big enough. There is not much we can really do here. I thought
+       * about g_renew() but it won't initialize to 0 if the arg is
+       * smaller. Also we don't want to free the original array.
+       */
+      for (iter = info->layers, i = 0;
+           iter;
+           iter = g_list_next (iter), i++)
+        info->hot_spot_x[i] = hot_spot_x[i];
+    }
+
+  if (hot_spot_y && n_hot_spot_y == info->num_icons)
+    {
+      for (iter = info->layers, i = 0;
+           iter;
+           iter = g_list_next (iter), i++)
+        info->hot_spot_y[i] = hot_spot_y[i];
+    }
 
   /* Limit the color depths to values that don't cause any color loss
    * -- the user should pick these anyway, so we can save her some
@@ -225,6 +295,8 @@ ico_save_init (GimpImage   *image,
   /* set with default values */
   memcpy (info->depths, info->default_depths,
           sizeof (gint) * info->num_icons);
+
+  return TRUE;
 }
 
 
@@ -237,37 +309,41 @@ ico_save_dialog (GimpImage      *image,
   GList         *iter;
   gint           i;
   gint           response;
-  GimpParasite  *parasite = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY);
-
-  /* Loading hot spots for cursors if applicable */
-  parasite = gimp_image_get_parasite (image, "cur-hot-spot");
-
-  if (parasite)
-    {
-      gchar   *parasite_data;
-      guint32  parasite_size;
-      gint x, y;
-
-      parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
-      parasite_data = g_strndup (parasite_data, parasite_size);
-
-      if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
-        {
-          info->hot_spot_x = x;
-          info->hot_spot_y = y;
-        }
-
-      gimp_parasite_free (parasite);
-      g_free (parasite_data);
-    }
 
   dialog = ico_dialog_new (info);
   for (iter = info->layers, i = 0;
        iter;
        iter = g_list_next (iter), i++)
     {
+      if (info->is_cursor)
+        {
+          GimpParasite *parasite = NULL;
+
+          /* Loading hot spots for cursors if applicable */
+          parasite = gimp_item_get_parasite (GIMP_ITEM (iter->data), "cur-hot-spot");
+
+          if (parasite)
+            {
+              gchar   *parasite_data;
+              guint32  parasite_size;
+              gint x, y;
+
+              parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+              parasite_data = g_strndup (parasite_data, parasite_size);
+
+              if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
+                {
+                  info->hot_spot_x[i] = x;
+                  info->hot_spot_y[i] = y;
+                }
+
+              gimp_parasite_free (parasite);
+              g_free (parasite_data);
+            }
+        }
+
       /* if (gimp_layer_get_visible(layers[i])) */
       ico_dialog_add_icon (dialog, iter->data, i);
     }
@@ -1080,6 +1156,8 @@ ico_save_info_free (IcoSaveInfo  *info)
   g_free (info->default_depths);
   g_free (info->compress);
   g_list_free (info->layers);
+  g_free (info->hot_spot_x);
+  g_free (info->hot_spot_y);
   memset (info, 0, sizeof (IcoSaveInfo));
 }
 
@@ -1089,42 +1167,51 @@ ico_save_image (GFile      *file,
                 gint32      run_mode,
                 GError    **error)
 {
-  IcoSaveInfo    info;
+  IcoSaveInfo info;
 
   D(("*** Exporting Microsoft icon file %s\n",
      gimp_file_get_utf8_name (file)));
 
   info.is_cursor = FALSE;
 
-  return shared_save_image (file, image, run_mode, error, &info);
+  return shared_save_image (file, image, run_mode,
+                            0, NULL, 0, NULL,
+                            error, &info);
 }
 
 GimpPDBStatusType
 cur_save_image (GFile      *file,
                 GimpImage  *image,
                 gint32      run_mode,
-                gint32      hot_spot_x,
-                gint32      hot_spot_y,
+                gint       *n_hot_spot_x,
+                gint32    **hot_spot_x,
+                gint       *n_hot_spot_y,
+                gint32    **hot_spot_y,
                 GError    **error)
 {
-  IcoSaveInfo  info;
+  IcoSaveInfo info;
 
   D(("*** Exporting Microsoft cursor file %s\n",
      gimp_file_get_utf8_name (file)));
 
   info.is_cursor = TRUE;
-  info.hot_spot_x = hot_spot_x;
-  info.hot_spot_y = hot_spot_y;
 
-  return shared_save_image (file, image, run_mode, error, &info);
+  return shared_save_image (file, image, run_mode,
+                            n_hot_spot_x, hot_spot_x,
+                            n_hot_spot_y, hot_spot_y,
+                            error, &info);
 }
 
 GimpPDBStatusType
-shared_save_image (GFile *file,
-                   GimpImage     *image,
-                   gint32         run_mode,
-                   GError       **error,
-                   IcoSaveInfo   *info)
+shared_save_image (GFile        *file,
+                   GimpImage    *image,
+                   gint32        run_mode,
+                   gint         *n_hot_spot_x,
+                   gint32      **hot_spot_x,
+                   gint         *n_hot_spot_y,
+                   gint32      **hot_spot_y,
+                   GError      **error,
+                   IcoSaveInfo  *info)
 {
   FILE          *fp;
   GList         *iter;
@@ -1137,7 +1224,15 @@ shared_save_image (GFile *file,
   GimpParasite  *parasite = NULL;
   gchar         *str;
 
-  ico_save_init (image, info);
+  if (! ico_save_init (image, run_mode, info,
+                       n_hot_spot_x ? *n_hot_spot_x : 0,
+                       hot_spot_x   ? *hot_spot_x   : NULL,
+                       n_hot_spot_y ? *n_hot_spot_y : 0,
+                       hot_spot_y   ? *hot_spot_y   : NULL,
+                       error))
+    {
+      return GIMP_PDB_EXECUTION_ERROR;
+    }
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
@@ -1210,8 +1305,8 @@ shared_save_image (GFile *file,
       /* .cur file reuses these fields for cursor offsets */
       if (info->is_cursor)
         {
-          entries[i].planes = info->hot_spot_x;
-          entries[i].bpp = info->hot_spot_y;
+          entries[i].planes = info->hot_spot_x[i];
+          entries[i].bpp = info->hot_spot_y[i];
         }
       entries[i].offset = ftell (fp);
 
@@ -1251,14 +1346,34 @@ shared_save_image (GFile *file,
   /* Updating parasite hot spots if needed */
   if (info->is_cursor)
     {
-      str = g_strdup_printf ("%d %d", info->hot_spot_x, info->hot_spot_y);
-      parasite = gimp_parasite_new ("cur-hot-spot",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    strlen (str) + 1, (gpointer) str);
-      g_free (str);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
+      for (iter = info->layers, i = 0;
+           iter;
+           iter = g_list_next (iter), i++)
+        {
+          str = g_strdup_printf ("%d %d", info->hot_spot_x[i], info->hot_spot_y[i]);
+          parasite = gimp_parasite_new ("cur-hot-spot",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (str) + 1, (gpointer) str);
+          g_free (str);
+          gimp_item_attach_parasite (GIMP_ITEM (iter->data), parasite);
+          gimp_parasite_free (parasite);
+        }
     }
+
+  if (hot_spot_x)
+    {
+      *hot_spot_x = info->hot_spot_x;
+      info->hot_spot_x = NULL;
+    }
+  if (hot_spot_y)
+    {
+      *hot_spot_y = info->hot_spot_y;
+      info->hot_spot_y = NULL;
+    }
+  if (n_hot_spot_x)
+    *n_hot_spot_x = info->num_icons;
+  if (n_hot_spot_y)
+    *n_hot_spot_y = info->num_icons;
 
   ico_save_info_free (info);
   fclose (fp);

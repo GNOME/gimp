@@ -49,9 +49,6 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget     *frame;
   GtkWidget     *scrolled_window;
   GtkWidget     *viewport;
-  GtkWidget     *grid;
-  GtkAdjustment *adj;
-  GtkWidget     *spinbutton;
   GtkWidget     *warning;
 
   dialog = gimp_export_dialog_new (_("Windows Icon"),
@@ -73,46 +70,6 @@ ico_dialog_new (IcoSaveInfo *info)
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
-
-  /* Cursor */
-  if (info->is_cursor)
-    {
-      frame = gimp_frame_new (_("Cursor Hot spot"));
-      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 4);
-      gtk_widget_show (frame);
-
-      grid = gtk_grid_new ();
-      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-      gtk_container_add (GTK_CONTAINER (frame), grid);
-      gtk_widget_show (grid);
-
-      adj = (GtkAdjustment *)
-             gtk_adjustment_new (info->hot_spot_x, 0,
-                                 G_MAXUINT16, 1, 10, 0);
-      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
-      gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
-                                 0, G_MAXUINT16);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                _("Hot spot _X:"), 0.0, 0.5,
-                                spinbutton, 1);
-      g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
-                        &info->hot_spot_x);
-
-      adj = (GtkAdjustment *)
-             gtk_adjustment_new (info->hot_spot_y, 0,
-                                 G_MAXUINT16, 1, 10, 0);
-      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
-      gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
-                                 0, G_MAXUINT16);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                                _("Hot spot _Y:"), 0.0, 0.5,
-                                spinbutton, 1);
-      g_signal_connect (adj, "value-changed",
-                        G_CALLBACK (gimp_int_adjustment_update),
-                        &info->hot_spot_y);
-    }
 
   /* Cursor */
   frame = gimp_frame_new (_("Icon Details"));
@@ -501,6 +458,46 @@ ico_dialog_add_icon (GtkWidget    *dialog,
   ico_dialog_update_icon_preview (dialog, layer, info->depths[layer_num]);
 
   ico_dialog_check_compat (dialog, info);
+
+  /* Cursor */
+  if (info->is_cursor)
+    {
+      GtkWidget     *grid;
+      GtkAdjustment *adj;
+      GtkWidget     *spinbutton;
+
+      grid = gtk_grid_new ();
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_box_pack_start (GTK_BOX (hbox), grid, FALSE, FALSE, 0);
+      gtk_widget_show (grid);
+
+      adj = (GtkAdjustment *)
+             gtk_adjustment_new (info->hot_spot_x[layer_num], 0,
+                                 G_MAXUINT16, 1, 10, 0);
+      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+      gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
+                                 0, G_MAXUINT16);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("Hot spot _X:"), 0.0, 0.5,
+                                spinbutton, 1);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &info->hot_spot_x[layer_num]);
+
+      adj = (GtkAdjustment *)
+             gtk_adjustment_new (info->hot_spot_y[layer_num], 0,
+                                 G_MAXUINT16, 1, 10, 0);
+      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+      gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
+                                 0, G_MAXUINT16);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("Hot spot _Y:"), 0.0, 0.5,
+                                spinbutton, 1);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &info->hot_spot_y[layer_num]);
+    }
 }
 
 static void

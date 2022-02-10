@@ -664,7 +664,6 @@ ico_load_image (GFile        *file,
   guchar        *buf;
   guint          icon_count;
   gint           maxsize;
-  GimpParasite  *parasite;
   gchar         *str;
 
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -716,23 +715,27 @@ ico_load_image (GFile        *file,
   image = gimp_image_new (max_width, max_height, GIMP_RGB);
   gimp_image_set_file (image, file);
 
-  /* Save CUR hot spot information */
-  if (header.resource_type == 2)
-    {
-      str = g_strdup_printf ("%d %d", info[0].planes, info[0].bpp);
-      parasite = gimp_parasite_new ("cur-hot-spot",
-                                    GIMP_PARASITE_PERSISTENT,
-                                    strlen (str) + 1, (gpointer) str);
-      g_free (str);
-      gimp_image_attach_parasite (image, parasite);
-      gimp_parasite_free (parasite);
-    }
-
   maxsize = max_width * max_height * 4;
   buf = g_new (guchar, max_width * max_height * 4);
   for (i = 0; i < icon_count; i++)
     {
-      ico_load_layer (fp, image, i, buf, maxsize, info+i);
+      GimpLayer *layer;
+
+      layer = ico_load_layer (fp, image, i, buf, maxsize, info+i);
+
+      /* Save CUR hot spot information */
+      if (header.resource_type == 2)
+        {
+          GimpParasite *parasite;
+
+          str = g_strdup_printf ("%d %d", info[i].planes, info[i].bpp);
+          parasite = gimp_parasite_new ("cur-hot-spot",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (str) + 1, (gpointer) str);
+          g_free (str);
+          gimp_item_attach_parasite (GIMP_ITEM (layer), parasite);
+          gimp_parasite_free (parasite);
+        }
     }
   g_free (buf);
   g_free (info);
