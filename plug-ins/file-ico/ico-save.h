@@ -27,6 +27,19 @@ GimpPDBStatusType ico_save_image          (GFile         *file,
                                            gint32         run_mode,
                                            GError       **error);
 
+GimpPDBStatusType cur_save_image          (GFile         *file,
+                                           GimpImage     *image,
+                                           gint32         run_mode,
+                                           gint32         hot_spot_x,
+                                           gint32         hot_spot_y,
+                                           GError       **error);
+
+GimpPDBStatusType shared_save_image       (GFile         *file,
+                                           GimpImage     *image,
+                                           gint32         run_mode,
+                                           GError       **error,
+                                           IcoSaveInfo   *info);
+
 gboolean          ico_cmap_contains_black (const guchar  *cmap,
                                            gint           num_colors);
 

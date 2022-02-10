@@ -34,8 +34,10 @@
 #include "libgimp/stdplugins-intl.h"
 
 #define LOAD_PROC        "file-ico-load"
+#define LOAD_CUR_PROC    "file-cur-load"
 #define LOAD_THUMB_PROC  "file-ico-load-thumb"
 #define SAVE_PROC        "file-ico-save"
+#define SAVE_CUR_PROC    "file-cur-save"
 
 
 typedef struct _Ico      Ico;
@@ -79,6 +81,14 @@ static GimpValueArray * ico_save             (GimpProcedure        *procedure,
                                               GFile                *file,
                                               const GimpValueArray *args,
                                               gpointer              run_data);
+static GimpValueArray * cur_save             (GimpProcedure        *procedure,
+                                              GimpRunMode           run_mode,
+                                              GimpImage            *image,
+                                              gint                  n_drawables,
+                                              GimpDrawable        **drawables,
+                                              GFile                *file,
+                                              const GimpValueArray *args,
+                                              gpointer              run_data);
 
 
 G_DEFINE_TYPE (Ico, ico, GIMP_TYPE_PLUG_IN)
@@ -107,7 +117,9 @@ ico_query_procedures (GimpPlugIn *plug_in)
 
   list = g_list_append (list, g_strdup (LOAD_THUMB_PROC));
   list = g_list_append (list, g_strdup (LOAD_PROC));
+  list = g_list_append (list, g_strdup (LOAD_CUR_PROC));
   list = g_list_append (list, g_strdup (SAVE_PROC));
+  list = g_list_append (list, g_strdup (SAVE_CUR_PROC));
 
   return list;
 }
@@ -146,6 +158,36 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_THUMB_PROC);
     }
+  else if (! strcmp (name, LOAD_CUR_PROC))
+    {
+      procedure = gimp_load_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           ico_load, NULL, NULL);
+
+      gimp_procedure_set_menu_label (procedure, N_("Microsoft Windows cursor"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Loads files of Windows CUR file format",
+                                        "Loads files of Windows CUR file format",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Christian Kreibich <christian@whoop.org>, "
+                                      "Nikc M.",
+                                      "Christian Kreibich <christian@whoop.org>, "
+                                      "Nikc M.",
+                                      "2002-2022");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/vnd.microsoft.icon");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "cur");
+      gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
+                                      "0,string,\\000\\001\\000\\000,0,string,\\000\\002\\000\\000");
+
+      gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
+                                                LOAD_THUMB_PROC);
+    }
   else if (! strcmp (name, LOAD_THUMB_PROC))
     {
       procedure = gimp_thumbnail_procedure_new (plug_in, name,
@@ -153,7 +195,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                                 ico_load_thumb, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads a preview from an Windows ICO file",
+                                        "Loads a preview from a Windows ICO or CUR files",
                                         "",
                                         name);
       gimp_procedure_set_attribution (procedure,
@@ -185,6 +227,45 @@ ico_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-ico");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ico");
+    }
+  else if (! strcmp (name, SAVE_CUR_PROC))
+    {
+      procedure = gimp_save_procedure_new (plug_in, name,
+                                           GIMP_PDB_PROC_TYPE_PLUGIN,
+                                           cur_save, NULL, NULL);
+
+      gimp_procedure_set_image_types (procedure, "*");
+
+      gimp_procedure_set_menu_label (procedure, N_("Microsoft Windows cursor"));
+      gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
+
+      gimp_procedure_set_documentation (procedure,
+                                        "Saves files in Windows CUR file format",
+                                        "Saves files in Windows CUR file format",
+                                        name);
+      gimp_procedure_set_attribution (procedure,
+                                      "Christian Kreibich <christian@whoop.org>, "
+                                      "Nikc M.",
+                                      "Christian Kreibich <christian@whoop.org>, "
+                                      "Nikc M.",
+                                      "2002-2022");
+
+      gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
+                                          "image/vnd.microsoft.icon");
+      gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
+                                          "cur");
+
+      GIMP_PROC_ARG_INT (procedure, "hot-spot-x",
+                         "Hot spot X",
+                         "X coordinate of hot spot",
+                         0, G_MAXUINT16, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "hot-spot-y",
+                         "Hot spot Y",
+                         "Y coordinate of hot spot",
+                         0, G_MAXUINT16, 0,
+                         G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -277,6 +358,41 @@ ico_save (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   status = ico_save_image (file, image, run_mode, &error);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static GimpValueArray *
+cur_save (GimpProcedure        *procedure,
+          GimpRunMode           run_mode,
+          GimpImage            *image,
+          gint                  n_drawables,
+          GimpDrawable        **drawables,
+          GFile                *file,
+          const GimpValueArray *args,
+          gpointer              run_data)
+{
+  GimpProcedureConfig *config;
+  GimpPDBStatusType    status;
+  GError              *error      = NULL;
+  gint                 hot_spot_x = 0;
+  gint                 hot_spot_y = 0;
+
+  INIT_I18N ();
+  gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
+  g_object_get (config,
+                "hot-spot-x",  &hot_spot_x,
+                "hot-spot-y",  &hot_spot_y,
+                NULL);
+
+  status = cur_save_image (file, image, run_mode, hot_spot_x, hot_spot_y, &error);
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }

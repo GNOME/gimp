@@ -43,13 +43,16 @@ static void   ico_dialog_check_compat    (GtkWidget   *dialog,
 GtkWidget *
 ico_dialog_new (IcoSaveInfo *info)
 {
-  GtkWidget *dialog;
-  GtkWidget *main_vbox;
-  GtkWidget *vbox;
-  GtkWidget *frame;
-  GtkWidget *scrolled_window;
-  GtkWidget *viewport;
-  GtkWidget *warning;
+  GtkWidget     *dialog;
+  GtkWidget     *main_vbox;
+  GtkWidget     *vbox;
+  GtkWidget     *frame;
+  GtkWidget     *scrolled_window;
+  GtkWidget     *viewport;
+  GtkWidget     *grid;
+  GtkAdjustment *adj;
+  GtkWidget     *spinbutton;
+  GtkWidget     *warning;
 
   dialog = gimp_export_dialog_new (_("Windows Icon"),
                                    PLUG_IN_BINARY,
@@ -65,14 +68,55 @@ ico_dialog_new (IcoSaveInfo *info)
 
   g_object_set_data (G_OBJECT (dialog), "save_info", info);
 
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
 
+  /* Cursor */
+  if (info->is_cursor)
+    {
+      frame = gimp_frame_new (_("Cursor Hot spot"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 4);
+      gtk_widget_show (frame);
+
+      grid = gtk_grid_new ();
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
+
+      adj = (GtkAdjustment *)
+             gtk_adjustment_new (info->hot_spot_x, 0,
+                                 G_MAXUINT16, 1, 10, 0);
+      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+      gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
+                                 0, G_MAXUINT16);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("Hot spot _X:"), 0.0, 0.5,
+                                spinbutton, 1);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &info->hot_spot_x);
+
+      adj = (GtkAdjustment *)
+             gtk_adjustment_new (info->hot_spot_y, 0,
+                                 G_MAXUINT16, 1, 10, 0);
+      spinbutton = gimp_spin_button_new (adj, 1.0, 0);
+      gtk_spin_button_set_range (GTK_SPIN_BUTTON (spinbutton),
+                                 0, G_MAXUINT16);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("Hot spot _Y:"), 0.0, 0.5,
+                                spinbutton, 1);
+      g_signal_connect (adj, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &info->hot_spot_y);
+    }
+
+  /* Cursor */
   frame = gimp_frame_new (_("Icon Details"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 4);
   gtk_widget_show (frame);
 
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
@@ -98,7 +142,7 @@ ico_dialog_new (IcoSaveInfo *info)
                             "by all programs. Older applications may not "
                             "open this file correctly."),
                           NULL);
-  gtk_box_pack_end (GTK_BOX (main_vbox), warning, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox), warning, FALSE, FALSE, 12);
   /* don't show the warning here */
 
   g_object_set_data (G_OBJECT (dialog), "warning", warning);

@@ -233,12 +233,35 @@ static gboolean
 ico_save_dialog (GimpImage      *image,
                  IcoSaveInfo    *info)
 {
-  GtkWidget *dialog;
-  GList     *iter;
-  gint       i;
-  gint       response;
+  GtkWidget     *dialog;
+  GList         *iter;
+  gint           i;
+  gint           response;
+  GimpParasite  *parasite = NULL;
 
   gimp_ui_init (PLUG_IN_BINARY);
+
+  /* Loading hot spots for cursors if applicable */
+  parasite = gimp_image_get_parasite (image, "cur-hot-spot");
+
+  if (parasite)
+    {
+      gchar   *parasite_data;
+      guint32  parasite_size;
+      gint x, y;
+
+      parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      parasite_data = g_strndup (parasite_data, parasite_size);
+
+      if (sscanf (parasite_data, "%i %i", &x, &y) == 2)
+        {
+          info->hot_spot_x = x;
+          info->hot_spot_y = y;
+        }
+
+      gimp_parasite_free (parasite);
+      g_free (parasite_data);
+    }
 
   dialog = ico_dialog_new (info);
   for (iter = info->layers, i = 0;
@@ -1066,25 +1089,60 @@ ico_save_image (GFile      *file,
                 gint32      run_mode,
                 GError    **error)
 {
-  FILE          *fp;
-  GList         *iter;
-  gint           width;
-  gint           height;
   IcoSaveInfo    info;
-  IcoFileHeader  header;
-  IcoFileEntry  *entries;
-  gboolean       saved;
-  gint           i;
 
   D(("*** Exporting Microsoft icon file %s\n",
      gimp_file_get_utf8_name (file)));
 
-  ico_save_init (image, &info);
+  info.is_cursor = FALSE;
+
+  return shared_save_image (file, image, run_mode, error, &info);
+}
+
+GimpPDBStatusType
+cur_save_image (GFile      *file,
+                GimpImage  *image,
+                gint32      run_mode,
+                gint32      hot_spot_x,
+                gint32      hot_spot_y,
+                GError    **error)
+{
+  IcoSaveInfo  info;
+
+  D(("*** Exporting Microsoft cursor file %s\n",
+     gimp_file_get_utf8_name (file)));
+
+  info.is_cursor = TRUE;
+  info.hot_spot_x = hot_spot_x;
+  info.hot_spot_y = hot_spot_y;
+
+  return shared_save_image (file, image, run_mode, error, &info);
+}
+
+GimpPDBStatusType
+shared_save_image (GFile *file,
+                   GimpImage     *image,
+                   gint32         run_mode,
+                   GError       **error,
+                   IcoSaveInfo   *info)
+{
+  FILE          *fp;
+  GList         *iter;
+  gint           width;
+  gint           height;
+  IcoFileHeader  header;
+  IcoFileEntry  *entries;
+  gboolean       saved;
+  gint           i;
+  GimpParasite  *parasite = NULL;
+  gchar         *str;
+
+  ico_save_init (image, info);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       /* Allow user to override default values */
-      if ( !ico_save_dialog (image, &info))
+      if ( !ico_save_dialog (image, info))
         return GIMP_PDB_CANCEL;
     }
 
@@ -1103,30 +1161,32 @@ ico_save_image (GFile      *file,
 
   header.reserved = 0;
   header.resource_type = 1;
-  header.icon_count = info.num_icons;
+  if (info->is_cursor)
+    header.resource_type = 2;
+  header.icon_count = info->num_icons;
   if (! ico_write_int16 (fp, &header.reserved, 1)      ||
       ! ico_write_int16 (fp, &header.resource_type, 1) ||
       ! ico_write_int16 (fp, &header.icon_count, 1))
     {
-      ico_save_info_free (&info);
+      ico_save_info_free (info);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  entries = g_new0 (IcoFileEntry, info.num_icons);
-  if (fwrite (entries, sizeof (IcoFileEntry), info.num_icons, fp) <= 0)
+  entries = g_new0 (IcoFileEntry, info->num_icons);
+  if (fwrite (entries, sizeof (IcoFileEntry), info->num_icons, fp) <= 0)
     {
-      ico_save_info_free (&info);
+      ico_save_info_free (info);
       g_free (entries);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  for (iter = info.layers, i = 0;
+  for (iter = info->layers, i = 0;
        iter;
        iter = g_list_next (iter), i++)
     {
-      gimp_progress_update ((gdouble)i / (gdouble)info.num_icons);
+      gimp_progress_update ((gdouble)i / (gdouble)info->num_icons);
 
       width = gimp_drawable_get_width (iter->data);
       height = gimp_drawable_get_height (iter->data);
@@ -1140,23 +1200,29 @@ ico_save_image (GFile      *file,
           entries[i].width = 0;
           entries[i].height = 0;
         }
-      if ( info.depths[i] <= 8 )
-        entries[i].num_colors = 1 << info.depths[i];
+      if (info->depths[i] <= 8 )
+        entries[i].num_colors = 1 << info->depths[i];
       else
         entries[i].num_colors = 0;
       entries[i].reserved = 0;
       entries[i].planes = 1;
-      entries[i].bpp = info.depths[i];
+      entries[i].bpp = info->depths[i];
+      /* .cur file reuses these fields for cursor offsets */
+      if (info->is_cursor)
+        {
+          entries[i].planes = info->hot_spot_x;
+          entries[i].bpp = info->hot_spot_y;
+        }
       entries[i].offset = ftell (fp);
 
-      if (info.compress[i])
-        saved = ico_write_png (fp, iter->data, info.depths[i]);
+      if (info->compress[i])
+        saved = ico_write_png (fp, iter->data, info->depths[i]);
       else
-        saved = ico_write_icon (fp, iter->data, info.depths[i]);
+        saved = ico_write_icon (fp, iter->data, info->depths[i]);
 
       if (!saved)
         {
-          ico_save_info_free (&info);
+          ico_save_info_free (info);
           fclose (fp);
           return GIMP_PDB_EXECUTION_ERROR;
         }
@@ -1164,7 +1230,7 @@ ico_save_image (GFile      *file,
       entries[i].size = ftell (fp) - entries[i].offset;
     }
 
-  for (i = 0; i < info.num_icons; i++)
+  for (i = 0; i < info->num_icons; i++)
     {
       entries[i].planes = GUINT16_TO_LE (entries[i].planes);
       entries[i].bpp    = GUINT16_TO_LE (entries[i].bpp);
@@ -1173,16 +1239,28 @@ ico_save_image (GFile      *file,
     }
 
   if (fseek (fp, sizeof(IcoFileHeader), SEEK_SET) < 0
-      || fwrite (entries, sizeof (IcoFileEntry), info.num_icons, fp) <= 0)
+      || fwrite (entries, sizeof (IcoFileEntry), info->num_icons, fp) <= 0)
     {
-      ico_save_info_free (&info);
+      ico_save_info_free (info);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
   gimp_progress_update (1.0);
 
-  ico_save_info_free (&info);
+  /* Updating parasite hot spots if needed */
+  if (info->is_cursor)
+    {
+      str = g_strdup_printf ("%d %d", info->hot_spot_x, info->hot_spot_y);
+      parasite = gimp_parasite_new ("cur-hot-spot",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (str) + 1, (gpointer) str);
+      g_free (str);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+
+  ico_save_info_free (info);
   fclose (fp);
   g_free (entries);
 

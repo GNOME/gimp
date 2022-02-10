@@ -120,7 +120,7 @@ ico_read_int8 (FILE   *fp,
 }
 
 
-static guint32
+static IcoFileHeader
 ico_read_init (FILE *fp)
 {
   IcoFileHeader header;
@@ -130,12 +130,13 @@ ico_read_init (FILE *fp)
       ! ico_read_int16 (fp, &header.resource_type, 1) ||
       ! ico_read_int16 (fp, &header.icon_count, 1)    ||
       header.reserved != 0 ||
-      header.resource_type != 1)
+      (header.resource_type != 1 && header.resource_type != 2))
     {
-      return 0;
+      header.icon_count = 0;
+      return header;
     }
 
-  return header.icon_count;
+  return header;
 }
 
 
@@ -229,6 +230,7 @@ ico_read_info (FILE    *fp,
     {
       info[i].width  = entries[i].width;
       info[i].height = entries[i].height;
+      info[i].planes = entries[i].planes;
       info[i].bpp    = GUINT16_FROM_LE (entries[i].bpp);
       info[i].size   = GUINT32_FROM_LE (entries[i].size);
       info[i].offset = GUINT32_FROM_LE (entries[i].offset);
@@ -653,14 +655,17 @@ GimpImage *
 ico_load_image (GFile        *file,
                 GError      **error)
 {
-  FILE        *fp;
-  IcoLoadInfo *info;
-  gint         max_width, max_height;
-  gint         i;
-  GimpImage   *image;
-  guchar      *buf;
-  guint        icon_count;
-  gint         maxsize;
+  FILE          *fp;
+  IcoFileHeader  header;
+  IcoLoadInfo   *info;
+  gint           max_width, max_height;
+  gint           i;
+  GimpImage     *image;
+  guchar        *buf;
+  guint          icon_count;
+  gint           maxsize;
+  GimpParasite  *parasite;
+  gchar         *str;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -675,7 +680,8 @@ ico_load_image (GFile        *file,
       return NULL;
     }
 
-  icon_count = ico_read_init (fp);
+  header = ico_read_init (fp);
+  icon_count = header.icon_count;
   if (!icon_count)
     {
       fclose (fp);
@@ -710,6 +716,18 @@ ico_load_image (GFile        *file,
   image = gimp_image_new (max_width, max_height, GIMP_RGB);
   gimp_image_set_file (image, file);
 
+  /* Save CUR hot spot information */
+  if (header.resource_type == 2)
+    {
+      str = g_strdup_printf ("%d %d", info[0].planes, info[0].bpp);
+      parasite = gimp_parasite_new ("cur-hot-spot",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (str) + 1, (gpointer) str);
+      g_free (str);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+
   maxsize = max_width * max_height * 4;
   buf = g_new (guchar, max_width * max_height * 4);
   for (i = 0; i < icon_count; i++)
@@ -731,15 +749,16 @@ ico_load_thumbnail_image (GFile   *file,
                           gint    *height,
                           GError **error)
 {
-  FILE        *fp;
-  IcoLoadInfo *info;
-  GimpImage   *image;
-  gint         w     = 0;
-  gint         h     = 0;
-  gint         bpp   = 0;
-  gint         match = 0;
-  gint         i, icon_count;
-  guchar      *buf;
+  FILE          *fp;
+  IcoLoadInfo   *info;
+  IcoFileHeader  header;
+  GimpImage     *image;
+  gint           w     = 0;
+  gint           h     = 0;
+  gint           bpp   = 0;
+  gint           match = 0;
+  gint           i, icon_count;
+  guchar        *buf;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -754,7 +773,8 @@ ico_load_thumbnail_image (GFile   *file,
       return NULL;
     }
 
-  icon_count = ico_read_init (fp);
+  header = ico_read_init (fp);
+  icon_count = header.icon_count;
   if (! icon_count)
     {
       fclose (fp);

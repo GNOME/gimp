@@ -80,6 +80,7 @@ typedef struct _IcoLoadInfo
     guint    width;
     guint    height;
     gint     bpp;
+    gint     planes;
     gint     offset;
     gint     size;
 } IcoLoadInfo;
@@ -91,6 +92,9 @@ typedef struct _IcoSaveInfo
     gboolean    *compress;
     GList       *layers;
     gint         num_icons;
+    gboolean     is_cursor;
+    gint         hot_spot_x;
+    gint         hot_spot_y;
 } IcoSaveInfo;
 
 
