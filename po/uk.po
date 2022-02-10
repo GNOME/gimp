@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-04 14:15+0000\n"
-"PO-Revision-Date: 2022-02-04 22:47+0200\n"
+"POT-Creation-Date: 2022-02-10 20:24+0000\n"
+"PO-Revision-Date: 2022-02-10 22:45+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3467,8 +3467,6 @@ msgid "Brush Angle (Editor): Rotate Left by 15°"
 msgstr "Кут пензля (редактор): повернути ліворуч на 15°"
 
 #: ../app/actions/context-actions.c:1093
-#| msgctxt "dynamics-action"
-#| msgid "D_uplicate Dynamics"
 msgctxt "context-action"
 msgid "_Enable/Disable Dynamics"
 msgstr "_Увімкнути/Вимкнути динаміку"
@@ -3476,8 +3474,7 @@ msgstr "_Увімкнути/Вимкнути динаміку"
 #: ../app/actions/context-actions.c:1094
 msgctxt "context-action"
 msgid "Apply or ignore the dynamics when painting"
-msgstr ""
-"Застосовувати чи ігнорувати динаміку під час малювання"
+msgstr "Застосовувати чи ігнорувати динаміку під час малювання"
 
 #: ../app/actions/context-commands.c:459
 #, c-format
@@ -3500,12 +3497,10 @@ msgid "Brush Angle: %2.2f"
 msgstr "Кут пензля: %2.2f"
 
 #: ../app/actions/context-commands.c:827
-#| msgid "Dynamics Folders"
 msgid "Dynamics disabled"
 msgstr "Динаміку вимкнено"
 
 #: ../app/actions/context-commands.c:830
-#| msgid "Dynamics Folders"
 msgid "Dynamics enabled"
 msgstr "Динаміку увімкнено"
 
@@ -11647,7 +11642,7 @@ msgstr ""
 "Помилка зчитування файла «%s». Будуть використані типові значення. Резервна "
 "копія конфігурації створена у «%s»."
 
-#: ../app/config/gimpcoreconfig.c:851 ../app/dialogs/preferences-dialog.c:1899
+#: ../app/config/gimpcoreconfig.c:783 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Синтаксис взірця для пошуку і позначення записів:"
 
@@ -13745,7 +13740,7 @@ msgid "Deleting \"%s\" failed: %s"
 msgstr "Не вдалось вилучити «%s»: %s"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:702
+#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:707
 #: ../app/dialogs/preferences-dialog.c:3326
 #: ../app/tools/gimppaintoptions-gui.c:311
 msgid "Dynamics"
@@ -14362,68 +14357,68 @@ msgstr "Встановити непрозорість каналу"
 msgid "Selection Mask"
 msgstr "Маска позначеної ділянки"
 
-#: ../app/core/gimpcontext.c:664
+#: ../app/core/gimpcontext.c:669
 msgid "Foreground"
 msgstr "Передній план"
 
-#: ../app/core/gimpcontext.c:665 ../app/core/gimpgrid.c:94
+#: ../app/core/gimpcontext.c:670 ../app/core/gimpgrid.c:94
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: ../app/core/gimpcontext.c:671 ../app/core/gimpimage-new.c:149
+#: ../app/core/gimpcontext.c:676 ../app/core/gimpimage-new.c:149
 msgid "Background"
 msgstr "Тло"
 
-#: ../app/core/gimpcontext.c:672 ../app/core/gimpgrid.c:101
+#: ../app/core/gimpcontext.c:677 ../app/core/gimpgrid.c:101
 msgid "Background color"
 msgstr "Колір тла"
 
-#: ../app/core/gimpcontext.c:678 ../app/core/gimpcontext.c:679
+#: ../app/core/gimpcontext.c:683 ../app/core/gimpcontext.c:684
 #: ../app/operations/gimpoperationsettings.c:100
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:316
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: ../app/core/gimpcontext.c:687 ../app/core/gimpcontext.c:688
+#: ../app/core/gimpcontext.c:692 ../app/core/gimpcontext.c:693
 msgid "Paint Mode"
 msgstr "Режим малювання"
 
-#: ../app/core/gimpcontext.c:695 ../app/core/gimpcontext.c:696
+#: ../app/core/gimpcontext.c:700 ../app/core/gimpcontext.c:701
 #: ../app/tools/gimpmybrushoptions-gui.c:54
 #: ../app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Пензель"
 
-#: ../app/core/gimpcontext.c:703
+#: ../app/core/gimpcontext.c:708
 msgid "Paint dynamics"
 msgstr "Динаміка малювання"
 
-#: ../app/core/gimpcontext.c:709 ../app/core/gimpcontext.c:710
+#: ../app/core/gimpcontext.c:714 ../app/core/gimpcontext.c:715
 #: ../app/tools/gimpmybrushtool.c:73
 msgid "MyPaint Brush"
 msgstr "Пензель MyPaint"
 
-#: ../app/core/gimpcontext.c:716 ../app/core/gimpcontext.c:717
+#: ../app/core/gimpcontext.c:721 ../app/core/gimpcontext.c:722
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../app/core/gimpcontext.c:723 ../app/core/gimpcontext.c:724
+#: ../app/core/gimpcontext.c:728 ../app/core/gimpcontext.c:729
 #: ../app/pdb/drawable-edit-cmds.c:253 ../app/tools/gimpgradientoptions.c:269
 #: ../app/tools/gimpgradienttool.c:164 ../app/tools/gimppaintoptions-gui.c:367
 msgid "Gradient"
 msgstr "Градієнт"
 
-#: ../app/core/gimpcontext.c:730 ../app/core/gimpcontext.c:731
+#: ../app/core/gimpcontext.c:735 ../app/core/gimpcontext.c:736
 #: ../app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Палітра"
 
-#: ../app/core/gimpcontext.c:737 ../app/core/gimpcontext.c:738
+#: ../app/core/gimpcontext.c:742 ../app/core/gimpcontext.c:743
 #: ../app/tools/gimptextoptions.c:551
 msgid "Font"
 msgstr "Шрифт"
 
-#: ../app/core/gimpcontext.c:744 ../app/core/gimpcontext.c:745
+#: ../app/core/gimpcontext.c:749 ../app/core/gimpcontext.c:750
 msgid "Tool Preset"
 msgstr "Шаблон інструментів"
 
@@ -14515,7 +14510,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Масштаб"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:87
+#: ../app/core/gimpdrawable-bucket-fill.c:88
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Заливання"
@@ -14601,28 +14596,28 @@ msgid "Style"
 msgstr "Стиль"
 
 #: ../app/core/gimpfilloptions.c:117 ../app/pdb/gimppdbcontext.c:101
-#: ../app/tools/gimpbucketfilloptions.c:150
+#: ../app/tools/gimpbucketfilloptions.c:153
 #: ../app/tools/gimpselectionoptions.c:81 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Згладжування"
 
-#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:163
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
 msgstr "Розмивати межі"
 
-#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:161
+#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:164
 msgid "Enable feathering of fill edges"
 msgstr "Увімкнути розмазування країв заповнення кольором"
 
 #: ../app/core/gimpfilloptions.c:131 ../app/paint/gimpmybrushoptions.c:87
-#: ../app/tools/gimpbucketfilloptions.c:167 ../app/tools/gimpcoloroptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:170 ../app/tools/gimpcoloroptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:102
 #: ../app/tools/gimpselectionoptions.c:95 ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr "Радіус"
 
-#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:168
+#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:171
 #: ../app/tools/gimpselectionoptions.c:96
 msgid "Radius of feathering"
 msgstr "Радіус розмазування"
@@ -15211,40 +15206,40 @@ msgstr "Масштабувати зображення"
 msgid "Can't undo %s"
 msgstr "Не вдалось скасувати %s"
 
-#: ../app/core/gimpimagefile.c:743 ../app/dialogs/preferences-dialog.c:1991
+#: ../app/core/gimpimagefile.c:751 ../app/dialogs/preferences-dialog.c:1991
 msgid "Folder"
 msgstr "Тека"
 
-#: ../app/core/gimpimagefile.c:748
+#: ../app/core/gimpimagefile.c:756
 msgid "Special File"
 msgstr "Особливий файл"
 
-#: ../app/core/gimpimagefile.c:764
+#: ../app/core/gimpimagefile.c:772
 msgid "Remote File"
 msgstr "Віддалений файл"
 
-#: ../app/core/gimpimagefile.c:783
+#: ../app/core/gimpimagefile.c:791
 msgid "Click to create preview"
 msgstr "Натисніть для створення файла перегляду"
 
-#: ../app/core/gimpimagefile.c:789
+#: ../app/core/gimpimagefile.c:797
 msgid "Loading preview..."
 msgstr "Завантаження файла попереднього перегляду…"
 
-#: ../app/core/gimpimagefile.c:795
+#: ../app/core/gimpimagefile.c:803
 msgid "Preview is out of date"
 msgstr "Файл попереднього перегляду застарів"
 
-#: ../app/core/gimpimagefile.c:801
+#: ../app/core/gimpimagefile.c:809
 msgid "Cannot create preview"
 msgstr "Не вдалось створити файл попереднього перегляду"
 
-#: ../app/core/gimpimagefile.c:811
+#: ../app/core/gimpimagefile.c:819
 msgid "(Preview may be out of date)"
 msgstr "(Можливо, файл попереднього перегляду застарів)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:820 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:828 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:658
 #, c-format
 msgid "%d × %d pixel"
@@ -15254,7 +15249,7 @@ msgstr[1] "%d x %d точки"
 msgstr[2] "%d x %d точок"
 msgstr[3] "%d x %d точка"
 
-#: ../app/core/gimpimagefile.c:843 ../app/display/gimpdisplayshell-title.c:358
+#: ../app/core/gimpimagefile.c:851 ../app/display/gimpdisplayshell-title.c:358
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -15263,7 +15258,7 @@ msgstr[1] "%d шари"
 msgstr[2] "%d шарів"
 msgstr[3] "%d шар"
 
-#: ../app/core/gimpimagefile.c:891
+#: ../app/core/gimpimagefile.c:899
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Не вдалось відкрити файл мініатюри «%s»: %s"
@@ -15473,20 +15468,20 @@ msgstr "Не вдалось перейменувати маски шарів."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Вибрати прозорі пікселі замість сірих"
 
-#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
+#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:206
 msgid "Line art detection threshold"
 msgstr "Поріг виявлення контуру"
 
-#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:190
+#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:207
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Поріг виявлення контуру (за більших значень буде включено більше пікселів )"
 
-#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:196
+#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:213
 msgid "Maximum growing size"
 msgstr "Максимальний розмір нарощування"
 
-#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:197
+#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:214
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Максимальна кількість пікселів нарощування під контуром"
 
@@ -15982,7 +15977,7 @@ msgstr "Лінійне/Придатне до сприйняття"
 msgid "Color profile"
 msgstr "Колірний профіль"
 
-#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:111
+#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:114
 msgid "Fill type"
 msgstr "Тип заповнення"
 
@@ -19317,7 +19312,7 @@ msgid "Drop New Path"
 msgstr "Опускання нового контуру"
 
 #: ../app/display/gimpdisplayshell-dnd.c:365
-#: ../app/tools/gimpbucketfilltool.c:579 ../app/tools/gimpcagetool.c:240
+#: ../app/tools/gimpbucketfilltool.c:602 ../app/tools/gimpcagetool.c:240
 #: ../app/tools/gimpfiltertool.c:306 ../app/tools/gimpgradienttool.c:273
 #: ../app/tools/gimpselectiontool.c:569
 #, c-format
@@ -20989,8 +20984,8 @@ msgstr "Штамп"
 msgid "No patterns available for use with this tool."
 msgstr "Немає текстур, доступних для використання з цим інструментом."
 
-#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:181
-#: ../app/tools/gimpbucketfilloptions.c:496
+#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:184
+#: ../app/tools/gimpbucketfilloptions.c:534
 #: ../app/tools/gimpcloneoptions-gui.c:230
 msgid "Source"
 msgstr "Джерело"
@@ -21212,14 +21207,12 @@ msgid "Scatter brush as you paint"
 msgstr "Розкидати пензель протягом малювання "
 
 #: ../app/paint/gimppaintoptions.c:309
-#| msgid "Paint dynamics"
 msgid "Enable dynamics"
 msgstr "Увімкнути динаміку"
 
 #: ../app/paint/gimppaintoptions.c:310
 msgid "Apply dynamics curves to paint settings"
-msgstr ""
-"Застосовувати криві динаміки до параметрів малювання"
+msgstr "Застосовувати криві динаміки до параметрів малювання"
 
 #: ../app/paint/gimppaintoptions.c:316
 msgid "Amount"
@@ -21322,24 +21315,24 @@ msgctxt "smudge-tool"
 msgid "No erasing effect"
 msgstr "Без ефекту витирання"
 
-#: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:97
-#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:135
+#: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:110
+#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:138
 #: ../app/tools/gimpcoloroptions.c:70 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
 msgstr "Об'єднувати ділянки за зразком"
 
-#: ../app/paint/gimpsourcecore.c:225
+#: ../app/paint/gimpsourcecore.c:151
 msgid "Set a source image first."
 msgstr "Вкажіть початкове зображення."
 
-#: ../app/paint/gimpsourcecore.c:232
+#: ../app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr ""
 "Неможливо малювати на вирівнюванні «Зареєстровано» на декількох об'єктах для "
 "малювання."
 
-#: ../app/paint/gimpsourceoptions.c:89 ../app/tools/gimpaligntool.c:123
+#: ../app/paint/gimpsourceoptions.c:102 ../app/tools/gimpaligntool.c:123
 #: ../app/tools/gimpcloneoptions-gui.c:283 ../app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "Вирівнювання"
@@ -21759,7 +21752,7 @@ msgstr "Поріг вибору"
 msgid "Sample transparent"
 msgstr "Прозорість вибору"
 
-#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:145
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Diagonal neighbors"
 msgstr "Сусідні діагональні"
@@ -23135,32 +23128,32 @@ msgstr "_Контраст"
 msgid "Edit these Settings as Levels"
 msgstr "Змінити ці параметри як рівні"
 
-#: ../app/tools/gimpbucketfilloptions.c:119
+#: ../app/tools/gimpbucketfilloptions.c:122
 msgid "Fill selection"
 msgstr "Заповнити позначене"
 
-#: ../app/tools/gimpbucketfilloptions.c:120
+#: ../app/tools/gimpbucketfilloptions.c:123
 msgid "Which area will be filled"
 msgstr "Яку ділянку буде заповнено"
 
-#: ../app/tools/gimpbucketfilloptions.c:127
+#: ../app/tools/gimpbucketfilloptions.c:130
 msgid "Fill transparent areas"
 msgstr "Заповнити прозорі ділянки"
 
-#: ../app/tools/gimpbucketfilloptions.c:128
+#: ../app/tools/gimpbucketfilloptions.c:131
 msgid "Allow completely transparent regions to be filled"
 msgstr "Дозволити заповнення абсолютно прозорих ділянок"
 
-#: ../app/tools/gimpbucketfilloptions.c:136
+#: ../app/tools/gimpbucketfilloptions.c:139
 msgid "Base filled area on all visible layers"
 msgstr "Використовувати для визначення ділянок заповнення усі видимі шари"
 
-#: ../app/tools/gimpbucketfilloptions.c:143
+#: ../app/tools/gimpbucketfilloptions.c:146
 #: ../app/tools/gimpregionselectoptions.c:106
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Вважати діагональні пікселі з'єднаними"
 
-#: ../app/tools/gimpbucketfilloptions.c:151
+#: ../app/tools/gimpbucketfilloptions.c:154
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -23170,85 +23163,99 @@ msgstr ""
 "порогове значення) або на краях ліній графіки. Вимкніть згладжування, щоб "
 "заповнити усю область однорідним кольором."
 
-#: ../app/tools/gimpbucketfilloptions.c:174
+#: ../app/tools/gimpbucketfilloptions.c:177
+#: ../app/tools/gimpbucketfilloptions.c:199
 #: ../app/tools/gimpgradientoptions.c:122
 #: ../app/tools/gimpregionselectoptions.c:113
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Поріг"
 
-#: ../app/tools/gimpbucketfilloptions.c:175
+#: ../app/tools/gimpbucketfilloptions.c:178
+#: ../app/tools/gimpbucketfilloptions.c:200
 #: ../app/tools/gimpregionselectoptions.c:114
 msgid "Maximum color difference"
 msgstr "Максимальна відмінність кольорів"
 
-#: ../app/tools/gimpbucketfilloptions.c:182
+#: ../app/tools/gimpbucketfilloptions.c:185
 msgid "Source image for line art computation"
 msgstr "Джерельне зображення для розрахунку контурів"
 
-#: ../app/tools/gimpbucketfilloptions.c:203
+#: ../app/tools/gimpbucketfilloptions.c:192
+#| msgid "Crop only currently selected layers"
+msgid "Allow closing lines in selected layer"
+msgstr "Дозволити замикати лінії у позначеному шарі"
+
+#: ../app/tools/gimpbucketfilloptions.c:193
+msgid ""
+"Consider pixels of selected layer and filled with the fill color as line art "
+"closure"
+msgstr ""
+"Брати до уваги пікселі позначеного шару і виконувати заповнення кольором заповнення як замиканням графіки"
+
+#: ../app/tools/gimpbucketfilloptions.c:220
 msgid "Maximum gap length"
 msgstr "Найбільша довжина розриву"
 
-#: ../app/tools/gimpbucketfilloptions.c:204
+#: ../app/tools/gimpbucketfilloptions.c:221
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Найбільший розрив лінії (у пікселях), який можна закрити"
 
-#: ../app/tools/gimpbucketfilloptions.c:210
-#: ../app/tools/gimpbucketfilloptions.c:462
+#: ../app/tools/gimpbucketfilloptions.c:227
+#: ../app/tools/gimpbucketfilloptions.c:500
 msgid "Fill by"
 msgstr "Тип заповнення"
 
-#: ../app/tools/gimpbucketfilloptions.c:211
+#: ../app/tools/gimpbucketfilloptions.c:228
 msgid "Criterion used for determining color similarity"
 msgstr "Критерії для визначення подібності кольорів"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:408
+#: ../app/tools/gimpbucketfilloptions.c:446
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Тип заповнення  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:421
+#: ../app/tools/gimpbucketfilloptions.c:459
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Область застосування  (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:428
+#: ../app/tools/gimpbucketfilloptions.c:466
 msgid "Finding Similar Colors"
 msgstr "Пошук схожих кольорів"
 
-#: ../app/tools/gimpbucketfilloptions.c:476
+#: ../app/tools/gimpbucketfilloptions.c:514
 msgid "Line Art Detection"
 msgstr "Виявлення контуру"
 
-#: ../app/tools/gimpbucketfilloptions.c:486
+#: ../app/tools/gimpbucketfilloptions.c:524
 msgid "(computing...)"
 msgstr "(обчислюємо…)"
 
-#: ../app/tools/gimpbucketfilltool.c:167
+#: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill"
 msgstr "Заповнення"
 
-#: ../app/tools/gimpbucketfilltool.c:168
+#: ../app/tools/gimpbucketfilltool.c:169
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr "Заповнення: заповнення кольором чи текстурою"
 
-#: ../app/tools/gimpbucketfilltool.c:169
+#: ../app/tools/gimpbucketfilltool.c:170
 msgid "_Bucket Fill"
 msgstr "_Заповнення"
 
-#: ../app/tools/gimpbucketfilltool.c:346
+#: ../app/tools/gimpbucketfilltool.c:367
 msgid "Bucket fill"
 msgstr "Заповнення"
 
-#: ../app/tools/gimpbucketfilltool.c:565
+#: ../app/tools/gimpbucketfilltool.c:588
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Неможливо заповнити декілька шарів одразу. Виберіть лише один шар."
 
-#: ../app/tools/gimpbucketfilltool.c:567 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:590 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
@@ -23258,14 +23265,14 @@ msgstr "Неможливо заповнити декілька шарів одр
 msgid "No selected drawables."
 msgstr "Немає позначених об'єктів малювання."
 
-#: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
+#: ../app/tools/gimpbucketfilltool.c:610 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
 #: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppaintselecttool.c:377
 #: ../app/tools/gimpwarptool.c:817
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
 
-#: ../app/tools/gimpbucketfilltool.c:594 ../app/tools/gimpcagetool.c:247
+#: ../app/tools/gimpbucketfilltool.c:617 ../app/tools/gimpcagetool.c:247
 #: ../app/tools/gimpeditselectiontool.c:1106
 #: ../app/tools/gimpgradienttool.c:280 ../app/tools/gimpselectiontool.c:577
 #: ../app/tools/gimpwarptool.c:803
@@ -23273,16 +23280,16 @@ msgstr "Активний шар - невидимий."
 msgid "The active layer's pixels are locked."
 msgstr "Точки растру активного шару заблоковані від змін"
 
-#: ../app/tools/gimpbucketfilltool.c:603
+#: ../app/tools/gimpbucketfilltool.c:626
 msgid "No valid line art source selected."
 msgstr "Не вибрано придатного джерела контурів."
 
-#: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:926
+#: ../app/tools/gimpbucketfilltool.c:809 ../app/tools/gimpbucketfilltool.c:949
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:501
 msgid "Click in any image to pick the background color"
 msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
-#: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:935
+#: ../app/tools/gimpbucketfilltool.c:816 ../app/tools/gimpbucketfilltool.c:958
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:495
 msgid "Click in any image to pick the foreground color"
 msgstr ""
@@ -26123,19 +26130,25 @@ msgid "All visible layers"
 msgstr "Всі видимі шари"
 
 #: ../app/tools/tools-enums.c:58
+#| msgctxt "undo-type"
+#| msgid "Delete layer"
 msgctxt "line-art-source"
-msgid "Active layer"
-msgstr "Активний шар"
+msgid "Selected layer"
+msgstr "Позначений шар"
 
 #: ../app/tools/tools-enums.c:59
+#| msgctxt "line-art-source"
+#| msgid "Layer below the active one"
 msgctxt "line-art-source"
-msgid "Layer below the active one"
-msgstr "Шар під активним шаром"
+msgid "Layer below the selected one"
+msgstr "Шар під позначеним шаром"
 
 #: ../app/tools/tools-enums.c:60
+#| msgctxt "line-art-source"
+#| msgid "Layer above the active one"
 msgctxt "line-art-source"
-msgid "Layer above the active one"
-msgstr "Шар над активним шаром"
+msgid "Layer above the selected one"
+msgstr "Шар над позначеним шаром"
 
 #: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
@@ -29152,6 +29165,10 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgctxt "line-art-source"
+#~ msgid "Active layer"
+#~ msgstr "Активний шар"
 
 #~ msgid "Dynamics Options"
 #~ msgstr "Параметри динаміки"
