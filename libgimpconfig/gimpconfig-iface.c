@@ -495,6 +495,11 @@ gimp_config_deserialize_file (GimpConfig  *config,
   gimp_scanner_unref (scanner);
 
   if (! success)
+    /* If we get this assert, it means we have a bug in one of the
+     * deserialize() implementations. Any failure case should report the
+     * error condition with g_scanner_error() which will populate the
+     * error object passed in gimp_scanner_new*().
+     */
     g_assert (error == NULL || *error != NULL);
 
   return success;
