@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-02 18:17+0000\n"
-"PO-Revision-Date: 2022-02-02 21:39+0200\n"
+"POT-Creation-Date: 2022-02-10 20:25+0000\n"
+"PO-Revision-Date: 2022-02-10 22:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -982,7 +982,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1099
+#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1022
 #: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
@@ -1018,7 +1018,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
-#: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
+#: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
 #: ../plug-ins/file-psd/psd-save.c:1820
@@ -1948,7 +1948,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
@@ -2031,7 +2031,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
-#: ../plug-ins/file-ico/ico-save.c:1091 ../plug-ins/file-jpeg/jpeg-save.c:269
+#: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1012
 #, c-format
@@ -4455,10 +4455,12 @@ msgid "_Write hot spot values"
 msgstr "_Записати значення «гарячих точок»"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1133
+#: ../plug-ins/file-ico/ico-dialog.c:482
 msgid "Hot spot _X:"
 msgstr "_X «гарячої точки»:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1147
+#: ../plug-ins/file-ico/ico-dialog.c:495
 msgid "Hot spot _Y:"
 msgstr "_Y «гарячої точки»:"
 
@@ -6749,11 +6751,12 @@ msgstr "Експортувати зображення як анімацію FLI"
 msgid "Windows Icon"
 msgstr "Значок Windows"
 
-#: ../plug-ins/file-ico/ico-dialog.c:74
+#. Cursor
+#: ../plug-ins/file-ico/ico-dialog.c:75
 msgid "Icon Details"
 msgstr "Подробиці значка"
 
-#: ../plug-ins/file-ico/ico-dialog.c:97
+#: ../plug-ins/file-ico/ico-dialog.c:98
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -6761,48 +6764,48 @@ msgstr ""
 "Великі значки та стиснення не підтримуються всіма програмами. Більш старі "
 "програми можуть некоректно відкривати цей файл."
 
-#: ../plug-ins/file-ico/ico-dialog.c:166
+#: ../plug-ins/file-ico/ico-dialog.c:167
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 біт/точку, 1-біт альфа-каналом, 2-кольорова палітра"
 
-#: ../plug-ins/file-ico/ico-dialog.c:167
+#: ../plug-ins/file-ico/ico-dialog.c:168
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 біта/точку, 1-біт альфа-канал, 16-кольорова палітра"
 
-#: ../plug-ins/file-ico/ico-dialog.c:168
+#: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 біт/точку, 1-біт альфа-канал, 256-кольорова палітра"
 
-#: ../plug-ins/file-ico/ico-dialog.c:169
+#: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 біт/точку, 1-біт альфа-канал, без палітри"
 
-#: ../plug-ins/file-ico/ico-dialog.c:170
+#: ../plug-ins/file-ico/ico-dialog.c:171
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 біт/точку, 8-біт альфа-канал, без палітри"
 
-#: ../plug-ins/file-ico/ico-dialog.c:184
+#: ../plug-ins/file-ico/ico-dialog.c:185
 msgid "Compressed (PNG)"
 msgstr "Стиснений (PNG)"
 
-#: ../plug-ins/file-ico/ico-load.c:221
+#: ../plug-ins/file-ico/ico-load.c:222
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "Не вдалось прочитати '%lu' байтів"
 
-#: ../plug-ins/file-ico/ico-load.c:248
+#: ../plug-ins/file-ico/ico-load.c:250
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "Піктограма #%d має нульову ширину або висоту"
 
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:634
+#: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
 msgstr "Значок #%i"
 
 #. ----- Open PSD file -----
-#: ../plug-ins/file-ico/ico-load.c:744 ../plug-ins/file-jpeg/jpeg-load.c:526
+#: ../plug-ins/file-ico/ico-load.c:766 ../plug-ins/file-jpeg/jpeg-load.c:526
 #: ../plug-ins/file-psd/psd-thumb-load.c:72
 #: ../plug-ins/file-raw/file-darktable.c:517
 #: ../plug-ins/file-raw/file-rawtherapee.c:459
@@ -6810,9 +6813,22 @@ msgstr "Значок #%i"
 msgid "Opening thumbnail for '%s'"
 msgstr "Відкривається перегляд для «%s»"
 
-#: ../plug-ins/file-ico/ico.c:127 ../plug-ins/file-ico/ico.c:172
+#: ../plug-ins/file-ico/ico-save.c:210
+#, c-format
+msgid ""
+"Called non-interactively with %d and %d hotspot coordinates with an image of "
+"%d icons."
+msgstr ""
+"Неінтерактивний виклик із координатами %d і %d «гарячої» точки із зображенням %d піктограм."
+
+#: ../plug-ins/file-ico/ico.c:139 ../plug-ins/file-ico/ico.c:214
 msgid "Microsoft Windows icon"
 msgstr "Значок Microsoft Windows"
+
+#: ../plug-ins/file-ico/ico.c:167 ../plug-ins/file-ico/ico.c:239
+#| msgid "Microsoft Windows icon"
+msgid "Microsoft Windows cursor"
+msgstr "Курсор Microsoft Windows"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:218
 msgid "JPEG preview"
@@ -9721,7 +9737,6 @@ msgid "Exif Tag"
 msgstr "Мітка Exif"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
-#| msgid "Value"
 msgctxt "A tag value"
 msgid "Value"
 msgstr "Значення"
