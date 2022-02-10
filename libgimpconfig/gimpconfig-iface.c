@@ -539,9 +539,6 @@ gimp_config_deserialize_stream (GimpConfig    *config,
 
   gimp_scanner_unref (scanner);
 
-  if (! success)
-    g_assert (error == NULL || *error != NULL);
-
   return success;
 }
 
@@ -585,9 +582,6 @@ gimp_config_deserialize_string (GimpConfig   *config,
   g_object_thaw_notify (G_OBJECT (config));
 
   gimp_scanner_unref (scanner);
-
-  if (! success)
-    g_assert (error == NULL || *error != NULL);
 
   return success;
 }
