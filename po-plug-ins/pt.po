@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-03 22:11+0000\n"
-"PO-Revision-Date: 2022-02-06 21:51+0000\n"
+"POT-Creation-Date: 2022-02-10 12:10+0000\n"
+"PO-Revision-Date: 2022-02-10 13:39+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -986,7 +986,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1099
+#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1157
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1022
 #: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
@@ -1022,7 +1022,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
-#: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
+#: ../plug-ins/file-ico/ico-load.c:678 ../plug-ins/file-ico/ico-load.c:771
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
 #: ../plug-ins/file-psd/psd-save.c:1820
@@ -1956,7 +1956,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-ico/ico-load.c:670 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
@@ -2039,7 +2039,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
-#: ../plug-ins/file-ico/ico-save.c:1091 ../plug-ins/file-jpeg/jpeg-save.c:269
+#: ../plug-ins/file-ico/ico-save.c:1149 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1012
 #, c-format
@@ -4458,10 +4458,12 @@ msgid "_Write hot spot values"
 msgstr "_Guardar valores de ponto quente"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1133
+#: ../plug-ins/file-ico/ico-dialog.c:97
 msgid "Hot spot _X:"
 msgstr "Ponto quente _X:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1147
+#: ../plug-ins/file-ico/ico-dialog.c:110
 msgid "Hot spot _Y:"
 msgstr "Ponto quente _Y:"
 
@@ -6756,15 +6758,20 @@ msgstr "_Para:"
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagem como animação FLIC"
 
-#: ../plug-ins/file-ico/ico-dialog.c:54
+#: ../plug-ins/file-ico/ico-dialog.c:57
 msgid "Windows Icon"
 msgstr "Ícone do Windows"
 
-#: ../plug-ins/file-ico/ico-dialog.c:74
+#: ../plug-ins/file-ico/ico-dialog.c:80
+msgid "Cursor Hot spot"
+msgstr "Cursor Hot spot"
+
+#. Cursor
+#: ../plug-ins/file-ico/ico-dialog.c:118
 msgid "Icon Details"
 msgstr "Detalhes do ícone"
 
-#: ../plug-ins/file-ico/ico-dialog.c:97
+#: ../plug-ins/file-ico/ico-dialog.c:141
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -6772,48 +6779,48 @@ msgstr ""
 "Os ícones grandes e compressão não são suportados por todos os programas. As "
 "aplicações mais antigas poderão não abrir este ficheiro corretamente."
 
-#: ../plug-ins/file-ico/ico-dialog.c:166
+#: ../plug-ins/file-ico/ico-dialog.c:210
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alfa, paleta com 2 cores"
 
-#: ../plug-ins/file-ico/ico-dialog.c:167
+#: ../plug-ins/file-ico/ico-dialog.c:211
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alfa, paleta com 16 cores"
 
-#: ../plug-ins/file-ico/ico-dialog.c:168
+#: ../plug-ins/file-ico/ico-dialog.c:212
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, paleta com 256 cores"
 
-#: ../plug-ins/file-ico/ico-dialog.c:169
+#: ../plug-ins/file-ico/ico-dialog.c:213
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bit alfa, sem paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:170
+#: ../plug-ins/file-ico/ico-dialog.c:214
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bits alfa, sem paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:184
+#: ../plug-ins/file-ico/ico-dialog.c:228
 msgid "Compressed (PNG)"
 msgstr "Comprimido (PNG)"
 
-#: ../plug-ins/file-ico/ico-load.c:221
+#: ../plug-ins/file-ico/ico-load.c:222
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "Não foi possível ler “%lu” bytes"
 
-#: ../plug-ins/file-ico/ico-load.c:248
+#: ../plug-ins/file-ico/ico-load.c:250
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "O ícone nº %d tem zero de largura ou altura"
 
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:634
+#: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
 msgstr "Ícone nº %i"
 
 #. ----- Open PSD file -----
-#: ../plug-ins/file-ico/ico-load.c:744 ../plug-ins/file-jpeg/jpeg-load.c:526
+#: ../plug-ins/file-ico/ico-load.c:763 ../plug-ins/file-jpeg/jpeg-load.c:526
 #: ../plug-ins/file-psd/psd-thumb-load.c:72
 #: ../plug-ins/file-raw/file-darktable.c:517
 #: ../plug-ins/file-raw/file-rawtherapee.c:459
@@ -6821,9 +6828,13 @@ msgstr "Ícone nº %i"
 msgid "Opening thumbnail for '%s'"
 msgstr "A abrir miniatura de '%s'"
 
-#: ../plug-ins/file-ico/ico.c:127 ../plug-ins/file-ico/ico.c:172
+#: ../plug-ins/file-ico/ico.c:139 ../plug-ins/file-ico/ico.c:214
 msgid "Microsoft Windows icon"
 msgstr "Ícone do Microsoft Windows"
+
+#: ../plug-ins/file-ico/ico.c:167 ../plug-ins/file-ico/ico.c:239
+msgid "Microsoft Windows cursor"
+msgstr "Cursor do Microsoft Windows"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:218
 msgid "JPEG preview"
