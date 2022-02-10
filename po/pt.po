@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-04 14:15+0000\n"
-"PO-Revision-Date: 2022-02-06 21:49+0000\n"
+"POT-Creation-Date: 2022-02-09 22:00+0000\n"
+"PO-Revision-Date: 2022-02-10 13:49+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -287,7 +287,7 @@ msgstr "Seleção múltipla de camadas no painel “Camadas” ancorável"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Proper high pixel density display support"
-msgstr "Suporte adequado para ecrãs com alta densidade de píxeis"
+msgstr "Suporte adequado para ecrãs com alta densidade de pixéis"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Improved input device support"
@@ -356,7 +356,7 @@ msgid ""
 "allows fractional pixel density"
 msgstr ""
 "A importação de PDF agora fornece uma opção para carregar camadas em ordem "
-"inversa e permite densidade de píxeis fracionada"
+"inversa e permite densidade de pixéis fracionada"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
@@ -469,7 +469,7 @@ msgid ""
 "actual pixels"
 msgstr ""
 "O recorte não destrutivo agora está disponível recortando a tela em vez de "
-"píxeis reais"
+"pixéis reais"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid ""
@@ -574,7 +574,7 @@ msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
-"Nova opção “Mostrar tudo” no menu “Ver” para revelar píxeis fora do limite "
+"Nova opção “Mostrar tudo” no menu “Ver” para revelar pixéis fora do limite "
 "da tela"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
@@ -766,7 +766,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "HiDPI support improvements"
-msgstr "Melhorias ao suporte a HiDPI (ecrãs de alta densidade de píxeis)"
+msgstr "Melhorias ao suporte a HiDPI (ecrãs de alta densidade de pixéis)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "New preference to choose the default export file type"
@@ -983,7 +983,7 @@ msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Pré-visualização do efeito na tela, com pré-visualização dividida para "
-"píxeis de processamento antes / depois"
+"pixéis de processamento antes / depois"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
@@ -1972,7 +1972,7 @@ msgstr "Alternar _visibilidade do canal"
 #: ../app/actions/channels-actions.c:119
 msgctxt "channels-action"
 msgid "L_ock Pixels of Channel"
-msgstr "Bloquear píxeis d_o canal"
+msgstr "Bloquear pixéis d_o canal"
 
 #: ../app/actions/channels-actions.c:125
 msgctxt "channels-action"
@@ -2265,7 +2265,7 @@ msgstr "_Selecionar esta cor"
 #: ../app/actions/colormap-actions.c:74
 msgctxt "colormap-action"
 msgid "Select all pixels with this color"
-msgstr "Selecionar todos os píxeis com esta cor"
+msgstr "Selecionar todos os pixéis com esta cor"
 
 #: ../app/actions/colormap-actions.c:79
 msgctxt "colormap-action"
@@ -2275,7 +2275,7 @@ msgstr "_Adicionar à seleção"
 #: ../app/actions/colormap-actions.c:80
 msgctxt "colormap-action"
 msgid "Add all pixels with this color to the current selection"
-msgstr "Adicionar todos os píxeis com esta cor à seleção atual"
+msgstr "Adicionar todos os pixéis com esta cor à seleção atual"
 
 #: ../app/actions/colormap-actions.c:85
 msgctxt "colormap-action"
@@ -2285,7 +2285,7 @@ msgstr "_Subtrair da seleção"
 #: ../app/actions/colormap-actions.c:86
 msgctxt "colormap-action"
 msgid "Subtract all pixels with this color from the current selection"
-msgstr "Subtrair todos os píxeis com esta cor da seleção atual"
+msgstr "Subtrair todos os pixéis com esta cor da seleção atual"
 
 #: ../app/actions/colormap-actions.c:91
 msgctxt "colormap-action"
@@ -2295,7 +2295,7 @@ msgstr "_Intersetar com a seleção"
 #: ../app/actions/colormap-actions.c:92
 msgctxt "colormap-action"
 msgid "Intersect all pixels with this color with the current selection"
-msgstr "Intersetar todos os píxeis com esta cor com a seleção atual"
+msgstr "Intersetar todos os pixéis com esta cor com a seleção atual"
 
 #: ../app/actions/context-actions.c:47
 msgctxt "context-action"
@@ -4558,12 +4558,12 @@ msgstr "Alternar _visibilidade do desenho"
 #: ../app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawable"
-msgstr "_Bloquear píxeis do desenho"
+msgstr "_Bloquear pixéis do desenho"
 
 #: ../app/actions/drawable-actions.c:68
 msgctxt "drawable-action"
 msgid "Keep the pixels on this drawable from being modified"
-msgstr "Impede que os píxeis deste desenho sejam alterados"
+msgstr "Impede que os pixéis deste desenho sejam alterados"
 
 #: ../app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
@@ -4796,7 +4796,7 @@ msgstr "Cor_tar"
 #: ../app/actions/edit-actions.c:106
 msgctxt "edit-action"
 msgid "Move the selected pixels to the clipboard"
-msgstr "Mover os píxeis selecionados para a área de transferência"
+msgstr "Mover os pixéis selecionados para a área de transferência"
 
 #: ../app/actions/edit-actions.c:111
 msgctxt "edit-action"
@@ -4806,7 +4806,7 @@ msgstr "_Copiar"
 #: ../app/actions/edit-actions.c:112
 msgctxt "edit-action"
 msgid "Copy the selected pixels to the clipboard"
-msgstr "Copiar os píxeis selecionados para a área de transferência"
+msgstr "Copiar os pixéis selecionados para a área de transferência"
 
 #. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:117
@@ -4845,7 +4845,7 @@ msgstr "Cor_tar para a lista de cópias…"
 msgctxt "edit-action"
 msgid "Move the selected pixels to a named buffer"
 msgstr ""
-"Mover os píxeis selecionados para uma cópia no painel da lista de cópias"
+"Mover os pixéis selecionados para uma cópia no painel da lista de cópias"
 
 #: ../app/actions/edit-actions.c:141
 msgctxt "edit-action"
@@ -4855,7 +4855,7 @@ msgstr "_Copiar para a lista de cópias…"
 #: ../app/actions/edit-actions.c:142
 msgctxt "edit-action"
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Copiar os píxeis selecionados para o painel da lista de cópias"
+msgstr "Copiar os pixéis selecionados para o painel da lista de cópias"
 
 #. GIMP_ICON_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:147
@@ -4888,7 +4888,7 @@ msgstr "_Apagar"
 #: ../app/actions/edit-actions.c:161
 msgctxt "edit-action"
 msgid "Clear the selected pixels"
-msgstr "Apagar os píxeis selecionados"
+msgstr "Apagar os pixéis selecionados"
 
 #: ../app/actions/edit-actions.c:169
 msgctxt "edit-action"
@@ -5026,7 +5026,7 @@ msgstr[1] "Cortar %d camadas para a área de transferência."
 
 #: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
-msgstr "Cortar píxeis para a área de transferências."
+msgstr "Cortar pixéis para a área de transferências."
 
 #: ../app/actions/edit-commands.c:291
 msgid "Copied layer to the clipboard."
@@ -5034,7 +5034,7 @@ msgstr "Camada copiada para a área de transferência."
 
 #: ../app/actions/edit-commands.c:292 ../app/actions/edit-commands.c:324
 msgid "Copied pixels to the clipboard."
-msgstr "Píxeis copiados para a área de transferência."
+msgstr "Pixéis copiados para a área de transferência."
 
 #: ../app/actions/edit-commands.c:403 ../app/actions/edit-commands.c:686
 #: ../app/tools/gimpseamlessclonetool.c:303
@@ -5072,7 +5072,7 @@ msgstr "Colado como nova camada porque o alvo é um grupo de camadas."
 
 #: ../app/actions/edit-commands.c:660 ../app/display/gimpdisplayshell-dnd.c:506
 msgid "Pasted as new layer because the target's pixels are locked."
-msgstr "Colado como nova camada porque os píxeis do alvo estão bloqueados."
+msgstr "Colado como nova camada porque os pixéis do alvo estão bloqueados."
 
 #: ../app/actions/edit-commands.c:703
 msgid "There are no selected layers or channels to cut from."
@@ -6213,7 +6213,7 @@ msgstr "_Vinheta..."
 #: ../app/actions/filters-actions.c:757
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Píxeis de aguarela…"
+msgstr "_Pixéis de aguarela…"
 
 #: ../app/actions/filters-actions.c:762
 msgctxt "filters-action"
@@ -7761,7 +7761,7 @@ msgstr "Alternar _visibilidade da camada"
 #: ../app/actions/layers-actions.c:327
 msgctxt "layers-action"
 msgid "L_ock Pixels of Layer"
-msgstr "_Bloquear píxeis da camada"
+msgstr "_Bloquear pixéis da camada"
 
 #: ../app/actions/layers-actions.c:333
 msgctxt "layers-action"
@@ -10689,7 +10689,7 @@ msgstr "_Ponto por ponto"
 #: ../app/actions/view-actions.c:199
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
-msgstr "Um píxel no ecrã representa um píxel na imagem"
+msgstr "Um pixel no ecrã representa um pixel na imagem"
 
 #: ../app/actions/view-actions.c:205
 msgctxt "view-action"
@@ -11733,7 +11733,7 @@ msgstr ""
 "predefinidos. Foi criada uma cópia de segurança da sua configuração em \"%s"
 "\"."
 
-#: ../app/config/gimpcoreconfig.c:851 ../app/dialogs/preferences-dialog.c:1899
+#: ../app/config/gimpcoreconfig.c:783 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
 msgstr "Sintaxe padrão para procurar e selecionar itens:"
 
@@ -11840,12 +11840,12 @@ msgstr ""
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
-msgstr "Quando ativado, um píxel no ecrã representa um píxel na imagem."
+msgstr "Quando ativado, um pixel no ecrã representa um pixel na imagem."
 
 #: ../app/config/gimprc-blurbs.h:109
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
 msgstr ""
-"Esta é a distância em píxeis onde a atração às guias e à grelha é ativada."
+"Esta é a distância em pixéis onde a atração às guias e à grelha é ativada."
 
 #: ../app/config/gimprc-blurbs.h:113
 msgid "Snap to guides by default in new image windows."
@@ -11873,9 +11873,9 @@ msgid ""
 msgstr ""
 "Ferramentas como a “Selecionar com varinha mágica” e o “Balde de tinta” são "
 "baseadas num algoritmo de preenchimento a partir da semente. O que este "
-"algoritmo faz é: começando no píxel inicial progride em todas as direções "
-"até que a diferença de intensidade dos píxeis para onde se propagou "
-"comparada com a do píxel original seja maior que o limite especificado. Este "
+"algoritmo faz é: começando no pixel inicial progride em todas as direções "
+"até que a diferença de intensidade dos pixéis para onde se propagou "
+"comparada com a do pixel original seja maior que o limite especificado. Este "
 "valor representa o limite de diferença predefinido."
 
 #: ../app/config/gimprc-blurbs.h:138
@@ -13900,7 +13900,7 @@ msgid "Deleting \"%s\" failed: %s"
 msgstr "Não foi possível eliminar \"%s\": %s"
 
 #. initialize the list of gimp dynamics
-#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:702
+#: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:707
 #: ../app/dialogs/preferences-dialog.c:3326
 #: ../app/tools/gimppaintoptions-gui.c:311
 msgid "Dynamics"
@@ -14537,69 +14537,69 @@ msgstr "Definir opacidade do canal"
 msgid "Selection Mask"
 msgstr "Máscara de seleção"
 
-#: ../app/core/gimpcontext.c:664
+#: ../app/core/gimpcontext.c:669
 msgid "Foreground"
 msgstr "1º plano"
 
-#: ../app/core/gimpcontext.c:665 ../app/core/gimpgrid.c:94
+#: ../app/core/gimpcontext.c:670 ../app/core/gimpgrid.c:94
 msgid "Foreground color"
 msgstr "Cor de 1º plano"
 
-#: ../app/core/gimpcontext.c:671 ../app/core/gimpimage-new.c:149
+#: ../app/core/gimpcontext.c:676 ../app/core/gimpimage-new.c:149
 msgid "Background"
 msgstr "Fundo"
 
-#: ../app/core/gimpcontext.c:672 ../app/core/gimpgrid.c:101
+#: ../app/core/gimpcontext.c:677 ../app/core/gimpgrid.c:101
 msgid "Background color"
 msgstr "Cor de fundo"
 
 # Campo que aparece nas opções da ferramenta como Pincel, etc.
-#: ../app/core/gimpcontext.c:678 ../app/core/gimpcontext.c:679
+#: ../app/core/gimpcontext.c:683 ../app/core/gimpcontext.c:684
 #: ../app/operations/gimpoperationsettings.c:100
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:316
 msgid "Opacity"
 msgstr "Opacidade"
 
-#: ../app/core/gimpcontext.c:687 ../app/core/gimpcontext.c:688
+#: ../app/core/gimpcontext.c:692 ../app/core/gimpcontext.c:693
 msgid "Paint Mode"
 msgstr "Modo de pintura"
 
-#: ../app/core/gimpcontext.c:695 ../app/core/gimpcontext.c:696
+#: ../app/core/gimpcontext.c:700 ../app/core/gimpcontext.c:701
 #: ../app/tools/gimpmybrushoptions-gui.c:54
 #: ../app/tools/gimppaintoptions-gui.c:156
 msgid "Brush"
 msgstr "Pincel"
 
-#: ../app/core/gimpcontext.c:703
+#: ../app/core/gimpcontext.c:708
 msgid "Paint dynamics"
 msgstr "Dinâmicas de pintura"
 
-#: ../app/core/gimpcontext.c:709 ../app/core/gimpcontext.c:710
+#: ../app/core/gimpcontext.c:714 ../app/core/gimpcontext.c:715
 #: ../app/tools/gimpmybrushtool.c:73
 msgid "MyPaint Brush"
 msgstr "Pincel MyPaint"
 
-#: ../app/core/gimpcontext.c:716 ../app/core/gimpcontext.c:717
+#: ../app/core/gimpcontext.c:721 ../app/core/gimpcontext.c:722
 msgid "Pattern"
 msgstr "Textura"
 
-#: ../app/core/gimpcontext.c:723 ../app/core/gimpcontext.c:724
+#: ../app/core/gimpcontext.c:728 ../app/core/gimpcontext.c:729
 #: ../app/pdb/drawable-edit-cmds.c:253 ../app/tools/gimpgradientoptions.c:269
 #: ../app/tools/gimpgradienttool.c:164 ../app/tools/gimppaintoptions-gui.c:367
 msgid "Gradient"
 msgstr "Gradiente"
 
-#: ../app/core/gimpcontext.c:730 ../app/core/gimpcontext.c:731
+#: ../app/core/gimpcontext.c:735 ../app/core/gimpcontext.c:736
 #: ../app/widgets/gimpcolorselectorpalette.c:59
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../app/core/gimpcontext.c:737 ../app/core/gimpcontext.c:738
+#: ../app/core/gimpcontext.c:742 ../app/core/gimpcontext.c:743
 #: ../app/tools/gimptextoptions.c:551
 msgid "Font"
 msgstr "Tipo de letra"
 
-#: ../app/core/gimpcontext.c:744 ../app/core/gimpcontext.c:745
+#: ../app/core/gimpcontext.c:749 ../app/core/gimpcontext.c:750
 msgid "Tool Preset"
 msgstr "Modelo de definições da ferramenta"
 
@@ -14691,7 +14691,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Alterar tamanho"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:87
+#: ../app/core/gimpdrawable-bucket-fill.c:88
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Balde de tinta"
@@ -14712,7 +14712,7 @@ msgstr "Seleção flutuante"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
-msgstr "A calcular alfa para os píxeis desconhecidos"
+msgstr "A calcular alfa para os pixéis desconhecidos"
 
 #: ../app/core/gimpdrawable-fill.c:215 ../app/vectors/gimpvectors.c:676
 msgid "Not enough points to fill"
@@ -14777,28 +14777,28 @@ msgid "Style"
 msgstr "Estilo"
 
 #: ../app/core/gimpfilloptions.c:117 ../app/pdb/gimppdbcontext.c:101
-#: ../app/tools/gimpbucketfilloptions.c:150
+#: ../app/tools/gimpbucketfilloptions.c:153
 #: ../app/tools/gimpselectionoptions.c:81 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Margens suaves"
 
-#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:160
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:163
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
 msgstr "Margens a desvanecer"
 
-#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:161
+#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:164
 msgid "Enable feathering of fill edges"
 msgstr "Ativar o desvanecimento das margens do preenchimento"
 
 #: ../app/core/gimpfilloptions.c:131 ../app/paint/gimpmybrushoptions.c:87
-#: ../app/tools/gimpbucketfilloptions.c:167 ../app/tools/gimpcoloroptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:170 ../app/tools/gimpcoloroptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:102
 #: ../app/tools/gimpselectionoptions.c:95 ../app/widgets/gimpbrusheditor.c:155
 msgid "Radius"
 msgstr "Raio"
 
-#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:168
+#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:171
 #: ../app/tools/gimpselectionoptions.c:96
 msgid "Radius of feathering"
 msgstr "Raio do desvanecimento"
@@ -15394,55 +15394,55 @@ msgstr "Alterar tamanho da imagem"
 msgid "Can't undo %s"
 msgstr "Não foi possível desfazer %s"
 
-#: ../app/core/gimpimagefile.c:743 ../app/dialogs/preferences-dialog.c:1991
+#: ../app/core/gimpimagefile.c:751 ../app/dialogs/preferences-dialog.c:1991
 msgid "Folder"
 msgstr "Pasta"
 
-#: ../app/core/gimpimagefile.c:748
+#: ../app/core/gimpimagefile.c:756
 msgid "Special File"
 msgstr "Ficheiro especial"
 
-#: ../app/core/gimpimagefile.c:764
+#: ../app/core/gimpimagefile.c:772
 msgid "Remote File"
 msgstr "Ficheiro remoto"
 
-#: ../app/core/gimpimagefile.c:783
+#: ../app/core/gimpimagefile.c:791
 msgid "Click to create preview"
 msgstr "[Clique] para criar a pré-visualização"
 
-#: ../app/core/gimpimagefile.c:789
+#: ../app/core/gimpimagefile.c:797
 msgid "Loading preview..."
 msgstr "A carregar a pré-visualização…"
 
-#: ../app/core/gimpimagefile.c:795
+#: ../app/core/gimpimagefile.c:803
 msgid "Preview is out of date"
 msgstr "A pré-visualização está desatualizada"
 
-#: ../app/core/gimpimagefile.c:801
+#: ../app/core/gimpimagefile.c:809
 msgid "Cannot create preview"
 msgstr "Não foi possível criar a pré-visualização"
 
-#: ../app/core/gimpimagefile.c:811
+#: ../app/core/gimpimagefile.c:819
 msgid "(Preview may be out of date)"
 msgstr "(a pré-visualização pode estar desatualizada)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:820 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:828 ../app/widgets/gimpimagepropview.c:437
 #: ../app/widgets/gimpsizebox.c:429 ../app/widgets/gimptemplateeditor.c:658
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
-msgstr[0] "%d x %d píxel"
-msgstr[1] "%d x %d píxeis"
+msgstr[0] "%d x %d pixel"
+msgstr[1] "%d x %d pixéis"
 
-#: ../app/core/gimpimagefile.c:843 ../app/display/gimpdisplayshell-title.c:358
+#: ../app/core/gimpimagefile.c:851 ../app/display/gimpdisplayshell-title.c:358
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
 msgstr[0] "%d camada"
 msgstr[1] "%d camadas"
 
-#: ../app/core/gimpimagefile.c:891
+#: ../app/core/gimpimagefile.c:899
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Não foi possível abrir a miniatura \"%s\": %s"
@@ -15652,24 +15652,24 @@ msgstr "Não foi possível alterar o nome das máscaras da camada."
 
 #: ../app/core/gimplineart.c:338 ../app/core/gimplineart.c:339
 msgid "Select transparent pixels instead of gray ones"
-msgstr "Selecionar píxeis transparentes em vez dos cinzentos"
+msgstr "Selecionar pixéis transparentes em vez dos cinzentos"
 
-#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:189
+#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:206
 msgid "Line art detection threshold"
 msgstr "Limite da deteção de desenho de linha"
 
-#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:190
+#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:207
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
-"Limite para detetar contorno (valores mais altos irão incluir mais píxeis)"
+"Limite para detetar contorno (valores mais altos irão incluir mais pixéis)"
 
-#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:196
+#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:213
 msgid "Maximum growing size"
 msgstr "Tamanho máximo de crescimento"
 
-#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:197
+#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:214
 msgid "Maximum number of pixels grown under the line art"
-msgstr "Número máximo de píxeis crescidos abaixo do desenho de linha"
+msgstr "Número máximo de pixéis crescidos abaixo do desenho de linha"
 
 #: ../app/core/gimplineart.c:359
 msgid "Maximum curved closing length"
@@ -15677,7 +15677,7 @@ msgstr "Comprimento máximo da curva a fechar"
 
 #: ../app/core/gimplineart.c:360
 msgid "Maximum curved length (in pixels) to close the line art"
-msgstr "Comprimento máximo da curva (em píxeis) para fechar o desenho de linha"
+msgstr "Comprimento máximo da curva (em pixéis) para fechar o desenho de linha"
 
 #: ../app/core/gimplineart.c:366
 msgid "Maximum straight closing length"
@@ -15686,7 +15686,7 @@ msgstr "Comprimento máximo da linha direita a fechar"
 #: ../app/core/gimplineart.c:367
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr ""
-"Comprimento máximo da linha direita (em píxeis) para fechar o desenho de "
+"Comprimento máximo da linha direita (em pixéis) para fechar o desenho de "
 "linha"
 
 #: ../app/core/gimpmybrush-load.c:75
@@ -16078,7 +16078,7 @@ msgstr "Intervalo X"
 
 #: ../app/core/gimpsymmetry-tiling.c:105
 msgid "Interval on the X axis (pixels)"
-msgstr "Intervalo no eixo dos X (píxeis)"
+msgstr "Intervalo no eixo dos X (pixéis)"
 
 #: ../app/core/gimpsymmetry-tiling.c:116
 msgid "Interval Y"
@@ -16086,7 +16086,7 @@ msgstr "Intervalo Y"
 
 #: ../app/core/gimpsymmetry-tiling.c:117
 msgid "Interval on the Y axis (pixels)"
-msgstr "Intervalo no eixo dos Y (píxeis)"
+msgstr "Intervalo no eixo dos Y (pixéis)"
 
 #: ../app/core/gimpsymmetry-tiling.c:128
 msgid "Shift"
@@ -16094,7 +16094,7 @@ msgstr "Desvio"
 
 #: ../app/core/gimpsymmetry-tiling.c:129
 msgid "X-shift between lines (pixels)"
-msgstr "Desvio X entre linhas (píxeis)"
+msgstr "Desvio X entre linhas (pixéis)"
 
 #: ../app/core/gimpsymmetry-tiling.c:140
 msgid "Max strokes X"
@@ -16171,7 +16171,7 @@ msgstr "Linear / percetual"
 msgid "Color profile"
 msgstr "Perfil de cor"
 
-#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:111
+#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:114
 msgid "Fill type"
 msgstr "Tipo de preenchimento"
 
@@ -16232,12 +16232,12 @@ msgstr "O ficheiro do modelo de definições da ferramenta está corrompido."
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-singular"
 msgid "pixel"
-msgstr "píxel"
+msgstr "pixel"
 
 #: ../app/core/gimpunit.c:60
 msgctxt "unit-plural"
 msgid "pixels"
-msgstr "píxeis"
+msgstr "pixéis"
 
 #: ../app/core/gimpunit.c:64
 msgctxt "unit-singular"
@@ -17273,7 +17273,7 @@ msgstr "_Amostra de camadas combinadas"
 
 #: ../app/dialogs/palette-import-dialog.c:245
 msgid "_Selected Pixels only"
-msgstr "_Só píxeis selecionados"
+msgstr "_Só pixéis selecionados"
 
 #: ../app/dialogs/palette-import-dialog.c:256
 msgid "Palette _file"
@@ -18450,7 +18450,7 @@ msgstr "Resolução do monitor"
 #: ../app/dialogs/preferences-dialog.c:2733 ../app/display/gimpcursorview.c:211
 #: ../app/widgets/gimpgrideditor.c:201 ../app/widgets/gimpgrideditor.c:236
 msgid "Pixels"
-msgstr "Píxeis"
+msgstr "Pixéis"
 
 #: ../app/dialogs/preferences-dialog.c:2751 ../app/widgets/gimpgrideditor.c:197
 #: ../app/widgets/gimpgrideditor.c:232
@@ -18965,7 +18965,7 @@ msgstr "Resolução _Y:"
 #: ../app/dialogs/print-size-dialog.c:244 ../app/widgets/gimpsizebox.c:253
 #, c-format
 msgid "pixels/%a"
-msgstr "píxeis/%a"
+msgstr "pixéis/%a"
 
 #: ../app/dialogs/quit-dialog.c:164
 msgid "Quit GIMP"
@@ -19540,17 +19540,17 @@ msgid "Drop New Path"
 msgstr "Largar novo caminho"
 
 #: ../app/display/gimpdisplayshell-dnd.c:365
-#: ../app/tools/gimpbucketfilltool.c:579 ../app/tools/gimpcagetool.c:240
+#: ../app/tools/gimpbucketfilltool.c:602 ../app/tools/gimpcagetool.c:240
 #: ../app/tools/gimpfiltertool.c:306 ../app/tools/gimpgradienttool.c:273
 #: ../app/tools/gimpselectiontool.c:569
 #, c-format
 msgid "Cannot modify the pixels of layer groups."
-msgstr "Não é possível alterar os píxeis de grupos de camadas."
+msgstr "Não é possível alterar os pixéis de grupos de camadas."
 
 #: ../app/display/gimpdisplayshell-dnd.c:374 ../app/tools/gimpfiltertool.c:315
 #: ../app/tools/gimppainttool.c:328 ../app/tools/gimptransformtool.c:681
 msgid "A selected layer's pixels are locked."
-msgstr "Os píxeis de uma camada selecionada estão bloqueados."
+msgstr "Os pixéis de uma camada selecionada estão bloqueados."
 
 #: ../app/display/gimpdisplayshell-dnd.c:426
 #: ../app/widgets/gimpdrawabletreeview.c:267
@@ -19667,7 +19667,7 @@ msgstr "Camada escolhida: “%s”"
 #: ../app/tools/gimpmeasuretool.c:625 ../app/tools/gimpmeasuretool.c:777
 #: ../app/tools/gimpmeasuretool.c:833 ../app/tools/gimpmeasuretool.c:861
 msgid "pixels"
-msgstr "píxeis"
+msgstr "pixéis"
 
 #: ../app/display/gimpstatusbar.c:447
 #, c-format
@@ -21082,7 +21082,7 @@ msgstr "Ajustar níveis de cor"
 #: ../app/operations/gimpoperationoffset.c:118
 #: ../app/tools/gimpoffsettool.c:130
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "Deslocar os píxeis, opcionalmente ajustando-os nos contornos"
+msgstr "Deslocar os pixéis, opcionalmente ajustando-os nos contornos"
 
 #: ../app/operations/gimpoperationposterize.c:83
 msgid "Reduce to a limited set of colors"
@@ -21218,8 +21218,8 @@ msgstr "Clonar"
 msgid "No patterns available for use with this tool."
 msgstr "Não há texturas disponíveis para usar com esta ferramenta."
 
-#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:181
-#: ../app/tools/gimpbucketfilloptions.c:496
+#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:184
+#: ../app/tools/gimpbucketfilloptions.c:534
 #: ../app/tools/gimpcloneoptions-gui.c:230
 msgid "Source"
 msgstr "Fonte"
@@ -21340,7 +21340,7 @@ msgstr "Sem efeito de apagar"
 
 #: ../app/paint/gimpmybrushoptions.c:116 ../app/paint/gimpsmudgeoptions.c:87
 msgid "Never decrease alpha of existing pixels"
-msgstr "Nunca diminuir o alfa ou píxeis existentes"
+msgstr "Nunca diminuir o alfa ou pixéis existentes"
 
 #: ../app/paint/gimppaintbrush.c:82 ../app/tools/gimppaintbrushtool.c:57
 msgid "Paintbrush"
@@ -21564,22 +21564,22 @@ msgctxt "smudge-tool"
 msgid "No erasing effect"
 msgstr "Sem efeito de apagar"
 
-#: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:97
-#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:135
+#: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:110
+#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:138
 #: ../app/tools/gimpcoloroptions.c:70 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
 msgstr "Amostra de camadas combinadas"
 
-#: ../app/paint/gimpsourcecore.c:225
+#: ../app/paint/gimpsourcecore.c:151
 msgid "Set a source image first."
 msgstr "Primeiro tem de definir a imagem de origem."
 
-#: ../app/paint/gimpsourcecore.c:232
+#: ../app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr "O alinhamento \"registado\" não pode pintar em vários drawables."
 
-#: ../app/paint/gimpsourceoptions.c:89 ../app/tools/gimpaligntool.c:123
+#: ../app/paint/gimpsourceoptions.c:102 ../app/tools/gimpaligntool.c:123
 #: ../app/tools/gimpcloneoptions-gui.c:283 ../app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "Alinhar"
@@ -22003,7 +22003,7 @@ msgstr "Limite de amostragem"
 msgid "Sample transparent"
 msgstr "Amostra transparente"
 
-#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:142
+#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:145
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Diagonal neighbors"
 msgstr "Vizinhos nas diagonais"
@@ -23395,121 +23395,135 @@ msgstr "_Contraste"
 msgid "Edit these Settings as Levels"
 msgstr "Editar estas configurações como níveis"
 
-#: ../app/tools/gimpbucketfilloptions.c:119
+#: ../app/tools/gimpbucketfilloptions.c:122
 msgid "Fill selection"
 msgstr "Preencher seleção"
 
-#: ../app/tools/gimpbucketfilloptions.c:120
+#: ../app/tools/gimpbucketfilloptions.c:123
 msgid "Which area will be filled"
 msgstr "Que área será preenchida"
 
-#: ../app/tools/gimpbucketfilloptions.c:127
+#: ../app/tools/gimpbucketfilloptions.c:130
 msgid "Fill transparent areas"
 msgstr "Preencher áreas transparentes"
 
-#: ../app/tools/gimpbucketfilloptions.c:128
+#: ../app/tools/gimpbucketfilloptions.c:131
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permitir preencher regiões completamente transparentes"
 
-#: ../app/tools/gimpbucketfilloptions.c:136
+#: ../app/tools/gimpbucketfilloptions.c:139
 msgid "Base filled area on all visible layers"
 msgstr "Área base preenchida em todas as camadas visíveis"
 
-#: ../app/tools/gimpbucketfilloptions.c:143
+#: ../app/tools/gimpbucketfilloptions.c:146
 #: ../app/tools/gimpregionselectoptions.c:106
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Considerar também pixéis vizinhos nas diagonais (e não só os laterais)"
 
-#: ../app/tools/gimpbucketfilloptions.c:151
+#: ../app/tools/gimpbucketfilloptions.c:154
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
 "uniformly."
 msgstr ""
-"Basear a opacidade de preenchimento na diferença de cor do píxel clicado "
+"Basear a opacidade de preenchimento na diferença de cor do pixel clicado "
 "(ver o limite) ou nas margens do desenho de linha. Desative o contorno suave "
 "(antisserrilhamento) para preencher toda a área uniformemente."
 
-#: ../app/tools/gimpbucketfilloptions.c:174
+#: ../app/tools/gimpbucketfilloptions.c:177
+#: ../app/tools/gimpbucketfilloptions.c:199
 #: ../app/tools/gimpgradientoptions.c:122
 #: ../app/tools/gimpregionselectoptions.c:113
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Limiar"
 
-#: ../app/tools/gimpbucketfilloptions.c:175
+#: ../app/tools/gimpbucketfilloptions.c:178
+#: ../app/tools/gimpbucketfilloptions.c:200
 #: ../app/tools/gimpregionselectoptions.c:114
 msgid "Maximum color difference"
 msgstr "Limite máximo da diferença da cor"
 
-#: ../app/tools/gimpbucketfilloptions.c:182
+#: ../app/tools/gimpbucketfilloptions.c:185
 msgid "Source image for line art computation"
 msgstr "Imagem de origem para o cálculo do desenho de linha"
 
-#: ../app/tools/gimpbucketfilloptions.c:203
+#: ../app/tools/gimpbucketfilloptions.c:192
+msgid "Allow closing lines in selected layer"
+msgstr "Permitir linhas de fecho na camada selecionada"
+
+#: ../app/tools/gimpbucketfilloptions.c:193
+msgid ""
+"Consider pixels of selected layer and filled with the fill color as line art "
+"closure"
+msgstr ""
+"Considere os pixéis da camada selecionada e preenchida com a cor de "
+"preenchimento como encerramento de linha de arte"
+
+#: ../app/tools/gimpbucketfilloptions.c:220
 msgid "Maximum gap length"
 msgstr "Comprimento máximo da lacuna"
 
-#: ../app/tools/gimpbucketfilloptions.c:204
+#: ../app/tools/gimpbucketfilloptions.c:221
 msgid "Maximum gap (in pixels) in line art which can be closed"
-msgstr "Lacuna máxima (em píxeis) no desenho de linha que pode ser fechada"
+msgstr "Lacuna máxima (em pixéis) no desenho de linha que pode ser fechada"
 
-#: ../app/tools/gimpbucketfilloptions.c:210
-#: ../app/tools/gimpbucketfilloptions.c:462
+#: ../app/tools/gimpbucketfilloptions.c:227
+#: ../app/tools/gimpbucketfilloptions.c:500
 msgid "Fill by"
 msgstr "Preencher com"
 
-#: ../app/tools/gimpbucketfilloptions.c:211
+#: ../app/tools/gimpbucketfilloptions.c:228
 msgid "Criterion used for determining color similarity"
 msgstr "Critério usado para determinar similaridade de cor"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:408
+#: ../app/tools/gimpbucketfilloptions.c:446
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo de preenchimento [%s]"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:421
+#: ../app/tools/gimpbucketfilloptions.c:459
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Área afetada [%s]"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:428
+#: ../app/tools/gimpbucketfilloptions.c:466
 msgid "Finding Similar Colors"
 msgstr "Ao procurar cores similares"
 
-#: ../app/tools/gimpbucketfilloptions.c:476
+#: ../app/tools/gimpbucketfilloptions.c:514
 msgid "Line Art Detection"
 msgstr "Deteção de desenho de linha"
 
-#: ../app/tools/gimpbucketfilloptions.c:486
+#: ../app/tools/gimpbucketfilloptions.c:524
 msgid "(computing...)"
 msgstr "(a calcular…)"
 
-#: ../app/tools/gimpbucketfilltool.c:167
+#: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill"
 msgstr "Balde de tinta"
 
-#: ../app/tools/gimpbucketfilltool.c:168
+#: ../app/tools/gimpbucketfilltool.c:169
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
 msgstr ""
 "Ferramenta Balde de tinta: preenche a área selecionada com uma cor ou textura"
 
-#: ../app/tools/gimpbucketfilltool.c:169
+#: ../app/tools/gimpbucketfilltool.c:170
 msgid "_Bucket Fill"
 msgstr "_Balde de tinta"
 
-#: ../app/tools/gimpbucketfilltool.c:346
+#: ../app/tools/gimpbucketfilltool.c:367
 msgid "Bucket fill"
 msgstr "Balde de tinta"
 
-#: ../app/tools/gimpbucketfilltool.c:565
+#: ../app/tools/gimpbucketfilltool.c:588
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Não é possível preencher várias camadas. Selecione apenas uma camada."
 
-#: ../app/tools/gimpbucketfilltool.c:567 ../app/tools/gimpcagetool.c:228
+#: ../app/tools/gimpbucketfilltool.c:590 ../app/tools/gimpcagetool.c:228
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:296
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
@@ -23519,32 +23533,32 @@ msgstr "Não é possível preencher várias camadas. Selecione apenas uma camada
 msgid "No selected drawables."
 msgstr "Nenhum desenho selecionado."
 
-#: ../app/tools/gimpbucketfilltool.c:587 ../app/tools/gimpcagetool.c:257
+#: ../app/tools/gimpbucketfilltool.c:610 ../app/tools/gimpcagetool.c:257
 #: ../app/tools/gimpforegroundselecttool.c:307
 #: ../app/tools/gimpgradienttool.c:290 ../app/tools/gimppaintselecttool.c:377
 #: ../app/tools/gimpwarptool.c:817
 msgid "The active layer is not visible."
 msgstr "A camada ativa não é visível."
 
-#: ../app/tools/gimpbucketfilltool.c:594 ../app/tools/gimpcagetool.c:247
+#: ../app/tools/gimpbucketfilltool.c:617 ../app/tools/gimpcagetool.c:247
 #: ../app/tools/gimpeditselectiontool.c:1106
 #: ../app/tools/gimpgradienttool.c:280 ../app/tools/gimpselectiontool.c:577
 #: ../app/tools/gimpwarptool.c:803
 #, c-format
 msgid "The active layer's pixels are locked."
-msgstr "Os píxeis da camada ativa estão bloqueados."
+msgstr "Os pixéis da camada ativa estão bloqueados."
 
-#: ../app/tools/gimpbucketfilltool.c:603
+#: ../app/tools/gimpbucketfilltool.c:626
 msgid "No valid line art source selected."
 msgstr ""
 "Não há nenhuma imagem de origem selecionada válida para o desenho de linha."
 
-#: ../app/tools/gimpbucketfilltool.c:786 ../app/tools/gimpbucketfilltool.c:926
+#: ../app/tools/gimpbucketfilltool.c:809 ../app/tools/gimpbucketfilltool.c:949
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:501
 msgid "Click in any image to pick the background color"
 msgstr "[Clique] em qualquer imagem para obter a cor de fundo"
 
-#: ../app/tools/gimpbucketfilltool.c:793 ../app/tools/gimpbucketfilltool.c:935
+#: ../app/tools/gimpbucketfilltool.c:816 ../app/tools/gimpbucketfilltool.c:958
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:495
 msgid "Click in any image to pick the foreground color"
 msgstr "[Clique] em qualquer imagem para obter a cor de 1º plano"
@@ -23676,7 +23690,7 @@ msgstr "Amostra média"
 
 #: ../app/tools/gimpcoloroptions.c:79 ../app/tools/gimpcolorpickeroptions.c:73
 msgid "Use averaged color value from nearby pixels"
-msgstr "Utilizar valor médio das cores dos píxeis vizinhos"
+msgstr "Utilizar valor médio das cores dos pixéis vizinhos"
 
 #: ../app/tools/gimpcoloroptions.c:87
 msgid "Color Picker Average Radius"
@@ -23720,7 +23734,7 @@ msgstr "Pipeta"
 
 #: ../app/tools/gimpcolorpickertool.c:109
 msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Ferramenta Pipeta: seleciona cores a partir de píxeis da imagem"
+msgstr "Ferramenta Pipeta: seleciona cores a partir de pixéis da imagem"
 
 #: ../app/tools/gimpcolorpickertool.c:110
 msgid "C_olor Picker"
@@ -23814,7 +23828,7 @@ msgstr "Cortar só as camadas atualmente selecionadas"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
-msgstr "Eliminar píxeis cortados"
+msgstr "Eliminar pixéis cortados"
 
 #: ../app/tools/gimpcropoptions.c:103
 msgid "Discard non-locked layer data that falls out of the crop region"
@@ -23871,7 +23885,7 @@ msgstr "Não existe nenhuma camada selecionada para recortar."
 
 #: ../app/tools/gimpcroptool.c:470
 msgid "All selected layers' pixels are locked."
-msgstr "Os píxeis da camada selecionada estão bloqueados."
+msgstr "Os pixéis da camada selecionada estão bloqueados."
 
 #: ../app/tools/gimpcroptool.c:475
 #, c-format
@@ -24029,7 +24043,7 @@ msgstr "A posição da camada ativa está bloqueada."
 
 #: ../app/tools/gimpeditselectiontool.c:1121 ../app/tools/gimpmovetool.c:362
 msgid "All selected channels' positions or pixels are locked."
-msgstr "Todas as posições dos canais selecionados ou píxeis estão bloqueados."
+msgstr "Todas as posições dos canais selecionados ou pixéis estão bloqueados."
 
 #: ../app/tools/gimpeditselectiontool.c:1143 ../app/tools/gimpmovetool.c:375
 msgid "All selected layers' positions are locked."
@@ -24286,7 +24300,7 @@ msgstr "_Máscara de pré-visualização"
 
 #: ../app/tools/gimpforegroundselecttool.c:354
 msgid "Select foreground pixels"
-msgstr "Selecionar píxeis de 1º plano"
+msgstr "Selecionar pixéis de 1º plano"
 
 #: ../app/tools/gimpforegroundselecttool.c:630
 #: ../app/tools/gimpforegroundselecttool.c:635
@@ -24973,7 +24987,7 @@ msgstr "A posição da camada selecionada está bloqueada."
 
 #: ../app/tools/gimpmovetool.c:348
 msgid "The selected layer's pixels are locked."
-msgstr "Os píxeis da camada selecionada estão bloqueados."
+msgstr "Os pixéis da camada selecionada estão bloqueados."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25162,7 +25176,7 @@ msgstr "Ligar ao pincel predefinido"
 msgid ""
 "Paint over areas to mark pixels for inclusion or exclusion from selection"
 msgstr ""
-"Pintar sobre áreas para marcar os píxeis para inclusão ou exclusão da seleção"
+"Pintar sobre áreas para marcar os pixéis para inclusão ou exclusão da seleção"
 
 #: ../app/tools/gimppaintselectoptions.c:90
 #: ../app/tools/gimppaintselectoptions.c:91
@@ -25372,7 +25386,7 @@ msgstr "Cantos da seleção arredondados"
 
 #: ../app/tools/gimprectangleselectoptions.c:103
 msgid "Radius of rounding in pixels"
-msgstr "Raio do arredondamento em píxeis"
+msgstr "Raio do arredondamento em pixéis"
 
 #: ../app/tools/gimprectangleselecttool.c:149
 msgid "Rectangle Select"
@@ -25552,11 +25566,11 @@ msgstr "[Clique] + [arrastar] para mover a máscara de seleção"
 
 #: ../app/tools/gimpselectiontool.c:378
 msgid "Click-Drag to move the selected pixels"
-msgstr "[Clique] + [arrastar] para mover os píxeis selecionados"
+msgstr "[Clique] + [arrastar] para mover os pixéis selecionados"
 
 #: ../app/tools/gimpselectiontool.c:382
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "[Clique] + [arrastar] para mover uma cópia dos píxeis selecionados"
+msgstr "[Clique] + [arrastar] para mover uma cópia dos pixéis selecionados"
 
 #: ../app/tools/gimpselectiontool.c:386
 msgid "Click to anchor the floating selection"
@@ -26412,18 +26426,18 @@ msgstr "Todas as camadas visíveis"
 
 #: ../app/tools/tools-enums.c:58
 msgctxt "line-art-source"
-msgid "Active layer"
-msgstr "Camada ativa"
+msgid "Selected layer"
+msgstr "Camada selecionada"
 
 #: ../app/tools/tools-enums.c:59
 msgctxt "line-art-source"
-msgid "Layer below the active one"
-msgstr "Camada abaixo da que está ativa"
+msgid "Layer below the selected one"
+msgstr "Camada abaixo da selecionada"
 
 #: ../app/tools/tools-enums.c:60
 msgctxt "line-art-source"
-msgid "Layer above the active one"
-msgstr "Camada acima da que está ativa"
+msgid "Layer above the selected one"
+msgstr "Camada acima da selecionada"
 
 #: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
@@ -26517,7 +26531,7 @@ msgstr "CdV (item)"
 #: ../app/tools/tools-enums.c:318
 msgctxt "warp-behavior"
 msgid "Move pixels"
-msgstr "Mover píxeis"
+msgstr "Mover pixéis"
 
 #: ../app/tools/tools-enums.c:319
 msgctxt "warp-behavior"
@@ -28084,7 +28098,7 @@ msgstr ""
 
 #: ../app/widgets/gimpdrawabletreeview.c:122
 msgid "Lock pixels"
-msgstr "Bloquear píxeis"
+msgstr "Bloquear pixéis"
 
 #: ../app/widgets/gimpdrawabletreeview.c:124
 msgid "Lock position and size"
@@ -28396,7 +28410,7 @@ msgstr "Mediana:"
 
 #: ../app/widgets/gimphistogrameditor.c:136
 msgid "Pixels:"
-msgstr "Píxeis:"
+msgstr "Pixéis:"
 
 #: ../app/widgets/gimphistogrameditor.c:137
 msgid "Count:"
@@ -28445,7 +28459,7 @@ msgstr ""
 
 #: ../app/widgets/gimpimagepropview.c:111
 msgid "Size in pixels:"
-msgstr "Tamanho em píxeis:"
+msgstr "Tamanho em pixéis:"
 
 #: ../app/widgets/gimpimagepropview.c:114
 msgid "Print size:"
@@ -28489,7 +28503,7 @@ msgstr "Passos de refazer:"
 
 #: ../app/widgets/gimpimagepropview.c:155
 msgid "Number of pixels:"
-msgstr "Número de píxeis:"
+msgstr "Número de pixéis:"
 
 #: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of layers:"
@@ -28507,7 +28521,7 @@ msgstr "Número de caminhos:"
 #: ../app/widgets/gimptemplateeditor.c:341
 #, c-format
 msgid "pixels/%s"
-msgstr "píxeis/%s"
+msgstr "pixéis/%s"
 
 #: ../app/widgets/gimpimagepropview.c:462
 #, c-format
@@ -29443,7 +29457,7 @@ msgstr "Erro ao escrever XCF: não foi possível alocar %d bytes de memória."
 #: ../app/xcf/xcf-write.c:293
 #, c-format
 msgid "Error writing XCF: unsupported BPC when writing pixel: %d"
-msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o píxel: %d"
+msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 
 #: ../app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
@@ -29457,6 +29471,10 @@ msgstr "redondo"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "impreciso"
+
+#~ msgctxt "line-art-source"
+#~ msgid "Active layer"
+#~ msgstr "Camada ativa"
 
 #~ msgid "Dynamics Options"
 #~ msgstr "Opções das dinâmicas"
