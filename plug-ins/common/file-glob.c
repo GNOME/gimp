@@ -89,7 +89,7 @@ glob_query_procedures (GimpPlugIn *plug_in)
 
 static GimpProcedure *
 glob_create_procedure (GimpPlugIn  *plug_in,
-                           const gchar *name)
+                       const gchar *name)
 {
   GimpProcedure *procedure = NULL;
 
@@ -128,12 +128,6 @@ glob_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_VAL_INT (procedure, "num-files",
-                         "Num files",
-                         "Number of returned filenames",
-                         0, G_MAXINT, 0,
-                         G_PARAM_READWRITE);
-
       GIMP_PROC_VAL_STRV (procedure, "files",
                           "Files",
                           "The list of matching filenames",
@@ -168,7 +162,7 @@ glob_run (GimpProcedure        *procedure,
                                                   GIMP_PDB_SUCCESS,
                                                   NULL);
 
-  GIMP_VALUES_TAKE_STRV (return_vals, 0, matches);
+  GIMP_VALUES_TAKE_STRV (return_vals, 1, matches);
 
   return return_vals;
 }
@@ -187,7 +181,7 @@ glob_match (const gchar   *pattern,
   g_return_val_if_fail (pattern != NULL, FALSE);
   g_return_val_if_fail (matches != NULL, FALSE);
 
-  *matches     = NULL;
+  *matches = NULL;
 
   /*  This is not a complete glob() implementation but rather a very
    *  simplistic approach. However it works for the most common use
@@ -258,7 +252,7 @@ glob_match (const gchar   *pattern,
   /* NULL-terminator */
   g_ptr_array_add (array, NULL);
 
-  *matches     = (gchar **) g_ptr_array_free (array, FALSE);
+  *matches = (gchar **) g_ptr_array_free (array, FALSE);
 
   return TRUE;
 }
