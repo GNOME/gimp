@@ -363,6 +363,46 @@ gimp_pdb_run_procedure_array (GimpPDB              *pdb,
 }
 
 /**
+ * gimp_pdb_run_procedure_config:
+ * @pdb:            the #GimpPDB object.
+ * @procedure_name: the registered name to call.
+ * @config:         a config object obtained with gimp_procedure_create_config().
+ *
+ * Runs the procedure named @procedure_name with @config.
+ *
+ * Returns: (transfer full): the return values for the procedure call.
+ *
+ * Since: 3.0
+ */
+GimpValueArray *
+gimp_pdb_run_procedure_config (GimpPDB             *pdb,
+                               const gchar         *procedure_name,
+                               GimpProcedureConfig *config)
+{
+  GimpProcedure  *procedure;
+  GimpValueArray *args;
+  GimpValueArray *return_values;
+
+  g_return_val_if_fail (GIMP_IS_PDB (pdb), NULL);
+  g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_CONFIG (config), NULL);
+
+  procedure = gimp_pdb_lookup_procedure (pdb, procedure_name);
+
+  g_return_val_if_fail (gimp_procedure_config_get_procedure (config) == procedure,
+                        NULL);
+
+  args = gimp_procedure_new_arguments (procedure);
+
+  gimp_procedure_config_get_values (config, args);
+  return_values = gimp_pdb_run_procedure_array (pdb, procedure_name, args);
+
+  gimp_value_array_unref (args);
+
+  return return_values;
+}
+
+/**
  * gimp_pdb_temp_procedure_name:
  * @pdb: the #GimpPDB object.
  *
