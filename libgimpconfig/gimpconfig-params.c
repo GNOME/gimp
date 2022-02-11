@@ -333,20 +333,29 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           copy = gimp_param_spec_rgb_array (name, nick, blurb,
                                             flags);
         }
-      else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
-        {
-          GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec);
+    }
+  else if (GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (pspec))
+    {
+      GimpParamSpecObjectArray *spec = GIMP_PARAM_SPEC_OBJECT_ARRAY (pspec);
 
-          copy = gimp_param_spec_object_array (name, nick, blurb,
-                                               spec->object_type,
-                                               flags);
-        }
+      copy = gimp_param_spec_object_array (name, nick, blurb,
+                                           spec->object_type,
+                                           flags);
     }
   else if (G_IS_PARAM_SPEC_OBJECT (pspec))
     {
-      GType value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+      GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+      const gchar *type_name  = g_type_name (value_type);
 
-      if (value_type == G_TYPE_FILE)
+      if (value_type == G_TYPE_FILE                   ||
+          /* These types are not visibile in libgimpconfig so we compare
+           * with type names instead.
+           */
+          g_strcmp0 (type_name, "GimpImage")     == 0 ||
+          g_strcmp0 (type_name, "GimpDrawable")  == 0 ||
+          g_strcmp0 (type_name, "GimpLayer")     == 0 ||
+          g_strcmp0 (type_name, "GimpSelection") == 0 ||
+          g_strcmp0 (type_name, "GimpVectors")   == 0)
         {
           copy = g_param_spec_object (name, nick, blurb,
                                       value_type,
