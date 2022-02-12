@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-10 20:24+0000\n"
-"PO-Revision-Date: 2022-02-10 22:45+0200\n"
+"POT-Creation-Date: 2022-02-12 17:57+0000\n"
+"PO-Revision-Date: 2022-02-12 22:50+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2111,9 +2111,11 @@ msgid "Select the bottommost channel"
 msgstr "Перейти до найнижчого каналу"
 
 #: ../app/actions/channels-actions.c:230
+#| msgctxt "channels-action"
+#| msgid "Select _Previous Channel"
 msgctxt "channels-action"
-msgid "Select _Previous Channel"
-msgstr "Позначити _попередній канал"
+msgid "Select _Previous Channels"
+msgstr "Позначити _попередні канали"
 
 #: ../app/actions/channels-actions.c:231
 msgctxt "channels-action"
@@ -3694,8 +3696,8 @@ msgstr "240 секунд"
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:567
 #: ../app/widgets/gimpdeviceeditor.c:543 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
-#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:439
+#: ../app/widgets/gimphelp.c:779 ../app/widgets/gimpiconpicker.c:484
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:712
 msgid "_Cancel"
 msgstr "_Скасувати"
@@ -21852,12 +21854,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: ../app/pdb/gimpprocedure.c:1022
+#: ../app/pdb/gimpprocedure.c:1023
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: ../app/pdb/gimpprocedure.c:1032
+#: ../app/pdb/gimpprocedure.c:1033
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -21894,8 +21896,8 @@ msgstr "2D перетворення"
 msgid "2D Transforming"
 msgstr "2D перетворення"
 
-#: ../app/pdb/pdb-cmds.c:1122 ../app/pdb/pdb-cmds.c:1166
-#: ../app/pdb/pdb-cmds.c:1208
+#: ../app/pdb/pdb-cmds.c:1115 ../app/pdb/pdb-cmds.c:1159
+#: ../app/pdb/pdb-cmds.c:1201
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Мітка даних «%s» не є канонічним ідентифікатором"
@@ -23182,7 +23184,6 @@ msgid "Source image for line art computation"
 msgstr "Джерельне зображення для розрахунку контурів"
 
 #: ../app/tools/gimpbucketfilloptions.c:192
-#| msgid "Crop only currently selected layers"
 msgid "Allow closing lines in selected layer"
 msgstr "Дозволити замикати лінії у позначеному шарі"
 
@@ -23191,7 +23192,8 @@ msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
 msgstr ""
-"Брати до уваги пікселі позначеного шару і виконувати заповнення кольором заповнення як замиканням графіки"
+"Брати до уваги пікселі позначеного шару і виконувати заповнення кольором "
+"заповнення як замиканням графіки"
 
 #: ../app/tools/gimpbucketfilloptions.c:220
 msgid "Maximum gap length"
@@ -26130,22 +26132,16 @@ msgid "All visible layers"
 msgstr "Всі видимі шари"
 
 #: ../app/tools/tools-enums.c:58
-#| msgctxt "undo-type"
-#| msgid "Delete layer"
 msgctxt "line-art-source"
 msgid "Selected layer"
 msgstr "Позначений шар"
 
 #: ../app/tools/tools-enums.c:59
-#| msgctxt "line-art-source"
-#| msgid "Layer below the active one"
 msgctxt "line-art-source"
 msgid "Layer below the selected one"
 msgstr "Шар під позначеним шаром"
 
 #: ../app/tools/tools-enums.c:60
-#| msgctxt "line-art-source"
-#| msgid "Layer above the active one"
 msgctxt "line-art-source"
 msgid "Layer above the selected one"
 msgstr "Шар над позначеним шаром"
@@ -28036,15 +28032,15 @@ msgstr "Змінити колір тла сітки"
 msgid "_Background color:"
 msgstr "Колір _тла:"
 
-#: ../app/widgets/gimphelp.c:371
+#: ../app/widgets/gimphelp.c:370
 msgid "Help browser is missing"
 msgstr "Програма перегляду довідки відсутня"
 
-#: ../app/widgets/gimphelp.c:372
+#: ../app/widgets/gimphelp.c:371
 msgid "The GIMP help browser is not available."
 msgstr "Програма для перегляду посібника з GIMP відсутня."
 
-#: ../app/widgets/gimphelp.c:373
+#: ../app/widgets/gimphelp.c:372
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -28052,40 +28048,40 @@ msgstr ""
 "Вбудований оглядач довідки GIMP відсутній. Натомість можете використовувати "
 "звичайний веб-оглядач."
 
-#: ../app/widgets/gimphelp.c:419
+#: ../app/widgets/gimphelp.c:411
 msgid "Help browser doesn't start"
 msgstr "Програма перегляду довідки не запускається"
 
-#: ../app/widgets/gimphelp.c:420
+#: ../app/widgets/gimphelp.c:412
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Не вдалось запустити програму перегляду довідки GIMP."
 
-#: ../app/widgets/gimphelp.c:422
+#: ../app/widgets/gimphelp.c:414
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Натомість можете для читання сторінок довідки використовувати веб-оглядач."
 
-#: ../app/widgets/gimphelp.c:448
+#: ../app/widgets/gimphelp.c:440
 msgid "Use _Web Browser"
 msgstr "Використовувати _веб-оглядач"
 
-#: ../app/widgets/gimphelp.c:793
+#: ../app/widgets/gimphelp.c:776
 msgid "GIMP user manual is missing"
 msgstr "Посібник з GIMP відсутній"
 
-#: ../app/widgets/gimphelp.c:809
+#: ../app/widgets/gimphelp.c:792
 msgid "The GIMP user manual is not installed in your language."
 msgstr "Не встановлено підручника користувача GIMP вашою рідною мовою."
 
-#: ../app/widgets/gimphelp.c:820
+#: ../app/widgets/gimphelp.c:803
 msgid "Read Selected _Language"
 msgstr "Читати позначеною _мовою"
 
-#: ../app/widgets/gimphelp.c:824
+#: ../app/widgets/gimphelp.c:807
 msgid "Available manuals..."
 msgstr "Доступні підручники…"
 
-#: ../app/widgets/gimphelp.c:836
+#: ../app/widgets/gimphelp.c:819
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
@@ -28093,7 +28089,7 @@ msgstr ""
 "Ви можете або вибрати підручник іншою мовою, або прочитати версію з "
 "інтернету."
 
-#: ../app/widgets/gimphelp.c:842
+#: ../app/widgets/gimphelp.c:825
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -28101,7 +28097,7 @@ msgstr ""
 "Варто або встановити пакет з довідкою, або змінити параметри програми, щоб "
 "використовувати довідку з інтернету"
 
-#: ../app/widgets/gimphelp.c:847
+#: ../app/widgets/gimphelp.c:830
 msgid "Read _Online"
 msgstr "_Читати з мережі"
 
