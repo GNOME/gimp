@@ -51,7 +51,8 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget     *viewport;
   GtkWidget     *warning;
 
-  dialog = gimp_export_dialog_new (_("Windows Icon"),
+  dialog = gimp_export_dialog_new (info->is_cursor ?
+                                   _("Windows Cursor") : _("Windows Icon"),
                                    PLUG_IN_BINARY,
                                    "plug-in-winicon");
 
