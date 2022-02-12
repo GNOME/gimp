@@ -227,7 +227,7 @@ static const GimpEnumActionEntry channels_select_actions[] =
     GIMP_HELP_CHANNEL_BOTTOM },
 
   { "channels-select-previous", NULL,
-    NC_("channels-action", "Select _Previous Channel"), NULL,
+    NC_("channels-action", "Select _Previous Channels"), NULL,
     NC_("channels-action", "Select the channels above the selected channels"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_CHANNEL_PREVIOUS },
