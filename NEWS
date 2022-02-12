@@ -199,6 +199,9 @@ API:
   - New functions gimp_context_are_dynamics_enabled() and
     gimp_context_enable_dynamics().
   - New gimp_pdb_run_procedure_config() function.
+  - GimpStringArray type was removed in favor of GStrv. Various libgimp
+    API were updated to use GStrv, and relevant plug-in procedure with
+    GStrv arguments or return values were updated as well.
 
 Documentation:
 
