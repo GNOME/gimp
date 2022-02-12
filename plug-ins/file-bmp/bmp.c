@@ -196,7 +196,7 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_BOOLEAN (procedure, "write-color-space-info",
+      GIMP_PROC_ARG_BOOLEAN (procedure, "write-color-space",
                              "Write color space information",
                              "Whether or not to write BITMAPV5HEADER "
                              "color space data",

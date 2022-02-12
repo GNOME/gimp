@@ -324,9 +324,9 @@ save_image (GFile         *file,
     }
 
   g_object_get (config,
-                "use-rle",                &use_rle,
-                "write-color-space-info", &write_color_space,
-                "rgb-format",             &rgb_format,
+                "use-rle",           &use_rle,
+                "write-color-space", &write_color_space,
+                "rgb-format",        &rgb_format,
                 NULL);
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -1010,7 +1010,7 @@ save_dialog (GimpProcedure *procedure,
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  toggle = gimp_prop_check_button_new (config, "write-color-space-info",
+  toggle = gimp_prop_check_button_new (config, "write-color-space",
                                        _("_Write color space information"));
   gimp_help_set_help_data (toggle,
                            _("Some applications can not read BMP images that "
