@@ -72,11 +72,12 @@ static  gboolean  save_dialog     (gint    channels,
 
 static struct
 {
-  RGBMode rgb_format;
-  gint    use_run_length_encoding;
+  RGBMode  rgb_format;
+  gint     use_run_length_encoding;
 
   /* Whether or not to write BITMAPV5HEADER color space data */
-  gint    dont_write_color_space_data;
+  gint     dont_write_color_space_data;
+  gboolean overwrite_RGB_format;
 } BMPSaveData;
 
 
@@ -166,7 +167,8 @@ save_image (const gchar  *filename,
       BitsPerPixel = 32;
       MapSize      = 0;
       channels     = 4;
-      BMPSaveData.rgb_format = RGBA_8888;
+      if (!BMPSaveData.overwrite_RGB_format)
+        BMPSaveData.rgb_format = RGBA_8888;
       break;
 
     case GIMP_RGB_IMAGE:
@@ -175,7 +177,8 @@ save_image (const gchar  *filename,
       BitsPerPixel = 24;
       MapSize      = 0;
       channels     = 3;
-      BMPSaveData.rgb_format = RGB_888;
+      if (!BMPSaveData.overwrite_RGB_format)
+        BMPSaveData.rgb_format = RGB_888;
       break;
 
     case GIMP_GRAYA_IMAGE:
@@ -249,8 +252,12 @@ save_image (const gchar  *filename,
       g_assert_not_reached ();
     }
 
-  BMPSaveData.use_run_length_encoding = 0;
-  BMPSaveData.dont_write_color_space_data = 0;
+  /* Don't alter option data if already defined in non-interactive mode Script-fu */
+  if (BMPSaveData.use_run_length_encoding != 1)
+   BMPSaveData.use_run_length_encoding = 0;
+
+  if (BMPSaveData.dont_write_color_space_data != 1)
+    BMPSaveData.dont_write_color_space_data = 0;
   mask_info_size = 0;
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -567,6 +574,27 @@ save_image (const gchar  *filename,
   g_free (pixels);
 
   return GIMP_PDB_SUCCESS;
+}
+
+/* Entry point for file-bmp-save2 */
+GimpPDBStatusType
+save_image2 (const gchar  *filename,
+             gint32        image,
+             gint32        drawable_ID,
+             gint32        use_rle,
+             gint32        write_color_space,
+             gint32        rgb_format,
+             GimpRunMode   run_mode,
+             GError      **error)
+{
+  BMPSaveData.use_run_length_encoding = use_rle;
+  BMPSaveData.dont_write_color_space_data = write_color_space;
+  BMPSaveData.rgb_format = (RGBMode) rgb_format;
+  /* Prevents save_image () from overwriting user's RGB format */
+  BMPSaveData.overwrite_RGB_format = TRUE;
+
+  return save_image (filename, image, drawable_ID,
+                     run_mode, error);
 }
 
 static inline void

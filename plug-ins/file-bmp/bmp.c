@@ -111,6 +111,18 @@ query (void)
     { GIMP_PDB_STRING,   "raw-filename", "The name entered" },
   };
 
+  static const GimpParamDef save_args2[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",          "The run mode { RUN-INTERACTIVE (0), RUN-NONINTERACTIVE (1) }" },
+    { GIMP_PDB_IMAGE,    "image",             "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",          "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",          "The name of the file to save the image in" },
+    { GIMP_PDB_STRING,   "raw-filename",      "The name entered" },
+    { GIMP_PDB_INT32,    "use-rle",           "Use run-length-encoding compression (only valid for 4 and 8-bit indexed images)" },
+    { GIMP_PDB_INT32,    "write-color-space", "Whether or not to write BITMAPV5HEADER color space data" },
+    { GIMP_PDB_INT32,    "rgb-format",        "Export format for RGB images (0=RGB_565, 1=RGBA_5551, 2=RGB_555, 3=RGB_888, 4=RGBA_8888, 5=RGBX_8888)" },
+  };
+
   gimp_install_procedure (LOAD_PROC,
                           "Loads files of Windows BMP file format",
                           "Loads files of Windows BMP file format",
@@ -144,6 +156,23 @@ query (void)
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/bmp");
   gimp_register_save_handler (SAVE_PROC, "bmp", "");
+
+  gimp_install_procedure (SAVE_PROC2,
+                          "Saves files in Windows BMP file format",
+                          "Saves files in Windows BMP file format, "
+                          "with RLE, color space information, and RGB format "
+                          "options available non-interactively",
+                          "Alexander Schulz",
+                          "Alexander Schulz",
+                          "1997",
+                          N_("Windows BMP image"),
+                          "INDEXED, GRAY, RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args2), 0,
+                          save_args2, NULL);
+
+  gimp_register_file_handler_mime (SAVE_PROC2, "image/bmp");
+  gimp_register_save_handler (SAVE_PROC2, "bmp", "");
 }
 
 static void
@@ -203,7 +232,8 @@ run (const gchar      *name,
             }
         }
     }
-  else if (strcmp (name, SAVE_PROC) == 0)
+  else if (strcmp (name, SAVE_PROC) == 0 ||
+           strcmp (name, SAVE_PROC2) == 0)
     {
       gint32           image_ID    = param[1].data.d_int32;
       gint32           drawable_ID = param[2].data.d_int32;
@@ -231,7 +261,8 @@ run (const gchar      *name,
 
         case GIMP_RUN_NONINTERACTIVE:
           /*  Make sure all the arguments are there!  */
-          if (nparams != 5)
+          if ((strcmp (name, SAVE_PROC) == 0 && nparams != 5) ||
+              (strcmp (name, SAVE_PROC2) == 0 && nparams != 8))
             status = GIMP_PDB_CALLING_ERROR;
           break;
 
@@ -240,10 +271,21 @@ run (const gchar      *name,
         }
 
       if (status == GIMP_PDB_SUCCESS)
-        status = save_image (param[3].data.d_string,
-                             image_ID, drawable_ID,
-                             run_mode,
-                             &error);
+        {
+          if (strcmp (name, SAVE_PROC) == 0)
+            status = save_image (param[3].data.d_string,
+                                 image_ID, drawable_ID,
+                                 run_mode,
+                                 &error);
+          else
+            status = save_image2 (param[3].data.d_string,
+                                  image_ID, drawable_ID,
+                                  param[5].data.d_int32,
+                                  param[6].data.d_int32,
+                                  param[7].data.d_int32,
+                                  run_mode,
+                                  &error);
+        }
 
       if (export == GIMP_EXPORT_EXPORT)
         gimp_image_delete (image_ID);

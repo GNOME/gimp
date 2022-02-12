@@ -22,6 +22,7 @@
 
 #define LOAD_PROC      "file-bmp-load"
 #define SAVE_PROC      "file-bmp-save"
+#define SAVE_PROC2     "file-bmp-save2"
 #define PLUG_IN_BINARY "file-bmp"
 #define PLUG_IN_ROLE   "gimp-file-bmp"
 
