@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-03 22:11+0000\n"
-"PO-Revision-Date: 2022-02-04 23:03+0100\n"
+"POT-Creation-Date: 2022-02-12 00:43+0000\n"
+"PO-Revision-Date: 2022-02-12 12:30+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -980,7 +980,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Spara parametrar för CML-utforskare"
 
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1557 ../plug-ins/common/file-mng.c:873
+#: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -988,7 +988,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1099
+#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1022
 #: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
@@ -1024,7 +1024,7 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
-#: ../plug-ins/file-ico/ico-load.c:673 ../plug-ins/file-ico/ico-load.c:752
+#: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
 #: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
 #: ../plug-ins/file-psd/psd-save.c:1820
@@ -1947,7 +1947,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
-#: ../plug-ins/file-ico/ico-load.c:665 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:90
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
@@ -2030,7 +2030,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
-#: ../plug-ins/file-ico/ico-save.c:1091 ../plug-ins/file-jpeg/jpeg-save.c:269
+#: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1012
 #, c-format
@@ -2151,11 +2151,11 @@ msgstr "Överföringssyntax %s stöds inte av GIMP."
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "%s stöds inte av GIMP i kombination med sampel per bildpunkt: %d"
 
-#: ../plug-ins/common/file-dicom.c:1522
+#: ../plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
 msgstr "Kan inte spara bilder med en alfakanal."
 
-#: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1543 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -4438,12 +4438,14 @@ msgid "_Write hot spot values"
 msgstr "_Skriv värden för aktiv punkt"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1133
+#: ../plug-ins/file-ico/ico-dialog.c:482
 msgid "Hot spot _X:"
-msgstr "Aktivpunkt _X:"
+msgstr "_X för aktiv punkt:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1147
+#: ../plug-ins/file-ico/ico-dialog.c:495
 msgid "Hot spot _Y:"
-msgstr "Aktivpunkt _Y:"
+msgstr "_Y för aktiv punkt:"
 
 #: ../plug-ins/common/file-xbm.c:1356
 msgid "W_rite extra mask file"
@@ -4507,7 +4509,7 @@ msgstr "Exportera bild som X11-muspekare"
 
 #: ../plug-ins/common/file-xmc.c:1137
 msgid "Enter the X coordinate of the hot spot. The origin is top left corner."
-msgstr "Ange X-koordinat för aktivpunkt. Ursprunget är övre vänstra hörnet."
+msgstr "Ange X-koordinat för aktiv punkt. Ursprunget är övre vänstra hörnet."
 
 #: ../plug-ins/common/file-xmc.c:1151
 msgid "Enter the Y coordinate of the hot spot. The origin is top left corner."
@@ -4655,7 +4657,7 @@ msgid ""
 "You can satisfy it by checking \"Replace the size of all frames...\" in the "
 "export dialog, or your cursor may not appear in GNOME settings."
 msgstr ""
-"Din pekare har exporterats men den innehåller en eller flera bildrutor vars "
+"Din markör har exporterats men den innehåller en eller flera bildrutor vars "
 "nominella storlek inte stöds av GNOME:s inställningar.\n"
 "Du kan uppfylla det genom att bocka för ”Byt ut storlek för alla bildrutor…” "
 "i dialogrutan för att exportera, annars kanske markören inte visas i GNOME:s "
@@ -5193,22 +5195,22 @@ msgstr "Blä_ddrare för insticksmoduler"
 msgid "Display information about plug-ins"
 msgstr "Visa information om insticksmoduler"
 
-#: ../plug-ins/common/plugin-browser.c:371
+#: ../plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
 msgstr "Sök efter namn"
 
-#: ../plug-ins/common/plugin-browser.c:385
+#: ../plug-ins/common/plugin-browser.c:387
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d insticksmodul"
 msgstr[1] "%d insticksmoduler"
 
-#: ../plug-ins/common/plugin-browser.c:394
+#: ../plug-ins/common/plugin-browser.c:396
 msgid "No matches for your query"
 msgstr "Inga sökträffar för din sökning"
 
-#: ../plug-ins/common/plugin-browser.c:397
+#: ../plug-ins/common/plugin-browser.c:399
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -6727,11 +6729,12 @@ msgstr "Exportera bild som FLI-animation"
 msgid "Windows Icon"
 msgstr "Windows-ikon"
 
-#: ../plug-ins/file-ico/ico-dialog.c:74
+#. Cursor
+#: ../plug-ins/file-ico/ico-dialog.c:75
 msgid "Icon Details"
 msgstr "Ikondetaljer"
 
-#: ../plug-ins/file-ico/ico-dialog.c:97
+#: ../plug-ins/file-ico/ico-dialog.c:98
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -6739,48 +6742,48 @@ msgstr ""
 "Stora ikoner och komprimering stöds inte av alla program. Äldre program "
 "kanske inte kan öppna den här filen korrekt."
 
-#: ../plug-ins/file-ico/ico-dialog.c:166
+#: ../plug-ins/file-ico/ico-dialog.c:167
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alfa, 2-platspalett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:167
+#: ../plug-ins/file-ico/ico-dialog.c:168
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alfa, 16-platspalett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:168
+#: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, 256-platspalett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:169
+#: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bits alfa, ingen palett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:170
+#: ../plug-ins/file-ico/ico-dialog.c:171
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alfa, ingen palett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:184
+#: ../plug-ins/file-ico/ico-dialog.c:185
 msgid "Compressed (PNG)"
 msgstr "Komprimerad (PNG)"
 
-#: ../plug-ins/file-ico/ico-load.c:221
+#: ../plug-ins/file-ico/ico-load.c:222
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "Kunde inte läsa ”%lu” byte"
 
-#: ../plug-ins/file-ico/ico-load.c:248
+#: ../plug-ins/file-ico/ico-load.c:250
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "Ikon #%d har noll bredd eller höjd"
 
 #. read successfully. add to image
-#: ../plug-ins/file-ico/ico-load.c:634
+#: ../plug-ins/file-ico/ico-load.c:636
 #, c-format
 msgid "Icon #%i"
 msgstr "Ikon #%i"
 
 #. ----- Open PSD file -----
-#: ../plug-ins/file-ico/ico-load.c:744 ../plug-ins/file-jpeg/jpeg-load.c:526
+#: ../plug-ins/file-ico/ico-load.c:766 ../plug-ins/file-jpeg/jpeg-load.c:526
 #: ../plug-ins/file-psd/psd-thumb-load.c:72
 #: ../plug-ins/file-raw/file-darktable.c:517
 #: ../plug-ins/file-raw/file-rawtherapee.c:459
@@ -6788,9 +6791,22 @@ msgstr "Ikon #%i"
 msgid "Opening thumbnail for '%s'"
 msgstr "Öppnar miniatyrbild för ”%s”"
 
-#: ../plug-ins/file-ico/ico.c:127 ../plug-ins/file-ico/ico.c:172
+#: ../plug-ins/file-ico/ico-save.c:210
+#, c-format
+msgid ""
+"Called non-interactively with %d and %d hotspot coordinates with an image of "
+"%d icons."
+msgstr ""
+"Anropad icke-interaktivt med koordinaterna %d och %d för aktiv punkt med en "
+"bild på %d ikoner."
+
+#: ../plug-ins/file-ico/ico.c:139 ../plug-ins/file-ico/ico.c:214
 msgid "Microsoft Windows icon"
 msgstr "Microsoft Windows-ikon"
+
+#: ../plug-ins/file-ico/ico.c:167 ../plug-ins/file-ico/ico.c:239
+msgid "Microsoft Windows cursor"
+msgstr "Microsoft Windows-markör"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:218
 msgid "JPEG preview"
@@ -6847,7 +6863,7 @@ msgstr "Flyttal"
 msgid "JPEG image"
 msgstr "JPEG-bild"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7455,30 +7471,30 @@ msgstr "Misslyckades med skrivning av en scanline på rad %d"
 msgid "Writing pages with different bit depth is strange."
 msgstr "Att skriva sidor med olika bitdjup är konstigt."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1224
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Ingen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1225
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 msgid "Pack Bits"
 msgstr "Packa bitar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "Deflate"
 msgstr "Packa ihop"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3-fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1231
+#: ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4-fax"
 
@@ -12504,6 +12520,9 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "Cursor Hot spot"
+#~ msgstr "Aktiv punkt för markör"
 
 #~ msgid "PAT format does not support multiple layers."
 #~ msgstr "PAT-formatet stöder inte flera lager."
