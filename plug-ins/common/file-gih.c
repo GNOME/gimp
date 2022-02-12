@@ -412,7 +412,7 @@ gih_save (GimpProcedure        *procedure,
       else
         {
           const guint8  *rank = GIMP_VALUES_GET_UINT8_ARRAY  (args, 7);
-          const gchar  **sel  = GIMP_VALUES_GET_STRV (args, 8);
+          const gchar  **sel  = GIMP_VALUES_GET_STRV (args, 9);
 
           for (i = 0; i < gihparams.dim; i++)
             {
