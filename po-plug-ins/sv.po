@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-12 00:43+0000\n"
-"PO-Revision-Date: 2022-02-12 12:30+0100\n"
+"POT-Creation-Date: 2022-02-12 12:56+0000\n"
+"PO-Revision-Date: 2022-02-12 15:32+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -4438,12 +4438,12 @@ msgid "_Write hot spot values"
 msgstr "_Skriv värden för aktiv punkt"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1133
-#: ../plug-ins/file-ico/ico-dialog.c:482
+#: ../plug-ins/file-ico/ico-dialog.c:483
 msgid "Hot spot _X:"
 msgstr "_X för aktiv punkt:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1147
-#: ../plug-ins/file-ico/ico-dialog.c:495
+#: ../plug-ins/file-ico/ico-dialog.c:496
 msgid "Hot spot _Y:"
 msgstr "_Y för aktiv punkt:"
 
@@ -6725,16 +6725,20 @@ msgstr "_Till:"
 msgid "Export Image as FLI Animation"
 msgstr "Exportera bild som FLI-animation"
 
-#: ../plug-ins/file-ico/ico-dialog.c:54
+#: ../plug-ins/file-ico/ico-dialog.c:55
+msgid "Windows Cursor"
+msgstr "Windows-muspekare"
+
+#: ../plug-ins/file-ico/ico-dialog.c:55
 msgid "Windows Icon"
 msgstr "Windows-ikon"
 
 #. Cursor
-#: ../plug-ins/file-ico/ico-dialog.c:75
+#: ../plug-ins/file-ico/ico-dialog.c:76
 msgid "Icon Details"
 msgstr "Ikondetaljer"
 
-#: ../plug-ins/file-ico/ico-dialog.c:98
+#: ../plug-ins/file-ico/ico-dialog.c:99
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -6742,27 +6746,27 @@ msgstr ""
 "Stora ikoner och komprimering stöds inte av alla program. Äldre program "
 "kanske inte kan öppna den här filen korrekt."
 
-#: ../plug-ins/file-ico/ico-dialog.c:167
+#: ../plug-ins/file-ico/ico-dialog.c:168
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alfa, 2-platspalett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:168
+#: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alfa, 16-platspalett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:169
+#: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, 256-platspalett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:170
+#: ../plug-ins/file-ico/ico-dialog.c:171
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bits alfa, ingen palett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:171
+#: ../plug-ins/file-ico/ico-dialog.c:172
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alfa, ingen palett"
 
-#: ../plug-ins/file-ico/ico-dialog.c:185
+#: ../plug-ins/file-ico/ico-dialog.c:186
 msgid "Compressed (PNG)"
 msgstr "Komprimerad (PNG)"
 
@@ -6806,7 +6810,7 @@ msgstr "Microsoft Windows-ikon"
 
 #: ../plug-ins/file-ico/ico.c:167 ../plug-ins/file-ico/ico.c:239
 msgid "Microsoft Windows cursor"
-msgstr "Microsoft Windows-markör"
+msgstr "Microsoft Windows-muspekare"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:218
 msgid "JPEG preview"
