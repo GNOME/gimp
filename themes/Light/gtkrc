@@ -457,7 +457,7 @@ widget "gtk-tooltip*" style "tlsog-tooltips-style"
 style "tlsog-treeview" = "tlsog-default-style"
 {
   xthickness = 2
-  ythickness = 0
+  ythickness = 2
 
   GtkTreeView::odd_row_color = "#BDBDBD"
   GtkTreeView::even_row_color = "#BDBDBD"
@@ -477,8 +477,8 @@ style "tlsog-treeview" = "tlsog-default-style"
       image
         {
           function = SHADOW
-          file = "ui/null.png"
-          border = { 0, 0, 0, 0 }
+          file = "ui/treeview-item-prelight.png"
+          border = { 1, 1, 1, 1 }
           stretch = TRUE
         }
      image

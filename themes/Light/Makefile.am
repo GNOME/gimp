@@ -129,6 +129,7 @@ themeui_DATA =	\
 	ui/spin-up-normal.png	\
 	ui/spin-up-pressed.png	\
 	ui/toolbar.png	\
-	ui/transparent.png
+	ui/transparent.png \
+	ui/treeview-item-prelight.png
 
 EXTRA_DIST = $(themedata_DATA) $(themeui_DATA)

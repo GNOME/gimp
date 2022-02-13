@@ -457,7 +457,7 @@ widget "gtk-tooltip*" style "sogg-tooltips-style"
 style "sogg-treeview" = "sogg-default-style"
 {
   xthickness = 2
-  ythickness = 0
+  ythickness = 2
 
   GtkTreeView::odd_row_color = "#BDBDBD"
   GtkTreeView::even_row_color = "#BDBDBD"
@@ -478,8 +478,8 @@ style "sogg-treeview" = "sogg-default-style"
       image
         {
           function = SHADOW
-          file = "ui/null.png"
-          border = { 0, 0, 0, 0 }
+          file = "ui/treeview-item-prelight.png"
+          border = { 1, 1, 1, 1 }
           stretch = TRUE
         }
       image

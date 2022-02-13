@@ -2342,7 +2342,7 @@ class "GimpSpinScale" style "gimp-dark-spin-scale-style"
 style "gimp-dark-treeview" = "gimp-dark-default-style"
 {
   xthickness = 2
-  ythickness = 0
+  ythickness = 2
 
   GtkTreeView::odd_row_color = "#383838"
   GtkTreeView::even_row_color = "#383838"
@@ -2363,8 +2363,8 @@ style "gimp-dark-treeview" = "gimp-dark-default-style"
       image
         {
           function = SHADOW
-          file = "ui/null.png"
-          border = { 0, 0, 0, 0 }
+          file = "ui/treeview-item-prelight.png"
+          border = { 1, 1, 1, 1 }
           stretch = TRUE
         }
      image
