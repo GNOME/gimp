@@ -337,6 +337,9 @@ When writing code, any core developer is expected to follow:
 [GIMP's developer wiki](https://wiki.gimp.org/index.php/Main_Page) can
 also contain various valuable resources.
 
+Finally the [debugging-tips](debugging-tips.md) file contain many very
+useful tricks to help you debugging in various common cases.
+
 ### Newcomers
 
 If this is your first time contributing to GIMP, you might be interested

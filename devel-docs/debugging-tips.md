@@ -7,9 +7,10 @@ newcomers.
 The basic thing is to build babl, GEGL and GIMP with `--enable-debug`.
 
 Note that if you also built glib from source with `--enable-debug`,
-every GObject destroyed are apparently overwritten with values invalid
-as pointers, so dereferencing one after destruction usually leads to a
-crash, which is a good way to find some more vicious bugs.
+every pointers of destroyed GObject are overwritten with `0xaa` bytes,
+so dereferencing one after destruction usually leads to a crash, which
+is a good way to find some more vicious bugs. Also it makes pointers of
+destroyed data easy to spot.
 
 ## Debug logs ##
 
@@ -60,6 +61,10 @@ shortcut, if you first enable with:
 > gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
 
 See also: https://wiki.gnome.org/Projects/GTK%2B/Inspector
+
+Note also that running GIMP with `GDK_SCALE=2` (or other values) allow
+to test the interface in another scaling than your native one. This
+settings is also available in the GtkInspector.
 
 ## Debugging GEGL code ##
 
