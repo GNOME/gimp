@@ -147,7 +147,7 @@ typedef enum /*< lowercase_name=gimp_transform_3d_lens_mode >*/
   GIMP_TRANSFORM_3D_LENS_MODE_FOCAL_LENGTH, /*< desc="Focal length" >*/
   GIMP_TRANSFORM_3D_LENS_MODE_FOV_IMAGE,    /*< desc="Field of view (relative to image)", abbrev="FOV (image)" >*/
   GIMP_TRANSFORM_3D_LENS_MODE_FOV_ITEM,     /*< desc="Field of view (relative to item)", abbrev="FOV (item)" >*/
-} Gimp3DTrasnformLensMode;
+} Gimp3DTransformLensMode;
 
 
 #define GIMP_TYPE_WARP_BEHAVIOR (gimp_warp_behavior_get_type ())

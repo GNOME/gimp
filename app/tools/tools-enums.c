@@ -274,15 +274,15 @@ gimp_transform_3d_lens_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_TRANSFORM_3D_LENS_MODE_FOCAL_LENGTH, NC_("3-dtrasnform-lens-mode", "Focal length"), NULL },
-    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_IMAGE, NC_("3-dtrasnform-lens-mode", "Field of view (relative to image)"), NULL },
+    { GIMP_TRANSFORM_3D_LENS_MODE_FOCAL_LENGTH, NC_("3-dtransform-lens-mode", "Focal length"), NULL },
+    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_IMAGE, NC_("3-dtransform-lens-mode", "Field of view (relative to image)"), NULL },
     /* Translators: this is an abbreviated version of "Field of view (relative to image)".
        Keep it short. */
-    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_IMAGE, NC_("3-dtrasnform-lens-mode", "FOV (image)"), NULL },
-    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_ITEM, NC_("3-dtrasnform-lens-mode", "Field of view (relative to item)"), NULL },
+    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_IMAGE, NC_("3-dtransform-lens-mode", "FOV (image)"), NULL },
+    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_ITEM, NC_("3-dtransform-lens-mode", "Field of view (relative to item)"), NULL },
     /* Translators: this is an abbreviated version of "Field of view (relative to item)".
        Keep it short. */
-    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_ITEM, NC_("3-dtrasnform-lens-mode", "FOV (item)"), NULL },
+    { GIMP_TRANSFORM_3D_LENS_MODE_FOV_ITEM, NC_("3-dtransform-lens-mode", "FOV (item)"), NULL },
     { 0, NULL, NULL }
   };
 
@@ -290,8 +290,8 @@ gimp_transform_3d_lens_mode_get_type (void)
 
   if (G_UNLIKELY (! type))
     {
-      type = g_enum_register_static ("Gimp3DTrasnformLensMode", values);
-      gimp_type_set_translation_context (type, "3-dtrasnform-lens-mode");
+      type = g_enum_register_static ("Gimp3DTransformLensMode", values);
+      gimp_type_set_translation_context (type, "3-dtransform-lens-mode");
       gimp_enum_set_value_descriptions (type, descs);
     }
 

@@ -482,7 +482,7 @@ static void
 gimp_transform_3d_tool_dialog_update (GimpTransformGridTool *tg_tool)
 {
   GimpTransform3DTool     *t3d     = GIMP_TRANSFORM_3D_TOOL (tg_tool);
-  Gimp3DTrasnformLensMode  lens_mode;
+  Gimp3DTransformLensMode  lens_mode;
   gint                     permutation[3];
   gint                     i;
 
