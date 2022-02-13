@@ -203,6 +203,31 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   gtk_container_add (GTK_CONTAINER (statusbar), hbox);
   gtk_widget_show (hbox);
 
+  /* When changing the text of the cursor_label, it requests a resize
+   * bubbling up to containers, up to the display shell. If the resizing
+   * actually happens (even when the size is the same), a full "draw"
+   * signal is triggered on the whole canvas, which is not a good thing
+   * as a general rule (and very bad on some platforms such as macOS).
+   * It's too late to do anything when processing the "draw" signal
+   * because then we can't know if some part of the invalidated
+   * rectangle really needs to be redrawn. What we do is not propagate
+   * the size request back to container parents. Instead we queue the
+   * resize directly on the widget.
+   *
+   * Note that the "resize-mode" property seems to be unrecommended now
+   * (though only the public functions are deprecated, we get no
+   * deprecation setting as a property) but it's still here in GTK3 and
+   * still seems like the proper way to avoid propagating useless
+   * no-actual-size-change resizes to container widgets.
+   * XXX On GTK4, we will likely have to test again and if it's still a
+   * problem, make a different fix.
+   *
+   * See discussion in MR !572.
+   */
+  g_object_set (statusbar,
+                "resize-mode", GTK_RESIZE_QUEUE,
+                NULL);
+
   statusbar->shell          = NULL;
   statusbar->messages       = NULL;
   statusbar->context_ids    = g_hash_table_new_full (g_str_hash, g_str_equal,
