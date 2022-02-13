@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-12 17:57+0000\n"
-"PO-Revision-Date: 2022-02-12 22:50+0200\n"
+"POT-Creation-Date: 2022-02-13 13:46+0000\n"
+"PO-Revision-Date: 2022-02-13 18:53+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -2111,8 +2111,6 @@ msgid "Select the bottommost channel"
 msgstr "Перейти до найнижчого каналу"
 
 #: ../app/actions/channels-actions.c:230
-#| msgctxt "channels-action"
-#| msgid "Select _Previous Channel"
 msgctxt "channels-action"
 msgid "Select _Previous Channels"
 msgstr "Позначити _попередні канали"
@@ -26207,31 +26205,41 @@ msgid "Grayscale"
 msgstr "Відтінки сірого"
 
 #: ../app/tools/tools-enums.c:277
-msgctxt "3-dtrasnform-lens-mode"
+#| msgctxt "3-dtrasnform-lens-mode"
+#| msgid "Focal length"
+msgctxt "3-dtransform-lens-mode"
 msgid "Focal length"
 msgstr "Фокальна відстань"
 
 #: ../app/tools/tools-enums.c:278
-msgctxt "3-dtrasnform-lens-mode"
+#| msgctxt "3-dtrasnform-lens-mode"
+#| msgid "Field of view (relative to image)"
+msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to image)"
 msgstr "Поле зору (відносно зображення)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
-msgctxt "3-dtrasnform-lens-mode"
+#| msgctxt "3-dtrasnform-lens-mode"
+#| msgid "FOV (image)"
+msgctxt "3-dtransform-lens-mode"
 msgid "FOV (image)"
 msgstr "Поле зору (зображення)"
 
 #: ../app/tools/tools-enums.c:282
-msgctxt "3-dtrasnform-lens-mode"
+#| msgctxt "3-dtrasnform-lens-mode"
+#| msgid "Field of view (relative to item)"
+msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to item)"
 msgstr "Поле зору (відносно елемента)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
-msgctxt "3-dtrasnform-lens-mode"
+#| msgctxt "3-dtrasnform-lens-mode"
+#| msgid "FOV (item)"
+msgctxt "3-dtransform-lens-mode"
 msgid "FOV (item)"
 msgstr "Поле зору (елемент)"
 
