@@ -35,7 +35,8 @@ G_BEGIN_DECLS
  * @paint_mode: Paint mode
  * @width: width
  * @height: height
- * @mask_data: (array): Mask data
+ * @mask_size: Mask size.
+ * @mask_data: (array length=mask_size): Mask data
  * @dialog_closing: Dialog closing?
  * @user_data: (closure): user data
  */
@@ -45,6 +46,7 @@ typedef void (* GimpRunBrushCallback)   (const gchar          *brush_name,
                                          GimpLayerMode         paint_mode,
                                          gint                  width,
                                          gint                  height,
+                                         gint                  mask_size,
                                          const guchar         *mask_data,
                                          gboolean              dialog_closing,
                                          gpointer              user_data);

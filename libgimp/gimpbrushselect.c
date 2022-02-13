@@ -33,6 +33,7 @@ typedef struct
   gint                  paint_mode;
   gint                  width;
   gint                  height;
+  gint                  brush_mask_size;
   guchar               *brush_mask_data;
   GimpRunBrushCallback  callback;
   gboolean              closing;
@@ -224,6 +225,7 @@ gimp_temp_brush_run (GimpProcedure        *procedure,
   data->paint_mode      = GIMP_VALUES_GET_ENUM        (args, 3);
   data->width           = GIMP_VALUES_GET_INT         (args, 4);
   data->height          = GIMP_VALUES_GET_INT         (args, 5);
+  data->brush_mask_size = GIMP_VALUES_GET_INT         (args, 6);
   data->brush_mask_data = GIMP_VALUES_DUP_UINT8_ARRAY (args, 7);
   data->closing         = GIMP_VALUES_GET_BOOLEAN     (args, 8);
 
@@ -245,6 +247,7 @@ gimp_temp_brush_idle (GimpBrushData *data)
                     data->paint_mode,
                     data->width,
                     data->height,
+                    data->brush_mask_size,
                     data->brush_mask_data,
                     data->closing,
                     data->data);

@@ -104,6 +104,7 @@ static void   gimp_brush_select_button_callback (const gchar          *brush_nam
                                                  GimpLayerMode         paint_mode,
                                                  gint                  width,
                                                  gint                  height,
+                                                 gint                  mask_size,
                                                  const guchar         *mask_data,
                                                  gboolean              dialog_closing,
                                                  gpointer              user_data);
@@ -449,7 +450,8 @@ gimp_brush_select_button_set_brush (GimpBrushSelectButton *button,
 
           gimp_brush_select_button_callback (name,
                                              opacity, spacing, paint_mode,
-                                             width, height, mask_data,
+                                             width, height, width * height,
+                                             mask_data,
                                              FALSE, button);
 
           g_free (mask_data);
@@ -564,6 +566,7 @@ gimp_brush_select_button_callback (const gchar   *name,
                                    GimpLayerMode  paint_mode,
                                    gint           width,
                                    gint           height,
+                                   gint           mask_size,
                                    const guchar  *mask_data,
                                    gboolean       dialog_closing,
                                    gpointer       data)
