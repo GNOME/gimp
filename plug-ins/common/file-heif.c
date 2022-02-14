@@ -2604,7 +2604,6 @@ save_dialog (GimpProcedure *procedure,
   GtkWidget *grid2;
   GtkListStore  *store;
   GtkWidget     *combo;
-  gint           save_bit_depth = 8;
 #endif
   gboolean   run;
 
@@ -2660,43 +2659,13 @@ save_dialog (GimpProcedure *procedure,
 #endif
 
 #if LIBHEIF_HAVE_VERSION(1,8,0)
-  g_object_get (config,
-                "save-bit-depth", &save_bit_depth,
-                NULL);
-
-  switch (gimp_image_get_precision (image))
-    {
-    case GIMP_PRECISION_U8_LINEAR:
-    case GIMP_PRECISION_U8_NON_LINEAR:
-    case GIMP_PRECISION_U8_PERCEPTUAL:
-      /* image is 8bit depth */
-      if (save_bit_depth > 8)
-        {
-          save_bit_depth = 8;
-          g_object_set (config,
-                        "save-bit-depth", save_bit_depth,
-                        NULL);
-        }
-      break;
-    default:
-      /* high bit depth */
-      if (save_bit_depth < 12)
-        {
-          save_bit_depth = 12;
-          g_object_set (config,
-                        "save-bit-depth", save_bit_depth,
-                        NULL);
-        }
-      break;
-    }
-
   grid2 = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid2), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid2), 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), grid2, FALSE, FALSE, 0);
   gtk_widget_show (grid2);
 
-  store = gimp_int_store_new (_("8 bit/channel"),         8,
+  store = gimp_int_store_new (_("8 bit/channel"),   8,
                               _("10 bit/channel"), 10,
                               _("12 bit/channel"), 12,
                               NULL);
