@@ -177,12 +177,12 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                          8, 16, 8,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_AUX_ARG_INT (procedure, "speed",
-                             _("Effort/S_peed"),
-                             _("Encoder effort setting"),
-                             1, 9,
-                             7,
-                             G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "speed",
+                         _("Effort/S_peed"),
+                         _("Encoder effort setting"),
+                         1, 9,
+                         7,
+                         G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "uses-original-profile",
                              _("Save ori_ginal profile"),
