@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-10 21:19+0000\n"
-"PO-Revision-Date: 2022-02-11 10:32+0100\n"
+"POT-Creation-Date: 2022-02-13 17:03+0000\n"
+"PO-Revision-Date: 2022-02-13 20:30+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -974,7 +974,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Shrani parametre raziskovalca MZP"
 
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1557 ../plug-ins/common/file-mng.c:873
+#: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -2149,11 +2149,11 @@ msgstr "GIMP ne podpira skladnje prenosa %s."
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "GIMP ne podpira %s v kombinaciji z vzorci na slikovno točko: %d"
 
-#: ../plug-ins/common/file-dicom.c:1522
+#: ../plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
 msgstr "Slik ni mogoče shraniti s kanalom alfa."
 
-#: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1543 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -4432,12 +4432,12 @@ msgid "_Write hot spot values"
 msgstr "_Zapiši vrednosti vroče točke"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1133
-#: ../plug-ins/file-ico/ico-dialog.c:482
+#: ../plug-ins/file-ico/ico-dialog.c:483
 msgid "Hot spot _X:"
 msgstr "Vroča točka _X:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1147
-#: ../plug-ins/file-ico/ico-dialog.c:495
+#: ../plug-ins/file-ico/ico-dialog.c:496
 msgid "Hot spot _Y:"
 msgstr "Vroča točka _Y:"
 
@@ -5190,11 +5190,11 @@ msgstr "Brskalnik _vstavkov"
 msgid "Display information about plug-ins"
 msgstr "Pokaži podatke o vstavkih"
 
-#: ../plug-ins/common/plugin-browser.c:371
+#: ../plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
 msgstr "Iskanje po imenu"
 
-#: ../plug-ins/common/plugin-browser.c:385
+#: ../plug-ins/common/plugin-browser.c:387
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
@@ -5203,11 +5203,11 @@ msgstr[1] "%d vstavek"
 msgstr[2] "%d vstavka"
 msgstr[3] "%d vstavki"
 
-#: ../plug-ins/common/plugin-browser.c:394
+#: ../plug-ins/common/plugin-browser.c:396
 msgid "No matches for your query"
 msgstr "Ni zadetkov"
 
-#: ../plug-ins/common/plugin-browser.c:397
+#: ../plug-ins/common/plugin-browser.c:399
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -6717,16 +6717,20 @@ msgstr "_Do:"
 msgid "Export Image as FLI Animation"
 msgstr "Izvozi sliko kot animacijo FLI"
 
-#: ../plug-ins/file-ico/ico-dialog.c:54
+#: ../plug-ins/file-ico/ico-dialog.c:55
+msgid "Windows Cursor"
+msgstr "Kazalec Windows"
+
+#: ../plug-ins/file-ico/ico-dialog.c:55
 msgid "Windows Icon"
 msgstr "Ikona Windows"
 
 #. Cursor
-#: ../plug-ins/file-ico/ico-dialog.c:75
+#: ../plug-ins/file-ico/ico-dialog.c:76
 msgid "Icon Details"
 msgstr "Podrobnosti ikone"
 
-#: ../plug-ins/file-ico/ico-dialog.c:98
+#: ../plug-ins/file-ico/ico-dialog.c:99
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -6734,27 +6738,27 @@ msgstr ""
 "Velike ikone in stiskanje ni podprto v vseh programih. Starejše aplikacije "
 "morda te datoteke ne bodo odprle pravilno."
 
-#: ../plug-ins/file-ico/ico-dialog.c:167
+#: ../plug-ins/file-ico/ico-dialog.c:168
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bitni kanal alfa, 2-mestna paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:168
+#: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bitni kanal alfa, 16-mestna paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:169
+#: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bitni kanal alfa, 256-mestna paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:170
+#: ../plug-ins/file-ico/ico-dialog.c:171
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bitni kanal alfa, brez palete"
 
-#: ../plug-ins/file-ico/ico-dialog.c:171
+#: ../plug-ins/file-ico/ico-dialog.c:172
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bitni kanal alfa, brez palete"
 
-#: ../plug-ins/file-ico/ico-dialog.c:185
+#: ../plug-ins/file-ico/ico-dialog.c:186
 msgid "Compressed (PNG)"
 msgstr "Stisnjeno (PNG)"
 
@@ -6855,7 +6859,7 @@ msgstr "plavajoča vejica"
 msgid "JPEG image"
 msgstr "Slika JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7474,30 +7478,30 @@ msgstr "Spodletelo pisanje črte v vrstici %d"
 msgid "Writing pages with different bit depth is strange."
 msgstr "Zapisovanje strani z različnimi bitnimi globinami je čudno."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1224
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Brez"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1225
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 msgid "Pack Bits"
 msgstr "Zloži bite"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "Deflate"
 msgstr "Stisni"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "CCITT Group 3 fax"
 msgstr "Telefaks CCITT Group 3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1231
+#: ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "CCITT Group 4 fax"
 msgstr "Telefaks CCITT Group 4"
 
