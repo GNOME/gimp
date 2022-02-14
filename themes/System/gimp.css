@@ -132,6 +132,10 @@ entry.italic {
     color: rgba (1.0, 0.0, 0.0, 1.0);
 }
 
+treeview header button {
+    padding: 6px;
+}
+
 treeview .toggle-icon:not(.visible):hover {
     border: 1px solid gray;
     border-radius: 3px;
