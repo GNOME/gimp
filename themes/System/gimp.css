@@ -131,3 +131,12 @@ entry.italic {
     /* why does this not work */
     color: rgba (1.0, 0.0, 0.0, 1.0);
 }
+
+treeview .toggle-icon:not(.visible):hover {
+    border: 1px solid gray;
+    border-radius: 3px;
+}
+
+treeview .toggle-icon:not(.visible):selected {
+    border-color: lightgray;
+}

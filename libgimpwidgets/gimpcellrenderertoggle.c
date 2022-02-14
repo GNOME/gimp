@@ -383,6 +383,7 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
   gtk_style_context_save (context);
 
   gtk_style_context_add_class (context, GTK_STYLE_CLASS_BUTTON);
+  gtk_style_context_add_class (context, "toggle-icon");
 
   gtk_cell_renderer_get_padding (cell, &xpad, &ypad);
 
@@ -400,7 +401,10 @@ gimp_cell_renderer_toggle_render (GtkCellRenderer      *cell,
     gtk_cell_renderer_toggle_get_active (GTK_CELL_RENDERER_TOGGLE (cell));
 
   if (active)
-    state |= GTK_STATE_FLAG_ACTIVE;
+    {
+      gtk_style_context_add_class (context, "visible");
+      state |= GTK_STATE_FLAG_ACTIVE;
+    }
 
   if (! gtk_cell_renderer_toggle_get_activatable (GTK_CELL_RENDERER_TOGGLE (cell)))
     state |= GTK_STATE_FLAG_INSENSITIVE;
