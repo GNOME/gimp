@@ -82,6 +82,16 @@ endif
 
 CLEANFILES = $(noinst_DATA)
 
+# This is basically the same rule as the catch all 64/%.png rule above,
+# because somehow the native Windows build fail without it (no problem
+# on cross-build for Windows or native Linux builds). When trying to
+# build gimp-core-pixbufs.gresource.xml, we were getting an error
+# because of "No rule to make target '64/dialog-question.png'".
+# Interestingly, the problem doesn't happen for the other XML, but maybe
+# it's because it's not needed from within icons/Makefile.am.
+64/dialog-question.png: scalable/dialog-question.svg ../../tools/colorsvg2png
+	mkdir -p $(@D) && \
+	$(top_builddir)/tools/colorsvg2png $< $@ $(@D)
 
 gimp-core-pixbufs.gresource.xml: $(CORE_IMAGES) Makefile.am
 	$(AM_V_GEN) ( rm -f $@; \
