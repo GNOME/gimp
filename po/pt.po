@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-09 22:00+0000\n"
-"PO-Revision-Date: 2022-02-10 13:49+0000\n"
+"POT-Creation-Date: 2022-02-13 13:46+0000\n"
+"PO-Revision-Date: 2022-02-14 12:36+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -2131,8 +2131,8 @@ msgstr "Selecionar o canal mais abaixo"
 
 #: ../app/actions/channels-actions.c:230
 msgctxt "channels-action"
-msgid "Select _Previous Channel"
-msgstr "Selecionar o canal _anterior"
+msgid "Select _Previous Channels"
+msgstr "Selecionar canais _anteriores"
 
 #: ../app/actions/channels-actions.c:231
 msgctxt "channels-action"
@@ -3705,8 +3705,8 @@ msgstr "240 segundos"
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:567
 #: ../app/widgets/gimpdeviceeditor.c:543 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
-#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:439
+#: ../app/widgets/gimphelp.c:779 ../app/widgets/gimpiconpicker.c:484
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:712
 msgid "_Cancel"
 msgstr "_Cancelar"
@@ -22107,14 +22107,14 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s"
 "\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
 
-#: ../app/pdb/gimpprocedure.c:1022
+#: ../app/pdb/gimpprocedure.c:1023
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "O procedimento \"%s\" devolveu uma expressão UTF-8 inválida para o argumento "
 "“%s”."
 
-#: ../app/pdb/gimpprocedure.c:1032
+#: ../app/pdb/gimpprocedure.c:1033
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -22152,8 +22152,8 @@ msgstr "Transformar em 2D"
 msgid "2D Transforming"
 msgstr "A fazer a transformação 2D"
 
-#: ../app/pdb/pdb-cmds.c:1122 ../app/pdb/pdb-cmds.c:1166
-#: ../app/pdb/pdb-cmds.c:1208
+#: ../app/pdb/pdb-cmds.c:1115 ../app/pdb/pdb-cmds.c:1159
+#: ../app/pdb/pdb-cmds.c:1201
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "A etiqueta de dados “%s” não é um identificador canónico"
@@ -26500,31 +26500,31 @@ msgid "Grayscale"
 msgstr "Tons de cinzento"
 
 #: ../app/tools/tools-enums.c:277
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "Focal length"
-msgstr "Comprimento focal"
+msgstr "Distância focal"
 
 #: ../app/tools/tools-enums.c:278
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to image)"
 msgstr "Campo de visão (relativo à imagem)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "FOV (image)"
 msgstr "CdV (imagem)"
 
 #: ../app/tools/tools-enums.c:282
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to item)"
 msgstr "Campo de visão (relativo ao item)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "FOV (item)"
 msgstr "CdV (item)"
 
@@ -28327,15 +28327,15 @@ msgstr "Alterar cor de fundo da grelha"
 msgid "_Background color:"
 msgstr "Cor de _fundo:"
 
-#: ../app/widgets/gimphelp.c:371
+#: ../app/widgets/gimphelp.c:370
 msgid "Help browser is missing"
 msgstr "Falta o navegador de ajuda"
 
-#: ../app/widgets/gimphelp.c:372
+#: ../app/widgets/gimphelp.c:371
 msgid "The GIMP help browser is not available."
 msgstr "O “Navegador de ajuda” do GIMP não está disponível."
 
-#: ../app/widgets/gimphelp.c:373
+#: ../app/widgets/gimphelp.c:372
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -28344,47 +28344,47 @@ msgstr ""
 "alternativa, pode usar o seu tradicional navegador da Internet para "
 "consultar as páginas de ajuda."
 
-#: ../app/widgets/gimphelp.c:419
+#: ../app/widgets/gimphelp.c:411
 msgid "Help browser doesn't start"
 msgstr "O navegador de ajuda não iniciou"
 
-#: ../app/widgets/gimphelp.c:420
+#: ../app/widgets/gimphelp.c:412
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Não foi possível iniciar o complemento “Navegador de ajuda” do GIMP."
 
-#: ../app/widgets/gimphelp.c:422
+#: ../app/widgets/gimphelp.c:414
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Em alternativa, pode usar o navegador da Internet para consultar as páginas "
 "de ajuda."
 
-#: ../app/widgets/gimphelp.c:448
+#: ../app/widgets/gimphelp.c:440
 msgid "Use _Web Browser"
 msgstr "Usar o _navegador da Internet"
 
-#: ../app/widgets/gimphelp.c:793
+#: ../app/widgets/gimphelp.c:776
 msgid "GIMP user manual is missing"
 msgstr "Falta o manual de utilizador do GIMP"
 
-#: ../app/widgets/gimphelp.c:809
+#: ../app/widgets/gimphelp.c:792
 msgid "The GIMP user manual is not installed in your language."
 msgstr "O manual de utilizador do GIMP no seu idioma não está instalado."
 
-#: ../app/widgets/gimphelp.c:820
+#: ../app/widgets/gimphelp.c:803
 msgid "Read Selected _Language"
 msgstr "Ler _idioma selecionado"
 
-#: ../app/widgets/gimphelp.c:824
+#: ../app/widgets/gimphelp.c:807
 msgid "Available manuals..."
 msgstr "Manuais disponíveis…"
 
-#: ../app/widgets/gimphelp.c:836
+#: ../app/widgets/gimphelp.c:819
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
 msgstr "Pode selecionar um manual noutro idioma ou ler a versão online."
 
-#: ../app/widgets/gimphelp.c:842
+#: ../app/widgets/gimphelp.c:825
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -28392,7 +28392,7 @@ msgstr ""
 "Pode instalar o pacote adicional de ajuda ou alterar as preferências para "
 "usar a versão online."
 
-#: ../app/widgets/gimphelp.c:847
+#: ../app/widgets/gimphelp.c:830
 msgid "Read _Online"
 msgstr "_Ler na Internet"
 
