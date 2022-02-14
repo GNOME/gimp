@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-11 17:00+0000\n"
-"PO-Revision-Date: 2022-02-11 23:28+0000\n"
+"POT-Creation-Date: 2022-02-12 12:56+0000\n"
+"PO-Revision-Date: 2022-02-14 12:38+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -978,7 +978,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Guardar parâmetros do explorador CML"
 
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
-#: ../plug-ins/common/file-dicom.c:1557 ../plug-ins/common/file-mng.c:873
+#: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
 #: ../plug-ins/common/file-raw-data.c:1117
@@ -2160,11 +2160,11 @@ msgstr "A sintaxe de transferência %s não é suportada pelo GIMP."
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr "%s não é suportada pelo GIMP em combinação com amostras por pixel: %d"
 
-#: ../plug-ins/common/file-dicom.c:1522
+#: ../plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
 msgstr "Não é possível guardar imagens com canal alfa."
 
-#: ../plug-ins/common/file-dicom.c:1541 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1543 ../plug-ins/common/file-ps.c:1318
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -4458,12 +4458,12 @@ msgid "_Write hot spot values"
 msgstr "_Guardar valores de ponto quente"
 
 #: ../plug-ins/common/file-xbm.c:1337 ../plug-ins/common/file-xmc.c:1133
-#: ../plug-ins/file-ico/ico-dialog.c:482
+#: ../plug-ins/file-ico/ico-dialog.c:483
 msgid "Hot spot _X:"
 msgstr "Ponto quente _X:"
 
 #: ../plug-ins/common/file-xbm.c:1345 ../plug-ins/common/file-xmc.c:1147
-#: ../plug-ins/file-ico/ico-dialog.c:495
+#: ../plug-ins/file-ico/ico-dialog.c:496
 msgid "Hot spot _Y:"
 msgstr "Ponto quente _Y:"
 
@@ -5225,22 +5225,22 @@ msgstr "_Navegador de complementos"
 msgid "Display information about plug-ins"
 msgstr "Mostrar informação sobre os complementos"
 
-#: ../plug-ins/common/plugin-browser.c:371
+#: ../plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
 msgstr "Procurar por nome"
 
-#: ../plug-ins/common/plugin-browser.c:385
+#: ../plug-ins/common/plugin-browser.c:387
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d complemento"
 msgstr[1] "%d complementos"
 
-#: ../plug-ins/common/plugin-browser.c:394
+#: ../plug-ins/common/plugin-browser.c:396
 msgid "No matches for your query"
 msgstr "Sem resultados para a sua consulta"
 
-#: ../plug-ins/common/plugin-browser.c:397
+#: ../plug-ins/common/plugin-browser.c:399
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
@@ -6758,16 +6758,20 @@ msgstr "_Para:"
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagem como animação FLIC"
 
-#: ../plug-ins/file-ico/ico-dialog.c:54
+#: ../plug-ins/file-ico/ico-dialog.c:55
+msgid "Windows Cursor"
+msgstr "Cursor do Windows"
+
+#: ../plug-ins/file-ico/ico-dialog.c:55
 msgid "Windows Icon"
 msgstr "Ícone do Windows"
 
 #. Cursor
-#: ../plug-ins/file-ico/ico-dialog.c:75
+#: ../plug-ins/file-ico/ico-dialog.c:76
 msgid "Icon Details"
 msgstr "Detalhes do ícone"
 
-#: ../plug-ins/file-ico/ico-dialog.c:98
+#: ../plug-ins/file-ico/ico-dialog.c:99
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -6775,27 +6779,27 @@ msgstr ""
 "Os ícones grandes e compressão não são suportados por todos os programas. As "
 "aplicações mais antigas poderão não abrir este ficheiro corretamente."
 
-#: ../plug-ins/file-ico/ico-dialog.c:167
+#: ../plug-ins/file-ico/ico-dialog.c:168
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alfa, paleta com 2 cores"
 
-#: ../plug-ins/file-ico/ico-dialog.c:168
+#: ../plug-ins/file-ico/ico-dialog.c:169
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alfa, paleta com 16 cores"
 
-#: ../plug-ins/file-ico/ico-dialog.c:169
+#: ../plug-ins/file-ico/ico-dialog.c:170
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, paleta com 256 cores"
 
-#: ../plug-ins/file-ico/ico-dialog.c:170
+#: ../plug-ins/file-ico/ico-dialog.c:171
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bit alfa, sem paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:171
+#: ../plug-ins/file-ico/ico-dialog.c:172
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bits alfa, sem paleta"
 
-#: ../plug-ins/file-ico/ico-dialog.c:185
+#: ../plug-ins/file-ico/ico-dialog.c:186
 msgid "Compressed (PNG)"
 msgstr "Comprimido (PNG)"
 
@@ -6896,7 +6900,7 @@ msgstr "Vírgula flutuante"
 msgid "JPEG image"
 msgstr "Imagem JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "JPEG"
 msgstr "JPEG (velocidade: ++, compressão: ++++, perda de dados)"
 
@@ -7518,31 +7522,31 @@ msgstr "Falhou a gravação de uma scanline na linha %d"
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escrever páginas com profundidades de bits diferentes é estranho."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1224
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Nenhuma"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1225
 msgid "LZW"
 msgstr "LZW (velocidade: ++, compressão: ++)"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 msgid "Pack Bits"
 msgstr "Pack Bits (velocidade: +++, compressão: +)"
 
 # Não traduzir, “Deflate” é o nome da compressão
-#: ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "Deflate"
 msgstr "Deflate (velocidade: +, compressão: +++)"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax (só para imagens a P/B)"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1231
+#: ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax (só para imagens a P/B)"
 
