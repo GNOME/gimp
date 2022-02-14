@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-10 21:18+0000\n"
-"PO-Revision-Date: 2022-02-11 10:42+0100\n"
+"POT-Creation-Date: 2022-02-13 17:03+0000\n"
+"PO-Revision-Date: 2022-02-13 20:30+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2047,8 +2047,8 @@ msgstr "Izberi kanal na dnu"
 
 #: ../app/actions/channels-actions.c:230
 msgctxt "channels-action"
-msgid "Select _Previous Channel"
-msgstr "Izberi _prejšnji kanal"
+msgid "Select _Previous Channels"
+msgstr "Izberi _prejšnje kanale"
 
 #: ../app/actions/channels-actions.c:231
 msgctxt "channels-action"
@@ -3628,8 +3628,8 @@ msgstr "240 s"
 #: ../app/widgets/gimpcontrollereditor.c:661
 #: ../app/widgets/gimpcontrollerlist.c:567
 #: ../app/widgets/gimpdeviceeditor.c:543 ../app/widgets/gimpdnd-xds.c:228
-#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:447
-#: ../app/widgets/gimphelp.c:796 ../app/widgets/gimpiconpicker.c:484
+#: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:439
+#: ../app/widgets/gimphelp.c:779 ../app/widgets/gimpiconpicker.c:484
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:712
 msgid "_Cancel"
 msgstr "Pre_kliči"
@@ -19337,7 +19337,7 @@ msgstr "Izbrana plast: »%s«"
 msgid "pixels"
 msgstr "slikovnih točk"
 
-#: ../app/display/gimpstatusbar.c:447
+#: ../app/display/gimpstatusbar.c:472
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Prekliči <i>%s</i>"
@@ -21738,12 +21738,12 @@ msgstr ""
 "Klic procedure »%s« ima vrednost »%s« za argument »%s« (#%d, vrsta %s). Ta "
 "vrednost je zunaj dovoljenega obsega."
 
-#: ../app/pdb/gimpprocedure.c:1022
+#: ../app/pdb/gimpprocedure.c:1023
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Procedura »%s« je vrnila neveljaven niz UTF-8 za argument »%s«."
 
-#: ../app/pdb/gimpprocedure.c:1032
+#: ../app/pdb/gimpprocedure.c:1033
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -21780,8 +21780,8 @@ msgstr "2D-preoblikovanje"
 msgid "2D Transforming"
 msgstr "2D-preoblikovanje"
 
-#: ../app/pdb/pdb-cmds.c:1122 ../app/pdb/pdb-cmds.c:1166
-#: ../app/pdb/pdb-cmds.c:1208
+#: ../app/pdb/pdb-cmds.c:1115 ../app/pdb/pdb-cmds.c:1159
+#: ../app/pdb/pdb-cmds.c:1201
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Podatkovna oznaka »%s« ni kanonski identifikator"
@@ -26074,31 +26074,31 @@ msgid "Grayscale"
 msgstr "Sivinsko"
 
 #: ../app/tools/tools-enums.c:277
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "Focal length"
 msgstr "Goriščna razdalja"
 
 #: ../app/tools/tools-enums.c:278
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to image)"
 msgstr "VIdno polje (relativno na sliko)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "FOV (image)"
 msgstr "Vidno polje (slika)"
 
 #: ../app/tools/tools-enums.c:282
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to item)"
 msgstr "Vidno polje (relativno na element)"
 
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
-msgctxt "3-dtrasnform-lens-mode"
+msgctxt "3-dtransform-lens-mode"
 msgid "FOV (item)"
 msgstr "VIdno polje (element)"
 
@@ -27900,15 +27900,15 @@ msgstr "Spremeni barvo ozadja mreže"
 msgid "_Background color:"
 msgstr "Barva _ozadja:"
 
-#: ../app/widgets/gimphelp.c:371
+#: ../app/widgets/gimphelp.c:370
 msgid "Help browser is missing"
 msgstr "Brskalnik pomoči manjka"
 
-#: ../app/widgets/gimphelp.c:372
+#: ../app/widgets/gimphelp.c:371
 msgid "The GIMP help browser is not available."
 msgstr "Brskalnik pomoči GIMP ni na voljo."
 
-#: ../app/widgets/gimphelp.c:373
+#: ../app/widgets/gimphelp.c:372
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation. "
 "You may instead use the web browser for reading the help pages."
@@ -27916,41 +27916,41 @@ msgstr ""
 "Očitno v vaši namestivi manjka vtičnik brskalnika pomoči GIMP. Namesto tega "
 "lahko strani pomoči prebirate s pomočjo svojega spletnega brskalnika."
 
-#: ../app/widgets/gimphelp.c:419
+#: ../app/widgets/gimphelp.c:411
 msgid "Help browser doesn't start"
 msgstr "Brskalnik pomoči se ne zažene."
 
-#: ../app/widgets/gimphelp.c:420
+#: ../app/widgets/gimphelp.c:412
 msgid "Could not start the GIMP help browser plug-in."
 msgstr "Vtičnika brskalnika pomoči GIMP ni mogoče zagnati."
 
-#: ../app/widgets/gimphelp.c:422
+#: ../app/widgets/gimphelp.c:414
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Namesto tega lahko strani pomoči prebirate s pomočjo svojega spletnega "
 "brskalnika."
 
-#: ../app/widgets/gimphelp.c:448
+#: ../app/widgets/gimphelp.c:440
 msgid "Use _Web Browser"
 msgstr "Uporabi spletni _brskalnik"
 
-#: ../app/widgets/gimphelp.c:793
+#: ../app/widgets/gimphelp.c:776
 msgid "GIMP user manual is missing"
 msgstr "Uporabniški priročnik za GIMP manjka"
 
-#: ../app/widgets/gimphelp.c:809
+#: ../app/widgets/gimphelp.c:792
 msgid "The GIMP user manual is not installed in your language."
 msgstr "Uporabniški priročnik za GIMP v vašem jeziku ni nameščen."
 
-#: ../app/widgets/gimphelp.c:820
+#: ../app/widgets/gimphelp.c:803
 msgid "Read Selected _Language"
 msgstr "Beri v izbranem _jeziku"
 
-#: ../app/widgets/gimphelp.c:824
+#: ../app/widgets/gimphelp.c:807
 msgid "Available manuals..."
 msgstr "Razpoložljivi priročniki ..."
 
-#: ../app/widgets/gimphelp.c:836
+#: ../app/widgets/gimphelp.c:819
 msgid ""
 "You may either select a manual in another language or read the online "
 "version."
@@ -27958,7 +27958,7 @@ msgstr ""
 "Lahko izberete priročnik v drugem jeziku ali preberete njegovo spletno "
 "različico."
 
-#: ../app/widgets/gimphelp.c:842
+#: ../app/widgets/gimphelp.c:825
 msgid ""
 "You may either install the additional help package or change your "
 "preferences to use the online version."
@@ -27966,7 +27966,7 @@ msgstr ""
 "Namestite lahko dodaten paket pomoči ali pa spremenite nastavitve, da boste "
 "lahko uporabljali spletno različico."
 
-#: ../app/widgets/gimphelp.c:847
+#: ../app/widgets/gimphelp.c:830
 msgid "Read _Online"
 msgstr "P_reberi na spletu"
 
