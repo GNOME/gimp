@@ -1788,7 +1788,7 @@ layers_opacity_cmd_callback (GimpAction *action,
       opacity = action_select_value (select_type,
                                      gimp_layer_get_opacity (iter->data),
                                      0.0, 1.0, 1.0,
-                                     1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
+                                     1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
       gimp_layer_set_opacity (iter->data, opacity, push_undo);
     }
 
@@ -1842,7 +1842,7 @@ layers_mode_cmd_callback (GimpAction *action,
       index = layers_mode_index (layer_mode, modes, n_modes);
       index = action_select_value (select_type,
                                    index, 0, n_modes - 1, 0,
-                                   0.0, 1.0, 1.0, 0.0, FALSE);
+                                   0.0, 1.0, 1.0, 0.0, FALSE, FALSE);
       layer_mode = modes[index];
       g_free (modes);
 

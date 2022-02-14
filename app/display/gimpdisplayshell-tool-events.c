@@ -17,6 +17,8 @@
 
 #include "config.h"
 
+#include <math.h>
+
 #include <gegl.h>
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
@@ -36,6 +38,7 @@
 #include "core/gimpimage-pick-item.h"
 #include "core/gimpitem.h"
 
+#include "widgets/gimpaction.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
 #include "widgets/gimpcontrollermouse.h"
@@ -45,6 +48,7 @@
 #include "widgets/gimpdevicemanager.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpenumaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -137,6 +141,10 @@ static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell 
                                                                const GimpCoords  *display_coords,
                                                                GimpCoords        *image_coords,
                                                                gboolean          *update_software_cursor);
+
+static void       gimp_display_shell_activate_enum_action     (GimpUIManager     *manager,
+                                                               const gchar       *action_desc,
+                                                               gint               value);
 
 
 /*  public functions  */
@@ -508,22 +516,35 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (gdk_event_triggers_context_menu (event))
           {
-            GimpUIManager *ui_manager;
-            const gchar   *ui_path;
+            GimpUIManager   *ui_manager;
+            const gchar     *ui_path;
+            GdkModifierType  mod_state;
 
-            ui_manager = tool_manager_get_popup_active (gimp,
-                                                        &image_coords, state,
-                                                        display,
-                                                        &ui_path);
+            mod_state = state & gimp_get_all_modifiers_mask ();
 
-            if (! ui_manager)
+            /* Menu only with a right-click and no modifiers. */
+            if (mod_state == 0)
               {
-                ui_manager = shell->popup_manager;
-                ui_path    = "/dummy-menubar/image-popup";
-              }
+                ui_manager = tool_manager_get_popup_active (gimp,
+                                                            &image_coords, state,
+                                                            display,
+                                                            &ui_path);
 
-            gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path, event,
-                                                 NULL, NULL);
+                if (! ui_manager)
+                  {
+                    ui_manager = shell->popup_manager;
+                    ui_path    = "/dummy-menubar/image-popup";
+                  }
+
+                gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path, event,
+                                                     NULL, NULL);
+              }
+            else if (mod_state == GDK_MOD1_MASK)
+              {
+                shell->mod1_settings = TRUE;
+                gimp_display_shell_start_scrolling (shell, event, state,
+                                                    bevent->x, bevent->y);
+              }
           }
         else if (bevent->button == 1)
           {
@@ -703,7 +724,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 3)
           {
-            /* nop */
+            if (shell->mod1_settings)
+              gimp_display_shell_stop_scrolling (shell, event);
           }
         else
           {
@@ -1624,7 +1646,8 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
   shell->rotate_drag_angle = shell->rotate_angle;
   shell->scaling           = (state & gimp_get_toggle_behavior_mask ()) ? TRUE : FALSE;
-  shell->layer_picking     = (state & GDK_MOD1_MASK) ? TRUE : FALSE;
+  shell->layer_picking     = ! gdk_event_triggers_context_menu (event) && (state & GDK_MOD1_MASK) ? TRUE : FALSE;
+  shell->mod1_settings     = gdk_event_triggers_context_menu (event) && (state & GDK_MOD1_MASK) ? TRUE : FALSE;
 
   if (shell->rotating)
     {
@@ -1679,6 +1702,10 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
           shell->picked_layer = layer;
         }
     }
+  else if (shell->mod1_settings == TRUE)
+    {
+      /* no-op. */
+    }
   else
     gimp_display_shell_set_override_cursor (shell,
                                             (GimpCursorType) GDK_FLEUR);
@@ -1701,6 +1728,7 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   shell->rotate_drag_angle = 0.0;
   shell->scaling           = FALSE;
   shell->layer_picking     = FALSE;
+  shell->mod1_settings     = FALSE;
 
   /* We may have ungrabbed the pointer when space was released while
    * mouse was down, to be able to catch a GDK_BUTTON_RELEASE event.
@@ -1739,6 +1767,36 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
   else if (shell->layer_picking)
     {
       /* Do nothing. We only pick the layer on click. */
+    }
+  else if (shell->mod1_settings == TRUE)
+    {
+      GimpDisplay *display     = shell->display;
+      Gimp        *gimp        = gimp_display_get_gimp (display);
+      GimpTool    *active_tool = tool_manager_get_active (gimp);
+      const gchar *action;
+      gint         size;
+
+      /* Size in image pixels: distance between start and current
+       * position.
+       */
+      size = (gint) (sqrt (pow ((x - shell->scroll_start_x) / shell->scale_x, 2) +
+                           pow ((y - shell->scroll_start_y) / shell->scale_y, 2)) * 2.0);
+
+      /* TODO: different logics with "lock brush to view". */
+      /* TODO 2: scale aware? */
+      action = gimp_tool_control_get_action_size (active_tool->control);
+
+      if (action)
+        {
+          GimpImageWindow *window  = gimp_display_shell_get_window (shell);
+          GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+          /* Special trick with these enum actions. If using any
+           * positive value, we get the GIMP_ACTION_SELECT_SET behavior
+           * which sets to the given value.
+           */
+          gimp_display_shell_activate_enum_action (manager, action, size);
+        }
     }
   else
     {
@@ -2175,4 +2233,34 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
             *update_software_cursor = TRUE;
         }
     }
+}
+
+static void
+gimp_display_shell_activate_enum_action (GimpUIManager *manager,
+                                         const gchar   *action_desc,
+                                         gint           value)
+{
+  gchar *group_name;
+  gchar *action_name;
+
+  group_name  = g_strdup (action_desc);
+  action_name = strchr (group_name, '/');
+
+  if (action_name)
+    {
+      GimpAction *action;
+
+      *action_name++ = '\0';
+
+      action = gimp_ui_manager_find_action (manager, group_name, action_name);
+
+      if (GIMP_IS_ENUM_ACTION (action) &&
+          GIMP_ENUM_ACTION (action)->value_variable)
+        {
+          gimp_action_emit_activate (action,
+                                     g_variant_new_int32 (value));
+        }
+    }
+
+  g_free (group_name);
 }
