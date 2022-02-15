@@ -541,7 +541,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               }
             else if (mod_state == GDK_MOD1_MASK)
               {
-                shell->mod1_settings = TRUE;
                 gimp_display_shell_start_scrolling (shell, event, state,
                                                     bevent->x, bevent->y);
               }
@@ -1099,15 +1098,21 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK &&
-            shell->picked_layer)
+        if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK)
           {
-            GimpStatusbar *statusbar;
+            if (shell->picked_layer)
+              {
+                GimpStatusbar *statusbar;
 
-            statusbar = gimp_display_shell_get_statusbar (shell);
-            gimp_statusbar_pop_temp (statusbar);
+                statusbar = gimp_display_shell_get_statusbar (shell);
+                gimp_statusbar_pop_temp (statusbar);
 
-            shell->picked_layer = NULL;
+                shell->picked_layer = NULL;
+              }
+            else if (shell->mod1_settings)
+              {
+                gimp_display_shell_stop_scrolling (shell, event);
+              }
           }
 
         if ((state & GDK_BUTTON1_MASK)      &&
