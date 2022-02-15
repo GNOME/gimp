@@ -2697,7 +2697,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
                             const gchar **version_string,
                             gchar       **version_reason)
 {
-  GList       *layers;
+  GList       *items;
   GList       *list;
   GList       *reasons = NULL;
   gint         version = 0;  /* default to oldest */
@@ -2715,9 +2715,8 @@ gimp_image_get_xcf_version (GimpImage    *image,
   if (gimp_image_get_colormap (image))
     version = 1;
 
-  layers = gimp_image_get_layer_list (image);
-
-  for (list = layers; list; list = g_list_next (list))
+  items = gimp_image_get_layer_list (image);
+  for (list = items; list; list = g_list_next (list))
     {
       GimpLayer *layer = GIMP_LAYER (list->data);
 
@@ -2836,10 +2835,44 @@ gimp_image_get_xcf_version (GimpImage    *image,
                                              "added in %s"), "GIMP 2.10"));
               version = MAX (13, version);
             }
+
+          if (gimp_item_get_lock_position (GIMP_ITEM (layer)))
+            {
+              ADD_REASON (g_strdup_printf (_("Position locks on layer groups were added in %s"),
+                                           "GIMP 3.0"));
+              version = MAX (17, version);
+            }
+
+          if (gimp_layer_get_lock_alpha (layer))
+            {
+              ADD_REASON (g_strdup_printf (_("Alpha channel locks on layer groups were added in %s"),
+                                           "GIMP 3.0"));
+              version = MAX (17, version);
+            }
+        }
+
+      if (gimp_item_get_lock_visibility (GIMP_ITEM (layer)))
+        {
+          ADD_REASON (g_strdup_printf (_("Visibility locks were added in %s"),
+                                       "GIMP 3.0"));
+          version = MAX (17, version);
         }
     }
+  g_list_free (items);
 
-  g_list_free (layers);
+  items = gimp_image_get_channel_list (image);
+  for (list = items; list; list = g_list_next (list))
+    {
+      GimpChannel *channel = GIMP_CHANNEL (list->data);
+
+      if (gimp_item_get_lock_visibility (GIMP_ITEM (channel)))
+        {
+          ADD_REASON (g_strdup_printf (_("Visibility locks were added in %s"),
+                                       "GIMP 3.0"));
+          version = MAX (17, version);
+        }
+    }
+  g_list_free (items);
 
   /* version 6 for new metadata has been dropped since they are
    * saved through parasites, which is compatible with older versions.
@@ -2960,6 +2993,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 14:
     case 15:
     case 16:
+    case 17:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;

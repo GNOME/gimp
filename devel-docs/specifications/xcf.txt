@@ -194,6 +194,11 @@ Since GIMP 3.0.0, released on TODO.
 - New PROP_ITEM_SET and PROP_ITEM_SET_ITEM to store sets of layers,
   channels or paths.
 
+Version 17:
+Since GIMP 3.0.0, released on TODO.
+- New PROP_LOCK_VISIBILITY on layers and channels.
+- PROP_LOCK_POSITION and PROP_LOCK_ALPHA can now be set on layer groups.
+
 1. BASIC CONCEPTS
 =================
 
@@ -669,6 +674,9 @@ PROP_LOCK_POSITION (since GIMP 2.10.0, commit d4933b30526, editing state)
 
   PROP_LOCK_POSITION specifies whether the layer, channel or path's
   position is locked, i.e. cannot be transformed (translation, etc.).
+
+  Up to XCF 16, this could not be set on layer groups. It is possible
+  since XCF 17.
 
 PROP_LOCK_VISIBILITY (since version 3, editing state)
   uint32  42         Type identification
@@ -1373,6 +1381,9 @@ PROP_LOCK_ALPHA (editing state)
 
   PROP_LOCK_ALPHA prevents all drawing tools in GIMP from increasing the alpha
   of any pixel in the layer. Decreasing the alpha is possible.
+
+  Up to XCF 16, this could not be set on layer groups. It is possible
+  since XCF 17.
 
 PROP_MODE (essential)
   uint32  7        Type identification
