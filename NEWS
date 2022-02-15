@@ -37,7 +37,11 @@ Core:
     items from the visibility switch.
   - New internal API gimp_widget_blink_rect() to blink only specific
     area of a widget, which may be useful for various notification-type
-    exchanges.
+    exchanges. This is used in particular to blink lock cells in
+    GimpItemTreeView in order to point attention to the reason why an
+    action is forbidden (e.g. when trying to paint on a layer with
+    pixels locked, a message would be shown on status bar and the "Lock
+    pixels" icon would blink).
   - XCF version 16 with support of item sets.
   - Wayland:
     * Clean some popup code out of gtk_menu_popup() which is deprecated
@@ -62,6 +66,12 @@ Core:
   - Block the statusbar from needlessly triggering full canvas redraws
     by not propagating its resize requests. This is quite a useful
     optimization for macOS in particular (but any OS in general too).
+  - Alpha and position locks can now be set on layer groups. Alpha lock
+    on groups mostly works like pixel lock (except for the alpha channel
+    only). Position lock work both ways by forbidding moving child
+    layers but also parent layers.
+  - XCF version 17 with support of visibility locks, as well as ability
+    to set alpha or position locks on layer groups.
 
 User Interface:
 
