@@ -220,6 +220,8 @@ static void    gimp_layer_srgb_to_pixel         (GimpPickable       *pickable,
                                                  const Babl         *format,
                                                  gpointer            pixel);
 
+static gboolean gimp_layer_real_is_alpha_locked (GimpLayer          *layer,
+                                                 GimpLayer         **locked_layer);
 static void       gimp_layer_real_translate     (GimpLayer          *layer,
                                                  gint                offset_x,
                                                  gint                offset_y);
@@ -468,6 +470,7 @@ gimp_layer_class_init (GimpLayerClass *klass)
   klass->apply_mask_changed           = NULL;
   klass->edit_mask_changed            = NULL;
   klass->show_mask_changed            = NULL;
+  klass->is_alpha_locked              = gimp_layer_real_is_alpha_locked;
   klass->translate                    = gimp_layer_real_translate;
   klass->scale                        = gimp_layer_real_scale;
   klass->resize                       = gimp_layer_real_resize;
@@ -1488,7 +1491,8 @@ gimp_layer_get_active_components (GimpDrawable *drawable,
   /*  first copy the image active channels  */
   gimp_image_get_active_array (image, active);
 
-  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
+  if (gimp_drawable_has_alpha (drawable) &&
+      gimp_layer_is_alpha_locked (layer, NULL))
     active[babl_format_get_n_components (format) - 1] = FALSE;
 }
 
@@ -1499,7 +1503,8 @@ gimp_layer_get_active_mask (GimpDrawable *drawable)
   GimpImage         *image = gimp_item_get_image (GIMP_ITEM (drawable));
   GimpComponentMask  mask  = gimp_image_get_active_mask (image);
 
-  if (gimp_drawable_has_alpha (drawable) && layer->lock_alpha)
+  if (gimp_drawable_has_alpha (drawable) &&
+      gimp_layer_is_alpha_locked (layer, NULL))
     mask &= ~GIMP_COMPONENT_MASK_ALPHA;
 
   return mask;
@@ -1625,6 +1630,26 @@ gimp_layer_srgb_to_pixel (GimpPickable  *pickable,
   GimpImage *image = gimp_item_get_image (GIMP_ITEM (pickable));
 
   gimp_pickable_srgb_to_pixel (GIMP_PICKABLE (image), color, format, pixel);
+}
+
+static gboolean
+gimp_layer_real_is_alpha_locked (GimpLayer  *layer,
+                                 GimpLayer **locked_layer)
+{
+  GimpItem *parent = gimp_item_get_parent (GIMP_ITEM (layer));
+
+  if (layer->lock_alpha)
+    {
+      if (locked_layer)
+        *locked_layer = layer;
+    }
+  else if (parent &&
+           gimp_layer_is_alpha_locked (GIMP_LAYER (parent), locked_layer))
+    {
+      return TRUE;
+    }
+
+  return layer->lock_alpha;
 }
 
 static void
@@ -2899,12 +2924,17 @@ gimp_layer_can_lock_alpha (GimpLayer *layer)
 {
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
-    return FALSE;
-
   return TRUE;
 }
 
+gboolean
+gimp_layer_is_alpha_locked (GimpLayer  *layer,
+                            GimpLayer **locked_layer)
+{
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+
+  return GIMP_LAYER_GET_CLASS (layer)->is_alpha_locked (layer, locked_layer);
+}
 
 /*  protected functions  */
 

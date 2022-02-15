@@ -87,6 +87,9 @@ struct _GimpLayerClass
   void          (* show_mask_changed)         (GimpLayer              *layer);
 
   /*  virtual functions  */
+  gboolean      (* is_alpha_locked)           (GimpLayer              *layer,
+                                               GimpLayer             **locked_layer);
+
   void          (* translate)                 (GimpLayer              *layer,
                                                gint                    offset_x,
                                                gint                    offset_y);
@@ -237,6 +240,8 @@ void            gimp_layer_set_lock_alpha      (GimpLayer            *layer,
                                                 gboolean              push_undo);
 gboolean        gimp_layer_get_lock_alpha      (GimpLayer            *layer);
 gboolean        gimp_layer_can_lock_alpha      (GimpLayer            *layer);
+gboolean        gimp_layer_is_alpha_locked     (GimpLayer            *layer,
+                                                GimpLayer           **locked_layer);
 
 
 /*  protected  */

@@ -915,24 +915,27 @@ gimp_paint_tool_check_alpha (GimpPaintTool  *paint_tool,
 
   if (klass->is_alpha_only && klass->is_alpha_only (paint_tool, drawable))
     {
+      GimpLayer *locked_layer = NULL;
+
       if (! gimp_drawable_has_alpha (drawable))
         {
           g_set_error_literal (
             error, GIMP_ERROR, GIMP_FAILED,
-            _("The active layer does not have an alpha channel."));
+            _("The selected drawable does not have an alpha channel."));
 
           return FALSE;
         }
 
         if (GIMP_IS_LAYER (drawable) &&
-            gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)))
+            gimp_layer_is_alpha_locked (GIMP_LAYER (drawable),
+                                        &locked_layer))
         {
           g_set_error_literal (
             error, GIMP_ERROR, GIMP_FAILED,
-            _("The active layer's alpha channel is locked."));
+            _("The selected layer's alpha channel is locked."));
 
           if (error)
-            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+            gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (locked_layer));
 
           return FALSE;
         }

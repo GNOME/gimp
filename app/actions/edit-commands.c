@@ -568,9 +568,11 @@ static gboolean
 check_drawable_alpha (GimpDrawable *drawable,
                       gpointer      data)
 {
+  GimpLayer *locked_layer = NULL;
+
   if (gimp_drawable_has_alpha (drawable) &&
       GIMP_IS_LAYER (drawable)           &&
-      gimp_layer_get_lock_alpha (GIMP_LAYER (drawable)))
+      gimp_layer_is_alpha_locked (GIMP_LAYER (drawable), &locked_layer))
     {
       Gimp        *gimp    = action_data_get_gimp    (data);
       GimpDisplay *display = action_data_get_display (data);
@@ -581,7 +583,7 @@ check_drawable_alpha (GimpDrawable *drawable,
             gimp, G_OBJECT (display), GIMP_MESSAGE_WARNING,
             _("A selected layer's alpha channel is locked."));
 
-          gimp_tools_blink_lock_box (gimp, GIMP_ITEM (drawable));
+          gimp_tools_blink_lock_box (gimp, GIMP_ITEM (locked_layer));
         }
 
       return FALSE;
