@@ -73,6 +73,52 @@
   </provides>
 
   <releases>
+    <release version="2.99.10" date="TODO" type="development">
+      <description>
+        <_p>
+        GIMP 2.99.10 is a notable development release in the 2.99 series, featuring many changes.
+        Let's mention in particular:
+        </_p>
+        <ul>
+          <_li>
+          "Linked layers" concept superseded by new "Layer set" concept
+          </_li>
+          <_li>
+          Lock icons in item dockables (Layers, Channels, Paths) moved next to the visibility (eye) icon
+          </_li>
+          <_li>
+          Alt-click on visibility and lock icons in item dockables massively toggles on same level
+          </_li>
+          <_li>
+          New checkbox to enable or disable dynamics in paint tools' options (replacing "Dynamics Off" dynamics)
+          </_li>
+          <_li>
+          Improved support for Wayland and macOS Big Sur (and newer)
+          </_li>
+          <_li>
+          "Fill by line art detection" in Bucket Fill tool has a new option
+          </_li>
+          <_li>
+          Channels and paths multi-selectable with part of relevant actions working
+          </_li>
+          <_li>
+          Various file format support improvements, in particular to PSD, JPEG-XL and HEIF
+          </_li>
+          <_li>
+          New support of Microsoft Windows Cursor file format (.cur files)
+          </_li>
+          <_li>
+          Removed KDE and GNOME screenshot portals in favor of Freedesktop one
+          </_li>
+          <_li>
+          Windows screenshot implementation now has an "Include mouse pointer" option
+          </_li>
+          <_li>
+          New and modified libgimp API for plug-in developers
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.8" date="2021-10-17" type="development">
       <description>
         <_p>
