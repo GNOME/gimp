@@ -1438,6 +1438,18 @@ xcf_load_layer_props (XcfInfo    *info,
           }
           break;
 
+        case PROP_LOCK_VISIBILITY:
+          {
+            gboolean lock_visibility;
+
+            xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
+
+            if (gimp_item_can_lock_visibility (GIMP_ITEM (*layer)))
+              gimp_item_set_lock_visibility (GIMP_ITEM (*layer),
+                                             lock_visibility, FALSE);
+          }
+          break;
+
         case PROP_APPLY_MASK:
           xcf_read_int32 (info, (guint32 *) apply_mask, 1);
           break;
@@ -1787,6 +1799,7 @@ xcf_check_layer_props (XcfInfo    *info,
         case PROP_LOCK_CONTENT:
         case PROP_LOCK_ALPHA:
         case PROP_LOCK_POSITION:
+        case PROP_LOCK_VISIBILITY:
         case PROP_APPLY_MASK:
         case PROP_EDIT_MASK:
         case PROP_SHOW_MASK:
@@ -1943,6 +1956,18 @@ xcf_load_channel_props (XcfInfo      *info,
             if (gimp_item_can_lock_position (GIMP_ITEM (*channel)))
               gimp_item_set_lock_position (GIMP_ITEM (*channel),
                                            lock_position, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_VISIBILITY:
+          {
+            gboolean lock_visibility;
+
+            xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
+
+            if (gimp_item_can_lock_visibility (GIMP_ITEM (*channel)))
+              gimp_item_set_lock_visibility (GIMP_ITEM (*channel),
+                                             lock_visibility, FALSE);
           }
           break;
 

@@ -67,6 +67,7 @@ typedef enum
   PROP_SAMPLE_POINTS      = 39,
   PROP_ITEM_SET           = 40,
   PROP_ITEM_SET_ITEM      = 41,
+  PROP_LOCK_VISIBILITY    = 42,
 } PropType;
 
 typedef enum

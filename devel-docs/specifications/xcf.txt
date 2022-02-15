@@ -670,6 +670,15 @@ PROP_LOCK_POSITION (since GIMP 2.10.0, commit d4933b30526, editing state)
   PROP_LOCK_POSITION specifies whether the layer, channel or path's
   position is locked, i.e. cannot be transformed (translation, etc.).
 
+PROP_LOCK_VISIBILITY (since version 3, editing state)
+  uint32  42         Type identification
+  uint32  4          Four bytes of payload
+  uint32  locked     1 if visibility is locked; 0 if not
+
+  PROP_LOCK_VISIBILITY prevents the visibility to be switched (either
+  explicitly for the item or when using features changing visibility to
+  a range of items).
+
 PROP_OPACITY (essential)
   uint32  6          Type identification
   uint32  4          Four bytes of payload
@@ -1109,8 +1118,9 @@ Channel properties
 The following properties are found only in the property list of
 channel structures. Additionally the list can also contain the
 properties: PROP_COLOR_TAG, PROP_END, PROP_FLOAT_OPACITY, PROP_LINKED,
-PROP_LOCK_CONTENT, PROP_LOCK_POSITION, PROP_OPACITY, PROP_PARASITES,
-PROP_TATTOO and PROP_VISIBLE, defined in chapter 2.
+PROP_LOCK_CONTENT, PROP_LOCK_POSITION, PROP_LOCK_VISIBILITY,
+PROP_OPACITY, PROP_PARASITES, PROP_TATTOO and PROP_VISIBLE, defined in
+chapter 2.
 
 PROP_ACTIVE_CHANNEL (editing state)
   uint32  3        Type identification
@@ -1205,8 +1215,9 @@ Layer properties
 The following properties are found only in the property list of layer
 structures. Additionally the list can also contain the properties:
 PROP_COLOR_TAG, PROP_END, PROP_FLOAT_OPACITY, PROP_LINKED,
-PROP_LOCK_CONTENT, PROP_LOCK_POSITION, PROP_OPACITY, PROP_PARASITES,
-PROP_TATTOO and PROP_VISIBLE, defined in chapter 2.
+PROP_LOCK_CONTENT, PROP_LOCK_POSITION, PROP_LOCK_VISIBILITY,
+PROP_OPACITY, PROP_PARASITES, PROP_TATTOO and PROP_VISIBLE, defined in
+chapter 2.
 
 PROP_ACTIVE_LAYER (editing state)
   uint32  2        Type identification
