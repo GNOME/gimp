@@ -60,7 +60,7 @@ gimp_item_toggle_exclusive_visible (GimpItem    *item,
                               (GimpItemIsEnabledFunc) gimp_item_is_visible,
                               (GimpItemSetFunc)       gimp_item_set_visible,
                               NULL,
-                              (GimpItemIsPropLocked)  gimp_item_is_visibility_locked,
+                              (GimpItemIsPropLocked)  gimp_item_get_lock_visibility,
                               (GimpItemUndoPush)      gimp_image_undo_push_item_visibility,
                               _("Set Item Exclusive Visibility"),
                               GIMP_UNDO_GROUP_ITEM_VISIBILITY,
@@ -79,10 +79,10 @@ gimp_item_toggle_exclusive (GimpItem               *item,
                             gboolean                only_selected,
                             GimpContext            *context)
 {
-  GList       *ancestry;
-  GList       *on;
-  GList       *off;
-  GList       *list;
+  GList *ancestry;
+  GList *on;
+  GList *off;
+  GList *list;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (gimp_item_is_attached (item));

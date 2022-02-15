@@ -130,7 +130,8 @@ static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item,
 static gboolean   gimp_item_real_is_position_locked (GimpItem       *item,
                                                      GimpItem      **locked_item,
                                                      gboolean        check_children);
-static gboolean   gimp_item_real_is_visibility_locked (GimpItem       *item);
+static gboolean gimp_item_real_is_visibility_locked (GimpItem       *item,
+                                                     GimpItem      **locked_item);
 static gboolean   gimp_item_real_bounds             (GimpItem       *item,
                                                      gdouble        *x,
                                                      gdouble        *y,
@@ -514,13 +515,15 @@ gimp_item_real_is_position_locked (GimpItem  *item,
 }
 
 static gboolean
-gimp_item_real_is_visibility_locked (GimpItem *item)
+gimp_item_real_is_visibility_locked (GimpItem  *item,
+                                     GimpItem **locked_item)
 {
-  GimpItem *parent = gimp_item_get_parent (item);
+  /* Unlike other locks, the visibility lock does not propagate from
+   * parents or children.
+   */
 
-  /* Locking visibility of a group item locks all child items. */
-  if (parent && gimp_item_is_visibility_locked (parent))
-    return TRUE;
+  if (GET_PRIVATE (item)->lock_visibility && locked_item)
+    *locked_item = item;
 
   return GET_PRIVATE (item)->lock_visibility;
 }
@@ -2320,7 +2323,7 @@ gimp_item_set_visible (GimpItem *item,
 
   if (gimp_item_get_visible (item) != visible)
     {
-      if (gimp_item_is_visibility_locked (item))
+      if (gimp_item_is_visibility_locked (item, NULL))
         {
           return FALSE;
         }
@@ -2591,11 +2594,12 @@ gimp_item_can_lock_visibility (GimpItem *item)
 }
 
 gboolean
-gimp_item_is_visibility_locked (GimpItem *item)
+gimp_item_is_visibility_locked (GimpItem  *item,
+                                GimpItem **locked_item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return GIMP_ITEM_GET_CLASS (item)->is_visibility_locked (item);
+  return GIMP_ITEM_GET_CLASS (item)->is_visibility_locked (item, locked_item);
 }
 
 gboolean
