@@ -59,6 +59,9 @@ Core:
     it was meant to work, but since the report has existed for more than
     13 years and I'm not sure it has ever worked, it's worth writing it
     here.
+  - Block the statusbar from needlessly triggering full canvas redraws
+    by not propagating its resize requests. This is quite a useful
+    optimization for macOS in particular (but any OS in general too).
 
 User Interface:
 
@@ -144,6 +147,9 @@ Plug-ins:
     * Windows: cursor capture option now available.
   - CUR: added load and export support for Microsoft Windows cursor
     (.cur) files.
+  - HEIF: bit depth heuristic removed for the settings. The plug-in just
+    stores and set back the last used values as for other settings
+    instead of trying to be "clever".
 
 Build:
 
@@ -212,9 +218,12 @@ Documentation:
     devel-docs/.
 
 Translations:
-  - Updated Basque, British English, Catalan, Chinese (China), Hungarian,
-    Italian, Kabyle, Latvian, Lithuanian, Polish, Portuguese, Slovenian,
-    Spanish, Swedish, Ukrainian translations
+
+  - 18 translations were updated: Basque, British English, Catalan,
+    Chinese (China), Danish, German, Hungarian, Italian, Kabyle,
+    Latvian, Lithuanian, Polish, Portuguese, Russian, Slovenian,
+    Spanish, Swedish, Ukrainian.
+
 
 Overview of Changes from GIMP 2.99.6 to GIMP 2.99.8
 ===================================================
