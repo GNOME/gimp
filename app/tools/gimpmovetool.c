@@ -363,7 +363,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
             for (iter = selected_items; iter; iter = iter->next)
               if (gimp_item_is_position_locked (iter->data, &locked_item))
-              locked_message = _("A selected layers' position is locked.");
+              locked_message = _("A selected layer's position is locked.");
           }
       }
       break;
