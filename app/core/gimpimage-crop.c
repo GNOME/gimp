@@ -122,7 +122,7 @@ gimp_image_crop (GimpImage    *image,
 
       gimp_item_translate (item, -x, -y, TRUE);
 
-      if (crop_layers && ! gimp_item_is_content_locked (item))
+      if (crop_layers && ! gimp_item_is_content_locked (item, NULL))
         {
           gint off_x, off_y;
           gint lx1, ly1, lx2, ly2;

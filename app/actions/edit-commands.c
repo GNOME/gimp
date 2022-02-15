@@ -512,7 +512,7 @@ edit_clear_cmd_callback (GimpAction *action,
 
   for (iter = drawables; iter; iter = iter->next)
     if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)) &&
-        ! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+        ! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
       gimp_drawable_edit_clear (iter->data, action_data_get_context (data));
 
   gimp_image_undo_group_end (image);
@@ -653,7 +653,7 @@ edit_paste (GimpDisplay   *display,
                                     _("Pasted as new layer because the "
                                       "target is a layer group."));
             }
-          else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+          else if (gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
             {
               gimp_message_literal (display->gimp, G_OBJECT (display),
                                     GIMP_MESSAGE_INFO,

@@ -125,7 +125,8 @@ static void       gimp_item_get_property            (GObject        *object,
 static gint64     gimp_item_get_memsize             (GimpObject     *object,
                                                      gint64         *gui_size);
 
-static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item);
+static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item,
+                                                     GimpItem      **locked_item);
 static gboolean   gimp_item_real_is_position_locked (GimpItem       *item);
 static gboolean   gimp_item_real_is_visibility_locked (GimpItem       *item);
 static gboolean   gimp_item_real_bounds             (GimpItem       *item,
@@ -471,12 +472,16 @@ gimp_item_get_memsize (GimpObject *object,
 }
 
 static gboolean
-gimp_item_real_is_content_locked (GimpItem *item)
+gimp_item_real_is_content_locked (GimpItem  *item,
+                                  GimpItem **locked_item)
 {
   GimpItem *parent = gimp_item_get_parent (item);
 
-  if (parent && gimp_item_is_content_locked (parent))
+  if (parent && gimp_item_is_content_locked (parent, locked_item))
     return TRUE;
+
+  if (GET_PRIVATE (item)->lock_content && locked_item)
+    *locked_item = item;
 
   return GET_PRIVATE (item)->lock_content;
 }
@@ -2460,11 +2465,12 @@ gimp_item_can_lock_content (GimpItem *item)
 }
 
 gboolean
-gimp_item_is_content_locked (GimpItem *item)
+gimp_item_is_content_locked (GimpItem  *item,
+                             GimpItem **locked_item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item);
+  return GIMP_ITEM_GET_CLASS (item)->is_content_locked (item, locked_item);
 }
 
 void

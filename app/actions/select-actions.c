@@ -170,7 +170,7 @@ select_actions_update (GimpActionGroup *group,
 
       for (iter = drawables; iter; iter = iter->next)
         {
-          if (gimp_item_is_content_locked (iter->data))
+          if (gimp_item_is_content_locked (iter->data, NULL))
             all_writable = FALSE;
 
           if (gimp_viewable_get_children (iter->data))
@@ -182,7 +182,7 @@ select_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable));
+          writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             children = TRUE;

@@ -311,7 +311,8 @@ gimp_paint_tool_button_press (GimpTool            *tool,
 
   for (iter = drawables; iter; iter = iter->next)
     {
-      GimpDrawable *drawable = iter->data;
+      GimpDrawable *drawable    = iter->data;
+      GimpItem     *locked_item = NULL;
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         {
@@ -322,11 +323,11 @@ gimp_paint_tool_button_press (GimpTool            *tool,
           return;
         }
 
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
         {
           gimp_tool_message_literal (tool, display,
-                                     _("A selected layer's pixels are locked."));
-          gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+                                     _("The selected item's pixels are locked."));
+          gimp_tools_blink_lock_box (display->gimp, locked_item);
           g_list_free (drawables);
 
           return;
@@ -552,7 +553,7 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
           GimpDrawable *drawable = iter->data;
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable))               ||
-              gimp_item_is_content_locked (GIMP_ITEM (drawable))                  ||
+              gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL)            ||
               ! gimp_paint_tool_check_alpha (paint_tool, drawable, display, NULL) ||
               ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
                  config->edit_non_visible))

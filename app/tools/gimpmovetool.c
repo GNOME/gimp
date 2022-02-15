@@ -344,7 +344,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
             if (gimp_item_is_position_locked (selected_items->data))
               locked_message = _("The selected layer's position is locked.");
-            else if (gimp_item_is_content_locked (selected_items->data))
+            else if (gimp_item_is_content_locked (selected_items->data, NULL))
               locked_message = _("The selected layer's pixels are locked.");
           }
         else if (GIMP_IS_CHANNEL (selected_items->data))
@@ -355,7 +355,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
             for (iter = selected_items; iter; iter = iter->next)
               if (! gimp_item_is_position_locked (iter->data) &&
-                  ! gimp_item_is_content_locked (iter->data))
+                  ! gimp_item_is_content_locked (iter->data, NULL))
                 n_items++;
 
             if (n_items == 0)

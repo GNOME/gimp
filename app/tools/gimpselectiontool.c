@@ -558,8 +558,9 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
     case SELECTION_MOVE:
     case SELECTION_MOVE_COPY:
         {
-          GList *drawables = gimp_image_get_selected_drawables (image);
-          GList *iter;
+          GList    *drawables   = gimp_image_get_selected_drawables (image);
+          GimpItem *locked_item = NULL;
+          GList    *iter;
 
           for (iter = drawables; iter; iter = iter->next)
             {
@@ -571,13 +572,13 @@ gimp_selection_tool_check (GimpSelectionTool  *sel_tool,
                   g_list_free (drawables);
                   return FALSE;
                 }
-              else if (gimp_item_is_content_locked (iter->data))
+              else if (gimp_item_is_content_locked (iter->data, &locked_item))
                 {
                   g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                               _("The active layer's pixels are locked."));
+                               _("A selected item's pixels are locked."));
 
                   if (error)
-                    gimp_tools_blink_lock_box (display->gimp, iter->data);
+                    gimp_tools_blink_lock_box (display->gimp, locked_item);
 
                   g_list_free (drawables);
                   return FALSE;

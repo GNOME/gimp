@@ -891,7 +891,7 @@ filters_actions_update (GimpActionGroup *group,
           else
             item = GIMP_ITEM (drawable);
 
-          writable = ! gimp_item_is_content_locked (item);
+          writable = ! gimp_item_is_content_locked (item, NULL);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             writable = FALSE;

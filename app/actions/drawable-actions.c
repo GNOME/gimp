@@ -194,7 +194,7 @@ drawable_actions_update (GimpActionGroup *group,
 
           locked        = gimp_item_get_lock_content (item);
           can_lock      = gimp_item_can_lock_content (item);
-          writable      = ! gimp_item_is_content_locked (item);
+          writable      = ! gimp_item_is_content_locked (item, NULL);
           locked_pos    = gimp_item_get_lock_position (item);
           can_lock_pos  = gimp_item_can_lock_position (item);
           movable       = ! gimp_item_is_position_locked (item);

@@ -284,6 +284,7 @@ gimp_filter_tool_initialize (GimpTool     *tool,
   GimpGuiConfig    *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage        *image       = gimp_display_get_image (display);
   GimpDisplayShell *shell       = gimp_display_get_shell (display);
+  GimpItem         *locked_item = NULL;
   GList            *drawables   = gimp_image_get_selected_drawables (image);
   GimpDrawable     *drawable;
 
@@ -309,12 +310,12 @@ gimp_filter_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("A selected layer's pixels are locked."));
+                           _("A selected item's pixels are locked."));
       if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+        gimp_tools_blink_lock_box (display->gimp, locked_item);
 
       g_list_free (drawables);
       return FALSE;

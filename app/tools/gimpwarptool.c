@@ -757,11 +757,12 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
                            GimpDisplay  *display,
                            gboolean      show_message)
 {
-  GimpTool        *tool      = GIMP_TOOL (wt);
-  GimpWarpOptions *options   = GIMP_WARP_TOOL_GET_OPTIONS (wt);
-  GimpGuiConfig   *config    = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage       *image     = gimp_display_get_image (display);
-  GList           *drawables = gimp_image_get_selected_drawables (image);
+  GimpTool        *tool        = GIMP_TOOL (wt);
+  GimpWarpOptions *options     = GIMP_WARP_TOOL_GET_OPTIONS (wt);
+  GimpGuiConfig   *config      = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage       *image       = gimp_display_get_image (display);
+  GimpItem        *locked_item = NULL;
+  GList           *drawables   = gimp_image_get_selected_drawables (image);
   GimpDrawable    *drawable;
 
   if (g_list_length (drawables) != 1)
@@ -795,14 +796,14 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       if (show_message)
         {
           gimp_tool_message_literal (tool, display,
-                                     _("The active layer's pixels are locked."));
+                                     _("The selected item's pixels are locked."));
 
-          gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+          gimp_tools_blink_lock_box (display->gimp, locked_item);
         }
 
       return FALSE;
@@ -814,7 +815,7 @@ gimp_warp_tool_can_stroke (GimpWarpTool *wt,
       if (show_message)
         {
           gimp_tool_message_literal (tool, display,
-                                     _("The active layer is not visible."));
+                                     _("The selected item is not visible."));
         }
 
       return FALSE;

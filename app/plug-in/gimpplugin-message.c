@@ -272,7 +272,7 @@ gimp_plug_in_handle_tile_put (GimpPlugIn *plug_in,
     }
   else
     {
-      if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+      if (gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
         {
           gimp_message (plug_in->manager->gimp, NULL, GIMP_MESSAGE_ERROR,
                         "Plug-in \"%s\"\n(%s)\n\n"

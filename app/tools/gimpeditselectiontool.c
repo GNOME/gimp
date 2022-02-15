@@ -987,6 +987,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   GdkModifierType    extend_mask    = gimp_get_extend_selection_mask ();
   const gchar       *null_message   = NULL;
   const gchar       *locked_message = NULL;
+  GimpItem          *locked_item    = NULL;
   GList             *iter;
   gint               velocity;
 
@@ -1101,9 +1102,10 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
             {
               locked_message = _("The active layer's position is locked.");
             }
-          else if (gimp_item_is_content_locked (selected_items->data))
+          else if (gimp_item_is_content_locked (selected_items->data,
+                                                &locked_item))
             {
-              locked_message = _("The active layer's pixels are locked.");
+              locked_message = _("The selected layer's pixels are locked.");
             }
         }
       else if (GIMP_IS_CHANNEL (selected_items->data))
@@ -1114,7 +1116,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
 
           for (iter = selected_items; iter; iter = iter->next)
             if (! gimp_item_is_position_locked (iter->data) &&
-                ! gimp_item_is_content_locked (iter->data))
+                ! gimp_item_is_content_locked (iter->data, NULL))
               n_items++;
 
           if (n_items == 0)
@@ -1159,8 +1161,12 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
   else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
-      gimp_tools_blink_lock_box (display->gimp,
-                                 active_item ? active_item : selected_items->data);
+
+      if (locked_item == NULL)
+        locked_item = active_item ? active_item : selected_items->data;
+
+      gimp_tools_blink_lock_box (display->gimp, locked_item);
+
       g_list_free (selected_items);
       return TRUE;
     }

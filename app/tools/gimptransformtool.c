@@ -658,6 +658,7 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
   GList                *iter;
   const gchar          *null_message   = NULL;
   const gchar          *locked_message = NULL;
+  GimpItem             *locked_item    = NULL;
   GimpGuiConfig        *config         = GIMP_GUI_CONFIG (display->gimp->config);
 
   g_return_val_if_fail (GIMP_IS_TRANSFORM_TOOL (tr_tool), NULL);
@@ -677,7 +678,7 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
         {
           GimpItem *item = iter->data;
 
-          if (gimp_item_is_content_locked (item))
+          if (gimp_item_is_content_locked (item, &locked_item))
             locked_message = _("A selected layer's pixels are locked.");
           else if (gimp_item_is_position_locked (item))
             locked_message = _("A selected layer's position and size are locked.");
@@ -708,7 +709,7 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
           GimpItem *item = iter->data;
 
           /* cannot happen, so don't translate these messages */
-          if (gimp_item_is_content_locked (item))
+          if (gimp_item_is_content_locked (item, &locked_item))
             locked_message = "The selection's pixels are locked.";
           else if (gimp_item_is_position_locked (item))
             locked_message = "The selection's position and size are locked.";
@@ -722,8 +723,8 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
         {
           GimpItem *item = iter->data;
 
-          if (gimp_item_is_content_locked (item))
-            locked_message = _("The active path's strokes are locked.");
+          if (gimp_item_is_content_locked (item, &locked_item))
+            locked_message = _("The selected path's strokes are locked.");
           else if (gimp_item_is_position_locked (item))
             locked_message = _("The active path's position is locked.");
           else if (! gimp_vectors_get_n_strokes (GIMP_VECTORS (item)))
@@ -749,7 +750,12 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, locked_message);
       if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (objects->data));
+        {
+          if (locked_item == NULL)
+            locked_item = GIMP_ITEM (objects->data);
+
+          gimp_tools_blink_lock_box (display->gimp, locked_item);
+        }
       return NULL;
     }
 

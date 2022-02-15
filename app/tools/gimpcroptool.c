@@ -461,7 +461,7 @@ gimp_crop_tool_commit (GimpCropTool *crop_tool)
                 }
 
               for (iter = layers; iter; iter = iter->next)
-                if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+                if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
                   break;
 
               if (iter == NULL)

@@ -306,7 +306,7 @@ edit_actions_update (GimpActionGroup *group,
           if (! gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
             have_no_groups = TRUE;
 
-          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
             have_writable = TRUE;
 
           if (have_no_groups && have_writable)

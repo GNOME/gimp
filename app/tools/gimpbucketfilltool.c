@@ -571,6 +571,7 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpGuiConfig         *config      = GIMP_GUI_CONFIG (display->gimp->config);
   GimpImage             *image       = gimp_display_get_image (display);
+  GimpItem              *locked_item = NULL;
   GList                 *drawables   = gimp_image_get_selected_drawables (image);
   GimpDrawable          *drawable;
 
@@ -611,11 +612,11 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
       return;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       gimp_tool_message_literal (tool, display,
-                                 _("The active layer's pixels are locked."));
-      gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+                                 _("The selected layer's pixels are locked."));
+      gimp_tools_blink_lock_box (display->gimp, locked_item);
       return;
     }
 
@@ -881,9 +882,9 @@ gimp_bucket_fill_tool_cursor_update (GimpTool         *tool,
       if (g_list_length (drawables) == 1)
         drawable = drawables->data;
 
-      if (drawable                                                &&
-          ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) &&
-          ! gimp_item_is_content_locked (GIMP_ITEM (drawable))    &&
+      if (drawable                                                   &&
+          ! gimp_viewable_get_children (GIMP_VIEWABLE (drawable))    &&
+          ! gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL) &&
           (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
            config->edit_non_visible))
         {

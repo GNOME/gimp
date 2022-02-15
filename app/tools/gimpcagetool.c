@@ -214,9 +214,10 @@ gimp_cage_tool_initialize (GimpTool     *tool,
                            GimpDisplay  *display,
                            GError      **error)
 {
-  GimpGuiConfig *config    = GIMP_GUI_CONFIG (display->gimp->config);
-  GimpImage     *image     = gimp_display_get_image (display);
-  GList         *drawables = gimp_image_get_selected_drawables (image);
+  GimpGuiConfig *config      = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage     *image       = gimp_display_get_image (display);
+  GimpItem      *locked_item = NULL;
+  GList         *drawables   = gimp_image_get_selected_drawables (image);
   GimpDrawable  *drawable;
 
   if (g_list_length (drawables) != 1)
@@ -241,12 +242,12 @@ gimp_cage_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer's pixels are locked."));
+                           _("The selected item's pixels are locked."));
       if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+        gimp_tools_blink_lock_box (display->gimp, locked_item);
       return FALSE;
     }
 
@@ -254,7 +255,7 @@ gimp_cage_tool_initialize (GimpTool     *tool,
       ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer is not visible."));
+                           _("The active item is not visible."));
       return FALSE;
     }
 
@@ -714,9 +715,9 @@ gimp_cage_tool_cursor_update (GimpTool         *tool,
         drawable = drawables->data;
       g_list_free (drawables);
 
-      if (! drawable                                            ||
-          gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-          gimp_item_is_content_locked (GIMP_ITEM (drawable))    ||
+      if (! drawable                                               ||
+          gimp_viewable_get_children (GIMP_VIEWABLE (drawable))    ||
+          gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL) ||
           ! (gimp_item_is_visible (GIMP_ITEM (drawable)) ||
              config->edit_non_visible))
         {

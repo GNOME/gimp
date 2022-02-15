@@ -836,7 +836,7 @@ layers_actions_update (GimpActionGroup *group,
           else
             have_no_groups = TRUE;
 
-          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data)))
+          if (! gimp_item_is_content_locked (GIMP_ITEM (iter->data), NULL))
             have_writable = TRUE;
           else
             all_writable  = FALSE;
@@ -889,7 +889,7 @@ layers_actions_update (GimpActionGroup *group,
                       /*  "next_visible" is actually "next_visible" and
                        *  "writable" and "not group"
                        */
-                      if (gimp_item_is_content_locked (next_visible->data) ||
+                      if (gimp_item_is_content_locked (next_visible->data, NULL) ||
                           gimp_viewable_get_children (next_visible->data))
                         next_visible = NULL;
 

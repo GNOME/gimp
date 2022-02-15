@@ -185,7 +185,7 @@ gimp_gegl_procedure_get_sensitive (GimpProcedure  *procedure,
       else
         item = GIMP_ITEM (drawable);
 
-      sensitive = ! gimp_item_is_content_locked (item);
+      sensitive = ! gimp_item_is_content_locked (item, NULL);
 
       if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
         sensitive = FALSE;

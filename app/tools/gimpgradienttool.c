@@ -238,9 +238,10 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
                                GimpDisplay  *display,
                                GError      **error)
 {
-  GimpImage           *image     = gimp_display_get_image (display);
-  GimpGradientOptions *options   = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
-  GimpGuiConfig       *config    = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpImage           *image       = gimp_display_get_image (display);
+  GimpGradientOptions *options     = GIMP_GRADIENT_TOOL_GET_OPTIONS (tool);
+  GimpGuiConfig       *config      = GIMP_GUI_CONFIG (display->gimp->config);
+  GimpItem            *locked_item = NULL;
   GList               *drawables;
   GimpDrawable        *drawable;
 
@@ -274,12 +275,12 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
       return FALSE;
     }
 
-  if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+  if (gimp_item_is_content_locked (GIMP_ITEM (drawable), &locked_item))
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer's pixels are locked."));
+                           _("The selected layer's pixels are locked."));
       if (error)
-        gimp_tools_blink_lock_box (display->gimp, GIMP_ITEM (drawable));
+        gimp_tools_blink_lock_box (display->gimp, locked_item);
       return FALSE;
     }
 
@@ -287,7 +288,7 @@ gimp_gradient_tool_initialize (GimpTool     *tool,
       ! config->edit_non_visible)
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("The active layer is not visible."));
+                           _("The selected item is not visible."));
       return FALSE;
     }
 
@@ -473,9 +474,9 @@ gimp_gradient_tool_cursor_update (GimpTool         *tool,
   GimpImage     *image     = gimp_display_get_image (display);
   GList         *drawables = gimp_image_get_selected_drawables (image);
 
-  if (g_list_length (drawables) != 1                ||
-      gimp_viewable_get_children (drawables->data)  ||
-      gimp_item_is_content_locked (drawables->data) ||
+  if (g_list_length (drawables) != 1                      ||
+      gimp_viewable_get_children (drawables->data)        ||
+      gimp_item_is_content_locked (drawables->data, NULL) ||
       ! (gimp_item_is_visible (drawables->data) ||
          config->edit_non_visible))
     {

@@ -36,7 +36,8 @@ static void            gimp_layer_mask_preview_freeze       (GimpViewable      *
 static void            gimp_layer_mask_preview_thaw         (GimpViewable      *viewable);
 
 static gboolean        gimp_layer_mask_is_attached          (GimpItem          *item);
-static gboolean        gimp_layer_mask_is_content_locked    (GimpItem          *item);
+static gboolean        gimp_layer_mask_is_content_locked    (GimpItem          *item,
+                                                             GimpItem         **locked_item);
 static gboolean        gimp_layer_mask_is_position_locked   (GimpItem          *item);
 static GimpItemTree  * gimp_layer_mask_get_tree             (GimpItem          *item);
 static GimpItem      * gimp_layer_mask_duplicate            (GimpItem          *item,
@@ -131,13 +132,14 @@ gimp_layer_mask_preview_thaw (GimpViewable *viewable)
 }
 
 static gboolean
-gimp_layer_mask_is_content_locked (GimpItem *item)
+gimp_layer_mask_is_content_locked (GimpItem  *item,
+                                   GimpItem **locked_item)
 {
   GimpLayerMask *mask  = GIMP_LAYER_MASK (item);
   GimpLayer     *layer = gimp_layer_mask_get_layer (mask);
 
   if (layer)
-    return gimp_item_is_content_locked (GIMP_ITEM (layer));
+    return gimp_item_is_content_locked (GIMP_ITEM (layer), locked_item);
 
   return FALSE;
 }

@@ -396,7 +396,7 @@ vectors_actions_update (GimpActionGroup *group,
 
       if (drawable)
         {
-          dr_writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable));
+          dr_writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             dr_children = TRUE;

@@ -310,7 +310,7 @@ gimp_edit_paste_get_layers (GimpImage     *image,
    */
   if (! drawable                                            ||
       gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-      gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+      gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
     {
       if (gimp_edit_paste_is_in_place (*paste_type))
         *paste_type = GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;

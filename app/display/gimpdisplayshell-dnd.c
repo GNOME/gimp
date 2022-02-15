@@ -367,7 +367,7 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
           return;
         }
 
-      if (gimp_item_is_content_locked (iter->data))
+      if (gimp_item_is_content_locked (iter->data, NULL))
         {
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
@@ -499,7 +499,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
           paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
         }
-      else if (gimp_item_is_content_locked (GIMP_ITEM (drawable)))
+      else if (gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
         {
           gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
                                 GIMP_MESSAGE_ERROR,
