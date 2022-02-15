@@ -1062,7 +1062,8 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
           /* cannot happen, don't translate this message */
           null_message = "There is no selection to move.";
         }
-      else if (gimp_item_is_position_locked (active_item))
+      else if (gimp_item_is_position_locked (active_item,
+                                             &locked_item))
         {
           /* cannot happen, don't translate this message */
           locked_message = "The selection's position is locked.";
@@ -1079,9 +1080,10 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         {
           null_message = _("There is no path to move.");
         }
-      else if (gimp_item_is_position_locked (active_item))
+      else if (gimp_item_is_position_locked (active_item,
+                                             &locked_item))
         {
-          locked_message = _("The active path's position is locked.");
+          locked_message = _("The selected path's position is locked.");
         }
       break;
 
@@ -1098,9 +1100,10 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         {
           edit_mode = GIMP_TRANSLATE_MODE_LAYER_MASK;
 
-          if (gimp_item_is_position_locked (selected_items->data))
+          if (gimp_item_is_position_locked (selected_items->data,
+                                            &locked_item))
             {
-              locked_message = _("The active layer's position is locked.");
+              locked_message = _("The selected layer's position is locked.");
             }
           else if (gimp_item_is_content_locked (selected_items->data,
                                                 &locked_item))
@@ -1115,7 +1118,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
           edit_mode = GIMP_TRANSLATE_MODE_CHANNEL;
 
           for (iter = selected_items; iter; iter = iter->next)
-            if (! gimp_item_is_position_locked (iter->data) &&
+            if (! gimp_item_is_position_locked (iter->data, NULL) &&
                 ! gimp_item_is_content_locked (iter->data, NULL))
               n_items++;
 
@@ -1126,9 +1129,10 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         {
           edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
 
-          if (gimp_item_is_position_locked (selected_items->data))
+          if (gimp_item_is_position_locked (selected_items->data,
+                                            &locked_item))
             {
-              locked_message = _("The active layer's position is locked.");
+              locked_message = _("The selected layer's position is locked.");
             }
         }
       else
@@ -1138,7 +1142,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
           edit_mode = GIMP_TRANSLATE_MODE_LAYER;
 
           for (iter = selected_items; iter; iter = iter->next)
-            if (! gimp_item_is_position_locked (iter->data))
+            if (! gimp_item_is_position_locked (iter->data, NULL))
               n_items++;
 
           if (n_items == 0)

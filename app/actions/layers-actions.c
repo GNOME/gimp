@@ -841,7 +841,7 @@ layers_actions_update (GimpActionGroup *group,
           else
             all_writable  = FALSE;
 
-          if (gimp_item_is_position_locked (GIMP_ITEM (iter->data)))
+          if (gimp_item_is_position_locked (GIMP_ITEM (iter->data), NULL))
             all_movable = FALSE;
 
           if (gimp_layer_can_lock_alpha (iter->data))

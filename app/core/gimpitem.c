@@ -127,7 +127,9 @@ static gint64     gimp_item_get_memsize             (GimpObject     *object,
 
 static gboolean   gimp_item_real_is_content_locked  (GimpItem       *item,
                                                      GimpItem      **locked_item);
-static gboolean   gimp_item_real_is_position_locked (GimpItem       *item);
+static gboolean   gimp_item_real_is_position_locked (GimpItem       *item,
+                                                     GimpItem      **locked_item,
+                                                     gboolean        check_children);
 static gboolean   gimp_item_real_is_visibility_locked (GimpItem       *item);
 static gboolean   gimp_item_real_bounds             (GimpItem       *item,
                                                      gdouble        *x,
@@ -477,18 +479,37 @@ gimp_item_real_is_content_locked (GimpItem  *item,
 {
   GimpItem *parent = gimp_item_get_parent (item);
 
-  if (parent && gimp_item_is_content_locked (parent, locked_item))
-    return TRUE;
-
-  if (GET_PRIVATE (item)->lock_content && locked_item)
-    *locked_item = item;
+  if (GET_PRIVATE (item)->lock_content)
+    {
+      if (locked_item)
+        *locked_item = item;
+    }
+  else if (parent && gimp_item_is_content_locked (parent, locked_item))
+    {
+      return TRUE;
+    }
 
   return GET_PRIVATE (item)->lock_content;
 }
 
 static gboolean
-gimp_item_real_is_position_locked (GimpItem *item)
+gimp_item_real_is_position_locked (GimpItem  *item,
+                                   GimpItem **locked_item,
+                                   gboolean   check_children)
 {
+  GimpItem *parent = gimp_item_get_parent (item);
+
+  if (GET_PRIVATE (item)->lock_position)
+    {
+      if (locked_item)
+        *locked_item = item;
+    }
+  else if (parent &&
+           GIMP_ITEM_GET_CLASS (item)->is_position_locked (parent, locked_item, FALSE))
+    {
+      return TRUE;
+    }
+
   return GET_PRIVATE (item)->lock_position;
 }
 
@@ -2514,18 +2535,16 @@ gimp_item_can_lock_position (GimpItem *item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  if (gimp_viewable_get_children (GIMP_VIEWABLE (item)))
-    return FALSE;
-
   return TRUE;
 }
 
 gboolean
-gimp_item_is_position_locked (GimpItem *item)
+gimp_item_is_position_locked (GimpItem  *item,
+                              GimpItem **locked_item)
 {
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
 
-  return GIMP_ITEM_GET_CLASS (item)->is_position_locked (item);
+  return GIMP_ITEM_GET_CLASS (item)->is_position_locked (item, locked_item, TRUE);
 }
 
 void

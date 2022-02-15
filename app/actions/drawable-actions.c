@@ -197,7 +197,7 @@ drawable_actions_update (GimpActionGroup *group,
           writable      = ! gimp_item_is_content_locked (item, NULL);
           locked_pos    = gimp_item_get_lock_position (item);
           can_lock_pos  = gimp_item_can_lock_position (item);
-          movable       = ! gimp_item_is_position_locked (item);
+          movable       = ! gimp_item_is_position_locked (item, NULL);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             children = TRUE;

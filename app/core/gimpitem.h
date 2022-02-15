@@ -54,7 +54,9 @@ struct _GimpItemClass
   gboolean        (* is_attached)        (GimpItem               *item);
   gboolean        (* is_content_locked)  (GimpItem               *item,
                                           GimpItem              **locked_item);
-  gboolean        (* is_position_locked) (GimpItem               *item);
+  gboolean        (* is_position_locked) (GimpItem               *item,
+                                          GimpItem              **locked_item,
+                                          gboolean                checking_children);
   gboolean        (* is_visibility_locked) (GimpItem               *item);
   GimpItemTree  * (* get_tree)           (GimpItem               *item);
   gboolean        (* bounds)             (GimpItem               *item,
@@ -382,7 +384,8 @@ void            gimp_item_set_lock_position  (GimpItem          *item,
                                               gboolean           push_undo);
 gboolean        gimp_item_get_lock_position  (GimpItem          *item);
 gboolean        gimp_item_can_lock_position  (GimpItem          *item);
-gboolean        gimp_item_is_position_locked (GimpItem          *item);
+gboolean        gimp_item_is_position_locked (GimpItem          *item,
+                                              GimpItem         **locked_item);
 
 void            gimp_item_set_lock_visibility  (GimpItem        *item,
                                                 gboolean         lock_visibility,

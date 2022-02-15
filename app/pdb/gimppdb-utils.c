@@ -594,7 +594,7 @@ gimp_pdb_item_is_modifiable (GimpItem           *item,
       return FALSE;
     }
 
-  if ((modify & GIMP_PDB_ITEM_POSITION) && gimp_item_is_position_locked (item))
+  if ((modify & GIMP_PDB_ITEM_POSITION) && gimp_item_is_position_locked (item, NULL))
     {
       g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_INVALID_ARGUMENT,
                    _("Item '%s' (%d) cannot be modified because its "

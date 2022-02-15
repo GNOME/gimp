@@ -544,10 +544,10 @@ gimp_tool_path_check_writable (GimpToolPath *path)
   GimpItem            *locked_item = NULL;
 
   if (gimp_item_is_content_locked (GIMP_ITEM (private->vectors), &locked_item) ||
-      gimp_item_is_position_locked (GIMP_ITEM (private->vectors)))
+      gimp_item_is_position_locked (GIMP_ITEM (private->vectors), &locked_item))
     {
       gimp_tool_widget_message_literal (GIMP_TOOL_WIDGET (path),
-                                        _("The active path is locked."));
+                                        _("The selected path is locked."));
 
       if (locked_item == NULL)
         locked_item = GIMP_ITEM (private->vectors);

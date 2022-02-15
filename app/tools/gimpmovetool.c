@@ -189,6 +189,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
   GimpTranslateMode  translate_mode = GIMP_TRANSLATE_MODE_MASK;
   const gchar       *null_message   = NULL;
   const gchar       *locked_message = NULL;
+  GimpItem          *locked_item    = NULL;
 
   tool->display = display;
 
@@ -297,7 +298,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
             for (iter = selected_items; iter; iter = iter->next)
               {
-                if (! gimp_item_is_position_locked (iter->data))
+                if (! gimp_item_is_position_locked (iter->data, &locked_item))
                   n_items++;
               }
 
@@ -321,7 +322,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
             /* cannot happen, don't translate this message */
             null_message  = "There is no selection to move.";
           }
-        else if (gimp_item_is_position_locked (active_item))
+        else if (gimp_item_is_position_locked (active_item, &locked_item))
           {
             locked_message = "The selection's position is locked.";
           }
@@ -342,37 +343,27 @@ gimp_move_tool_button_press (GimpTool            *tool,
 
             translate_mode = GIMP_TRANSLATE_MODE_LAYER_MASK;
 
-            if (gimp_item_is_position_locked (selected_items->data))
+            if (gimp_item_is_position_locked (selected_items->data, &locked_item))
               locked_message = _("The selected layer's position is locked.");
             else if (gimp_item_is_content_locked (selected_items->data, NULL))
               locked_message = _("The selected layer's pixels are locked.");
           }
         else if (GIMP_IS_CHANNEL (selected_items->data))
           {
-            gint n_items = 0;
-
             translate_mode = GIMP_TRANSLATE_MODE_CHANNEL;
 
             for (iter = selected_items; iter; iter = iter->next)
-              if (! gimp_item_is_position_locked (iter->data) &&
-                  ! gimp_item_is_content_locked (iter->data, NULL))
-                n_items++;
-
-            if (n_items == 0)
-              locked_message = _("All selected channels' positions or pixels are locked.");
+              if (gimp_item_is_position_locked (iter->data, &locked_item) ||
+                  gimp_item_is_content_locked (iter->data, &locked_item))
+              locked_message = _("A selected channel's position or pixels are locked.");
           }
         else
           {
-            gint n_items = 0;
-
             translate_mode = GIMP_TRANSLATE_MODE_LAYER;
 
             for (iter = selected_items; iter; iter = iter->next)
-              if (! gimp_item_is_position_locked (iter->data))
-                n_items++;
-
-            if (n_items == 0)
-              locked_message = _("All selected layers' positions are locked.");
+              if (gimp_item_is_position_locked (iter->data, &locked_item))
+              locked_message = _("A selected layers' position is locked.");
           }
       }
       break;
@@ -391,8 +382,11 @@ gimp_move_tool_button_press (GimpTool            *tool,
   else if (locked_message)
     {
       gimp_tool_message_literal (tool, display, locked_message);
-      gimp_tools_blink_lock_box (display->gimp,
-                                 active_item ? active_item : selected_items->data);
+
+      if (locked_item == NULL)
+        locked_item = active_item ? active_item : selected_items->data;
+
+      gimp_tools_blink_lock_box (display->gimp, locked_item);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       g_list_free (selected_items);
       return;
@@ -603,7 +597,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
 
           for (iter = selected; iter; iter = iter->next)
             {
-              if (! gimp_item_is_position_locked (iter->data))
+              if (! gimp_item_is_position_locked (iter->data, NULL))
                 n_items++;
             }
 
@@ -640,7 +634,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
       gint   n_items = 0;
 
       for (iter = items; iter; iter = iter->next)
-        if (! gimp_item_is_position_locked (iter->data))
+        if (! gimp_item_is_position_locked (iter->data, NULL))
           n_items++;
       if (n_items == 0)
         modifier = GIMP_CURSOR_MODIFIER_BAD;
@@ -670,7 +664,7 @@ gimp_move_tool_cursor_update (GimpTool         *tool,
               tool_cursor = GIMP_TOOL_CURSOR_MOVE;
               modifier    = GIMP_CURSOR_MODIFIER_ANCHOR;
             }
-          else if (gimp_item_is_position_locked (GIMP_ITEM (layer)))
+          else if (gimp_item_is_position_locked (GIMP_ITEM (layer), NULL))
             {
               modifier = GIMP_CURSOR_MODIFIER_BAD;
             }
