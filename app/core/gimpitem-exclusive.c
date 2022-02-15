@@ -215,9 +215,11 @@ gimp_item_exclusive_get_lists (GimpItem              *item,
           /* Do we care only about selected drawables? */
           (! only_selected  || gimp_image_is_selected_drawable (image,
                                                                 GIMP_DRAWABLE (other))) &&
-          /* We are only interested in same level items. */
-          gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
-          gimp_viewable_get_parent (GIMP_VIEWABLE (item)))
+          /* We are only interested in same level items unless
+           * @only_selected is TRUE. */
+          (only_selected ||
+           gimp_viewable_get_parent (GIMP_VIEWABLE (other)) ==
+           gimp_viewable_get_parent (GIMP_VIEWABLE (item))))
         {
           if (is_enabled (other))
             *on = g_list_prepend (*on, other);

@@ -87,7 +87,7 @@
           Lock icons in item dockables (Layers, Channels, Paths) moved next to the visibility (eye) icon
           </_li>
           <_li>
-          Alt-click on visibility and lock icons in item dockables massively toggles on same level
+          Alt-click on visibility and lock icons in item dockables massively toggles visibility and locks among selected items
           </_li>
           <_li>
           New checkbox to enable or disable dynamics in paint tools' options (replacing "Dynamics Off" dynamics)
