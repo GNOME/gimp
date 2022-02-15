@@ -478,6 +478,13 @@ presentation of an artwork but for the work-in-progress processus.
 
 Developers are welcome to read the [specifications of XCF](specifications/xcf.txt).
 
+#### Locks
+
+Items in an image can be locked in various ways to prevent different
+types of edits.
+
+This is further explained in [the specifications of locks](specifications/locks.md).
+
 #### UI Framework
 
 GIMP has an evolved GUI framework, with a toolbox, dockables, menus…
