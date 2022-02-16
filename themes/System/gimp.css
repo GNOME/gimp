@@ -117,10 +117,20 @@ GimpRuler {
     font-size: smaller;
 }
 
-spinbutton entry progress {
+GimpSpinScale entry {
+    /* Important: prevent overhigh spin scale */
+    min-height: 16px;
+}
+
+GimpSpinScale entry progress {
     background-color: @theme_selected_bg_color;
     border-width:     0px;
     border-radius:    3px;
+}
+
+GimpSpinScale button {
+    /* Makes the +- buttons a bit more compact. */
+    padding: 0 1px 0 1px;
 }
 
 entry.italic {

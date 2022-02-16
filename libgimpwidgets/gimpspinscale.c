@@ -172,6 +172,8 @@ gimp_spin_scale_class_init (GimpSpinScaleClass *klass)
                                    g_param_spec_string ("label", NULL, NULL,
                                                         NULL,
                                                         GIMP_PARAM_READWRITE));
+
+  gtk_widget_class_set_css_name (widget_class, "GimpSpinScale");
 }
 
 static void
