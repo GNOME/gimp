@@ -62,6 +62,7 @@
 #include <libgimpwidgets/gimpintcombobox.h>
 #include <libgimpwidgets/gimpintstore.h>
 #include <libgimpwidgets/gimplabeled.h>
+#include <libgimpwidgets/gimplabelentry.h>
 #include <libgimpwidgets/gimplabelintwidget.h>
 #include <libgimpwidgets/gimplabelspin.h>
 #include <libgimpwidgets/gimpmemsizeentry.h>

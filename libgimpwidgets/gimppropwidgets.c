@@ -2100,6 +2100,63 @@ gimp_prop_entry_notify (GObject    *config,
   g_free (value);
 }
 
+/*****************/
+/*  label entry  */
+/*****************/
+
+/**
+ * gimp_prop_label_entry_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of string property.
+ * @max_len:       Maximum allowed length of string (set to negative for
+ *                 no maximum).
+ *
+ * Creates a #GimpLabelEntry to set and display the value of the
+ * specified string property.
+ *
+ * Returns: (transfer full): A new #GtkEntry widget.
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_label_entry_new (GObject     *config,
+                           const gchar *property_name,
+                           gint         max_len)
+{
+  GParamSpec  *param_spec;
+  GtkWidget   *label_entry;
+  GtkWidget   *entry;
+  const gchar *label;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec (config, property_name,
+                                 G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  label = g_param_spec_get_nick (param_spec);
+  label_entry = gimp_label_entry_new (label);
+  entry = gimp_label_entry_get_entry (GIMP_LABEL_ENTRY (label_entry));
+
+  if (max_len > 0)
+    gtk_entry_set_max_length (GTK_ENTRY (entry), max_len);
+
+  gtk_editable_set_editable (GTK_EDITABLE (entry),
+                             param_spec->flags & G_PARAM_WRITABLE);
+
+  set_param_spec (G_OBJECT (label_entry), label_entry, param_spec);
+
+  g_object_bind_property (config,      property_name,
+                          label_entry, "value",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+  gtk_widget_show (label_entry);
+
+  return label_entry;
+}
+
 
 /*****************/
 /*  text buffer  */

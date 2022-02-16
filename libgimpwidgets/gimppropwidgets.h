@@ -147,6 +147,9 @@ GtkWidget     * gimp_prop_label_new               (GObject       *config,
 GtkWidget     * gimp_prop_entry_new               (GObject       *config,
                                                    const gchar   *property_name,
                                                    gint           max_len);
+GtkWidget     * gimp_prop_label_entry_new         (GObject       *config,
+                                                   const gchar   *property_name,
+                                                   gint           max_len);
 GtkTextBuffer * gimp_prop_text_buffer_new         (GObject       *config,
                                                    const gchar   *property_name,
                                                    gint           max_len);
