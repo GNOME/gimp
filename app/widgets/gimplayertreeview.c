@@ -62,7 +62,6 @@
 #include "gimphelp-ids.h"
 #include "gimplayermodebox.h"
 #include "gimplayertreeview.h"
-#include "gimpspinscale.h"
 #include "gimpuimanager.h"
 #include "gimpviewrenderer.h"
 #include "gimpwidgets-utils.h"

@@ -72,6 +72,7 @@ libgimpwidgets_sources_introspectable = files(
   'gimpscrolledpreview.c',
   'gimpsizeentry.c',
   'gimpspinbutton.c',
+  'gimpspinscale.c',
   'gimpstringcombobox.c',
   'gimpunitcombobox.c',
   'gimpunitstore.c',

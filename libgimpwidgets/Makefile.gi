@@ -52,6 +52,7 @@ libgimpwidgets_introspectable_headers =	\
 	../libgimpwidgets/gimpscrolledpreview.h     		\
 	../libgimpwidgets/gimpsizeentry.h	       		\
 	../libgimpwidgets/gimpspinbutton.h	       		\
+	../libgimpwidgets/gimpspinscale.h			\
 	../libgimpwidgets/gimpstringcombobox.h      		\
 	../libgimpwidgets/gimpunitcombobox.h	       		\
 	../libgimpwidgets/gimpunitstore.h	       		\
@@ -116,6 +117,7 @@ libgimpwidgets_introspectable =	\
 	../libgimpwidgets/gimpscrolledpreview.c		\
 	../libgimpwidgets/gimpsizeentry.c			\
 	../libgimpwidgets/gimpspinbutton.c			\
+	../libgimpwidgets/gimpspinscale.c			\
 	../libgimpwidgets/gimpstringcombobox.c		\
 	../libgimpwidgets/gimpunitcombobox.c			\
 	../libgimpwidgets/gimpunitstore.c			\

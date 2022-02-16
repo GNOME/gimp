@@ -36,7 +36,6 @@
 
 #include "gimpbrusheditor.h"
 #include "gimpdocked.h"
-#include "gimpspinscale.h"
 #include "gimpview.h"
 #include "gimpviewrenderer.h"
 

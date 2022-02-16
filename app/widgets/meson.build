@@ -182,7 +182,6 @@ libappwidgets_sources = [
   'gimpsettingsbox.c',
   'gimpsettingseditor.c',
   'gimpsizebox.c',
-  'gimpspinscale.c',
   'gimpstringaction.c',
   'gimpstrokeeditor.c',
   'gimpsymmetryeditor.c',

@@ -49,7 +49,6 @@
 #include "gimplanguagecombobox.h"
 #include "gimplanguageentry.h"
 #include "gimplayermodebox.h"
-#include "gimpspinscale.h"
 #include "gimpview.h"
 #include "gimppolar.h"
 #include "gimppropwidgets.h"

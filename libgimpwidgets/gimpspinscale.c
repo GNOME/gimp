@@ -26,14 +26,13 @@
 #include <gdk/gdkkeysyms.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpmath/gimpmath.h"
 
-#include "widgets-types.h"
+#include "gimpwidgetstypes.h"
 
 #include "gimpspinscale.h"
 
-#include "gimp-intl.h"
+#include "libgimp/libgimp-intl.h"
 
 
 #define RELATIVE_CHANGE_SPEED 0.1

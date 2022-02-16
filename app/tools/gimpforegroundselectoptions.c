@@ -29,7 +29,6 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"
 

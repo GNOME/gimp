@@ -33,7 +33,6 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppivotselector.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"

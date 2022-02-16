@@ -30,7 +30,6 @@
 #include "core/gimpimage.h"
 
 #include "widgets/gimpcolorpanel.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "channel-options-dialog.h"

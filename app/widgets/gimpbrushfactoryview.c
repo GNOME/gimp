@@ -37,7 +37,6 @@
 #include "gimpcontainerview.h"
 #include "gimpeditor.h"
 #include "gimpmenufactory.h"
-#include "gimpspinscale.h"
 #include "gimpviewrenderer.h"
 
 #include "gimp-intl.h"

@@ -30,7 +30,6 @@
 
 #include "widgets/gimplayermodebox.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-constructors.h"
 #include "widgets/gimpwidgets-utils.h"

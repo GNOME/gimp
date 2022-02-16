@@ -28,7 +28,6 @@
 #include "core/gimp-transform-utils.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpspinscale.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimptoolgui.h"

@@ -18,8 +18,16 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+#if !defined (__GIMP_WIDGETS_H_INSIDE__) && !defined (GIMP_WIDGETS_COMPILATION)
+#error "Only <libgimpwidgets/gimpwidgets.h> can be included directly."
+#endif
+
 #ifndef __GIMP_SPIN_SCALE_H__
 #define __GIMP_SPIN_SCALE_H__
+
+#include <libgimpwidgets/gimpspinbutton.h>
+
+G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_SPIN_SCALE            (gimp_spin_scale_get_type ())
@@ -69,5 +77,8 @@ gdouble       gimp_spin_scale_get_gamma          (GimpSpinScale *scale);
 void          gimp_spin_scale_set_constrain_drag (GimpSpinScale *scale,
                                                   gboolean       constrain);
 gboolean      gimp_spin_scale_get_constrain_drag (GimpSpinScale *scale);
+
+
+G_END_DECLS
 
 #endif  /*  __GIMP_SPIN_SCALE_H__  */

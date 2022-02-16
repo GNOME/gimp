@@ -31,7 +31,6 @@
 #include "core/gimpcontext.h"
 
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 
 #include "gimppropgui.h"
 #include "gimppropgui-color-balance.h"

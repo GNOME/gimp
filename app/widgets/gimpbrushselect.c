@@ -42,7 +42,6 @@
 #include "gimpbrushselect.h"
 #include "gimpcontainerbox.h"
 #include "gimplayermodebox.h"
-#include "gimpspinscale.h"
 
 #include "gimp-intl.h"
 

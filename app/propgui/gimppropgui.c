@@ -41,7 +41,6 @@
 
 #include "widgets/gimpcolorpanel.h"
 #include "widgets/gimpmessagebox.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimppropwidgets.h"
 
 #include "gimppropgui.h"

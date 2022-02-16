@@ -35,7 +35,6 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-constructors.h"
 
 #include "display/gimpdisplay.h"

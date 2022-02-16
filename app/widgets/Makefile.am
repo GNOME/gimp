@@ -365,8 +365,6 @@ libappwidgets_a_sources = \
 	gimpsettingseditor.h		\
 	gimpsizebox.c			\
 	gimpsizebox.h			\
-	gimpspinscale.c			\
-	gimpspinscale.h			\
 	gimpstringaction.c		\
 	gimpstringaction.h		\
 	gimpstrokeeditor.c		\

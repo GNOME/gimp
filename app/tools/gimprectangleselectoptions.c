@@ -29,7 +29,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 
 #include "gimprectangleoptions.h"
 #include "gimprectangleselectoptions.h"

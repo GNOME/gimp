@@ -30,7 +30,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimphandletransformoptions.h"

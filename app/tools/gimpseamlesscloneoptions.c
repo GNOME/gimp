@@ -29,7 +29,6 @@
 #include "tools-types.h"
 
 #include "widgets/gimppropwidgets.h"
-#include "widgets/gimpspinscale.h"
 
 #include "gimpseamlesscloneoptions.h"
 #include "gimptooloptions-gui.h"

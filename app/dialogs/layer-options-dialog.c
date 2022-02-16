@@ -38,7 +38,6 @@
 
 #include "widgets/gimpcontainertreeview.h"
 #include "widgets/gimplayermodebox.h"
-#include "widgets/gimpspinscale.h"
 #include "widgets/gimpviewabledialog.h"
 
 #include "item-options-dialog.h"
