@@ -373,16 +373,16 @@ gimp_spin_scale_draw (GtkWidget *widget,
       GtkStateFlags    state;
       gint             minimum_width;
       gint             natural_width;
-      PangoRectangle   logical;
+      PangoRectangle   ink;
       gint             layout_offset_x;
       gint             layout_offset_y;
       GdkRGBA          text_color;
       GdkRGBA          bar_text_color;
       gdouble          progress_fraction;
-      gint             progress_x;
-      gint             progress_y;
-      gint             progress_width;
-      gint             progress_height;
+      gdouble          progress_x;
+      gdouble          progress_y;
+      gdouble          progress_width;
+      gdouble          progress_height;
 
       gtk_widget_get_allocation (widget, &allocation);
 
@@ -417,16 +417,16 @@ gimp_spin_scale_draw (GtkWidget *widget,
       pango_layout_set_width (private->layout,
                               PANGO_SCALE *
                               (allocation.width - minimum_width));
-      pango_layout_get_pixel_extents (private->layout, NULL, &logical);
+      pango_layout_get_pixel_extents (private->layout, &ink, NULL);
 
       gtk_entry_get_layout_offsets (GTK_ENTRY (widget), NULL, &layout_offset_y);
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-        layout_offset_x = text_area.x + text_area.width - logical.width - 2;
+        layout_offset_x = text_area.x + text_area.width - ink.width - 2;
       else
         layout_offset_x = text_area.x + 2;
 
-      layout_offset_x -= logical.x;
+      layout_offset_x -= ink.x;
 
       gtk_style_context_get_color (style, state, &text_color);
 
@@ -441,16 +441,16 @@ gimp_spin_scale_draw (GtkWidget *widget,
         {
           progress_fraction = 1.0 - progress_fraction;
 
-          progress_x      = text_area.width * progress_fraction;
-          progress_y      = 0;
+          progress_x      = (gdouble) text_area.width * progress_fraction + text_area.x;
+          progress_y      = 0.0;
           progress_width  = text_area.width - progress_x;
           progress_height = text_area.height;
         }
       else
         {
-          progress_x      = 0;
-          progress_y      = 0;
-          progress_width  = text_area.width * progress_fraction;
+          progress_x      = text_area.x;
+          progress_y      = 0.0;
+          progress_width  = (gdouble) text_area.width * progress_fraction;
           progress_height = text_area.height;
         }
 
