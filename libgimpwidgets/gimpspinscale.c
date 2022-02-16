@@ -399,6 +399,12 @@ gimp_spin_scale_draw (GtkWidget *widget,
           private->layout = gtk_widget_create_pango_layout (widget,
                                                             private->label_text);
           pango_layout_set_ellipsize (private->layout, PANGO_ELLIPSIZE_END);
+          /* Needing to force right-to-left layout when the widget is
+           * set so, even when the text is not RTL text. Without this,
+           * such case is broken because on the left side, we'd have
+           * both the value and the label texts.
+           */
+          pango_layout_set_auto_dir (private->layout, FALSE);
 
           if (private->mnemonics_visible)
             {
@@ -436,23 +442,14 @@ gimp_spin_scale_draw (GtkWidget *widget,
       gtk_style_context_restore (style);
 
       progress_fraction = gtk_entry_get_progress_fraction (GTK_ENTRY (widget));
+      progress_y        = 0.0;
+      progress_width    = (gdouble) text_area.width * progress_fraction;
+      progress_height   = text_area.height;
 
       if (gtk_widget_get_direction (widget) == GTK_TEXT_DIR_RTL)
-        {
-          progress_fraction = 1.0 - progress_fraction;
-
-          progress_x      = (gdouble) text_area.width * progress_fraction + text_area.x;
-          progress_y      = 0.0;
-          progress_width  = text_area.width - progress_x;
-          progress_height = text_area.height;
-        }
+        progress_x = text_area.width + text_area.x - progress_width;
       else
-        {
-          progress_x      = text_area.x;
-          progress_y      = 0.0;
-          progress_width  = (gdouble) text_area.width * progress_fraction;
-          progress_height = text_area.height;
-        }
+        progress_x = text_area.x;
 
       cairo_save (cr);
 
