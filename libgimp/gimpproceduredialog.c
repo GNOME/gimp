@@ -544,11 +544,19 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
  * Creates a new #GtkWidget for @property according to the property
  * type. The following types are possible:
  *
- * - %G_TYPE_PARAM_BOOLEAN: %GTK_TYPE_CHECK_BUTTON (default) or
- *   %GTK_TYPE_SWITCH
- * - %G_TYPE_PARAM_INT: %GIMP_TYPE_LABEL_SPIN (default) or
- *   %GIMP_TYPE_SCALE_ENTRY or %GIMP_TYPE_SPIN_BUTTON (no label).
- * - %G_TYPE_PARAM_STRING: %GTK_TYPE_ENTRY (default).
+ * - %G_TYPE_PARAM_BOOLEAN:
+ *     * %GTK_TYPE_CHECK_BUTTON (default)
+ *     * %GTK_TYPE_SWITCH
+ * - %G_TYPE_PARAM_INT or %G_TYPE_PARAM_DOUBLE:
+ *     * %GIMP_TYPE_LABEL_SPIN (default): a spin button with a label.
+ *     * %GIMP_TYPE_SCALE_ENTRY: a scale entry.
+ *     * %GIMP_TYPE_SPIN_BUTTON: a spin button with no label.
+ * - %G_TYPE_PARAM_STRING:
+ *     * %GIMP_TYPE_LABEL_ENTRY (default): an entry with a label.
+ *     * %GTK_TYPE_ENTRY: an entry with no label.
+ *     * %GTK_TYPE_TEXT_VIEW: a text view with no label.
+ * - %GIMP_TYPE_PARAM_RGB:
+ *     * %GIMP_TYPE_COLOR_AREA: a color area with no label.
  *
  * If the @widget_type is not supported for the actual type of
  * @property, the function will fail. To keep the default, set to
@@ -646,10 +654,16 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING)
     {
-      if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_TEXT_VIEW)
+      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_ENTRY)
+        {
+          widget = gimp_prop_label_entry_new (G_OBJECT (dialog->priv->config),
+                                              property, -1);
+        }
+      else if (widget_type == GTK_TYPE_TEXT_VIEW)
         {
           GtkTextBuffer *buffer;
 
+          /* Text view with no label. */
           buffer = gimp_prop_text_buffer_new (G_OBJECT (dialog->priv->config),
                                               property, -1);
           widget = gtk_text_view_new_with_buffer (buffer);
@@ -661,6 +675,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         }
       else if (widget_type == GTK_TYPE_ENTRY)
         {
+          /* Entry with no label. */
           widget = gimp_prop_entry_new (G_OBJECT (dialog->priv->config),
                                         property, -1);
         }
