@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-15 21:09+0000\n"
-"PO-Revision-Date: 2022-02-15 23:31+0200\n"
+"POT-Creation-Date: 2022-02-16 01:14+0000\n"
+"PO-Revision-Date: 2022-02-16 09:44+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -94,9 +94,6 @@ msgstr ""
 "до піктограми видимості (ока)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
-#| msgid ""
-#| "Alt-click on visibility and lock icons in item dockables massively "
-#| "toggles on same level"
 msgid ""
 "Alt-click on visibility and lock icons in item dockables massively toggles "
 "visibility and locks among selected items"
@@ -14911,19 +14908,16 @@ msgstr "Маски для груп шарів було додано у %s"
 
 #: ../app/core/gimpimage.c:2841
 #, c-format
-#| msgid "Masks on layer groups were added in %s"
 msgid "Position locks on layer groups were added in %s"
 msgstr "Блокування позицій для груп шарів було додано у %s"
 
 #: ../app/core/gimpimage.c:2848
 #, c-format
-#| msgid "Masks on layer groups were added in %s"
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Блокування каналу прозорості для груп шарів було додано у %s"
 
 #: ../app/core/gimpimage.c:2856 ../app/core/gimpimage.c:2870
 #, c-format
-#| msgid "Layer groups were added in %s"
 msgid "Visibility locks were added in %s"
 msgstr "Блокування видимості було додано у %s"
 
@@ -19737,7 +19731,6 @@ msgid "Restrict editing to polygons"
 msgstr "Створювати лише прямі та кути"
 
 #: ../app/display/gimptoolpath.c:550
-#| msgid "The active path is locked."
 msgid "The selected path is locked."
 msgstr "Позначений контур заблоковано від змін"
 
@@ -23441,12 +23434,10 @@ msgstr "Неможливо змінити декілька шарів одраз
 
 #: ../app/tools/gimpcagetool.c:248 ../app/tools/gimppainttool.c:329
 #: ../app/tools/gimpwarptool.c:804
-#| msgid "The selected layer's pixels are locked."
 msgid "The selected item's pixels are locked."
 msgstr "Точки растру позначеного пункту заблоковані від змін."
 
 #: ../app/tools/gimpcagetool.c:258
-#| msgid "The active layer is not visible."
 msgid "The active item is not visible."
 msgstr "Активний пункт — невидимий."
 
@@ -23878,7 +23869,6 @@ msgstr "Немає контуру для переміщення."
 
 #: ../app/tools/gimpeditselectiontool.c:1086
 #: ../app/tools/gimptransformtool.c:729
-#| msgid "The selected layer's position is locked."
 msgid "The selected path's position is locked."
 msgstr "Позиція позначеного контуру заблокована від змін."
 
@@ -23956,7 +23946,6 @@ msgstr "Показувати засоби керування фільтром н
 
 #: ../app/tools/gimpfiltertool.c:316 ../app/tools/gimpselectiontool.c:578
 #, c-format
-#| msgid "A selected layer's pixels are locked."
 msgid "A selected item's pixels are locked."
 msgstr "Точки растру позначеного запису заблоковані від змін."
 
@@ -24320,7 +24309,6 @@ msgid "No active drawables."
 msgstr "Немає активних об'єктів малювання."
 
 #: ../app/tools/gimpgradienttool.c:291 ../app/tools/gimpwarptool.c:818
-#| msgid "A selected layer is not visible."
 msgid "The selected item is not visible."
 msgstr "Позначений пункт є невидимим."
 
@@ -24830,14 +24818,13 @@ msgid "All selected path's position are locked."
 msgstr "Усі позиції позначеного шару заблоковано."
 
 #: ../app/tools/gimpmovetool.c:358
-#| msgid "All selected channels' positions or pixels are locked."
 msgid "A selected channel's position or pixels are locked."
 msgstr "Позначену позицію або пікселі каналу заблоковано."
 
 #: ../app/tools/gimpmovetool.c:366
-#| msgid "The selected layer's position is locked."
-msgid "A selected layers' position is locked."
-msgstr "Позиція позначених шарів заблокована від змін."
+#| msgid "A selected layers' position is locked."
+msgid "A selected layer's position is locked."
+msgstr "Позиція позначеного шару заблокована від змін."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25087,12 +25074,10 @@ msgid "%s for a straight line"
 msgstr "%s для малювання прямої лінії"
 
 #: ../app/tools/gimppainttool.c:924
-#| msgid "The active layer does not have an alpha channel."
 msgid "The selected drawable does not have an alpha channel."
 msgstr "У позначеному намальованому об'єкті немає каналу прозорості."
 
 #: ../app/tools/gimppainttool.c:935
-#| msgid "A selected layer's alpha channel is locked."
 msgid "The selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
@@ -26028,12 +26013,10 @@ msgid "There is no path to transform."
 msgstr "Немає контуру для перетворення."
 
 #: ../app/tools/gimptransformtool.c:727
-#| msgid "The active path's strokes are locked."
 msgid "The selected path's strokes are locked."
 msgstr "Елементи позначеного контуру заблоковані від змін"
 
 #: ../app/tools/gimptransformtool.c:731
-#| msgid "The active path has no strokes."
 msgid "The selected path has no strokes."
 msgstr "Позначений контур не містить штрихів."
 
