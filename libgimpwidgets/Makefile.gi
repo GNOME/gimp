@@ -34,6 +34,7 @@ libgimpwidgets_introspectable_headers =	\
 	../libgimpwidgets/gimpicons.h	       		\
 	../libgimpwidgets/gimpintcombobox.h	       		\
 	../libgimpwidgets/gimpintstore.h	       		\
+	../libgimpwidgets/gimplabelcolor.h			\
 	../libgimpwidgets/gimplabeled.h				\
 	../libgimpwidgets/gimplabelentry.h			\
 	../libgimpwidgets/gimplabelintwidget.h			\
@@ -100,6 +101,7 @@ libgimpwidgets_introspectable =	\
 	../libgimpwidgets/gimpicons.c			\
 	../libgimpwidgets/gimpintcombobox.c			\
 	../libgimpwidgets/gimpintstore.c			\
+	../libgimpwidgets/gimplabelcolor.c			\
 	../libgimpwidgets/gimplabeled.c				\
 	../libgimpwidgets/gimplabelentry.c			\
 	../libgimpwidgets/gimplabelintwidget.c			\
