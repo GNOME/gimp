@@ -1,25 +1,25 @@
 # Swedish messages for GIMP Python.
-# Copyright © 2000-2003, 2007-2010, 2016, 2020, 2021 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007-2010, 2016, 2020, 2021, 2022 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2009, 2010.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2016.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2020, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-21 17:07+0000\n"
-"PO-Revision-Date: 2021-04-21 22:10+0200\n"
+"POT-Creation-Date: 2022-02-17 22:15+0000\n"
+"PO-Revision-Date: 2022-02-18 00:12+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
@@ -95,47 +95,47 @@ msgstr "Spara som färglagd HTML-text"
 msgid "Colored HTML text"
 msgstr "Färglagd HTML-text"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "Lager_namn"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Lagernamn"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Moln"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "_Turbulens"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Turbulens"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "O_pacitet"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Opacitet"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
+#: ../plug-ins/python/foggify.py:124
+msgid "_Fog color"
 msgstr "Färg på _dimma"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Färg på dimma"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Lägg till ett lager av dimma"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Dimma…"
 
@@ -804,159 +804,3 @@ msgstr "Vänta : Renderar mönster"
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Spirogimp…"
-
-#~ msgid "Slice"
-#~ msgstr "Skär"
-
-#~ msgid "Path for HTML export"
-#~ msgstr "Sökväg för HTML-export"
-
-#~ msgid "Filename for export"
-#~ msgstr "Filnamn för export"
-
-#~ msgid "Image name prefix"
-#~ msgstr "Prefix för bildnamn"
-
-#~ msgid "Image format (gif, jpg, png)"
-#~ msgstr "Bildformat (gif, jpg, png)"
-
-#~ msgid "Separate image folder"
-#~ msgstr "Separat bildmapp"
-
-#~ msgid "Folder for image export"
-#~ msgstr "Mapp för bildexport"
-
-#~ msgid "Space between table elements"
-#~ msgstr "Utrymme mellan tabellelement"
-
-#~ msgid "Javascript for onmouseover and clicked"
-#~ msgstr "Javascript för onmouseover och clicked"
-
-#~ msgid "Skip animation for table caps"
-#~ msgstr "Hoppa över animering för tabelltexter"
-
-#~ msgid ""
-#~ "Cuts an image along its guides, creates images and a HTML table snippet"
-#~ msgstr ""
-#~ "Skär en bild längs dess hjälplinjer, skapar bilder och en HTML-tabellsnutt"
-
-#~ msgid "_Slice..."
-#~ msgstr "_Skär…"
-
-#~ msgid "_Console"
-#~ msgstr "_Konsol"
-
-#~ msgid "Missing exception information"
-#~ msgstr "Undantagsinformation saknas"
-
-#~ msgid "An error occurred running %s"
-#~ msgstr "Ett fel inträffade vid körning av %s"
-
-#~ msgid "_More Information"
-#~ msgstr "_Mer information"
-
-#~ msgid "No"
-#~ msgstr "Nej"
-
-#~ msgid "Yes"
-#~ msgstr "Ja"
-
-#~ msgid "Python-Fu File Selection"
-#~ msgstr "Python-Fu filväljare"
-
-#~ msgid "Python-Fu Folder Selection"
-#~ msgstr "Python-Fu mappväljare"
-
-#~ msgid "Invalid input for '%s'"
-#~ msgstr "Ogiltig inmatning för \"%s\""
-
-#~ msgid "Python-Fu Color Selection"
-#~ msgstr "Python-Fu färgval"
-
-#~ msgid "_Image"
-#~ msgstr "_Bild"
-
-#~ msgid "_Drawable"
-#~ msgstr "_Rityta"
-
-#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
-#~ msgstr ""
-#~ "Lägg till en skuggkastning till ett lager, och eventuellt fasa dess kanter"
-
-#~ msgid "_Drop Shadow and Bevel..."
-#~ msgstr "Skug_gkastning och fasning…"
-
-#~ msgid "_Shadow blur"
-#~ msgstr "_Oskarp skugga"
-
-#~ msgid "_Bevel"
-#~ msgstr "_Fasning"
-
-#~ msgid "_Drop shadow"
-#~ msgstr "S_kuggkastning"
-
-#~ msgid "Drop shadow _X displacement"
-#~ msgstr "_X-förskjutning för skuggkastning"
-
-#~ msgid "Drop shadow _Y displacement"
-#~ msgstr "_Y-förskjutning för skuggkastning"
-
-#~ msgid "_Cancel"
-#~ msgstr "A_vbryt"
-
-#~ msgid "_OK"
-#~ msgstr "_OK"
-
-#~ msgid ""
-#~ "Keep\n"
-#~ "Layer"
-#~ msgstr ""
-#~ "Behåll\n"
-#~ "lager"
-
-#~ msgid ""
-#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
-#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
-#~ "pattern is redrawn on the layer that was active when the plugin was "
-#~ "launched."
-#~ msgstr ""
-#~ "Om ikryssad kommer spiro-lagret att behållas och insticksmodulen att "
-#~ "snabbt avslutas när OK trycks ned. Om avmarkerad kommer spiro-lagret tas "
-#~ "bort, och mönstret ritas om på lagret som var aktivt när insticksmodulen "
-#~ "startades."
-
-#~ msgid "Source code"
-#~ msgstr "Källkod"
-
-#~ msgid "Entry box"
-#~ msgstr "Inmatningsruta"
-
-#~ msgid "Color _model"
-#~ msgstr "Färg_modell"
-
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "HSV"
-#~ msgstr "NMI"
-
-#~ msgid "Red or Hue"
-#~ msgstr "Röd eller nyans"
-
-#~ msgid "Blue or Value"
-#~ msgstr "Blå eller intensitet"
-
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr "Skapa en ny pensel med tecken från en textsekvens"
-
-#~ msgid "New Brush from _Text..."
-#~ msgstr "Ny pensel från _text..."
-
-#~ msgid "Font"
-#~ msgstr "Typsnitt"
-
-#~ msgid "Pixel Size"
-#~ msgstr "Bildpunktsstorlek"
-
-#~ msgid "Text"
-#~ msgstr "Text"
