@@ -51,20 +51,25 @@ struct _GimpLabelColorClass
   void (* _gimp_reserved8) (void);
 };
 
-GtkWidget * gimp_label_color_new            (const gchar       *label,
-                                             const GimpRGB     *color);
+GtkWidget * gimp_label_color_new              (const gchar       *label,
+                                               const GimpRGB     *color,
+                                               gboolean           editable);
 
 /* TODO: it would be interesting for such a widget to have an API to
  * customize the label being also above or below, left or right. I could
  * imagine wanting to pretty-list several colors with specific layouts.
  */
 
-void        gimp_label_color_set_value      (GimpLabelColor     *color,
-                                             const GimpRGB      *value);
-void        gimp_label_color_get_value      (GimpLabelColor     *color,
-                                             GimpRGB            *value);
+void        gimp_label_color_set_value        (GimpLabelColor     *color,
+                                               const GimpRGB      *value);
+void        gimp_label_color_get_value        (GimpLabelColor     *color,
+                                               GimpRGB            *value);
 
-GtkWidget * gimp_label_color_get_color_area (GimpLabelColor     *color);
+void        gimp_label_color_set_editable     (GimpLabelColor     *color,
+                                               gboolean            editable);
+gboolean    gimp_label_color_is_editable      (GimpLabelColor     *color);
+
+GtkWidget * gimp_label_color_get_color_widget (GimpLabelColor     *color);
 
 G_END_DECLS
 

@@ -35,7 +35,7 @@
 /**
  * SECTION: gimplabelcolor
  * @title: GimpLabelColor
- * @short_description: Widget containing a color area and a label.
+ * @short_description: Widget containing a color widget and a label.
  *
  * This widget is a subclass of #GimpLabeled with a #GtkColor.
  **/
@@ -50,11 +50,16 @@ enum
 {
   PROP_0,
   PROP_VALUE,
+  PROP_EDITABLE,
+  N_PROPS
 };
+static GParamSpec *object_props[N_PROPS] = { NULL, };
+
 
 typedef struct _GimpLabelColorPrivate
 {
   GtkWidget *area;
+  gboolean   editable;
 } GimpLabelColorPrivate;
 
 static void        gimp_label_color_constructed       (GObject       *object);
@@ -108,13 +113,27 @@ gimp_label_color_class_init (GimpLabelColorClass *klass)
    * Since: 3.0
    **/
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
-  g_object_class_install_property (object_class, PROP_VALUE,
-                                   gimp_param_spec_rgb ("value",
-                                                        "Color",
-                                                        "The displayed color",
-                                                        TRUE, &black,
-                                                        GIMP_PARAM_READWRITE |
-                                                        G_PARAM_CONSTRUCT));
+  object_props[PROP_VALUE] = gimp_param_spec_rgb ("value",
+                                                  "Color",
+                                                  "The displayed color",
+                                                  TRUE, &black,
+                                                  GIMP_PARAM_READWRITE    |
+                                                  G_PARAM_CONSTRUCT);
+
+  /**
+   * GimpLabelColor:editable:
+   *
+   * Whether the color can be edited.
+   *
+   * Since: 3.0
+   **/
+  object_props[PROP_EDITABLE] = g_param_spec_boolean ("editable",
+                                                      "Whether the color can be edited",
+                                                      "Whether the color can be edited",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE);
+
+  g_object_class_install_properties (object_class, N_PROPS, object_props);
 }
 
 static void
@@ -124,6 +143,7 @@ gimp_label_color_init (GimpLabelColor *color)
   GimpRGB                black;
 
   gimp_rgba_set (&black, 0.0, 0.0, 0.0, 1.0);
+  priv->editable = FALSE;
   priv->area = gimp_color_area_new (&black, GIMP_COLOR_AREA_SMALL_CHECKS,
                                     GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
 
@@ -164,19 +184,68 @@ gimp_label_color_set_property (GObject      *object,
     case PROP_VALUE:
         {
           GimpRGB *new_color;
-          GimpRGB  color;
+          GimpRGB *color;
 
           new_color = g_value_get_boxed (value);
 
-          gimp_color_area_get_color (GIMP_COLOR_AREA (priv->area), &color);
+          g_object_get (priv->area,
+                        "color", &color,
+                        NULL);
 
           /* Avoid looping forever since we have bound this widget's
            * "value" property with the color button "value" property.
            */
-          if (gimp_rgba_distance (&color, new_color) >= GIMP_RGBA_EPSILON)
+          if (gimp_rgba_distance (color, new_color) >= GIMP_RGBA_EPSILON)
             {
-              gimp_color_area_set_color (GIMP_COLOR_AREA (priv->area), new_color);
+              g_object_set (priv->area, "color", new_color, NULL);
               g_signal_emit (object, gimp_label_color_signals[VALUE_CHANGED], 0);
+            }
+          g_boxed_free (GIMP_TYPE_RGB, color);
+        }
+      break;
+    case PROP_EDITABLE:
+      if (priv->editable != g_value_get_boolean (value))
+        {
+          const gchar       *dialog_title;
+          GimpLabeled       *labeled;
+          GimpRGB           *color;
+          GimpColorAreaType  type;
+          gboolean           attached;
+
+          labeled = GIMP_LABELED (lcolor);
+          /* Reuse the label contents (without mnemonics) as dialog
+           * title for the color selection. This is why the "editable"
+           * property must not be a G_PARAM_CONSTRUCT.
+           */
+          dialog_title = gtk_label_get_text (GTK_LABEL (gimp_labeled_get_label (labeled)));
+
+          attached = (gtk_widget_get_parent (priv->area) != NULL);
+          g_object_get (priv->area,
+                        "type",  &type,
+                        "color", &color,
+                        NULL);
+
+          gtk_widget_destroy (priv->area);
+
+          priv->editable = g_value_get_boolean (value);
+          if (priv->editable)
+            priv->area = gimp_color_button_new (dialog_title,
+                                                20, 20, color, type);
+          else
+            priv->area = gimp_color_area_new (color, type,
+                                              GDK_BUTTON1_MASK | GDK_BUTTON2_MASK);
+
+          g_boxed_free (GIMP_TYPE_RGB, color);
+
+          gtk_widget_set_size_request (priv->area, 20, 20);
+          g_object_bind_property (G_OBJECT (priv->area), "color",
+                                  G_OBJECT (lcolor),     "value",
+                                  G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+          if (attached)
+            {
+              gtk_grid_attach (GTK_GRID (lcolor), priv->area, 1, 0, 1, 1);
+              gtk_widget_show (priv->area);
             }
         }
       break;
@@ -199,14 +268,12 @@ gimp_label_color_get_property (GObject    *object,
   switch (property_id)
     {
     case PROP_VALUE:
-        {
-          GimpRGB c;
-
-          gimp_color_area_get_color (GIMP_COLOR_AREA( priv->area), &c);
-
-          g_value_set_boxed (value, &c);
-        }
+      g_object_get_property (G_OBJECT (priv->area), "color", value);
       break;
+    case PROP_EDITABLE:
+      g_value_set_boolean (value, priv->editable);
+      break;
+
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -245,23 +312,29 @@ gimp_label_color_populate (GimpLabeled *labeled,
  * Creates a #GimpLabelColor which contains a widget and displays a
  * color area. By default, the color area is of type
  * %GIMP_COLOR_AREA_SMALL_CHECKS, which means transparency of @color
- * will be shown. Moreover the color is draggable to other widgets
- * accepting color drops with buttons 1 and 2.
+ * will be shown.
+ *
+ * Moreover in the non-editable case, the color is draggable to other
+ * widgets accepting color drops with buttons 1 and 2.
+ * In the editable case, the @label is reused as the color chooser's
+ * dialog title.
  *
  * If you wish to customize any of these default behaviours, get the
- * #GimpColorArea with gimp_label_color_get_color_area().
+ * #GimpColorArea or #GimpColorButton with gimp_label_color_get_color_widget().
  *
  * Returns: (transfer full): The new #GimpLabelColor widget.
  **/
 GtkWidget *
 gimp_label_color_new (const gchar   *label,
-                      const GimpRGB *color)
+                      const GimpRGB *color,
+                      gboolean       editable)
 {
   GtkWidget *labeled;
 
   labeled = g_object_new (GIMP_TYPE_LABEL_COLOR,
-                          "label",  label,
-                          "value",  color,
+                          "label",    label,
+                          "value",    color,
+                          "editable", editable,
                           NULL);
 
   return labeled;
@@ -288,7 +361,7 @@ gimp_label_color_set_value (GimpLabelColor *color,
 /**
  * gimp_label_color_get_value:
  * @color: The #GtkLabelColor.
- * @value: (out): The color to assign to the color area.
+ * @value: (out callee-allocates): The color to assign to the color area.
  *
  * This function returns the value shown by @color.
  **/
@@ -300,19 +373,59 @@ gimp_label_color_get_value (GimpLabelColor *color,
 
   g_return_if_fail (GIMP_IS_LABEL_COLOR (color));
 
-  gimp_color_area_get_color (GIMP_COLOR_AREA (priv->area), value);
+  g_object_get (priv->area,
+                "color", &value,
+                NULL);
 }
 
 /**
- * gimp_label_color_get_color_area:
+ * gimp_label_color_set_editable:
+ * @color:    The #GtkLabelColor.
+ * @editable: Whether the color should be editable.
+ *
+ * Changes the editability of the color.
+ **/
+void
+gimp_label_color_set_editable (GimpLabelColor *color,
+                               gboolean        editable)
+{
+  g_return_if_fail (GIMP_IS_LABEL_COLOR (color));
+
+  g_object_set (color, "editable", editable, NULL);
+}
+
+/**
+ * gimp_label_color_is_editable:
+ * @color: The #GtkLabelColor.
+ *
+ * This function tells whether the color widget allows to edit the
+ * color.
+ * Returns: %TRUE if the color is editable.
+ **/
+gboolean
+gimp_label_color_is_editable (GimpLabelColor *color)
+{
+  GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
+
+  g_return_val_if_fail (GIMP_IS_LABEL_COLOR (color), FALSE);
+
+  priv = gimp_label_color_get_instance_private (color);
+
+  return GIMP_IS_COLOR_SELECT (priv->area);
+}
+
+/**
+ * gimp_label_color_get_color_widget:
  * @color: The #GimpLabelColor
  *
- * This function returns the #GimpColorArea packed in @color.
+ * This function returns the color widget packed in @color, which can be
+ * either a #GimpColorButton (if the @color is editable) or a
+ * #GimpColorArea otherwise.
  *
- * Returns: (transfer none): The #GimpColorArea packed in @color.
+ * Returns: (transfer none): The color widget packed in @color.
  **/
 GtkWidget *
-gimp_label_color_get_color_area (GimpLabelColor *color)
+gimp_label_color_get_color_widget (GimpLabelColor *color)
 {
   GimpLabelColorPrivate *priv = gimp_label_color_get_instance_private (color);
 

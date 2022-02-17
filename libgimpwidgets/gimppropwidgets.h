@@ -223,7 +223,8 @@ GtkWidget     * gimp_prop_color_select_new        (GObject       *config,
                                                    GimpColorAreaType  type);
 
 GtkWidget     * gimp_prop_label_color_new         (GObject       *config,
-                                                   const gchar   *property_name);
+                                                   const gchar   *property_name,
+                                                   gboolean       editable);
 
 
 /*  GimpParamUnit  */

@@ -3859,6 +3859,7 @@ gimp_prop_color_select_new (GObject           *config,
  * gimp_prop_label_color_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of RGB property.
+ * @editable:      Whether the widget should allow color editability.
  *
  * Creates a #GimpLabelColor to set and display the value of an RGB
  * property.
@@ -3869,7 +3870,8 @@ gimp_prop_color_select_new (GObject           *config,
  */
 GtkWidget *
 gimp_prop_label_color_new (GObject     *config,
-                           const gchar *property_name)
+                           const gchar *property_name,
+                           gboolean     editable)
 {
   GParamSpec  *param_spec;
   GtkWidget   *prop_widget;
@@ -3887,7 +3889,7 @@ gimp_prop_label_color_new (GObject     *config,
 
   label = g_param_spec_get_nick (param_spec);
 
-  prop_widget = gimp_label_color_new (label, value);
+  prop_widget = gimp_label_color_new (label, value, editable);
   g_free (value);
 
   g_object_bind_property (config,      property_name,
