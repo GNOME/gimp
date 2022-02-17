@@ -222,6 +222,10 @@ GtkWidget     * gimp_prop_color_select_new        (GObject       *config,
                                                    gint           height,
                                                    GimpColorAreaType  type);
 
+GtkWidget     * gimp_prop_label_color_new         (GObject       *config,
+                                                   const gchar   *property_name);
+
+
 /*  GimpParamUnit  */
 
 GtkWidget     * gimp_prop_unit_combo_box_new      (GObject       *config,

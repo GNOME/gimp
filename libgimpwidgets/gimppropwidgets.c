@@ -3855,6 +3855,51 @@ gimp_prop_color_select_new (GObject           *config,
   return button;
 }
 
+/**
+ * gimp_prop_label_color_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of RGB property.
+ *
+ * Creates a #GimpLabelColor to set and display the value of an RGB
+ * property.
+ *
+ * Returns: (transfer full): A new #GimpLabelColor widget.
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_label_color_new (GObject     *config,
+                           const gchar *property_name)
+{
+  GParamSpec  *param_spec;
+  GtkWidget   *prop_widget;
+  const gchar *label;
+  GimpRGB     *value;
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  label = g_param_spec_get_nick (param_spec);
+
+  prop_widget = gimp_label_color_new (label, value);
+  g_free (value);
+
+  g_object_bind_property (config,      property_name,
+                          prop_widget, "value",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+
+  gtk_widget_show (prop_widget);
+
+  return prop_widget;
+}
+
 /********************/
 /*  unit combo box  */
 /********************/
