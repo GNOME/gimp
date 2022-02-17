@@ -35,6 +35,11 @@ struct _GimpLabeledClass
 {
   GtkGridClass       parent_class;
 
+  /*  Signals        */
+
+  void (* mnemonic_widget_changed) (GimpLabeled *labeled,
+                                    GtkWidget   *widget);
+
   /*  Class methods  */
 
   /**
@@ -50,11 +55,12 @@ struct _GimpLabeledClass
    * Returns: (transfer none): the #GtkWidget which the label must be
    *                           set as mnemonic to.
    **/
-  GtkWidget     * (* populate) (GimpLabeled *labeled,
-                                gint        *x,
-                                gint        *y,
-                                gint        *width,
-                                gint        *height);
+  GtkWidget     * (* populate)     (GimpLabeled *labeled,
+                                    gint        *x,
+                                    gint        *y,
+                                    gint        *width,
+                                    gint        *height);
+
 
   /* Padding for future expansion */
   void (* _gimp_reserved1) (void);

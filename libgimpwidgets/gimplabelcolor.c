@@ -246,6 +246,7 @@ gimp_label_color_set_property (GObject      *object,
             {
               gtk_grid_attach (GTK_GRID (lcolor), priv->area, 1, 0, 1, 1);
               gtk_widget_show (priv->area);
+              g_signal_emit_by_name (object, "mnemonic-widget-changed", priv->area);
             }
         }
       break;

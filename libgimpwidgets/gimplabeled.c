@@ -42,31 +42,41 @@
 
 enum
 {
+  MNEMONIC_WIDGET_CHANGED,
+  LAST_SIGNAL
+};
+
+enum
+{
   PROP_0,
   PROP_LABEL,
 };
 
 typedef struct _GimpLabeledPrivate
 {
-  GtkWidget     *label;
-  GtkWidget     *mnemonic_widget;
+  GtkWidget *label;
 } GimpLabeledPrivate;
 
 
-static void       gimp_labeled_constructed       (GObject       *object);
-static void       gimp_labeled_set_property      (GObject       *object,
-                                                  guint          property_id,
-                                                  const GValue  *value,
-                                                  GParamSpec    *pspec);
-static void       gimp_labeled_get_property      (GObject       *object,
-                                                  guint          property_id,
-                                                  GValue        *value,
-                                                  GParamSpec    *pspec);
+static void       gimp_labeled_constructed            (GObject       *object);
+static void       gimp_labeled_set_property           (GObject       *object,
+                                                       guint          property_id,
+                                                       const GValue  *value,
+                                                       GParamSpec    *pspec);
+static void       gimp_labeled_get_property           (GObject       *object,
+                                                       guint          property_id,
+                                                       GValue        *value,
+                                                       GParamSpec    *pspec);
+
+static void gimp_labeled_real_mnemonic_widget_changed (GimpLabeled   *labeled,
+                                                       GtkWidget     *widget);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpLabeled, gimp_labeled, GTK_TYPE_GRID)
 
 #define parent_class gimp_labeled_parent_class
 
+static guint signals[LAST_SIGNAL] = { 0 };
 
 static void
 gimp_labeled_class_init (GimpLabeledClass *klass)
@@ -76,6 +86,17 @@ gimp_labeled_class_init (GimpLabeledClass *klass)
   object_class->constructed  = gimp_labeled_constructed;
   object_class->set_property = gimp_labeled_set_property;
   object_class->get_property = gimp_labeled_get_property;
+
+  signals[MNEMONIC_WIDGET_CHANGED] =
+    g_signal_new ("mnemonic-widget-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpLabeledClass, mnemonic_widget_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 1,
+                  GTK_TYPE_WIDGET);
+
+  klass->mnemonic_widget_changed = gimp_labeled_real_mnemonic_widget_changed;
 
   /**
    * GimpLabeled:label:
@@ -103,6 +124,7 @@ gimp_labeled_constructed (GObject *object)
   GimpLabeledClass   *klass;
   GimpLabeled        *labeled = GIMP_LABELED (object);
   GimpLabeledPrivate *priv    = gimp_labeled_get_instance_private (labeled);
+  GtkWidget          *mnemonic_widget;
   gint                x       = 0;
   gint                y       = 0;
   gint                width   = 1;
@@ -115,10 +137,10 @@ gimp_labeled_constructed (GObject *object)
 
   klass = GIMP_LABELED_GET_CLASS (labeled);
   g_return_if_fail (klass->populate);
-  priv->mnemonic_widget = klass->populate (labeled, &x, &y, &width, &height);
+  mnemonic_widget = klass->populate (labeled, &x, &y, &width, &height);
 
-  if (priv->mnemonic_widget)
-    gtk_label_set_mnemonic_widget (GTK_LABEL (priv->label), priv->mnemonic_widget);
+  g_signal_emit (object, signals[MNEMONIC_WIDGET_CHANGED], 0,
+                 mnemonic_widget);
 
   gtk_grid_attach (GTK_GRID (labeled), priv->label, x, y, width, height);
   gtk_widget_show (priv->label);
@@ -173,6 +195,15 @@ gimp_labeled_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_labeled_real_mnemonic_widget_changed (GimpLabeled *labeled,
+                                           GtkWidget   *widget)
+{
+  GimpLabeledPrivate *priv  = gimp_labeled_get_instance_private (labeled);
+
+  gtk_label_set_mnemonic_widget (GTK_LABEL (priv->label), widget);
 }
 
 /* Public functions */
