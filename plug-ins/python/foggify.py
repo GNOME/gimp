@@ -36,7 +36,6 @@ def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
     if run_mode == Gimp.RunMode.INTERACTIVE:
         GimpUi.init('python-fu-foggify')
         dialog = GimpUi.ProcedureDialog(procedure=procedure, config=config)
-        dialog.get_color_widget('color', True, GimpUi.ColorAreaType.FLAT)
         dialog.fill(None)
         if not dialog.run():
             dialog.destroy()
@@ -122,7 +121,7 @@ class Foggify (Gimp.PlugIn):
     # work. I still leave it this way for now until we figure this out
     # as it should be the better syntax.
     color = GObject.Property(type =Gimp.RGB, default=_color,
-                             nick =_("Fog _color"),
+                             nick =_("_Fog color"),
                              blurb=_("Fog color"))
 
     ## GimpPlugIn virtual methods ##
