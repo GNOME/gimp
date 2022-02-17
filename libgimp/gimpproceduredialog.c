@@ -556,6 +556,10 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
  *     * %GTK_TYPE_ENTRY: an entry with no label.
  *     * %GTK_TYPE_TEXT_VIEW: a text view with no label.
  * - %GIMP_TYPE_PARAM_RGB:
+ *     * %GIMP_TYPE_LABEL_COLOR (default): a color button with a label.
+ *         Please use gimp_procedure_dialog_get_color_widget() for a
+ *         non-editable color area with a label.
+ *     * %GIMP_TYPE_COLOR_BUTTON: a color button with no label.
  *     * %GIMP_TYPE_COLOR_AREA: a color area with no label.
  *
  * If the @widget_type is not supported for the actual type of
@@ -682,9 +686,27 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
     {
-      widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
-                                         property, 20, 20,
-                                         GIMP_COLOR_AREA_SMALL_CHECKS);
+      if (widget_type == G_TYPE_NONE || widget_type == GIMP_TYPE_LABEL_COLOR)
+        {
+          widget = gimp_prop_label_color_new (G_OBJECT (dialog->priv->config),
+                                              property, TRUE);
+        }
+      else if (widget_type == GIMP_TYPE_COLOR_BUTTON)
+        {
+          widget = gimp_prop_color_select_new (G_OBJECT (dialog->priv->config),
+                                               property, 20, 20,
+                                               GIMP_COLOR_AREA_SMALL_CHECKS);
+          gtk_widget_set_vexpand (widget, FALSE);
+          gtk_widget_set_hexpand (widget, FALSE);
+        }
+      else if (widget_type == GIMP_TYPE_COLOR_AREA)
+        {
+          widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
+                                             property, 20, 20,
+                                             GIMP_COLOR_AREA_SMALL_CHECKS);
+          gtk_widget_set_vexpand (widget, FALSE);
+          gtk_widget_set_hexpand (widget, FALSE);
+        }
     }
   else
     {
@@ -751,13 +773,13 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
  * Creates a new widget for @property which must necessarily be a
  * #GimpRGB property.
  * This must be used instead of gimp_procedure_dialog_get_widget() when
- * you want more customizability for an RGB property.
+ * you want a #GimpLabelColor which is not customizable for an RGB
+ * property, or when to set a specific @type.
  *
  * If a widget has already been created for this procedure, it will be
  * returned instead (whatever its actual widget type).
  *
- * Returns: (transfer none): a #GimpColorButton representing @property
- *                           if @editable is %TRUE, a #GimpColorArea otherwise.
+ * Returns: (transfer none): a #GimpLabelColor representing @property.
  *                           The object belongs to @dialog and must not
  *                           be freed.
  */
@@ -789,15 +811,11 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
 
   if (G_PARAM_SPEC_TYPE (pspec) == GIMP_TYPE_PARAM_RGB)
     {
-      if (editable)
-        widget = gimp_prop_color_select_new (G_OBJECT (dialog->priv->config),
-                                             property, 20, 20, type);
-      else
-        widget = gimp_prop_color_area_new (G_OBJECT (dialog->priv->config),
-                                           property, 20, 20, type);
+      widget = gimp_prop_label_color_new (G_OBJECT (dialog->priv->config),
+                                          property, editable);
 
       gtk_widget_set_vexpand (widget, FALSE);
-      gtk_widget_set_hexpand (widget, TRUE);
+      gtk_widget_set_hexpand (widget, FALSE);
     }
 
   if (! widget)
