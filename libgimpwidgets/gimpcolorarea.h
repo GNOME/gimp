@@ -84,6 +84,8 @@ void        gimp_color_area_get_color        (GimpColorArea     *area,
 gboolean    gimp_color_area_has_alpha        (GimpColorArea     *area);
 void        gimp_color_area_set_type         (GimpColorArea     *area,
                                               GimpColorAreaType  type);
+void        gimp_color_area_enable_drag      (GimpColorArea     *area,
+                                              GdkModifierType    drag_mask);
 void        gimp_color_area_set_draw_border  (GimpColorArea     *area,
                                               gboolean           draw_border);
 void        gimp_color_area_set_out_of_gamut (GimpColorArea     *area,

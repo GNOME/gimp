@@ -216,8 +216,7 @@ gimp_color_area_class_init (GimpColorAreaClass *klass)
                                                        "The modifier mask that triggers dragging the color",
                                                        GDK_TYPE_MODIFIER_TYPE,
                                                        0,
-                                                       GIMP_PARAM_WRITABLE |
-                                                       G_PARAM_CONSTRUCT_ONLY));
+                                                       GIMP_PARAM_WRITABLE));
   /**
    * GimpColorArea:draw-border:
    *
@@ -336,6 +335,8 @@ gimp_color_area_set_property (GObject      *object,
                              drag_mask,
                              &target, 1,
                              GDK_ACTION_COPY | GDK_ACTION_MOVE);
+      else
+        gtk_drag_source_unset (GTK_WIDGET (area));
       break;
 
     case PROP_DRAW_BORDER:
@@ -622,6 +623,27 @@ gimp_color_area_set_type (GimpColorArea     *area,
 
       g_object_notify (G_OBJECT (area), "type");
     }
+}
+
+/**
+ * gimp_color_area_enable_drag:
+ * @area:      A #GimpColorArea.
+ * @drag_mask: The bitmask of buttons that can start the drag.
+ *
+ * Allows dragging the color displayed with buttons identified by
+ * @drag_mask. The drag supports targets of type "application/x-color".
+ *
+ * Note that setting a @drag_mask of 0 disables the drag ability.
+ **/
+void
+gimp_color_area_enable_drag (GimpColorArea   *area,
+                             GdkModifierType  drag_mask)
+{
+  g_return_if_fail (GIMP_IS_COLOR_AREA (area));
+
+  g_object_set (area,
+                "drag-mask", drag_mask,
+                NULL);
 }
 
 /**
