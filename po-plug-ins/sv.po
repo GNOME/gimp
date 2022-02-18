@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-19 16:20+0000\n"
-"PO-Revision-Date: 2022-01-21 21:21+0100\n"
+"POT-Creation-Date: 2022-02-16 01:13+0000\n"
+"PO-Revision-Date: 2022-02-18 21:43+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -52,7 +52,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1896
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1898
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
@@ -117,7 +117,7 @@ msgstr "A_vbryt"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1897
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1899
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -278,7 +278,7 @@ msgstr "Optimerar animation"
 
 #: ../plug-ins/common/animation-play.c:210
 msgid "Preview a GIMP layer-based animation"
-msgstr "Förhandsgranska en GIMP-lagerbaserad animation"
+msgstr "Förhandsvisa en GIMP-lagerbaserad animation"
 
 #: ../plug-ins/common/animation-play.c:215
 msgid "_Playback..."
@@ -919,8 +919,8 @@ msgid ""
 msgstr ""
 "”Fixera frö” är ett alias till mig.\n"
 "Samma frö producerar samma bild, om (1) bildens vidd är densamma (detta är "
-"anledningen till att ritytans bild är olik förhandsgranskningen), och (2) "
-"alla mutationshastigheter är noll."
+"anledningen till att ritytans bild är olik förhandsvisningen), och (2) alla "
+"mutationshastigheter är noll."
 
 #: ../plug-ins/common/cml-explorer.c:1453
 msgid "O_thers"
@@ -1053,7 +1053,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1728
 #: ../plug-ins/file-tiff/file-tiff-save.c:965
@@ -1536,7 +1536,7 @@ msgstr "Skal_delning:"
 
 #: ../plug-ins/common/contrast-retinex.c:362
 msgid "Dy_namic:"
-msgstr "Dy_namisk:"
+msgstr "Dy_namik:"
 
 #: ../plug-ins/common/contrast-retinex.c:650
 msgid "Retinex: filtering"
@@ -1596,17 +1596,17 @@ msgstr "Böj efter kurva"
 #: ../plug-ins/gimpressionist/sizemap.c:458
 #: ../plug-ins/print/print-page-layout.c:176
 msgid "Preview"
-msgstr "Förhandsgranska"
+msgstr "Förhandsvisa"
 
 #. The preview button
 #: ../plug-ins/common/curve-bend.c:1356
 msgid "_Preview Once"
-msgstr "_Förhandsgranska en gång"
+msgstr "_Förhandsvisa en gång"
 
 #. The preview toggle
 #: ../plug-ins/common/curve-bend.c:1365
 msgid "Automatic pre_view"
-msgstr "Automatisk _förhandsgranskning"
+msgstr "Automatisk _förhandsvisning"
 
 # src/menus.c:311
 #. Options area, bottom of column
@@ -2208,7 +2208,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettrubrik"
 #: ../plug-ins/common/file-cel.c:663
 #, c-format
 msgid "'%s': is not a KCF palette file"
-msgstr "”%s” är inte en KCF-palettfil"
+msgstr "”%s”: är inte en KCF-palettfil"
 
 #: ../plug-ins/common/file-cel.c:672
 #, c-format
@@ -2240,7 +2240,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:312
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
 #: ../plug-ins/file-psd/psd-save.c:1699 ../plug-ins/file-sgi/sgi.c:584
@@ -2627,59 +2627,59 @@ msgstr ""
 msgid "image content"
 msgstr "bildinnehåll"
 
-#: ../plug-ins/common/file-heif.c:1316
+#: ../plug-ins/common/file-heif.c:1318
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Exporterar ”%s” med %s-kodare"
 
-#: ../plug-ins/common/file-heif.c:1367 ../plug-ins/common/file-heif.c:1621
+#: ../plug-ins/common/file-heif.c:1369 ../plug-ins/common/file-heif.c:1623
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:1658
+#: ../plug-ins/common/file-heif.c:1660
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:1747
+#: ../plug-ins/common/file-heif.c:1749
 msgid "primary"
 msgstr "primär"
 
-#: ../plug-ins/common/file-heif.c:1892
+#: ../plug-ins/common/file-heif.c:1894
 msgid "Load HEIF Image"
 msgstr "Läs in HEIF-bild"
 
-#: ../plug-ins/common/file-heif.c:1906
+#: ../plug-ins/common/file-heif.c:1908
 msgid "Select Image"
 msgstr "Välj bild"
 
-#: ../plug-ins/common/file-heif.c:2072
+#: ../plug-ins/common/file-heif.c:2074
 msgid "Nearly _lossless"
 msgstr "Nästan _förlustfri"
 
-#: ../plug-ins/common/file-heif.c:2076 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2078 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Kvalitet:"
 
-#: ../plug-ins/common/file-heif.c:2119
+#: ../plug-ins/common/file-heif.c:2121
 msgid "Bit depth:"
 msgstr "Bitdjup:"
 
-#: ../plug-ins/common/file-heif.c:2125
+#: ../plug-ins/common/file-heif.c:2127
 msgid "8 bit/channel"
 msgstr "8 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2126
+#: ../plug-ins/common/file-heif.c:2128
 msgid "10 bit/channel"
 msgstr "10 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2127
+#: ../plug-ins/common/file-heif.c:2129
 msgid "12 bit/channel"
 msgstr "12 bitar/kanal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2136 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save color _profile"
@@ -3652,7 +3652,7 @@ msgstr "_Encapsulated PostScript"
 
 #: ../plug-ins/common/file-ps.c:3792
 msgid "P_review"
-msgstr "F_örhandsgranska"
+msgstr "F_örhandsvisa"
 
 #: ../plug-ins/common/file-ps.c:3816
 msgid "Preview _size:"
@@ -4684,7 +4684,7 @@ msgstr "Kunde inte öppna ”%s” för skrivning: "
 #: ../plug-ins/common/file-xwd.c:686
 #, c-format
 msgid "Error exporting '%s': "
-msgstr "Fel vid exportering av ”%s”: "
+msgstr "Fel vid export av ”%s”: "
 
 #: ../plug-ins/common/file-xwd.c:1762 ../plug-ins/common/file-xwd.c:2160
 #, c-format
@@ -6623,29 +6623,29 @@ msgstr "Bitdjupet stöds inte eller är ogiltigt."
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmappen avslutades oväntat."
 
-#: ../plug-ins/file-bmp/bmp-save.c:183 ../plug-ins/file-bmp/bmp-save.c:216
+#: ../plug-ins/file-bmp/bmp-save.c:186 ../plug-ins/file-bmp/bmp-save.c:219
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr "Kan inte exportera indexerad bild med transparens i BMP-filformat."
 
-#: ../plug-ins/file-bmp/bmp-save.c:185 ../plug-ins/file-bmp/bmp-save.c:218
+#: ../plug-ins/file-bmp/bmp-save.c:188 ../plug-ins/file-bmp/bmp-save.c:221
 msgid "Alpha channel will be ignored."
 msgstr "Alfakanal kommer att ignoreras."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:924
+#: ../plug-ins/file-bmp/bmp-save.c:952
 msgid "_Run-Length Encoded"
 msgstr "_Skurlängdskodad"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:937
+#: ../plug-ins/file-bmp/bmp-save.c:965
 msgid "Co_mpatibility Options"
 msgstr "Ko_mpatibilitetsalternativ"
 
-#: ../plug-ins/file-bmp/bmp-save.c:947
+#: ../plug-ins/file-bmp/bmp-save.c:975
 msgid "_Do not write color space information"
 msgstr "Skriv inte färgrym_dsinformation"
 
-#: ../plug-ins/file-bmp/bmp-save.c:949
+#: ../plug-ins/file-bmp/bmp-save.c:977
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6657,24 +6657,25 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:965 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
 #: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "_Avancerade inställningar"
 
-#: ../plug-ins/file-bmp/bmp-save.c:980
+#: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "16 bits"
 msgstr "16 bitar"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1016
+#: ../plug-ins/file-bmp/bmp-save.c:1044
 msgid "24 bits"
 msgstr "24 bitar"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1033
+#: ../plug-ins/file-bmp/bmp-save.c:1061
 msgid "32 bits"
 msgstr "32 bitar"
 
-#: ../plug-ins/file-bmp/bmp.c:120 ../plug-ins/file-bmp/bmp.c:139
+#: ../plug-ins/file-bmp/bmp.c:132 ../plug-ins/file-bmp/bmp.c:151
+#: ../plug-ins/file-bmp/bmp.c:168
 msgid "Windows BMP image"
 msgstr "Windows BMP-bild"
 
@@ -6958,7 +6959,7 @@ msgstr "Microsoft Windows-ikon"
 
 #: ../plug-ins/file-jpeg/jpeg-load.c:230
 msgid "JPEG preview"
-msgstr "JPEG förhandsgranska"
+msgstr "JPEG förhandsvisa"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:206 ../plug-ins/file-jpeg/jpeg-save.c:213
 #, c-format
@@ -7001,7 +7002,7 @@ msgstr "Aktivera förhandsvisning för att läsa av filstorleken."
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:900
 msgid "Sho_w preview in image window"
-msgstr "Visa _förhandsgranskning i bildfönstret"
+msgstr "Visa _förhandsvisning i bildfönstret"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:918
 msgid "Save _Exif data"
@@ -7114,7 +7115,7 @@ msgstr "JPEG-bild"
 
 #: ../plug-ins/file-jpeg/jpeg.c:313
 msgid "Export Preview"
-msgstr "Förhandsgranska export"
+msgstr "Förhandsvisa export"
 
 #: ../plug-ins/file-psd/psd-load.c:228
 #: ../plug-ins/file-psd/psd-thumb-load.c:130
@@ -8124,15 +8125,15 @@ msgstr "Fractal Explorer"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:637
 msgid "Re_altime preview"
-msgstr "Förh_andsgranska i realtid"
+msgstr "Förh_andsvisa i realtid"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:645
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "Om aktiverad kommer förhandsgranskningen att ritas om automatiskt"
+msgstr "Om aktiverad kommer förhandsvisningen att ritas om automatiskt"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:648
 msgid "R_edraw preview"
-msgstr "Ri_ta om förhandsgranskning"
+msgstr "Ri_ta om förhandsvisning"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:669
 #: ../plug-ins/imagemap/imap_menu.c:197
@@ -8362,7 +8363,7 @@ msgid ""
 "function). The result is visible in the preview image"
 msgstr ""
 "Skapa en färgkarta med de alternativ du angav ovan (färgintensitet/-"
-"funktion). Resultatet visas i förhandsgranskningsbilden"
+"funktion). Resultatet visas i förhandsvisningsbilden"
 
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1147
 msgid "Apply active gradient to final image"
@@ -9168,7 +9169,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientmap.c:588
 #: ../plug-ins/gimpressionist/sizemap.c:456
 msgid "Adjust the preview's brightness"
-msgstr "Justera förhandsgranskarens ljusstyrka"
+msgstr "Justera förhandsvisarens ljusstyrka"
 
 #: ../plug-ins/gimpressionist/orientmap.c:611
 msgid "Select previous vector"
@@ -9377,7 +9378,7 @@ msgstr "_Uppdatera"
 
 #: ../plug-ins/gimpressionist/preview.c:180
 msgid "Refresh the Preview window"
-msgstr "Uppdatera förhandsgranskningsfönstret"
+msgstr "Uppdatera förhandsvisningsfönstret"
 
 #: ../plug-ins/gimpressionist/preview.c:188
 msgid "Revert to the original image"
@@ -10185,7 +10186,7 @@ msgstr "Misslyckades med att skriva GFlare-filen ”%s”: %s"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2480
 msgid "A_uto update preview"
-msgstr "A_uto-uppdatera förhandsgranskning"
+msgstr "A_uto-uppdatera förhandsvisning"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:2533
 msgid "'Default' is created."
@@ -11005,7 +11006,7 @@ msgstr "Dimensioner"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:322
 msgid "Pre_view"
-msgstr "Förhands_granska"
+msgstr "Förhands_visa"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:360
 msgid "_JavaScript"
@@ -11082,7 +11083,7 @@ msgstr "bildpunkter från _toppen"
 
 #: ../plug-ins/imagemap/imap_grid.c:288
 msgid "_Preview"
-msgstr "_Förhandsgranska"
+msgstr "_Förhandsvisa"
 
 #: ../plug-ins/imagemap/imap_main.c:121
 msgid "Create a clickable imagemap"
@@ -11511,11 +11512,11 @@ msgstr "Skapa en ny bild vid tillämpning av filter"
 
 #: ../plug-ins/lighting/lighting-ui.c:339
 msgid "High _quality preview"
-msgstr "Hög_kvalitativ förhandsgranskning"
+msgstr "Hög_kvalitativ förhandsvisning"
 
 #: ../plug-ins/lighting/lighting-ui.c:349
 msgid "Enable/disable high quality preview"
-msgstr "Använd/använd inte högkvalitetsförhandsgranskning"
+msgstr "Använd/använd inte högkvalitetsförhandsvisning"
 
 #: ../plug-ins/lighting/lighting-ui.c:357
 msgid "Distance:"
@@ -11767,7 +11768,7 @@ msgstr "Miljö_karta"
 #: ../plug-ins/lighting/lighting-ui.c:1099
 #: ../plug-ins/map-object/map-object-ui.c:1395
 msgid "Recompute preview image"
-msgstr "Räkna om förhandsgranskningsbild"
+msgstr "Räkna om förhandsvisningsbild"
 
 #: ../plug-ins/lighting/lighting-ui.c:1101
 msgid "I_nteractive"
@@ -11775,7 +11776,7 @@ msgstr "I_nteraktiv"
 
 #: ../plug-ins/lighting/lighting-ui.c:1115
 msgid "Enable/disable real time preview of changes"
-msgstr "Använd/använd inte realtidsförhandsgranskning"
+msgstr "Använd/använd inte realtidsförhandsvisning"
 
 #: ../plug-ins/lighting/lighting-ui.c:1158
 msgid "Save Lighting Preset"
@@ -12038,7 +12039,7 @@ msgstr "Mappa till objekt"
 
 #: ../plug-ins/map-object/map-object-ui.c:1386
 msgid "_Preview!"
-msgstr "_Förhandsgranska!"
+msgstr "_Förhandsvisa!"
 
 #: ../plug-ins/map-object/map-object-ui.c:1413
 msgid "Show _wireframe"
@@ -12046,7 +12047,7 @@ msgstr "Visa _trådram"
 
 #: ../plug-ins/map-object/map-object-ui.c:1422
 msgid "Update preview _live"
-msgstr "Uppdatera förhandsgranskning _live"
+msgstr "Uppdatera förhandsvisning _live"
 
 #: ../plug-ins/metadata/metadata-editor.c:439
 msgid "Edit metadata (IPTC, EXIF, XMP)"
