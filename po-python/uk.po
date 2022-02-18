@@ -2,13 +2,13 @@
 # Yuri Syrota <rasta@renome.rovno.ua>, 2000.
 # Maxim Dziumanenko <dziumanenko@gmail.com>, 2004-2010.
 # Korostil Daniel <ted.korostiled@gmail.com>, 2011.
-# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021.
+# Yuri Chornoivan <yurchor@ukr.net>, 2018, 2020, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-21 06:44+0000\n"
-"PO-Revision-Date: 2021-04-21 12:58+0300\n"
+"POT-Creation-Date: 2022-02-17 22:15+0000\n"
+"PO-Revision-Date: 2022-02-18 09:01+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -92,51 +92,48 @@ msgstr "Зберегти як кольоровий текст HTML"
 msgid "Colored HTML text"
 msgstr "Кольровий текст HTML"
 
-#: ../plug-ins/python/foggify.py:105
-#| msgid "Layer name"
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "_Назва шару"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Назва шару"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Хмари"
 
-#: ../plug-ins/python/foggify.py:110
-#| msgid "Turbulence"
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "_Турбулентність"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Турбулентність"
 
-#: ../plug-ins/python/foggify.py:115
-#| msgid "Opacity"
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "Н_епрозорість"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Непрозорість"
 
-#: ../plug-ins/python/foggify.py:125
+#: ../plug-ins/python/foggify.py:124
 #| msgid "Fog color"
-msgid "Fog _color"
-msgstr "_Колір туману"
+msgid "_Fog color"
+msgstr "Колір т_уману"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Колір туману"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Додати шар туману"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Туман..."
 
@@ -810,6 +807,10 @@ msgstr "Будь ласка, зачекайте: обробляємо візер
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Спіроґімп…"
+
+#~| msgid "Fog color"
+#~ msgid "Fog _color"
+#~ msgstr "_Колір туману"
 
 #~ msgid "Exercise a goat (Python 3)"
 #~ msgstr "Потренувати козу (Python 3)"
