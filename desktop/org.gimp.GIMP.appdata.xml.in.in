@@ -90,6 +90,12 @@
           Alt-click on visibility and lock icons in item dockables massively toggles visibility and locks among selected items
           </_li>
           <_li>
+          Item dockables now display icon headers for visibility and locks column
+          </_li>
+          <_li>
+          Our System theme shows visible hints around unset visibility and locks icons when hovering them in item dockables
+          </_li>
+          <_li>
           New checkbox to enable or disable dynamics in paint tools' options (replacing "Dynamics Off" dynamics)
           </_li>
           <_li>
