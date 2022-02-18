@@ -100,6 +100,9 @@ User Interface:
     shift-click which switch within all items at same level).
   - Channels and vectors are now multi-selectable (though actions may
     have not been all updated yet to handle multiple items).
+  - On-hover indicators around inactive/unset eye/locked toggles in
+    Layer/Channels/Paths dialogs.
+  - GimpSpinScale made more compact.
 
 Tools:
 
@@ -218,6 +221,14 @@ API:
   - GimpStringArray type was removed in favor of GStrv. Various libgimp
     API were updated to use GStrv, and relevant plug-in procedure with
     GStrv arguments or return values were updated as well.
+  - New widget GimpSpinScale which is the scale widget used by core
+    code, such as the "Opacity" slider on the Layers dockable, moved to
+    libgimpwidgets to be usable by plug-ins.
+  - New widgets: GimpLabelColor and GimpLabelEntry which are now used by
+    default for GimpRGB and string properties by GimpProcedureDialog.
+    They also come with their property widget API:
+    gimp_prop_label_entry_new() and gimp_prop_label_color_new().
+  - New gimp_color_area_enable_drag() API.
 
 Documentation:
 
