@@ -419,7 +419,7 @@ gimp_config_serialize_to_string (GimpConfig *config,
  * @parasite_flags: the new parasite's flags
  * @data:           user data passed to the serialize implementation.
  *
- * Serializes the object properties of @config to a [class@Parasite].
+ * Serializes the object properties of @config to a [struct@Parasite].
  *
  * Returns: (transfer full): the newly allocated parasite.
  *

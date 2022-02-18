@@ -629,8 +629,8 @@ gimp_plug_in_get_temp_procedure (GimpPlugIn  *plug_in,
  * [method@PlugIn.extension_process] in an endless loop.
  *
  * If the plug-in cannot use [method@PlugIn.extension_process], i.e. if
- * it has a GUI and is hanging around in a [class@GLib.MainLoop], it must call
- * [method@PlugIn.extension_enable].
+ * it has a GUI and is hanging around in a [struct@GLib.MainLoop], it
+ * must call [method@PlugIn.extension_enable].
  *
  * Note that the plug-in does not need to be a
  * [const@PDBProcType.EXTENSION] to register temporary procedures.
