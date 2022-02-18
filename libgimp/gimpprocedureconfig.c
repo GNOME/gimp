@@ -39,7 +39,7 @@
  * procedure's arguments and auxiliary arguments in number, order and
  * type.
  *
- * It implements the [iface@Config] interface and therefore has all its
+ * It implements the [struct@Config] interface and therefore has all its
  * serialization and deserialization features.
  *
  * Since: 3.0
