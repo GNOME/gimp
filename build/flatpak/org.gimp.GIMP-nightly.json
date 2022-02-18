@@ -59,13 +59,13 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://exiv2.org/builds/exiv2-0.27.5-Source.tar.gz",
+                            "url": "https://github.com/Exiv2/exiv2/releases/download/v0.27.5/exiv2-0.27.5-Source.tar.gz",
                             "sha256": "35a58618ab236a901ca4928b0ad8b31007ebdc0386d904409d825024e45ea6e2",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 769,
                                 "stable-only": true,
-                                "url-template": "https://exiv2.org/builds/exiv2-$version-Source.tar.gz"
+                                "url-template": "https://github.com/Exiv2/exiv2/releases/download/v$version/exiv2-$version-Source.tar.gz"
                             }
                         }
                     ]
