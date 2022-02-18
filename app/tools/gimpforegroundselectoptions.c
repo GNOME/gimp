@@ -298,7 +298,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (hbox);
 
   /* stroke width */
-  scale = gimp_prop_spin_scale_new (config, "stroke-width", NULL,
+  scale = gimp_prop_spin_scale_new (config, "stroke-width",
                                     1.0, 10.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);
@@ -351,7 +351,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (inner_vbox);
 
   /*  engine parameters  */
-  scale = gimp_prop_spin_scale_new (config, "levels", NULL,
+  scale = gimp_prop_spin_scale_new (config, "levels",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
@@ -363,7 +363,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
                                NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "active-levels", NULL,
+  scale = gimp_prop_spin_scale_new (config, "active-levels",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 
@@ -375,7 +375,7 @@ gimp_foreground_select_options_gui (GimpToolOptions *tool_options)
                                GINT_TO_POINTER (GIMP_MATTING_ENGINE_LEVIN),
                                NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "iterations", NULL,
+  scale = gimp_prop_spin_scale_new (config, "iterations",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (inner_vbox), scale, FALSE, FALSE, 0);
 

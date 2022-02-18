@@ -1355,6 +1355,9 @@ static void   gimp_prop_adjustment_notify   (GObject       *config,
  * Creates a spin button to set and display the value of the
  * specified double property.
  *
+ * If you wish to change the widget's range relatively to the
+ * @property_name's range, use gimp_prop_widget_set_factor().
+ *
  * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
  *
  * Since: 2.4
@@ -1369,6 +1372,7 @@ gimp_prop_spin_button_new (GObject     *config,
   GParamSpec    *param_spec;
   GtkWidget     *spinbutton;
   GtkAdjustment *adjustment;
+  GBinding      *binding;
   gdouble        value;
   gdouble        lower;
   gdouble        upper;
@@ -1392,13 +1396,12 @@ gimp_prop_spin_button_new (GObject     *config,
 
   set_param_spec (G_OBJECT (adjustment), spinbutton, param_spec);
 
-  g_signal_connect (adjustment, "value-changed",
-                    G_CALLBACK (gimp_prop_adjustment_callback),
-                    config);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_adjustment_notify),
-                  adjustment);
+  binding = g_object_bind_property (config,     property_name,
+                                    spinbutton, "value",
+                                    G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+  g_object_set_data (G_OBJECT (adjustment),
+                     "gimp-prop-adjustment-binding",
+                     binding);
 
   gtk_widget_show (spinbutton);
 
@@ -1448,6 +1451,215 @@ gimp_prop_label_spin_new (GObject     *config,
                           G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
 
   return widget;
+}
+
+/**
+ * gimp_prop_spin_scale_new:
+ * @config:         Object to which property is attached.
+ * @property_name:  Name of double or int property controlled by the
+ *                  spin button.
+ * @step_increment: Step size.
+ * @page_increment: Page size.
+ * @digits:         Number of digits after decimal point to display.
+ *                  This is only used for double properties. In case of
+ *                  int properties, `digits = 0` is implied.
+ *
+ * Creates a spin scale to set and display the value of the specified
+ * int or double property.
+ *
+ * By default, the @property_name's nick will be used as label of the
+ * returned widget. Use gimp_spin_scale_set_label() to change this.
+ *
+ * If you wish to change the widget's range relatively to the
+ * @property_name's range, use gimp_prop_widget_set_factor().
+ *
+ * Returns: (transfer full): A new #libgimpwidgets-gimpspinbutton.
+ *
+ * Since: 3.0
+ */
+GtkWidget *
+gimp_prop_spin_scale_new (GObject     *config,
+                          const gchar *property_name,
+                          gdouble      step_increment,
+                          gdouble      page_increment,
+                          gint         digits)
+{
+  GParamSpec    *param_spec;
+  GtkWidget     *spinscale;
+  GtkAdjustment *adjustment;
+  const gchar   *label;
+  const gchar   *tooltip;
+  GBinding      *binding;
+  gdouble        value;
+  gdouble        lower;
+  gdouble        upper;
+
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  if (! get_numeric_values (config,
+                            param_spec, &value, &lower, &upper, G_STRFUNC))
+    return NULL;
+
+  if (! G_IS_PARAM_SPEC_DOUBLE (param_spec))
+    digits = 0;
+
+  adjustment = gtk_adjustment_new (value, lower, upper,
+                                   step_increment, page_increment, 0);
+  label = g_param_spec_get_nick (param_spec);
+
+  spinscale = gimp_spin_scale_new (adjustment, label, digits);
+
+  set_param_spec (G_OBJECT (adjustment), spinscale, param_spec);
+
+  tooltip = g_param_spec_get_blurb (param_spec);
+  gimp_help_set_help_data (spinscale, tooltip, NULL);
+
+  binding = g_object_bind_property (config, property_name,
+                                    spinscale, "value",
+                                    G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+
+  g_object_set_data (G_OBJECT (adjustment),
+                     "gimp-prop-adjustment-binding",
+                     binding);
+
+  gtk_widget_show (spinscale);
+
+  return spinscale;
+}
+
+/**
+ * gimp_prop_widget_set_factor:
+ * @widget:         Property widget.
+ * @factor:         Multiplier to convert the @widget's range and
+ *                  map appropriately to the property's range it is
+ *                  associated to.
+ * @step_increment: Step size.
+ * @page_increment: Page size.
+ * @digits:         Number of digits after decimal point to display.
+ *
+ * Change the display factor of the property @widget relatively to the
+ * property it was bound to. Currently the only types of widget accepted
+ * as input are those created by gimp_prop_spin_scale_new() and
+ * gimp_prop_spin_button_new().
+ *
+ * If @factor is 1.0, then the config property and the widget display
+ * map exactly.
+ *
+ * If @factor is not 1.0, the widget's range will be computed based of
+ * @property_name's range multiplied by @factor. A typical usage would
+ * be to display a [0.0, 1.0] range as [0.0, 100.0] by setting 100.0 as
+ * @factor. This function can only be used with double properties.
+ *
+ * The @step_increment and @page_increment can be set to new increments
+ * you want to get for this new range. If you set them to 0.0 or
+ * negative values, new increments will be computed based on the new
+ * @factor and previous factor.
+ *
+ * Since: 3.0
+ */
+void
+gimp_prop_widget_set_factor (GtkWidget *widget,
+                             gdouble    factor,
+                             gdouble    step_increment,
+                             gdouble    page_increment,
+                             gint       digits)
+{
+  GtkAdjustment *adjustment;
+  GParamSpec    *param_spec;
+  GBinding      *binding;
+  GObject       *config;
+  gchar         *property_name;
+  gdouble       *factor_store;
+  gdouble        old_factor = 1.0;
+  gdouble        f;
+
+  g_return_if_fail (GTK_IS_SPIN_BUTTON (widget));
+  g_return_if_fail (factor != 0.0);
+  g_return_if_fail (digits >= 0);
+
+  adjustment = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
+
+  param_spec = get_param_spec (G_OBJECT (adjustment));
+  g_return_if_fail (param_spec != NULL && G_IS_PARAM_SPEC_DOUBLE (param_spec));
+
+  /* Get the old factor and recompute new values. */
+  factor_store = g_object_get_data (G_OBJECT (adjustment),
+                                    "gimp-prop-adjustment-factor");
+  if (factor_store)
+    {
+      old_factor = *factor_store;
+    }
+  else
+    {
+      factor_store = g_new (gdouble, 1);
+      g_object_set_data_full (G_OBJECT (adjustment),
+                              "gimp-prop-adjustment-factor",
+                              factor_store, (GDestroyNotify) g_free);
+    }
+
+  *factor_store = factor;
+
+  f = factor / old_factor;
+
+  if (step_increment <= 0)
+    step_increment = f * gtk_adjustment_get_step_increment (adjustment);
+
+  if (page_increment <= 0)
+    page_increment = f * gtk_adjustment_get_page_increment (adjustment);
+
+  /* Remove the old binding. */
+  binding = g_object_get_data (G_OBJECT (adjustment),
+                               "gimp-prop-adjustment-binding");
+  g_return_if_fail (binding != NULL);
+  config = g_binding_dup_source (binding);
+
+  /* This binding should not have outlived the config object. */
+  g_return_if_fail (config != NULL);
+
+  property_name = g_strdup (g_binding_get_source_property (binding));
+  g_binding_unbind (binding);
+
+  /* Reconfigure the scale object. */
+  gtk_adjustment_configure (adjustment,
+                            f * gtk_adjustment_get_value (adjustment),
+                            f * gtk_adjustment_get_lower (adjustment),
+                            f * gtk_adjustment_get_upper (adjustment),
+                            step_increment,
+                            page_increment,
+                            f * gtk_adjustment_get_page_size (adjustment));
+
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (widget), digits);
+
+  /* Finally create a new binding. */
+  if (factor != 1.0)
+    {
+      gdouble *user_data;
+
+      user_data = g_new0 (gdouble, 1);
+      *user_data = factor;
+      /* With @factor == 1.0, this is equivalent to a
+       * g_object_bind_property().
+       */
+      binding = g_object_bind_property_full (config, property_name,
+                                             widget, "value",
+                                             G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE,
+                                             gimp_prop_widget_double_to_factor,
+                                             gimp_prop_widget_double_from_factor,
+                                             user_data, (GDestroyNotify) g_free);
+    }
+  else
+    {
+      binding = g_object_bind_property (config, property_name,
+                                        widget, "value",
+                                        G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+    }
+  g_object_set_data (G_OBJECT (adjustment),
+                     "gimp-prop-adjustment-binding",
+                     binding);
+  g_object_unref (config);
+  g_free (property_name);
 }
 
 /**

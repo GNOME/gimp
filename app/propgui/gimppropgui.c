@@ -199,7 +199,7 @@ gimp_prop_widget_new_from_pspec (GObject                  *config,
             }
         }
 
-      widget = gimp_prop_spin_scale_new (config, pspec->name, NULL,
+      widget = gimp_prop_spin_scale_new (config, pspec->name,
                                          step, page, digits);
 
       if (HAS_KEY (pspec, "unit", "degree") &&

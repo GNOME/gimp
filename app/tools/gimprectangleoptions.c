@@ -1019,9 +1019,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   {
     GtkWidget *scale;
 
-    scale = gimp_prop_spin_scale_new (config, "highlight-opacity", NULL,
+    scale = gimp_prop_spin_scale_new (config, "highlight-opacity",
                                       0.01, 0.1, 0);
-    gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+    gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
 
     frame = gimp_prop_expanding_frame_new (config, "highlight", NULL,
                                            scale, NULL);

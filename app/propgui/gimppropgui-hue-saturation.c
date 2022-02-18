@@ -222,9 +222,9 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
   gtk_widget_show (grid);
 
   /* Create the 'Overlap' option slider */
-  scale = gimp_prop_spin_scale_new (config, "overlap",
-                                    _("_Overlap"), 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  scale = gimp_prop_spin_scale_new (config, "overlap", 0.01, 0.1, 0);
+  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Overlap"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   frame = gimp_frame_new (_("Adjust Selected Color"));
@@ -237,20 +237,21 @@ _gimp_prop_gui_new_hue_saturation (GObject                  *config,
 
   /*  Create the hue scale widget  */
   scale = gimp_prop_spin_scale_new (config, "hue",
-                                    _("_Hue"), 1.0 / 180.0, 15.0 / 180.0, 0);
-  gimp_prop_widget_set_factor (scale, 180.0, 0.0, 0.0, 1);
+                                    1.0 / 180.0, 15.0 / 180.0, 0);
+  gimp_prop_widget_set_factor (scale, 180.0, 1.0, 15.0, 1);
+  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Hue"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /*  Create the lightness scale widget  */
-  scale = gimp_prop_spin_scale_new (config, "lightness",
-                                    _("_Lightness"), 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  scale = gimp_prop_spin_scale_new (config, "lightness", 0.01, 0.1, 0);
+  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Lightness"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /*  Create the saturation scale widget  */
-  scale = gimp_prop_spin_scale_new (config, "saturation",
-                                    _("_Saturation"), 0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  scale = gimp_prop_spin_scale_new (config, "saturation", 0.01, 0.1, 0);
+  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
+  gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), _("_Saturation"));
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);

@@ -1142,7 +1142,6 @@ gimp_filter_tool_update_dialog_operation_settings (GimpFilterTool *filter_tool)
           /*  The opacity scale  */
           scale = gimp_prop_spin_scale_new (filter_tool->config,
                                             "gimp-opacity",
-                                            NULL,
                                             1.0, 10.0, 1);
           gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
           gtk_box_pack_start (GTK_BOX (vbox2), scale,

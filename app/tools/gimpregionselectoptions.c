@@ -268,7 +268,7 @@ gimp_region_select_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
+  scale = gimp_prop_spin_scale_new (config, "threshold",
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

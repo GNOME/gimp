@@ -128,7 +128,7 @@ gimp_seamless_clone_options_gui (GimpToolOptions *tool_options)
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget *scale;
 
-  scale = gimp_prop_spin_scale_new (config, "max-refine-scale", NULL,
+  scale = gimp_prop_spin_scale_new (config, "max-refine-scale",
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 50.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);

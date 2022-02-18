@@ -490,7 +490,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
 
   /*  the threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "threshold", NULL,
+  scale = gimp_prop_spin_scale_new (config, "threshold",
                                     1.0, 16.0, 1);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
   options->priv->threshold_scale = scale;
@@ -535,7 +535,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
 
   /*  Line Art: fill as line art  */
-  scale = gimp_prop_spin_scale_new (config, "fill-color-as-line-art-threshold", NULL,
+  scale = gimp_prop_spin_scale_new (config, "fill-color-as-line-art-threshold",
                                     1.0, 16.0, 1);
 
   frame = gimp_prop_expanding_frame_new (config, "fill-color-as-line-art", NULL,
@@ -548,7 +548,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
 
   /*  Line Art: feather radius scale  */
-  scale = gimp_prop_spin_scale_new (config, "feather-radius", NULL,
+  scale = gimp_prop_spin_scale_new (config, "feather-radius",
                                     1.0, 10.0, 1);
 
   frame = gimp_prop_expanding_frame_new (config, "feather", NULL,
@@ -556,17 +556,17 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
 
   /*  Line Art: max growing size */
-  scale = gimp_prop_spin_scale_new (config, "line-art-max-grow", NULL,
+  scale = gimp_prop_spin_scale_new (config, "line-art-max-grow",
                                     1, 5, 0);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
 
   /*  Line Art: stroke threshold */
-  scale = gimp_prop_spin_scale_new (config, "line-art-threshold", NULL,
+  scale = gimp_prop_spin_scale_new (config, "line-art-threshold",
                                     0.05, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
 
   /*  Line Art: max gap length */
-  scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length", NULL,
+  scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length",
                                     1, 5, 0);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
 

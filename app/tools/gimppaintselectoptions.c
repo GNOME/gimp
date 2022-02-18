@@ -179,7 +179,7 @@ gimp_paint_select_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (hbox);
 
   /* stroke width */
-  scale = gimp_prop_spin_scale_new (config, "stroke-width", NULL,
+  scale = gimp_prop_spin_scale_new (config, "stroke-width",
                                     1.0, 10.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gimp_spin_scale_set_gamma (GIMP_SPIN_SCALE (scale), 1.7);

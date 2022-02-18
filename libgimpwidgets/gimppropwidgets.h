@@ -118,6 +118,17 @@ GtkWidget     * gimp_prop_label_spin_new          (GObject      *config,
                                                    const gchar  *property_name,
                                                    gint          digits);
 
+GtkWidget     * gimp_prop_spin_scale_new          (GObject      *config,
+                                                   const gchar  *property_name,
+                                                   gdouble       step_increment,
+                                                   gdouble       page_increment,
+                                                   gint          digits);
+
+void            gimp_prop_widget_set_factor       (GtkWidget    *widget,
+                                                   gdouble       factor,
+                                                   gdouble       step_increment,
+                                                   gdouble       page_increment,
+                                                   gint          digits);
 
 GtkWidget     * gimp_prop_hscale_new              (GObject      *config,
                                                    const gchar  *property_name,

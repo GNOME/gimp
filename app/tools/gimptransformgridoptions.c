@@ -443,9 +443,9 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox2), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  scale = gimp_prop_spin_scale_new (config, "preview-opacity", NULL,
+  scale = gimp_prop_spin_scale_new (config, "preview-opacity",
                                     0.01, 0.1, 0);
-  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
   gtk_widget_show (scale);
 
@@ -470,7 +470,7 @@ gimp_transform_grid_options_gui (GimpToolOptions *tool_options)
   gtk_frame_set_label_widget (GTK_FRAME (frame), combo);
 
   /*  the grid density scale  */
-  scale = gimp_prop_spin_scale_new (config, "grid-size", NULL,
+  scale = gimp_prop_spin_scale_new (config, "grid-size",
                                     1.8, 8.0, 0);
   gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), NULL);
   gtk_container_add (GTK_CONTAINER (frame), scale);

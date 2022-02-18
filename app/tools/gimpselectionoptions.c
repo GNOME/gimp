@@ -278,7 +278,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
     GtkWidget *scale;
 
     /*  the feather radius scale  */
-    scale = gimp_prop_spin_scale_new (config, "feather-radius", NULL,
+    scale = gimp_prop_spin_scale_new (config, "feather-radius",
                                       1.0, 10.0, 1);
 
     frame = gimp_prop_expanding_frame_new (config, "feather", NULL,

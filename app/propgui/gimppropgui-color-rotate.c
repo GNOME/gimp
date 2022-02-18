@@ -105,12 +105,12 @@ gimp_prop_angle_range_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_spin_scale_new (config, alpha_property_name, NULL,
+  scale = gimp_prop_spin_scale_new (config, alpha_property_name,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, beta_property_name, NULL,
+  scale = gimp_prop_spin_scale_new (config, beta_property_name,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -167,12 +167,12 @@ gimp_prop_polar_box_new (GObject     *config,
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
-  scale = gimp_prop_spin_scale_new (config, angle_property_name, NULL,
+  scale = gimp_prop_spin_scale_new (config, angle_property_name,
                                     1.0, 15.0, 2);
   gtk_spin_button_set_wrap (GTK_SPIN_BUTTON (scale), TRUE);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, radius_property_name, NULL,
+  scale = gimp_prop_spin_scale_new (config, radius_property_name,
                                     1.0, 15.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

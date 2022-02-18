@@ -154,7 +154,7 @@ gimp_color_options_gui (GimpToolOptions *tool_options)
   GtkWidget *scale;
 
   /*  the sample average options  */
-  scale = gimp_prop_spin_scale_new (config, "average-radius", NULL,
+  scale = gimp_prop_spin_scale_new (config, "average-radius",
                                     1.0, 10.0, 0);
 
   frame = gimp_prop_expanding_frame_new (config, "sample-average", NULL,

@@ -309,22 +309,22 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
 
   options->behavior_combo = combo;
 
-  scale = gimp_prop_spin_scale_new (config, "effect-size", NULL,
+  scale = gimp_prop_spin_scale_new (config, "effect-size",
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-hardness", NULL,
+  scale = gimp_prop_spin_scale_new (config, "effect-hardness",
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "effect-strength", NULL,
+  scale = gimp_prop_spin_scale_new (config, "effect-strength",
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "stroke-spacing", NULL,
+  scale = gimp_prop_spin_scale_new (config, "stroke-spacing",
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
@@ -360,7 +360,7 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   button = gimp_prop_check_button_new (config, "stroke-during-motion", NULL);
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "stroke-periodically-rate", NULL,
+  scale = gimp_prop_spin_scale_new (config, "stroke-periodically-rate",
                                     1, 10, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 100.0);
 
@@ -377,7 +377,7 @@ gimp_warp_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), vbox2);
   gtk_widget_show (vbox2);
 
-  scale = gimp_prop_spin_scale_new (config, "n-animation-frames", NULL,
+  scale = gimp_prop_spin_scale_new (config, "n-animation-frames",
                                     1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 3.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);

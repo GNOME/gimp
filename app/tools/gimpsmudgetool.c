@@ -99,11 +99,11 @@ gimp_smudge_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
 
   /*  the rate scale  */
-  scale = gimp_prop_spin_scale_new (config, "rate", NULL,
+  scale = gimp_prop_spin_scale_new (config, "rate",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "flow", NULL,
+  scale = gimp_prop_spin_scale_new (config, "flow",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

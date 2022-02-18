@@ -314,7 +314,7 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gradient_options_repeat_gradient_type_notify (options, NULL, combo);
 
   /*  the offset scale  */
-  scale = gimp_prop_spin_scale_new (config, "offset", NULL,
+  scale = gimp_prop_spin_scale_new (config, "offset",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
@@ -329,12 +329,12 @@ gimp_gradient_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   /*  max depth scale  */
-  scale = gimp_prop_spin_scale_new (config, "supersample-depth", NULL,
+  scale = gimp_prop_spin_scale_new (config, "supersample-depth",
                                     1.0, 1.0, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /*  threshold scale  */
-  scale = gimp_prop_spin_scale_new (config, "supersample-threshold", NULL,
+  scale = gimp_prop_spin_scale_new (config, "supersample-threshold",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 

@@ -172,7 +172,7 @@ gimp_rectangle_select_options_gui (GimpToolOptions *tool_options)
       GtkWidget *scale;
       GtkWidget *toggle;
 
-      scale = gimp_prop_spin_scale_new (config, "corner-radius", NULL,
+      scale = gimp_prop_spin_scale_new (config, "corner-radius",
                                         1.0, 10.0, 1);
       gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale),
                                         0.0, 1000.0);

@@ -230,7 +230,7 @@ gimp_dodge_burn_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
 
   /*  the exposure scale  */
-  scale = gimp_prop_spin_scale_new (config, "exposure", NULL,
+  scale = gimp_prop_spin_scale_new (config, "exposure",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 

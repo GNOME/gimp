@@ -126,10 +126,9 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
     }
 
   /*  the opacity scale  */
-  scale = gimp_prop_spin_scale_new (config, "opacity", NULL,
-                                    0.01, 0.1, 0);
+  scale = gimp_prop_spin_scale_new (config, "opacity", 0.01, 0.1, 0);
   gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
-  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
   /*  temp debug foo, disabled in stable  */
@@ -327,7 +326,7 @@ dynamics_options_gui (GimpPaintOptions *paint_options,
   gtk_box_pack_start (GTK_BOX (inner_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  scale = gimp_prop_spin_scale_new (config, "fade-length", NULL,
+  scale = gimp_prop_spin_scale_new (config, "fade-length",
                                     1.0, 50.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 1.0, 1000.0);
   gtk_box_pack_start (GTK_BOX (hbox), scale, TRUE, TRUE, 0);
@@ -392,7 +391,7 @@ jitter_options_gui (GimpPaintOptions *paint_options,
   GtkWidget *frame;
   GtkWidget *scale;
 
-  scale = gimp_prop_spin_scale_new (config, "jitter-amount", NULL,
+  scale = gimp_prop_spin_scale_new (config, "jitter-amount",
                                     0.01, 1.0, 2);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (scale), 0.0, 5.0);
 
@@ -416,11 +415,11 @@ smoothing_options_gui (GimpPaintOptions *paint_options,
   frame = gimp_prop_expanding_frame_new (config, "use-smoothing", NULL,
                                          vbox, NULL);
 
-  scale = gimp_prop_spin_scale_new (config, "smoothing-quality", NULL,
+  scale = gimp_prop_spin_scale_new (config, "smoothing-quality",
                                     1, 10, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
-  scale = gimp_prop_spin_scale_new (config, "smoothing-factor", NULL,
+  scale = gimp_prop_spin_scale_new (config, "smoothing-factor",
                                     1, 10, 1);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
@@ -507,7 +506,7 @@ gimp_paint_options_gui_scale_with_buttons (GObject      *config,
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
 
-  scale = gimp_prop_spin_scale_new (config, prop_name, NULL,
+  scale = gimp_prop_spin_scale_new (config, prop_name,
                                     step_increment, page_increment, digits);
   gimp_spin_scale_set_constrain_drag (GIMP_SPIN_SCALE (scale), TRUE);
 

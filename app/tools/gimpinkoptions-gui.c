@@ -61,12 +61,12 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (vbox2);
 
   /*  size slider  */
-  scale = gimp_prop_spin_scale_new (config, "size", NULL,
+  scale = gimp_prop_spin_scale_new (config, "size",
                                     1.0, 2.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /* angle adjust slider */
-  scale = gimp_prop_spin_scale_new (config, "tilt-angle", NULL,
+  scale = gimp_prop_spin_scale_new (config, "tilt-angle",
                                     1.0, 10.0, 1);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
@@ -80,17 +80,17 @@ gimp_ink_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (vbox2);
 
   /* size sens slider */
-  scale = gimp_prop_spin_scale_new (config, "size-sensitivity", NULL,
+  scale = gimp_prop_spin_scale_new (config, "size-sensitivity",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /* tilt sens slider */
-  scale = gimp_prop_spin_scale_new (config, "tilt-sensitivity", NULL,
+  scale = gimp_prop_spin_scale_new (config, "tilt-sensitivity",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 
   /* velocity sens slider */
-  scale = gimp_prop_spin_scale_new (config, "vel-sensitivity", NULL,
+  scale = gimp_prop_spin_scale_new (config, "vel-sensitivity",
                                     0.01, 0.1, 2);
   gtk_box_pack_start (GTK_BOX (vbox2), scale, FALSE, FALSE, 0);
 

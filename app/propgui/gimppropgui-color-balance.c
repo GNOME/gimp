@@ -54,10 +54,9 @@ create_levels_scale (GObject     *config,
   gtk_grid_attach (GTK_GRID (grid), label, 0, col, 1, 1);
   gtk_widget_show (label);
 
-  scale = gimp_prop_spin_scale_new (config, property_name,
-                                    NULL, 0.01, 0.1, 0);
+  scale = gimp_prop_spin_scale_new (config, property_name, 0.01, 0.1, 0);
   gimp_spin_scale_set_label (GIMP_SPIN_SCALE (scale), NULL);
-  gimp_prop_widget_set_factor (scale, 100.0, 0.0, 0.0, 1);
+  gimp_prop_widget_set_factor (scale, 100.0, 1.0, 10.0, 1);
   gtk_widget_set_hexpand (scale, TRUE);
   gtk_grid_attach (GTK_GRID (grid), scale, 1, col, 1, 1);
 

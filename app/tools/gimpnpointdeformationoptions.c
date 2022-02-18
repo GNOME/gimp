@@ -209,14 +209,14 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_spin_scale_new (config, "square-size", NULL,
+  widget = gimp_prop_spin_scale_new (config, "square-size",
                                      1.0, 10.0, 0);
   npd_options->scale_square_size = widget;
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 10.0, 100.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_spin_scale_new (config, "rigidity", NULL,
+  widget = gimp_prop_spin_scale_new (config, "rigidity",
                                      1.0, 10.0, 0);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 1.0, 2000.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
@@ -233,7 +233,7 @@ gimp_n_point_deformation_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
   gtk_widget_set_can_focus (widget, FALSE);
 
-  widget = gimp_prop_spin_scale_new (config, "mls-weights-alpha", NULL,
+  widget = gimp_prop_spin_scale_new (config, "mls-weights-alpha",
                                      0.1, 0.1, 1);
   gimp_spin_scale_set_scale_limits (GIMP_SPIN_SCALE (widget), 0.1, 2.0);
   gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
