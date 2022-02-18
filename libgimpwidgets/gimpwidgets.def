@@ -30,6 +30,7 @@ EXPORTS
 	gimp_chain_button_set_active
 	gimp_chain_button_set_icon_size
 	gimp_chain_position_get_type
+	gimp_color_area_enable_drag
 	gimp_color_area_get_color
 	gimp_color_area_get_type
 	gimp_color_area_has_alpha
@@ -227,6 +228,18 @@ EXPORTS
 	gimp_int_store_lookup_by_value
 	gimp_int_store_new
 	gimp_int_store_new_valist
+	gimp_label_color_get_color_widget
+	gimp_label_color_get_type
+	gimp_label_color_get_value
+	gimp_label_color_is_editable
+	gimp_label_color_new
+	gimp_label_color_set_editable
+	gimp_label_color_set_value
+	gimp_label_entry_get_entry
+	gimp_label_entry_get_type
+	gimp_label_entry_get_value
+	gimp_label_entry_new
+	gimp_label_entry_set_value
 	gimp_label_int_widget_get_type
 	gimp_label_int_widget_get_widget
 	gimp_label_int_widget_new
@@ -351,6 +364,8 @@ EXPORTS
 	gimp_prop_int_combo_box_new
 	gimp_prop_int_radio_box_new
 	gimp_prop_int_radio_frame_new
+	gimp_prop_label_color_new
+	gimp_prop_label_entry_new
 	gimp_prop_label_new
 	gimp_prop_label_spin_new
 	gimp_prop_memsize_entry_new
@@ -420,6 +435,17 @@ EXPORTS
         gimp_spin_button_get_type
 	gimp_spin_button_new
         gimp_spin_button_new_with_range
+        gimp_spin_scale_get_constrain_drag
+        gimp_spin_scale_get_gamma
+        gimp_spin_scale_get_label
+        gimp_spin_scale_get_scale_limits
+        gimp_spin_scale_get_type
+        gimp_spin_scale_new
+        gimp_spin_scale_set_constrain_drag
+        gimp_spin_scale_set_gamma
+        gimp_spin_scale_set_label
+        gimp_spin_scale_set_scale_limits
+        gimp_spin_scale_unset_scale_limits
 	gimp_standard_help_func
 	gimp_string_combo_box_get_active
 	gimp_string_combo_box_get_type
