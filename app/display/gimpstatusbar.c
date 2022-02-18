@@ -1800,7 +1800,36 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
 
 static gboolean gimp_statusbar_queue_pos_redraw (gpointer data)
 {
-  GimpStatusbar *statusbar = GIMP_STATUSBAR (data);
+  GimpStatusbar    *statusbar = GIMP_STATUSBAR (data);
+  GimpDisplayShell *shell;
+  GimpImage        *image;
+  gint              image_width       = 0;
+  gint              image_height      = 0;
+  gint              label_width_chars = 2;
+
+  shell = statusbar->shell;
+  image = gimp_display_get_image (shell->display);
+
+  if (image)
+    {
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
+
+      /* The number of chars within up to 2 times the image bounds is:
+       * - max width chars: floor (log10 (2 * max_width)) + 1
+       * - max height chars: floor (log10 (2 * max_height)) + 1
+       * - the comma and a space: + 2
+       * - possibly 2 minus characters when going in negative
+       *   dimensions: + 2
+       * The goal of this is to avoid the label size jumping up and
+       * down. Actually it was not a problem on Linux, but this was
+       * reported on macOS.
+       * See: https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/572#note_1389445
+       * Of course, it could still happen for people going way
+       * off-canvas but that's acceptable edge-case.
+       */
+      label_width_chars = floor (log10 (2 * image_width)) + floor (log10 (2 * image_height)) + 6;
+    }
 
 #ifdef GDK_WINDOWING_QUARTZ
 /*
@@ -1824,6 +1853,7 @@ static gboolean gimp_statusbar_queue_pos_redraw (gpointer data)
 #endif
 
   g_free (statusbar->cursor_string_last);
+  gtk_label_set_width_chars (GTK_LABEL (statusbar->cursor_label), label_width_chars);
   gimp_statusbar_cursor_label_set_text (statusbar, statusbar->cursor_string_todraw);
   statusbar->cursor_string_last = statusbar->cursor_string_todraw;
   statusbar->cursor_string_todraw = NULL;
