@@ -812,7 +812,10 @@ save_image (const gchar            *filename,
       if (params->xmp)
         {
           metadata_flags |= GIMP_METADATA_SAVE_XMP;
-          metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+          if (params->iptc)
+            metadata_flags |= GIMP_METADATA_SAVE_IPTC;
+          else
+            metadata_flags &= ~GIMP_METADATA_SAVE_IPTC;
         }
       else
         {
@@ -824,6 +827,11 @@ save_image (const gchar            *filename,
         metadata_flags |= GIMP_METADATA_SAVE_COLOR_PROFILE;
       else
         metadata_flags &= ~GIMP_METADATA_SAVE_COLOR_PROFILE;
+
+      if (params->thumbnail)
+        metadata_flags |= GIMP_METADATA_SAVE_THUMBNAIL;
+      else
+        metadata_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
       file = g_file_new_for_path (filename);
       gimp_image_metadata_save_finish (image_ID,

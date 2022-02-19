@@ -92,6 +92,7 @@ save_dialog (WebPSaveParams *params,
   GtkWidget *label;
   GtkWidget *toggle;
   GtkWidget *toggle_minsize;
+  GtkWidget *toggle_iptc;
   GtkWidget *combo;
   GtkObject *quality_scale;
   GtkObject *alpha_quality_scale;
@@ -373,6 +374,18 @@ save_dialog (WebPSaveParams *params,
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->exif);
 
+  /* IPTC metadata */
+  toggle_iptc = gtk_check_button_new_with_mnemonic (_("Save _IPTC"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle_iptc), params->iptc);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle_iptc, FALSE, FALSE, 0);
+  gtk_widget_show (toggle_iptc);
+
+  g_signal_connect (toggle_iptc, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &params->iptc);
+
+  gtk_widget_set_sensitive (toggle_iptc, params->xmp);
+
   /* XMP metadata */
   toggle = gtk_check_button_new_with_mnemonic (_("Save _XMP data"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->xmp);
@@ -383,6 +396,10 @@ save_dialog (WebPSaveParams *params,
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->xmp);
 
+  g_object_bind_property (toggle, "active",
+                          toggle_iptc, "sensitive",
+                          G_BINDING_SYNC_CREATE);
+
   /* Color profile */
   toggle = gtk_check_button_new_with_mnemonic (_("Save color _profile"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->profile);
@@ -392,6 +409,16 @@ save_dialog (WebPSaveParams *params,
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &params->profile);
+
+  /* Save Thumbnail */
+  toggle = gtk_check_button_new_with_mnemonic (_("Save _thumbnail"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), params->thumbnail);
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &params->thumbnail);
 
   gtk_widget_show (dialog);
 

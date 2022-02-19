@@ -92,6 +92,29 @@ query (void)
     { GIMP_PDB_INT32,    "force-delay",   "Force delay on all frames" }
   };
 
+  static const GimpParamDef save_arguments2[] =
+  {
+    { GIMP_PDB_INT32,    "run-mode",      "Interactive, non-interactive" },
+    { GIMP_PDB_IMAGE,    "image",         "Input image" },
+    { GIMP_PDB_DRAWABLE, "drawable",      "Drawable to save" },
+    { GIMP_PDB_STRING,   "filename",      "The name of the file to save the image to" },
+    { GIMP_PDB_STRING,   "raw-filename",  "The name entered" },
+    { GIMP_PDB_INT32,    "preset",        "preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, Text=5)" },
+    { GIMP_PDB_INT32,    "lossless",      "Use lossless encoding (0/1)" },
+    { GIMP_PDB_FLOAT,    "quality",       "Quality of the image (0 <= quality <= 100)" },
+    { GIMP_PDB_FLOAT,    "alpha-quality", "Quality of the image's alpha channel (0 <= alpha-quality <= 100)" },
+    { GIMP_PDB_INT32,    "animation",     "Use layers for animation (0/1)" },
+    { GIMP_PDB_INT32,    "anim-loop",     "Loop animation infinitely (0/1)" },
+    { GIMP_PDB_INT32,    "minimize-size", "Minimize animation size (0/1)" },
+    { GIMP_PDB_INT32,    "kf-distance",   "Maximum distance between key-frames (>=0)" },
+    { GIMP_PDB_INT32,    "exif",          "Toggle saving exif data (0/1)" },
+    { GIMP_PDB_INT32,    "iptc",          "Toggle saving iptc data (0/1)" },
+    { GIMP_PDB_INT32,    "xmp",           "Toggle saving xmp data (0/1)" },
+    { GIMP_PDB_INT32,    "thumbnail",     "Toggle saving thumbnail (0/1)" },
+    { GIMP_PDB_INT32,    "delay",         "Delay to use when timestamps are not available or forced" },
+    { GIMP_PDB_INT32,    "force-delay",   "Force delay on all frames" }
+  };
+
   gimp_install_procedure (LOAD_PROC,
                           "Loads images in the WebP file format",
                           "Loads images in the WebP file format",
@@ -129,6 +152,24 @@ query (void)
 
   gimp_register_file_handler_mime (SAVE_PROC, "image/webp");
   gimp_register_save_handler (SAVE_PROC, "webp", "");
+
+  gimp_install_procedure (SAVE_PROC2,
+                          "Saves files in the WebP image format",
+                          "Saves files in the WebP image format "
+                          "with additional metadata control",
+                          "Nathan Osman, Ben Touchette",
+                          "(C) 2015-2016 Nathan Osman, (C) 2016 Ben Touchette",
+                          "2015,2016",
+                          N_("WebP image"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_arguments2),
+                          0,
+                          save_arguments2,
+                          NULL);
+
+  gimp_register_file_handler_mime (SAVE_PROC2, "image/webp");
+  gimp_register_save_handler (SAVE_PROC2, "webp", "");
 }
 
 static void
@@ -172,7 +213,8 @@ run (const gchar      *name,
           status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, SAVE_PROC) ||
+           ! strcmp (name, SAVE_PROC2))
     {
       GimpMetadata          *metadata = NULL;
       GimpMetadataSaveFlags  metadata_flags;
@@ -200,6 +242,7 @@ run (const gchar      *name,
       params.xmp           = FALSE;
       params.delay         = 200;
       params.force_delay   = FALSE;
+      params.thumbnail     = FALSE;
 
       /* Override the defaults with preferences. */
       metadata = gimp_image_metadata_save_prepare (image_ID,
@@ -209,17 +252,25 @@ run (const gchar      *name,
       params.xmp     = (metadata_flags & GIMP_METADATA_SAVE_XMP) != 0;
       params.iptc    = (metadata_flags & GIMP_METADATA_SAVE_IPTC) != 0;
       params.profile = (metadata_flags & GIMP_METADATA_SAVE_COLOR_PROFILE) != 0;
+      if (! strcmp (name, SAVE_PROC2))
+        params.thumbnail = (metadata_flags & GIMP_METADATA_SAVE_THUMBNAIL) != 0;
 
       switch (run_mode)
         {
         case GIMP_RUN_WITH_LAST_VALS:
           /*  Possibly override with session data  */
-          gimp_get_data (SAVE_PROC, &params);
+          if (! strcmp (name, SAVE_PROC))
+            gimp_get_data (SAVE_PROC, &params);
+          else if (! strcmp (name, SAVE_PROC2))
+            gimp_get_data (SAVE_PROC2, &params);
           break;
 
         case GIMP_RUN_INTERACTIVE:
           /*  Possibly override with session data  */
-          gimp_get_data (SAVE_PROC, &params);
+          if (! strcmp (name, SAVE_PROC))
+            gimp_get_data (SAVE_PROC, &params);
+          else if (! strcmp (name, SAVE_PROC2))
+            gimp_get_data (SAVE_PROC2, &params);
 
           if (! save_dialog (&params, image_ID))
             {
@@ -228,7 +279,8 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          if (nparams != 18)
+          if ((! strcmp (name, SAVE_PROC) && nparams != 18) ||
+              (! strcmp (name, SAVE_PROC2) && nparams != 19))
             {
               status = GIMP_PDB_CALLING_ERROR;
             }
@@ -240,18 +292,27 @@ run (const gchar      *name,
               else
                 params.preset = param[5].data.d_int32;
 
-              params.lossless      = param[6].data.d_int32;
-              params.quality       = param[7].data.d_float;
-              params.alpha_quality = param[8].data.d_float;
-              params.animation     = param[9].data.d_int32;
-              params.loop          = param[10].data.d_int32;
-              params.minimize_size = param[11].data.d_int32;
-              params.kf_distance   = param[12].data.d_int32;
-              params.exif          = param[13].data.d_int32;
-              params.iptc          = param[14].data.d_int32;
-              params.xmp           = param[15].data.d_int32;
-              params.delay         = param[16].data.d_int32;
-              params.force_delay   = param[17].data.d_int32;
+              params.lossless          = param[6].data.d_int32;
+              params.quality           = param[7].data.d_float;
+              params.alpha_quality     = param[8].data.d_float;
+              params.animation         = param[9].data.d_int32;
+              params.loop              = param[10].data.d_int32;
+              params.minimize_size     = param[11].data.d_int32;
+              params.kf_distance       = param[12].data.d_int32;
+              params.exif              = param[13].data.d_int32;
+              params.iptc              = param[14].data.d_int32;
+              params.xmp               = param[15].data.d_int32;
+              if (! strcmp (name, SAVE_PROC))
+                {
+                  params.delay         = param[16].data.d_int32;
+                  params.force_delay   = param[17].data.d_int32;
+                }
+              else
+                {
+                  params.thumbnail     = param[16].data.d_int32;
+                  params.delay         = param[17].data.d_int32;
+                  params.force_delay   = param[18].data.d_int32;
+                }
             }
           break;
 
@@ -304,7 +365,10 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           /* save parameters for later */
-          gimp_set_data (SAVE_PROC, &params, sizeof (params));
+          if (! strcmp (name, SAVE_PROC))
+            gimp_set_data (SAVE_PROC, &params, sizeof (params));
+          else if (! strcmp (name, SAVE_PROC2))
+            gimp_set_data (SAVE_PROC2, &params, sizeof (params));
         }
     }
 

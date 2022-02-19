@@ -25,6 +25,7 @@
 
 #define LOAD_PROC      "file-webp-load"
 #define SAVE_PROC      "file-webp-save"
+#define SAVE_PROC2     "file-webp-save2"
 #define PLUG_IN_BINARY "file-webp"
 #define PLUG_IN_ROLE   "gimp-file-webp"
 
