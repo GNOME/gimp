@@ -49,7 +49,8 @@ Core:
     * Use GtkGestureDrag in ColorWheel module and ScrolledPreview widget
       to avoid unwanted popups and make us future-proof for GTK4.
   - macOS: various improvements for macOS support of the development
-    version.
+    version. In particular the slowness issues have been solved and
+    various bugs have been fixed.
   - The debug dialog only gets a backtrace of the main thread now,
     because of some bugs in GDB locking GIMP when trying to get a full
     backtrace for all threads.
@@ -203,32 +204,51 @@ Build:
 
 API:
 
-  - New gimp_item_get_lock_visibility() and
-    gimp_item_set_lock_visibility() to get and set the visibility lock
-    of an item.
-  - New gimp_event_triggers_context_menu() as alternative to
-    gdk_event_triggers_context_menu() with the additional ability of
-    using button release events a contextual menu triggering (instead of
-    press events), which might be prefered in some cases. Other than
-    this, it uses exactly the same conditions as its GDK counterpart.
-  - Removed: gimp_item_set_linked() and gimp_item_get_linked().
   - Vala bindings gimp-3.vapi and gimp-ui-3.vapi were renamed to
     gimp-3.0.vapi and gimp-ui-3.0.vapi respectively in the autotools
     build (now consistent with meson).
-  - New functions gimp_context_are_dynamics_enabled() and
-    gimp_context_enable_dynamics().
-  - New gimp_pdb_run_procedure_config() function.
-  - GimpStringArray type was removed in favor of GStrv. Various libgimp
-    API were updated to use GStrv, and relevant plug-in procedure with
-    GStrv arguments or return values were updated as well.
-  - New widget GimpSpinScale which is the scale widget used by core
-    code, such as the "Opacity" slider on the Layers dockable, moved to
-    libgimpwidgets to be usable by plug-ins.
-  - New widgets: GimpLabelColor and GimpLabelEntry which are now used by
-    default for GimpRGB and string properties by GimpProcedureDialog.
-    They also come with their property widget API:
-    gimp_prop_label_entry_new() and gimp_prop_label_color_new().
-  - New gimp_color_area_enable_drag() API.
+  - Changes in libgimp:
+    * GimpStringArray type was removed in favor of GStrv. Various libgimp
+      API were updated to use GStrv, and relevant plug-in procedures with
+      GStrv arguments or return values were updated as well.
+    * New functions:
+      + gimp_context_are_dynamics_enabled()
+      + gimp_context_enable_dynamics().
+      + gimp_item_get_lock_visibility()
+      + gimp_item_set_lock_visibility()
+      + gimp_pdb_run_procedure_config()
+    * Removed functions:
+      + gimp_item_get_linked()
+      + gimp_item_set_linked()
+  - Changes in libgimpui:
+    * New widgets:
+      + GimpLabelColor (now used by default for GimpRGB properties in
+        GimpProcedureDialog)
+      + GimpLabelEntry (now used by default for string properties in
+        GimpProcedureDialog)
+      + GimpSpinScale (formerly a core-only widget, e.g. used by the
+        "Opacity" slider on the Layers dockable, moved to libgimpui to be
+        usable by plug-ins)
+    * New functions:
+      + gimp_color_area_enable_drag()
+      + gimp_event_triggers_context_menu(): alternative to
+        gdk_event_triggers_context_menu() with the additional ability of
+        using button release events as contextual menu triggering
+        (instead of press events), which might be prefered in some
+        cases. Other than this, it uses exactly the same conditions as
+        its GDK counterpart.
+      + gimp_procedure_dialog_get_spin_scale()
+      + gimp_prop_label_color_new().
+      + gimp_prop_label_entry_new()
+      + gimp_prop_spin_scale_new()
+      + gimp_prop_widget_set_factor()
+    * Improved functions:
+      + gimp_procedure_dialog_get_widget() can now generate widgets of
+        type GimpSpinScale (for int/double properties) and GimpLabelColor
+        or GimpColorButton (for GimpRGB properties).
+      + gimp_procedure_dialog_get_color_widget() now only return
+        GimpLabelColor widgets (editable or not).
+
 
 Documentation:
 
