@@ -10,22 +10,22 @@
 # Filipe Gomes <filipefgomes@gmail.com>, 2007.
 # Fernando Correia <fcorreia.mail@gmail.com>, 2010.
 # Sara Campos <lalocas@protonmail.com>, 2021.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-10-06 13:06+0000\n"
-"PO-Revision-Date: 2021-10-06 22:37+0100\n"
+"POT-Creation-Date: 2022-02-18 23:17+0000\n"
+"PO-Revision-Date: 2022-02-19 17:52+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
@@ -102,47 +102,47 @@ msgstr "Guardar como texto HTML colorido"
 msgid "Colored HTML text"
 msgstr "Texto HTML colorido"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "_Nome da camada"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Nome da camada"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Nuvens"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "_Turbulência"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Turbulência"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "Op_acidade"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Opacidade"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
-msgstr "_Cor no nevoeiro"
+#: ../plug-ins/python/foggify.py:124
+msgid "_Fog color"
+msgstr "Cor do _nevoeiro"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Cor do nevoeiro"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Adicionar uma camada de nevoeiro"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Nevoeiro..."
 
@@ -816,6 +816,9 @@ msgstr "Por favor aguarde: a renderizar a textura"
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Espirógrafo…"
+
+#~ msgid "Fog _color"
+#~ msgstr "_Cor no nevoeiro"
 
 #~ msgid "Missing exception information"
 #~ msgstr "Informação sobre a exceção em falta"
