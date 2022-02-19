@@ -34,7 +34,7 @@
   <contributor role="author" last-active="1.0">Marc Bless</contributor>
   <contributor role="author" last-active="1.0">Edward Blevins</contributor>
   <contributor role="author" last-active="1.0">Reagan Blundell</contributor>
-  <contributor role="author" last-active="3.0">Jacob Boerema</contributor>
+  <contributor role="author documenter" last-active="3.0">Jacob Boerema</contributor>
   <contributor role="author" last-active="2.8">Hendrik Boom</contributor>
   <contributor role="author" last-active="1.0">Xavier Bouchoux</contributor>
   <contributor role="author" last-active="2.8">Richard Bowers</contributor>
@@ -66,6 +66,7 @@
   <contributor role="author" last-active="2.10">Kevin Cozens</contributor>
   <contributor role="author" last-active="2.10">Jeremiah Darais</contributor>
   <contributor role="artist" last-active="2.4">Paul Davey</contributor>
+  <contributor role="artist documenter" last-active="3.0">Patrick David</contributor>
   <contributor role="author" last-active="2.6">Michael Deal</contributor>
   <contributor role="artist author" last-active="2.10">Alexia Death</contributor>
   <contributor role="author" last-active="1.0">Brian Degenhardt</contributor>
@@ -111,7 +112,7 @@
   <contributor role="author" last-active="1.0">Marcelo de Gomensoro Malheiros</contributor>
   <contributor role="author" last-active="2.10">Saul Goode</contributor>
   <contributor role="author" last-active="2.8">David Gowers</contributor>
-  <contributor role="author" last-active="3.0">Niels De Graef</contributor>
+  <contributor role="author documenter" last-active="3.0">Niels De Graef</contributor>
   <contributor role="author" last-active="2.10">Cameron Gregory</contributor>
   <contributor role="author" last-active="3.0">Stanislav Grinkov</contributor>
   <contributor role="author" last-active="2.8">Eric Grivel</contributor>
@@ -160,7 +161,7 @@
   <contributor role="author" last-active="2.0">David Koblas</contributor>
   <contributor role="author" last-active="2.2">Daniel Kobras</contributor>
   <contributor role="author" last-active="3.0">Øyvind Kolås</contributor>
-  <contributor role="author" last-active="3.0">Lloyd Konneker</contributor>
+  <contributor role="author documenter" last-active="3.0">Lloyd Konneker</contributor>
   <contributor role="author" last-active="2.4">Robert L Krawitz</contributor>
   <contributor role="author" last-active="2.8">Kretynofil</contributor>
   <contributor role="author" last-active="2.8">Christian Krippendorf</contributor>
@@ -244,9 +245,10 @@
   <contributor role="author" last-active="2.8">Jon Nordby</contributor>
   <contributor role="author" last-active="2.8">Martin Nordholts</contributor>
   <contributor role="author" last-active="1.0">Stephen Robert Norris</contributor>
-  <contributor role="author" last-active="3.0">Daniel Novomesky</contributor>
+  <contributor role="author" last-active="3.0">Daniel Novomeský</contributor>
   <contributor role="author" last-active="1.0">Erik Nygren</contributor>
   <contributor role="author" last-active="1.0">Miles O'Neal</contributor>
+  <contributor role="author" last-active="3.0">Lukas Oberhuber</contributor>
   <contributor role="author" last-active="2.8">David Odin</contributor>
   <contributor role="author" last-active="2.8">Nelson A. de Oliveira</contributor>
   <contributor role="author" last-active="2.8">Victor Oliveira</contributor>
@@ -260,7 +262,7 @@
   <contributor role="author" last-active="1.2">Jay Painter</contributor>
   <contributor role="author" last-active="2.10">Juan Palacios</contributor>
   <contributor role="artist author" last-active="2.10">Ville Pätsi</contributor>
-  <contributor role="author" last-active="3.0">Akkana Peck</contributor>
+  <contributor role="author documenter" last-active="3.0">Akkana Peck</contributor>
   <contributor role="documenter" last-active="2.6">Pierre Perrier</contributor>
   <contributor role="author" last-active="2.0">Asbjorn Pettersen</contributor>
   <contributor role="author" last-active="2.10">Félix Piédallu</contributor>
