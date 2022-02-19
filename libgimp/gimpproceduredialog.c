@@ -549,7 +549,8 @@ gimp_procedure_dialog_new (GimpProcedure       *procedure,
  *     * %GTK_TYPE_SWITCH
  * - %G_TYPE_PARAM_INT or %G_TYPE_PARAM_DOUBLE:
  *     * %GIMP_TYPE_LABEL_SPIN (default): a spin button with a label.
- *     * %GIMP_TYPE_SCALE_ENTRY: a scale entry.
+ *     * %GIMP_TYPE_SCALE_ENTRY: a scale entry with label.
+ *     * %GIMP_TYPE_SPIN_SCALE: a spin scale with label embedded.
  *     * %GIMP_TYPE_SPIN_BUTTON: a spin button with no label.
  * - %G_TYPE_PARAM_STRING:
  *     * %GIMP_TYPE_LABEL_ENTRY (default): an entry with a label.
@@ -648,6 +649,11 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                               property,
                                               _(g_param_spec_get_nick (pspec)),
                                               1.0, FALSE, 0.0, 0.0);
+        }
+      else if (widget_type == GIMP_TYPE_SPIN_SCALE)
+        {
+          widget = gimp_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
+                                             property, step, page, digits);
         }
       else if (widget_type == GIMP_TYPE_SPIN_BUTTON)
         {
@@ -917,6 +923,90 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
           gtk_size_group_add_widget (dialog->priv->label_group, label);
         }
     }
+
+  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
+
+  return widget;
+}
+
+/**
+ * gimp_procedure_dialog_get_spin_scale:
+ * @dialog:   the associated #GimpProcedureDialog.
+ * @property: name of the int or double property to build a
+ *            #GimpSpinScale for. It must be a property of the
+ *            #GimpProcedure @dialog has been created for.
+ * @factor:   a display factor for the range shown by the widget.
+ *
+ * Creates a new #GimpSpinScale for @property which must necessarily be
+ * an integer or double property.
+ * This can be used instead of gimp_procedure_dialog_get_widget() in
+ * particular if you want to tweak the display factor. A typical example
+ * is showing a [0.0, 1.0] range as [0.0, 100.0] instead (@factor = 100.0).
+ *
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (whatever its actual widget type).
+ *
+ * Returns: (transfer none): the #GtkWidget representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_spin_scale (GimpProcedureDialog *dialog,
+                                      const gchar         *property,
+                                      gdouble              factor)
+{
+  GtkWidget  *widget = NULL;
+  GParamSpec *pspec;
+  gdouble     minimum;
+  gdouble     maximum;
+  gdouble     step   = 0.0;
+  gdouble     page   = 0.0;
+  gint        digits = 0;
+
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
+  g_return_val_if_fail (property != NULL, NULL);
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, property);
+      return NULL;
+    }
+
+  g_return_val_if_fail (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
+                        G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_DOUBLE, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (widget)
+    return widget;
+
+  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
+    {
+      GParamSpecInt *pspecint = (GParamSpecInt *) pspec;
+
+      minimum = (gdouble) pspecint->minimum;
+      maximum = (gdouble) pspecint->maximum;
+    }
+  else /* G_TYPE_PARAM_DOUBLE */
+    {
+      GParamSpecDouble *pspecdouble = (GParamSpecDouble *) pspec;
+
+      minimum = pspecdouble->minimum;
+      maximum = pspecdouble->maximum;
+    }
+  gimp_range_estimate_settings (minimum * factor, maximum * factor, &step, &page, &digits);
+
+  widget = gimp_prop_spin_scale_new (G_OBJECT (dialog->priv->config),
+                                     property, step, page, digits);
+  gimp_prop_widget_set_factor (widget, factor, step, page, digits);
 
   gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
   g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
