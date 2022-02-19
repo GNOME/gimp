@@ -11,8 +11,11 @@
   <xsl:template name="recent-contributor">
     <xsl:param name="role" />
     <xsl:apply-templates select="dc:contributor[contains(@role, $role) and
-                                 number(@last-active) >= 2             and
-                                 number(substring-after(@last-active, &quot;.&quot;)) >= 8]" />
+                                 ((number(@last-active) >= 2             and
+                                  number(substring-after(@last-active, &quot;.&quot;)) >= 10) or
+                                  number(@last-active) >= 3)]" >
+      <xsl:sort order="descending" data-type="number" select="@last-active" />
+    </xsl:apply-templates>
   </xsl:template>
 
   <xsl:template match="/dc:gimp-authors">
