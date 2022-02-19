@@ -18,6 +18,12 @@
 #include "config.h"
 
 #include <gtk/gtk.h>
+#ifdef GDK_WINDOWING_QUARTZ
+#include <gdk/gdkquartz.h>
+#endif
+#ifdef GDK_WINDOWING_WAYLAND
+#include <gdk/gdkwayland.h>
+#endif
 
 #include "widgets-types.h"
 
@@ -451,10 +457,37 @@ gimp_cursor_new (GdkWindow          *window,
 
   if (scale_factor > 1)
     {
+      gint hot_x_scaled = hot_x;
+      gint hot_y_scaled = hot_y;
+
       cairo_surface_t *surface =
         gdk_cairo_surface_create_from_pixbuf (pixbuf, scale_factor, NULL);
 
-      cursor = gdk_cursor_new_from_surface (display, surface, hot_x, hot_y);
+      /*
+       * MacOS and Wayland need the hotspot in surface coordinates
+       * X11 needs the hotspot in pixel coordinates (not scaled)
+       * Windows doesn't handle scaled cursors at all
+       * Broadway does not appear to support surface cursors at all,
+       * let alone scaled surface cursors.
+       * https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/545#note_1388777
+       */
+      if (FALSE                            ||
+#ifdef GDK_WINDOWING_WAYLAND
+          GDK_IS_WAYLAND_DISPLAY (display) ||
+#endif
+#ifdef GDK_WINDOWING_QUARTZ
+          GDK_IS_QUARTZ_DISPLAY (display)  ||
+#endif
+          FALSE)
+        {
+          hot_x_scaled *= scale_factor;
+          hot_y_scaled *= scale_factor;
+        }
+
+      cursor = gdk_cursor_new_from_surface (display,
+                                            surface,
+                                            hot_x_scaled,
+                                            hot_y_scaled);
       cairo_surface_destroy (surface);
     }
   else
