@@ -152,6 +152,11 @@ static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
 static GdkPixbuf * gimp_statusbar_load_icon       (GimpStatusbar     *statusbar,
                                                    const gchar       *icon_name);
 
+static void     gimp_statusbar_cursor_label_set_text (GimpStatusbar  *statusbar,
+                                                      gchar          *buffer);
+
+static gboolean gimp_statusbar_queue_pos_redraw   (gpointer           data);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_FRAME,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
@@ -393,6 +398,12 @@ gimp_statusbar_dispose (GObject *object)
     {
       g_source_remove (statusbar->temp_timeout_id);
       statusbar->temp_timeout_id = 0;
+    }
+
+  if (statusbar->statusbar_pos_redraw_idle_id)
+    {
+      g_source_remove (statusbar->statusbar_pos_redraw_idle_id);
+      statusbar->statusbar_pos_redraw_idle_id = 0;
     }
 
   g_clear_pointer (&statusbar->size_widgets, g_slist_free);
@@ -1232,31 +1243,7 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
   GimpImage        *image;
   gchar             buffer[CURSOR_LEN];
 
-#ifdef GDK_WINDOWING_QUARTZ
-  /*
-   * This optimization dramatically improves drawing refresh speed on Macs with retina
-   * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
-   * running Big Sur (released Nov 2020) or higher.
-   * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
-   */
-  gint64            curr_time = g_get_monotonic_time ();
-#endif
-
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
-
-#ifdef GDK_WINDOWING_QUARTZ
-  /*
-   * This optimization dramatically improves drawing refresh speed on Macs with retina
-   * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
-   * running Big Sur (released Nov 2020) or higher.
-   * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
-   */
-  /* only redraw max every 100ms */
-  if (curr_time - statusbar->last_frame_time < 1000 * 300)
-    return;
-
-  statusbar->last_frame_time = curr_time;
-#endif
 
   shell = statusbar->shell;
   image = gimp_display_get_image (shell->display);
@@ -1321,13 +1308,26 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
                   "", x, ", ", y, "");
     }
 
-  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
+  if (g_strcmp0 (buffer, statusbar->cursor_string_last) == 0)
+    return;
+
+  g_free (statusbar->cursor_string_todraw);
+  statusbar->cursor_string_todraw = g_strdup (buffer);
+
+  if (statusbar->statusbar_pos_redraw_idle_id == 0)
+    {
+      statusbar->statusbar_pos_redraw_idle_id =
+        g_idle_add_full (G_PRIORITY_LOW,
+                         gimp_statusbar_queue_pos_redraw,
+                         statusbar,
+                         NULL);
+    }
 }
 
 void
 gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 {
-  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), "");
+  gimp_statusbar_cursor_label_set_text (statusbar, "");
   gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
 }
 
@@ -1796,4 +1796,55 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
                        g_strdup (icon_name), g_object_ref (icon));
 
   return icon;
+}
+
+static gboolean gimp_statusbar_queue_pos_redraw (gpointer data)
+{
+  GimpStatusbar *statusbar = GIMP_STATUSBAR (data);
+
+#ifdef GDK_WINDOWING_QUARTZ
+/*
+ * This optimization dramatically improves drawing refresh speed on Macs with retina
+ * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
+ * running Big Sur (released Nov 2020) or higher.
+ * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
+ *
+ * only redraw max every 333ms and only redraw when the other two decorations aren't
+ * redrawing (cursor_label, horizontal and vertical rulers). This will keep the draw
+ * rects of limited size.
+ */
+  gint64 curr_time     = g_get_monotonic_time ();
+  gint64 mod_time      = curr_time % G_TIME_SPAN_SECOND;
+  gint   timeslice_num = mod_time / (G_TIME_SPAN_SECOND / 9) % 3;
+
+  if (curr_time - statusbar->last_frame_time < G_TIME_SPAN_SECOND / 3 || timeslice_num != 0)
+    return G_SOURCE_CONTINUE;
+
+  statusbar->last_frame_time = curr_time;
+#endif
+
+  g_free (statusbar->cursor_string_last);
+  gimp_statusbar_cursor_label_set_text (statusbar, statusbar->cursor_string_todraw);
+  statusbar->cursor_string_last = statusbar->cursor_string_todraw;
+  statusbar->cursor_string_todraw = NULL;
+
+  statusbar->statusbar_pos_redraw_idle_id = 0;
+
+  return G_SOURCE_REMOVE;
+}
+
+static void gimp_statusbar_cursor_label_set_text (GimpStatusbar *statusbar, gchar *buffer)
+{
+#ifdef GDK_WINDOWING_QUARTZ
+  /*
+   * Without this code, on MacOS the cursor label leaps about in width as the label width is
+   * closely wrapped to the content which changes with each cursor move.
+   * Here is a discussion of the issue:
+   * https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/572#note_1389445
+   */
+  if (gtk_label_get_width_chars (GTK_LABEL (statusbar->cursor_label)) <= (gint)strlen (buffer) + 4)
+    gtk_label_set_width_chars (GTK_LABEL (statusbar->cursor_label), strlen (buffer) + 6);
+#endif
+
+  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
 }

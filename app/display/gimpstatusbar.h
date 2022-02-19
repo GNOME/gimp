@@ -53,6 +53,9 @@ struct _GimpStatusbar
    */
   gint64               last_frame_time;
 #endif
+  guint                statusbar_pos_redraw_idle_id;
+  gchar               *cursor_string_todraw;
+  gchar               *cursor_string_last;
 
   GdkPixbuf           *icon;
   GHashTable          *icon_hash;

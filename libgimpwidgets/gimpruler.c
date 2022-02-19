@@ -77,6 +77,16 @@ struct _GimpRulerPrivate
   PangoLayout     *layout;
 
   GList           *track_widgets;
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /*
+   * This optimization dramatically improves drawing refresh speed on Macs with retina
+   * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
+   * running Big Sur (released Nov 2020) or higher.
+   * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
+   */
+  gint64           last_frame_time;
+#endif
 };
 
 #define GET_PRIVATE(obj) (((GimpRuler *) (obj))->priv)
@@ -652,6 +662,7 @@ gimp_ruler_set_position (GimpRuler *ruler,
       xdiff = rect.x - priv->last_pos_rect.x;
       ydiff = rect.y - priv->last_pos_rect.y;
 
+#ifndef GDK_WINDOWING_QUARTZ
       /*
        * If the position has changed far enough, queue a redraw immediately.
        * Otherwise, we only queue a redraw in a low priority idle handler, to
@@ -674,6 +685,15 @@ gimp_ruler_set_position (GimpRuler *ruler,
           gimp_ruler_queue_pos_redraw (ruler);
         }
       else if (! priv->pos_redraw_idle_id)
+#else
+      /*
+       * pos_redraw_idle_id being set can be counted on to mean
+       * a redraw is needed (on mac only) since we will not do
+       * a high priority draws due to the dramatic performance
+       * they will have.
+       */
+      if (! priv->pos_redraw_idle_id)
+#endif
         {
           priv->pos_redraw_idle_id =
             g_idle_add_full (G_PRIORITY_LOW,
@@ -1251,11 +1271,42 @@ gimp_ruler_get_pos_rect (GimpRuler *ruler,
 static gboolean
 gimp_ruler_idle_queue_pos_redraw (gpointer data)
 {
-  GimpRuler        *ruler = data;
-  GimpRulerPrivate *priv  = GET_PRIVATE (ruler);
+  GimpRuler        *ruler     = data;
+  GimpRulerPrivate *priv      = GET_PRIVATE (ruler);
+
+#ifdef GDK_WINDOWING_QUARTZ
+  /*
+   * This optimization dramatically improves drawing refresh speed on Macs with retina
+   * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
+   * running Big Sur (released Nov 2020) or higher.
+   * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
+   *
+   * only redraw max every 333ms and only redraw when the other two decorations aren't
+   * redrawing (cursor_label, horizontal and vertical rulers). This will keep the draw
+   * rects of limited size.
+   */
+  gint64 curr_time     = g_get_monotonic_time ();
+  gint64 mod_time      = curr_time % G_TIME_SPAN_SECOND;
+  gint   timeslice_num = mod_time / (G_TIME_SPAN_SECOND / 9) % 3;
+
+  if (curr_time - priv->last_frame_time < G_TIME_SPAN_SECOND / 3)
+    return G_SOURCE_CONTINUE;
+  if (priv->orientation == GTK_ORIENTATION_HORIZONTAL && timeslice_num != 1)
+    return G_SOURCE_CONTINUE;
+  if (priv->orientation == GTK_ORIENTATION_VERTICAL   && timeslice_num != 2)
+    return G_SOURCE_CONTINUE;
+
+  priv->last_frame_time = curr_time;
+#endif
 
   gimp_ruler_queue_pos_redraw (ruler);
 
+  /*
+    * pos_redraw_idle_id being set can be counted on to mean
+    * a redraw is needed (on mac only) since we will not do
+    * a high priority draws due to the dramatic performance
+    * they will have.
+    */
   priv->pos_redraw_idle_id = 0;
 
   return G_SOURCE_REMOVE;
