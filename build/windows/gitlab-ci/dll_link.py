@@ -102,7 +102,7 @@ def find_dependencies(obj, srcdirs):
     # Parse lines with DLL Name instead of lib*.dll directly
     for match in re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE):
       dll = match.group(1)
-      if dll not in dlls:
+      if dll not in dlls and os.path.basename(dll) not in sys_dlls:
         dlls.add(dll)
         find_dependencies(dll, srcdirs)
 
