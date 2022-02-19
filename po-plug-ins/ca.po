@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-14 12:07+0000\n"
-"PO-Revision-Date: 2021-11-01 18:38+0100\n"
+"POT-Creation-Date: 2022-02-16 07:45+0000\n"
+"PO-Revision-Date: 2022-02-16 10:17+0100\n"
 "Last-Translator: maite guix <maite.guix@me.com>\n"
 "Language-Team: Catalan <tradgnome@softcatala.org>\n"
 "Language: ca\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -2169,6 +2169,7 @@ msgstr "El GIMP no permet la sintaxi de transferència %s."
 #, c-format
 msgid "%s is not supported by GIMP in combination with samples per pixel: %d"
 msgstr ""
+"%s no és compatible amb el GIMP en combinació amb mostres per píxel: %d"
 
 #: ../plug-ins/common/file-dicom.c:1524
 msgid "Cannot save images with alpha channel."
@@ -2886,11 +2887,11 @@ msgstr ""
 
 #: ../plug-ins/common/file-jpegxl.c:175
 msgid "_Bit depth"
-msgstr "_Profunditat de bits:"
+msgstr "_Profunditat de bits"
 
 #: ../plug-ins/common/file-jpegxl.c:176
 msgid "Bit depth of exported image"
-msgstr ""
+msgstr "Profunditat de bits de la imatge exportada"
 
 #: ../plug-ins/common/file-jpegxl.c:181
 msgid "Effort/S_peed"
@@ -2910,11 +2911,11 @@ msgstr "Desa el perfil ICC per exportar el fitxer JXL"
 
 #: ../plug-ins/common/file-jpegxl.c:1107
 msgid "lightning (fastest)"
-msgstr ""
+msgstr "llampec (més ràpid)"
 
 #: ../plug-ins/common/file-jpegxl.c:1108
 msgid "thunder"
-msgstr ""
+msgstr "tro"
 
 #: ../plug-ins/common/file-jpegxl.c:1109
 msgid "falcon (faster)"
@@ -6852,6 +6853,8 @@ msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
 "%d icons."
 msgstr ""
+"Cridat sense interacció amb les coordenades del punt %d i %d d'accés amb una "
+"imatge de %d icones."
 
 #: ../plug-ins/file-ico/ico.c:139 ../plug-ins/file-ico/ico.c:214
 msgid "Microsoft Windows icon"

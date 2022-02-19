@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-04-25 16:36+0000\n"
+"POT-Creation-Date: 2022-02-18 23:17+0000\n"
 "PO-Revision-Date: 2020-11-26 19:18+0100\n"
 "Last-Translator: Carles Ferrando Garcia <carles.ferrando@gmail.com>\n"
 "Language-Team: Catalan <gimp@llistes.softcatala.org>\n"
@@ -97,47 +97,47 @@ msgstr "Desa com a text HTML de colors"
 msgid "Colored HTML text"
 msgstr "Text HTML de colors"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "_Nom de la capa"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Nom de la capa"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Núvols"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "_Turbulència"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Turbulència"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "_Opacitat"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Opacitat"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
-msgstr "C_olor de la boira"
+#: ../plug-ins/python/foggify.py:124
+msgid "_Fog color"
+msgstr "_Color de la boira"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Color de la boira"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Afegeix una capa de boira"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Boira..."
 
@@ -812,3 +812,6 @@ msgstr "Espereu: s'està renderitzant el patró"
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Espirògraf..."
+
+#~ msgid "Fog _color"
+#~ msgstr "C_olor de la boira"
