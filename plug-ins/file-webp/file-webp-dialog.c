@@ -90,9 +90,9 @@ save_dialog (GimpImage     *image,
 
   /* Create scale for image and alpha quality */
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "quality", GIMP_TYPE_SCALE_ENTRY);
+                                    "quality", GIMP_TYPE_SPIN_SCALE);
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "alpha-quality", GIMP_TYPE_SCALE_ENTRY);
+                                    "alpha-quality", GIMP_TYPE_SPIN_SCALE);
 
   /* Create frame for quality options */
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),

@@ -802,7 +802,7 @@ save_dialog (GimpProcedure       *procedure,
                                        (orig_quality > 0), NULL, NULL, FALSE);
 
   /* Quality as a GimpScaleEntry. */
-  gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog), "quality", 100.0);
+  gimp_procedure_dialog_get_spin_scale (GIMP_PROCEDURE_DIALOG (dialog), "quality", 100.0);
 
   /* changing quality disables custom quantization tables, and vice-versa */
   g_signal_connect (config, "notify::quality",
@@ -876,7 +876,7 @@ save_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "advanced-title", _("Advanced Options"));
   widget = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                             "smoothing", GIMP_TYPE_SCALE_ENTRY);
+                                             "smoothing", GIMP_TYPE_SPIN_SCALE);
   gimp_help_set_help_data (widget, NULL, "file-jpeg-save-smoothing");
 
   /* Add some logics for "Use original quality". */

@@ -2284,7 +2284,7 @@ save_dialog (GimpImage     *image,
                                            image);
 
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "compression", GIMP_TYPE_SCALE_ENTRY);
+                                    "compression", GIMP_TYPE_SPIN_SCALE);
 
   store = gimp_int_store_new (_("Automatic"),    PNG_FORMAT_AUTO,
                               _("8 bpc RGB"),    PNG_FORMAT_RGB8,
