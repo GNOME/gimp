@@ -101,6 +101,8 @@ gboolean     gimp_ascii_strtod                     (const gchar       *nptr,
                                                     gchar            **endptr,
                                                     gdouble           *result);
 
+gchar     *  gimp_appstream_to_pango_markup        (const gchar       *as_text);
+
 gint         gimp_g_list_compare                   (GList             *list1,
                                                     GList             *list2);
 

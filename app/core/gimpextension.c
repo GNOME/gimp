@@ -27,8 +27,7 @@
 
 #include "core-types.h"
 
-#include "config/gimpxmlparser.h"
-
+#include "gimp-utils.h"
 #include "gimperror.h"
 #include "gimpextension.h"
 #include "gimpextension-error.h"
@@ -99,24 +98,6 @@ static GList      * gimp_extension_validate_paths  (GimpExtension  *extension,
                                                     const gchar    *paths,
                                                     gboolean        as_directories,
                                                     GError        **error);
-
-static void         appstream_text_start_element   (GMarkupParseContext  *context,
-                                                    const gchar          *element_name,
-                                                    const gchar         **attribute_names,
-                                                    const gchar         **attribute_values,
-                                                    gpointer              user_data,
-                                                    GError              **error);
-static void         appstream_text_end_element     (GMarkupParseContext  *context,
-                                                    const gchar          *element_name,
-                                                    gpointer              user_data,
-                                                    GError              **error);
-static void         appstream_text_characters      (GMarkupParseContext  *context,
-                                                    const gchar          *text,
-                                                    gsize                 text_len,
-                                                    gpointer              user_data,
-                                                    GError              **error);
-static const gchar* gimp_extension_get_tag_lang    (const gchar         **attribute_names,
-                                                    const gchar         **attribute_values);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpExtension, gimp_extension, GIMP_TYPE_OBJECT)
@@ -337,49 +318,13 @@ gimp_extension_get_path (GimpExtension *extension)
 gchar *
 gimp_extension_get_markup_description (GimpExtension *extension)
 {
-  static const GMarkupParser appstream_text_parser =
-    {
-      appstream_text_start_element,
-      appstream_text_end_element,
-      appstream_text_characters,
-      NULL, /*  passthrough */
-      NULL  /*  error       */
-    };
   const gchar *description;
 
-  GimpXmlParser *xml_parser;
-  gchar         *markup = NULL;
-  GError        *error  = NULL;
-  ParseState     state;
+  g_return_val_if_fail (GIMP_IS_EXTENSION (extension), NULL);
 
-  state.level           = 0;
-  state.foreign_level   = -1;
-  state.text            = g_string_new (NULL);
-  state.numbered_list   = FALSE;
-  state.unnumbered_list = FALSE;
-  state.lang            = g_getenv ("LANGUAGE");
-  state.original        = NULL;
-
-  xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
   description = gimp_extension_get_description (extension);
-  if (description &&
-      ! gimp_xml_parser_parse_buffer (xml_parser, description, -1, &error))
-    {
-      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
-      g_error_free (error);
-    }
 
-  /* Append possibly last original text without proper localization. */
-  if (state.original)
-    {
-      g_string_append (state.text, state.original->str);
-      g_string_free (state.original, TRUE);
-    }
-
-  markup = g_string_free (state.text, FALSE);
-  gimp_xml_parser_free (xml_parser);
-
-  return markup;
+  return gimp_appstream_to_pango_markup (description);
 }
 
 gboolean
@@ -890,155 +835,4 @@ gimp_extension_validate_paths (GimpExtension  *extension,
   list = g_list_reverse (list);
 
   return list;
-}
-
-static void
-appstream_text_start_element (GMarkupParseContext  *context,
-                              const gchar          *element_name,
-                              const gchar         **attribute_names,
-                              const gchar         **attribute_values,
-                              gpointer              user_data,
-                              GError              **error)
-{
-  ParseState  *state  = user_data;
-  GString     *output = state->text;
-  const gchar *tag_lang;
-
-  state->level++;
-
-  if (state->foreign_level >= 0)
-    return;
-
-  tag_lang = gimp_extension_get_tag_lang (attribute_names, attribute_values);
-  if ((state->lang == NULL && tag_lang == NULL) ||
-      g_strcmp0 (tag_lang, state->lang) == 0)
-    {
-      /* Current tag is our current language. */
-      if (state->original)
-        g_string_free (state->original, TRUE);
-      state->original = NULL;
-
-      output = state->text;
-    }
-  else if (tag_lang == NULL)
-    {
-      /* Current tag is the original language (and we want a
-       * localization).
-       */
-      if (state->original)
-        {
-          g_string_append (state->text, state->original->str);
-          g_string_free (state->original, TRUE);
-        }
-      state->original = g_string_new (NULL);
-
-      output = state->original;
-    }
-  else
-    {
-      /* Current tag is an unrelated language */
-      state->foreign_level = state->level;
-      return;
-    }
-
-  if ((state->numbered_list || state->unnumbered_list) &&
-      (g_strcmp0 (element_name, "ul") == 0 ||
-       g_strcmp0 (element_name, "ol") == 0))
-    {
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                   _("This parser does not support imbricated lists."));
-    }
-  else if (g_strcmp0 (element_name, "ul") == 0)
-    {
-      state->unnumbered_list = TRUE;
-    }
-  else if (g_strcmp0 (element_name, "ol") == 0)
-    {
-      state->numbered_list = TRUE;
-      state->list_num      = 0;
-    }
-  else if (g_strcmp0 (element_name, "li") == 0)
-    {
-      state->list_num++;
-      if (state->numbered_list)
-        g_string_append_printf (output, "\n %d. ",
-                                state->list_num);
-      else if (state->unnumbered_list)
-        g_string_append (output, "\n * ");
-      else
-        g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                     _("<li> must be inside <ol> or <ul> tags."));
-    }
-  else if (g_strcmp0 (element_name, "p") != 0)
-    {
-      g_set_error (error, GIMP_ERROR, GIMP_FAILED,
-                   _("Unknown tag <%s>."), element_name);
-    }
-}
-
-static void
-appstream_text_end_element (GMarkupParseContext  *context,
-                            const gchar          *element_name,
-                            gpointer              user_data,
-                            GError              **error)
-{
-  ParseState *state = user_data;
-
-  state->level--;
-
-  if (g_strcmp0 (element_name, "p") == 0)
-    {
-      if (state->foreign_level < 0)
-        {
-          if (state->original)
-            g_string_append (state->original, "\n\n");
-          else
-            g_string_append (state->text, "\n\n");
-        }
-    }
-  else if (g_strcmp0 (element_name, "ul") == 0 ||
-           g_strcmp0 (element_name, "ol") == 0)
-    {
-      state->numbered_list   = FALSE;
-      state->unnumbered_list = FALSE;
-    }
-
-  if (state->foreign_level > state->level)
-    state->foreign_level = -1;
-}
-
-static void
-appstream_text_characters (GMarkupParseContext  *context,
-                           const gchar          *text,
-                           gsize                 text_len,
-                           gpointer              user_data,
-                           GError              **error)
-{
-  ParseState *state = user_data;
-
-  if (state->foreign_level < 0)
-    {
-      if (state->original)
-        g_string_append (state->original, text);
-      else
-        g_string_append (state->text, text);
-    }
-}
-
-static const gchar *
-gimp_extension_get_tag_lang (const gchar **attribute_names,
-                             const gchar **attribute_values)
-{
-  while (*attribute_names)
-    {
-      if (! strcmp (*attribute_names, "xml:lang"))
-        {
-          return *attribute_values;
-        }
-
-      attribute_names++;
-      attribute_values++;
-    }
-
-  return NULL;
 }
