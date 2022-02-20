@@ -877,6 +877,7 @@
       <menuitem action="help-context-help" />
       <menuitem action="dialogs-tips" />
       <menuitem action="dialogs-about" />
+      <menuitem action="dialogs-welcome" />
       <separator />
       <menuitem action="dialogs-action-search" />
       <separator />

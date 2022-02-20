@@ -281,6 +281,8 @@ static const GimpDialogFactoryEntry entries[] =
             dialogs_palette_import_get,     TRUE, TRUE,  TRUE),
   TOPLEVEL ("gimp-tips-dialog",
             dialogs_tips_get,               TRUE, FALSE, FALSE),
+  TOPLEVEL ("gimp-welcome-dialog",
+            dialogs_welcome_get,            TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-about-dialog",
             dialogs_about_get,              TRUE, FALSE, FALSE),
   TOPLEVEL ("gimp-action-search-dialog",

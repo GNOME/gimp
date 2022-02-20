@@ -83,6 +83,7 @@
 #include "preferences-dialog.h"
 #include "quit-dialog.h"
 #include "tips-dialog.h"
+#include "welcome-dialog.h"
 
 #include "gimp-intl.h"
 
@@ -197,6 +198,15 @@ dialogs_tips_get (GimpDialogFactory *factory,
                   gint               view_size)
 {
   return tips_dialog_create (context->gimp);
+}
+
+GtkWidget *
+dialogs_welcome_get (GimpDialogFactory *factory,
+                     GimpContext       *context,
+                     GimpUIManager     *ui_manager,
+                     gint               view_size)
+{
+  return welcome_dialog_create (context->gimp);
 }
 
 GtkWidget *

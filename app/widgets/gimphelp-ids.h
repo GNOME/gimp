@@ -726,6 +726,7 @@
 #define GIMP_HELP_TEXT_EDITOR_DIALOG              "gimp-text-editor-dialog"
 #define GIMP_HELP_TIPS_DIALOG                     "gimp-tips-dialog"
 #define GIMP_HELP_UNDO_DIALOG                     "gimp-undo-dialog"
+#define GIMP_HELP_WELCOME_DIALOG                  "gimp-welcome-dialog"
 
 #define GIMP_HELP_EXPORT_DIALOG                   "gimp-export-dialog"
 #define GIMP_HELP_EXPORT_CONFIRM_DIALOG           "gimp-export-confirm-dialog"

@@ -1426,6 +1426,7 @@ conf.set_quoted('GIMPDATADIR',     prefix / gimpdatadir)
 conf.set_quoted('GIMPPLUGINDIR',   prefix / gimpplugindir)
 conf.set_quoted('PLUGINDIR',       prefix / gimpplugindir)
 conf.set_quoted('LOCALEDIR',       prefix / localedir)
+conf.set_quoted('DESKTOP_DATADIR', prefix / get_option('datadir'))
 
 conf.set_quoted('LOCALSTATEDIR',   prefix / get_option('localstatedir'))
 # /usr/com?

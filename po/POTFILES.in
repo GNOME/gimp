@@ -248,6 +248,7 @@ app/dialogs/user-install-dialog.c
 app/dialogs/vectors-export-dialog.c
 app/dialogs/vectors-import-dialog.c
 app/dialogs/vectors-options-dialog.c
+app/dialogs/welcome-dialog.c
 
 app/display/display-enums.c
 app/display/gimpcursorview.c

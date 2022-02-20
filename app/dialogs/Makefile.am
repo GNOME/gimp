@@ -1,13 +1,15 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"	\
-	-I$(top_builddir)		\
-	-I$(top_srcdir)			\
-	-I$(top_builddir)/app		\
-	-I$(top_srcdir)/app		\
-	$(GEGL_CFLAGS)			\
-	$(GTK_CFLAGS)			\
+	-DG_LOG_DOMAIN=\"Gimp-Dialogs\"			\
+	-DDESKTOP_DATADIR=\""$(DESKTOP_DATADIR)"\"	\
+	-I$(top_builddir)				\
+	-I$(top_srcdir)					\
+	-I$(top_builddir)/app				\
+	-I$(top_srcdir)/app				\
+	$(APPSTREAM_GLIB_CFLAGS)			\
+	$(GEGL_CFLAGS)					\
+	$(GTK_CFLAGS)					\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappdialogs.a
@@ -102,7 +104,9 @@ libappdialogs_a_sources = \
 	vectors-import-dialog.c		\
 	vectors-import-dialog.h		\
 	vectors-options-dialog.c	\
-	vectors-options-dialog.h
+	vectors-options-dialog.h	\
+	welcome-dialog.c		\
+	welcome-dialog.h
 
 libappdialogs_a_built_sources = \
 	authors.h

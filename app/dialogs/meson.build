@@ -43,6 +43,7 @@ libappdialogs_sources = [
   'vectors-export-dialog.c',
   'vectors-import-dialog.c',
   'vectors-options-dialog.c',
+  'welcome-dialog.c',
   gitversion_h,
 ]
 
@@ -61,5 +62,6 @@ libappdialogs = static_library('appdialogs',
   c_args: '-DG_LOG_DOMAIN="Gimp-Dialogs"',
   dependencies: [
     gegl, gtk3,
+    appstream_glib,
   ],
 )
