@@ -36,6 +36,7 @@
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include "dialogs/about-dialog.h"
+#include "dialogs/welcome-dialog.h"
 #endif
 
 #include "gimp-intl.h"
@@ -415,9 +416,9 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
 #ifndef GIMP_CONSOLE_COMPILATION
       gtk_widget_show (about_dialog_create (config));
 #else
-      g_warning (_("A new version of GIMP (%s) was released.\n"
-                   "It is recommended to update."),
-                 config->last_known_release);
+      g_printerr (_("A new version of GIMP (%s) was released.\n"
+                    "It is recommended to update."),
+                  config->last_known_release);
 #endif
     }
 }
@@ -512,16 +513,35 @@ gimp_version_cmp (const gchar *v1,
 /*
  * gimp_update_auto_check:
  * @config:
+ * @gimp:
  *
  * Run the check for newer versions of GIMP if conditions are right.
  *
  * Returns: %TRUE if a check was actually run.
  */
 gboolean
-gimp_update_auto_check (GimpCoreConfig *config)
+gimp_update_auto_check (GimpCoreConfig *config,
+                        Gimp           *gimp)
 {
   gint64 prev_update_timestamp;
   gint64 current_timestamp;
+
+  if (config->last_run_version == NULL ||
+      gimp_version_cmp (GIMP_VERSION,
+                        config->last_run_version) > 0)
+    {
+#ifndef GIMP_CONSOLE_COMPILATION
+      /* GIMP was just updated and this is the first time the new
+       * version is run. Display a welcome dialog, and do not check for
+       * updates right now. */
+      gtk_widget_show (welcome_dialog_create (gimp));
+
+      return FALSE;
+#else
+      g_log (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE,
+             "Welcome to GIMP %s!", GIMP_VERSION);
+#endif
+    }
 
   /* Builds with update check deactivated just always return FALSE. */
 #ifdef CHECK_UPDATE

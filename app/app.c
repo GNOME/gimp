@@ -319,7 +319,14 @@ app_run (const gchar         *full_prog_name,
   /*  check for updates *after* enabling config autosave, so that the timestamp
    *  is saved
    */
-  gimp_update_auto_check (gimp->edit_config);
+  gimp_update_auto_check (gimp->edit_config, gimp);
+
+  /* Set this after gimp_update_auto_check(). This will be used for the
+   * next run.
+   */
+  g_object_set (gimp->edit_config,
+                "last-run-version", GIMP_VERSION,
+                NULL);
 
   loop = run_loop = g_main_loop_new (NULL, FALSE);
 

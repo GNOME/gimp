@@ -125,6 +125,7 @@ enum
   PROP_LAST_RELEASE_COMMENT,
   PROP_LAST_REVISION,
   PROP_LAST_KNOWN_RELEASE,
+  PROP_LAST_RUN_VERSION,
 #ifdef G_OS_WIN32
   PROP_WIN32_POINTER_INPUT_API,
 #endif
@@ -661,6 +662,13 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                         0, G_MAXINT, 0,
                         GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LAST_RUN_VERSION,
+                           "last-run-version",
+                           "Version of GIMP run last",
+                           LAST_RUN_VERSION_BLURB,
+                           NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SAVE_DOCUMENT_HISTORY,
                             "save-document-history",
                             "Save document history",
@@ -865,6 +873,7 @@ gimp_core_config_finalize (GObject *object)
 
   g_clear_pointer (&core_config->last_known_release, g_free);
   g_clear_pointer (&core_config->last_release_comment, g_free);
+  g_clear_pointer (&core_config->last_run_version, g_free);
 
   g_clear_object (&core_config->default_image);
   g_clear_object (&core_config->default_grid);
@@ -1088,6 +1097,10 @@ gimp_core_config_set_property (GObject      *object,
     case PROP_LAST_KNOWN_RELEASE:
       g_clear_pointer (&core_config->last_known_release, g_free);
       core_config->last_known_release = g_value_dup_string (value);
+      break;
+    case PROP_LAST_RUN_VERSION:
+      g_clear_pointer (&core_config->last_run_version, g_free);
+      core_config->last_run_version = g_value_dup_string (value);
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       core_config->save_document_history = g_value_get_boolean (value);
@@ -1348,6 +1361,9 @@ gimp_core_config_get_property (GObject    *object,
       break;
     case PROP_LAST_KNOWN_RELEASE:
       g_value_set_string (value, core_config->last_known_release);
+      break;
+    case PROP_LAST_RUN_VERSION:
+      g_value_set_string (value, core_config->last_run_version);
       break;
     case PROP_SAVE_DOCUMENT_HISTORY:
       g_value_set_boolean (value, core_config->save_document_history);
