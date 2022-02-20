@@ -164,6 +164,13 @@ Plug-ins:
   - HEIF: bit depth heuristic removed for the settings. The plug-in just
     stores and set back the last used values as for other settings
     instead of trying to be "clever".
+  - help-browser and webpage are now marked "unmaintained" and building
+    them is discouraged, except for developers. The reasons are: the
+    multiple problems for building, while it is not even available on
+    Windows anymore (and unsure if it will ever be solved anytime soon),
+    bringing features which nowadays most people have with browsers
+    installed by default on systems (allowing to read the manual and
+    take full webpage screenshots).
 
 Build:
 
