@@ -27,6 +27,9 @@ import sys
 dlls = set()
 sys_dlls = set()
 
+# Previously done DLLs in previous runs
+done_dlls = set()
+
 # Common paths
 bindir = 'bin'
 
@@ -34,7 +37,15 @@ bindir = 'bin'
 # Functions
 
 # Main function
-def main(binary, srcdirs, destdir, debug):
+def main(binary, srcdirs, destdir, debug, dll_file):
+  global done_dlls
+  try:
+    if dll_file is not None:
+      with open(dll_file, 'r') as f:
+        done_dlls = { line.strip() for line in f if len(line.strip()) != 0 }
+  except FileNotFoundError:
+    pass
+
   sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
                                                                                  binary, ', '.join(srcdirs)))
   find_dependencies(os.path.abspath(binary), srcdirs)
@@ -61,10 +72,19 @@ def main(binary, srcdirs, destdir, debug):
   else:
     copy_dlls(dlls - sys_dlls, srcdirs, destdir)
 
+  if dll_file is not None:
+    with open(dll_file, 'w') as f:
+      f.write("\n".join(set.union(done_dlls, dlls, sys_dlls)))
+
 def find_dependencies(obj, srcdirs):
   '''
   List DLLs of an object file in a recursive way.
   '''
+  if obj in set.union(done_dlls, sys_dlls):
+    # Already processed, either in a previous run of the script
+    # (done_dlls) or in this one.
+    return True
+
   if not os.path.isabs(obj):
     for srcdir in srcdirs:
       abs_dll = os.path.join(srcdir, bindir, obj)
@@ -102,7 +122,7 @@ def find_dependencies(obj, srcdirs):
     # Parse lines with DLL Name instead of lib*.dll directly
     for match in re.finditer(r"DLL Name: *(\S+.dll)", out, re.MULTILINE):
       dll = match.group(1)
-      if dll not in dlls and os.path.basename(dll) not in sys_dlls:
+      if dll not in set.union(done_dlls, dlls, sys_dlls):
         dlls.add(dll)
         find_dependencies(dll, srcdirs)
 
@@ -132,9 +152,10 @@ def copy_dlls(dll_list, srcdirs, destdir):
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
   parser.add_argument('--debug', dest='debug', action = 'store_true', default = False)
+  parser.add_argument('--output-dll-list', dest='dll_file', action = 'store', default = None)
   parser.add_argument('bin')
   parser.add_argument('src', nargs='+')
   parser.add_argument('dest')
   args = parser.parse_args(sys.argv[1:])
 
-  main(args.bin, args.src, args.dest, args.debug)
+  main(args.bin, args.src, args.dest, args.debug, args.dll_file)

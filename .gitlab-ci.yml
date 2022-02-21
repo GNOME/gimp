@@ -370,6 +370,7 @@ packaging-win64-native:
     paths:
     - gimp-w64
     - _build-w64/build/windows/installer/lang/
+    - done-dll.list
   needs: ["gimp-win64-native"]
 
 ## WINDOWS 32-bit CI (native MSYS2) ##
@@ -455,6 +456,7 @@ packaging-win32-native:
     expire_in: 1 day
     paths:
     - gimp-w32
+    - done-dll.list
   needs: ["gimp-win32-native"]
 
 ## WINDOWS 64-bit CI (cross-build crossroad) ##
