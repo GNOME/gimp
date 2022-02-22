@@ -412,7 +412,7 @@ welcome_dialog_create (Gimp *gimp)
 
   widget = gtk_label_new (NULL);
   tmp = g_strdup (_("This welcome dialog is only shown at first launch. "
-                    "You can call if again from the \"Help\" menu."));
+                    "You can show it again from the \"Help\" menu."));
   markup = g_strdup_printf ("<small>%s</small>", tmp);
   g_free (tmp);
   widget = gtk_label_new (NULL);
