@@ -64,6 +64,8 @@ welcome_dialog_create (Gimp *gimp)
   GdkMonitor    *monitor;
   GdkRectangle   workarea;
 
+  GList         *windows;
+
   GtkWidget     *main_vbox;
   GtkWidget     *stack;
   GtkWidget     *grid;
@@ -153,11 +155,15 @@ welcome_dialog_create (Gimp *gimp)
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
+  windows = gimp_get_image_windows (gimp);
   welcome_dialog = gimp_dialog_new (title,
                                     "gimp-welcome-dialog",
-                                    NULL, 0, NULL, NULL,
+                                    windows ?  windows->data : NULL,
+                                    0, NULL, NULL,
                                     NULL);
+  g_list_free (windows);
   gtk_window_set_resizable (GTK_WINDOW (welcome_dialog), FALSE);
+  gtk_window_set_position (GTK_WINDOW (welcome_dialog), GTK_WIN_POS_CENTER_ON_PARENT);
   g_free (title);
 
   g_signal_connect (welcome_dialog,
