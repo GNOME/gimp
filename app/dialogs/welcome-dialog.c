@@ -50,6 +50,9 @@ static void     welcome_add_link        (GtkGrid        *grid,
                                          const gchar    *emoji,
                                          const gchar    *title,
                                          const gchar    *link);
+static void     welcome_size_allocate   (GtkWidget      *welcome_dialog,
+                                         GtkAllocation  *allocation,
+                                         gpointer        user_data);
 
 
 GtkWidget *
@@ -59,10 +62,6 @@ welcome_dialog_create (Gimp *gimp)
   AsApp         *app           = NULL;
   const gchar   *release_notes = NULL;
   GError        *error         = NULL;
-  GFile         *splash_file;
-  GdkPixbuf     *pixbuf;
-  GdkMonitor    *monitor;
-  GdkRectangle   workarea;
 
   GList         *windows;
 
@@ -87,8 +86,6 @@ welcome_dialog_create (Gimp *gimp)
   gchar         *tmp;
 
   gint           row;
-  gint           max_width;
-  gint           max_height;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -134,25 +131,6 @@ welcome_dialog_create (Gimp *gimp)
     }
   g_free (appdata_path);
 
-  monitor = gimp_get_monitor_at_pointer ();
-  gdk_monitor_get_workarea (monitor, &workarea);
-#ifdef GDK_WINDOWING_WAYLAND
-  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
-    {
-      /* See the long comment in app/gui/splash.c on why we do this
-       * weird stuff for Wayland only.
-       * See also #5322.
-       */
-      max_width  = workarea.width  / 4;
-      max_height = workarea.height / 4;
-    }
-  else
-#endif
-    {
-      max_width  = workarea.width  / 2;
-      max_height = workarea.height / 2;
-    }
-
   /* Translators: the %s string will be the version, e.g. "3.0". */
   title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
   windows = gimp_get_image_windows (gimp);
@@ -162,7 +140,6 @@ welcome_dialog_create (Gimp *gimp)
                                     0, NULL, NULL,
                                     NULL);
   g_list_free (windows);
-  gtk_window_set_resizable (GTK_WINDOW (welcome_dialog), FALSE);
   gtk_window_set_position (GTK_WINDOW (welcome_dialog), GTK_WIN_POS_CENTER_ON_PARENT);
   g_free (title);
 
@@ -190,30 +167,16 @@ welcome_dialog_create (Gimp *gimp)
                         "Welcome");
   gtk_widget_show (vbox);
 
-  splash_file = gimp_data_directory_file ("images", "gimp-splash.png", NULL);
-  pixbuf = gdk_pixbuf_new_from_file_at_scale (g_file_peek_path (splash_file),
-                                              max_width, max_height,
-                                              TRUE, &error);
-  if (pixbuf)
-    {
-      image = gtk_image_new_from_pixbuf (pixbuf);
-      g_object_unref (pixbuf);
-    }
-  else
-    {
-      g_printerr ("%s: Error loading '%s': %s\n", G_STRFUNC,
-                  g_file_peek_path (splash_file),
-                  error->message);
-      g_clear_error (&error);
-
-      image = gtk_image_new_from_icon_name ("gimp-wilber",
-                                            GTK_ICON_SIZE_DIALOG);
-    }
-  g_object_unref (splash_file);
-
+  image = gtk_image_new_from_icon_name ("gimp-wilber",
+                                        GTK_ICON_SIZE_DIALOG);
   gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
   gtk_box_pack_start (GTK_BOX (vbox), image, FALSE, FALSE, 0);
   gtk_widget_show (image);
+
+  g_signal_connect (welcome_dialog,
+                    "size-allocate",
+                    G_CALLBACK (welcome_size_allocate),
+                    image);
 
   /* Welcome title. */
 
@@ -460,4 +423,75 @@ welcome_add_link (GtkGrid     *grid,
   button = gtk_link_button_new_with_label (link, title);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
+}
+
+static void
+welcome_size_allocate (GtkWidget     *welcome_dialog,
+                       GtkAllocation *allocation,
+                       gpointer       user_data)
+{
+  GtkWidget     *image = GTK_WIDGET (user_data);
+  GError        *error = NULL;
+  GFile         *splash_file;
+  GdkPixbuf     *pixbuf;
+  GdkMonitor    *monitor;
+  GdkRectangle   workarea;
+  gint           min_width;
+  gint           min_height;
+  gint           max_width;
+  gint           max_height;
+  gint           image_width;
+  gint           image_height;
+
+  if (gtk_image_get_storage_type (GTK_IMAGE (image)) == GTK_IMAGE_PIXBUF)
+    return;
+
+  monitor = gimp_get_monitor_at_pointer ();
+  gdk_monitor_get_workarea (monitor, &workarea);
+#ifdef GDK_WINDOWING_WAYLAND
+  if (GDK_IS_WAYLAND_DISPLAY (gdk_display_get_default ()))
+    {
+      /* See the long comment in app/gui/splash.c on why we do this
+       * weird stuff for Wayland only.
+       * See also #5322.
+       */
+      min_width  = workarea.width  / 8;
+      min_height = workarea.height / 8;
+      max_width  = workarea.width  / 4;
+      max_height = workarea.height / 4;
+    }
+  else
+#endif
+    {
+      min_width  = workarea.width  / 4;
+      min_height = workarea.height / 4;
+      max_width  = workarea.width  / 2;
+      max_height = workarea.height / 2;
+    }
+  image_width = allocation->width + 40;
+  image_height = allocation->height + 40;
+
+  /* On big monitors, we get very huge images with a lot of empty space.
+   * So let's go with a logic so that we want a max and min size
+   * (relatively to desktop area), but we also want to avoid too much
+   * empty space. This is why we compute first the dialog size without
+   * any image in there.
+   */
+  image_width = CLAMP (image_width, min_width, max_width);
+  image_height = CLAMP (image_height, min_height, max_height);
+
+  splash_file = gimp_data_directory_file ("images", "gimp-splash.png", NULL);
+  pixbuf = gdk_pixbuf_new_from_file_at_scale (g_file_peek_path (splash_file),
+                                              image_width, image_height,
+                                              TRUE, &error);
+  if (pixbuf)
+    {
+      gtk_image_set_from_pixbuf (GTK_IMAGE (image), pixbuf);
+      g_object_unref (pixbuf);
+    }
+  g_object_unref (splash_file);
+
+  gtk_widget_show (image);
+
+  gtk_window_set_resizable (GTK_WINDOW (welcome_dialog), FALSE);
 }
