@@ -325,7 +325,7 @@ app_run (const gchar         *full_prog_name,
    * next run.
    */
   g_object_set (gimp->edit_config,
-                "last-run-version", GIMP_VERSION,
+                "config-version", GIMP_VERSION,
                 NULL);
 
   loop = run_loop = g_main_loop_new (NULL, FALSE);

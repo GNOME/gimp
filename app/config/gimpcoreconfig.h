@@ -116,7 +116,7 @@ struct _GimpCoreConfig
   gchar                  *last_release_comment;
   gint                    last_revision;
 
-  gchar                  *last_run_version;
+  gchar                  *config_version;
 };
 
 struct _GimpCoreConfigClass

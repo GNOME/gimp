@@ -526,9 +526,9 @@ gimp_update_auto_check (GimpCoreConfig *config,
   gint64 prev_update_timestamp;
   gint64 current_timestamp;
 
-  if (config->last_run_version == NULL ||
+  if (config->config_version == NULL ||
       gimp_version_cmp (GIMP_VERSION,
-                        config->last_run_version) > 0)
+                        config->config_version) > 0)
     {
 #ifndef GIMP_CONSOLE_COMPILATION
       /* GIMP was just updated and this is the first time the new

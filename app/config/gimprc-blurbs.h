@@ -270,8 +270,8 @@ _("Specifies the language to use for the user interface.")
 #define LAST_KNOWN_RELEASE_BLURB \
 _("The last known release version of GIMP as queried from official website.")
 
-#define LAST_RUN_VERSION_BLURB \
-_("The version of GIMP which was last run.")
+#define CONFIG_VERSION_BLURB \
+_("The version of GIMP config files.")
 
 #define LAST_OPENED_SIZE_BLURB \
 _("How many recently opened image filenames to keep on the File menu.")
