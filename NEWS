@@ -104,6 +104,10 @@ User Interface:
   - On-hover indicators around inactive/unset eye/locked toggles in
     Layer/Channels/Paths dialogs.
   - GimpSpinScale made more compact.
+  - New "Welcome dialog" which appears only after a new installation or
+    an update, will show a few common links, and the release notes
+    (taken from the AppStream data, so they can even be localized).
+  - The new "Welcome dialog" comes with a new splash screen by Aryeom.
 
 Tools:
 
@@ -208,6 +212,10 @@ Build:
     user-installed fonts (feature appeared in Windows 1809) was
     implemented. GIMP had its own workaround until now, which got
     removed in this version.
+  - Optimization of the DLL search script for creating the Windows
+    installer, which made the "packaging-win*-native" jobs in particular
+    run from over 2 hours in some cases to about 10 minutes. So it's a
+    big gain for the creation wait for the Windows installer.
 
 API:
 
