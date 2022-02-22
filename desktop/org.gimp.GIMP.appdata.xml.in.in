@@ -73,7 +73,7 @@
   </provides>
 
   <releases>
-    <release version="2.99.10" date="TODO" type="development">
+    <release version="2.99.10" date="2022-02-22" type="development">
       <description>
         <_p>
         GIMP 2.99.10 is a notable development release in the 2.99 series, featuring many changes.
