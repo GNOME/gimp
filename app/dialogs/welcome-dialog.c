@@ -92,6 +92,22 @@ welcome_dialog_create (Gimp *gimp)
   appdata_path = g_build_filename (DESKTOP_DATADIR, "metainfo",
                                    "org.gimp.GIMP.appdata.xml",
                                    NULL);
+  if (! g_file_test (appdata_path, G_FILE_TEST_IS_REGULAR))
+    {
+      /* This should not happen since we install explicitly this file in
+       * metainfo/, but flatpak at least is overriding our install and
+       * moving the file to appdata/ (which used to be the legacy
+       * location). Hopefully they are the only ones doing it, but just
+       * in case, let's make an alternative check in this other
+       * location.
+       */
+      g_printerr ("%s: AppStream file '%s' is not a regular file.\n",
+                  G_STRFUNC, appdata_path);
+      g_free (appdata_path);
+      appdata_path = g_build_filename (DESKTOP_DATADIR, "appdata",
+                                       "org.gimp.GIMP.appdata.xml",
+                                       NULL);
+    }
   if (g_file_test (appdata_path, G_FILE_TEST_IS_REGULAR))
     {
       AsRelease *release;
