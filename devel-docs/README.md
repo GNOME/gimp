@@ -271,8 +271,8 @@ rules. To do so:
   very useful information.
 
 Additionally you can quickly switch between the light and dark variant
-of a same them by going to "Visual" and switching the "Dark Variant"
-button ON or OFF.
+of a same theme by going to "Visual" tab and switching the "Dark
+Variant" button ON or OFF.
 
 ### Icon themes
 
