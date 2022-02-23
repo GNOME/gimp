@@ -277,6 +277,8 @@ Source: "{#GIMP_DIR32}\etc\*"; DestDir: "{app}\etc"; Components: gimp32 or gimp6
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\environ\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\environ"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\lib\gimp\{#DIR_VER}\interpreters\*"; DestDir: "{app}\lib\gimp\{#DIR_VER}\interpreters"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#GIMP_DIR32}\share\gimp\*"; DestDir: "{app}\share\gimp"; Components: gimp32 or gimp64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
+Source: "{#GIMP_DIR32}\share\metainfo\*"; DestDir: "{app}\share\metainfo"; Components: gimp32 or gimp64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
+
 Source: "{#DEPS_DIR32}\share\glib-2.0\schemas\*"; DestDir: "{app}\share\glib-2.0\schemas"; Components: deps32 or deps64; Flags: recursesubdirs createallsubdirs restartreplace uninsrestartdelete ignoreversion
 ;Source: "{#DEPS_DIR32}\share\enchant\*"; DestDir: "{app}\share\enchant"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
 Source: "{#DEPS_DIR32}\share\libwmf\*"; DestDir: "{app}\share\libwmf"; Components: deps32 or deps64; Flags: recursesubdirs restartreplace uninsrestartdelete ignoreversion
