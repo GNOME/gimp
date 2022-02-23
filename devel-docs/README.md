@@ -221,6 +221,59 @@ which can be generated from within GIMP.
 Alternatively GIMP supports the SVG Gradient format.
 
 ### Themes
+
+GTK3 uses CSS themes. Don't be fooled though. It's not real CSS in that
+it doesn't have all the features of real web CSS, and since it's for
+desktop applications, some things are necessarily different. What it
+means is mostly that it "looks similar" enough that people used to web
+styling should not be too disorientated.
+
+You can start by looking at the [official
+documentation](https://docs.gtk.org/gtk3/migrating-themes.html) for
+theme migration (from GTK+2 to 3), which gives a good overview, though
+it's far from being perfect unfortunately.
+
+Another good idea would be to look at existing well maintained GTK3
+themes to get inspiration and see how things work.
+
+Finally you can look at our only current theme, the [System
+theme](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/themes/System/gimp.css).
+Note though that this `System` theme is pretty bare, and that's its goal
+(try to theme as few as possible over whatever is the current real
+system theme).
+
+TODO: for any theme maker reading this, what we want for GIMP 3.0 are at
+least the following additional themes:
+
+- a full custom theme using neutral grayscale colors with a dark and
+  light variant;
+- a mid-gray neutral theme.
+
+As a last trick for theme makers, we recommend to work with the
+GtkInspector tool, which allows you to test CSS rules live in the `CSS`
+tab. You can run the `GtkInspector` by going to the `File > Debug` menu
+and selecting `Start GtkInspector` menu item.
+
+It also allows you to find the name of a widget to use in your CSS
+rules. To do so:
+
+* Start the `GtkInspector`;
+* go on the "Objects" tab;
+* click the "target" 🞋 icon on the headerbar's top-left, then pick in
+  GIMP interface the widget you are interested to style;
+* the widget name will be displayed on the top of the information area
+  of the dialog.
+* Feel free to browse the various sections to see the class hierachy,
+  CSS nodes and so on.
+* The second top-left button (just next to the target icon) allows you
+  to switch between the details of the selected widget and the widget
+  hierarchy (container widgets containing other widgets), which is also
+  very useful information.
+
+Additionally you can quickly switch between the light and dark variant
+of a same them by going to "Visual" and switching the "Dark Variant"
+button ON or OFF.
+
 ### Icon themes
 
 Icon sets (a.k.a. "icon themes") have been separated from themes since
