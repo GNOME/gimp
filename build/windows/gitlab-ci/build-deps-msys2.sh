@@ -96,7 +96,6 @@ cd ../..
 ## libjxl ##
 pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-brotli  \
-    mingw-w64-$MSYS2_ARCH-highway \
     mingw-w64-$MSYS2_ARCH-cmake
 
 git clone --depth=${GIT_DEPTH} --branch v0.6.1 --recursive https://github.com/libjxl/libjxl.git _libjxl
@@ -115,7 +114,7 @@ cmake -G Ninja \
     -DJPEGXL_ENABLE_MANPAGES=OFF \
     -DJPEGXL_ENABLE_SKCMS=ON \
     -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
-    -DJPEGXL_FORCE_SYSTEM_HWY=ON \
+    -DJPEGXL_FORCE_SYSTEM_HWY=OFF \
     -DJPEGXL_ENABLE_JNI=OFF \
     -DJPEGXL_ENABLE_TCMALLOC=OFF \
     -DJPEGXL_ENABLE_TOOLS=OFF \
