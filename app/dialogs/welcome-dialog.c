@@ -89,7 +89,13 @@ welcome_dialog_create (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  appdata_path = g_build_filename (DESKTOP_DATADIR, "metainfo",
+  /* Why I am using gimp_data_directory() then backing out 2 directories
+   * instead of directly using gimp_installation_directory () is because
+   * the 'datadir' might be customized, so I don't want to hardcode
+   * "share". It might be something else.
+   */
+  appdata_path = g_build_filename (gimp_data_directory (),
+                                   "..", "..", "metainfo",
                                    "org.gimp.GIMP.appdata.xml",
                                    NULL);
   if (! g_file_test (appdata_path, G_FILE_TEST_IS_REGULAR))
@@ -104,7 +110,8 @@ welcome_dialog_create (Gimp *gimp)
       g_printerr ("%s: AppStream file '%s' is not a regular file.\n",
                   G_STRFUNC, appdata_path);
       g_free (appdata_path);
-      appdata_path = g_build_filename (DESKTOP_DATADIR, "appdata",
+      appdata_path = g_build_filename (gimp_data_directory (),
+                                       "..", "..", "appdata",
                                        "org.gimp.GIMP.appdata.xml",
                                        NULL);
     }
