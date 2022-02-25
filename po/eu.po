@@ -712,23 +712,23 @@ msgstr "Gordetzeko elkarrizketa-koadroaren XCF bateragarritasun-informazioa orai
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
-msgstr ""
+msgstr "Errendimendua erregistratzeko zenbait tresna gehitu dira eta erregistroak aginte-panelean erakusten dira"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
-msgstr ""
+msgstr "GIMP 2.10.6 bertsioak akats asko konpondu ditu, zenbait optimizazio izan ditu eta eginbide berriak ditu. Aldaketarik nabarmenenak:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
-msgstr ""
+msgstr "Testu-geruzek orain testu bertikalak ere irudikatu ditzakete (karaktere-orientazio eta lerro-norabide desberdinekin)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
-msgstr ""
+msgstr "\"Planeta txikia\" (gegl:stereographic-projection) iragazki berria"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "New \"Long Shadow\" filter"
@@ -811,7 +811,7 @@ msgstr ""
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
-msgstr ""
+msgstr "2.10 seriearen lehen argitalpena, irudiak prozesatzeko motor berria, GEGL izenekoa, erabiltzeko lehen urratsak eman dituena. Aldaketarik nabarmenenak: "
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "High bit depth color processing (16/32-bit per color channel)"
@@ -826,7 +826,7 @@ msgstr "Kolorearen kudeaketa GIMPen nukleo barruko ebingidea da orain, eta trepe
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
-msgstr ""
+msgstr "Efektuak oihal gainean aurreikusi daitezke, prozesatutako pixelen aurretik/ondoren bista zatituarekin"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid ""
@@ -18644,7 +18644,7 @@ msgstr "<big>Garapen-bertsio ezegonkorra</big>\n"
 "<small><tt>%s</tt> commit-a</small>\n"
 "\n"
 "<small>Akatsen berri eman baino lehen, egiaztatu akats horiek\n"
-"git-eko azken master adarrarean daudela.</small>"
+"git-eko azken master adarrean daudela.</small>"
 
 #: ../app/display/gimpdisplayshell-close.c:168
 #: ../app/display/gimpdisplayshell-close.c:266
