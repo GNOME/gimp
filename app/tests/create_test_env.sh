@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Copy tests resources
 for dir in files gimpdir gimpdir-empty; do

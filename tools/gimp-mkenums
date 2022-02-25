@@ -1,4 +1,6 @@
-#!/usr/bin/perl -w
+#!/usr/bin/env perl
+
+use warnings;
 
 # This is gimp-mkenums, a perl script based on glib-mkenums.
 # It can be used just like glib-mkenums but offers one extra
