@@ -22,7 +22,7 @@ gimp_plugins_rc = custom_target('gimp_plugins_rc',
   build_by_default: true,
   build_always_stale: true,
   command: [python, '-c', 'exit()'],
-  depends: [gitversion_h],
+  depends: generate_version_h ? [gitversion_h] : [],
   output:  ['gimp-plug-ins.rc']
 )
 
@@ -30,6 +30,6 @@ gimp_app_rc = custom_target('gimp_app_rc',
   build_by_default: true,
   build_always_stale: true,
   command: [python, '-c', 'exit()'],
-  depends: [gitversion_h],
+  depends: generate_version_h ? [gitversion_h] : [],
   output:  ['gimp.rc']
 )
