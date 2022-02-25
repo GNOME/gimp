@@ -1476,7 +1476,8 @@ has_version_h = run_command('python3', '-c',
   'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
 ).returncode() == 0
 
-if is_git_repository or not has_version_h
+generate_version_h = is_git_repository or not has_version_h
+if generate_version_h
   gitversion_h1 = vcs_tag(
     input : 'app/git-version.h.in',
     output: 'git-version.h.in.1',
@@ -1647,7 +1648,7 @@ custom_target('Changelog',
   build_by_default: false,
 )
 
-meson.add_dist_script('meson_dist_script.sh')
+meson.add_dist_script('meson_dist_script.sh', generate_version_h ? gitversion_h.full_path() : gitversion_h)
 
 
 ################################################################################
