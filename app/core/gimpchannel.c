@@ -826,7 +826,8 @@ gimp_channel_stroke (GimpItem           *item,
     case GIMP_STROKE_LINE:
       gimp_drawable_stroke_boundary (drawable,
                                      stroke_options,
-                                     segs_in, n_segs_in,
+                                     n_segs_in > 0 ? segs_in   : segs_out,
+                                     n_segs_in > 0 ? n_segs_in : n_segs_out,
                                      offset_x, offset_y,
                                      push_undo);
       retval = TRUE;
@@ -849,7 +850,8 @@ gimp_channel_stroke (GimpItem           *item,
         retval = gimp_paint_core_stroke_boundary (core, drawable,
                                                   paint_options,
                                                   emulate_dynamics,
-                                                  segs_in, n_segs_in,
+                                                  n_segs_in > 0 ? segs_in   : segs_out,
+                                                  n_segs_in > 0 ? n_segs_in : n_segs_out,
                                                   offset_x, offset_y,
                                                   push_undo, error);
 

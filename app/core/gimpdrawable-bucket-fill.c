@@ -23,8 +23,11 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
+
+#include "config/gimpdialogconfig.h"
 
 #include "gegl/gimp-gegl-apply-operation.h"
 #include "gegl/gimp-gegl-mask.h"
@@ -38,6 +41,7 @@
 #include "gimpdrawable.h"
 #include "gimpdrawable-bucket-fill.h"
 #include "gimpfilloptions.h"
+#include "gimpstrokeoptions.h"
 #include "gimpimage.h"
 #include "gimplineart.h"
 #include "gimppickable.h"
@@ -325,7 +329,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
  *               filling process. Set to NULL if you need a one-time
  *               fill.
  * @mask_x: returned x bound of @mask_buffer.
- * @mask_y: returned x bound of @mask_buffer.
+ * @mask_y: returned y bound of @mask_buffer.
  * @mask_width: returned width bound of @mask_buffer.
  * @mask_height: returned height bound of @mask_buffer.
  *
@@ -333,7 +337,7 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
  * based on @line_art and @options, without actually applying it.
  * If @mask_buffer is not NULL, the intermediate fill mask will also be
  * returned. This fill mask can later be reused in successive calls to
- * gimp_drawable_get_bucket_fill_buffer() for interactive filling.
+ * gimp_drawable_get_line_art_fill_buffer() for interactive filling.
  *
  * The @fill_color_as_line_art option is a special feature where we
  * consider pixels in @drawable already in the fill color as part of the
@@ -351,6 +355,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
                                         gboolean          sample_merged,
                                         gboolean          fill_color_as_line_art,
                                         gdouble           fill_color_threshold,
+                                        gboolean          line_art_stroke,
                                         gdouble           seed_x,
                                         gdouble           seed_y,
                                         GeglBuffer      **mask_buffer,
@@ -362,6 +367,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   GimpImage  *image;
   GeglBuffer *buffer;
   GeglBuffer *new_mask;
+  GeglBuffer *stroke_mask;
   GeglBuffer *fill_buffer   = NULL;
   GimpRGB     fill_color;
   gint        fill_offset_x = 0;
@@ -438,7 +444,59 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   if (mask_buffer)
     *mask_buffer = new_mask;
 
-  gimp_gegl_mask_bounds (new_mask, &x, &y, &width, &height);
+  if (line_art_stroke)
+    {
+      GimpChannel       *channel;
+      GList             *drawables;
+      GimpStrokeOptions *stroke_options;
+      GimpContext       *context = gimp_get_user_context (image->gimp);
+      GError            *error   = NULL;
+      const GimpRGB      white   = {1.0, 1.0, 1.0, 1.0};
+
+      context = gimp_config_duplicate (GIMP_CONFIG (context));
+      /* As we are stroking a mask, we need to set color to white. */
+      gimp_context_set_foreground (GIMP_CONTEXT (context),
+                                   &white);
+
+      /* This initial version uses the stroke option as used in other
+       * stroke features. A future version should allow to set the
+       * stroke directly from bucket fill tool options.
+       */
+      stroke_options = GIMP_DIALOG_CONFIG (image->gimp->config)->stroke_options;
+      stroke_options = gimp_config_duplicate (GIMP_CONFIG (stroke_options));
+
+      channel = gimp_channel_new_from_buffer (image, new_mask, NULL, NULL);
+      gimp_image_add_hidden_item (image, GIMP_ITEM (channel));
+      drawables = g_list_prepend (NULL, channel);
+
+      if (! gimp_item_stroke (GIMP_ITEM (channel), drawables,
+                              context,
+                              stroke_options,
+                              NULL, FALSE, NULL, &error))
+        {
+          g_warning ("%s: stroking failed with: %s\n",
+                     G_STRFUNC, error ? error->message : "no error message");
+          g_clear_error (&error);
+        }
+
+      g_list_free (drawables);
+
+      gimp_pickable_flush (GIMP_PICKABLE (channel));
+      stroke_mask = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
+      g_object_ref (stroke_mask);
+
+      gimp_image_remove_hidden_item (image, GIMP_ITEM (channel));
+      g_object_unref (channel);
+
+      g_object_unref (stroke_options);
+      g_object_unref (context);
+    }
+  else
+    {
+      stroke_mask = g_object_ref (new_mask);
+    }
+
+  gimp_gegl_mask_bounds (stroke_mask, &x, &y, &width, &height);
   width  -= x;
   height -= y;
 
@@ -508,7 +566,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
                                                             width, height),
                                             -x, -y);
 
-  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, new_mask,
+  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, stroke_mask,
                            -mask_offset_x, -mask_offset_y, 1.0);
 
   if (gimp_fill_options_get_feather (options, &feather_radius))
@@ -533,6 +591,8 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
 
   if (! mask_buffer)
     g_object_unref (new_mask);
+
+  g_object_unref (stroke_mask);
 
   gimp_unset_busy (image->gimp);
 

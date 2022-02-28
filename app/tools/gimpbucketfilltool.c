@@ -457,6 +457,7 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                          GIMP_LINE_ART_SOURCE_SAMPLE_MERGED,
                                                          options->fill_as_line_art,
                                                          options->fill_as_line_art_threshold / 255.0,
+                                                         options->line_art_stroke,
                                                          x, y,
                                                          &tool->priv->fill_mask,
                                                          &x, &y, NULL, NULL);

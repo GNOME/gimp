@@ -59,6 +59,7 @@ enum
   PROP_LINE_ART_SOURCE,
   PROP_LINE_ART_THRESHOLD,
   PROP_LINE_ART_MAX_GROW,
+  PROP_LINE_ART_STROKE,
   PROP_LINE_ART_MAX_GAP_LENGTH,
   PROP_FILL_CRITERION,
   PROP_FILL_COLOR_AS_LINE_ART,
@@ -215,6 +216,14 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                         1, 100, 3,
                         GIMP_PARAM_STATIC_STRINGS);
 
+  /* TODO: we should be able to choose which tool to stroke with. */
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINE_ART_STROKE,
+                            "line-art-stroke-border",
+                            _("Stroke borders"),
+                            _("Stroke fill borders with last stroke options"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_MAX_GAP_LENGTH,
                         "line-art-max-gap-length",
                         _("Maximum gap length"),
@@ -294,6 +303,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
     case PROP_LINE_ART_MAX_GROW:
       options->line_art_max_grow = g_value_get_int (value);
       break;
+    case PROP_LINE_ART_STROKE:
+      options->line_art_stroke = g_value_get_boolean (value);
+      break;
     case PROP_LINE_ART_MAX_GAP_LENGTH:
       options->line_art_max_gap_length = g_value_get_int (value);
       break;
@@ -358,6 +370,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       break;
     case PROP_LINE_ART_MAX_GROW:
       g_value_set_int (value, options->line_art_max_grow);
+      break;
+    case PROP_LINE_ART_STROKE:
+      g_value_set_boolean (value, options->line_art_stroke);
       break;
     case PROP_LINE_ART_MAX_GAP_LENGTH:
       g_value_set_int (value, options->line_art_max_gap_length);
@@ -559,6 +574,10 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   scale = gimp_prop_spin_scale_new (config, "line-art-max-grow",
                                     1, 5, 0);
   gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
+
+  /*  Line Art: stroke border with paint brush */
+  widget = gimp_prop_check_button_new (config, "line-art-stroke-border", NULL);
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
 
   /*  Line Art: stroke threshold */
   scale = gimp_prop_spin_scale_new (config, "line-art-threshold",

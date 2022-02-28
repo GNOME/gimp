@@ -52,6 +52,7 @@ struct _GimpBucketFillOptions
   GimpLineArtSource             line_art_source;
   gdouble                       line_art_threshold;
   gint                          line_art_max_grow;
+  gboolean                      line_art_stroke;
   gint                          line_art_max_gap_length;
 
   gboolean                      fill_as_line_art;
