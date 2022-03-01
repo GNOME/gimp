@@ -111,6 +111,8 @@ struct _GimpImagePrivate
   GimpItemTree      *vectors;               /*  the tree of vectors          */
   GSList            *layer_stack;           /*  the layers in MRU order      */
 
+  GList             *hidden_items;          /*  internal process-only items  */
+
   GList             *stored_layer_sets;
   GList             *stored_channel_sets;
   GList             *stored_vectors_sets;

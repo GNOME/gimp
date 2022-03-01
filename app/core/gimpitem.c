@@ -855,9 +855,14 @@ gimp_item_unset_removed (GimpItem *item)
 gboolean
 gimp_item_is_attached (GimpItem *item)
 {
-  GimpItem *parent;
+  GimpImage *image;
+  GimpItem  *parent;
 
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+
+  image = gimp_item_get_image (item);
+  if (image != NULL && gimp_image_is_hidden_item (image, item))
+    return TRUE;
 
   parent = gimp_item_get_parent (item);
 

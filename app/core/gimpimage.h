@@ -488,6 +488,13 @@ void            gimp_image_remove_vectors        (GimpImage          *image,
                                                   gboolean            push_undo,
                                                   GList              *new_selected);
 
+gboolean        gimp_image_add_hidden_item       (GimpImage          *image,
+                                                  GimpItem           *item);
+void            gimp_image_remove_hidden_item    (GimpImage          *image,
+                                                  GimpItem           *item);
+gboolean        gimp_image_is_hidden_item        (GimpImage          *image,
+                                                  GimpItem           *item);
+
 gboolean    gimp_image_coords_in_active_pickable (GimpImage          *image,
                                                   const GimpCoords   *coords,
                                                   gboolean            show_all,

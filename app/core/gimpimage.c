@@ -1189,6 +1189,17 @@ gimp_image_finalize (GObject *object)
   g_clear_pointer (&private->display_path, g_free);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+
+  /* Don't just free the list silently. It is supposed to be empty.
+   * Instead just assert this fact to warn on improper management of
+   * hidden items.
+   */
+  if (private->hidden_items != NULL)
+    {
+      g_warning ("%s: the hidden items list should be empty (%d items remaining).",
+                 G_STRFUNC, g_list_length (private->hidden_items));
+      g_list_free (private->hidden_items);
+    }
 }
 
 static void
@@ -6020,6 +6031,68 @@ gimp_image_remove_vectors (GimpImage   *image,
 
   if (push_undo)
     gimp_image_undo_group_end (image);
+}
+
+/*  hidden items  */
+
+/* Sometimes you want to create a channel or other types of drawables to
+ * work on them without adding them to the public trees and to be
+ * visible in the GUI. This is when you create hidden items. No undo
+ * steps will ever be created either for any processing on these items.
+ *
+ * Note that you are expected to manage the hidden items properly. In
+ * particular, once you are done with them, remove them with
+ * gimp_image_remove_hidden_item() and free them.
+ * @image is not assuming ownership of @item.
+ */
+gboolean
+gimp_image_add_hidden_item (GimpImage *image,
+                            GimpItem  *item)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (! gimp_item_is_attached (item), FALSE);
+  g_return_val_if_fail (gimp_item_get_image (item) == image, FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  private->hidden_items = g_list_prepend (private->hidden_items, item);
+
+  return TRUE;
+}
+
+void
+gimp_image_remove_hidden_item (GimpImage *image,
+                               GimpItem  *item)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (gimp_item_get_image (item) == image);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  g_return_if_fail (g_list_find (private->hidden_items, item) != NULL);
+
+  private->hidden_items = g_list_remove (private->hidden_items, item);
+}
+
+gboolean
+gimp_image_is_hidden_item (GimpImage *image,
+                           GimpItem  *item)
+{
+  GimpImagePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
+  g_return_val_if_fail (gimp_item_get_image (item) == image, FALSE);
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  return (g_list_find (private->hidden_items, item) != NULL);
 }
 
 gboolean
