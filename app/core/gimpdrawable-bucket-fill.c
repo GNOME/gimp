@@ -367,7 +367,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   GimpImage  *image;
   GeglBuffer *buffer;
   GeglBuffer *new_mask;
-  GeglBuffer *stroke_mask;
+  GeglBuffer *rendered_mask;
   GeglBuffer *fill_buffer   = NULL;
   GimpRGB     fill_color;
   gint        fill_offset_x = 0;
@@ -444,9 +444,26 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   if (mask_buffer)
     *mask_buffer = new_mask;
 
+  rendered_mask = gimp_gegl_buffer_dup (new_mask);
+  if (gimp_fill_options_get_feather (options, &feather_radius))
+    {
+      /* Feathering for the line art algorithm is not applied during
+       * mask creation because we just want to apply it on the borders
+       * of the mask at the end (since the mask can evolve, we don't
+       * want to actually touch the mask, but only the intermediate
+       * rendered results).
+       */
+      gimp_gegl_apply_feather (rendered_mask, NULL, NULL, rendered_mask, NULL,
+                               feather_radius, feather_radius, TRUE);
+    }
+
   if (line_art_stroke)
     {
+      /* Similarly to feathering, stroke only happens on the rendered
+       * result, not on the returned mask.
+       */
       GimpChannel       *channel;
+      GimpChannel       *stroked;
       GList             *drawables;
       GimpStrokeOptions *stroke_options;
       GimpContext       *context = gimp_get_user_context (image->gimp);
@@ -466,8 +483,10 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
       stroke_options = gimp_config_duplicate (GIMP_CONFIG (stroke_options));
 
       channel = gimp_channel_new_from_buffer (image, new_mask, NULL, NULL);
+      stroked = gimp_channel_new_from_buffer (image, rendered_mask, NULL, NULL);
       gimp_image_add_hidden_item (image, GIMP_ITEM (channel));
-      drawables = g_list_prepend (NULL, channel);
+      gimp_image_add_hidden_item (image, GIMP_ITEM (stroked));
+      drawables = g_list_prepend (NULL, stroked);
 
       if (! gimp_item_stroke (GIMP_ITEM (channel), drawables,
                               context,
@@ -481,22 +500,21 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
 
       g_list_free (drawables);
 
-      gimp_pickable_flush (GIMP_PICKABLE (channel));
-      stroke_mask = gimp_drawable_get_buffer (GIMP_DRAWABLE (channel));
-      g_object_ref (stroke_mask);
+      gimp_pickable_flush (GIMP_PICKABLE (stroked));
+      g_object_unref (rendered_mask);
+      rendered_mask = gimp_drawable_get_buffer (GIMP_DRAWABLE (stroked));
+      g_object_ref (rendered_mask);
 
       gimp_image_remove_hidden_item (image, GIMP_ITEM (channel));
       g_object_unref (channel);
+      gimp_image_remove_hidden_item (image, GIMP_ITEM (stroked));
+      g_object_unref (stroked);
 
       g_object_unref (stroke_options);
       g_object_unref (context);
     }
-  else
-    {
-      stroke_mask = g_object_ref (new_mask);
-    }
 
-  gimp_gegl_mask_bounds (stroke_mask, &x, &y, &width, &height);
+  gimp_gegl_mask_bounds (rendered_mask, &x, &y, &width, &height);
   width  -= x;
   height -= y;
 
@@ -566,19 +584,8 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
                                                             width, height),
                                             -x, -y);
 
-  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, stroke_mask,
+  gimp_gegl_apply_opacity (buffer, NULL, NULL, buffer, rendered_mask,
                            -mask_offset_x, -mask_offset_y, 1.0);
-
-  if (gimp_fill_options_get_feather (options, &feather_radius))
-    {
-      /* Feathering for the line art algorithm is not applied during
-       * mask creation because we just want to apply it on the borders
-       * of the mask at the end (since the mask can evolve, we don't
-       * want to actually touch it, but only the intermediate results).
-       */
-      gimp_gegl_apply_feather (buffer, NULL, NULL, buffer, NULL,
-                               feather_radius, feather_radius, TRUE);
-    }
 
   if (mask_x)
     *mask_x = x;
@@ -592,7 +599,7 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
   if (! mask_buffer)
     g_object_unref (new_mask);
 
-  g_object_unref (stroke_mask);
+  g_object_unref (rendered_mask);
 
   gimp_unset_busy (image->gimp);
 
