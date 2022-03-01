@@ -73,6 +73,8 @@ struct _GimpBucketFillOptionsPrivate
 
   GtkWidget *similar_color_frame;
   GtkWidget *line_art_frame;
+  GtkWidget *line_art_frame2;
+  GtkWidget *line_art_frame3;
   GtkWidget *fill_as_line_art_frame;
 };
 
@@ -190,7 +192,7 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_FILL_COLOR_AS_LINE_ART,
                             "fill-color-as-line-art",
-                            _("Allow closing lines in selected layer"),
+                            _("Manual closure in fill layer"),
                             _("Consider pixels of selected layer and filled with the fill color as line art closure"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -421,21 +423,22 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
     case GIMP_BUCKET_FILL_LINE_ART:
       gtk_widget_hide (options->priv->similar_color_frame);
       gtk_widget_show (options->priv->line_art_frame);
+      gtk_widget_show (options->priv->line_art_frame2);
+      gtk_widget_show (options->priv->line_art_frame3);
       if ((options->fill_mode == GIMP_BUCKET_FILL_FG ||
            options->fill_mode == GIMP_BUCKET_FILL_BG) &&
           (options->line_art_source == GIMP_LINE_ART_SOURCE_LOWER_LAYER ||
            options->line_art_source == GIMP_LINE_ART_SOURCE_UPPER_LAYER))
-        gtk_widget_show (options->priv->fill_as_line_art_frame);
+        gtk_widget_set_sensitive (options->priv->fill_as_line_art_frame, TRUE);
       else
-        gtk_widget_hide (options->priv->fill_as_line_art_frame);
+        gtk_widget_set_sensitive (options->priv->fill_as_line_art_frame, FALSE);
       break;
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
-      gtk_widget_show (options->priv->similar_color_frame);
-      gtk_widget_hide (options->priv->line_art_frame);
-      break;
     default:
       gtk_widget_hide (options->priv->similar_color_frame);
       gtk_widget_hide (options->priv->line_art_frame);
+      gtk_widget_hide (options->priv->line_art_frame2);
+      gtk_widget_hide (options->priv->line_art_frame3);
       break;
     }
 }
@@ -549,7 +552,41 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Source"));
   gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
 
-  /*  Line Art: fill as line art  */
+  /*  the fill transparent areas toggle  */
+  widget = gimp_prop_check_button_new (config, "fill-transparent",
+                                       _("Detect opacity rather than grayscale"));
+  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+
+  /*  Line Art: stroke threshold */
+  scale = gimp_prop_spin_scale_new (config, "line-art-threshold",
+                                    0.05, 0.1, 2);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
+
+  /* Line Art Closure frame */
+  frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  options->priv->line_art_frame2 = frame;
+  gtk_widget_show (frame);
+
+  /* Line Art Closure: frame label */
+  widget = gtk_label_new (_("Line Art Closure"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), widget);
+  gtk_widget_show (widget);
+
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), box2);
+  gtk_widget_show (box2);
+
+  /*  Line Art Closure: max gap length */
+  frame = gimp_frame_new (_("Automatic closure"));
+  gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length",
+                                    1, 5, 0);
+  gtk_container_add (GTK_CONTAINER (frame), scale);
+
+  /*  Line Art Closure: manual line art closure */
   scale = gimp_prop_spin_scale_new (config, "fill-color-as-line-art-threshold",
                                     1.0, 16.0, 1);
 
@@ -558,11 +595,28 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
   options->priv->fill_as_line_art_frame = frame;
 
-  /*  the fill transparent areas toggle  */
-  widget = gimp_prop_check_button_new (config, "fill-transparent", NULL);
-  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+  /* Line Art Borders frame */
 
-  /*  Line Art: feather radius scale  */
+  frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  options->priv->line_art_frame3 = frame;
+  gtk_widget_show (frame);
+
+  /* Line Art Borders: frame label */
+  widget = gtk_label_new (_("Fill borders"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), widget);
+  gtk_widget_show (widget);
+
+  box2 = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+  gtk_container_add (GTK_CONTAINER (frame), box2);
+  gtk_widget_show (box2);
+
+  /*  Line Art Borders: max growing size */
+  scale = gimp_prop_spin_scale_new (config, "line-art-max-grow",
+                                    1, 5, 0);
+  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
+
+  /*  Line Art Borders: feather radius scale  */
   scale = gimp_prop_spin_scale_new (config, "feather-radius",
                                     1.0, 10.0, 1);
 
@@ -570,24 +624,9 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
                                          scale, NULL);
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
 
-  /*  Line Art: max growing size */
-  scale = gimp_prop_spin_scale_new (config, "line-art-max-grow",
-                                    1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
-
-  /*  Line Art: stroke border with paint brush */
+  /*  Line Art Borders: stroke border with paint brush */
   widget = gimp_prop_check_button_new (config, "line-art-stroke-border", NULL);
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
-
-  /*  Line Art: stroke threshold */
-  scale = gimp_prop_spin_scale_new (config, "line-art-threshold",
-                                    0.05, 0.1, 2);
-  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
-
-  /*  Line Art: max gap length */
-  scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length",
-                                    1, 5, 0);
-  gtk_box_pack_start (GTK_BOX (box2), scale, FALSE, FALSE, 0);
 
   gimp_bucket_fill_options_update_area (options);
 
