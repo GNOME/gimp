@@ -349,20 +349,21 @@ gimp_drawable_get_bucket_fill_buffer (GimpDrawable         *drawable,
  *          used in a drawable filter as preview.
  */
 GeglBuffer *
-gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
-                                        GimpLineArt      *line_art,
-                                        GimpFillOptions  *options,
-                                        gboolean          sample_merged,
-                                        gboolean          fill_color_as_line_art,
-                                        gdouble           fill_color_threshold,
-                                        gboolean          line_art_stroke,
-                                        gdouble           seed_x,
-                                        gdouble           seed_y,
-                                        GeglBuffer      **mask_buffer,
-                                        gdouble          *mask_x,
-                                        gdouble          *mask_y,
-                                        gint             *mask_width,
-                                        gint             *mask_height)
+gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
+                                        GimpLineArt       *line_art,
+                                        GimpFillOptions   *options,
+                                        gboolean           sample_merged,
+                                        gboolean           fill_color_as_line_art,
+                                        gdouble            fill_color_threshold,
+                                        gboolean           line_art_stroke,
+                                        GimpStrokeOptions *stroke_options,
+                                        gdouble            seed_x,
+                                        gdouble            seed_y,
+                                        GeglBuffer       **mask_buffer,
+                                        gdouble           *mask_x,
+                                        gdouble           *mask_y,
+                                        gint              *mask_width,
+                                        gint              *mask_height)
 {
   GimpImage  *image;
   GeglBuffer *buffer;
@@ -465,7 +466,6 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
       GimpChannel       *channel;
       GimpChannel       *stroked;
       GList             *drawables;
-      GimpStrokeOptions *stroke_options;
       GimpContext       *context = gimp_get_user_context (image->gimp);
       GError            *error   = NULL;
       const GimpRGB      white   = {1.0, 1.0, 1.0, 1.0};
@@ -474,13 +474,6 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
       /* As we are stroking a mask, we need to set color to white. */
       gimp_context_set_foreground (GIMP_CONTEXT (context),
                                    &white);
-
-      /* This initial version uses the stroke option as used in other
-       * stroke features. A future version should allow to set the
-       * stroke directly from bucket fill tool options.
-       */
-      stroke_options = GIMP_DIALOG_CONFIG (image->gimp->config)->stroke_options;
-      stroke_options = gimp_config_duplicate (GIMP_CONFIG (stroke_options));
 
       channel = gimp_channel_new_from_buffer (image, new_mask, NULL, NULL);
       stroked = gimp_channel_new_from_buffer (image, rendered_mask, NULL, NULL);
@@ -510,7 +503,6 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable     *drawable,
       gimp_image_remove_hidden_item (image, GIMP_ITEM (stroked));
       g_object_unref (stroked);
 
-      g_object_unref (stroke_options);
       g_object_unref (context);
     }
 

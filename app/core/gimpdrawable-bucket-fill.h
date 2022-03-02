@@ -51,6 +51,7 @@ GeglBuffer * gimp_drawable_get_line_art_fill_buffer (GimpDrawable         *drawa
                                                      gboolean              fill_color_as_line_art,
                                                      gdouble               fill_color_threshold,
                                                      gboolean              line_art_stroke,
+                                                     GimpStrokeOptions    *stroke_options,
                                                      gdouble               seed_x,
                                                      gdouble               seed_y,
                                                      GeglBuffer          **mask_buffer,

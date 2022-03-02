@@ -27,13 +27,19 @@
 #include "tools-types.h"
 
 #include "config/gimpcoreconfig.h"
+#include "config/gimpdialogconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimppaintinfo.h"
+#include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 
+#include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainerview.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -60,6 +66,7 @@ enum
   PROP_LINE_ART_THRESHOLD,
   PROP_LINE_ART_MAX_GROW,
   PROP_LINE_ART_STROKE,
+  PROP_LINE_ART_STROKE_TOOL,
   PROP_LINE_ART_MAX_GAP_LENGTH,
   PROP_FILL_CRITERION,
   PROP_FILL_COLOR_AS_LINE_ART,
@@ -80,6 +87,7 @@ struct _GimpBucketFillOptionsPrivate
 
 static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
 
+static void   gimp_bucket_fill_options_finalize          (GObject               *object);
 static void   gimp_bucket_fill_options_set_property      (GObject               *object,
                                                           guint                  property_id,
                                                           const GValue          *value,
@@ -88,6 +96,11 @@ static void   gimp_bucket_fill_options_get_property      (GObject               
                                                           guint                  property_id,
                                                           GValue                *value,
                                                           GParamSpec            *pspec);
+static gboolean
+             gimp_bucket_fill_options_select_stroke_tool (GimpContainerView     *view,
+                                                          GList                 *items,
+                                                          GList                 *paths,
+                                                          GimpBucketFillOptions *options);
 
 static void   gimp_bucket_fill_options_reset             (GimpConfig            *config);
 static void   gimp_bucket_fill_options_update_area       (GimpBucketFillOptions *options);
@@ -109,6 +122,7 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
+  object_class->finalize     = gimp_bucket_fill_options_finalize;
   object_class->set_property = gimp_bucket_fill_options_set_property;
   object_class->get_property = gimp_bucket_fill_options_get_property;
 
@@ -218,13 +232,18 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                         1, 100, 3,
                         GIMP_PARAM_STATIC_STRINGS);
 
-  /* TODO: we should be able to choose which tool to stroke with. */
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINE_ART_STROKE,
                             "line-art-stroke-border",
                             _("Stroke borders"),
                             _("Stroke fill borders with last stroke options"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_LINE_ART_STROKE_TOOL,
+                           "line-art-stroke-tool",
+                           _("Stroke tool"),
+                           _("The tool to stroke the fill borders with"),
+                           "gimp-pencil", GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_MAX_GAP_LENGTH,
                         "line-art-max-gap-length",
@@ -254,6 +273,19 @@ static void
 gimp_bucket_fill_options_init (GimpBucketFillOptions *options)
 {
   options->priv = gimp_bucket_fill_options_get_instance_private (options);
+
+  options->line_art_stroke_tool = NULL;
+}
+
+static void
+gimp_bucket_fill_options_finalize (GObject *object)
+{
+  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (object);
+
+  g_clear_object (&options->stroke_options);
+  g_clear_pointer (&options->line_art_stroke_tool, g_free);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -262,7 +294,8 @@ gimp_bucket_fill_options_set_property (GObject      *object,
                                        const GValue *value,
                                        GParamSpec   *pspec)
 {
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (object);
+  GimpBucketFillOptions *options      = GIMP_BUCKET_FILL_OPTIONS (object);
+  GimpToolOptions       *tool_options = GIMP_TOOL_OPTIONS (object);
 
   switch (property_id)
     {
@@ -307,6 +340,28 @@ gimp_bucket_fill_options_set_property (GObject      *object,
       break;
     case PROP_LINE_ART_STROKE:
       options->line_art_stroke = g_value_get_boolean (value);
+      break;
+    case PROP_LINE_ART_STROKE_TOOL:
+      g_clear_pointer (&options->line_art_stroke_tool, g_free);
+      options->line_art_stroke_tool = g_value_dup_string (value);
+
+      if (options->stroke_options)
+        {
+          GimpPaintInfo *paint_info = NULL;
+          Gimp          *gimp       = tool_options->tool_info->gimp;
+
+          if (! options->line_art_stroke_tool)
+            options->line_art_stroke_tool = g_strdup ("gimp-pencil");
+
+          paint_info = GIMP_PAINT_INFO (gimp_container_get_child_by_name (gimp->paint_info_list,
+                                                                          options->line_art_stroke_tool));
+          if (! paint_info && ! gimp_container_is_empty (gimp->paint_info_list))
+            paint_info = GIMP_PAINT_INFO (gimp_container_get_child_by_index (gimp->paint_info_list, 0));
+
+          g_object_set (options->stroke_options,
+                        "paint-info", paint_info,
+                        NULL);
+        }
       break;
     case PROP_LINE_ART_MAX_GAP_LENGTH:
       options->line_art_max_gap_length = g_value_get_int (value);
@@ -376,6 +431,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
     case PROP_LINE_ART_STROKE:
       g_value_set_boolean (value, options->line_art_stroke);
       break;
+    case PROP_LINE_ART_STROKE_TOOL:
+      g_value_set_string (value, options->line_art_stroke_tool);
+      break;
     case PROP_LINE_ART_MAX_GAP_LENGTH:
       g_value_set_int (value, options->line_art_max_gap_length);
       break;
@@ -393,6 +451,26 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static gboolean
+gimp_bucket_fill_options_select_stroke_tool (GimpContainerView     *view,
+                                             GList                 *items,
+                                             GList                 *paths,
+                                             GimpBucketFillOptions *options)
+{
+  GList *iter;
+
+  for (iter = items; iter; iter = iter->next)
+    {
+      g_object_set (options,
+                    "line-art-stroke-tool",
+                    iter->data ? gimp_object_get_name (iter->data) : NULL,
+                    NULL);
+      break;
+    }
+
+  return TRUE;
 }
 
 static void
@@ -446,9 +524,10 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
 GtkWidget *
 gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 {
-  GimpBucketFillOptions *options = GIMP_BUCKET_FILL_OPTIONS (tool_options);
-  GObject               *config = G_OBJECT (tool_options);
-  GtkWidget             *vbox   = gimp_paint_options_gui (tool_options);
+  GimpBucketFillOptions *options    = GIMP_BUCKET_FILL_OPTIONS (tool_options);
+  GObject               *config     = G_OBJECT (tool_options);
+  Gimp                  *gimp       = tool_options->tool_info->gimp;
+  GtkWidget             *vbox       = gimp_paint_options_gui (tool_options);
   GtkWidget             *box2;
   GtkWidget             *frame;
   GtkWidget             *hbox;
@@ -625,8 +704,24 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
 
   /*  Line Art Borders: stroke border with paint brush */
-  widget = gimp_prop_check_button_new (config, "line-art-stroke-border", NULL);
-  gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
+
+  options->stroke_options = gimp_stroke_options_new (gimp,
+                                                     gimp_get_user_context (gimp),
+                                                     TRUE);
+  gimp_config_sync (G_OBJECT (GIMP_DIALOG_CONFIG (gimp->config)->stroke_options),
+                    G_OBJECT (options->stroke_options), 0);
+
+  widget = gimp_container_combo_box_new (gimp->paint_info_list,
+                                         GIMP_CONTEXT (options->stroke_options),
+                                         16, 0);
+  g_signal_connect (widget, "select-items",
+                    G_CALLBACK (gimp_bucket_fill_options_select_stroke_tool),
+                    options);
+
+  frame = gimp_prop_expanding_frame_new (config, "line-art-stroke-border", NULL,
+                                         widget, NULL);
+  gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
+  gtk_widget_show (widget);
 
   gimp_bucket_fill_options_update_area (options);
 
