@@ -2939,6 +2939,12 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Dra_g-to-zoom behavior:"),
                             GTK_GRID (grid), 0, size_group);
 
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "drag-zoom-speed", 5.0, 25.0, 0,
+                         _("Drag-to-zoom spe_ed:"),
+                         GTK_GRID (grid), 0, size_group);
+
   /*  Space Bar  */
   vbox2 = prefs_frame_new (_("Space Bar"),
                            GTK_CONTAINER (vbox), FALSE);

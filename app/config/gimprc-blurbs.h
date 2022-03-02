@@ -261,6 +261,10 @@ _("When enabled, this will ensure that the full image is visible after a " \
 _("Whether to zoom based on distance moved or time spent moving, when " \
   "zooming via dragging the mouse.")
 
+#define DRAG_ZOOM_SPEED_BLURB \
+_("Adjusts the rate at which dragging the mouse will zoom the canvas, " \
+  "in percentage.")
+
 #define INTERPOLATION_TYPE_BLURB \
 _("Sets the level of interpolation used for scaling and other " \
   "transformations.")

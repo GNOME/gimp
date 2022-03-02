@@ -51,6 +51,7 @@ struct _GimpDisplayConfig
   gboolean            default_dot_for_dot;
   gboolean            initial_zoom_to_fit;
   GimpDragZoomMode    drag_zoom_mode;
+  gboolean            drag_zoom_speed;
   GimpCursorMode      cursor_mode;
   gboolean            cursor_updating;
   gboolean            show_brush_outline;

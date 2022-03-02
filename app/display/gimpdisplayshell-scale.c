@@ -812,6 +812,7 @@ gimp_display_shell_scale_drag (GimpDisplayShell *shell,
   if (delta_y != 0.0)
     {
       GimpDisplayConfig *config = shell->display->config;
+      gdouble            speed  = config->drag_zoom_speed * 0.01;
 
       gimp_display_shell_push_zoom_focus_pointer_pos (shell, start_x, start_y);
 
@@ -819,21 +820,21 @@ gimp_display_shell_scale_drag (GimpDisplayShell *shell,
         {
           gimp_display_shell_scale (shell,
                                     GIMP_ZOOM_TO,
-                                    scale * exp (0.005 * delta_y),
+                                    scale * exp (0.005 * speed * delta_y),
                                     GIMP_ZOOM_FOCUS_POINTER);
         }
       else if (delta_y > 0.0) /* drag_zoom_mode == PROP_DRAG_ZOOM_MODE_DURATION */
         {
           gimp_display_shell_scale (shell,
                                     GIMP_ZOOM_TO,
-                                    scale * 1.1,
+                                    scale * (1 + 0.1 * speed),
                                     GIMP_ZOOM_FOCUS_POINTER);
         }
       else /* delta_y < 0.0 */
         {
           gimp_display_shell_scale (shell,
                                     GIMP_ZOOM_TO,
-                                    scale * 0.9,
+                                    scale * (1 - 0.1 * speed),
                                     GIMP_ZOOM_FOCUS_POINTER);
         }
 
