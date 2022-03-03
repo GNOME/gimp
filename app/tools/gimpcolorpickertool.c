@@ -330,6 +330,7 @@ static void
 gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
                                     GimpDisplay         *display)
 {
+  Gimp             *gimp      = gimp_display_get_gimp (display);
   GimpTool         *tool      = GIMP_TOOL (picker_tool);
   GimpToolOptions  *options   = GIMP_TOOL_GET_OPTIONS (tool);
   GimpContext      *context   = GIMP_CONTEXT (tool->tool_info->tool_options);
@@ -364,7 +365,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
                       hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  picker_tool->color_frame1 = gimp_color_frame_new ();
+  picker_tool->color_frame1 = gimp_color_frame_new (gimp);
   gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (picker_tool->color_frame1),
                                      context->gimp->config->color_management);
   gimp_color_frame_set_has_coords (GIMP_COLOR_FRAME (picker_tool->color_frame1),
@@ -377,7 +378,7 @@ gimp_color_picker_tool_info_create (GimpColorPickerTool *picker_tool,
                       FALSE, FALSE, 0);
   gtk_widget_show (picker_tool->color_frame1);
 
-  picker_tool->color_frame2 = gimp_color_frame_new ();
+  picker_tool->color_frame2 = gimp_color_frame_new (gimp);
   gimp_color_frame_set_color_config (GIMP_COLOR_FRAME (picker_tool->color_frame2),
                                      context->gimp->config->color_management);
   g_object_bind_property (options,                   "frame2-mode",

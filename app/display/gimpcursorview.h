@@ -51,7 +51,8 @@ struct _GimpCursorViewClass
 
 GType       gimp_cursor_view_get_type          (void) G_GNUC_CONST;
 
-GtkWidget * gimp_cursor_view_new               (GimpMenuFactory *menu_factory);
+GtkWidget * gimp_cursor_view_new               (Gimp            *gimp,
+                                                GimpMenuFactory *menu_factory);
 
 void        gimp_cursor_view_set_sample_merged (GimpCursorView  *view,
                                                 gboolean         sample_merged);

@@ -19,7 +19,7 @@
 #define __GIMP_COLOR_FRAME_H__
 
 
-#define GIMP_COLOR_FRAME_ROWS 5
+#define GIMP_COLOR_FRAME_ROWS 6
 
 
 #define GIMP_TYPE_COLOR_FRAME            (gimp_color_frame_get_type ())
@@ -35,6 +35,8 @@ typedef struct _GimpColorFrameClass GimpColorFrameClass;
 struct _GimpColorFrame
 {
   GimpFrame           parent_instance;
+
+  Gimp               *gimp;
 
   gboolean            sample_valid;
   gboolean            sample_average;
@@ -65,8 +67,10 @@ struct _GimpColorFrame
 
   PangoLayout        *number_layout;
 
+  GimpImage          *image;
+
   GimpColorConfig    *config;
-  GimpColorTransform *transform;
+  GimpColorProfile   *view_profile;
 };
 
 struct _GimpColorFrameClass
@@ -77,7 +81,7 @@ struct _GimpColorFrameClass
 
 GType       gimp_color_frame_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_frame_new                (void);
+GtkWidget * gimp_color_frame_new                (Gimp               *gimp);
 
 void        gimp_color_frame_set_mode           (GimpColorFrame     *frame,
                                                  GimpColorPickMode   mode);
@@ -106,6 +110,9 @@ void        gimp_color_frame_set_invalid        (GimpColorFrame     *frame);
 
 void        gimp_color_frame_set_color_config   (GimpColorFrame     *frame,
                                                  GimpColorConfig    *config);
+
+void        gimp_color_frame_set_image          (GimpColorFrame     *frame,
+                                                 GimpImage          *image);
 
 
 #endif  /*  __GIMP_COLOR_FRAME_H__  */

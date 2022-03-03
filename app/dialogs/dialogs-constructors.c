@@ -374,7 +374,8 @@ dialogs_cursor_view_new (GimpDialogFactory *factory,
                          GimpUIManager     *ui_manager,
                          gint               view_size)
 {
-  return gimp_cursor_view_new (gimp_dialog_factory_get_menu_factory (factory));
+  return gimp_cursor_view_new (context->gimp,
+                               gimp_dialog_factory_get_menu_factory (factory));
 }
 
 GtkWidget *

@@ -55,6 +55,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_SAMPLE_MERGED
 };
 
@@ -62,6 +63,8 @@ enum
 struct _GimpCursorViewPrivate
 {
   GimpEditor        parent_instance;
+
+  Gimp             *gimp;
 
   GtkWidget        *coord_hbox;
   GtkWidget        *selection_hbox;
@@ -96,6 +99,7 @@ struct _GimpCursorViewPrivate
 static void       gimp_cursor_view_docked_iface_init     (GimpDockedInterface *iface);
 
 static void       gimp_cursor_view_dispose               (GObject             *object);
+static void       gimp_cursor_view_constructed           (GObject             *object);
 static void       gimp_cursor_view_set_property          (GObject             *object,
                                                           guint                property_id,
                                                           const GValue        *value,
@@ -153,11 +157,19 @@ gimp_cursor_view_class_init (GimpCursorViewClass* klass)
   GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
+  object_class->constructed   = gimp_cursor_view_constructed;
   object_class->dispose       = gimp_cursor_view_dispose;
   object_class->get_property  = gimp_cursor_view_get_property;
   object_class->set_property  = gimp_cursor_view_set_property;
 
   widget_class->style_updated = gimp_cursor_view_style_updated;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 
   g_object_class_install_property (object_class, PROP_SAMPLE_MERGED,
                                    g_param_spec_boolean ("sample-merged",
@@ -306,31 +318,6 @@ gimp_cursor_view_init (GimpCursorView *view)
                             _("H"), 0.5, 0.5,
                             view->priv->selection_height_label, 1);
 
-
-  /* color information */
-
-  view->priv->color_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
-                                        content_spacing);
-  gtk_box_set_homogeneous (GTK_BOX (view->priv->color_hbox), TRUE);
-  gtk_box_pack_start (GTK_BOX (view), view->priv->color_hbox, FALSE, FALSE, 0);
-  gtk_widget_show (view->priv->color_hbox);
-
-  view->priv->color_frame_1 = gimp_color_frame_new ();
-  gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                             GIMP_COLOR_PICK_MODE_PIXEL);
-  gimp_color_frame_set_ellipsize (GIMP_COLOR_FRAME (view->priv->color_frame_1),
-                                  PANGO_ELLIPSIZE_END);
-  gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_1,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (view->priv->color_frame_1);
-
-  view->priv->color_frame_2 = gimp_color_frame_new ();
-  gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_2),
-                             GIMP_COLOR_PICK_MODE_RGB_PERCENT);
-  gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_2,
-                      TRUE, TRUE, 0);
-  gtk_widget_show (view->priv->color_frame_2);
-
   /* sample merged toggle */
 
   toggle = gimp_prop_check_button_new (G_OBJECT (view), "sample-merged",
@@ -352,6 +339,41 @@ gimp_cursor_view_docked_iface_init (GimpDockedInterface *iface)
 }
 
 static void
+gimp_cursor_view_constructed (GObject             *object)
+{
+  GimpCursorView *view = GIMP_CURSOR_VIEW (object);
+  gint            content_spacing;
+
+  gtk_widget_style_get (GTK_WIDGET (view),
+                        "content-spacing", &content_spacing,
+                        NULL);
+
+  /* color information */
+  view->priv->color_hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL,
+                                        content_spacing);
+  gtk_box_set_homogeneous (GTK_BOX (view->priv->color_hbox), TRUE);
+  gtk_box_pack_start (GTK_BOX (view), view->priv->color_hbox, FALSE, FALSE, 0);
+  gtk_widget_show (view->priv->color_hbox);
+
+  view->priv->color_frame_1 = gimp_color_frame_new (view->priv->gimp);
+  gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+                             GIMP_COLOR_PICK_MODE_PIXEL);
+  gimp_color_frame_set_ellipsize (GIMP_COLOR_FRAME (view->priv->color_frame_1),
+                                  PANGO_ELLIPSIZE_END);
+  gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_1,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (view->priv->color_frame_1);
+
+  view->priv->color_frame_2 = gimp_color_frame_new (view->priv->gimp);
+  gimp_color_frame_set_mode (GIMP_COLOR_FRAME (view->priv->color_frame_2),
+                             GIMP_COLOR_PICK_MODE_RGB_PERCENT);
+  gtk_box_pack_start (GTK_BOX (view->priv->color_hbox), view->priv->color_frame_2,
+                      TRUE, TRUE, 0);
+  gtk_widget_show (view->priv->color_frame_2);
+
+}
+
+static void
 gimp_cursor_view_dispose (GObject *object)
 {
   GimpCursorView *view = GIMP_CURSOR_VIEW (object);
@@ -364,6 +386,9 @@ gimp_cursor_view_dispose (GObject *object)
       g_source_remove (view->priv->cursor_idle_id);
       view->priv->cursor_idle_id = 0;
     }
+
+  view->priv->color_frame_1 = NULL;
+  view->priv->color_frame_2 = NULL;
 
   g_clear_object (&view->priv->cursor_image);
 
@@ -380,6 +405,10 @@ gimp_cursor_view_set_property (GObject      *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      view->priv->gimp = g_value_get_object (value);
+      break;
+
     case PROP_SAMPLE_MERGED:
       view->priv->sample_merged = g_value_get_boolean (value);
       break;
@@ -400,6 +429,10 @@ gimp_cursor_view_get_property (GObject    *object,
 
   switch (property_id)
     {
+    case PROP_GIMP:
+      g_value_set_object (value, view->priv->gimp);
+      break;
+
     case PROP_SAMPLE_MERGED:
       g_value_set_boolean (value, view->priv->sample_merged);
       break;
@@ -810,11 +843,13 @@ gimp_cursor_view_cursor_idle (GimpCursorView *view)
 /*  public functions  */
 
 GtkWidget *
-gimp_cursor_view_new (GimpMenuFactory *menu_factory)
+gimp_cursor_view_new (Gimp            *gimp,
+                      GimpMenuFactory *menu_factory)
 {
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   return g_object_new (GIMP_TYPE_CURSOR_VIEW,
+                       "gimp",            gimp,
                        "menu-factory",    menu_factory,
                        "menu-identifier", "<CursorInfo>",
                        "ui-path",         "/cursor-info-popup",
