@@ -6,6 +6,28 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.10 to GIMP 2.99.12
+=====================================================
+
+Core:
+
+  - Added concept of "hidden item" to a GimpImage. This would allow to
+    process non attached items for internal processing more easily.
+
+Tools:
+
+  - The "Fill by line art detection" mode of the Bucket Fill tool got
+    the following improvements:
+    * New "Stroke borders" option where you can select a paint tool
+      (except source tools) to stroke the fill mask before filling with
+      the color. The settings will be the ones as set on the
+      corresponding tool (except for the color).
+    * The options got reorganized in 3 sections (Line Art Detection,
+      Line Art Closure and Fill Borders) and some options were reworded.
+      This should hopefully make the now many options more
+      understandable.
+
+
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
 ====================================================
 
@@ -216,6 +238,7 @@ Build:
     installer, which made the "packaging-win*-native" jobs in particular
     run from over 2 hours in some cases to about 10 minutes. So it's a
     big gain for the creation wait for the Windows installer.
+  - GEGL minimum required version bumped to 0.4.36.
 
 API:
 
