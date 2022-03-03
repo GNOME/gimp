@@ -46,6 +46,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-lensfun \
     mingw-w64-$MSYS2_ARCH-libarchive \
     mingw-w64-$MSYS2_ARCH-libheif \
+    mingw-w64-$MSYS2_ARCH-libjxl \
     mingw-w64-$MSYS2_ARCH-libmypaint \
     mingw-w64-$MSYS2_ARCH-libspiro \
     mingw-w64-$MSYS2_ARCH-libwebp \
