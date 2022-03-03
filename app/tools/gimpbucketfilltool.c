@@ -239,6 +239,10 @@ gimp_bucket_fill_tool_constructed (GObject *object)
                                     line_art, "max-grow",
                                     G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
   bindings = g_list_prepend (bindings, binding);
+  binding = g_object_bind_property (options,  "line-art-automatic-closure",
+                                    line_art, "automatic-closure",
+                                    G_BINDING_SYNC_CREATE | G_BINDING_BIDIRECTIONAL);
+  bindings = g_list_prepend (bindings, binding);
   binding = g_object_bind_property (options,  "line-art-max-gap-length",
                                     line_art, "spline-max-length",
                                     G_BINDING_SYNC_CREATE | G_BINDING_DEFAULT);

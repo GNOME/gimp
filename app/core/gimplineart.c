@@ -59,6 +59,7 @@ enum
   PROP_SELECT_TRANSPARENT,
   PROP_MAX_GROW,
   PROP_THRESHOLD,
+  PROP_AUTOMATIC_CLOSURE,
   PROP_SPLINE_MAX_LEN,
   PROP_SEGMENT_MAX_LEN,
 };
@@ -81,6 +82,7 @@ struct _GimpLineArtPrivate
   /* Used in the closing step. */
   gboolean      select_transparent;
   gdouble       threshold;
+  gboolean      automatic_closure;
   gint          spline_max_len;
   gint          segment_max_len;
   gboolean      max_len_bound;
@@ -95,6 +97,7 @@ typedef struct
 
   gboolean     select_transparent;
   gdouble      threshold;
+  gboolean     automatic_closure;
   gint         spline_max_len;
   gint         segment_max_len;
 } LineArtData;
@@ -182,6 +185,7 @@ static void            gimp_line_art_input_invalidate_preview  (GimpViewable    
 static GeglBuffer    * gimp_line_art_close                     (GeglBuffer             *buffer,
                                                                 gboolean                select_transparent,
                                                                 gdouble                 stroke_threshold,
+                                                                gboolean                automatic_closure,
                                                                 gint                    spline_max_length,
                                                                 gint                    segment_max_length,
                                                                 gint                    minimal_lineart_area,
@@ -354,6 +358,13 @@ gimp_line_art_class_init (GimpLineArtClass *klass)
                                                      1, 100, 3,
                                                      G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
 
+  g_object_class_install_property (object_class, PROP_AUTOMATIC_CLOSURE,
+                                   g_param_spec_boolean ("automatic-closure",
+                                                         _("Whether or not we should perform the closing step"),
+                                                         _("Whether or not we should perform the closing step"),
+                                                         TRUE,
+                                                         G_PARAM_CONSTRUCT | GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_SPLINE_MAX_LEN,
                                    g_param_spec_int ("spline-max-length",
                                                      _("Maximum curved closing length"),
@@ -414,6 +425,13 @@ gimp_line_art_set_property (GObject      *object,
           gimp_line_art_compute (line_art);
         }
       break;
+    case PROP_AUTOMATIC_CLOSURE:
+      if (line_art->priv->automatic_closure != g_value_get_boolean (value))
+        {
+          line_art->priv->automatic_closure = g_value_get_boolean (value);
+          gimp_line_art_compute (line_art);
+        }
+      break;
     case PROP_SPLINE_MAX_LEN:
       if (line_art->priv->spline_max_len != g_value_get_int (value))
         {
@@ -457,6 +475,9 @@ gimp_line_art_get_property (GObject    *object,
       break;
     case PROP_THRESHOLD:
       g_value_set_double (value, line_art->priv->threshold);
+      break;
+    case PROP_AUTOMATIC_CLOSURE:
+      g_value_set_boolean (value, line_art->priv->automatic_closure);
       break;
     case PROP_SPLINE_MAX_LEN:
       g_value_set_int (value, line_art->priv->spline_max_len);
@@ -754,6 +775,7 @@ gimp_line_art_prepare_async_func (GimpAsync   *async,
   closed = gimp_line_art_close (buffer,
                                 select_transparent,
                                 data->threshold,
+                                data->automatic_closure,
                                 data->spline_max_len,
                                 data->segment_max_len,
                                 /*minimal_lineart_area,*/
@@ -816,6 +838,7 @@ line_art_data_new (GeglBuffer  *buffer,
   data->buffer             = g_object_ref (buffer);
   data->select_transparent = line_art->priv->select_transparent;
   data->threshold          = line_art->priv->threshold;
+  data->automatic_closure  = line_art->priv->automatic_closure;
   data->spline_max_len     = line_art->priv->spline_max_len;
   data->segment_max_len    = line_art->priv->segment_max_len;
 
@@ -884,6 +907,9 @@ gimp_line_art_input_invalidate_preview (GimpViewable *viewable,
  *                      luminosity.
  * @stroke_threshold: [0-1] threshold value for detecting stroke pixels
  *                    (higher values will detect more stroke pixels).
+ * @automatic_closure: whether the closing step should be performed or
+ *                     not. @spline_max_length and @segment_max_len are
+ *                     used only if @automatic_closure is %TRUE.
  * @spline_max_length: the maximum length for creating splines between
  *                     end points.
  * @segment_max_length: the maximum length for creating segments
@@ -928,6 +954,7 @@ static GeglBuffer *
 gimp_line_art_close (GeglBuffer  *buffer,
                      gboolean     select_transparent,
                      gdouble      stroke_threshold,
+                     gboolean     automatic_closure,
                      gint         spline_max_length,
                      gint         segment_max_length,
                      gint         minimal_lineart_area,
@@ -1031,7 +1058,8 @@ gimp_line_art_close (GeglBuffer  *buffer,
 
   closed = g_object_ref (strokes);
 
-  if (spline_max_length > 0 || segment_max_length > 0)
+  if (automatic_closure &&
+      (spline_max_length > 0 || segment_max_length > 0))
     {
       GArray     *keypoints           = NULL;
       GHashTable *visited             = NULL;

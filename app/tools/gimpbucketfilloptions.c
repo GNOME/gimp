@@ -71,6 +71,7 @@ enum
   PROP_LINE_ART_MAX_GROW,
   PROP_LINE_ART_STROKE,
   PROP_LINE_ART_STROKE_TOOL,
+  PROP_LINE_ART_AUTOMATIC_CLOSURE,
   PROP_LINE_ART_MAX_GAP_LENGTH,
   PROP_FILL_CRITERION,
   PROP_FILL_COLOR_AS_LINE_ART,
@@ -254,6 +255,13 @@ gimp_bucket_fill_options_class_init (GimpBucketFillOptionsClass *klass)
                            _("The tool to stroke the fill borders with"),
                            "gimp-pencil", GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_LINE_ART_AUTOMATIC_CLOSURE,
+                            "line-art-automatic-closure",
+                            _("Automatic closure"),
+                            _("Geometric analysis of the stroke contours to close line arts by splines/segments"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_INT (object_class, PROP_LINE_ART_MAX_GAP_LENGTH,
                         "line-art-max-gap-length",
                         _("Maximum gap length"),
@@ -372,6 +380,9 @@ gimp_bucket_fill_options_set_property (GObject      *object,
                         NULL);
         }
       break;
+    case PROP_LINE_ART_AUTOMATIC_CLOSURE:
+      options->line_art_automatic_closure = g_value_get_boolean (value);
+      break;
     case PROP_LINE_ART_MAX_GAP_LENGTH:
       options->line_art_max_gap_length = g_value_get_int (value);
       break;
@@ -442,6 +453,9 @@ gimp_bucket_fill_options_get_property (GObject    *object,
       break;
     case PROP_LINE_ART_STROKE_TOOL:
       g_value_set_string (value, options->line_art_stroke_tool);
+      break;
+    case PROP_LINE_ART_AUTOMATIC_CLOSURE:
+      g_value_set_boolean (value, options->line_art_automatic_closure);
       break;
     case PROP_LINE_ART_MAX_GAP_LENGTH:
       g_value_set_int (value, options->line_art_max_gap_length);
@@ -691,13 +705,11 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (box2);
 
   /*  Line Art Closure: max gap length */
-  frame = gimp_frame_new (_("Automatic closure"));
-  gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
   scale = gimp_prop_spin_scale_new (config, "line-art-max-gap-length",
                                     1, 5, 0);
-  gtk_container_add (GTK_CONTAINER (frame), scale);
+  frame = gimp_prop_expanding_frame_new (config, "line-art-automatic-closure", NULL,
+                                         scale, NULL);
+  gtk_box_pack_start (GTK_BOX (box2), frame, FALSE, FALSE, 0);
 
   /*  Line Art Closure: manual line art closure */
   scale = gimp_prop_spin_scale_new (config, "fill-color-as-line-art-threshold",
