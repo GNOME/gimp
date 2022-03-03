@@ -38,10 +38,14 @@
 
 #include "display/gimpdisplay.h"
 
+#include "paint/gimpsourceoptions.h"
+
 #include "widgets/gimpcontainercombobox.h"
+#include "widgets/gimpcontainertreestore.h"
 #include "widgets/gimpcontainerview.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpviewablebox.h"
+#include "widgets/gimpviewrenderer.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpbucketfilloptions.h"
@@ -101,6 +105,11 @@ static gboolean
                                                           GList                 *items,
                                                           GList                 *paths,
                                                           GimpBucketFillOptions *options);
+static void  gimp_bucket_fill_options_tool_cell_renderer (GtkCellLayout         *layout,
+                                                          GtkCellRenderer       *cell,
+                                                          GtkTreeModel          *model,
+                                                          GtkTreeIter           *iter,
+                                                          gpointer               data);
 
 static void   gimp_bucket_fill_options_reset             (GimpConfig            *config);
 static void   gimp_bucket_fill_options_update_area       (GimpBucketFillOptions *options);
@@ -474,6 +483,31 @@ gimp_bucket_fill_options_select_stroke_tool (GimpContainerView     *view,
 }
 
 static void
+gimp_bucket_fill_options_tool_cell_renderer (GtkCellLayout   *layout,
+                                             GtkCellRenderer *cell,
+                                             GtkTreeModel    *model,
+                                             GtkTreeIter     *iter,
+                                             gpointer         data)
+{
+  GimpViewRenderer *renderer;
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                      -1);
+
+  if (renderer->viewable)
+    {
+      GimpPaintInfo *info = GIMP_PAINT_INFO (renderer->viewable);
+
+      if (GIMP_IS_SOURCE_OPTIONS (info->paint_options))
+        gtk_tree_store_set (GTK_TREE_STORE (model), iter,
+                            GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE, FALSE,
+                            -1);
+    }
+  g_object_unref (renderer);
+}
+
+static void
 gimp_bucket_fill_options_reset (GimpConfig *config)
 {
   GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
@@ -714,6 +748,10 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   widget = gimp_container_combo_box_new (gimp->paint_info_list,
                                          GIMP_CONTEXT (options->stroke_options),
                                          16, 0);
+  gtk_cell_layout_set_cell_data_func (GTK_CELL_LAYOUT (widget),
+                                      GIMP_CONTAINER_COMBO_BOX (widget)->viewable_renderer,
+                                      gimp_bucket_fill_options_tool_cell_renderer,
+                                      options, NULL);
   g_signal_connect (widget, "select-items",
                     G_CALLBACK (gimp_bucket_fill_options_select_stroke_tool),
                     options);

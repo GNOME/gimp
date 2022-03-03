@@ -162,6 +162,8 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
   gtk_cell_layout_set_attributes (layout, cell,
                                   "renderer",
                                   GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,
+                                  "sensitive",
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                                   NULL);
 
   gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (model),
@@ -174,6 +176,8 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
   gtk_cell_layout_set_attributes (layout, cell,
                                   "text",
                                   GIMP_CONTAINER_TREE_STORE_COLUMN_NAME,
+                                  "sensitive",
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_NAME_SENSITIVE,
                                   NULL);
 
   combo->text_renderer = cell;
