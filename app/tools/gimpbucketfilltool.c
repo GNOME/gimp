@@ -455,7 +455,8 @@ gimp_bucket_fill_tool_preview (GimpBucketFillTool *tool,
                                                          fill_options,
                                                          options->line_art_source ==
                                                          GIMP_LINE_ART_SOURCE_SAMPLE_MERGED,
-                                                         options->fill_as_line_art,
+                                                         options->fill_as_line_art &&
+                                                         options->fill_mode != GIMP_BUCKET_FILL_PATTERN,
                                                          options->fill_as_line_art_threshold / 255.0,
                                                          options->line_art_stroke,
                                                          options->stroke_options,
