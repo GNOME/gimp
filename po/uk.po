@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-03 19:12+0000\n"
-"PO-Revision-Date: 2022-03-04 11:58+0200\n"
+"POT-Creation-Date: 2022-03-04 13:34+0000\n"
+"PO-Revision-Date: 2022-03-04 16:03+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -14708,28 +14708,28 @@ msgid "Style"
 msgstr "Стиль"
 
 #: ../app/core/gimpfilloptions.c:117 ../app/pdb/gimppdbcontext.c:101
-#: ../app/tools/gimpbucketfilloptions.c:180
+#: ../app/tools/gimpbucketfilloptions.c:187
 #: ../app/tools/gimpselectionoptions.c:81 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Згладжування"
 
-#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:190
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:197
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
 msgstr "Розмивати межі"
 
-#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:191
+#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:198
 msgid "Enable feathering of fill edges"
 msgstr "Увімкнути розмазування країв заповнення кольором"
 
 #: ../app/core/gimpfilloptions.c:131 ../app/paint/gimpmybrushoptions.c:87
-#: ../app/tools/gimpbucketfilloptions.c:197 ../app/tools/gimpcoloroptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:204 ../app/tools/gimpcoloroptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:101
 #: ../app/tools/gimpselectionoptions.c:95 ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "Радіус"
 
-#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:198
+#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:205
 #: ../app/tools/gimpselectionoptions.c:96
 msgid "Radius of feathering"
 msgstr "Радіус розмазування"
@@ -15595,27 +15595,26 @@ msgstr "Не вдалось перейменувати маски шарів."
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Вибрати прозорі пікселі замість сірих"
 
-#: ../app/core/gimplineart.c:349 ../app/tools/gimpbucketfilloptions.c:233
+#: ../app/core/gimplineart.c:349 ../app/tools/gimpbucketfilloptions.c:240
 msgid "Line art detection threshold"
 msgstr "Поріг виявлення контуру"
 
-#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:234
+#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:241
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Поріг виявлення контуру (за більших значень буде включено більше пікселів )"
 
-#: ../app/core/gimplineart.c:356 ../app/tools/gimpbucketfilloptions.c:240
+#: ../app/core/gimplineart.c:356 ../app/tools/gimpbucketfilloptions.c:247
 msgid "Maximum growing size"
 msgstr "Максимальний розмір нарощування"
 
-#: ../app/core/gimplineart.c:357 ../app/tools/gimpbucketfilloptions.c:241
+#: ../app/core/gimplineart.c:357 ../app/tools/gimpbucketfilloptions.c:248
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Максимальна кількість пікселів нарощування під контуром"
 
 #: ../app/core/gimplineart.c:363 ../app/core/gimplineart.c:364
 msgid "Whether or not we should perform the closing step"
-msgstr ""
-"Визначає, чи слід виконувати крок із замикання"
+msgstr "Визначає, чи слід виконувати крок із замикання"
 
 #: ../app/core/gimplineart.c:370
 msgid "Maximum curved closing length"
@@ -16109,7 +16108,7 @@ msgstr "Лінійне/Придатне до сприйняття"
 msgid "Color profile"
 msgstr "Колірний профіль"
 
-#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:141
+#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:148
 msgid "Fill type"
 msgstr "Тип заповнення"
 
@@ -21185,8 +21184,8 @@ msgstr "Штамп"
 msgid "No patterns available for use with this tool."
 msgstr "Немає текстур, доступних для використання з цим інструментом."
 
-#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:211
-#: ../app/tools/gimpbucketfilloptions.c:679
+#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:218
+#: ../app/tools/gimpbucketfilloptions.c:767
 #: ../app/tools/gimpcloneoptions-gui.c:230
 msgid "Source"
 msgstr "Джерело"
@@ -21517,7 +21516,7 @@ msgid "No erasing effect"
 msgstr "Без ефекту витирання"
 
 #: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:110
-#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:165
+#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:172
 #: ../app/tools/gimpcoloroptions.c:70 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
@@ -21953,7 +21952,7 @@ msgstr "Поріг вибору"
 msgid "Sample transparent"
 msgstr "Прозорість вибору"
 
-#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:172
+#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:179
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Diagonal neighbors"
 msgstr "Сусідні діагональні"
@@ -23329,32 +23328,32 @@ msgstr "_Контраст"
 msgid "Edit these Settings as Levels"
 msgstr "Змінити ці параметри як рівні"
 
-#: ../app/tools/gimpbucketfilloptions.c:149
+#: ../app/tools/gimpbucketfilloptions.c:156
 msgid "Fill selection"
 msgstr "Заповнити позначене"
 
-#: ../app/tools/gimpbucketfilloptions.c:150
+#: ../app/tools/gimpbucketfilloptions.c:157
 msgid "Which area will be filled"
 msgstr "Яку ділянку буде заповнено"
 
-#: ../app/tools/gimpbucketfilloptions.c:157
+#: ../app/tools/gimpbucketfilloptions.c:164
 msgid "Fill transparent areas"
 msgstr "Заповнити прозорі ділянки"
 
-#: ../app/tools/gimpbucketfilloptions.c:158
+#: ../app/tools/gimpbucketfilloptions.c:165
 msgid "Allow completely transparent regions to be filled"
 msgstr "Дозволити заповнення абсолютно прозорих ділянок"
 
-#: ../app/tools/gimpbucketfilloptions.c:166
+#: ../app/tools/gimpbucketfilloptions.c:173
 msgid "Base filled area on all visible layers"
 msgstr "Використовувати для визначення ділянок заповнення усі видимі шари"
 
-#: ../app/tools/gimpbucketfilloptions.c:173
+#: ../app/tools/gimpbucketfilloptions.c:180
 #: ../app/tools/gimpregionselectoptions.c:106
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Вважати діагональні пікселі з'єднаними"
 
-#: ../app/tools/gimpbucketfilloptions.c:181
+#: ../app/tools/gimpbucketfilloptions.c:188
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -23364,30 +23363,29 @@ msgstr ""
 "порогове значення) або на краях ліній графіки. Вимкніть згладжування, щоб "
 "заповнити усю область однорідним кольором."
 
-#: ../app/tools/gimpbucketfilloptions.c:204
-#: ../app/tools/gimpbucketfilloptions.c:226
+#: ../app/tools/gimpbucketfilloptions.c:211
+#: ../app/tools/gimpbucketfilloptions.c:233
 #: ../app/tools/gimpgradientoptions.c:122
 #: ../app/tools/gimpregionselectoptions.c:113
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Поріг"
 
-#: ../app/tools/gimpbucketfilloptions.c:205
-#: ../app/tools/gimpbucketfilloptions.c:227
+#: ../app/tools/gimpbucketfilloptions.c:212
+#: ../app/tools/gimpbucketfilloptions.c:234
 #: ../app/tools/gimpregionselectoptions.c:114
 msgid "Maximum color difference"
 msgstr "Максимальна відмінність кольорів"
 
-#: ../app/tools/gimpbucketfilloptions.c:212
+#: ../app/tools/gimpbucketfilloptions.c:219
 msgid "Source image for line art computation"
 msgstr "Джерельне зображення для розрахунку контурів"
 
-#: ../app/tools/gimpbucketfilloptions.c:219
+#: ../app/tools/gimpbucketfilloptions.c:226
 msgid "Manual closure in fill layer"
-msgstr ""
-"Замикання вручну на шарі залиття"
+msgstr "Замикання вручну на шарі залиття"
 
-#: ../app/tools/gimpbucketfilloptions.c:220
+#: ../app/tools/gimpbucketfilloptions.c:227
 msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
@@ -23395,95 +23393,103 @@ msgstr ""
 "Брати до уваги пікселі позначеного шару і виконувати заповнення кольором "
 "заповнення як замиканням графіки"
 
-#: ../app/tools/gimpbucketfilloptions.c:247
-#| msgctxt "view-action"
-#| msgid "Scroll to left border"
+#: ../app/tools/gimpbucketfilloptions.c:254
 msgid "Stroke borders"
 msgstr "Рамки штрихування"
 
-#: ../app/tools/gimpbucketfilloptions.c:248
+#: ../app/tools/gimpbucketfilloptions.c:255
 msgid "Stroke fill borders with last stroke options"
-msgstr ""
-"Параметри рамки штрихового заповнення із останнім штрихом"
+msgstr "Параметри рамки штрихового заповнення із останнім штрихом"
 
-#: ../app/tools/gimpbucketfilloptions.c:254
-#| msgid "Stroke Path"
+#: ../app/tools/gimpbucketfilloptions.c:261
 msgid "Stroke tool"
 msgstr "Інструмент штрихування"
 
-#: ../app/tools/gimpbucketfilloptions.c:255
+#: ../app/tools/gimpbucketfilloptions.c:262
 msgid "The tool to stroke the fill borders with"
-msgstr ""
-"Інструмент для штрихування рамок залиття"
+msgstr "Інструмент для штрихування рамок залиття"
 
-#: ../app/tools/gimpbucketfilloptions.c:260
-#| msgid "Automatically Detected"
+#: ../app/tools/gimpbucketfilloptions.c:267
 msgid "Automatic closure"
 msgstr "Автоматичне замикання"
 
-#: ../app/tools/gimpbucketfilloptions.c:261
+#: ../app/tools/gimpbucketfilloptions.c:268
 msgid ""
 "Geometric analysis of the stroke contours to close line arts by splines/"
 "segments"
 msgstr ""
-"Геометричний аналіз штрихових контурів для замикання штрихування сплайнами або сегментами"
+"Геометричний аналіз штрихових контурів для замикання штрихування сплайнами "
+"або сегментами"
 
-#: ../app/tools/gimpbucketfilloptions.c:267
+#: ../app/tools/gimpbucketfilloptions.c:274
 msgid "Maximum gap length"
 msgstr "Найбільша довжина розриву"
 
-#: ../app/tools/gimpbucketfilloptions.c:268
+#: ../app/tools/gimpbucketfilloptions.c:275
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Найбільший розрив лінії (у пікселях), який можна закрити"
 
-#: ../app/tools/gimpbucketfilloptions.c:274
-#: ../app/tools/gimpbucketfilloptions.c:645
+#: ../app/tools/gimpbucketfilloptions.c:281
+#: ../app/tools/gimpbucketfilloptions.c:733
 msgid "Fill by"
 msgstr "Тип заповнення"
 
-#: ../app/tools/gimpbucketfilloptions.c:275
+#: ../app/tools/gimpbucketfilloptions.c:282
 msgid "Criterion used for determining color similarity"
 msgstr "Критерії для визначення подібності кольорів"
 
+#: ../app/tools/gimpbucketfilloptions.c:582
+msgid ""
+"Opaque pixels will be considered as line art instead of low luminance pixels"
+msgstr ""
+"Непрозорі пікселі вважатимуться графікою, а не пікселями із низькою світністю"
+
+#: ../app/tools/gimpbucketfilloptions.c:636
+#| msgid "No valid line art source selected."
+msgid "No valid source drawable selected"
+msgstr "Не вибрано придатного початкового намальованого об'єкта"
+
+#: ../app/tools/gimpbucketfilloptions.c:638
+#| msgid "The selected drawable does not have an alpha channel."
+msgid "The source drawable has no alpha channel"
+msgstr "У початковому намальованому об'єкті немає каналу прозорості"
+
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:591
+#: ../app/tools/gimpbucketfilloptions.c:679
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Тип заповнення  (%s)"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:604
+#: ../app/tools/gimpbucketfilloptions.c:692
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Область застосування  (%s)"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:611
+#: ../app/tools/gimpbucketfilloptions.c:699
 msgid "Finding Similar Colors"
 msgstr "Пошук схожих кольорів"
 
-#: ../app/tools/gimpbucketfilloptions.c:659
+#: ../app/tools/gimpbucketfilloptions.c:747
 msgid "Line Art Detection"
 msgstr "Виявлення контуру"
 
-#: ../app/tools/gimpbucketfilloptions.c:669
+#: ../app/tools/gimpbucketfilloptions.c:757
 msgid "(computing...)"
 msgstr "(обчислюємо…)"
 
-#: ../app/tools/gimpbucketfilloptions.c:684
+#: ../app/tools/gimpbucketfilloptions.c:772
 msgid "Detect opacity rather than grayscale"
-msgstr ""
-"Виявляти непрозорість, а не тони сірого"
+msgstr "Виявляти непрозорість, а не тони сірого"
 
 #. Line Art Closure: frame label
-#: ../app/tools/gimpbucketfilloptions.c:699
-#| msgid "Line style"
+#: ../app/tools/gimpbucketfilloptions.c:788
 msgid "Line Art Closure"
 msgstr "Замикання штрихування"
 
 #. Line Art Borders: frame label
-#: ../app/tools/gimpbucketfilloptions.c:731
-#| msgid "Fill Color"
+#: ../app/tools/gimpbucketfilloptions.c:820
 msgid "Fill borders"
 msgstr "Рамки заповнення"
 
