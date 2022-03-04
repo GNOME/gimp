@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-22 14:34+0000\n"
-"PO-Revision-Date: 2022-02-23 12:00+0000\n"
+"POT-Creation-Date: 2022-03-04 10:01+0000\n"
+"PO-Revision-Date: 2022-03-04 10:40+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -3883,7 +3883,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2324
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2335
 #: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:762 ../app/widgets/gimpdnd-xds.c:87
@@ -14638,17 +14638,17 @@ msgstr "Não é possível preencher um canal vazio."
 msgid "Cannot stroke empty channel."
 msgstr "Não é possível traçar um canal vazio."
 
-#: ../app/core/gimpchannel.c:1647
+#: ../app/core/gimpchannel.c:1649
 msgctxt "undo-type"
 msgid "Set Channel Color"
 msgstr "Definir cor do canal"
 
-#: ../app/core/gimpchannel.c:1698
+#: ../app/core/gimpchannel.c:1700
 msgctxt "undo-type"
 msgid "Set Channel Opacity"
 msgstr "Definir opacidade do canal"
 
-#: ../app/core/gimpchannel.c:1787 ../app/core/gimpselection.c:172
+#: ../app/core/gimpchannel.c:1789 ../app/core/gimpselection.c:172
 msgid "Selection Mask"
 msgstr "Máscara de seleção"
 
@@ -14806,7 +14806,7 @@ msgctxt "undo-type"
 msgid "Scale"
 msgstr "Alterar tamanho"
 
-#: ../app/core/gimpdrawable-bucket-fill.c:88
+#: ../app/core/gimpdrawable-bucket-fill.c:92
 msgctxt "undo-type"
 msgid "Bucket Fill"
 msgstr "Balde de tinta"
@@ -14892,28 +14892,28 @@ msgid "Style"
 msgstr "Estilo"
 
 #: ../app/core/gimpfilloptions.c:117 ../app/pdb/gimppdbcontext.c:101
-#: ../app/tools/gimpbucketfilloptions.c:153
+#: ../app/tools/gimpbucketfilloptions.c:180
 #: ../app/tools/gimpselectionoptions.c:81 ../app/tools/gimptextoptions.c:136
 msgid "Antialiasing"
 msgstr "Margens suaves"
 
-#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:163
+#: ../app/core/gimpfilloptions.c:124 ../app/tools/gimpbucketfilloptions.c:190
 #: ../app/tools/gimpselectionoptions.c:88
 msgid "Feather edges"
 msgstr "Margens a desvanecer"
 
-#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:164
+#: ../app/core/gimpfilloptions.c:125 ../app/tools/gimpbucketfilloptions.c:191
 msgid "Enable feathering of fill edges"
 msgstr "Ativar o desvanecimento das margens do preenchimento"
 
 #: ../app/core/gimpfilloptions.c:131 ../app/paint/gimpmybrushoptions.c:87
-#: ../app/tools/gimpbucketfilloptions.c:170 ../app/tools/gimpcoloroptions.c:86
+#: ../app/tools/gimpbucketfilloptions.c:197 ../app/tools/gimpcoloroptions.c:86
 #: ../app/tools/gimprectangleselectoptions.c:101
 #: ../app/tools/gimpselectionoptions.c:95 ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius"
 msgstr "Raio"
 
-#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:171
+#: ../app/core/gimpfilloptions.c:132 ../app/tools/gimpbucketfilloptions.c:198
 #: ../app/tools/gimpselectionoptions.c:96
 msgid "Radius of feathering"
 msgstr "Raio do desvanecimento"
@@ -15094,103 +15094,103 @@ msgstr "Transformar grupo de camadas"
 msgid "Symmetry"
 msgstr "Simetria"
 
-#: ../app/core/gimpimage.c:2569
+#: ../app/core/gimpimage.c:2580
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: ../app/core/gimpimage.c:2573
+#: ../app/core/gimpimage.c:2584
 msgid " (overwritten)"
 msgstr " (substituída)"
 
-#: ../app/core/gimpimage.c:2582
+#: ../app/core/gimpimage.c:2593
 msgid " (imported)"
 msgstr " (importada)"
 
-#: ../app/core/gimpimage.c:2755 ../app/core/gimpimage.c:2769
-#: ../app/core/gimpimage.c:2812
+#: ../app/core/gimpimage.c:2766 ../app/core/gimpimage.c:2780
+#: ../app/core/gimpimage.c:2823
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "O modo de camada “%s” foi introduzido no %s"
 
-#: ../app/core/gimpimage.c:2827
+#: ../app/core/gimpimage.c:2838
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Os grupos de camadas foram introduzidos no %s"
 
-#: ../app/core/gimpimage.c:2834
+#: ../app/core/gimpimage.c:2845
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "As máscaras nos grupos de camada foram introduzidas no %s"
 
-#: ../app/core/gimpimage.c:2841
+#: ../app/core/gimpimage.c:2852
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Bloqueios de posição nos grupos de camada foram introduzidas no %s"
 
-#: ../app/core/gimpimage.c:2848
+#: ../app/core/gimpimage.c:2859
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Bloqueios do canal Alfa nos grupos de camada foram introduzidas no %s"
 
-#: ../app/core/gimpimage.c:2856 ../app/core/gimpimage.c:2870
+#: ../app/core/gimpimage.c:2867 ../app/core/gimpimage.c:2881
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Bloqueios de visibilidade foram adicionados no %s"
 
-#: ../app/core/gimpimage.c:2884
+#: ../app/core/gimpimage.c:2895
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "As imagens com alta profundidade de cor foram introduzidas no %s"
 
-#: ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2903
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 "A codificação das imagens com alta profundidade de cor foi corrigida no %s"
 
-#: ../app/core/gimpimage.c:2900
+#: ../app/core/gimpimage.c:2911
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "A compressão zlib interna foi introduzida no %s"
 
-#: ../app/core/gimpimage.c:2917
+#: ../app/core/gimpimage.c:2928
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "O suporte a imagens maiores que 4GB foi introduzido no %s"
 
-#: ../app/core/gimpimage.c:2924
+#: ../app/core/gimpimage.c:2935
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "A seleção múltipla de camadas foi introduzida no %s"
 
-#: ../app/core/gimpimage.c:2941
+#: ../app/core/gimpimage.c:2952
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "As guias fora da tela foram adicionadas no %s"
 
-#: ../app/core/gimpimage.c:2952
+#: ../app/core/gimpimage.c:2963
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Definição de itens e pesquisa de padrões no nome dos itens foram adicionados "
 "em %s"
 
-#: ../app/core/gimpimage.c:2958
+#: ../app/core/gimpimage.c:2969
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "A seleção múltipla de canais foi introduzida no %s"
 
-#: ../app/core/gimpimage.c:3062
+#: ../app/core/gimpimage.c:3073
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Alterar resolução da imagem"
 
-#: ../app/core/gimpimage.c:3114
+#: ../app/core/gimpimage.c:3125
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Alterar unidade da imagem"
 
-#: ../app/core/gimpimage.c:4161
+#: ../app/core/gimpimage.c:4172
 #, c-format
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
@@ -15198,47 +15198,47 @@ msgstr ""
 "Não foi possível validar o parasita \"gimp-comment\" parasita: comentário "
 "contém caracteres UTF-8 inválidos"
 
-#: ../app/core/gimpimage.c:4222
+#: ../app/core/gimpimage.c:4233
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Anexar parasita à imagem"
 
-#: ../app/core/gimpimage.c:4264
+#: ../app/core/gimpimage.c:4275
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: ../app/core/gimpimage.c:5249
+#: ../app/core/gimpimage.c:5260
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: ../app/core/gimpimage.c:5293 ../app/core/gimpimage.c:5324
+#: ../app/core/gimpimage.c:5304 ../app/core/gimpimage.c:5335
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: ../app/core/gimpimage.c:5318
+#: ../app/core/gimpimage.c:5329
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: ../app/core/gimpimage.c:5842
+#: ../app/core/gimpimage.c:5853
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: ../app/core/gimpimage.c:5872 ../app/core/gimpimage.c:5897
+#: ../app/core/gimpimage.c:5883 ../app/core/gimpimage.c:5908
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: ../app/core/gimpimage.c:5956
+#: ../app/core/gimpimage.c:5967
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: ../app/core/gimpimage.c:5986 ../app/core/gimpimage.c:5994
+#: ../app/core/gimpimage.c:5997 ../app/core/gimpimage.c:6005
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
@@ -15577,17 +15577,17 @@ msgstr[1] "%d camadas"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Não foi possível abrir a miniatura \"%s\": %s"
 
-#: ../app/core/gimpitem.c:2200
+#: ../app/core/gimpitem.c:2205
 msgctxt "undo-type"
 msgid "Attach Parasite"
 msgstr "Anexar parasita"
 
-#: ../app/core/gimpitem.c:2210
+#: ../app/core/gimpitem.c:2215
 msgctxt "undo-type"
 msgid "Attach Parasite to Item"
 msgstr "Anexar parasita ao item"
 
-#: ../app/core/gimpitem.c:2261 ../app/core/gimpitem.c:2268
+#: ../app/core/gimpitem.c:2266 ../app/core/gimpitem.c:2273
 msgctxt "undo-type"
 msgid "Remove Parasite from Item"
 msgstr "Remover parasita do item"
@@ -15780,40 +15780,44 @@ msgstr "Máscara de camada em seleção"
 msgid "Cannot rename layer masks."
 msgstr "Não foi possível alterar o nome das máscaras da camada."
 
-#: ../app/core/gimplineart.c:338 ../app/core/gimplineart.c:339
+#: ../app/core/gimplineart.c:342 ../app/core/gimplineart.c:343
 msgid "Select transparent pixels instead of gray ones"
 msgstr "Selecionar pixéis transparentes em vez dos cinzentos"
 
-#: ../app/core/gimplineart.c:345 ../app/tools/gimpbucketfilloptions.c:206
+#: ../app/core/gimplineart.c:349 ../app/tools/gimpbucketfilloptions.c:233
 msgid "Line art detection threshold"
 msgstr "Limite da deteção de desenho de linha"
 
-#: ../app/core/gimplineart.c:346 ../app/tools/gimpbucketfilloptions.c:207
+#: ../app/core/gimplineart.c:350 ../app/tools/gimpbucketfilloptions.c:234
 msgid "Threshold to detect contour (higher values will include more pixels)"
 msgstr ""
 "Limite para detetar contorno (valores mais altos irão incluir mais pixéis)"
 
-#: ../app/core/gimplineart.c:352 ../app/tools/gimpbucketfilloptions.c:213
+#: ../app/core/gimplineart.c:356 ../app/tools/gimpbucketfilloptions.c:240
 msgid "Maximum growing size"
 msgstr "Tamanho máximo de crescimento"
 
-#: ../app/core/gimplineart.c:353 ../app/tools/gimpbucketfilloptions.c:214
+#: ../app/core/gimplineart.c:357 ../app/tools/gimpbucketfilloptions.c:241
 msgid "Maximum number of pixels grown under the line art"
 msgstr "Número máximo de pixéis crescidos abaixo do desenho de linha"
 
-#: ../app/core/gimplineart.c:359
+#: ../app/core/gimplineart.c:363 ../app/core/gimplineart.c:364
+msgid "Whether or not we should perform the closing step"
+msgstr "Se devemos ou não realizar a etapa de fecho"
+
+#: ../app/core/gimplineart.c:370
 msgid "Maximum curved closing length"
 msgstr "Comprimento máximo da curva a fechar"
 
-#: ../app/core/gimplineart.c:360
+#: ../app/core/gimplineart.c:371
 msgid "Maximum curved length (in pixels) to close the line art"
 msgstr "Comprimento máximo da curva (em pixéis) para fechar o desenho de linha"
 
-#: ../app/core/gimplineart.c:366
+#: ../app/core/gimplineart.c:377
 msgid "Maximum straight closing length"
 msgstr "Comprimento máximo da linha direita a fechar"
 
-#: ../app/core/gimplineart.c:367
+#: ../app/core/gimplineart.c:378
 msgid "Maximum straight length (in pixels) to close the line art"
 msgstr ""
 "Comprimento máximo da linha direita (em pixéis) para fechar o desenho de "
@@ -16301,7 +16305,7 @@ msgstr "Linear / percetual"
 msgid "Color profile"
 msgstr "Perfil de cor"
 
-#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:114
+#: ../app/core/gimptemplate.c:222 ../app/tools/gimpbucketfilloptions.c:141
 msgid "Fill type"
 msgstr "Tipo de preenchimento"
 
@@ -19330,7 +19334,7 @@ msgid "_Next Tip"
 msgstr "Dica _seguinte"
 
 #. a link to the related section in the user manual
-#: ../app/dialogs/tips-dialog.c:194 ../app/dialogs/welcome-dialog.c:392
+#: ../app/dialogs/tips-dialog.c:194 ../app/dialogs/welcome-dialog.c:378
 msgid "Learn more"
 msgstr "Saber mais"
 
@@ -19406,20 +19410,20 @@ msgid "Lock path _position"
 msgstr "Bloquear p_osição do caminho"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:157
+#: ../app/dialogs/welcome-dialog.c:158
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Bem-vindo(a) ao GIMP %s"
 
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:221
+#: ../app/dialogs/welcome-dialog.c:207
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "Instalou o GIMP %s!"
 
 #. Welcome message: left
-#: ../app/dialogs/welcome-dialog.c:242
+#: ../app/dialogs/welcome-dialog.c:228
 msgid ""
 "GIMP is a Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -19427,22 +19431,22 @@ msgstr ""
 "O GIMP é um Software Livre para autoria e manipulação de imagens.\n"
 "Quer saber mais?"
 
-#: ../app/dialogs/welcome-dialog.c:271
+#: ../app/dialogs/welcome-dialog.c:257
 msgid "GIMP website"
 msgstr "Website do GIMP"
 
-#: ../app/dialogs/welcome-dialog.c:275
+#: ../app/dialogs/welcome-dialog.c:261
 msgid "Tutorials"
 msgstr "Tutoriais"
 
-#: ../app/dialogs/welcome-dialog.c:280
+#: ../app/dialogs/welcome-dialog.c:266
 msgid "Documentation"
 msgstr "Documentação"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: ../app/dialogs/welcome-dialog.c:288
+#: ../app/dialogs/welcome-dialog.c:274
 msgid ""
 "GIMP is a Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -19450,21 +19454,21 @@ msgstr ""
 "O GIMP é um Software Comunitário sob a licença pública geral GNU v3.\n"
 "Quer contribuir?"
 
-#: ../app/dialogs/welcome-dialog.c:313
+#: ../app/dialogs/welcome-dialog.c:299
 msgid "Contributing"
 msgstr "Contribuição"
 
-#: ../app/dialogs/welcome-dialog.c:318
+#: ../app/dialogs/welcome-dialog.c:304
 msgid "Donating"
 msgstr "Doação"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:341
+#: ../app/dialogs/welcome-dialog.c:327
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Notas de lançamento do GIMP %s"
 
-#: ../app/dialogs/welcome-dialog.c:414
+#: ../app/dialogs/welcome-dialog.c:400
 msgid ""
 "This welcome dialog is only shown at first launch. You can show it again "
 "from the \"Help\" menu."
@@ -19737,7 +19741,7 @@ msgid "Drop New Path"
 msgstr "Largar novo caminho"
 
 #: ../app/display/gimpdisplayshell-dnd.c:365
-#: ../app/tools/gimpbucketfilltool.c:603 ../app/tools/gimpcagetool.c:241
+#: ../app/tools/gimpbucketfilltool.c:610 ../app/tools/gimpcagetool.c:241
 #: ../app/tools/gimpfiltertool.c:307 ../app/tools/gimpgradienttool.c:274
 #: ../app/tools/gimpselectiontool.c:570
 #, c-format
@@ -21415,8 +21419,8 @@ msgstr "Clonar"
 msgid "No patterns available for use with this tool."
 msgstr "Não há texturas disponíveis para usar com esta ferramenta."
 
-#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:184
-#: ../app/tools/gimpbucketfilloptions.c:534
+#: ../app/paint/gimpcloneoptions.c:67 ../app/tools/gimpbucketfilloptions.c:211
+#: ../app/tools/gimpbucketfilloptions.c:679
 #: ../app/tools/gimpcloneoptions-gui.c:230
 msgid "Source"
 msgstr "Fonte"
@@ -21762,7 +21766,7 @@ msgid "No erasing effect"
 msgstr "Sem efeito de apagar"
 
 #: ../app/paint/gimpsmudgeoptions.c:93 ../app/paint/gimpsourceoptions.c:110
-#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:138
+#: ../app/pdb/gimppdbcontext.c:129 ../app/tools/gimpbucketfilloptions.c:165
 #: ../app/tools/gimpcoloroptions.c:70 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
@@ -22200,7 +22204,7 @@ msgstr "Limite de amostragem"
 msgid "Sample transparent"
 msgstr "Amostra transparente"
 
-#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:145
+#: ../app/pdb/gimppdbcontext.c:158 ../app/tools/gimpbucketfilloptions.c:172
 #: ../app/tools/gimpregionselectoptions.c:105
 msgid "Diagonal neighbors"
 msgstr "Vizinhos nas diagonais"
@@ -23592,32 +23596,32 @@ msgstr "_Contraste"
 msgid "Edit these Settings as Levels"
 msgstr "Editar estas configurações como níveis"
 
-#: ../app/tools/gimpbucketfilloptions.c:122
+#: ../app/tools/gimpbucketfilloptions.c:149
 msgid "Fill selection"
 msgstr "Preencher seleção"
 
-#: ../app/tools/gimpbucketfilloptions.c:123
+#: ../app/tools/gimpbucketfilloptions.c:150
 msgid "Which area will be filled"
 msgstr "Que área será preenchida"
 
-#: ../app/tools/gimpbucketfilloptions.c:130
+#: ../app/tools/gimpbucketfilloptions.c:157
 msgid "Fill transparent areas"
 msgstr "Preencher áreas transparentes"
 
-#: ../app/tools/gimpbucketfilloptions.c:131
+#: ../app/tools/gimpbucketfilloptions.c:158
 msgid "Allow completely transparent regions to be filled"
 msgstr "Permitir preencher regiões completamente transparentes"
 
-#: ../app/tools/gimpbucketfilloptions.c:139
+#: ../app/tools/gimpbucketfilloptions.c:166
 msgid "Base filled area on all visible layers"
 msgstr "Área base preenchida em todas as camadas visíveis"
 
-#: ../app/tools/gimpbucketfilloptions.c:146
+#: ../app/tools/gimpbucketfilloptions.c:173
 #: ../app/tools/gimpregionselectoptions.c:106
 msgid "Treat diagonally neighboring pixels as connected"
 msgstr "Considerar também pixéis vizinhos nas diagonais (e não só os laterais)"
 
-#: ../app/tools/gimpbucketfilloptions.c:154
+#: ../app/tools/gimpbucketfilloptions.c:181
 msgid ""
 "Base fill opacity on color difference from the clicked pixel (see threshold) "
 "or on line  art borders. Disable antialiasing to fill the entire area "
@@ -23627,77 +23631,119 @@ msgstr ""
 "(ver o limite) ou nas margens do desenho de linha. Desative o contorno suave "
 "(antisserrilhamento) para preencher toda a área uniformemente."
 
-#: ../app/tools/gimpbucketfilloptions.c:177
-#: ../app/tools/gimpbucketfilloptions.c:199
+#: ../app/tools/gimpbucketfilloptions.c:204
+#: ../app/tools/gimpbucketfilloptions.c:226
 #: ../app/tools/gimpgradientoptions.c:122
 #: ../app/tools/gimpregionselectoptions.c:113
 #: ../app/tools/gimpthresholdtool.c:93
 msgid "Threshold"
 msgstr "Limiar"
 
-#: ../app/tools/gimpbucketfilloptions.c:178
-#: ../app/tools/gimpbucketfilloptions.c:200
+#: ../app/tools/gimpbucketfilloptions.c:205
+#: ../app/tools/gimpbucketfilloptions.c:227
 #: ../app/tools/gimpregionselectoptions.c:114
 msgid "Maximum color difference"
 msgstr "Limite máximo da diferença da cor"
 
-#: ../app/tools/gimpbucketfilloptions.c:185
+#: ../app/tools/gimpbucketfilloptions.c:212
 msgid "Source image for line art computation"
 msgstr "Imagem de origem para o cálculo do desenho de linha"
 
-#: ../app/tools/gimpbucketfilloptions.c:192
-msgid "Allow closing lines in selected layer"
-msgstr "Permitir linhas de fecho na camada selecionada"
+#: ../app/tools/gimpbucketfilloptions.c:219
+msgid "Manual closure in fill layer"
+msgstr "Fecho manual na camada de preenchimento"
 
-#: ../app/tools/gimpbucketfilloptions.c:193
+#: ../app/tools/gimpbucketfilloptions.c:220
 msgid ""
 "Consider pixels of selected layer and filled with the fill color as line art "
 "closure"
 msgstr ""
 "Considere os pixéis da camada selecionada e preenchida com a cor de "
-"preenchimento como encerramento de linha de arte"
+"preenchimento como fecho de linha de arte"
 
-#: ../app/tools/gimpbucketfilloptions.c:220
+#: ../app/tools/gimpbucketfilloptions.c:247
+msgid "Stroke borders"
+msgstr "Contornos traçados"
+
+#: ../app/tools/gimpbucketfilloptions.c:248
+msgid "Stroke fill borders with last stroke options"
+msgstr "Contornos de preenchimento de traçado com opções do último traçado"
+
+#: ../app/tools/gimpbucketfilloptions.c:254
+msgid "Stroke tool"
+msgstr "Ferramenta de traçar"
+
+#: ../app/tools/gimpbucketfilloptions.c:255
+msgid "The tool to stroke the fill borders with"
+msgstr "A ferramenta para traçar os contornos de preenchimento"
+
+#: ../app/tools/gimpbucketfilloptions.c:260
+msgid "Automatic closure"
+msgstr "Fecho automático"
+
+#: ../app/tools/gimpbucketfilloptions.c:261
+msgid ""
+"Geometric analysis of the stroke contours to close line arts by splines/"
+"segments"
+msgstr ""
+"Análise geométrica dos contornos dos traços para fechar linhas artísticas "
+"por estrias/segmentos"
+
+#: ../app/tools/gimpbucketfilloptions.c:267
 msgid "Maximum gap length"
 msgstr "Comprimento máximo da lacuna"
 
-#: ../app/tools/gimpbucketfilloptions.c:221
+#: ../app/tools/gimpbucketfilloptions.c:268
 msgid "Maximum gap (in pixels) in line art which can be closed"
 msgstr "Lacuna máxima (em pixéis) no desenho de linha que pode ser fechada"
 
-#: ../app/tools/gimpbucketfilloptions.c:227
-#: ../app/tools/gimpbucketfilloptions.c:500
+#: ../app/tools/gimpbucketfilloptions.c:274
+#: ../app/tools/gimpbucketfilloptions.c:645
 msgid "Fill by"
 msgstr "Preencher com"
 
-#: ../app/tools/gimpbucketfilloptions.c:228
+#: ../app/tools/gimpbucketfilloptions.c:275
 msgid "Criterion used for determining color similarity"
 msgstr "Critério usado para determinar similaridade de cor"
 
 #. fill type
-#: ../app/tools/gimpbucketfilloptions.c:446
+#: ../app/tools/gimpbucketfilloptions.c:591
 #, c-format
 msgid "Fill Type  (%s)"
 msgstr "Tipo de preenchimento [%s]"
 
 #. fill selection
-#: ../app/tools/gimpbucketfilloptions.c:459
+#: ../app/tools/gimpbucketfilloptions.c:604
 #, c-format
 msgid "Affected Area  (%s)"
 msgstr "Área afetada [%s]"
 
 #. Similar color frame
-#: ../app/tools/gimpbucketfilloptions.c:466
+#: ../app/tools/gimpbucketfilloptions.c:611
 msgid "Finding Similar Colors"
 msgstr "Ao procurar cores similares"
 
-#: ../app/tools/gimpbucketfilloptions.c:514
+#: ../app/tools/gimpbucketfilloptions.c:659
 msgid "Line Art Detection"
 msgstr "Deteção de desenho de linha"
 
-#: ../app/tools/gimpbucketfilloptions.c:524
+#: ../app/tools/gimpbucketfilloptions.c:669
 msgid "(computing...)"
 msgstr "(a calcular…)"
+
+#: ../app/tools/gimpbucketfilloptions.c:684
+msgid "Detect opacity rather than grayscale"
+msgstr "Detetar opacidade em vez de escala de cinzentos"
+
+#. Line Art Closure: frame label
+#: ../app/tools/gimpbucketfilloptions.c:699
+msgid "Line Art Closure"
+msgstr "Fecho da linha de arte"
+
+#. Line Art Borders: frame label
+#: ../app/tools/gimpbucketfilloptions.c:731
+msgid "Fill borders"
+msgstr "Preencher os contornos"
 
 #: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill"
@@ -23712,15 +23758,15 @@ msgstr ""
 msgid "_Bucket Fill"
 msgstr "_Balde de tinta"
 
-#: ../app/tools/gimpbucketfilltool.c:367
+#: ../app/tools/gimpbucketfilltool.c:371
 msgid "Bucket fill"
 msgstr "Balde de tinta"
 
-#: ../app/tools/gimpbucketfilltool.c:589
+#: ../app/tools/gimpbucketfilltool.c:596
 msgid "Cannot fill multiple layers. Select only one layer."
 msgstr "Não é possível preencher várias camadas. Selecione apenas uma camada."
 
-#: ../app/tools/gimpbucketfilltool.c:591 ../app/tools/gimpcagetool.c:229
+#: ../app/tools/gimpbucketfilltool.c:598 ../app/tools/gimpcagetool.c:229
 #: ../app/tools/gimpcurvestool.c:220 ../app/tools/gimpfiltertool.c:297
 #: ../app/tools/gimpforegroundselecttool.c:295
 #: ../app/tools/gimplevelstool.c:210 ../app/tools/gimpoffsettool.c:189
@@ -23730,29 +23776,29 @@ msgstr "Não é possível preencher várias camadas. Selecione apenas uma camada
 msgid "No selected drawables."
 msgstr "Nenhum desenho selecionado."
 
-#: ../app/tools/gimpbucketfilltool.c:611
+#: ../app/tools/gimpbucketfilltool.c:618
 #: ../app/tools/gimpforegroundselecttool.c:307
 #: ../app/tools/gimppaintselecttool.c:377
 msgid "The active layer is not visible."
 msgstr "A camada ativa não é visível."
 
-#: ../app/tools/gimpbucketfilltool.c:618
+#: ../app/tools/gimpbucketfilltool.c:625
 #: ../app/tools/gimpeditselectiontool.c:1111
 #: ../app/tools/gimpgradienttool.c:281 ../app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Os pixéis da camada selecionada estão bloqueados."
 
-#: ../app/tools/gimpbucketfilltool.c:627
+#: ../app/tools/gimpbucketfilltool.c:634
 msgid "No valid line art source selected."
 msgstr ""
 "Não há nenhuma imagem de origem selecionada válida para o desenho de linha."
 
-#: ../app/tools/gimpbucketfilltool.c:810 ../app/tools/gimpbucketfilltool.c:950
+#: ../app/tools/gimpbucketfilltool.c:817 ../app/tools/gimpbucketfilltool.c:957
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:502
 msgid "Click in any image to pick the background color"
 msgstr "[Clique] em qualquer imagem para obter a cor de fundo"
 
-#: ../app/tools/gimpbucketfilltool.c:817 ../app/tools/gimpbucketfilltool.c:959
+#: ../app/tools/gimpbucketfilltool.c:824 ../app/tools/gimpbucketfilltool.c:966
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:496
 msgid "Click in any image to pick the foreground color"
 msgstr "[Clique] em qualquer imagem para obter a cor de 1º plano"
@@ -29684,6 +29730,9 @@ msgstr "redondo"
 msgid "fuzzy"
 msgstr "impreciso"
 
+#~ msgid "Allow closing lines in selected layer"
+#~ msgstr "Permitir linhas de fecho na camada selecionada"
+
 #~ msgid "The active layer's pixels are locked."
 #~ msgstr "Os pixéis da camada ativa estão bloqueados."
 
@@ -29791,10 +29840,6 @@ msgstr "impreciso"
 #~ msgctxt "dialogs-action"
 #~ msgid "Tool presets"
 #~ msgstr "Predefinições da ferramenta"
-
-#~ msgctxt "tab-style"
-#~ msgid "Automatic"
-#~ msgstr "Automático"
 
 #~ msgctxt "drawable-action"
 #~ msgid "Invert the colors perceptually"
