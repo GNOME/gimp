@@ -1421,7 +1421,10 @@ appstream_text_end_element (GMarkupParseContext  *context,
     }
   else if (g_strcmp0 (element_name, "li") == 0)
     {
-      g_string_append (state->text, "\n");
+      if (state->original)
+        g_string_append (state->original, "\n");
+      else
+        g_string_append (state->text, "\n");
     }
 
   if (state->foreign_level > state->level)
