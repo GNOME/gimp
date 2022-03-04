@@ -84,7 +84,7 @@ gimp_tools_blink_lock_box (Gimp     *gimp,
 
 
 /**
- * gimp_tools_blink_property:
+ * gimp_tools_blink_widget:
  * @gimp:
  * @dockable_identifier:
  * @widget_identifier:
@@ -139,10 +139,23 @@ gimp_tools_search_widget_rec (GtkWidget   *widget,
                               "gimp-widget-identifier");
 
       if (id && g_strcmp0 (id, searched_id) == 0)
-        gimp_widget_blink (widget);
+        {
+          /* Giving focus to help scrolling the dockable so that the
+           * widget is visible. Note that it seems to work fine if the
+           * dockable was already present, not if it was just created.
+           *
+           * TODO: this should be fixed so that we always make the
+           * widget visible before blinking, otherwise it's a bit
+           * useless when this happens.
+           */
+          gtk_widget_grab_focus (widget);
+          gimp_widget_blink (widget);
+        }
       else if (GTK_IS_CONTAINER (widget))
-        gtk_container_foreach (GTK_CONTAINER (widget),
-                               (GtkCallback) gimp_tools_search_widget_rec,
-                               (gpointer) searched_id);
+        {
+          gtk_container_foreach (GTK_CONTAINER (widget),
+                                 (GtkCallback) gimp_tools_search_widget_rec,
+                                 (gpointer) searched_id);
+        }
     }
 }
