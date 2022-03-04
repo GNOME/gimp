@@ -32,6 +32,8 @@
 #include "core/gimp.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpdatafactory.h"
+#include "core/gimpdrawable.h"
+#include "core/gimpimage.h"
 #include "core/gimppaintinfo.h"
 #include "core/gimpstrokeoptions.h"
 #include "core/gimptoolinfo.h"
@@ -88,6 +90,7 @@ struct _GimpBucketFillOptionsPrivate
   GtkWidget *line_art_frame2;
   GtkWidget *line_art_frame3;
   GtkWidget *fill_as_line_art_frame;
+  GtkWidget *line_art_detect_opacity;
 };
 
 static void   gimp_bucket_fill_options_config_iface_init (GimpConfigInterface *config_iface);
@@ -111,6 +114,10 @@ static void  gimp_bucket_fill_options_tool_cell_renderer (GtkCellLayout         
                                                           GtkTreeModel          *model,
                                                           GtkTreeIter           *iter,
                                                           gpointer               data);
+static void gimp_bucket_fill_options_image_changed       (GimpContext           *context,
+                                                          GimpImage             *image,
+                                                          GimpBucketFillOptions *options);
+
 
 static void   gimp_bucket_fill_options_reset             (GimpConfig            *config);
 static void   gimp_bucket_fill_options_update_area       (GimpBucketFillOptions *options);
@@ -522,6 +529,36 @@ gimp_bucket_fill_options_tool_cell_renderer (GtkCellLayout   *layout,
 }
 
 static void
+gimp_bucket_fill_options_image_changed (GimpContext           *context,
+                                        GimpImage             *image,
+                                        GimpBucketFillOptions *options)
+{
+  GimpImage *prev_image;
+
+  prev_image = g_object_get_data (G_OBJECT (options), "gimp-bucket-fill-options-image");
+
+  if (image != prev_image)
+    {
+      if (prev_image)
+        g_signal_handlers_disconnect_by_func (prev_image,
+                                              G_CALLBACK (gimp_bucket_fill_options_update_area),
+                                              options);
+      if (image)
+        {
+          g_signal_connect_object (image, "selected-channels-changed",
+                                   G_CALLBACK (gimp_bucket_fill_options_update_area),
+                                   options, G_CONNECT_SWAPPED);
+          g_signal_connect_object (image, "selected-layers-changed",
+                                   G_CALLBACK (gimp_bucket_fill_options_update_area),
+                                   options, G_CONNECT_SWAPPED);
+        }
+
+      g_object_set_data (G_OBJECT (options), "gimp-bucket-fill-options-image", image);
+      gimp_bucket_fill_options_update_area (options);
+    }
+}
+
+static void
 gimp_bucket_fill_options_reset (GimpConfig *config)
 {
   GimpToolOptions *tool_options = GIMP_TOOL_OPTIONS (config);
@@ -540,9 +577,19 @@ gimp_bucket_fill_options_reset (GimpConfig *config)
 static void
 gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
 {
+  GimpImage   *image;
+  GList       *drawables = NULL;
+  const gchar *tooltip   = _("Opaque pixels will be considered as line art "
+                             "instead of low luminance pixels");
+
+  image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
+
   /* GUI not created yet. */
   if (! options->priv->threshold_scale)
     return;
+
+  if (image)
+    drawables = gimp_image_get_selected_drawables (image);
 
   switch (options->fill_area)
     {
@@ -558,6 +605,45 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
         gtk_widget_set_sensitive (options->priv->fill_as_line_art_frame, TRUE);
       else
         gtk_widget_set_sensitive (options->priv->fill_as_line_art_frame, FALSE);
+
+      if (image != NULL                                                  &&
+          options->line_art_source != GIMP_LINE_ART_SOURCE_SAMPLE_MERGED &&
+          g_list_length (drawables) == 1)
+        {
+          GimpDrawable  *source = NULL;
+          GimpItem      *parent;
+          GimpContainer *container;
+          gint           index;
+
+          parent = gimp_item_get_parent (GIMP_ITEM (drawables->data));
+          if (parent)
+            container = gimp_viewable_get_children (GIMP_VIEWABLE (parent));
+          else
+            container = gimp_image_get_layers (image);
+
+          index = gimp_item_get_index (GIMP_ITEM (drawables->data));
+          if (options->line_art_source == GIMP_LINE_ART_SOURCE_ACTIVE_LAYER)
+            source = drawables->data;
+          else if (options->line_art_source == GIMP_LINE_ART_SOURCE_LOWER_LAYER)
+            source = GIMP_DRAWABLE (gimp_container_get_child_by_index (container, index + 1));
+          else if (options->line_art_source == GIMP_LINE_ART_SOURCE_UPPER_LAYER)
+            source = GIMP_DRAWABLE (gimp_container_get_child_by_index (container, index - 1));
+
+          gtk_widget_set_sensitive (options->priv->line_art_detect_opacity,
+                                    source != NULL &&
+                                    gimp_drawable_has_alpha (source));
+          if (source == NULL)
+            tooltip = _("No valid source drawable selected");
+          else if (! gimp_drawable_has_alpha (source))
+            tooltip = _("The source drawable has no alpha channel");
+        }
+      else
+        {
+          gtk_widget_set_sensitive (options->priv->line_art_detect_opacity,
+                                    TRUE);
+        }
+      gtk_widget_set_tooltip_text (options->priv->line_art_detect_opacity,
+                                   tooltip);
       break;
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
     default:
@@ -567,6 +653,8 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
       gtk_widget_hide (options->priv->line_art_frame3);
       break;
     }
+
+  g_list_free (drawables);
 }
 
 GtkWidget *
@@ -682,6 +770,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /*  the fill transparent areas toggle  */
   widget = gimp_prop_check_button_new (config, "fill-transparent",
                                        _("Detect opacity rather than grayscale"));
+  options->priv->line_art_detect_opacity = widget;
   gtk_box_pack_start (GTK_BOX (box2), widget, FALSE, FALSE, 0);
 
   /*  Line Art: stroke threshold */
@@ -774,6 +863,11 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
 
   gimp_bucket_fill_options_update_area (options);
+
+  g_signal_connect (gimp_get_user_context (GIMP_CONTEXT (tool_options)->gimp),
+                    "image-changed",
+                    G_CALLBACK (gimp_bucket_fill_options_image_changed),
+                    tool_options);
 
   return vbox;
 }
