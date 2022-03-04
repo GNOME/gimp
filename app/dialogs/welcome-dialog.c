@@ -74,15 +74,15 @@ welcome_dialog_create (Gimp *gimp)
   GtkWidget     *vbox;
   GtkWidget     *hbox;
   GtkWidget     *image;
+  GtkWidget     *listbox;
   GtkWidget     *widget;
-
-  GtkTextBuffer *buffer;
-  GtkTextIter    iter;
 
   gchar         *release_link;
   gchar         *appdata_path;
   gchar         *title;
   gchar         *markup;
+  gchar         *release_introduction = NULL;
+  GList         *release_items        = NULL;
   gchar         *tmp;
 
   gint           row;
@@ -344,26 +344,55 @@ welcome_dialog_create (Gimp *gimp)
 
       /* Release note contents. */
 
-      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-      gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-      gtk_widget_show (scrolled_window);
+      gimp_appstream_to_pango_markups (release_notes,
+                                       &release_introduction,
+                                       &release_items);
+      if (release_introduction)
+        {
+          widget = gtk_label_new (NULL);
+          gtk_label_set_markup (GTK_LABEL (widget), release_introduction);
+          gtk_label_set_max_width_chars (GTK_LABEL (widget), 70);
+          gtk_label_set_selectable (GTK_LABEL (widget), FALSE);
+          gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
+          gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+          gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+          gtk_widget_show (widget);
 
-      widget = gtk_text_view_new ();
-      gtk_widget_set_vexpand (widget, TRUE);
-      gtk_widget_set_hexpand (widget, TRUE);
-      gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (widget), GTK_WRAP_WORD_CHAR);
-      gtk_text_view_set_editable (GTK_TEXT_VIEW (widget), FALSE);
-      gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (widget), FALSE);
-      gtk_text_view_set_justification (GTK_TEXT_VIEW (widget), GTK_JUSTIFY_LEFT);
-      buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (widget));
-      gtk_text_buffer_get_start_iter (buffer, &iter);
+          g_free (release_introduction);
+        }
 
-      markup = gimp_appstream_to_pango_markup (release_notes);
-      gtk_text_buffer_insert_markup (buffer, &iter, markup, -1);
-      g_free (markup);
+      if (release_items)
+        {
+          GList *item;
 
-      gtk_container_add (GTK_CONTAINER (scrolled_window), widget);
-      gtk_widget_show (widget);
+          scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+          gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
+          gtk_widget_show (scrolled_window);
+
+          listbox = gtk_list_box_new ();
+
+          for (item = release_items; item; item = item->next)
+            {
+              GtkWidget *row;
+
+              row = gtk_list_box_row_new ();
+              widget = gtk_label_new (NULL);
+              gtk_label_set_markup (GTK_LABEL (widget), item->data);
+              gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+              gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
+              gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
+              gtk_widget_set_halign (widget, GTK_ALIGN_START);
+              gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
+              gtk_container_add (GTK_CONTAINER (row), widget);
+
+              gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
+              gtk_widget_show_all (row);
+            }
+          gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
+          gtk_widget_show (listbox);
+
+          g_list_free_full (release_items, g_free);
+        }
 
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);

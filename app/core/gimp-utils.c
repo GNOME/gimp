@@ -75,9 +75,15 @@ typedef struct
   const gchar *lang;
   GString     *original;
   gint         foreign_level;
+
+  gchar      **introduction;
+  GList      **release_items;
 } ParseState;
 
 
+static gchar      * gimp_appstream_parse           (const gchar          *as_text,
+                                                    gchar               **introduction,
+                                                    GList               **release_items);
 static void         appstream_text_start_element   (GMarkupParseContext  *context,
                                                     const gchar          *element_name,
                                                     const gchar         **attribute_names,
@@ -955,49 +961,19 @@ gimp_ascii_strtod (const gchar  *nptr,
 gchar *
 gimp_appstream_to_pango_markup (const gchar *as_text)
 {
-  static const GMarkupParser appstream_text_parser =
-    {
-      appstream_text_start_element,
-      appstream_text_end_element,
-      appstream_text_characters,
-      NULL, /*  passthrough */
-      NULL  /*  error       */
-    };
-
-  GimpXmlParser *xml_parser;
-  gchar         *markup = NULL;
-  GError        *error  = NULL;
-  ParseState     state;
-
-  state.level           = 0;
-  state.foreign_level   = -1;
-  state.text            = g_string_new (NULL);
-  state.numbered_list   = FALSE;
-  state.unnumbered_list = FALSE;
-  state.lang            = g_getenv ("LANGUAGE");
-  state.original        = NULL;
-
-  xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
-  if (as_text &&
-      ! gimp_xml_parser_parse_buffer (xml_parser, as_text, -1, &error))
-    {
-      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
-      g_error_free (error);
-    }
-
-  /* Append possibly last original text without proper localization. */
-  if (state.original)
-    {
-      g_string_append (state.text, state.original->str);
-      g_string_free (state.original, TRUE);
-    }
-
-  markup = g_string_free (state.text, FALSE);
-  gimp_xml_parser_free (xml_parser);
-
-  return markup;
+  return gimp_appstream_parse (as_text, NULL, NULL);
 }
 
+void
+gimp_appstream_to_pango_markups (const gchar  *as_text,
+                                 gchar       **introduction,
+                                 GList       **release_items)
+{
+  gchar * markup;
+
+  markup = gimp_appstream_parse (as_text, introduction, release_items);
+  g_free (markup);
+}
 
 gint
 gimp_g_list_compare (GList *list1,
@@ -1308,6 +1284,61 @@ gimp_create_image_from_buffer (Gimp        *gimp,
 
 /* Private functions */
 
+
+static gchar *
+gimp_appstream_parse (const gchar  *as_text,
+                      gchar       **introduction,
+                      GList       **release_items)
+{
+  static const GMarkupParser appstream_text_parser =
+    {
+      appstream_text_start_element,
+      appstream_text_end_element,
+      appstream_text_characters,
+      NULL, /*  passthrough */
+      NULL  /*  error       */
+    };
+
+  GimpXmlParser *xml_parser;
+  gchar         *markup = NULL;
+  GError        *error  = NULL;
+  ParseState     state;
+
+  state.level           = 0;
+  state.foreign_level   = -1;
+  state.text            = g_string_new (NULL);
+  state.list_num        = 0;
+  state.numbered_list   = FALSE;
+  state.unnumbered_list = FALSE;
+  state.lang            = g_getenv ("LANGUAGE");
+  state.original        = NULL;
+  state.introduction    = introduction;
+  state.release_items   = release_items;
+
+  xml_parser  = gimp_xml_parser_new (&appstream_text_parser, &state);
+  if (as_text &&
+      ! gimp_xml_parser_parse_buffer (xml_parser, as_text, -1, &error))
+    {
+      g_printerr ("%s: %s\n", G_STRFUNC, error->message);
+      g_error_free (error);
+    }
+
+  /* Append possibly last original text without proper localization. */
+  if (state.original)
+    {
+      g_string_append (state.text, state.original->str);
+      g_string_free (state.original, TRUE);
+    }
+
+  if (release_items)
+    *release_items = g_list_reverse (*release_items);
+
+  markup = g_string_free (state.text, FALSE);
+  gimp_xml_parser_free (xml_parser);
+
+  return markup;
+}
+
 static void
 appstream_text_start_element (GMarkupParseContext  *context,
                               const gchar          *element_name,
@@ -1367,6 +1398,7 @@ appstream_text_start_element (GMarkupParseContext  *context,
   else if (g_strcmp0 (element_name, "ul") == 0)
     {
       state->unnumbered_list = TRUE;
+      state->list_num        = 0;
     }
   else if (g_strcmp0 (element_name, "ol") == 0)
     {
@@ -1407,6 +1439,10 @@ appstream_text_end_element (GMarkupParseContext  *context,
     {
       if (state->foreign_level < 0)
         {
+          if (state->introduction &&
+              *state->introduction == NULL)
+            *state->introduction = g_strdup (state->original ? state->original->str : state->text->str);
+
           if (state->original)
             g_string_append (state->original, "\n\n");
           else
@@ -1440,8 +1476,24 @@ appstream_text_characters (GMarkupParseContext  *context,
 {
   ParseState *state = user_data;
 
-  if (state->foreign_level < 0)
+  if (state->foreign_level < 0 && text_len > 0)
     {
+      if (state->list_num > 0 && state->release_items)
+        {
+          GList **items = state->release_items;
+
+          if (state->list_num == g_list_length (*(state->release_items)))
+            {
+              gchar *tmp = (*items)->data;
+
+              (*items)->data = g_strconcat (tmp, text, NULL);
+              g_free (tmp);
+            }
+          else
+            {
+              *items = g_list_prepend (*items, g_strdup (text));
+            }
+        }
       if (state->original)
         g_string_append (state->original, text);
       else
