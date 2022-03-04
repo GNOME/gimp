@@ -49,7 +49,7 @@ GType gimp_color_rendering_intent_get_type (void) G_GNUC_CONST;
 
 /**
  * GimpColorRenderingIntent:
- * @GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:            Preceptual
+ * @GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:            Perceptual
  * @GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC: Relative colorimetric
  * @GIMP_COLOR_RENDERING_INTENT_SATURATION:            Saturation
  * @GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC: Absolute colorimetric
