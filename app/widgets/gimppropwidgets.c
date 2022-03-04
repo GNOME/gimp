@@ -141,6 +141,10 @@ gimp_prop_expanding_frame_new (GObject      *config,
 
   gtk_widget_show (frame);
 
+  g_object_set_data_full (G_OBJECT (frame), "gimp-widget-identifier",
+                          g_strdup (property_name),
+                          (GDestroyNotify) g_free);
+
   return frame;
 }
 
