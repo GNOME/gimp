@@ -475,6 +475,7 @@ EXPORTS
 	gimp_widget_get_color_profile
 	gimp_widget_get_color_transform
 	gimp_widget_get_monitor
+	gimp_widget_set_identifier
 	gimp_widget_track_monitor
 	gimp_widgets_error_quark
 	gimp_widgets_init
