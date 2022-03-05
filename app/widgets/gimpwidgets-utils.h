@@ -95,7 +95,12 @@ void              gimp_widget_blink                (GtkWidget             *widge
 void              gimp_widget_blink_cancel         (GtkWidget             *widget);
 void              gimp_blink_dockable              (Gimp                  *gimp,
                                                     const gchar           *dockable_identifier,
-                                                    const gchar           *widget_identifier);
+                                                    const gchar           *widget_identifier,
+                                                    GList               **blink_script);
+
+void              gimp_widget_script_blink         (GtkWidget            *widget,
+                                                    GList               **blink_script);
+void              gimp_blink_play_script           (GList                *blink_script);
 
 
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,

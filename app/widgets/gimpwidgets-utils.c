@@ -71,8 +71,15 @@
 #define GIMP_TOOL_OPTIONS_GUI_FUNC_KEY "gimp-tool-options-gui-func"
 
 
+typedef struct
+{
+  GList       **blink_script;
+  const gchar  *widget_identifier;
+} BlinkData;
+
+
 static void         gimp_search_widget_rec         (GtkWidget            *widget,
-                                                    const gchar          *searched_id);
+                                                    BlinkData            *data);
 
 
 GtkWidget *
@@ -1400,8 +1407,10 @@ static gboolean
 gimp_widget_blink_timeout (GtkWidget *widget)
 {
   WidgetBlink *blink;
+  GList       *script;
 
-  blink = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
+  blink  = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
+  script = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink-script");
 
   gimp_highlight_widget (widget, blink->counter % 2 == 1, blink->rect);
   blink->counter++;
@@ -1411,6 +1420,20 @@ gimp_widget_blink_timeout (GtkWidget *widget)
       blink->timeout_id = 0;
 
       g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
+
+      if (script)
+        {
+          GtkWidget *next_widget = script->data;
+
+          if (script->next)
+            g_object_set_data_full (G_OBJECT (next_widget), "gimp-widget-blink-script",
+                                    g_list_copy (script->next),
+                                    (GDestroyNotify) g_list_free);
+
+          gimp_widget_blink (next_widget);
+
+          g_object_set_data (G_OBJECT (widget), "gimp-widget-blink-script", NULL);
+        }
 
       return G_SOURCE_REMOVE;
     }
@@ -1440,6 +1463,28 @@ gimp_widget_blink (GtkWidget *widget)
 
   while ((widget = gtk_widget_get_parent (widget)))
     gimp_widget_blink_cancel (widget);
+}
+
+void
+gimp_widget_script_blink (GtkWidget  *widget,
+                          GList     **blink_scenario)
+{
+  *blink_scenario = g_list_append (*blink_scenario, widget);
+
+  while ((widget = gtk_widget_get_parent (widget)))
+    gimp_widget_blink_cancel (widget);
+}
+
+void
+gimp_blink_play_script (GList *blink_scenario)
+{
+  g_return_if_fail (g_list_length (blink_scenario) > 0);
+
+  g_object_set_data_full (G_OBJECT (blink_scenario->data),
+                          "gimp-widget-blink-script",
+                          g_list_copy (blink_scenario->next),
+                          (GDestroyNotify) g_list_free);
+  gimp_widget_blink (blink_scenario->data);
 }
 
 void
@@ -1487,6 +1532,7 @@ gimp_widget_blink_cancel (GtkWidget *widget)
  * @gimp:
  * @dockable_identifier:
  * @widget_identifier:
+ * @blink_scenario:
  *
  * This function will raise the dockable identified by
  * @dockable_identifier. The list of dockable identifiers can be found
@@ -1494,15 +1540,21 @@ gimp_widget_blink_cancel (GtkWidget *widget)
  *
  * Then it will find the widget identified by @widget_identifier. Note
  * that for propwidgets, this is usually the associated property name.
- * Finally it will blink this widget to raise attention.
+ *
+ * Finally it will either blink this widget immediately to raise
+ * attention, or add it to the @blink_scenario if not %NULL. The blink
+ * scenario must be explicitly started with gimp_blink_play_script()
+ * when ready.
  */
 void
-gimp_blink_dockable (Gimp        *gimp,
-                     const gchar *dockable_identifier,
-                     const gchar *widget_identifier)
+gimp_blink_dockable (Gimp         *gimp,
+                     const gchar  *dockable_identifier,
+                     const gchar  *widget_identifier,
+                     GList       **blink_scenario)
 {
   GtkWidget  *dockable;
   GdkMonitor *monitor;
+  BlinkData  *data;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -1518,9 +1570,13 @@ gimp_blink_dockable (Gimp        *gimp,
   if (! dockable)
     return;
 
+  data = g_slice_new (BlinkData);
+  data->blink_script      = blink_scenario;
+  data->widget_identifier = widget_identifier;
   gtk_container_foreach (GTK_CONTAINER (dockable),
                          (GtkCallback) gimp_search_widget_rec,
-                         (gpointer) widget_identifier);
+                         (gpointer) data);
+  g_slice_free (BlinkData, data);
 }
 
 /**
@@ -2035,9 +2091,12 @@ gimp_widget_flush_expose (void)
 /*  private functions  */
 
 static void
-gimp_search_widget_rec (GtkWidget   *widget,
-                        const gchar *searched_id)
+gimp_search_widget_rec (GtkWidget *widget,
+                        BlinkData *data)
 {
+  GList       **blink_script = data->blink_script;
+  const gchar  *searched_id  = data->widget_identifier;
+
   if (gtk_widget_is_visible (widget))
     {
       const gchar *id;
@@ -2056,13 +2115,16 @@ gimp_search_widget_rec (GtkWidget   *widget,
            * useless when this happens.
            */
           gtk_widget_grab_focus (widget);
-          gimp_widget_blink (widget);
+          if (blink_script)
+            gimp_widget_script_blink (widget, blink_script);
+          else
+            gimp_widget_blink (widget);
         }
       else if (GTK_IS_CONTAINER (widget))
         {
           gtk_container_foreach (GTK_CONTAINER (widget),
                                  (GtkCallback) gimp_search_widget_rec,
-                                 (gpointer) searched_id);
+                                 (gpointer) data);
         }
     }
 }
