@@ -384,10 +384,15 @@ welcome_dialog_create (Gimp *gimp)
           for (item = release_items; item; item = item->next)
             {
               GtkWidget *row;
+              gchar     *markup;
+
+              /* Add a bold dot for pretty listing. */
+              markup = g_strdup_printf ("<span weight='ultrabold' >\xe2\x80\xa2</span> %s",
+                                        (gchar *) item->data);
 
               row = gtk_list_box_row_new ();
               widget = gtk_label_new (NULL);
-              gtk_label_set_markup (GTK_LABEL (widget), item->data);
+              gtk_label_set_markup (GTK_LABEL (widget), markup);
               gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
               gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
               gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
@@ -397,6 +402,8 @@ welcome_dialog_create (Gimp *gimp)
 
               gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
               gtk_widget_show_all (row);
+
+              g_free (markup);
             }
           gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
           gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
