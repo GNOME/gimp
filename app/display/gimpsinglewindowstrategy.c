@@ -107,6 +107,10 @@ gimp_single_window_strategy_show_dockable_dialog (GimpWindowStrategy *strategy,
                                       GIMP_DOCK (widget),
                                       -1 /*index*/);
         }
+      else
+        {
+          widget = gimp_dialog_factory_find_widget (factory, "gimp-toolbox");
+        }
     }
   else if (gimp_dialog_factory_find_widget (factory, identifiers))
     {
