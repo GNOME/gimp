@@ -28,6 +28,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "widgets-types.h"
 
@@ -897,6 +898,32 @@ gimp_tool_button_update (GimpToolButton *tool_button)
   else
     {
       gimp_help_set_help_data (GTK_WIDGET (tool_button), NULL, NULL);
+    }
+
+  if (tool_info)
+    {
+      gchar *id = gimp_object_get_name (tool_info);
+
+      if (g_str_has_prefix (id, "gimp-") &&
+          g_str_has_suffix (id, "-tool"))
+        {
+          /* The GimpToolInfo names are of the form "gimp-pencil-tool",
+           * and action names are of the form "tools-pencil".
+           * To simplify things, I make the tool button identifiers the
+           * same as the actions, which make them easier to find.
+           */
+          gchar *suffix;
+
+          id = g_strdup_printf ("tools-%s", id + 5);
+          suffix = g_strrstr (id, "-tool");
+          suffix[0] = '\0';
+        }
+      else
+        {
+          id = g_strdup (id);
+        }
+
+      gimp_widget_set_identifier (tool_button, id);
     }
 
   gimp_tool_button_update_toggled (tool_button);

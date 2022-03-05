@@ -1,3 +1,16 @@
+welcome_dialog_data_h = custom_target('welcome-dialog-data-h',
+                                      input : [meson.source_root() / 'tools/generate-welcome-dialog-data.py',
+                                               meson.source_root() / 'desktop/org.gimp.GIMP.appdata.xml.in.in'],
+                                      output : ['welcome-dialog-data.h'],
+                                      command : ['python3', '@INPUT0@', gimp_version, '--header'],
+                                      capture: true)
+welcome_dialog_data_c = custom_target('welcome-dialog-data-c',
+                                      input : [meson.source_root() / 'tools/generate-welcome-dialog-data.py',
+                                               meson.source_root() / 'desktop/org.gimp.GIMP.appdata.xml.in.in'],
+                                      output : ['welcome-dialog-data.c'],
+                                      command : ['python3', '@INPUT0@', gimp_version],
+                                      capture: true)
+
 libappdialogs_sources = [
   'about-dialog.c',
   'action-search-dialog.c',
@@ -45,6 +58,8 @@ libappdialogs_sources = [
   'vectors-options-dialog.c',
   'welcome-dialog.c',
   gitversion_h,
+  welcome_dialog_data_c,
+  welcome_dialog_data_h,
 ]
 
 # Auto-generated sources

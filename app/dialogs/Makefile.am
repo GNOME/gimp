@@ -106,7 +106,9 @@ libappdialogs_a_sources = \
 	vectors-options-dialog.c	\
 	vectors-options-dialog.h	\
 	welcome-dialog.c		\
-	welcome-dialog.h
+	welcome-dialog.h		\
+	welcome-dialog-data.c		\
+	welcome-dialog-data.h
 
 libappdialogs_a_built_sources = \
 	authors.h
@@ -126,3 +128,11 @@ if HAVE_XSLTPROC
 else
 	@echo "*** xsltproc is required to regenerate $(@) ***"; exit 1;
 endif
+
+$(srcdir)/welcome-dialog.c: welcome-dialog-data.h welcome-dialog-data.c
+
+welcome-dialog-data.h: ../../desktop/org.gimp.GIMP.appdata.xml.in.in ../../tools/generate-welcome-dialog-data.py
+	$(top_srcdir)/tools/generate-welcome-dialog-data.py --header $(GIMP_VERSION) > $@
+
+welcome-dialog-data.c: ../../desktop/org.gimp.GIMP.appdata.xml.in.in ../../tools/generate-welcome-dialog-data.py
+	$(top_srcdir)/tools/generate-welcome-dialog-data.py $(GIMP_VERSION) > $@

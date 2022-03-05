@@ -37,22 +37,32 @@
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 
+#include "widgets/gimpaction.h"
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimptoolbox.h"
+#include "widgets/gimpuimanager.h"
+#include "widgets/gimpwidgets-utils.h"
+#include "widgets/gimpwindowstrategy.h"
 
 #include "welcome-dialog.h"
+#include "welcome-dialog-data.h"
 
 #include "gimp-intl.h"
 
 
-static void     welcome_add_link        (GtkGrid        *grid,
-                                         gint            column,
-                                         gint           *row,
-                                         const gchar    *emoji,
-                                         const gchar    *title,
-                                         const gchar    *link);
-static void     welcome_size_allocate   (GtkWidget      *welcome_dialog,
-                                         GtkAllocation  *allocation,
-                                         gpointer        user_data);
+static void   welcome_dialog_release_item_activated (GtkListBox    *listbox,
+                                                     GtkListBoxRow *row,
+                                                     gpointer       user_data);
+static void   welcome_add_link                      (GtkGrid        *grid,
+                                                     gint            column,
+                                                     gint           *row,
+                                                     const gchar    *emoji,
+                                                     const gchar    *title,
+                                                     const gchar    *link);
+static void   welcome_size_allocate                 (GtkWidget      *welcome_dialog,
+                                                     GtkAllocation  *allocation,
+                                                     gpointer        user_data);
 
 
 GtkWidget *
@@ -389,6 +399,12 @@ welcome_dialog_create (Gimp *gimp)
               gtk_widget_show_all (row);
             }
           gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
+          gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
+                                           GTK_SELECTION_NONE);
+
+          g_signal_connect (listbox, "row-activated",
+                            G_CALLBACK (welcome_dialog_release_item_activated),
+                            gimp);
           gtk_widget_show (listbox);
 
           g_list_free_full (release_items, g_free);
@@ -438,6 +454,82 @@ welcome_dialog_create (Gimp *gimp)
   g_clear_object (&app);
 
   return welcome_dialog;
+}
+
+static void
+welcome_dialog_release_item_activated (GtkListBox    *listbox,
+                                       GtkListBoxRow *row,
+                                       gpointer       user_data)
+{
+  Gimp         *gimp          = user_data;
+  GList        *blink_script  = NULL;
+  const gchar  *script_string;
+  gchar       **script_steps;
+  gint          row_index;
+  gint          i;
+
+  row_index = gtk_list_box_row_get_index (row);
+
+  g_return_if_fail (row_index < n_gimp_welcome_dialog_demo);
+
+  script_string = gimp_welcome_dialog_demo[row_index];
+
+  if (script_string == NULL)
+    /* Not an error. Some release items have no demos. */
+    return;
+
+  script_steps = g_strsplit (script_string, ",", 0);
+
+  for (i = 0; script_steps[i]; i++)
+    {
+      gchar **ids;
+      gchar  *dockable_id = NULL;
+      gchar  *widget_id   = NULL;
+
+      ids = g_strsplit (script_steps[i], ":", 2);
+      /* Even if the string doesn't contain a second part, it is
+       * NULL-terminated, hence the widget_id will simply be NULL, which
+       * is fine when you just want to blink a dialog.
+       */
+      dockable_id = ids[0];
+      widget_id   = ids[1];
+
+      if (g_strcmp0 (dockable_id, "gimp-toolbox") == 0 &&
+          widget_id != NULL)
+        {
+          GimpUIManager *ui_manager;
+          GtkWidget     *toolbox;
+
+          /* As a special case, for the toolbox, we don't just raise it,
+           * we also select the tool if one was requested.
+           */
+          toolbox = gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                                               gimp,
+                                                               gimp_dialog_factory_get_singleton (),
+                                                               gimp_get_monitor_at_pointer (),
+                                                               "gimp-toolbox");
+          /* Find and activate the tool. */
+          if (toolbox &&
+              (ui_manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox))))
+            {
+              GimpAction *action;
+
+              action = gimp_ui_manager_find_action (ui_manager, "tools", widget_id);
+                                                    /*"tools-bucket-fill");*/
+              gimp_action_activate (GIMP_ACTION (action));
+            }
+        }
+
+      /* Blink widget. */
+      gimp_blink_dockable (gimp, dockable_id, widget_id, &blink_script);
+
+      g_strfreev (ids);
+    }
+  if (blink_script != NULL)
+    gimp_blink_play_script (blink_script);
+
+  g_list_free (blink_script);
+  g_strfreev (script_steps);
 }
 
 static void
