@@ -1570,13 +1570,16 @@ gimp_blink_dockable (Gimp         *gimp,
   if (! dockable)
     return;
 
-  data = g_slice_new (BlinkData);
-  data->blink_script      = blink_scenario;
-  data->widget_identifier = widget_identifier;
-  gtk_container_foreach (GTK_CONTAINER (dockable),
-                         (GtkCallback) gimp_search_widget_rec,
-                         (gpointer) data);
-  g_slice_free (BlinkData, data);
+  if (widget_identifier)
+    {
+      data = g_slice_new (BlinkData);
+      data->blink_script      = blink_scenario;
+      data->widget_identifier = widget_identifier;
+      gtk_container_foreach (GTK_CONTAINER (dockable),
+                             (GtkCallback) gimp_search_widget_rec,
+                             (gpointer) data);
+      g_slice_free (BlinkData, data);
+    }
 }
 
 /**
