@@ -195,6 +195,31 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
   g_free (base_dir);
 }
 
+/**
+ * gimp_widget_set_identifier:
+ * @widget:
+ * @identifier:
+ *
+ * Set an identifier which can be used by the various gimp_blink_*()
+ * API. As a default, property widget will use the synced property name
+ * as widget identifier. You can always use this function to override a
+ * given widget identifier with a more specific name.
+ *
+ * It's doesn't need to be in public API because it is only used for
+ * internal blinking ability in core GIMP GUI.
+ */
+void
+gimp_widget_set_identifier (GtkWidget   *widget,
+                            const gchar *identifier)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  g_object_set_data_full (G_OBJECT (widget),
+                          "gimp-widget-identifier",
+                          g_strdup (identifier),
+                          (GDestroyNotify) g_free);
+}
+
 /* clean up babl (in particular, so that the fish cache is constructed) if the
  * compiler supports destructors
  */
