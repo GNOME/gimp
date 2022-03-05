@@ -93,6 +93,10 @@ void              gimp_widget_blink_rect           (GtkWidget            *widget
                                                     GdkRectangle         *rect);
 void              gimp_widget_blink                (GtkWidget             *widget);
 void              gimp_widget_blink_cancel         (GtkWidget             *widget);
+void              gimp_blink_dockable              (Gimp                  *gimp,
+                                                    const gchar           *dockable_identifier,
+                                                    const gchar           *widget_identifier);
+
 
 GtkWidget       * gimp_dock_with_window_new        (GimpDialogFactory    *factory,
                                                     GdkMonitor           *monitor,

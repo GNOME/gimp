@@ -632,8 +632,7 @@ gimp_bucket_fill_tool_button_press (GimpTool            *tool,
     {
       gimp_tool_message_literal (tool, display,
                                  _("No valid line art source selected."));
-      gimp_tools_blink_widget (display->gimp,
-                               "gimp-tool-options", "line-art-source");
+      gimp_blink_dockable (display->gimp, "gimp-tool-options", "line-art-source");
       return;
     }
 

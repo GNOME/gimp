@@ -22,9 +22,5 @@
 void   gimp_tools_blink_lock_box (Gimp     *gimp,
                                   GimpItem *item);
 
-void   gimp_tools_blink_widget   (Gimp        *gimp,
-                                  const gchar *dockable_identifier,
-                                  const gchar *widget_identifier);
-
 
 #endif  /* __GIMP_TOOLS_UTILS_H__ */
