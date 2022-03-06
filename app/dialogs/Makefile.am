@@ -131,8 +131,8 @@ endif
 
 $(srcdir)/welcome-dialog.c: welcome-dialog-data.h welcome-dialog-data.c
 
-welcome-dialog-data.h: ../../desktop/org.gimp.GIMP.appdata.xml.in.in ../../tools/generate-welcome-dialog-data.py
+welcome-dialog-data.h: $(top_srcdir)/desktop/org.gimp.GIMP.appdata.xml.in.in $(top_srcdir)/tools/generate-welcome-dialog-data.py
 	$(top_srcdir)/tools/generate-welcome-dialog-data.py --header $(GIMP_VERSION) > $@
 
-welcome-dialog-data.c: ../../desktop/org.gimp.GIMP.appdata.xml.in.in ../../tools/generate-welcome-dialog-data.py
+welcome-dialog-data.c: $(top_srcdir)/desktop/org.gimp.GIMP.appdata.xml.in.in $(top_srcdir)/tools/generate-welcome-dialog-data.py
 	$(top_srcdir)/tools/generate-welcome-dialog-data.py $(GIMP_VERSION) > $@
