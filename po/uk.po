@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-04 13:34+0000\n"
-"PO-Revision-Date: 2022-03-04 16:03+0200\n"
+"POT-Creation-Date: 2022-03-06 12:16+0000\n"
+"PO-Revision-Date: 2022-03-06 14:23+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -14060,21 +14060,21 @@ msgstr "Створення теки «%s»…"
 msgid "Cannot create folder '%s': %s"
 msgstr "Не вдалось створити теку \"%s\": %s"
 
-#: ../app/core/gimp-utils.c:561 ../app/core/gimpfilloptions.c:383
+#: ../app/core/gimp-utils.c:567 ../app/core/gimpfilloptions.c:383
 msgid "No patterns available for this operation."
 msgstr "Немає доступних текстур для цієї операції."
 
-#: ../app/core/gimp-utils.c:1365
+#: ../app/core/gimp-utils.c:1396
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "У цьому засобі обробки не передбачено підтримки упорядкованих списків."
 
-#: ../app/core/gimp-utils.c:1387
+#: ../app/core/gimp-utils.c:1419
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> має бути вкладено до теґів <ol> або <ul>."
 
-#: ../app/core/gimp-utils.c:1392
+#: ../app/core/gimp-utils.c:1424
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Невідомий програмі теґ <%s>."
@@ -19093,7 +19093,7 @@ msgid "_Next Tip"
 msgstr "_Наступна"
 
 #. a link to the related section in the user manual
-#: ../app/dialogs/tips-dialog.c:194 ../app/dialogs/welcome-dialog.c:378
+#: ../app/dialogs/tips-dialog.c:194 ../app/dialogs/welcome-dialog.c:474
 msgid "Learn more"
 msgstr "Дізнатись більше"
 
@@ -19172,20 +19172,20 @@ msgid "Lock path _position"
 msgstr "Замкнути _позицію контура"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:158
+#: ../app/dialogs/welcome-dialog.c:168
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Вітаємо у GIMP %s"
 
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:207
+#: ../app/dialogs/welcome-dialog.c:217
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "Вами встановлено GIMP %s!"
 
 #. Welcome message: left
-#: ../app/dialogs/welcome-dialog.c:228
+#: ../app/dialogs/welcome-dialog.c:238
 msgid ""
 "GIMP is a Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -19194,22 +19194,22 @@ msgstr ""
 "зображеннями.\n"
 "Хочете дізнатися більше?"
 
-#: ../app/dialogs/welcome-dialog.c:257
+#: ../app/dialogs/welcome-dialog.c:267
 msgid "GIMP website"
 msgstr "Сайт GIMP"
 
-#: ../app/dialogs/welcome-dialog.c:261
+#: ../app/dialogs/welcome-dialog.c:271
 msgid "Tutorials"
 msgstr "Підручники"
 
-#: ../app/dialogs/welcome-dialog.c:266
+#: ../app/dialogs/welcome-dialog.c:276
 msgid "Documentation"
 msgstr "Документація"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: ../app/dialogs/welcome-dialog.c:274
+#: ../app/dialogs/welcome-dialog.c:284
 msgid ""
 "GIMP is a Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -19218,21 +19218,27 @@ msgstr ""
 "випущено за умов дотримання GNU general public license v3.\n"
 "Хочете взяти участь у розробці?"
 
-#: ../app/dialogs/welcome-dialog.c:299
+#: ../app/dialogs/welcome-dialog.c:309
 msgid "Contributing"
 msgstr "Участь"
 
-#: ../app/dialogs/welcome-dialog.c:304
+#: ../app/dialogs/welcome-dialog.c:314
 msgid "Donating"
 msgstr "Фінансова підтримка"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:327
+#: ../app/dialogs/welcome-dialog.c:339
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Нотатки щодо випуску GIMP %s"
 
-#: ../app/dialogs/welcome-dialog.c:400
+#: ../app/dialogs/welcome-dialog.c:449
+#, c-format
+msgid "Click on release items with a %s bullet point to get a tour."
+msgstr ""
+"Натисніть пункти опису пунктів з позначкою %s, щоб переглянути огляд."
+
+#: ../app/dialogs/welcome-dialog.c:497
 msgid ""
 "This welcome dialog is only shown at first launch. You can show it again "
 "from the \"Help\" menu."
@@ -23445,12 +23451,10 @@ msgstr ""
 "Непрозорі пікселі вважатимуться графікою, а не пікселями із низькою світністю"
 
 #: ../app/tools/gimpbucketfilloptions.c:636
-#| msgid "No valid line art source selected."
 msgid "No valid source drawable selected"
 msgstr "Не вибрано придатного початкового намальованого об'єкта"
 
 #: ../app/tools/gimpbucketfilloptions.c:638
-#| msgid "The selected drawable does not have an alpha channel."
 msgid "The source drawable has no alpha channel"
 msgstr "У початковому намальованому об'єкті немає каналу прозорості"
 
@@ -23539,12 +23543,12 @@ msgstr "Точки растру позначеного шару заблоков
 msgid "No valid line art source selected."
 msgstr "Не вибрано придатного джерела контурів."
 
-#: ../app/tools/gimpbucketfilltool.c:817 ../app/tools/gimpbucketfilltool.c:957
+#: ../app/tools/gimpbucketfilltool.c:818 ../app/tools/gimpbucketfilltool.c:958
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:502
 msgid "Click in any image to pick the background color"
 msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
-#: ../app/tools/gimpbucketfilltool.c:824 ../app/tools/gimpbucketfilltool.c:966
+#: ../app/tools/gimpbucketfilltool.c:825 ../app/tools/gimpbucketfilltool.c:967
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:496
 msgid "Click in any image to pick the foreground color"
 msgstr ""
@@ -29056,7 +29060,7 @@ msgstr ""
 "Активний градієнт.\n"
 "Клацніть, щоб відкрити діалогове вікно \"Градієнти\"."
 
-#: ../app/widgets/gimptoolbutton.c:549
+#: ../app/widgets/gimptoolbutton.c:550
 msgid "Also in group:"
 msgstr "Також у групі:"
 
@@ -29158,42 +29162,42 @@ msgstr "Відкрити діалог вибору палітри"
 msgid "Open the font selection dialog"
 msgstr "Відкрити діалог вибору шрифту"
 
-#: ../app/widgets/gimpwidgets-utils.c:613
+#: ../app/widgets/gimpwidgets-utils.c:628
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (спробуйте %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:613
+#: ../app/widgets/gimpwidgets-utils.c:628
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:617
+#: ../app/widgets/gimpwidgets-utils.c:632
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (спробуйте %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:621
+#: ../app/widgets/gimpwidgets-utils.c:636
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (спробуйте %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1817
+#: ../app/widgets/gimpwidgets-utils.c:1925
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Вбудовані відтінки сірого  (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1824
+#: ../app/widgets/gimpwidgets-utils.c:1932
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "Вбудований RGB (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1844
+#: ../app/widgets/gimpwidgets-utils.c:1952
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Бажаний відтінків сірого (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1853
+#: ../app/widgets/gimpwidgets-utils.c:1961
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "Бажаний RGB (%s)"
