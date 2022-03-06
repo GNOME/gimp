@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-03-06 12:16+0000\n"
-"PO-Revision-Date: 2022-03-06 14:23+0200\n"
+"PO-Revision-Date: 2022-03-06 16:42+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -19236,7 +19236,7 @@ msgstr "Нотатки щодо випуску GIMP %s"
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr ""
-"Натисніть пункти опису пунктів з позначкою %s, щоб переглянути огляд."
+"Натисніть пункти опису випуску з позначкою %s, щоб переглянути огляд."
 
 #: ../app/dialogs/welcome-dialog.c:497
 msgid ""
