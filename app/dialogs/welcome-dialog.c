@@ -32,18 +32,10 @@
 
 #include "dialogs-types.h"
 
-#include "config/gimpguiconfig.h"
-
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
 
-#include "widgets/gimpaction.h"
-#include "widgets/gimpdialogfactory.h"
-#include "widgets/gimphelp-ids.h"
-#include "widgets/gimptoolbox.h"
-#include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
-#include "widgets/gimpwindowstrategy.h"
 
 #include "welcome-dialog.h"
 #include "welcome-dialog-data.h"
@@ -544,34 +536,43 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
       dockable_id = ids[0];
       widget_id   = ids[1];
 
-      if (g_strcmp0 (dockable_id, "gimp-toolbox") == 0 &&
-          widget_id != NULL)
+      /* Allowing white spaces so that the demo in XML metadata can be
+       * spaced-out or even on multiple lines for clarity.
+       */
+      dockable_id = g_strstrip (dockable_id);
+      widget_id   = g_strstrip (widget_id);
+
+      /* All our dockable IDs start with "gimp-". This allows to write
+       * shorter names in the demo script.
+       */
+      if (! g_str_has_prefix (dockable_id, "gimp-"))
         {
-          GimpUIManager *ui_manager;
-          GtkWidget     *toolbox;
+          gchar *tmp = g_strdup_printf ("gimp-%s", dockable_id);
 
-          /* As a special case, for the toolbox, we don't just raise it,
-           * we also select the tool if one was requested.
-           */
-          toolbox = gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
-                                                               gimp,
-                                                               gimp_dialog_factory_get_singleton (),
-                                                               gimp_get_monitor_at_pointer (),
-                                                               "gimp-toolbox");
-          /* Find and activate the tool. */
-          if (toolbox &&
-              (ui_manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox))))
-            {
-              GimpAction *action;
-
-              action = gimp_ui_manager_find_action (ui_manager, "tools", widget_id);
-                                                    /*"tools-bucket-fill");*/
-              gimp_action_activate (GIMP_ACTION (action));
-            }
+          g_free (ids[0]);
+          dockable_id = ids[0] = tmp;
         }
 
       /* Blink widget. */
-      gimp_blink_dockable (gimp, dockable_id, widget_id, &blink_script);
+      if (g_strcmp0 (dockable_id, "gimp-toolbox") == 0)
+        {
+          /* All tool button IDs start with "tools-". This allows to
+           * write shorter tool names in the demo script.
+           */
+          if (! g_str_has_prefix (widget_id, "tools-"))
+            {
+              gchar *tmp = g_strdup_printf ("tools-%s", widget_id);
+
+              g_free (ids[1]);
+              widget_id = ids[1] = tmp;
+            }
+
+          gimp_blink_toolbox (gimp, widget_id, &blink_script);
+        }
+      else
+        {
+          gimp_blink_dockable (gimp, dockable_id, widget_id, &blink_script);
+        }
 
       g_strfreev (ids);
     }

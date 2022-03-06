@@ -61,6 +61,7 @@
 #include "gimpdockwindow.h"
 #include "gimperrordialog.h"
 #include "gimpsessioninfo.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
 
@@ -1525,6 +1526,46 @@ gimp_widget_blink_cancel (GtkWidget *widget)
 
       g_object_set_data (G_OBJECT (widget), "gimp-widget-blink", NULL);
     }
+}
+
+/**
+ * gimp_blink_toolbox:
+ * @gimp:
+ * @action_name:
+ * @blink_scenario:
+ *
+ * This is similar to gimp_blink_dockable() for the toolbox
+ * specifically. What it will do, additionally to blink the tool button,
+ * is first to activate it.
+ *
+ * Also the identifier is easy as it is simply the action name.
+ */
+void
+gimp_blink_toolbox (Gimp         *gimp,
+                    const gchar  *action_name,
+                    GList       **blink_scenario)
+{
+  GimpUIManager *ui_manager;
+  GtkWidget     *toolbox;
+
+  /* As a special case, for the toolbox, we don't just raise it,
+   * we also select the tool if one was requested.
+   */
+  toolbox = gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                                       gimp,
+                                                       gimp_dialog_factory_get_singleton (),
+                                                       gimp_get_monitor_at_pointer (),
+                                                       "gimp-toolbox");
+  /* Find and activate the tool. */
+  if (toolbox && action_name != NULL &&
+      (ui_manager = gimp_dock_get_ui_manager (GIMP_DOCK (toolbox))))
+    {
+      GimpAction *action;
+
+      action = gimp_ui_manager_find_action (ui_manager, "tools", action_name);
+      gimp_action_activate (GIMP_ACTION (action));
+    }
+  gimp_blink_dockable (gimp, "gimp-toolbox", action_name, blink_scenario);
 }
 
 /**
