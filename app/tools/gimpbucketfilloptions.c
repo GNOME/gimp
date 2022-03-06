@@ -23,6 +23,7 @@
 #include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "tools-types.h"
 
@@ -86,9 +87,7 @@ struct _GimpBucketFillOptionsPrivate
   GtkWidget *threshold_scale;
 
   GtkWidget *similar_color_frame;
-  GtkWidget *line_art_frame;
-  GtkWidget *line_art_frame2;
-  GtkWidget *line_art_frame3;
+  GtkWidget *line_art_settings;
   GtkWidget *fill_as_line_art_frame;
   GtkWidget *line_art_detect_opacity;
 };
@@ -595,9 +594,7 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
     {
     case GIMP_BUCKET_FILL_LINE_ART:
       gtk_widget_hide (options->priv->similar_color_frame);
-      gtk_widget_show (options->priv->line_art_frame);
-      gtk_widget_show (options->priv->line_art_frame2);
-      gtk_widget_show (options->priv->line_art_frame3);
+      gtk_widget_show (options->priv->line_art_settings);
       if ((options->fill_mode == GIMP_BUCKET_FILL_FG ||
            options->fill_mode == GIMP_BUCKET_FILL_BG) &&
           (options->line_art_source == GIMP_LINE_ART_SOURCE_LOWER_LAYER ||
@@ -646,11 +643,12 @@ gimp_bucket_fill_options_update_area (GimpBucketFillOptions *options)
                                    tooltip);
       break;
     case GIMP_BUCKET_FILL_SIMILAR_COLORS:
+      gtk_widget_show (options->priv->similar_color_frame);
+      gtk_widget_hide (options->priv->line_art_settings);
+      break;
     default:
       gtk_widget_hide (options->priv->similar_color_frame);
-      gtk_widget_hide (options->priv->line_art_frame);
-      gtk_widget_hide (options->priv->line_art_frame2);
-      gtk_widget_hide (options->priv->line_art_frame3);
+      gtk_widget_hide (options->priv->line_art_settings);
       break;
     }
 
@@ -733,10 +731,13 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Fill by"));
   gtk_box_pack_start (GTK_BOX (box2), combo, FALSE, FALSE, 0);
 
-  /* Line art frame */
+  /* Line art settings */
+  options->priv->line_art_settings = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), options->priv->line_art_settings, FALSE, FALSE, 0);
+  gimp_widget_set_identifier (options->priv->line_art_settings, "line-art-settings");
+
   frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  options->priv->line_art_frame = frame;
+  gtk_box_pack_start (GTK_BOX (options->priv->line_art_settings), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* Line art: label widget */
@@ -780,8 +781,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
 
   /* Line Art Closure frame */
   frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  options->priv->line_art_frame2 = frame;
+  gtk_box_pack_start (GTK_BOX (options->priv->line_art_settings), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* Line Art Closure: frame label */
@@ -812,8 +812,7 @@ gimp_bucket_fill_options_gui (GimpToolOptions *tool_options)
   /* Line Art Borders frame */
 
   frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  options->priv->line_art_frame3 = frame;
+  gtk_box_pack_start (GTK_BOX (options->priv->line_art_settings), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* Line Art Borders: frame label */
