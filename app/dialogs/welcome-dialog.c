@@ -320,6 +320,8 @@ welcome_dialog_create (Gimp *gimp)
 
   if (release_notes)
     {
+      gint n_demos = 0;
+
       vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
       gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
       gtk_stack_add_titled (GTK_STACK (stack), vbox, "release-notes",
@@ -374,6 +376,7 @@ welcome_dialog_create (Gimp *gimp)
       if (release_items)
         {
           GList *item;
+          gint   i;
 
           scrolled_window = gtk_scrolled_window_new (NULL, NULL);
           gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
@@ -381,14 +384,24 @@ welcome_dialog_create (Gimp *gimp)
 
           listbox = gtk_list_box_new ();
 
-          for (item = release_items; item; item = item->next)
+          for (item = release_items, i = 0; item; item = item->next, i++)
             {
               GtkWidget *row;
               gchar     *markup;
 
               /* Add a bold dot for pretty listing. */
-              markup = g_strdup_printf ("<span weight='ultrabold' >\xe2\x80\xa2</span> %s",
-                                        (gchar *) item->data);
+              if (i < n_gimp_welcome_dialog_demo &&
+                  gimp_welcome_dialog_demo[i] != NULL)
+                {
+                  markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s",
+                                            (gchar *) item->data);
+                  n_demos++;
+                }
+              else
+                {
+                  markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s",
+                                            (gchar *) item->data);
+                }
 
               row = gtk_list_box_row_new ();
               widget = gtk_label_new (NULL);
@@ -417,6 +430,37 @@ welcome_dialog_create (Gimp *gimp)
           g_list_free_full (release_items, g_free);
         }
 
+      if (n_demos > 0)
+        {
+          /* A small explicative string to help discoverability of the demo
+           * ability.
+           */
+          hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
+          gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+          gtk_widget_show (hbox);
+
+          image = gtk_image_new_from_icon_name ("dialog-information",
+                                                GTK_ICON_SIZE_MENU);
+          gtk_widget_set_valign (image, GTK_ALIGN_CENTER);
+          gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+          gtk_widget_show (image);
+
+          widget = gtk_label_new (NULL);
+          tmp = g_strdup_printf (_("Click on release items with a %s bullet point to get a tour."),
+                                 "<span weight='ultrabold'>\xe2\x96\xb6</span>");
+          markup = g_strdup_printf ("<i>%s</i>", tmp);
+          g_free (tmp);
+          gtk_label_set_markup (GTK_LABEL (widget), markup);
+          g_free (markup);
+          gtk_box_pack_start (GTK_BOX (hbox), widget, FALSE, FALSE, 0);
+          gtk_widget_show (widget);
+
+          /* TODO: if a demo changed settings, should we add a "reset"
+           * button to get back to previous state?
+           */
+        }
+
+      /* Link to full release notes on web site at the bottom. */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
       gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
       gtk_widget_show (hbox);
@@ -449,12 +493,11 @@ welcome_dialog_create (Gimp *gimp)
   /**************/
 
   widget = gtk_label_new (NULL);
-  tmp = g_strdup (_("This welcome dialog is only shown at first launch. "
-                    "You can show it again from the \"Help\" menu."));
-  markup = g_strdup_printf ("<small>%s</small>", tmp);
-  g_free (tmp);
-  widget = gtk_label_new (NULL);
+  markup = g_strdup_printf ("<small>%s</small>",
+                            _("This welcome dialog is only shown at first launch. "
+                              "You can show it again from the \"Help\" menu."));
   gtk_label_set_markup (GTK_LABEL (widget), markup);
+  g_free (markup);
   gtk_widget_show (widget);
   gtk_box_pack_start (GTK_BOX (main_vbox), widget, FALSE, FALSE, 0);
 
