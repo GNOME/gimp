@@ -205,6 +205,13 @@ gimp_widgets_init (GimpHelpFunc           standard_help_func,
  * as widget identifier. You can always use this function to override a
  * given widget identifier with a more specific name.
  *
+ * Note that when a widget is bound to a property, in other words when
+ * in one of our propwidgets API, you should rather use
+ * gimp_widget_set_bound_property() because it allows more easily to
+ * tweak values.
+ * gimp_widget_set_identifier() is more destined to random widgets which
+ * you just want to be able to blink.
+ *
  * It's doesn't need to be in public API because it is only used for
  * internal blinking ability in core GIMP GUI.
  */
@@ -218,6 +225,41 @@ gimp_widget_set_identifier (GtkWidget   *widget,
                           "gimp-widget-identifier",
                           g_strdup (identifier),
                           (GDestroyNotify) g_free);
+}
+
+/**
+ * gimp_widget_set_bound_property:
+ * @widget:
+ * @config:
+ * @property_name:
+ *
+ * This is similar to gimp_widget_set_identifier() because the
+ * property_name can be used as identifier by our blink API.
+ * You can still set explicitly (and additionally)
+ * gimp_widget_set_identifier() for rare cases where 2 widgets in a same
+ * container would bind the same property (or 2 properties named the
+ * same way for 2 different config objects). The identifier will be used
+ * in priority to the property name (which can still be used for
+ * changing the widget value, so it remains important to also set it).
+ *
+ * It's doesn't need to be in public API because it is only used for
+ * internal blinking ability in core GIMP GUI.
+ */
+void
+gimp_widget_set_bound_property (GtkWidget   *widget,
+                                GObject     *config,
+                                const gchar *property_name)
+{
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  g_object_set_data_full (G_OBJECT (widget),
+                          "gimp-widget-property-name",
+                          g_strdup (property_name),
+                          (GDestroyNotify) g_free);
+  g_object_set_data_full (G_OBJECT (widget),
+                          "gimp-widget-property-config",
+                          g_object_ref (config),
+                          (GDestroyNotify) g_object_unref);
 }
 
 /* clean up babl (in particular, so that the fish cache is constructed) if the

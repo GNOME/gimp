@@ -76,11 +76,20 @@ typedef struct
 {
   GList       **blink_script;
   const gchar  *widget_identifier;
-} BlinkData;
+  const gchar  *settings_value;
+} BlinkSearch;
 
+typedef struct
+{
+  GtkWidget *widget;
+  gchar     *settings_value;
+} BlinkStep;
 
-static void         gimp_search_widget_rec         (GtkWidget            *widget,
-                                                    BlinkData            *data);
+static void         gimp_widget_blink_after        (GtkWidget   *widget,
+                                                    gint         ms_timeout);
+static void         gimp_search_widget_rec         (GtkWidget   *widget,
+                                                    BlinkSearch *data);
+static void         gimp_blink_free_script         (GList       *blink_scenario);
 
 
 GtkWidget *
@@ -1405,6 +1414,28 @@ widget_blink_free (WidgetBlink *blink)
 }
 
 static gboolean
+gimp_widget_blink_start_timeout (GtkWidget *widget)
+{
+  WidgetBlink *blink;
+
+  blink = g_object_get_data (G_OBJECT (widget), "gimp-widget-blink");
+  if (blink)
+    {
+      blink->timeout_id = 0;
+      gimp_widget_blink (widget);
+    }
+  else
+    {
+      /* If the data is not here anymore, our blink has been canceled
+       * already. Also delete the script, if any.
+       */
+      g_object_set_data (G_OBJECT (widget), "gimp-widget-blink-script", NULL);
+    }
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
 gimp_widget_blink_timeout (GtkWidget *widget)
 {
   WidgetBlink *blink;
@@ -1416,7 +1447,75 @@ gimp_widget_blink_timeout (GtkWidget *widget)
   gimp_highlight_widget (widget, blink->counter % 2 == 1, blink->rect);
   blink->counter++;
 
-  if (blink->counter == 3)
+  if (blink->counter == 1)
+    {
+      if (script)
+        {
+          BlinkStep *step = script->data;
+
+          if (step->settings_value)
+            {
+              const gchar *prop_name;
+              GObject     *config;
+              GParamSpec  *param_spec;
+
+              prop_name = g_object_get_data (G_OBJECT (widget),
+                                             "gimp-widget-property-name");
+              config    = g_object_get_data (G_OBJECT (widget),
+                                             "gimp-widget-property-config");
+
+              if (config && G_IS_OBJECT (config) && prop_name)
+                {
+                  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                                             prop_name);
+                  if (! param_spec)
+                    {
+                      g_printerr ("%s: %s has no property named '%s'.\n",
+                                  G_STRFUNC,
+                                  g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                                  prop_name);
+                      return G_SOURCE_CONTINUE;
+                    }
+                  if (! (param_spec->flags & G_PARAM_WRITABLE))
+                    {
+                      g_printerr ("%s: property '%s' of %s is not writable.\n",
+                                  G_STRFUNC,
+                                  param_spec->name,
+                                  g_type_name (param_spec->owner_type));
+                      return G_SOURCE_CONTINUE;
+                    }
+                  if (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_ENUM) ||
+                      g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_INT)  ||
+                      g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_BOOLEAN))
+                    {
+                      gchar  *endptr;
+                      gint64  enum_value;
+
+                      enum_value = g_ascii_strtoll (step->settings_value, &endptr, 10);
+                      if (enum_value == 0 && endptr == step->settings_value)
+                        {
+                          g_printerr ("%s: settings value '%s' cannot properly be converted to int.\n",
+                                      G_STRFUNC, step->settings_value);
+                          return G_SOURCE_CONTINUE;
+                        }
+
+                      g_object_set (config,
+                                    prop_name, enum_value,
+                                    NULL);
+                    }
+                  else
+                    {
+                      g_printerr ("%s: currently unsupported type '%s' for property %s of %s.\n",
+                                  G_STRFUNC,
+                                  g_type_name (G_TYPE_FROM_INSTANCE (param_spec)),
+                                  param_spec->name,
+                                  g_type_name (param_spec->owner_type));
+                    }
+                }
+            }
+        }
+    }
+  else if (blink->counter == 3)
     {
       blink->timeout_id = 0;
 
@@ -1424,14 +1523,19 @@ gimp_widget_blink_timeout (GtkWidget *widget)
 
       if (script)
         {
-          GtkWidget *next_widget = script->data;
-
           if (script->next)
-            g_object_set_data_full (G_OBJECT (next_widget), "gimp-widget-blink-script",
-                                    g_list_copy (script->next),
-                                    (GDestroyNotify) g_list_free);
+            {
+              BlinkStep *next_step   = script->next->data;
+              GtkWidget *next_widget = next_step->widget;
 
-          gimp_widget_blink (next_widget);
+              g_object_set_data_full (G_OBJECT (next_widget), "gimp-widget-blink-script",
+                                      script->next,
+                                      (GDestroyNotify) gimp_blink_free_script);
+              script->next->prev = NULL;
+              script->next       = NULL;
+
+              gimp_widget_blink_after (next_widget, 500);
+            }
 
           g_object_set_data (G_OBJECT (widget), "gimp-widget-blink-script", NULL);
         }
@@ -1467,25 +1571,42 @@ gimp_widget_blink (GtkWidget *widget)
 }
 
 void
-gimp_widget_script_blink (GtkWidget  *widget,
-                          GList     **blink_scenario)
+gimp_widget_script_blink (GtkWidget    *widget,
+                          const gchar  *settings_value,
+                          GList       **blink_scenario)
 {
-  *blink_scenario = g_list_append (*blink_scenario, widget);
+  BlinkStep *step;
+
+  step = g_slice_new (BlinkStep);
+  step->widget         = widget;
+  step->settings_value = g_strdup (settings_value);
+
+  *blink_scenario = g_list_append (*blink_scenario, step);
 
   while ((widget = gtk_widget_get_parent (widget)))
     gimp_widget_blink_cancel (widget);
 }
 
+/* gimp_blink_play_script:
+ * @blink_scenario:
+ *
+ * This function will play the @blink_scenario and free the associated
+ * data once done.
+ */
 void
 gimp_blink_play_script (GList *blink_scenario)
 {
+  BlinkStep *step;
+
   g_return_if_fail (g_list_length (blink_scenario) > 0);
 
-  g_object_set_data_full (G_OBJECT (blink_scenario->data),
+  step = blink_scenario->data;
+
+  g_object_set_data_full (G_OBJECT (step->widget),
                           "gimp-widget-blink-script",
-                          g_list_copy (blink_scenario->next),
-                          (GDestroyNotify) g_list_free);
-  gimp_widget_blink (blink_scenario->data);
+                          blink_scenario,
+                          (GDestroyNotify) gimp_blink_free_script);
+  gimp_widget_blink (step->widget);
 }
 
 void
@@ -1565,7 +1686,7 @@ gimp_blink_toolbox (Gimp         *gimp,
       action = gimp_ui_manager_find_action (ui_manager, "tools", action_name);
       gimp_action_activate (GIMP_ACTION (action));
     }
-  gimp_blink_dockable (gimp, "gimp-toolbox", action_name, blink_scenario);
+  gimp_blink_dockable (gimp, "gimp-toolbox", action_name, NULL, blink_scenario);
 }
 
 /**
@@ -1573,6 +1694,7 @@ gimp_blink_toolbox (Gimp         *gimp,
  * @gimp:
  * @dockable_identifier:
  * @widget_identifier:
+ * @settings_value:
  * @blink_scenario:
  *
  * This function will raise the dockable identified by
@@ -1582,20 +1704,28 @@ gimp_blink_toolbox (Gimp         *gimp,
  * Then it will find the widget identified by @widget_identifier. Note
  * that for propwidgets, this is usually the associated property name.
  *
+ * If @settings_value is set, then it will try to change the widget
+ * value, depending the type of widgets. Note that for now, only
+ * property widgets of enum, int or boolean types can be set (so the
+ * @settings_value string must represent an int value).
+ *
  * Finally it will either blink this widget immediately to raise
  * attention, or add it to the @blink_scenario if not %NULL. The blink
  * scenario must be explicitly started with gimp_blink_play_script()
- * when ready.
+ * when ready. @blink_scenario should be considered as opaque data, so
+ * you should not free it directly and let gimp_blink_play_script() do
+ * so for you.
  */
 void
 gimp_blink_dockable (Gimp         *gimp,
                      const gchar  *dockable_identifier,
                      const gchar  *widget_identifier,
+                     const gchar  *settings_value,
                      GList       **blink_scenario)
 {
-  GtkWidget  *dockable;
-  GdkMonitor *monitor;
-  BlinkData  *data;
+  GtkWidget   *dockable;
+  GdkMonitor  *monitor;
+  BlinkSearch *data;
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
@@ -1613,13 +1743,14 @@ gimp_blink_dockable (Gimp         *gimp,
 
   if (widget_identifier)
     {
-      data = g_slice_new (BlinkData);
+      data = g_slice_new (BlinkSearch);
       data->blink_script      = blink_scenario;
       data->widget_identifier = widget_identifier;
+      data->settings_value    = settings_value;
       gtk_container_foreach (GTK_CONTAINER (dockable),
                              (GtkCallback) gimp_search_widget_rec,
                              (gpointer) data);
-      g_slice_free (BlinkData, data);
+      g_slice_free (BlinkSearch, data);
     }
 }
 
@@ -2135,40 +2266,75 @@ gimp_widget_flush_expose (void)
 /*  private functions  */
 
 static void
-gimp_search_widget_rec (GtkWidget *widget,
-                        BlinkData *data)
+gimp_widget_blink_after (GtkWidget *widget,
+                         gint       ms_timeout)
 {
-  GList       **blink_script = data->blink_script;
-  const gchar  *searched_id  = data->widget_identifier;
+  WidgetBlink *blink;
 
-  if (gtk_widget_is_visible (widget))
+  g_return_if_fail (GTK_IS_WIDGET (widget));
+
+  blink = widget_blink_new ();
+
+  g_object_set_data_full (G_OBJECT (widget), "gimp-widget-blink", blink,
+                          (GDestroyNotify) widget_blink_free);
+
+  blink->timeout_id = g_timeout_add (ms_timeout,
+                                     (GSourceFunc) gimp_widget_blink_start_timeout,
+                                     widget);
+}
+
+static void
+gimp_search_widget_rec (GtkWidget   *widget,
+                        BlinkSearch *data)
+{
+  GList       **blink_script   = data->blink_script;
+  const gchar  *searched_id    = data->widget_identifier;
+  const gchar  *settings_value = data->settings_value;
+  const gchar  *id;
+
+  id = g_object_get_data (G_OBJECT (widget),
+                          "gimp-widget-identifier");
+
+  if (id == NULL)
+    /* Using propwidgets identifiers as fallback. */
+    id = g_object_get_data (G_OBJECT (widget),
+                            "gimp-widget-property-name");
+
+  if (id && g_strcmp0 (id, searched_id) == 0)
     {
-      const gchar *id;
-
-      id = g_object_get_data (G_OBJECT (widget),
-                              "gimp-widget-identifier");
-
-      if (id && g_strcmp0 (id, searched_id) == 0)
-        {
-          /* Giving focus to help scrolling the dockable so that the
-           * widget is visible. Note that it seems to work fine if the
-           * dockable was already present, not if it was just created.
-           *
-           * TODO: this should be fixed so that we always make the
-           * widget visible before blinking, otherwise it's a bit
-           * useless when this happens.
-           */
-          gtk_widget_grab_focus (widget);
-          if (blink_script)
-            gimp_widget_script_blink (widget, blink_script);
-          else
-            gimp_widget_blink (widget);
-        }
-      else if (GTK_IS_CONTAINER (widget))
-        {
-          gtk_container_foreach (GTK_CONTAINER (widget),
-                                 (GtkCallback) gimp_search_widget_rec,
-                                 (gpointer) data);
-        }
+      /* Giving focus to help scrolling the dockable so that the
+       * widget is visible. Note that it seems to work fine if the
+       * dockable was already present, not if it was just created.
+       *
+       * TODO: this should be fixed so that we always make the
+       * widget visible before blinking, otherwise it's a bit
+       * useless when this happens.
+       */
+      gtk_widget_grab_focus (widget);
+      if (blink_script)
+        gimp_widget_script_blink (widget, settings_value, blink_script);
+      else if (gtk_widget_is_visible (widget))
+        gimp_widget_blink (widget);
     }
+  else if (GTK_IS_CONTAINER (widget))
+    {
+      gtk_container_foreach (GTK_CONTAINER (widget),
+                             (GtkCallback) gimp_search_widget_rec,
+                             (gpointer) data);
+    }
+}
+
+static void
+gimp_blink_free_script (GList *blink_scenario)
+{
+  GList *iter;
+
+  for (iter = blink_scenario; iter; iter = iter->next)
+    {
+      BlinkStep *step = iter->data;
+
+      g_free (step->settings_value);
+      g_slice_free (BlinkStep, step);
+    }
+  g_list_free (blink_scenario);
 }

@@ -140,7 +140,7 @@ gimp_prop_expanding_frame_new (GObject      *config,
   if (button)
     *button = toggle;
 
-  gimp_widget_set_identifier (frame, property_name);
+  gimp_widget_set_bound_property (frame, config, property_name);
   gtk_widget_show (frame);
 
   return frame;
@@ -243,7 +243,7 @@ gimp_prop_boolean_icon_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_radio_button_notify),
                   button);
 
-  gimp_widget_set_identifier (box, property_name);
+  gimp_widget_set_bound_property (box, config, property_name);
   gtk_widget_show (box);
 
   return box;
@@ -326,7 +326,7 @@ gimp_prop_layer_mode_box_new (GObject              *config,
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_identifier (box, property_name);
+  gimp_widget_set_bound_property (box, config, property_name);
   gtk_widget_show (box);
 
   return box;
@@ -398,7 +398,7 @@ gimp_prop_color_button_new (GObject           *config,
                   G_CALLBACK (gimp_prop_color_button_notify),
                   button);
 
-  gimp_widget_set_identifier (button, property_name);
+  gimp_widget_set_bound_property (button, config, property_name);
   gtk_widget_show (button);
 
   return button;
@@ -566,7 +566,7 @@ gimp_prop_angle_dial_new (GObject     *config,
                                    l, (GDestroyNotify) g_free);
     }
 
-  gimp_widget_set_identifier (dial, property_name);
+  gimp_widget_set_bound_property (dial, config, property_name);
   gtk_widget_show (dial);
 
   return dial;
@@ -624,7 +624,7 @@ gimp_prop_angle_range_dial_new (GObject     *config,
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_identifier (dial, alpha_property_name);
+  gimp_widget_set_bound_property (dial, config, alpha_property_name);
   gtk_widget_show (dial);
 
   return dial;
@@ -668,7 +668,7 @@ gimp_prop_polar_new (GObject     *config,
                           G_BINDING_BIDIRECTIONAL |
                           G_BINDING_SYNC_CREATE);
 
-  gimp_widget_set_identifier (polar, angle_property_name);
+  gimp_widget_set_bound_property (polar, config, angle_property_name);
   gtk_widget_show (polar);
 
   return polar;
@@ -742,7 +742,7 @@ gimp_prop_range_new (GObject     *config,
   if (sorted)
     gimp_gtk_adjustment_chain (adjustment1, adjustment2);
 
-  gimp_widget_set_identifier (vbox, lower_property_name);
+  gimp_widget_set_bound_property (vbox, config, lower_property_name);
   gtk_widget_show (vbox);
 
   return vbox;
@@ -844,7 +844,7 @@ gimp_prop_view_new (GObject     *config,
                   G_CALLBACK (gimp_prop_view_notify),
                   view);
 
-  gimp_widget_set_identifier (view, property_name);
+  gimp_widget_set_bound_property (view, config, property_name);
   gtk_widget_show (view);
 
   return view;
@@ -1045,7 +1045,7 @@ gimp_prop_number_pair_entry_new (GObject     *config,
                   G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
                   number_pair_entry);
 
-  gimp_widget_set_identifier (number_pair_entry, left_number_property);
+  gimp_widget_set_bound_property (number_pair_entry, config, left_number_property);
   gtk_widget_show (number_pair_entry);
 
   return number_pair_entry;
@@ -1188,7 +1188,7 @@ gimp_prop_language_combo_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_language_combo_box_notify),
                   combo);
 
-  gimp_widget_set_identifier (combo, property_name);
+  gimp_widget_set_bound_property (combo, config, property_name);
   gtk_widget_show (combo);
 
   return combo;
@@ -1289,7 +1289,7 @@ gimp_prop_language_entry_new (GObject     *config,
                   G_CALLBACK (gimp_prop_language_entry_notify),
                   entry);
 
-  gimp_widget_set_identifier (entry, property_name);
+  gimp_widget_set_bound_property (entry, config, property_name);
   gtk_widget_show (entry);
 
   return entry;
@@ -1444,7 +1444,7 @@ gimp_prop_profile_combo_box_new (GObject      *config,
                   G_CALLBACK (gimp_prop_profile_combo_notify),
                   combo);
 
-  gimp_widget_set_identifier (combo, property_name);
+  gimp_widget_set_bound_property (combo, config, property_name);
   gtk_widget_show (combo);
 
   return combo;
@@ -1584,7 +1584,7 @@ gimp_prop_compression_combo_box_new (GObject     *config,
                   G_CALLBACK (gimp_prop_compression_combo_box_notify),
                   combo);
 
-  gimp_widget_set_identifier (combo, property_name);
+  gimp_widget_set_bound_property (combo, config, property_name);
   gtk_widget_show (combo);
 
   return combo;

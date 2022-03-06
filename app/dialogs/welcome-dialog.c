@@ -525,8 +525,10 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
   for (i = 0; script_steps[i]; i++)
     {
       gchar **ids;
-      gchar  *dockable_id = NULL;
-      gchar  *widget_id   = NULL;
+      gchar  *dockable_id    = NULL;
+      gchar  *widget_id      = NULL;
+      gchar **settings       = NULL;
+      gchar  *settings_value = NULL;
 
       ids = g_strsplit (script_steps[i], ":", 2);
       /* Even if the string doesn't contain a second part, it is
@@ -535,6 +537,14 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
        */
       dockable_id = ids[0];
       widget_id   = ids[1];
+
+      if (widget_id != NULL)
+        {
+          settings = g_strsplit (widget_id, "=", 2);
+
+          widget_id = settings[0];
+          settings_value = settings[1];
+        }
 
       /* Allowing white spaces so that the demo in XML metadata can be
        * spaced-out or even on multiple lines for clarity.
@@ -559,27 +569,30 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
           /* All tool button IDs start with "tools-". This allows to
            * write shorter tool names in the demo script.
            */
-          if (! g_str_has_prefix (widget_id, "tools-"))
+          if (widget_id != NULL && ! g_str_has_prefix (widget_id, "tools-"))
             {
               gchar *tmp = g_strdup_printf ("tools-%s", widget_id);
 
-              g_free (ids[1]);
-              widget_id = ids[1] = tmp;
+              g_free (settings[0]);
+              widget_id = settings[0] = tmp;
             }
 
           gimp_blink_toolbox (gimp, widget_id, &blink_script);
         }
       else
         {
-          gimp_blink_dockable (gimp, dockable_id, widget_id, &blink_script);
+          gimp_blink_dockable (gimp, dockable_id,
+                               widget_id, settings_value,
+                               &blink_script);
         }
 
       g_strfreev (ids);
+      if (settings)
+        g_strfreev (settings);
     }
   if (blink_script != NULL)
     gimp_blink_play_script (blink_script);
 
-  g_list_free (blink_script);
   g_strfreev (script_steps);
 }
 

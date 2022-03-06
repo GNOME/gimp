@@ -100,9 +100,11 @@ void              gimp_blink_toolbox               (Gimp                  *gimp,
 void              gimp_blink_dockable              (Gimp                  *gimp,
                                                     const gchar           *dockable_identifier,
                                                     const gchar           *widget_identifier,
+                                                    const gchar           *settings_value,
                                                     GList               **blink_script);
 
 void              gimp_widget_script_blink         (GtkWidget            *widget,
+                                                    const gchar          *widget_identifier,
                                                     GList               **blink_script);
 void              gimp_blink_play_script           (GList                *blink_script);
 
