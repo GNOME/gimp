@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-04 13:34+0000\n"
-"PO-Revision-Date: 2022-03-04 22:09+0000\n"
+"POT-Creation-Date: 2022-03-06 12:16+0000\n"
+"PO-Revision-Date: 2022-03-06 21:54+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -14220,21 +14220,21 @@ msgstr "A criar a pasta \"%s\"..."
 msgid "Cannot create folder '%s': %s"
 msgstr "Não é possível criar a pasta \"%s\": %s"
 
-#: ../app/core/gimp-utils.c:561 ../app/core/gimpfilloptions.c:383
+#: ../app/core/gimp-utils.c:567 ../app/core/gimpfilloptions.c:383
 msgid "No patterns available for this operation."
 msgstr "Não há texturas disponíveis para esta operação."
 
-#: ../app/core/gimp-utils.c:1365
+#: ../app/core/gimp-utils.c:1396
 #, c-format
 msgid "This parser does not support imbricated lists."
 msgstr "Este analisador não oferece suporte a listas imbricadas."
 
-#: ../app/core/gimp-utils.c:1387
+#: ../app/core/gimp-utils.c:1419
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> tem de estar dentro das etiquetas <ol> ou <ul>."
 
-#: ../app/core/gimp-utils.c:1392
+#: ../app/core/gimp-utils.c:1424
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Etiqueta desconhecida <%s>."
@@ -19334,7 +19334,7 @@ msgid "_Next Tip"
 msgstr "Dica _seguinte"
 
 #. a link to the related section in the user manual
-#: ../app/dialogs/tips-dialog.c:194 ../app/dialogs/welcome-dialog.c:378
+#: ../app/dialogs/tips-dialog.c:194 ../app/dialogs/welcome-dialog.c:474
 msgid "Learn more"
 msgstr "Saber mais"
 
@@ -19410,20 +19410,20 @@ msgid "Lock path _position"
 msgstr "Bloquear p_osição do caminho"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:158
+#: ../app/dialogs/welcome-dialog.c:168
 #, c-format
 msgid "Welcome to GIMP %s"
 msgstr "Bem-vindo(a) ao GIMP %s"
 
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:207
+#: ../app/dialogs/welcome-dialog.c:217
 #, c-format
 msgid "You installed GIMP %s!"
 msgstr "Instalou o GIMP %s!"
 
 #. Welcome message: left
-#: ../app/dialogs/welcome-dialog.c:228
+#: ../app/dialogs/welcome-dialog.c:238
 msgid ""
 "GIMP is a Free Software for image authoring and manipulation.\n"
 "Want to know more?"
@@ -19431,22 +19431,22 @@ msgstr ""
 "O GIMP é um Software Livre para autoria e manipulação de imagens.\n"
 "Quer saber mais?"
 
-#: ../app/dialogs/welcome-dialog.c:257
+#: ../app/dialogs/welcome-dialog.c:267
 msgid "GIMP website"
 msgstr "Website do GIMP"
 
-#: ../app/dialogs/welcome-dialog.c:261
+#: ../app/dialogs/welcome-dialog.c:271
 msgid "Tutorials"
 msgstr "Tutoriais"
 
-#: ../app/dialogs/welcome-dialog.c:266
+#: ../app/dialogs/welcome-dialog.c:276
 msgid "Documentation"
 msgstr "Documentação"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
 #. Welcome message: right
-#: ../app/dialogs/welcome-dialog.c:274
+#: ../app/dialogs/welcome-dialog.c:284
 msgid ""
 "GIMP is a Community Software under the GNU general public license v3.\n"
 "Want to contribute?"
@@ -19454,21 +19454,28 @@ msgstr ""
 "O GIMP é um Software Comunitário sob a licença pública geral GNU v3.\n"
 "Quer contribuir?"
 
-#: ../app/dialogs/welcome-dialog.c:299
+#: ../app/dialogs/welcome-dialog.c:309
 msgid "Contributing"
 msgstr "Contribuição"
 
-#: ../app/dialogs/welcome-dialog.c:304
+#: ../app/dialogs/welcome-dialog.c:314
 msgid "Donating"
 msgstr "Doação"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
-#: ../app/dialogs/welcome-dialog.c:327
+#: ../app/dialogs/welcome-dialog.c:339
 #, c-format
 msgid "GIMP %s Release Notes"
 msgstr "Notas de lançamento do GIMP %s"
 
-#: ../app/dialogs/welcome-dialog.c:400
+#: ../app/dialogs/welcome-dialog.c:449
+#, c-format
+msgid "Click on release items with a %s bullet point to get a tour."
+msgstr ""
+"Clique nos itens de lançamento com um marcador %s para obter uma visita "
+"guiada."
+
+#: ../app/dialogs/welcome-dialog.c:497
 msgid ""
 "This welcome dialog is only shown at first launch. You can show it again "
 "from the \"Help\" menu."
@@ -23808,12 +23815,12 @@ msgid "No valid line art source selected."
 msgstr ""
 "Não há nenhuma imagem de origem selecionada válida para o desenho de linha."
 
-#: ../app/tools/gimpbucketfilltool.c:817 ../app/tools/gimpbucketfilltool.c:957
+#: ../app/tools/gimpbucketfilltool.c:818 ../app/tools/gimpbucketfilltool.c:958
 #: ../app/tools/gimpcolorpickertool.c:270 ../app/tools/gimppainttool.c:502
 msgid "Click in any image to pick the background color"
 msgstr "[Clique] em qualquer imagem para obter a cor de fundo"
 
-#: ../app/tools/gimpbucketfilltool.c:824 ../app/tools/gimpbucketfilltool.c:966
+#: ../app/tools/gimpbucketfilltool.c:825 ../app/tools/gimpbucketfilltool.c:967
 #: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:496
 msgid "Click in any image to pick the foreground color"
 msgstr "[Clique] em qualquer imagem para obter a cor de 1º plano"
@@ -29360,7 +29367,7 @@ msgstr ""
 "O gradiente ativo.\n"
 "[Clique] para abrir o painel com a lista de gradientes."
 
-#: ../app/widgets/gimptoolbutton.c:549
+#: ../app/widgets/gimptoolbutton.c:550
 msgid "Also in group:"
 msgstr "Outras ferramentas neste grupo:"
 
@@ -29465,42 +29472,42 @@ msgid "Open the font selection dialog"
 msgstr "Abrir o painel com a lista de tipos de letra disponíveis"
 
 # alterado de “tente” para “outras opções” por ser mais claro
-#: ../app/widgets/gimpwidgets-utils.c:613
+#: ../app/widgets/gimpwidgets-utils.c:628
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (outras opções: [%s])"
 
-#: ../app/widgets/gimpwidgets-utils.c:613
+#: ../app/widgets/gimpwidgets-utils.c:628
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:617
+#: ../app/widgets/gimpwidgets-utils.c:632
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (outras opções: [%s], [%s])"
 
-#: ../app/widgets/gimpwidgets-utils.c:621
+#: ../app/widgets/gimpwidgets-utils.c:636
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (outras opções: [%s], [%s], [%s])"
 
-#: ../app/widgets/gimpwidgets-utils.c:1817
+#: ../app/widgets/gimpwidgets-utils.c:1925
 #, c-format
 msgid "Built-in grayscale (%s)"
 msgstr "Tons de cinzento embutidos (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1824
+#: ../app/widgets/gimpwidgets-utils.c:1932
 #, c-format
 msgid "Built-in RGB (%s)"
 msgstr "RGB embutido (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1844
+#: ../app/widgets/gimpwidgets-utils.c:1952
 #, c-format
 msgid "Preferred grayscale (%s)"
 msgstr "Tons de cinzento preferido (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:1853
+#: ../app/widgets/gimpwidgets-utils.c:1961
 #, c-format
 msgid "Preferred RGB (%s)"
 msgstr "RGB preferido (%s)"
