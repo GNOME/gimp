@@ -52,6 +52,7 @@
 #include "gegl/gimp-babl.h"
 
 #include "core/gimp.h"
+#include "core/gimptoolinfo.h"
 
 #include "gimpaction.h"
 #include "gimpaction.h"
@@ -61,6 +62,7 @@
 #include "gimpdockwindow.h"
 #include "gimperrordialog.h"
 #include "gimpsessioninfo.h"
+#include "gimptoolbutton.h"
 #include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 #include "gimpwindowstrategy.h"
@@ -1436,6 +1438,14 @@ gimp_widget_blink_start_timeout (GtkWidget *widget)
 }
 
 static gboolean
+gimp_widget_blink_popover_remove (GtkWidget *widget)
+{
+  gtk_widget_destroy (widget);
+
+  return G_SOURCE_REMOVE;
+}
+
+static gboolean
 gimp_widget_blink_timeout (GtkWidget *widget)
 {
   WidgetBlink *blink;
@@ -1451,13 +1461,13 @@ gimp_widget_blink_timeout (GtkWidget *widget)
     {
       if (script)
         {
-          BlinkStep *step = script->data;
+          BlinkStep *step         = script->data;
+          gchar     *popover_text = NULL;
 
           if (step->settings_value)
             {
               const gchar *prop_name;
               GObject     *config;
-              GParamSpec  *param_spec;
 
               prop_name = g_object_get_data (G_OBJECT (widget),
                                              "gimp-widget-property-name");
@@ -1466,6 +1476,9 @@ gimp_widget_blink_timeout (GtkWidget *widget)
 
               if (config && G_IS_OBJECT (config) && prop_name)
                 {
+                  GParamSpec  *param_spec;
+                  const gchar *nick;
+
                   param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                              prop_name);
                   if (! param_spec)
@@ -1484,6 +1497,9 @@ gimp_widget_blink_timeout (GtkWidget *widget)
                                   g_type_name (param_spec->owner_type));
                       return G_SOURCE_CONTINUE;
                     }
+
+                  nick = g_param_spec_get_nick (param_spec);
+
                   if (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_ENUM) ||
                       g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_INT)  ||
                       g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_BOOLEAN))
@@ -1502,6 +1518,42 @@ gimp_widget_blink_timeout (GtkWidget *widget)
                       g_object_set (config,
                                     prop_name, enum_value,
                                     NULL);
+
+                      if (nick)
+                        {
+                          if (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_BOOLEAN))
+                            {
+                              if ((gboolean) enum_value)
+                                /* TRANSLATORS: the %s will be replaced
+                                 * by the localized label of a boolean settings
+                                 * (e.g. a checkbox settings) displayed
+                                 * in some dockable GUI.
+                                 */
+                                popover_text = g_strdup_printf (_("Switch \"%s\" ON"), nick);
+                              else
+                                popover_text = g_strdup_printf (_("Switch \"%s\" OFF"), nick);
+                            }
+                          else if (g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), G_TYPE_PARAM_ENUM))
+                            {
+                              GParamSpecEnum   *pspec_enum = (GParamSpecEnum *) param_spec;
+                              const GEnumValue *genum_value;
+
+                              genum_value = g_enum_get_value (pspec_enum->enum_class, enum_value);
+                              if (genum_value)
+                                {
+                                  const gchar *enum_desc;
+
+                                  enum_desc = gimp_enum_value_get_desc (pspec_enum->enum_class, genum_value);
+                                  if (enum_desc)
+                                    /* TRANSLATORS: the %s will be replaced
+                                     * by the localized label of a
+                                     * multi-choice settings displayed
+                                     * in some dockable GUI.
+                                     */
+                                    popover_text = g_strdup_printf (_("Select \"%s\""), enum_desc);
+                                }
+                            }
+                        }
                     }
                   else
                     {
@@ -1512,6 +1564,32 @@ gimp_widget_blink_timeout (GtkWidget *widget)
                                   g_type_name (param_spec->owner_type));
                     }
                 }
+            }
+          else if (GIMP_IS_TOOL_BUTTON (widget))
+            {
+              GimpToolInfo *info;
+
+              info = gimp_tool_button_get_tool_info (GIMP_TOOL_BUTTON (widget));
+              /* TRANSLATORS: %s will be a tool name, so we'll get a
+               * final string looking like 'Activate the "Bucket fill" tool'.
+               */
+              popover_text = g_strdup_printf (_("Activate the \"%s\" tool"),
+                                              info->label);
+            }
+
+          if (popover_text != NULL)
+            {
+              GtkWidget *popover = gtk_popover_new (widget);
+              GtkWidget *label   = gtk_label_new (popover_text);
+
+              gtk_container_add (GTK_CONTAINER (popover), label);
+              gtk_widget_show (label);
+              gtk_widget_show (popover);
+
+              g_timeout_add (1200,
+                             (GSourceFunc) gimp_widget_blink_popover_remove,
+                             popover);
+              g_free (popover_text);
             }
         }
     }
@@ -1534,7 +1612,7 @@ gimp_widget_blink_timeout (GtkWidget *widget)
               script->next->prev = NULL;
               script->next       = NULL;
 
-              gimp_widget_blink_after (next_widget, 500);
+              gimp_widget_blink_after (next_widget, 800);
             }
 
           g_object_set_data (G_OBJECT (widget), "gimp-widget-blink-script", NULL);

@@ -591,7 +591,19 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
         g_strfreev (settings);
     }
   if (blink_script != NULL)
-    gimp_blink_play_script (blink_script);
+    {
+      GList *windows = gimp_get_image_windows (gimp);
+
+      /* Losing forcus on the welcome dialog on purpose for the main GUI
+       * to be more readable.
+       */
+      if (windows)
+        gtk_window_present (windows->data);
+
+      gimp_blink_play_script (blink_script);
+
+      g_list_free (windows);
+    }
 
   g_strfreev (script_steps);
 }
