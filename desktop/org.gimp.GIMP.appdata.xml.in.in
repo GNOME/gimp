@@ -73,6 +73,25 @@
   </provides>
 
   <releases>
+    <release version="2.99.11" date="TODO" type="development">
+      <description>
+        <_p>
+        One step further towards GIMP 3.0, GIMP 2.99.12 comes along with the following noteworthy improvements:
+        </_p>
+        <ul>
+          <_li demo="toolbox:bucket-fill,
+                     tool-options:fill-area=2,
+                     tool-options:line-art-stroke-border=1">
+          New "Stroke borders" option in Bucket Fill tool's "Fill by line art detection"
+          </_li>
+          <_li demo="toolbox:bucket-fill,
+                     tool-options:fill-area=2,
+                     tool-options:line-art-settings">
+          Redesigned and reorganized "Fill by line art detection" settings
+          </_li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.10" date="2022-02-22" type="development">
       <description>
         <_p>
