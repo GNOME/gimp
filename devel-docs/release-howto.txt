@@ -75,6 +75,10 @@
      [ ] Loading text will appear in bottom quarter, so image contents
          must be adapted.
 
+ ( ) Make sure that changes which would deserve some tour get the
+     appropriate "demo" attribute in desktop/org.gimp.GIMP.appdata.xml.in
+     as documented in README.md.
+
  ( ) If ever the actual release date evolved and is different from the
      planned date, update the "date" in the <release> tag of the appdata
      in: desktop/org.gimp.GIMP.appdata.xml.in

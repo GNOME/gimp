@@ -446,6 +446,59 @@ Some of these duties include:
   to make a GIMP release as looking in this file to write release notes
   is much easier than reviewing hundreds of commits.
 
+#### AppStream metadata
+
+One of the requirement of a good release is to have a proper `<release>`
+tag in the [AppStream metadata
+file](desktop/org.gimp.GIMP.appdata.xml.in.in). This metadata is used by
+various installers (e.g. GNOME Software, KDE Discover), software
+websites (e.g. Flathub). Having good release info in particular will
+help people know what happened on the last release, and also it will
+have GIMP feature among the "recently updated" software list, when the
+installer/website has such a section.
+
+Moreover we use this data within GIMP itself where we feature recent
+changes in the Welcome dialog after an update.
+
+What you should take care of are the following points:
+
+* For the general rules on AppStream format, please refer to its
+  [specifications](https://www.freedesktop.org/software/appstream/docs/).
+* Native language text are translated if a tag name starts with `_`.
+  Therefore do not use `<p>` but `<_p>` in the source. Same for `<_li>`
+  instead of `<li>`. These will be transformed by our build system.
+* It also means you should push the `<release>` text early to leave time
+  to translators.
+* Since we use this data in GIMP itself, we stick to a specific
+  contents in a `<release>` tag. In particular, all `<release>` tags
+  must start with one or several `<_p>` paragraphs, followed by a `<ul>`
+  list.
+* Make sure the `date` and `version` attributes are appropriate. When
+  the release date is still unknown, setting "TODO" is a good practice
+  as our CI will `grep TODO` on even micro versions and fail on them.
+* We have a custom feature in GIMP: adding `demo` attributes to `<_li>`
+  points of the release will generate a feature tour (basically blinking
+  several pieces of GIMP in order).
+  The format is as follows:
+    - demo steps are comma-separated;
+    - each step are in the form `dockable:widget=value`. You could write
+      only `dockable` (which would blink the dockable), or
+      `dockable:widget` (which would only blink the specific widget).
+      The full form would not only blink the widget but also change its
+      value (only boolean and integer types are supported for now).
+    - dockable names can be found in `app/dialogs/dialogs.c`. Since they
+      all start with `gimp-`, writing the suffix or not is equivalent.
+    - the widget IDs will default to the associated property. If the
+      widget is not a propwidget, or you wish to create a specific ID,
+      `gimp_widget_set_identifier()` must have been set explicitly to
+      this widget.
+    - as a special case, tool buttons (in `toolbox:` dockable) IDs are
+      the action names, so you can just search in `Edit > Keyboard
+      Shortcuts` menu. These are usually of the form `tools-*` so the
+      short form without `tools-` is also accepted.
+    - spaces in this `demo` attribute are ignored which allows to
+      pretty-write the demo rules for better reading.
+
 ### Directory structure of GIMP source tree
 
 GIMP source tree can be divided into the main application, libraries, plug-ins,
