@@ -20,7 +20,6 @@
 
 #include "config.h"
 
-#include <appstream-glib.h>
 #include <gegl.h>
 #include <gtk/gtk.h>
 #ifdef GDK_WINDOWING_WAYLAND
@@ -60,101 +59,28 @@ static void   welcome_size_allocate                 (GtkWidget      *welcome_dia
 GtkWidget *
 welcome_dialog_create (Gimp *gimp)
 {
-  GtkWidget     *welcome_dialog;
-  AsApp         *app           = NULL;
-  const gchar   *release_notes = NULL;
-  GError        *error         = NULL;
+  GtkWidget  *welcome_dialog;
+  GList      *windows;
 
-  GList         *windows;
+  GtkWidget  *main_vbox;
+  GtkWidget  *stack;
+  GtkWidget  *grid;
+  GtkWidget  *switcher;
 
-  GtkWidget     *main_vbox;
-  GtkWidget     *stack;
-  GtkWidget     *grid;
-  GtkWidget     *switcher;
+  GtkWidget  *scrolled_window;
+  GtkWidget  *vbox;
+  GtkWidget  *hbox;
+  GtkWidget  *image;
+  GtkWidget  *listbox;
+  GtkWidget  *widget;
 
-  GtkWidget     *scrolled_window;
-  GtkWidget     *vbox;
-  GtkWidget     *hbox;
-  GtkWidget     *image;
-  GtkWidget     *listbox;
-  GtkWidget     *widget;
-
-  gchar         *release_link;
-  gchar         *appdata_path;
-  gchar         *title;
-  gchar         *markup;
-  gchar         *release_introduction = NULL;
-  GList         *release_items        = NULL;
-  gchar         *tmp;
-
-  gint           row;
+  gchar      *release_link;
+  gchar      *title;
+  gchar      *markup;
+  gchar      *tmp;
+  gint        row;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  /* Why I am using gimp_data_directory() then backing out 2 directories
-   * instead of directly using gimp_installation_directory () is because
-   * the 'datadir' might be customized, so I don't want to hardcode
-   * "share". It might be something else.
-   */
-  appdata_path = g_build_filename (gimp_data_directory (),
-                                   "..", "..", "metainfo",
-                                   "org.gimp.GIMP.appdata.xml",
-                                   NULL);
-  if (! g_file_test (appdata_path, G_FILE_TEST_IS_REGULAR))
-    {
-      /* This should not happen since we install explicitly this file in
-       * metainfo/, but flatpak at least is overriding our install and
-       * moving the file to appdata/ (which used to be the legacy
-       * location). Hopefully they are the only ones doing it, but just
-       * in case, let's make an alternative check in this other
-       * location.
-       */
-      g_printerr ("%s: AppStream file '%s' is not a regular file.\n",
-                  G_STRFUNC, appdata_path);
-      g_free (appdata_path);
-      appdata_path = g_build_filename (gimp_data_directory (),
-                                       "..", "..", "appdata",
-                                       "org.gimp.GIMP.appdata.xml",
-                                       NULL);
-    }
-  if (g_file_test (appdata_path, G_FILE_TEST_IS_REGULAR))
-    {
-      AsRelease *release;
-
-      app = as_app_new ();
-      if (as_app_parse_file (app, appdata_path,
-                             AS_APP_PARSE_FLAG_USE_HEURISTICS,
-                             &error))
-        {
-          if ((release = as_app_get_release (app, GIMP_VERSION)) != NULL)
-            release_notes = as_release_get_description (release, g_getenv ("LANGUAGE")) ?
-              as_release_get_description (release, g_getenv ("LANGUAGE")) :
-              as_release_get_description (release, NULL);
-          else if (GIMP_MICRO_VERSION % 2 == 0)
-            g_printerr ("%s: no <release> tag for version %s in '%s'\n",
-                        G_STRFUNC, GIMP_VERSION, appdata_path);
-        }
-      else if (error)
-        {
-          g_printerr ("%s: %s\n", G_STRFUNC, error->message);
-          g_clear_error (&error);
-        }
-      else
-        {
-          g_printerr ("%s: failed to load AppStream file '%s'\n", G_STRFUNC, appdata_path);
-        }
-    }
-  else
-    {
-      /* Note that none of the errors here and above should happen.
-       * Each of our releases (even micro value) should have a <release>
-       * tag. But I am just printing to stderr and half-ignoring the
-       * miss because it is not serious enough to break normal GIMP
-       * usage.
-       */
-      g_printerr ("%s: AppStream file '%s' is not a regular file.\n", G_STRFUNC, appdata_path);
-    }
-  g_free (appdata_path);
 
   /* Translators: the %s string will be the version, e.g. "3.0". */
   title = g_strdup_printf (_("Welcome to GIMP %s"), GIMP_VERSION);
@@ -310,7 +236,7 @@ welcome_dialog_create (Gimp *gimp)
   /* Release Notes */
   /*****************/
 
-  if (release_notes)
+  if (gimp_welcome_dialog_n_items > 0)
     {
       gint n_demos = 0;
 
@@ -346,15 +272,22 @@ welcome_dialog_create (Gimp *gimp)
       gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
       gtk_widget_show (image);
 
-      /* Release note contents. */
+      /* Release note introduction. */
 
-      gimp_appstream_to_pango_markups (release_notes,
-                                       &release_introduction,
-                                       &release_items);
-      if (release_introduction)
+      if (gimp_welcome_dialog_intro_n_paragraphs)
         {
+          GString *introduction = NULL;
+
+          for (gint i = 0; i < gimp_welcome_dialog_intro_n_paragraphs; i++)
+            {
+              if (i == 0)
+                introduction = g_string_new (_(gimp_welcome_dialog_intro[i]));
+              else
+                g_string_append_printf (introduction, "\n%s",
+                                        _(gimp_welcome_dialog_intro[i]));
+            }
           widget = gtk_label_new (NULL);
-          gtk_label_set_markup (GTK_LABEL (widget), release_introduction);
+          gtk_label_set_markup (GTK_LABEL (widget), introduction->str);
           gtk_label_set_max_width_chars (GTK_LABEL (widget), 70);
           gtk_label_set_selectable (GTK_LABEL (widget), FALSE);
           gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
@@ -362,65 +295,59 @@ welcome_dialog_create (Gimp *gimp)
           gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
           gtk_widget_show (widget);
 
-          g_free (release_introduction);
+          g_string_free (introduction, TRUE);
         }
 
-      if (release_items)
+      /* Release note's change items. */
+
+      scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+      gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
+      gtk_widget_show (scrolled_window);
+
+      listbox = gtk_list_box_new ();
+
+      for (gint i = 0; i < gimp_welcome_dialog_n_items; i++)
         {
-          GList *item;
-          gint   i;
+          GtkWidget *row;
+          gchar     *markup;
 
-          scrolled_window = gtk_scrolled_window_new (NULL, NULL);
-          gtk_box_pack_start (GTK_BOX (vbox), scrolled_window, TRUE, TRUE, 0);
-          gtk_widget_show (scrolled_window);
-
-          listbox = gtk_list_box_new ();
-
-          for (item = release_items, i = 0; item; item = item->next, i++)
+          /* Add a bold dot for pretty listing. */
+          if (i < gimp_welcome_dialog_n_items &&
+              gimp_welcome_dialog_demos[i] != NULL)
             {
-              GtkWidget *row;
-              gchar     *markup;
-
-              /* Add a bold dot for pretty listing. */
-              if (i < n_gimp_welcome_dialog_demo &&
-                  gimp_welcome_dialog_demo[i] != NULL)
-                {
-                  markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s",
-                                            (gchar *) item->data);
-                  n_demos++;
-                }
-              else
-                {
-                  markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s",
-                                            (gchar *) item->data);
-                }
-
-              row = gtk_list_box_row_new ();
-              widget = gtk_label_new (NULL);
-              gtk_label_set_markup (GTK_LABEL (widget), markup);
-              gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
-              gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
-              gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
-              gtk_widget_set_halign (widget, GTK_ALIGN_START);
-              gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
-              gtk_container_add (GTK_CONTAINER (row), widget);
-
-              gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
-              gtk_widget_show_all (row);
-
-              g_free (markup);
+              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x96\xb6</span>  %s",
+                                        _((gchar *) gimp_welcome_dialog_items[i]));
+              n_demos++;
             }
-          gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
-          gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
-                                           GTK_SELECTION_NONE);
+          else
+            {
+              markup = g_strdup_printf ("<span weight='ultrabold'>\xe2\x80\xa2</span>  %s",
+                                        _((gchar *) gimp_welcome_dialog_items[i]));
+            }
 
-          g_signal_connect (listbox, "row-activated",
-                            G_CALLBACK (welcome_dialog_release_item_activated),
-                            gimp);
-          gtk_widget_show (listbox);
+          row = gtk_list_box_row_new ();
+          widget = gtk_label_new (NULL);
+          gtk_label_set_markup (GTK_LABEL (widget), markup);
+          gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+          gtk_label_set_line_wrap_mode (GTK_LABEL (widget), PANGO_WRAP_WORD);
+          gtk_label_set_justify (GTK_LABEL (widget), GTK_JUSTIFY_LEFT);
+          gtk_widget_set_halign (widget, GTK_ALIGN_START);
+          gtk_label_set_xalign (GTK_LABEL (widget), 0.0);
+          gtk_container_add (GTK_CONTAINER (row), widget);
 
-          g_list_free_full (release_items, g_free);
+          gtk_list_box_insert (GTK_LIST_BOX (listbox), row, -1);
+          gtk_widget_show_all (row);
+
+          g_free (markup);
         }
+      gtk_container_add (GTK_CONTAINER (scrolled_window), listbox);
+      gtk_list_box_set_selection_mode (GTK_LIST_BOX (listbox),
+                                       GTK_SELECTION_NONE);
+
+      g_signal_connect (listbox, "row-activated",
+                        G_CALLBACK (welcome_dialog_release_item_activated),
+                        gimp);
+      gtk_widget_show (listbox);
 
       if (n_demos > 0)
         {
@@ -493,8 +420,6 @@ welcome_dialog_create (Gimp *gimp)
   gtk_widget_show (widget);
   gtk_box_pack_start (GTK_BOX (main_vbox), widget, FALSE, FALSE, 0);
 
-  g_clear_object (&app);
-
   return welcome_dialog;
 }
 
@@ -512,9 +437,9 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
 
   row_index = gtk_list_box_row_get_index (row);
 
-  g_return_if_fail (row_index < n_gimp_welcome_dialog_demo);
+  g_return_if_fail (row_index < gimp_welcome_dialog_n_items);
 
-  script_string = gimp_welcome_dialog_demo[row_index];
+  script_string = gimp_welcome_dialog_demos[row_index];
 
   if (script_string == NULL)
     /* Not an error. Some release items have no demos. */

@@ -23,6 +23,7 @@ Usage: generate-welcome-dialog-data.py
 
 import argparse
 import os.path
+import re
 import sys
 import xml.etree.ElementTree as ET
 
@@ -34,21 +35,42 @@ infile      = os.path.join(desktop_dir, 'org.gimp.GIMP.appdata.xml.in.in')
 outfile     = os.path.join(outdir, 'welcome-dialog-data.h')
 
 def parse_appdata(infile, version):
+  introduction  = []
+  release_texts = []
   release_demos = []
+
+  spaces = re.compile(r'\s+')
   tree = ET.parse(infile)
   root = tree.getroot()
   releases_node = root.find('releases')
   releases = releases_node.findall('release')
   for release in releases:
     if 'version' in release.attrib and release.attrib['version'] == version:
+      intro = release.findall('./description/_p')
+      for p in intro:
+        # Naive conversion for C strings, but it will probably fit for
+        # most cases.
+        p = p.text.strip()
+        p = p.replace('\\', '\\\\')
+        p = p.replace('"', '\\"')
+        # All redundant spaces unwanted as XML merges them anyway.
+        introduction += [spaces.sub(' ', p)]
+
       items = release.findall('./description/ul/_li')
       for item in items:
+        text = item.text.strip()
+        text = text.replace('\\', '\\\\')
+        text = text.replace('"', '\\"')
         demo = None
         if 'demo' in item.attrib:
           demo = item.attrib['demo']
+          # All spaces unneeded in demo string.
+          demo = demo.replace(' ', '')
+        release_texts += [spaces.sub(' ', text)]
         release_demos += [demo]
+      break
 
-  return release_demos
+  return introduction, release_texts, release_demos
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
@@ -87,14 +109,18 @@ if __name__ == "__main__":
 '''
   print(top_comment)
 
-  demos = parse_appdata(infile, args.version)
+  intro_p, items, demos = parse_appdata(infile, args.version)
 
   if args.header:
     print('#ifndef __WELCOME_DIALOG_DATA_H__')
     print('#define __WELCOME_DIALOG_DATA_H__\n\n')
 
-    print('extern gint          n_gimp_welcome_dialog_demo;')
-    print('extern const gchar * gimp_welcome_dialog_demo[];')
+    print('extern gint          gimp_welcome_dialog_n_items;')
+    print('extern const gchar * gimp_welcome_dialog_items[];')
+    print('extern const gchar * gimp_welcome_dialog_demos[];')
+    print()
+    print('extern gint          gimp_welcome_dialog_intro_n_paragraphs;')
+    print('extern const gchar * gimp_welcome_dialog_intro[];')
 
     print('\n\n#endif /* __WELCOME_DIALOG_DATA_H__ */')
   else:
@@ -102,13 +128,27 @@ if __name__ == "__main__":
     print('#include <glib.h>')
     print()
 
-    print('const gint    n_gimp_welcome_dialog_demo = {};'.format(len(demos)))
+    print('const gint   gimp_welcome_dialog_n_items = {};'.format(len(demos)))
     print()
-    print('const gchar * gimp_welcome_dialog_demo[] =')
+    print('const gchar *gimp_welcome_dialog_items[] =')
+    print('{')
+    for item in items:
+      print('  "{}",'.format(item))
+    print('  NULL,\n};')
+    print()
+    print('const gchar *gimp_welcome_dialog_demos[] =')
     print('{')
     for demo in demos:
       if demo is None:
         print('  NULL,')
       else:
         print('  "{}",'.format(demo))
+    print('  NULL,\n};')
+    print()
+    print('const gint   gimp_welcome_dialog_intro_n_paragraphs = {};'.format(len(intro_p)))
+    print()
+    print('const gchar *gimp_welcome_dialog_intro[] =')
+    print('{')
+    for p in intro_p:
+      print('  "{}",'.format(p))
     print('  NULL,\n};')
