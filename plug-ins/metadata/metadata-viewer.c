@@ -383,8 +383,17 @@ static inline gboolean
 metadata_tag_is_string (const gchar *tag)
 {
   const gchar *tag_type;
+  GError      *error = NULL;
 
-  tag_type = gexiv2_metadata_get_tag_type (tag);
+  tag_type = gexiv2_metadata_try_get_tag_type (tag, &error);
+  if (error)
+    {
+      g_printerr ("%s: Failed to get metadata tag type for tag %s: %s",
+                  G_STRFUNC, tag, error->message);
+      g_clear_error (&error);
+
+      return FALSE;
+    }
 
   return (g_strcmp0 (tag_type, "Byte")      != 0 &&
           g_strcmp0 (tag_type, "Undefined") != 0 &&
@@ -417,9 +426,17 @@ metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
                                     gint             value_column,
                                     const gchar     *tag)
 {
-  gchar *value;
+  gchar  *value = NULL;
+  GError *error = NULL;
 
-  value = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+  value = gexiv2_metadata_try_get_tag_interpreted_string (metadata, tag, &error);
+  if (error)
+    {
+      g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                  G_STRFUNC, tag, error->message);
+      g_clear_error (&error);
+    }
+
   metadata_dialog_add_tag (store, iter, tag_column, value_column,
                            tag, gettext (value));
   g_free (value);
@@ -465,9 +482,16 @@ metadata_dialog_add_multiple_values (GExiv2Metadata  *metadata,
                                      gint             tag_column,
                                      gint             value_column)
 {
-  gchar **values;
+  gchar  **values;
+  GError  *error = NULL;
 
-  values = gexiv2_metadata_get_tag_multiple (GEXIV2_METADATA (metadata), tag);
+  values = gexiv2_metadata_try_get_tag_multiple (GEXIV2_METADATA (metadata), tag, &error);
+  if (error)
+    {
+      g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                  G_STRFUNC, tag, error->message);
+      g_clear_error (&error);
+    }
 
   if (values)
     {
@@ -510,7 +534,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
   while ((tag = *tags++))
     {
       gchar  *value;
-      gchar **values;
 
       /* We need special handling for iptc tags like "Keywords" which
        * can appear multiple times. For now assuming that this can
@@ -546,9 +569,10 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
               gdouble  lng, lat, alt;
               gchar   *str;
               gchar  *value;
+              GError *error = NULL;
 
-              if (gexiv2_metadata_get_gps_longitude (GEXIV2_METADATA (metadata),
-                                                     &lng))
+              if (gexiv2_metadata_try_get_gps_longitude (GEXIV2_METADATA (metadata),
+                                                         &lng, &error))
                 {
                   str = metadata_format_gps_longitude_latitude (lng);
                   metadata_dialog_add_tag (store, iter,
@@ -557,12 +581,19 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                                            str);
                   g_free (str);
                 }
+              else if (error)
+                {
+                  g_printerr ("%s: unreadable gps longitude tag: %s\n",
+                              G_STRFUNC, error->message);
+                  g_clear_error (&error);
+                }
+
               metadata_dialog_add_translated_tag (metadata, store, iter,
                                                   tag_column, value_column,
                                                   "Exif.GPSInfo.GPSLongitudeRef");
 
-              if (gexiv2_metadata_get_gps_latitude (GEXIV2_METADATA (metadata),
-                                                    &lat))
+              if (gexiv2_metadata_try_get_gps_latitude (GEXIV2_METADATA (metadata),
+                                                        &lat, &error))
                 {
                   str = metadata_format_gps_longitude_latitude (lat);
                   metadata_dialog_add_tag (store, iter,
@@ -571,14 +602,22 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                                            str);
                   g_free (str);
                 }
+              else if (error)
+                {
+                  g_printerr ("%s: unreadable gps latitude tag: %s\n",
+                              G_STRFUNC, error->message);
+                  g_clear_error (&error);
+                }
+
               metadata_dialog_add_translated_tag (metadata, store, iter,
                                                   tag_column, value_column,
                                                   "Exif.GPSInfo.GPSLatitudeRef");
 
-              if (gexiv2_metadata_get_gps_altitude (GEXIV2_METADATA (metadata),
-                                                    &alt))
+              if (gexiv2_metadata_try_get_gps_altitude (GEXIV2_METADATA (metadata),
+                                                        &alt, &error))
                 {
-                  gchar *str2, *str3;
+                  gchar  *str2, *str3;
+                  GError *error = NULL;
 
                   str  = metadata_format_gps_altitude (alt, TRUE,  _(" meter"));
                   str2 = metadata_format_gps_altitude (alt, FALSE, _(" feet"));
@@ -590,8 +629,16 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                   g_free (str);
                   g_free (str2);
                   g_free (str3);
-                  value = gexiv2_metadata_get_tag_string (metadata,
-                                                          "Exif.GPSInfo.GPSAltitudeRef");
+                  value = gexiv2_metadata_try_get_tag_string (metadata,
+                                                              "Exif.GPSInfo.GPSAltitudeRef",
+                                                              &error);
+                  if (error)
+                    {
+                      g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                                  G_STRFUNC, "Exif.GPSInfo.GPSAltitudeRef",
+                                  error->message);
+                      g_clear_error (&error);
+                    }
 
                   if (value)
                     {
@@ -610,12 +657,27 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                       g_free (value);
                     }
                 }
+              else if (error)
+                {
+                  g_printerr ("%s: unreadable gps altitude tag: %s\n",
+                              G_STRFUNC, error->message);
+                  g_clear_error (&error);
+                }
               gps_done = TRUE;
             }
         }
       else if (! strcmp ("Exif.Photo.UserComment", tag))
         {
-          value = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+          GError *error = NULL;
+
+          value = gexiv2_metadata_try_get_tag_interpreted_string (metadata, tag, &error);
+          if (error)
+            {
+              g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                          G_STRFUNC, tag, error->message);
+              g_clear_error (&error);
+            }
+
           /* Can start with charset. Remove part that is not relevant. */
           value = metadata_interpret_user_comment (value);
 
@@ -626,23 +688,34 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
         }
       else
         {
-          if (g_str_has_prefix (tag, "Xmp.") &&
-              g_strcmp0 (gexiv2_metadata_get_tag_type (tag), "XmpText") != 0)
+          if (g_str_has_prefix (tag, "Xmp."))
             {
-              metadata_dialog_add_multiple_values (GEXIV2_METADATA (metadata),
-                                                   tag, store,
-                                                   tag_column,
-                                                   value_column);
+              GError      *error = NULL;
+              const gchar *tag_type;
+
+              tag_type = gexiv2_metadata_try_get_tag_type (tag, &error);
+              if (error)
+                {
+                  g_printerr ("%s: Failed to get metadata tag type for tag %s: %s",
+                              G_STRFUNC, tag, error->message);
+                  g_clear_error (&error);
+                }
+              else if (g_strcmp0 (tag_type, "XmpText") != 0)
+                {
+                  metadata_dialog_add_multiple_values (GEXIV2_METADATA (metadata),
+                                                       tag, store,
+                                                       tag_column,
+                                                       value_column);
+                  continue;
+                }
             }
-          else
-            {
-              value = metadata_dialog_format_tag_value (metadata, tag,
-                                                        /* truncate = */ TRUE);
-              metadata_dialog_add_tag (store, iter,
-                                       tag_column, value_column,
-                                       tag, value);
-              g_free (value);
-            }
+
+          value = metadata_dialog_format_tag_value (metadata, tag,
+                                                    /* truncate = */ TRUE);
+          metadata_dialog_add_tag (store, iter,
+                                   tag_column, value_column,
+                                   tag, value);
+          g_free (value);
         }
     }
 }
@@ -656,10 +729,18 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
 
   if (metadata_tag_is_string(tag))
     {
-      gchar *value;
-      gchar *value_utf8;
+      gchar  *value;
+      gchar  *value_utf8;
+      GError *error = NULL;
 
-      value      = gexiv2_metadata_get_tag_interpreted_string (metadata, tag);
+      value = gexiv2_metadata_try_get_tag_interpreted_string (metadata, tag, &error);
+      if (error)
+        {
+          g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                      G_STRFUNC, tag, error->message);
+          g_clear_error (&error);
+        }
+
       if (! g_utf8_validate (value, -1, NULL))
         {
           value_utf8 = g_locale_to_utf8 (value, -1, NULL, NULL, NULL);
@@ -681,8 +762,16 @@ metadata_dialog_format_tag_value (GExiv2Metadata *metadata,
       gsize         display_size;
       GString      *str;
       gint          i;
+      GError       *error = NULL;
 
-      bytes = gexiv2_metadata_get_tag_raw (metadata, tag);
+      bytes = gexiv2_metadata_try_get_tag_raw (metadata, tag, &error);
+      if (error)
+        {
+          g_printerr ("%s: unreadable '%s' metadata tag: %s\n",
+                      G_STRFUNC, tag, error->message);
+          g_clear_error (&error);
+        }
+
       data  = g_bytes_get_data (bytes, &size);
 
       if (! truncate)
