@@ -11,6 +11,17 @@ Otherwise, this branch is only for bug-fixes.
 Overview of Changes from GIMP 2.10.30 to GIMP 2.10.32
 =====================================================
 
+Core:
+
+  - Adding support for localized glyphs ('locl') in Text tool depending
+    on the value of the "Language" field in Text tool options.
+
+User Interface:
+
+  - Removed titlebar/borders from Windows Splash Screen.
+  - All official themes now have on-hover indicator around eye and link
+    toggles in Layer/Channel/Path Dialog tree-views.
+
 Plug-ins:
 
   - TGA: improving indexed images with alpha channel support (both
@@ -20,6 +31,13 @@ Plug-ins:
   - file-raw: "RGB Save Type" confusing dialog label renamed to "Palette
     Type" as on the main dev branch.
   - screenshot: option to capture cursor in now available on Windows.
+  - pygimp: new optional parameter `run_mode_param` (defaulting to True)
+    to register() function of the Python binding, which allows to make
+    the "run-mode" parameter optional when creating a new PDB procedure.
+    This is already used to fix "file-openraster-load-thumb" without
+    changing its signature.
+  - BMP: new PDB procedure "file-bmp-save2" which supports all options
+    available interactively.
 
 Libgimp:
 
@@ -31,6 +49,10 @@ Libgimpbase:
   - Limit to 1000 ancestors when serializing data with a log of
     `Xmp.photoshop.DocumentAncestors` tags (possibly because of a bugs
     of software who created these).
+
+Build:
+
+  - Bumping minimum GEGL to version 0.4.36.
 
 
 Overview of Changes from GIMP 2.10.28 to GIMP 2.10.30
