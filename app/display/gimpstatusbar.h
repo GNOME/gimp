@@ -68,6 +68,10 @@ struct _GimpStatusbar
   gchar                cursor_format_str[CURSOR_FORMAT_LENGTH];
   gchar                cursor_format_str_f[CURSOR_FORMAT_LENGTH];
   gchar                length_format_str[CURSOR_FORMAT_LENGTH];
+  GimpCursorPrecision  cursor_precision;
+  gint                 cursor_w_digits;
+  gint                 cursor_h_digits;
+
 
   GtkWidget           *cursor_label;
   GtkWidget           *unit_combo;

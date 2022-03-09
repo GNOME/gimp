@@ -1273,6 +1273,7 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
     case GIMP_CURSOR_PRECISION_SUBPIXEL:
       break;
     }
+  statusbar->cursor_precision = precision;
 
   if (shell->unit == GIMP_UNIT_PIXEL)
     {
@@ -1428,6 +1429,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%d%%s");
+
+      statusbar->cursor_w_digits = 0;
+      statusbar->cursor_h_digits = 0;
     }
   else /* show real world units */
     {
@@ -1445,6 +1449,9 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
                   "%%s%%.%df%%s", MAX (w_digits, h_digits));
+
+      statusbar->cursor_w_digits = w_digits;
+      statusbar->cursor_h_digits = h_digits;
     }
 
   gimp_statusbar_update_cursor (statusbar, GIMP_CURSOR_PRECISION_SUBPIXEL,
@@ -1808,27 +1815,6 @@ gimp_statusbar_queue_pos_redraw (gpointer data)
   shell = statusbar->shell;
   image = gimp_display_get_image (shell->display);
 
-  if (image)
-    {
-      image_width  = gimp_image_get_width  (image);
-      image_height = gimp_image_get_height (image);
-
-      /* The number of chars within up to 2 times the image bounds is:
-       * - max width chars: floor (log10 (2 * max_width)) + 1
-       * - max height chars: floor (log10 (2 * max_height)) + 1
-       * - the comma and a space: + 2
-       * - possibly 2 minus characters when going in negative
-       *   dimensions: + 2
-       * The goal of this is to avoid the label size jumping up and
-       * down. Actually it was not a problem on Linux, but this was
-       * reported on macOS.
-       * See: https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/572#note_1389445
-       * Of course, it could still happen for people going way
-       * off-canvas but that's acceptable edge-case.
-       */
-      label_width_chars = floor (log10 (2 * image_width)) + floor (log10 (2 * image_height)) + 6;
-    }
-
 #ifdef GDK_WINDOWING_QUARTZ
 /*
  * This optimization dramatically improves drawing refresh speed on Macs with retina
@@ -1849,6 +1835,65 @@ gimp_statusbar_queue_pos_redraw (gpointer data)
 
   statusbar->last_frame_time = curr_time;
 #endif
+
+  if (image)
+    {
+      image_width  = gimp_image_get_width  (image);
+      image_height = gimp_image_get_height (image);
+
+      /* The number of chars within up to 2 times the image bounds is:
+       * - max width chars: floor (log10 (2 * max_width)) + 1
+       * - max height chars: floor (log10 (2 * max_height)) + 1
+       * - the comma and a space: + 2
+       * - optional 2 minus characters when going in negative
+       *   dimensions: + 2
+       * - optional decimal separators and digits when showing
+       *   fractional values.
+       *
+       * The goal of this is to avoid the label size jumping up and
+       * down. Actually it was not a problem on Linux, but this was
+       * reported on macOS.
+       * See: https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/572#note_1389445
+       * So we just compute what looks like a reasonable "biggest size"
+       * in worst cases.
+       * Of course, it could still happen for people going way
+       * off-canvas but that's acceptable edge-case.
+       */
+      if (shell->unit == GIMP_UNIT_PIXEL)
+        {
+          label_width_chars = floor (log10 (2 * image_width)) + floor (log10 (2 * image_height)) + 6;
+
+          if (statusbar->cursor_precision == GIMP_CURSOR_PRECISION_SUBPIXEL)
+            /* In subpixel precision, we have a 1 digit precision per
+             * dimension, so 4 additional characters, decimal
+             * separators-included.
+             */
+            label_width_chars += 4;
+        }
+      else /* showing real world units */
+        {
+          GtkTreeModel  *model;
+          GimpUnitStore *store;
+          gdouble        max_x = (gdouble) image_width;
+          gdouble        max_y = (gdouble) image_height;
+
+          model = gtk_combo_box_get_model (GTK_COMBO_BOX (statusbar->unit_combo));
+          store = GIMP_UNIT_STORE (model);
+
+          gimp_unit_store_set_pixel_values (store, max_x, max_y);
+          gimp_unit_store_get_values (store, shell->unit, &max_x, &max_y);
+
+          label_width_chars = /* max width (int) up to 2 times image bounds - 1  */
+                              floor (log10 (2 * max_x))                                             +
+                              /* max height (int) up to 2 times image bounds - 1 */
+                              floor (log10 (2 * max_y))                                             +
+                              /* + 2 + comma + space + 2 minuses                 */
+                              6                                                                     +
+                              /* 2 (optional) decimal separators + digits.       */
+                              (statusbar->cursor_w_digits > 0 ? 1 + statusbar->cursor_w_digits : 0) +
+                              (statusbar->cursor_h_digits > 0 ? 1 + statusbar->cursor_h_digits : 0);
+        }
+    }
 
   g_free (statusbar->cursor_string_last);
   gtk_label_set_width_chars (GTK_LABEL (statusbar->cursor_label), label_width_chars);
