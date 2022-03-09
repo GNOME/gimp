@@ -508,6 +508,15 @@ gimp_text_layout_apply_tags (GimpTextLayout *layout,
     result = g_strdup_printf ("<span color=\"#%02x%02x%02x\">%s</span>",
                               r, g, b, markup);
   }
+  /* Updating font 'locl' (if supported) with 'lang' feature tag */
+  if (text->language)
+    {
+      gchar *tmp = g_strdup_printf ("<span lang=\"%s\">%s</span>",
+                                    text->language,
+                                    result);
+      g_free (result);
+      result = tmp;
+    }
 
   if (fabs (text->letter_spacing) > 0.1)
     {
