@@ -152,9 +152,6 @@ static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
 static GdkPixbuf * gimp_statusbar_load_icon       (GimpStatusbar     *statusbar,
                                                    const gchar       *icon_name);
 
-static void     gimp_statusbar_cursor_label_set_text (GimpStatusbar  *statusbar,
-                                                      gchar          *buffer);
-
 static gboolean gimp_statusbar_queue_pos_redraw   (gpointer           data);
 
 
@@ -1327,7 +1324,7 @@ gimp_statusbar_update_cursor (GimpStatusbar       *statusbar,
 void
 gimp_statusbar_clear_cursor (GimpStatusbar *statusbar)
 {
-  gimp_statusbar_cursor_label_set_text (statusbar, "");
+  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), "");
   gtk_widget_set_sensitive (statusbar->cursor_label, TRUE);
 }
 
@@ -1798,7 +1795,8 @@ gimp_statusbar_load_icon (GimpStatusbar *statusbar,
   return icon;
 }
 
-static gboolean gimp_statusbar_queue_pos_redraw (gpointer data)
+static gboolean
+gimp_statusbar_queue_pos_redraw (gpointer data)
 {
   GimpStatusbar    *statusbar = GIMP_STATUSBAR (data);
   GimpDisplayShell *shell;
@@ -1854,27 +1852,11 @@ static gboolean gimp_statusbar_queue_pos_redraw (gpointer data)
 
   g_free (statusbar->cursor_string_last);
   gtk_label_set_width_chars (GTK_LABEL (statusbar->cursor_label), label_width_chars);
-  gimp_statusbar_cursor_label_set_text (statusbar, statusbar->cursor_string_todraw);
+  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), statusbar->cursor_string_todraw);
   statusbar->cursor_string_last = statusbar->cursor_string_todraw;
   statusbar->cursor_string_todraw = NULL;
 
   statusbar->statusbar_pos_redraw_idle_id = 0;
 
   return G_SOURCE_REMOVE;
-}
-
-static void gimp_statusbar_cursor_label_set_text (GimpStatusbar *statusbar, gchar *buffer)
-{
-#ifdef GDK_WINDOWING_QUARTZ
-  /*
-   * Without this code, on MacOS the cursor label leaps about in width as the label width is
-   * closely wrapped to the content which changes with each cursor move.
-   * Here is a discussion of the issue:
-   * https://gitlab.gnome.org/GNOME/gimp/-/merge_requests/572#note_1389445
-   */
-  if (gtk_label_get_width_chars (GTK_LABEL (statusbar->cursor_label)) <= (gint)strlen (buffer) + 4)
-    gtk_label_set_width_chars (GTK_LABEL (statusbar->cursor_label), strlen (buffer) + 6);
-#endif
-
-  gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
 }
