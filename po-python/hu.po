@@ -1,5 +1,5 @@
 # Hungarian translation for gimp-python.
-# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020, 2021 Free Software Foundation, Inc.
+# Copyright (C) 2001, 2003, 2004, 2007, 2008, 2012, 2013, 2014, 2018, 2019, 2020, 2021, 2022 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-python package.
 #
 # Andras Timar <timar at gnome dot hu>, 2001, 2003.
@@ -7,21 +7,21 @@
 # Laszlo Dvornik <dvornik at gnome dot hu>, 2004.
 # Arpad Biro <biro arpad  at gmail dot com>, 2004, 2007, 2008.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2012.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019, 2020, 2021.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2019, 2020, 2021, 2022.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2018, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-09-14 17:46+0000\n"
-"PO-Revision-Date: 2021-09-24 17:51+0200\n"
-"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
+"POT-Creation-Date: 2022-03-04 10:02+0000\n"
+"PO-Revision-Date: 2022-03-10 00:40+0100\n"
+"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
+"X-Generator: Lokalize 19.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
@@ -98,47 +98,48 @@ msgstr "Mentés színes HTML szövegként"
 msgid "Colored HTML text"
 msgstr "Színes HTML szöveg"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "Réteg _neve"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Réteg neve"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Felhők"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "Ö_rvénylés"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Örvénylés"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "Átlátszat_lanság"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Átlátszatlanság"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
-msgstr "Köd _színe"
+#: ../plug-ins/python/foggify.py:124
+#| msgid "Fog color"
+msgid "_Fog color"
+msgstr "_Köd színe"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Köd színe"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Ködréteg hozzáadása"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Köd…"
 
