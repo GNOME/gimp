@@ -79,6 +79,7 @@ m4_define([libjxl_required_version], [0.6.1])
 m4_define([liblzma_required_version], [5.0.0])
 m4_define([libmypaint_required_version], [1.3.0])
 m4_define([libpng_required_version], [1.6.25])
+m4_define([libtiff_required_version], [4.0.0])
 m4_define([libunwind_required_version], [1.1.0])
 m4_define([openexr_required_version], [1.6.1])
 m4_define([openjpeg_required_version], [2.1.0])
@@ -181,6 +182,7 @@ LIBJXL_REQUIRED_VERSION=libjxl_required_version
 LIBLZMA_REQUIRED_VERSION=liblzma_required_version
 LIBMYPAINT_REQUIRED_VERSION=libmypaint_required_version
 LIBPNG_REQUIRED_VERSION=libpng_required_version
+LIBTIFF_REQUIRED_VERSION=libtiff_required_version
 OPENEXR_REQUIRED_VERSION=openexr_required_version
 OPENJPEG_REQUIRED_VERSION=openjpeg_required_version
 PANGOCAIRO_REQUIRED_VERSION=pangocairo_required_version
@@ -217,6 +219,7 @@ AC_SUBST(LIBJXL_REQUIRED_VERSION)
 AC_SUBST(LIBLZMA_REQUIRED_VERSION)
 AC_SUBST(LIBMYPAINT_REQUIRED_VERSION)
 AC_SUBST(LIBPNG_REQUIRED_VERSION)
+AC_SUBST(LIBTIFF_REQUIRED_VERSION)
 AC_SUBST(OPENEXR_REQUIRED_VERSION)
 AC_SUBST(OPENJPEG_REQUIRED_VERSION)
 AC_SUBST(PANGOCAIRO_REQUIRED_VERSION)
@@ -1489,31 +1492,9 @@ AC_MSG_RESULT([$enable_relocatable_bundle])
 # Check for libtiff
 ###################
 
-libtiff_error=
-if test -z "$TIFF_LIBS"; then
-  AC_CHECK_LIB(tiff, TIFFReadScanline,
-    [AC_CHECK_HEADER(tiffio.h,
-      FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff',
-      [libtiff_error="TIFF header files not found"])],
-    [AC_CHECK_LIB(tiff, TIFFWriteScanline,
-      [AC_CHECK_HEADER(tiffio.h,
-        FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff -ljpeg -lz',
-	[libtiff_error="TIFF header files not found"])],
-      [AC_CHECK_LIB(tiff34, TIFFFlushData,
-	[AC_CHECK_HEADER(tiffio.h,
-          FILE_TIFF_LOAD='file-tiff-load$(EXEEXT)'; FILE_TIFF_SAVE='file-tiff-save$(EXEEXT)'; TIFF_LIBS='-ltiff34 -ljpeg -lz',
-	  [libtiff_error="TIFF header files not found"])],
-      [libtiff_error="TIFF library not found"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
-fi
-
-if test -z "$TIFF_LIBS"; then
-  add_deps_error([libtiff], [Checks for TIFF library failed: $libtiff_error])
-fi
-
+PKG_CHECK_MODULES(TIFF, [libtiff-4 >= libtiff_required_version],,
+                  [add_deps_error([libtiff-4 >= libtiff_required_version])])
 MIME_TYPES="$MIME_TYPES;image/tiff"
-
-AC_SUBST(TIFF_LIBS)
-
 
 ###################
 # Check for libjpeg

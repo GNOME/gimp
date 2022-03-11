@@ -997,10 +997,12 @@ save_image (GFile         *file,
   gint        origin_x            = 0;
   gint        origin_y            = 0;
   gint        saved_bpp;
+  gboolean    bigtiff;
   gboolean    config_save_profile;
   gboolean    config_save_thumbnail;
 
   g_object_get (config,
+                "bigtiff",            &bigtiff,
                 "save-color-profile", &config_save_profile,
                 "save-thumbnail",     &config_save_thumbnail,
                 NULL);
@@ -1013,7 +1015,7 @@ save_image (GFile         *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open file and write some global data */
-  tif = tiff_open (file, "w", error);
+  tif = tiff_open (file, (bigtiff ? "w8" : "w"), error);
 
   if (! tif)
     {
@@ -1267,6 +1269,7 @@ save_dialog (GimpImage     *image,
 
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "compression",
+                              "bigtiff",
                               "layers-frame",
                               "save-transparent-pixels",
                               NULL);

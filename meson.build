@@ -629,7 +629,8 @@ MIMEtypes = [
 
 
 
-libtiff = dependency('libtiff-4')
+libtiff_minver = '4.0.0'
+libtiff = dependency('libtiff-4', version: '>=' + libtiff_minver)
 MIMEtypes += 'image/tiff'
 
 
@@ -1540,6 +1541,7 @@ install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms_minver)
 install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
 install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)
+install_conf.set('LIBTIFF_REQUIRED_VERSION',      libtiff_minver)
 install_conf.set('LIBMYPAINT_REQUIRED_VERSION',   libmypaint_minver)
 install_conf.set('LIBPNG_REQUIRED_VERSION',       libpng_minver)
 install_conf.set('OPENEXR_REQUIRED_VERSION',      openexr_minver)

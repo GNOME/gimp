@@ -57,7 +57,6 @@
 
 
 #define SAVE_PROC      "file-tiff-save"
-#define SAVE2_PROC     "file-tiff-save2"
 #define PLUG_IN_BINARY "file-tiff"
 
 
@@ -144,11 +143,12 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            tiff_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("TIFF image"));
+      gimp_procedure_set_menu_label (procedure, N_("TIFF or BigTIFF image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "loads files of the tiff file format",
-                                        "FIXME: write help for tiff_load",
+                                        "Loads files of the TIFF and BigTIFF file formats",
+                                        "Loads files of the Tag Image File Format (TIFF) and "
+                                        "its 64-bit offsets variant (BigTIFF)",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball, Peter Mattis & Nick Lamb",
@@ -172,14 +172,13 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("TIFF image"));
+      gimp_procedure_set_menu_label (procedure, N_("TIFF or BigTIFF image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Saves files in the tiff file format",
-                                        "Saves files in the Tagged Image File "
-                                        "Format. The value for the saved "
-                                        "comment is taken from the "
-                                        "'gimp-comment' parasite",
+                                        "Exports files in the TIFF or BigTIFF file formats",
+                                        "Exports files in the Tag Image File Format (TIFF) or "
+                                        "its 64-bit offsets variant (BigTIFF) able to support "
+                                        "much bigger file sizes",
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Spencer Kimball & Peter Mattis",
@@ -194,6 +193,13 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                           "image/tiff");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "tif,tiff");
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "bigtiff",
+                             "Export in BigTIFF variant file format",
+                             "The BigTIFF variant file format uses 64-bit offsets, "
+                             "hence supporting over 4GiB files and bigger",
+                             FALSE,
+                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "compression",
                          "Co_mpression",

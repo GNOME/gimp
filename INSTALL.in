@@ -212,7 +212,7 @@ header files installed.
      libpng               @LIBPNG_REQUIRED_VERSION@
      libpoppler-glib      @POPPLER_REQUIRED_VERSION@
      librsvg              @RSVG_REQUIRED_VERSION@
-     libtiff
+     libtiff              @LIBTIFF_REQUIRED_VERSION@
      Little CMS           @LCMS_REQUIRED_VERSION@
      mypaint-brushes-1.0
      pangocairo           @PANGOCAIRO_REQUIRED_VERSION@
