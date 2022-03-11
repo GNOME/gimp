@@ -116,7 +116,7 @@
                   (begin
                     ; blend with 20% offset to get less transparency in the front
 		    (gimp-context-set-gradient-fg-bg-rgb)
-                    (gimp-drawable_edit-gradient-fill bl-mask
+                    (gimp-drawable-edit-gradient-fill bl-mask
 						      GRADIENT-LINEAR 20
 						      FALSE 0 0
 						      TRUE
@@ -196,9 +196,9 @@
           (if (= optimize TRUE)
               (begin
                 (gimp-image-convert-indexed img CONVERT-DITHER-FS CONVERT-PALETTE-WEB 250 FALSE TRUE "")
-                (set! img-out (car (plug-in-animationoptimize RUN-NONINTERACTIVE
-                                                              img
-                                                              bl-layer)))
+                (set! img (car (plug-in-animationoptimize RUN-NONINTERACTIVE
+                                                          img
+                                                          blended-layer)))
               )
           )
 
