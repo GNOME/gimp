@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-12 12:56+0000\n"
-"PO-Revision-Date: 2022-02-14 12:38+0000\n"
+"POT-Creation-Date: 2022-03-11 10:38+0000\n"
+"PO-Revision-Date: 2022-03-11 18:43+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -988,8 +988,8 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
 #: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
-#: ../plug-ins/file-tiff/file-tiff-save.c:1022
-#: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
+#: ../plug-ins/file-tiff/file-tiff-save.c:1024
+#: ../plug-ins/file-tiff/file-tiff-save.c:1100 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:846 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -1231,7 +1231,7 @@ msgstr "A_vermelhado cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2649 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2648 ../plug-ins/common/file-raw-data.c:1870
 msgid "RGB"
 msgstr "RGB"
 
@@ -2041,7 +2041,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
-#: ../plug-ins/file-tiff/file-tiff-save.c:1012
+#: ../plug-ins/file-tiff/file-tiff-save.c:1014
 #, c-format
 msgid "Exporting '%s'"
 msgstr "A exportar '%s'"
@@ -2534,75 +2534,75 @@ msgstr "Carregar imagem HEIF"
 msgid "Select Image"
 msgstr "Selecionar imagem"
 
-#: ../plug-ins/common/file-heif.c:2614
+#: ../plug-ins/common/file-heif.c:2613
 msgid "Export Image as AVIF"
 msgstr "Exportar imagem como AVIF"
 
-#: ../plug-ins/common/file-heif.c:2614
+#: ../plug-ins/common/file-heif.c:2613
 msgid "Export Image as HEIF"
 msgstr "Exportar imagem como HEIF"
 
-#: ../plug-ins/common/file-heif.c:2627
+#: ../plug-ins/common/file-heif.c:2626
 msgid "_Lossless"
 msgstr "_Sem perda"
 
-#: ../plug-ins/common/file-heif.c:2645
+#: ../plug-ins/common/file-heif.c:2644
 msgid "_Quality"
 msgstr "_Qualidade"
 
-#: ../plug-ins/common/file-heif.c:2650
+#: ../plug-ins/common/file-heif.c:2649
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2651
+#: ../plug-ins/common/file-heif.c:2650
 msgid "YUV420"
 msgstr "YUV420"
 
-#: ../plug-ins/common/file-heif.c:2658
+#: ../plug-ins/common/file-heif.c:2657
 msgid "Pixel format:"
 msgstr "Formato do píxel:"
 
-#: ../plug-ins/common/file-heif.c:2699 ../plug-ins/common/file-jpegxl.c:1122
+#: ../plug-ins/common/file-heif.c:2668 ../plug-ins/common/file-jpegxl.c:1122
 msgid "8 bit/channel"
 msgstr "8 bits/canal"
 
-#: ../plug-ins/common/file-heif.c:2700
+#: ../plug-ins/common/file-heif.c:2669
 msgid "10 bit/channel"
 msgstr "10 bits/canal"
 
-#: ../plug-ins/common/file-heif.c:2701
+#: ../plug-ins/common/file-heif.c:2670
 msgid "12 bit/channel"
 msgstr "12 bits/canal"
 
-#: ../plug-ins/common/file-heif.c:2708
+#: ../plug-ins/common/file-heif.c:2677
 msgid "Bit depth:"
 msgstr "Profundidade de bit:"
 
-#: ../plug-ins/common/file-heif.c:2711
+#: ../plug-ins/common/file-heif.c:2680
 msgid "Slow"
 msgstr "Lento"
 
-#: ../plug-ins/common/file-heif.c:2712
+#: ../plug-ins/common/file-heif.c:2681
 msgid "Balanced"
 msgstr "Equilibrado"
 
-#: ../plug-ins/common/file-heif.c:2713
+#: ../plug-ins/common/file-heif.c:2682
 msgid "Fast"
 msgstr "Rápido"
 
-#: ../plug-ins/common/file-heif.c:2720
+#: ../plug-ins/common/file-heif.c:2689
 msgid "Speed:"
 msgstr "Velocidade:"
 
-#: ../plug-ins/common/file-heif.c:2726
+#: ../plug-ins/common/file-heif.c:2695
 msgid "Save color _profile"
 msgstr "Guardar perfil de _cor"
 
-#: ../plug-ins/common/file-heif.c:2732
+#: ../plug-ins/common/file-heif.c:2701
 msgid "_Save Exif data"
 msgstr "_Guardar dados Exif"
 
-#: ../plug-ins/common/file-heif.c:2737
+#: ../plug-ins/common/file-heif.c:2706
 msgid "Save _XMP data"
 msgstr "Guardar dados _XMP"
 
@@ -6900,7 +6900,7 @@ msgstr "Vírgula flutuante"
 msgid "JPEG image"
 msgstr "Imagem JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "JPEG"
 msgstr "JPEG (velocidade: ++, compressão: ++++, perda de dados)"
 
@@ -7251,15 +7251,15 @@ msgstr "RLE agressiva (não suportada pela SGI)"
 msgid "Compression _type:"
 msgstr "_Tipo de compressão:"
 
-#: ../plug-ins/file-tiff/file-tiff.c:147 ../plug-ins/file-tiff/file-tiff.c:175
-msgid "TIFF image"
-msgstr "Imagem TIFF"
+#: ../plug-ins/file-tiff/file-tiff.c:146 ../plug-ins/file-tiff/file-tiff.c:175
+msgid "TIFF or BigTIFF image"
+msgstr "Imagem TIFF ou BigTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:192
+#: ../plug-ins/file-tiff/file-tiff.c:191
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:409
+#: ../plug-ins/file-tiff/file-tiff.c:415
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -7517,36 +7517,36 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "Falhou a gravação de uma scanline na linha %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1123
+#: ../plug-ins/file-tiff/file-tiff-save.c:1125
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escrever páginas com profundidades de bits diferentes é estranho."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1224
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Nenhuma"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "LZW"
 msgstr "LZW (velocidade: ++, compressão: ++)"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "Pack Bits"
 msgstr "Pack Bits (velocidade: +++, compressão: +)"
 
 # Não traduzir, “Deflate” é o nome da compressão
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "Deflate"
 msgstr "Deflate (velocidade: +, compressão: +++)"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-tiff/file-tiff-save.c:1231
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax (só para imagens a P/B)"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1232
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax (só para imagens a P/B)"
 
@@ -12022,15 +12022,15 @@ msgstr "Visualizador de metadados: %s"
 msgid "(%lu more character(s))"
 msgstr "(%lu mais caracteres)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:583
+#: ../plug-ins/metadata/metadata-viewer.c:622
 msgid " meter"
 msgstr " metro"
 
-#: ../plug-ins/metadata/metadata-viewer.c:584
+#: ../plug-ins/metadata/metadata-viewer.c:623
 msgid " feet"
 msgstr " pés"
 
-#: ../plug-ins/metadata/metadata-viewer.c:702
+#: ../plug-ins/metadata/metadata-viewer.c:791
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu mais bytes)"
