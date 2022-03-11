@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-12 12:56+0000\n"
-"PO-Revision-Date: 2022-02-12 18:21+0200\n"
+"POT-Creation-Date: 2022-03-11 10:38+0000\n"
+"PO-Revision-Date: 2022-03-11 22:07+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -984,8 +984,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
 #: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
-#: ../plug-ins/file-tiff/file-tiff-save.c:1022
-#: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
+#: ../plug-ins/file-tiff/file-tiff-save.c:1024
+#: ../plug-ins/file-tiff/file-tiff-save.c:1100 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:846 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -1227,7 +1227,7 @@ msgstr "_Redness cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2649 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2648 ../plug-ins/common/file-raw-data.c:1870
 msgid "RGB"
 msgstr "RGB"
 
@@ -2033,7 +2033,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
-#: ../plug-ins/file-tiff/file-tiff-save.c:1012
+#: ../plug-ins/file-tiff/file-tiff-save.c:1014
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -2529,75 +2529,75 @@ msgstr "Завантажити зображення HEIF"
 msgid "Select Image"
 msgstr "Виберіть зображення"
 
-#: ../plug-ins/common/file-heif.c:2614
+#: ../plug-ins/common/file-heif.c:2613
 msgid "Export Image as AVIF"
 msgstr "Експортувати зображення як AVIF"
 
-#: ../plug-ins/common/file-heif.c:2614
+#: ../plug-ins/common/file-heif.c:2613
 msgid "Export Image as HEIF"
 msgstr "Експортувати зображення як HEIF"
 
-#: ../plug-ins/common/file-heif.c:2627
+#: ../plug-ins/common/file-heif.c:2626
 msgid "_Lossless"
 msgstr "_Без втрат"
 
-#: ../plug-ins/common/file-heif.c:2645
+#: ../plug-ins/common/file-heif.c:2644
 msgid "_Quality"
 msgstr "Я_кість"
 
-#: ../plug-ins/common/file-heif.c:2650
+#: ../plug-ins/common/file-heif.c:2649
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2651
+#: ../plug-ins/common/file-heif.c:2650
 msgid "YUV420"
 msgstr "YUV420"
 
-#: ../plug-ins/common/file-heif.c:2658
+#: ../plug-ins/common/file-heif.c:2657
 msgid "Pixel format:"
 msgstr "Формат пікселів:"
 
-#: ../plug-ins/common/file-heif.c:2699 ../plug-ins/common/file-jpegxl.c:1122
+#: ../plug-ins/common/file-heif.c:2668 ../plug-ins/common/file-jpegxl.c:1122
 msgid "8 bit/channel"
 msgstr "8 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2700
+#: ../plug-ins/common/file-heif.c:2669
 msgid "10 bit/channel"
 msgstr "10 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2701
+#: ../plug-ins/common/file-heif.c:2670
 msgid "12 bit/channel"
 msgstr "12 біт/канал"
 
-#: ../plug-ins/common/file-heif.c:2708
+#: ../plug-ins/common/file-heif.c:2677
 msgid "Bit depth:"
 msgstr "Бітова глибина:"
 
-#: ../plug-ins/common/file-heif.c:2711
+#: ../plug-ins/common/file-heif.c:2680
 msgid "Slow"
 msgstr "Повільно"
 
-#: ../plug-ins/common/file-heif.c:2712
+#: ../plug-ins/common/file-heif.c:2681
 msgid "Balanced"
 msgstr "Збалансовано"
 
-#: ../plug-ins/common/file-heif.c:2713
+#: ../plug-ins/common/file-heif.c:2682
 msgid "Fast"
 msgstr "Швидко"
 
-#: ../plug-ins/common/file-heif.c:2720
+#: ../plug-ins/common/file-heif.c:2689
 msgid "Speed:"
 msgstr "Швидкість:"
 
-#: ../plug-ins/common/file-heif.c:2726
+#: ../plug-ins/common/file-heif.c:2695
 msgid "Save color _profile"
 msgstr "Зберегти _профіль кольорів"
 
-#: ../plug-ins/common/file-heif.c:2732
+#: ../plug-ins/common/file-heif.c:2701
 msgid "_Save Exif data"
 msgstr "З_берегти дані Exif"
 
-#: ../plug-ins/common/file-heif.c:2737
+#: ../plug-ins/common/file-heif.c:2706
 msgid "Save _XMP data"
 msgstr "Зберегти дані _XMP"
 
@@ -6748,7 +6748,6 @@ msgid "Export Image as FLI Animation"
 msgstr "Експортувати зображення як анімацію FLI"
 
 #: ../plug-ins/file-ico/ico-dialog.c:55
-#| msgid "Windows Icon"
 msgid "Windows Cursor"
 msgstr "Курсор Windows"
 
@@ -6890,7 +6889,7 @@ msgstr "З рухомою комою"
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7242,15 +7241,16 @@ msgstr "Агресивне RLE (не підтримується SGI)"
 msgid "Compression _type:"
 msgstr "_Тип стиснення:"
 
-#: ../plug-ins/file-tiff/file-tiff.c:147 ../plug-ins/file-tiff/file-tiff.c:175
-msgid "TIFF image"
-msgstr "Зображення TIFF"
+#: ../plug-ins/file-tiff/file-tiff.c:146 ../plug-ins/file-tiff/file-tiff.c:175
+#| msgid "TIFF image"
+msgid "TIFF or BigTIFF image"
+msgstr "Зображення TIFF або BigTIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:192
+#: ../plug-ins/file-tiff/file-tiff.c:191
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:409
+#: ../plug-ins/file-tiff/file-tiff.c:415
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -7518,35 +7518,35 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "Не вдалося записати рядок сканування %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1123
+#: ../plug-ins/file-tiff/file-tiff-save.c:1125
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1224
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Немає"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "Deflate"
 msgstr "Deflate"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-tiff/file-tiff-save.c:1231
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1232
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -12003,15 +12003,15 @@ msgstr "Оглядач метаданих: %s"
 msgid "(%lu more character(s))"
 msgstr "(%lu більше символів)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:583
+#: ../plug-ins/metadata/metadata-viewer.c:622
 msgid " meter"
 msgstr " метр"
 
-#: ../plug-ins/metadata/metadata-viewer.c:584
+#: ../plug-ins/metadata/metadata-viewer.c:623
 msgid " feet"
 msgstr " футів"
 
-#: ../plug-ins/metadata/metadata-viewer.c:702
+#: ../plug-ins/metadata/metadata-viewer.c:791
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu більше байт)"
