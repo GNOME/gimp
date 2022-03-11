@@ -36,7 +36,8 @@ gboolean  save_dialog (GimpImage     *image,
                        gboolean       has_alpha,
                        gboolean       is_monochrome,
                        gboolean       is_indexed,
-                       gboolean       is_multi_layer);
+                       gboolean       is_multi_layer,
+                       gboolean       classic_tiff_failed);
 
 
 #endif /* __FILE_TIFF_SAVE_H__ */

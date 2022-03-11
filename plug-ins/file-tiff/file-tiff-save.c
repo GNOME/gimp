@@ -805,7 +805,8 @@ save_layer (TIFF        *tif,
 
           if (!success)
             {
-              g_message (_("Failed a scanline write on row %d"), row);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Failed a scanline write on row %d"), row);
               goto out;
             }
         }
@@ -1144,6 +1145,7 @@ out:
   gimp_progress_update (1.0);
 
   g_list_free (layers);
+
   return status;
 }
 
@@ -1196,7 +1198,8 @@ save_dialog (GimpImage     *image,
              gboolean       has_alpha,
              gboolean       is_monochrome,
              gboolean       is_indexed,
-             gboolean       is_multi_layer)
+             gboolean       is_multi_layer,
+             gboolean       classic_tiff_failed)
 {
   GtkWidget       *dialog;
   GtkListStore    *store;
@@ -1221,6 +1224,21 @@ save_dialog (GimpImage     *image,
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
                                            GIMP_PROCEDURE_CONFIG (config),
                                            image);
+
+  if (classic_tiff_failed)
+    {
+      GtkWidget *bigtiff_checkbox;
+
+      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "big-tif-warning",
+                                       "\xe2\x9a\xa0 Warning: maximum TIFF file size exceeded. "
+                                       "Retry as BigTIFF or cancel.");
+      g_object_set (config, "bigtiff", TRUE, NULL);
+      bigtiff_checkbox = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
+                                                           "bigtiff",
+                                                           G_TYPE_NONE);
+      gtk_widget_set_sensitive (bigtiff_checkbox, FALSE);
+    }
 
   store =
     gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
@@ -1267,12 +1285,21 @@ save_dialog (GimpImage     *image,
                                        "save-geotiff",
                                        has_geotiff, NULL, NULL, FALSE);
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "compression",
-                              "bigtiff",
-                              "layers-frame",
-                              "save-transparent-pixels",
-                              NULL);
+  if (classic_tiff_failed)
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "compression",
+                                "big-tif-warning",
+                                "bigtiff",
+                                "layers-frame",
+                                "save-transparent-pixels",
+                                NULL);
+  else
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "compression",
+                                "bigtiff",
+                                "layers-frame",
+                                "save-transparent-pixels",
+                                NULL);
 
   g_object_get (config,
                 "compression", &compression,

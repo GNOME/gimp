@@ -50,6 +50,7 @@
 #include <libgimp/gimpui.h>
 
 #include "file-tiff.h"
+#include "file-tiff-io.h"
 #include "file-tiff-load.h"
 #include "file-tiff-save.h"
 
@@ -77,28 +78,38 @@ struct _TiffClass
 #define TIFF_TYPE  (tiff_get_type ())
 #define TIFF (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), TIFF_TYPE, Tiff))
 
-GType                   tiff_get_type         (void) G_GNUC_CONST;
+GType                    tiff_get_type         (void) G_GNUC_CONST;
 
-static GList          * tiff_query_procedures (GimpPlugIn           *plug_in);
-static GimpProcedure  * tiff_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+static GList           * tiff_query_procedures (GimpPlugIn           *plug_in);
+static GimpProcedure   * tiff_create_procedure (GimpPlugIn           *plug_in,
+                                                const gchar          *name);
 
-static GimpValueArray * tiff_load             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
-static GimpValueArray * tiff_save             (GimpProcedure        *procedure,
-                                               GimpRunMode           run_mode,
-                                               GimpImage            *image,
-                                               gint                  n_drawables,
-                                               GimpDrawable        **drawables,
-                                               GFile                *file,
-                                               const GimpValueArray *args,
-                                               gpointer              run_data);
+static GimpValueArray  * tiff_load             (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GFile                *file,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+static GimpValueArray  * tiff_save             (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *image,
+                                                gint                  n_drawables,
+                                                GimpDrawable        **drawables,
+                                                GFile                *file,
+                                                const GimpValueArray *args,
+                                                gpointer              run_data);
+static GimpPDBStatusType tiff_save_rec         (GimpProcedure        *procedure,
+                                                GimpRunMode           run_mode,
+                                                GimpImage            *orig_image,
+                                                gint                  n_orig_drawables,
+                                                GimpDrawable        **orig_drawables,
+                                                GFile                *file,
+                                                GimpProcedureConfig  *config,
+                                                GimpMetadata         *metadata,
+                                                gboolean              retried,
+                                                GError              **error);
 
-static gboolean         image_is_monochrome  (GimpImage            *image);
-static gboolean         image_is_multi_layer (GimpImage            *image);
+static gboolean          image_is_monochrome  (GimpImage            *image);
+static gboolean          image_is_multi_layer (GimpImage            *image);
 
 
 G_DEFINE_TYPE (Tiff, tiff, GIMP_TYPE_PLUG_IN)
@@ -316,11 +327,9 @@ tiff_save (GimpProcedure        *procedure,
            gpointer              run_data)
 {
   GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   GimpMetadata        *metadata;
-  GimpImage           *orig_image;
   GError              *error  = NULL;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
   gegl_init (NULL, NULL);
@@ -328,8 +337,6 @@ tiff_save (GimpProcedure        *procedure,
   config = gimp_procedure_create_config (procedure);
   metadata = gimp_procedure_config_begin_export (config, image, run_mode,
                                                  args, "image/tiff");
-
-  orig_image = image;
 
   switch (run_mode)
     {
@@ -341,16 +348,45 @@ tiff_save (GimpProcedure        *procedure,
       break;
     }
 
+  status = tiff_save_rec (procedure, run_mode, image,
+                          n_drawables, drawables,
+                          file, config, metadata, FALSE, &error);
+
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
+}
+
+static GimpPDBStatusType
+tiff_save_rec (GimpProcedure        *procedure,
+               GimpRunMode           run_mode,
+               GimpImage            *orig_image,
+               gint                  n_orig_drawables,
+               GimpDrawable        **orig_drawables,
+               GFile                *file,
+               GimpProcedureConfig  *config,
+               GimpMetadata         *metadata,
+               gboolean              retried,
+               GError              **error)
+{
+  GimpImage         *image       = orig_image;
+  GimpDrawable     **drawables   = orig_drawables;
+  gint               n_drawables = n_orig_drawables;
+  GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
+  GimpExportReturn   export      = GIMP_EXPORT_CANCEL;
+  gboolean           bigtiff     = FALSE;
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
       if (! save_dialog (orig_image, procedure, G_OBJECT (config),
                          n_drawables == 1 ? gimp_drawable_has_alpha (drawables[0]) : TRUE,
-                         image_is_monochrome (image),
-                         gimp_image_get_base_type (image) == GIMP_INDEXED,
-                         image_is_multi_layer (image)))
+                         image_is_monochrome (orig_image),
+                         gimp_image_get_base_type (orig_image) == GIMP_INDEXED,
+                         image_is_multi_layer (orig_image),
+                         retried))
         {
-          return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                   NULL);
+          return GIMP_PDB_CANCEL;
         }
     }
 
@@ -365,6 +401,7 @@ tiff_save (GimpProcedure        *procedure,
         gboolean               crop_layers;
 
         g_object_get (config,
+                      "bigtiff",     &bigtiff,
                       "compression", &compression,
                       "save-layers", &save_layers,
                       "crop-layers", &crop_layers,
@@ -386,7 +423,7 @@ tiff_save (GimpProcedure        *procedure,
                             GIMP_EXPORT_CAN_HANDLE_ALPHA);
           }
 
-        if (save_layers && image_is_multi_layer (image))
+        if (save_layers && image_is_multi_layer (orig_image))
           {
             capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYERS;
 
@@ -398,8 +435,7 @@ tiff_save (GimpProcedure        *procedure,
                                     capabilities);
 
         if (export == GIMP_EXPORT_CANCEL)
-          return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                   NULL);
+          return GIMP_PDB_CANCEL;
       }
       break;
 
@@ -420,15 +456,10 @@ tiff_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, orig_image, G_OBJECT (config), metadata,
-                        &error))
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+      if (! save_image (file, image, orig_image, G_OBJECT (config),
+                        metadata, error))
+        status = GIMP_PDB_EXECUTION_ERROR;
     }
-
-  gimp_procedure_config_end_export (config, image, file, status);
-  g_object_unref (config);
 
   if (export == GIMP_EXPORT_EXPORT)
     {
@@ -436,7 +467,21 @@ tiff_save (GimpProcedure        *procedure,
       g_free (drawables);
     }
 
-  return gimp_procedure_new_return_values (procedure, status, error);
+  if (status == GIMP_PDB_EXECUTION_ERROR &&
+      run_mode == GIMP_RUN_INTERACTIVE   &&
+      ! retried && ! bigtiff && tiff_got_file_size_error ())
+    {
+      /* Retrying but just once, when the save failed because we exceeded
+       * TIFF max size, to propose BigTIFF instead. */
+      tiff_reset_file_size_error ();
+      g_clear_error (error);
+
+      return tiff_save_rec (procedure, run_mode,
+                            orig_image, n_orig_drawables, orig_drawables,
+                            file, config, metadata, TRUE, error);
+    }
+
+  return status;
 }
 
 static gboolean
