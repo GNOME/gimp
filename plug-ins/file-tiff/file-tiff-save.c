@@ -1226,19 +1226,11 @@ save_dialog (GimpImage     *image,
                                            image);
 
   if (classic_tiff_failed)
-    {
-      GtkWidget *bigtiff_checkbox;
-
-      gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "big-tif-warning",
-                                       "\xe2\x9a\xa0 Warning: maximum TIFF file size exceeded. "
-                                       "Retry as BigTIFF or cancel.");
-      g_object_set (config, "bigtiff", TRUE, NULL);
-      bigtiff_checkbox = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                           "bigtiff",
-                                                           G_TYPE_NONE);
-      gtk_widget_set_sensitive (bigtiff_checkbox, FALSE);
-    }
+    gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                     "big-tif-warning",
+                                     "\xe2\x9a\xa0 Warning: maximum TIFF file size exceeded. "
+                                     "Retry as BigTIFF or with a different compression algorithm, "
+                                     "or cancel.");
 
   store =
     gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
@@ -1287,8 +1279,8 @@ save_dialog (GimpImage     *image,
 
   if (classic_tiff_failed)
     gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                                "compression",
                                 "big-tif-warning",
+                                "compression",
                                 "bigtiff",
                                 "layers-frame",
                                 "save-transparent-pixels",
