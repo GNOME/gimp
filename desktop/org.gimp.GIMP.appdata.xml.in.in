@@ -89,6 +89,7 @@
                      tool-options:line-art-settings">
           Redesigned and reorganized "Fill by line art detection" settings
           </_li>
+          <_li>Added support for the BigTIFF file format</_li>
         </ul>
       </description>
     </release>

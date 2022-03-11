@@ -27,6 +27,27 @@ Tools:
       This should hopefully make the now many options more
       understandable.
 
+Plug-ins:
+
+  - BigTIFF: our TIFF plug-in now officially supports BigTIFF import and
+    export.
+    * Import was actually already working transparently if you had
+      a recent enough libtiff. Now the recent libtiff is enforced by
+      dependency requirements.
+    * Export support was added with a checkbox in the interactive dialog
+      and a new "bigtiff" argument in the "file-tiff-save" PDB
+      procedure.
+    * When an interactive export of ClassicTIFF fails for the explicit
+      reason of "Maximum TIFF file size exceeded", the export dialog is
+      raised again with a message proposing to try again as BigTIFF.
+      This allows because discoverability and understandibility of the
+      issue, while not forcing BigTIFF export (since it might not be
+      supported everywhere).
+
+Build:
+
+  - libtiff dependency's minimum required version bumped to 4.0.0.
+
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
 ====================================================
