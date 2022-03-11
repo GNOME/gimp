@@ -1226,11 +1226,18 @@ save_dialog (GimpImage     *image,
                                            image);
 
   if (classic_tiff_failed)
-    gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                     "big-tif-warning",
-                                     "\xe2\x9a\xa0 Warning: maximum TIFF file size exceeded. "
-                                     "Retry as BigTIFF or with a different compression algorithm, "
-                                     "or cancel.");
+    {
+      GtkWidget *label;
+
+      label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                               "big-tif-warning",
+                                               "\xe2\x9a\xa0 Warning: maximum TIFF file size exceeded. "
+                                               "Retry as BigTIFF or with a different compression algorithm, "
+                                               "or cancel.");
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
+      gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
+    }
 
   store =
     gimp_int_store_new (_("None"),              GIMP_COMPRESSION_NONE,
