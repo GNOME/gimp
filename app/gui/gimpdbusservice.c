@@ -331,7 +331,7 @@ gimp_dbus_service_process_idle (GimpDBusService *service)
 {
   IdleData *data;
 
-  if (! service->gimp->initialized || ! service->gimp->restored)
+  if (! gimp_is_restored (service->gimp))
     {
       if (! service->timeout_source)
         {
