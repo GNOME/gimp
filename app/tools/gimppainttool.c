@@ -863,9 +863,10 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
                                   0.0, (2.0 * G_PI));
         }
 
-      if (! outline                 &&
-          ! line_drawn              &&
-          ! paint_tool->show_cursor &&
+      if (! outline                   &&
+          ! paint_tool->draw_fallback &&
+          ! line_drawn                &&
+          ! paint_tool->show_cursor   &&
           ! paint_tool->draw_circle)
         {
           /*  don't leave the user without any indication and draw
