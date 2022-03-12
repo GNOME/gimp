@@ -2943,37 +2943,6 @@ prefs_dialog_new (Gimp       *gimp,
                             _("_While space bar is pressed:"),
                             GTK_GRID (grid), 0, size_group);
 
-  /*  Mouse Pointers  */
-  vbox2 = prefs_frame_new (_("Mouse Pointers"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-  button = prefs_check_button_add (object, "show-brush-outline",
-                                   _("Show _brush outline"),
-                                   GTK_BOX (vbox2));
-
-  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
-  g_object_bind_property (button, "active",
-                          vbox3,  "sensitive",
-                          G_BINDING_SYNC_CREATE);
-  prefs_check_button_add (object, "snap-brush-outline",
-                          _("S_nap brush outline to stroke"),
-                          GTK_BOX (vbox3));
-
-  prefs_check_button_add (object, "show-paint-tool-cursor",
-                          _("Show pointer for paint _tools"),
-                          GTK_BOX (vbox2));
-
-  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
-
-  prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
-                            _("Pointer _mode:"),
-                            GTK_GRID (grid), 0, size_group);
-  prefs_enum_combo_box_add (object, "cursor-handedness", 0, 0,
-                            _("Pointer _handedness:"),
-                            GTK_GRID (grid), 1, NULL);
-
-  g_clear_object (&size_group);
-
 
   /********************************/
   /*  Image Windows / Appearance  */
@@ -3172,6 +3141,45 @@ prefs_dialog_new (Gimp       *gimp,
                                   GIMP_HELP_PREFS_INPUT_DEVICES,
                                   NULL,
                                   &top_iter);
+
+  /*  Mouse Pointers  */
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 10);
+  gtk_widget_set_halign (hbox, GTK_ALIGN_START);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  vbox2 = prefs_frame_new (_("Pointers"),
+                           GTK_CONTAINER (hbox), FALSE);
+
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  prefs_enum_combo_box_add (object, "cursor-mode", 0, 0,
+                            _("Pointer _mode:"),
+                            GTK_GRID (grid), 0, size_group);
+  prefs_enum_combo_box_add (object, "cursor-handedness", 0, 0,
+                            _("Pointer _handedness:"),
+                            GTK_GRID (grid), 1, size_group);
+  g_clear_object (&size_group);
+
+  vbox2 = prefs_frame_new (_("Paint Tools"),
+                           GTK_CONTAINER (hbox), FALSE);
+
+  button = prefs_check_button_add (object, "show-brush-outline",
+                                   _("Show _brush outline"),
+                                   GTK_BOX (vbox2));
+
+  vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+  g_object_bind_property (button, "active",
+                          vbox3,  "sensitive",
+                          G_BINDING_SYNC_CREATE);
+  prefs_check_button_add (object, "snap-brush-outline",
+                          _("S_nap brush outline to stroke"),
+                          GTK_BOX (vbox3));
+
+  prefs_check_button_add (object, "show-paint-tool-cursor",
+                          _("Show pointer for paint _tools"),
+                          GTK_BOX (vbox2));
 
   /*  Extended Input Devices  */
   vbox2 = prefs_frame_new (_("Extended Input Devices"),
