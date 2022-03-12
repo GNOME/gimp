@@ -9,16 +9,16 @@
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2008.
 # Ignacio Casal Quinteiro <nacho.resa@gmail.com>, 2008.
 # Fran Diéguez <frandieguez@gnome.org>, 2011.
-# Fran Dieguez <fran.dieguez@gnome.org>, 2011-2022.
+# Fran Dieguez <frandieguez@gnome.org>, 2011-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-11 14:30+0000\n"
-"PO-Revision-Date: 2022-03-12 01:20+0100\n"
-"Last-Translator: Fran Dieguez <fran.dieguez@gnome.org>\n"
-"Language-Team: Galician <proxecto@trasno.gal>\n"
+"POT-Creation-Date: 2022-03-08 15:45+0000\n"
+"PO-Revision-Date: 2022-03-11 09:47+0100\n"
+"Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
+"Language-Team: Galician <Proxecto Trasno <proxecto@trasno.gal>>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -103,145 +103,141 @@ msgid "Redesigned and reorganized \"Fill by line art detection\" settings"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
-msgid "Added support for the BigTIFF file format"
-msgstr ""
-
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid ""
 "GIMP 2.99.10 is a notable development release in the 2.99 series, featuring "
 "many changes. Let's mention in particular:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "\"Linked layers\" concept superseded by new \"Layer set\" concept"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Lock icons in item dockables (Layers, Channels, Paths) moved next to the "
 "visibility (eye) icon"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "Alt-click on visibility and lock icons in item dockables massively toggles "
 "visibility and locks among selected items"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Item dockables now display icon headers for visibility and locks column"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "Our System theme shows visible hints around unset visibility and locks icons "
 "when hovering them in item dockables"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "New checkbox to enable or disable dynamics in paint tools' options "
 "(replacing \"Dynamics Off\" dynamics)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Improved support for Wayland and macOS Big Sur (and newer)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "\"Fill by line art detection\" in Bucket Fill tool has a new option"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "Channels and paths multi-selectable with part of relevant actions working"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "Various file format support improvements, in particular to PSD, JPEG-XL and "
 "HEIF"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "New support of Microsoft Windows Cursor file format (.cur files)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "Removed KDE and GNOME screenshot portals in favor of Freedesktop one"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "Windows screenshot implementation now has an \"Include mouse pointer\" option"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "New and modified libgimp API for plug-in developers"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid ""
 "While during this fourth cycle of development, many efforts were devoted to "
 "infrastructure, GIMP 2.99.8 still received many welcome improvements, "
 "notably:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "New modes in Clone, Heal and Perspective Clone tools when multiple layers "
 "are selected"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "Windows Ink support for input devices on Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "Clicking on toolbox or Wilber's drop area actively focuses the canvas"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid "Marching ants display ported to Wayland and macOS Big Sur logics"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Initial implementation of config folder migration for GIMP 3"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid ""
 "Action \"view-rotate-reset\" renamed to \"view-reset\" and new \"view-rotate-"
 "reset\" and \"view-flip-rotate\" actions"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "PSD: bigger-than-4GiB file support and up to 99 channels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "PSB: new support (loading only)"
-msgstr ""
+msgstr "PSB: nova compatibilidade (só lectura)"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+msgid "SGI: 16-bit images support"
+msgstr "SGI: compatibilidade con imaxes de 16"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
-msgid "SGI: 16-bit images support"
-msgstr ""
+msgid "JPEG XL: new support (loading and exporting)"
+msgstr "JPEG XL: nova compatibilidade (lectura e exportado)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
-msgid "JPEG XL: new support (loading and exporting)"
-msgstr ""
-
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid ""
 "New API functions gimp_display_present() and "
 "gimp_procedure_dialog_fill_expander()"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "Much porting to newer API, code cleanup and bug fixing done"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid ""
 "For this third development release, more development effort has been shifted "
 "towards the API. Many functions were renamed for consistent naming scheme, "
@@ -251,608 +247,607 @@ msgid ""
 "guaranteed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "Regarding end-creator changes, some notable improvements are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Canvas Size dialog now displays a template selector"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Off-canvas guides are now allowed"
-msgstr ""
+msgstr "Agora admítense as guías fóra do canvas"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "The experimental Paint Select tool got various improvements"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "More fixes for Wayland support"
-msgstr ""
+msgstr "Máis arranxos na compatibilidade con Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid ""
 "Dialog dropped for the Freedesktop portal implementation of the screenshot "
 "plug-in"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "PNG import creates an ICC profile out of the gAMA and/or cHRM chunks"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid ""
 "TIFF export stores the ICC profile and comment on each layer to prevent "
 "ambiguous files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "This second development release contains various usability and API updates. "
 "A new experimental tool makes an entrance in the playground."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "Many usability improvements on the slider widget"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 #, fuzzy
 #| msgid "-Click on thumbnail in Layers dockable"
 msgid "Usability cleaning in the Layers dockable"
 msgstr "-Prema sobre a miniatura do empotrábel de capas"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid ""
 "The action search now shows all actions even inactive ones (yet pushed below)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Different default tools depending on pointer device type"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Default dynamics is now \"Pressure Size\""
-msgstr ""
+msgstr "Dinámicas predeterminadas é agora «Tamaño da presión»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid "Various usability improvements in the Input Device editor"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "New \"Paint Select\" experimental tool in the playground"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Plug-in API now provides many dialog generation utilities"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid ""
 "This is the first development release for GIMP 3.0, whose focus was the port "
 "to the GTK+3 toolkit. Noteworthy improvements (though some are still work-in-"
 "progress) include:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 #, fuzzy
 #| msgid "-Click on thumbnail in Layers dockable"
 msgid "Multi-selection of layers in the Layers dockable"
 msgstr "-Prema sobre a miniatura do empotrábel de capas"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Proper high pixel density display support"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the input devices editor"
 msgid "Improved input device support"
 msgstr "Abrir o editor de dispositivos de entrada"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Major plug-in API rewrite"
-msgstr ""
+msgstr "Reescrita importante da API de engadidos"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "New manageable extension format"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "CSS-based themes and actual symbolic icon theme support"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "Wayland support"
-msgstr ""
+msgstr "Compatibilidade con Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
 "such as PSD and AVIF."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid "GeoTIFF metadata support added"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
-#, fuzzy
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 #| msgid "Transformation"
 msgid "New Kabyle translation"
-msgstr "Transformación"
+msgstr "Nova tradución ao Kabyle"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "New progressive performance logs and dashboard updates"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid "Various bug fixes"
-msgstr ""
+msgstr "Varios arranxos de erros"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "On-canvas controls for the Vignette filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid "Over 30 bugfixes"
-msgstr ""
+msgstr "Máis de 30 arranxos de erros"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "Tools are now grouped in the toolbox by default"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid "Vastly improved user experience for the transformation preview"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "Much smoother brush outline motion on the canvas"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
 "has a few noteworthy improvements:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid "HEIF import/export: color profile support"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
 "available, in particular for curves editing:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid "Improved curves interaction overall"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "A few enhancements specific to the Curves tool"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid "Layer support in TIFF"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "Discovery of user-installed fonts in Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid "Free Select tool creates preliminary selection"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid "Scale tool scales around center even when using numeric input"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Several optimizations including faster layer group rendering"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid "HiDPI support improvements"
-msgstr ""
+msgstr "Melloras na compatibilidade de HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "New preference to choose the default export file type"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "New DDS format loading/exporting plug-in"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid "New \"Long Shadow\" filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
 "fixed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -860,199 +855,199 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:178
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
 msgid "And much, much more…"
-msgstr ""
+msgstr "E moito, moito máis…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:179
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:178
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:180
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:179
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:181
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:180
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:182
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:181
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:182
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
 "(yaw, pitch, roll)."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:184
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
 "warnings and critical errors when \"fatal-warnings\" debug key is set"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:185
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:184
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
 "fixes, most notable improvements are:"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:185
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:187
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:188
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:187
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:189
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:188
 #, fuzzy
 #| msgid "Cannot paint on layer groups."
 msgid "Layer masks on layer groups"
 msgstr "Non se pode renomear as máscaras de capa."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:190
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:189
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:191
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:190
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:192
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:191
 msgid "Metadata defaults preferences now available"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:193
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:192
 msgid "Various GUI polishing"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:194
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:193
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:195
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:194
 #, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the gradient editor"
 msgid "On-canvas gradient editing"
 msgstr "Abrir o editor de degradados"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:196
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:195
 msgid "Notification when an image is over/underexposed"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:197
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:196
 #, fuzzy
 #| msgid "Color Management"
 msgid "Better and faster color management"
 msgstr "Xestión da cor"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:197
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:199
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
 msgid "Paste in place feature"
-msgstr "Característica de Pegar no sitio"
+msgstr ""
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:199
+msgid "Many usability improvements"
+msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:200
-msgid "Many usability improvements"
-msgstr "Moitas melloras de usabilidade"
-
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:201
 msgid "Manual can be displayed in the user's preferred language"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:202
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:201
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:203
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:202
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:204
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:203
 msgid "New support for password-protected PDF"
 msgstr ""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:205
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:204
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr ""
 
@@ -1238,7 +1233,7 @@ msgstr "Mostra unha páxina de preferencias con características experimentais"
 
 #: ../app/main.c:298
 msgid "Show an image submenu with debug actions"
-msgstr "Mostrar unha submenú de imaxe con accións de depuración"
+msgstr ""
 
 #: ../app/main.c:716
 msgid "[FILE|URI...]"
@@ -1335,7 +1330,7 @@ msgstr "Información do punteiro"
 
 #: ../app/actions/actions.c:133 ../app/dialogs/dialogs.c:331
 msgid "Dashboard"
-msgstr "Panel"
+msgstr ""
 
 #: ../app/actions/actions.c:136
 msgid "Debug"
@@ -1498,10 +1493,11 @@ msgid "Tools"
 msgstr "Ferramentas"
 
 #: ../app/actions/actions.c:238
+#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Path _Tool"
 msgid "Path Toolpath"
-msgstr "Ruta de ferramenta"
+msgstr "_Ferramenta Camiño"
 
 #: ../app/actions/actions.c:241 ../app/dialogs/dialogs.c:383
 #: ../app/tools/gimpvectortool.c:167
@@ -1659,25 +1655,28 @@ msgid "Paste the selected buffer"
 msgstr "Pegar o búfer seleccionado"
 
 #: ../app/actions/buffers-actions.c:67
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer _Into"
 msgctxt "buffers-action"
 msgid "Paste Buffer In Pl_ace"
-msgstr "Pegar búfer no _lugar"
+msgstr "Pegar búfer _en"
 
 #: ../app/actions/buffers-actions.c:68
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer at its original position"
-msgstr "Pegar o búfer seleccionado na súa posición orixinal"
+msgstr "Pegar o búfer seleccionado na selección"
 
 #: ../app/actions/buffers-actions.c:73
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer _Into"
 msgctxt "buffers-action"
 msgid "Paste Buffer _Into The Selection"
-msgstr "Pegar búfer _na selecicón"
+msgstr "Pegar búfer _en"
 
 #: ../app/actions/buffers-actions.c:74
 msgctxt "buffers-action"
@@ -1685,18 +1684,20 @@ msgid "Paste the selected buffer into the selection"
 msgstr "Pegar o búfer seleccionado na selección"
 
 #: ../app/actions/buffers-actions.c:79
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste Buffer Into The Selection In Place"
-msgstr "Pegar o búfer na selección no lugar"
+msgstr "Pegar o búfer seleccionado na selección"
 
 #: ../app/actions/buffers-actions.c:81
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer into the selection"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer into the selection at its original position"
-msgstr "Pegar o búfer seleccionado na selección na súa posición orixinal"
+msgstr "Pegar o búfer seleccionado na selección"
 
 #: ../app/actions/buffers-actions.c:86
 msgctxt "buffers-action"
@@ -1709,28 +1710,30 @@ msgid "Paste the selected buffer as a new layer"
 msgstr "Pegar o búfer seleccionado como unha nova capa"
 
 #: ../app/actions/buffers-actions.c:92
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste Buffer as New _Layer"
 msgctxt "buffers-action"
 msgid "Paste Buffer as New Layer in Place"
-msgstr "Pega o búfer como Nova capa no lugar"
+msgstr "Pega o búfer como Nova _capa"
 
 #: ../app/actions/buffers-actions.c:94
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer as a new layer"
 msgctxt "buffers-action"
 msgid "Paste the selected buffer as a new layer at its original position"
-msgstr ""
-"Pegar o búfer seleccionado como unha nova capa na súa posición orixinal"
+msgstr "Pegar o búfer seleccionado como unha nova capa"
 
 #: ../app/actions/buffers-actions.c:126 ../app/actions/buffers-actions.c:127
 #: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
 #: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
 #: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
+#, fuzzy
 #| msgctxt "buffers-action"
 #| msgid "Paste the selected buffer"
 msgid "No selected buffer"
-msgstr "No búfer seleccionado"
+msgstr "Pegar o búfer seleccionado"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -1789,11 +1792,12 @@ msgid "Create duplicates of selected channels and add them to the image"
 msgstr "Crear duplicado desta canle e engadila á imaxe"
 
 #: ../app/actions/channels-actions.c:78
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_Delete Channel"
 msgctxt "channels-action"
 msgid "_Delete Channels"
-msgstr "_Eliminar canles"
+msgstr "_Eliminar canle"
 
 #: ../app/actions/channels-actions.c:79
 #, fuzzy
@@ -1804,11 +1808,12 @@ msgid "Delete selected channels"
 msgstr "Eliminar esta canle"
 
 #: ../app/actions/channels-actions.c:84
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_Raise Channel"
 msgctxt "channels-action"
 msgid "_Raise Channels"
-msgstr "_Subir canles"
+msgstr "_Subir canle"
 
 #: ../app/actions/channels-actions.c:85
 #, fuzzy
@@ -1835,11 +1840,12 @@ msgid "Raise these channels to the top of the channel stack"
 msgstr "Elevar esta canle ate a cima da rima de canles"
 
 #: ../app/actions/channels-actions.c:97
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "_Lower Channel"
 msgctxt "channels-action"
 msgid "_Lower Channels"
-msgstr "_Baixar canles"
+msgstr "_Baixar canle"
 
 #: ../app/actions/channels-actions.c:98
 #, fuzzy
@@ -1904,11 +1910,12 @@ msgid "Blue"
 msgstr "Azul"
 
 #: ../app/actions/channels-actions.c:141
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Blue"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Blue"
-msgstr "Etiqueta de cor da canle: Estabelecer a azul"
+msgstr "Etiqueta de cor: Estabelecer a azul"
 
 #: ../app/actions/channels-actions.c:146
 msgctxt "channels-action"
@@ -1916,11 +1923,12 @@ msgid "Green"
 msgstr "Verde"
 
 #: ../app/actions/channels-actions.c:147
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Green"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Green"
-msgstr "Etiqueta de cor da canle: Estabelecer a verde"
+msgstr "Etiqueta de cor: Estabelecer a verde"
 
 #: ../app/actions/channels-actions.c:152
 msgctxt "channels-action"
@@ -1928,11 +1936,12 @@ msgid "Yellow"
 msgstr "Amarelo"
 
 #: ../app/actions/channels-actions.c:153
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Yellow"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Yellow"
-msgstr "Etiqueta de cor da canle: Estabelecer a amarelo"
+msgstr "Etiqueta de cor: Estabelecer a amarelo"
 
 #: ../app/actions/channels-actions.c:158
 msgctxt "channels-action"
@@ -1940,11 +1949,12 @@ msgid "Orange"
 msgstr "Laranxa"
 
 #: ../app/actions/channels-actions.c:159
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Orange"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Orange"
-msgstr "Etiqueta de cor da canle: Estabelecer a laranxa"
+msgstr "Etiqueta de cor: Estabelecer a laranxa"
 
 #: ../app/actions/channels-actions.c:164
 msgctxt "channels-action"
@@ -1952,11 +1962,12 @@ msgid "Brown"
 msgstr "Marrón"
 
 #: ../app/actions/channels-actions.c:165
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Brown"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Brown"
-msgstr "Etiqueta de cor da canle: Estabelecer a marrón"
+msgstr "Etiqueta de cor: Estabelecer a marrón"
 
 #: ../app/actions/channels-actions.c:170
 msgctxt "channels-action"
@@ -1964,11 +1975,12 @@ msgid "Red"
 msgstr "Vermello"
 
 #: ../app/actions/channels-actions.c:171
+#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Color Tag: Set to Red"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Red"
-msgstr "Etiqueta de cor da canle: Estabelecer a vermello"
+msgstr "Etiqueta de cor: Estabelecer a vermello"
 
 #: ../app/actions/channels-actions.c:176
 msgctxt "channels-action"
@@ -1976,11 +1988,12 @@ msgid "Violet"
 msgstr "Violeta"
 
 #: ../app/actions/channels-actions.c:177
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Violet"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Violet"
-msgstr "Etiqueta de cor da canle: Estabelecer a violeta"
+msgstr "Etiqueta de cor: Estabelecer a violeta"
 
 #: ../app/actions/channels-actions.c:182
 msgctxt "channels-action"
@@ -1988,11 +2001,12 @@ msgid "Gray"
 msgstr "Gris"
 
 #: ../app/actions/channels-actions.c:183
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "Color Tag: Set to Gray"
 msgctxt "channels-action"
 msgid "Channel Color Tag: Set to Gray"
-msgstr "Etiqueta de cor da canle: Estabelecer a gris"
+msgstr "Etiqueta de cor: Estabelecer a gris"
 
 #: ../app/actions/channels-actions.c:191
 msgctxt "channels-action"
@@ -2130,36 +2144,40 @@ msgid "New Channel Color"
 msgstr "Cor da canle nova"
 
 #: ../app/actions/channels-commands.c:231
+#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Raise Channel"
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "Subir canle"
-msgstr[1] "Subir canles"
+msgstr[1] "Subir canle"
 
 #: ../app/actions/channels-commands.c:266
+#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Raise Channel to Top"
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
-msgstr[0] "Subir canle á parte superior"
-msgstr[1] "Subir canles á parte superior"
+msgstr[0] "Subir a canle á parte superior"
+msgstr[1] "Subir a canle á parte superior"
 
 #: ../app/actions/channels-commands.c:303
+#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lower Channel"
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "Baixar canle"
-msgstr[1] "Baixar canles"
+msgstr[1] "Baixar canle"
 
 #: ../app/actions/channels-commands.c:340
+#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lower Channel to Bottom"
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Baixar canle á parte inferior"
-msgstr[1] "Baixar canles á parte inferior"
+msgstr[1] "Baixar canle á parte inferior"
 
 #: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:462
 #: ../app/display/gimpdisplayshell-dnd.c:707
@@ -2170,18 +2188,19 @@ msgid "%s Channel Copy"
 msgstr "Copia da canle %s"
 
 #: ../app/actions/channels-commands.c:396
+#, fuzzy
 #| msgctxt "channels-action"
 #| msgid "D_uplicate Channel"
 msgid "Duplicate channels"
-msgstr "Duplicar canles"
+msgstr "D_uplicar canle"
 
 #: ../app/actions/channels-commands.c:439
-#, c-format
+#, fuzzy, c-format
 #| msgctxt "undo-type"
 #| msgid "Remove Channel"
 msgctxt "undo-type"
 msgid "Remove %d Channels"
-msgstr "Eliminar %d canle"
+msgstr "Eliminar canle"
 
 #: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
@@ -2781,370 +2800,392 @@ msgstr "Azul de segundo plano: Incrementar un 10%"
 #: ../app/actions/context-actions.c:481
 msgctxt "context-action"
 msgid "Foreground Hue: Set"
-msgstr "Ton do primeiro plano:  estabelecer"
+msgstr ""
 
 #: ../app/actions/context-actions.c:485
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Minimum"
-msgstr "Ton do primeiro plano: estabelecer ao mínimo"
+msgstr ""
 
 #: ../app/actions/context-actions.c:489
 msgctxt "context-action"
 msgid "Foreground Hue: Set to Maximum"
-msgstr "Ton do primeiro plano: estabelecer ao máximo"
+msgstr ""
 
 #: ../app/actions/context-actions.c:493
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 1%"
-msgstr "Ton do primeiro plano: reducir un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:497
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 1%"
-msgstr "Ton do primeiro plano: incrementar un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:501
 msgctxt "context-action"
 msgid "Foreground Hue: Decrease by 10%"
-msgstr "Ton do primeiro plano: reducir un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:505
 msgctxt "context-action"
 msgid "Foreground Hue: Increase by 10%"
-msgstr "Ton do primeiro plano: incrementar un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:513
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set"
-msgstr "Saturación do primeiro plano: estabelecer"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:517
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Minimum"
-msgstr "Saturación do primeiro plano: estabelecer ao mínimo"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:521
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Set to Maximum"
-msgstr "Saturación do primeiro plano: estabelecer ao máximo"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:525
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 1%"
-msgstr "Saturación do primeiro plano: reducir un 1%"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:529
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 1%"
-msgstr "Saturación do primeiro plano: incrementar un 1%"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:533
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Decrease by 10%"
-msgstr "Saturación do primeiro plano: reducir un 10%"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:537
+#, fuzzy
 #| msgid "Foreground Extraction"
 msgctxt "context-action"
 msgid "Foreground Saturation: Increase by 10%"
-msgstr "Saturación do primeiro plano: incrementar un 10%"
+msgstr "Extracción de cor de primeiro plano"
 
 #: ../app/actions/context-actions.c:545
+#, fuzzy
 #| msgid "Foreground Select"
 msgctxt "context-action"
 msgid "Foreground Value: Set"
-msgstr "Valor do primeiro plano: estabelecer"
+msgstr "Selección do primeiro plano"
 
 #: ../app/actions/context-actions.c:549
+#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Minimum"
-msgstr "Valor do primeiro plano: estabelecer ao mínimo"
+msgstr "Cor de primeiro plano establecida a:"
 
 #: ../app/actions/context-actions.c:553
+#, fuzzy
 #| msgid "Foreground color set to:"
 msgctxt "context-action"
 msgid "Foreground Value: Set to Maximum"
-msgstr "Valor do primeiro plano: estabelecer ao máximo"
+msgstr "Cor de primeiro plano establecida a:"
 
 #: ../app/actions/context-actions.c:557
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 1%"
-msgstr "Valor do primeiro plano: reducir un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:561
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 1%"
-msgstr "Valor do primeiro plano: incrementar un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:565
 msgctxt "context-action"
 msgid "Foreground Value: Decrease by 10%"
-msgstr "Valor do primeiro plano: reducir un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:569
 msgctxt "context-action"
 msgid "Foreground Value: Increase by 10%"
-msgstr "Valor do primeiro plano: incrementar un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:577
+#, fuzzy
 #| msgid "Background"
 msgctxt "context-action"
 msgid "Background Hue: Set"
-msgstr "Ton do fondo: estabelecer"
+msgstr "Fondo"
 
 #: ../app/actions/context-actions.c:581
+#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Minimum"
-msgstr "Ton do fondo: estabelecer ao mínimo"
+msgstr "Cor de fondo establecida a:"
 
 #: ../app/actions/context-actions.c:585
+#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Hue: Set to Maximum"
-msgstr "Ton do fondo: estabelecer ao máximo"
+msgstr "Cor de fondo establecida a:"
 
 #: ../app/actions/context-actions.c:589
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 1%"
-msgstr "Ton do fondo: reducir un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:593
 msgctxt "context-action"
 msgid "Background Hue: Increase by 1%"
-msgstr "Ton do fondo: incrementar un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:597
 msgctxt "context-action"
 msgid "Background Hue: Decrease by 10%"
-msgstr "Ton do fondo: reducir un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:601
 msgctxt "context-action"
 msgid "Background Hue: Increase by 10%"
-msgstr "Ton do fondo: incrementar un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:609
+#, fuzzy
 #| msgid "Background color set to:"
 msgctxt "context-action"
 msgid "Background Saturation: Set"
-msgstr "Saturación do fondo: estabelecer"
+msgstr "Cor de fondo establecida a:"
 
 #: ../app/actions/context-actions.c:613
 msgctxt "context-action"
 msgid "Background Saturation: Set to Minimum"
-msgstr "Saturación do fondo: estabelecer ao mínimo"
+msgstr ""
 
 #: ../app/actions/context-actions.c:617
 msgctxt "context-action"
 msgid "Background Saturation: Set to Maximum"
-msgstr "Saturación do fondo: estabelecer ao máximo"
+msgstr ""
 
 #: ../app/actions/context-actions.c:621
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 1%"
-msgstr "Saturación do fondo: reducir un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:625
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 1%"
-msgstr "Saturación do fondo: incrementar un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:629
 msgctxt "context-action"
 msgid "Background Saturation: Decrease by 10%"
-msgstr "Saturación do fondo: reducir un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:633
 msgctxt "context-action"
 msgid "Background Saturation: Increase by 10%"
-msgstr "Saturación do fondo: incrementar un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:641
 msgctxt "context-action"
 msgid "Background Value: Set"
-msgstr "Valor do fondo: estabelecer"
+msgstr "Valor de segundo plano: Estabelecer"
 
 #: ../app/actions/context-actions.c:645
 msgctxt "context-action"
 msgid "Background Value: Set to Minimum"
-msgstr "Valor do fondo: estabelecer ao mínimo"
+msgstr "Valor de segundo plano: Estabelecer ao mínimo"
 
 #: ../app/actions/context-actions.c:649
 msgctxt "context-action"
 msgid "Background Value: Set to Maximum"
-msgstr "Valor do fondo: estabelecer ao máximo"
+msgstr "Valor de segundo plano: Estabelecer ao máximo"
 
 #: ../app/actions/context-actions.c:653
 msgctxt "context-action"
 msgid "Background Value: Decrease by 1%"
-msgstr "Valor do fondo: reducir un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:657
 msgctxt "context-action"
 msgid "Background Value: Increase by 1%"
-msgstr "Valor do fondo: incrementar un 1%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:661
 msgctxt "context-action"
 msgid "Background Value: Decrease by 10%"
-msgstr "Valor do fondo: recucir un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:665
 msgctxt "context-action"
 msgid "Background Value: Increase by 10%"
-msgstr "Valor do fondo: incrementar un 10%"
+msgstr ""
 
 #: ../app/actions/context-actions.c:673
+#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Fill with Transparency"
 msgctxt "context-action"
 msgid "Tool Opacity: Set Transparency"
-msgstr "Ferramenta de opacidade: estabelecer transparencia"
+msgstr "Encher con transparencia"
 
 #: ../app/actions/context-actions.c:677
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Transparent"
-msgstr "Ferramenta de opacidade: facer completamente transparente"
+msgstr ""
 
 #: ../app/actions/context-actions.c:681
 msgctxt "context-action"
 msgid "Tool Opacity: Make Completely Opaque"
-msgstr "Ferramenta de opacidade: facer completamente opaco"
+msgstr ""
 
 #: ../app/actions/context-actions.c:685
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Transparent"
-msgstr "Ferramenta de opacidade: facer un 1% maís transparente"
+msgstr ""
 
 #: ../app/actions/context-actions.c:689
 msgctxt "context-action"
 msgid "Tool Opacity: Make 1% More Opaque"
-msgstr "Ferramenta de opacidade: facer un 1% máis opaco"
+msgstr ""
 
 #: ../app/actions/context-actions.c:693
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Transparent"
-msgstr "Ferramenta de opacidade: facer un 10% máis transparente"
+msgstr ""
 
 #: ../app/actions/context-actions.c:697
 msgctxt "context-action"
 msgid "Tool Opacity: Make 10% More Opaque"
-msgstr "Ferramenta de opacidade: facer un 10% máis opaco"
+msgstr ""
 
 #: ../app/actions/context-actions.c:705
+#, fuzzy
 #| msgid "Paint Mode: %s"
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "Ferramenta de modo de pintura: seleccionar primeira"
+msgstr "Modo de pintura: %s"
 
 #: ../app/actions/context-actions.c:709
+#, fuzzy
 #| msgid "Paint Mode: %s"
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "Ferramenta de modo de pintura: seleccionar última"
+msgstr "Modo de pintura: %s"
 
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr "Ferramenta de modo de pintura: seleccionar anterior"
+msgstr ""
 
 #: ../app/actions/context-actions.c:717
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr "Ferramenta de modo de pintura: seleccionar seguinte"
+msgstr ""
 
 #: ../app/actions/context-actions.c:725
 msgctxt "context-action"
 msgid "Tool Selection: Choose by Index"
-msgstr "Ferramenta de selección: escoller por índice"
+msgstr ""
 
 #: ../app/actions/context-actions.c:729
+#, fuzzy
 #| msgctxt "cursor-mode"
 #| msgid "Tool icon with crosshair"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to First"
-msgstr "Ferramenta de selección: trocar á primeira"
+msgstr "Icona de ferramenta con retícula"
 
 #: ../app/actions/context-actions.c:733
+#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Last"
-msgstr "Ferramenta de selección: trocar á última"
+msgstr "Selección a camiño"
 
 #: ../app/actions/context-actions.c:737
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Previous"
-msgstr "Ferramenta de selección: trocar á anterior"
+msgstr ""
 
 #: ../app/actions/context-actions.c:741
 msgctxt "context-action"
 msgid "Tool Selection: Switch to Next"
-msgstr "Ferramenta de selección: trocar á seguinte"
+msgstr ""
 
 #: ../app/actions/context-actions.c:749
 msgctxt "context-action"
 msgid "Brush Selection: Select by Index"
-msgstr "Ferramenta de pincel: seleccionar por índice"
+msgstr ""
 
 #: ../app/actions/context-actions.c:753
 msgctxt "context-action"
 msgid "Brush Selection: Switch to First"
-msgstr "Ferramenta de pincel: trocar á primeira"
+msgstr ""
 
 #: ../app/actions/context-actions.c:757
+#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Last"
-msgstr "Ferramenta de pincel: trocar á última"
+msgstr "Selección a camiño"
 
 #: ../app/actions/context-actions.c:761
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Previous"
-msgstr "Ferramenta de pincel: trocar á anterior"
+msgstr ""
 
 #: ../app/actions/context-actions.c:765
 msgctxt "context-action"
 msgid "Brush Selection: Switch to Next"
-msgstr "Ferramenta de pincel: trocar á seguinte"
+msgstr ""
 
 #: ../app/actions/context-actions.c:773
 msgctxt "context-action"
 msgid "Pattern Selection: Select by Index"
-msgstr "Selección por patrón: seleccionar por índice"
+msgstr ""
 
 #: ../app/actions/context-actions.c:777
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to First"
-msgstr "Selección por patrón: trocar á primeira"
+msgstr ""
 
 #: ../app/actions/context-actions.c:781
+#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Floating Selection to Layer"
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Last"
-msgstr "Selección por patrón: trocar á última"
+msgstr "Selección flotante a capa"
 
 #: ../app/actions/context-actions.c:785
+#, fuzzy
 #| msgctxt "select-action"
 #| msgid "Stroke the selection with last used values"
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Previous"
-msgstr "Selección por patrón: trocar á anterior"
+msgstr "Trazar a selección cos últimos valores utilizados"
 
 #: ../app/actions/context-actions.c:789
 msgctxt "context-action"
 msgid "Pattern Selection: Switch to Next"
-msgstr "Selección por patrón: trocar á seguinte"
+msgstr ""
 
 #: ../app/actions/context-actions.c:797
 msgctxt "context-action"
@@ -3552,10 +3593,9 @@ msgid "Brush Angle: %2.2f"
 msgstr "Ángulo do pincel: %2.2f"
 
 #: ../app/actions/context-commands.c:827
-#, fuzzy
 #| msgid "Dynamics Folders"
 msgid "Dynamics disabled"
-msgstr "Cartafoles de tipos de letra"
+msgstr "Dinámicas desactivadas"
 
 #: ../app/actions/context-commands.c:830
 #, fuzzy
@@ -3665,52 +3705,52 @@ msgstr ""
 #: ../app/actions/dashboard-actions.c:89
 msgctxt "dashboard-update-interval"
 msgid "0.25 Seconds"
-msgstr "0.25 segundo"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:94
 msgctxt "dashboard-update-interval"
 msgid "0.5 Seconds"
-msgstr "0.5 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:99
 msgctxt "dashboard-update-interval"
 msgid "1 Second"
-msgstr "1 segundo"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:104
 msgctxt "dashboard-update-interval"
 msgid "2 Seconds"
-msgstr "2 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:109
 msgctxt "dashboard-update-interval"
 msgid "4 Seconds"
-msgstr "4 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:117
 msgctxt "dashboard-history-duration"
 msgid "15 Seconds"
-msgstr "15 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:122
 msgctxt "dashboard-history-duration"
 msgid "30 Seconds"
-msgstr "30 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:127
 msgctxt "dashboard-history-duration"
 msgid "60 Seconds"
-msgstr "60 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:132
 msgctxt "dashboard-history-duration"
 msgid "120 Seconds"
-msgstr "120 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-actions.c:137
 msgctxt "dashboard-history-duration"
 msgid "240 Seconds"
-msgstr "240 segundos"
+msgstr ""
 
 #: ../app/actions/dashboard-commands.c:118
 #: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:167
@@ -3768,33 +3808,37 @@ msgstr "240 segundos"
 #: ../app/widgets/gimpfiledialog.c:327 ../app/widgets/gimphelp.c:439
 #: ../app/widgets/gimphelp.c:779 ../app/widgets/gimpiconpicker.c:484
 #: ../app/widgets/gimpprogressdialog.c:91 ../app/widgets/gimpsettingsbox.c:712
+#, fuzzy
 #| msgid "Cancelled"
 msgid "_Cancel"
-msgstr "_Cancelar"
+msgstr "Cancelado"
 
 #: ../app/actions/dashboard-commands.c:119
+#, fuzzy
 #| msgctxt "filters-action"
 #| msgid "_Decor"
 msgid "_Record"
-msgstr "_Gravar"
+msgstr "_Decor"
 
 #: ../app/actions/dashboard-commands.c:141
+#, fuzzy
 #| msgid "All files"
 msgid "All Files"
 msgstr "Todos os ficheiros"
 
 #: ../app/actions/dashboard-commands.c:146
+#, fuzzy
 #| msgid "All files (*.*)"
 msgid "Log Files (*.log)"
-msgstr "Ficheiros de rexistro (*.log)"
+msgstr "Todos os ficheiros (*.*)"
 
 #: ../app/actions/dashboard-commands.c:179
 msgid "Log samples per second"
-msgstr "Mostraxe de rexistro por segundo"
+msgstr ""
 
 #: ../app/actions/dashboard-commands.c:183
 msgid "Sample fre_quency:"
-msgstr "Fre_cuencia de mostreo:"
+msgstr ""
 
 #: ../app/actions/dashboard-commands.c:202
 msgid "_Backtrace"
@@ -3868,7 +3912,7 @@ msgstr "Sen titulo"
 #: ../app/actions/file-commands.c:537
 #, c-format
 msgid "Can't show file in file manager: %s"
-msgstr "Non é posíbel mostrar o ficheiro no xestor de ficheiros: %s"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:47
 msgctxt "windows-action"
@@ -3898,14 +3942,15 @@ msgstr "Abrir a xanela de estado dos dispositivos"
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
-msgstr "Pintado de _simetría"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:66
+#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the layers dialog"
 msgctxt "dialogs-action"
 msgid "Open the symmetry dialog"
-msgstr "Abrir o diálogo de simetría"
+msgstr "Abrir o diálogo de capas"
 
 #: ../app/actions/dialogs-actions.c:71
 msgctxt "dialogs-action"
@@ -4118,10 +4163,11 @@ msgid "Open the palettes dialog"
 msgstr "Abrir o diálogo de paletas"
 
 #: ../app/actions/dialogs-actions.c:191
+#, fuzzy
 #| msgid "Palette Editor"
 msgctxt "dialogs-action"
 msgid "Palette _Editor"
-msgstr "_Editor de paletas"
+msgstr "Editor de paletas"
 
 #: ../app/actions/dialogs-actions.c:192
 msgctxt "dialogs-action"
@@ -4129,10 +4175,11 @@ msgid "Open the palette editor"
 msgstr "Abrir o editor da paleta"
 
 #: ../app/actions/dialogs-actions.c:197
+#, fuzzy
 #| msgid "Tool Presets"
 msgctxt "dialogs-action"
 msgid "Tool Pre_sets"
-msgstr "_Axustes prefixados das ferramentas"
+msgstr "Axustes prefixados das ferramentas"
 
 #: ../app/actions/dialogs-actions.c:198
 msgctxt "dialogs-action"
@@ -4202,14 +4249,15 @@ msgstr "Abrir a consola de erros"
 #: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "_Dashboard"
-msgstr "_Panel"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:240
+#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the brush editor"
 msgctxt "dialogs-action"
 msgid "Open the dashboard"
-msgstr "Abrir o panel"
+msgstr "Abrir o editor de pinceis"
 
 #: ../app/actions/dialogs-actions.c:250
 msgctxt "dialogs-action"
@@ -4262,16 +4310,17 @@ msgid "Show some helpful tips on using GIMP"
 msgstr "Mostrar consellos útiles sobre o uso do GIMP"
 
 #: ../app/actions/dialogs-actions.c:280
+#, fuzzy
 #| msgctxt "documents-action"
 #| msgid "File Open _Dialog"
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
-msgstr "Diálogo de benvida"
+msgstr "_Diálogo de apertura de ficheiros"
 
 #: ../app/actions/dialogs-actions.c:281
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
-msgstr "Mostrar información da publicación de GIMP en execución"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:287 ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
@@ -4279,11 +4328,12 @@ msgid "About GIMP"
 msgstr "Sobre GIMP"
 
 #: ../app/actions/dialogs-actions.c:289
+#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "_About"
 msgctxt "dialogs-action"
 msgid "About"
-msgstr "Sobre"
+msgstr "_Sobre"
 
 #: ../app/actions/dialogs-actions.c:291
 msgctxt "dialogs-action"
@@ -4293,25 +4343,27 @@ msgstr "_Sobre"
 #: ../app/actions/dialogs-actions.c:299
 msgctxt "dialogs-action"
 msgid "_Search and Run a Command"
-msgstr "_Buscar e executar unha orde"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:300
 msgctxt "dialogs-action"
 msgid "Search commands by keyword, and run them"
-msgstr "Mostrar ordes por palabra chave e executalas"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:305
+#, fuzzy
 #| msgid "Starting Extensions"
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
-msgstr "Xestionar _extensións"
+msgstr "Iniciando extensións"
 
 #: ../app/actions/dialogs-actions.c:306
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
-msgstr "Xestionar extensións: buscar, instalar, desinstalar, actualizar."
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:369
+#, fuzzy
 #| msgctxt "windows-action"
 #| msgid "Tool_box"
 msgid "Tool_box"
@@ -4322,9 +4374,10 @@ msgid "Raise the toolbox"
 msgstr "Elevar a caixa de ferramentas"
 
 #: ../app/actions/dialogs-actions.c:374
+#, fuzzy
 #| msgid "New Toolbox"
 msgid "New Tool_box"
-msgstr "Caixa de _ferramentas nova"
+msgstr "Caixa de ferramentas nova"
 
 #: ../app/actions/dialogs-actions.c:375
 msgid "Create a new toolbox"
@@ -4531,17 +4584,19 @@ msgid "Copy image location to clipboard"
 msgstr "Copiar ao portapapeis a localización da imaxe"
 
 #: ../app/actions/documents-actions.c:70
+#, fuzzy
 #| msgid "Module Manager"
 msgctxt "documents-action"
 msgid "Show in _File Manager"
-msgstr "Mostrar no _Xestor de ficheiros"
+msgstr "Xestor de módulos"
 
 #: ../app/actions/documents-actions.c:71
+#, fuzzy
 #| msgctxt "documents-action"
 #| msgid "Copy image location to clipboard"
 msgctxt "documents-action"
 msgid "Show image location in the file manager"
-msgstr "Mostrar a localización de imaxe no xestor de ficheiros"
+msgstr "Copiar ao portapapeis a localización da imaxe"
 
 #: ../app/actions/documents-actions.c:76
 msgctxt "documents-action"
@@ -4599,6 +4654,7 @@ msgstr "Borrar o historial de documentos"
 
 #: ../app/actions/documents-commands.c:238 ../app/actions/edit-commands.c:168
 #: ../app/dialogs/preferences-dialog.c:670
+#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "Cl_ear"
 msgid "Cl_ear"
@@ -4637,11 +4693,12 @@ msgid "Automatic white balance correction"
 msgstr "Corrección automática de balance de brancos"
 
 #: ../app/actions/drawable-actions.c:60
+#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Toggle visibility"
 msgctxt "drawable-action"
 msgid "Toggle Drawable _Visibility"
-msgstr "Trocar a _visibilidade do debuxábel"
+msgstr "Activar ou desactivar a visibilidade"
 
 #: ../app/actions/drawable-actions.c:66
 #, fuzzy
@@ -4674,11 +4731,12 @@ msgid "Flip _Horizontally"
 msgstr "Voltear _horizontalmente"
 
 #: ../app/actions/drawable-actions.c:86
+#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image horizontally"
 msgctxt "drawable-action"
 msgid "Flip drawable horizontally"
-msgstr "Voltear debuxábel horizontalmente"
+msgstr "Voltear imaxe horizontalmente"
 
 #: ../app/actions/drawable-actions.c:91
 msgctxt "drawable-action"
@@ -4691,7 +4749,7 @@ msgstr "Voltear _verticalmente"
 #| msgid "Flip image vertically"
 msgctxt "drawable-action"
 msgid "Flip drawable vertically"
-msgstr "Voltear debuxábel verticalmente"
+msgstr "Voltear imaxe verticalmente"
 
 #: ../app/actions/drawable-actions.c:100
 msgctxt "drawable-action"
@@ -4772,10 +4830,11 @@ msgid "Copy dynamics file location to clipboard"
 msgstr "Copiar no portapapeis a ruta do ficheiro de dinámica"
 
 #: ../app/actions/dynamics-actions.c:65
+#, fuzzy
 #| msgid "Module Manager"
 msgctxt "dynamics-action"
 msgid "Show in _File Manager"
-msgstr "Mostrar no _Xestor de ficheiros"
+msgstr "Xestor de módulos"
 
 #: ../app/actions/dynamics-actions.c:66
 #, fuzzy
@@ -4811,11 +4870,12 @@ msgid "_Edit Dynamics..."
 msgstr "_Editar dinámica…"
 
 #: ../app/actions/dynamics-actions.c:87
+#, fuzzy
 #| msgctxt "dynamics-action"
 #| msgid "Edit dynamics"
 msgctxt "dynamics-action"
 msgid "Edit this dynamics"
-msgstr "Editar esta dinámica"
+msgstr "Editar dinámica"
 
 #: ../app/actions/dynamics-editor-actions.c:43
 msgctxt "dynamics-editor-action"
@@ -5800,17 +5860,17 @@ msgstr ""
 #: ../app/actions/filters-actions.c:158
 msgctxt "filters-action"
 msgid "_Erode"
-msgstr "_Erosionar"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:159
 msgctxt "filters-action"
 msgid "Grow darker areas of the image"
-msgstr "Medrar as áreas escuras da imaxe"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:177
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr "_Mapa de alien…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:182
 msgctxt "filters-action"
@@ -5825,7 +5885,7 @@ msgstr "Aplicar _lentes…"
 #: ../app/actions/filters-actions.c:192
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
-msgstr "Matriz de _Bayer…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:197
 msgctxt "filters-action"
@@ -5857,7 +5917,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:222
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
-msgstr "Mesturaador de _canles…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:227
 msgctxt "filters-action"
@@ -5865,18 +5925,21 @@ msgid "_Checkerboard..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:232
+#, fuzzy
 #| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "Color _Balance..."
 msgstr "_Balance de cor…"
 
 #: ../app/actions/filters-actions.c:237
+#, fuzzy
 #| msgid "Color _Balance..."
 msgctxt "filters-action"
 msgid "_Color Exchange..."
 msgstr "_Balance de cor…"
 
 #: ../app/actions/filters-actions.c:242
+#, fuzzy
 #| msgid "Colori_ze..."
 msgctxt "filters-action"
 msgid "Colori_ze..."
@@ -5889,26 +5952,29 @@ msgid "Dithe_r..."
 msgstr "Out_ro…"
 
 #: ../app/actions/filters-actions.c:252
+#, fuzzy
 #| msgctxt "colormap-action"
 #| msgid "_Edit Color..."
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
-msgstr "_Rotar cores…"
+msgstr "_Editar cor…"
 
 #: ../app/actions/filters-actions.c:257
+#, fuzzy
 msgctxt "filters-action"
 msgid "Color T_emperature..."
-msgstr "T_emperatura da cor…"
+msgstr "Crear modelo…"
 
 #: ../app/actions/filters-actions.c:262
+#, fuzzy
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
-msgstr "Cor a _alfa…"
+msgstr "_Balance de cor…"
 
 #: ../app/actions/filters-actions.c:267
 msgctxt "filters-action"
 msgid "_Extract Component..."
-msgstr "_Extraer compoñente…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:272
 #, fuzzy
@@ -5920,29 +5986,32 @@ msgstr "Matriz de transformación"
 #: ../app/actions/filters-actions.c:277
 msgctxt "filters-action"
 msgid "_Cubism..."
-msgstr "_Cubismo…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:282
+#, fuzzy
 #| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Curves..."
 msgstr "_Curvas…"
 
 #: ../app/actions/filters-actions.c:287
+#, fuzzy
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr "_Desinterliñado…"
+msgstr "_Reducir saturación…"
 
 #: ../app/actions/filters-actions.c:292
+#, fuzzy
 #| msgid "_Desaturate..."
 msgctxt "filters-action"
 msgid "_Desaturate..."
-msgstr "…Desaturar…"
+msgstr "_Reducir saturación…"
 
 #: ../app/actions/filters-actions.c:297
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr "Diferencia de _gausianos…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:302
 #, fuzzy
@@ -5959,11 +6028,10 @@ msgid "_Displace..."
 msgstr "_Reducir saturación…"
 
 #: ../app/actions/filters-actions.c:312
-#, fuzzy
 #| msgid "Distance:"
 msgctxt "filters-action"
 msgid "Distance _Map..."
-msgstr "Distancia:"
+msgstr "_Mapa de distancia…"
 
 #: ../app/actions/filters-actions.c:317
 #, fuzzy
@@ -5985,37 +6053,40 @@ msgid "_Laplace"
 msgstr "_Substituír"
 
 #: ../app/actions/filters-actions.c:332
+#, fuzzy
 #| msgctxt "file-action"
 #| msgid "_Open..."
 msgctxt "filters-action"
 msgid "_Neon..."
-msgstr "_Neon…"
+msgstr "_Abrir…"
 
 #: ../app/actions/filters-actions.c:337
 msgctxt "filters-action"
 msgid "_Sobel..."
-msgstr "_Sobel…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:342
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr "_Relieve…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:347
+#, fuzzy
 #| msgid "_Fade..."
 msgctxt "filters-action"
 msgid "En_grave..."
-msgstr "_Gravar…"
+msgstr "_Esvaecer…"
 
 #: ../app/actions/filters-actions.c:352
+#, fuzzy
 msgctxt "filters-action"
 msgid "E_xposure..."
-msgstr "E_xposición…"
+msgstr "Exposición:"
 
 #: ../app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
-msgstr "_Fattal e outros. 2002…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:362
 #, fuzzy
@@ -6037,7 +6108,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr "Desenfoque gausiano _selectivo…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:382
 #, fuzzy
@@ -6047,14 +6118,15 @@ msgid "_GEGL Graph..."
 msgstr "Operación _GEGL…"
 
 #: ../app/actions/filters-actions.c:387
+#, fuzzy
 msgctxt "filters-action"
 msgid "_Grid..."
-msgstr "_Grade…"
+msgstr "Grade"
 
 #: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr "Paso _alto…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:397
 #, fuzzy
@@ -6073,7 +6145,7 @@ msgstr "Matiz-_Saturación…"
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr "_Ilusión…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:412
 #, fuzzy
@@ -6086,7 +6158,7 @@ msgstr "_Editar gradación…"
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
 msgid "_Kaleidoscope..."
-msgstr "_Caleidoscopio…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:422
 #, fuzzy
@@ -6124,7 +6196,7 @@ msgstr "_Curvas…"
 #: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr "Planeta _pequeno…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:452
 #, fuzzy
@@ -6135,7 +6207,7 @@ msgstr "A_umentar…"
 #: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
-msgstr "_Mantiuk 2006..."
+msgstr ""
 
 #: ../app/actions/filters-actions.c:462
 #, fuzzy
@@ -6160,7 +6232,7 @@ msgstr "_Editar cor…"
 #: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
-msgstr "Mesturador _mono…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
@@ -6184,9 +6256,10 @@ msgid "_Zoom Motion Blur..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:502
+#, fuzzy
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr "_Ruído de cela…"
+msgstr "_Ruído"
 
 #: ../app/actions/filters-actions.c:507
 #, fuzzy
@@ -6252,9 +6325,10 @@ msgid "_Slur..."
 msgstr "E_scalar capa…"
 
 #: ../app/actions/filters-actions.c:557
+#, fuzzy
 msgctxt "filters-action"
 msgid "_Solid Noise..."
-msgstr "_Ruído sólido…"
+msgstr "_Ruído"
 
 #: ../app/actions/filters-actions.c:562
 #, fuzzy
@@ -6265,7 +6339,7 @@ msgstr "Grade"
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr "Mapa _normal…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:572
 #, fuzzy
@@ -6283,12 +6357,12 @@ msgstr ""
 #: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr "Proxeccion _panorama…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr "_Fotocopia…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:592
 #, fuzzy
@@ -6299,12 +6373,12 @@ msgstr "_Posterizar…"
 #: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr "_Plasma…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr "Coorinadas _polares…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:607
 #, fuzzy
@@ -6322,12 +6396,12 @@ msgstr "_Transformar"
 #: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr "Eliminación de ollos _vermellos…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr "_Reinhard 2005…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:627
 #, fuzzy
@@ -6358,7 +6432,7 @@ msgstr "_Editar patrón…"
 #: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr "_Sepia…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
@@ -6403,7 +6477,7 @@ msgstr "Colo_rar…"
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "S_piral..."
-msgstr "Es_piral…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:692
 #, fuzzy
@@ -6413,15 +6487,16 @@ msgid "_Stretch Contrast..."
 msgstr "L_uminosidade e contraste…"
 
 #: ../app/actions/filters-actions.c:697
+#, fuzzy
 #| msgid "_Curves..."
 msgctxt "filters-action"
 msgid "_Stress..."
-msgstr "_Estrés…"
+msgstr "_Curvas…"
 
 #: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr "Super_nova…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:707
 #, fuzzy
@@ -6472,7 +6547,7 @@ msgstr "E_scalar imaxe…"
 #: ../app/actions/filters-actions.c:742
 msgctxt "filters-action"
 msgid "_Variable Blur..."
-msgstr "Desenfoque _variábel…"
+msgstr ""
 
 #: ../app/actions/filters-actions.c:747
 #, fuzzy
@@ -6494,9 +6569,10 @@ msgid "_Waterpixels..."
 msgstr "_Curvas…"
 
 #: ../app/actions/filters-actions.c:762
+#, fuzzy
 msgctxt "filters-action"
 msgid "_Waves..."
-msgstr "_Ondas…"
+msgstr "_Curvas…"
 
 #: ../app/actions/filters-actions.c:767
 msgctxt "filters-action"
@@ -6504,9 +6580,10 @@ msgid "W_hirl and Pinch..."
 msgstr ""
 
 #: ../app/actions/filters-actions.c:772
+#, fuzzy
 msgctxt "filters-action"
 msgid "W_ind..."
-msgstr "V_ento…"
+msgstr "Grade"
 
 #: ../app/actions/filters-actions.c:780
 #, fuzzy
@@ -7454,11 +7531,12 @@ msgid "Convert the image to linear light"
 msgstr "Converte a imaxe a cores indexadas"
 
 #: ../app/actions/image-actions.c:256
+#, fuzzy
 #| msgctxt "gradient-editor-blending"
 #| msgid "_Linear"
 msgctxt "image-convert-action"
 msgid "Non-Linear"
-msgstr "Non-Lineal"
+msgstr "_Lineal"
 
 #: ../app/actions/image-actions.c:258
 #, fuzzy
@@ -7469,10 +7547,11 @@ msgid "Convert the image to non-linear gamma from the color profile"
 msgstr "Converter a imaxe ao espazo de cores RGB"
 
 #: ../app/actions/image-actions.c:262
+#, fuzzy
 #| msgid "Percentile:"
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
-msgstr "Porcentual (sRGB)"
+msgstr "Percentil:"
 
 #: ../app/actions/image-actions.c:264
 #, fuzzy
@@ -7533,27 +7612,32 @@ msgid "Rotate the image 90 degrees to the left"
 msgstr "Rotar a imaxe 90 graos á esquerda"
 
 #: ../app/actions/image-actions.c:459
+#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "_RGB"
 msgctxt "image-convert-action"
 msgid "_RGB..."
-msgstr "_RGB..."
+msgstr "_RGB"
 
 #: ../app/actions/image-actions.c:461
+#, fuzzy
 #| msgctxt "image-convert-action"
 #| msgid "_Grayscale"
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
-msgstr "_Escala de grises…"
+msgstr "Escala de gri_ses"
 
 #: ../app/actions/image-commands.c:566
-#, c-format
+#, fuzzy, c-format
 #| msgid ""
 #| "Saving '%s' failed:\n"
 #| "\n"
 #| "%s"
 msgid "Saving color profile failed: %s"
-msgstr "Fallou o gardando do perfil de cor: %s"
+msgstr ""
+"Erro ao gardar «%s»:\n"
+"\n"
+"%s"
 
 #: ../app/actions/image-commands.c:606
 #, fuzzy
@@ -7710,26 +7794,27 @@ msgid "Blend Space"
 msgstr "Mestura: "
 
 #: ../app/actions/layers-actions.c:60
-#, fuzzy
 #| msgctxt "select-criterion"
 #| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr "Composto"
+msgstr "Espazo composto"
 
 #: ../app/actions/layers-actions.c:64
+#, fuzzy
 #| msgctxt "select-criterion"
 #| msgid "Composite"
 msgctxt "layers-action"
 msgid "Composite Mode"
-msgstr "Modo composto"
+msgstr "Composto"
 
 #: ../app/actions/layers-actions.c:68
+#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color"
 msgctxt "layers-action"
 msgid "Color Tag"
-msgstr "Etiqueta de cor"
+msgstr "Cor"
 
 #: ../app/actions/layers-actions.c:72
 msgctxt "layers-action"
@@ -7772,10 +7857,11 @@ msgid "Layer _Mode"
 msgstr "_Modo de capa"
 
 #: ../app/actions/layers-actions.c:89
+#, fuzzy
 #| msgid "Default _interpolation:"
 msgctxt "layers-action"
 msgid "Default Edit Action"
-msgstr "Acción de edición predeterminada"
+msgstr "_Interpolación predefinida:"
 
 #: ../app/actions/layers-actions.c:90
 #, fuzzy
@@ -8310,6 +8396,7 @@ msgid "Layer Composite Mode: Intersection"
 msgstr ""
 
 #: ../app/actions/layers-actions.c:425
+#, fuzzy
 #| msgid "None"
 msgctxt "layers-action"
 msgid "None"
@@ -8323,6 +8410,7 @@ msgid "Layer Color Tag: Clear"
 msgstr "Balance de cor"
 
 #: ../app/actions/layers-actions.c:431
+#, fuzzy
 #| msgid "Blue"
 msgctxt "layers-action"
 msgid "Blue"
@@ -8337,6 +8425,7 @@ msgid "Layer Color Tag: Set to Blue"
 msgstr "Etiqueta de cor: Estabelecer a azul"
 
 #: ../app/actions/layers-actions.c:437
+#, fuzzy
 #| msgid "Green"
 msgctxt "layers-action"
 msgid "Green"
@@ -8351,6 +8440,7 @@ msgid "Layer Color Tag: Set to Green"
 msgstr "Etiqueta de cor: Estabelecer a verde"
 
 #: ../app/actions/layers-actions.c:443
+#, fuzzy
 #| msgid "Yellow"
 msgctxt "layers-action"
 msgid "Yellow"
@@ -8365,10 +8455,11 @@ msgid "Layer Color Tag: Set to Yellow"
 msgstr "Etiqueta de cor: Estabelecer a amarelo"
 
 #: ../app/actions/layers-actions.c:449
+#, fuzzy
 #| msgid "Range"
 msgctxt "layers-action"
 msgid "Orange"
-msgstr "Laranxa"
+msgstr "Intervalo"
 
 #: ../app/actions/layers-actions.c:450
 #, fuzzy
@@ -8381,7 +8472,7 @@ msgstr "Etiqueta de cor: Estabelecer a laranxa"
 #: ../app/actions/layers-actions.c:455
 msgctxt "layers-action"
 msgid "Brown"
-msgstr "Marrón"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:456
 #, fuzzy
@@ -8392,6 +8483,7 @@ msgid "Layer Color Tag: Set to Brown"
 msgstr "Etiqueta de cor: Estabelecer a marrón"
 
 #: ../app/actions/layers-actions.c:461
+#, fuzzy
 #| msgid "Red"
 msgctxt "layers-action"
 msgid "Red"
@@ -8408,7 +8500,7 @@ msgstr "Etiqueta de cor: Estabelecer a vermello"
 #: ../app/actions/layers-actions.c:467
 msgctxt "layers-action"
 msgid "Violet"
-msgstr "Violeta"
+msgstr ""
 
 #: ../app/actions/layers-actions.c:468
 #, fuzzy
@@ -8419,9 +8511,10 @@ msgid "Layer Color Tag: Set to Violet"
 msgstr "Etiqueta de cor: Estabelecer a violeta"
 
 #: ../app/actions/layers-actions.c:473
+#, fuzzy
 msgctxt "layers-action"
 msgid "Gray"
-msgstr "Gris"
+msgstr "Escala de gri_ses"
 
 #: ../app/actions/layers-actions.c:474
 #, fuzzy
@@ -9302,16 +9395,18 @@ msgid "_Edit Palette..."
 msgstr "_Editar paleta…"
 
 #: ../app/actions/palettes-actions.c:100
+#, fuzzy
 #| msgctxt "palettes-action"
 #| msgid "Edit palette"
 msgctxt "palettes-action"
 msgid "Edit this palette"
-msgstr "Editar esta paleta"
+msgstr "Editar paleta"
 
 #: ../app/actions/palettes-commands.c:85
+#, fuzzy
 #| msgid "Merge Palette"
 msgid "Merge Palettes"
-msgstr "Combinar paletas"
+msgstr "Combinar paleta"
 
 #: ../app/actions/palettes-commands.c:89
 msgid "Enter a name for the merged palette"
@@ -9903,7 +9998,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr "TTB-LTR"
+msgstr ""
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
@@ -9913,7 +10008,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr "TTB-LTR-UPRIGHT"
+msgstr ""
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
@@ -9931,10 +10026,11 @@ msgstr "Abrir ficheiro de texto (UTF-8)"
 #: ../app/dialogs/vectors-import-dialog.c:89
 #: ../app/widgets/gimpiconpicker.c:485 ../app/widgets/gimpopendialog.c:87
 #: ../app/widgets/gimpsettingsbox.c:714
+#, fuzzy
 #| msgctxt "text-editor-action"
 #| msgid "Open"
 msgid "_Open"
-msgstr "_Abrir"
+msgstr "Abrir"
 
 #: ../app/actions/text-editor-commands.c:141
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:72
@@ -15431,7 +15527,7 @@ msgstr "Pinceis"
 
 #: ../app/core/gimpbrushgenerated.c:143
 msgid "Brush Radius"
-msgstr "Dinámica do pincel"
+msgstr "Radio do pincel"
 
 #: ../app/core/gimpbrushgenerated.c:150
 msgid "Brush Spikes"
@@ -16055,20 +16151,18 @@ msgstr ""
 "A cor de fondo da grade, só se utiliza no estilo de liña de guións duplos."
 
 #: ../app/core/gimpgrid.c:109
-#, fuzzy
 #| msgid "Spacing"
 msgid "Spacing X"
-msgstr "Espazamento"
+msgstr "Espazado X"
 
 #: ../app/core/gimpgrid.c:110
 msgid "Horizontal spacing of grid lines."
 msgstr "Espazo horizontal das liñas da grade."
 
 #: ../app/core/gimpgrid.c:116
-#, fuzzy
 #| msgid "Spacing"
 msgid "Spacing Y"
-msgstr "Espazamento"
+msgstr "Espazado Y"
 
 #: ../app/core/gimpgrid.c:117
 msgid "Vertical spacing of grid lines."
@@ -17232,11 +17326,10 @@ msgstr ""
 "liña dende o punto real de unión."
 
 #: ../app/core/gimpstrokeoptions.c:199
-#, fuzzy
 #| msgctxt "dash-preset"
 #| msgid "Dash, dot"
 msgid "Dash offset"
-msgstr "Raia, punto"
+msgstr "Compensación da raia"
 
 #: ../app/core/gimpstrokeoptions.c:221
 #, fuzzy
@@ -19719,10 +19812,9 @@ msgid "Indexed Conversion Dialog"
 msgstr "Conversión a cor indexada"
 
 #: ../app/dialogs/preferences-dialog.c:2311
-#, fuzzy
 #| msgid "Colormap"
 msgid "Colormap:"
-msgstr "Mapa de cores"
+msgstr "Mapa de cores:"
 
 #: ../app/dialogs/preferences-dialog.c:2314
 #, fuzzy
@@ -20057,10 +20149,9 @@ msgid "Use a locally installed copy"
 msgstr "Usar unha copia instalada neste computador"
 
 #: ../app/dialogs/preferences-dialog.c:2578
-#, fuzzy
 #| msgid "User manual:"
 msgid "U_ser manual:"
-msgstr "Manual de usuario:"
+msgstr "Manual de _usuario:"
 
 #: ../app/dialogs/preferences-dialog.c:2589
 #, fuzzy
@@ -20877,10 +20968,9 @@ msgstr "_Y:"
 
 #. Button to center the image on canvas just below the preview.
 #: ../app/dialogs/resize-dialog.c:444
-#, fuzzy
 #| msgid "Center _X:"
 msgid "C_enter"
-msgstr "Centro _X:"
+msgstr "C_entrar"
 
 #: ../app/dialogs/resize-dialog.c:470
 msgid "Resize _layers:"
@@ -21565,7 +21655,7 @@ msgstr ""
 msgid "pixels"
 msgstr "píxeles"
 
-#: ../app/display/gimpstatusbar.c:480
+#: ../app/display/gimpstatusbar.c:483
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "Cancelar <i>%s</i>"
@@ -22895,12 +22985,11 @@ msgid "Hard light"
 msgstr "Luz forte"
 
 #: ../app/operations/operations-enums.c:264
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Soft light"
 msgctxt "layer-mode"
 msgid "Soft light"
-msgstr "Luz suave"
+msgstr "Claridade suave"
 
 #: ../app/operations/operations-enums.c:265
 #, fuzzy
@@ -23090,10 +23179,9 @@ msgstr ""
 
 #: ../app/operations/gimpcolorbalanceconfig.c:103
 #: ../app/operations/gimpcolorbalanceconfig.c:104
-#, fuzzy
 #| msgid "Cyan"
 msgid "Cyan-Red"
-msgstr "Ciano"
+msgstr "Ciano-vermello"
 
 #: ../app/operations/gimpcolorbalanceconfig.c:109
 #: ../app/operations/gimpcolorbalanceconfig.c:110
@@ -23316,10 +23404,9 @@ msgid "Mode"
 msgstr "Modo:"
 
 #: ../app/operations/gimpoperationdesaturate.c:92
-#, fuzzy
 #| msgid "Choose shade of gray based on:"
 msgid "Choose shade of gray based on"
-msgstr "Escoller sombra gris baseada en:"
+msgstr "Seleccionar ton de gris baseado en"
 
 #: ../app/operations/gimpoperationhuesaturation.c:65
 #, fuzzy
@@ -24361,17 +24448,15 @@ msgid "Interpolation"
 msgstr "Interpolación:"
 
 #: ../app/pdb/gimppdbcontext.c:173
-#, fuzzy
 #| msgid "Transformation"
 msgid "Transform direction"
-msgstr "Transformación"
+msgstr "Dirección da transformación"
 
 #: ../app/pdb/gimppdbcontext.c:181
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Transform Items"
 msgid "Transform resize"
-msgstr "Transformar elementos"
+msgstr "Transformar cambio de tamaño"
 
 #: ../app/pdb/gimppdbcontext.c:196
 #, fuzzy
@@ -25511,10 +25596,9 @@ msgid "Remove transform"
 msgstr "Eliminar parásito da imaxe"
 
 #: ../app/propgui/gimppropgui-recursive-transform.c:315
-#, fuzzy
 #| msgid "Transform:"
 msgid "Recursive Transform: "
-msgstr "Transformar:"
+msgstr "Transformación recursiva:"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:62
 msgid "Shadows"
@@ -25527,10 +25611,9 @@ msgid "Highlights"
 msgstr "Resaltado"
 
 #: ../app/propgui/gimppropgui-shadows-highlights.c:94
-#, fuzzy
 #| msgid "Comment"
 msgid "Common"
-msgstr "Comentario"
+msgstr "Común"
 
 #: ../app/propgui/gimppropgui-spiral.c:220
 msgid "Spiral: "
@@ -25741,7 +25824,7 @@ msgstr ""
 "Algunhas propiedades do texto poderían ser incorrectas. A non ser que queira "
 "editar a capa de texto non necesitará preocuparse por isto."
 
-#: ../app/text/gimptextlayout.c:594
+#: ../app/text/gimptextlayout.c:585
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
@@ -26841,7 +26924,7 @@ msgstr "Tipo de ficheiro"
 
 #: ../app/tools/gimpflipoptions.c:68
 msgid "Direction of flipping"
-msgstr "Dirección"
+msgstr "Dirección do volteado"
 
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:135 ../app/tools/gimpmagnifyoptions.c:191
@@ -28267,7 +28350,7 @@ msgstr "Esquinas arredondadas"
 
 #: ../app/tools/gimprectangleselectoptions.c:102
 msgid "Radius of rounding in pixels"
-msgstr "Radio do arendodado en píxeles"
+msgstr "Radio do arredondado en píxeles"
 
 #: ../app/tools/gimprectangleselecttool.c:149
 msgid "Rectangle Select"
@@ -28828,10 +28911,10 @@ msgid "Limit rotation steps to 15 degrees"
 msgstr "Limitar os pasos de rotación a 15 graos"
 
 #: ../app/tools/gimptransformgridoptions.c:504
-#, fuzzy, c-format
+#, c-format
 #| msgid "Keep aspect  (%s)"
 msgid "Keep aspect (%s)"
-msgstr "Manter proporción  (%s)"
+msgstr "Manter proporción (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:510
 msgid "Keep the original aspect ratio"
@@ -29025,10 +29108,9 @@ msgid "Local frame (%s)"
 msgstr ""
 
 #: ../app/tools/gimptransform3dtool.c:114
-#, fuzzy
 #| msgid "2D Transform"
 msgid "3D Transform"
-msgstr "Transformación 2D"
+msgstr "Transformación 3D"
 
 #: ../app/tools/gimptransform3dtool.c:115
 #, fuzzy
@@ -29037,17 +29119,15 @@ msgid ""
 msgstr "Ferramenta inclinar: inclinar a capa, a selección ou o camiño"
 
 #: ../app/tools/gimptransform3dtool.c:116
-#, fuzzy
 #| msgid "2D Transform"
 msgid "_3D Transform"
-msgstr "Transformación 2D"
+msgstr "Transformación _3D"
 
 #: ../app/tools/gimptransform3dtool.c:139
-#, fuzzy
 #| msgid "2D Transform"
 msgctxt "undo-type"
 msgid "3D Transform"
-msgstr "Transformación 2D"
+msgstr "Transformación 3D"
 
 #: ../app/tools/gimptransform3dtool.c:140
 #, fuzzy
@@ -32534,10 +32614,10 @@ msgstr "polgadas"
 #. * in some dockable GUI.
 #.
 #: ../app/widgets/gimpwidgets-utils.c:1553
-#, fuzzy, c-format
+#, c-format
 #| msgid "Delete \"%s\"?"
 msgid "Select \"%s\""
-msgstr "Quere eliminar «%s»?"
+msgstr "Seleccionar «%s»"
 
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
