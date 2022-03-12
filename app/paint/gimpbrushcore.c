@@ -1198,7 +1198,8 @@ gimp_brush_core_eval_transform_dynamics (GimpBrushCore     *core,
       core->reflect  = coords->reflect;
     }
 
-  if (! GIMP_IS_DYNAMICS (core->dynamics))
+  if (! GIMP_IS_DYNAMICS (core->dynamics) ||
+      ! gimp_paint_options_are_dynamics_enabled (paint_options))
     return;
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->handles_dynamic_transforming_brush)
