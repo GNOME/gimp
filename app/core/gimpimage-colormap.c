@@ -235,7 +235,7 @@ guchar *
 gimp_image_get_colormap (GimpImage *image)
 {
   GimpImagePrivate *private;
-  guchar           *colormap;
+  guchar           *colormap = NULL;
   gint              n_colors, i;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
@@ -245,15 +245,19 @@ gimp_image_get_colormap (GimpImage *image)
     return NULL;
 
   n_colors = gimp_palette_get_n_colors (private->palette);
-  colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
-  for (i = 0; i < n_colors; i++)
+  if (n_colors > 0)
     {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (private->palette, i);
-      gimp_rgb_get_uchar (&entry->color,
-                          &colormap[i * 3],
-                          &colormap[i * 3 + 1],
-                          &colormap[i * 3 + 2]);
+      colormap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
+
+      for (i = 0; i < n_colors; i++)
+        {
+          GimpPaletteEntry *entry = gimp_palette_get_entry (private->palette, i);
+          gimp_rgb_get_uchar (&entry->color,
+                              &colormap[i * 3],
+                              &colormap[i * 3 + 1],
+                              &colormap[i * 3 + 2]);
+        }
     }
 
   return colormap;
