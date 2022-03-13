@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-03-12 22:25+0000\n"
-"PO-Revision-Date: 2022-03-13 01:56+0100\n"
+"PO-Revision-Date: 2022-03-14 00:18+0100\n"
 "Last-Translator: Fran Dieguez <fran.dieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -10229,11 +10229,10 @@ msgstr ""
 "Copiar a ruta do ficheiro de axustes prefixados de ferramenta ao portapapeis"
 
 #: ../app/actions/tool-presets-actions.c:68
-#, fuzzy
 #| msgid "Module Manager"
 msgctxt "tool-presets-action"
 msgid "Show in _File Manager"
-msgstr "Xestor de módulos"
+msgstr "Mostrar no Xestor de _ficheiros"
 
 #: ../app/actions/tool-presets-actions.c:69
 #, fuzzy
@@ -10345,480 +10344,466 @@ msgid "_Arbitrary Rotation..."
 msgstr "Rotación _arbitraria…"
 
 #: ../app/actions/tools-actions.c:64
-#, fuzzy
 #| msgctxt "tools-action"
 #| msgid "Rotate by an arbitrary angle"
 msgctxt "tools-action"
 msgid "Rotate drawable by an arbitrary angle"
-msgstr "Rotar un ángulo arbitrario"
+msgstr "Rotar debuxábel por un ángulo arbitrario"
 
 #: ../app/actions/tools-actions.c:70
-#, fuzzy
 #| msgctxt "tools-action"
 #| msgid "Rotate by an arbitrary angle"
 msgctxt "tools-action"
 msgid "Rotate image by an arbitrary angle"
-msgstr "Rotar un ángulo arbitrario"
+msgstr "Rotar imaxe por un ángulo arbitrario"
 
 #: ../app/actions/tools-actions.c:158
-#, fuzzy
 #| msgid "Airbrush"
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set"
-msgstr "Aerógrafo"
+msgstr "Taxa do aerógrafo: estabelecer"
 
 #: ../app/actions/tools-actions.c:162
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Minimum"
-msgstr ""
+msgstr "Taxa do aerógrafo: estabelecer ao mínimo"
 
 #: ../app/actions/tools-actions.c:166
 msgctxt "tools-action"
 msgid "Airbrush Rate: Set to Maximum"
-msgstr ""
+msgstr "Taxa do aerógrafo: estabelecer ao máximo"
 
 #: ../app/actions/tools-actions.c:170
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 1"
-msgstr ""
+msgstr "Taxa do aerógrafo: decrementar 1"
 
 #: ../app/actions/tools-actions.c:174
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 1"
-msgstr ""
+msgstr "Taxa do aerógrafo: incrementar 1"
 
 #: ../app/actions/tools-actions.c:178
 msgctxt "tools-action"
 msgid "Airbrush Rate: Decrease by 10"
-msgstr ""
+msgstr "Taxa do aerógrafo: decrementar 10"
 
 #: ../app/actions/tools-actions.c:182
 msgctxt "tools-action"
 msgid "Airbrush Rate: Increase by 10"
-msgstr ""
+msgstr "Taxa do aerógrafo: incrementar 10"
 
 #: ../app/actions/tools-actions.c:190
-#, fuzzy
 #| msgid "Airbrush"
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set"
-msgstr "Aerógrafo"
+msgstr "Fluxo do aerógrafo: estabelecer"
 
 #: ../app/actions/tools-actions.c:194
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Minimum"
-msgstr ""
+msgstr "Fluxo do aerógrafo: estabelecer ao mínimo"
 
 #: ../app/actions/tools-actions.c:198
 msgctxt "tools-action"
 msgid "Airbrush Flow: Set to Maximum"
-msgstr ""
+msgstr "Fluxo do aerógrafo: estabelecer ao máximo"
 
 #: ../app/actions/tools-actions.c:202
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 1"
-msgstr ""
+msgstr "Fluxo do aerógrafo: decrementar 1"
 
 #: ../app/actions/tools-actions.c:206
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 1"
-msgstr ""
+msgstr "Fluxo do aerógrafo: incrementar 1"
 
 #: ../app/actions/tools-actions.c:210
 msgctxt "tools-action"
 msgid "Airbrush Flow: Decrease by 10"
-msgstr ""
+msgstr "Fluxo do aerógrafo: decrementar 10"
 
 #: ../app/actions/tools-actions.c:214
 msgctxt "tools-action"
 msgid "Airbrush Flow: Increase by 10"
-msgstr ""
+msgstr "Fluxo do aerógrafo: incrementar 10"
 
 #: ../app/actions/tools-actions.c:271
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set"
-msgstr ""
+msgstr "Opacidade da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:275
-#, fuzzy
 #| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Opacity: Set to Default Value"
-msgstr "_Restaurar as opcións de ferramentas gardadas aos valores predefinidos"
+msgstr "Opacidade da ferramenta: estabelecer valor predeterminado"
 
 #: ../app/actions/tools-actions.c:279
 msgctxt "tools-action"
 msgid "Tool's Opacity: Minimize"
-msgstr ""
+msgstr "Opacidade da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:283
 msgctxt "tools-action"
 msgid "Tool's Opacity: Maximize"
-msgstr ""
+msgstr "Opacidade da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:287
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 1"
-msgstr ""
+msgstr "Opacidade da ferramenta: decrementar 1"
 
 #: ../app/actions/tools-actions.c:291
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 1"
-msgstr ""
+msgstr "Opacidade da ferramenta: incrementar 1"
 
 #: ../app/actions/tools-actions.c:295
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease by 10"
-msgstr ""
+msgstr "Opacidade da ferramenta: decrementar 10"
 
 #: ../app/actions/tools-actions.c:299
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase by 10"
-msgstr ""
+msgstr "Opacidade da ferramenta: incrementar 10"
 
 #: ../app/actions/tools-actions.c:303
 msgctxt "tools-action"
 msgid "Tool's Opacity: Decrease Relative"
-msgstr ""
+msgstr "Opacidade da ferramenta: decremento relativo"
 
 #: ../app/actions/tools-actions.c:307
 msgctxt "tools-action"
 msgid "Tool's Opacity: Increase Relative"
-msgstr ""
+msgstr "Opacidade da ferramenta: incremento relativo"
 
 #: ../app/actions/tools-actions.c:315
 msgctxt "tools-action"
 msgid "Tool's Size: Set"
-msgstr ""
+msgstr "Tamaño da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:319
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Size: Set to Default Value"
-msgstr "Restablecer os valores predefinidos"
+msgstr "Tamaño da ferramenta: estabelecer valor predeterminado"
 
 #: ../app/actions/tools-actions.c:323
 msgctxt "tools-action"
 msgid "Tool's Size: Minimize"
-msgstr ""
+msgstr "Tamaño da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:327
 msgctxt "tools-action"
 msgid "Tool's Size: Maximize"
-msgstr ""
+msgstr "Tamaño da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:331
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 1"
-msgstr ""
+msgstr "Tamaño da ferramenta: decrementar 1"
 
 #: ../app/actions/tools-actions.c:335
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 1"
-msgstr ""
+msgstr "Tamaño da ferramenta: incrementar 1"
 
 #: ../app/actions/tools-actions.c:339
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease by 10"
-msgstr ""
+msgstr "Tamaño da ferramenta: decrementar 10"
 
 #: ../app/actions/tools-actions.c:343
 msgctxt "tools-action"
 msgid "Tool's Size: Increase by 10"
-msgstr ""
+msgstr "Tamaño da ferramenta: incrementar 10"
 
 #: ../app/actions/tools-actions.c:347
 msgctxt "tools-action"
 msgid "Tool's Size: Decrease Relative"
-msgstr ""
+msgstr "Tamaño da ferramenta: decremento relativa"
 
 #: ../app/actions/tools-actions.c:351
 msgctxt "tools-action"
 msgid "Tool's Size: Increase Relative"
-msgstr ""
+msgstr "Tamaño da ferramenta: incremento relativo"
 
 #: ../app/actions/tools-actions.c:359
-#, fuzzy
 #| msgid "Brush Aspect Ratio"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set"
-msgstr "Proporción de aspecto"
+msgstr "Proporción de aspecto da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:363
-#, fuzzy
 #| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Set To Default Value"
-msgstr "_Restaurar as opcións de ferramentas gardadas aos valores predefinidos"
+msgstr ""
+"Proporción de aspecto da ferramenta: estabelecer o valor predeterminado"
 
 #: ../app/actions/tools-actions.c:367
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Minimize"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:371
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Maximize"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:375
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 0.1"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: decrementar 0.1"
 
 #: ../app/actions/tools-actions.c:379
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 0.1"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: incrementar 0.1"
 
 #: ../app/actions/tools-actions.c:383
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease by 1"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: decrementar 1"
 
 #: ../app/actions/tools-actions.c:387
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase by 1"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: incrementar 1"
 
 #: ../app/actions/tools-actions.c:391
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Decrease Relative"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: decremento relativa"
 
 #: ../app/actions/tools-actions.c:395
 msgctxt "tools-action"
 msgid "Tool's Aspect Ratio: Increase Relative"
-msgstr ""
+msgstr "Proporción de aspecto da ferramenta: incremento relativo"
 
 #: ../app/actions/tools-actions.c:403
 msgctxt "tools-action"
 msgid "Tool's Angle: Set"
-msgstr ""
+msgstr "Ángulo da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:407
 msgctxt "tools-action"
 msgid "Tool's Angle: Set Angle To Default Value"
-msgstr ""
+msgstr "Ángulo da ferramenta: estabelecer o ángulo ao valor predeterminado"
 
 #: ../app/actions/tools-actions.c:411
 msgctxt "tools-action"
 msgid "Tool's Angle: Minimize"
-msgstr ""
+msgstr "Ángulo da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:415
 msgctxt "tools-action"
 msgid "Tool's Angle: Maximize"
-msgstr ""
+msgstr "Ángulo da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:419
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 1°"
-msgstr ""
+msgstr "Ángulo da ferramenta: decrementar 1°"
 
 #: ../app/actions/tools-actions.c:423
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 1°"
-msgstr ""
+msgstr "Ángulo da ferramenta: incrementar 1°"
 
 #: ../app/actions/tools-actions.c:427
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease by 15°"
-msgstr ""
+msgstr "Ángulo da ferramenta: decrementar 15°"
 
 #: ../app/actions/tools-actions.c:431
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase by 15°"
-msgstr ""
+msgstr "Ángulo da ferramenta: incrementar 15°"
 
 #: ../app/actions/tools-actions.c:435
 msgctxt "tools-action"
 msgid "Tool's Angle: Decrease Relative"
-msgstr ""
+msgstr "Ángulo da ferramenta: decremento relativo"
 
 #: ../app/actions/tools-actions.c:439
 msgctxt "tools-action"
 msgid "Tool's Angle: Increase Relative"
-msgstr ""
+msgstr "Ángulo da ferramenta: incremento relativo"
 
 #: ../app/actions/tools-actions.c:447
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set"
-msgstr ""
+msgstr "Espazamento da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:451
-#, fuzzy
 #| msgid "_Reset Saved Tool Options to Default Values"
 msgctxt "tools-action"
 msgid "Tool's Spacing: Set To Default Value"
-msgstr "_Restaurar as opcións de ferramentas gardadas aos valores predefinidos"
+msgstr "Espazamento da ferramenta: estabelecer ao valor predeterminado"
 
 #: ../app/actions/tools-actions.c:455
 msgctxt "tools-action"
 msgid "Tool's Spacing: Minimize"
-msgstr ""
+msgstr "Espazamento da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:459
 msgctxt "tools-action"
 msgid "Tool's Spacing: Maximize"
-msgstr ""
+msgstr "Espazamento da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:463
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 1"
-msgstr ""
+msgstr "Espazamento da ferramenta: decrementar 1"
 
 #: ../app/actions/tools-actions.c:467
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 1"
-msgstr ""
+msgstr "Espazamento da ferramenta: incrementar 1"
 
 #: ../app/actions/tools-actions.c:471
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease by 10"
-msgstr ""
+msgstr "Espazamento da ferramenta: decrementar 10"
 
 #: ../app/actions/tools-actions.c:475
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase by 10"
-msgstr ""
+msgstr "Espazamento da ferramenta: incrementar 10"
 
 #: ../app/actions/tools-actions.c:479
 msgctxt "tools-action"
 msgid "Tool's Spacing: Decrease Relative"
-msgstr ""
+msgstr "Espazamento da ferramenta: decremento relativo"
 
 #: ../app/actions/tools-actions.c:483
 msgctxt "tools-action"
 msgid "Tool's Spacing: Increase Relative"
-msgstr ""
+msgstr "Espazamento da ferramenta: incremento relativo"
 
 #: ../app/actions/tools-actions.c:491
-#, fuzzy
 #| msgid "Tool Presets"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set"
-msgstr "Axustes prefixados das ferramentas"
+msgstr "Dureza da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:495
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Hardness: Set to Default Value"
-msgstr "Restablecer os valores predefinidos"
+msgstr "Dureza da ferramenta: estabelecer ao valor predeterminado"
 
 #: ../app/actions/tools-actions.c:499
 msgctxt "tools-action"
 msgid "Tool's Hardness: Minimize"
-msgstr ""
+msgstr "Dureza da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:503
 msgctxt "tools-action"
 msgid "Tool's Hardness: Maximize"
-msgstr ""
+msgstr "Dureza da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:507
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 1"
-msgstr ""
+msgstr "Dureza da ferramenta: decrementar 1"
 
 #: ../app/actions/tools-actions.c:511
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 1"
-msgstr ""
+msgstr "Dureza da ferramenta: incrementar 1"
 
 #: ../app/actions/tools-actions.c:515
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease by 10"
-msgstr ""
+msgstr "Dureza da ferramenta: decrementar 10"
 
 #: ../app/actions/tools-actions.c:519
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase by 10"
-msgstr ""
+msgstr "Dureza da ferramenta: incrementar 10"
 
 #: ../app/actions/tools-actions.c:523
 msgctxt "tools-action"
 msgid "Tool's Hardness: Decrease Relative"
-msgstr ""
+msgstr "Dureza da ferramenta: decremento relativo"
 
 #: ../app/actions/tools-actions.c:527
 msgctxt "tools-action"
 msgid "Tool's Hardness: Increase Relative"
-msgstr ""
+msgstr "Dureza da ferramenta: incremento relativo"
 
 #: ../app/actions/tools-actions.c:535
-#, fuzzy
 #| msgid "Tool Presets"
 msgctxt "tools-action"
 msgid "Tool's Force: Set"
-msgstr "Axustes prefixados das ferramentas"
+msgstr "Forza da ferramenta: estabelecer"
 
 #: ../app/actions/tools-actions.c:539
-#, fuzzy
 #| msgctxt "tool-options-action"
 #| msgid "Reset to default values"
 msgctxt "tools-action"
 msgid "Tool's Force: Set to Default Value"
-msgstr "Restablecer os valores predefinidos"
+msgstr "Forza da ferramenta: estabelecer ao valor predeterminado"
 
 #: ../app/actions/tools-actions.c:543
 msgctxt "tools-action"
 msgid "Tool's Force: Minimize"
-msgstr ""
+msgstr "Forza da ferramenta: minimizar"
 
 #: ../app/actions/tools-actions.c:547
 msgctxt "tools-action"
 msgid "Tool's Force: Maximize"
-msgstr ""
+msgstr "Forza da ferramenta: maximizar"
 
 #: ../app/actions/tools-actions.c:551
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 1"
-msgstr ""
+msgstr "Forza da ferramenta: decrementar 1"
 
 #: ../app/actions/tools-actions.c:555
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 1"
-msgstr ""
+msgstr "Forza da ferramenta: incrementar 1"
 
 #: ../app/actions/tools-actions.c:559
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease by 10"
-msgstr ""
+msgstr "Forza da ferramenta: decrementar 10"
 
 #: ../app/actions/tools-actions.c:563
 msgctxt "tools-action"
 msgid "Tool's Force: Increase by 10"
-msgstr ""
+msgstr "Forza da ferramenta: incrementar 10"
 
 #: ../app/actions/tools-actions.c:567
 msgctxt "tools-action"
 msgid "Tool's Force: Decrease Relative"
-msgstr ""
+msgstr "Forza da ferramenta: decremento relativo"
 
 #: ../app/actions/tools-actions.c:571
 msgctxt "tools-action"
 msgid "Tool's Force: Increase Relative"
-msgstr ""
+msgstr "Forza da ferramenta: incremento relativo"
 
 #: ../app/actions/vector-toolpath-actions.c:45
-#, fuzzy
 #| msgctxt "text-tool-action"
 #| msgid "Text Tool Menu"
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
-msgstr "Ferramenta Te_xto"
+msgstr "Menu da ruta de ferramenta vector"
 
 #: ../app/actions/vector-toolpath-actions.c:49
-#, fuzzy
 #| msgid "Delete Anchor"
 msgctxt "vector-toolpath-action"
 msgid "_Delete Anchor"
-msgstr "Eliminar áncora"
+msgstr "_Eliminar áncora"
 
 #: ../app/actions/vector-toolpath-actions.c:53
 msgctxt "vector-toolpath-action"
@@ -10826,26 +10811,23 @@ msgid "Shift S_tart"
 msgstr ""
 
 #: ../app/actions/vector-toolpath-actions.c:58
-#, fuzzy
 #| msgid "Insert Anchor"
 msgctxt "vector-toolpath-action"
 msgid "_Insert Anchor"
-msgstr "Inserir áncora"
+msgstr "_Inserir áncora"
 
 #: ../app/actions/vector-toolpath-actions.c:62
-#, fuzzy
 #| msgid "Delete Segment"
 msgctxt "vector-toolpath-action"
 msgid "Delete _Segment"
-msgstr "Eliminar segmento"
+msgstr "_Eliminar segmento"
 
 #: ../app/actions/vector-toolpath-actions.c:66
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Render Stroke"
 msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
-msgstr "Renderizar trazo"
+msgstr "Trazo _inverso"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
@@ -10853,27 +10835,24 @@ msgid "Paths Menu"
 msgstr "Menú Camiños"
 
 #: ../app/actions/vectors-actions.c:50
-#, fuzzy
 #| msgctxt "layer-mode-effects"
 #| msgid "Color"
 msgctxt "vectors-action"
 msgid "Color Tag"
-msgstr "Cor"
+msgstr "Etiqueta de cor"
 
 #: ../app/actions/vectors-actions.c:54
-#, fuzzy
 #| msgctxt "palettes-action"
 #| msgid "Edit palette"
 msgctxt "vectors-action"
 msgid "Edit Pa_th"
-msgstr "Editar paleta"
+msgstr "Editar _camiño"
 
 #: ../app/actions/vectors-actions.c:55
-#, fuzzy
 #| msgid "Export the active path"
 msgctxt "vectors-action"
 msgid "Edit the active path"
-msgstr "Exportar o camiño activo"
+msgstr "Edita o camiño actual"
 
 #: ../app/actions/vectors-actions.c:60
 msgctxt "vectors-action"
@@ -10971,12 +10950,11 @@ msgid "Lower this path to the bottom"
 msgstr "Baixar camiño á parte inferior"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Fill Path..."
 msgctxt "vectors-action"
 msgid "Fill Pat_h..."
-msgstr "Rechear camiño…"
+msgstr "Rechear _camiño…"
 
 #: ../app/actions/vectors-actions.c:120
 msgctxt "vectors-action"
@@ -11248,68 +11226,60 @@ msgid "Advanced options"
 msgstr "Opcións avanzadas"
 
 #: ../app/actions/vectors-actions.c:298
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Top Layer"
 msgctxt "vectors-action"
 msgid "Select _Top Path"
-msgstr "Seleccionar a capa s_uperior"
+msgstr "Seleccionar o camiño s_uperior"
 
 #: ../app/actions/vectors-actions.c:299
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the topmost layer"
 msgctxt "vectors-action"
 msgid "Select the topmost path"
-msgstr "Seleccionar a capa superior"
+msgstr "Selecciona o camiño máis arriba"
 
 #: ../app/actions/vectors-actions.c:304
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Bottom Layer"
 msgctxt "vectors-action"
 msgid "Select _Bottom Path"
-msgstr "Seleccionar a capa i_nferior"
+msgstr "Seleccionar o camiño i_nferior"
 
 #: ../app/actions/vectors-actions.c:305
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the bottommost layer"
 msgctxt "vectors-action"
 msgid "Select the bottommost path"
-msgstr "Seleccionar a capa inferior"
+msgstr "Selecciona o camiño de máis abaixo"
 
 #: ../app/actions/vectors-actions.c:310
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Previous Layer"
 msgctxt "vectors-action"
 msgid "Select _Previous Path"
-msgstr "Seleccionar a capa an_terior"
+msgstr "Seleccionar camiño an_terior"
 
 #: ../app/actions/vectors-actions.c:311
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer above the current layer"
 msgctxt "vectors-action"
 msgid "Select the path above the current path"
-msgstr "Seleccionar a capa anterior á capa actual"
+msgstr "Selecciona o camiño sobre o camiño actual"
 
 #: ../app/actions/vectors-actions.c:316
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select _Next Layer"
 msgctxt "vectors-action"
 msgid "Select _Next Path"
-msgstr "Seleccionar a se_guinte capa"
+msgstr "Seleccionar se_guinte camiño"
 
 #: ../app/actions/vectors-actions.c:317
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layer below the current layer"
 msgctxt "vectors-action"
 msgid "Select the vector below the current path"
-msgstr "Seleccionar a capa inferior á capa actual"
+msgstr "Selecciona o vector debaixo do camiño actual"
 
 #: ../app/actions/vectors-commands.c:162 ../app/actions/vectors-commands.c:726
 msgid "Path Attributes"
@@ -11324,18 +11294,16 @@ msgid "New Path"
 msgstr "Novo camiño"
 
 #: ../app/actions/vectors-commands.c:206
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Create a new path..."
 msgid "Create a New Path"
-msgstr "Crear un modelo novo"
+msgstr "Crear un camiño novo"
 
 #: ../app/actions/vectors-commands.c:434 ../app/tools/gimpvectoroptions.c:201
 #: ../app/tools/gimpvectortool.c:744
-#, fuzzy
 #| msgid "Flip Path"
 msgid "Fill Path"
-msgstr "Voltear o camiño"
+msgstr "Encher camiño"
 
 #: ../app/actions/vectors-commands.c:466 ../app/tools/gimpvectoroptions.c:209
 #: ../app/tools/gimpvectortool.c:818
@@ -11353,10 +11321,9 @@ msgid "_Zoom"
 msgstr "_Zoom"
 
 #: ../app/actions/view-actions.c:71
-#, fuzzy
 msgctxt "view-action"
 msgid "_Flip & Rotate"
-msgstr "_Rotar"
+msgstr "_Voltear e rotar"
 
 #: ../app/actions/view-actions.c:72
 msgctxt "view-action"
@@ -11364,11 +11331,10 @@ msgid "_Padding Color"
 msgstr "Cor do t_apiz"
 
 #: ../app/actions/view-actions.c:75
-#, fuzzy
 #| msgid "Color Management"
 msgctxt "view-action"
 msgid "_Color Management"
-msgstr "Xestión da cor"
+msgstr "Xestión da _cor"
 
 #: ../app/actions/view-actions.c:78
 #, fuzzy
@@ -11400,10 +11366,9 @@ msgid "Create another view on this image"
 msgstr "Crear outra visualización desta imaxe"
 
 #: ../app/actions/view-actions.c:94
-#, fuzzy
 msgctxt "view-action"
 msgid "_Close View"
-msgstr "_Pechar"
+msgstr "_Pechar vista"
 
 #: ../app/actions/view-actions.c:95
 #, fuzzy
@@ -11486,11 +11451,10 @@ msgid "Set a custom rotation angle"
 msgstr "Establecer un factor de zoom personalizado"
 
 #: ../app/actions/view-actions.c:136
-#, fuzzy
 #| msgid "Flipping"
 msgctxt "view-action"
 msgid "_Reset Flipping"
-msgstr "Volteando"
+msgstr "_Restabelecer volteado"
 
 #: ../app/actions/view-actions.c:138
 #, fuzzy
@@ -11501,7 +11465,7 @@ msgstr "Restablecer todos os filtros"
 #: ../app/actions/view-actions.c:143
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
-msgstr ""
+msgstr "_Restabelecer volteado e rotación"
 
 #: ../app/actions/view-actions.c:145
 #, fuzzy
@@ -11576,18 +11540,16 @@ msgid "Connect to another display"
 msgstr "Conectar con outra pantalla"
 
 #: ../app/actions/view-actions.c:191
-#, fuzzy
 #| msgid "Show _rulers"
 msgctxt "view-action"
 msgid "Show _All"
-msgstr "Mostrar _regras"
+msgstr "Mostrar _todo"
 
 #: ../app/actions/view-actions.c:192
-#, fuzzy
 #| msgid "Show image size"
 msgctxt "view-action"
 msgid "Show full image content"
-msgstr "Mostrar tamaño da imaxe"
+msgstr "Mostrar o contido completo da imaxe"
 
 #: ../app/actions/view-actions.c:198
 msgctxt "view-action"
@@ -11676,20 +11638,18 @@ msgid "Draw a border around the active layer"
 msgstr "Trazar un bordo arredor da capa activa"
 
 #: ../app/actions/view-actions.c:255
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Show _Layer Boundary"
 msgctxt "view-action"
 msgid "Show Canvas Bounda_ry"
-msgstr "Mostrar os _límites da capa"
+msgstr "Mostrar _límites do canvas"
 
 #: ../app/actions/view-actions.c:256
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Draw a border around the active layer"
 msgctxt "view-action"
 msgid "Draw a border around the canvas"
-msgstr "Trazar un bordo arredor da capa activa"
+msgstr "Debuxar un bordo arredor do canvas"
 
 #: ../app/actions/view-actions.c:262
 msgctxt "view-action"
@@ -11712,12 +11672,11 @@ msgid "Display the image's grid"
 msgstr "Mostrar a grade da imaxe"
 
 #: ../app/actions/view-actions.c:276
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Show Sample Points"
 msgctxt "view-action"
 msgid "Sh_ow Sample Points"
-msgstr "Mostrar puntos de mostra"
+msgstr "M_ostrar puntos de mostraxe"
 
 #: ../app/actions/view-actions.c:277
 msgctxt "view-action"
@@ -11725,7 +11684,6 @@ msgid "Display the image's color sample points"
 msgstr "Mostrar os puntos de mostra de cor da imaxe"
 
 #: ../app/actions/view-actions.c:283
-#, fuzzy
 #| msgctxt "view-action"
 #| msgid "Sn_ap to Guides"
 msgctxt "view-action"
@@ -11828,12 +11786,12 @@ msgstr "Establecer un factor de zoom personalizado"
 #: ../app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
-msgstr ""
+msgstr "Afastar ampliación o máximo posíbel"
 
 #: ../app/actions/view-actions.c:359
 msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
-msgstr ""
+msgstr "Acercar ampliación o máximo posíbel"
 
 #: ../app/actions/view-actions.c:364
 msgctxt "view-zoom-action"
@@ -11983,7 +11941,6 @@ msgid "Set a custom zoom factor"
 msgstr "Establecer un factor de zoom personalizado"
 
 #: ../app/actions/view-actions.c:494
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Flip _Horizontally"
 msgctxt "view-action"
@@ -11991,15 +11948,13 @@ msgid "Flip _Horizontally"
 msgstr "Voltear _horizontalmente"
 
 #: ../app/actions/view-actions.c:495
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image horizontally"
 msgctxt "view-action"
 msgid "Flip the view horizontally"
-msgstr "Voltear imaxe horizontalmente"
+msgstr "Voltear a vista horizontalmente"
 
 #: ../app/actions/view-actions.c:501
-#, fuzzy
 #| msgctxt "drawable-action"
 #| msgid "Flip _Vertically"
 msgctxt "view-action"
@@ -12007,19 +11962,17 @@ msgid "Flip _Vertically"
 msgstr "Voltear _verticalmente"
 
 #: ../app/actions/view-actions.c:502
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Flip image vertically"
 msgctxt "view-action"
 msgid "Flip the view vertically"
-msgstr "Voltear imaxe verticalmente"
+msgstr "Voltear a vista verticalmente"
 
 #: ../app/actions/view-actions.c:516
-#, fuzzy
 #| msgid "R_eset Range"
 msgctxt "view-action"
 msgid "_Reset Rotate"
-msgstr "R_establecer intervalo"
+msgstr "R_establecer rotación"
 
 #: ../app/actions/view-actions.c:518
 #, fuzzy
@@ -12056,38 +12009,33 @@ msgid "Rotate the view 90 degrees to the right"
 msgstr "Rotar a imaxe 90 graos á dereita"
 
 #: ../app/actions/view-actions.c:538
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Rotar _180°"
 
 #: ../app/actions/view-actions.c:539
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Turn the image upside-down"
 msgctxt "view-action"
 msgid "Turn the view upside-down"
-msgstr "Colocar a imaxe para abaixo"
+msgstr "Poñer a vista ao revés"
 
 #: ../app/actions/view-actions.c:544
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Rotar 90° en sentido _antihorario"
+msgstr "Rotar 90° en sentido antihorario"
 
 #: ../app/actions/view-actions.c:545
-#, fuzzy
 #| msgctxt "image-action"
 #| msgid "Rotate the image 90 degrees to the left"
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
-msgstr "Rotar a imaxe 90 graos á esquerda"
+msgstr "Rotar a vista 90 graos á esquerda"
 
 #: ../app/actions/view-actions.c:550
-#, fuzzy
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
-msgstr "Rotar 90° en sentido _antihorario"
+msgstr "Rotar 15° en sentido horario"
 
 #: ../app/actions/view-actions.c:551
 #, fuzzy
@@ -12098,11 +12046,10 @@ msgid "Rotate the view 15 degrees to the left"
 msgstr "Rotar a imaxe 90 graos á esquerda"
 
 #: ../app/actions/view-actions.c:559 ../app/actions/view-actions.c:586
-#, fuzzy
 #| msgid "Percentile:"
 msgctxt "view-action"
 msgid "_Perceptual"
-msgstr "Percentil:"
+msgstr "_Porcentual"
 
 #: ../app/actions/view-actions.c:560
 #, fuzzy
@@ -12112,12 +12059,11 @@ msgid "Display rendering intent is perceptual"
 msgstr "Tentativa de renderizado en _pantalla:"
 
 #: ../app/actions/view-actions.c:565 ../app/actions/view-actions.c:592
-#, fuzzy
 #| msgctxt "palette-editor-action"
 #| msgid "_Delete Color"
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
-msgstr "_Eliminar cor"
+msgstr "Colorímetro _relativo"
 
 #: ../app/actions/view-actions.c:566
 #, fuzzy
@@ -12127,10 +12073,9 @@ msgid "Display rendering intent is relative colorimetric"
 msgstr "Tentativa de renderizado en _pantalla:"
 
 #: ../app/actions/view-actions.c:571 ../app/actions/view-actions.c:598
-#, fuzzy
 msgctxt "view-action"
 msgid "_Saturation"
-msgstr "_Saturación:"
+msgstr "_Saturación"
 
 #: ../app/actions/view-actions.c:572
 #, fuzzy
@@ -12142,7 +12087,7 @@ msgstr "Tentativa de renderizado en _pantalla:"
 #: ../app/actions/view-actions.c:577 ../app/actions/view-actions.c:604
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
-msgstr ""
+msgstr "Colorímetro _absoluto"
 
 #: ../app/actions/view-actions.c:578
 #, fuzzy
@@ -12210,12 +12155,11 @@ msgid "Use the dark check color"
 msgstr "Usar a cor escura das casiñas"
 
 #: ../app/actions/view-actions.c:631
-#, fuzzy
 #| msgctxt "view-padding-color"
 #| msgid "Select _Custom Color..."
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
-msgstr "Seleccionar _cor personalizada…"
+msgstr "_Cor personalizada…"
 
 #: ../app/actions/view-actions.c:632
 msgctxt "view-padding-color"
@@ -12248,46 +12192,40 @@ msgid "Set horizontal scroll offset"
 msgstr ""
 
 #: ../app/actions/view-actions.c:663
-#, fuzzy
 #| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll to left border"
-msgstr "Desprazar cara á esquerda"
+msgstr "Desprazar ao bordo esquerdo"
 
 #: ../app/actions/view-actions.c:668
-#, fuzzy
 #| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll to right border"
-msgstr "Desprazar cara á dereita"
+msgstr "Desprazar ao bordo dereito"
 
 #: ../app/actions/view-actions.c:673
-#, fuzzy
 #| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll left"
-msgstr "Desprazar cara á esquerda"
+msgstr "Desprazar á esquerda"
 
 #: ../app/actions/view-actions.c:678
-#, fuzzy
 #| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll right"
-msgstr "Desprazar cara á dereita"
+msgstr "Desprazar á dereita"
 
 #: ../app/actions/view-actions.c:683
-#, fuzzy
 #| msgid "Scroll Left"
 msgctxt "view-action"
 msgid "Scroll page left"
-msgstr "Desprazar cara á esquerda"
+msgstr "Desprazar á páxina da esquerda"
 
 #: ../app/actions/view-actions.c:688
-#, fuzzy
 #| msgid "Scroll Right"
 msgctxt "view-action"
 msgid "Scroll page right"
-msgstr "Desprazar cara á dereita"
+msgstr "Desprazar á páxina da dereita"
 
 #: ../app/actions/view-actions.c:696
 msgctxt "view-action"
@@ -12297,7 +12235,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:701
 msgctxt "view-action"
 msgid "Scroll to top border"
-msgstr ""
+msgstr "Desprazar ao borde superior"
 
 #: ../app/actions/view-actions.c:706
 #, fuzzy
@@ -12357,19 +12295,19 @@ msgstr "_Zoom (%s)"
 #. H: Horizontal, V: Vertical
 #: ../app/actions/view-actions.c:1179
 msgid "(H+V) "
-msgstr ""
+msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
 #: ../app/actions/view-actions.c:1185
 msgid "(H) "
-msgstr ""
+msgstr "(H) "
 
 #. please preserve the trailing space
 #. V: Vertical
 #: ../app/actions/view-actions.c:1191
 msgid "(V) "
-msgstr ""
+msgstr "(V) "
 
 #: ../app/actions/view-actions.c:1198
 #, fuzzy, c-format
@@ -12410,7 +12348,7 @@ msgstr "Mover esta xanela á pantalla %s"
 #: ../app/widgets/gimpcontrollereditor.c:662
 #: ../app/widgets/gimperrordialog.c:76 ../app/widgets/gimpfiledialog.c:176
 msgid "_OK"
-msgstr ""
+msgstr "_Aceptar"
 
 #: ../app/actions/windows-actions.c:102
 msgctxt "windows-action"
@@ -12509,60 +12447,55 @@ msgstr "Usar está activado GIMP está en modo de xanela única."
 #: ../app/actions/windows-actions.c:151
 msgctxt "windows-tabs-position-action"
 msgid "_Top"
-msgstr ""
+msgstr "_Arriba"
 
 #: ../app/actions/windows-actions.c:152
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Raise this path to the top"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the top"
-msgstr "Subir camiño á parte superior"
+msgstr "Posición das lapelas na parte superior"
 
 #: ../app/actions/windows-actions.c:156
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Layer to _Bottom"
 msgctxt "windows-tabs-position-action"
 msgid "_Bottom"
-msgstr "Capa ao _fondo"
+msgstr "_Abaixo"
 
 #: ../app/actions/windows-actions.c:157
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Lower this path to the bottom"
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the bottom"
-msgstr "Baixar camiño á parte inferior"
+msgstr "Posición das lapelas na parte inferior"
 
 #: ../app/actions/windows-actions.c:161
 msgctxt "windows-tabs-position-action"
 msgid "_Left"
-msgstr ""
+msgstr "_Esquerda"
 
 #: ../app/actions/windows-actions.c:162
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the left"
-msgstr ""
+msgstr "Posición das lapelas á esquerda"
 
 #: ../app/actions/windows-actions.c:166
-#, fuzzy
 #| msgid "H_eight:"
 msgctxt "windows-tabs-position-action"
 msgid "_Right"
-msgstr "A_ltura:"
+msgstr "_Dereita"
 
 #: ../app/actions/windows-actions.c:167
 msgctxt "windows-tabs-position-action"
 msgid "Position the tabs on the right"
-msgstr ""
+msgstr "Posición das lapelas á dereita"
 
 #: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
-#, fuzzy
 #| msgctxt "windows-action"
 #| msgid "Single-Window Mode"
 msgid "Single-window mode disabled"
-msgstr "Modo de xanela única"
+msgstr "Modo de xanela única desactivado"
 
 #: ../app/actions/windows-commands.c:208
 msgid ""
@@ -12616,62 +12549,54 @@ msgid "Crosshair only"
 msgstr "Só retículas"
 
 #: ../app/config/config-enums.c:122
-#, fuzzy
 #| msgctxt "edit-action"
 #| msgid "_New Image"
 msgctxt "export-file-type"
 msgid "PNG Image"
-msgstr "_Nova imaxe"
+msgstr "Imaxe PNG"
 
 #: ../app/config/config-enums.c:123
-#, fuzzy
 #| msgid "Image"
 msgctxt "export-file-type"
 msgid "JPEG Image"
-msgstr "Imaxe"
+msgstr "Imaxe JPEG"
 
 #: ../app/config/config-enums.c:124
-#, fuzzy
 #| msgid "Open Image"
 msgctxt "export-file-type"
 msgid "OpenRaster Image"
-msgstr "Abrir imaxe"
+msgstr "Imaxe OpenRaster"
 
 #: ../app/config/config-enums.c:125
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Crop Image"
 msgctxt "export-file-type"
 msgid "Photoshop Image"
-msgstr "Recortar imaxe"
+msgstr "Imaxe Photoshop"
 
 #: ../app/config/config-enums.c:126
-#, fuzzy
 #| msgid "Clear Document History"
 msgctxt "export-file-type"
 msgid "Portable Document Format"
-msgstr "Borrar o historial de documentos"
+msgstr "Formado de documento portábel"
 
 #: ../app/config/config-enums.c:127
-#, fuzzy
 #| msgid "Image"
 msgctxt "export-file-type"
 msgid "TIFF Image"
-msgstr "Imaxe"
+msgstr "Imaxe TIFF"
 
 #: ../app/config/config-enums.c:128
-#, fuzzy
 #| msgid "Window Management"
 msgctxt "export-file-type"
 msgid "Windows BMP Image"
-msgstr "Xestión de xanelas"
+msgstr "Imaxe BMP de Windows"
 
 #: ../app/config/config-enums.c:129
-#, fuzzy
 #| msgid "Open Image"
 msgctxt "export-file-type"
 msgid "WebP Image"
-msgstr "Abrir imaxe"
+msgstr "Imaxe WebP"
 
 #: ../app/config/config-enums.c:157
 msgctxt "handedness"
@@ -12788,7 +12713,7 @@ msgstr ""
 
 #: ../app/config/gimpcoreconfig.c:797 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
-msgstr ""
+msgstr "A sintaxe de patrón para buscar e seleccionar elementos:"
 
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:435
 msgid "Layer"
@@ -12848,6 +12773,8 @@ msgstr "Especifica como debe debuxarse a área arredor da imaxe."
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
 msgstr ""
+"Comprobar se hai actualizacións de GIMP mediante consultas a internet en "
+"segundo plano."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -13408,41 +13335,38 @@ msgstr ""
 "Ocultar empotrábeis e outras xanelas, deixando unicamente as xanelas de imaxe"
 
 #: ../app/config/gimprc-blurbs.h:473
-#, fuzzy
 #| msgctxt "windows-action"
 #| msgid "When enabled GIMP is in a single-window mode."
 msgid "Show the image tabs bar in single window mode."
-msgstr "Usar está activado GIMP está en modo de xanela única."
+msgstr "Mostrar a barra de lapelas de imaxe no modo de xanela única."
 
 #: ../app/config/gimprc-blurbs.h:476
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the N-Point Deformation tool."
-msgstr "Abrir o diálogo de información do punteiro"
+msgstr "Activar a ferramenta de deformación de punto N."
 
 #: ../app/config/gimprc-blurbs.h:479
 msgid "Enable the Handle Transform tool."
-msgstr ""
+msgstr "Activar a ferramenta de Xestión de transformación."
 
 #: ../app/config/gimprc-blurbs.h:482
 msgid "Enable symmetry on painting."
-msgstr ""
+msgstr "Activar a simetría ao pintar."
 
 #: ../app/config/gimprc-blurbs.h:485
 msgid "Enable the MyPaint Brush tool."
-msgstr ""
+msgstr "Activar a ferramenta de Pincel de MyPaint."
 
 #: ../app/config/gimprc-blurbs.h:488
 msgid "Enable the Seamless Clone tool."
-msgstr ""
+msgstr "Activar a ferramenta de Clonado contínuo."
 
 #: ../app/config/gimprc-blurbs.h:491
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the pointer information dialog"
 msgid "Enable the Paint Select tool."
-msgstr "Abrir o diálogo de información do punteiro"
+msgstr "Activar a ferramenta de selección de pintura"
 
 #: ../app/config/gimprc-blurbs.h:494
 msgid "What to do when the space bar is pressed in the image window."
@@ -13451,6 +13375,8 @@ msgstr "Que facer cando se preme a barra espazadora na xanela da imaxe."
 #: ../app/config/gimprc-blurbs.h:497
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
+"O método de compresión usado para os datos de tesela almacenados no ficheiro "
+"de intercambio."
 
 #: ../app/config/gimprc-blurbs.h:500
 msgid ""
@@ -13501,7 +13427,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:525
 msgid "The name of the theme to use."
-msgstr ""
+msgstr "O nome do tema a usar."
 
 #: ../app/config/gimprc-blurbs.h:534
 #, fuzzy
@@ -13520,53 +13446,73 @@ msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"Estabelece o estado predeterminado «Compensación de punto negro» para o "
+"diálogo de «Convertir perfíl de cor»."
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Estabelece o método de tramado da capa predeterminado para o diálogo de "
+"«Precisión de conversión»."
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"Estabelece o método de tramado das capas de texto predeterminado para o "
+"diálogo de «Precisión de conversión»."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"Estabelece o método de tramado de canles predeterminado para o diálogo de "
+"«Precisión de conversión»."
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
+"Estabelece o tipo de paleta predeterminada para o diálogo de «Converter a "
+"indexado»."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"Estabelece o número máximo de cores por omisión para o diálogo de «Converter "
+"a indexado»."
 
 #: ../app/config/gimprc-blurbs.h:562
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
+"Estabelece o estado «Eliminar cores duplicados» para o diálogo de «Converter "
+"a indexado»."
 
 #: ../app/config/gimprc-blurbs.h:565
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
+"Estabelece o tipo de tramado predeterminado para o diálogo de «Converter a "
+"indexado»."
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
+"Estabelece o estado «Alfa do tramado» para o diálogo de «Converter a "
+"indexado»."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"Estabelece o estado «Tramar capas de texto» predeterminada para o diálogo de "
+"«Converter a indexado»."
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
@@ -13819,10 +13765,9 @@ msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:756
-#, fuzzy
 #| msgid "_Maximum number of colors:"
 msgid "The maximum number of actions saved in history."
-msgstr "Número _máximo de cores:"
+msgstr "Número máximo de cores accións a gardar no historial."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
@@ -13880,22 +13825,19 @@ msgid "BG color fill"
 msgstr "Perfil de cor"
 
 #: ../app/core/core-enums.c:116
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Pattern"
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Patrón"
+msgstr "Patrón de recheo"
 
 #: ../app/core/core-enums.c:145
-#, fuzzy
 #| msgid "Hardness"
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Dureza"
 
 #: ../app/core/core-enums.c:146
-#, fuzzy
 #| msgctxt "curve-type"
 #| msgid "Smooth"
 msgctxt "channel-border-style"
@@ -13903,14 +13845,12 @@ msgid "Smooth"
 msgstr "Suavizar"
 
 #: ../app/core/core-enums.c:147
-#, fuzzy
 #| msgid "Feather edges"
 msgctxt "channel-border-style"
 msgid "Feathered"
-msgstr "Difuminar os bordos"
+msgstr "Difuminar"
 
 #: ../app/core/core-enums.c:182
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "Pixel"
 msgctxt "color-pick-mode"
@@ -13918,11 +13858,10 @@ msgid "Pixel"
 msgstr "Píxel"
 
 #: ../app/core/core-enums.c:183
-#, fuzzy
 #| msgid "RGB (%d, %d, %d)"
 msgctxt "color-pick-mode"
 msgid "RGB (%)"
-msgstr "RGB (%d, %d, %d)"
+msgstr "RGB (%)"
 
 #: ../app/core/core-enums.c:184
 #, fuzzy
@@ -13932,7 +13871,6 @@ msgid "RGB (0..255)"
 msgstr "RGB (%d, %d, %d)"
 
 #: ../app/core/core-enums.c:185
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "HSV"
 msgctxt "color-pick-mode"
@@ -13942,15 +13880,14 @@ msgstr "HSV"
 #: ../app/core/core-enums.c:186
 msgctxt "color-pick-mode"
 msgid "CIE LCh"
-msgstr ""
+msgstr "CIE LCh"
 
 #: ../app/core/core-enums.c:187
 msgctxt "color-pick-mode"
 msgid "CIE LAB"
-msgstr ""
+msgstr "CIE LAB"
 
 #: ../app/core/core-enums.c:188
-#, fuzzy
 #| msgctxt "color-frame-mode"
 #| msgid "CMYK"
 msgctxt "color-pick-mode"
@@ -13960,12 +13897,12 @@ msgstr "CMYK"
 #: ../app/core/core-enums.c:189
 msgctxt "color-pick-mode"
 msgid "CIE xyY"
-msgstr ""
+msgstr "CIE xyY"
 
 #: ../app/core/core-enums.c:190
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
-msgstr ""
+msgstr "CIE Yu'v'"
 
 #: ../app/core/core-enums.c:220
 msgctxt "color-profile-policy"
@@ -14014,7 +13951,6 @@ msgid "Positioned"
 msgstr "Posicionado"
 
 #: ../app/core/core-enums.c:379
-#, fuzzy
 #| msgctxt "curve-type"
 #| msgid "Smooth"
 msgctxt "curve-point-type"
@@ -14024,7 +13960,7 @@ msgstr "Suavizar"
 #: ../app/core/core-enums.c:380
 msgctxt "curve-point-type"
 msgid "Corner"
-msgstr ""
+msgstr "Esquina"
 
 #: ../app/core/core-enums.c:408
 msgctxt "curve-type"
@@ -14094,22 +14030,22 @@ msgstr "Raia, punto, punto"
 #: ../app/core/core-enums.c:486
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
-msgstr ""
+msgstr "Depurar avisos, erros críticos e crashes"
 
 #: ../app/core/core-enums.c:487
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
-msgstr ""
+msgstr "Depurar erros críticos e crashes"
 
 #: ../app/core/core-enums.c:488
 msgctxt "debug-policy"
 msgid "Debug crashes only"
-msgstr ""
+msgstr "Depurar só crashes"
 
 #: ../app/core/core-enums.c:489
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
-msgstr ""
+msgstr "Non depurar GIMP nunca"
 
 #: ../app/core/core-enums.c:575
 msgctxt "dynamics-output-type"
@@ -14177,28 +14113,24 @@ msgid "Pattern"
 msgstr "Patrón"
 
 #: ../app/core/core-enums.c:642
-#, fuzzy
 #| msgctxt "dialogs-action"
 #| msgid "Open the selection editor"
 msgctxt "filter-region"
 msgid "Use the selection as input"
-msgstr "Abrir o editor de selección"
+msgstr "Abrir a selección como entrada"
 
 #: ../app/core/core-enums.c:643
-#, fuzzy
 #| msgid "Use the online version"
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
-msgstr "Usar a versión en liña"
+msgstr "Usar a capa enteira como entrada"
 
 #: ../app/core/core-enums.c:674
-#, fuzzy
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Fixo"
 
 #: ../app/core/core-enums.c:675
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Foreground color"
 msgctxt "gradient-color"
@@ -14210,25 +14142,23 @@ msgstr "Cor de primeiro plano"
 #: ../app/core/core-enums.c:678
 msgctxt "gradient-color"
 msgid "FG"
-msgstr ""
+msgstr "FG"
 
 #: ../app/core/core-enums.c:679
-#, fuzzy
 #| msgctxt "gradient-editor-color-type"
 #| msgid "Fo_reground Color (Transparent)"
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
-msgstr "Cor de pri_meiro plano (Transparente)"
+msgstr "Cor de primeiro plano (Transparente)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:682
 msgctxt "gradient-color"
 msgid "FG (t)"
-msgstr ""
+msgstr "FG (t)"
 
 #: ../app/core/core-enums.c:683
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Background color"
 msgctxt "gradient-color"
@@ -14240,22 +14170,21 @@ msgstr "Cor de fondo"
 #: ../app/core/core-enums.c:686
 msgctxt "gradient-color"
 msgid "BG"
-msgstr ""
+msgstr "BG"
 
 #: ../app/core/core-enums.c:687
-#, fuzzy
 #| msgctxt "gradient-editor-color-type"
 #| msgid "B_ackground Color (Transparent)"
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
-msgstr "Cor de fondo (Transparente)"
+msgstr "Cor de fondo (transparente)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
 #: ../app/core/core-enums.c:690
 msgctxt "gradient-color"
 msgid "BG (t)"
-msgstr ""
+msgstr "BG (t)"
 
 #: ../app/core/core-enums.c:803
 msgctxt "histogram-channel"
@@ -14285,7 +14214,7 @@ msgstr "Alfa"
 #: ../app/core/core-enums.c:808
 msgctxt "histogram-channel"
 msgid "Luminance"
-msgstr ""
+msgstr "Luminiscencia"
 
 #: ../app/core/core-enums.c:809
 msgctxt "histogram-channel"
@@ -14340,12 +14269,12 @@ msgstr "Erro"
 #: ../app/core/core-enums.c:905
 msgctxt "message-severity"
 msgid "WARNING"
-msgstr ""
+msgstr "AVISO"
 
 #: ../app/core/core-enums.c:906
 msgctxt "message-severity"
 msgid "CRITICAL"
-msgstr ""
+msgstr "CRÍTICO"
 
 #: ../app/core/core-enums.c:935
 #, fuzzy
@@ -14358,12 +14287,12 @@ msgstr "Preguntar qué facer"
 #: ../app/core/core-enums.c:936
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
-msgstr ""
+msgstr "Rescartar metadatos sen rotar"
 
 #: ../app/core/core-enums.c:937
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
-msgstr ""
+msgstr "Rotar a imaxe e logo descartar metadatos"
 
 #: ../app/core/core-enums.c:1002
 msgctxt "win32-pointer-input-api"
@@ -14393,27 +14322,24 @@ msgid "Large (256x256)"
 msgstr "Grande (256x256)"
 
 #: ../app/core/core-enums.c:1063
-#, fuzzy
 #| msgctxt "gradient-editor-blending"
 #| msgid "_Linear"
 msgctxt "trc-type"
 msgid "Linear"
-msgstr "_Lineal"
+msgstr "Lineal"
 
 #: ../app/core/core-enums.c:1064
-#, fuzzy
 #| msgctxt "gradient-editor-blending"
 #| msgid "_Linear"
 msgctxt "trc-type"
 msgid "Non-Linear"
-msgstr "_Lineal"
+msgstr "Non lineal"
 
 #: ../app/core/core-enums.c:1065
-#, fuzzy
 #| msgid "Percentile:"
 msgctxt "trc-type"
 msgid "Perceptual"
-msgstr "Percentil:"
+msgstr "Porcentual"
 
 #: ../app/core/core-enums.c:1264
 msgctxt "undo-type"
@@ -14441,11 +14367,10 @@ msgid "Rotate image"
 msgstr "Rotar imaxe"
 
 #: ../app/core/core-enums.c:1269
-#, fuzzy
 #| msgid "Transforming"
 msgctxt "undo-type"
 msgid "Transform image"
-msgstr "Transformando"
+msgstr "Transformar imaxe"
 
 #: ../app/core/core-enums.c:1270
 msgctxt "undo-type"
@@ -14519,22 +14444,19 @@ msgid "Item visibility"
 msgstr "Visibilidade do elemento"
 
 #: ../app/core/core-enums.c:1284
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
-msgstr "Bloquear/Desbloquear a canle alfa"
+msgstr "Bloquear/Desbloquear contidos"
 
 #: ../app/core/core-enums.c:1285 ../app/core/core-enums.c:1332
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
-msgstr "Bloquear/Desbloquear a canle alfa"
+msgstr "Bloquear/Desbloquear posición"
 
 #: ../app/core/core-enums.c:1286 ../app/core/core-enums.c:1333
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
-msgstr "Bloquear/Desbloquear a canle alfa"
+msgstr "Bloquear/Desbloquear visibilidade"
 
 #: ../app/core/core-enums.c:1287
 msgctxt "undo-type"
@@ -14562,7 +14484,6 @@ msgid "Add layer"
 msgstr "Engadir capa"
 
 #: ../app/core/core-enums.c:1292
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Add Alpha Channel"
 msgctxt "undo-type"
@@ -14580,7 +14501,6 @@ msgid "Apply layer mask"
 msgstr "Aplicar máscara de capa"
 
 #: ../app/core/core-enums.c:1295
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Remove Alpha Channel"
 msgctxt "undo-type"
@@ -14588,36 +14508,32 @@ msgid "Remove alpha channel"
 msgstr "Eliminar canle alfa"
 
 #: ../app/core/core-enums.c:1296
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Lock/Unlock alpha channel"
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
-msgstr "Bloquear/Desbloquear a canle alfa"
+msgstr "Bloquear/Desbloquear canles alfa"
 
 #: ../app/core/core-enums.c:1297
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer opacity"
 msgctxt "undo-type"
 msgid "Set layers opacity"
-msgstr "Definir opacidade da capa"
+msgstr "Definir opacidade das capas"
 
 #: ../app/core/core-enums.c:1298
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Set layer mode"
 msgctxt "undo-type"
 msgid "Set layers mode"
-msgstr "Definir modo da capa"
+msgstr "Definir modo das capas"
 
 #: ../app/core/core-enums.c:1299
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Add Channel"
 msgctxt "undo-type"
 msgid "Add channels"
-msgstr "Engadir canle"
+msgstr "Engadir canles"
 
 #: ../app/core/core-enums.c:1300 ../app/core/core-enums.c:1359
 msgctxt "undo-type"
@@ -14685,10 +14601,9 @@ msgid "Image type"
 msgstr "Tipo de imaxe"
 
 #: ../app/core/core-enums.c:1313
-#, fuzzy
 msgctxt "undo-type"
 msgid "Image precision"
-msgstr "Propiedades da imaxe"
+msgstr "Precisión da imaxe"
 
 #: ../app/core/core-enums.c:1314
 msgctxt "undo-type"
@@ -14701,12 +14616,11 @@ msgid "Image resolution change"
 msgstr "Modificación da resolución da imaxe"
 
 #: ../app/core/core-enums.c:1317
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Change Image Unit"
 msgctxt "undo-type"
 msgid "Change metadata"
-msgstr "Modificar a unidade da imaxe"
+msgstr "Cambiar metadatos"
 
 #: ../app/core/core-enums.c:1318
 msgctxt "undo-type"
@@ -14801,7 +14715,7 @@ msgstr "Reanudar o redimensionamento do grupo de capas"
 #: ../app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Start transforming group layer"
-msgstr ""
+msgstr "Iniciar a transformación do grupo de capas"
 
 #: ../app/core/core-enums.c:1344
 #, fuzzy
@@ -14827,10 +14741,9 @@ msgid "Text layer modification"
 msgstr "Modificación da capa de texto"
 
 #: ../app/core/core-enums.c:1348
-#, fuzzy
 msgctxt "undo-type"
 msgid "Convert text layer"
-msgstr "Converter o bordo"
+msgstr "Converter capa de texto"
 
 #: ../app/core/core-enums.c:1350
 msgctxt "undo-type"
@@ -14873,12 +14786,11 @@ msgid "Path modification"
 msgstr "Modificación do camiño"
 
 #: ../app/core/core-enums.c:1360
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Transform Items"
 msgctxt "undo-type"
 msgid "Transform grid"
-msgstr "Transformar elementos"
+msgstr "Grella de transformación"
 
 #: ../app/core/core-enums.c:1362
 msgctxt "undo-type"
@@ -14953,20 +14865,19 @@ msgstr "Ver como grade"
 #: ../app/core/core-enums.c:1467
 msgctxt "select-method"
 msgid "Selection by basic text search"
-msgstr ""
+msgstr "Selección por busca de texto básica"
 
 #: ../app/core/core-enums.c:1468
 msgctxt "select-method"
 msgid "Selection by regular expression search"
-msgstr ""
+msgstr "Selección por busca de expresión regular"
 
 #: ../app/core/core-enums.c:1469
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
-msgstr "Selección a camiño"
+msgstr "Selección por busca de patrón glob"
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:535 ../app/core/gimp.c:565
@@ -15022,11 +14933,10 @@ msgstr "Dinámica do pincel"
 
 #. initialize the color history
 #: ../app/core/gimp-data-factories.c:386 ../app/core/gimp-palettes.c:60
-#, fuzzy
 #| msgctxt "documents-action"
 #| msgid "_Clear History"
 msgid "Color History"
-msgstr "_Limpar historial"
+msgstr "Historial de cor"
 
 #. update tag cache
 #: ../app/core/gimp-data-factories.c:403
@@ -15034,12 +14944,12 @@ msgid "Updating tag cache"
 msgstr "Actualizar a caché de etiquetas"
 
 #: ../app/core/gimp-edit.c:123
-#, fuzzy, c-format
+#, c-format
 #| msgid "Text Layer"
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
-msgstr[0] "Capa de texto"
-msgstr[1] "Capa de texto"
+msgstr[0] "Cortar capa"
+msgstr[1] "Cortar %d capas"
 
 #: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:507
 msgid "Pasted Layer"
@@ -15121,7 +15031,6 @@ msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr ""
 
 #: ../app/core/gimp-gradients.c:64
-#, fuzzy
 #| msgctxt "dash-preset"
 #| msgid "Custom"
 msgid "Custom"
@@ -15152,40 +15061,37 @@ msgstr "Primeiro plano a Transparente"
 #. * the operation.
 #.
 #: ../app/core/gimp-gui.c:209
-#, fuzzy, c-format
+#, c-format
 #| msgid "Please wait"
 msgid "Please wait: %s\n"
-msgstr "Agarde"
+msgstr "Agarde: %s\n"
 
 #: ../app/core/gimp-internal-data.c:286 ../app/core/gimp-internal-data.c:299
 #: ../app/core/gimpdata.c:547 ../app/core/gimpdata.c:560
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading '%s': %s"
 msgid "Error saving '%s': "
-msgstr "Erro ao ler «%s»: %s"
+msgstr "Erro ao gardar «%s»: "
 
 #: ../app/core/gimp-internal-data.c:305 ../app/core/gimpdata.c:566
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error running '%s'"
 msgid "Error saving '%s'"
-msgstr "Erro ao executar «%s»"
+msgstr "Erro ao gardar «%s»"
 
 #: ../app/core/gimp-spawn.c:186
-#, fuzzy, c-format
+#, c-format
 #| msgid ""
 #| "Failed to load data:\n"
 #| "\n"
 #| "%s"
 msgid "Failed to fork (%s)"
-msgstr ""
-"Erro ao cargar datos:\n"
-"\n"
-"%s"
+msgstr "Fallo ao facer fork (%s)"
 
 #: ../app/core/gimp-spawn.c:223
 #, c-format
 msgid "Failed to execute child process “%s” (%s)"
-msgstr ""
+msgstr "Produciuse un fallo ao executar o proceso «%s» fillo (%s)"
 
 #. This is a special string to specify the language identifier to
 #. * look for in the gimp-tags-default.xml file. Please translate the
@@ -15253,7 +15159,7 @@ msgstr ""
 #: ../app/core/gimp-utils.c:1424
 #, c-format
 msgid "Unknown tag <%s>."
-msgstr ""
+msgstr "Etiqueta «%s» descoñecida."
 
 #: ../app/core/gimpbrush-load.c:173
 #, fuzzy, c-format
@@ -15297,7 +15203,7 @@ msgstr ""
 #: ../app/core/gimpbrush-load.c:242
 #, c-format
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "Formato de pincel non admitida"
 
 #: ../app/core/gimpbrush-load.c:254
 #, c-format
@@ -15402,16 +15308,14 @@ msgid "Brush Spacing"
 msgstr "Espazamento"
 
 #: ../app/core/gimpbrushclipboard.c:187
-#, fuzzy
 #| msgid "Clipboard"
 msgid "Clipboard Mask"
-msgstr "Portapapeis"
+msgstr "Mascara do portapapeis"
 
 #: ../app/core/gimpbrushclipboard.c:189 ../app/core/gimppatternclipboard.c:165
-#, fuzzy
 #| msgid "Clipboard"
 msgid "Clipboard Image"
-msgstr "Portapapeis"
+msgstr "Imaxe do portapapeis"
 
 #: ../app/core/gimpbrushgenerated-load.c:76
 #, fuzzy, c-format
@@ -15430,45 +15334,45 @@ msgid "Unknown GIMP brush shape."
 msgstr ""
 
 #: ../app/core/gimpbrushgenerated-load.c:173
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid empty brush name"
 msgid "Invalid brush spacing."
-msgstr "Nome baleiro do pincel non válido"
+msgstr "Espazado do pincel non válido."
 
 #: ../app/core/gimpbrushgenerated-load.c:190
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid shortcut."
 msgid "Invalid brush radius."
-msgstr "Atallo non válido."
+msgstr "Radio do pincel non válido."
 
 #: ../app/core/gimpbrushgenerated-load.c:209
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid shortcut."
 msgid "Invalid brush spike count."
-msgstr "Atallo non válido."
+msgstr "Contía de picos do pincel non válida."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid empty brush name"
 msgid "Invalid brush hardness."
-msgstr "Nome baleiro do pincel non válido"
+msgstr "Dureza do pincel non válida."
 
 #: ../app/core/gimpbrushgenerated-load.c:242
-#, fuzzy, c-format
+#, c-format
 #| msgid "Brush Aspect Ratio"
 msgid "Invalid brush aspect ratio."
-msgstr "Proporción de aspecto"
+msgstr "Proporción de aspecto do pincel non válida."
 
 #: ../app/core/gimpbrushgenerated-load.c:258
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid empty brush name"
 msgid "Invalid brush angle."
-msgstr "Nome baleiro do pincel non válido"
+msgstr "Ángulo do pincel non válido."
 
 #: ../app/core/gimpbrushgenerated-load.c:281
 #, c-format
 msgid "In line %d of brush file: "
-msgstr ""
+msgstr "Na liña %d do ficheiro do pincel:"
 
 #: ../app/core/gimpbrushgenerated.c:135
 msgid "Brush Shape"
@@ -15539,12 +15443,11 @@ msgid "Select by Color"
 msgstr "Seleccionar por cor"
 
 #: ../app/core/gimpchannel-select.c:641
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Select by Color"
 msgctxt "undo-type"
 msgid "Select by Indexed Color"
-msgstr "Seleccionar por cor"
+msgstr "Seleccionar por cor indexado"
 
 #: ../app/core/gimpchannel.c:255
 msgctxt "undo-type"
@@ -15673,10 +15576,9 @@ msgid "Flood Channel"
 msgstr "Voltear canle"
 
 #: ../app/core/gimpchannel.c:782
-#, fuzzy
 #| msgid "Cannot stroke empty channel."
 msgid "Cannot fill empty channel."
-msgstr "Non é posible trazar unha canle en branco."
+msgstr "Non é posible encher unha canle baleira."
 
 #: ../app/core/gimpchannel.c:818
 msgid "Cannot stroke empty channel."
@@ -15697,14 +15599,12 @@ msgid "Selection Mask"
 msgstr "Máscara de selección"
 
 #: ../app/core/gimpcontext.c:669
-#, fuzzy
 #| msgctxt "active-color"
 #| msgid "Foreground"
 msgid "Foreground"
-msgstr "Frente"
+msgstr "Primeiro plano"
 
 #: ../app/core/gimpcontext.c:670 ../app/core/gimpgrid.c:94
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Foreground color"
 msgid "Foreground color"
@@ -15715,7 +15615,6 @@ msgid "Background"
 msgstr "Fondo"
 
 #: ../app/core/gimpcontext.c:677 ../app/core/gimpgrid.c:101
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Background color"
 msgid "Background color"
@@ -15738,20 +15637,17 @@ msgid "Brush"
 msgstr "_Pincel"
 
 #: ../app/core/gimpcontext.c:708
-#, fuzzy
 #| msgid "Paint Dynamics"
 msgid "Paint dynamics"
-msgstr "Dinámica da pintura"
+msgstr "Dinámicas da pintura"
 
 #: ../app/core/gimpcontext.c:714 ../app/core/gimpcontext.c:715
 #: ../app/tools/gimpmybrushtool.c:73
-#, fuzzy
 #| msgid "Paintbrush"
 msgid "MyPaint Brush"
-msgstr "Pincel de pintura"
+msgstr "Pincel de MyPaint"
 
 #: ../app/core/gimpcontext.c:721 ../app/core/gimpcontext.c:722
-#, fuzzy
 #| msgctxt "fill-type"
 #| msgid "Pattern"
 msgid "Pattern"
@@ -15840,16 +15736,16 @@ msgid "You don't have any writable data folder configured."
 msgstr "Non ten un cartafol configura para escrita."
 
 #: ../app/core/gimpdataloaderfactory.c:476
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading '%s': %s"
 msgid "Error loading '%s': "
-msgstr "Erro ao ler «%s»: %s"
+msgstr "Erro ao cargar «%s»: "
 
 #: ../app/core/gimpdataloaderfactory.c:482
-#, fuzzy, c-format
+#, c-format
 #| msgid "Error reading '%s': %s"
 msgid "Error loading '%s'"
-msgstr "Erro ao ler «%s»: %s"
+msgstr "Erro ao cargar «%s»"
 
 #: ../app/core/gimpdataloaderfactory.c:492 ../app/file-data/file-data-gbr.c:95
 #: ../app/file-data/file-data-gex.c:343 ../app/file-data/file-data-gex.c:481
@@ -15892,7 +15788,6 @@ msgid "Equalize"
 msgstr "Ecualizar"
 
 #: ../app/core/gimpdrawable-floating-selection.c:203
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Float Selection"
 msgid "Floating Selection"
@@ -15900,7 +15795,7 @@ msgstr "Selección flotante"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:66
 msgid "Computing alpha of unknown pixels"
-msgstr ""
+msgstr "Computando alfa dos píxeles descoñecidos"
 
 #: ../app/core/gimpdrawable-fill.c:215 ../app/vectors/gimpvectors.c:676
 msgid "Not enough points to fill"
@@ -15913,15 +15808,14 @@ msgstr "Renderizar trazo"
 
 #: ../app/core/gimpdrawable-gradient.c:125
 #: ../app/core/gimpdrawable-gradient.c:137 ../app/tools/gimpgradienttool.c:1084
-#, fuzzy
 #| msgid "Gradient"
 msgctxt "undo-type"
 msgid "Gradient"
-msgstr "Gradacións"
+msgstr "Gradación"
 
 #: ../app/core/gimpdrawable-gradient.c:226
 msgid "Calculating distance map"
-msgstr ""
+msgstr "Calculando mapa de distancia"
 
 #: ../app/core/gimpdrawable-levels.c:72
 #: ../app/tools/gimpforegroundselectoptions.c:127
@@ -15963,11 +15857,10 @@ msgid "Output type"
 msgstr "Niveis de saída"
 
 #: ../app/core/gimpfilloptions.c:109
-#, fuzzy
 #| msgctxt "dockable-action"
 #| msgid "_Tab Style"
 msgid "Style"
-msgstr "Es_tilo da lapela"
+msgstr "Estilo"
 
 #: ../app/core/gimpfilloptions.c:117 ../app/pdb/gimppdbcontext.c:101
 #: ../app/tools/gimpbucketfilloptions.c:186
@@ -16044,14 +15937,14 @@ msgstr "Cadea UTF-8 non válida no ficheiro de gradación «%s»."
 #: ../app/core/gimpgradient-load.c:122
 #, c-format
 msgid "File is corrupt."
-msgstr ""
+msgstr "O ficheiro está corrompido."
 
 #: ../app/core/gimpgradient-load.c:168 ../app/core/gimpgradient-load.c:183
 #: ../app/core/gimpgradient-load.c:193 ../app/core/gimpgradient-load.c:205
 #: ../app/core/gimpgradient-load.c:215 ../app/core/gimpgradient-load.c:223
 #, c-format
 msgid "Corrupt segment %d."
-msgstr ""
+msgstr "Segmento corrupto %d."
 
 #: ../app/core/gimpgradient-load.c:236 ../app/core/gimpgradient-load.c:246
 #, fuzzy, c-format
@@ -16068,10 +15961,10 @@ msgid "In line %d of gradient file: "
 msgstr "Nome baleiro da gradación non válido"
 
 #: ../app/core/gimpgradient-load.c:337
-#, fuzzy, c-format
+#, c-format
 #| msgid "No linear gradients found in '%s'"
 msgid "No linear gradients found."
-msgstr "Non se localizaron gradacións lineais en «%s»"
+msgstr "Non se atoparon gradacións lineais"
 
 #: ../app/core/gimpgradient-save.c:202
 #, fuzzy, c-format
@@ -16080,10 +15973,9 @@ msgid "Writing POV file '%s' failed: %s"
 msgstr "Erro ao abrir «%s»: %s"
 
 #: ../app/core/gimpgrid.c:86
-#, fuzzy
 #| msgid "Line _style:"
 msgid "Line style"
-msgstr "E_stilo de liña:"
+msgstr "Estilo de liña"
 
 #: ../app/core/gimpgrid.c:87
 msgid "Line style used for the grid."
@@ -16116,16 +16008,14 @@ msgid "Vertical spacing of grid lines."
 msgstr "Espazo vertical das liñas da grade."
 
 #: ../app/core/gimpgrid.c:123
-#, fuzzy
 #| msgid "Spacing"
 msgid "Spacing unit"
-msgstr "Espazamento"
+msgstr "Unidade de espazamento"
 
 #: ../app/core/gimpgrid.c:130
-#, fuzzy
 #| msgid "Offset"
 msgid "Offset X"
-msgstr "Desprazamento"
+msgstr "Desprazamento X"
 
 #: ../app/core/gimpgrid.c:131
 msgid ""
@@ -16135,10 +16025,9 @@ msgstr ""
 "negativo."
 
 #: ../app/core/gimpgrid.c:139
-#, fuzzy
 #| msgid "Offset"
 msgid "Offset Y"
-msgstr "Desprazamento"
+msgstr "Desprazamento Y"
 
 #: ../app/core/gimpgrid.c:140
 msgid "Vertical offset of the first grid line; this may be a negative number."
@@ -16147,10 +16036,9 @@ msgstr ""
 "negativo."
 
 #: ../app/core/gimpgrid.c:148
-#, fuzzy
 #| msgid "Offset"
 msgid "Offset unit"
-msgstr "Desprazamento"
+msgstr "Unidade de desprazamento"
 
 #: ../app/core/gimpgrouplayer.c:290
 msgid "Layer Group"
@@ -16193,7 +16081,7 @@ msgstr "Transformar capa"
 
 #: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
-msgstr ""
+msgstr "Simetría"
 
 #: ../app/core/gimpimage.c:2576
 msgid " (exported)"
@@ -16959,10 +16847,10 @@ msgstr ""
 #. TRANSLATORS: the "%s" is an item title and "%u" is the number of
 #. occurrences for this item.
 #: ../app/core/gimppalette-import.c:212
-#, fuzzy, c-format
+#, c-format
 #| msgid "%s (try %s)"
 msgid "%s (occurs %u)"
-msgstr "%s (tentar %s)"
+msgstr "%s (ocurre %u)"
 
 #: ../app/core/gimppalette-import.c:536
 #, c-format
@@ -16980,10 +16868,10 @@ msgid "Invalid UTF-8 string in palette file '%s'"
 msgstr "Cadea UTF-8 non válida no ficheiro de paleta «%s»"
 
 #: ../app/core/gimppalette-load.c:114
-#, fuzzy, c-format
+#, c-format
 #| msgid "Invalid shortcut."
 msgid "Invalid column count."
-msgstr "Atallo non válido."
+msgstr "Contía de columna non válida."
 
 #: ../app/core/gimppalette-load.c:121
 #, c-format
@@ -17037,13 +16925,12 @@ msgstr "Non se puido ler a cabeceira desde o ficheiro de paleta «%s»:"
 
 #: ../app/core/gimppalette-load.c:458
 msgid "Premature end of file."
-msgstr ""
+msgstr "Fin de ficheiro prematuro."
 
 #: ../app/core/gimppalettemru.c:123 ../app/core/gimppalettemru.c:229
-#, fuzzy
 #| msgid "History"
 msgid "History Color"
-msgstr "Historial"
+msgstr "Historial de cor"
 
 #: ../app/core/gimppattern-load.c:60
 #, fuzzy
@@ -17086,10 +16973,9 @@ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
 msgstr ""
 
 #: ../app/core/gimppattern-load.c:129 ../app/core/gimppattern-load.c:167
-#, fuzzy
 #| msgid "File is truncated in line %d"
 msgid "File appears truncated."
-msgstr "O ficheiro está truncado na liña %d"
+msgstr "O ficheiro semella truncado"
 
 #: ../app/core/gimppattern-load.c:135
 #, c-format
@@ -17129,11 +17015,10 @@ msgid "Move Selection"
 msgstr "Mover selección"
 
 #: ../app/core/gimpselection.c:174
-#, fuzzy
 #| msgid "_Flip Selection"
 msgctxt "undo-type"
 msgid "Fill Selection"
-msgstr "_Inverter selección simetricamente"
+msgstr "Encher selección"
 
 #: ../app/core/gimpselection.c:175
 msgctxt "undo-type"
@@ -17181,12 +17066,11 @@ msgid "Shrink Selection"
 msgstr "Encoller selección"
 
 #: ../app/core/gimpselection.c:200
-#, fuzzy
 #| msgctxt "undo-type"
 #| msgid "Remove item"
 msgctxt "undo-type"
 msgid "Remove Holes"
-msgstr "Eliminar elemento"
+msgstr "Eliminar buratos"
 
 #: ../app/core/gimpselection.c:308
 #, fuzzy
@@ -17221,24 +17105,22 @@ msgstr "Capa flotante"
 #: ../app/core/gimpsettings.c:152
 #, c-format
 msgid "Last used: %s"
-msgstr ""
+msgstr "Último usado: %s"
 
 #: ../app/core/gimpstrokeoptions.c:153
 msgid "Method"
-msgstr ""
+msgstr "Método"
 
 #: ../app/core/gimpstrokeoptions.c:161
-#, fuzzy
 #| msgid "Line width:"
 msgid "Line width"
-msgstr "Largura da liña:"
+msgstr "Largura da liña"
 
 #: ../app/core/gimpstrokeoptions.c:168 ../app/core/gimptemplate.c:152
 #: ../app/tools/gimptextoptions.c:123
-#, fuzzy
 #| msgid "Units"
 msgid "Unit"
-msgstr "Unidades"
+msgstr "Unidade"
 
 #: ../app/core/gimpstrokeoptions.c:175
 #, fuzzy
@@ -17284,11 +17166,10 @@ msgid "None"
 msgstr "Ningún"
 
 #: ../app/core/gimpsymmetry.c:151
-#, fuzzy
 #| msgctxt "align-reference-type"
 #| msgid "Active path"
 msgid "Active"
-msgstr "Activar camiño"
+msgstr "Activa"
 
 #: ../app/core/gimpsymmetry.c:152
 msgid "Activate symmetry painting"
@@ -17296,7 +17177,7 @@ msgstr ""
 
 #: ../app/core/gimpsymmetry-mandala.c:115
 msgid "Mandala"
-msgstr ""
+msgstr "Mandala"
 
 #: ../app/core/gimpsymmetry-mandala.c:122
 #, fuzzy
@@ -17331,7 +17212,7 @@ msgstr ""
 
 #: ../app/core/gimpsymmetry-mandala.c:162
 msgid "Kaleidoscope"
-msgstr ""
+msgstr "Caleidoscopio"
 
 #: ../app/core/gimpsymmetry-mandala.c:163
 msgid "Reflect consecutive strokes"
