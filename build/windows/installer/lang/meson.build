@@ -26,6 +26,7 @@ languages = [
   { 'code': 'eu',    },
   { 'code': 'fi',    },
   { 'code': 'fr',    },
+  { 'code': 'gl',    },
   { 'code': 'he',    },
   { 'code': 'hu',    },
   { 'code': 'id',    },

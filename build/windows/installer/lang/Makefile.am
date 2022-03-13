@@ -20,6 +20,7 @@ languages = \
 	eu:[eu]		\
 	fi:[fi]		\
 	fr:[fr]		\
+	gl:[gl]		\
 	he:[he]		\
 	hu:[hu]		\
 	id:[id]		\
