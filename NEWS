@@ -13,6 +13,20 @@ Core:
 
   - Added concept of "hidden item" to a GimpImage. This would allow to
     process non attached items for internal processing more easily.
+  - Do not show a crosshair anymore when "Show brush outline" is
+    checked and "Show pointer for paint tools" is unchecked, if the
+    brush outline cannot be drawn (in which case a fallback 4-arcs
+    generic outline showing the size is displayed), for instance because
+    using a dynamic changing the size.
+  - When both "Show brush outline" and "Show pointer for paint tools"
+    are unchecked, show a minimal visual feedback of a few pixels only,
+    as conspicuous as possible, instead of a crosshair.
+  - Move and reorganize pointer-related settings in Preferences from
+    "Image Windows" to "Input Devices" tabs.
+  - On macOS, delay opening new images dropped on the application icon
+    in the dock to after GIMP is fully initialized.
+  - Some code reorganization and factorization of image colormap and
+    palette handling.
 
 Tools:
 
@@ -39,10 +53,15 @@ Plug-ins:
       procedure.
     * When an interactive export of ClassicTIFF fails for the explicit
       reason of "Maximum TIFF file size exceeded", the export dialog is
-      raised again with a message proposing to try again as BigTIFF.
+      raised again with a message proposing to try again as BigTIFF or
+      trying another compression algorithm.
       This allows because discoverability and understandibility of the
       issue, while not forcing BigTIFF export (since it might not be
       supported everywhere).
+
+Translations:
+
+  - New Galician translation for the installer.
 
 Build:
 

@@ -90,6 +90,8 @@
           Redesigned and reorganized "Fill by line art detection" settings
           </_li>
           <_li>Added support for the BigTIFF file format</_li>
+          <_li>Tool pointer settings reorganized and moved from "Image Windows" to "Input Devices" tabs in Preferences</_li>
+          <_li>Improved handling of unchecked "Show pointer for paint tools" option</_li>
         </ul>
       </description>
     </release>
