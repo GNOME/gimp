@@ -569,10 +569,16 @@ gimp_paint_tool_cursor_update (GimpTool         *tool,
       if (! paint_tool->show_cursor &&
           modifier != GIMP_CURSOR_MODIFIER_BAD)
         {
-          gimp_tool_set_cursor (tool, display,
-                                GIMP_CURSOR_NONE,
-                                GIMP_TOOL_CURSOR_NONE,
-                                GIMP_CURSOR_MODIFIER_NONE);
+          if (paint_tool->draw_brush)
+            gimp_tool_set_cursor (tool, display,
+                                  GIMP_CURSOR_NONE,
+                                  GIMP_TOOL_CURSOR_NONE,
+                                  GIMP_CURSOR_MODIFIER_NONE);
+          else
+            gimp_tool_set_cursor (tool, display,
+                                  GIMP_CURSOR_SINGLE_DOT,
+                                  GIMP_TOOL_CURSOR_NONE,
+                                  GIMP_CURSOR_MODIFIER_NONE);
           return;
         }
 
@@ -869,15 +875,24 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
           ! paint_tool->show_cursor   &&
           ! paint_tool->draw_circle)
         {
-          /*  don't leave the user without any indication and draw
-           *  a fallback crosshair
+          /* I am not sure this case can/should ever happen since now we
+           * always set the GIMP_CURSOR_SINGLE_DOT when neither pointer
+           * nor outline options are checked. Yet let's imagine any
+           * weird case where brush outline is wanted, without pointer
+           * cursor, yet we fail to draw the outline while neither
+           * circle nor fallbacks are requested (it depends on per-class
+           * implementation of get_outline()).
+           *
+           * In such a case, we don't want to leave the user without any
+           * indication so we draw a fallback crosshair.
            */
-          gimp_draw_tool_add_handle (draw_tool,
-                                     GIMP_HANDLE_CROSSHAIR,
-                                     cur_x, cur_y,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                     GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
-                                     GIMP_HANDLE_ANCHOR_CENTER);
+          if (paint_tool->draw_brush)
+            gimp_draw_tool_add_handle (draw_tool,
+                                       GIMP_HANDLE_CIRCLE,
+                                       cur_x, cur_y,
+                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                       GIMP_TOOL_HANDLE_SIZE_CROSSHAIR,
+                                       GIMP_HANDLE_ANCHOR_CENTER);
         }
     }
 

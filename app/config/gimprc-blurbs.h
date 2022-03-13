@@ -417,8 +417,10 @@ _("When enabled, dialogs will show a help button that gives access to " \
   "be reached by pressing F1.")
 
 #define SHOW_PAINT_TOOL_CURSOR_BLURB \
-_("When enabled, the mouse pointer will be shown over the image while " \
-  "using a paint tool.")
+_("When enabled, the pointer will be shown over the image while " \
+  "using a paint tool. "                                          \
+  "If both the brush outline and pointer are disabled, the "      \
+  "position will be indicated as unobtrusively as possibly.")
 
 #define SHOW_MENUBAR_BLURB \
 _("When enabled, the menubar is visible by default. This can also be " \
