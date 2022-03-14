@@ -936,14 +936,28 @@ coding style files following our rules.
 
 ### Code Formatter
 
-We don't use a code formatter to re-format code because it is unable to
-handle special cases well as far as we know.
+Our project contains a `.clang-format` in the repository root.
 
-Nevertheless we would be interested to use these to perform at least
-some soft verification of contributed patches. A CI-performed check
-could help new contributors to fix their basic newcomer coding style
-mistakes and free up reviewing contributors' time.
+A good way to test your code is with the following command while it's
+not committed yet:
 
-The tool Clang-format has been mentionned as relevant, though nobody has
-written syntax files for this tool yet (contribution welcome for this
-too). See also #950.
+```sh
+git diff -U0 --no-color | clang-format-diff -p1
+```
+
+Note that we are not considering these format rules as perfect, because
+it seems the tool still cannot handle several special cases we have in
+our coding style. Also we are not perfectly fond of the way it handles
+long lines (when to accept lines a bit longer than the max line width or
+not) as well as other rules. Therefore the current document remains the
+ultimate one to verify when unsure of how to format something.
+
+The CI for any merge request will contain a job called `clang-format`
+which will also run your proposed change through the clang-format code
+formatter as a soft verification of contributed patches. Note that this
+job is only informational and in particular, it isn't considered a CI
+failure, since — as said above — we are not perfectly happy with the
+tool yet.
+Nevertheless we expect new contributors to look at the result to fix
+their basic coding style mistakes and free up reviewing contributors'
+time.
