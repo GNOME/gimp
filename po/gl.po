@@ -16,7 +16,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-03-12 22:25+0000\n"
-"PO-Revision-Date: 2022-03-14 00:18+0100\n"
+"PO-Revision-Date: 2022-03-14 00:49+0100\n"
 "Last-Translator: Fran Dieguez <fran.dieguez@gnome.org>\n"
 "Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
@@ -367,7 +367,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "New manageable extension format"
-msgstr ""
+msgstr "Novo formato de extensión xestinábel"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "CSS-based themes and actual symbolic icon theme support"
@@ -3584,7 +3584,7 @@ msgstr "Menú de diálogos"
 #: ../app/actions/dashboard-actions.c:44
 msgctxt "dashboard-action"
 msgid "_Groups"
-msgstr ""
+msgstr "_Grupos"
 
 #: ../app/actions/dashboard-actions.c:46
 #, fuzzy
@@ -3602,7 +3602,7 @@ msgstr "_Saturación:"
 #: ../app/actions/dashboard-actions.c:51
 msgctxt "dashboard-action"
 msgid "_Start/Stop Recording..."
-msgstr ""
+msgstr "_Comezar/Deter gravación…"
 
 #: ../app/actions/dashboard-actions.c:52
 msgctxt "dashboard-action"
@@ -3893,7 +3893,7 @@ msgstr "Abrir a xanela de estado dos dispositivos"
 #: ../app/actions/dialogs-actions.c:65
 msgctxt "dialogs-action"
 msgid "_Symmetry Painting"
-msgstr ""
+msgstr "Pintado _simétrico"
 
 #: ../app/actions/dialogs-actions.c:66
 #, fuzzy
@@ -4200,7 +4200,7 @@ msgstr "Abrir a consola de erros"
 #: ../app/actions/dialogs-actions.c:239
 msgctxt "dialogs-action"
 msgid "_Dashboard"
-msgstr ""
+msgstr "_Panel"
 
 #: ../app/actions/dialogs-actions.c:240
 #, fuzzy
@@ -5811,7 +5811,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:158
 msgctxt "filters-action"
 msgid "_Erode"
-msgstr ""
+msgstr "_Erosión"
 
 #: ../app/actions/filters-actions.c:159
 msgctxt "filters-action"
@@ -5937,7 +5937,7 @@ msgstr "Matriz de transformación"
 #: ../app/actions/filters-actions.c:277
 msgctxt "filters-action"
 msgid "_Cubism..."
-msgstr ""
+msgstr "_Cubismo…"
 
 #: ../app/actions/filters-actions.c:282
 #, fuzzy
@@ -6095,7 +6095,7 @@ msgstr "Matiz-_Saturación…"
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr ""
+msgstr "_Illusión…"
 
 #: ../app/actions/filters-actions.c:412
 #, fuzzy
@@ -6187,7 +6187,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Mosaic..."
-msgstr ""
+msgstr "_Mosaico…"
 
 #: ../app/actions/filters-actions.c:487
 #, fuzzy
@@ -6289,7 +6289,7 @@ msgstr "Grade"
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
 msgid "_Normal Map..."
-msgstr ""
+msgstr "Mapa _normal…"
 
 #: ../app/actions/filters-actions.c:572
 #, fuzzy
@@ -6312,7 +6312,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr ""
+msgstr "_Fotocopia…"
 
 #: ../app/actions/filters-actions.c:592
 #, fuzzy
@@ -6323,7 +6323,7 @@ msgstr "_Posterizar…"
 #: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr ""
+msgstr "_Plasma…"
 
 #: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
@@ -6351,7 +6351,7 @@ msgstr ""
 #: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr ""
+msgstr "_Reinhard 2005…"
 
 #: ../app/actions/filters-actions.c:627
 #, fuzzy
@@ -6427,7 +6427,7 @@ msgstr "Colo_rar…"
 #: ../app/actions/filters-actions.c:687
 msgctxt "filters-action"
 msgid "S_piral..."
-msgstr ""
+msgstr "Es_piral…"
 
 #: ../app/actions/filters-actions.c:692
 #, fuzzy
@@ -6446,7 +6446,7 @@ msgstr "_Curvas…"
 #: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr ""
+msgstr "Super_nova…"
 
 #: ../app/actions/filters-actions.c:707
 #, fuzzy
@@ -6762,7 +6762,7 @@ msgstr "Esférico (_decrecente)"
 #: ../app/actions/gradient-editor-actions.c:343
 msgctxt "gradient-editor-blending"
 msgid "S_tep"
-msgstr ""
+msgstr "P_aso"
 
 #: ../app/actions/gradient-editor-actions.c:348
 msgctxt "gradient-editor-blending"
@@ -7100,7 +7100,7 @@ msgstr "_Modo"
 #: ../app/actions/image-actions.c:60
 msgctxt "image-action"
 msgid "_Encoding"
-msgstr ""
+msgstr "_Codificacíon"
 
 #: ../app/actions/image-actions.c:62
 #, fuzzy
@@ -7122,7 +7122,7 @@ msgstr "_Guías"
 #: ../app/actions/image-actions.c:65
 msgctxt "image-action"
 msgid "Meta_data"
-msgstr ""
+msgstr "Meta_data"
 
 #: ../app/actions/image-actions.c:67
 msgctxt "image-action"
@@ -7400,7 +7400,7 @@ msgstr "Converte a imaxe a cores indexadas"
 #: ../app/actions/image-actions.c:211
 msgctxt "image-convert-action"
 msgid "8 bit integer"
-msgstr ""
+msgstr "Enteiro de 8 bits"
 
 #: ../app/actions/image-actions.c:213
 #, fuzzy
@@ -7411,7 +7411,7 @@ msgstr "Converte a imaxe a cores indexadas"
 #: ../app/actions/image-actions.c:217
 msgctxt "image-convert-action"
 msgid "16 bit integer"
-msgstr ""
+msgstr "Enteiro de 16 bits"
 
 #: ../app/actions/image-actions.c:219
 #, fuzzy
@@ -7422,7 +7422,7 @@ msgstr "Converte a imaxe a cores indexadas"
 #: ../app/actions/image-actions.c:223
 msgctxt "image-convert-action"
 msgid "32 bit integer"
-msgstr ""
+msgstr "Enteiro de 32 bits"
 
 #: ../app/actions/image-actions.c:225
 #, fuzzy
@@ -8111,7 +8111,7 @@ msgstr "Recortar a capa até os límites da selección"
 #: ../app/actions/layers-actions.c:256
 msgctxt "layers-action"
 msgid "Crop to C_ontent"
-msgstr ""
+msgstr "Recorte ao _contido"
 
 #: ../app/actions/layers-actions.c:257
 #, fuzzy
@@ -8298,7 +8298,7 @@ msgstr ""
 #: ../app/actions/layers-actions.c:398
 msgctxt "layers-action"
 msgid "Union"
-msgstr ""
+msgstr "Unión"
 
 #: ../app/actions/layers-actions.c:399
 #, fuzzy
@@ -8420,7 +8420,7 @@ msgstr "Etiqueta de cor: Estabelecer a laranxa"
 #: ../app/actions/layers-actions.c:455
 msgctxt "layers-action"
 msgid "Brown"
-msgstr ""
+msgstr "Marrón"
 
 #: ../app/actions/layers-actions.c:456
 #, fuzzy
@@ -8448,7 +8448,7 @@ msgstr "Etiqueta de cor: Estabelecer a vermello"
 #: ../app/actions/layers-actions.c:467
 msgctxt "layers-action"
 msgid "Violet"
-msgstr ""
+msgstr "Violeta"
 
 #: ../app/actions/layers-actions.c:468
 #, fuzzy
@@ -9926,7 +9926,7 @@ msgstr "Da dereita á esquerda"
 #: ../app/actions/text-editor-actions.c:71
 msgctxt "text-editor-action"
 msgid "TTB-RTL"
-msgstr ""
+msgstr "TTB-RTL"
 
 #: ../app/actions/text-editor-actions.c:72
 msgctxt "text-editor-action"
@@ -9936,7 +9936,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:77
 msgctxt "text-editor-action"
 msgid "TTB-RTL-UPRIGHT"
-msgstr ""
+msgstr "TTB-RTL-UPRIGHT"
 
 #: ../app/actions/text-editor-actions.c:78
 msgctxt "text-editor-action"
@@ -9946,7 +9946,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:83
 msgctxt "text-editor-action"
 msgid "TTB-LTR"
-msgstr ""
+msgstr "TTB-LTR"
 
 #: ../app/actions/text-editor-actions.c:84
 msgctxt "text-editor-action"
@@ -9956,7 +9956,7 @@ msgstr ""
 #: ../app/actions/text-editor-actions.c:89
 msgctxt "text-editor-action"
 msgid "TTB-LTR-UPRIGHT"
-msgstr ""
+msgstr "TTB-LTR-UPRIGHT"
 
 #: ../app/actions/text-editor-actions.c:90
 msgctxt "text-editor-action"
@@ -17247,7 +17247,7 @@ msgstr ""
 
 #: ../app/core/gimpsymmetry-mirror.c:144
 msgid "Central Symmetry"
-msgstr ""
+msgstr "Simetría central"
 
 #: ../app/core/gimpsymmetry-mirror.c:145
 msgid "Invert the initial stroke through a point"
@@ -17581,7 +17581,7 @@ msgstr ""
 
 #: ../app/dialogs/about-dialog.c:405 ../app/dialogs/about-dialog.c:426
 msgid "Check for updates"
-msgstr ""
+msgstr "Comprobar actualizacións"
 
 #. Translators: first string is the date in the locale's date
 #. * representation (e.g., 12/31/99), second is the time in the
@@ -17745,7 +17745,7 @@ msgstr "Perfil de cor"
 
 #: ../app/dialogs/color-profile-dialog.c:261
 msgid "Profile _details"
-msgstr ""
+msgstr "_Detalles do perfíl"
 
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:201
@@ -18838,7 +18838,7 @@ msgstr "Preferencias"
 #: ../app/dialogs/preferences-dialog.c:1185
 #: ../app/dialogs/preferences-dialog.c:1186
 msgid "System Resources"
-msgstr ""
+msgstr "Recursos do sistema"
 
 #: ../app/dialogs/preferences-dialog.c:1194
 msgid "Resource Consumption"
@@ -18872,7 +18872,7 @@ msgstr "Número de _procesadores que utilizar:"
 
 #: ../app/dialogs/preferences-dialog.c:1224
 msgid "Network access"
-msgstr ""
+msgstr "Acceso á rede"
 
 #: ../app/dialogs/preferences-dialog.c:1228
 msgid "Check for updates (requires internet)"
@@ -19101,7 +19101,7 @@ msgstr "Opcións avanzadas"
 #: ../app/dialogs/preferences-dialog.c:1508
 #: ../app/dialogs/preferences-dialog.c:1509
 msgid "Image Import & Export"
-msgstr ""
+msgstr "Importado e exportado de imaxe"
 
 #. Import Policies
 #: ../app/dialogs/preferences-dialog.c:1519
@@ -19399,7 +19399,7 @@ msgstr "Tamaño de previsualización de na_vegación:"
 #. Item
 #: ../app/dialogs/preferences-dialog.c:1896
 msgid "Item search"
-msgstr ""
+msgstr "Busca do elemento"
 
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1903
@@ -19493,7 +19493,7 @@ msgstr "Mostrar _imaxe activa"
 
 #: ../app/dialogs/preferences-dialog.c:2213
 msgid "Use tool _groups"
-msgstr ""
+msgstr "Usar _grupos de ferramenta"
 
 #. Tool Editor
 #: ../app/dialogs/preferences-dialog.c:2220
@@ -20268,7 +20268,7 @@ msgstr "Dispositivos de entrada estendidos"
 
 #: ../app/dialogs/preferences-dialog.c:3193
 msgid "Pointer Input API:"
-msgstr ""
+msgstr "API de entrada de punteiro:"
 
 #: ../app/dialogs/preferences-dialog.c:3204
 #, fuzzy
@@ -20946,7 +20946,7 @@ msgstr "Benvida a GIMP %s"
 #: ../app/dialogs/welcome-dialog.c:135
 #, c-format
 msgid "You installed GIMP %s!"
-msgstr ""
+msgstr "Instalou GIMP %s!"
 
 #. Welcome message: left
 #: ../app/dialogs/welcome-dialog.c:156
