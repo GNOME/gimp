@@ -108,5 +108,8 @@ void    gimp_paint_tool_set_draw_circle     (GimpPaintTool       *tool,
                                              gboolean             draw_circle,
                                              gint                 circle_size);
 
+void    gimp_paint_tool_force_draw          (GimpPaintTool       *tool,
+                                             gboolean             force);
+
 
 #endif  /*  __GIMP_PAINT_TOOL_H__  */

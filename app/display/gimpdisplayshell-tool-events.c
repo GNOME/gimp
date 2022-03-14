@@ -54,6 +54,7 @@
 
 #include "tools/gimpguidetool.h"
 #include "tools/gimpmovetool.h"
+#include "tools/gimppainttool.h"
 #include "tools/gimpsamplepointtool.h"
 #include "tools/gimptoolcontrol.h"
 #include "tools/tool_manager.h"
@@ -1709,11 +1710,17 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
     }
   else if (shell->mod1_settings == TRUE)
     {
-      /* no-op. */
+      Gimp     *gimp       = gimp_display_get_gimp (shell->display);
+      GimpTool *active_tool = tool_manager_get_active (gimp);
+
+      if (GIMP_IS_PAINT_TOOL (active_tool))
+        gimp_paint_tool_force_draw (GIMP_PAINT_TOOL (active_tool), TRUE);
     }
   else
-    gimp_display_shell_set_override_cursor (shell,
-                                            (GimpCursorType) GDK_FLEUR);
+    {
+      gimp_display_shell_set_override_cursor (shell,
+                                              (GimpCursorType) GDK_FLEUR);
+    }
 }
 
 static void
@@ -1723,6 +1730,15 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   g_return_if_fail (shell->scrolling);
 
   gimp_display_shell_unset_override_cursor (shell);
+
+  if (shell->mod1_settings == TRUE)
+    {
+      Gimp     *gimp       = gimp_display_get_gimp (shell->display);
+      GimpTool *active_tool = tool_manager_get_active (gimp);
+
+      if (GIMP_IS_PAINT_TOOL (active_tool))
+        gimp_paint_tool_force_draw (GIMP_PAINT_TOOL (active_tool), FALSE);
+    }
 
   shell->scrolling         = FALSE;
   shell->scroll_start_x    = 0;

@@ -801,6 +801,7 @@ gimp_paint_tool_draw (GimpDrawTool *draw_tool)
         }
 
       gimp_paint_tool_set_draw_fallback (paint_tool, FALSE, 0.0);
+      gimp_paint_tool_set_draw_circle (paint_tool, FALSE, 0.0);
 
       if (paint_tool->draw_brush)
         outline = gimp_paint_tool_get_outline (paint_tool,
@@ -1070,4 +1071,31 @@ gimp_paint_tool_set_draw_circle (GimpPaintTool *tool,
 
   tool->draw_circle = draw_circle;
   tool->circle_size = circle_size;
+}
+
+
+/**
+ * gimp_paint_tool_force_draw:
+ * @tool:
+ * @force:
+ *
+ * If @force is %TRUE, the brush, or a fallback, or circle will be
+ * drawn, regardless of the Preferences settings. This can be used for
+ * code such as when modifying brush size or shape on-canvas with a
+ * visual feedback, temporarily bypassing the user setting.
+ */
+void
+gimp_paint_tool_force_draw (GimpPaintTool *tool,
+                            gboolean       force)
+{
+  GimpDisplayConfig *display_config;
+
+  g_return_if_fail (GIMP_IS_PAINT_TOOL (tool));
+
+  display_config = GIMP_DISPLAY_CONFIG (GIMP_TOOL (tool)->tool_info->gimp->config);
+
+  if (force)
+    tool->draw_brush = TRUE;
+  else
+    tool->draw_brush  = display_config->show_brush_outline;
 }
