@@ -5,6 +5,8 @@
 #
 ---
 
+BasedOnStyle: GNU
+
 AlignAfterOpenBracket: Align
 AlignArrayOfStructures: Left
 AlignConsecutiveAssignments: Consecutive
@@ -12,12 +14,17 @@ AlignConsecutiveDeclarations: Consecutive
 AlignConsecutiveMacros: Consecutive
 AlignEscapedNewlines: Left
 
+AllowAllParametersOfDeclarationOnNextLine: false
 AlwaysBreakAfterReturnType: AllDefinitions
+BinPackParameters: false
 BreakBeforeBraces: GNU
 IndentWidth: 2
-SpaceBeforeParens: Always
 PointerAlignment: Right
 UseTab: Never
+
+SpaceBeforeParens: Always
+SpaceAfterLogicalNot: true
+SpaceAfterCStyleCast: true
 
 # Our column limit is more around 80 characters but we want to avoid
 # this rule to be over-agressive. So for clang-format, let's use a
@@ -26,9 +33,10 @@ UseTab: Never
 # limits, if clang-format really ends up re-formatting, there might be
 # something better to do code-wise (i.e. we might be in an akwardly
 # over-nested block case).
-ColumnLimit: 100
-PenaltyBreakAssignment: 40
-PenaltyBreakBeforeFirstCallParameter: 40
+ColumnLimit: 80
+PenaltyBreakAssignment: 60
+PenaltyBreakBeforeFirstCallParameter: 100
+PenaltyBreakString: 60
 # Uncomment this when we start using clang-format 14 in the CI.
 # PenaltyBreakOpenParenthesis: 40
 PenaltyExcessCharacter: 1
