@@ -339,7 +339,7 @@ tools_ink_blob_size_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "size",
-                              0.1, 1.0, 10.0, 0.1, FALSE, FALSE);
+                              0.1, 1.0, 10.0, 0.1, FALSE, TRUE);
     }
 }
 
