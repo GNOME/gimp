@@ -144,7 +144,7 @@ gimp_image_colormap_update_formats (GimpImage *image)
 
   g_free (format_name);
 
-  if (private->palette)
+  if (private->palette && gimp_palette_get_n_colors (private->palette) > 0)
     {
       guchar *colormap;
       gint    n_colors;
