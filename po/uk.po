@@ -9,15 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-11 14:30+0000\n"
-"PO-Revision-Date: 2022-03-11 22:08+0200\n"
+"POT-Creation-Date: 2022-03-13 16:41+0000\n"
+"PO-Revision-Date: 2022-03-14 11:14+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 3 : n%10==1 && n%100!=11 ? 0 : n"
+"%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -96,10 +97,23 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Added support for the BigTIFF file format"
-msgstr ""
-"Додано підтримку формату файлів BigTIFF"
+msgstr "Додано підтримку формату файлів BigTIFF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid ""
+"Tool pointer settings reorganized and moved from \"Image Windows\" to "
+"\"Input Devices\" tabs in Preferences"
+msgstr ""
+"Переупорядковано параметри вказівника. Параметри перенесено з «Вікон"
+" зображень» до «Пристроїв введення» у «Налаштуваннях»"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+msgid "Improved handling of unchecked \"Show pointer for paint tools\" option"
+msgstr ""
+"Удосконалено обробку випадку із непозначеним пунктом «Показувати вказівник у"
+" режимі малювання»"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "GIMP 2.99.10 is a notable development release in the 2.99 series, featuring "
 "many changes. Let's mention in particular:"
@@ -107,11 +121,11 @@ msgstr ""
 "GIMP 2.99.10 є помітним випуском у розробці послідовності випусків 2.99, у "
 "якому реалізовано багато змін. Згадаймо, зокрема, такі:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "\"Linked layers\" concept superseded by new \"Layer set\" concept"
 msgstr "Поняття «пов'язані шари» замінено новим поняттям «набір шарів»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid ""
 "Lock icons in item dockables (Layers, Channels, Paths) moved next to the "
 "visibility (eye) icon"
@@ -119,7 +133,7 @@ msgstr ""
 "Піктограми замків на панелях із пунктами (шари, канали, контури) перенесено "
 "до піктограми видимості (ока)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "Alt-click on visibility and lock icons in item dockables massively toggles "
 "visibility and locks among selected items"
@@ -127,13 +141,13 @@ msgstr ""
 "Alt-клацання на піктограмах видимості та блокування на панелях списків можна "
 "пакетно перемикати видимість та блокування позначених пунктів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Item dockables now display icon headers for visibility and locks column"
 msgstr ""
 "У новій версії на рухомих панелях елементів показано смужки заголовків з "
 "піктограмами для перемикання видимості і блокування"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid ""
 "Our System theme shows visible hints around unset visibility and locks icons "
 "when hovering them in item dockables"
@@ -142,7 +156,7 @@ msgstr ""
 "вимкнених піктограм видимості та блокування при наведенні на них вказівника "
 "на рухомих панелях елементів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "New checkbox to enable or disable dynamics in paint tools' options "
 "(replacing \"Dynamics Off\" dynamics)"
@@ -150,24 +164,24 @@ msgstr ""
 "Реалізовано новий пункт-позначку для вмикання або вимикання динаміки у "
 "параметрах інструмента малювання (замінив собою пункт «Вимкнути динаміку»)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid "Improved support for Wayland and macOS Big Sur (and newer)"
 msgstr "Удосконалено підтримку Wayland і macOS Big Sur (та новіших версій)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "\"Fill by line art detection\" in Bucket Fill tool has a new option"
 msgstr ""
 "Новий пункт в інструментів залиття з відерця для «Заповнити за виявленими "
 "контурами»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid ""
 "Channels and paths multi-selectable with part of relevant actions working"
 msgstr ""
 "Уможливлено позначення багатьох каналів та контурів із частиною відповідних "
 "дій"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "Various file format support improvements, in particular to PSD, JPEG-XL and "
 "HEIF"
@@ -175,29 +189,29 @@ msgstr ""
 "Різноманітні удосконалення у підтримці форматів файлів, зокрема PSD, JPEG-XL "
 "та HEIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid "New support of Microsoft Windows Cursor file format (.cur files)"
 msgstr ""
 "Реалізовано підтримку формату файлів Microsoft Windows Cursor (файлів .cur)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "Removed KDE and GNOME screenshot portals in favor of Freedesktop one"
 msgstr ""
 "Вилучено портали знімків вікон KDE і GNOME на користь порталу Freedesktop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid ""
 "Windows screenshot implementation now has an \"Include mouse pointer\" option"
 msgstr ""
 "У реалізації засобу створення знімків вікон у Windows додано пункт «Включити "
 "вказівник миші»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid "New and modified libgimp API for plug-in developers"
 msgstr ""
 "Нові і модифіковані програмні інтерфейси libgimp для розробників додатків"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid ""
 "While during this fourth cycle of development, many efforts were devoted to "
 "infrastructure, GIMP 2.99.8 still received many welcome improvements, "
@@ -207,7 +221,7 @@ msgstr ""
 "до удосконалення інфраструктури, GIMP 2.99.8 отримав багато бажаних "
 "удосконалень, зокрема:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "New modes in Clone, Heal and Perspective Clone tools when multiple layers "
 "are selected"
@@ -215,27 +229,27 @@ msgstr ""
 "Нові режими для інструментів клонування, лікування та перспективи, якщо "
 "позначено декілька шарів."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid "Windows Ink support for input devices on Windows"
 msgstr "Підтримка Windows Ink для пристроїв введення даних у Windows."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Clicking on toolbox or Wilber's drop area actively focuses the canvas"
 msgstr ""
 "Клацання на панелі інструментів або області скидання з Вілбером призводить "
 "до активного фокусування полотна."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Marching ants display ported to Wayland and macOS Big Sur logics"
 msgstr ""
 "Показ позначених ділянок із мурашиною доріжкою портовано на логіку Wayland і "
 "macOS Big Sur."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Initial implementation of config folder migration for GIMP 3"
 msgstr "Початкова реалізація перенесення тек налаштувань для GIMP 3"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid ""
 "Action \"view-rotate-reset\" renamed to \"view-reset\" and new \"view-rotate-"
 "reset\" and \"view-flip-rotate\" actions"
@@ -243,25 +257,25 @@ msgstr ""
 "Дію «view-rotate-reset» перейменовано на «view-reset»; нові дії «view-rotate-"
 "reset» і «view-flip-rotate»."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid "PSD: bigger-than-4GiB file support and up to 99 channels"
 msgstr ""
 "PSD: підтримка файлів із розміром понад 4 ГБ і кількістю каналів, що не "
 "перевищує 100."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "PSB: new support (loading only)"
 msgstr "PSB: підтримка нового формату (лише завантаження)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "SGI: 16-bit images support"
 msgstr "SGI: підтримка 16-бітових зображень."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "JPEG XL: new support (loading and exporting)"
 msgstr "JPEG XL: підтримка нового формату (завантаження та експортування)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid ""
 "New API functions gimp_display_present() and "
 "gimp_procedure_dialog_fill_expander()"
@@ -269,13 +283,13 @@ msgstr ""
 "Нові функції програмного інтерфейсу — gimp_display_present() та "
 "gimp_procedure_dialog_fill_expander()."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid "Much porting to newer API, code cleanup and bug fixing done"
 msgstr ""
 "Багато портування на новий програмний інтерфейс, чищення коду та виправлення "
 "вад."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid ""
 "For this third development release, more development effort has been shifted "
 "towards the API. Many functions were renamed for consistent naming scheme, "
@@ -292,30 +306,30 @@ msgstr ""
 "випусках цієї гілки слід очікувати подальших оновлень програмного "
 "інтерфейсу, оскільки у цій гілці стабільність інтерфейсу ще не гарантовано."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid "Regarding end-creator changes, some notable improvements are:"
 msgstr ""
 "Якщо розглядати зміни у засобі завершальної обробки даних, серед помітних "
 "удосконалень слід відзначити такі:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Canvas Size dialog now displays a template selector"
 msgstr "У новій версії вікна розміру полотна показано засіб вибору шаблона"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Off-canvas guides are now allowed"
 msgstr "Уможливлено використання напрямних поза полотном"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "The experimental Paint Select tool got various improvements"
 msgstr ""
 "Різноманітні удосконалення в експериментальному інструментів вибору фарби"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "More fixes for Wayland support"
 msgstr "Додаткові виправлення у реалізації підтримки Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid ""
 "Dialog dropped for the Freedesktop portal implementation of the screenshot "
 "plug-in"
@@ -323,13 +337,13 @@ msgstr ""
 "Усунено діалогове вікно засобу створення знімків вікон на користь реалізації "
 "з порталу Freedesktop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid "PNG import creates an ICC profile out of the gAMA and/or cHRM chunks"
 msgstr ""
 "Засіб імпортування PNG створює профіль ICC на основі фрагментів gAMA і/або "
 "cHRM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid ""
 "TIFF export stores the ICC profile and comment on each layer to prevent "
 "ambiguous files"
@@ -337,7 +351,7 @@ msgstr ""
 "Засіб експортування TIFF зберігає профіль ICC і коментар до кожного з шарів "
 "з метою запобігання появі неоднозначних файлів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid ""
 "This second development release contains various usability and API updates. "
 "A new experimental tool makes an entrance in the playground."
@@ -346,58 +360,58 @@ msgstr ""
 "пов'язано зі зручністю користування та програмним інтерфейсом. До "
 "«пісочниці» включено новий експериментальний інструмент."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid "Many usability improvements on the slider widget"
 msgstr ""
 "Багато удосконалень у віджеті повзунка, користуватися яким тепер стало "
 "зручніше"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Usability cleaning in the Layers dockable"
 msgstr "Спрощення користування панеллю «Шари»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid ""
 "The action search now shows all actions even inactive ones (yet pushed below)"
 msgstr ""
 "На панелі пошуку дій реалізовано показ усіх пунктів дій, навіть неактивних "
 "(неактивні показано нижче)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
 "Реалізовано показ відповідних символів для шрифтів із корейськими та "
 "японськими ієрогліфами"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid "Different default tools depending on pointer device type"
 msgstr ""
 "Реалізовано використання різних типових інструментів для різних типів "
 "пристроїв керування вказівником"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Default dynamics is now \"Pressure Size\""
 msgstr "Типовою динамікою у новій версії є «Розмір тиску»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Various usability improvements in the Input Device editor"
 msgstr ""
 "Різноманітні пов'язані зі зручністю користування удосконалення у редакторів "
 "пристрою вхідних даних"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "New \"Paint Select\" experimental tool in the playground"
 msgstr ""
 "Новий експериментальний інструмент «Позначення малюванням» у «пісочниці»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Plug-in API now provides many dialog generation utilities"
 msgstr ""
 "У новій версії програмного інтерфейсу додатків передбачено багато допоміжних "
 "засобів створення діалогових вікон"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid ""
 "This is the first development release for GIMP 3.0, whose focus was the port "
 "to the GTK+3 toolkit. Noteworthy improvements (though some are still work-in-"
@@ -407,41 +421,41 @@ msgstr ""
 "набір інструментів GTK+3. Серед вартих уваги удосконалень (хоча роботу над "
 "деякими з них ще не завершено):"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid "Multi-selection of layers in the Layers dockable"
 msgstr "Уможливлено позначення декількох шарів на панелі «Шари»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Proper high pixel density display support"
 msgstr "Реалізовано належну підтримку дисплеїв із високою щільністю пікселів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Improved input device support"
 msgstr "Удосконалено підтримку пристроїв вводу"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Major plug-in API rewrite"
 msgstr "Значне переписування програмного інтерфейсу додатків"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
 msgstr ""
 "Програмним інтерфейсом додатків у новій версії можна скористатися C/C++, "
 "Python 3, Javascript, Lua і Vala"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "New manageable extension format"
 msgstr "Новий керований формат розширень"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "CSS-based themes and actual symbolic icon theme support"
 msgstr "Теми на основі CSS і справжня підтримка тем символічних піктограм"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "Wayland support"
 msgstr "Підтримка Wayland"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
@@ -451,7 +465,7 @@ msgstr ""
 "відповідно до розвитку операційних систем, удосконалено підтримку метаданих, "
 "а також підтримку декількох форматів даних, зокрема PSD і AVIF."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
@@ -459,7 +473,7 @@ msgstr ""
 "У GIMP 2.10.28 виправлено ваду у збиранні GIMP 2.10.26, яку пов'язано із "
 "тим, що неналежним чином встановлювалися деякі з даних тем."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
@@ -467,17 +481,17 @@ msgstr ""
 "GIMP 2.10.26 є випуском із виправленням вад — десятки виправлених вад у коді "
 "ядра, скриптів та додатків."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.24, знову ж таки, є випуском, основним акцентом у якому є "
 "виправлення вад. Помітні зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "GeoTIFF metadata support added"
 msgstr "Додано підтримку метаданих GeoTIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
@@ -485,43 +499,43 @@ msgstr ""
 "Під час імпортування PDF нова версія програми пропонує завантажувати шари у "
 "зворотному порядку і уможливлює нецілі значення густини пікселів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr ""
 "Оновлено засіб імпортування цифрових негативів з метою обробки змін у "
 "програмному інтерфейсі darktable 3.6 та новіших версій"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
 "Удосконалено підтримку файлів у таких форматах: HEIF, PSP, TIFF, JPEG, PNG, "
 "PDF, DDS, BMP, PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 "Багато виправлено та удосконалень у засобах перегляду та редагування "
 "метаданих"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "New Kabyle translation"
 msgstr "Новий переклад кабильською мовою"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr ""
 "Уможливлено прилипання до точок поза полотном (до ґратки, напрямних і "
 "контурів)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr ""
 "GIMP 2.10.22 є випуском, основним акцентом у якому є виправлення вад. "
 "Помітні зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
@@ -529,23 +543,23 @@ msgstr ""
 "Удосконалено підтримку HEIF: можливе експортування з високою бітовою "
 "глибиною кольорів, імпортування та експортування AVIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Декілька удосконалень у підтримці Corel PaintShop Pro"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
 "«Об'єднання за зразком» у новій версії доступне у параметрах інструментів "
 "дій GEGL"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
 "«Об'єднання за зразком» у новій версії типово увімкнено для засобів вибору "
 "кольорів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
@@ -553,7 +567,7 @@ msgstr ""
 "Пункт вмикання підтримки OpenCL перенесено на вкладку «Пісочниця» у "
 "налаштуваннях"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
@@ -561,21 +575,21 @@ msgstr ""
 "Матування-спалах тепер є типовим рушієм для інструмента позначення областей "
 "переднього плану, оскільки він працює набагато краще"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid "New progressive performance logs and dashboard updates"
 msgstr "Новий прогресивний журнал швидкодії та оновлення панелі приладів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr ""
 "У докладних діагностичних даних буде показано дані Flatpak, якщо вони є "
 "придатними"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Various bug fixes"
 msgstr "Виправлено різноманітні вади"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
@@ -583,13 +597,13 @@ msgstr ""
 "У GIMP 2.10.20 реалізовано нові можливості, а також виправлено важливі вади. "
 "Найпомітніші зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr ""
 "У новій версії групи інструментів розкриваються при наведенні вказівника "
 "миші, а не при клацанні"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
@@ -597,7 +611,7 @@ msgstr ""
 "У новій версії доступне неруйнівне обрізання (обрізання полотна, а не самих "
 "пікселів)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
@@ -605,21 +619,21 @@ msgstr ""
 "Досконаліша підтримка PSD: доступне експортування 16-бітових файлів, читання "
 "і запис каналів у правильному порядку"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid "On-canvas controls for the Vignette filter"
 msgstr "Вбудовані до полотна засоби керування фільтром віньєтування"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr ""
 "Нові фільтри: флуоресценція, фокусне розмивання, розмивання об'єктивом, "
 "змінне розмивання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "Over 30 bugfixes"
 msgstr "Виправлено понад 30 вад"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -628,7 +642,7 @@ msgstr ""
 "файлів PSD у просторі CMYK та додано висококонтрастний варіант теми "
 "піктограм-символів."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -638,46 +652,46 @@ msgstr ""
 "новий інструмент для просторових перетворень зображення, новий засіб "
 "перевірки оновлень та звичний набір виправлень вад. Помітні удосконалення:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "У новій версії інструменти типово групуються за наборами"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr "Використано компактний стиль повзунків із удосконаленим інтерфейсом"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "Значно удосконалень інтерфейс попереднього перегляду перетворень"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr ""
 "Реалізовано підсвічування областей швартування під час перетягування "
 "придатних до швартування панелей"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr ""
 "Новий інструмент просторового перетворення для обертання і панорамування "
 "об'єктів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "Значно удосконалено рух контуру пензля на полотні"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr ""
 "Консолідовано інтерфейс користувача для об'єднання та пов'язування шарів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid "Update check to notify users that a new release/installer is available"
 msgstr ""
 "Оновлено перевірку для сповіщення користувачів щодо появи нових випусків та "
 "пакунків"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -688,7 +702,7 @@ msgstr ""
 "нарешті портовано на GEGL. Звичайно ж, крім цього, є декілька вартих уваги "
 "удосконалень:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
@@ -696,58 +710,58 @@ msgstr ""
 "Меню «Перегляд»: новий пункт «Показати усе» для розширення області перегляду "
 "на ділянки поза межами полотна"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr ""
 "Фільтри: новий пункт «Обрізання», який надає змогу змінити розміри шару, "
 "якщо потрібно"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
 "Інструмент вибору переднього плану: новий режим попереднього перегляду "
 "«Відтінки сірого»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr ""
 "Інструмент вибору переднього плану: реалізовано можливість вибору кольору і "
 "рівня непрозорості для попереднього перегляду «Колір»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr ""
 "Інструмент довільного вибору: поліпшено взаємодію при копіюванні зі "
 "вставленням"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr ""
 "Інструменти перетворення: новий тип перетворення зображення, який надає "
 "змогу виконати дію над усім зображенням"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "Налаштування: новий пункт «Дозволити редагування невидимих шарів»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "HEIF import/export: color profile support"
 msgstr ""
 "Імпортування та експортування HEIF: реалізовано підтримку профілів кольорів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr ""
 "Експортування до PDF: текстові шари у групах шарів у новій версії буде "
 "експортовано як текст"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr ""
 "Імпортування TIFF: у новій версії програма питає, як обробляти невказані "
 "канали TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -757,31 +771,31 @@ msgstr ""
 "випуском 2.10.10 із багатьма змінами! Втім, у цьому випуску ви зможете "
 "скористатися і багатьма чудовими поліпшеннями, зокрема у редагуванні кривих:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid "Improved curves interaction overall"
 msgstr "Загальне поліпшення роботи інструмента кривих"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "A few enhancements specific to the Curves tool"
 msgstr "Декілька поліпшень у інструментів малювання кривих"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid "Layer support in TIFF"
 msgstr "Підтримка шарів у TIFF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "Виявлення встановлених користувачем шрифтів у Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "Нарощувальний режим у інструменті освітлення/вигорання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid "Free Select tool creates preliminary selection"
 msgstr "Інструмент довільного позначення створює попереднє позначення"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
@@ -789,7 +803,7 @@ msgstr ""
 "GIMP 2.10.10 - дещо більше оновлення з багатьма новими можливостями і "
 "виправленими помилками. Основні покращення:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
@@ -797,13 +811,13 @@ msgstr ""
 "Інструмент Заповнення: новий  режим \"Заповнити за виявленими контурами\" "
 "для неповністю замкнених контурів "
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr ""
 "Інструмент Заповнення тепер дозволяє швидко вибрати колір за допомогою Ctrl"
 "+клацання"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
@@ -811,11 +825,11 @@ msgstr ""
 "Інструмент Заповнення тепер дозволяє утримувати мишу під час заповнення "
 "\"подібних кольорів\" і \"виявлених контурів\""
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid "Scale tool scales around center even when using numeric input"
 msgstr "Масштабування від центру, навіть за використання числового введення"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
@@ -823,7 +837,7 @@ msgstr ""
 "Інструмент Об'єднане перетворення тепер типово зберігає пропорції при "
 "збільшенні чи зменшенні"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
@@ -831,24 +845,24 @@ msgstr ""
 "До графічного інтерфейсу засобу перетворення перспективи додано пункти "
 "«Обмежити опорні точки» та «Навколо центру»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
 "Новий загальний модифікатор на полотні - 'Alt + середня кнопка' для вибору "
 "шарів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr ""
 "У новій версії параметричні пензлі використовують 32-бітову глибину кольорів "
 "із дійсними значеннями каналів для уникнення постеризації"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr ""
 "Уможливлено дублювання пензлів, які малюють зображення з буфера та візерунків"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
@@ -856,25 +870,25 @@ msgstr ""
 "Невдала спроба змінити заблокований шар супроводжується блиманням, щоб "
 "привернути увагу до можливої помилки"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr ""
 "Новий інтерфейс на полотні (прості лінії) дпя колового, лінійного та "
 "масштабованого розмиття рухом"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid "Several optimizations including faster layer group rendering"
 msgstr "Низка оптимізацій, включно зі швидшим вимальовуванням груп шарів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr ""
 "Файли резервування пам'яті і кешу більше не записуються у каталог "
 "конфігурації"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
@@ -882,15 +896,15 @@ msgstr ""
 "Різні варіанти запису/експортування стали більш стійкими до помилок завдяки "
 "уникненню запису часткових файлів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid "HiDPI support improvements"
 msgstr "Покращена підтримка HiDPI"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid "New preference to choose the default export file type"
 msgstr "Нові передустановки для вибору типового формату файла для експорту"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -898,11 +912,11 @@ msgstr ""
 "Новий параметр для експорту PNG, JPEG та TIFF з колірним профілем; PSD "
 "завжди експортується з колірним профілем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid "New DDS format loading/exporting plug-in"
 msgstr "Новий додаток для завантаження/експорту формату DDS"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
@@ -910,7 +924,7 @@ msgstr ""
 "Повністю переписано додаток «Спіроґімп». Розширено перелік параметрів та "
 "поліпшено взаємодію з програмою."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
@@ -918,7 +932,7 @@ msgstr ""
 "GIMP 2.10.8 є здебільшого випуском із виправленням вад та оптимізаціями. "
 "Зокрема, до цього випуску включено:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
@@ -926,12 +940,12 @@ msgstr ""
 "Адаптивний розмір фрагментів під час показу проєкцій із динамічним "
 "поліпшенням реактивності комп'ютера"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr ""
 "Поліпшено алгоритм виявлення RawTherapee (версії 5.5 та новіших) у Windows"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
@@ -939,7 +953,7 @@ msgstr ""
 "Зрозуміліші і помітніші дані щодо сумісності XCF у діалоговому вікні "
 "збереження даних"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
@@ -947,7 +961,7 @@ msgstr ""
 "Додано різноманітні засоби журналювання швидкодії. Доступ до записів "
 "журналів можна отримати за допомогою панелі приладів."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
@@ -955,7 +969,7 @@ msgstr ""
 "У GIMP 2.10.6 виправлено багато вад, виконано різноманітні оптимізації та "
 "додано нові можливості. Найпомітніші зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
@@ -963,15 +977,15 @@ msgstr ""
 "Текстові шари тепер можуть містити вертикально орієнтований текст (із "
 "різними орієнтаціями символів та напрямками рядків)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "Новий фільтр «Мала планета» (gegl:stereographic-projection)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid "New \"Long Shadow\" filter"
 msgstr "Новий фільтр «Довга тінь»"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
@@ -979,7 +993,7 @@ msgstr ""
 "Новий пункт «Випрямити» у засобі вимірювання уможливлює вертикальне "
 "випрямлення"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
@@ -987,7 +1001,7 @@ msgstr ""
 "Зображення попереднього перегляду тепер малюються асинхронно, а попередні "
 "перегляди груп шарів можна вимкнути у налаштуваннях програми"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
@@ -995,17 +1009,17 @@ msgstr ""
 "Нове поле «async» у групі «різне» панелі приладів показує кількість поточних "
 "асинхронних операцій"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr ""
 "Спрощено фільтрування за форматом файлів у діалогових вікнах відкриття, "
 "збереження та експортування даних"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "Нова мова перекладу (тепер GIMP перекладено 81 мовою): мараті"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
@@ -1013,7 +1027,7 @@ msgstr ""
 "У GIMP 2.10.4 виправлено багато вад і виконано різноманітні оптимізації. "
 "Найпомітніші зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
@@ -1021,12 +1035,12 @@ msgstr ""
 "Спрощення у засобі вимірювання: тепер шари можна обертати, використовуючи "
 "лінію вимірювання як горизонт"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr ""
 "Швидкий запуск: завантаження шрифтів більше не блокує завантаження програми"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
@@ -1034,13 +1048,13 @@ msgstr ""
 "Реалізовано вибір шрифтів за допомогою інтерфейсу користувача, подібного до "
 "інтерфейсу для пензлів, візерунків та градієнтів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr ""
 "Підтримка PSD: уможливлено імпортування попередньо скомпонованого зображення "
 "PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
@@ -1048,7 +1062,7 @@ msgstr ""
 "Оновлення панелі приладів: нова група «Пам'ять» та поліпшена група «Резервна "
 "пам'ять», де показано різноманітні параметри роботи"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -1058,7 +1072,7 @@ msgstr ""
 "2.10.0, в основному є версією із виправленням вад після основного випуску. У "
 "цій версії виправлено декілька десятків вад."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -1071,7 +1085,7 @@ msgstr ""
 "прикладом застосування наших нових, вільніших правил щодо стабільних "
 "мікровипусків."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -1079,13 +1093,13 @@ msgstr ""
 "Головною особливістю першої версії у серії 2.10 є портування на новий рушій "
 "обробки зображень, GEGL. Найпомітніші зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr ""
 "Обробка зображень із високою розрядністю кольорів (16/32 бітів на канал "
 "кольору)"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
@@ -1093,38 +1107,38 @@ msgstr ""
 "Тепер керування кольорами є основною можливістю — ним можна скористатися у "
 "більшості віджетів та на панелях перегляду"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr ""
 "Попередній перегляд застосування ефектів на полотні із поділом на зони до і "
 "після обробки пікселів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr ""
 "Можливості багатопотокового показу, обробки і малювання із використанням "
 "апаратного прискорення"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid "Most tools improved, several new transformation tools"
 msgstr ""
 "Поліпшено більшість інструментів, реалізовано декілька нових засобів "
 "перетворення"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr ""
 "Поліпшено підтримку багатьох форматів зображень, зокрема імпортування даних "
 "PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "Нові підтримувані формати зображень: OpenEXR, RGBE, WebP, HGT…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
@@ -1132,25 +1146,25 @@ msgstr ""
 "Поліпшено можливості з цифрового малювання: обертання і віддзеркалення "
 "полотна, симетричне малювання, пензлі MyPaint…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "Перегляд і редагування метаданих для Exif, XMP, IPTC і DICOM"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:178
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr ""
 "Базова підтримка HiDPI: визначення розмірів піктограм у автоматичному режимі "
 "або вручну користувачем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:179
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "Нові теми для GIMP: світла, сіра, темна і загальносистемна"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:178
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:180
 msgid "And much, much more…"
 msgstr "А також багато чого іншого…"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:179
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:181
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -1160,7 +1174,7 @@ msgstr ""
 "зробили акцент на пришвидшення роботи програми та оптимізацію із метою "
 "удосконалення умов малювання. Найпомітніші зміни:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:180
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:182
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
@@ -1168,13 +1182,13 @@ msgstr ""
 "Значна оптимізація ядра програми для малювання і показу зображення, зокрема "
 "паралелізація коду малювання."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:181
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr ""
 "Збереження симетрії у файлах XCF (зберігається у форматі додатків до "
 "зображення)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:182
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:184
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
@@ -1182,7 +1196,7 @@ msgstr ""
 "Переписано світлу та темну теми, щоб усунути різноманітні проблеми зі "
 "зручністю у користуванні. Вилучено теми «Світліша» і «Темніша»."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:185
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -1193,7 +1207,7 @@ msgstr ""
 "взаємодію на полотні для обертання у просторі (відхилення, закручування, "
 "обертання)."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:184
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -1204,7 +1218,7 @@ msgstr ""
 "змогу переглядати не лише отримання сигналів, але і попередження і критичні "
 "помилки, якщо встановлено ключ діагностики «fatal-warnings»."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:185
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:187
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -1214,13 +1228,13 @@ msgstr ""
 "2.10.0. Увагу розробників зосереджено на усуванні вад та стабільності "
 "роботи. Окрім виправлення багатьох вад, найпомітнішими змінами є такі:"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:188
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr ""
 "Нова панель приладів, яку можна швартувати для спостереження за "
 "використанням ресурсів у GIMP"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:187
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:189
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
@@ -1228,37 +1242,37 @@ msgstr ""
 "Нове вікно діагностики для отримання даних зворотного трасування та інших "
 "діагностичних даних і полегшення звітування щодо вад"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:188
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:190
 msgid "Unsaved images can now be recovered after a crash"
 msgstr ""
 "Тепер можна відновлювати незбережені зображення після аварійного завершення "
 "роботи"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:189
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:191
 msgid "Layer masks on layer groups"
 msgstr "Маски шарів на групах шарів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:190
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:192
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr ""
 "Поліпшено підтримку JPEG 2000 для високих значень бітової глибини та "
 "різноманітних просторів кольорів"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:191
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:193
 msgid "Screenshot and color picking improved on various platforms"
 msgstr ""
 "Поліпшено засоби створення знімків вікон та вибору кольорів на різноманітних "
 "платформах"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:192
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:194
 msgid "Metadata defaults preferences now available"
 msgstr "Уможливлено вибір типової поведінки щодо зберігання метаданих"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:193
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:195
 msgid "Various GUI polishing"
 msgstr "Різноманітні поліпшення у інтерфейсі користувача"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:194
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:196
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
@@ -1267,47 +1281,47 @@ msgstr ""
 "реалізовано різноманітні поліпшення. Втім, основну увагу розробників було "
 "зосереджено на виправленні помилок та поліпшеннях у стабільності роботи."
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:195
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:197
 msgid "On-canvas gradient editing"
 msgstr "Редагування градієнтів на полотні"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:196
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
 msgid "Notification when an image is over/underexposed"
 msgstr "Сповіщення щодо пере- та недоекспонованості зображення"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:197
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:199
 msgid "Better and faster color management"
 msgstr "Ліпше і швидше керування кольорами"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:200
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "Підтримка піпетки кольорів та знімків вікон на Wayland у Плазмі KDE"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:199
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:201
 msgid "Paste in place feature"
 msgstr "Можливість вставляння на місці"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:200
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:202
 msgid "Many usability improvements"
 msgstr "Багато поліпшень у зручності користування"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:201
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:203
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "Підручник користувача може бути показано позначеною користувачем мовою"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:202
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:204
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "Поліпшення у фільтрі поділу за частотами"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:203
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:205
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "Поліпшення сумісності із файлами .psd Photoshop"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:204
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:206
 msgid "New support for password-protected PDF"
 msgstr "Підтримка файлів PDF, вміст яких захищено паролем"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:205
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:207
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Підтримка формату HGT (дані Digital Elevation Model)"
 
@@ -1562,7 +1576,7 @@ msgstr "Редактор пензлів"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:3328
 msgid "Brushes"
 msgstr "Пензлі"
 
@@ -1646,7 +1660,7 @@ msgstr "Фільтри"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:358 ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/dialogs.c:358 ../app/dialogs/preferences-dialog.c:3358
 msgid "Fonts"
 msgstr "Шрифти"
 
@@ -1657,12 +1671,12 @@ msgstr "Редактор градієнтів"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3352
 msgid "Gradients"
 msgstr "Градієнти"
 
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
-#: ../app/dialogs/dialogs.c:364 ../app/dialogs/preferences-dialog.c:3356
+#: ../app/dialogs/dialogs.c:364 ../app/dialogs/preferences-dialog.c:3364
 msgid "Tool Presets"
 msgstr "Шаблони інструментів"
 
@@ -1691,7 +1705,7 @@ msgstr "Шари"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3362
+#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3370
 msgid "MyPaint Brushes"
 msgstr "Пензлі MyPaint"
 
@@ -1702,17 +1716,17 @@ msgstr "Редактор палітри"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
-#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3346
 msgid "Palettes"
 msgstr "Палітри"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
-#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3340
 msgid "Patterns"
 msgstr "Текстури"
 
-#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3368
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3376
 msgid "Plug-ins"
 msgstr "Додатки"
 
@@ -2317,7 +2331,7 @@ msgstr[1] "Опустити канали додолу"
 msgstr[2] "Опустити канали додолу"
 msgstr[3] "Опустити канал додолу"
 
-#: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:462
+#: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:460
 #: ../app/display/gimpdisplayshell-dnd.c:707
 #: ../app/widgets/gimpchanneltreeview.c:261
 #: ../app/widgets/gimplayertreeview.c:938
@@ -3895,8 +3909,8 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:115 ../app/actions/tool-options-commands.c:75
-#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2335
-#: ../app/core/gimppalette.c:463 ../app/core/gimppalette-import.c:213
+#: ../app/core/gimpbrushgenerated-load.c:121 ../app/core/gimpimage.c:2331
+#: ../app/core/gimppalette.c:430 ../app/core/gimppalette-import.c:213
 #: ../app/core/gimppalette-load.c:194
 #: ../app/dialogs/palette-import-dialog.c:762 ../app/widgets/gimpdnd-xds.c:87
 msgid "Untitled"
@@ -9312,7 +9326,7 @@ msgstr "Від_крити"
 
 #: ../app/actions/text-editor-commands.c:141
 #: ../app/actions/text-tool-commands.c:226 ../app/config/gimpconfig-file.c:72
-#: ../app/core/gimppalette-import.c:521 ../app/plug-in/gimpenvirontable.c:289
+#: ../app/core/gimppalette-import.c:501 ../app/plug-in/gimpenvirontable.c:289
 #: ../app/plug-in/gimpinterpreterdb.c:234
 #: ../app/tools/gimpfiltertool-settings.c:170
 #: ../app/widgets/gimptextbuffer.c:1663
@@ -12266,11 +12280,14 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:420
 msgid ""
-"When enabled, the mouse pointer will be shown over the image while using a "
-"paint tool."
-msgstr "Якщо ввімкнено, при малюванні буде видно курсор інструменту."
+"When enabled, the pointer will be shown over the image while using a paint "
+"tool. If both the brush outline and pointer are disabled, the position will "
+"be indicated as unobtrusively as possibly."
+msgstr ""
+"Якщо ввімкнено, при малюванні буде видно курсор інструменту. Якщо вимкнено"
+" показ контура пензля та курсора, позицію буде показано якомога менш помітно."
 
-#: ../app/config/gimprc-blurbs.h:424
+#: ../app/config/gimprc-blurbs.h:426
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -12278,7 +12295,7 @@ msgstr ""
 "Якщо ввімкнено, ввімкнена панель меню. Це також можна зробити командою "
 "\"Перегляд→Показувати панель меню\"."
 
-#: ../app/config/gimprc-blurbs.h:428
+#: ../app/config/gimprc-blurbs.h:430
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -12286,7 +12303,7 @@ msgstr ""
 "Якщо ввімкнено, показуються лінійки. Це також можна зробити командою "
 "\"Перегляд→Показувати лінійки\"."
 
-#: ../app/config/gimprc-blurbs.h:432
+#: ../app/config/gimprc-blurbs.h:434
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -12294,7 +12311,7 @@ msgstr ""
 "Якщо ввімкнено, показуються смуги прокрутки. Це також можна зробити командою "
 "\"Перегляд→Показувати смуги прокрутки\"."
 
-#: ../app/config/gimprc-blurbs.h:436
+#: ../app/config/gimprc-blurbs.h:438
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -12302,7 +12319,7 @@ msgstr ""
 "Якщо ввімкнено, показується смужка стану. Це також можна зробити командою "
 "\"Перегляд→Показувати смужка стану\"."
 
-#: ../app/config/gimprc-blurbs.h:440
+#: ../app/config/gimprc-blurbs.h:442
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -12310,7 +12327,7 @@ msgstr ""
 "Якщо ввімкнено, ввімкнено показ позначеної ділянки. Це також можна зробити "
 "командою \"Перегляд→Показувати позначеної ділянки\"."
 
-#: ../app/config/gimprc-blurbs.h:444
+#: ../app/config/gimprc-blurbs.h:446
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -12318,7 +12335,7 @@ msgstr ""
 "Якщо ввімкнено, ввімкнено показ меж шару. Це також можна зробити командою "
 "\"Перегляд→Показувати межі шару\"."
 
-#: ../app/config/gimprc-blurbs.h:448
+#: ../app/config/gimprc-blurbs.h:450
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
@@ -12326,7 +12343,7 @@ msgstr ""
 "Якщо ввімкнено, ввімкнено показ меж полотна. Це також можна зробити командою "
 "\"Перегляд→Показувати межі полотна\"."
 
-#: ../app/config/gimprc-blurbs.h:452
+#: ../app/config/gimprc-blurbs.h:454
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -12334,7 +12351,7 @@ msgstr ""
 "Якщо ввімкнено, показуються напрямні. Це також можна зробити командою "
 "\"Перегляд→Показувати напрямні\"."
 
-#: ../app/config/gimprc-blurbs.h:456
+#: ../app/config/gimprc-blurbs.h:458
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -12342,7 +12359,7 @@ msgstr ""
 "Якщо ввімкнено, показується сітка. Це також можна зробити командою "
 "\"Перегляд→Показувати сітку\"."
 
-#: ../app/config/gimprc-blurbs.h:460
+#: ../app/config/gimprc-blurbs.h:462
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -12350,57 +12367,57 @@ msgstr ""
 "Якщо ввімкнено, зразкові точки типово показуються. Це також можна зробити "
 "командою \"Перегляд→Показувати зразкові точки\"."
 
-#: ../app/config/gimprc-blurbs.h:464
+#: ../app/config/gimprc-blurbs.h:466
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "Показувати контекстну підказку при наведенні на об'єкт."
 
-#: ../app/config/gimprc-blurbs.h:467
+#: ../app/config/gimprc-blurbs.h:469
 msgid "Use GIMP in a single-window mode."
 msgstr "Використовувати GIMP у режимі з одним вікном"
 
-#: ../app/config/gimprc-blurbs.h:470
+#: ../app/config/gimprc-blurbs.h:472
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr "Сховати всі діалоги у панелі, залишити лише вікна зображень"
 
-#: ../app/config/gimprc-blurbs.h:473
+#: ../app/config/gimprc-blurbs.h:475
 msgid "Show the image tabs bar in single window mode."
 msgstr "Показувати панель вкладок зображень у одновіконному режимі."
 
-#: ../app/config/gimprc-blurbs.h:476
+#: ../app/config/gimprc-blurbs.h:478
 msgid "Enable the N-Point Deformation tool."
 msgstr "Увімкнути інструмент «Деформація за N точками»."
 
-#: ../app/config/gimprc-blurbs.h:479
+#: ../app/config/gimprc-blurbs.h:481
 msgid "Enable the Handle Transform tool."
 msgstr "Увімкнути інструмент «Перетворення за точками»."
 
-#: ../app/config/gimprc-blurbs.h:482
+#: ../app/config/gimprc-blurbs.h:484
 msgid "Enable symmetry on painting."
 msgstr "Увімкнути симетрію під час малювання."
 
-#: ../app/config/gimprc-blurbs.h:485
+#: ../app/config/gimprc-blurbs.h:487
 msgid "Enable the MyPaint Brush tool."
 msgstr "Увімкнути інструмент «Пензлі MyPaint»."
 
-#: ../app/config/gimprc-blurbs.h:488
+#: ../app/config/gimprc-blurbs.h:490
 msgid "Enable the Seamless Clone tool."
 msgstr "Увімкнути інструмент «Безшовний клон»."
 
-#: ../app/config/gimprc-blurbs.h:491
+#: ../app/config/gimprc-blurbs.h:493
 msgid "Enable the Paint Select tool."
 msgstr "Увімкнути інструмент «Малювання позначеного»."
 
-#: ../app/config/gimprc-blurbs.h:494
+#: ../app/config/gimprc-blurbs.h:496
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "Що робити, коли у вікні зображення натискають пробіл."
 
-#: ../app/config/gimprc-blurbs.h:497
+#: ../app/config/gimprc-blurbs.h:499
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 "Спосіб стискання, який буде використано для даних плиток, які зберігаються у "
 "файлі резервної пам'яті."
 
-#: ../app/config/gimprc-blurbs.h:500
+#: ../app/config/gimprc-blurbs.h:502
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -12416,7 +12433,7 @@ msgstr ""
 "сповільнюється, якщо файл свопінгу створений у каталозі, під'єднаному через "
 "NFS. У цьому випадку бажано помістити файл свопінгу у \"/tmp\"."
 
-#: ../app/config/gimprc-blurbs.h:509
+#: ../app/config/gimprc-blurbs.h:511
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -12424,15 +12441,15 @@ msgstr ""
 "Якщо ввімкнено, комбінації клавіш для вибору підсвіченого пункту меню можна "
 "змінювати безпосередньо у меню."
 
-#: ../app/config/gimprc-blurbs.h:513
+#: ../app/config/gimprc-blurbs.h:515
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Зберігати змінені комбінації клавіш при виході з GIMP."
 
-#: ../app/config/gimprc-blurbs.h:516
+#: ../app/config/gimprc-blurbs.h:518
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Відновлювати збережені комбінації клавіш при кожному запуску GIMP."
 
-#: ../app/config/gimprc-blurbs.h:519
+#: ../app/config/gimprc-blurbs.h:521
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -12444,24 +12461,24 @@ msgstr ""
 "GIMP, але деякі можуть залишатись, тому не слід давати іншим користувачам на "
 "перегляд та зміну цього каталогу."
 
-#: ../app/config/gimprc-blurbs.h:525
+#: ../app/config/gimprc-blurbs.h:527
 msgid "The name of the theme to use."
 msgstr "Назва теми, яку слід використати."
 
-#: ../app/config/gimprc-blurbs.h:534
+#: ../app/config/gimprc-blurbs.h:536
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr ""
 "Якщо ввімкнено, буде надано перевагу символічним піктограмам, якщо такі є "
 "доступними."
 
-#: ../app/config/gimprc-blurbs.h:540
+#: ../app/config/gimprc-blurbs.h:542
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "Встановлює типове відтворення кольорів для вікна «Перетворити до профілю "
 "кольорів»."
 
-#: ../app/config/gimprc-blurbs.h:543
+#: ../app/config/gimprc-blurbs.h:545
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -12469,13 +12486,13 @@ msgstr ""
 "Встановлює типове значення параметра «Компенсація точки чорного» для вікна "
 "«Перетворити до профілю кольорів»."
 
-#: ../app/config/gimprc-blurbs.h:547
+#: ../app/config/gimprc-blurbs.h:549
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Встановлює типовий метод розмивання шару для вікна «Перетворення точності»."
 
-#: ../app/config/gimprc-blurbs.h:550
+#: ../app/config/gimprc-blurbs.h:552
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -12483,18 +12500,18 @@ msgstr ""
 "Встановлює типовий метод розмивання текстового шару для вікна «Перетворення "
 "точності»."
 
-#: ../app/config/gimprc-blurbs.h:553
+#: ../app/config/gimprc-blurbs.h:555
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Встановлює типовий метод розмивання каналів для вікна «Перетворення "
 "точності»."
 
-#: ../app/config/gimprc-blurbs.h:556
+#: ../app/config/gimprc-blurbs.h:558
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "Встановлює типовий тип палітри для вікна «Перетворити на індексоване»."
 
-#: ../app/config/gimprc-blurbs.h:559
+#: ../app/config/gimprc-blurbs.h:561
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -12502,7 +12519,7 @@ msgstr ""
 "Встановлює типову максимальну кількість кольорів для вікна «Перетворити до "
 "індексованого»."
 
-#: ../app/config/gimprc-blurbs.h:562
+#: ../app/config/gimprc-blurbs.h:564
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -12510,19 +12527,19 @@ msgstr ""
 "Встановлює типове значення параметра «Вилучити дублікати кольорів» для вікна "
 "«Перетворити до індексованого»."
 
-#: ../app/config/gimprc-blurbs.h:565
+#: ../app/config/gimprc-blurbs.h:567
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "Встановлює типовий тип розмивання для вікна «Перетворити на індексоване»."
 
-#: ../app/config/gimprc-blurbs.h:568
+#: ../app/config/gimprc-blurbs.h:570
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Розмити альфу» для вікна «Перетворити "
 "до індексованого»."
 
-#: ../app/config/gimprc-blurbs.h:571
+#: ../app/config/gimprc-blurbs.h:573
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -12530,125 +12547,125 @@ msgstr ""
 "Встановлює типове значення параметра «Розмити текстові шари» для вікна "
 "«Перетворити до індексованого»."
 
-#: ../app/config/gimprc-blurbs.h:574
+#: ../app/config/gimprc-blurbs.h:576
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "Встановлює типовий тип заповнення для вікна «Розмір полотна»."
 
-#: ../app/config/gimprc-blurbs.h:577
+#: ../app/config/gimprc-blurbs.h:579
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "Встановлює типовий набір шарів для зміни розмірів у вікні «Розмір полотна»."
 
-#: ../app/config/gimprc-blurbs.h:580
+#: ../app/config/gimprc-blurbs.h:582
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Змінити розмір текстових шарів» для "
 "вікна «Розмір полотна»."
 
-#: ../app/config/gimprc-blurbs.h:583
+#: ../app/config/gimprc-blurbs.h:585
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
 "Встановлює, як буде виконано пошук та позначення записів на основі "
 "текстового взірця."
 
-#: ../app/config/gimprc-blurbs.h:586
+#: ../app/config/gimprc-blurbs.h:588
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "Встановлює типову назву шару для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:589
+#: ../app/config/gimprc-blurbs.h:591
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "Встановлює типовий режим для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:592
+#: ../app/config/gimprc-blurbs.h:594
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr "Встановлю типовий простір змішування для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:595
+#: ../app/config/gimprc-blurbs.h:597
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "Встановлю типовий простір компонування для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:598
+#: ../app/config/gimprc-blurbs.h:600
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "Встановлює типовий режим компонування для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:601
+#: ../app/config/gimprc-blurbs.h:603
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "Встановлю типову непрозорість для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:604
+#: ../app/config/gimprc-blurbs.h:606
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "Встановлює типовий тип заповнення для вікна «Новий шар»."
 
-#: ../app/config/gimprc-blurbs.h:607
+#: ../app/config/gimprc-blurbs.h:609
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr "Встановлює типовий тип заповнення для вікна «Розмір меж шару»."
 
-#: ../app/config/gimprc-blurbs.h:610
+#: ../app/config/gimprc-blurbs.h:612
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "Встановлює типову маску для вікна «Додати маску шару»."
 
-#: ../app/config/gimprc-blurbs.h:613
+#: ../app/config/gimprc-blurbs.h:615
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Інвертувати маску» для вікна «Додати "
 "маску шару»."
 
-#: ../app/config/gimprc-blurbs.h:616
+#: ../app/config/gimprc-blurbs.h:618
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Встановлює типове значення параметра типу об'єднання для вікна «Об'єднати "
 "видимі шари»."
 
-#: ../app/config/gimprc-blurbs.h:619
+#: ../app/config/gimprc-blurbs.h:621
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Лише активна група» для вікна "
 "«Об'єднати видимі шари»."
 
-#: ../app/config/gimprc-blurbs.h:622
+#: ../app/config/gimprc-blurbs.h:624
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Відкинути невидимі» для вікна "
 "«Об'єднати видимі шари»."
 
-#: ../app/config/gimprc-blurbs.h:625
+#: ../app/config/gimprc-blurbs.h:627
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "Встановлює типову назву каналу для вікна «Новий канал»."
 
-#: ../app/config/gimprc-blurbs.h:628
+#: ../app/config/gimprc-blurbs.h:630
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "Встановлю типовий колір і непрозорість для вікна «Новий канал»."
 
-#: ../app/config/gimprc-blurbs.h:631
+#: ../app/config/gimprc-blurbs.h:633
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "Встановлює типову назву контура для вікна «Новий контур»."
 
-#: ../app/config/gimprc-blurbs.h:634
+#: ../app/config/gimprc-blurbs.h:636
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "Встановлює шлях до типової теки для вікна «Експортувати контур»."
 
-#: ../app/config/gimprc-blurbs.h:637
+#: ../app/config/gimprc-blurbs.h:639
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Експортувати активний контур» для "
 "вікна «Експортувати контур»."
 
-#: ../app/config/gimprc-blurbs.h:640
+#: ../app/config/gimprc-blurbs.h:642
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "Встановлює шлях до типової теки для вікна «Імпортувати контур»."
 
-#: ../app/config/gimprc-blurbs.h:643
+#: ../app/config/gimprc-blurbs.h:645
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "Встановлює типове значення параметра «Об'єднати імпортовані контури» для "
 "вікна «Імпортувати контур»."
 
-#: ../app/config/gimprc-blurbs.h:646
+#: ../app/config/gimprc-blurbs.h:648
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -12656,12 +12673,12 @@ msgstr ""
 "Встановлює типове значення параметра «Масштабувати імпортовані контури» для "
 "вікна «Імпортувати контур»."
 
-#: ../app/config/gimprc-blurbs.h:649
+#: ../app/config/gimprc-blurbs.h:651
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
 "Встановлює типовий радіус розмазування для вікна «Розмивання позначеного»."
 
-#: ../app/config/gimprc-blurbs.h:652
+#: ../app/config/gimprc-blurbs.h:654
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
@@ -12669,17 +12686,17 @@ msgstr ""
 "Встановлює типове значення параметра «Позначені ділянки продовжити за межі "
 "зображення» у вікні «Вибір розмиванням»."
 
-#: ../app/config/gimprc-blurbs.h:656
+#: ../app/config/gimprc-blurbs.h:658
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "Встановлює типовий радіус збільшення для вікна «Збільшення позначеного»."
 
-#: ../app/config/gimprc-blurbs.h:659
+#: ../app/config/gimprc-blurbs.h:661
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "Встановлює типовий радіус скорочення для вікна «Скорочення позначеного»."
 
-#: ../app/config/gimprc-blurbs.h:662
+#: ../app/config/gimprc-blurbs.h:664
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -12687,11 +12704,11 @@ msgstr ""
 "Встановлює типове значення параметра «Позначені ділянки продовжити за межі "
 "зображення» у вікні «Скорочення позначеного»."
 
-#: ../app/config/gimprc-blurbs.h:666
+#: ../app/config/gimprc-blurbs.h:668
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "Встановлює типовий радіус рамки для вікна «Вибір рамки»."
 
-#: ../app/config/gimprc-blurbs.h:669
+#: ../app/config/gimprc-blurbs.h:671
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -12699,15 +12716,15 @@ msgstr ""
 "Встановлює типове значення параметра «Позначені ділянки продовжити за межі "
 "зображення» у вікні «Вибір рамки»."
 
-#: ../app/config/gimprc-blurbs.h:673
+#: ../app/config/gimprc-blurbs.h:675
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "Встановлює типовий стиль рамки для вікна «Вибір рамки»."
 
-#: ../app/config/gimprc-blurbs.h:682
+#: ../app/config/gimprc-blurbs.h:684
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "Встановіть розмір ескізу у діалозі відкривання файлів."
 
-#: ../app/config/gimprc-blurbs.h:685
+#: ../app/config/gimprc-blurbs.h:687
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -12715,7 +12732,7 @@ msgstr ""
 "Якщо розмір файла попереднього перегляду буде менше вказаного тут значення, "
 "тоді перегляд у діалозі відкривання буде оновлюватись автоматично."
 
-#: ../app/config/gimprc-blurbs.h:689
+#: ../app/config/gimprc-blurbs.h:691
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -12727,45 +12744,45 @@ msgstr ""
 "дані, що не уміщуються у оперативній пам'яті. Якщо оперативної пам'яті "
 "вдосталь, це значення краще збільшити."
 
-#: ../app/config/gimprc-blurbs.h:695
+#: ../app/config/gimprc-blurbs.h:697
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "Поміняти у панелі інструментів місцями кольори переднього плану та тла"
 
-#: ../app/config/gimprc-blurbs.h:698
+#: ../app/config/gimprc-blurbs.h:700
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Показувати активний пензель, текстуру та градієнт у панелі інструментів."
 
-#: ../app/config/gimprc-blurbs.h:701
+#: ../app/config/gimprc-blurbs.h:703
 msgid "Use a single toolbox button for grouped tools."
 msgstr ""
 "Використовувати єдину кнопку набору інструментів для згрупованих "
 "інструментів."
 
-#: ../app/config/gimprc-blurbs.h:704
+#: ../app/config/gimprc-blurbs.h:706
 msgid "Show the currently active image in the toolbox."
 msgstr "Показувати активне зображення у панелі інструментів."
 
-#: ../app/config/gimprc-blurbs.h:707
+#: ../app/config/gimprc-blurbs.h:709
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "Показувати маскот GIMP над набором інструментів."
 
-#: ../app/config/gimprc-blurbs.h:710
+#: ../app/config/gimprc-blurbs.h:712
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Визначає як показувати прозорість у зображенні."
 
-#: ../app/config/gimprc-blurbs.h:713
+#: ../app/config/gimprc-blurbs.h:715
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Встановлює розмір шахових клітин, що показують прозорість."
 
-#: ../app/config/gimprc-blurbs.h:716
+#: ../app/config/gimprc-blurbs.h:718
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr ""
 "Якщо увімкнено, файли, що не змінилися після завантаження не зберігатимуться."
 
-#: ../app/config/gimprc-blurbs.h:720
+#: ../app/config/gimprc-blurbs.h:722
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -12774,7 +12791,7 @@ msgstr ""
 "скасування операцій доступна доки не вичерпається пам'ять, відведена для "
 "скасування операцій."
 
-#: ../app/config/gimprc-blurbs.h:724
+#: ../app/config/gimprc-blurbs.h:726
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -12784,25 +12801,25 @@ msgstr ""
 "зображенні. Незалежно від цього параметра, можна зробити принаймні стільки "
 "скасувань операцій, скільки вказано в конфігурації."
 
-#: ../app/config/gimprc-blurbs.h:729
+#: ../app/config/gimprc-blurbs.h:731
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Встановлює розмір попереднього перегляду у вікні історії скасувань."
 
-#: ../app/config/gimprc-blurbs.h:732
+#: ../app/config/gimprc-blurbs.h:734
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Якщо ввімкнено, при натисканні на F1 відкривається довідка."
 
-#: ../app/config/gimprc-blurbs.h:735
+#: ../app/config/gimprc-blurbs.h:737
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "При увімкненні меню використовується OpenCL для деяких операцій."
 
-#: ../app/config/gimprc-blurbs.h:753
+#: ../app/config/gimprc-blurbs.h:755
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 "Якщо позначено, під час пошуку дій програма показуватиме знайдені неактивні "
 "дії."
 
-#: ../app/config/gimprc-blurbs.h:756
+#: ../app/config/gimprc-blurbs.h:758
 msgid "The maximum number of actions saved in history."
 msgstr "Максимальна кількість записів дій, які зберігатимуться у журналі."
 
@@ -13853,7 +13870,7 @@ msgid "Parasites"
 msgstr "Шуми"
 
 #. initialize the module list
-#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3380
+#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3388
 msgid "Modules"
 msgstr "Модулі"
 
@@ -13879,7 +13896,7 @@ msgstr "Не вдалось вилучити «%s»: %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:707
-#: ../app/dialogs/preferences-dialog.c:3326
+#: ../app/dialogs/preferences-dialog.c:3334
 #: ../app/tools/gimppaintoptions-gui.c:309
 msgid "Dynamics"
 msgstr "Динаміка малювання"
@@ -13903,7 +13920,7 @@ msgstr[1] "Вирізати %d шари"
 msgstr[2] "Вирізати %d шарів"
 msgstr[3] "Вирізати шар"
 
-#: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:509
+#: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:507
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
@@ -14929,101 +14946,101 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Перетворити групу шарів"
 
-#: ../app/core/gimpimage.c:690 ../app/widgets/gimpsymmetryeditor.c:176
+#: ../app/core/gimpimage.c:691 ../app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Симетрія"
 
-#: ../app/core/gimpimage.c:2580
+#: ../app/core/gimpimage.c:2576
 msgid " (exported)"
 msgstr " (експортовано)"
 
-#: ../app/core/gimpimage.c:2584
+#: ../app/core/gimpimage.c:2580
 msgid " (overwritten)"
 msgstr " (перезаписано)"
 
-#: ../app/core/gimpimage.c:2593
+#: ../app/core/gimpimage.c:2589
 msgid " (imported)"
 msgstr " (імпортовано)"
 
-#: ../app/core/gimpimage.c:2766 ../app/core/gimpimage.c:2780
-#: ../app/core/gimpimage.c:2823
+#: ../app/core/gimpimage.c:2762 ../app/core/gimpimage.c:2776
+#: ../app/core/gimpimage.c:2819
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Режим шару «%s» було додано у %s"
 
-#: ../app/core/gimpimage.c:2838
+#: ../app/core/gimpimage.c:2834
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Групи шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2845
+#: ../app/core/gimpimage.c:2841
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Маски для груп шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2852
+#: ../app/core/gimpimage.c:2848
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Блокування позицій для груп шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2859
+#: ../app/core/gimpimage.c:2855
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Блокування каналу прозорості для груп шарів було додано у %s"
 
-#: ../app/core/gimpimage.c:2867 ../app/core/gimpimage.c:2881
+#: ../app/core/gimpimage.c:2863 ../app/core/gimpimage.c:2877
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Блокування видимості було додано у %s"
 
-#: ../app/core/gimpimage.c:2895
+#: ../app/core/gimpimage.c:2891
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: ../app/core/gimpimage.c:2903
+#: ../app/core/gimpimage.c:2899
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: ../app/core/gimpimage.c:2911
+#: ../app/core/gimpimage.c:2907
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: ../app/core/gimpimage.c:2928
+#: ../app/core/gimpimage.c:2924
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: ../app/core/gimpimage.c:2935
+#: ../app/core/gimpimage.c:2931
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: ../app/core/gimpimage.c:2952
+#: ../app/core/gimpimage.c:2948
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: ../app/core/gimpimage.c:2963
+#: ../app/core/gimpimage.c:2959
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Набір записів та пошук за взірцем у назві запису було додано у %s"
 
-#: ../app/core/gimpimage.c:2969
+#: ../app/core/gimpimage.c:2965
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: ../app/core/gimpimage.c:3073
+#: ../app/core/gimpimage.c:3069
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: ../app/core/gimpimage.c:3125
+#: ../app/core/gimpimage.c:3121
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
@@ -15148,27 +15165,27 @@ msgstr "Перетворюємо з «%s» до «%s»"
 msgid "Color profile conversion"
 msgstr "Перетворення профілю кольорів"
 
-#: ../app/core/gimpimage-colormap.c:68
+#: ../app/core/gimpimage-colormap.c:67
 #, c-format
 msgid "Colormap of Image #%d (%s)"
 msgstr "Карта кольорів зображення #%d (%s)"
 
-#: ../app/core/gimpimage-colormap.c:227
+#: ../app/core/gimpimage-colormap.c:213 ../app/core/gimpimage-colormap.c:297
 msgctxt "undo-type"
 msgid "Set Colormap"
 msgstr "Вказати карту кольорів"
 
-#: ../app/core/gimpimage-colormap.c:267
+#: ../app/core/gimpimage-colormap.c:335
 msgctxt "undo-type"
 msgid "Unset Colormap"
 msgstr "Вернути карту кольорів"
 
-#: ../app/core/gimpimage-colormap.c:320
+#: ../app/core/gimpimage-colormap.c:389
 msgctxt "undo-type"
 msgid "Change Colormap entry"
 msgstr "Змінити запис карти кольорів"
 
-#: ../app/core/gimpimage-colormap.c:348
+#: ../app/core/gimpimage-colormap.c:411
 msgctxt "undo-type"
 msgid "Add Color to Colormap"
 msgstr "Додати колір до карти кольорів"
@@ -15675,12 +15692,7 @@ msgstr "Не вдалося перетворити пензель MyPaint з п�
 msgid "%s (occurs %u)"
 msgstr "%s (трапився %u разів)"
 
-#: ../app/core/gimppalette-import.c:426
-#, c-format
-msgid "Index %d"
-msgstr "Індексований %d"
-
-#: ../app/core/gimppalette-import.c:556
+#: ../app/core/gimppalette-import.c:536
 #, c-format
 msgid "Unknown type of palette file: %s"
 msgstr "Невідомий тип файла палітри: %s"
@@ -15731,23 +15743,23 @@ msgstr ""
 "Читається файл палітри «%s»: значення RGB поза межами допустимого діапазону "
 "у рядку %d."
 
-#: ../app/core/gimppalette-load.c:209 ../app/core/gimppalette-load.c:454
+#: ../app/core/gimppalette-load.c:208 ../app/core/gimppalette-load.c:453
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
 msgstr ""
 "Читається файл палітри «%s»: прочитано %d кольорів із обірваного файлу: %s"
 
-#: ../app/core/gimppalette-load.c:231
+#: ../app/core/gimppalette-load.c:230
 #, c-format
 msgid "In line %d of palette file: "
 msgstr "У рядку %d файла палітри: "
 
-#: ../app/core/gimppalette-load.c:427
+#: ../app/core/gimppalette-load.c:426
 #, c-format
 msgid "Could not read header from palette file '%s': "
 msgstr "Не вдалось прочитати заголовок з файла палітри «%s»: "
 
-#: ../app/core/gimppalette-load.c:459
+#: ../app/core/gimppalette-load.c:458
 msgid "Premature end of file."
 msgstr "Передчасний кінець файлу."
 
@@ -17778,7 +17790,7 @@ msgstr "Параметри інструменту"
 #: ../app/dialogs/preferences-dialog.c:1709
 #: ../app/dialogs/preferences-dialog.c:2568
 #: ../app/dialogs/preferences-dialog.c:2901
-#: ../app/dialogs/preferences-dialog.c:3156
+#: ../app/dialogs/preferences-dialog.c:3125
 #: ../app/widgets/gimpcontrollereditor.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:298
 msgid "General"
@@ -17963,7 +17975,7 @@ msgstr "Панель інструментів"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2188
-#: ../app/dialogs/preferences-dialog.c:2984 ../app/widgets/gimpgrideditor.c:133
+#: ../app/dialogs/preferences-dialog.c:2953 ../app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Зовнішній вигляд"
 
@@ -18494,367 +18506,373 @@ msgstr "Пробіл"
 msgid "_While space bar is pressed:"
 msgstr "_При натисканні пробілу:"
 
-#. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2947
-msgid "Mouse Pointers"
-msgstr "Вказівник миші"
-
-#: ../app/dialogs/preferences-dialog.c:2951
-msgid "Show _brush outline"
-msgstr "Показувати контур _пензля"
-
-#: ../app/dialogs/preferences-dialog.c:2959
-msgid "S_nap brush outline to stroke"
-msgstr "При_липання пензля до контуру мазків"
-
-#: ../app/dialogs/preferences-dialog.c:2963
-msgid "Show pointer for paint _tools"
-msgstr "Показувати вказівник у режимі _малювання"
-
-#: ../app/dialogs/preferences-dialog.c:2969
-msgid "Pointer _mode:"
-msgstr "_Режим курсору:"
-
-#: ../app/dialogs/preferences-dialog.c:2972
-msgid "Pointer _handedness:"
-msgstr "Хіральність _курсору:"
-
-#: ../app/dialogs/preferences-dialog.c:2983
+#: ../app/dialogs/preferences-dialog.c:2952
 msgid "Image Window Appearance"
 msgstr "Вигляд вікна зображення"
 
-#: ../app/dialogs/preferences-dialog.c:2993
+#: ../app/dialogs/preferences-dialog.c:2962
 msgid "Default Appearance in Normal Mode"
 msgstr "Зовнішній вигляд з звичайному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:2998
+#: ../app/dialogs/preferences-dialog.c:2967
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Зовнішній вигляд у повноекранному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3007
+#: ../app/dialogs/preferences-dialog.c:2976
 msgid "Image Title & Statusbar Format"
 msgstr "Формат заголовку зображення та рядок сану"
 
-#: ../app/dialogs/preferences-dialog.c:3008
+#: ../app/dialogs/preferences-dialog.c:2977
 msgid "Title & Status"
 msgstr "Заголовок та стан"
 
-#: ../app/dialogs/preferences-dialog.c:3026
+#: ../app/dialogs/preferences-dialog.c:2995
 msgid "Current format"
 msgstr "Поточний формат"
 
-#: ../app/dialogs/preferences-dialog.c:3027
+#: ../app/dialogs/preferences-dialog.c:2996
 msgid "Default format"
 msgstr "Типовий формат"
 
-#: ../app/dialogs/preferences-dialog.c:3028
+#: ../app/dialogs/preferences-dialog.c:2997
 msgid "Show zoom percentage"
 msgstr "Показувати масштаб у відсотках"
 
-#: ../app/dialogs/preferences-dialog.c:3029
+#: ../app/dialogs/preferences-dialog.c:2998
 msgid "Show zoom ratio"
 msgstr "Показувати масштабний коефіцієнт"
 
-#: ../app/dialogs/preferences-dialog.c:3030
+#: ../app/dialogs/preferences-dialog.c:2999
 msgid "Show image size"
 msgstr "Показувати розмір зображення"
 
-#: ../app/dialogs/preferences-dialog.c:3031
+#: ../app/dialogs/preferences-dialog.c:3000
 msgid "Show drawable size"
 msgstr "Показувати розмір промальованого"
 
-#: ../app/dialogs/preferences-dialog.c:3044
+#: ../app/dialogs/preferences-dialog.c:3013
 msgid "Image Title Format"
 msgstr "Формат заголовку зображення"
 
-#: ../app/dialogs/preferences-dialog.c:3046
+#: ../app/dialogs/preferences-dialog.c:3015
 msgid "Image Statusbar Format"
 msgstr "Формат рядка стану"
 
-#: ../app/dialogs/preferences-dialog.c:3140
+#: ../app/dialogs/preferences-dialog.c:3109
 msgid "Image Window Snapping Behavior"
 msgstr "Поведінка щодо прилипання у вікні зображення"
 
-#: ../app/dialogs/preferences-dialog.c:3141
+#: ../app/dialogs/preferences-dialog.c:3110
 msgid "Snapping"
 msgstr "Прилипання"
 
-#: ../app/dialogs/preferences-dialog.c:3148
+#: ../app/dialogs/preferences-dialog.c:3117
 msgid "Default Behavior in Normal Mode"
 msgstr "Типова поведінка у звичайному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3152
+#: ../app/dialogs/preferences-dialog.c:3121
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Типовий поведінка у повноекранному режимі"
 
-#: ../app/dialogs/preferences-dialog.c:3161
+#: ../app/dialogs/preferences-dialog.c:3130
 msgid "_Snapping distance:"
 msgstr "Відстань прилипанн_я:"
 
-#: ../app/dialogs/preferences-dialog.c:3170
-#: ../app/dialogs/preferences-dialog.c:3171
+#: ../app/dialogs/preferences-dialog.c:3139
+#: ../app/dialogs/preferences-dialog.c:3140
 msgid "Input Devices"
 msgstr "Пристрої вводу"
 
-#. Extended Input Devices
+#: ../app/dialogs/preferences-dialog.c:3151
+#| msgid "Pointer"
+msgid "Pointers"
+msgstr "Вказівники"
+
+#: ../app/dialogs/preferences-dialog.c:3158
+msgid "Pointer _mode:"
+msgstr "_Режим курсору:"
+
+#: ../app/dialogs/preferences-dialog.c:3161
+msgid "Pointer _handedness:"
+msgstr "Хіральність _курсору:"
+
+#: ../app/dialogs/preferences-dialog.c:3165
+#| msgctxt "tools-action"
+#| msgid "_Paint Tools"
+msgid "Paint Tools"
+msgstr "Засоби малювання"
+
+#: ../app/dialogs/preferences-dialog.c:3169
+msgid "Show _brush outline"
+msgstr "Показувати контур _пензля"
+
 #: ../app/dialogs/preferences-dialog.c:3177
+msgid "S_nap brush outline to stroke"
+msgstr "При_липання пензля до контуру мазків"
+
+#: ../app/dialogs/preferences-dialog.c:3181
+msgid "Show pointer for paint _tools"
+msgstr "Показувати вказівник у режимі _малювання"
+
+#. Extended Input Devices
+#: ../app/dialogs/preferences-dialog.c:3185
 msgid "Extended Input Devices"
 msgstr "Додаткові пристрої вводу"
 
-#: ../app/dialogs/preferences-dialog.c:3193
+#: ../app/dialogs/preferences-dialog.c:3201
 msgid "Pointer Input API:"
 msgstr "Інтерфейс введення з вказівника:"
 
-#: ../app/dialogs/preferences-dialog.c:3204
+#: ../app/dialogs/preferences-dialog.c:3212
 msgid "S_hare tool and tool options between input devices"
 msgstr "Сп_ільне використання інструментів і параметрів для пристроїв введення"
 
-#: ../app/dialogs/preferences-dialog.c:3208
+#: ../app/dialogs/preferences-dialog.c:3216
 msgid "Configure E_xtended Input Devices..."
 msgstr "Налаштувати _додаткові пристрої вводу…"
 
-#: ../app/dialogs/preferences-dialog.c:3215
+#: ../app/dialogs/preferences-dialog.c:3223
 msgid "_Save input device settings on exit"
 msgstr "З_берігати параметри пристроїв вводу при виході"
 
-#: ../app/dialogs/preferences-dialog.c:3219
+#: ../app/dialogs/preferences-dialog.c:3227
 msgid "Save Input Device Settings _Now"
 msgstr "Зберегти параметри пристроїв вводу _зараз"
 
-#: ../app/dialogs/preferences-dialog.c:3226
+#: ../app/dialogs/preferences-dialog.c:3234
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Відновити типові параметри пристроїв вводу"
 
-#: ../app/dialogs/preferences-dialog.c:3241
+#: ../app/dialogs/preferences-dialog.c:3249
 msgid "Additional Input Controllers"
 msgstr "Додаткові способи керування"
 
-#: ../app/dialogs/preferences-dialog.c:3242
+#: ../app/dialogs/preferences-dialog.c:3250
 msgid "Input Controllers"
 msgstr "Способи керування"
 
-#: ../app/dialogs/preferences-dialog.c:3257
-#: ../app/dialogs/preferences-dialog.c:3258
+#: ../app/dialogs/preferences-dialog.c:3265
+#: ../app/dialogs/preferences-dialog.c:3266
 msgid "Folders"
 msgstr "Теки"
 
-#: ../app/dialogs/preferences-dialog.c:3265
+#: ../app/dialogs/preferences-dialog.c:3273
 msgid "Reset _Folders"
 msgstr "Скинути _теки"
 
-#: ../app/dialogs/preferences-dialog.c:3281
+#: ../app/dialogs/preferences-dialog.c:3289
 msgid "_Temporary folder:"
 msgstr "Тека тим_часових файлів:"
 
-#: ../app/dialogs/preferences-dialog.c:3282
+#: ../app/dialogs/preferences-dialog.c:3290
 msgid "Select Folder for Temporary Files"
 msgstr "Виберіть каталог для тимчасових файлів"
 
-#: ../app/dialogs/preferences-dialog.c:3286
+#: ../app/dialogs/preferences-dialog.c:3294
 msgid "_Swap folder:"
 msgstr "_Каталог резервної пам'яті:"
 
-#: ../app/dialogs/preferences-dialog.c:3287
+#: ../app/dialogs/preferences-dialog.c:3295
 msgid "Select Swap Folder"
 msgstr "Виберіть теку свопінгу"
 
-#: ../app/dialogs/preferences-dialog.c:3320
+#: ../app/dialogs/preferences-dialog.c:3328
 msgid "Brush Folders"
 msgstr "Теки пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3323
+#: ../app/dialogs/preferences-dialog.c:3331
 msgid "Reset Brush _Folders"
 msgstr "Скинути _теки пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3324
+#: ../app/dialogs/preferences-dialog.c:3332
 msgid "Select Brush Folders"
 msgstr "Виберіть теку пензлів"
 
-#: ../app/dialogs/preferences-dialog.c:3326
+#: ../app/dialogs/preferences-dialog.c:3334
 msgid "Dynamics Folders"
 msgstr "Теки з файлами динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3329
+#: ../app/dialogs/preferences-dialog.c:3337
 msgid "Reset Dynamics _Folders"
 msgstr "Скинути _теки динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3330
+#: ../app/dialogs/preferences-dialog.c:3338
 msgid "Select Dynamics Folders"
 msgstr "Виберіть теку з файлами динаміки малювання"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3340
 msgid "Pattern Folders"
 msgstr "Теки текстур"
 
-#: ../app/dialogs/preferences-dialog.c:3335
+#: ../app/dialogs/preferences-dialog.c:3343
 msgid "Reset Pattern _Folders"
 msgstr "Скинути _теки текстур"
 
-#: ../app/dialogs/preferences-dialog.c:3336
+#: ../app/dialogs/preferences-dialog.c:3344
 msgid "Select Pattern Folders"
 msgstr "Виберіть теку текстури"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3346
 msgid "Palette Folders"
 msgstr "Теки палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3341
+#: ../app/dialogs/preferences-dialog.c:3349
 msgid "Reset Palette _Folders"
 msgstr "Скинути _теки палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3342
+#: ../app/dialogs/preferences-dialog.c:3350
 msgid "Select Palette Folders"
 msgstr "Виберіть теку палітр"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3352
 msgid "Gradient Folders"
 msgstr "Теки градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3347
+#: ../app/dialogs/preferences-dialog.c:3355
 msgid "Reset Gradient _Folders"
 msgstr "Скинути _теки градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3348
+#: ../app/dialogs/preferences-dialog.c:3356
 msgid "Select Gradient Folders"
 msgstr "Виберіть теку градієнтів"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3358
 msgid "Font Folders"
 msgstr "Теки шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3353
+#: ../app/dialogs/preferences-dialog.c:3361
 msgid "Reset Font _Folders"
 msgstr "Скинути _теки шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3354
+#: ../app/dialogs/preferences-dialog.c:3362
 msgid "Select Font Folders"
 msgstr "Виберіть теку шрифтів"
 
-#: ../app/dialogs/preferences-dialog.c:3356
+#: ../app/dialogs/preferences-dialog.c:3364
 msgid "Tool Preset Folders"
 msgstr "Теки шаблону інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3359
+#: ../app/dialogs/preferences-dialog.c:3367
 msgid "Reset Tool Preset _Folders"
 msgstr "Скинути _теки типових наборів інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3360
+#: ../app/dialogs/preferences-dialog.c:3368
 msgid "Select Tool Preset Folders"
 msgstr "Вибрати теки шаблону інструментів"
 
-#: ../app/dialogs/preferences-dialog.c:3362
+#: ../app/dialogs/preferences-dialog.c:3370
 msgid "MyPaint Brush Folders"
 msgstr "Теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3365
+#: ../app/dialogs/preferences-dialog.c:3373
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Скинути _теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3366
+#: ../app/dialogs/preferences-dialog.c:3374
 msgid "Select MyPaint Brush Folders"
 msgstr "Виберіть теки пензлів MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3368
+#: ../app/dialogs/preferences-dialog.c:3376
 msgid "Plug-in Folders"
 msgstr "Теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3371
+#: ../app/dialogs/preferences-dialog.c:3379
 msgid "Reset plug-in _Folders"
 msgstr "Скинути _теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3372
+#: ../app/dialogs/preferences-dialog.c:3380
 msgid "Select plug-in Folders"
 msgstr "Виберіть теки додатків"
 
-#: ../app/dialogs/preferences-dialog.c:3374
+#: ../app/dialogs/preferences-dialog.c:3382
 msgid "Scripts"
 msgstr "Скрипти"
 
-#: ../app/dialogs/preferences-dialog.c:3374
+#: ../app/dialogs/preferences-dialog.c:3382
 msgid "Script-Fu Folders"
 msgstr "Теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3377
+#: ../app/dialogs/preferences-dialog.c:3385
 msgid "Reset Script-Fu _Folders"
 msgstr "Скинути _теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3378
+#: ../app/dialogs/preferences-dialog.c:3386
 msgid "Select Script-Fu Folders"
 msgstr "Виберіть теки Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3380
+#: ../app/dialogs/preferences-dialog.c:3388
 msgid "Module Folders"
 msgstr "Теки модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3383
+#: ../app/dialogs/preferences-dialog.c:3391
 msgid "Reset Module _Folders"
 msgstr "Скинути _теки модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3384
+#: ../app/dialogs/preferences-dialog.c:3392
 msgid "Select Module Folders"
 msgstr "Виберіть теку модулів"
 
-#: ../app/dialogs/preferences-dialog.c:3386
+#: ../app/dialogs/preferences-dialog.c:3394
 msgid "Interpreters"
 msgstr "Інтерпретатори"
 
-#: ../app/dialogs/preferences-dialog.c:3386
+#: ../app/dialogs/preferences-dialog.c:3394
 msgid "Interpreter Folders"
 msgstr "Каталоги інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3389
+#: ../app/dialogs/preferences-dialog.c:3397
 msgid "Reset Interpreter _Folders"
 msgstr "Скинути _теки інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3390
+#: ../app/dialogs/preferences-dialog.c:3398
 msgid "Select Interpreter Folders"
 msgstr "Виберіть каталоги інтерпретаторів"
 
-#: ../app/dialogs/preferences-dialog.c:3392
+#: ../app/dialogs/preferences-dialog.c:3400
 msgid "Environment"
 msgstr "Середовище"
 
-#: ../app/dialogs/preferences-dialog.c:3392
+#: ../app/dialogs/preferences-dialog.c:3400
 msgid "Environment Folders"
 msgstr "Теки середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3395
+#: ../app/dialogs/preferences-dialog.c:3403
 msgid "Reset Environment _Folders"
 msgstr "Скинути _теки середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3396
+#: ../app/dialogs/preferences-dialog.c:3404
 msgid "Select Environment Folders"
 msgstr "Виберіть теку середовища"
 
-#: ../app/dialogs/preferences-dialog.c:3398
+#: ../app/dialogs/preferences-dialog.c:3406
 msgid "Themes"
 msgstr "Теми"
 
-#: ../app/dialogs/preferences-dialog.c:3398
+#: ../app/dialogs/preferences-dialog.c:3406
 msgid "Theme Folders"
 msgstr "Теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3401
+#: ../app/dialogs/preferences-dialog.c:3409
 msgid "Reset Theme _Folders"
 msgstr "Скинути _теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3402
+#: ../app/dialogs/preferences-dialog.c:3410
 msgid "Select Theme Folders"
 msgstr "Виберіть теки стилів оформлення"
 
-#: ../app/dialogs/preferences-dialog.c:3404
+#: ../app/dialogs/preferences-dialog.c:3412
 msgid "Icon Themes"
 msgstr "Теми піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3404
+#: ../app/dialogs/preferences-dialog.c:3412
 msgid "Icon Theme Folders"
 msgstr "Теки тем піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3407
+#: ../app/dialogs/preferences-dialog.c:3415
 msgid "Reset Icon Theme _Folders"
 msgstr "Скинути _теки тем піктограм"
 
-#: ../app/dialogs/preferences-dialog.c:3408
+#: ../app/dialogs/preferences-dialog.c:3416
 msgid "Select Icon Theme Folders"
 msgstr "Виберіть теки тем піктограм"
 
@@ -19483,7 +19501,8 @@ msgstr "Зберегти зміни у «%s» перед закриванням?
 #: ../app/display/gimpdisplayshell-close.c:307
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d годину будуть втрачені."
 msgstr[1] ""
@@ -19517,7 +19536,8 @@ msgstr[3] ""
 #: ../app/display/gimpdisplayshell-close.c:330
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Якщо ви не збережете зображення, зміни за останню %d хвилину будуть втрачені."
 msgstr[1] ""
@@ -19731,7 +19751,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
 #: ../app/display/gimptoolfocus.c:1149 ../app/display/gimptoolgyroscope.c:729
-#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:669
+#: ../app/display/gimptoolline.c:1557 ../app/tools/gimppainttool.c:675
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для обмеження кроку кута"
@@ -25256,16 +25276,16 @@ msgstr ""
 msgid "Cannot paint on layer groups."
 msgstr "Не вдалось малювати на групі шарів"
 
-#: ../app/tools/gimppainttool.c:700
+#: ../app/tools/gimppainttool.c:706
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для малювання прямої лінії"
 
-#: ../app/tools/gimppainttool.c:924
+#: ../app/tools/gimppainttool.c:940
 msgid "The selected drawable does not have an alpha channel."
 msgstr "У позначеному намальованому об'єкті немає каналу прозорості."
 
-#: ../app/tools/gimppainttool.c:935
+#: ../app/tools/gimppainttool.c:951
 msgid "The selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
@@ -27009,12 +27029,12 @@ msgctxt "Color value"
 msgid "n/a"
 msgstr "н/д"
 
-#: ../app/widgets/gimpcolormapeditor.c:241
+#: ../app/widgets/gimpcolormapeditor.c:234
 #, c-format
 msgid "Edit colormap entry #%d"
 msgstr "Зміна запису палітри кольорів #%d"
 
-#: ../app/widgets/gimpcolormapeditor.c:249
+#: ../app/widgets/gimpcolormapeditor.c:242
 msgid "Edit Colormap Entry"
 msgstr "Зміна запису палітри кольорів"
 
@@ -28662,7 +28682,7 @@ msgid "Detach dialog from canvas"
 msgstr "Від'єднати вікно від полотна"
 
 #: ../app/widgets/gimppaletteeditor.c:262
-#: ../app/widgets/gimppaletteeditor.c:806
+#: ../app/widgets/gimppaletteeditor.c:815
 msgid "Undefined"
 msgstr "Невизначено"
 
@@ -29494,6 +29514,17 @@ msgstr "круглі"
 #: ../data/tags/gimp-tags-default.xml.in.h:3
 msgid "fuzzy"
 msgstr "ретушовані"
+
+#~ msgid ""
+#~ "When enabled, the mouse pointer will be shown over the image while using "
+#~ "a paint tool."
+#~ msgstr "Якщо ввімкнено, при малюванні буде видно курсор інструменту."
+
+#~ msgid "Index %d"
+#~ msgstr "Індексований %d"
+
+#~ msgid "Mouse Pointers"
+#~ msgstr "Вказівник миші"
 
 #~ msgid "Allow closing lines in selected layer"
 #~ msgstr "Дозволити замикати лінії у позначеному шарі"
