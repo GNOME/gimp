@@ -23,7 +23,7 @@ msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-02-03 03:48+0000\n"
-"PO-Revision-Date: 2022-02-08 19:01+0800\n"
+"PO-Revision-Date: 2022-03-06 19:09+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -5545,7 +5545,7 @@ msgstr "半平整(_S)…"
 #: ../app/actions/filters-actions.c:643
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr "乌贼墨(_S)…"
+msgstr "深褐色(_S)…"
 
 #: ../app/actions/filters-actions.c:648
 msgctxt "filters-action"
