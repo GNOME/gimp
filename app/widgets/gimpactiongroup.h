@@ -123,6 +123,18 @@ struct _GimpStringActionEntry
   const gchar *help_id;
 };
 
+struct _GimpDoubleActionEntry
+{
+  const gchar   *name;
+  const gchar   *icon_name;
+  const gchar   *label;
+  const gchar   *accelerator;
+  const gchar   *tooltip;
+  const gdouble  value;
+
+  const gchar   *help_id;
+};
+
 struct _GimpProcedureActionEntry
 {
   const gchar   *name;
@@ -187,6 +199,11 @@ void   gimp_action_group_add_enum_actions     (GimpActionGroup             *grou
 void   gimp_action_group_add_string_actions   (GimpActionGroup             *group,
                                                const gchar                 *msg_context,
                                                const GimpStringActionEntry *entries,
+                                               guint                        n_entries,
+                                               GimpActionCallback           callback);
+void   gimp_action_group_add_double_actions   (GimpActionGroup             *group,
+                                               const gchar                 *msg_context,
+                                               const GimpDoubleActionEntry *entries,
                                                guint                        n_entries,
                                                GimpActionCallback           callback);
 void   gimp_action_group_add_procedure_actions(GimpActionGroup             *group,

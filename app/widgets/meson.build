@@ -96,6 +96,7 @@ libappwidgets_sources = [
   'gimpdocked.c',
   'gimpdockwindow.c',
   'gimpdocumentview.c',
+  'gimpdoubleaction.c',
   'gimpdrawabletreeview.c',
   'gimpdynamicseditor.c',
   'gimpdynamicsfactoryview.c',

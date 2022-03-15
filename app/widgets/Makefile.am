@@ -189,6 +189,8 @@ libappwidgets_a_sources = \
 	gimpdockwindow.h		\
 	gimpdocumentview.c		\
 	gimpdocumentview.h		\
+	gimpdoubleaction.c		\
+	gimpdoubleaction.h		\
 	gimpdrawabletreeview.c		\
 	gimpdrawabletreeview.h		\
 	gimpdynamicseditor.c		\

@@ -37,6 +37,7 @@
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
 #include "gimpactionimpl.h"
+#include "gimpdoubleaction.h"
 #include "gimpenumaction.h"
 #include "gimpprocedureaction.h"
 #include "gimpradioaction.h"
@@ -636,6 +637,58 @@ gimp_action_group_add_string_actions (GimpActionGroup             *group,
         }
 
       action = gimp_string_action_new (entries[i].name, label, tooltip,
+                                       entries[i].icon_name,
+                                       entries[i].help_id,
+                                       entries[i].value);
+
+      if (callback)
+        g_signal_connect (action, "gimp-activate",
+                          G_CALLBACK (callback),
+                          group->user_data);
+
+      gimp_action_group_add_action_with_accel (group, GIMP_ACTION (action),
+                                               entries[i].accelerator);
+      g_signal_emit (group, signals[ACTION_ADDED], 0, action);
+
+      g_object_unref (action);
+    }
+}
+
+void
+gimp_action_group_add_double_actions (GimpActionGroup             *group,
+                                      const gchar                 *msg_context,
+                                      const GimpDoubleActionEntry *entries,
+                                      guint                        n_entries,
+                                      GimpActionCallback           callback)
+{
+  gint i;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+
+  for (i = 0; i < n_entries; i++)
+    {
+      GimpDoubleAction *action;
+      const gchar      *label;
+      const gchar      *tooltip = NULL;
+
+      if (! gimp_action_group_check_unique_action (group, entries[i].name))
+        continue;
+
+      if (msg_context)
+        {
+          label = g_dpgettext2 (NULL, msg_context, entries[i].label);
+
+          if (entries[i].tooltip)
+            tooltip = g_dpgettext2 (NULL, msg_context, entries[i].tooltip);
+        }
+      else
+        {
+          label = gettext (entries[i].label);
+          if (entries[i].tooltip)
+            tooltip = gettext (entries[i].tooltip);
+        }
+
+      action = gimp_double_action_new (entries[i].name, label, tooltip,
                                        entries[i].icon_name,
                                        entries[i].help_id,
                                        entries[i].value);

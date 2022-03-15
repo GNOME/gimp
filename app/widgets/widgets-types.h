@@ -127,6 +127,7 @@ typedef struct _GimpToolPresetFactoryView    GimpToolPresetFactoryView;
 typedef struct _GimpAction                   GimpAction;
 typedef struct _GimpActionFactory            GimpActionFactory;
 typedef struct _GimpActionGroup              GimpActionGroup;
+typedef struct _GimpDoubleAction             GimpDoubleAction;
 typedef struct _GimpEnumAction               GimpEnumAction;
 typedef struct _GimpMenuFactory              GimpMenuFactory;
 typedef struct _GimpProcedureAction          GimpProcedureAction;
@@ -284,6 +285,7 @@ typedef struct _GimpSessionManaged           GimpSessionManaged;
 /*  structs  */
 
 typedef struct _GimpActionEntry              GimpActionEntry;
+typedef struct _GimpDoubleActionEntry        GimpDoubleActionEntry;
 typedef struct _GimpEnumActionEntry          GimpEnumActionEntry;
 typedef struct _GimpProcedureActionEntry     GimpProcedureActionEntry;
 typedef struct _GimpRadioActionEntry         GimpRadioActionEntry;
