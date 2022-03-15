@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-16 01:13+0000\n"
-"PO-Revision-Date: 2022-02-18 21:43+0100\n"
+"POT-Creation-Date: 2022-03-12 21:03+0000\n"
+"PO-Revision-Date: 2022-03-14 01:00+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -242,7 +242,7 @@ msgstr "Reducera filstorleken där det är möjligt att kombinera lager"
 
 #: ../plug-ins/common/animation-optimize.c:161
 msgid "_Optimize (Difference)"
-msgstr "_Optimera (Skillnad)"
+msgstr "_Optimera (skillnad)"
 
 #: ../plug-ins/common/animation-optimize.c:169
 msgid "Remove optimization to make editing easier"
