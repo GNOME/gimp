@@ -452,6 +452,7 @@ EXPORTS
 	gimp_image_metadata_load_finish
 	gimp_image_metadata_load_prepare
 	gimp_image_metadata_load_thumbnail
+	gimp_image_metadata_save_filter
 	gimp_image_metadata_save_finish
 	gimp_image_metadata_save_prepare
 	gimp_image_new

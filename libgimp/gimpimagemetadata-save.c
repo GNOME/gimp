@@ -519,33 +519,38 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
 }
 
 /**
- * gimp_image_metadata_save_finish:
+ * gimp_image_metadata_save_filter:
  * @image:     The actually saved image
  * @mime_type: The saved file's mime-type
- * @metadata:  The metadata to write to @file
+ * @metadata:  The metadata to export
  * @flags:     Flags to specify what of the metadata to save
- * @file:      The file @image was saved to
+ * @file:      The file @image was saved to or NULL if file was not saved yet
  * @error:     Return location for error message
  *
- * Saves the @metadata retrieved from the image with
- * gimp_image_metadata_save_prepare() to @file, taking into account
- * the passed @flags.
+ * Filters the @metadata retrieved from the image with
+ * gimp_image_metadata_save_prepare(),
+ * taking into account the passed @flags.
  *
  * Note that the @image passed to this function might be different
  * from the image passed to gimp_image_metadata_save_prepare(), due
  * to whatever file export conversion happened in the meantime
  *
- * Returns: Whether the save was successful.
+ * This is an alternative to gimp_image_metadata_save_finish when you
+ * want to save metadata yourself and you need only filtering processing.
  *
- * Since: 2.10
+ * Returns: Filtered metadata or NULL in case of failure.
+ *
+ * Use g_object_unref() when returned metadata are no longer needed
+ *
+ * Since: 3.0
  */
-gboolean
-gimp_image_metadata_save_finish (GimpImage              *image,
-                                 const gchar            *mime_type,
-                                 GimpMetadata           *metadata,
-                                 GimpMetadataSaveFlags   flags,
-                                 GFile                  *file,
-                                 GError                **error)
+GimpMetadata *
+gimp_image_metadata_save_filter (GimpImage            *image,
+                                 const gchar          *mime_type,
+                                 GimpMetadata         *metadata,
+                                 GimpMetadataSaveFlags flags,
+                                 GFile                *file,
+                                 GError              **error)
 {
   GimpMetadata   *new_metadata;
   GExiv2Metadata *new_g2metadata;
@@ -558,28 +563,33 @@ gimp_image_metadata_save_finish (GimpImage              *image,
   gboolean        support_exif;
   gboolean        support_xmp;
   gboolean        support_iptc;
-  gboolean        success = FALSE;
   gint            i;
 
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (mime_type != NULL, FALSE);
-  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
-  g_return_val_if_fail (G_IS_FILE (file), FALSE);
-  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (mime_type != NULL, NULL);
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   if (! (flags & (GIMP_METADATA_SAVE_EXIF |
                   GIMP_METADATA_SAVE_XMP  |
                   GIMP_METADATA_SAVE_IPTC |
                   GIMP_METADATA_SAVE_THUMBNAIL)))
-    return TRUE;
+    return NULL;
 
-  /* read metadata from saved file */
-  new_metadata = gimp_metadata_load_from_file (file, error);
-  new_g2metadata = GEXIV2_METADATA (new_metadata);
+  if (file)
+    {
+      /* read metadata from saved file */
+      new_metadata = gimp_metadata_load_from_file (file, error);
+    }
+  else
+    {
+      new_metadata = gimp_metadata_new ();
+    }
 
   if (! new_metadata)
-    return FALSE;
+    return NULL;
 
+  new_g2metadata = GEXIV2_METADATA (new_metadata);
   support_exif = gexiv2_metadata_get_supports_exif (new_g2metadata);
   support_xmp  = gexiv2_metadata_get_supports_xmp  (new_g2metadata);
   support_iptc = gexiv2_metadata_get_supports_iptc (new_g2metadata);
@@ -840,6 +850,60 @@ gimp_image_metadata_save_finish (GimpImage              *image,
   if (flags & GIMP_METADATA_SAVE_COMMENT)
     {
       /* nothing to do, blah blah */
+    }
+
+  return new_metadata;
+}
+
+/**
+ * gimp_image_metadata_save_finish:
+ * @image:     The actually saved image
+ * @mime_type: The saved file's mime-type
+ * @metadata:  The metadata to write to @file
+ * @flags:     Flags to specify what of the metadata to save
+ * @file:      The file @image was saved to
+ * @error:     Return location for error message
+ *
+ * Saves the @metadata retrieved from the image with
+ * gimp_image_metadata_save_prepare() to @file, taking into account
+ * the passed @flags.
+ *
+ * Note that the @image passed to this function might be different
+ * from the image passed to gimp_image_metadata_save_prepare(), due
+ * to whatever file export conversion happened in the meantime
+ *
+ * Returns: Whether the save was successful.
+ *
+ * Since: 2.10
+ */
+gboolean
+gimp_image_metadata_save_finish (GimpImage            *image,
+                                 const gchar          *mime_type,
+                                 GimpMetadata         *metadata,
+                                 GimpMetadataSaveFlags flags,
+                                 GFile                *file,
+                                 GError              **error)
+{
+  GimpMetadata *new_metadata;
+  gboolean      success = FALSE;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (mime_type != NULL, FALSE);
+  g_return_val_if_fail (GEXIV2_IS_METADATA (metadata), FALSE);
+  g_return_val_if_fail (G_IS_FILE (file), FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (! (flags & (GIMP_METADATA_SAVE_EXIF |
+                  GIMP_METADATA_SAVE_XMP  |
+                  GIMP_METADATA_SAVE_IPTC |
+                  GIMP_METADATA_SAVE_THUMBNAIL)))
+    return TRUE;
+
+  new_metadata = gimp_image_metadata_save_filter (image, mime_type, metadata,
+                                                  flags, file, error);
+  if (! new_metadata)
+    {
+      return FALSE;
     }
 
   success = gimp_metadata_save_to_file (new_metadata, file, error);
