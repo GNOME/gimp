@@ -1,25 +1,25 @@
 # Swedish messages for GIMP Script-Fu.
-# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2020 Free Software Foundation, Inc.
+# Copyright © 2000-2003, 2007, 2008, 2011, 2015, 2017-2020, 2022 Free Software Foundation, Inc.
 # Christian Rose <menthos@menthos.com>, 2000, 2001, 2002, 2003.
 # Jan Morén <jan.moren@lucs.lu.se>, 2003.
 # Tomas Ögren <stric@ing.umu.se>, 2001.
 # Daniel Nylander <po@danielnylander.se>, 2007, 2008, 2011.
-# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020.
+# Anders Jonsson <anders.jonsson@norsjovallen.se>, 2015, 2018, 2019, 2020, 2022.
 # Sebastian Rasmussen <sebras@gmail.com>, 2015, 2017.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-12 23:19+0000\n"
-"PO-Revision-Date: 2020-02-13 00:41+0100\n"
+"POT-Creation-Date: 2022-03-12 21:03+0000\n"
+"PO-Revision-Date: 2022-03-15 18:16+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -137,8 +137,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Spara utdata från Script-Fu-konsol"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
-#: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:836
+#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "A_vbryt"
 
@@ -159,69 +159,69 @@ msgstr "V_erkställ"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu-evalueringsläget tillåter endast icke-interaktiv användning"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kan inte köra två skript på samma gång."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Du kör redan skriptet ”%s”."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
+#: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:235
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
 msgstr "Å_terställ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:341
+#: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu-färgväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu-filväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu-mappväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu-typsnittsväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu-palettväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:490
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu-mönsterväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:499
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu-gradientväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu-penselväljare"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:877
+#: ../plug-ins/script-fu/script-fu-interface.c:880
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Fel vid körning av %s:"
@@ -235,27 +235,27 @@ msgstr "För få argument till ”script-fu-register”-anrop"
 msgid "Error while loading %s:"
 msgstr "Fel vid inläsning av %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu-serveralternativ"
 
-#: ../plug-ins/script-fu/script-fu-server.c:837
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Starta servern"
 
-#: ../plug-ins/script-fu/script-fu-server.c:870
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Lyssna på IP:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:877
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Serverport:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:883
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Serverloggfil:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:896
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -282,7 +282,7 @@ msgstr "Tjocklek"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -323,7 +323,7 @@ msgstr "Deltavärde på färg"
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
 msgid "Frame"
-msgstr "Ram"
+msgstr "Bildruta"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:222
 msgid "Blend Animation needs at least three source layers"
@@ -331,7 +331,7 @@ msgstr "Toningsanimation behöver minst tre lager som källor"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
-msgstr "_Intonad…"
+msgstr "_Intoning…"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:229
 msgid ""
@@ -343,11 +343,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
-msgstr "Mellanramar"
+msgstr "Mellanliggande bildrutor"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
-msgstr "Maximal utsmetningsradie"
+msgstr "Maximal oskärperadie"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:238
 msgid "Looped"
@@ -404,7 +404,7 @@ msgstr "Förbered för GIF"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
-msgstr "Hastighet (bildpunkter/ram)"
+msgstr "Hastighet (bildpunkter/bildruta)"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:176
 msgid "Carved Surface"
@@ -563,11 +563,11 @@ msgstr "Lägg till en tygliknande textur till markerad region (eller alfa)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
-msgstr "Utsmetning i X-led"
+msgstr "Oskärpa i X-led"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:61
 msgid "Blur Y"
-msgstr "Utsmetning i Y-led"
+msgstr "Oskärpa i Y-led"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:62
 msgid "Azimuth"
@@ -659,9 +659,9 @@ msgstr "Avstånd i Y-led"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
-msgstr "Utsmetningsradie"
+msgstr "Oskärperadie"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
@@ -800,7 +800,7 @@ msgstr "Kantstorlek"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
-msgstr "Smeta ut kant"
+msgstr "Oskärpa längs kant"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
@@ -1305,7 +1305,7 @@ msgstr "Krusningsstyrka"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:78
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:105
 msgid "Number of frames"
-msgstr "Antal ramar"
+msgstr "Antal bildrutor"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Edge behavior"
@@ -1323,34 +1323,34 @@ msgstr "Smeta"
 msgid "Black"
 msgstr "Svart"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "_Runda hörn…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
 "Runda av hörnen i en bild och lägg valfritt till en skuggkastning och "
 "bakgrund"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "Hörnradie"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Lägg till kastad skugga"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "X-avstånd för skugga"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Y-avstånd för skugga"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Lägg till bakgrund"
 
@@ -1438,11 +1438,11 @@ msgstr "_Roterande glob…"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr "Skapa en animation genom att mapp aktuell bild på en roterande sfär"
+msgstr "Skapa en animation genom att mappa aktuell bild på en roterande sfär"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:102
 msgid "Frames"
-msgstr "Ramar"
+msgstr "Bildrutor"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:103
 msgid "Turn from left to right"
@@ -1583,7 +1583,7 @@ msgstr "_Sfär…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
-msgstr "_Brickutsmetning…"
+msgstr "_Brickoskärpa…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
@@ -1595,15 +1595,15 @@ msgstr "Radie"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "Blur vertically"
-msgstr "Smeta ut vertikalt"
+msgstr "Vertikal oskärpa"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur horizontally"
-msgstr "Smeta ut horisontellt"
+msgstr "Horisontell oskärpa"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "Blur type"
-msgstr "Utsmetningstyp"
+msgstr "Oskärpetyp"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
@@ -1647,14 +1647,14 @@ msgstr "Invertera riktning"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:397
 msgid "_Weave..."
-msgstr "_Våg…"
+msgstr "_Väv…"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:398
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Skapa ett nytt lager fyllt med en vågeffekt som kan användas som en "
+"Skapa ett nytt lager fyllt med en väveffekt som kan användas som en "
 "överliggande eller bumpmapp"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
@@ -1725,7 +1725,7 @@ msgstr "Skuggkastningsopacitet"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
-msgstr "Utsmetningsradie för skuggkastning"
+msgstr "Oskärperadie för skuggkastning"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
