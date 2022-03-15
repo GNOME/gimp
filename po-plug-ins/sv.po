@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-16 01:15+0000\n"
-"PO-Revision-Date: 2022-02-18 21:56+0100\n"
+"POT-Creation-Date: 2022-03-11 10:38+0000\n"
+"PO-Revision-Date: 2022-03-14 00:59+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -344,7 +344,7 @@ msgstr ""
 
 #: ../plug-ins/common/animation-optimize.c:205
 msgid "_Optimize (Difference)"
-msgstr "_Optimera (Skillnad)"
+msgstr "_Optimera (skillnad)"
 
 #: ../plug-ins/common/animation-optimize.c:208
 msgid "Reduce file size where combining layers is possible"
@@ -990,8 +990,8 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
 #: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
-#: ../plug-ins/file-tiff/file-tiff-save.c:1022
-#: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
+#: ../plug-ins/file-tiff/file-tiff-save.c:1024
+#: ../plug-ins/file-tiff/file-tiff-save.c:1100 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:846 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -2032,7 +2032,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
-#: ../plug-ins/file-tiff/file-tiff-save.c:1012
+#: ../plug-ins/file-tiff/file-tiff-save.c:1014
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exporterar ”%s”"
@@ -6867,7 +6867,7 @@ msgstr "Flyttal"
 msgid "JPEG image"
 msgstr "JPEG-bild"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1230
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7214,15 +7214,15 @@ msgstr "Aggressiv RLE (stöds inte av SGI)"
 msgid "Compression _type:"
 msgstr "Komprimerings_typ:"
 
-#: ../plug-ins/file-tiff/file-tiff.c:147 ../plug-ins/file-tiff/file-tiff.c:175
-msgid "TIFF image"
-msgstr "TIFF-bild"
+#: ../plug-ins/file-tiff/file-tiff.c:146 ../plug-ins/file-tiff/file-tiff.c:175
+msgid "TIFF or BigTIFF image"
+msgstr "TIFF- eller BigTIFF-bild"
 
-#: ../plug-ins/file-tiff/file-tiff.c:192
+#: ../plug-ins/file-tiff/file-tiff.c:191
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:409
+#: ../plug-ins/file-tiff/file-tiff.c:415
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -7470,35 +7470,35 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "Misslyckades med skrivning av en scanline på rad %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1123
+#: ../plug-ins/file-tiff/file-tiff-save.c:1125
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Att skriva sidor med olika bitdjup är konstigt."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1224
+#: ../plug-ins/file-tiff/file-tiff-save.c:1226
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Ingen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1227
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1228
 msgid "Pack Bits"
 msgstr "Packa bitar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1229
 msgid "Deflate"
 msgstr "Packa ihop"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-tiff/file-tiff-save.c:1231
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3-fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1232
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4-fax"
 
@@ -11968,15 +11968,15 @@ msgstr "Metadatavisare: %s"
 msgid "(%lu more character(s))"
 msgstr "(%lu tecken till)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:583
+#: ../plug-ins/metadata/metadata-viewer.c:622
 msgid " meter"
 msgstr " meter"
 
-#: ../plug-ins/metadata/metadata-viewer.c:584
+#: ../plug-ins/metadata/metadata-viewer.c:623
 msgid " feet"
 msgstr " fot"
 
-#: ../plug-ins/metadata/metadata-viewer.c:702
+#: ../plug-ins/metadata/metadata-viewer.c:791
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(%llu byte till)"
