@@ -37,6 +37,13 @@ void       gimp_display_shell_zoom_gesture_update     (GtkGestureZoom   *gesture
                                                        GdkEventSequence *sequence,
                                                        GimpDisplayShell *shell);
 
+void       gimp_display_shell_rotate_gesture_begin    (GtkGestureRotate *gesture,
+                                                       GdkEventSequence *sequence,
+                                                       GimpDisplayShell *shell);
+void       gimp_display_shell_rotate_gesture_update   (GtkGestureRotate *gesture,
+                                                       GdkEventSequence *sequence,
+                                                       GimpDisplayShell *shell);
+
 void       gimp_display_shell_buffer_stroke           (GimpMotionBuffer *buffer,
                                                        const GimpCoords *coords,
                                                        guint32           time,

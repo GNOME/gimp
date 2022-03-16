@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -99,6 +100,10 @@ static void       gimp_display_shell_handle_scrolling         (GimpDisplayShell 
                                                                GdkModifierType    state,
                                                                gint               x,
                                                                gint               y);
+
+static void       gimp_display_shell_rotate_gesture_maybe_get_state (GtkGestureRotate *gesture,
+                                                                     GdkEventSequence *sequence,
+                                                                     guint            *maybe_out_state);
 
 static void       gimp_display_shell_space_pressed            (GimpDisplayShell  *shell,
                                                                const GdkEvent    *event);
@@ -1274,6 +1279,38 @@ gimp_display_shell_zoom_gesture_update (GtkGestureZoom   *gesture,
 }
 
 void
+gimp_display_shell_rotate_gesture_begin (GtkGestureRotate *gesture,
+                                         GdkEventSequence *sequence,
+                                         GimpDisplayShell *shell)
+{
+
+  shell->initial_gesture_rotate_angle = shell->rotate_angle;
+  shell->last_gesture_rotate_state    = 0;
+  gimp_display_shell_rotate_gesture_maybe_get_state (gesture, sequence,
+                                                     &shell->last_gesture_rotate_state);
+}
+
+void
+gimp_display_shell_rotate_gesture_update (GtkGestureRotate *gesture,
+                                          GdkEventSequence *sequence,
+                                          GimpDisplayShell *shell)
+{
+  gdouble         angle;
+  gboolean        constrain;
+
+  gimp_display_shell_rotate_gesture_maybe_get_state (gesture, sequence,
+                                                     &shell->last_gesture_rotate_state);
+
+  angle = shell->initial_gesture_rotate_angle +
+          180.0 * gtk_gesture_rotate_get_angle_delta (gesture) / G_PI;
+
+  constrain = (shell->last_gesture_rotate_state & GDK_CONTROL_MASK) ? TRUE : FALSE;
+
+  gimp_display_shell_rotate_to (shell,
+                                constrain ? RINT (angle / 15.0) * 15.0 : angle);
+}
+
+void
 gimp_display_shell_buffer_stroke (GimpMotionBuffer *buffer,
                                   const GimpCoords *coords,
                                   guint32           time,
@@ -1669,6 +1706,33 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
 
   shell->scroll_last_x = x;
   shell->scroll_last_y = y;
+}
+
+static void
+gimp_display_shell_rotate_gesture_maybe_get_state (GtkGestureRotate *gesture,
+                                                   GdkEventSequence *sequence,
+                                                   guint            *maybe_out_state)
+{
+  /* The only way to get any access to any data about events handled by the
+   * GtkGestureRotate is through its last_event. The set of events handled by
+   * GtkGestureRotate is not fully defined so we can't guarantee that last_event
+   * will be of event type that has a state field (though touch and gesture
+   * events do have that).
+   *
+   * Usually this would not be a problem, but when handling a gesture we don't
+   * want to repeatedly switch between a valid state and its default value if
+   * last_event happens to not have it. Thus we store the last valid state
+   * and only update it if we get a valid state from last_event.
+   */
+  guint           state = 0;
+  const GdkEvent *last_event;
+
+  last_event = gtk_gesture_get_last_event (GTK_GESTURE (gesture), sequence);
+  if (last_event == NULL)
+    return;
+
+  if (gdk_event_get_state (last_event, &state))
+    *maybe_out_state = state;
 }
 
 static void

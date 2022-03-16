@@ -101,6 +101,7 @@ struct _GimpDisplayShell
 
   GtkWidget         *canvas;           /*  GimpCanvas widget                  */
   GtkGesture        *zoom_gesture;     /*  Zoom gesture handler for the canvas*/
+  GtkGesture        *rotate_gesture;   /*  Rotation gesture handler           */
 
   GtkAdjustment     *hsbdata;          /*  adjustments                        */
   GtkAdjustment     *vsbdata;
@@ -202,6 +203,10 @@ struct _GimpDisplayShell
 
   /*  the state of gimp_display_shell_zoom_gesture_*() */
   gdouble            last_zoom_scale;
+
+  /*  the state of gimp_display_shell_rotate_gesture_*() */
+  guint              last_gesture_rotate_state;
+  gdouble            initial_gesture_rotate_angle;
 
   /* Two states are possible when the shell is grabbed: it can be
    * grabbed with space (or space+button1 which is the same state),
