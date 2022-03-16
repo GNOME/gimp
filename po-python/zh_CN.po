@@ -4,22 +4,22 @@
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 #    QA by Aron Xu <aronmalache@163.com>, 2008.
 # Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
-# lumingzh <lumingzh@qq.com>, 2019-2021.
+# lumingzh <lumingzh@qq.com>, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-01 11:39+0000\n"
-"PO-Revision-Date: 2021-07-28 15:41-0400\n"
-"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
+"POT-Creation-Date: 2022-02-20 00:30+0000\n"
+"PO-Revision-Date: 2022-02-20 17:58+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 3.0\n"
-"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
@@ -94,47 +94,48 @@ msgstr "保存为着色的 HTML 文本"
 msgid "Colored HTML text"
 msgstr "着色的 HTML 文本"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "图层名(_N)"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "图层名"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "云"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "湍流(_T)"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "湍流"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "不透明度(_P)"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "不透明度"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
-msgstr "雾色(_C)"
+#: ../plug-ins/python/foggify.py:124
+#| msgid "Fog color"
+msgid "_Fog color"
+msgstr "雾色(_F)"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "雾色"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "添加一个雾图层"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "雾(_F)..."
 
@@ -778,6 +779,9 @@ msgstr "请稍等：正在渲染图案"
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "斯派罗图案…"
+
+#~ msgid "Fog _color"
+#~ msgstr "雾色(_C)"
 
 #~ msgid "Exercise a goat (Python 3)"
 #~ msgstr "锻炼一只山羊（Python 3）"
