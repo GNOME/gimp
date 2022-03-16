@@ -4,20 +4,22 @@
 # 神州散人 <kappa8086@gmail.com>, 2008-2009.
 # Mingye Wang (Arthur2e5) <arthur200126@gmail.com>, 2015.
 # Aron Xu <aronxu@gnome.org>, 2008, 2019.
+# lumingzh <lumingzh@qq.com>, 2020-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 14:47+0000\n"
-"PO-Revision-Date: 2020-07-11 15:04-0400\n"
-"Last-Translator: Aron Xu <happyaron.xu@gmail.com>\n"
-"Language-Team: Chinese (China) <i18n-zh@googlegroups.com>\n"
+"POT-Creation-Date: 2022-01-30 22:28+0000\n"
+"PO-Revision-Date: 2022-01-31 17:47+0800\n"
+"Last-Translator: lumingzh <lumingzh@qq.com>\n"
+"Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=1; plural=0\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -33,7 +35,7 @@ msgstr "远程操作 Script-Fu 的服务器"
 
 #: ../plug-ins/script-fu/script-fu.c:151
 msgid "_Start Server..."
-msgstr "启动服务器(_S)..."
+msgstr "启动服务器(_S)…"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_GIMP Online"
@@ -57,7 +59,7 @@ msgstr "按钮(_B)"
 
 #: ../plug-ins/script-fu/script-fu.c:317
 msgid "_Logos"
-msgstr "徽标(_L)"
+msgstr "标志(_L)"
 
 #: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Patterns"
@@ -69,7 +71,7 @@ msgstr "网页主题(_W)"
 
 #: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Alien Glow"
-msgstr "奇异炽光(_A)"
+msgstr "奇异发光(_A)"
 
 #: ../plug-ins/script-fu/script-fu.c:326
 msgid "_Beveled Pattern"
@@ -81,7 +83,7 @@ msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:331
 msgid "Alpha to _Logo"
-msgstr "Alpha 转徽标(_L)"
+msgstr "透明转标志(_L)"
 
 #: ../plug-ins/script-fu/script-fu.c:334
 msgid "Re-read all available Script-Fu scripts"
@@ -128,14 +130,14 @@ msgstr "交互式 Scheme 开发"
 
 #: ../plug-ins/script-fu/script-fu-console.c:232
 msgid "_Browse..."
-msgstr "浏览(_B)..."
+msgstr "浏览(_B)…"
 
 #: ../plug-ins/script-fu/script-fu-console.c:288
 msgid "Save Script-Fu Console Output"
 msgstr "保存 Script-Fu 控制台输出"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
-#: ../plug-ins/script-fu/script-fu-interface.c:236
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "取消(_C)"
@@ -157,69 +159,69 @@ msgstr "应用(_A)"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Script-Fu 求值模式只允许非交互式调用"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu 无法同时处理两个脚本。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "你已经正在运行 “%s” 脚本。"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
+#: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu：%s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:235
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
 msgstr "重置(_R)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 msgid "_OK"
 msgstr "确定(_O)"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
 msgstr "%s："
 
-#: ../plug-ins/script-fu/script-fu-interface.c:341
+#: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu 颜色选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu 文件选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu 文件夹选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu 字体选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu 色板选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:490
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu 图案选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:499
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu 渐变选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu 画笔选择"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:877
+#: ../plug-ins/script-fu/script-fu-interface.c:880
 #, c-format
 msgid "Error while executing %s:"
 msgstr "执行 %s 时出错："
@@ -267,7 +269,7 @@ msgstr "凹凸贴图"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:189
 msgid "Add B_evel..."
-msgstr "添加斜面(_E)..."
+msgstr "添加斜面(_E)…"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:190
 msgid "Add a beveled border to an image"
@@ -280,7 +282,7 @@ msgstr "厚度"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -292,11 +294,11 @@ msgstr "保持凹凸图层"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:108
 msgid "Border Layer"
-msgstr "边框层"
+msgstr "加边图层"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:162
 msgid "Add _Border..."
-msgstr "添加边框(_B)..."
+msgstr "添加边框(_B)…"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm:163
 msgid "Add a border around an image"
@@ -321,7 +323,7 @@ msgstr "颜色变化量"
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:206
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:327
 msgid "Frame"
-msgstr "边框"
+msgstr "帧"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:222
 msgid "Blend Animation needs at least three source layers"
@@ -329,7 +331,7 @@ msgstr "混合动画至少需要三个源图层"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:228
 msgid "_Blend..."
-msgstr "混合(_B)..."
+msgstr "混合(_B)…"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:229
 msgid ""
@@ -339,7 +341,7 @@ msgstr "创建中间图层以在背景上混合两个以上图层为动画"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:236
 msgid "Intermediate frames"
-msgstr "中间帧数"
+msgstr "中间帧"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
@@ -358,17 +360,17 @@ msgstr "烧入脚本共需要两个图层。一个带透明的前景图层和一
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:224
 msgid "B_urn-In..."
-msgstr "烧入(_U)..."
+msgstr "烧入(_U)…"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:225
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr "创建两层之间的中间层以产生动画的“烧入”过渡"
+msgstr "创建中间图层以产生在两个图层间的”烧入“动画过渡"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:232
 msgid "Glow color"
-msgstr "炽光颜色"
+msgstr "发光颜色"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:233
 msgid "Fadeout"
@@ -384,11 +386,11 @@ msgstr "日冕宽度"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:236
 msgid "After glow"
-msgstr "炽光后"
+msgstr "发光之后"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:237
 msgid "Add glowing"
-msgstr "添加炽光"
+msgstr "添加辉光"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:238
 msgid "Prepare for GIF"
@@ -396,11 +398,11 @@ msgstr "为 GIF 作准备"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:239
 msgid "Speed (pixels/frame)"
-msgstr "速度(像素/帧)"
+msgstr "速度（像素/帧）"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:176
 msgid "Carved Surface"
-msgstr "雕刻面"
+msgstr "雕刻表面"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:177
 msgid "Bevel Shadow"
@@ -408,7 +410,7 @@ msgstr "斜面阴影"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:178
 msgid "Bevel Highlight"
-msgstr "斜面高亮"
+msgstr "斜面高光"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:179
 msgid "Cast Shadow"
@@ -416,16 +418,16 @@ msgstr "投射阴影"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:180
 msgid "Inset"
-msgstr "插图"
+msgstr "嵌入"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:192
 msgid "Stencil C_arve..."
-msgstr "蜡版雕刻(_A)..."
+msgstr "模板雕刻(_A)…"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:193
 msgid ""
 "Use the specified drawable as a stencil to carve from the specified image."
-msgstr "以指定的可绘制对象为样板从指定图像中雕刻。"
+msgstr "以指定的可绘区为模板从指定图像中雕刻。"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm:200
 msgid "Image to carve"
@@ -462,17 +464,17 @@ msgstr "镀铬"
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:218
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:68
 msgid "Highlight"
-msgstr "高亮"
+msgstr "高光"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:232
 msgid "Stencil C_hrome..."
-msgstr "蜡版镀铬(_H)..."
+msgstr "模板镀铬(_H)…"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:233
 msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
-msgstr "用指定的(灰度)蜡版给选中区域（或 alpha） 添加镀铬效果"
+msgstr "用指定的（灰阶）模板给选中区域（或透明）添加镀铬效果"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:240
 msgid "Chrome saturation"
@@ -484,7 +486,7 @@ msgstr "镀铬亮度"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:242
 msgid "Chrome factor"
-msgstr "镀铬因子"
+msgstr "镀铬系数"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:243
 msgid "Environment map"
@@ -492,11 +494,11 @@ msgstr "环境贴图"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:246
 msgid "Highlight balance"
-msgstr "突出显示色彩平衡"
+msgstr "高光平衡"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:247
 msgid "Chrome balance"
-msgstr "镀铬色彩平衡"
+msgstr "镀铬平衡"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm:248
 msgid "Chrome white areas"
@@ -508,12 +510,12 @@ msgstr "效果图层"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:127
 msgid "_Circuit..."
-msgstr "电路(_C)..."
+msgstr "电路(_C)…"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:128
 msgid ""
 "Fill the selected region (or alpha) with traces like those on a circuit board"
-msgstr "以电路板痕迹线填充选中区域（或 alpha）"
+msgstr "以电路板痕迹线填充选中区域（或透明）"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:135
 msgid "Oilify mask size"
@@ -525,7 +527,7 @@ msgstr "电路种子"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:137
 msgid "No background (only for separate layer)"
-msgstr "没有背景(只对分离图层)"
+msgstr "没有背景（只对分离图层）"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm:138
 #: ../plug-ins/script-fu/scripts/lava.scm:129
@@ -542,11 +544,11 @@ msgstr "分离图层"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:52
 msgid "_Clothify..."
-msgstr "布状效果(_C)..."
+msgstr "布料纤维(_C)…"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:53
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr "给选中区域（或 alpha） 添加类似布料的纹理"
+msgstr "给选中区域（或透明）添加类似布料的纹理"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
@@ -562,7 +564,7 @@ msgstr "方位角"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:63
 msgid "Elevation"
-msgstr "仰角"
+msgstr "海拔"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:64
 msgid "Depth"
@@ -574,7 +576,7 @@ msgstr "污迹"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:82
 msgid "_Coffee Stain..."
-msgstr "咖啡迹(_C)..."
+msgstr "咖啡迹(_C)…"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:83
 msgid "Add realistic looking coffee stains to the image"
@@ -582,45 +584,39 @@ msgstr "给图像添加视觉效果逼真的咖啡迹"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Stains"
-msgstr "污迹数"
+msgstr "污迹"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
-msgstr "仅加深"
+msgstr "仅变暗"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-#, fuzzy
-#| msgid "Difference Clouds..."
 msgid "_Difference Clouds..."
-msgstr "差分云..."
+msgstr "差分云(_D)…"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
-msgstr "应用到差值图层模式的纯色噪音"
+msgstr "以差值图层模式应用的固态噪点"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:105
 msgid "_Distort..."
-msgstr "形变(_D)..."
+msgstr "扭曲变形(_D)…"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:106
 msgid "Distress the selection"
-msgstr "使选区扭区变形"
+msgstr "使选区扭曲变形"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#, fuzzy
-#| msgid "Threshold (bigger 1<-->254 smaller)"
 msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "阈值（更大 1<-->254 更小）"
+msgstr "阈值（更大 1<-->254 更小）(_T)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#, fuzzy
-#| msgid "Spread"
 msgid "_Spread"
-msgstr "延伸"
+msgstr "延伸(_S)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
 msgid "_Granularity (1 is low)"
-msgstr "粒度（1 为低）"
+msgstr "颗粒度（1 为低）(_G)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
 msgid "S_mooth"
@@ -632,15 +628,15 @@ msgstr "水平平滑(_I)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
 msgid "Smooth _vertically"
-msgstr "垂直平滑(_V)"
+msgstr "竖直平滑(_V)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
-msgstr "投影（过时）(_D)..."
+msgstr "投影（过时）(_D)…"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:171
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr "给选中区域（或 alpha） 添加投影"
+msgstr "给选中区域（或透明）添加投影"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:178
 msgid "Offset X"
@@ -652,7 +648,7 @@ msgstr "位移 Y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
 msgstr "模糊半径"
 
@@ -675,11 +671,11 @@ msgstr "允许改变大小"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
 msgid "_Erase Every Nth Row..."
-msgstr "每 N 行擦除(_E)..."
+msgstr "每第N行擦除(_E)…"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:43
 msgid "Erase every nth row or column"
-msgstr "每 n 行或 n 列擦除"
+msgstr "擦除每第N行或列"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:50
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:65
@@ -709,11 +705,11 @@ msgstr "擦除"
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:52
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
-msgstr "以背景填充"
+msgstr "用背景填充"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:57
 msgid "_Erase Every Other Row..."
-msgstr "隔行擦除(_E)..."
+msgstr "隔行擦除(_E)…"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:58
 msgid "Erase every other row or column"
@@ -733,7 +729,7 @@ msgstr "奇数"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
-msgstr "渲染字体图(_F)..."
+msgstr "渲染字体映射(_F)…"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:153
 msgid ""
@@ -750,7 +746,7 @@ msgstr "使用字体名字作为文字(_N)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:160
 msgid "_Labels"
-msgstr "标记(_L)"
+msgstr "标签(_L)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:161
 msgid "_Filter (regexp)"
@@ -762,7 +758,7 @@ msgstr "字体大小（像素）(_S)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:163
 msgid "_Border (pixels)"
-msgstr "边缘（像素）(_B)"
+msgstr "边框（像素）(_B)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:164
 msgid "_Color scheme"
@@ -778,24 +774,24 @@ msgstr "活动颜色"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:149
 msgid "_Fuzzy Border..."
-msgstr "边缘模糊(_F)..."
+msgstr "边缘模糊(_F)…"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:150
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "给图像添加有缺口的模糊的边缘"
+msgstr "给图像添加有缺口的模糊的边框"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:158
 #: ../plug-ins/script-fu/scripts/old-photo.scm:98
 msgid "Border size"
-msgstr "边缘大小"
+msgstr "边框大小"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:159
 msgid "Blur border"
-msgstr "边缘模糊"
+msgstr "模糊边框"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
-msgstr "粒度(1 为低)"
+msgstr "颗粒度（1 为低）"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
@@ -803,7 +799,7 @@ msgstr "添加阴影"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:162
 msgid "Shadow weight (%)"
-msgstr "阴影深度 (%)"
+msgstr "阴影权重（%）"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:164
 msgid "Flatten image"
@@ -884,7 +880,7 @@ msgstr "到 GIMP 维基的书签"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:242
 msgid "_Bug Reports and Feature Requests"
-msgstr "Bug 报告和特性需求(_B)"
+msgstr "缺陷报告和特性需求(_B)"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:243
 msgid "Bookmark to the bug tracker of GIMP"
@@ -896,7 +892,7 @@ msgstr "用户手册网站(_U)"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:69
 msgid "Custom _Gradient..."
-msgstr "自定义渐变(_G)..."
+msgstr "自定义渐变(_G)…"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm:70
 msgid "Create an image filled with an example of the current gradient"
@@ -924,7 +920,7 @@ msgstr "反向渐变"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:84
 msgid "_Grid..."
-msgstr "网格(_G)..."
+msgstr "网格(_G)…"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:85
 msgid ""
@@ -934,11 +930,11 @@ msgstr "使用当前笔刷按照 X 和 Y 位置列表的指定绘制网格"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:92
 msgid "X divisions"
-msgstr "X 切分数"
+msgstr "X 分割数"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm:93
 msgid "Y divisions"
-msgstr "Y 切分数"
+msgstr "Y 分割数"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:32
 msgid "New Guides from _Selection"
@@ -950,7 +946,7 @@ msgstr "沿目前选区的边界框生成四根参考线"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
-msgstr "新建参考线(按百分比)(_P)..."
+msgstr "新建参考线（按百分比）(_P)…"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:28
 msgid "Add a guide at the position specified as a percentage of the image size"
@@ -958,10 +954,8 @@ msgstr "在以图像尺寸的百分比指定的位置处添加一条参考线"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#, fuzzy
-#| msgid "Direction"
 msgid "_Direction"
-msgstr "方向"
+msgstr "方向(_D)"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -971,19 +965,19 @@ msgstr "水平"
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:36
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
 msgid "Vertical"
-msgstr "垂直"
+msgstr "竖直"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
 msgid "_Position (in %)"
-msgstr "位置(_P) (按百分比)"
+msgstr "位置（按 %）(_P)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
-msgstr "新建参考线(_G)..."
+msgstr "新建参考线(_G)…"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:28
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr "在指定的方向和位置(按像素)添加参考线"
+msgstr "在指定的方向和位置（像素单位）添加参考线"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
 msgid "_Position"
@@ -995,11 +989,11 @@ msgstr "删除所有参考线(_R)"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:20
 msgid "Remove all horizontal and vertical guides"
-msgstr "移除所有水平及垂直参考线"
+msgstr "移除所有水平及竖直参考线"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:117
 msgid "_Lava..."
-msgstr "熔岩(_L)..."
+msgstr "熔岩(_L)…"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:118
 msgid "Fill the current selection with lava"
@@ -1015,7 +1009,7 @@ msgstr "大小"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:127
 msgid "Roughness"
-msgstr "粗略度"
+msgstr "粗糙度"
 
 #: ../plug-ins/script-fu/scripts/lava.scm:128
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:351
@@ -1028,7 +1022,7 @@ msgstr "使用当前渐变"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:108
 msgid "Line _Nova..."
-msgstr "新星线(_N)..."
+msgstr "超新星线(_N)…"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:109
 msgid ""
@@ -1042,7 +1036,7 @@ msgstr "线的数量"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Sharpness (degrees)"
-msgstr "锐度(度数)"
+msgstr "锐度（度数）"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm:118
 msgid "Offset radius"
@@ -1054,7 +1048,7 @@ msgstr "随机度"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:63
 msgid "_Rectangular..."
-msgstr "矩形(_R)..."
+msgstr "矩形(_R)…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:64
 msgid "Create a rectangular brush"
@@ -1076,7 +1070,7 @@ msgstr "间距"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:133
 msgid "Re_ctangular, Feathered..."
-msgstr "羽化的矩形(_C)..."
+msgstr "羽化的矩形(_C)…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:134
 msgid "Create a rectangular brush with feathered edges"
@@ -1089,7 +1083,7 @@ msgstr "羽化"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
-msgstr "椭圆(_E)..."
+msgstr "椭圆(_E)…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:190
 msgid "Create an elliptical brush"
@@ -1097,7 +1091,7 @@ msgstr "创建一个椭圆形画笔"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:258
 msgid "Elli_ptical, Feathered..."
-msgstr "羽化的椭圆(_P)..."
+msgstr "羽化的椭圆(_P)…"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:259
 msgid "Create an elliptical brush with feathered edges"
@@ -1105,7 +1099,7 @@ msgstr "创建一个带羽化边缘的椭圆形画笔"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:89
 msgid "_Old Photo..."
-msgstr "老照片(_O)..."
+msgstr "老照片(_O)…"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:90
 msgid "Make an image look like an old photo"
@@ -1120,11 +1114,11 @@ msgstr "失焦模糊"
 #. and the 'minimum' value.
 #: ../plug-ins/script-fu/scripts/old-photo.scm:102
 msgid "Sepia"
-msgstr "褐色"
+msgstr "深褐色"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm:103
 msgid "Mottle"
-msgstr "斑迹"
+msgstr "斑纹"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:226
 msgid "Folder for the output file"
@@ -1178,7 +1172,7 @@ msgstr "剪贴板中没有可以粘贴的图像数据。"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:62
 msgid "New _Brush..."
-msgstr "新画笔(_B)..."
+msgstr "新画笔(_B)…"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:63
 msgid "Paste the clipboard contents into a new brush"
@@ -1198,14 +1192,12 @@ msgstr "文件名(_F)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#, fuzzy
-#| msgid "Spacing"
 msgid "_Spacing"
-msgstr "间距"
+msgstr "间距(_S)"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
-msgstr "新图案(_P)..."
+msgstr "新图案(_P)…"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:51
 msgid "Paste the clipboard contents into a new pattern"
@@ -1213,18 +1205,16 @@ msgstr "将剪贴板中的内容粘贴到新图案"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#, fuzzy
-#| msgid "Pattern name"
 msgid "_Pattern name"
-msgstr "图案名字"
+msgstr "图案名字(_P)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
-msgstr "透视(_P)..."
+msgstr "透视(_P)…"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:199
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr "给选中的区域（或 alpha）添加透视阴影"
+msgstr "给选中的区域（或透明）添加透视阴影"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:206
 msgid "Angle"
@@ -1244,11 +1234,11 @@ msgstr "插值"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:121
 msgid "_Predator..."
-msgstr "捕食者(_P)..."
+msgstr "捕食者(_P)…"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:122
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr "给选中区域（或 alpha）添加“捕食者”效果"
+msgstr "给选中区域（或透明）添加“捕食者”效果"
 
 #: ../plug-ins/script-fu/scripts/predator.scm:129
 msgid "Edge amount"
@@ -1272,12 +1262,12 @@ msgstr "反转图像中图层的顺序"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:69
 msgid "_Rippling..."
-msgstr "波纹(_R)..."
+msgstr "波纹(_R)…"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:70
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current layer"
-msgstr "通过为当前图层添加水波纹效果来创建一幅多层图像"
+msgstr "通过为当前图层添加波纹效果来创建一幅多层图像"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:77
 msgid "Rippling strength"
@@ -1294,7 +1284,7 @@ msgstr "边缘行为"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Wrap"
-msgstr "环绕"
+msgstr "包裹"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm:79
 msgid "Smear"
@@ -1304,38 +1294,38 @@ msgstr "涂抹"
 msgid "Black"
 msgstr "黑色"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
-msgstr "圆角(_R)..."
+msgstr "圆角(_R)…"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "使图像的边角圆滑并可选择地添加投影和背景"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "边缘半径"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "添加投影"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "阴影 X 偏移"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "阴影 Y 偏移"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "添加背景"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "设置颜色表(_T)..."
+msgstr "设置颜色表(_T)…"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -1347,7 +1337,7 @@ msgstr "调色版"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:139
 msgid "Rounded R_ectangle..."
-msgstr "圆角矩形(_E)..."
+msgstr "圆角矩形(_E)…"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:140
 msgid "Round the corners of the current selection"
@@ -1355,15 +1345,15 @@ msgstr "当前选区圆角化"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
 msgid "R_adius (%)"
-msgstr "半径(_A) (%)"
+msgstr "半径（%）(_A)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
 msgid "Co_ncave"
-msgstr "凹(_N)"
+msgstr "凹陷(_N)"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
-msgstr "到画笔(_B)..."
+msgstr "到画笔(_B)…"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:134
 msgid "Convert a selection to a brush"
@@ -1379,7 +1369,7 @@ msgstr "转换选区到图像"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:93
 msgid "To _Pattern..."
-msgstr "到图案(_P)..."
+msgstr "到图案(_P)…"
 
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:94
 msgid "Convert a selection to a pattern"
@@ -1387,7 +1377,7 @@ msgstr "转换选区到图案"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:245
 msgid "_Slide..."
-msgstr "幻灯片(_S)..."
+msgstr "幻灯片(_S)…"
 
 #: ../plug-ins/script-fu/scripts/slide.scm:246
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
@@ -1411,7 +1401,7 @@ msgstr "字体颜色"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:94
 msgid "_Spinning Globe..."
-msgstr "旋转球(_S)..."
+msgstr "旋转球(_S)…"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:95
 msgid "Create an animation by mapping the current image onto a spinning sphere"
@@ -1435,15 +1425,15 @@ msgstr "索引颜色数（0 = 保持 RGB）"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:240
 msgid "Rendering Spyro"
-msgstr "正在渲染 Spyro"
+msgstr "正在渲染斯派罗"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
 msgid "_Spyrogimp (older script-fu version)..."
-msgstr "_Spyrogimp（较旧的 script-fu 版本）…"
+msgstr "斯派罗图形（旧的 script-fu 版本）(_S)…"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
-msgstr "该过程已不推荐使用！请改用“plug-in-spyrogimp”。"
+msgstr "该程序已废弃！使用“plug-in-spyrogimp”代替。"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1451,7 +1441,7 @@ msgstr "类型"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Spyrograph"
-msgstr "螺旋型星云线"
+msgstr "斯派罗图形"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:324
 msgid "Epitrochoid"
@@ -1556,11 +1546,11 @@ msgstr "渐变：循环三角"
 
 #: ../plug-ins/script-fu/scripts/test-sphere.scm:272
 msgid "_Sphere..."
-msgstr "球体(_S)..."
+msgstr "球体(_S)…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
-msgstr "可平铺模糊(_T)..."
+msgstr "可平铺模糊(_T)…"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
@@ -1572,7 +1562,7 @@ msgstr "半径"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:77
 msgid "Blur vertically"
-msgstr "垂直模糊"
+msgstr "竖直模糊"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:78
 msgid "Blur horizontally"
@@ -1600,7 +1590,7 @@ msgstr "蒙板不透明度"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:95
 msgid "_Waves..."
-msgstr "水波(_W)..."
+msgstr "水波(_W)…"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm:96
 msgid ""
@@ -1622,7 +1612,7 @@ msgstr "反向"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:397
 msgid "_Weave..."
-msgstr "编织(_W)..."
+msgstr "编织(_W)…"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:398
 msgid ""
@@ -1632,19 +1622,19 @@ msgstr "创建一个以编织效果填充的新图层以被用于覆盖或凸凹
 
 #: ../plug-ins/script-fu/scripts/weave.scm:405
 msgid "Ribbon width"
-msgstr "织条宽度"
+msgstr "带子宽度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:406
 msgid "Ribbon spacing"
-msgstr "织条间距"
+msgstr "带子间距"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:407
 msgid "Shadow darkness"
-msgstr "阴影颜色深度"
+msgstr "阴影暗度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:408
 msgid "Shadow depth"
-msgstr "阴影凹陷深度"
+msgstr "阴影深度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:409
 msgid "Thread length"
@@ -1656,7 +1646,7 @@ msgstr "线密度"
 
 #: ../plug-ins/script-fu/scripts/weave.scm:411
 msgid "Thread intensity"
-msgstr "线亮度"
+msgstr "线强度"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:92
 msgid "Shadow"
@@ -1668,23 +1658,23 @@ msgstr "_Xach-Effect..."
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:122
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "给选中区域（或 alpha）添加细致的半透明三维效果"
+msgstr "给选中区域（或透明）添加细致的半透明三维效果"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:129
 msgid "Highlight X offset"
-msgstr "突出显示 X 偏移"
+msgstr "高光 X 偏移"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:130
 msgid "Highlight Y offset"
-msgstr "突出显示 Y 偏移"
+msgstr "高光 Y 偏移"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:131
 msgid "Highlight color"
-msgstr "高亮颜色"
+msgstr "高光颜色"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:132
 msgid "Highlight opacity"
-msgstr "突出显示不透明度"
+msgstr "高光不透明度"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:133
 msgid "Drop shadow color"
@@ -1705,6 +1695,12 @@ msgstr "投影 X 偏移"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "投影 Y 偏移"
+
+#~ msgid "Script-Fu _Console"
+#~ msgstr "Script-Fu 控制台(_C)"
+
+#~ msgid "Lava works with exactly one selected layer"
+#~ msgstr "熔岩滤镜仅对单个选中图层有效"
 
 #~ msgid "Plug-in _Registry"
 #~ msgstr "插件注册(_R)"
