@@ -203,10 +203,12 @@ struct _GimpDisplayShell
 
   /*  the state of gimp_display_shell_zoom_gesture_*() */
   gdouble            last_zoom_scale;
+  gboolean           zoom_gesture_active;
 
   /*  the state of gimp_display_shell_rotate_gesture_*() */
   guint              last_gesture_rotate_state;
   gdouble            initial_gesture_rotate_angle;
+  gboolean           rotate_gesture_active;
 
   /* Two states are possible when the shell is grabbed: it can be
    * grabbed with space (or space+button1 which is the same state),

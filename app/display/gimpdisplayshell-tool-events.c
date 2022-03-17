@@ -1255,6 +1255,35 @@ gimp_display_shell_canvas_grab_notify (GtkWidget        *canvas,
     }
 }
 
+/* The ratio of the following defines what finger movement we interpret as
+ * a rotation versus zoom gesture. If finger movement is partially a zoom
+ * and partially a rotation, the detected gesture will be whichever gesture
+ * we detect first
+ *
+ * Let's define "finger movement angle" as the angle between the direction of
+ * finger movement and the line between fingers. If this angle is zero then
+ * the gesture is completely a zoom gesture. If this angle is 90 degrees
+ * then the gesture is completely a rotation gesture.
+ *
+ * The boundary finger movement angle (below which the gesture is zoom gesture
+ * and above which the gesture is rotate gesture) will be defined as follows:
+ *
+ *    boundary = arctan(deg2rad(ROTATE_GESTURE_ACTIVATION_DEG_DIFF) /
+ *                      (ZOOM_GESTURE_ACTIVATION_SCALE_DIFF / 2))
+ *
+ * Note that ZOOM_GESTURE_ACTIVATION_SCALE_DIFF needs to be divided by 2
+ * because both fingers are moving so the distance between them is increasing
+ * twice as fast.
+ *
+ * We probably want boundary angle to be around 60 degrees to prevent
+ * accidentally starting rotations.
+ *
+ * With ZOOM_GESTURE_ACTIVATION_SCALE_DIFF==0.02 and
+ * ROTATE_GESTURE_ACTIVATION_DEG_DIFF==1 boundary is 60.2 degrees.
+ */
+#define ZOOM_GESTURE_ACTIVATION_SCALE_DIFF 0.02
+#define ROTATE_GESTURE_ACTIVATION_DEG_DIFF 1
+
 void
 gimp_display_shell_zoom_gesture_begin (GtkGestureZoom   *gesture,
                                        GdkEventSequence *sequence,
@@ -1268,14 +1297,37 @@ gimp_display_shell_zoom_gesture_update (GtkGestureZoom   *gesture,
                                         GdkEventSequence *sequence,
                                         GimpDisplayShell *shell)
 {
-  gdouble current_scale = gtk_gesture_zoom_get_scale_delta (gesture);
-  gdouble delta = (current_scale - shell->last_zoom_scale) / shell->last_zoom_scale;
+  gdouble current_scale;
+  gdouble delta;
+
+  if (shell->rotate_gesture_active)
+    return;
+
+  /* we only activate zoom gesture handling if rotate gesture was inactive and
+   * the zoom difference is significant enough */
+  current_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+  if (!shell->zoom_gesture_active                              &&
+      current_scale > (1 - ZOOM_GESTURE_ACTIVATION_SCALE_DIFF) &&
+      current_scale < (1 + ZOOM_GESTURE_ACTIVATION_SCALE_DIFF))
+    return;
+
+  shell->zoom_gesture_active = TRUE;
+
+  delta = (current_scale - shell->last_zoom_scale) / shell->last_zoom_scale;
   shell->last_zoom_scale = current_scale;
 
   gimp_display_shell_scale (shell,
                             GIMP_ZOOM_PINCH,
                             delta,
                             GIMP_ZOOM_FOCUS_POINTER);
+}
+
+void
+gimp_display_shell_zoom_gesture_end (GtkGestureZoom   *gesture,
+                                     GdkEventSequence *sequence,
+                                     GimpDisplayShell *shell)
+{
+  shell->zoom_gesture_active = FALSE;
 }
 
 void
@@ -1295,19 +1347,39 @@ gimp_display_shell_rotate_gesture_update (GtkGestureRotate *gesture,
                                           GdkEventSequence *sequence,
                                           GimpDisplayShell *shell)
 {
-  gdouble         angle;
-  gboolean        constrain;
+  gdouble  angle;
+  gdouble  angle_delta_deg;
+  gboolean constrain;
+
+  /* we only activate rotate gesture handling if zoom gesture was inactive and
+   * the rotation is significant enough */
+  if (shell->zoom_gesture_active)
+    return;
+
+  angle_delta_deg = 180.0 * gtk_gesture_rotate_get_angle_delta (gesture) / G_PI;
+  if (!shell->rotate_gesture_active                         &&
+      angle_delta_deg > -ROTATE_GESTURE_ACTIVATION_DEG_DIFF &&
+      angle_delta_deg < ROTATE_GESTURE_ACTIVATION_DEG_DIFF)
+    return;
+
+  shell->rotate_gesture_active = TRUE;
+
+  angle = shell->initial_gesture_rotate_angle + angle_delta_deg;
 
   gimp_display_shell_rotate_gesture_maybe_get_state (gesture, sequence,
                                                      &shell->last_gesture_rotate_state);
 
-  angle = shell->initial_gesture_rotate_angle +
-          180.0 * gtk_gesture_rotate_get_angle_delta (gesture) / G_PI;
-
   constrain = (shell->last_gesture_rotate_state & GDK_CONTROL_MASK) ? TRUE : FALSE;
 
-  gimp_display_shell_rotate_to (shell,
-                                constrain ? RINT (angle / 15.0) * 15.0 : angle);
+  gimp_display_shell_rotate_to (shell, constrain ? RINT (angle / 15.0) * 15.0 : angle);
+}
+
+void
+gimp_display_shell_rotate_gesture_end (GtkGestureRotate *gesture,
+                                       GdkEventSequence *sequence,
+                                       GimpDisplayShell *shell)
+{
+  shell->rotate_gesture_active = FALSE;
 }
 
 void

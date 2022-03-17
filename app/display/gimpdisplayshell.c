@@ -515,10 +515,12 @@ gimp_display_shell_constructed (GObject *object)
   shell->zoom_gesture = gtk_gesture_zoom_new (GTK_WIDGET (shell->canvas));
   gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (shell->zoom_gesture),
                                               GTK_PHASE_CAPTURE);
+  shell->zoom_gesture_active = FALSE;
 
   shell->rotate_gesture = gtk_gesture_rotate_new (GTK_WIDGET (shell->canvas));
   gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (shell->rotate_gesture),
                                               GTK_PHASE_CAPTURE);
+  shell->rotate_gesture_active = FALSE;
 
   /*  the horizontal ruler  */
   shell->hrule = gimp_ruler_new (GTK_ORIENTATION_HORIZONTAL);
@@ -612,13 +614,18 @@ gimp_display_shell_constructed (GObject *object)
   g_signal_connect (shell->zoom_gesture, "update",
                     G_CALLBACK (gimp_display_shell_zoom_gesture_update),
                     shell);
+  g_signal_connect (shell->zoom_gesture, "end",
+                    G_CALLBACK (gimp_display_shell_zoom_gesture_end),
+                    shell);
   g_signal_connect (shell->rotate_gesture, "begin",
                     G_CALLBACK (gimp_display_shell_rotate_gesture_begin),
                     shell);
   g_signal_connect (shell->rotate_gesture, "update",
                     G_CALLBACK (gimp_display_shell_rotate_gesture_update),
                     shell);
-
+  g_signal_connect (shell->rotate_gesture, "end",
+                    G_CALLBACK (gimp_display_shell_rotate_gesture_end),
+                    shell);
 
   /*  the zoom button  */
   shell->zoom_button = g_object_new (GTK_TYPE_CHECK_BUTTON,
