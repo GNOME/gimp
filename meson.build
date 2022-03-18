@@ -334,7 +334,7 @@ gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
 gegl_minver       = '0.4.36'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
-gexiv2_minver     = '0.12.2'
+gexiv2_minver     = '0.14.0'
 gexiv2            = dependency('gexiv2',             version: '>='+gexiv2_minver)
 
 gio               = dependency('gio-2.0')
