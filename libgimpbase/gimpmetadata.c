@@ -202,23 +202,28 @@ G_DEFINE_TYPE_WITH_PRIVATE (GimpMetadata, gimp_metadata, GEXIV2_TYPE_METADATA)
 static void
 gimp_metadata_class_init (GimpMetadataClass *klass)
 {
-  if (! gexiv2_metadata_register_xmp_namespace ("http://ns.adobe.com/DICOM/",
-                                                "DICOM"))
+  GError *error = NULL;
+
+  if (! gexiv2_metadata_try_register_xmp_namespace ("http://ns.adobe.com/DICOM/",
+                                                    "DICOM", &error))
     {
-      g_printerr ("Failed to register XMP namespace 'DICOM'\n");
+      g_printerr ("Failed to register XMP namespace 'DICOM': %s\n", error->message);
+      g_clear_error (&error);
     }
 
-  if (! gexiv2_metadata_register_xmp_namespace ("http://darktable.sf.net/",
-                                                "darktable"))
+  if (! gexiv2_metadata_try_register_xmp_namespace ("http://darktable.sf.net/",
+                                                    "darktable", &error))
     {
-      g_printerr ("Failed to register XMP namespace 'darktable'\n");
+      g_printerr ("Failed to register XMP namespace 'darktable': %s\n", error->message);
+      g_clear_error (&error);
     }
 
   /* Usage example Xmp.GIMP.tagname */
-  if (! gexiv2_metadata_register_xmp_namespace ("http://www.gimp.org/xmp/",
-                                                "GIMP"))
+  if (! gexiv2_metadata_try_register_xmp_namespace ("http://www.gimp.org/xmp/",
+                                                    "GIMP", &error))
     {
-      g_printerr ("Failed to register XMP namespace 'GIMP'\n");
+      g_printerr ("Failed to register XMP namespace 'GIMP': %s\n", error->message);
+      g_clear_error (&error);
     }
 }
 
@@ -393,8 +398,8 @@ gimp_metadata_add_xmp_history (GimpMetadata *metadata,
           g_snprintf (tagstr, sizeof (tagstr), "%s[%d]%s",
                       tags[3], count, history_tags[ii]);
 
-          if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
-                                       tagstr))
+          if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                           tagstr, NULL))
             {
               lastfound = 1;
             }
@@ -1496,14 +1501,14 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
 
   /*  the logic here was mostly taken from darktable and libkexiv2  */
 
-  if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
-                               "Exif.Photo.ColorSpace"))
+  if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                   "Exif.Photo.ColorSpace", NULL))
     {
       exif_cs = gexiv2_metadata_try_get_tag_long (GEXIV2_METADATA (metadata),
                                                   "Exif.Photo.ColorSpace", NULL);
     }
-  else if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
-                                    "Xmp.exif.ColorSpace"))
+  else if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                        "Xmp.exif.ColorSpace", NULL))
     {
       exif_cs = gexiv2_metadata_try_get_tag_long (GEXIV2_METADATA (metadata),
                                                   "Xmp.exif.ColorSpace", NULL);
@@ -1542,8 +1547,8 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
           g_free (iop_index);
         }
 
-      if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
-                                   "Exif.Nikon3.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                       "Exif.Nikon3.ColorSpace", NULL))
         {
           glong nikon_cs;
 
@@ -1560,8 +1565,8 @@ gimp_metadata_get_colorspace (GimpMetadata *metadata)
             }
         }
 
-      if (gexiv2_metadata_has_tag (GEXIV2_METADATA (metadata),
-                                   "Exif.Canon.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (GEXIV2_METADATA (metadata),
+                                       "Exif.Canon.ColorSpace", NULL))
         {
           glong canon_cs;
 
@@ -1605,55 +1610,55 @@ gimp_metadata_set_colorspace (GimpMetadata           *metadata,
   switch (colorspace)
     {
     case GIMP_METADATA_COLORSPACE_UNSPECIFIED:
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Photo.ColorSpace");
-      gexiv2_metadata_clear_tag (g2metadata, "Xmp.exif.ColorSpace");
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex");
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Nikon3.ColorSpace");
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Canon.ColorSpace");
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Photo.ColorSpace", NULL);
+      gexiv2_metadata_try_clear_tag (g2metadata, "Xmp.exif.ColorSpace", NULL);
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex", NULL);
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Nikon3.ColorSpace", NULL);
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Canon.ColorSpace", NULL);
       break;
 
     case GIMP_METADATA_COLORSPACE_UNCALIBRATED:
       gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0xffff, NULL);
-      if (gexiv2_metadata_has_tag (g2metadata, "Xmp.exif.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Xmp.exif.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0xffff, NULL);
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex");
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Nikon3.ColorSpace");
-      gexiv2_metadata_clear_tag (g2metadata, "Exif.Canon.ColorSpace");
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Iop.InteroperabilityIndex", NULL);
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Nikon3.ColorSpace", NULL);
+      gexiv2_metadata_try_clear_tag (g2metadata, "Exif.Canon.ColorSpace", NULL);
       break;
 
     case GIMP_METADATA_COLORSPACE_SRGB:
       gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0x01, NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Xmp.exif.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Xmp.exif.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0x01, NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Iop.InteroperabilityIndex"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Exif.Iop.InteroperabilityIndex", NULL))
         gexiv2_metadata_try_set_tag_string (g2metadata,
                                             "Exif.Iop.InteroperabilityIndex",
                                             "R98", NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Nikon3.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Exif.Nikon3.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Nikon3.ColorSpace", 0x01, NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Canon.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Exif.Canon.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Canon.ColorSpace", 0x01, NULL);
       break;
 
     case GIMP_METADATA_COLORSPACE_ADOBERGB:
       gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Photo.ColorSpace", 0x02, NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Xmp.exif.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Xmp.exif.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Xmp.exif.ColorSpace", 0x02, NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Iop.InteroperabilityIndex"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Exif.Iop.InteroperabilityIndex", NULL))
         gexiv2_metadata_try_set_tag_string (g2metadata,
                                             "Exif.Iop.InteroperabilityIndex",
                                             "R03", NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Nikon3.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Exif.Nikon3.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Nikon3.ColorSpace", 0x02, NULL);
 
-      if (gexiv2_metadata_has_tag (g2metadata, "Exif.Canon.ColorSpace"))
+      if (gexiv2_metadata_try_has_tag (g2metadata, "Exif.Canon.ColorSpace", NULL))
         gexiv2_metadata_try_set_tag_long (g2metadata, "Exif.Canon.ColorSpace", 0x02, NULL);
       break;
     }
