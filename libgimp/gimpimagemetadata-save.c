@@ -538,7 +538,7 @@ gimp_image_metadata_set_xmp_structs (GList          *xmp_list,
  * This is an alternative to gimp_image_metadata_save_finish when you
  * want to save metadata yourself and you need only filtering processing.
  *
- * Returns: Filtered metadata or NULL in case of failure.
+ * Returns: (transfer full): Filtered metadata or NULL in case of failure.
  *
  * Use g_object_unref() when returned metadata are no longer needed
  *
