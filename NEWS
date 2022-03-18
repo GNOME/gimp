@@ -59,6 +59,12 @@ Plug-ins:
       issue, while not forcing BigTIFF export (since it might not be
       supported everywhere).
 
+API:
+
+  - Changes in libgimp:
+    * New functions:
+      + gimp_image_metadata_save_filter()
+
 Translations:
 
   - New Galician translation for the installer.
@@ -66,6 +72,7 @@ Translations:
 Build:
 
   - libtiff dependency's minimum required version bumped to 4.0.0.
+  - gexiv2 dependency's minimum required version bumped to 0.14.0.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
