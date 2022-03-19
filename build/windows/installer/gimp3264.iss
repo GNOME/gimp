@@ -80,20 +80,28 @@
 #pragma option -e+
 
 #ifndef VERSION
-	#define DEVEL "is6"
-	#define VERSION "2.10.12"
-	#define NOFILES
-	#define GIMP_DIR "W:\msys64-gtk2\opt\output\2.10.12"
-	#define DIR32 "i686-w64-mingw32"
-	#define DIR64 "x86_64-w64-mingw32" 
-	#define DEPS_DIR "W:\msys64-gtk2\opt\comb"
-	#define DDIR32 "mingw32"
-	#define DDIR64 "mingw64"
-	#define PYTHON
-	#define LUA
-	#define DEBUG_SYMBOLS
-	#define NOCOMPRESSION
+	#error VERSION must be defined
 #endif
+#ifndef GIMP_DIR
+	#error GIMP_DIR must be defined
+#endif
+#ifndef DIR32
+	#error DIR32 must be defined
+#endif
+#ifndef DIR64
+	#error DIR64 must be defined
+#endif
+#ifndef DEPS_DIR
+	#error DEPS_DIR must be defined
+#endif
+#ifndef DDIR32
+	#error DDIR32 must be defined
+#endif
+#ifndef DDIR64
+	#error DDIR64 must be defined
+#endif
+
+; Optional: PYTHON, LUA, DEBUG_SYMBOLS, NOCOMPRESSION, NOFILES, DEVEL
 
 #include "directories.isi"
 #include "version.isi"
