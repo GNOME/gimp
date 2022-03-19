@@ -234,6 +234,7 @@ gimp-meson-debian:
       --prefix="${INSTALL_PREFIX}"
     - ninja -C _build
     - ninja -C _build test
+    - ninja -C _build dist
 
 gimp-clang-debian:
   rules:
