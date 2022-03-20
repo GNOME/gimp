@@ -14,16 +14,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-04 10:02+0000\n"
-"PO-Revision-Date: 2022-03-10 01:03+0100\n"
-"Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
+"POT-Creation-Date: 2022-03-16 12:59+0000\n"
+"PO-Revision-Date: 2022-03-20 14:15+0100\n"
+"Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -989,8 +989,8 @@ msgstr "CML-böngésző paramétereinek mentése"
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
 #: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
-#: ../plug-ins/file-tiff/file-tiff-save.c:1022
-#: ../plug-ins/file-tiff/file-tiff-save.c:1098 ../plug-ins/flame/flame.c:508
+#: ../plug-ins/file-tiff/file-tiff-save.c:1025
+#: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:846 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -2037,7 +2037,7 @@ msgstr "„%s”: fájl vége vagy hiba a palettaadatok olvasása közben"
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
-#: ../plug-ins/file-tiff/file-tiff-save.c:1012
+#: ../plug-ins/file-tiff/file-tiff-save.c:1015
 #, c-format
 msgid "Exporting '%s'"
 msgstr "„%s” exportálása"
@@ -2151,7 +2151,6 @@ msgstr "A(z) „%s” nem egy DICOM-fájl."
 
 #: ../plug-ins/common/file-dicom.c:576
 #, c-format
-#| msgid "Aggressive RLE (not supported by SGI)"
 msgid "Transfer syntax %s is not supported by GIMP."
 msgstr "A(z) %s átadási szintaxist nem támogatja a GIMP."
 
@@ -2506,7 +2505,6 @@ msgstr "képtartalom"
 
 #: ../plug-ins/common/file-heif.c:1569
 #, c-format
-#| msgid "Exporting '%s'"
 msgid "Exporting '%s' using %s encoder"
 msgstr "A(z) „%s” exportálása %s kódoló használatával"
 
@@ -2840,7 +2838,6 @@ msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Nem támogatott színtér a(z) „%s” JP2 képben."
 
 #: ../plug-ins/common/file-jpegxl.c:117 ../plug-ins/common/file-jpegxl.c:144
-#| msgid "JPEG image"
 msgid "JPEG XL image"
 msgstr "JPEG XL kép"
 
@@ -2853,17 +2850,14 @@ msgid "Saves files in the JPEG XL file format"
 msgstr "Elmenti a JPEG XL fájlformátumban lévő fájlokat"
 
 #: ../plug-ins/common/file-jpegxl.c:163
-#| msgid "_Lossless"
 msgid "L_ossless"
 msgstr "_Veszteségmentes"
 
 #: ../plug-ins/common/file-jpegxl.c:164
-#| msgid "No compression"
 msgid "Use lossless compression"
 msgstr "Veszteségmentes tömörítés használata"
 
 #: ../plug-ins/common/file-jpegxl.c:169
-#| msgid "_Compression:"
 msgid "Co_mpression/maxError"
 msgstr "_Tömörítés/legnagyobb hiba"
 
@@ -2872,11 +2866,10 @@ msgid ""
 "Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
 "visually lossless."
 msgstr ""
-"Legnagyobb butteraugli távolság, az alacsonyabb érték magasabb minőséget"
-" jelent. Tartomány: 0-tól 15-ig. Az 1.0 jelentése: láthatóan veszteségmentes."
+"Legnagyobb butteraugli távolság, az alacsonyabb érték magasabb minőséget "
+"jelent. Tartomány: 0-tól 15-ig. Az 1.0 jelentése: láthatóan veszteségmentes."
 
 #: ../plug-ins/common/file-jpegxl.c:175
-#| msgid "Bit depth:"
 msgid "_Bit depth"
 msgstr "_Bitmélység"
 
@@ -2893,7 +2886,6 @@ msgid "Encoder effort setting"
 msgstr "Kódoló erőfeszítésének beállítása"
 
 #: ../plug-ins/common/file-jpegxl.c:188
-#| msgid "Save color _profile"
 msgid "Save ori_ginal profile"
 msgstr "Ere_deti profil mentése"
 
@@ -2902,7 +2894,6 @@ msgid "Store ICC profile to exported JXL file"
 msgstr "ICC-profil tárolása az exportált JLX-fájlhoz"
 
 #: ../plug-ins/common/file-jpegxl.c:1107
-#| msgid "Lighting Effects"
 msgid "lightning (fastest)"
 msgstr "villámlás (leggyorsabb)"
 
@@ -2939,7 +2930,6 @@ msgid "tortoise (slower)"
 msgstr "teknősbéka (lassabb)"
 
 #: ../plug-ins/common/file-jpegxl.c:1123
-#| msgid "10 bit/channel"
 msgid "16 bit/channel"
 msgstr "16 bit/csatorna"
 
@@ -5326,7 +5316,6 @@ msgid "G-Qbist"
 msgstr "G-Qbist"
 
 #: ../plug-ins/common/qbist.c:979
-#| msgid "Pattern fill"
 msgid "Pattern"
 msgstr "Minta"
 
@@ -6758,7 +6747,6 @@ msgid "Export Image as FLI Animation"
 msgstr "Kép exportálása FLI-animációként"
 
 #: ../plug-ins/file-ico/ico-dialog.c:55
-#| msgid "Windows Icon"
 msgid "Windows Cursor"
 msgstr "Windows kurzor"
 
@@ -6842,7 +6830,6 @@ msgid "Microsoft Windows icon"
 msgstr "Microsoft Windows ikon"
 
 #: ../plug-ins/file-ico/ico.c:167 ../plug-ins/file-ico/ico.c:239
-#| msgid "Microsoft Windows icon"
 msgid "Microsoft Windows cursor"
 msgstr "Microsoft Windows kurzor"
 
@@ -6901,7 +6888,7 @@ msgstr "Lebegőpontos"
 msgid "JPEG image"
 msgstr "JPEG-kép"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1247
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7000,7 +6987,6 @@ msgstr "Nem támogatott vagy érvénytelen rétegméret: %dx%d"
 
 #: ../plug-ins/file-psd/psd-load.c:755
 #, c-format
-#| msgid "Unsupported or invalid mask info size: %d"
 msgid "Unsupported or invalid mask info size."
 msgstr "Nem támogatott vagy érvénytelen maszkinformáció-méret."
 
@@ -7252,15 +7238,15 @@ msgstr "Agresszív RLE (az SGI nem támogatja)"
 msgid "Compression _type:"
 msgstr "Tömörítés _típusa:"
 
-#: ../plug-ins/file-tiff/file-tiff.c:147 ../plug-ins/file-tiff/file-tiff.c:175
-msgid "TIFF image"
-msgstr "TIFF-kép"
+#: ../plug-ins/file-tiff/file-tiff.c:157 ../plug-ins/file-tiff/file-tiff.c:186
+msgid "TIFF or BigTIFF image"
+msgstr "TIFF vagy BigTIFF-kép"
 
-#: ../plug-ins/file-tiff/file-tiff.c:192
+#: ../plug-ins/file-tiff/file-tiff.c:202
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:409
+#: ../plug-ins/file-tiff/file-tiff.c:451
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -7515,40 +7501,40 @@ msgstr ""
 "A TIFF formátum csak 7 bites ASCII kódolást engedélyez\n"
 "a megjegyzésekben. A megjegyzés nem lett elmentve."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:808
+#: ../plug-ins/file-tiff/file-tiff-save.c:809
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Nem sikerült egy sor kiírása a(z) %d. sorban"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1123
+#: ../plug-ins/file-tiff/file-tiff-save.c:1126
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "A lapok különböző bitmélységgel történő írása furcsa."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1224
+#: ../plug-ins/file-tiff/file-tiff-save.c:1243
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Nincs"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1225
+#: ../plug-ins/file-tiff/file-tiff-save.c:1244
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1245
 msgid "Pack Bits"
 msgstr "Bitek összecsomagolása"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1246
 msgid "Deflate"
 msgstr "„Deflate” formátum"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-tiff/file-tiff-save.c:1249
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
@@ -7569,22 +7555,18 @@ msgid "_Minimize output size (slower)"
 msgstr "Kimeneti méret _minimalizálása (lassabb)"
 
 #: ../plug-ins/file-webp/file-webp.c:203
-#| msgid "Max distance between key-frames:"
 msgid "Max distance between _key-frames"
 msgstr "_Kulcsképkockák közti legnagyobb távolság"
 
 #: ../plug-ins/file-webp/file-webp.c:209
-#| msgid "Max distance between key-frames:"
 msgid "_Default delay between frames"
 msgstr "Képkockák közti _alapértelmezett késleltetés"
 
 #: ../plug-ins/file-webp/file-webp.c:216
-#| msgid "Use delay entered above for all frames"
 msgid "Use default dela_y for all frames"
 msgstr "Alapértelmezett _késleltetés használata az összes képkockához"
 
 #: ../plug-ins/file-webp/file-webp.c:222
-#| msgid "As A_nimation"
 msgid "Save a_nimation"
 msgstr "A_nimáció mentése"
 
@@ -9757,7 +9739,6 @@ msgid "Exif Tag"
 msgstr "Exif címke"
 
 #: ../plug-ins/ui/plug-in-metadata-viewer.ui.h:2
-#| msgid "Value"
 msgctxt "A tag value"
 msgid "Value"
 msgstr "Érték"
@@ -12028,15 +12009,15 @@ msgstr "Metaadat-megjelenítő: %s"
 msgid "(%lu more character(s))"
 msgstr "(még %lu karakter)"
 
-#: ../plug-ins/metadata/metadata-viewer.c:583
+#: ../plug-ins/metadata/metadata-viewer.c:622
 msgid " meter"
 msgstr " méter"
 
-#: ../plug-ins/metadata/metadata-viewer.c:584
+#: ../plug-ins/metadata/metadata-viewer.c:623
 msgid " feet"
 msgstr " láb"
 
-#: ../plug-ins/metadata/metadata-viewer.c:702
+#: ../plug-ins/metadata/metadata-viewer.c:791
 #, c-format
 msgid "(%llu more byte(s))"
 msgstr "(még %llu bájt)"
