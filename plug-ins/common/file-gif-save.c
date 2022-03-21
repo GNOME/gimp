@@ -182,9 +182,16 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "loop",
                              "Loop",
-                             "(animated gif) loop infinitely",
+                             "(animated gif) Loop infinitely",
                              TRUE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "number-of-repeats",
+                         "Number of repeats",
+                         "(animated gif) Number of repeats "
+                         "(Ignored if 'loop' is TRUE)",
+                         0, G_MAXSHORT - 1, 0,
+                         G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-delay",
                          "Default delay",
@@ -194,7 +201,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-dispose",
-                         "Default dispoe",
+                         "Default dispose",
                          "(animated gif) Default disposal type "
                          "(0=`don't care`, "
                          "1=combine, "
@@ -756,6 +763,7 @@ save_image (GFile         *file,
 
   gboolean       config_interlace;
   gboolean       config_loop;
+  gint           config_number_of_repeats;
   gint           config_default_delay;
   gint           config_default_dispose;
   gboolean       config_use_default_delay;
@@ -765,15 +773,16 @@ save_image (GFile         *file,
   gchar         *config_comment;
 
   g_object_get (config,
-                "interlace",       &config_interlace,
-                "loop",            &config_loop,
-                "default-delay",   &config_default_delay,
-                "default-dispose", &config_default_dispose,
-                "force-delay",     &config_use_default_delay,
-                "force-dispose",   &config_use_default_dispose,
-                "as-animation",    &config_as_animation,
-                "save-comment",    &config_save_comment,
-                "gimp-comment",    &config_comment,
+                "interlace",         &config_interlace,
+                "loop",              &config_loop,
+                "number-of-repeats", &config_number_of_repeats,
+                "default-delay",     &config_default_delay,
+                "default-dispose",   &config_default_dispose,
+                "force-delay",       &config_use_default_delay,
+                "force-dispose",     &config_use_default_dispose,
+                "as-animation",      &config_as_animation,
+                "save-comment",      &config_save_comment,
+                "gimp-comment",      &config_comment,
                 NULL);
 
   /* The GIF spec says 7bit ASCII for the comment block. */
@@ -959,11 +968,18 @@ save_image (GFile         *file,
 
 
   /* If the image has multiple layers it'll be made into an animated
-   * GIF, so write out the infinite-looping extension
+   * GIF, so write out the looping extension
    */
-  if ((nlayers > 1) && (config_loop))
-    if (! gif_encode_loop_ext (output, 0, error))
-      return FALSE;
+  if (nlayers > 1)
+    {
+      /* If 'Forever' toggle was checked, override number_of_repeats */
+      if (config_loop)
+        config_number_of_repeats = 0;
+
+      if (config_loop || config_number_of_repeats > 0)
+        if (! gif_encode_loop_ext (output, config_number_of_repeats, error))
+          return FALSE;
+    }
 
   /* Write comment extension - mustn't be written before the looping ext. */
   if (config_save_comment && config_comment && strlen (config_comment))
@@ -1240,6 +1256,7 @@ save_dialog (GimpImage     *image,
       GtkWidget    *label;
       GtkListStore *store;
       GtkWidget    *combo;
+      gboolean      toggle_state;
 
       /* Animation toggle and frame */
       frame = gimp_frame_new (NULL);
@@ -1260,10 +1277,26 @@ save_dialog (GimpImage     *image,
                               grid,   "sensitive",
                               G_BINDING_SYNC_CREATE);
 
-      /* Loop forever toggle */
+      /* Number of repeats spin */
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      spin = gimp_prop_spin_button_new (config, "number-of-repeats",
+                                        1, 1, 1);
+      gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
+                                _("_Number of repeats:"),
+                                0.0, 0.5,
+                                hbox, 1);
+
+      /* Loop Forever toggle */
       toggle = gimp_prop_check_button_new (config, "loop",
-                                           _("_Loop forever"));
-      gtk_grid_attach (GTK_GRID (grid), toggle, 0, 0, 2, 1);
+                                           _("_Forever"));
+      gtk_box_pack_start (GTK_BOX (hbox), toggle, FALSE, FALSE, 0);
+
+      toggle_state = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+      gtk_widget_set_sensitive (spin, ! toggle_state);
+      g_object_bind_property (config, "loop",
+                              spin, "sensitive",
+                              G_BINDING_INVERT_BOOLEAN);
 
       /* Default delay spin */
       hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
