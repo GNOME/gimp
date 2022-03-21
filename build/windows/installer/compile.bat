@@ -3,6 +3,9 @@ if [%1]==[] goto help
 if [%2]==[] goto help
 if [%3]==[] goto help
 if [%4]==[] goto help
+if [%5]==[] goto help
+if [%6]==[] goto help
+if [%7]==[] goto help
 set VER=%~1
 set GIMP_BASE=%~2
 set GIMP32=%~3
