@@ -10,14 +10,14 @@
 # Árpád Bíró <biro arpad at gmail dot com>, 2004, 2007, 2008.
 # Gábor Kelemen <kelemeng at gnome dot hu>, 2007, 2008, 2009, 2016.
 # Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2016, 2018, 2019, 2020, 2021, 2022.
-# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021.
+# Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021, 2022.
 # Gabor Kelemen <kelemeng at ubuntu dot com>, 2018.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-10 00:09+0000\n"
-"PO-Revision-Date: 2022-03-10 01:27+0100\n"
+"POT-Creation-Date: 2022-03-16 12:15+0000\n"
+"PO-Revision-Date: 2022-03-21 01:14+0100\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -87,14 +87,17 @@ msgid ""
 "evolutions, improves metadata support as well as support of several formats, "
 "such as PSD and AVIF."
 msgstr ""
+"A GIMP 2.10.30 számos hibát javít, frissíti az operációs rendszerek "
+"evolúcióját követő háttérszolgáltatásokat, továbbfejleszti a metaadatok "
+"támogatását, valamint új formátumokat támogat, mint a PSD és az AVIF."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
-"A GIMP 2.10.28 javítja a GIMP 2.10.26 egyik összeállítási problémáját, "
-"ahol egyes témaadatok hibásan lettek telepítve."
+"A GIMP 2.10.28 javítja a GIMP 2.10.26 egyik összeállítási problémáját, ahol "
+"egyes témaadatok hibásan lettek telepítve."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
@@ -1998,7 +2001,7 @@ msgstr "Át_látszatlanság"
 #: ../app/actions/context-actions.c:53
 msgctxt "context-action"
 msgid "Paint _Mode"
-msgstr "Rajzolási mó_d"
+msgstr "Festési mó_d"
 
 #: ../app/actions/context-actions.c:55
 msgctxt "context-action"
@@ -2751,22 +2754,22 @@ msgstr "Eszköz átlátszatlansága: 10%-kal átlátszatlanabbá tétel"
 #: ../app/actions/context-actions.c:705
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select First"
-msgstr "Eszköz rajzolási módja: első kiválasztása"
+msgstr "Eszköz festési módja: első kiválasztása"
 
 #: ../app/actions/context-actions.c:709
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Last"
-msgstr "Eszköz rajzolási módja: utolsó kiválasztása"
+msgstr "Eszköz festési módja: utolsó kiválasztása"
 
 #: ../app/actions/context-actions.c:713
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Previous"
-msgstr "Eszköz rajzolási módja: előző kiválasztása"
+msgstr "Eszköz festési módja: előző kiválasztása"
 
 #: ../app/actions/context-actions.c:717
 msgctxt "context-action"
 msgid "Tool Paint Mode: Select Next"
-msgstr "Eszköz rajzolási módja: következő kiválasztása"
+msgstr "Eszköz festési módja: következő kiválasztása"
 
 #: ../app/actions/context-actions.c:725
 msgctxt "context-action"
@@ -3166,7 +3169,7 @@ msgstr "Ecset szöge (szerkesztő): forgatás balra 15°-kal"
 #: ../app/actions/context-commands.c:458
 #, c-format
 msgid "Paint Mode: %s"
-msgstr "Rajzolási mód: %s"
+msgstr "Festési mód: %s"
 
 #: ../app/actions/context-commands.c:612
 #, c-format
@@ -4690,10 +4693,9 @@ msgid "Copy Named"
 msgstr "Másolás név szerint"
 
 #: ../app/actions/edit-commands.c:444
-#, fuzzy
 #| msgid "Copy Visible Named "
 msgid "Copy Visible Named"
-msgstr "Látható másolása név szerint "
+msgstr "Látható másolása név szerint"
 
 #: ../app/actions/edit-commands.c:539 ../app/tools/gimppainttool.c:887
 msgid "The active layer's alpha channel is locked."
@@ -14934,7 +14936,6 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:99
 #, c-format
-#| msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
@@ -14962,9 +14963,6 @@ msgstr "Végzetes feldolgozási hiba a mintafájlban: "
 
 #: ../app/core/gimppattern-save.c:52
 #, c-format
-#| msgid ""
-#| "Unsupported pattern depth %d.\n"
-#| "GIMP Patterns must be GRAY or RGB."
 msgid ""
 "Unsupported pattern dimensions %d x %d.\n"
 "GIMP Patterns have a maximum size of %d x %d."
@@ -19111,12 +19109,12 @@ msgstr "Érvénytelen karaktersorozat az URI-ben"
 #: ../app/file-data/file-data-gih.c:295
 #, c-format
 msgid "Negative x offset: %d for layer %s corrected."
-msgstr ""
+msgstr "A(z) %2$s réteg %1$d mértékű negatív x tengelyű eltolása javítva."
 
 #: ../app/file-data/file-data-gih.c:302
 #, c-format
 msgid "Negative y offset: %d for layer %s corrected."
-msgstr ""
+msgstr "A(z) %2$s réteg %1$d mértékű negatív y tengelyű eltolása javítva."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
@@ -21187,8 +21185,6 @@ msgid "Motion Blur"
 msgstr "Elmosás elmozdítással"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2748
-#| msgctxt "filters-action"
-#| msgid "_Median Blur..."
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "Medián elmosás"
