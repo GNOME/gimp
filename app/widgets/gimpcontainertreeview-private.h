@@ -43,6 +43,8 @@ struct _GimpContainerTreeViewPrivate
   GdkScrollDirection  scroll_dir;
 
   gboolean            dnd_drop_to_empty;
+
+  gdouble             zoom_accumulated_scroll_delta;
 };
 
 

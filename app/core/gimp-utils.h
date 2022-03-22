@@ -123,6 +123,9 @@ GimpImage  * gimp_create_image_from_buffer         (Gimp              *gimp,
                                                     GeglBuffer        *buffer,
                                                     const gchar       *image_name);
 
+gint         gimp_view_size_get_larger             (gint view_size);
+gint         gimp_view_size_get_smaller            (gint view_size);
+
 #ifdef G_OS_WIN32
 
 gboolean     gimp_win32_have_wintab                (void);

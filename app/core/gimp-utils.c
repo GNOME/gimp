@@ -1281,6 +1281,49 @@ gimp_create_image_from_buffer (Gimp        *gimp,
   return image;
 }
 
+gint
+gimp_view_size_get_larger (gint view_size)
+{
+  if (view_size < GIMP_VIEW_SIZE_TINY)
+    return GIMP_VIEW_SIZE_TINY;
+  if (view_size < GIMP_VIEW_SIZE_EXTRA_SMALL)
+    return GIMP_VIEW_SIZE_EXTRA_SMALL;
+  if (view_size < GIMP_VIEW_SIZE_SMALL)
+    return GIMP_VIEW_SIZE_SMALL;
+  if (view_size < GIMP_VIEW_SIZE_MEDIUM)
+    return GIMP_VIEW_SIZE_MEDIUM;
+  if (view_size < GIMP_VIEW_SIZE_LARGE)
+    return GIMP_VIEW_SIZE_LARGE;
+  if (view_size < GIMP_VIEW_SIZE_EXTRA_LARGE)
+    return GIMP_VIEW_SIZE_EXTRA_LARGE;
+  if (view_size < GIMP_VIEW_SIZE_HUGE)
+    return GIMP_VIEW_SIZE_HUGE;
+  if (view_size < GIMP_VIEW_SIZE_ENORMOUS)
+    return GIMP_VIEW_SIZE_ENORMOUS;
+  return GIMP_VIEW_SIZE_GIGANTIC;
+}
+
+gint
+gimp_view_size_get_smaller (gint view_size)
+{
+  if (view_size > GIMP_VIEW_SIZE_GIGANTIC)
+    return GIMP_VIEW_SIZE_GIGANTIC;
+  if (view_size > GIMP_VIEW_SIZE_ENORMOUS)
+    return GIMP_VIEW_SIZE_ENORMOUS;
+  if (view_size > GIMP_VIEW_SIZE_HUGE)
+    return GIMP_VIEW_SIZE_HUGE;
+  if (view_size > GIMP_VIEW_SIZE_EXTRA_LARGE)
+    return GIMP_VIEW_SIZE_EXTRA_LARGE;
+  if (view_size > GIMP_VIEW_SIZE_LARGE)
+    return GIMP_VIEW_SIZE_LARGE;
+  if (view_size > GIMP_VIEW_SIZE_MEDIUM)
+    return GIMP_VIEW_SIZE_MEDIUM;
+  if (view_size > GIMP_VIEW_SIZE_SMALL)
+    return GIMP_VIEW_SIZE_SMALL;
+  if (view_size > GIMP_VIEW_SIZE_EXTRA_SMALL)
+    return GIMP_VIEW_SIZE_EXTRA_SMALL;
+  return GIMP_VIEW_SIZE_TINY;
+}
 
 /* Private functions */
 
