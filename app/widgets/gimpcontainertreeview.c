@@ -134,6 +134,12 @@ static GList       * gimp_container_tree_view_drag_viewable_list (GtkWidget    *
                                                                    gpointer      data);
 static GdkPixbuf    *gimp_container_tree_view_drag_pixbuf       (GtkWidget                   *widget,
                                                                  gpointer                     data);
+static void          gimp_container_tree_view_zoom_gesture_begin  (GtkGestureZoom            *gesture,
+                                                                   GdkEventSequence          *sequence,
+                                                                   GimpContainerTreeView     *tree_view);
+static void          gimp_container_tree_view_zoom_gesture_update (GtkGestureZoom            *gesture,
+                                                                   GdkEventSequence          *sequence,
+                                                                   GimpContainerTreeView     *tree_view);
 
 static gboolean      gimp_container_tree_view_get_selected_single (GimpContainerTreeView  *tree_view,
                                                                    GtkTreeIter            *iter);
@@ -156,6 +162,8 @@ static gboolean      gimp_container_tree_view_search_path_foreach (GtkTreeModel 
                                                                    gpointer                  data);
 static GtkTreePath * gimp_container_tree_view_get_path            (GimpContainerTreeView    *tree_view,
                                                                    GimpViewable             *viewable);
+
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpContainerTreeView, gimp_container_tree_view,
                          GIMP_TYPE_CONTAINER_BOX,
@@ -354,6 +362,18 @@ gimp_container_tree_view_constructed (GObject *object)
                     G_CALLBACK (gimp_container_tree_view_scroll),
                     tree_view);
 
+  tree_view->priv->zoom_gesture = gtk_gesture_zoom_new (GTK_WIDGET (tree_view->view));
+  gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (tree_view->priv->zoom_gesture),
+                                              GTK_PHASE_CAPTURE);
+
+  /* The default signal handler needs to run first to setup scale delta */
+  g_signal_connect_after (tree_view->priv->zoom_gesture, "begin",
+                          G_CALLBACK (gimp_container_tree_view_zoom_gesture_begin),
+                          tree_view);
+  g_signal_connect_after (tree_view->priv->zoom_gesture, "update",
+                          G_CALLBACK (gimp_container_tree_view_zoom_gesture_update),
+                          tree_view);
+
   /* connect_after so external code can connect to "query-tooltip" too
    * and override the default tip
    */
@@ -388,6 +408,7 @@ gimp_container_tree_view_finalize (GObject *object)
     }
 
   g_clear_pointer (&tree_view->priv->editing_path, g_free);
+  g_clear_object (&tree_view->priv->zoom_gesture);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -1754,6 +1775,50 @@ gimp_container_tree_view_drag_pixbuf (GtkWidget *widget,
                                          width, height);
 
   return NULL;
+}
+
+#define ZOOM_GESTURE_STEP_SIZE 1.2
+
+static void
+gimp_container_tree_view_zoom_gesture_begin (GtkGestureZoom        *gesture,
+                                             GdkEventSequence      *sequence,
+                                             GimpContainerTreeView *tree_view)
+{
+  tree_view->priv->zoom_gesture_last_set_value = gtk_gesture_zoom_get_scale_delta (gesture);
+}
+
+static void
+gimp_container_tree_view_zoom_gesture_update (GtkGestureZoom        *gesture,
+                                              GdkEventSequence      *sequence,
+                                              GimpContainerTreeView *tree_view)
+{
+  gdouble current_scale;
+  gdouble last_set_value         = tree_view->priv->zoom_gesture_last_set_value;
+  gdouble min_value_for_increase = last_set_value * ZOOM_GESTURE_STEP_SIZE;
+  gdouble max_value_for_decrease = last_set_value / ZOOM_GESTURE_STEP_SIZE;
+  GimpContainerView *view;
+  gint               view_border_width;
+  gint               view_size;
+
+  view      = GIMP_CONTAINER_VIEW (tree_view);
+  view_size = gimp_container_view_get_view_size (view, &view_border_width);
+
+  current_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+  if (current_scale > min_value_for_increase)
+    {
+      last_set_value = min_value_for_increase;
+      view_size      = gimp_view_size_get_larger (view_size);
+    }
+  else if (current_scale < max_value_for_decrease)
+    {
+      last_set_value = max_value_for_decrease;
+      view_size      = gimp_view_size_get_smaller (view_size);
+    }
+  else
+    return;
+
+  tree_view->priv->zoom_gesture_last_set_value = last_set_value;
+  gimp_container_view_set_view_size (view, view_size, view_border_width);
 }
 
 static gboolean
