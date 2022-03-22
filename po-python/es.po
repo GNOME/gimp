@@ -17,16 +17,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-20 02:37+0000\n"
-"PO-Revision-Date: 2021-05-23 17:54+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2022-03-22 13:18+0000\n"
+"PO-Revision-Date: 2022-03-22 20:36+0100\n"
+"Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
 msgid "Save as colored HTML text..."
@@ -103,47 +103,47 @@ msgstr "Guardar como texto HTML coloreado"
 msgid "Colored HTML text"
 msgstr "Texto HTML coloreado"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "_Nombre de la capa"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Nombre de la capa"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Nubes"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "_Turbulencia"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Turbulencia"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "O_pacidad"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Opacidad"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
-msgstr "_Color de la niebla"
+#: ../plug-ins/python/foggify.py:124
+msgid "_Fog color"
+msgstr "Color de la _niebla"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Color de la niebla"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Añadir una capa de niebla"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Niebla…"
 
@@ -821,6 +821,9 @@ msgstr "Espere : Trazando el patrón"
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Espirogimp…"
+
+#~ msgid "Fog _color"
+#~ msgstr "_Color de la niebla"
 
 #~ msgid "Exercise a goat (Python 3)"
 #~ msgstr "Ejercitar una cabra (Python 3)"
