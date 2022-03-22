@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-10 20:49+0000\n"
-"PO-Revision-Date: 2022-02-10 22:22+0100\n"
+"POT-Creation-Date: 2022-02-25 18:41+0000\n"
+"PO-Revision-Date: 2022-03-04 23:38+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -84,7 +84,7 @@ msgid ""
 msgstr ""
 "GIMP 2.10.30 fixar många fel, uppdaterar bakändesimplementationer så de "
 "följer operativsystems utveckling och förbättrar metadatastöd samt stöd för "
-"flera format så som PSD och AVIF."
+"flera format såsom PSD och AVIF."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
@@ -204,7 +204,7 @@ msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
 msgstr ""
-"GIMP 2.10.20 kommer med nya funktioner så väl som viktiga felfixar. "
+"GIMP 2.10.20 kommer med nya funktioner såväl som viktiga felfixar. "
 "Framstående ändringar:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
@@ -611,7 +611,7 @@ msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr ""
-"GIMP 2.10.4 inkluderar många felfixar så väl som diverse optimeringar. De "
+"GIMP 2.10.4 inkluderar många felfixar såväl som diverse optimeringar. De "
 "mest framstående ändringarna är:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
@@ -663,7 +663,7 @@ msgid ""
 "policy in stable micro releases."
 msgstr ""
 "Den har också en ny insticksmodul för stöd för HEIF-formatet, både för "
-"import och export, så väl som 2 nya filter: ”Sfär” och ”Rekursiv transform”. "
+"import och export, såväl som 2 nya filter: ”Sfär” och ”Rekursiv transform”. "
 "Dessa är bra exempel på vår lättade policy kring ny funktionalitet i stabila "
 "mikroutgåvor."
 
@@ -11076,8 +11076,8 @@ msgstr "Bana"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "När aktiverat blir en bild den aktiva bilden när dess bildfönster får fokus. "
 "Detta är användbart för fönsterhanterare med ”klicka för fokus”."
@@ -13632,7 +13632,7 @@ msgid ""
 "dialog's 'Folders' section."
 msgstr ""
 "Du har en skrivbar datamapp konfigurerad (%s), men den mappen finns inte. "
-"Skapa mappen eller justera din konfiguration i delen ”kataloger” i "
+"Skapa mappen eller justera din konfiguration i delen ”mappar” i "
 "Inställningsdialogrutan."
 
 #: ../app/core/gimpdatafactory.c:928
@@ -13644,7 +13644,7 @@ msgid ""
 msgstr ""
 "Du har en skrivbar datamapp konfigurerad, men den mappen är inte en del av "
 "din datasökväg. Du redigerade förmodligen gimprc-filen manuellt, justera "
-"detta i delen ”kataloger” i Inställningsdialogrutan."
+"detta i delen ”mappar” i Inställningsdialogrutan."
 
 #: ../app/core/gimpdatafactory.c:938
 #, c-format
@@ -17564,7 +17564,7 @@ msgstr "Inmatningsenheter"
 #: ../app/dialogs/preferences-dialog.c:3198
 #: ../app/dialogs/preferences-dialog.c:3199
 msgid "Folders"
-msgstr "Kataloger"
+msgstr "Mappar"
 
 #: ../app/dialogs/preferences-dialog.c:3206
 msgid "Reset _Folders"
@@ -20790,8 +20790,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "Proceduren ”%s” har anropats med en felaktig värdetyp för argumentet "
 "”%s” (nr. %d). Förväntade %s, fick %s."
@@ -25791,7 +25791,7 @@ msgstr "Musknappshändelser"
 #: ../app/widgets/gimpcontrollerwheel.c:87
 #: ../app/widgets/gimpcontrollerwheel.c:90
 msgid "Scroll Up"
-msgstr "Stega Uppåt"
+msgstr "Stega uppåt"
 
 #: ../app/widgets/gimpcontrollerwheel.c:94
 #: ../app/widgets/gimpcontrollerwheel.c:97
@@ -25802,7 +25802,7 @@ msgstr "Stega Uppåt"
 #: ../app/widgets/gimpcontrollerwheel.c:112
 #: ../app/widgets/gimpcontrollerwheel.c:115
 msgid "Scroll Down"
-msgstr "Stega Neråt"
+msgstr "Stega nedåt"
 
 #: ../app/widgets/gimpcontrollerwheel.c:119
 #: ../app/widgets/gimpcontrollerwheel.c:122
@@ -25813,7 +25813,7 @@ msgstr "Stega Neråt"
 #: ../app/widgets/gimpcontrollerwheel.c:137
 #: ../app/widgets/gimpcontrollerwheel.c:140
 msgid "Scroll Left"
-msgstr "Stega Vänster"
+msgstr "Stega vänster"
 
 #: ../app/widgets/gimpcontrollerwheel.c:144
 #: ../app/widgets/gimpcontrollerwheel.c:147
@@ -25824,7 +25824,7 @@ msgstr "Stega Vänster"
 #: ../app/widgets/gimpcontrollerwheel.c:162
 #: ../app/widgets/gimpcontrollerwheel.c:165
 msgid "Scroll Right"
-msgstr "Stega Höger"
+msgstr "Stega höger"
 
 #: ../app/widgets/gimpcontrollerwheel.c:177
 msgid "Mouse Wheel"
@@ -25880,7 +25880,7 @@ msgstr "Kopiera informationen om felet till urklipp genom att klicka: "
 #: ../app/widgets/gimpcriticaldialog.c:242
 #: ../app/widgets/gimpcriticaldialog.c:594
 msgid "Open our bug tracker in the browser by clicking: "
-msgstr "Öppna vårt felrapporteringssytem i webbläsaren genom att klicka på: "
+msgstr "Öppna vårt felrapporteringssystem i webbläsaren genom att klicka på: "
 
 #: ../app/widgets/gimpcriticaldialog.c:244
 #: ../app/widgets/gimpcriticaldialog.c:596
@@ -26306,7 +26306,7 @@ msgstr "Diverse information"
 
 #: ../app/widgets/gimpdashboard.c:1157
 msgid "Select fields"
-msgstr "Markerad fält"
+msgstr "Markera fält"
 
 # sebras: blir det bättre med "Finns ej"?
 #. Tranlators: "N/A" is an abbreviation for "not available"
