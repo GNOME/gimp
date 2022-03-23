@@ -58,6 +58,8 @@ Plug-ins:
       This allows because discoverability and understandibility of the
       issue, while not forcing BigTIFF export (since it might not be
       supported everywhere).
+  - GIF: new option to specify a number of repeat for animated GIF
+    (rather than single run vs. infinite loop only).
 
 API:
 
@@ -73,6 +75,7 @@ Build:
 
   - libtiff dependency's minimum required version bumped to 4.0.0.
   - gexiv2 dependency's minimum required version bumped to 0.14.0.
+  - Our meson/Debian CI now runs `meson dist` too.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
