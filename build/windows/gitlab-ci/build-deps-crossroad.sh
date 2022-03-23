@@ -35,6 +35,7 @@ crossroad install appstream-glib              \
                   glib-networking             \
                   json-c                      \
                   ghostscript                 \
+                  gobject-introspection       \
                   iso-codes                   \
                   libheif                     \
                   libjxl                      \
