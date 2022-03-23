@@ -158,8 +158,8 @@ help_run (GimpProcedure        *procedure,
 
   INIT_I18N ();
 
-  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
-                        GIMP_VALUES_GET_STRV (args, 2)))
+  if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 0),
+                        GIMP_VALUES_GET_STRV (args, 1)))
     {
       status = GIMP_PDB_CALLING_ERROR;
     }
