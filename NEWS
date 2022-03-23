@@ -50,6 +50,12 @@ Libgimpbase:
     `Xmp.photoshop.DocumentAncestors` tags (possibly because of a bugs
     of software who created these).
 
+Icons:
+
+  - Chain icons for the Color icon theme reworked from the Symbolic
+    versions (with contrast borders to work on any background color) so
+    that the "broken" and full variants are easily distinguishable.
+
 Build:
 
   - Bumping minimum GEGL to version 0.4.36.
