@@ -434,8 +434,8 @@ read_color_mode_block (PSDimage      *img_a,
                        GInputStream  *input,
                        GError       **error)
 {
-  static guchar cmap[] = { 0, 0, 0, 255, 255, 255 };
-  guint32       block_len;
+  static guchar cmap[]    = { 0, 0, 0, 255, 255, 255 };
+  guint32       block_len = 0;
 
   img_a->color_map_entries = 0;
   img_a->color_map_len = 0;
@@ -522,7 +522,7 @@ read_image_resource_block (PSDimage      *img_a,
                            GInputStream  *input,
                            GError       **error)
 {
-  guint64 block_len;
+  guint64 block_len = 0;
   guint64 block_end;
 
   if (psd_read (input, &block_len, 4, error) < 4)
@@ -2309,7 +2309,7 @@ add_merged_image (GimpImage     *image,
   PSDchannel            chn_a[MAX_CHANNELS];
   gchar                *alpha_name;
   guchar               *pixels;
-  guint16               comp_mode;
+  guint16               comp_mode = 0;
   guint16               base_channels;
   guint16               extra_channels;
   guint16               total_channels;
