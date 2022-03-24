@@ -101,7 +101,7 @@ file_open_image (Gimp                *gimp,
     {
       if (my_error)
         {
-          g_printerr ("%s: mounting remote volume failed, trying to download"
+          g_printerr ("%s: mounting remote volume failed, trying to download "
                       "the file: %s\n",
                       G_STRFUNC, my_error->message);
           g_clear_error (&my_error);
