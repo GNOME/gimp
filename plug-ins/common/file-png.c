@@ -619,7 +619,7 @@ load_image (GFile        *file,
       /* this could happen if the compile time and run-time libpng
          versions do not match. */
 
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Error creating PNG read struct while loading '%s'."),
                    gimp_file_get_utf8_name (file));
       return NULL;
@@ -628,7 +628,7 @@ load_image (GFile        *file,
   info = png_create_info_struct (pp);
   if (! info)
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while reading '%s'. Could not create PNG header info structure."),
                    gimp_file_get_utf8_name (file));
       return NULL;
@@ -899,7 +899,7 @@ load_image (GFile        *file,
       break;
 
     default:
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Unknown color model in PNG file '%s'."),
                    gimp_file_get_utf8_name (file));
       return NULL;
@@ -912,7 +912,7 @@ load_image (GFile        *file,
                                          image_type, image_precision);
   if (! image)
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Could not create new image for '%s': %s"),
                    gimp_file_get_utf8_name (file),
                    gimp_pdb_get_last_error (gimp_get_pdb ()));
@@ -1456,7 +1456,7 @@ save_image (GFile        *file,
       /* this could happen if the compile time and run-time libpng
        * versions do not match.
        */
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Error creating PNG write struct while exporting '%s'."),
                    gimp_file_get_utf8_name (file));
       return FALSE;
@@ -1465,7 +1465,7 @@ save_image (GFile        *file,
   info = png_create_info_struct (pp);
   if (! info)
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while exporting '%s'. Could not create PNG header info structure."),
                    gimp_file_get_utf8_name (file));
       return FALSE;
@@ -1473,7 +1473,7 @@ save_image (GFile        *file,
 
   if (setjmp (png_jmpbuf (pp)))
     {
-      g_set_error (error, 0, 0,
+      g_set_error (error, G_FILE_ERROR, 0,
                    _("Error while exporting '%s'. Could not export image."),
                    gimp_file_get_utf8_name (file));
       return FALSE;
@@ -1619,7 +1619,7 @@ save_image (GFile        *file,
         break;
 
       default:
-        g_set_error (error, 0, 0, "Image type can't be exported as PNG");
+        g_set_error (error, G_FILE_ERROR, 0, "Image type can't be exported as PNG");
         return FALSE;
       }
     }
