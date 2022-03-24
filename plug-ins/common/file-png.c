@@ -598,7 +598,6 @@ load_image (GFile        *file,
   GimpImageType     layer_type;           /* Type of drawable/layer */
   GimpColorProfile *profile      = NULL;  /* Color profile */
   gchar            *profile_name = NULL;  /* Profile's name */
-  gboolean          linear       = FALSE; /* Linear RGB */
   FILE             *fp;                   /* File pointer */
   volatile GimpImage *image      = NULL;  /* Image -- protected for setjmp() */
   GimpLayer        *layer;                /* Layer */
@@ -681,8 +680,7 @@ load_image (GFile        *file,
     png_set_swap (pp);
 
   /*
-   * Get the iCCP (color profile) chunk, if any, and figure if it's
-   * a linear RGB profile
+   * Get the iCCP (color profile) chunk, if any.
    */
   profile = load_color_profile (pp, info, &profile_name);
 
@@ -790,30 +788,23 @@ load_image (GFile        *file,
     }
 
   if (profile)
-    {
-      *profile_loaded = TRUE;
-
-      linear = gimp_color_profile_is_linear (profile);
-    }
+    *profile_loaded = TRUE;
 
   /*
-   * Get image precision and color model
+   * Get image precision and color model.
+   * Note that we always import PNG as non-linear. The data might be
+   * actually linear because of a linear profile, or because of a gAMA
+   * chunk with 1.0 value (which we convert to a profile above). But
+   * then we'll just set the right profile and that's it. Other than
+   * this, PNG doesn't have (that I can see in the spec) any kind of
+   * flag saying that data is linear, bypassing the profile's TRC so
+   * there is basically no reason to explicitly set a linear precision.
    */
 
   if (png_get_bit_depth (pp, info) == 16)
-    {
-      if (linear)
-        image_precision = GIMP_PRECISION_U16_LINEAR;
-      else
-        image_precision = GIMP_PRECISION_U16_NON_LINEAR;
-    }
+    image_precision = GIMP_PRECISION_U16_NON_LINEAR;
   else
-    {
-      if (linear)
-        image_precision = GIMP_PRECISION_U8_LINEAR;
-      else
-        image_precision = GIMP_PRECISION_U8_NON_LINEAR;
-    }
+    image_precision = GIMP_PRECISION_U8_NON_LINEAR;
 
   if (png_get_bit_depth (pp, info) < 8)
     {
