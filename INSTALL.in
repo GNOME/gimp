@@ -150,12 +150,39 @@ header files installed.
      have to make sure your $PKG_CONFIG_PATH environment variable also
      lists `$PREFIX/share/pkgconfig/`.
 
- 12. You may want to install other third party libraries or programs
+ 12. GIMP uses GLib's GIO library to handle file URIs and any I/O in
+     general, transparently, regardless where the file is stored, i.e.
+     locally, remotely, with which scheme, and so on. GIO in turn
+     supports various backends through modules. We don't know all the
+     modules available but since HTTP and HTTPS are so pervasive
+     nowadays, we kind of consider a least GIO modules for these schemes
+     mandatory (it allows to open from a pasted URL or just drag'n drop
+     from e.g. a browser).
+
+     For HTTP support (and many other schemes), on Linux at least, you
+     should install `gvfs`:
+
+        https://wiki.gnome.org/Projects/gvfs
+
+     It is unclear whether `gvfs` can be built and installed on other
+     platforms such as Windows and macOS.
+
+     For HTTPS support, you should install `glib-networking`:
+
+        https://gitlab.gnome.org/GNOME/glib-networking
+
+     Of course there might be more modules providing support of more
+     storage backends. Ideally GIMP would have support to load from any
+     backend so packaging together with more GIO modules or recommending
+     them in a package manager would be ideal. In any case, installing
+     the ones for HTTP and HTTPS seems like the minimum nowadays.
+
+ 13. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: openjpeg,
      webkit, libmng, libwmf, libaa and libgs (Ghostscript).
 
- 13. HEIF support depends on the libheif library. If you don't have
+ 14. HEIF support depends on the libheif library. If you don't have
      access to pre-built packages, the code is available at:
 
         https://github.com/strukturag/libheif
@@ -165,29 +192,29 @@ header files installed.
      libaom decoder and encoder (for AV1, i.e. AVIF files), otherwise
      the plug-in is mostly useless.
 
- 14. GObject Introspection requires the following dependencies to be
+ 15. GObject Introspection requires the following dependencies to be
      built and installed with introspection as well: babl, cairo,
      GdkPixbuf, GEGL, GIO, GLib, GObject and GTK+.
 
- 15. Windows builds can now generate backtrace logs upon a crash.
+ 16. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
      The feature depends on Dr.MinGW's ExcHndl library:
 
         https://github.com/jrfonseca/drmingw
 
- 16. Configure GIMP by running the `configure' script. You may want
+ 17. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
- 17. Build GIMP by running `make'. The use of GNU make is recommended.
+ 18. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
- 18. Install GIMP by running `make install'. In order to avoid clashes
+ 19. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-@GIMP_APP_VERSION@.
 
- 19. Summary of required packages and what version you need:
+ 20. Summary of required packages and what version you need:
 
      Package Name         Version
 
@@ -204,6 +231,7 @@ header files installed.
      GLib                 @GLIB_REQUIRED_VERSION@
      glib-networking
      GTK+                 @GTK_REQUIRED_VERSION@
+     gvfs (on Linux)
      HarfBuzz             @HARFBUZZ_REQUIRED_VERSION@
      libbzip2
      libjpeg
@@ -219,7 +247,7 @@ header files installed.
      poppler-data         @POPPLER_DATA_REQUIRED_VERSION@
      zlib
 
- 20. Summary of optional packages:
+ 21. Summary of optional packages:
 
      Package Name        Version        Feature
 
@@ -238,7 +266,7 @@ header files installed.
      webkit              @WEBKITGTK_REQUIRED_VERSION@         Help browser & webpage
      vala                -              Vala plug-ins
 
- 21. Summary of optional runtime dependencies:
+ 22. Summary of optional runtime dependencies:
 
      darktable >= 1.7, with lua support enabled for raw loading
      RawTherapee >= 5.2 for raw loading
