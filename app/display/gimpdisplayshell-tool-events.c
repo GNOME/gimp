@@ -700,7 +700,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else if (bevent->button == 2)
           {
-            if (shell->scrolling)
+            if (shell->scrolling                 &&
+                ! shell->button1_release_pending &&
+                (! shell->space_release_pending ||
+                 shell->display->config->space_bar_action != GIMP_SPACE_BAR_ACTION_PAN))
               gimp_display_shell_stop_scrolling (shell, event);
           }
         else if (bevent->button == 3)
