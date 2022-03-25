@@ -848,34 +848,24 @@ gimp_text_style_editor_size_changed (GimpSizeEntry       *entry,
   GtkTextBuffer *buffer = GTK_TEXT_BUFFER (editor->buffer);
   GList         *insert_tags;
   GList         *remove_tags;
+  GtkTextIter    start, end;
+  gdouble        points;
+
+  points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
+                                 GIMP_UNIT_PIXEL, editor->resolution_y);
 
   if (gtk_text_buffer_get_has_selection (buffer))
     {
-      GtkTextIter start, end;
-      gdouble     points;
-
       gtk_text_buffer_get_selection_bounds (buffer, &start, &end);
-
-      points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
-                                     GIMP_UNIT_PIXEL,
-                                     editor->resolution_y);
-
-      gimp_text_buffer_set_size (editor->buffer, &start, &end,
-                                 PANGO_SCALE * points);
     }
   else
     {
-      GtkTextIter start, end;
-      gdouble points;
-      gint size;
-      size = gtk_text_buffer_get_char_count(buffer);
-      points = gimp_units_to_points (gimp_size_entry_get_refval (entry, 0),
-                                     GIMP_UNIT_PIXEL, 
-                                     editor->resolution_y);
-      gtk_text_buffer_get_iter_at_offset(buffer, &start, 0);
-      gtk_text_buffer_get_iter_at_offset(buffer, &end, size);
-      gimp_text_buffer_set_size (editor->buffer, &start, &end, PANGO_SCALE * points);
+      gtk_text_buffer_get_iter_at_offset (buffer, &start, 0);
+      gtk_text_buffer_get_iter_at_offset (buffer, &end, -1);
     }
+
+  gimp_text_buffer_set_size (editor->buffer, &start, &end,
+                             PANGO_SCALE * points);
 
   insert_tags = gimp_text_style_editor_list_tags (editor, &remove_tags);
   gimp_text_buffer_set_insert_tags (editor->buffer, insert_tags, remove_tags);
