@@ -73,8 +73,8 @@ cd ../..
 
 ## babl and GEGL (follow master branch) ##
 
-git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/babl.git _babl
-git clone --depth=${GIT_DEPTH} https://gitlab.gnome.org/GNOME/gegl.git _gegl
+git clone --depth=${GIT_DEPTH} --branch BABL_0_1_92 --single-branch https://gitlab.gnome.org/GNOME/babl.git _babl
+git clone --depth=${GIT_DEPTH} --branch GEGL_0_4_36 --single-branch https://gitlab.gnome.org/GNOME/gegl.git _gegl
 
 mkdir _babl/_build
 cd _babl/_build

@@ -100,7 +100,7 @@ cd "_build${ARTIFACTS_SUFFIX}"
               --with-directx-sdk="${MSYS2_PREFIX}" \
               --with-javascript=no \
               --with-build-id=org.gimp.GIMP_official \
-              --with-revision=1 \
+              --with-revision=2 \
               ${GIMP_OPTIONS}
 make -j4
 make install
