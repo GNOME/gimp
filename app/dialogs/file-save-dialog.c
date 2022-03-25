@@ -162,7 +162,7 @@ file_save_dialog_response (GtkWidget *dialog,
 
   if (response_id != GTK_RESPONSE_OK)
     {
-      if (! file_dialog->busy)
+      if (! file_dialog->busy && response_id != GTK_RESPONSE_HELP)
         gtk_widget_destroy (dialog);
 
       return;
