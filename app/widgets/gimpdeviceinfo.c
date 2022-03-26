@@ -595,6 +595,39 @@ gimp_device_info_tool_changed (GdkDevice      *device,
 {
   g_object_freeze_notify (G_OBJECT (info));
 
+  /* GDK docs says that the number of axes can change on "changed"
+   * signal for virtual devices only, but here, I encounter a change of
+   * number of axes on a physical device, the first time when a stylus
+   * approached then moved away from the active surface. When the tool
+   * became then a GDK_DEVICE_TOOL_TYPE_UNKNOWN, I had one more axis
+   * (which created criticals later).
+   * So let's check specifically for such case.
+   */
+  if (info->priv->n_axes != gdk_device_get_n_axes (device))
+    {
+      gint n_axes     = gdk_device_get_n_axes (device);
+      gint old_n_axes = info->priv->n_axes;
+      gint i;
+
+      for (i = n_axes; i < info->priv->n_axes; i++)
+        g_free (info->priv->axes_names[i]);
+
+      info->priv->axes_names = g_renew (gchar *, info->priv->axes_names, n_axes + 1);
+      for (i = info->priv->n_axes; i < n_axes + 1; i++)
+        info->priv->axes_names[i] = NULL;
+
+      info->priv->axes_uses  = g_renew (GdkAxisUse, info->priv->axes_uses, n_axes);
+      info->priv->n_axes     = n_axes;
+
+      for (i = old_n_axes; i < n_axes; i++)
+        {
+          GdkAxisUse axis_use;
+
+          axis_use = gdk_device_get_axis_use (info->priv->device, i);
+          gimp_device_info_set_axis_use (info, i, axis_use);
+        }
+    }
+
   g_object_notify (G_OBJECT (info), "tool-type");
   g_object_notify (G_OBJECT (info), "tool-serial");
   g_object_notify (G_OBJECT (info), "tool-hardware-id");
