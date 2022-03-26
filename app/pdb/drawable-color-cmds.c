@@ -740,7 +740,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                "gimp-drawable-brightness-contrast");
   gimp_procedure_set_static_help (procedure,
                                   "Modify brightness/contrast in the specified drawable.",
-                                  "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -0.5 and 0.5.",
+                                  "This procedures allows the brightness and contrast of the specified drawable to be modified. Both 'brightness' and 'contrast' parameters are defined between -1.0 and 1.0.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -756,13 +756,13 @@ register_drawable_color_procs (GimpPDB *pdb)
                                g_param_spec_double ("brightness",
                                                     "brightness",
                                                     "Brightness adjustment",
-                                                    -0.5, 0.5, -0.5,
+                                                    -1.0, 1.0, -1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("contrast",
                                                     "contrast",
                                                     "Contrast adjustment",
-                                                    -0.5, 0.5, -0.5,
+                                                    -1.0, 1.0, -1.0,
                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

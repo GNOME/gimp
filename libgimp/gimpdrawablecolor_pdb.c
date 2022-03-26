@@ -47,7 +47,7 @@
  *
  * This procedures allows the brightness and contrast of the specified
  * drawable to be modified. Both 'brightness' and 'contrast' parameters
- * are defined between -0.5 and 0.5.
+ * are defined between -1.0 and 1.0.
  *
  * Returns: TRUE on success.
  *

@@ -22,7 +22,7 @@ sub drawable_brightness_contrast {
     $help = <<'HELP';
 This procedures allows the brightness and contrast of the specified drawable to
 be modified.  Both 'brightness' and 'contrast' parameters are defined between
--0.5 and 0.5.
+-1.0 and 1.0.
 HELP
 
     &std_pdb_misc;
@@ -32,9 +32,9 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => 'The drawable' },
-	{ name => 'brightness', type => '-0.5 <= float <= 0.5',
+	{ name => 'brightness', type => '-1.0 <= float <= 1.0',
 	  desc => 'Brightness adjustment' },
-	{ name => 'contrast', type => '-0.5 <= float <= 0.5',
+	{ name => 'contrast', type => '-1.0 <= float <= 1.0',
 	  desc => 'Contrast adjustment' }
     );
 
