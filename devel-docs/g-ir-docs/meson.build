@@ -17,6 +17,8 @@ foreach lang : [ 'python', 'gjs' ]
     ],
     build_by_default: true)
 
+  ## Gimp Module ##
+
   # XXX `output` is bogus. g-ir-doc-tool produces a lot of output,
   # basically one page per public symbol, which is more than 1000 so
   # it's not usable. Since custom_target() requires an 'output', I could
@@ -41,10 +43,28 @@ foreach lang : [ 'python', 'gjs' ]
     ],
     build_by_default: true)
 
-  ## Gimp Module ##
+  # This step is completely an ugly workaround for 2 tool issues. The
+  # first issue is that g-ir-doc-tool generates invalid XML by not
+  # transforming less-than signs into entities. So I am special-casing
+  # the one API documentation where we need to write a less-than (it will
+  # need to be updated if this happens again).
+  # See GIMP issue #7685.
+  # The second issue is in meson itself which transforms backslash into
+  # slashes preventing to write most basic regexp in a 'command'. For
+  # this reason, I need to add the sed command as an external script.
+  # See meson issue #1564.
+  docs_pages_fix_sh = find_program('docs_pages_fix.sh')
+  gir_docs_pages_fix = custom_target('g-ir-Gimp-' + lang + '-pages-fix',
+    input: [ gir_docs_pages ],
+    output: [ 'Gimp-' + lang + '-pages-fix' ],
+    command: [
+      docs_pages_fix_sh,
+      '@OUTDIR@' + '/pages/' + lang + '/Gimp-' + gimp_api_version + '/Gimp.Procedure.add_menu_path.page',
+    ],
+    build_by_default: true)
 
   gir_docs_cache = custom_target('g-ir-Gimp-' + lang + '-cache',
-    input: [ gir_docs_pages ],
+    input: [ gir_docs_pages_fix ],
     output: [ 'Gimp-' + lang + '-cache' ],
     command: [
       yelp_build, 'cache',
