@@ -119,8 +119,6 @@ if meson.version().version_compare('>=0.57.0')
     ],
   )
 
-  ## TODO remove that ?
-
   pdbgen = custom_target('stamp-pdbgen',
     input : [
       files(
