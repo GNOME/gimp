@@ -215,6 +215,7 @@ gimp-distcheck-debian:
         --prefix="${INSTALL_PREFIX}"
         --enable-debug
         --enable-gi-docgen
+        --enable-g-ir-doc
         --enable-windows-installer
     - make -j "$(nproc)"
     - make -j "$(nproc)" check
@@ -231,7 +232,7 @@ gimp-meson-debian:
   extends: .gimp-debian-base
   script:
     - meson _build
-      --prefix="${INSTALL_PREFIX}" -Dg-ir-doc=true
+      --prefix="${INSTALL_PREFIX}"
     - ninja -C _build
     - ninja -C _build test
     - ninja -C _build dist
@@ -769,6 +770,29 @@ sources:
     - FILENAME=`ls gimp-*.tar.bz2` &&
       sha256sum gimp-*.tar.bz2 > ${FILENAME}.SHA256SUMS &&
       sha512sum gimp-*.tar.bz2 > ${FILENAME}.SHA512SUMS
+  needs: ["gimp-distcheck-debian"]
+
+dev-docs:
+  rules:
+    # On commits.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_SOURCES != null'
+  stage: distribution
+  dependencies:
+    - gimp-distcheck-debian
+  artifacts:
+    name: "GIMP-sources-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    expire_in: 2 days
+    paths:
+    - g-ir-docs
+    - reference
+  script:
+    - mv _build/devel-docs/g-ir-docs .
+    - mv _build/devel-docs/reference .
   needs: ["gimp-distcheck-debian"]
 
 win64-nightly:
