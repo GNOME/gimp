@@ -80,4 +80,7 @@ libappinternalprocs = static_library('appinternalprocs',
   dependencies: [
     cairo, gegl, gdk_pixbuf,
   ],
+  sources: [
+    pdbgen
+  ],
 )

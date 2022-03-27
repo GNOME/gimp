@@ -63,11 +63,11 @@ endforeach
 
 
 enum_headers = [
-  gimpbaseenums,
-  appconfigenums,
-  appoperationsenums,
-  appcoreenums,
-  apppaintenums,
+  meson.source_root() + '/libgimpbase/gimpbaseenums.h',
+  meson.source_root() + '/libgimpconfig/gimpconfigenums.h',
+  meson.source_root() + '/app/operations/operations-enums.h',
+  meson.source_root() + '/app/core/core-enums.h',
+  meson.source_root() + '/app/paint/paint-enums.h'
 ]
 
 # Perl environment
@@ -82,7 +82,7 @@ perl_env = [
   'destdir='  + meson.build_root(),
   'builddir=' + meson.build_root(),
 ]
-perl= [
+perl_opts = [
   perl,
   '-I', perlbindir,
   '-I', perlsrcdir,
@@ -106,6 +106,8 @@ groups_pl = custom_target('groups.pl',
   capture: true,
 )
 
+pdbgen_run = find_program('meson-pdbgen.sh')
+
 if meson.version().version_compare('>=0.57.0')
   enums_pl = custom_target('enums.pl',
     input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
@@ -122,6 +124,7 @@ if meson.version().version_compare('>=0.57.0')
   pdbgen = custom_target('stamp-pdbgen',
     input : [
       files(
+        'meson-pdbgen.sh',
         'pdbgen.pl',
 
         'app.pl',
@@ -137,8 +140,7 @@ if meson.version().version_compare('>=0.57.0')
     output: [ 'stamp-pdbgen', ],
     env: perl_env,
     command: [
-      perl, '@INPUT0@',
-      'app', 'lib',
+      pdbgen_run, perl, meson.source_root(), meson.build_root()
     ],
   )
 
@@ -147,7 +149,7 @@ if meson.version().version_compare('>=0.57.0')
     output: [ 'stamp-enum-code', ],
     env: perl_env,
     command: [
-      perl, '@INPUT0@',
+      perl_opts, '@INPUT0@',
     ],
   )
 else
@@ -160,7 +162,7 @@ else
     input : [ 'enumgen.pl', 'enums-external.pl', enum_headers, ],
     output: [ 'enums.pl', ],
     command: [
-      env, perl_env, perl, '@INPUT0@',
+      env, perl_env, perl_opts, '@INPUT0@',
       enum_headers,
     ],
   )
@@ -168,6 +170,7 @@ else
   pdbgen = custom_target('stamp-pdbgen',
     input : [
       files(
+        'meson-pdbgen.sh',
         'pdbgen.pl',
 
         'app.pl',
@@ -182,16 +185,16 @@ else
     ],
     output: [ 'stamp-pdbgen', ],
     command: [
-      env, perl_env, perl, '@INPUT0@',
-      'app', 'lib',
+      env, perl_env, pdbgen_run, perl, meson.source_root(), meson.build_root()
     ],
   )
+
 
   stamp_enumcode = custom_target('stamp-enum-code',
     input : [ 'enumcode.pl', ],
     output: [ 'stamp-enum-code', ],
     command: [
-      env, perl_env, perl, '@INPUT0@',
+      env, perl_env, perl_opts, '@INPUT0@',
     ],
   )
 endif

@@ -1667,6 +1667,7 @@ endif
 # Tools
 subdir('libgimpbase')
 subdir('tools')
+subdir('pdb')
 
 # Translations
 subdir('po')
@@ -1700,7 +1701,6 @@ subdir('extensions')
 subdir('modules')
 subdir('plug-ins')
 subdir('app')
-subdir('pdb')
 subdir('app-tools')
 
 # Docs

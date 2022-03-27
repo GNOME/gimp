@@ -298,6 +298,9 @@ libgimp = library('gimp-'+ gimp_api_version,
     drmingw,
     gtk3,
   ],
+  sources: [
+    pdbgen
+  ],
   c_args: [ '-DG_LOG_DOMAIN="LibGimp"', '-DGIMP_COMPILATION', ],
   link_with: [
     libgimpbase,
