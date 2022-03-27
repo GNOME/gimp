@@ -125,6 +125,8 @@ Then just run your older GIMP!
 
 ## Debugging on flatpak
 
+### Generic flatpak abilities
+
 If you want to inspect the sandbox environment, you can do so by
 specifying a custom shell instead of the GIMP binary with the following
 command:
@@ -149,9 +151,11 @@ flatpak install flathub org.gimp.GIMP.Debug
 flatpak install flathub org.gnome.Sdk.Debug
 ```
 
-Finally even with reporter trace without debug symbols (yet debug
-symbols installed on your side), if you make sure you use exactly the
-same flatpak commit as the reporter (see `Testing older GIMP versions`
+### Getting accurate traces from reported inaccurate traces
+
+Even with reporter trace without debug symbols (yet debug symbols
+installed on your side), if you make sure you use exactly the same
+flatpak commit as the reporter (see `Testing older GIMP versions`
 section), you are ensured to use the same binaries. Hence you can trace
 back the code line from an offset.
 
@@ -171,6 +175,52 @@ $ flatpak run --devel --command=bash org.gimp.GIMP
 (flatpak) $ gdb /app/bin/gimp-2.10
 (gdb) info line *(file_open_image+0x4e8)
 Line 216 of "file-open.c" starts at address 0x4d5738 <file_open_image+1256> and ends at 0x4d5747 <file_open_image+1271>.
+```
+
+### Debugging though gdbserver
+
+In some cases, when GIMP grabs the pointer and/or keyboard, i.e. when
+you debug something happening on canvas in particular, it might be very
+hard to get back to your debugger, since your system won't be responding
+to your keyboard or click events.
+
+To work around this, you can debug remotely, or simply from a TTY (while
+the desktop doesn't answer properly):
+
+In your desktop, run GIMP through a debugger server:
+
+```
+$ flatpak run --devel --command=bash org.gimp.GIMP//beta
+$ gdbserver :9999 /app/bin/gimp-2.99
+```
+
+Go to a TTY and run
+
+```
+$ gdb /app/bin/gimp-2.99
+(gdb) target remote localhost:9999
+(gdb) continue
+```
+
+Of course, before the `continue`, you may add whatever break points or
+other commands necessary for your specific issue. GIMP will start in the
+desktop when you hit `continue` (it will likely be a slower start).
+
+Then do your issue reproduction steps on GIMP. When you need to debug,
+you can go to the TTY whenever you want, not bothering about any
+keyboard/pointer grabs.
+
+Note that since copy-pasting is harder in a TTY, you might want to
+redirect your output to a file, especially if you need to upload it or
+read it slowly next to GIMP code. For instance here are commands to
+output a full backtrace into a file from the gdb prompt and exit (to
+force the device ungrab by killing GIMP and go work on desktop again):
+
+```
+(gdb) set logging file gimp-issue-1234.txt
+(gdb) set logging on
+(gdb) thread apply all backtrace full
+(gdb) quit
 ```
 
 ## Debugging icons ##
