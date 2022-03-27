@@ -5,6 +5,7 @@ Gimp-%-docs: $(top_builddir)/libgimp/Gimp-@GIMP_API_VERSION@.gir
 		-I "$(top_builddir)/libgimp" --language=$*		\
 		-o "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)"	\
 		$<
+	sed -i 's/<\(Prefix\|Image\)/\&lt;\1/g' "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/Gimp.Procedure.add_menu_path.page"
 	$(YELP_BUILD) cache								\
 		-o "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/index.cache"	\
 		"$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/"
