@@ -60,8 +60,17 @@ stamp-isl: setup.isl Makefile.am
 	done &&										\
 	echo timestamp > stamp-isl
 
+# * setup.isl.ini is used by intltool-extract to extract the localizable
+#   strings. We needed to use the ini syntax for leaving comments to
+#   translators (with '#' instead of ';').
+# * setup.isl.in is in the actual .isl format except for the gettext
+#   underscoring.
+# * setup.isl is in the .isl format but mixing all languages.
 setup.isl: setup.isl.in $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
 	$(AM_V_GEN) $(INTLTOOL_MERGE) $(top_srcdir)/po-windows-installer $< $(@) -d -u -c $(top_builddir)/po-windows-installer/.intltool-merge-cache
+
+setup.isl.in: setup.isl.ini Makefile.am
+	$(AM_V_GEN) sed 's/^#/;/' $< > $@
 
 all-local: $(stamp_files)
 

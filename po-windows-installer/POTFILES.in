@@ -3,4 +3,4 @@
 
 [encoding: UTF-8]
 
-[type: gettext/ini] build/windows/installer/lang/setup.isl.in
+[type: gettext/ini] build/windows/installer/lang/setup.isl.ini

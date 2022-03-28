@@ -1,5 +1,14 @@
+isl_in_input = custom_target('setup.isl.in',
+  input : 'setup.isl.ini',
+  output: 'setup.isl.in',
+  capture: true,
+  command: [
+    'sed', 's/^#/;/', '@INPUT@',
+  ]
+)
+
 isl_input = custom_target('setup.isl',
-  input : 'setup.isl.in',
+  input : isl_in_input,
   output: 'setup.isl',
   command: [
     intltool_merge,
