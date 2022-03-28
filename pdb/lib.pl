@@ -742,6 +742,7 @@ HEADER
         print CFILE " * $cname\n";
         print CFILE $lgpl_bottom;
         print CFILE qq/#include "config.h"\n\n/;
+	print CFILE qq/#include "stamp-pdbgen.h"\n\n/;
 	print CFILE $out->{headers}, "\n" if exists $out->{headers};
 	print CFILE qq/#include "gimp.h"\n/;
 

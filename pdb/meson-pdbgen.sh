@@ -12,4 +12,4 @@ export BUILD builddir
 
 cd "$top_srcdir"/pdb
 $PERL pdbgen.pl app lib
-echo `date` > $top_builddir/pdb/stamp-pdbgen
+echo "/* Generated on `date`. */" > $top_builddir/pdb/stamp-pdbgen.h

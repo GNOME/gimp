@@ -101,7 +101,7 @@ pdbgen_deps = \
 stamp_files = \
 	stamp-enums		\
 	stamp-groups		\
-	stamp-pdbgen		\
+	stamp-pdbgen.h		\
 	stamp-enum-code		\
 	stamp-enum-code-py
 
@@ -132,14 +132,14 @@ stamp-groups: Makefile.am
 	&& rm $$rootme/groups.pl.tmp \
 	&& echo timestamp > $$rootme/stamp-groups
 
-stamp-pdbgen: $(pdbgen_deps) $(pdb_scripts) $(pdb_groups) Makefile.am
+stamp-pdbgen.h: $(pdbgen_deps) $(pdb_scripts) $(pdb_groups) Makefile.am
 	rootme=`pwd`; \
 	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
 	builddir=`cd $(top_builddir) && pwd`; export builddir; \
 	cd $(srcdir) && \
 	   PDBGEN_BACKUP=$(PDBGEN_BACKUP) PDBGEN_GROUPS=$(PDBGEN_GROUPS) \
 	   $(PERL) pdbgen.pl app lib \
-	&& echo timestamp > $$rootme/stamp-pdbgen
+	&& echo "/* Generated on `date`. */" > $$rootme/stamp-pdbgen.h
 
 stamp-enum-code: $(srcdir)/enumcode.pl $(enum_deps)
 	rootme=`pwd`; \
@@ -150,4 +150,4 @@ stamp-enum-code: $(srcdir)/enumcode.pl $(enum_deps)
 	  $(PERL) enumcode.pl \
 	 && echo timestamp > $$rootme/stamp-enum-code
 
-all-local: stamp-pdbgen stamp-enum-code
+all-local: stamp-pdbgen.h stamp-enum-code

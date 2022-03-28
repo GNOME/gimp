@@ -119,7 +119,7 @@ if meson.version().version_compare('>=0.57.0')
     ],
   )
 
-  pdbgen = custom_target('stamp-pdbgen',
+  pdbgen = custom_target('stamp-pdbgen.h',
     input : [
       files(
         'meson-pdbgen.sh',
@@ -135,7 +135,7 @@ if meson.version().version_compare('>=0.57.0')
       groups_pl,
       pdb_sources,
     ],
-    output: [ 'stamp-pdbgen', ],
+    output: [ 'stamp-pdbgen.h', ],
     env: perl_env,
     command: [
       pdbgen_run, perl, meson.source_root(), meson.build_root()
@@ -165,7 +165,7 @@ else
     ],
   )
 
-  pdbgen = custom_target('stamp-pdbgen',
+  pdbgen = custom_target('stamp-pdbgen.h',
     input : [
       files(
         'meson-pdbgen.sh',
@@ -181,7 +181,7 @@ else
       groups_pl,
       pdb_sources,
     ],
-    output: [ 'stamp-pdbgen', ],
+    output: [ 'stamp-pdbgen.h', ],
     command: [
       env, perl_env, pdbgen_run, perl, meson.source_root(), meson.build_root()
     ],

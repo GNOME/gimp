@@ -74,6 +74,7 @@ AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"LibGimp\"	\
 	-DGIMP_COMPILATION		\
 	-I$(top_srcdir)			\
+	-I$(top_builddir)/pdb		\
 	$(GTK_CFLAGS)			\
 	$(GEGL_CFLAGS)			\
 	$(GEXIV2_CFLAGS)		\

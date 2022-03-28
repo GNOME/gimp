@@ -5,6 +5,7 @@ AM_CPPFLAGS = \
 	-I$(top_builddir)		\
 	-I$(top_srcdir)			\
 	-I$(top_builddir)/app		\
+	-I$(top_builddir)/pdb		\
 	-I$(top_srcdir)/app		\
 	$(CAIRO_CFLAGS)			\
 	$(GEGL_CFLAGS)			\

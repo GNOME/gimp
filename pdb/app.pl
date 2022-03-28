@@ -935,6 +935,7 @@ GPL
 	open CFILE, "> $cfile" or die "Can't open $cfile: $!\n";
 	print CFILE $gpl;
 	print CFILE qq/#include "config.h"\n\n/;
+	print CFILE qq/#include "stamp-pdbgen.h"\n\n/;
 	print CFILE $headers, "\n";
 	print CFILE $extra->{decls}, "\n" if exists $extra->{decls};
 	print CFILE "\n", $extra->{code} if exists $extra->{code};
@@ -981,6 +982,7 @@ HEADER
 	open IFILE, "> $internal" or die "Can't open $internal: $!\n";
 	print IFILE $gpl;
 	print IFILE qq@#include "config.h"\n\n@;
+	print IFILE qq/#include "stamp-pdbgen.h"\n\n/;
 	print IFILE qq@#include <glib-object.h>\n\n@;
 	print IFILE qq@#include "pdb-types.h"\n\n@;
 	print IFILE qq@#include "gimppdb.h"\n\n@;

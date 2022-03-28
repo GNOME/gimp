@@ -19,6 +19,8 @@
 
 #include "config.h"
 
+#include "stamp-pdbgen.h"
+
 #include <glib-object.h>
 
 #include "pdb-types.h"
