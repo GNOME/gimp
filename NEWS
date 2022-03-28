@@ -40,6 +40,8 @@ Tools:
       Line Art Closure and Fill Borders) and some options were reworded.
       This should hopefully make the now many options more
       understandable.
+  - Full text layer's text size will now be changed when changing font
+    size in the text editor window, when no text is selected.
 
 Plug-ins:
 
@@ -60,6 +62,14 @@ Plug-ins:
       supported everywhere).
   - GIF: new option to specify a number of repeat for animated GIF
     (rather than single run vs. infinite loop only).
+  - help-browser: rewritten to use GtkAction and GtkApplication, even
+    though it's now a deprecated plug-in (though it's a good example for
+    porting other plug-ins the same way).
+  - PNG: the format does not have any flag for linear RGB, but it can
+    simply include a linear profile (or a 1.0 gAMA chunk). Therefore
+    since we always attach the profile when importing (or transform the
+    gAMA chunk into a profile), we now always load PNG images as
+    non-linear backend.
 
 API:
 
@@ -76,6 +86,19 @@ Build:
   - libtiff dependency's minimum required version bumped to 4.0.0.
   - gexiv2 dependency's minimum required version bumped to 0.14.0.
   - Our meson/Debian CI now runs `meson dist` too.
+  - gvfs is marked as an expected dependency for GIMP (as a GIO module)
+    on Linux, since it seems we wouldn't have HTTP support without. This
+    is only written in the INSTALL file though, no tests are run on
+    configure time.
+  - The distribution stage now has a new `dev-docs` job containing both
+    the C API reference (gi-docgen) and the Python and Javascript (gjs)
+    ones (g-ir-doc).
+  - The `pdbgen` (generation of PDB source files) build step is finally
+    ported to meson too, which is a major step to one day consider this
+    build system out of the "experimental" zone.
+  - Windows installer's gettext files (.po) will now also contain
+    extracted comments from the source to give more context to
+    translators.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
