@@ -2811,7 +2811,7 @@ AC_ARG_ENABLE(windows-installer,
               enable_windows_installer=no)
 
 if test "x$enable_windows_installer" != xno; then
-  if test ! -e "$srcdir/build/windows/installer/lang/setup.isl.in"; then
+  if test ! -e "$srcdir/build/windows/installer/lang/setup.isl.ini"; then
     AC_MSG_RESULT([no (not building from git)])
     AC_MSG_ERROR([Building the Windows installer is only supported when building from git.])
   fi
