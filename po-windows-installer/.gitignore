@@ -2,6 +2,7 @@
 /*.mo
 /*.pot
 /.intltool-merge-cache
+/.intltool-merge-cache.lock
 /Makefile
 /Makefile.in
 /POTFILES

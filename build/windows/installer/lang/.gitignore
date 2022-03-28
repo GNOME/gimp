@@ -1,5 +1,6 @@
 /Makefile
 /Makefile.in
 /setup.isl
+/setup.isl.in
 /*.setup.isl
-/isl-stamp
+/stamp-isl
