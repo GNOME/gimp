@@ -24,6 +24,7 @@ pacman --noconfirm -Suy
 pacman --noconfirm -S --needed \
     base-devel \
     mingw-w64-$MSYS2_ARCH-toolchain \
+    mingw-w64-$MSYS2_ARCH-autotools \
     mingw-w64-$MSYS2_ARCH-ccache \
     \
     mingw-w64-$MSYS2_ARCH-appstream-glib \
