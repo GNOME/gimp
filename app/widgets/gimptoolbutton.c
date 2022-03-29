@@ -902,10 +902,11 @@ gimp_tool_button_update (GimpToolButton *tool_button)
 
   if (tool_info)
     {
-      gchar *id = gimp_object_get_name (tool_info);
+      const gchar *tool_name = gimp_object_get_name (tool_info);
+      gchar       *identifier;
 
-      if (g_str_has_prefix (id, "gimp-") &&
-          g_str_has_suffix (id, "-tool"))
+      if (g_str_has_prefix (tool_name, "gimp-") &&
+          g_str_has_suffix (tool_name, "-tool"))
         {
           /* The GimpToolInfo names are of the form "gimp-pencil-tool",
            * and action names are of the form "tools-pencil".
@@ -914,16 +915,17 @@ gimp_tool_button_update (GimpToolButton *tool_button)
            */
           gchar *suffix;
 
-          id = g_strdup_printf ("tools-%s", id + 5);
-          suffix = g_strrstr (id, "-tool");
+          identifier = g_strdup_printf ("tools-%s", tool_name + 5);
+          suffix = g_strrstr (identifier, "-tool");
           suffix[0] = '\0';
         }
       else
         {
-          id = g_strdup (id);
+          identifier = g_strdup (tool_name);
         }
 
-      gimp_widget_set_identifier (tool_button, id);
+      gimp_widget_set_identifier (GTK_WIDGET (tool_button), identifier);
+      g_free (identifier);
     }
 
   gimp_tool_button_update_toggled (tool_button);
