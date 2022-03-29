@@ -249,16 +249,16 @@ static void draw_horizontal_line   (guchar *buffer, gint bufsize,
                                     gint px[2], gint py[2]);
 static void darken_vertical_line   (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-                                    gint *px, gint *py, gdouble delta);
+                                    gint px[2], gint py[2], gdouble delta);
 static void lighten_vertical_line  (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-                                    gint *px, gint *py, gdouble delta);
+                                    gint px[2], gint py[2], gdouble delta);
 static void darken_horizontal_line (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-                                    gint *px, gint *py, gdouble delta);
+                                    gint px[2], gint py[2], gdouble delta);
 static void lighten_horizontal_line(guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
-                                    gint *px, gint *py, gdouble delta);
+                                    gint px[2], gint py[2], gdouble delta);
 static void draw_right_bump        (guchar *buffer, gint bufsize,
                                     gint width, gint bytes,
                                     gint x_offset, gint curve_start_offset,
