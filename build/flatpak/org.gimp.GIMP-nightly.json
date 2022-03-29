@@ -138,6 +138,9 @@
                                 "type": "anitya",
                                 "project-id": 13289,
                                 "stable-only": true,
+                                "versions": {
+                                    "<": "3.0.0"
+                                },
                                 "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
                             }
                         },
@@ -172,6 +175,9 @@
                         "type": "anitya",
                         "project-id": 13289,
                         "stable-only": true,
+                        "versions": {
+                            "<": "3.0.0"
+                        },
                         "url-template": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v$version.tar.gz"
                     }
                 },
