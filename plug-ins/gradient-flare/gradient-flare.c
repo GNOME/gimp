@@ -511,13 +511,13 @@ static void gflare_read_int             (gint         *intvar,
                                          GFlareFile   *gf);
 static void gflare_read_double          (gdouble      *dblvar,
                                          GFlareFile   *gf);
-static void gflare_read_gradient_name   (gchar        *name,
+static void gflare_read_gradient_name   (GradientName  name,
                                          GFlareFile   *gf);
 static void gflare_read_shape           (GFlareShape  *shape,
                                          GFlareFile   *gf);
 static void gflare_read_mode            (GFlareMode   *mode,
                                          GFlareFile   *gf);
-static void gflare_write_gradient_name  (gchar        *name,
+static void gflare_write_gradient_name  (GradientName  name,
                                          FILE         *fp);
 
 static gint calc_sample_one_gradient    (void);
