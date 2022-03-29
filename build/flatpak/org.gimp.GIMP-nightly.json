@@ -103,8 +103,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.12/lcms2-2.12.tar.gz",
-                    "sha256": "18663985e864100455ac3e507625c438c3710354d85e5cbb7cd4043e11fe10f5",
+                    "url": "https://github.com/mm2/Little-CMS/releases/download/lcms2.13.1/lcms2-2.13.1.tar.gz",
+                    "sha256": "d473e796e7b27c5af01bd6d1552d42b45b43457e7182ce9903f38bb748203b88",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 9815,
@@ -132,8 +132,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.7.tar.gz",
-                            "sha256": "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d",
+                            "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.8.tar.gz",
+                            "sha256": "db261a7fcc046ec6634e4c5696a2fc2ce8b55f50aac6abe034308f54c8495f55",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 13289,
@@ -169,8 +169,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.7.tar.gz",
-                    "sha256": "36ecb2290cba6fc92b2ec9357f8dc0e364b4f9a90d727bf9a57c84760695272d",
+                    "url": "https://github.com/AcademySoftwareFoundation/openexr/archive/refs/tags/v2.5.8.tar.gz",
+                    "sha256": "db261a7fcc046ec6634e4c5696a2fc2ce8b55f50aac6abe034308f54c8495f55",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 13289,
@@ -230,8 +230,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-22.01.0.tar.xz",
-                    "sha256": "7d3493056b5b86413e5c693c2cae02c5c06cd8e618d14c2c31e2c84b67b2313e",
+                    "url": "https://poppler.freedesktop.org/poppler-22.03.0.tar.xz",
+                    "sha256": "728c78ba94d75a55f6b6355d4fbdaa6f49934d9616be58e5e679a9cfd0980e1e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -445,8 +445,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.10.1.tar.gz",
-                    "sha256": "acb4d1045f48a237e70294b950153e48dce5b5f9ca8190e86c2b8c54ce00a7ee",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.11.0.tar.gz",
+                    "sha256": "fdd957ed06019465f7de73ce931afaf5d40e96e14ae57d91f60868b8c123c4c8",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
@@ -476,8 +476,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.19.tar.gz",
-                            "sha256": "947f51bfe50c2a0749304fbe373e00e7637600b0a47b78a51382aeb30ca08562",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.20.tar.gz",
+                            "sha256": "8495c9affc536253648e942908e88e097f2ec7753ede55aca52e5dead3029e3c",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -715,22 +715,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.17.4/cairo-1.17.4.tar.gz",
-                    "sha256": "0a673c88f7c049b4555c1f152b11d9fe16d8523b62632d2d5c14e1868499ce9f",
+                    "url": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/1.17.6/cairo-1.17.6.tar.gz",
+                    "sha256": "a2227afc15e616657341c42af9830c937c3a6bfa63661074eabef13600e8936f",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 247,
                         "stable-only": true,
                         "url-template": "https://gitlab.freedesktop.org/cairo/cairo/-/archive/$version/cairo-$version.tar.gz"
                     }
-                },
-                {
-                    "type": "patch",
-                    "path": "../patches/cairo-mr114-gimp-issue-6210.patch"
-                },
-                {
-                    "type": "patch",
-                    "path": "../patches/cairo-mr245-issue325.patch"
                 }
             ]
         },
@@ -786,8 +778,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/2.50.0/graphviz-2.50.0.tar.gz",
-                            "sha256": "afa48581f764a35e148909cc96a0308ec2356b5225b64af12492f3392f20ef1c",
+                            "url": "https://gitlab.com/graphviz/graphviz/-/archive/3.0.0/graphviz-3.0.0.tar.gz",
+                            "sha256": "59931082a3638139e06c296b96e860a9d338432af06f7f57a6ad8da5cbf465c7",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 1249,

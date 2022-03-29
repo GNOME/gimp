@@ -1,6 +1,6 @@
-diff -Naur SuiteSparse-5.10.1/Makefile SuiteSparse-5.10.1.patched/Makefile
---- SuiteSparse-5.10.1/Makefile	2021-05-18 15:01:16.000000000 +0200
-+++ SuiteSparse-5.10.1.patched/Makefile	2021-07-22 02:03:40.698984882 +0200
+diff -Naur SuiteSparse-5.11.0/Makefile SuiteSparse-5.11.0.patched/Makefile
+--- SuiteSparse-5.11.0/Makefile	2021-05-18 15:01:16.000000000 +0200
++++ SuiteSparse-5.11.0.patched/Makefile	2021-07-22 02:03:40.698984882 +0200
 @@ -35,7 +35,7 @@
  endif
  	( cd SPQR && $(MAKE) )
@@ -12,10 +12,9 @@ diff -Naur SuiteSparse-5.10.1/Makefile SuiteSparse-5.10.1.patched/Makefile
  
 @@ -46,27 +46,27 @@
  # (note that CSparse is not installed; CXSparse is installed instead)
- install: metisinstall
+ install: metisinstall gbinstall moninstall
  	( cd SuiteSparse_config && $(MAKE) install )
--	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
-+#	( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
+ 	# ( cd Mongoose  && $(MAKE) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
  	( cd AMD && $(MAKE) install )
 -	( cd BTF && $(MAKE) install )
 +#	( cd BTF && $(MAKE) install )
@@ -37,9 +36,8 @@ diff -Naur SuiteSparse-5.10.1/Makefile SuiteSparse-5.10.1.patched/Makefile
  	( cd GPUQREngine && $(MAKE) install )
  endif
 -	( cd SPQR && $(MAKE) install )
--	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
 +#	( cd SPQR && $(MAKE) install )
-+#	( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
+ 	# ( cd GraphBLAS && $(MAKE) JOBS=$(JOBS) CMAKE_OPTIONS='$(CMAKE_OPTIONS)' install )
  #	( cd PIRO_BAND && $(MAKE) install )
  #	( cd SKYLINE_SVD && $(MAKE) install )
 -	( cd SLIP_LU && $(MAKE) install )
