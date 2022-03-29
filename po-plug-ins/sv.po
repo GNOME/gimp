@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-11 10:38+0000\n"
-"PO-Revision-Date: 2022-03-14 00:59+0100\n"
+"POT-Creation-Date: 2022-03-21 15:27+0000\n"
+"PO-Revision-Date: 2022-03-22 20:42+0100\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -77,7 +77,7 @@ msgstr "Rasta en get (C)"
 #: ../plug-ins/common/curve-bend.c:1220 ../plug-ins/common/curve-bend.c:1994
 #: ../plug-ins/common/curve-bend.c:2029 ../plug-ins/common/depth-merge.c:732
 #: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1003
-#: ../plug-ins/common/file-gif-save.c:1143 ../plug-ins/common/file-heif.c:2459
+#: ../plug-ins/common/file-gif-save.c:1159 ../plug-ins/common/file-heif.c:2301
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
@@ -184,7 +184,7 @@ msgstr "Rasta en get (Python 3)"
 #: ../plug-ins/common/colormap-remap.c:666 ../plug-ins/common/compose.c:1183
 #: ../plug-ins/common/contrast-retinex.c:351
 #: ../plug-ins/common/curve-bend.c:1221 ../plug-ins/common/depth-merge.c:733
-#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2460
+#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2302
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:547 ../plug-ins/common/film.c:1315
 #: ../plug-ins/common/grid.c:761 ../plug-ins/common/hot.c:679
@@ -990,8 +990,8 @@ msgstr "Spara parametrar för CML-utforskare"
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
 #: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
-#: ../plug-ins/file-tiff/file-tiff-save.c:1024
-#: ../plug-ins/file-tiff/file-tiff-save.c:1100 ../plug-ins/flame/flame.c:508
+#: ../plug-ins/file-tiff/file-tiff-save.c:1025
+#: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: ../plug-ins/gfig/gfig.c:846 ../plug-ins/ifs-compose/ifs-compose.c:2422
 #: ../plug-ins/lighting/lighting-ui.c:1233
@@ -1230,7 +1230,7 @@ msgstr "_Rödton cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2648 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2490 ../plug-ins/common/file-raw-data.c:1870
 msgid "RGB"
 msgstr "RGB"
 
@@ -1801,7 +1801,7 @@ msgstr "_Överlappning:"
 
 #: ../plug-ins/common/depth-merge.c:844 ../plug-ins/common/file-raw-data.c:1903
 msgid "O_ffset:"
-msgstr "O_ffset:"
+msgstr "_Förskjutning:"
 
 #: ../plug-ins/common/depth-merge.c:853
 msgid "Sc_ale 1:"
@@ -2021,7 +2021,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:903
+#: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:912
 #: ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
@@ -2032,7 +2032,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
-#: ../plug-ins/file-tiff/file-tiff-save.c:1014
+#: ../plug-ins/file-tiff/file-tiff-save.c:1015
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exporterar ”%s”"
@@ -2244,24 +2244,24 @@ msgstr ""
 "GIF: Odokumenterad komposittyp %d hanteras inte. Animeringen kanske inte kan "
 "spelas eller sparas igen perfekt."
 
-#: ../plug-ins/common/file-gif-save.c:225
+#: ../plug-ins/common/file-gif-save.c:232
 msgid "Save the image comment in the GIF file"
 msgstr "Spara bildkommentaren i GIF-filen"
 
-#: ../plug-ins/common/file-gif-save.c:231
+#: ../plug-ins/common/file-gif-save.c:238
 msgid "Image comment"
 msgstr "Bildkommentar"
 
-#: ../plug-ins/common/file-gif-save.c:338
+#: ../plug-ins/common/file-gif-save.c:345
 #, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "GIF-formatet stöder inte flera lager."
 
-#: ../plug-ins/common/file-gif-save.c:546
+#: ../plug-ins/common/file-gif-save.c:553
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr "Kunde inte enkelt reducera antalet färger mer. Exporterar som opak."
 
-#: ../plug-ins/common/file-gif-save.c:665
+#: ../plug-ins/common/file-gif-save.c:672
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2270,7 +2270,7 @@ msgstr ""
 "Kunde inte exportera ”%s”. Filformatet GIF har inte stöd för bilder som är "
 "högre eller bredare än %d bildpunkter."
 
-#: ../plug-ins/common/file-gif-save.c:789
+#: ../plug-ins/common/file-gif-save.c:798
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2278,18 +2278,18 @@ msgstr ""
 "GIF-formatet stöder endast kommentarer i 7-bitars ASCII. Ingen kommentar "
 "sparad."
 
-#: ../plug-ins/common/file-gif-save.c:876
+#: ../plug-ins/common/file-gif-save.c:885
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Kan ej exportera RGB-färgbilder. Konvertera till indexerad eller gråskala "
 "först."
 
-#: ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-gif-save.c:1105
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Fördröjning inlagd för att undvika ond CPU-ätande animation."
 
-#: ../plug-ins/common/file-gif-save.c:1138
+#: ../plug-ins/common/file-gif-save.c:1154
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2297,11 +2297,11 @@ msgstr ""
 "Bilden du försöker exportera som en GIF innehåller lager som sträcker sig "
 "utanför själva kanten på bilden."
 
-#: ../plug-ins/common/file-gif-save.c:1144
+#: ../plug-ins/common/file-gif-save.c:1160
 msgid "Cr_op"
 msgstr "B_eskär"
 
-#: ../plug-ins/common/file-gif-save.c:1155
+#: ../plug-ins/common/file-gif-save.c:1171
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2309,63 +2309,67 @@ msgstr ""
 "GIF-filformatet tillåter inte det här. Du kan välja att antingen beskära "
 "alla lager till bildkanterna eller avbryta exporten."
 
-#: ../plug-ins/common/file-gif-save.c:1192
+#: ../plug-ins/common/file-gif-save.c:1208
 msgid "Export Image as GIF"
 msgstr "Exportera bild som GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1202 ../plug-ins/common/file-mng.c:1608
+#: ../plug-ins/common/file-gif-save.c:1218 ../plug-ins/common/file-mng.c:1608
 msgid "_Interlace"
 msgstr "_Fläta"
 
-#: ../plug-ins/common/file-gif-save.c:1211
+#: ../plug-ins/common/file-gif-save.c:1227
 msgid "Save c_omment"
 msgstr "Spara k_ommentar"
 
-#: ../plug-ins/common/file-gif-save.c:1250
+#: ../plug-ins/common/file-gif-save.c:1267
 msgid "As _animation"
 msgstr "Som _animation"
 
-#: ../plug-ins/common/file-gif-save.c:1265
-msgid "_Loop forever"
-msgstr "_Loopa för evigt"
+#: ../plug-ins/common/file-gif-save.c:1286
+msgid "_Number of repeats:"
+msgstr "_Antal upprepningar:"
 
-#: ../plug-ins/common/file-gif-save.c:1271
+#: ../plug-ins/common/file-gif-save.c:1292
+msgid "_Forever"
+msgstr "_För alltid"
+
+#: ../plug-ins/common/file-gif-save.c:1304
 msgid "_Delay between frames where unspecified:"
 msgstr "_Tidsmellanrum mellan bildrutor när inte angivet:"
 
-#: ../plug-ins/common/file-gif-save.c:1279 ../plug-ins/common/file-mng.c:1723
+#: ../plug-ins/common/file-gif-save.c:1312 ../plug-ins/common/file-mng.c:1723
 msgid "milliseconds"
 msgstr "millisekunder"
 
-#: ../plug-ins/common/file-gif-save.c:1283
+#: ../plug-ins/common/file-gif-save.c:1316
 msgid "I don't care"
 msgstr "Jag bryr mig inte"
 
-#: ../plug-ins/common/file-gif-save.c:1285
+#: ../plug-ins/common/file-gif-save.c:1318
 msgid "Cumulative layers (combine)"
 msgstr "Kumulativa lager (kombinera)"
 
-#: ../plug-ins/common/file-gif-save.c:1287
+#: ../plug-ins/common/file-gif-save.c:1320
 msgid "One frame per layer (replace)"
 msgstr "En bildruta per lager (ersätt)"
 
-#: ../plug-ins/common/file-gif-save.c:1295
+#: ../plug-ins/common/file-gif-save.c:1328
 msgid "_Frame disposal where unspecified"
 msgstr "Bild_rutehantering där inte specificerat"
 
-#: ../plug-ins/common/file-gif-save.c:1301
+#: ../plug-ins/common/file-gif-save.c:1334
 msgid "_Use delay entered above for all frames"
 msgstr "_Använd ovanstående fördröjning för alla bildrutor"
 
-#: ../plug-ins/common/file-gif-save.c:1306
+#: ../plug-ins/common/file-gif-save.c:1339
 msgid "U_se disposal entered above for all frames"
 msgstr "An_vänd hantering angiven ovan för alla bildrutor"
 
-#: ../plug-ins/common/file-gif-save.c:1314
+#: ../plug-ins/common/file-gif-save.c:1347
 msgid "Animated GIF"
 msgstr "Animerad GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1318
+#: ../plug-ins/common/file-gif-save.c:1351
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -2494,103 +2498,103 @@ msgstr ""
 msgid "image content"
 msgstr "bildinnehåll"
 
-#: ../plug-ins/common/file-heif.c:1569
+#: ../plug-ins/common/file-heif.c:1499
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Exporterar ”%s” med %s-kodare"
 
-#: ../plug-ins/common/file-heif.c:1619 ../plug-ins/common/file-heif.c:2012
+#: ../plug-ins/common/file-heif.c:1549 ../plug-ins/common/file-heif.c:1942
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:2221
+#: ../plug-ins/common/file-heif.c:2063
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Skrivning av HEIF-bild misslyckades: %s"
 
-#: ../plug-ins/common/file-heif.c:2310
+#: ../plug-ins/common/file-heif.c:2152
 msgid "primary"
 msgstr "primär"
 
-#: ../plug-ins/common/file-heif.c:2455
+#: ../plug-ins/common/file-heif.c:2297
 msgid "Load HEIF Image"
 msgstr "Läs in HEIF-bild"
 
-#: ../plug-ins/common/file-heif.c:2469
+#: ../plug-ins/common/file-heif.c:2311
 msgid "Select Image"
 msgstr "Välj bild"
 
-#: ../plug-ins/common/file-heif.c:2613
+#: ../plug-ins/common/file-heif.c:2455
 msgid "Export Image as AVIF"
 msgstr "Exportera bild som AVIF"
 
-#: ../plug-ins/common/file-heif.c:2613
+#: ../plug-ins/common/file-heif.c:2455
 msgid "Export Image as HEIF"
 msgstr "Exportera bild som HEIF"
 
-#: ../plug-ins/common/file-heif.c:2626
+#: ../plug-ins/common/file-heif.c:2468
 msgid "_Lossless"
 msgstr "För_lustfri"
 
-#: ../plug-ins/common/file-heif.c:2644
+#: ../plug-ins/common/file-heif.c:2486
 msgid "_Quality"
 msgstr "_Kvalitet"
 
-#: ../plug-ins/common/file-heif.c:2649
+#: ../plug-ins/common/file-heif.c:2491
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2650
+#: ../plug-ins/common/file-heif.c:2492
 msgid "YUV420"
 msgstr "YUV420"
 
 # src/sidebar.c:115
-#: ../plug-ins/common/file-heif.c:2657
+#: ../plug-ins/common/file-heif.c:2499
 msgid "Pixel format:"
 msgstr "Bildpunktsformat:"
 
-#: ../plug-ins/common/file-heif.c:2668 ../plug-ins/common/file-jpegxl.c:1122
+#: ../plug-ins/common/file-heif.c:2510 ../plug-ins/common/file-jpegxl.c:1122
 msgid "8 bit/channel"
 msgstr "8 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2669
+#: ../plug-ins/common/file-heif.c:2511
 msgid "10 bit/channel"
 msgstr "10 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2670
+#: ../plug-ins/common/file-heif.c:2512
 msgid "12 bit/channel"
 msgstr "12 bitar/kanal"
 
-#: ../plug-ins/common/file-heif.c:2677
+#: ../plug-ins/common/file-heif.c:2519
 msgid "Bit depth:"
 msgstr "Bitdjup:"
 
-#: ../plug-ins/common/file-heif.c:2680
+#: ../plug-ins/common/file-heif.c:2522
 msgid "Slow"
 msgstr "Långsam"
 
-#: ../plug-ins/common/file-heif.c:2681
+#: ../plug-ins/common/file-heif.c:2523
 msgid "Balanced"
 msgstr "Balanserad"
 
-#: ../plug-ins/common/file-heif.c:2682
+#: ../plug-ins/common/file-heif.c:2524
 msgid "Fast"
 msgstr "Snabb"
 
-#: ../plug-ins/common/file-heif.c:2689
+#: ../plug-ins/common/file-heif.c:2531
 msgid "Speed:"
 msgstr "Hastighet:"
 
-#: ../plug-ins/common/file-heif.c:2695
+#: ../plug-ins/common/file-heif.c:2537
 msgid "Save color _profile"
 msgstr "Spara färg_profil"
 
-#: ../plug-ins/common/file-heif.c:2701
+#: ../plug-ins/common/file-heif.c:2543
 msgid "_Save Exif data"
 msgstr "_Spara Exif-data"
 
-#: ../plug-ins/common/file-heif.c:2706
+#: ../plug-ins/common/file-heif.c:2548
 msgid "Save _XMP data"
 msgstr "Spara _XMP-data"
 
@@ -4069,7 +4073,7 @@ msgstr "_Palettyp:"
 
 #: ../plug-ins/common/file-raw-data.c:1973
 msgid "Off_set:"
-msgstr "Off_set:"
+msgstr "För_skjutning:"
 
 #: ../plug-ins/common/file-raw-data.c:1985
 msgid "Select Palette File"
@@ -6867,7 +6871,7 @@ msgstr "Flyttal"
 msgid "JPEG image"
 msgstr "JPEG-bild"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1230
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1247
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7214,15 +7218,15 @@ msgstr "Aggressiv RLE (stöds inte av SGI)"
 msgid "Compression _type:"
 msgstr "Komprimerings_typ:"
 
-#: ../plug-ins/file-tiff/file-tiff.c:146 ../plug-ins/file-tiff/file-tiff.c:175
+#: ../plug-ins/file-tiff/file-tiff.c:157 ../plug-ins/file-tiff/file-tiff.c:186
 msgid "TIFF or BigTIFF image"
 msgstr "TIFF- eller BigTIFF-bild"
 
-#: ../plug-ins/file-tiff/file-tiff.c:191
+#: ../plug-ins/file-tiff/file-tiff.c:202
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff.c:415
+#: ../plug-ins/file-tiff/file-tiff.c:451
 #, c-format
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
@@ -7465,40 +7469,40 @@ msgstr ""
 "TIFF-formatet stöder endast kommentarer i\n"
 "7-bitars ASCII. Ingen kommentar sparad."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:808
+#: ../plug-ins/file-tiff/file-tiff-save.c:809
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Misslyckades med skrivning av en scanline på rad %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1125
+#: ../plug-ins/file-tiff/file-tiff-save.c:1126
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Att skriva sidor med olika bitdjup är konstigt."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1226
+#: ../plug-ins/file-tiff/file-tiff-save.c:1243
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Ingen"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1227
+#: ../plug-ins/file-tiff/file-tiff-save.c:1244
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1228
+#: ../plug-ins/file-tiff/file-tiff-save.c:1245
 msgid "Pack Bits"
 msgstr "Packa bitar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1229
+#: ../plug-ins/file-tiff/file-tiff-save.c:1246
 msgid "Deflate"
 msgstr "Packa ihop"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1231
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3-fax"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1232
+#: ../plug-ins/file-tiff/file-tiff-save.c:1249
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4-fax"
 
@@ -11475,7 +11479,7 @@ msgstr "Skapa nytt lager"
 
 #: ../plug-ins/map-object/map-object-ui.c:528
 msgid "Create a new layer when applying filter"
-msgstr "Skapa ett ny lager vid tillämpning av filter"
+msgstr "Skapa ett nytt lager vid tillämpning av filter"
 
 #: ../plug-ins/map-object/map-object-ui.c:536
 msgid "Enable _antialiasing"
@@ -12524,6 +12528,9 @@ msgstr "_Bildläsare/Kamera…"
 #: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "_Loop forever"
+#~ msgstr "_Loopa för evigt"
 
 #~ msgid "Cursor Hot spot"
 #~ msgstr "Aktiv punkt för markör"
@@ -13988,9 +13995,6 @@ msgstr "Överför data från bildläsare/kamera"
 
 #~ msgid "_Ignore"
 #~ msgstr "_Ignorera"
-
-#~ msgid "_Force"
-#~ msgstr "_Kraft"
 
 #~ msgid "C_entering"
 #~ msgstr "M_ittpunkt"
