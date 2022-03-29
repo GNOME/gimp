@@ -355,7 +355,7 @@
             ]
         },
         {
-            /* Copy from shared-modules to avoid submodules on dev repo. */
+            "//": "Copy from shared-modules to avoid submodules on dev repo.",
             "name": "intltool",
             "cleanup": [
                 "*"
@@ -418,13 +418,16 @@
                         "type": "anitya",
                         "project-id": 17096,
                         "stable-only": true,
+                        "versions": {
+                            "<": "2.0.0"
+                        },
                         "url-template": "https://github.com/mypaint/mypaint-brushes/releases/download/v$version/mypaint-brushes-$version.tar.xz"
                     }
                 }
             ]
         },
         {
-            /* Shamelessly taken from org.octave.Octave manifest! */
+            "//": "Shamelessly taken from org.octave.Octave manifest!",
             "name": "SuiteSparse",
             "no-autogen": true,
             "make-args": [
