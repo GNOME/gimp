@@ -51,9 +51,9 @@ def main(binary, srcdirs, destdir, debug, dll_file):
   find_dependencies(os.path.abspath(binary), srcdirs)
   if debug in ['debug-only', 'debug-run']:
     if debug == 'debug-only':
-      print("Running in debug-only mode (no DLL moved) for '{}'".format(dll_file))
+      print("Running in debug-only mode (no DLL moved) for '{}'".format(binary))
     else:
-      print("Running with debug output for '{}'".format(dll_file))
+      print("Running with debug output for '{}'".format(binary))
 
     if len(dlls) > 0:
       sys.stdout.write("Needed DLLs:\n\t- ")
