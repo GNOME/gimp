@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-16 12:59+0000\n"
-"PO-Revision-Date: 2022-03-20 14:15+0100\n"
+"POT-Creation-Date: 2022-03-22 13:18+0000\n"
+"PO-Revision-Date: 2022-03-22 14:37+0100\n"
 "Last-Translator: Meskó Balázs <mesko.balazs@fsf.hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -78,7 +78,7 @@ msgstr "Egy kecske edzése (C)"
 #: ../plug-ins/common/curve-bend.c:1220 ../plug-ins/common/curve-bend.c:1994
 #: ../plug-ins/common/curve-bend.c:2029 ../plug-ins/common/depth-merge.c:732
 #: ../plug-ins/common/destripe.c:483 ../plug-ins/common/file-cel.c:1003
-#: ../plug-ins/common/file-gif-save.c:1143 ../plug-ins/common/file-heif.c:2459
+#: ../plug-ins/common/file-gif-save.c:1159 ../plug-ins/common/file-heif.c:2301
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
@@ -185,7 +185,7 @@ msgstr "Egy kecske edzése (Python 3)"
 #: ../plug-ins/common/colormap-remap.c:666 ../plug-ins/common/compose.c:1183
 #: ../plug-ins/common/contrast-retinex.c:351
 #: ../plug-ins/common/curve-bend.c:1221 ../plug-ins/common/depth-merge.c:733
-#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2460
+#: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-heif.c:2302
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:547 ../plug-ins/common/film.c:1315
 #: ../plug-ins/common/grid.c:761 ../plug-ins/common/hot.c:679
@@ -1233,7 +1233,7 @@ msgstr "Vörösesség cr7_09:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2648 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2490 ../plug-ins/common/file-raw-data.c:1870
 msgid "RGB"
 msgstr "RGB"
 
@@ -2026,7 +2026,7 @@ msgstr "„%s”: fájl vége vagy hiba a palettaadatok olvasása közben"
 #.
 #. * Open the file for writing...
 #.
-#: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:903
+#: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:912
 #: ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
@@ -2252,25 +2252,25 @@ msgstr ""
 "GIF: a nem dokumentált „%d” GIF-összetételi típus kezelése nem támogatott. "
 "Elképzelhető, hogy az animáció nem lesz lejátszható vagy újra elmenthető."
 
-#: ../plug-ins/common/file-gif-save.c:225
+#: ../plug-ins/common/file-gif-save.c:232
 msgid "Save the image comment in the GIF file"
 msgstr "Kép megjegyzésének mentése a GIF-fájlban"
 
-#: ../plug-ins/common/file-gif-save.c:231
+#: ../plug-ins/common/file-gif-save.c:238
 msgid "Image comment"
 msgstr "Kép megjegyzése"
 
-#: ../plug-ins/common/file-gif-save.c:338
+#: ../plug-ins/common/file-gif-save.c:345
 #, c-format
 msgid "GIF format does not support multiple layers."
 msgstr "A GIF formátum nem támogat egynél több réteget."
 
-#: ../plug-ins/common/file-gif-save.c:546
+#: ../plug-ins/common/file-gif-save.c:553
 msgid "Couldn't simply reduce colors further. Exporting as opaque."
 msgstr ""
 "A színek további csökkentése nem sikerült. Exportálás átlátszatlanként."
 
-#: ../plug-ins/common/file-gif-save.c:665
+#: ../plug-ins/common/file-gif-save.c:672
 #, c-format
 msgid ""
 "Unable to export '%s'.  The GIF file format does not support images that are "
@@ -2279,7 +2279,7 @@ msgstr ""
 "„%s” exportálása nem lehetséges. A GIF fájlformátum nem tud olyan képeket "
 "eltárolni, amelyek szélessége vagy magassága %d képpontnál nagyobb."
 
-#: ../plug-ins/common/file-gif-save.c:789
+#: ../plug-ins/common/file-gif-save.c:798
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
@@ -2287,18 +2287,18 @@ msgstr ""
 "A GIF formátum csak 7 bites ASCII kódolást engedélyez a megjegyzésekben. A "
 "megjegyzés nem lett elmentve."
 
-#: ../plug-ins/common/file-gif-save.c:876
+#: ../plug-ins/common/file-gif-save.c:885
 msgid ""
 "Cannot export RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "RGB-színű képek nem exportálhatók. Alakítsa a képet indexelt színűre vagy "
 "szürkeárnyalatosra."
 
-#: ../plug-ins/common/file-gif-save.c:1089
+#: ../plug-ins/common/file-gif-save.c:1105
 msgid "Delay inserted to prevent evil CPU-sucking animation."
 msgstr "Késleltetés betéve a processzorterhelés csökkentésére."
 
-#: ../plug-ins/common/file-gif-save.c:1138
+#: ../plug-ins/common/file-gif-save.c:1154
 msgid ""
 "The image you are trying to export as a GIF contains layers which extend "
 "beyond the actual borders of the image."
@@ -2306,11 +2306,11 @@ msgstr ""
 "A kép, amelyet Ön GIF-ként szeretne exportálni, olyan rétegeket tartalmaz, "
 "amelyek a kép tényleges határain kívülre nyúlnak."
 
-#: ../plug-ins/common/file-gif-save.c:1144
+#: ../plug-ins/common/file-gif-save.c:1160
 msgid "Cr_op"
 msgstr "Vá_gás"
 
-#: ../plug-ins/common/file-gif-save.c:1155
+#: ../plug-ins/common/file-gif-save.c:1171
 msgid ""
 "The GIF file format does not allow this.  You may choose whether to crop all "
 "of the layers to the image borders, or cancel this export."
@@ -2318,63 +2318,67 @@ msgstr ""
 "A GIF fájlformátum ezt nem teszi lehetővé. Ön levághatja a rétegeket a "
 "képméretnek megfelelően, vagy megszakíthatja az exportálást."
 
-#: ../plug-ins/common/file-gif-save.c:1192
+#: ../plug-ins/common/file-gif-save.c:1208
 msgid "Export Image as GIF"
 msgstr "Kép exportálása GIF-ként"
 
-#: ../plug-ins/common/file-gif-save.c:1202 ../plug-ins/common/file-mng.c:1608
+#: ../plug-ins/common/file-gif-save.c:1218 ../plug-ins/common/file-mng.c:1608
 msgid "_Interlace"
 msgstr "_Váltottsoros"
 
-#: ../plug-ins/common/file-gif-save.c:1211
+#: ../plug-ins/common/file-gif-save.c:1227
 msgid "Save c_omment"
 msgstr "Meg_jegyzés mentése"
 
-#: ../plug-ins/common/file-gif-save.c:1250
+#: ../plug-ins/common/file-gif-save.c:1267
 msgid "As _animation"
 msgstr "_Animációként"
 
-#: ../plug-ins/common/file-gif-save.c:1265
-msgid "_Loop forever"
-msgstr "Végtele_n ismétlés"
+#: ../plug-ins/common/file-gif-save.c:1286
+msgid "_Number of repeats:"
+msgstr "_Ismétlések száma:"
 
-#: ../plug-ins/common/file-gif-save.c:1271
+#: ../plug-ins/common/file-gif-save.c:1292
+msgid "_Forever"
+msgstr "Ö_rökké"
+
+#: ../plug-ins/common/file-gif-save.c:1304
 msgid "_Delay between frames where unspecified:"
 msgstr "_Késleltetés a képkockák közt, ahol nincs megadva:"
 
-#: ../plug-ins/common/file-gif-save.c:1279 ../plug-ins/common/file-mng.c:1723
+#: ../plug-ins/common/file-gif-save.c:1312 ../plug-ins/common/file-mng.c:1723
 msgid "milliseconds"
 msgstr "ezredmásodperc"
 
-#: ../plug-ins/common/file-gif-save.c:1283
+#: ../plug-ins/common/file-gif-save.c:1316
 msgid "I don't care"
 msgstr "Nem lényeges"
 
-#: ../plug-ins/common/file-gif-save.c:1285
+#: ../plug-ins/common/file-gif-save.c:1318
 msgid "Cumulative layers (combine)"
 msgstr "Kumulatív rétegek (egyesítés)"
 
-#: ../plug-ins/common/file-gif-save.c:1287
+#: ../plug-ins/common/file-gif-save.c:1320
 msgid "One frame per layer (replace)"
 msgstr "Rétegenként egy képkocka (helyettesítés)"
 
-#: ../plug-ins/common/file-gif-save.c:1295
+#: ../plug-ins/common/file-gif-save.c:1328
 msgid "_Frame disposal where unspecified"
 msgstr "Képkockák el_dobása, ahol nincs megadva"
 
-#: ../plug-ins/common/file-gif-save.c:1301
+#: ../plug-ins/common/file-gif-save.c:1334
 msgid "_Use delay entered above for all frames"
 msgstr "A _fenti késleltetés használata minden képkockához"
 
-#: ../plug-ins/common/file-gif-save.c:1306
+#: ../plug-ins/common/file-gif-save.c:1339
 msgid "U_se disposal entered above for all frames"
 msgstr "A fent_i eldobás használata minden képkockához"
 
-#: ../plug-ins/common/file-gif-save.c:1314
+#: ../plug-ins/common/file-gif-save.c:1347
 msgid "Animated GIF"
 msgstr "Animált GIF"
 
-#: ../plug-ins/common/file-gif-save.c:1318
+#: ../plug-ins/common/file-gif-save.c:1351
 msgid ""
 "You can only export as animation when the image has more than one layer.\n"
 "The image you are trying to export only has one layer."
@@ -2503,102 +2507,102 @@ msgstr ""
 msgid "image content"
 msgstr "képtartalom"
 
-#: ../plug-ins/common/file-heif.c:1569
+#: ../plug-ins/common/file-heif.c:1499
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "A(z) „%s” exportálása %s kódoló használatával"
 
-#: ../plug-ins/common/file-heif.c:1619 ../plug-ins/common/file-heif.c:2012
+#: ../plug-ins/common/file-heif.c:1549 ../plug-ins/common/file-heif.c:1942
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "HEIF kép kódolása meghiúsult: %s"
 
-#: ../plug-ins/common/file-heif.c:2221
+#: ../plug-ins/common/file-heif.c:2063
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "HEIF kép írása meghiúsult: %s"
 
-#: ../plug-ins/common/file-heif.c:2310
+#: ../plug-ins/common/file-heif.c:2152
 msgid "primary"
 msgstr "elsődleges"
 
-#: ../plug-ins/common/file-heif.c:2455
+#: ../plug-ins/common/file-heif.c:2297
 msgid "Load HEIF Image"
 msgstr "HEIF kép betöltése"
 
-#: ../plug-ins/common/file-heif.c:2469
+#: ../plug-ins/common/file-heif.c:2311
 msgid "Select Image"
 msgstr "Kép kiválasztása"
 
-#: ../plug-ins/common/file-heif.c:2613
+#: ../plug-ins/common/file-heif.c:2455
 msgid "Export Image as AVIF"
 msgstr "Kép exportálása AVIF-ként"
 
-#: ../plug-ins/common/file-heif.c:2613
+#: ../plug-ins/common/file-heif.c:2455
 msgid "Export Image as HEIF"
 msgstr "Kép exportálása HEIF-ként"
 
-#: ../plug-ins/common/file-heif.c:2626
+#: ../plug-ins/common/file-heif.c:2468
 msgid "_Lossless"
 msgstr "_Veszteségmentes"
 
-#: ../plug-ins/common/file-heif.c:2644
+#: ../plug-ins/common/file-heif.c:2486
 msgid "_Quality"
 msgstr "Mi_nőség"
 
-#: ../plug-ins/common/file-heif.c:2649
+#: ../plug-ins/common/file-heif.c:2491
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2650
+#: ../plug-ins/common/file-heif.c:2492
 msgid "YUV420"
 msgstr "YUV420"
 
-#: ../plug-ins/common/file-heif.c:2657
+#: ../plug-ins/common/file-heif.c:2499
 msgid "Pixel format:"
 msgstr "Képpontformátum:"
 
-#: ../plug-ins/common/file-heif.c:2668 ../plug-ins/common/file-jpegxl.c:1122
+#: ../plug-ins/common/file-heif.c:2510 ../plug-ins/common/file-jpegxl.c:1122
 msgid "8 bit/channel"
 msgstr "8 bit/csatorna"
 
-#: ../plug-ins/common/file-heif.c:2669
+#: ../plug-ins/common/file-heif.c:2511
 msgid "10 bit/channel"
 msgstr "10 bit/csatorna"
 
-#: ../plug-ins/common/file-heif.c:2670
+#: ../plug-ins/common/file-heif.c:2512
 msgid "12 bit/channel"
 msgstr "12 bit/csatorna"
 
-#: ../plug-ins/common/file-heif.c:2677
+#: ../plug-ins/common/file-heif.c:2519
 msgid "Bit depth:"
 msgstr "Bitmélység:"
 
-#: ../plug-ins/common/file-heif.c:2680
+#: ../plug-ins/common/file-heif.c:2522
 msgid "Slow"
 msgstr "Lassú"
 
-#: ../plug-ins/common/file-heif.c:2681
+#: ../plug-ins/common/file-heif.c:2523
 msgid "Balanced"
 msgstr "Kiegyensúlyozott"
 
-#: ../plug-ins/common/file-heif.c:2682
+#: ../plug-ins/common/file-heif.c:2524
 msgid "Fast"
 msgstr "Gyors"
 
-#: ../plug-ins/common/file-heif.c:2689
+#: ../plug-ins/common/file-heif.c:2531
 msgid "Speed:"
 msgstr "Sebesség:"
 
-#: ../plug-ins/common/file-heif.c:2695
+#: ../plug-ins/common/file-heif.c:2537
 msgid "Save color _profile"
 msgstr "Szín_profil mentése"
 
-#: ../plug-ins/common/file-heif.c:2701
+#: ../plug-ins/common/file-heif.c:2543
 msgid "_Save Exif data"
 msgstr "Exif-adatok _mentése"
 
-#: ../plug-ins/common/file-heif.c:2706
+#: ../plug-ins/common/file-heif.c:2548
 msgid "Save _XMP data"
 msgstr "XMP-_adatok mentése"
 
