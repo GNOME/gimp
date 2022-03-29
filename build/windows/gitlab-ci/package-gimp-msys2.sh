@@ -206,9 +206,17 @@ done
 for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
   python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --output-dll-list done-dll.list;
 done
+echo "Checking for DLLs in ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ into ${GIMP_DISTRIB}"
+echo GIMP_PREFIX:
+ls ${GIMP_PREFIX}/
+echo
+echo MSYS_PREFIX:
+ls ${MSYS_PREFIX}/
+echo
 for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
   python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${MSYS_PREFIX}/ ${GIMP_DISTRIB} --debug=debug-run --output-dll-list done-dll.list;
 done
+ls ${GIMP_DISTRIB}
 
 # Libraries for GObject Introspection.
 
