@@ -49,8 +49,12 @@ def main(binary, srcdirs, destdir, debug, dll_file):
   sys.stdout.write("{} (INFO): searching for dependencies of {} in {}.\n".format(os.path.basename(__file__),
                                                                                  binary, ', '.join(srcdirs)))
   find_dependencies(os.path.abspath(binary), srcdirs)
-  if args.debug:
-    print("Running in debug mode (no DLL moved)")
+  if debug in ['debug-only', 'debug-run']:
+    if debug == 'debug-only':
+      print("Running in debug-only mode (no DLL moved) for '{}'".format(dll_file))
+    else:
+      print("Running with debug output for '{}'".format(dll_file))
+
     if len(dlls) > 0:
       sys.stdout.write("Needed DLLs:\n\t- ")
       sys.stdout.write("\n\t- ".join(list(dlls)))
@@ -69,6 +73,9 @@ def main(binary, srcdirs, destdir, debug, dll_file):
       sys.stdout.write('Installed DLLs:\n\t- ')
       sys.stdout.write("\n\t- ".join(installed_dlls))
       print()
+
+    if debug == 'debug-run':
+      copy_dlls(dlls - sys_dlls, srcdirs, destdir)
   else:
     copy_dlls(dlls - sys_dlls, srcdirs, destdir)
 
@@ -151,7 +158,8 @@ def copy_dlls(dll_list, srcdirs, destdir):
 
 if __name__ == "__main__":
   parser = argparse.ArgumentParser()
-  parser.add_argument('--debug', dest='debug', action = 'store_true', default = False)
+  parser.add_argument('--debug', dest='debug',
+                      choices=['debug-only', 'debug-run', 'run-only'], default = 'run-only')
   parser.add_argument('--output-dll-list', dest='dll_file', action = 'store', default = None)
   parser.add_argument('bin')
   parser.add_argument('src', nargs='+')
