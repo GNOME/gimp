@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-03-29 19:47+0000\n"
-"PO-Revision-Date: 2022-03-29 23:28+0100\n"
+"PO-Revision-Date: 2022-03-30 18:58+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -554,14 +554,14 @@ msgstr "Várias melhorias no suporte ao Corel PaintShop Pro"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
-"“Amostra de camadas combinadas” de cor agora disponível nas opções da "
-"ferramenta de operação GEGL"
+"“Amostra de camadas unidas” de cor agora disponível nas opções da ferramenta "
+"de operação GEGL"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr ""
-"“Amostra de camadas combinadas” de cor agora está ativada por predefinição "
-"para a escolha de cores"
+"“Amostra de camadas unidas” de cor agora está ativada por predefinição para "
+"a escolha de cores"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
@@ -3668,7 +3668,7 @@ msgstr "Menu Informação do ponteiro"
 #: ../app/actions/cursor-info-actions.c:48
 msgctxt "cursor-info-action"
 msgid "_Sample Merged"
-msgstr "_Amostra de camadas combinadas"
+msgstr "_Amostra de camadas unidas"
 
 #: ../app/actions/cursor-info-actions.c:49
 msgctxt "cursor-info-action"
@@ -7131,7 +7131,7 @@ msgstr "_Unir camadas visíveis..."
 #: ../app/actions/image-actions.c:155
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
-msgstr "Combinar as camadas que estiverem visíveis numa só camada"
+msgstr "Unir as camadas que estiverem visíveis numa só camada"
 
 #: ../app/actions/image-actions.c:160
 msgctxt "image-action"
@@ -8982,7 +8982,7 @@ msgstr "Menu Pontos de amostragem"
 #: ../app/actions/sample-points-actions.c:47
 msgctxt "sample-points-action"
 msgid "_Sample Merged"
-msgstr "_Amostra de camadas combinadas"
+msgstr "_Amostra de camadas unidas"
 
 #: ../app/actions/sample-points-actions.c:49
 msgctxt "sample-points-action"
@@ -17444,7 +17444,7 @@ msgstr "I_magem"
 
 #: ../app/dialogs/palette-import-dialog.c:234
 msgid "Sample _Merged"
-msgstr "_Amostra de camadas combinadas"
+msgstr "_Amostra de camadas unidas"
 
 #: ../app/dialogs/palette-import-dialog.c:245
 msgid "_Selected Pixels only"
@@ -19676,7 +19676,7 @@ msgstr "A"
 
 #: ../app/display/gimpcursorview.c:337
 msgid "_Sample Merged"
-msgstr "_Amostra de camadas combinadas"
+msgstr "_Amostra de camadas unidas"
 
 #: ../app/display/gimpdisplayshell.c:500
 msgid "Access the image menu"
@@ -21821,7 +21821,7 @@ msgstr "Sem efeito de apagar"
 #: ../app/tools/gimpcoloroptions.c:70 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpregionselectoptions.c:98
 msgid "Sample merged"
-msgstr "Amostra de camadas combinadas"
+msgstr "Amostra de camadas unidas"
 
 #: ../app/paint/gimpsourcecore.c:151
 msgid "Set a source image first."
@@ -23997,7 +23997,7 @@ msgstr "[Clique] para usar outra origem a clonar"
 
 #: ../app/tools/gimpcoloroptions.c:71
 msgid "Use merged color value from all composited visible layers"
-msgstr "Usar valor da cor de todas as camadas combinadas visíveis"
+msgstr "Usar valor da cor de todas as camadas unidas visíveis"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Sample average"
