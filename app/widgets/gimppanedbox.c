@@ -166,7 +166,7 @@ static void
 gimp_paned_box_dispose (GObject *object)
 {
   GimpPanedBox *paned_box = GIMP_PANED_BOX (object);
-  gint          i;
+  gsize         i;
 
   for (i = 0; i < G_N_ELEMENTS (paned_box->p->dnd_highlights); i++)
     gimp_paned_box_hide_drop_indicator (paned_box, i);
@@ -363,7 +363,7 @@ gimp_paned_box_drop_indicator_draw (GtkWidget *widget,
 {
   GimpPanedBox *paned_box = GIMP_PANED_BOX (widget);
   GimpRGB       color;
-  gint          i;
+  gsize         i;
 
   gimp_rgb_parse_hex (&color, DROP_HIGHLIGHT_COLOR, -1);
 
