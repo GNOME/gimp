@@ -106,6 +106,7 @@ meson .. -Dprefix="${GIMP_PREFIX}"           \
          -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
          -Djavascript=false                  \
          -Dbuild-id=org.gimp.GIMP_official   \
+         -Dgi-docgen=disabled                \
          ${GIMP_OPTIONS}
 ninja
 ninja install
