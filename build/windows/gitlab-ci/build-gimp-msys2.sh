@@ -6,12 +6,12 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     export MSYS2_PREFIX="/c/msys64/mingw32"
-    export GIMP_OPTIONS="--with-vala=no --enable-vala=no"
+    export GIMP_OPTIONS="-Dvala-plugins=disabled"
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
     export MSYS2_PREFIX="/c/msys64/mingw64/"
-    export GIMP_OPTIONS="--enable-windows-installer"
+    export GIMP_OPTIONS="-Dwindows-installer=true"
 fi
 
 export ACLOCAL_FLAGS="-I${MSYS2_PREFIX}/share/aclocal"
@@ -27,6 +27,7 @@ pacman --noconfirm -S --needed \
     mingw-w64-$MSYS2_ARCH-toolchain \
     mingw-w64-$MSYS2_ARCH-autotools \
     mingw-w64-$MSYS2_ARCH-ccache \
+    mingw-w64-$MSYS2_ARCH-meson \
     \
     mingw-w64-$MSYS2_ARCH-aalib \
     mingw-w64-$MSYS2_ARCH-appstream-glib \
@@ -100,13 +101,13 @@ cd "_build${ARTIFACTS_SUFFIX}"
 # and Seed/Webkit are the 2 contenders so far, but they are not
 # available on MSYS2 and we are told it's very hard to build them).
 # TODO: re-enable javascript plug-ins when we can figure this out.
-../autogen.sh --prefix="${GIMP_PREFIX}" \
-              --with-directx-sdk="${MSYS2_PREFIX}" \
-              --with-javascript=no \
-              --with-build-id=org.gimp.GIMP_official \
-              ${GIMP_OPTIONS}
-make -j4
-make install
+meson .. -Dprefix="${GIMP_PREFIX}"           \
+         -Ddirectx-sdk-dir="${MSYS2_PREFIX}" \
+         -Djavascript=false                  \
+         -Dbuild-id=org.gimp.GIMP_official   \
+         ${GIMP_OPTIONS}
+ninja
+ninja install
 cd ..
 
 #ccache --show-stats
