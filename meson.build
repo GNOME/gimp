@@ -845,8 +845,8 @@ if directx_sdk_path != '' and platform_windows
   endif
 
   directx = declare_dependency(
-    link_with: cc.find_library('dxguid',
-                  dirs:  directx_sdk_path / 'Lib' / 'x86'),
+    dependencies: cc.find_library('dxguid',
+                                  dirs: directx_sdk_path / 'Lib' / 'x86'),
     include_directories: directx_sdk_path / 'Include',
   )
 endif
