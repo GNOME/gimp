@@ -65,7 +65,8 @@ if directx.found()
     'name': 'controller-dx-input',
     'srcs': [ 'controller-dx-dinput.c', 'gimpinputdevicestore-dx.c', ],
     'deps': directx,
-    'link': [ controller_libs, '-lrpcrt4', ],
+    'link': [ controller_libs, ],
+    'link-args': [ '-lrpcrt4', ],
   }
 endif
 
@@ -83,12 +84,14 @@ foreach module : modules
   srcs = module.get('srcs', name + '.c')
   deps = module.get('deps', [])
   link = module.get('link', [])
+  link_args = module.get('link-args', [])
 
   library(name,
     srcs,
     include_directories: rootInclude,
     dependencies: modules_deps + [ deps ],
     link_with: link,
+    link_args: link_args,
     install: true,
     install_dir: gimpplugindir / 'modules',
   )
