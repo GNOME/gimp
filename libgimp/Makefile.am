@@ -174,6 +174,7 @@ libgimp_@GIMP_API_VERSION@_la_LIBADD = \
 	$(exchndl)		\
 	$(CAIRO_LIBS)		\
 	$(GEGL_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(GDK_PIXBUF_LIBS)	\
 	$(RT_LIBS)
 
@@ -188,10 +189,11 @@ EXTRA_libgimpui_@GIMP_API_VERSION@_la_DEPENDENCIES = $(gimpui_def)
 
 libgimpui_@GIMP_API_VERSION@_la_LIBADD = \
 	$(libgimp)		\
-	$(libgimpwidgets)	\
+	$(libgimpconfig)	\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(libgimpmodule)	\
+	$(libgimpwidgets)	\
 	$(GEGL_LIBS)		\
 	$(GTK_LIBS)		\
 	$(GEXIV2_LIBS)		\
