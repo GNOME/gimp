@@ -111,8 +111,13 @@ if libjxl.found() and libjxl_threads.found()
 endif
 
 if libmng.found()
+  mng_cflags = []
+  if platform_windows
+    mng_cflags = [ '-DMNG_USE_DLL' ]
+  endif
   common_plugins_list += { 'name': 'file-mng',
-    'deps': [ gtk3, gegl, libmng, libpng, ],
+                           'deps': [ gtk3, gegl, libmng, libpng, ],
+                           'cflags': mng_cflags,
   }
 endif
 

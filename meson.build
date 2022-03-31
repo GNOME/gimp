@@ -661,8 +661,14 @@ MIMEtypes += [ 'image/png', 'image/x-icon']
 libmng = dependency('libmng', required: get_option('mng'))
 
 if not libmng.found()
-  libmng = cc.find_library('mng', required: get_option('mng'))
-  if libmng.found() and not cc.has_function('mng_create', dependencies: libmng)
+  libmng = cc.find_library('mng', required: get_option('mng'),)
+
+  mng_test_prefix = ''
+  if platform_windows
+    mng_test_prefix = '#define MNG_USE_DLL\n#include <libmng.h>'
+  endif
+  if libmng.found() and not cc.has_function('mng_create', dependencies: libmng,
+                                            prefix: mng_test_prefix)
     libmng = no_dep
   endif
 endif
