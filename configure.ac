@@ -1615,17 +1615,22 @@ AC_ARG_WITH(libmng,  [  --without-libmng        build without MNG support])
 have_libmng=no
 if test "x$with_libmng" != xno && test -z "$MNG_LIBS" &&
    test -n "$PNG_LIBS" && test -n "$JPEG_LIBS" && test -n "$Z_LIBS"; then
-  AC_CHECK_LIB(mng, mng_create,
-    [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
-    [have_libmng="no (MNG library not found)"], -lz -lm)
-  if test "$mng_ok" = yes; then
-    have_libmng=yes
-    FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"; MNG_CFLAGS="$PNG_CFLAGS"
-    if test "x$platform_win32" = "xyes"; then
-      MNG_CFLAGS="$MNG_CFLAGS -DMNG_USE_DLL"
+
+  PKG_CHECK_MODULES(MNG, libmng, have_libmng=yes, have_libmng=no)
+
+  if test "x$have_libmng" != xyes; then
+    AC_CHECK_LIB(mng, mng_create,
+      [AC_CHECK_HEADER(libmng.h, mng_ok=yes)],
+      [have_libmng="no (MNG library not found)"], -lz -lm)
+    if test "$mng_ok" = yes; then
+      have_libmng=yes
+      FILE_MNG='file-mng$(EXEEXT)'; MNG_LIBS="-lmng $JPEG_LIBS $PNG_LIBS"; MNG_CFLAGS="$PNG_CFLAGS"
+      if test "x$platform_win32" = "xyes"; then
+        MNG_CFLAGS="$MNG_CFLAGS -DMNG_USE_DLL"
+      fi
+    else
+      have_libmng="no (MNG header file not found)"
     fi
-  else
-    have_libmng="no (MNG header file not found)"
   fi
 fi
 
