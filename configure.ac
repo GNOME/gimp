@@ -2617,8 +2617,8 @@ fi
 
 if pkg-config --atleast-version=glib_required_version glib-2.0 &&
    pkg-config gio-2.0; then
-  NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
-  NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
+  NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0 gmodule-2.0`
+  NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0 gmodule-2.0`
   if pkg-config --atleast-version=rsvg_required_version librsvg-2.0; then
     NATIVE_SVG_LIBS=`pkg-config --libs librsvg-2.0`
     NATIVE_SVG_CFLAGS=`pkg-config --cflags librsvg-2.0`

@@ -64,12 +64,11 @@ if ENABLE_VECTOR_ICONS
 endif
 
 # Build tools which must be built for the build platform.
-colorsvg2png_SOURCES = colorsvg2png.c
-colorsvg2png_CFLAGS  = $(NATIVE_GLIB_CFLAGS) $(NATIVE_SVG_CFLAGS)
-colorsvg2png_LDADD   = $(NATIVE_GLIB_LIBS) $(NATIVE_SVG_LIBS)
-all-local: colorsvg2png$(BUILD_EXEEXT)
+colorsvg2png$(BUILD_EXEEXT): colorsvg2png.c
+	$(CC_FOR_BUILD) -o $@ $< $(CPPFLAGS_FOR_BUILD) $(CFLAGS_FOR_BUILD) $(LDFLAGS_FOR_BUILD) \
+			         $(NATIVE_GLIB_LIBS) $(NATIVE_GLIB_CFLAGS) $(NATIVE_SVG_LIBS) $(NATIVE_SVG_CFLAGS)
 
-noinst_PROGRAMS = colorsvg2png
+all-local: colorsvg2png$(BUILD_EXEEXT)
 
 DISTCLEANFILES = colorsvg2png$(BUILD_EXEEXT)
 
@@ -108,6 +107,7 @@ AM_LDFLAGS = \
 	$(xnone)
 
 EXTRA_DIST = \
+	colorsvg2png.c				\
 	defcheck.py				\
 	gimp-mkenums				\
 	gimppath2svg.py				\
