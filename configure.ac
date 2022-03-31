@@ -2299,7 +2299,33 @@ AM_CONDITIONAL(WITH_PDBGEN, test "x$with_pdbgen" = xyes)
 # Check for GObject Introspection
 #################################
 
-GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
+AC_ARG_ENABLE(force-gir-cross-compilation,
+              [  --enable-force-gir-cross-compilation
+                          GIR is buildable even if cross-compiling
+                          (default=auto)],,
+              enable_force_gir_cross_compilation=auto)
+
+AC_MSG_CHECKING([if introspecting libgimp])
+warning_gir=
+build_gir=yes
+if test "x$cross_compiling" != xyes ||
+   test "x$enable_force_gir_cross_compilation" = xyes; then
+  # When not-cross-compiling, we always build with introspection.
+  # It's the basic case.
+  GOBJECT_INTROSPECTION_REQUIRE(introspection_required_version)
+else
+  build_gir=no
+  warning_gir="
+WARNING: GObject Introspection is disabled while cross-compiling because
+         GI tools do not manage to properly generate introspection data
+         while cross-compiling. Nevertheless we consider our introspected
+         API as a core component of GIMP, thus you are expected to build
+         this data natively.
+         To forcefully build with GObject Introspection, set:
+         --enable-force-gir-cross-compilation"
+fi
+AM_CONDITIONAL(HAVE_INTROSPECTION, test "x$build_gir" != xno)
+AC_MSG_RESULT([$build_gir])
 
 #####################
 # Check for json-glib
@@ -3300,7 +3326,7 @@ Documentation:
   GObject Introspection:     $enable_g_ir_doc
 
 Bug report URL: $with_bug_report_url
-$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua$warning_libheif$warning_libmypaint"
+$override_bug_report_url$warning_vector_icons_windows$warning_glib_networking$warning_gcc$warning_python$warning_javascript$warning_lua$warning_libheif$warning_libmypaint$warning_gir"
 
 if test "x$required_deps" = "x"; then
   AC_OUTPUT

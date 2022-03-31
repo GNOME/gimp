@@ -246,6 +246,8 @@ gimpuimarshal.c: gimpuimarshal.h
 
 ### GObject introspection
 
+if HAVE_INTROSPECTION
+
 -include $(INTROSPECTION_MAKEFILE)
 include ../libgimpbase/Makefile.gi
 include ../libgimpcolor/Makefile.gi
@@ -463,3 +465,4 @@ EXTRA_DIST += \
 	GimpUi-@GIMP_API_VERSION@.metadata
 
 endif # ENABLE_VAPIGEN
+endif # HAVE_INTROSPECTION
