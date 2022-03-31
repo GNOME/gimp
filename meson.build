@@ -658,7 +658,14 @@ libpng_minver = '1.6.25'
 libpng = dependency('libpng', version: '>='+libpng_minver)
 MIMEtypes += [ 'image/png', 'image/x-icon']
 
-libmng = cc.find_library('mng', required: get_option('mng'))
+libmng = dependency('libmng', required: get_option('mng'))
+
+if not libmng.found()
+  libmng = cc.find_library('mng', required: get_option('mng'))
+  if libmng.found() and not cc.has_function('mng_create', dependencies: libmng)
+    libmng = no_dep
+  endif
+endif
 
 libaa = cc.find_library('aa', required: get_option('aa'))
 
