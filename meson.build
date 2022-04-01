@@ -1881,11 +1881,13 @@ if warnings.length() > 0
   endforeach
 endif
 
-warning('''
+if not platform_windows
+  warning('''
 
-        MESON BUILD IS STILL EXPERIMENTAL!
+          MESON BUILD IS STILL EXPERIMENTAL!
 
-        we encourage usage of meson if you want to test and
-        report bugs. Yet if you are a packager, DO NOT USE
-        meson until we fix all known issues and bugs.
-        ''')
+          we encourage usage of meson if you want to test and
+          report bugs. Yet if you are a packager, DO NOT USE
+          meson until we fix all known issues and bugs.
+          ''')
+endif
