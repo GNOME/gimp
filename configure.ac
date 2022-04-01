@@ -98,6 +98,9 @@ m4_define([wmf_required_version], [0.2.8])
 # version of gettext with more version numbers, please update the tests.
 m4_define([xgettext_required_version], [0.19])
 
+# required versions for build-time only tools
+m4_define([native_glib_required_version], [2.2.0])
+
 AC_INIT([GIMP], [gimp_version],
         [https://gitlab.gnome.org/GNOME/gimp/issues/new],
         [gimp])
@@ -2571,7 +2574,7 @@ if test "x$enable_vector_icons" != "xno"; then
        test -f "$gdk_pixbuf_moduledir/libpixbufloader-svg.so"; then
       # We must not use $PKG_CONFIG nor PKG_CHECK_* macros because we need
       # to make sure we use the native pkg-config (in case we cross-compile).
-      if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+      if pkg-config --atleast-version=native_glib_required_version glib-2.0 &&
          pkg-config gio-2.0; then
         NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0`
         NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0`
@@ -2585,7 +2588,7 @@ WARNING: You enabled vector icons on Win32. Make sure to run:
        so that GdkPixbuf knows where to find the SVG loader."
         fi
       else
-        enable_vector_icons="no (missing native glib-2.0 > glib_required_version or gio-2.0)"
+        enable_vector_icons="no (missing native glib-2.0 > native_glib_required_version or gio-2.0)"
       fi
     else
       enable_vector_icons="no (librsvg GdkPixbuf loader missing)"
@@ -2615,7 +2618,7 @@ WARNING: vector icons are disabled. Be aware that librsvg is still
   fi
 fi
 
-if pkg-config --atleast-version=glib_required_version glib-2.0 &&
+if pkg-config --atleast-version=native_glib_required_version glib-2.0 &&
    pkg-config gio-2.0; then
   NATIVE_GLIB_LIBS=`pkg-config --libs gio-2.0 glib-2.0 gmodule-2.0`
   NATIVE_GLIB_CFLAGS=`pkg-config --cflags gio-2.0 glib-2.0 gmodule-2.0`
@@ -2628,7 +2631,7 @@ if pkg-config --atleast-version=glib_required_version glib-2.0 &&
     add_deps_error([native librsvg-2.0], [Could not find librsvg for the build system.])
   fi
 else
-  add_deps_error([native glib], [Could not find GLib for the build system.])
+  add_deps_error([native glib], [Could not find native GLib for the build system.])
 fi
 
 AC_SUBST(NATIVE_GLIB_LIBS)
