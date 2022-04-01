@@ -289,7 +289,8 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
             base = rowstart
             for size in partition_spans:
                 palette_sort(palette, SELECT_SLICE, '%d:1,%d' % (base, size),
-                             channel, quantize, ascending, 0, 1.0)
+                             channel1, ascending1, channel2, ascending2,
+                             quantize, 0, 1.0)
                 base += size
     else:
         stride = length
@@ -300,7 +301,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
 
         for row_start in range(start, start + stride * nrows, stride):
             sublist = get_colors(row_start, row_start + stride)
-            sublist.sort(key=lambda v:v[0], reverse=not ascending)
+            sublist.sort(key=lambda v:v[0])
             for i, entry in zip(range(row_start, row_start + stride), sublist):
                 pdb.gimp_palette_entry_set_name (palette, i, entry[1][0])
                 pdb.gimp_palette_entry_set_color (palette, i, entry[1][1])
