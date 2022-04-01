@@ -204,6 +204,11 @@ header files installed.
 
  17. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
+     Note that for Windows, we now recommend officially to build GIMP
+     with `meson` instead of `autotools` (`configure` script, make,
+     etc.). Therefore further build instructions below must be converted
+     as their meson command equivalents. On all other platforms, the
+     autotools are still recommended and more complete.
 
  18. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
