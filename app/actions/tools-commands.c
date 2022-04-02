@@ -171,7 +171,36 @@ tools_color_average_radius_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "average-radius",
-                              1.0, 1.0, 10.0, 0.1, FALSE, FALSE);
+                              1.0, 1.0, 10.0, 0.1, FALSE);
+    }
+}
+
+void
+tools_paintbrush_pixel_size_cmd_callback (GimpAction *action,
+                                          GVariant   *value,
+                                          gpointer    data)
+{
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  gdouble               dvalue;
+  return_if_no_context (context, data);
+
+  dvalue = g_variant_get_double (value);
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_PAINT_OPTIONS (tool_info->tool_options))
+    {
+      GParamSpec *pspec;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_info->tool_options),
+                                            "brush-size");
+      dvalue = CLAMP (dvalue,
+                      G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                      G_PARAM_SPEC_DOUBLE (pspec)->maximum);
+
+      g_object_set (G_OBJECT (tool_info->tool_options),
+                    "brush-size", dvalue,
+                    NULL);
     }
 }
 
@@ -195,7 +224,7 @@ tools_paintbrush_size_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-size",
-                              0.1, 1.0, 10.0, 1.0, FALSE, TRUE);
+                              0.1, 1.0, 10.0, 1.0, FALSE);
     }
 }
 
@@ -219,7 +248,7 @@ tools_paintbrush_angle_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-angle",
-                              0.1, 1.0, 15.0, 0.1, TRUE, FALSE);
+                              0.1, 1.0, 15.0, 0.1, TRUE);
     }
 }
 
@@ -243,7 +272,7 @@ tools_paintbrush_aspect_ratio_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-aspect-ratio",
-                              0.01, 0.1, 1.0, 0.1, TRUE, FALSE);
+                              0.01, 0.1, 1.0, 0.1, TRUE);
     }
 }
 
@@ -267,7 +296,7 @@ tools_paintbrush_spacing_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-spacing",
-                              0.001, 0.01, 0.1, 0.1, FALSE, FALSE);
+                              0.001, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -291,7 +320,7 @@ tools_paintbrush_hardness_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-hardness",
-                              0.001, 0.01, 0.1, 0.1, FALSE, FALSE);
+                              0.001, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -315,7 +344,36 @@ tools_paintbrush_force_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "brush-force",
-                              0.001, 0.01, 0.1, 0.1, FALSE, FALSE);
+                              0.001, 0.01, 0.1, 0.1, FALSE);
+    }
+}
+
+void
+tools_ink_blob_pixel_size_cmd_callback (GimpAction *action,
+                                        GVariant   *value,
+                                        gpointer    data)
+{
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  gdouble               dvalue;
+  return_if_no_context (context, data);
+
+  dvalue = g_variant_get_double (value);
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_INK_OPTIONS (tool_info->tool_options))
+    {
+      GParamSpec *pspec;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_info->tool_options),
+                                            "size");
+      dvalue = CLAMP (dvalue,
+                      G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                      G_PARAM_SPEC_DOUBLE (pspec)->maximum);
+
+      g_object_set (G_OBJECT (tool_info->tool_options),
+                    "size", dvalue,
+                    NULL);
     }
 }
 
@@ -339,7 +397,7 @@ tools_ink_blob_size_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "size",
-                              0.1, 1.0, 10.0, 0.1, FALSE, TRUE);
+                              0.1, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -363,7 +421,7 @@ tools_ink_blob_aspect_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "blob-aspect",
-                              1.0, 0.1, 1.0, 0.1, FALSE, FALSE);
+                              1.0, 0.1, 1.0, 0.1, FALSE);
     }
 }
 
@@ -390,7 +448,7 @@ tools_ink_blob_angle_cmd_callback (GimpAction *action,
                               gimp_deg_to_rad (0.1),
                               gimp_deg_to_rad (1.0),
                               gimp_deg_to_rad (15.0),
-                              0.1, TRUE, FALSE);
+                              0.1, TRUE);
     }
 }
 
@@ -414,7 +472,7 @@ tools_airbrush_rate_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "rate",
-                              0.1, 1.0, 10.0, 0.1, FALSE, FALSE);
+                              0.1, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -438,7 +496,7 @@ tools_airbrush_flow_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "flow",
-                              0.1, 1.0, 10.0, 0.1, FALSE, FALSE);
+                              0.1, 1.0, 10.0, 0.1, FALSE);
     }
 }
 
@@ -462,7 +520,7 @@ tools_mybrush_radius_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "radius",
-                              0.1, 0.1, 0.5, 1.0, FALSE, FALSE);
+                              0.1, 0.1, 0.5, 1.0, FALSE);
     }
 }
 
@@ -522,7 +580,7 @@ tools_mybrush_hardness_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "hardness",
-                              0.001, 0.01, 0.1, 1.0, FALSE, FALSE);
+                              0.001, 0.01, 0.1, 1.0, FALSE);
     }
 }
 
@@ -546,7 +604,7 @@ tools_fg_select_brush_size_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "stroke-width",
-                              1.0, 4.0, 16.0, 0.1, FALSE, FALSE);
+                              1.0, 4.0, 16.0, 0.1, FALSE);
     }
 }
 
@@ -570,7 +628,7 @@ tools_transform_preview_opacity_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "preview-opacity",
-                              0.01, 0.1, 0.5, 0.1, FALSE, FALSE);
+                              0.01, 0.1, 0.5, 0.1, FALSE);
     }
 }
 
@@ -594,7 +652,7 @@ tools_warp_effect_size_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "effect-size",
-                              1.0, 4.0, 16.0, 0.1, FALSE, FALSE);
+                              1.0, 4.0, 16.0, 0.1, FALSE);
     }
 }
 
@@ -618,7 +676,7 @@ tools_warp_effect_hardness_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "effect-hardness",
-                              0.001, 0.01, 0.1, 0.1, FALSE, FALSE);
+                              0.001, 0.01, 0.1, 0.1, FALSE);
     }
 }
 

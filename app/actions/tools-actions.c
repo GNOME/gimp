@@ -80,6 +80,13 @@ static const GimpEnumActionEntry tools_color_average_radius_actions[] =
     NULL }
 };
 
+static const GimpDoubleActionEntry tools_paintbrush_pixel_size_actions[] =
+{
+  { "tools-paintbrush-pixel-size-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
+    "Set Brush Size in Pixel", NULL, NULL,
+    1.0, NULL }
+};
+
 static const GimpEnumActionEntry tools_paintbrush_size_actions[] =
 {
   { "tools-paintbrush-size-set", GIMP_ICON_TOOL_PAINTBRUSH,
@@ -126,6 +133,13 @@ static const GimpEnumActionEntry tools_paintbrush_force_actions[] =
     "Set Brush Force", NULL, NULL,
     GIMP_ACTION_SELECT_SET, TRUE,
     NULL }
+};
+
+static const GimpDoubleActionEntry tools_ink_blob_pixel_size_actions[] =
+{
+  { "tools-ink-blob-pixel-size-set", GIMP_ICON_TOOL_INK,
+    "Set Ink Blob Size in Pixel", NULL, NULL,
+    1.0, NULL }
 };
 
 static const GimpEnumActionEntry tools_ink_blob_size_actions[] =
@@ -227,7 +241,7 @@ static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
 static const GimpDoubleActionEntry tools_mybrush_pixel_size_actions[] =
 {
   { "tools-mypaint-brush-pixel-size-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
-    "Set MyPaint Brush Diameter in pixel", NULL, NULL,
+    "Set MyPaint Brush Diameter in Pixel", NULL, NULL,
     1.0, NULL }
 };
 
@@ -653,6 +667,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_color_average_radius_actions),
                                       tools_color_average_radius_cmd_callback);
 
+  gimp_action_group_add_double_actions (group, NULL,
+                                        tools_paintbrush_pixel_size_actions,
+                                        G_N_ELEMENTS (tools_paintbrush_pixel_size_actions),
+                                        tools_paintbrush_pixel_size_cmd_callback);
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_paintbrush_size_actions,
                                       G_N_ELEMENTS (tools_paintbrush_size_actions),
@@ -678,6 +696,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_paintbrush_force_actions),
                                       tools_paintbrush_force_cmd_callback);
 
+  gimp_action_group_add_double_actions (group, NULL,
+                                        tools_ink_blob_pixel_size_actions,
+                                        G_N_ELEMENTS (tools_ink_blob_pixel_size_actions),
+                                        tools_ink_blob_pixel_size_cmd_callback);
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_ink_blob_size_actions,
                                       G_N_ELEMENTS (tools_ink_blob_size_actions),

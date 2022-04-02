@@ -247,7 +247,7 @@ view_zoom_cmd_callback (GimpAction *action,
                                      scale,
                                      0.0, 512.0, 1.0,
                                      1.0 / 8.0, 1.0, 16.0, 0.0,
-                                     FALSE, FALSE);
+                                     FALSE);
 
         /* min = 1.0 / 256,  max = 256.0                */
         /* scale = min *  (max / min)**(i/n), i = 0..n  */
@@ -435,7 +435,7 @@ view_rotate_absolute_cmd_callback (GimpAction *action,
                                0.0,
                                -180.0, 180.0, 0.0,
                                1.0, 15.0, 90.0, 0.0,
-                               TRUE, FALSE);
+                               TRUE);
 
   gimp_display_shell_rotate_to (shell, angle);
 }
@@ -459,7 +459,7 @@ view_rotate_relative_cmd_callback (GimpAction *action,
                                0.0,
                                -180.0, 180.0, 0.0,
                                1.0, 15.0, 90.0, 0.0,
-                               TRUE, FALSE);
+                               TRUE);
 
   gimp_display_shell_rotate (shell, delta);
 }
@@ -518,7 +518,7 @@ view_scroll_horizontal_cmd_callback (GimpAction *action,
                                 gtk_adjustment_get_step_increment (adj),
                                 gtk_adjustment_get_page_increment (adj),
                                 0,
-                                FALSE, FALSE);
+                                FALSE);
 
   gtk_adjustment_set_value (shell->hsbdata, offset);
 }
@@ -548,7 +548,7 @@ view_scroll_vertical_cmd_callback (GimpAction *action,
                                 gtk_adjustment_get_step_increment (adj),
                                 gtk_adjustment_get_page_increment (adj),
                                 0,
-                                FALSE, FALSE);
+                                FALSE);
 
   gtk_adjustment_set_value (shell->vsbdata, offset);
 }

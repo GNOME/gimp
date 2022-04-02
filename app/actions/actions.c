@@ -503,15 +503,12 @@ action_data_sel_count (gpointer data)
  * skip_inc:
  * delta_factor:
  * wrap:
- * set_to_value:
  *
  * For any valid enum @value (which are all negative), the corresponding
  * action computes the semantic value (default, first, next, etc.).
- * For a positive @value:
- * - if @set_to_value is used, then @value is used as-is (possibly
- *   wrapped if @wrap is set, clamped otherwise).
- * - otherwise, @value is considered as a per-thousand value between the
- *   @min and @max, allowing to compute the returned value.
+ * For a positive @value, it is considered as a per-thousand value
+ * between the @min and @max (possibly wrapped if @wrap is set, clamped
+ * otherwise), allowing to compute the returned value.
  *
  * Returns: the computed value to use for the action.
  */
@@ -525,8 +522,7 @@ action_select_value (GimpActionSelectType  select_type,
                      gdouble               inc,
                      gdouble               skip_inc,
                      gdouble               delta_factor,
-                     gboolean              wrap,
-                     gboolean              set_to_value)
+                     gboolean              wrap)
 {
   switch (select_type)
     {
@@ -578,16 +574,9 @@ action_select_value (GimpActionSelectType  select_type,
 
     default:
       if ((gint) select_type >= 0)
-        {
-          if (set_to_value)
-            value = (gdouble) select_type;
-          else
-            value = (gdouble) select_type * (max - min) / 1000.0 + min;
-        }
+        value = (gdouble) select_type * (max - min) / 1000.0 + min;
       else
-        {
-          g_return_val_if_reached (value);
-        }
+        g_return_val_if_reached (value);
       break;
     }
 
@@ -616,8 +605,7 @@ action_select_property (GimpActionSelectType  select_type,
                         gdouble               inc,
                         gdouble               skip_inc,
                         gdouble               delta_factor,
-                        gboolean              wrap,
-                        gboolean              set_to_value)
+                        gboolean              wrap)
 {
   GParamSpec *pspec;
 
@@ -639,8 +627,7 @@ action_select_property (GimpActionSelectType  select_type,
                                    G_PARAM_SPEC_DOUBLE (pspec)->minimum,
                                    G_PARAM_SPEC_DOUBLE (pspec)->maximum,
                                    G_PARAM_SPEC_DOUBLE (pspec)->default_value,
-                                   small_inc, inc, skip_inc, delta_factor, wrap,
-                                   set_to_value);
+                                   small_inc, inc, skip_inc, delta_factor, wrap);
 
       g_object_set (object, property_name, value, NULL);
 
@@ -666,8 +653,7 @@ action_select_property (GimpActionSelectType  select_type,
                                    G_PARAM_SPEC_INT (pspec)->minimum,
                                    G_PARAM_SPEC_INT (pspec)->maximum,
                                    G_PARAM_SPEC_INT (pspec)->default_value,
-                                   small_inc, inc, skip_inc, delta_factor, wrap,
-                                   set_to_value);
+                                   small_inc, inc, skip_inc, delta_factor, wrap);
 
       g_object_set (object, property_name, value, NULL);
 

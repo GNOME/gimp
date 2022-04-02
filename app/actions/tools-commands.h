@@ -29,6 +29,9 @@ void   tools_color_average_radius_cmd_callback      (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 
+void   tools_paintbrush_pixel_size_cmd_callback     (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 void   tools_paintbrush_size_cmd_callback           (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
@@ -48,6 +51,9 @@ void   tools_paintbrush_force_cmd_callback          (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 
+void   tools_ink_blob_pixel_size_cmd_callback       (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 void   tools_ink_blob_size_cmd_callback             (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

@@ -145,7 +145,7 @@ context_foreground_red_cmd_callback (GimpAction *action,
   color.r = action_select_value (select_type,
                                  color.r,
                                  0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_context_set_foreground (context, &color);
 }
 
@@ -165,7 +165,7 @@ context_foreground_green_cmd_callback (GimpAction *action,
   color.g = action_select_value (select_type,
                                  color.g,
                                  0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_context_set_foreground (context, &color);
 }
 
@@ -185,7 +185,7 @@ context_foreground_blue_cmd_callback (GimpAction *action,
   color.b = action_select_value (select_type,
                                  color.b,
                                  0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_context_set_foreground (context, &color);
 }
 
@@ -205,7 +205,7 @@ context_background_red_cmd_callback (GimpAction *action,
   color.r = action_select_value (select_type,
                                  color.r,
                                  0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_context_set_background (context, &color);
 }
 
@@ -225,7 +225,7 @@ context_background_green_cmd_callback (GimpAction *action,
   color.g = action_select_value (select_type,
                                  color.g,
                                  0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_context_set_background (context, &color);
 }
 
@@ -245,7 +245,7 @@ context_background_blue_cmd_callback (GimpAction *action,
   color.b = action_select_value (select_type,
                                  color.b,
                                  0.0, 1.0, 1.0,
-                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                                 1.0 / 255.0, 0.01, 0.1, 0.0, FALSE);
   gimp_context_set_background (context, &color);
 }
 
@@ -267,7 +267,7 @@ context_foreground_hue_cmd_callback (GimpAction *action,
   hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
-                               1.0 / 360.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                               1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
   gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_foreground (context, &color);
 }
@@ -290,7 +290,7 @@ context_foreground_saturation_cmd_callback (GimpAction *action,
   hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
-                               0.01, 0.01, 0.1, 0.0, FALSE, FALSE);
+                               0.01, 0.01, 0.1, 0.0, FALSE);
   gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_foreground (context, &color);
 }
@@ -313,7 +313,7 @@ context_foreground_value_cmd_callback (GimpAction *action,
   hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
-                               0.01, 0.01, 0.1, 0.0, FALSE, FALSE);
+                               0.01, 0.01, 0.1, 0.0, FALSE);
   gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_foreground (context, &color);
 }
@@ -336,7 +336,7 @@ context_background_hue_cmd_callback (GimpAction *action,
   hsv.h = action_select_value (select_type,
                                hsv.h,
                                0.0, 1.0, 1.0,
-                               1.0 / 360.0, 0.01, 0.1, 0.0, FALSE, FALSE);
+                               1.0 / 360.0, 0.01, 0.1, 0.0, FALSE);
   gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_background (context, &color);
 }
@@ -359,7 +359,7 @@ context_background_saturation_cmd_callback (GimpAction *action,
   hsv.s = action_select_value (select_type,
                                hsv.s,
                                0.0, 1.0, 1.0,
-                               0.01, 0.01, 0.1, 0.0, FALSE, FALSE);
+                               0.01, 0.01, 0.1, 0.0, FALSE);
   gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_background (context, &color);
 }
@@ -382,7 +382,7 @@ context_background_value_cmd_callback (GimpAction *action,
   hsv.v = action_select_value (select_type,
                                hsv.v,
                                0.0, 1.0, 1.0,
-                               0.01, 0.01, 0.1, 0.0, FALSE, FALSE);
+                               0.01, 0.01, 0.1, 0.0, FALSE);
   gimp_hsv_to_rgb (&hsv, &color);
   gimp_context_set_background (context, &color);
 }
@@ -407,7 +407,7 @@ context_opacity_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (tool_info->tool_options),
                               "opacity",
-                              1.0 / 255.0, 0.01, 0.1, 0.1, FALSE, FALSE);
+                              1.0 / 255.0, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -435,7 +435,7 @@ context_paint_mode_cmd_callback (GimpAction *action,
   index = context_paint_mode_index (paint_mode, modes, n_modes);
   index = action_select_value (select_type,
                                index, 0, n_modes - 1, 0,
-                               0.0, 1.0, 1.0, 0.0, FALSE, FALSE);
+                               0.0, 1.0, 1.0, 0.0, FALSE);
   paint_mode = modes[index];
   g_free (modes);
 
@@ -576,7 +576,7 @@ context_brush_spacing_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "spacing",
-                              1.0, 5.0, 20.0, 0.1, FALSE, FALSE);
+                              1.0, 5.0, 20.0, 0.1, FALSE);
     }
 }
 
@@ -665,7 +665,7 @@ context_brush_radius_cmd_callback (GimpAction *action,
       radius = action_select_value (select_type,
                                     radius,
                                     min_radius, 4000.0, min_radius,
-                                    0.1, 1.0, 10.0, 0.05, FALSE, FALSE);
+                                    0.1, 1.0, 10.0, 0.05, FALSE);
       gimp_brush_generated_set_radius (generated, radius);
 
       display = action_data_get_display (data);
@@ -699,7 +699,7 @@ context_brush_spikes_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "spikes",
-                              0.0, 1.0, 4.0, 0.1, FALSE, FALSE);
+                              0.0, 1.0, 4.0, 0.1, FALSE);
     }
 }
 
@@ -724,7 +724,7 @@ context_brush_hardness_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "hardness",
-                              0.001, 0.01, 0.1, 0.1, FALSE, FALSE);
+                              0.001, 0.01, 0.1, 0.1, FALSE);
     }
 }
 
@@ -749,7 +749,7 @@ context_brush_aspect_cmd_callback (GimpAction *action,
                               action_data_get_display (data),
                               G_OBJECT (brush),
                               "aspect-ratio",
-                              0.1, 1.0, 4.0, 0.1, FALSE, FALSE);
+                              0.1, 1.0, 4.0, 0.1, FALSE);
     }
 }
 
@@ -784,7 +784,7 @@ context_brush_angle_cmd_callback (GimpAction *action,
         angle = action_select_value (select_type,
                                      angle,
                                      0.0, 180.0, 0.0,
-                                     0.1, 1.0, 15.0, 0.1, TRUE, FALSE);
+                                     0.1, 1.0, 15.0, 0.1, TRUE);
 
       gimp_brush_generated_set_angle (generated, angle);
 
@@ -881,7 +881,7 @@ context_select_color (GimpActionSelectType  select_type,
   index = action_select_value (select_type,
                                index,
                                0, max, 0,
-                               0, 1, 4, 0, FALSE, FALSE);
+                               0, 1, 4, 0, FALSE);
 
   context_set_color_index (index, use_colormap, use_palette, color);
 }
