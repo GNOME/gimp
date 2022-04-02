@@ -467,6 +467,42 @@ tools_mybrush_radius_cmd_callback (GimpAction *action,
 }
 
 void
+tools_mybrush_pixel_size_cmd_callback (GimpAction *action,
+                                       GVariant   *value,
+                                       gpointer    data)
+{
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  gdouble               dvalue;
+  return_if_no_context (context, data);
+
+  dvalue = g_variant_get_double (value);
+  /* Dividing by 2.0 because the parameter is the size of the brush,
+   * hence the diameter and this tool uses the radius as parameter.
+   * Furthermore MyPaint brush radius is stored as a natural logarithm
+   * radius.
+   */
+  dvalue = log (dvalue / 2.0);
+
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_MYBRUSH_OPTIONS (tool_info->tool_options))
+    {
+      GParamSpec *pspec;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_info->tool_options),
+                                            "radius");
+      dvalue = CLAMP (dvalue,
+                      G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                      G_PARAM_SPEC_DOUBLE (pspec)->maximum);
+
+      g_object_set (G_OBJECT (tool_info->tool_options),
+                    "radius", dvalue,
+                    NULL);
+    }
+}
+
+void
 tools_mybrush_hardness_cmd_callback (GimpAction *action,
                                      GVariant   *value,
                                      gpointer    data)

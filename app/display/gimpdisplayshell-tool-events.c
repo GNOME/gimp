@@ -48,6 +48,7 @@
 #include "widgets/gimpdevicemanager.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdialogfactory.h"
+#include "widgets/gimpdoubleaction.h"
 #include "widgets/gimpenumaction.h"
 #include "widgets/gimpuimanager.h"
 #include "widgets/gimpwidgets-utils.h"
@@ -143,9 +144,9 @@ static void       gimp_display_shell_untransform_event_coords (GimpDisplayShell 
                                                                GimpCoords        *image_coords,
                                                                gboolean          *update_software_cursor);
 
-static void       gimp_display_shell_activate_enum_action     (GimpUIManager     *manager,
+static void       gimp_display_shell_activate_action          (GimpUIManager     *manager,
                                                                const gchar       *action_desc,
-                                                               gint               value);
+                                                               GVariant          *value);
 
 
 /*  public functions  */
@@ -1805,18 +1806,31 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
 
       /* TODO: different logics with "lock brush to view". */
       /* TODO 2: scale aware? */
-      action = gimp_tool_control_get_action_size (active_tool->control);
-
+      action = gimp_tool_control_get_action_pixel_size (active_tool->control);
       if (action)
         {
           GimpImageWindow *window  = gimp_display_shell_get_window (shell);
           GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
 
-          /* Special trick with these enum actions. If using any
-           * positive value, we get the GIMP_ACTION_SELECT_SET behavior
-           * which sets to the given value.
-           */
-          gimp_display_shell_activate_enum_action (manager, action, size);
+          gimp_display_shell_activate_action (manager, action,
+                                              g_variant_new_double ((gdouble) size));
+        }
+      else
+        {
+          action = gimp_tool_control_get_action_size (active_tool->control);
+
+          if (action)
+            {
+              GimpImageWindow *window  = gimp_display_shell_get_window (shell);
+              GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+              /* Special trick with these enum actions. If using any
+               * positive value, we get the GIMP_ACTION_SELECT_SET behavior
+               * which sets to the given value.
+               */
+              gimp_display_shell_activate_action (manager, action,
+                                                  g_variant_new_int32 (size));
+            }
         }
     }
   else
@@ -2257,9 +2271,9 @@ gimp_display_shell_untransform_event_coords (GimpDisplayShell *shell,
 }
 
 static void
-gimp_display_shell_activate_enum_action (GimpUIManager *manager,
-                                         const gchar   *action_desc,
-                                         gint           value)
+gimp_display_shell_activate_action (GimpUIManager *manager,
+                                    const gchar   *action_desc,
+                                    GVariant      *value)
 {
   gchar *group_name;
   gchar *action_name;
@@ -2278,8 +2292,11 @@ gimp_display_shell_activate_enum_action (GimpUIManager *manager,
       if (GIMP_IS_ENUM_ACTION (action) &&
           GIMP_ENUM_ACTION (action)->value_variable)
         {
-          gimp_action_emit_activate (action,
-                                     g_variant_new_int32 (value));
+          gimp_action_emit_activate (action, value);
+        }
+      else if (GIMP_IS_DOUBLE_ACTION (action))
+        {
+          gimp_action_emit_activate (action, value);
         }
     }
 

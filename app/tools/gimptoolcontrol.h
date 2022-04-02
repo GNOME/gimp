@@ -79,15 +79,31 @@ struct _GimpToolControl
   GimpToolCursorType   toggle_tool_cursor;
   GimpCursorModifier   toggle_cursor_modifier;
 
-  gchar               *action_opacity;
   gchar               *action_size;
   gchar               *action_aspect;
   gchar               *action_angle;
+
   gchar               *action_spacing;
+
+  gchar               *action_opacity;
   gchar               *action_hardness;
   gchar               *action_force;
+
   gchar               *action_object_1;
   gchar               *action_object_2;
+
+  /* Enum actions have a +-/min/max values which are not necessarily so
+   * useful. They also have a variable value which works as a per mille
+   * between the min and max, so it's hard to use, especially for
+   * actions which have a huge max or which can have negative values.
+   * For instance, aspect and angle can be negative. As for size and
+   * spacing, their max value can be huge. Finally "size" can be
+   * negative for the MyPaint brush tool, which uses a logarithmic
+   * radius as base value.
+   * For this reason, we also register specialized actions with clear
+   * unit if needed.
+   */
+  gchar               *action_pixel_size;
 };
 
 struct _GimpToolControlClass
@@ -249,6 +265,11 @@ const gchar * gimp_tool_control_get_action_object_1 (GimpToolControl *control);
 void          gimp_tool_control_set_action_object_2 (GimpToolControl *control,
                                                      const gchar     *action);
 const gchar * gimp_tool_control_get_action_object_2 (GimpToolControl *control);
+
+
+void          gimp_tool_control_set_action_pixel_size (GimpToolControl *control,
+                                                       const gchar     *action);
+const gchar * gimp_tool_control_get_action_pixel_size (GimpToolControl *control);
 
 
 #endif /* __GIMP_TOOL_CONTROL_H__ */

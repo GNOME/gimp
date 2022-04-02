@@ -94,11 +94,13 @@ gimp_mybrush_tool_init (GimpMybrushTool *mybrush_tool)
 {
   GimpTool *tool = GIMP_TOOL (mybrush_tool);
 
-  gimp_tool_control_set_tool_cursor     (tool->control, GIMP_TOOL_CURSOR_INK);
-  gimp_tool_control_set_action_size     (tool->control,
-                                         "tools/tools-mypaint-brush-radius-set");
-  gimp_tool_control_set_action_hardness (tool->control,
-                                         "tools/tools-mypaint-brush-hardness-set");
+  gimp_tool_control_set_tool_cursor       (tool->control, GIMP_TOOL_CURSOR_INK);
+  gimp_tool_control_set_action_size       (tool->control,
+                                           "tools/tools-mypaint-brush-radius-set");
+  gimp_tool_control_set_action_pixel_size (tool->control,
+                                           "tools/tools-mypaint-brush-pixel-size-set");
+  gimp_tool_control_set_action_hardness   (tool->control,
+                                           "tools/tools-mypaint-brush-hardness-set");
 
   gimp_paint_tool_enable_color_picker (GIMP_PAINT_TOOL (mybrush_tool),
                                        GIMP_COLOR_PICK_TARGET_FOREGROUND);
@@ -125,11 +127,18 @@ gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool,
                                gdouble        y)
 {
   GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (paint_tool);
-  GimpMybrush        *brush   = gimp_context_get_mybrush (GIMP_CONTEXT (options));
   GimpCanvasItem     *item    = NULL;
   GimpDisplayShell   *shell   = gimp_display_get_shell (display);
+  gdouble             radius;
 
-  gdouble radius = exp (options->radius) + 2 * options->radius * gimp_mybrush_get_offset_by_random (brush);
+  /* Radius size as used by libmypaint is logarithmic.
+   * The drawn outline in the MyBrush tool is more of a general idea of
+   * the brush size. With each brush having its own logic, actual drawn
+   * dabs may be quite different, smaller but also bigger. And there are
+   * some random elements in there too.
+   * See also mypaint-brush.c code in libmypaint.
+   */
+  radius = exp (options->radius);
   radius = MAX (MAX (4 / shell->scale_x, 4 / shell->scale_y), radius);
 
   item = gimp_mybrush_tool_create_cursor (paint_tool, display, x, y, radius);

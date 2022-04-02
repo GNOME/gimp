@@ -98,6 +98,8 @@ gimp_tool_control_finalize (GObject *object)
   g_free (control->action_object_1);
   g_free (control->action_object_2);
 
+  g_free (control->action_pixel_size);
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -724,4 +726,25 @@ gimp_tool_control_get_action_object_2 (GimpToolControl *control)
   g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
 
   return control->action_object_2;
+}
+
+void
+gimp_tool_control_set_action_pixel_size (GimpToolControl *control,
+                                         const gchar     *action)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  if (action != control->action_pixel_size)
+    {
+      g_free (control->action_pixel_size);
+      control->action_pixel_size = g_strdup (action);
+    }
+}
+
+const gchar *
+gimp_tool_control_get_action_pixel_size (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), NULL);
+
+  return control->action_pixel_size;
 }

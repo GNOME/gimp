@@ -224,6 +224,13 @@ static const GimpEnumActionEntry tools_mybrush_radius_actions[] =
     NULL }
 };
 
+static const GimpDoubleActionEntry tools_mybrush_pixel_size_actions[] =
+{
+  { "tools-mypaint-brush-pixel-size-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
+    "Set MyPaint Brush Diameter in pixel", NULL, NULL,
+    1.0, NULL }
+};
+
 static const GimpEnumActionEntry tools_mybrush_hardness_actions[] =
 {
   { "tools-mypaint-brush-hardness-set", GIMP_ICON_TOOL_MYPAINT_BRUSH,
@@ -697,6 +704,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_mybrush_radius_actions,
                                       G_N_ELEMENTS (tools_mybrush_radius_actions),
                                       tools_mybrush_radius_cmd_callback);
+  gimp_action_group_add_double_actions (group, NULL,
+                                        tools_mybrush_pixel_size_actions,
+                                        G_N_ELEMENTS (tools_mybrush_pixel_size_actions),
+                                        tools_mybrush_pixel_size_cmd_callback);
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_mybrush_hardness_actions,
                                       G_N_ELEMENTS (tools_mybrush_hardness_actions),
