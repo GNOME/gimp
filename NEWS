@@ -99,6 +99,11 @@ Build:
   - Windows installer's gettext files (.po) will now also contain
     extracted comments from the source to give more context to
     translators.
+  - Flatpak manifest upgraded with new version constraints so that the
+    flatpak-external-data-checker does not warn wrongly on major update
+    when we don't want to or can't update immediately.
+  - meson is now recommended for Windows builds and our official
+    installer is now built (still from CI) with meson.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
