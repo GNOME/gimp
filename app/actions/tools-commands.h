@@ -89,6 +89,9 @@ void   tools_transform_preview_opacity_cmd_callback (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 
+void   tools_warp_effect_pixel_size_cmd_callback    (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
 void   tools_warp_effect_size_cmd_callback          (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

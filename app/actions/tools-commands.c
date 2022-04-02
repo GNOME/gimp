@@ -633,6 +633,35 @@ tools_transform_preview_opacity_cmd_callback (GimpAction *action,
 }
 
 void
+tools_warp_effect_pixel_size_cmd_callback (GimpAction *action,
+                                           GVariant   *value,
+                                           gpointer    data)
+{
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  gdouble               dvalue;
+  return_if_no_context (context, data);
+
+  dvalue = g_variant_get_double (value);
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_WARP_OPTIONS (tool_info->tool_options))
+    {
+      GParamSpec *pspec;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_info->tool_options),
+                                            "effect-size");
+      dvalue = CLAMP (dvalue,
+                      G_PARAM_SPEC_DOUBLE (pspec)->minimum,
+                      G_PARAM_SPEC_DOUBLE (pspec)->maximum);
+
+      g_object_set (G_OBJECT (tool_info->tool_options),
+                    "effect-size", dvalue,
+                    NULL);
+    }
+}
+
+void
 tools_warp_effect_size_cmd_callback (GimpAction *action,
                                      GVariant   *value,
                                      gpointer    data)

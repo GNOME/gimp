@@ -270,6 +270,13 @@ static const GimpEnumActionEntry tools_transform_preview_opacity_actions[] =
     NULL }
 };
 
+static const GimpDoubleActionEntry tools_warp_effect_pixel_size_actions[] =
+{
+  { "tools-warp-effect-pixel-size-set", GIMP_ICON_TOOL_WARP,
+    "Set Warp Effect Size in Pixel", NULL, NULL,
+    1.0, NULL }
+};
+
 static const GimpEnumActionEntry tools_warp_effect_size_actions[] =
 {
   { "tools-warp-effect-size-set", GIMP_ICON_TOOL_WARP,
@@ -745,6 +752,10 @@ tools_actions_setup (GimpActionGroup *group)
                                       G_N_ELEMENTS (tools_transform_preview_opacity_actions),
                                       tools_transform_preview_opacity_cmd_callback);
 
+  gimp_action_group_add_double_actions (group, NULL,
+                                        tools_warp_effect_pixel_size_actions,
+                                        G_N_ELEMENTS (tools_warp_effect_pixel_size_actions),
+                                        tools_warp_effect_pixel_size_cmd_callback);
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_warp_effect_size_actions,
                                       G_N_ELEMENTS (tools_warp_effect_size_actions),
