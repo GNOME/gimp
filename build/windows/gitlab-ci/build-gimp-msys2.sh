@@ -6,8 +6,7 @@ if [[ "$MSYSTEM" == "MINGW32" ]]; then
     export ARTIFACTS_SUFFIX="-w32"
     export MSYS2_ARCH="i686"
     export MSYS2_PREFIX="/c/msys64/mingw32"
-    # 32-bit libmng MSYS2 package is broken: https://github.com/msys2/MINGW-packages/issues/11136
-    export GIMP_OPTIONS="-Dvala-plugins=disabled -Dmng=disabled"
+    export GIMP_OPTIONS="-Dvala-plugins=disabled"
 else
     export ARTIFACTS_SUFFIX="-w64"
     export MSYS2_ARCH="x86_64"
