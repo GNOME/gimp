@@ -121,6 +121,10 @@ void   tools_force_cmd_callback                     (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
 
+void   tools_paint_select_pixel_size_cmd_callback   (GimpAction *action,
+                                                     GVariant   *value,
+                                                     gpointer    data);
+
 void   tools_object_1_cmd_callback                  (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

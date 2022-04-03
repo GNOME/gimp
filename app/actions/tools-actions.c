@@ -601,6 +601,13 @@ static const GimpEnumActionEntry tools_force_actions[] =
     NULL },
 };
 
+static const GimpDoubleActionEntry tools_paint_select_pixel_size_actions[] =
+{
+  { "tools-paint-select-pixel-size-set", GIMP_ICON_TOOL_PAINT_SELECT,
+    "Set Paint Select Brush Size in Pixel", NULL, NULL,
+    1.0, NULL }
+};
+
 static const GimpEnumActionEntry tools_object_1_actions[] =
 {
   { "tools-object-1-set", GIMP_ICON_DIALOG_TOOL_OPTIONS,
@@ -793,6 +800,11 @@ tools_actions_setup (GimpActionGroup *group)
                                       tools_force_actions,
                                       G_N_ELEMENTS (tools_force_actions),
                                       tools_force_cmd_callback);
+
+  gimp_action_group_add_double_actions (group, NULL,
+                                        tools_paint_select_pixel_size_actions,
+                                        G_N_ELEMENTS (tools_paint_select_pixel_size_actions),
+                                        tools_paint_select_pixel_size_cmd_callback);
 
   gimp_action_group_add_enum_actions (group, NULL,
                                       tools_object_1_actions,

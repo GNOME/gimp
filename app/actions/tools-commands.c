@@ -44,6 +44,7 @@
 #include "tools/gimp-tools.h"
 #include "tools/gimpcoloroptions.h"
 #include "tools/gimpforegroundselectoptions.h"
+#include "tools/gimppaintselectoptions.h"
 #include "tools/gimprectangleoptions.h"
 #include "tools/gimptool.h"
 #include "tools/gimptoolcontrol.h"
@@ -860,6 +861,35 @@ tools_force_cmd_callback (GimpAction *action,
 
       if (action_desc)
         tools_activate_enum_action (action_desc, value);
+    }
+}
+
+void
+tools_paint_select_pixel_size_cmd_callback (GimpAction *action,
+                                            GVariant   *value,
+                                            gpointer    data)
+{
+  GimpContext          *context;
+  GimpToolInfo         *tool_info;
+  gdouble               dvalue;
+  return_if_no_context (context, data);
+
+  dvalue = g_variant_get_double (value);
+  tool_info = gimp_context_get_tool (context);
+
+  if (tool_info && GIMP_IS_PAINT_SELECT_OPTIONS (tool_info->tool_options))
+    {
+      GParamSpec *pspec;
+
+      pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (tool_info->tool_options),
+                                            "stroke-width");
+      dvalue = CLAMP (dvalue,
+                      G_PARAM_SPEC_INT (pspec)->minimum,
+                      G_PARAM_SPEC_INT (pspec)->maximum);
+
+      g_object_set (G_OBJECT (tool_info->tool_options),
+                    "stroke-width", (gint) dvalue,
+                    NULL);
     }
 }
 

@@ -210,8 +210,11 @@ gimp_paint_select_tool_init (GimpPaintSelectTool *ps_tool)
                                      GIMP_TOOL_CURSOR_PAINTBRUSH);
   gimp_tool_control_set_cursor_modifier (tool->control,
                                          GIMP_CURSOR_MODIFIER_PLUS);
-  gimp_tool_control_set_action_size (tool->control,
-                                     "tools/tools-paint-select-brush-size-set");
+  gimp_tool_control_set_action_pixel_size (tool->control,
+                                           "tools/tools-paint-select-pixel-size-set");
+  /* TODO: the size-set action is not implemented. */
+  gimp_tool_control_set_action_size       (tool->control,
+                                           "tools/tools-paint-select-size-set");
   ps_tool->image_mask  = NULL;
   ps_tool->trimap      = NULL;
   ps_tool->drawable    = NULL;
@@ -576,6 +579,15 @@ gimp_paint_select_tool_options_notify (GimpTool         *tool,
                                        const GParamSpec *pspec)
 {
   GimpPaintSelectTool  *ps_tool = GIMP_PAINT_SELECT_TOOL (tool);
+
+  if (g_strcmp0 (pspec->name, "stroke-width") == 0)
+    {
+      /* This triggers a redraw of the tool pointer, especially useful
+       * here when we change the pen size with on-canvas interaction.
+       */
+      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    }
 
   if (! tool->display)
     return;
