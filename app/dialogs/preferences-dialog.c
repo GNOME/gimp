@@ -2917,6 +2917,76 @@ prefs_dialog_new (Gimp       *gimp,
   g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
 
+  /************************/
+  /*  Canvas Interaction  */
+  /************************/
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-image-windows",
+                                  _("Canvas Interaction"),
+                                  _("Canvas Interaction"),
+                                  GIMP_HELP_PREFS_CANVAS_INTERACTION,
+                                  NULL,
+                                  &top_iter);
+  gimp_prefs_box_set_page_scrollable (GIMP_PREFS_BOX (prefs_box), vbox, TRUE);
+
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  /*  Space Bar  */
+  vbox2 = prefs_frame_new (_("Space Bar"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "space-bar-action", 0, 0,
+                            _("_While space bar is pressed:"),
+                            GTK_GRID (grid), 0, size_group);
+
+  /*  Zoom by drag Behavior  */
+  vbox2 = prefs_frame_new (_("Zoom"),
+                           GTK_CONTAINER (vbox), FALSE);
+
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "drag-zoom-mode", 0, 0,
+                            _("Dra_g-to-zoom behavior:"),
+                            GTK_GRID (grid), 0, size_group);
+
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "drag-zoom-speed", 5.0, 25.0, 0,
+                         _("Drag-to-zoom spe_ed:"),
+                         GTK_GRID (grid), 0, size_group);
+
+  /***********************************/
+  /*  Canvas Interaction / Snapping  */
+  /***********************************/
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  "gimp-prefs-image-windows-snapping",
+                                  _("Snapping Behavior"),
+                                  _("Snapping"),
+                                  GIMP_HELP_PREFS_IMAGE_WINDOW_SNAPPING,
+                                  &top_iter,
+                                  &child_iter);
+
+  prefs_behavior_options_frame_add (gimp,
+                                    G_OBJECT (display_config->default_view),
+                                    _("Default Behavior in Normal Mode"),
+                                    GTK_CONTAINER (vbox));
+  prefs_behavior_options_frame_add (gimp,
+                                    G_OBJECT (display_config->default_fullscreen_view),
+                                    _("Default Behavior in Fullscreen Mode"),
+                                    GTK_CONTAINER (vbox));
+
+  /*  Snapping Distance  */
+  vbox2 = prefs_frame_new (_("General"),
+                           GTK_CONTAINER (vbox), FALSE);
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
+                         _("_Snapping distance:"),
+                         GTK_GRID (grid), 0, NULL);
+
+
   /*******************/
   /*  Image Windows  */
   /*******************/
@@ -2966,29 +3036,6 @@ prefs_dialog_new (Gimp       *gimp,
                                "1:1",
                                _("Initial zoom _ratio:"),
                                GTK_GRID (grid), 0, size_group);
-
-  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
-
-  prefs_enum_combo_box_add (object, "drag-zoom-mode", 0, 0,
-                            _("Dra_g-to-zoom behavior:"),
-                            GTK_GRID (grid), 0, size_group);
-
-  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
-
-  prefs_spin_button_add (object, "drag-zoom-speed", 5.0, 25.0, 0,
-                         _("Drag-to-zoom spe_ed:"),
-                         GTK_GRID (grid), 0, size_group);
-
-  /*  Space Bar  */
-  vbox2 = prefs_frame_new (_("Space Bar"),
-                           GTK_CONTAINER (vbox), FALSE);
-
-  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
-
-  prefs_enum_combo_box_add (object, "space-bar-action", 0, 0,
-                            _("_While space bar is pressed:"),
-                            GTK_GRID (grid), 0, size_group);
-
 
   /********************************/
   /*  Image Windows / Appearance  */
@@ -3145,36 +3192,6 @@ prefs_dialog_new (Gimp       *gimp,
                           entry);
       }
   }
-
-
-  /******************************/
-  /*  Image Windows / Snapping  */
-  /******************************/
-  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
-                                  "gimp-prefs-image-windows-snapping",
-                                  _("Image Window Snapping Behavior"),
-                                  _("Snapping"),
-                                  GIMP_HELP_PREFS_IMAGE_WINDOW_SNAPPING,
-                                  &top_iter,
-                                  &child_iter);
-
-  prefs_behavior_options_frame_add (gimp,
-                                    G_OBJECT (display_config->default_view),
-                                    _("Default Behavior in Normal Mode"),
-                                    GTK_CONTAINER (vbox));
-  prefs_behavior_options_frame_add (gimp,
-                                    G_OBJECT (display_config->default_fullscreen_view),
-                                    _("Default Behavior in Fullscreen Mode"),
-                                    GTK_CONTAINER (vbox));
-
-  /*  Snapping Distance  */
-  vbox2 = prefs_frame_new (_("General"),
-                           GTK_CONTAINER (vbox), FALSE);
-  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
-
-  prefs_spin_button_add (object, "snap-distance", 1.0, 5.0, 0,
-                         _("_Snapping distance:"),
-                         GTK_GRID (grid), 0, NULL);
 
 
   /*******************/
