@@ -11,18 +11,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp 2.10\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-07 13:47+0300\n"
-"PO-Revision-Date: 2019-08-07 13:49+0300\n"
-"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2022-02-25 18:42+0000\n"
+"PO-Revision-Date: 2022-03-03 14:46+0300\n"
+"Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
 "Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.31.90\n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -53,88 +53,88 @@ msgstr "Выбор кисти"
 msgid "_Browse..."
 msgstr "_Просмотреть..."
 
-#: ../libgimp/gimpexport.c:270 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "Расширение %s не может работать со слоями"
 
-#: ../libgimp/gimpexport.c:271 ../libgimp/gimpexport.c:280
-#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Объединить видимые слои"
 
-#: ../libgimp/gimpexport.c:279
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "Расширение %s не может обрабатывать смещение, размер или непрозрачность слоя"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:297
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "Расширение %s может обрабатывать слои только как кадры анимации"
 
-#: ../libgimp/gimpexport.c:289 ../libgimp/gimpexport.c:298
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Сохранить как анимацию"
 
-#: ../libgimp/gimpexport.c:298 ../libgimp/gimpexport.c:307
-#: ../libgimp/gimpexport.c:316 ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Свести изображение"
 
-#: ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "Расширение %s не может обрабатывать прозрачность"
 
-#: ../libgimp/gimpexport.c:324
+#: ../libgimp/gimpexport.c:349
 #, c-format
 msgid "%s plug-in can't handle transparent layers"
 msgstr "Плагин %s не может работать с прозрачными слоями"
 
-#: ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "Расширение %s не может обрабатывать маски слоя"
 
-#: ../libgimp/gimpexport.c:334
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Применить маски слоя"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr ""
 "Расширение %s может обрабатывать\\n\n"
 "только RGB-изображения"
 
-#: ../libgimp/gimpexport.c:343 ../libgimp/gimpexport.c:381
-#: ../libgimp/gimpexport.c:390
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Преобразовать в RGB"
 
-#: ../libgimp/gimpexport.c:351
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr ""
 "Расширение %s может обрабатывать\\n\n"
 "только изображения в градациях серого"
 
-#: ../libgimp/gimpexport.c:352 ../libgimp/gimpexport.c:381
-#: ../libgimp/gimpexport.c:402
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Преобразовать в оттенки серого"
 
-#: ../libgimp/gimpexport.c:360
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr ""
 "Расширение %s может обрабатывать\\n\n"
 "только индексированные изображения"
 
-#: ../libgimp/gimpexport.c:361 ../libgimp/gimpexport.c:390
-#: ../libgimp/gimpexport.c:400
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -142,14 +142,14 @@ msgstr ""
 "Преобразовать в индексированное используя\\n\n"
 "параметры по умолчанию (изменяемо вручную)"
 
-#: ../libgimp/gimpexport.c:370
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "Расширение %s может обрабатывать только\\n\n"
 "двухцветные или индексированные изображения"
 
-#: ../libgimp/gimpexport.c:371
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -157,42 +157,55 @@ msgstr ""
 "Преобразовать в индексированное используя\\n\n"
 "параметры по умолчанию для растра (изменяемо вручную)"
 
-#: ../libgimp/gimpexport.c:380
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr ""
 "Расширение %s может обрабатывать только\\n\n"
 "изображения в градациях серого или RGB"
 
-#: ../libgimp/gimpexport.c:389
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "Расширение %s может обрабатывать только\\n\n"
 "RGB- или индексированные изображения"
 
-#: ../libgimp/gimpexport.c:399
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
 "Расширение %s может обрабатывать только изображения\\n\n"
 "в градациях серого или индексированные изображения"
 
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "Расширению %s требуется альфа-канал"
 
-#: ../libgimp/gimpexport.c:411
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Добавить альфа-канал"
 
-#: ../libgimp/gimpexport.c:470
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "%s плагин должен обрезать слои по границам изображения"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Crop Layers"
+msgstr "Обрезать слои"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Изменение размера изображения в слоях"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Подтвердить сохранение"
 
-#: ../libgimp/gimpexport.c:475 ../libgimp/gimpexport.c:557
-#: ../libgimp/gimpexport.c:1055 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -201,24 +214,24 @@ msgstr "Подтвердить сохранение"
 msgid "_Cancel"
 msgstr "О_тмена"
 
-#: ../libgimp/gimpexport.c:476
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "_Подтвердить"
 
-#: ../libgimp/gimpexport.c:552
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Экспортировать файл"
 
-#: ../libgimp/gimpexport.c:556
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Игнорировать"
 
-#: ../libgimp/gimpexport.c:558 ../libgimp/gimpexport.c:1056
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Экспорт"
 
 #. the headline
-#: ../libgimp/gimpexport.c:588
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -228,11 +241,11 @@ msgstr ""
 "%s по следующим причинам:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:662
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "Экспортное преобразование не изменит ваше исходное изображение."
 
-#: ../libgimp/gimpexport.c:766
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -242,7 +255,7 @@ msgstr ""
 " в файл формата %s.\n"
 "Видимые слои не будут сохранены."
 
-#: ../libgimp/gimpexport.c:772
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -254,7 +267,7 @@ msgstr ""
 "Видимые слои не будут сохранены."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1049
+#: ../libgimp/gimpexport.c:1119
 #, c-format
 msgid "Export Image as %s"
 msgstr "Экспортировать как %s"
@@ -267,44 +280,44 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:687
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:878
 msgid "Background"
 msgstr "Фон"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1067
 #, c-format
 msgid "Rotate %s?"
 msgstr "Повернуть %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1073
 msgid "_Keep Original"
 msgstr "_Сохранить оригинал"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1074 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Повернуть"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Original"
 msgstr "Оригинал"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1131
 msgid "Rotated"
 msgstr "Повёрнуто"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1149
 msgid "This image contains Exif orientation metadata."
 msgstr "Это изображение содержит метаданные Exif об ориентации."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1167
 msgid "Would you like to rotate the image?"
 msgstr "Повернуть изображение?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1179
 msgid "_Don't ask me again"
 msgstr "_Больше не спрашивать"
 
@@ -1472,37 +1485,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Пропорциональная"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:961
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Загружать метаданные можно только из локальных файлов"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Не удалось преобразовать имя файла в системную кодовую страницу. "
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1017
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Метаданные можно сохранять только в локальные файлы"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1065
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Некорректный размер данных Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1094
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Не удалось разобрать данные Exif."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1144
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Не удалось разобрать данные IPTC."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1192
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Не удалось разобрать данные XMP."
@@ -1660,7 +1668,7 @@ msgid ""
 msgstr ""
 "Цветовой профиль, который используется для программной проверки того, как "
 "изображение будет выглядеть в другом цветовом пространстве, включая проверку "
-"для профиля принтера или другого устройства вывода."
+"для профиля принтера или другого устройства вывода. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1698,14 +1706,14 @@ msgid ""
 msgstr ""
 "Способ преобразования цветов цветового пространства изображения для "
 "устройства имитации вывода (обычно это монитор). Попробуйте все и выберите "
-"тот, при использовании которого изображение выглядит лучше всего."
+"тот, при использовании которого изображение выглядит лучше всего. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
 msgid ""
 "Try with and without black point compensation and choose what looks best. "
 msgstr ""
 "Попробуйте включить и отключить компенсацию чёрной точки; выберите тот "
-"вариант, при котором изображение выглядит лучше."
+"вариант, при котором изображение выглядит лучше. "
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
@@ -1720,7 +1728,7 @@ msgid ""
 "represented in the target color space."
 msgstr ""
 "Если включено, при программной цветопробе помечаются цвета, выходящие за "
-"пределы цветового пространства"
+"пределы цветового пространства."
 
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
@@ -1790,7 +1798,7 @@ msgstr "Цвет маркировки тонов вне цветового ох�
 #: ../libgimpconfig/gimpcolorconfig.c:841
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr "Цветовой профиль '%s' не предназначен для пространства RGB"
+msgstr "Цветовой профиль '%s' не предназначен для пространства RGB."
 
 #: ../libgimpconfig/gimpcolorconfig.c:699
 #: ../libgimpconfig/gimpcolorconfig.c:891
@@ -1816,17 +1824,17 @@ msgstr "значение для маркера %s не является корр
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "ожидалось 'yes' или 'no' для булевого маркёра %s, получено '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:588
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неверное значение '%s' для маркёра %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:599
+#: ../libgimpconfig/gimpconfig-deserialize.c:603
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неверное значение '%ld' для маркёра %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:668
+#: ../libgimpconfig/gimpconfig-deserialize.c:672
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при синтаксическом разборе маркёра '%s': %s"
@@ -1856,12 +1864,12 @@ msgstr "Ошибка записи в '%s': %s"
 #: ../libgimpconfig/gimpconfigwriter.c:183
 #, c-format
 msgid "Could not create directory '%s' for '%s': "
-msgstr "Не удалось создать каталог '%s' для '%s':"
+msgstr "Не удалось создать директорию '%s' для '%s': "
 
 #: ../libgimpconfig/gimpconfigwriter.c:199
 #, c-format
 msgid "Could not create temporary file for '%s': "
-msgstr "Не удалось создать временный файл для '%s':"
+msgstr "Не удалось создать временный файл для '%s': "
 
 #: ../libgimpconfig/gimpconfigwriter.c:783
 #, c-format
@@ -1932,7 +1940,7 @@ msgstr "В эскизе нет тэга Thumb::URI"
 #: ../libgimpthumb/gimpthumbnail.c:876
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Не удалось создать файлы предварительного просмотра  %s:  %s."
+msgstr "Не удалось создать файлы предварительного просмотра  %s:  %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:114
 msgid "_Search:"
@@ -2152,17 +2160,17 @@ msgstr "_Преобразовать"
 msgid "_Shear"
 msgstr "Н_аклонить"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "Килобайты"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+msgid "Kibibyte"
+msgstr "Кибибайт"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "Мегабайты"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+msgid "Mebibyte"
+msgstr "Мебибайт"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "Гигабайты"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+msgid "Gibibyte"
+msgstr "Гибибайт"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -2221,7 +2229,7 @@ msgstr "Удалить выбранную папку из списка"
 msgid "Writable"
 msgstr "Запись"
 
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:113
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2245,7 +2253,7 @@ msgstr "Стиль клеток"
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "Ввод текста в это поле ограничен %d символом"
+msgstr[0] "Ввод текста в это поле ограничен %d символом."
 msgstr[1] "Ввод текста в это поле ограничен %d символами."
 msgstr[2] "Ввод текста в это поле ограничен %d символами."
 
@@ -2815,11 +2823,11 @@ msgstr "Контроллер MIDI-событий"
 
 #: ../modules/controller-midi.c:203
 msgid "The name of the device to read MIDI events from."
-msgstr "Имя устройства, с которого читать MIDI-события"
+msgstr "Имя устройства, с которого читать MIDI-события."
 
 #: ../modules/controller-midi.c:206
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Введите 'alsa', чтобы использовать ALSA-секвенсер"
+msgstr "Введите 'alsa', чтобы использовать ALSA-секвенсер."
 
 #: ../modules/controller-midi.c:221
 msgid "Channel:"
@@ -2840,12 +2848,12 @@ msgstr "MIDI"
 #: ../modules/controller-midi.c:355
 #, c-format
 msgid "Note %02x on"
-msgstr "Нота %02x вкл."
+msgstr "Нота %02x включена"
 
 #: ../modules/controller-midi.c:358
 #, c-format
 msgid "Note %02x off"
-msgstr "Нота %02x выкл."
+msgstr "Нота %02x выключена"
 
 #: ../modules/controller-midi.c:361
 #, c-format
@@ -2866,7 +2874,7 @@ msgstr "Контроллер входящих MIDI-событий"
 
 #: ../modules/display-filter-clip-warning.c:120
 msgid "Clip warning color display filter"
-msgstr "Фильтр, помечающий недо- и переэкспонированные области "
+msgstr "Фильтр, помечающий недо- и переэкспонированные области"
 
 #: ../modules/display-filter-clip-warning.c:157
 msgid "Show shadows"
@@ -2983,186 +2991,8 @@ msgstr "Фильтр повышенного контраста"
 
 #: ../modules/display-filter-high-contrast.c:123
 msgid "Contrast cycles"
-msgstr "Циклы контраста"
+msgstr "Степень контраста"
 
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Контраст"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue (HSV)"
-#~ msgstr "Тон (HSV)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Saturation (HSV)"
-#~ msgstr "Насыщенность (HSV)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Value (HSV)"
-#~ msgstr "Значение (HSV)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Lightness (LCH)"
-#~ msgstr "Освещенность (LCH)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Chroma (LCH)"
-#~ msgstr "Цветность (LCH)"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue (LCH)"
-#~ msgstr "Тон (LCH)"
-
-#~ msgid "Deficiency"
-#~ msgstr "Разновидность:"
-
-#~ msgctxt "desaturate-mode"
-#~ msgid "Average"
-#~ msgstr "Среднее"
-
-#~ msgctxt "select-criterion"
-#~ msgid "Hue"
-#~ msgstr "Тон"
-
-#~ msgid "Hue"
-#~ msgstr "Тон"
-
-#~ msgid "_Gamma:"
-#~ msgstr "_Гамма:"
-
-#~ msgid "Color management display filter using ICC color profiles"
-#~ msgstr "Фильтр настройки цветопередачи, использующий ICC"
-
-#~ msgid "Color Management"
-#~ msgstr "Управление цветом"
-
-#~ msgid ""
-#~ "This filter takes its configuration from the Color Management section in "
-#~ "the Preferences dialog."
-#~ msgstr ""
-#~ "Этот фильтр настраивается во вкладке «Управление цветом» диалога "
-#~ "настройки программы."
-
-#~ msgid "Mode of operation:"
-#~ msgstr "Режим обработки:"
-
-#~ msgid "Image profile:"
-#~ msgstr "Профиль изображения:"
-
-#~ msgid "Monitor profile:"
-#~ msgstr "Профиль монитора:"
-
-#~ msgid "Print simulation profile:"
-#~ msgstr "Профиль имитации принтера:"
-
-#~ msgid "None"
-#~ msgstr "Без"
-
-#~ msgid "Color proof filter using ICC color profile"
-#~ msgstr "Фильтр настройки цветопередачи, использующий ICC-профиль"
-
-#~ msgid "Intent"
-#~ msgstr "Цветопередача"
-
-#~ msgid "Black point compensation"
-#~ msgstr "Компенсация чёрной точки"
-
-#~ msgid "Profile"
-#~ msgstr "Профиль"
-
-#~ msgid "Color Proof"
-#~ msgstr "Настройка цветопередачи"
-
-#~ msgid "Choose an ICC Color Profile"
-#~ msgstr "Выберите ICC-профиль"
-
-#~ msgid "_Profile:"
-#~ msgstr "_Профиль:"
-
-#~ msgid "_Intent:"
-#~ msgstr "_Цветопередача:"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "Компенсация _чёрной точки"
-
-#~ msgid "Mode of operation for color management."
-#~ msgstr "Способ управления цветом"
-
-#~ msgid "Print simulation profile"
-#~ msgstr "Профиль имитации принтера"
-
-#~ msgctxt "color-management-mode"
-#~ msgid "Print simulation"
-#~ msgstr "Имитация принтера"
-
-#~ msgid "_Edit"
-#~ msgstr "Исправить"
-
-#~ msgid "Sans"
-#~ msgstr "Sans"
-
-#~ msgctxt "desaturate-mode"
-#~ msgid "Luminosity"
-#~ msgstr "Светимость"
-
-#~ msgctxt "icon-type"
-#~ msgid "Stock ID"
-#~ msgstr "Stock ID"
-
-#~ msgctxt "interpolation-type"
-#~ msgid "Sinc (Lanczos3)"
-#~ msgstr "Sinc (Lanczos3)"
-
-#~ msgctxt "repeat-mode"
-#~ msgid "None"
-#~ msgstr "Нет"
-
-#~ msgid "The default RGB working space color profile."
-#~ msgstr ""
-#~ "Используемый по умолчанию ICC-профиль для работы в цветовом пространстве "
-#~ "RGB."
-
-#~ msgid "The color profile used for simulating a printed version (softproof)."
-#~ msgstr "Цветовой профиль для имитации печатной версии (цветопроба)."
-
-#~ msgid "Sets how colors are mapped for your display."
-#~ msgstr "Определяет способ переноса цветов на монитор"
-
-#~ msgid ""
-#~ "Sets how colors are converted from RGB working space to the print "
-#~ "simulation device."
-#~ msgstr ""
-#~ "Определяет способ преобразования цветов из рабочего пространства RGB в "
-#~ "пространство имитируемого печатающего устройства."
-
-#~ msgid "Could not open '%s' for writing: %s"
-#~ msgstr "Не удалось открыть '%s' для записи: %s"
-
-#~ msgid ""
-#~ "Error writing to temporary file for '%s': %s\n"
-#~ "The original file has not been touched."
-#~ msgstr ""
-#~ "Ошибка записи во временный файл для '%s': %s\n"
-#~ "Исходный файл не был изменён."
-
-#~ msgid ""
-#~ "Error writing to temporary file for '%s': %s\n"
-#~ "No file has been created."
-#~ msgstr ""
-#~ "Ошибка записи во временный файл для '%s': %s\n"
-#~ "Файл не был создан."
-
-#~ msgid "Could not create '%s': %s"
-#~ msgstr "Не удалось создать '%s': %s"
-
-#~ msgid "Page 000"
-#~ msgstr "Страница 000"
-
-#~ msgid "CMYK color selector"
-#~ msgstr "Выбора цвета в CMYK"
-
-#~ msgid "Black _pullout:"
-#~ msgstr "С_одержание черного:"
-
-#~ msgid "The percentage of black to pull out of the colored inks."
-#~ msgstr "Процентное содержание черного в цветных чернилах."
