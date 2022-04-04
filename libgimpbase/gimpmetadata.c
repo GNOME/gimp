@@ -590,6 +590,7 @@ typedef struct
 {
   gchar         name[1024];
   gboolean      base64;
+  gboolean      excessive_message_shown;
   GimpMetadata *metadata;
 } GimpMetadataParseData;
 
@@ -710,19 +711,38 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
             {
               guint length = g_strv_length (values);
 
-              values = g_renew (gchar *, values, length + 2);
-              values[length]     = value;
-              values[length + 1] = NULL;
-
-              gexiv2_metadata_try_set_tag_multiple (g2_metadata,
-                                                    parse_data->name,
-                                                    (const gchar **) values,
-                                                    &error);
-              if (error)
+              if (length > 1000 &&
+                  ! g_strcmp0 (parse_data->name, "Xmp.photoshop.DocumentAncestors"))
                 {
-                  g_warning ("%s: failed to set multiple metadata '%s': %s\n",
-                             G_STRFUNC, parse_data->name, error->message);
-                  g_clear_error (&error);
+                  /* Issue #8025, see also #7464 Some XCF images can have huge
+                   * amounts of this tag, apparently due to a bug in PhotoShop.
+                   * This makes deserializing it in the way we currently do
+                   * too slow. Until we can change this let's ignore everything
+                   * but the first 1000 values when serializing. */
+
+                  if (! parse_data->excessive_message_shown)
+                    {
+                      g_message ("Excessive number of Xmp.photoshop.DocumentAncestors tags found. "
+                                 "Only keeping the first 1000 values.");
+                      parse_data->excessive_message_shown = TRUE;
+                    }
+                }
+              else
+                {
+                  values = g_renew (gchar *, values, length + 2);
+                  values[length]     = value;
+                  values[length + 1] = NULL;
+
+                  gexiv2_metadata_try_set_tag_multiple (g2_metadata,
+                                                        parse_data->name,
+                                                        (const gchar **) values,
+                                                        &error);
+                  if (error)
+                    {
+                      g_warning ("%s: failed to set multiple metadata '%s': %s\n",
+                                 G_STRFUNC, parse_data->name, error->message);
+                      g_clear_error (&error);
+                    }
                 }
               g_strfreev (values);
             }
@@ -775,6 +795,7 @@ gimp_metadata_deserialize (const gchar *metadata_xml)
   metadata = gimp_metadata_new ();
 
   parse_data.metadata = metadata;
+  parse_data.excessive_message_shown = FALSE;
 
   markup_parser.start_element = gimp_metadata_deserialize_start_element;
   markup_parser.end_element   = gimp_metadata_deserialize_end_element;
