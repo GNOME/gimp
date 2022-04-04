@@ -107,6 +107,15 @@ typedef enum
   GIMP_POSITION_RIGHT   /*< desc="Right" >*/
 } GimpPosition;
 
+#define GIMP_TYPE_DRAG_ZOOM_MODE (gimp_drag_zoom_mode_get_type ())
+
+GType gimp_drag_zoom_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  PROP_DRAG_ZOOM_MODE_DISTANCE,  /*< desc="By distance" >*/
+  PROP_DRAG_ZOOM_MODE_DURATION,  /*< desc="By duration" >*/
+} GimpDragZoomMode;
 
 #define GIMP_TYPE_SPACE_BAR_ACTION (gimp_space_bar_action_get_type ())
 

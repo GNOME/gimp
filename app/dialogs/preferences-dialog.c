@@ -2933,6 +2933,12 @@ prefs_dialog_new (Gimp       *gimp,
                                _("Initial zoom _ratio:"),
                                GTK_GRID (grid), 0, size_group);
 
+  grid = prefs_grid_new (GTK_CONTAINER (vbox2));
+
+  prefs_enum_combo_box_add (object, "drag-zoom-mode", 0, 0,
+                            _("Dra_g-to-zoom behavior:"),
+                            GTK_GRID (grid), 0, size_group);
+
   /*  Space Bar  */
   vbox2 = prefs_frame_new (_("Space Bar"),
                            GTK_CONTAINER (vbox), FALSE);

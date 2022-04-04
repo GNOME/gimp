@@ -257,6 +257,10 @@ _("Sets the preferred pen and touch input API.")
 _("When enabled, this will ensure that the full image is visible after a " \
   "file is opened, otherwise it will be displayed with a scale of 1:1.")
 
+#define DRAG_ZOOM_MODE_BLURB \
+_("Whether to zoom based on distance moved or time spent moving, when " \
+  "zooming via dragging the mouse.")
+
 #define INTERPOLATION_TYPE_BLURB \
 _("Sets the level of interpolation used for scaling and other " \
   "transformations.")

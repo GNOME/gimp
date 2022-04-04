@@ -54,6 +54,7 @@ enum
   PROP_DEFAULT_SHOW_ALL,
   PROP_DEFAULT_DOT_FOR_DOT,
   PROP_INITIAL_ZOOM_TO_FIT,
+  PROP_DRAG_ZOOM_MODE,
   PROP_CURSOR_MODE,
   PROP_CURSOR_UPDATING,
   PROP_SHOW_BRUSH_OUTLINE,
@@ -180,6 +181,14 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             INITIAL_ZOOM_TO_FIT_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_DRAG_ZOOM_MODE,
+                         "drag-zoom-mode",
+                         "Drag-to-zoom behavior",
+                         DRAG_ZOOM_MODE_BLURB,
+                         GIMP_TYPE_DRAG_ZOOM_MODE,
+                         PROP_DRAG_ZOOM_MODE_DISTANCE,
+                         GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_CURSOR_MODE,
                          "cursor-mode",
@@ -426,6 +435,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_INITIAL_ZOOM_TO_FIT:
       display_config->initial_zoom_to_fit = g_value_get_boolean (value);
       break;
+    case PROP_DRAG_ZOOM_MODE:
+      display_config->drag_zoom_mode = g_value_get_enum (value);
+      break;
     case PROP_CURSOR_MODE:
       display_config->cursor_mode = g_value_get_enum (value);
       break;
@@ -537,6 +549,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_INITIAL_ZOOM_TO_FIT:
       g_value_set_boolean (value, display_config->initial_zoom_to_fit);
+      break;
+    case PROP_DRAG_ZOOM_MODE:
+      g_value_set_enum (value, display_config->drag_zoom_mode);
       break;
     case PROP_CURSOR_MODE:
       g_value_set_enum (value, display_config->cursor_mode);
