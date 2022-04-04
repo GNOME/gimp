@@ -1112,7 +1112,15 @@ xcf_load_image_props (XcfInfo   *info,
                 GError       *error = NULL;
 
                 if (! p)
-                  return FALSE;
+                  {
+                    gimp_message (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "Invalid image parasite found. "
+                                  "Possibly corrupt XCF file.");
+
+                    xcf_seek_pos (info, base + prop_size, NULL);
+                    continue;
+                  }
 
                 if (! gimp_image_parasite_validate (image, p, &error))
                   {
@@ -2091,6 +2099,8 @@ xcf_load_prop (XcfInfo  *info,
   if (G_UNLIKELY (xcf_read_int32 (info, (guint32 *) prop_size, 1) != 4))
     return FALSE;
 
+  GIMP_LOG (XCF, "prop type=%d size=%u", *prop_type, *prop_size);
+
   return TRUE;
 }
 
@@ -2968,15 +2978,17 @@ xcf_load_tile_zlib (XcfInfo       *info,
 static GimpParasite *
 xcf_load_parasite (XcfInfo *info)
 {
-  GimpParasite *parasite;
+  GimpParasite *parasite = NULL;
   gchar        *name;
   guint32       flags;
-  guint32       size;
+  guint32       size, size_read;
   gpointer      data;
 
   xcf_read_string (info, &name,  1);
   xcf_read_int32  (info, &flags, 1);
   xcf_read_int32  (info, &size,  1);
+
+  GIMP_LOG (XCF, "Parasite name: %s, flags: %d, size: %d", name, flags, size);
 
   if (size > MAX_XCF_PARASITE_DATA_LEN)
     {
@@ -2986,10 +2998,25 @@ xcf_load_parasite (XcfInfo *info)
       return NULL;
     }
 
-  data = g_new (gchar, size);
-  xcf_read_int8 (info, data, size);
+  if (!name)
+    {
+      g_printerr ("Parasite has no name! Possibly corrupt XCF file.\n");
+      return NULL;
+    }
 
-  parasite = gimp_parasite_new (name, flags, size, data);
+  data = g_new (gchar, size);
+  size_read = xcf_read_int8 (info, data, size);
+
+  if (size_read != size)
+    {
+      g_printerr ("Incorrect parasite data size: read %u bytes instead of %u. "
+                  "Possibly corrupt XCF file.\n",
+                  size_read, size);
+    }
+  else
+    {
+      parasite = gimp_parasite_new (name, flags, size, data);
+    }
 
   g_free (name);
   g_free (data);
