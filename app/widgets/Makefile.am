@@ -365,6 +365,10 @@ libappwidgets_a_sources = \
 	gimpsettingsbox.h		\
 	gimpsettingseditor.c		\
 	gimpsettingseditor.h		\
+	gimpshortcutbutton.c		\
+	gimpshortcutbutton.h		\
+	gimpshortcutbutton.c		\
+	gimpshortcutbutton.h		\
 	gimpsizebox.c			\
 	gimpsizebox.h			\
 	gimpstringaction.c		\

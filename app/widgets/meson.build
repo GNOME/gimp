@@ -183,6 +183,7 @@ libappwidgets_sources = [
   'gimpsessionmanaged.c',
   'gimpsettingsbox.c',
   'gimpsettingseditor.c',
+  'gimpshortcutbutton.c',
   'gimpsizebox.c',
   'gimpstringaction.c',
   'gimpstrokeeditor.c',
