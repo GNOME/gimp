@@ -608,6 +608,7 @@ app/widgets/gimpselectiondata.c
 app/widgets/gimpselectioneditor.c
 app/widgets/gimpsettingsbox.c
 app/widgets/gimpsettingseditor.c
+app/widgets/gimpshortcutbutton.c
 app/widgets/gimpsizebox.c
 app/widgets/gimpstrokeeditor.c
 app/widgets/gimpsymmetryeditor.c

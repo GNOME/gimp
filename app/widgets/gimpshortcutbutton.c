@@ -30,6 +30,8 @@
 
 #include "gimpshortcutbutton.h"
 
+#include "gimp-intl.h"
+
 
 enum
 {
@@ -41,7 +43,7 @@ struct _GimpShortcutButtonPrivate
 {
   gchar           *accelerator;
 
-  GtkWidget       *label;
+  GtkWidget       *stack;
 
   gboolean         modifier_only_accepted;
   gboolean         single_modifier;
@@ -69,6 +71,10 @@ static gboolean gimp_shortcut_button_key_press_event (GtkWidget   *button,
 static gboolean gimp_shortcut_button_focus_out_event (GimpShortcutButton* button,
                                                       GdkEventFocus       event,
                                                       gpointer            user_data);
+static void     gimp_shortcut_button_toggled         (GimpShortcutButton* button,
+                                                      gpointer            user_data);
+
+static void     gimp_shortcut_button_update_label    (GimpShortcutButton *button);
 
 static gboolean gimp_shortcut_button_timeout         (GimpShortcutButton *button);
 
@@ -99,13 +105,25 @@ gimp_shortcut_button_class_init (GimpShortcutButtonClass *klass)
 static void
 gimp_shortcut_button_init (GimpShortcutButton *button)
 {
+  GtkWidget *label;
+
   button->priv = gimp_shortcut_button_get_instance_private (button);
 
   button->priv->timer = 0;
 
-  button->priv->label = gtk_shortcut_label_new (NULL);
-  gtk_container_add (GTK_CONTAINER (button), button->priv->label);
-  gtk_widget_show (button->priv->label);
+  button->priv->stack = gtk_stack_new ();
+  gtk_container_add (GTK_CONTAINER (button), button->priv->stack);
+  gtk_widget_show (button->priv->stack);
+
+  label = gtk_shortcut_label_new (NULL);
+  gtk_stack_add_named (GTK_STACK (button->priv->stack), label,
+                       "shortcut-label");
+  gtk_widget_show (label);
+
+  label = gtk_label_new (_("No shortcut"));
+  gtk_stack_add_named (GTK_STACK (button->priv->stack), label,
+                       "label");
+  gtk_widget_show (label);
 }
 
 static void
@@ -119,6 +137,11 @@ gimp_shortcut_button_constructed (GObject *object)
   g_signal_connect (object, "focus-out-event",
                     G_CALLBACK (gimp_shortcut_button_focus_out_event),
                     NULL);
+  g_signal_connect (object, "toggled",
+                    G_CALLBACK (gimp_shortcut_button_toggled),
+                    NULL);
+
+  gimp_shortcut_button_toggled (GIMP_SHORTCUT_BUTTON (object), NULL);
 }
 
 static void
@@ -206,11 +229,15 @@ gimp_shortcut_button_set_accelerator (GimpShortcutButton *button,
 
   if (g_strcmp0 (accelerator, button->priv->accelerator) != 0)
     {
+      GtkWidget *label;
+
+      label = gtk_stack_get_child_by_name (GTK_STACK (button->priv->stack),
+                                           "shortcut-label");
+
       g_free (button->priv->accelerator);
       button->priv->accelerator = accelerator ? g_strdup (accelerator) : NULL;
 
-      if (accelerator)
-        gtk_shortcut_label_set_accelerator (GTK_SHORTCUT_LABEL (button->priv->label), accelerator);
+      gtk_shortcut_label_set_accelerator (GTK_SHORTCUT_LABEL (label), accelerator);
 
       g_object_notify (G_OBJECT (button), "accelerator");
     }
@@ -240,6 +267,8 @@ gimp_shortcut_button_accepts_modifier (GimpShortcutButton *button,
 
   button->priv->modifier_only_accepted = accepted;
   button->priv->single_modifier        = unique;
+
+  gimp_shortcut_button_update_label (button);
 }
 
 /* Private functions. */
@@ -317,6 +346,48 @@ gimp_shortcut_button_focus_out_event (GimpShortcutButton* button,
 
   /* Propagate event further. */
   return FALSE;
+}
+
+static void
+gimp_shortcut_button_toggled (GimpShortcutButton* button,
+                              gpointer            user_data)
+{
+  gimp_shortcut_button_update_label (button);
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)) ||
+      button->priv->accelerator == NULL)
+    gtk_stack_set_visible_child_name (GTK_STACK (button->priv->stack), "label");
+  else
+    gtk_stack_set_visible_child_name (GTK_STACK (button->priv->stack), "shortcut-label");
+}
+
+static void
+gimp_shortcut_button_update_label (GimpShortcutButton *button)
+{
+  GtkWidget *label;
+  gchar     *markup;
+
+  g_return_if_fail (GIMP_IS_SHORTCUT_BUTTON (button));
+
+  label = gtk_stack_get_child_by_name (GTK_STACK (button->priv->stack),
+                                       "label");
+
+  if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button)))
+    {
+      if (button->priv->modifier_only_accepted)
+        markup = g_strdup_printf ("<b>%s</b>", _("Set modifier"));
+      else
+        markup = g_strdup_printf ("<b>%s</b>", _("Set shortcut"));
+    }
+  else
+    {
+      if (button->priv->modifier_only_accepted)
+        markup = g_strdup_printf ("<i>%s</i>", _("No modifier"));
+      else
+        markup = g_strdup_printf ("<i>%s</i>", _("No shortcut"));
+    }
+  gtk_label_set_markup (GTK_LABEL (label), markup);
+  g_free (markup);
 }
 
 static gboolean
