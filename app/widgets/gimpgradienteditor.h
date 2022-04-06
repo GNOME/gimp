@@ -62,6 +62,8 @@ struct _GimpGradientEditor
   /*  Zoom and scrollbar  */
   gdouble                 zoom_factor;
   GtkAdjustment          *scroll_data;
+  GtkGesture             *zoom_gesture;
+  gdouble                 last_zoom_scale;
 
   /*  Gradient view  */
   gint                    view_last_x;

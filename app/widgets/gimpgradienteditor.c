@@ -96,7 +96,8 @@
                               GDK_BUTTON_PRESS_MASK        | \
                               GDK_BUTTON_RELEASE_MASK      | \
                               GDK_SCROLL_MASK              | \
-                              GDK_SMOOTH_SCROLL_MASK)
+                              GDK_SMOOTH_SCROLL_MASK       | \
+                              GDK_TOUCHPAD_GESTURE_MASK)
 
 #define GRAD_CONTROL_EVENT_MASK (GDK_EXPOSURE_MASK            | \
                                  GDK_LEAVE_NOTIFY_MASK        | \
@@ -177,6 +178,14 @@ static void      view_pick_color                  (GimpGradientEditor *editor,
                                                    GimpColorPickTarget pick_target,
                                                    GimpColorPickState  pick_state,
                                                    gint                x);
+
+static void      view_zoom_gesture_begin          (GtkGestureZoom     *gesture,
+                                                   GdkEventSequence   *sequence,
+                                                   GimpGradientEditor *editor);
+
+static void      view_zoom_gesture_update         (GtkGestureZoom     *gesture,
+                                                   GdkEventSequence   *sequence,
+                                                   GimpGradientEditor *editor);
 
 /* Gradient control functions */
 
@@ -340,6 +349,18 @@ gimp_gradient_editor_init (GimpGradientEditor *editor)
                               gradient_editor_drop_color,
                               editor);
 
+  editor->zoom_gesture = gtk_gesture_zoom_new (GTK_WIDGET (data_editor->view));
+  gtk_event_controller_set_propagation_phase (GTK_EVENT_CONTROLLER (editor->zoom_gesture),
+                                              GTK_PHASE_CAPTURE);
+
+
+  g_signal_connect (editor->zoom_gesture, "begin",
+                    G_CALLBACK (view_zoom_gesture_begin),
+                    editor);
+  g_signal_connect (editor->zoom_gesture, "update",
+                    G_CALLBACK (view_zoom_gesture_update),
+                    editor);
+
   /* Gradient control */
   editor->control = gtk_drawing_area_new ();
   gtk_widget_set_size_request (editor->control, -1, GRAD_CONTROL_HEIGHT);
@@ -449,6 +470,8 @@ gimp_gradient_editor_dispose (GObject *object)
   if (editor->color_dialog)
     gtk_dialog_response (GTK_DIALOG (editor->color_dialog),
                          GTK_RESPONSE_CANCEL);
+
+  g_clear_object (&editor->zoom_gesture);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
 }
@@ -672,7 +695,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
       delta = ABS (delta);
     }
-  else
+  else if (zoom_type != GIMP_ZOOM_PINCH)
     {
       delta = 1.0;
     }
@@ -715,6 +738,26 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
       value     = 0.0;
       page_size = 1.0;
+      break;
+
+    case GIMP_ZOOM_PINCH:
+      if (delta > 0.0)
+        editor->zoom_factor = editor->zoom_factor * (1.0 + delta);
+      else if (delta < 0.0)
+        editor->zoom_factor = editor->zoom_factor / (1.0 + -delta);
+      else
+        return;
+
+      if (editor->zoom_factor < 1)
+        editor->zoom_factor = 1;
+
+      page_size = 1.0 / editor->zoom_factor;
+      value     = old_value + (old_page_size - page_size) / 2.0;
+
+      if (value < 0.0)
+        value = 0.0;
+      else if ((value + page_size) > 1.0)
+        value = 1.0 - page_size;
       break;
 
     case GIMP_ZOOM_SMOOTH: /* can't happen, see above switch() */
@@ -1304,6 +1347,26 @@ view_pick_color (GimpGradientEditor  *editor,
 
   g_free (str2);
   g_free (str3);
+}
+
+static void
+view_zoom_gesture_begin (GtkGestureZoom     *gesture,
+                         GdkEventSequence   *sequence,
+                         GimpGradientEditor *editor)
+{
+  editor->last_zoom_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+}
+
+static void
+view_zoom_gesture_update (GtkGestureZoom     *gesture,
+                          GdkEventSequence   *sequence,
+                          GimpGradientEditor *editor)
+{
+  gdouble current_scale = gtk_gesture_zoom_get_scale_delta (gesture);
+  gdouble delta = (current_scale - editor->last_zoom_scale) / editor->last_zoom_scale;
+  editor->last_zoom_scale = current_scale;
+
+  gimp_gradient_editor_zoom (editor, GIMP_ZOOM_PINCH, delta);
 }
 
 /***** Gradient control functions *****/
