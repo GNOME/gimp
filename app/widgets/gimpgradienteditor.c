@@ -1146,6 +1146,7 @@ view_events (GtkWidget          *widget,
     {
     case GDK_LEAVE_NOTIFY:
       gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
+      editor->view_last_x = -1;
       break;
 
     case GDK_MOTION_NOTIFY:
@@ -1388,6 +1389,7 @@ control_events (GtkWidget          *widget,
     {
     case GDK_LEAVE_NOTIFY:
       gradient_editor_set_hint (editor, NULL, NULL, NULL, NULL);
+      editor->control_last_x = -1;
       break;
 
     case GDK_BUTTON_PRESS:

@@ -66,7 +66,7 @@ struct _GimpGradientEditor
   gdouble                 last_zoom_scale;
 
   /*  Gradient view  */
-  gint                    view_last_x;
+  gint                    view_last_x;          /* -1 if mouse has left focus */
   gboolean                view_button_down;
 
   /*  Gradient control  */
@@ -76,7 +76,7 @@ struct _GimpGradientEditor
   GradientEditorDragMode  control_drag_mode;    /* What is being dragged? */
   guint32                 control_click_time;   /* Time when mouse was pressed */
   gboolean                control_compress;     /* Compressing/expanding handles */
-  gint                    control_last_x;       /* Last mouse position when dragging */
+  gint                    control_last_x;       /* Last mouse position, -1 if out of focus */
   gdouble                 control_last_gx;      /* Last position (wrt gradient) when dragging */
   gdouble                 control_orig_pos;     /* Original click position when dragging */
 
