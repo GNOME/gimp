@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-06 18:18+0000\n"
+"PO-Revision-Date: 2022-04-06 18:47+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -13625,12 +13625,11 @@ msgid "Selection by regular expression search"
 msgstr ""
 
 #: ../app/core/core-enums.c:1469
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Selection to path"
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
-msgstr "Val að ferli"
+msgstr "Val eftir mynsturleit með algildisstöfum"
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:535 ../app/core/gimp.c:565
@@ -19945,12 +19944,12 @@ msgstr "Ógildur GIMP forritsviðauki '%s': %s"
 #: ../app/file-data/file-data-gih.c:292
 #, c-format
 msgid "Negative x offset: %d for layer %s corrected."
-msgstr ""
+msgstr "Neikvæð x-hliðrun: %d fyrir lagið %s leiðrétt."
 
 #: ../app/file-data/file-data-gih.c:299
 #, c-format
 msgid "Negative y offset: %d for layer %s corrected."
-msgstr ""
+msgstr "Neikvæð y-hliðrun: %d fyrir lagið %s leiðrétt."
 
 #: ../app/file-data/file-data.c:61 ../app/file-data/file-data.c:118
 msgid "GIMP brush"
@@ -23185,7 +23184,7 @@ msgstr "Uppruni myndar fyrir útreikning línumyndar"
 
 #: ../app/tools/gimpbucketfilloptions.c:225
 msgid "Manual closure in fill layer"
-msgstr ""
+msgstr "Handvirk lokun á fyllilagi"
 
 #: ../app/tools/gimpbucketfilloptions.c:226
 msgid ""
@@ -23286,14 +23285,13 @@ msgstr "(reikna út...)"
 
 #: ../app/tools/gimpbucketfilloptions.c:773
 msgid "Detect opacity rather than grayscale"
-msgstr ""
+msgstr "Finna ógegnsæi frekar en grátóna"
 
 #. Line Art Closure: frame label
 #: ../app/tools/gimpbucketfilloptions.c:788
-#, fuzzy
 #| msgid "Line style"
 msgid "Line Art Closure"
-msgstr "Línustíll"
+msgstr "Lokun línumyndar"
 
 #. Line Art Borders: frame label
 #: ../app/tools/gimpbucketfilloptions.c:819
@@ -25018,10 +25016,9 @@ msgid "%s for a straight line"
 msgstr "%s fyrir beina línu"
 
 #: ../app/tools/gimppainttool.c:940
-#, fuzzy
 #| msgid "The active layer does not have an alpha channel."
 msgid "The selected drawable does not have an alpha channel."
-msgstr "Virka lagið er ekki með alfa-gegnsæislitrás."
+msgstr "Valinn teiknihlutur er ekki með alfa-gegnsæislitrás."
 
 #: ../app/tools/gimppainttool.c:951
 #| msgid "A selected layer's alpha channel is locked."
@@ -25577,7 +25574,7 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:2347
 msgid "Text is required."
-msgstr ""
+msgstr "Texti er nauðsynlegur."
 
 #: ../app/tools/gimptexttool.c:2350
 #| msgctxt "undo-type"
@@ -28397,11 +28394,11 @@ msgstr "leita"
 
 #: ../app/widgets/gimplayertreeview.c:1131
 msgid "glob"
-msgstr ""
+msgstr "algildisstafir"
 
 #: ../app/widgets/gimplayertreeview.c:1131
 msgid "regexp"
-msgstr ""
+msgstr "regl. segð"
 
 #: ../app/widgets/gimplayertreeview.c:1235
 #: ../app/widgets/gimplayertreeview.c:1248
@@ -28416,24 +28413,22 @@ msgid "Text search"
 msgstr "Textaleit"
 
 #: ../app/widgets/gimplayertreeview.c:1254
-#, fuzzy
 #| msgid "Set layers' blend space"
 msgid "Select layers by glob patterns"
-msgstr "Stilla litarýmd blöndunar lagsins"
+msgstr "Velja lög mynstri með algildisstöfum"
 
 #: ../app/widgets/gimplayertreeview.c:1256
-#, fuzzy
 #| msgid "_Lock patterns"
 msgid "Glob pattern search"
-msgstr "_Læsa mynstrum"
+msgstr "Mynsturleit með algildisstöfum"
 
 #: ../app/widgets/gimplayertreeview.c:1260
 msgid "Select layers by regular expressions"
-msgstr ""
+msgstr "Velja lög eftir reglulegum segðum"
 
 #: ../app/widgets/gimplayertreeview.c:1262
 msgid "Regular Expression search"
-msgstr ""
+msgstr "Leit með reglulegri segð"
 
 #: ../app/widgets/gimplayertreeview.c:1326
 #, c-format
