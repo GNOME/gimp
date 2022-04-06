@@ -3,21 +3,21 @@
 # Copyright (C) 2008, 2015 Free Software Foundation, Inc.
 #
 # Anna Jonna Ármansdóttir <annajonna@gmail.com>, 2008.
-# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020.
+# Sveinn í Felli <sv1@fellsnet.is>, 2015, 2016, 2017, 2018, 2019, 2020, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-02-09 13:26+0000\n"
-"PO-Revision-Date: 2020-02-09 17:17+0000\n"
+"POT-Creation-Date: 2022-04-05 16:29+0000\n"
+"PO-Revision-Date: 2022-04-06 11:54+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic <translation-team-is@lists.sourceforge.net>\n"
+"Language-Team: Icelandic\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Lokalize 19.12.3\n"
 
 #. procedure executed successfully
 #: ../libgimp/gimp.c:1265
@@ -48,83 +48,82 @@ msgstr "Penslaval"
 msgid "_Browse..."
 msgstr "_Flakka..."
 
-#: ../libgimp/gimpexport.c:278 ../libgimp/gimpexport.c:314
+#: ../libgimp/gimpexport.c:295 ../libgimp/gimpexport.c:331
 #, c-format
 msgid "%s plug-in can't handle layers"
 msgstr "%s hjálparforritið getur ekki unnið með lög"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:288
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:315
+#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:332
 msgid "Merge Visible Layers"
 msgstr "Tvinna sýnileg lög"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:304
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 "%s hjálparforritið getur ekki unnið með hliðrun, stærðir eða gegnsæi í lögum"
 
-#: ../libgimp/gimpexport.c:296 ../libgimp/gimpexport.c:305
+#: ../libgimp/gimpexport.c:313 ../libgimp/gimpexport.c:322
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
 msgstr "%s hjálparforritið getur aðeins unnið með lög sem ramma í hreyfimyndum"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:314 ../libgimp/gimpexport.c:323
 msgid "Save as Animation"
 msgstr "Vista sem hreyfimynd"
 
-#: ../libgimp/gimpexport.c:306 ../libgimp/gimpexport.c:315
-#: ../libgimp/gimpexport.c:324 ../libgimp/gimpexport.c:333
+#: ../libgimp/gimpexport.c:323 ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:341 ../libgimp/gimpexport.c:350
 msgid "Flatten Image"
 msgstr "Fletja mynd"
 
-#: ../libgimp/gimpexport.c:323
+#: ../libgimp/gimpexport.c:340
 #, c-format
 msgid "%s plug-in can't handle transparency"
 msgstr "%s hjálparforritið getur ekki unnið með gegnsæi"
 
-#: ../libgimp/gimpexport.c:332
+#: ../libgimp/gimpexport.c:349
 #, c-format
-#| msgid "%s plug-in can't handle transparency"
 msgid "%s plug-in can't handle transparent layers"
 msgstr "%s hjálparforritið getur ekki unnið með gegnsæ lög"
 
-#: ../libgimp/gimpexport.c:341
+#: ../libgimp/gimpexport.c:358
 #, c-format
 msgid "%s plug-in can't handle layer masks"
 msgstr "%s hjálparforritið getur ekki unnið með maska á lögum"
 
-#: ../libgimp/gimpexport.c:342
+#: ../libgimp/gimpexport.c:359
 msgid "Apply Layer Masks"
 msgstr "Beita laghulu"
 
-#: ../libgimp/gimpexport.c:350
+#: ../libgimp/gimpexport.c:367
 #, c-format
 msgid "%s plug-in can only handle RGB images"
 msgstr "%s hjálparforritið meðhöndlar einungis RGB myndir"
 
-#: ../libgimp/gimpexport.c:351 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:398
+#: ../libgimp/gimpexport.c:368 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:415
 msgid "Convert to RGB"
 msgstr "Umbreyta í RGB"
 
-#: ../libgimp/gimpexport.c:359
+#: ../libgimp/gimpexport.c:376
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
 msgstr "%s hjálparforritið meðhöndlar einungis grátóna myndir"
 
-#: ../libgimp/gimpexport.c:360 ../libgimp/gimpexport.c:389
-#: ../libgimp/gimpexport.c:410
+#: ../libgimp/gimpexport.c:377 ../libgimp/gimpexport.c:406
+#: ../libgimp/gimpexport.c:427
 msgid "Convert to Grayscale"
 msgstr "Umbreyta í grátónamynd"
 
-#: ../libgimp/gimpexport.c:368
+#: ../libgimp/gimpexport.c:385
 #, c-format
 msgid "%s plug-in can only handle indexed images"
 msgstr "%s hjálparforritið meðhöndlar einungis litraðaðar myndir"
 
-#: ../libgimp/gimpexport.c:369 ../libgimp/gimpexport.c:398
-#: ../libgimp/gimpexport.c:408
+#: ../libgimp/gimpexport.c:386 ../libgimp/gimpexport.c:415
+#: ../libgimp/gimpexport.c:425
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
@@ -132,13 +131,13 @@ msgstr ""
 "Breyta í litraðað (indexed) með sjálfgefnum stillingum\n"
 "(Breyta handvirkt til að fínstilla)"
 
-#: ../libgimp/gimpexport.c:378
+#: ../libgimp/gimpexport.c:395
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
 "%s hjálparforritið meðhöndlar einungis litraðaðar (tveggja lita) bitamyndir"
 
-#: ../libgimp/gimpexport.c:379
+#: ../libgimp/gimpexport.c:396
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
@@ -146,37 +145,52 @@ msgstr ""
 "Umbreyta í litraðaða bitamynd (indexed) með sjálfgefnum stillingum\n"
 "(Breyta handvirkt til að fínstilla)"
 
-#: ../libgimp/gimpexport.c:388
+#: ../libgimp/gimpexport.c:405
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s hjálparforritið meðhöndlar einungis RGB eða grátónamyndir"
 
-#: ../libgimp/gimpexport.c:397
+#: ../libgimp/gimpexport.c:414
 #, c-format
 msgid "%s plug-in can only handle RGB or indexed images"
 msgstr ""
 "%s hjálparforritið meðhöndlar einungis RGB eða litraðaðar myndir (indexed)"
 
-#: ../libgimp/gimpexport.c:407
+#: ../libgimp/gimpexport.c:424
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s hjálparforritið meðhöndlar einungis grátóna- eða litraðaðar myndir"
 
-#: ../libgimp/gimpexport.c:418
+#: ../libgimp/gimpexport.c:435
 #, c-format
 msgid "%s plug-in needs an alpha channel"
 msgstr "%s hjálparforritið þarfnast gegnsæisrásar (alpha channel)"
 
-#: ../libgimp/gimpexport.c:419
+#: ../libgimp/gimpexport.c:436
 msgid "Add Alpha Channel"
 msgstr "Bæta inn alfa-gegnsæislitrás"
 
-#: ../libgimp/gimpexport.c:478
+#: ../libgimp/gimpexport.c:444
+#, c-format
+msgid "%s plug-in needs to crop the layers to the image bounds"
+msgstr "%s hjálparforritið þarf að utansníða lögin til jafns við stærð myndar"
+
+#: ../libgimp/gimpexport.c:445
+#| msgctxt "page-selector-target"
+#| msgid "Layers"
+msgid "Crop Layers"
+msgstr "Utansníða lög"
+
+#: ../libgimp/gimpexport.c:445
+msgid "Resize Image to Layers"
+msgstr "Aðlaga stærð myndar að lögum"
+
+#: ../libgimp/gimpexport.c:504
 msgid "Confirm Save"
 msgstr "Staðfesta vistun"
 
-#: ../libgimp/gimpexport.c:483 ../libgimp/gimpexport.c:565
-#: ../libgimp/gimpexport.c:1063 ../libgimpwidgets/gimpcolorbutton.c:549
+#: ../libgimp/gimpexport.c:509 ../libgimp/gimpexport.c:591
+#: ../libgimp/gimpexport.c:1125 ../libgimpwidgets/gimpcolorbutton.c:549
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:172
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:182
 #: ../libgimpwidgets/gimpfileentry.c:435 ../libgimpwidgets/gimpquerybox.c:275
@@ -185,24 +199,24 @@ msgstr "Staðfesta vistun"
 msgid "_Cancel"
 msgstr "_Hætta við"
 
-#: ../libgimp/gimpexport.c:484
+#: ../libgimp/gimpexport.c:510
 msgid "C_onfirm"
 msgstr "Stað_festa"
 
-#: ../libgimp/gimpexport.c:560
+#: ../libgimp/gimpexport.c:586
 msgid "Export File"
 msgstr "Flytja út skrá"
 
-#: ../libgimp/gimpexport.c:564
+#: ../libgimp/gimpexport.c:590
 msgid "_Ignore"
 msgstr "_Hunsa"
 
-#: ../libgimp/gimpexport.c:566 ../libgimp/gimpexport.c:1064
+#: ../libgimp/gimpexport.c:592 ../libgimp/gimpexport.c:1126
 msgid "_Export"
 msgstr "_Flytja út"
 
 #. the headline
-#: ../libgimp/gimpexport.c:596
+#: ../libgimp/gimpexport.c:622
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
@@ -212,11 +226,11 @@ msgstr ""
 "eftirfarandi ástæðum:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:670
+#: ../libgimp/gimpexport.c:696
 msgid "The export conversion won't modify your original image."
 msgstr "Útflutningur breytir ekki upprunalegri mynd."
 
-#: ../libgimp/gimpexport.c:774
+#: ../libgimp/gimpexport.c:800
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
@@ -225,7 +239,7 @@ msgstr ""
 "Þú ert að fara að vista laghulu sem %s.\n"
 "Þetta mun ekki vista sýnilegu lögin."
 
-#: ../libgimp/gimpexport.c:780
+#: ../libgimp/gimpexport.c:806
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
@@ -235,9 +249,8 @@ msgstr ""
 "Þetta mun ekki vista sýnilegu lögin."
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
-#: ../libgimp/gimpexport.c:1057
+#: ../libgimp/gimpexport.c:1119
 #, c-format
-#| msgid "Export Image as "
 msgid "Export Image as %s"
 msgstr "Flytja mynd út sem %s"
 
@@ -249,44 +262,44 @@ msgstr "Val á leturgerð"
 msgid "Gradient Selection"
 msgstr "Litstigilsval"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:687
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:878
 msgid "Background"
 msgstr "Bakgrunnur"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1067
 #, c-format
 msgid "Rotate %s?"
 msgstr "Snúa %s?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1073
 msgid "_Keep Original"
 msgstr "_Halda upprunalegu"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1074 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "S_núa"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Original"
 msgstr "Upprunalegt"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1131
 msgid "Rotated"
 msgstr "Snúið"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1149
 msgid "This image contains Exif orientation metadata."
 msgstr "Þessi mynd inniheldur lýsigögn með EXIF stefnumerki."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1167
 msgid "Would you like to rotate the image?"
 msgstr "Viltu snúa myndinni?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1179
 msgid "_Don't ask me again"
 msgstr "_Ekki spyrja mig aftur"
 
@@ -1452,37 +1465,32 @@ msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Utanskera með stærðarhlutföllum"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:982
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Get aðeins hlaðið inn lýsigögnum úr staðværum skrám"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "Umbreyting skráarheitis í stafatöflu kerfis mistókst."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:1038
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Get aðeins vistað lýsigögn í staðværar skrár"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1086
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ógild stærð EXIF-gagna."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1115
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Þáttun EXIF-gagna mistókst."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1165
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Þáttun IPTC-gagna mistókst."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1213
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Þáttun XMP-gagna mistókst."
@@ -2121,17 +2129,20 @@ msgstr "Umbrey_ta"
 msgid "_Shear"
 msgstr "_Skekkja"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:220
-msgid "Kilobytes"
-msgstr "Kílóbæti"
+#: ../libgimpwidgets/gimpmemsizeentry.c:256
+#| msgid "Kilobytes"
+msgid "Kibibyte"
+msgstr "Kíbíbæti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:221
-msgid "Megabytes"
-msgstr "Megabæti"
+#: ../libgimpwidgets/gimpmemsizeentry.c:257
+#| msgid "Megabytes"
+msgid "Mebibyte"
+msgstr "Mebíbæti"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:222
-msgid "Gigabytes"
-msgstr "Gígabæti"
+#: ../libgimpwidgets/gimpmemsizeentry.c:258
+#| msgid "Gigabytes"
+msgid "Gibibyte"
+msgstr "Gíbíbæti"
 
 #. Count label
 #: ../libgimpwidgets/gimppageselector.c:270
@@ -2189,7 +2200,7 @@ msgstr "Fjarlægja valda möppu úr lista"
 msgid "Writable"
 msgstr "Skrifanlegt"
 
-#: ../libgimpwidgets/gimppickbutton.c:112
+#: ../libgimpwidgets/gimppickbutton.c:113
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2952,6 +2963,9 @@ msgstr "Umferðir birtuskila"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Birtuskil"
+
+#~ msgid "Conversion of the filename to system codepage failed."
+#~ msgstr "Umbreyting skráarheitis í stafatöflu kerfis mistókst."
 
 #~ msgctxt "select-criterion"
 #~ msgid "Hue (HSV)"
