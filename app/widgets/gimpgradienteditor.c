@@ -723,10 +723,10 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
 
     case GIMP_ZOOM_OUT_MORE:
     case GIMP_ZOOM_OUT:
-      if (editor->zoom_factor <= 1)
-        return;
-
       editor->zoom_factor -= delta;
+
+      if (editor->zoom_factor < 1)
+        editor->zoom_factor = 1;
 
       page_size = 1.0 / editor->zoom_factor;
       value     = old_value - (page_size - old_page_size) * zoom_focus_x;
