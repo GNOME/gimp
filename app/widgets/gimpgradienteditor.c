@@ -187,6 +187,8 @@ static void      view_zoom_gesture_update         (GtkGestureZoom     *gesture,
                                                    GdkEventSequence   *sequence,
                                                    GimpGradientEditor *editor);
 
+static gdouble   view_get_normalized_last_x_pos   (GimpGradientEditor *editor);
+
 /* Gradient control functions */
 
 static gboolean  control_events                   (GtkWidget          *widget,
@@ -225,6 +227,8 @@ static double    control_move                     (GimpGradientEditor  *editor,
                                                    GimpGradientSegment *range_l,
                                                    GimpGradientSegment *range_r,
                                                    gdouble              delta);
+
+static gdouble   control_get_normalized_last_x_pos (GimpGradientEditor *editor);
 
 /* Control update/redraw functions */
 
@@ -674,7 +678,8 @@ gimp_gradient_editor_edit_right_color (GimpGradientEditor *editor)
 void
 gimp_gradient_editor_zoom (GimpGradientEditor *editor,
                            GimpZoomType        zoom_type,
-                           gdouble             delta)
+                           gdouble             delta,
+                           gdouble             zoom_focus_x)
 {
   GtkAdjustment *adjustment;
   gdouble        old_value;
@@ -713,7 +718,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
       editor->zoom_factor += delta;
 
       page_size = 1.0 / editor->zoom_factor;
-      value     = old_value + (old_page_size - page_size) / 2.0;
+      value     = old_value + (old_page_size - page_size) * zoom_focus_x;
       break;
 
     case GIMP_ZOOM_OUT_MORE:
@@ -724,7 +729,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
       editor->zoom_factor -= delta;
 
       page_size = 1.0 / editor->zoom_factor;
-      value     = old_value - (page_size - old_page_size) / 2.0;
+      value     = old_value - (page_size - old_page_size) * zoom_focus_x;
 
       if (value < 0.0)
         value = 0.0;
@@ -752,7 +757,7 @@ gimp_gradient_editor_zoom (GimpGradientEditor *editor,
         editor->zoom_factor = 1;
 
       page_size = 1.0 / editor->zoom_factor;
-      value     = old_value + (old_page_size - page_size) / 2.0;
+      value     = old_value + (old_page_size - page_size) * zoom_focus_x;
 
       if (value < 0.0)
         value = 0.0;
@@ -1210,16 +1215,19 @@ view_events (GtkWidget          *widget,
             switch (sevent->direction)
               {
               case GDK_SCROLL_UP:
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN, 1.0);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN, 1.0,
+                                           view_get_normalized_last_x_pos (editor));
                 break;
 
               case GDK_SCROLL_DOWN:
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT, 1.0);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT, 1.0,
+                                           view_get_normalized_last_x_pos (editor));
                 break;
 
               case GDK_SCROLL_SMOOTH:
                 gdk_event_get_scroll_deltas (event, NULL, &delta);
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_SMOOTH, delta);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_SMOOTH, delta,
+                                           view_get_normalized_last_x_pos (editor));
                 break;
 
               default:
@@ -1367,7 +1375,26 @@ view_zoom_gesture_update (GtkGestureZoom     *gesture,
   gdouble delta = (current_scale - editor->last_zoom_scale) / editor->last_zoom_scale;
   editor->last_zoom_scale = current_scale;
 
-  gimp_gradient_editor_zoom (editor, GIMP_ZOOM_PINCH, delta);
+  gimp_gradient_editor_zoom (editor, GIMP_ZOOM_PINCH, delta,
+                             view_get_normalized_last_x_pos (editor));
+}
+
+static gdouble
+view_get_normalized_last_x_pos (GimpGradientEditor *editor)
+{
+  GtkAllocation allocation;
+  gdouble       normalized;
+  if (editor->view_last_x < 0)
+    return 0.5;
+
+  gtk_widget_get_allocation (GIMP_DATA_EDITOR (editor)->view, &allocation);
+  normalized = (double) editor->view_last_x / (allocation.width - 1);
+
+  if (normalized < 0)
+    return 0;
+  if (normalized > 1.0)
+    return 1;
+  return normalized;
 }
 
 /***** Gradient control functions *****/
@@ -1427,16 +1454,19 @@ control_events (GtkWidget          *widget,
             switch (sevent->direction)
               {
               case GDK_SCROLL_UP:
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN, 1.0);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_IN, 1.0,
+                                           control_get_normalized_last_x_pos (editor));
                 break;
 
               case GDK_SCROLL_DOWN:
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT, 1.0);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_OUT, 1.0,
+                                           control_get_normalized_last_x_pos (editor));
                 break;
 
               case GDK_SCROLL_SMOOTH:
                 gdk_event_get_scroll_deltas (event, NULL, &delta);
-                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_SMOOTH, delta);
+                gimp_gradient_editor_zoom (editor, GIMP_ZOOM_SMOOTH, delta,
+                                           control_get_normalized_last_x_pos (editor));
                 break;
 
               default:
@@ -2020,6 +2050,26 @@ control_move (GimpGradientEditor  *editor,
                                            range_r,
                                            delta,
                                            editor->control_compress);
+}
+
+/*****/
+
+static gdouble
+control_get_normalized_last_x_pos (GimpGradientEditor *editor)
+{
+  GtkAllocation allocation;
+  gdouble       normalized;
+  if (editor->control_last_x < 0)
+    return 0.5;
+
+  gtk_widget_get_allocation (editor->control, &allocation);
+  normalized = (double) editor->control_last_x / (allocation.width - 1);
+
+  if (normalized < 0)
+    return 0;
+  if (normalized > 1.0)
+    return 1;
+  return normalized;
 }
 
 /*****/

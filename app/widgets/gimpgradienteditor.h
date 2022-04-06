@@ -115,7 +115,8 @@ void        gimp_gradient_editor_edit_right_color (GimpGradientEditor   *editor)
 
 void        gimp_gradient_editor_zoom             (GimpGradientEditor   *editor,
                                                    GimpZoomType          zoom_type,
-                                                   gdouble               delta);
+                                                   gdouble               delta,
+                                                   gdouble               zoom_focus_x);
 
 
 #endif  /* __GIMP_GRADIENT_EDITOR_H__ */

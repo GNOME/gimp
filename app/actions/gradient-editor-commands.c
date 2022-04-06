@@ -660,7 +660,7 @@ gradient_editor_zoom_cmd_callback (GimpAction *action,
   GimpGradientEditor *editor    = GIMP_GRADIENT_EDITOR (data);
   GimpZoomType        zoom_type = (GimpZoomType) g_variant_get_int32 (value);
 
-  gimp_gradient_editor_zoom (editor, zoom_type, 1.0);
+  gimp_gradient_editor_zoom (editor, zoom_type, 1.0, 0.5);
 }
 
 
