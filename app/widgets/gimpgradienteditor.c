@@ -879,7 +879,7 @@ gradient_editor_scrollbar_update (GtkAdjustment      *adjustment,
   gchar                    *str1;
   gchar                    *str2;
 
-  str1 = g_strdup_printf (_("Zoom factor: %d:1"),
+  str1 = g_strdup_printf (_("Zoom factor: %f:1"),
                           editor->zoom_factor);
 
   str2 = g_strdup_printf (_("Displaying [%0.4f, %0.4f]"),
