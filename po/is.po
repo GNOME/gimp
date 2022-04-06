@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-06 16:18+0000\n"
+"PO-Revision-Date: 2022-04-06 18:18+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -14747,16 +14747,16 @@ msgid "Masks on layer groups were added in %s"
 msgstr "Laghulum á hópuð lög var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2848
-#, fuzzy, c-format
+#, c-format
 #| msgid "Masks on layer groups were added in %s"
 msgid "Position locks on layer groups were added in %s"
-msgstr "Laghulum á hópuð lög var bætt við í %s"
+msgstr "Læsing staðsetninga á hópuð lög var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2855
-#, fuzzy, c-format
+#, c-format
 #| msgid "Masks on layer groups were added in %s"
 msgid "Alpha channel locks on layer groups were added in %s"
-msgstr "Laghulum á hópuð lög var bætt við í %s"
+msgstr "Læsing alfa-gegnsæislitrása á hópuð lög var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2863 ../app/core/gimpimage.c:2877
 #, c-format
@@ -14800,10 +14800,10 @@ msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 
 #: ../app/core/gimpimage.c:2965
-#, fuzzy, c-format
+#, c-format
 #| msgid "Multiple layer selection was added in %s"
 msgid "Multiple channel selection was added in %s"
-msgstr "Vali með mörgum lögum var bætt við í %s"
+msgstr "Vali með mörgum litrásum var bætt við í %s"
 
 #: ../app/core/gimpimage.c:3069
 msgctxt "undo-type"
@@ -23205,21 +23205,19 @@ msgid "Stroke fill borders with last stroke options"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:260
-#, fuzzy
 #| msgid "Stroke Path"
 msgid "Stroke tool"
-msgstr "Ferill pensilstroku"
+msgstr "Strokuverkfæri"
 
 #: ../app/tools/gimpbucketfilloptions.c:261
 msgid "The tool to stroke the fill borders with"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:266
-#, fuzzy
 #| msgctxt "tab-style"
 #| msgid "Automatic"
 msgid "Automatic closure"
-msgstr "Sjálfvirkt"
+msgstr "Sjálfvirk lokun"
 
 #: ../app/tools/gimpbucketfilloptions.c:267
 msgid ""
@@ -25026,7 +25024,6 @@ msgid "The selected drawable does not have an alpha channel."
 msgstr "Virka lagið er ekki með alfa-gegnsæislitrás."
 
 #: ../app/tools/gimppainttool.c:951
-#, fuzzy
 #| msgid "A selected layer's alpha channel is locked."
 msgid "The selected layer's alpha channel is locked."
 msgstr "Alfa-gegnsæislitrás valda lagsins er læst."
@@ -25595,10 +25592,9 @@ msgid "No layer."
 msgstr "Ekkert lag."
 
 #: ../app/tools/gimptexttool.c:2364
-#, fuzzy
 #| msgid "No valid line art source selected."
 msgid "Exactly one path must be selected."
-msgstr "Enginn gildur uppruni línumyndar valinn."
+msgstr "Nákvæmlega einn ferill verður að vera valinn."
 
 #: ../app/tools/gimptexttool-editor.c:1358
 msgid "GIMP Text Editor"
@@ -25968,13 +25964,11 @@ msgid "There is no path to transform."
 msgstr "Það er enginn ferill sem hægt er að ummynda."
 
 #: ../app/tools/gimptransformtool.c:727
-#, fuzzy
 #| msgid "The active path's strokes are locked."
 msgid "The selected path's strokes are locked."
-msgstr "Strokur virka ferilsins eru læstar."
+msgstr "Strokur valda ferilsins eru læstar."
 
 #: ../app/tools/gimptransformtool.c:731
-#, fuzzy
 #| msgid "The active path has no strokes."
 msgid "The selected path has no strokes."
 msgstr "Valinn ferill er ekki með neinar strokur."
@@ -27907,7 +27901,6 @@ msgid "Lock visibility"
 msgstr "Læsa sýnileika"
 
 #: ../app/widgets/gimpdrawabletreeview.c:192
-#, fuzzy
 #| msgid "Cannot select item while a floating selection is active."
 msgid "Cannot select items while a floating selection is active."
 msgstr "Get ekki valið atriði á meðan fljótandi val er virkt."
@@ -28371,17 +28364,15 @@ msgid "Select layers by patterns and store layer sets"
 msgstr "Velja lögin sem er fyrir neðan lögin sem þú ert að vinna á núna"
 
 #: ../app/widgets/gimplayertreeview.c:479
-#, fuzzy
 #| msgid "No filter selected"
 msgid "No layer set stored"
-msgstr "Engin sía valin"
+msgstr "Ekkert lagasett geymt"
 
 #: ../app/widgets/gimplayertreeview.c:501
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Edit the layer's name"
 msgid "New layer set's name"
-msgstr "Breyta heiti lagsins"
+msgstr "Heiti á nýju lagasetti"
 
 #: ../app/widgets/gimplayertreeview.c:539
 #: ../app/widgets/gimplayertreeview.c:542
@@ -28389,10 +28380,9 @@ msgid "Lock alpha channel"
 msgstr "Læsa alfa-gegnsæislitrás"
 
 #: ../app/widgets/gimplayertreeview.c:540
-#, fuzzy
 #| msgid "Unlock alpha channels"
 msgid "Unlock alpha channel"
-msgstr "Aflæsa alfa-gegnsæislitrásum"
+msgstr "Aflæsa alfa-gegnsæislitrás"
 
 #: ../app/widgets/gimplayertreeview.c:541
 #, fuzzy
@@ -28415,10 +28405,9 @@ msgstr ""
 
 #: ../app/widgets/gimplayertreeview.c:1235
 #: ../app/widgets/gimplayertreeview.c:1248
-#, fuzzy
 #| msgid "Set layers' blend space"
 msgid "Select layers by text search"
-msgstr "Stilla litarýmd blöndunar lagsins"
+msgstr "Velja lög með textaleit"
 
 #: ../app/widgets/gimplayertreeview.c:1237
 #: ../app/widgets/gimplayertreeview.c:1250
