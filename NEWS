@@ -43,6 +43,21 @@ Tools:
   - Full text layer's text size will now be changed when changing font
     size in the text editor window, when no text is selected.
 
+User Interface:
+
+  - New "Drag to Zoom" mode and speed settings in Preferences. Existing
+    drag-to-zoom behavior was linear depending only on pointer direction
+    (which makes it more or less time-based if we consider that pointer
+    events are regular). The new mode will take the actual distance
+    moved into account allowing to go faster or slower by dragging
+    further or not. The "speed" settings allows a finer zoom speed
+    control for both the old and new modes.
+  - Touchpad gesture rotation (2-finger pinch) on canvas now
+    implemented. Note that rotation or scaling by pinch are exclusive so
+    GIMP will detect the expected behavior through the initial movement
+    and will therefore lock on either rotation or scaling for the whole
+    duration of the pinch.
+
 Plug-ins:
 
   - BigTIFF: our TIFF plug-in now officially supports BigTIFF import and
@@ -104,6 +119,9 @@ Build:
     when we don't want to or can't update immediately.
   - meson is now recommended for Windows builds and our official
     installer is now built (still from CI) with meson.
+  - Flatpak manifest improved with version constraints for dependencies
+    where we should not update just yet (hence don't want new version
+    notifications).
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
