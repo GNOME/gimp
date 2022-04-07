@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 16:28+0000\n"
-"PO-Revision-Date: 2022-04-06 13:54+0000\n"
+"PO-Revision-Date: 2022-04-07 10:32+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -89,13 +89,15 @@ msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr ""
+"GIMP 2.10.28 lagar vandamál við byggingu GIMP 2.10.26, þar sem sum gögn "
+"varðandi þemu voru ekki rétt uppsett."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
-"GIMP 210.26 er fyrst og fremst útgáfa fyrir villulagfæringar, bæði í kjarna,"
+"GIMP 2.10.26 er fyrst og fremst útgáfa fyrir villulagfæringar, bæði í kjarna,"
 " skriftum og kóða viðbóta."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
@@ -107,7 +109,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "GeoTIFF metadata support added"
-msgstr "Stuðningur við lýsigögn í GeoTIFF"
+msgstr "Bætt við stuðningi við GeoTIFF-lýsigögn"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
@@ -124,6 +126,8 @@ msgstr ""
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr ""
+"Stuðningur við fleiri skráasnið: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, "
+"PSD"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "Many fixes and improvements to the metadata viewer and editor"
@@ -132,7 +136,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 #| msgid "Handle transformation"
 msgid "New Kabyle translation"
-msgstr "Ný þýðing á kabyle"
+msgstr "Ný Kabyle-þýðing"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
@@ -1194,7 +1198,7 @@ msgstr "Mynstur"
 
 #: ../app/actions/actions.c:210 ../app/dialogs/preferences-dialog.c:3309
 msgid "Plug-ins"
-msgstr "Viðbætur"
+msgstr "Hjálparforrit"
 
 #. Quick Mask Color
 #: ../app/actions/actions.c:213 ../app/core/gimpchannel.c:358
@@ -3249,7 +3253,7 @@ msgstr "Atvikaskrár (*.log)"
 
 #: ../app/actions/dashboard-commands.c:179
 msgid "Log samples per second"
-msgstr "Skráð sýni á sekúndu"
+msgstr "Fjöldi atvikaskráninga á sekúndu"
 
 #: ../app/actions/dashboard-commands.c:183
 msgid "Sample fre_quency:"
@@ -3261,7 +3265,7 @@ msgstr "_Afturrakning"
 
 #: ../app/actions/dashboard-commands.c:203
 msgid "Include backtraces in log"
-msgstr "Hafa afturrakningu með í atvikaskrá"
+msgstr "Taka afturrakningu með í atvikaskrá"
 
 #: ../app/actions/dashboard-commands.c:215
 msgid "_Messages"
@@ -3269,7 +3273,7 @@ msgstr "Skila_boð"
 
 #: ../app/actions/dashboard-commands.c:217
 msgid "Include diagnostic messages in log"
-msgstr "Innifela greiningarskilaboð í atvikaskrá"
+msgstr "Taka greiningarskilaboð með í atvikaskrá"
 
 #: ../app/actions/dashboard-commands.c:229
 msgid "Progressi_ve"
@@ -11215,6 +11219,8 @@ msgstr "Tiltekur hvaða tungumál eigi að nota í notandaviðmótinu."
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr ""
+"Síðasta þekkta dreifingarútgáfa GIMP miðað við upplýsingar af opinbera"
+" vefsvæðinu."
 
 #: ../app/config/gimprc-blurbs.h:268
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11222,11 +11228,11 @@ msgstr "Hversu mörg fyrri skráarnöfn á að sýna á skráarvalmynd."
 
 #: ../app/config/gimprc-blurbs.h:271
 msgid "The timestamp for the last known release date."
-msgstr ""
+msgstr "Tímamerki fyrir síðustu útgáfudagsetningu."
 
 #: ../app/config/gimprc-blurbs.h:274
 msgid "The last revision number for the release."
-msgstr ""
+msgstr "Síðasta útgáfunúmer fyrir dreifingarútgáfuna."
 
 #: ../app/config/gimprc-blurbs.h:277
 msgid ""
@@ -11856,11 +11862,11 @@ msgstr "Birta valinn pensil, mynstur og litstigul í verkfærakassanum."
 
 #: ../app/config/gimprc-blurbs.h:686
 msgid "Menu mode of grouped tools."
-msgstr ""
+msgstr "Valmyndarhamur hópaðra verkfæra."
 
 #: ../app/config/gimprc-blurbs.h:689
 msgid "Use a single toolbox button for grouped tools."
-msgstr ""
+msgstr "Nota einn hnapp í verkfærakassa fyrir hópuð verkfæri."
 
 #: ../app/config/gimprc-blurbs.h:692
 msgid "Show the currently active image in the toolbox."
@@ -14871,7 +14877,7 @@ msgstr "Skuggsjá"
 
 #: ../app/core/gimpsymmetry-mandala.c:162
 msgid "Reflect consecutive strokes"
-msgstr ""
+msgstr "Spegla strokum í röð"
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
@@ -16666,7 +16672,7 @@ msgstr "Tungumál"
 
 #: ../app/dialogs/preferences-dialog.c:1834
 msgid "Use co_mpact sliders"
-msgstr ""
+msgstr "_Nota þjappaðan stíl sleða"
 
 #. Previews
 #: ../app/dialogs/preferences-dialog.c:1838
@@ -18802,12 +18808,12 @@ msgstr "Ógild stafaruna í URI"
 #: ../app/file-data/file-data-gih.c:295
 #, c-format
 msgid "Negative x offset: %d for layer %s corrected."
-msgstr ""
+msgstr "Neikvæð x-hliðrun: %d fyrir lagið %s leiðrétt."
 
 #: ../app/file-data/file-data-gih.c:302
 #, c-format
 msgid "Negative y offset: %d for layer %s corrected."
-msgstr ""
+msgstr "Neikvæð y-hliðrun: %d fyrir lagið %s leiðrétt."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
@@ -21499,7 +21505,7 @@ msgstr "_Læsa mynstrum"
 
 #: ../app/propgui/gimppropgui-newsprint.c:245
 msgid "Loc_k periods"
-msgstr ""
+msgstr "Læsa pun_ktum"
 
 #: ../app/propgui/gimppropgui-newsprint.c:254
 msgid "Lock a_ngles"
@@ -24171,7 +24177,7 @@ msgstr "Skjásamsett forskoðun"
 
 #: ../app/tools/gimptransformgridoptions.c:120
 msgid "Show preview as part of the image composition"
-msgstr ""
+msgstr "Birta forskoðun sem hluta af myndsamsetningunni"
 
 #: ../app/tools/gimptransformgridoptions.c:126
 msgid "Preview linked items"
@@ -24179,7 +24185,7 @@ msgstr "Forskoða tengd atriði"
 
 #: ../app/tools/gimptransformgridoptions.c:127
 msgid "Include linked items in the preview"
-msgstr ""
+msgstr "Hafa tengd atriði með í forskoðuninni"
 
 #: ../app/tools/gimptransformgridoptions.c:133
 msgid "Synchronous preview"
@@ -24187,7 +24193,7 @@ msgstr "Samhæfð forskoðun"
 
 #: ../app/tools/gimptransformgridoptions.c:134
 msgid "Render the preview synchronously"
-msgstr ""
+msgstr "Myndgera forskoðun í rauntíma"
 
 #: ../app/tools/gimptransformgridoptions.c:140
 msgid "Image opacity"
@@ -24359,7 +24365,7 @@ msgstr "Sameinuð víxlverkun"
 
 #: ../app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
-msgstr ""
+msgstr "Sameina alla víxlverkunarhami"
 
 #: ../app/tools/gimptransform3doptions.c:93
 msgid "Constrain transformation to a single axis"
@@ -24371,7 +24377,7 @@ msgstr "Ummynda eftir Z-ásnum"
 
 #: ../app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
-msgstr ""
+msgstr "Umbreyta í staðværum tilvísunarramma"
 
 #: ../app/tools/gimptransform3doptions.c:197
 #, c-format
@@ -25768,6 +25774,7 @@ msgstr ""
 #: ../app/widgets/gimpcriticaldialog.c:262
 msgid "Copy-paste this whole debug data to report to developers"
 msgstr ""
+"Afritaðu-Límdu alla þessa vandamálsskýrslu og sendu hana til forritaranna"
 
 #: ../app/widgets/gimpcriticaldialog.c:360
 msgid "The operating system is out of memory or resources."
@@ -27586,6 +27593,10 @@ msgid ""
 "If you don't know what XMP is, you most likely don't need it. Reported "
 "error: %s."
 msgstr ""
+"Ekki var hægt að umbreyta skemmdum XMP-lýsigögnum sem vistuð hafa verið í "
+"eldri útgáfu GIMP og verða þau hunsuð.\n"
+"Ef þú veist ekki hvað XMP er, eru líkur á að þú þurfir ekki að hafa áhyggjur "
+"af þessu. Uppgefin villa: %s."
 
 #: ../app/xcf/xcf-load.c:691
 msgid ""
