@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-06 18:47+0000\n"
+"PO-Revision-Date: 2022-04-07 10:25+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -4114,7 +4114,7 @@ msgstr "Upphafsgluggi"
 #: ../app/actions/dialogs-actions.c:281
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
-msgstr ""
+msgstr "Birta upplýsingar um þá útgáfu GIMP sem er í gangi"
 
 #: ../app/actions/dialogs-actions.c:287 ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
@@ -11877,10 +11877,12 @@ msgstr "Tiltekur hvaða tungumál eigi að nota í notandaviðmótinu."
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr ""
+"Síðasta þekkta dreifingarútgáfa GIMP miðað við upplýsingar af opinbera"
+" vefsvæðinu."
 
 #: ../app/config/gimprc-blurbs.h:282
 msgid "The version of GIMP config files."
-msgstr ""
+msgstr "Útgáfa GIMP stillingaskránna."
 
 #: ../app/config/gimprc-blurbs.h:285
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11888,11 +11890,11 @@ msgstr "Hversu mörg fyrri skráarnöfn á að sýna á skráarvalmynd."
 
 #: ../app/config/gimprc-blurbs.h:288
 msgid "The timestamp for the last known release date."
-msgstr ""
+msgstr "Tímamerki fyrir síðustu útgáfudagsetningu."
 
 #: ../app/config/gimprc-blurbs.h:291
 msgid "The last revision number for the release."
-msgstr ""
+msgstr "Síðasta útgáfunúmer fyrir dreifingarútgáfuna."
 
 #: ../app/config/gimprc-blurbs.h:294
 msgid ""
@@ -12355,7 +12357,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:593
 msgid "Sets how items are searched and selected from a textual pattern."
-msgstr ""
+msgstr "Stillir hvernig leitað er að atriðum og þau valin út frá textamynstri."
 
 #: ../app/config/gimprc-blurbs.h:596
 msgid "Sets the default layer name for the 'New Layer' dialog."
@@ -13617,12 +13619,12 @@ msgstr "Skoða sem hnitanet"
 #: ../app/core/core-enums.c:1467
 msgctxt "select-method"
 msgid "Selection by basic text search"
-msgstr ""
+msgstr "Val eftir einfaldri textaleit"
 
 #: ../app/core/core-enums.c:1468
 msgctxt "select-method"
 msgid "Selection by regular expression search"
-msgstr ""
+msgstr "Val eftir leit með reglulegri segð"
 
 #: ../app/core/core-enums.c:1469
 #| msgctxt "vectors-action"
@@ -14797,6 +14799,7 @@ msgstr "Stoðlínum utan myndflatar bætt við í %s"
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
+"Sett af atriðum og leit eftir mynstrum í heiti atriða var bætt við í %s"
 
 #: ../app/core/gimpimage.c:2965
 #, c-format
@@ -15210,7 +15213,6 @@ msgid "Remove Parasite from Item"
 msgstr "Fjarlægja sníkil af hlut"
 
 #: ../app/core/gimpitem-exclusive.c:65
-#, fuzzy
 #| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Visibility"
 msgstr "Gera einungis þetta atriði sýnilegt"
@@ -15421,7 +15423,7 @@ msgstr "Hámarksfjöldi mynddíla sem vaxa undir línumyndinni"
 
 #: ../app/core/gimplineart.c:363 ../app/core/gimplineart.c:364
 msgid "Whether or not we should perform the closing step"
-msgstr ""
+msgstr "Hvort eigi að framkvæma lokunarskrefið eða ekki"
 
 #: ../app/core/gimplineart.c:370
 msgid "Maximum curved closing length"
@@ -17670,7 +17672,7 @@ msgstr "Stærð forskoðunar_yfirlits:"
 #. Item
 #: ../app/dialogs/preferences-dialog.c:1896
 msgid "Item search"
-msgstr ""
+msgstr "Leit að atriðum"
 
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1903
@@ -18262,11 +18264,11 @@ msgstr "_Upphaflegur aðdráttur:"
 
 #: ../app/dialogs/preferences-dialog.c:2939
 msgid "Dra_g-to-zoom behavior:"
-msgstr ""
+msgstr "Hegðun Draga-fyrir-aðdrátt:"
 
 #: ../app/dialogs/preferences-dialog.c:2945
 msgid "Drag-to-zoom spe_ed:"
-msgstr ""
+msgstr "Hraði Draga-fyrir-aðdrátt:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:2949
@@ -19048,13 +19050,15 @@ msgstr "Útgáfuupplýsingar GIMP %s"
 #: ../app/dialogs/welcome-dialog.c:368
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
-msgstr ""
+msgstr "Smelltu á atriði með %s merki til að fá kynningu á þeim."
 
 #: ../app/dialogs/welcome-dialog.c:416
 msgid ""
 "This welcome dialog is only shown at first launch. You can show it again "
 "from the \"Help\" menu."
 msgstr ""
+"Þessi upphafsgluggi er aðeins birtur í fyrstu ræsingu. Þú getur séð hann"
+" aftur með því að fara í \"Hjálp\"-valmyndina."
 
 #: ../app/display/display-enums.c:88
 msgctxt "compass-orientation"
