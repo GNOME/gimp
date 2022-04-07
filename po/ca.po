@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-03-29 19:47+0000\n"
-"PO-Revision-Date: 2022-02-19 18:06+0100\n"
-"Last-Translator: maite guix <maite.guix@me.com>\n"
+"PO-Revision-Date: 2022-04-07 18:06+0100\n"
+"Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -104,7 +104,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Added support for the BigTIFF file format"
-msgstr "S'ha afegit comptabilitat amb el format de fitxer BigTIFF"
+msgstr "S'ha afegit compatibilitat amb el format de fitxer BigTIFF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New option \"Number of repeats\" in GIF export"
@@ -2064,7 +2064,7 @@ msgstr "Canals _inferiors"
 #: ../app/actions/channels-actions.c:98
 msgctxt "channels-action"
 msgid "Lower these channels one step in the channel stack"
-msgstr "Baixa aquests canals un pas de la pila del canals"
+msgstr "Baixa aquests canals un pas en la pila de canals"
 
 #: ../app/actions/channels-actions.c:103
 msgctxt "channels-action"
@@ -2074,7 +2074,7 @@ msgstr "Canals inferiors al _capdavall"
 #: ../app/actions/channels-actions.c:105
 msgctxt "channels-action"
 msgid "Lower these channels to the bottom of the channel stack"
-msgstr "Baixa aquests canals al capdavall de la pila del canals"
+msgstr "Baixa aquests canals al capdavall de la pila de canals"
 
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
@@ -8177,7 +8177,7 @@ msgstr "Selecciona la capa del capdamun_t"
 #: ../app/actions/layers-actions.c:556
 msgctxt "layers-action"
 msgid "Select the topmost layer"
-msgstr "Selecciona la capa de de més amunt"
+msgstr "Selecciona la capa de més amunt"
 
 #: ../app/actions/layers-actions.c:561
 msgctxt "layers-action"
@@ -12640,7 +12640,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:585
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
-"Defineix com es cerquen i seleccionen els elements d'un patró textual."
+"Defineix com se cerquen i seleccionen els elements d'un patró textual."
 
 #: ../app/config/gimprc-blurbs.h:588
 msgid "Sets the default layer name for the 'New Layer' dialog."
@@ -15937,7 +15937,7 @@ msgid ""
 "Unsupported pattern dimensions %d x %d.\n"
 "GIMP Patterns have a maximum size of %d x %d."
 msgstr ""
-"No es permeten les dimensions de patró de de %d x %d.\n"
+"No es permeten les dimensions de patró de %d x %d.\n"
 "Els patrons del GIMP han de tenir una mida màxima de %d x %d."
 
 #: ../app/core/gimppdbprogress.c:268
@@ -23670,7 +23670,7 @@ msgstr "No s'ha seleccionat cap font dibuixable vàlida"
 
 #: ../app/tools/gimpbucketfilloptions.c:635
 msgid "The source drawable has no alpha channel"
-msgstr "El dibuixable seleccionat no té un canal alfa."
+msgstr "El dibuixable seleccionat no té un canal alfa"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:677
