@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-07 10:25+0000\n"
+"PO-Revision-Date: 2022-04-07 11:28+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -977,6 +977,8 @@ msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
+"\"Ljóst\" og \"Dökkt\" þemu hafa verið endurskrifuð frá grunni til að losna"
+" við ýmis notkunarvandamál. \"Ljósara\" og \"Dekkra\" þemu voru fjarlægð."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
 msgid ""
@@ -1536,11 +1538,10 @@ msgid "Tools"
 msgstr "Verkfæri"
 
 #: ../app/actions/actions.c:238
-#, fuzzy
 #| msgctxt "vectors-action"
 #| msgid "Path _Tool"
 msgid "Path Toolpath"
-msgstr "_Ferlaverkfæri"
+msgstr "Ferlaverkfæri"
 
 #: ../app/actions/actions.c:241 ../app/dialogs/dialogs.c:383
 #: ../app/tools/gimpvectortool.c:167
@@ -9880,12 +9881,11 @@ msgid "Tool's Force: Increase Relative"
 msgstr "Kraftur verkfæris: Auka hlutfallslega"
 
 #: ../app/actions/vector-toolpath-actions.c:45
-#, fuzzy
 #| msgctxt "text-tool-action"
 #| msgid "Text Tool Menu"
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
-msgstr "Valmynd textaverkfæris"
+msgstr "Valmynd vigurferlaverkfæris"
 
 #: ../app/actions/vector-toolpath-actions.c:49
 msgctxt "vector-toolpath-action"
@@ -9895,7 +9895,7 @@ msgstr "Eyða _festipunkti"
 #: ../app/actions/vector-toolpath-actions.c:53
 msgctxt "vector-toolpath-action"
 msgid "Shift S_tart"
-msgstr ""
+msgstr "_Hnikun hefst"
 
 #: ../app/actions/vector-toolpath-actions.c:58
 msgctxt "vector-toolpath-action"
@@ -11640,7 +11640,7 @@ msgstr "Skilgreinir hvernig svæðið umhverfis myndina verður teiknað."
 #: ../app/config/gimprc-blurbs.h:44
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
-msgstr ""
+msgstr "Leita að tiltækum uppfærslum GIMP með bakgrunnsfyrirspurnum á netið."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -15215,7 +15215,7 @@ msgstr "Fjarlægja sníkil af hlut"
 #: ../app/core/gimpitem-exclusive.c:65
 #| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Visibility"
-msgstr "Gera einungis þetta atriði sýnilegt"
+msgstr "Stilla sérstakan sýnileika þessa atriðis"
 
 #: ../app/core/gimplayer-floating-selection.c:126
 msgctxt "undo-type"
@@ -21216,7 +21216,7 @@ msgstr "Virkja pensilhreyfingar"
 
 #: ../app/paint/gimppaintoptions.c:310
 msgid "Apply dynamics curves to paint settings"
-msgstr ""
+msgstr "Virkja hreyfingarferla í málunarstillingum"
 
 #: ../app/paint/gimppaintoptions.c:316
 msgid "Amount"
@@ -21330,7 +21330,7 @@ msgstr "Veldu frummynd fyrst."
 
 #: ../app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
-msgstr ""
+msgstr "Með \"Afstillt\" hliðjöfnun er ekki hægt að mála á marga myndhluta."
 
 #: ../app/paint/gimpsourceoptions.c:102 ../app/tools/gimpaligntool.c:123
 #: ../app/tools/gimpcloneoptions-gui.c:283 ../app/tools/gimphealtool.c:104
@@ -21360,7 +21360,7 @@ msgstr "Jafnað"
 #: ../app/paint/paint-enums.c:85
 msgctxt "source-align-mode"
 msgid "Registered"
-msgstr "Skráð"
+msgstr "Afstillt (registered)"
 
 #: ../app/paint/paint-enums.c:86
 msgctxt "source-align-mode"
@@ -23197,11 +23197,10 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#, fuzzy
 #| msgctxt "stroke-method"
 #| msgid "Stroke line"
 msgid "Stroke borders"
-msgstr "Stroklína"
+msgstr "Strokujaðrar"
 
 #: ../app/tools/gimpbucketfilloptions.c:254
 msgid "Stroke fill borders with last stroke options"
@@ -23251,16 +23250,14 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:633
-#, fuzzy
 #| msgid "No valid line art source selected."
 msgid "No valid source drawable selected"
-msgstr "Enginn gildur uppruni línumyndar valinn."
+msgstr "Enginn gildur uppruni myndhlutar valinn."
 
 #: ../app/tools/gimpbucketfilloptions.c:635
-#, fuzzy
 #| msgid "The active layer does not have an alpha channel."
 msgid "The source drawable has no alpha channel"
-msgstr "Virka lagið er ekki með alfa-gegnsæislitrás."
+msgstr "Upprunalegi myndhlutinn er ekki með alfa-gegnsæislitrás."
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:677
@@ -23632,7 +23629,7 @@ msgstr "Eyða afskornum  mynddílum"
 
 #: ../app/tools/gimpcropoptions.c:103
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr ""
+msgstr "Henda gögnum ólæstra laga sem lenda út fyrir utanskurðarsvæði"
 
 #: ../app/tools/gimpcropoptions.c:109
 msgid "Allow growing"
@@ -25022,7 +25019,7 @@ msgstr "%s fyrir beina línu"
 #: ../app/tools/gimppainttool.c:940
 #| msgid "The active layer does not have an alpha channel."
 msgid "The selected drawable does not have an alpha channel."
-msgstr "Valinn teiknihlutur er ekki með alfa-gegnsæislitrás."
+msgstr "Valinn myndhluti er ekki með alfa-gegnsæislitrás."
 
 #: ../app/tools/gimppainttool.c:951
 #| msgid "A selected layer's alpha channel is locked."
@@ -25824,7 +25821,7 @@ msgstr "Sameinuð víxlverkun"
 
 #: ../app/tools/gimptransform3doptions.c:86
 msgid "Combine all interaction modes"
-msgstr ""
+msgstr "Sameina alla víxlverkunarhami"
 
 #: ../app/tools/gimptransform3doptions.c:93
 msgid "Constrain transformation to a single axis"
@@ -25836,7 +25833,7 @@ msgstr "Ummynda eftir Z-ásnum"
 
 #: ../app/tools/gimptransform3doptions.c:107
 msgid "Transform in the local frame of reference"
-msgstr ""
+msgstr "Umbreyta í staðværum tilvísunarramma"
 
 #: ../app/tools/gimptransform3doptions.c:197
 #, c-format
@@ -28326,16 +28323,14 @@ msgstr[0] "Númeraðir litir (einlitt)"
 msgstr[1] "Númeraðir litir (%d litir)"
 
 #: ../app/widgets/gimpitemtreeview.c:526
-#, fuzzy
 #| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Content Lock"
-msgstr "Gera einungis þetta atriði tengt"
+msgstr "Stilla sérstaka læsingu efnis þessa atriðis"
 
 #: ../app/widgets/gimpitemtreeview.c:542
-#, fuzzy
 #| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Position Lock"
-msgstr "Gera einungis þetta atriði tengt"
+msgstr "Stilla læsingu sérstakrar staðsetningar þessa atriðis"
 
 #: ../app/widgets/gimpitemtreeview.c:557
 #| msgctxt "undo-type"
@@ -28344,10 +28339,9 @@ msgid "Unlock visibility"
 msgstr "Aflæsa sýnileika"
 
 #: ../app/widgets/gimpitemtreeview.c:558
-#, fuzzy
 #| msgid "Set Item Exclusive Visible"
 msgid "Set Item Exclusive Visibility Lock"
-msgstr "Gera einungis þetta atriði sýnilegt"
+msgstr "Stilla læsingu sérstaks sýnileika þessa atriðis"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
@@ -28358,11 +28352,10 @@ msgid "Switch to another group of modes"
 msgstr "Skipa yfir í annan hóp hama"
 
 #: ../app/widgets/gimplayertreeview.c:435
-#, fuzzy
 #| msgctxt "layers-action"
 #| msgid "Select the layers below the current layers"
 msgid "Select layers by patterns and store layer sets"
-msgstr "Velja lögin sem er fyrir neðan lögin sem þú ert að vinna á núna"
+msgstr "Velja lög eftir mynstri og geyma lagasett"
 
 #: ../app/widgets/gimplayertreeview.c:479
 #| msgid "No filter selected"
@@ -28386,10 +28379,9 @@ msgid "Unlock alpha channel"
 msgstr "Aflæsa alfa-gegnsæislitrás"
 
 #: ../app/widgets/gimplayertreeview.c:541
-#, fuzzy
 #| msgid "Set Item Exclusive Linked"
 msgid "Set Item Exclusive Alpha Channel lock"
-msgstr "Gera einungis þetta atriði tengt"
+msgstr "Stilla læsingu sérstakrar alfa-gegnsæislitrásar þessa atriðis"
 
 #: ../app/widgets/gimplayertreeview.c:1130
 #| msgid "_Search:"
@@ -28419,7 +28411,7 @@ msgstr "Textaleit"
 #: ../app/widgets/gimplayertreeview.c:1254
 #| msgid "Set layers' blend space"
 msgid "Select layers by glob patterns"
-msgstr "Velja lög mynstri með algildisstöfum"
+msgstr "Velja lög eftir mynstri með algildisstöfum"
 
 #: ../app/widgets/gimplayertreeview.c:1256
 #| msgid "_Lock patterns"
