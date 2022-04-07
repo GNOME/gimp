@@ -15,6 +15,14 @@ Core:
 
   - Adding support for localized glyphs ('locl') in Text tool depending
     on the value of the "Language" field in Text tool options.
+  - XCF import nows drop Xmp.photoshop.DocumentAncestors tags after 1000
+    of them, similarly to what libgimpbase now does. This could happen
+    in XCF files which were created e.g. from a PSD import before we
+    handled the issue in libgimpbase.
+  - XCF import made more robust by ignoring (with a warning) invalid
+    parasites and continuing to load the rest of the file (which might
+    be valid). This way, we are able to salvage more cases of partially
+    corrupted XCF files.
 
 User Interface:
 
@@ -43,12 +51,19 @@ Libgimp:
 
   - New gimp_plug_in_error_quark() as a generic GQuark/GError domain for
     plug-ins (backported from 2.99.6).
+  - gimp_drawable_brightness_contrast() now works in the [-1.0, 1.0]
+    range (it's more of a fix than a change because it's what it should
+    have been from the start).
 
 Libgimpbase:
 
-  - Limit to 1000 ancestors when serializing data with a log of
-    `Xmp.photoshop.DocumentAncestors` tags (possibly because of a bugs
-    of software who created these).
+  - Limit to 1000 ancestors when importing images with incredible amount
+    of `Xmp.photoshop.DocumentAncestors` tags, which is most likely due
+    to a bug in some versions of Photoshop (in some PSDs, we encountered
+    over 100,000 such tags; it probably makes no sense that a document
+    could have that many ancestor documents). GIMP will now stops at
+    1000 such tags before dropping the rest and continue loading the
+    file.
 
 Icons:
 
