@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 16:28+0000\n"
-"PO-Revision-Date: 2022-04-07 10:32+0000\n"
+"PO-Revision-Date: 2022-04-07 10:51+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -679,6 +679,8 @@ msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr ""
+"\"Ljóst\" og \"Dökkt\" þemu hafa verið endurskrifuð frá grunni til að losna"
+" við ýmis notkunarvandamál. \"Ljósara\" og \"Dekkra\" þemu voru fjarlægð."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid ""
@@ -11003,7 +11005,7 @@ msgstr "Skilgreinir hvernig svæðið umhverfis myndina verður teiknað."
 #: ../app/config/gimprc-blurbs.h:44
 msgid ""
 "Check for availability of GIMP updates through background internet queries."
-msgstr ""
+msgstr "Leita að tiltækum uppfærslum GIMP með bakgrunnsfyrirspurnum á netið."
 
 #: ../app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
@@ -22270,7 +22272,7 @@ msgstr "Eyða afskornum mynddílum"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Discard non-locked layer data that falls out of the crop region"
-msgstr ""
+msgstr "Henda gögnum ólæstra laga sem lenda út fyrir utanskurðarsvæði"
 
 #: ../app/tools/gimpcropoptions.c:108
 msgid "Allow growing"
