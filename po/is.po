@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-07 11:28+0000\n"
+"PO-Revision-Date: 2022-04-08 15:36+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -3422,7 +3422,7 @@ msgstr "Virkja/Afvirkja p_ensilhreyfingar"
 #: ../app/actions/context-actions.c:1094
 msgctxt "context-action"
 msgid "Apply or ignore the dynamics when painting"
-msgstr ""
+msgstr "Beita eða hunsa pensilhreyfingar við málun"
 
 #: ../app/actions/context-commands.c:459
 #, c-format
@@ -11580,7 +11580,7 @@ msgstr ""
 
 #: ../app/config/gimpcoreconfig.c:797 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
-msgstr ""
+msgstr "Málskipan síunarmynsturs við leit og val atriða:"
 
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:435
 msgid "Layer"
@@ -23213,7 +23213,7 @@ msgstr "Strokuverkfæri"
 
 #: ../app/tools/gimpbucketfilloptions.c:261
 msgid "The tool to stroke the fill borders with"
-msgstr ""
+msgstr "Verkfærið til að strjúka fylltu jaðrana með"
 
 #: ../app/tools/gimpbucketfilloptions.c:266
 #| msgctxt "tab-style"
@@ -23248,6 +23248,8 @@ msgstr "Skilyrði sem notuð eru til að ákvarða líkindi lita"
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
 msgstr ""
+"Ógegnsæir mynddílar verða skilgreindir sem línuteikning í stað mynddíla með"
+" lágan ljóma"
 
 #: ../app/tools/gimpbucketfilloptions.c:633
 #| msgid "No valid line art source selected."
@@ -28041,7 +28043,7 @@ msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 #: ../app/widgets/gimpgradienteditor.c:1251
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Ljósleiki: %0.1f    Ógegnsæi: %0.1f"
+msgstr "Ljómi: %0.1f    Ógegnsæi: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1283
 #, c-format
