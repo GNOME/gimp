@@ -153,6 +153,7 @@ libgimpwidgets_headers_introspectable = files(
   'gimpscrolledpreview.h',
   'gimpsizeentry.h',
   'gimpspinbutton.h',
+  'gimpspinscale.h',
   'gimpstringcombobox.h',
   'gimpunitcombobox.h',
   'gimpunitstore.h',
