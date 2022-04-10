@@ -36,7 +36,9 @@
 gboolean
 _gimp_pick_button_xdg_available (void)
 {
-  GDBusProxy *proxy = NULL;
+  gboolean    ret     = TRUE;
+  GDBusProxy *proxy   = NULL;
+  GVariant   *version = NULL;
 
   proxy = g_dbus_proxy_new_for_bus_sync (G_BUS_TYPE_SESSION,
                                          G_DBUS_PROXY_FLAGS_DO_NOT_AUTO_START,
@@ -46,24 +48,30 @@ _gimp_pick_button_xdg_available (void)
                                          "org.freedesktop.portal.Screenshot",
                                          NULL, NULL);
 
-  if (proxy)
+  if (proxy == NULL)
     {
-      GError *error = NULL;
-
-      g_dbus_proxy_call_sync (proxy, "org.freedesktop.DBus.Peer.Ping",
-                              NULL,
-                              G_DBUS_CALL_FLAGS_NONE,
-                              -1, NULL, &error);
-      if (! error)
-        return TRUE;
-
-      g_clear_error (&error);
-
-      g_object_unref (proxy);
-      proxy = NULL;
+      ret = FALSE;
+      goto out;
     }
 
-  return FALSE;
+  /* Finally, PickColor is only available starting V2 of the portal */
+  version = g_dbus_proxy_get_cached_property (proxy, "version");
+  if (version == NULL)
+    {
+      ret = FALSE;
+      goto out;
+    }
+
+  if (g_variant_get_uint32 (version) < 2)
+    {
+      ret = FALSE;
+      goto out;
+    }
+
+out:
+  g_clear_pointer (&version, g_variant_unref);
+  g_clear_object (&proxy);
+  return ret;
 }
 
 static void
