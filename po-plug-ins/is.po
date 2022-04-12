@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 16:29+0000\n"
-"PO-Revision-Date: 2022-04-12 13:13+0000\n"
+"PO-Revision-Date: 2022-04-12 13:26+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -387,7 +387,7 @@ msgstr "Einn rammi per lag (skipta út)"
 
 #: ../plug-ins/common/animation-play.c:1026
 msgid "Memory could not be allocated to the frame container."
-msgstr ""
+msgstr "Ekki var hægt að úthluta minni fyrir rammagám."
 
 #: ../plug-ins/common/animation-play.c:1098
 msgid "Invalid image. Did you close it?"
@@ -572,7 +572,7 @@ msgstr "_Stærð:"
 
 #: ../plug-ins/common/checkerboard.c:500
 msgid "_Psychobilly"
-msgstr ""
+msgstr "_Psychobilly"
 
 #: ../plug-ins/common/cml-explorer.c:129
 msgid "Keep image's values"
@@ -713,11 +713,11 @@ msgstr "Með stigulveldi (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:206
 msgid "Multiply rand. value (0,1)"
-msgstr ""
+msgstr "Margfalda slembið gildi (0,1)"
 
 #: ../plug-ins/common/cml-explorer.c:207
 msgid "Multiply rand. value (0,2)"
-msgstr ""
+msgstr "Margfalda slembið gildi (0,2)"
 
 #: ../plug-ins/common/cml-explorer.c:208
 msgid "Multiply gradient (0,1)"
@@ -765,7 +765,7 @@ msgstr "Slembið frá sáðtölu"
 
 #: ../plug-ins/common/cml-explorer.c:232
 msgid "Randoms from seed (shared)"
-msgstr ""
+msgstr "Slembið frá sáðtölu (sameiginlegt)"
 
 #: ../plug-ins/common/cml-explorer.c:300 ../plug-ins/common/cml-explorer.c:308
 #: ../plug-ins/common/decompose.c:179
@@ -937,7 +937,7 @@ msgstr "Valkvæðar hleðslustillingar"
 
 #: ../plug-ins/common/cml-explorer.c:1535
 msgid "Source channel in file:"
-msgstr ""
+msgstr "Upprunalitrás í skrá:"
 
 #: ../plug-ins/common/cml-explorer.c:1556
 msgid "_Misc Ops."
@@ -1859,7 +1859,7 @@ msgstr "Aðskilnaður"
 
 #: ../plug-ins/common/decompose.c:483
 msgid "Image not suitable for this decomposition"
-msgstr ""
+msgstr "Mynd hentar ekki fyrir þessa sundurliðun"
 
 #: ../plug-ins/common/decompose.c:809
 msgid "Decompose"
@@ -1875,7 +1875,7 @@ msgstr "_Aðskilja í lög"
 
 #: ../plug-ins/common/decompose.c:890
 msgid "_Foreground as registration color"
-msgstr ""
+msgstr "Forgrunnslitur sem skráningarlitur"
 
 #: ../plug-ins/common/decompose.c:891
 msgid ""
