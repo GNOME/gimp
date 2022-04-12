@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-08 15:36+0000\n"
+"PO-Revision-Date: 2022-04-12 09:53+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -11840,7 +11840,7 @@ msgstr "Reyna að útbúa aflúsunargögn fyrir villuskýrslur þegar það á v
 
 #: ../app/config/gimprc-blurbs.h:254
 msgid "Sets the preferred pen and touch input API."
-msgstr ""
+msgstr "Stillir umbeðinn penna og API-inntak snertingar."
 
 #: ../app/config/gimprc-blurbs.h:257
 msgid ""
@@ -11855,12 +11855,15 @@ msgid ""
 "Whether to zoom based on distance moved or time spent moving, when zooming "
 "via dragging the mouse."
 msgstr ""
+"Stillir hvort aðdráttur sé háður færsluvegalengd eða færslutíma, þegar"
+" aðdráttur fer fram með því að draga músina."
 
 #: ../app/config/gimprc-blurbs.h:265
 msgid ""
 "Adjusts the rate at which dragging the mouse will zoom the canvas, in "
 "percentage."
 msgstr ""
+"Aðlagar hve mikið músin stýrir aðdrætti að myndfleti, í prósentuhlutfalli."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid ""
@@ -12083,6 +12086,10 @@ msgid ""
 "tool. If both the brush outline and pointer are disabled, the position will "
 "be indicated as unobtrusively as possibly."
 msgstr ""
+"Þegar þetta er virkt verður músarbendill birtur yfir mynd um leið og"
+" málunarverkfæri eru í notkun. Ef bæði útlína pensils og bendill eru gerð"
+" óvirk, mun staðsetningin vera gefin til kynna á eins látlausan hátt og hægt"
+" er."
 
 #: ../app/config/gimprc-blurbs.h:434
 msgid ""
@@ -13710,21 +13717,25 @@ msgstr "Víðvært biðminni"
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
+"AppData-upplýsingar forritsauka verða að vera af tegundinni \"addon\", fann í"
+" staðinn \"%s\"."
 
 #: ../app/core/gimpextension.c:381
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
-msgstr ""
+msgstr "AppData-upplýsingar forritsauka verða að bæta við \"org.gimp.GIMP\"."
 
 #: ../app/core/gimpextension.c:395
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr ""
+"Auðkenni AppData-upplýsinga (\"%s\") og mappan (\"%s\") verða að vera eins."
 
 #: ../app/core/gimpextension.c:410
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr ""
+"AppData-upplýsingar forritsauka verða að auglýsa útgáfuna í <release> merki."
 
 #: ../app/core/gimpextension.c:444
 #, c-format
@@ -22407,6 +22418,8 @@ msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr ""
+"Sleppi mögulegu forritsviðbótinni '%s': viðbætur verða að vera settar upp í"
+" undirmöppur.\n"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:383
 #, c-format
@@ -23204,7 +23217,7 @@ msgstr "Strokujaðrar"
 
 #: ../app/tools/gimpbucketfilloptions.c:254
 msgid "Stroke fill borders with last stroke options"
-msgstr ""
+msgstr "Strjúka fylltu jaðrana með síðustu valkostum stroku"
 
 #: ../app/tools/gimpbucketfilloptions.c:260
 #| msgid "Stroke Path"
