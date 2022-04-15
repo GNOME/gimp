@@ -437,6 +437,9 @@ app_run (const gchar         *full_prog_name,
 
   errors_exit ();
 
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, TRUE);
+
   g_object_unref (gimp);
 
   gimp_debug_instances ();
