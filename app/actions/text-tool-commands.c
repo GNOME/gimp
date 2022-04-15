@@ -185,7 +185,7 @@ text_tool_text_along_path_cmd_callback (GimpAction *action,
     {
       gimp_message (text_tool->image->gimp, G_OBJECT (text_tool),
                     GIMP_MESSAGE_ERROR,
-                    _("Test along path failed: %s"),
+                    _("Text along path failed: %s"),
                     error->message);
       g_clear_error (&error);
     }
