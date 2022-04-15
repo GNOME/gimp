@@ -169,6 +169,7 @@ app_run (const gchar         *full_prog_name,
          const gchar         *session_name,
          const gchar         *batch_interpreter,
          const gchar        **batch_commands,
+         gboolean             quit,
          gboolean             as_new,
          gboolean             no_interface,
          gboolean             no_data,
@@ -424,6 +425,15 @@ app_run (const gchar         *full_prog_name,
 
   if (run_loop)
     gimp_batch_run (gimp, batch_interpreter, batch_commands);
+
+  if (quit)
+    {
+      /* Return value, needed for the signal call; let's just ignore the
+       * result. */
+      gboolean cb_retval;
+
+      g_signal_emit_by_name (gimp, "exit", TRUE, &cb_retval);
+    }
 
   if (run_loop)
     g_main_loop_run (loop);

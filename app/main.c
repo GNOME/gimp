@@ -129,6 +129,7 @@ static const gchar        *session_name      = NULL;
 static const gchar        *batch_interpreter = NULL;
 static const gchar       **batch_commands    = NULL;
 static const gchar       **filenames         = NULL;
+static gboolean            quit              = FALSE;
 static gboolean            as_new            = FALSE;
 static gboolean            no_interface      = FALSE;
 static gboolean            no_data           = FALSE;
@@ -238,6 +239,11 @@ static const GOptionEntry main_entries[] =
     "batch-interpreter", 0, 0,
     G_OPTION_ARG_STRING, &batch_interpreter,
     N_("The procedure to process batch commands with"), "<proc>"
+  },
+  {
+    "quit", 0, 0,
+    G_OPTION_ARG_NONE, &quit,
+    N_("Quit immediately after performing requested actions"), NULL
   },
   {
     "console-messages", 'c', 0,
@@ -788,6 +794,7 @@ main (int    argc,
            session_name,
            batch_interpreter,
            batch_commands,
+           quit,
            as_new,
            no_interface,
            no_data,
