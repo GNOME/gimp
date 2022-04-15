@@ -225,7 +225,7 @@ gimp_image_procedure_set_sensitivity (GimpProcedure *procedure,
  * @plug_in:          a #GimpPlugIn.
  * @name:             the new procedure's name.
  * @proc_type:        the new procedure's #GimpPDBProcType.
- * @run_func:         (closure run_data) the run function for the new procedure.
+ * @run_func:         (closure run_data): the run function for the new procedure.
  * @run_data:         user data passed to @run_func.
  * @run_data_destroy: (destroy run_data) (nullable): free function for @run_data, or %NULL.
  *
