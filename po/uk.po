@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-05 13:09+0000\n"
-"PO-Revision-Date: 2022-04-05 21:40+0300\n"
+"POT-Creation-Date: 2022-04-15 15:26+0000\n"
+"PO-Revision-Date: 2022-04-15 21:46+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -9430,8 +9430,9 @@ msgstr "Вертикальна, зліва праворуч (орієнтаці�
 
 #: ../app/actions/text-tool-commands.c:188
 #, c-format
-msgid "Test along path failed: %s"
-msgstr "Не пройдено перевірку уздовж контуру: %s"
+#| msgid "Test along path failed: %s"
+msgid "Text along path failed: %s"
+msgstr "Помилка під час спроби розмістити текст уздовж контура: %s"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -12076,17 +12077,17 @@ msgid ""
 "Whether to zoom based on distance moved or time spent moving, when zooming "
 "via dragging the mouse."
 msgstr ""
-"Визначає, чи виконуватиметься масштабування на основі відстані пересування"
-" або часу протягом якого пересували вказівник при перетягуванні за допомогою"
-" вказівника миші."
+"Визначає, чи виконуватиметься масштабування на основі відстані пересування "
+"або часу протягом якого пересували вказівник при перетягуванні за допомогою "
+"вказівника миші."
 
 #: ../app/config/gimprc-blurbs.h:265
 msgid ""
 "Adjusts the rate at which dragging the mouse will zoom the canvas, in "
 "percentage."
 msgstr ""
-"Коригує швидкість у відсотках, за якої перетягування мишею призводитиме до"
-" масштабування."
+"Коригує швидкість у відсотках, за якої перетягування мишею призводитиме до "
+"масштабування."
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid ""
@@ -19470,19 +19471,19 @@ msgstr "_Об'єднувати за зразком"
 msgid "Access the image menu"
 msgstr "Доступ до меню зображення"
 
-#: ../app/display/gimpdisplayshell.c:630
+#: ../app/display/gimpdisplayshell.c:648
 msgid "Zoom image when window size changes"
 msgstr "При зміні розмірів вікна змінювати розміри зображення"
 
-#: ../app/display/gimpdisplayshell.c:659
+#: ../app/display/gimpdisplayshell.c:677
 msgid "Toggle Quick Mask"
 msgstr "Перемикнути швидку маску"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:692
 msgid "Navigate the image display"
 msgstr "Навігація на зображенні"
 
-#: ../app/display/gimpdisplayshell.c:727 ../app/display/gimpdisplayshell.c:1401
+#: ../app/display/gimpdisplayshell.c:745 ../app/display/gimpdisplayshell.c:1420
 #: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Перетягніть сюди зображення, які хочете відкрити"
@@ -19707,7 +19708,7 @@ msgstr "(не змінено)"
 msgid "(none)"
 msgstr "(немає)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1596
+#: ../app/display/gimpdisplayshell-tool-events.c:1705
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Вибрано шар: '%s'"
