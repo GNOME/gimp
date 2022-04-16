@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-15 15:26+0000\n"
-"PO-Revision-Date: 2022-04-15 21:46+0300\n"
+"POT-Creation-Date: 2022-04-15 23:41+0000\n"
+"PO-Revision-Date: 2022-04-16 19:00+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1414,113 +1414,117 @@ msgstr "використовує %s версії %s (зібрано з верс�
 msgid "%s version %s"
 msgstr "%s версії %s"
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Show version information and exit"
 msgstr "Показати номер версії та вийти"
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Show license information and exit"
 msgstr "Показати ліцензійні умови та вийти"
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Be more verbose"
 msgstr "Виводити докладнішу інформацію"
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Start a new GIMP instance"
 msgstr "Запустити нову копію GIMP"
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Open images as new"
 msgstr "Відкрити зображення як нові"
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Run without a user interface"
 msgstr "Запустити без інтерфейсу користувача"
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Не завантажувати пензлі, градієнти, палітри, текстури..."
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not load any fonts"
 msgstr "Не завантажувати шрифти"
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not show a splash screen"
 msgstr "Не показувати вікно вітання "
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Не використовувати спільну пам'ять між GIMP та додатками"
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
 msgstr "Не використовувати прискоренні команди центрального процесора"
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate sessionrc file"
 msgstr "Використовувати альтернативний файл sessionrc"
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Use an alternate user gimprc file"
 msgstr "Використовувати альтернативний файл gimprc користувача"
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "Use an alternate system gimprc file"
 msgstr "Використовувати альтернативний системний файл gimprc"
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Команда для пакетної обробки (можна використовувати неодноразово)"
 
-#: ../app/main.c:240
+#: ../app/main.c:241
 msgid "The procedure to process batch commands with"
 msgstr "Процедура для запуску команди пакетної обробки"
 
-#: ../app/main.c:245
+#: ../app/main.c:246
+msgid "Quit immediately after performing requested actions"
+msgstr "Після виконання потрібних дій негайно завершити роботу"
+
+#: ../app/main.c:251
 msgid "Send messages to console instead of using a dialog"
 msgstr "Показувати попередження на консолі замість діалогових вікон"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:251
+#: ../app/main.c:257
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Режим сумісності з PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:257
+#: ../app/main.c:263
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Налагодження при аварійному завершенні програми (never|query|always)"
 
-#: ../app/main.c:262
+#: ../app/main.c:268
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Дозволити налагодження обробників сигналів для некритичних сигналів"
 
-#: ../app/main.c:267
+#: ../app/main.c:273
 msgid "Make all warnings fatal"
 msgstr "Вважати всі попередження критичними"
 
-#: ../app/main.c:272
+#: ../app/main.c:278
 msgid "Output a gimprc file with default settings"
 msgstr "Показати файл gimprc з типовими параметрами"
 
-#: ../app/main.c:288
+#: ../app/main.c:294
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Показати впорядкований список застарілих процедур у PDB"
 
-#: ../app/main.c:293
+#: ../app/main.c:299
 msgid "Show a preferences page with experimental features"
 msgstr "Показувати сторінку налаштувань із експериментальними функціями"
 
-#: ../app/main.c:298
+#: ../app/main.c:304
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: ../app/main.c:716
+#: ../app/main.c:722
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: ../app/main.c:744
+#: ../app/main.c:750
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1528,20 +1532,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: ../app/main.c:763
+#: ../app/main.c:769
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: ../app/main.c:850
+#: ../app/main.c:857
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: ../app/main.c:851
+#: ../app/main.c:858
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: ../app/main.c:868
+#: ../app/main.c:875
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -9430,7 +9434,6 @@ msgstr "Вертикальна, зліва праворуч (орієнтаці�
 
 #: ../app/actions/text-tool-commands.c:188
 #, c-format
-#| msgid "Test along path failed: %s"
 msgid "Text along path failed: %s"
 msgstr "Помилка під час спроби розмістити текст уздовж контура: %s"
 
