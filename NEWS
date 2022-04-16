@@ -43,7 +43,7 @@ Tools:
   - Full text layer's text size will now be changed when changing font
     size in the text editor window, when no text is selected.
 
-User Interface:
+Graphical User Interface:
 
   - New "Drag to Zoom" mode and speed settings in Preferences. Existing
     drag-to-zoom behavior was linear depending only on pointer direction
@@ -57,6 +57,24 @@ User Interface:
     GIMP will detect the expected behavior through the initial movement
     and will therefore lock on either rotation or scaling for the whole
     duration of the pinch.
+
+Command Line Interface:
+
+  - Unless only one batch interpreter is available, there is no default
+    interpreter anymore (it used to be script-fu). Therefore if you set
+    `--batch` but not `--batch-interpreter`, GIMP will output an error
+    message and will list the available interpreters.
+  - GIMP will stop running the batch commands as soon as one command
+    fails (it won't try the following ones).
+  - A new `--quit` option allows you to quit GIMP immediately after
+    running the batch commands.
+  - If `--quit` is set and batch commands are run, the GIMP binary exit
+    code will propagate errors from any batch failure. Exit codes are
+    taken from command Linux error codes: 0 for success, 69 for service
+    unavailable (e.g. setting a non-existing interpreter name), 64 for
+    usage (e.g. not specifying any interpreter or calling errors), 70
+    for execution errors (bugs in the interpreter plug-in) and 130 for
+    canceling the call.
 
 Plug-ins:
 
@@ -85,12 +103,17 @@ Plug-ins:
     since we always attach the profile when importing (or transform the
     gAMA chunk into a profile), we now always load PNG images as
     non-linear backend.
+  - python-fu-eval and plug-in-script-fu-eval ported to new
+    GimpBatchProcedure class.
 
 API:
 
   - Changes in libgimp:
     * New functions:
       + gimp_image_metadata_save_filter()
+    * New class:
+      + GimpBatchProcedure: procedure usable as a batch interpreter on
+        command line.
 
 Translations:
 
