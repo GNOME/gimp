@@ -30,7 +30,7 @@ void  app_abort     (gboolean             no_interface,
                      const gchar         *abort_message) G_GNUC_NORETURN;
 void  app_exit      (gint                 status) G_GNUC_NORETURN;
 
-void  app_run       (const gchar         *full_prog_name,
+gint  app_run       (const gchar         *full_prog_name,
                      const gchar        **filenames,
                      GFile               *alternate_system_gimprc,
                      GFile               *alternate_gimprc,

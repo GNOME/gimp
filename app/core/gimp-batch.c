@@ -42,22 +42,23 @@
 
 static void  gimp_batch_exit_after_callback (Gimp          *gimp) G_GNUC_NORETURN;
 
-static void  gimp_batch_run_cmd             (Gimp          *gimp,
+static gint  gimp_batch_run_cmd             (Gimp          *gimp,
                                              const gchar   *proc_name,
                                              GimpProcedure *procedure,
                                              GimpRunMode    run_mode,
                                              const gchar   *cmd);
 
 
-void
+gint
 gimp_batch_run (Gimp         *gimp,
                 const gchar  *batch_interpreter,
                 const gchar **batch_commands)
 {
   gulong  exit_id;
+  gint    retval = EXIT_SUCCESS;
 
   if (! batch_commands || ! batch_commands[0])
-    return;
+    return retval;
 
   exit_id = g_signal_connect_after (gimp, "exit",
                                     G_CALLBACK (gimp_batch_exit_after_callback),
@@ -86,9 +87,10 @@ gimp_batch_run (Gimp         *gimp,
       GimpProcedure *procedure = gimp_pdb_lookup_procedure (gimp->pdb,
                                                             proc_name);
 
+      retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
       if (procedure)
-        gimp_batch_run_cmd (gimp, proc_name, procedure,
-                            GIMP_RUN_NONINTERACTIVE, NULL);
+        retval = gimp_batch_run_cmd (gimp, proc_name, procedure,
+                                     GIMP_RUN_NONINTERACTIVE, NULL);
       else
         g_message (_("The batch interpreter '%s' is not available. "
                      "Batch mode disabled."), proc_name);
@@ -98,13 +100,27 @@ gimp_batch_run (Gimp         *gimp,
       GimpProcedure *eval_proc = gimp_pdb_lookup_procedure (gimp->pdb,
                                                             batch_interpreter);
 
+      retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
       if (eval_proc)
         {
           gint i;
 
+          retval = EXIT_SUCCESS;
           for (i = 0; batch_commands[i]; i++)
-            gimp_batch_run_cmd (gimp, batch_interpreter, eval_proc,
-                                GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
+            {
+              retval = gimp_batch_run_cmd (gimp, batch_interpreter, eval_proc,
+                                            GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
+
+              /* In case of several commands, stop and return last
+               * failed command.
+               */
+              if (retval != EXIT_SUCCESS)
+                {
+                  g_printerr ("Stopping at failing batch command [%d]: %s\n",
+                              i, batch_commands[i]);
+                  break;
+                }
+            }
         }
       else
         {
@@ -114,6 +130,8 @@ gimp_batch_run (Gimp         *gimp,
     }
 
   g_signal_handler_disconnect (gimp, exit_id);
+
+  return retval;
 }
 
 
@@ -141,7 +159,7 @@ GIMP_IS_PARAM_SPEC_RUN_MODE (GParamSpec *pspec)
           pspec->value_type == GIMP_TYPE_RUN_MODE);
 }
 
-static void
+static gint
 gimp_batch_run_cmd (Gimp          *gimp,
                     const gchar   *proc_name,
                     GimpProcedure *procedure,
@@ -150,8 +168,9 @@ gimp_batch_run_cmd (Gimp          *gimp,
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GError         *error = NULL;
-  gint            i     = 0;
+  GError         *error  = NULL;
+  gint            i      = 0;
+  gint            retval = EXIT_SUCCESS;
 
   args = gimp_procedure_get_arguments (procedure);
 
@@ -176,6 +195,11 @@ gimp_batch_run_cmd (Gimp          *gimp,
   switch (g_value_get_enum (gimp_value_array_index (return_vals, 0)))
     {
     case GIMP_PDB_EXECUTION_ERROR:
+      /* Using Linux's standard exit code as found in /usr/include/sysexits.h
+       * Since other platforms may not have the header, I simply
+       * hardcode the few cases.
+       */
+      retval = 70; /* EX_SOFTWARE - internal software error */
       if (error)
         {
           g_printerr ("batch command experienced an execution error:\n"
@@ -188,6 +212,7 @@ gimp_batch_run_cmd (Gimp          *gimp,
       break;
 
     case GIMP_PDB_CALLING_ERROR:
+      retval = 64; /* EX_USAGE - command line usage error */
       if (error)
         {
           g_printerr ("batch command experienced a calling error:\n"
@@ -200,7 +225,19 @@ gimp_batch_run_cmd (Gimp          *gimp,
       break;
 
     case GIMP_PDB_SUCCESS:
+      retval = EXIT_SUCCESS;
       g_printerr ("batch command executed successfully\n");
+      break;
+
+    case GIMP_PDB_CANCEL:
+      /* Not in sysexits.h, but usually used for 'Script terminated by
+       * Control-C'. See: https://tldp.org/LDP/abs/html/exitcodes.html
+       */
+      retval = 130;
+      break;
+
+    case GIMP_PDB_PASS_THROUGH:
+      retval = EXIT_FAILURE; /* Catchall. */
       break;
     }
 
@@ -210,5 +247,5 @@ gimp_batch_run_cmd (Gimp          *gimp,
   if (error)
     g_error_free (error);
 
-  return;
+  return retval;
 }

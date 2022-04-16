@@ -161,7 +161,7 @@ app_exit (gint status)
   exit (status);
 }
 
-void
+gint
 app_run (const gchar         *full_prog_name,
          const gchar        **filenames,
          GFile               *alternate_system_gimprc,
@@ -194,6 +194,7 @@ app_run (const gchar         *full_prog_name,
   GFile              *gimpdir;
   const gchar        *abort_message;
   GError             *font_error = NULL;
+  gint                retval     = EXIT_SUCCESS;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -424,7 +425,7 @@ app_run (const gchar         *full_prog_name,
     }
 
   if (run_loop)
-    gimp_batch_run (gimp, batch_interpreter, batch_commands);
+    retval = gimp_batch_run (gimp, batch_interpreter, batch_commands);
 
   if (quit)
     {
@@ -433,6 +434,13 @@ app_run (const gchar         *full_prog_name,
       gboolean cb_retval;
 
       g_signal_emit_by_name (gimp, "exit", TRUE, &cb_retval);
+    }
+  else
+    {
+      /* Only take into account the batch commands' success when we
+       * return immediately.
+       */
+      retval = EXIT_SUCCESS;
     }
 
   if (run_loop)
@@ -455,6 +463,8 @@ app_run (const gchar         *full_prog_name,
   gimp_debug_instances ();
 
   gegl_exit ();
+
+  return retval;
 }
 
 

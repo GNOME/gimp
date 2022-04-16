@@ -539,6 +539,7 @@ main (int    argc,
   GFile          *user_gimprc_file   = NULL;
   GOptionGroup   *gimp_group         = NULL;
   gchar          *backtrace_file     = NULL;
+  gint            retval;
   gint            i;
 
 #ifdef ENABLE_WIN32_DEBUG_CONSOLE
@@ -787,29 +788,29 @@ main (int    argc,
   if (user_gimprc)
     user_gimprc_file = g_file_new_for_commandline_arg (user_gimprc);
 
-  app_run (argv[0],
-           filenames,
-           system_gimprc_file,
-           user_gimprc_file,
-           session_name,
-           batch_interpreter,
-           batch_commands,
-           quit,
-           as_new,
-           no_interface,
-           no_data,
-           no_fonts,
-           no_splash,
-           be_verbose,
-           use_shm,
-           use_cpu_accel,
-           console_messages,
-           use_debug_handler,
-           show_playground,
-           show_debug_menu,
-           stack_trace_mode,
-           pdb_compat_mode,
-           backtrace_file);
+  retval = app_run (argv[0],
+                    filenames,
+                    system_gimprc_file,
+                    user_gimprc_file,
+                    session_name,
+                    batch_interpreter,
+                    batch_commands,
+                    quit,
+                    as_new,
+                    no_interface,
+                    no_data,
+                    no_fonts,
+                    no_splash,
+                    be_verbose,
+                    use_shm,
+                    use_cpu_accel,
+                    console_messages,
+                    use_debug_handler,
+                    show_playground,
+                    show_debug_menu,
+                    stack_trace_mode,
+                    pdb_compat_mode,
+                    backtrace_file);
 
   g_free (backtrace_file);
 
@@ -820,7 +821,7 @@ main (int    argc,
 
   g_option_context_free (context);
 
-  return EXIT_SUCCESS;
+  return retval;
 }
 
 
