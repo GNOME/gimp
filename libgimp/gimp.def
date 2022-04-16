@@ -2,6 +2,10 @@ EXPORTS
 	gimp_airbrush
 	gimp_airbrush_default
 	gimp_attach_parasite
+	gimp_batch_procedure_get_interpreter_name
+	gimp_batch_procedure_get_type
+	gimp_batch_procedure_new
+	gimp_batch_procedure_set_interpreter_name
 	gimp_brush_application_mode_get_type
 	gimp_brush_delete
 	gimp_brush_duplicate
