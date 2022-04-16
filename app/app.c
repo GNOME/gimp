@@ -428,20 +428,15 @@ app_run (const gchar         *full_prog_name,
     retval = gimp_batch_run (gimp, batch_interpreter, batch_commands);
 
   if (quit)
-    {
-      /* Return value, needed for the signal call; let's just ignore the
-       * result. */
-      gboolean cb_retval;
-
-      g_signal_emit_by_name (gimp, "exit", TRUE, &cb_retval);
-    }
+    /* Emit the "exit" signal, but also properly free all images still
+     * opened.
+     */
+    gimp_exit (gimp, TRUE);
   else
-    {
-      /* Only take into account the batch commands' success when we
-       * return immediately.
-       */
-      retval = EXIT_SUCCESS;
-    }
+    /* Only take into account the batch commands' success when we
+     * return immediately.
+     */
+    retval = EXIT_SUCCESS;
 
   if (run_loop)
     g_main_loop_run (loop);
