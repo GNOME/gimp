@@ -26,15 +26,7 @@ from gi.repository import Gio
 import sys
 
 
-def code_eval(procedure, args, data):
-
-    # Get the parameters
-    if args.length() != 1:
-        error = 'No parameters given'
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
-                                           GLib.Error(error))
-
-    code = args.index(0)
+def code_eval(procedure, run_mode, code, args, data):
     if code == '-':
         code = sys.stdin.read()
     exec(code, globals())
@@ -42,15 +34,6 @@ def code_eval(procedure, args, data):
 
 
 class PythonEval (Gimp.PlugIn):
-    ## Parameters ##
-    __gproperties__ = {
-        "code": (str,
-                 "Python code to evaluate, or '-' to read from stdin",
-                 "Python code to evaluate, or '-' to read from stdin",
-                 "",
-                 GObject.ParamFlags.READWRITE)
-    }
-
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
         self.set_translation_domain("gimp30-python",
@@ -59,9 +42,9 @@ class PythonEval (Gimp.PlugIn):
         return ['python-fu-eval']
 
     def do_create_procedure(self, name):
-        procedure = Gimp.Procedure.new(self, name,
-                                       Gimp.PDBProcType.PLUGIN,
-                                       code_eval, None)
+        procedure = Gimp.BatchProcedure.new(self, name,
+                                            Gimp.PDBProcType.PLUGIN,
+                                            code_eval, None)
         procedure.set_documentation ("Evaluate Python code",
                                      "Evaluate python code under the python interpreter (primarily for batch mode)",
                                      name)
@@ -69,8 +52,6 @@ class PythonEval (Gimp.PlugIn):
         procedure.set_attribution("Manish Singh",
                                   "Manish Singh",
                                   "2006")
-
-        procedure.add_argument_from_property(self, "code")
 
         return procedure
 
