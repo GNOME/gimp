@@ -136,6 +136,7 @@ pdb_wrappers_headers = [
 
 libgimp_sources_introspectable = [
   'gimp.c',
+  'gimpbatchprocedure.c',
   'gimpbrushselect.c',
   'gimpchannel.c',
   'gimpdisplay.c',
@@ -191,6 +192,7 @@ libgimp_headers_introspectable = [
   'gimpenums.h',
 
   # Other headers
+  'gimpbatchprocedure.h',
   'gimpbrushselect.h',
   'gimpchannel.h',
   'gimpdisplay.h',

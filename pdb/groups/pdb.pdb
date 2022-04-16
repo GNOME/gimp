@@ -1156,6 +1156,42 @@ CODE
     );
 }
 
+sub pdb_set_batch_interpreter {
+    $blurb = 'Registers a batch interpreter procedure.';
+
+    $help = <<'HELP';
+Registers a procedural database procedure to be called with the command
+line interface options --batch-interpreter and --batch.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'procedure_name', type => 'string', non_empty => 1,
+          desc => 'The name of the procedure to be used for running batch commands' },
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in &&
+      gimp_pdb_is_canonical_procedure (procedure_name, error))
+    {
+      success = gimp_plug_in_set_batch_interpreter (plug_in,
+                                                              procedure_name,
+                                                              error);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub pdb_get_data {
     $blurb = 'Returns data associated with the specified identifier.';
 
@@ -1359,6 +1395,7 @@ CODE
             pdb_set_file_proc_handles_remote
             pdb_set_file_proc_handles_raw
             pdb_set_file_proc_thumbnail_loader
+            pdb_set_batch_interpreter
             pdb_get_data
             pdb_get_data_size
             pdb_set_data);

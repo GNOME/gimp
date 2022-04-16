@@ -36,6 +36,7 @@
 #include <libgimp/gimpenums.h>
 #include <libgimp/gimptypes.h>
 
+#include <libgimp/gimpbatchprocedure.h>
 #include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdisplay.h>

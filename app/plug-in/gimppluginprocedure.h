@@ -65,6 +65,7 @@ struct _GimpPlugInProcedure
   gchar               *mime_types;
   gboolean             handles_remote;
   gboolean             handles_raw;
+  gboolean             batch_interpreter;
   GSList              *extensions_list;
   GSList              *prefixes_list;
   GSList              *magics_list;
@@ -141,6 +142,7 @@ void          gimp_plug_in_procedure_set_handles_remote(GimpPlugInProcedure *pro
 void          gimp_plug_in_procedure_set_handles_raw   (GimpPlugInProcedure *proc);
 void          gimp_plug_in_procedure_set_thumb_loader  (GimpPlugInProcedure *proc,
                                                         const gchar         *thumbnailer);
+void          gimp_plug_in_procedure_set_batch_interpreter (GimpPlugInProcedure *proc);
 
 void       gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
                                                         Gimp                *gimp,

@@ -85,6 +85,9 @@ gboolean   gimp_plug_in_set_file_proc_thumb_loader   (GimpPlugIn    *plug_in,
                                                       const gchar   *proc_name,
                                                       const gchar   *thumb_proc,
                                                       GError       **error);
+gboolean   gimp_plug_in_set_batch_interpreter        (GimpPlugIn   *plug_in,
+                                                      const gchar  *proc_name,
+                                                      GError      **error);
 
 
 #endif /* __GIMP_PLUG_IN_PROC_H__ */

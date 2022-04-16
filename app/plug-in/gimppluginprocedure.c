@@ -1275,6 +1275,14 @@ gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
 }
 
 void
+gimp_plug_in_procedure_set_batch_interpreter (GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->batch_interpreter = TRUE;
+}
+
+void
 gimp_plug_in_procedure_handle_return_values (GimpPlugInProcedure *proc,
                                              Gimp                *gimp,
                                              GimpProgress        *progress,

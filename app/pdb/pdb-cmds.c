@@ -1082,6 +1082,38 @@ pdb_set_file_proc_thumbnail_loader_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+pdb_set_batch_interpreter_invoker (GimpProcedure         *procedure,
+                                   Gimp                  *gimp,
+                                   GimpContext           *context,
+                                   GimpProgress          *progress,
+                                   const GimpValueArray  *args,
+                                   GError               **error)
+{
+  gboolean success = TRUE;
+  const gchar *procedure_name;
+
+  procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+      if (plug_in &&
+          gimp_pdb_is_canonical_procedure (procedure_name, error))
+        {
+          success = gimp_plug_in_set_batch_interpreter (plug_in,
+                                                                  procedure_name,
+                                                                  error);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 pdb_get_data_invoker (GimpProcedure         *procedure,
                       Gimp                  *gimp,
                       GimpContext           *context,
@@ -2133,6 +2165,30 @@ register_pdb_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("thumb-proc",
                                                        "thumb proc",
                                                        "The name of the thumbnail load procedure.",
+                                                       FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-pdb-set-batch-interpreter
+   */
+  procedure = gimp_procedure_new (pdb_set_batch_interpreter_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-pdb-set-batch-interpreter");
+  gimp_procedure_set_static_help (procedure,
+                                  "Registers a batch interpreter procedure.",
+                                  "Registers a procedural database procedure to be called with the command line interface options --batch-interpreter and --batch.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("procedure-name",
+                                                       "procedure name",
+                                                       "The name of the procedure to be used for running batch commands",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

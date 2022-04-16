@@ -109,6 +109,7 @@ libgimp_introspectable_headers = \
 	../libgimp/gimptypes.h			\
 	../libgimp/gimpenums.h			\
 	${PDB_WRAPPERS_H}			\
+	../libgimp/gimpbatchprocedure.h		\
 	../libgimp/gimpbrushselect.h		\
 	../libgimp/gimpchannel.h		\
 	../libgimp/gimpdisplay.h		\
@@ -143,6 +144,7 @@ libgimp_introspectable = \
 	$(libgimp_built_sources)		\
 	../libgimp/gimp.c			\
 	${PDB_WRAPPERS_C}			\
+	../libgimp/gimpbatchprocedure.c		\
 	../libgimp/gimpbrushselect.c		\
 	../libgimp/gimpchannel.c		\
 	../libgimp/gimpdisplay.c		\

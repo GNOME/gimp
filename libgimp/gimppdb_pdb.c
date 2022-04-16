@@ -1138,6 +1138,42 @@ _gimp_pdb_set_file_proc_thumbnail_loader (const gchar *load_proc,
 }
 
 /**
+ * _gimp_pdb_set_batch_interpreter:
+ * @procedure_name: The name of the procedure to be used for running batch commands.
+ *
+ * Registers a batch interpreter procedure.
+ *
+ * Registers a procedural database procedure to be called with the
+ * command line interface options --batch-interpreter and --batch.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_pdb_set_batch_interpreter (const gchar *procedure_name)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, procedure_name,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pdb-set-batch-interpreter",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_pdb_get_data:
  * @identifier: The identifier associated with data.
  * @bytes: (out): The number of bytes in the data.
