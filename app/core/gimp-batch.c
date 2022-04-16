@@ -88,7 +88,7 @@ gimp_batch_run (Gimp         *gimp,
           else
             {
               retval = 64; /* EX_USAGE - command line usage error */
-              g_print ("%s\n%s\n",
+              g_print ("%s\n\n%s\n",
                        _("No batch interpreter specified."),
                        _("Available interpreters are:"));
 
@@ -107,6 +107,9 @@ gimp_batch_run (Gimp         *gimp,
                   g_free (locale_name);
                 }
 
+              g_print ("\n%s\n",
+                       _("Specify one of these interpreters as --batch-interpreter option."));
+
               return retval;
             }
         }
@@ -123,7 +126,7 @@ gimp_batch_run (Gimp         *gimp,
       retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
       g_print (_("The procedure '%s' is not a valid batch interpreter."),
                  batch_interpreter);
-      g_print ("\n%s\n%s\n",
+      g_print ("\n%s\n\n%s\n",
                _("Batch mode disabled."),
                _("Available interpreters are:"));
 
@@ -141,6 +144,10 @@ gimp_batch_run (Gimp         *gimp,
 
           g_free (locale_name);
         }
+
+      g_print ("\n%s\n",
+               _("Specify one of these interpreters as --batch-interpreter option."));
+
       return retval;
     }
 
