@@ -20,6 +20,8 @@
 
 
 GimpValueArray * script_fu_eval_run (GimpProcedure        *procedure,
+                                     GimpRunMode           run_mode,
+                                     const gchar          *code,
                                      const GimpValueArray *args);
 
 

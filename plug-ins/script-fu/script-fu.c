@@ -64,6 +64,13 @@ static GimpProcedure  * script_fu_create_procedure (GimpPlugIn           *plug_i
 static GimpValueArray * script_fu_run              (GimpProcedure        *procedure,
                                                     const GimpValueArray *args,
                                                     gpointer              run_data);
+static GimpValueArray * script_fu_batch_run        (GimpProcedure        *procedure,
+                                                    GimpRunMode           run_mode,
+                                                    const gchar          *code,
+                                                    const GimpValueArray *args,
+                                                    gpointer              run_data);
+static void             script_fu_run_init         (GimpProcedure        *procedure,
+                                                    GimpRunMode           run_mode);
 static GList *          script_fu_search_path      (void);
 static void             script_fu_extension_init   (GimpPlugIn           *plug_in);
 static GimpValueArray * script_fu_refresh_proc     (GimpProcedure        *procedure,
@@ -236,9 +243,9 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-eval"))
     {
-      procedure = gimp_procedure_new (plug_in, name,
-                                      GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      script_fu_run, NULL, NULL);
+      procedure = gimp_batch_procedure_new (plug_in, name,
+                                            GIMP_PDB_PROC_TYPE_PLUGIN,
+                                            script_fu_batch_run, NULL, NULL);
 
       gimp_procedure_set_documentation (procedure,
                                         "Evaluate scheme code",
@@ -249,19 +256,6 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       "Manish Singh",
                                       "Manish Singh",
                                       "1998");
-
-      GIMP_PROC_ARG_ENUM (procedure, "run-mode",
-                          "Run mode",
-                          "The run mode",
-                          GIMP_TYPE_RUN_MODE,
-                          GIMP_RUN_INTERACTIVE,
-                          G_PARAM_READWRITE);
-
-      GIMP_PROC_ARG_STRING (procedure, "code",
-                            "Code",
-                            "The code to run",
-                            NULL,
-                            G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -275,36 +269,11 @@ script_fu_run (GimpProcedure        *procedure,
   GimpPlugIn     *plug_in     = gimp_procedure_get_plug_in (procedure);
   const gchar    *name        = gimp_procedure_get_name (procedure);
   GimpValueArray *return_vals = NULL;
-  GList          *path;
-
-  INIT_I18N();
-
-  path = script_fu_search_path ();
-
-  /*  Determine before we allow scripts to register themselves
-   *   whether this is the base, automatically installed script-fu extension
-   */
-  if (strcmp (name, "extension-script-fu") == 0)
-    {
-      /*  Setup auxiliary temporary procedures for the base extension  */
-      script_fu_extension_init (plug_in);
-
-      /*  Init the interpreter and register scripts */
-      tinyscheme_init (path, TRUE);
-    }
-  else
-    {
-      /*  Init the interpreter  */
-      tinyscheme_init (path, FALSE);
-    }
 
   if (gimp_value_array_length (args) > 0)
-    ts_set_run_mode (GIMP_VALUES_GET_ENUM (args, 0));
-
-  /*  Load all of the available scripts  */
-  script_fu_find_scripts (plug_in, path);
-
-  g_list_free_full (path, (GDestroyNotify) g_object_unref);
+    script_fu_run_init (procedure, GIMP_VALUES_GET_ENUM (args, 0));
+  else
+    script_fu_run_init (procedure, GIMP_RUN_NONINTERACTIVE);
 
   if (strcmp (name, "extension-script-fu") == 0)
     {
@@ -343,13 +312,34 @@ script_fu_run (GimpProcedure        *procedure,
 
       return_vals = script_fu_server_run (procedure, args);
     }
-  else if (strcmp (name, "plug-in-script-fu-eval") == 0)
+
+  if (! return_vals)
+    return_vals = gimp_procedure_new_return_values (procedure,
+                                                    GIMP_PDB_SUCCESS,
+                                                    NULL);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+script_fu_batch_run (GimpProcedure        *procedure,
+                     GimpRunMode           run_mode,
+                     const gchar          *code,
+                     const GimpValueArray *args,
+                     gpointer              run_data)
+{
+  const gchar    *name        = gimp_procedure_get_name (procedure);
+  GimpValueArray *return_vals = NULL;
+
+  script_fu_run_init (procedure, run_mode);
+
+  if (strcmp (name, "plug-in-script-fu-eval") == 0)
     {
       /*
        *  A non-interactive "console" (for batch mode)
        */
 
-      return_vals = script_fu_eval_run (procedure, args);
+      return_vals = script_fu_eval_run (procedure, run_mode, code, args);
     }
 
   if (! return_vals)
@@ -358,6 +348,43 @@ script_fu_run (GimpProcedure        *procedure,
                                                     NULL);
 
   return return_vals;
+}
+
+static void
+script_fu_run_init (GimpProcedure *procedure,
+                    GimpRunMode    run_mode)
+{
+  GimpPlugIn     *plug_in     = gimp_procedure_get_plug_in (procedure);
+  const gchar    *name        = gimp_procedure_get_name (procedure);
+  GList          *path;
+
+  INIT_I18N();
+
+  path = script_fu_search_path ();
+
+  /*  Determine before we allow scripts to register themselves
+   *   whether this is the base, automatically installed script-fu extension
+   */
+  if (strcmp (name, "extension-script-fu") == 0)
+    {
+      /*  Setup auxiliary temporary procedures for the base extension  */
+      script_fu_extension_init (plug_in);
+
+      /*  Init the interpreter and register scripts */
+      tinyscheme_init (path, TRUE);
+    }
+  else
+    {
+      /*  Init the interpreter  */
+      tinyscheme_init (path, FALSE);
+    }
+
+  ts_set_run_mode (run_mode);
+
+  /*  Load all of the available scripts  */
+  script_fu_find_scripts (plug_in, path);
+
+  g_list_free_full (path, (GDestroyNotify) g_object_unref);
 }
 
 static GList *

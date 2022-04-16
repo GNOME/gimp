@@ -27,15 +27,12 @@
 
 GimpValueArray *
 script_fu_eval_run (GimpProcedure        *procedure,
+                    GimpRunMode           run_mode,
+                    const gchar          *code,
                     const GimpValueArray *args)
 {
   GString           *output = g_string_new (NULL);
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
-  const gchar       *code;
-
-  run_mode = GIMP_VALUES_GET_ENUM   (args, 0);
-  code     = GIMP_VALUES_GET_STRING (args, 1);
 
   ts_set_run_mode (run_mode);
   ts_register_output_func (ts_gstring_output_func, output);
