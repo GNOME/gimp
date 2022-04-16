@@ -1091,8 +1091,10 @@ pdb_set_batch_interpreter_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   const gchar *procedure_name;
+  const gchar *interpreter_name;
 
   procedure_name = g_value_get_string (gimp_value_array_index (args, 0));
+  interpreter_name = g_value_get_string (gimp_value_array_index (args, 1));
 
   if (success)
     {
@@ -1102,8 +1104,9 @@ pdb_set_batch_interpreter_invoker (GimpProcedure         *procedure,
           gimp_pdb_is_canonical_procedure (procedure_name, error))
         {
           success = gimp_plug_in_set_batch_interpreter (plug_in,
-                                                                  procedure_name,
-                                                                  error);
+                                                        procedure_name,
+                                                        interpreter_name,
+                                                        error);
         }
       else
         success = FALSE;
@@ -2190,6 +2193,13 @@ register_pdb_procs (GimpPDB *pdb)
                                                        "procedure name",
                                                        "The name of the procedure to be used for running batch commands",
                                                        FALSE, FALSE, TRUE,
+                                                       NULL,
+                                                       GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_string ("interpreter-name",
+                                                       "interpreter name",
+                                                       "A public-facing name for the interpreter, such as \"Python 3\".",
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

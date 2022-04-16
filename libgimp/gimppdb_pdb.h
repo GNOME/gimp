@@ -97,7 +97,8 @@ G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_handles_remote   (const gcha
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_handles_raw      (const gchar       *procedure_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_set_file_proc_thumbnail_loader (const gchar       *load_proc,
                                                                       const gchar       *thumb_proc);
-G_GNUC_INTERNAL gboolean    _gimp_pdb_set_batch_interpreter          (const gchar       *procedure_name);
+G_GNUC_INTERNAL gboolean    _gimp_pdb_set_batch_interpreter          (const gchar       *procedure_name,
+                                                                      const gchar       *interpreter_name);
 G_GNUC_INTERNAL gboolean    _gimp_pdb_get_data                       (const gchar       *identifier,
                                                                       gint              *bytes,
                                                                       guint8           **data);

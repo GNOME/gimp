@@ -243,7 +243,7 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
     }
   else if (! strcmp (name, "plug-in-script-fu-eval"))
     {
-      procedure = gimp_batch_procedure_new (plug_in, name,
+      procedure = gimp_batch_procedure_new (plug_in, name, "Script-fu (scheme)",
                                             GIMP_PDB_PROC_TYPE_PLUGIN,
                                             script_fu_batch_run, NULL, NULL);
 

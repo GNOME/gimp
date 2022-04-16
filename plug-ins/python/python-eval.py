@@ -42,7 +42,7 @@ class PythonEval (Gimp.PlugIn):
         return ['python-fu-eval']
 
     def do_create_procedure(self, name):
-        procedure = Gimp.BatchProcedure.new(self, name,
+        procedure = Gimp.BatchProcedure.new(self, name, "Python 3",
                                             Gimp.PDBProcType.PLUGIN,
                                             code_eval, None)
         procedure.set_documentation ("Evaluate Python code",

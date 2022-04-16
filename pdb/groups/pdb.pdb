@@ -1171,6 +1171,8 @@ HELP
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for running batch commands' },
+        { name => 'interpreter_name', type => 'string',
+          desc => 'A public-facing name for the interpreter, such as "Python 3".' }
     );
 
     %invoke = (
@@ -1182,8 +1184,9 @@ HELP
       gimp_pdb_is_canonical_procedure (procedure_name, error))
     {
       success = gimp_plug_in_set_batch_interpreter (plug_in,
-                                                              procedure_name,
-                                                              error);
+                                                    procedure_name,
+                                                    interpreter_name,
+                                                    error);
     }
   else
     success = FALSE;

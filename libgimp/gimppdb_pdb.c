@@ -1140,6 +1140,7 @@ _gimp_pdb_set_file_proc_thumbnail_loader (const gchar *load_proc,
 /**
  * _gimp_pdb_set_batch_interpreter:
  * @procedure_name: The name of the procedure to be used for running batch commands.
+ * @interpreter_name: A public-facing name for the interpreter, such as \"Python 3\".
  *
  * Registers a batch interpreter procedure.
  *
@@ -1151,7 +1152,8 @@ _gimp_pdb_set_file_proc_thumbnail_loader (const gchar *load_proc,
  * Since: 3.0
  **/
 gboolean
-_gimp_pdb_set_batch_interpreter (const gchar *procedure_name)
+_gimp_pdb_set_batch_interpreter (const gchar *procedure_name,
+                                 const gchar *interpreter_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -1159,6 +1161,7 @@ _gimp_pdb_set_batch_interpreter (const gchar *procedure_name)
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, procedure_name,
+                                          G_TYPE_STRING, interpreter_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

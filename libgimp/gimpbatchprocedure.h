@@ -79,6 +79,7 @@ GType           gimp_batch_procedure_get_type             (void) G_GNUC_CONST;
 
 GimpProcedure * gimp_batch_procedure_new                  (GimpPlugIn      *plug_in,
                                                            const gchar     *name,
+                                                           const gchar     *interpreter_name,
                                                            GimpPDBProcType  proc_type,
                                                            GimpBatchFunc    run_func,
                                                            gpointer         run_data,

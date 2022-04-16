@@ -60,8 +60,8 @@ static GTokenType plug_in_menu_path_deserialize  (GScanner             *scanner,
                                                   GimpPlugInProcedure  *proc);
 static GTokenType plug_in_icon_deserialize       (GScanner             *scanner,
                                                   GimpPlugInProcedure  *proc);
-static GTokenType plug_in_file_proc_deserialize  (GScanner             *scanner,
-                                                  GimpPlugInProcedure  *proc);
+static GTokenType plug_in_file_or_batch_proc_deserialize  (GScanner             *scanner,
+                                                           GimpPlugInProcedure  *proc);
 static GTokenType plug_in_proc_arg_deserialize   (GScanner             *scanner,
                                                   Gimp                 *gimp,
                                                   GimpProcedure        *procedure,
@@ -95,7 +95,8 @@ enum
   MIME_TYPES,
   HANDLES_REMOTE,
   HANDLES_RAW,
-  THUMB_LOADER
+  THUMB_LOADER,
+  BATCH_INTERPRETER,
 };
 
 
@@ -149,6 +150,8 @@ plug_in_rc_parse (Gimp    *gimp,
                               "load-proc", GINT_TO_POINTER (LOAD_PROC));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "save-proc", GINT_TO_POINTER (SAVE_PROC));
+  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
+                              "batch-interpreter", GINT_TO_POINTER (BATCH_INTERPRETER));
 
   g_scanner_scope_add_symbol (scanner, LOAD_PROC,
                               "extensions", GINT_TO_POINTER (EXTENSIONS));
@@ -449,7 +452,7 @@ plug_in_procedure_deserialize (GScanner             *scanner,
   if (token != G_TOKEN_LEFT_PAREN)
     return token;
 
-  token = plug_in_file_proc_deserialize (scanner, *proc);
+  token = plug_in_file_or_batch_proc_deserialize (scanner, *proc);
   if (token != G_TOKEN_LEFT_PAREN)
     return token;
 
@@ -609,8 +612,8 @@ plug_in_icon_deserialize (GScanner            *scanner,
 }
 
 static GTokenType
-plug_in_file_proc_deserialize (GScanner            *scanner,
-                               GimpPlugInProcedure *proc)
+plug_in_file_or_batch_proc_deserialize (GScanner            *scanner,
+                                        GimpPlugInProcedure *proc)
 {
   GTokenType token;
   gint       symbol;
@@ -622,113 +625,126 @@ plug_in_file_proc_deserialize (GScanner            *scanner,
     return G_TOKEN_SYMBOL;
 
   symbol = GPOINTER_TO_INT (scanner->value.v_symbol);
-  if (symbol != LOAD_PROC && symbol != SAVE_PROC)
+  if (symbol != LOAD_PROC && symbol != SAVE_PROC && symbol != BATCH_INTERPRETER)
     return G_TOKEN_SYMBOL;
 
-  proc->file_proc = TRUE;
-
-  g_scanner_set_scope (scanner, symbol);
-
-  while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
+  if (symbol == BATCH_INTERPRETER)
     {
-      token = g_scanner_get_next_token (scanner);
+      gchar *interpreter_name;
 
-      if (token != G_TOKEN_LEFT_PAREN)
-        return token;
+      if (! gimp_scanner_parse_string (scanner, &interpreter_name))
+        return G_TOKEN_STRING;
 
-      if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL))
-        return G_TOKEN_SYMBOL;
+      gimp_plug_in_procedure_set_batch_interpreter (proc, interpreter_name);
+      g_free (interpreter_name);
+    }
+  else
+    {
+      proc->file_proc = TRUE;
 
-      symbol = GPOINTER_TO_INT (scanner->value.v_symbol);
+      g_scanner_set_scope (scanner, symbol);
 
-      switch (symbol)
+      while (g_scanner_peek_next_token (scanner) == G_TOKEN_LEFT_PAREN)
         {
-        case EXTENSIONS:
-          {
-            gchar *extensions;
+          token = g_scanner_get_next_token (scanner);
 
-            if (! gimp_scanner_parse_string (scanner, &extensions))
-              return G_TOKEN_STRING;
+          if (token != G_TOKEN_LEFT_PAREN)
+            return token;
 
-            g_free (proc->extensions);
-            proc->extensions = extensions;
-          }
-          break;
+          if (! gimp_scanner_parse_token (scanner, G_TOKEN_SYMBOL))
+            return G_TOKEN_SYMBOL;
 
-        case PREFIXES:
-          {
-            gchar *prefixes;
+          symbol = GPOINTER_TO_INT (scanner->value.v_symbol);
 
-            if (! gimp_scanner_parse_string (scanner, &prefixes))
-              return G_TOKEN_STRING;
+          switch (symbol)
+            {
+            case EXTENSIONS:
+                {
+                  gchar *extensions;
 
-            g_free (proc->prefixes);
-            proc->prefixes = prefixes;
-          }
-          break;
+                  if (! gimp_scanner_parse_string (scanner, &extensions))
+                    return G_TOKEN_STRING;
 
-        case MAGICS:
-          {
-            gchar *magics;
+                  g_free (proc->extensions);
+                  proc->extensions = extensions;
+                }
+              break;
 
-            if (! gimp_scanner_parse_string_no_validate (scanner, &magics))
-              return G_TOKEN_STRING;
+            case PREFIXES:
+                {
+                  gchar *prefixes;
 
-            g_free (proc->magics);
-            proc->magics = magics;
-          }
-          break;
+                  if (! gimp_scanner_parse_string (scanner, &prefixes))
+                    return G_TOKEN_STRING;
 
-        case PRIORITY:
-          {
-            gint priority;
+                  g_free (proc->prefixes);
+                  proc->prefixes = prefixes;
+                }
+              break;
 
-            if (! gimp_scanner_parse_int (scanner, &priority))
-              return G_TOKEN_INT;
+            case MAGICS:
+                {
+                  gchar *magics;
 
-            gimp_plug_in_procedure_set_priority (proc, priority);
-          }
-          break;
+                  if (! gimp_scanner_parse_string_no_validate (scanner, &magics))
+                    return G_TOKEN_STRING;
 
-        case MIME_TYPES:
-          {
-            gchar *mime_types;
+                  g_free (proc->magics);
+                  proc->magics = magics;
+                }
+              break;
 
-            if (! gimp_scanner_parse_string (scanner, &mime_types))
-              return G_TOKEN_STRING;
+            case PRIORITY:
+                {
+                  gint priority;
 
-            gimp_plug_in_procedure_set_mime_types (proc, mime_types);
+                  if (! gimp_scanner_parse_int (scanner, &priority))
+                    return G_TOKEN_INT;
 
-            g_free (mime_types);
-          }
-          break;
+                  gimp_plug_in_procedure_set_priority (proc, priority);
+                }
+              break;
 
-        case HANDLES_REMOTE:
-          gimp_plug_in_procedure_set_handles_remote (proc);
-          break;
+            case MIME_TYPES:
+                {
+                  gchar *mime_types;
 
-        case HANDLES_RAW:
-          gimp_plug_in_procedure_set_handles_raw (proc);
-          break;
+                  if (! gimp_scanner_parse_string (scanner, &mime_types))
+                    return G_TOKEN_STRING;
 
-        case THUMB_LOADER:
-          {
-            gchar *thumb_loader;
+                  gimp_plug_in_procedure_set_mime_types (proc, mime_types);
 
-            if (! gimp_scanner_parse_string (scanner, &thumb_loader))
-              return G_TOKEN_STRING;
+                  g_free (mime_types);
+                }
+              break;
 
-            gimp_plug_in_procedure_set_thumb_loader (proc, thumb_loader);
+            case HANDLES_REMOTE:
+              gimp_plug_in_procedure_set_handles_remote (proc);
+              break;
 
-            g_free (thumb_loader);
-          }
-          break;
+            case HANDLES_RAW:
+              gimp_plug_in_procedure_set_handles_raw (proc);
+              break;
 
-        default:
-           return G_TOKEN_SYMBOL;
+            case THUMB_LOADER:
+                {
+                  gchar *thumb_loader;
+
+                  if (! gimp_scanner_parse_string (scanner, &thumb_loader))
+                    return G_TOKEN_STRING;
+
+                  gimp_plug_in_procedure_set_thumb_loader (proc, thumb_loader);
+
+                  g_free (thumb_loader);
+                }
+              break;
+
+            default:
+              return G_TOKEN_SYMBOL;
+            }
+          if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
+            return G_TOKEN_RIGHT_PAREN;
         }
-      if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
-        return G_TOKEN_RIGHT_PAREN;
     }
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
@@ -1281,6 +1297,13 @@ plug_in_rc_write (GSList  *plug_in_defs,
 
                   gimp_config_writer_close (writer);
                 }
+              else if (proc->batch_interpreter)
+                {
+                  gimp_config_writer_open (writer, "batch-interpreter");
+                  gimp_config_writer_string (writer, proc->batch_interpreter_name);
+                  gimp_config_writer_close (writer);
+                }
+
 
               gimp_config_writer_linefeed (writer);
 

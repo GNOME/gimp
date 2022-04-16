@@ -134,6 +134,7 @@ gimp_plug_in_manager_finalize (GObject *object)
   g_clear_pointer (&manager->save_procs,     g_slist_free);
   g_clear_pointer (&manager->export_procs,   g_slist_free);
   g_clear_pointer (&manager->raw_load_procs, g_slist_free);
+  g_clear_pointer (&manager->batch_procs,    g_slist_free);
 
   g_clear_pointer (&manager->display_load_procs,     g_slist_free);
   g_clear_pointer (&manager->display_save_procs,     g_slist_free);
@@ -184,6 +185,7 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
   memsize += gimp_g_slist_get_memsize (manager->save_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->export_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->raw_load_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->batch_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->display_load_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->display_save_procs, 0);
   memsize += gimp_g_slist_get_memsize (manager->display_export_procs, 0);
@@ -316,6 +318,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
           manager->save_procs             = g_slist_remove (manager->save_procs,             tmp_proc);
           manager->export_procs           = g_slist_remove (manager->export_procs,           tmp_proc);
           manager->raw_load_procs         = g_slist_remove (manager->raw_load_procs,         tmp_proc);
+          manager->batch_procs            = g_slist_remove (manager->batch_procs,            tmp_proc);
           manager->display_load_procs     = g_slist_remove (manager->display_load_procs,     tmp_proc);
           manager->display_save_procs     = g_slist_remove (manager->display_save_procs,     tmp_proc);
           manager->display_export_procs   = g_slist_remove (manager->display_export_procs,   tmp_proc);
@@ -332,6 +335,25 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
 
   manager->plug_in_procedures = g_slist_prepend (manager->plug_in_procedures,
                                                  g_object_ref (procedure));
+}
+
+void
+gimp_plug_in_manager_add_batch_procedure (GimpPlugInManager   *manager,
+                                          GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  if (! g_slist_find (manager->batch_procs, proc))
+    manager->batch_procs = g_slist_prepend (manager->batch_procs, proc);
+}
+
+GSList *
+gimp_plug_in_manager_get_batch_procedures (GimpPlugInManager *manager)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
+
+  return manager->batch_procs;
 }
 
 void

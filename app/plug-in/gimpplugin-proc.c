@@ -601,9 +601,11 @@ gimp_plug_in_set_file_proc_thumb_loader (GimpPlugIn   *plug_in,
 gboolean
 gimp_plug_in_set_batch_interpreter (GimpPlugIn   *plug_in,
                                     const gchar  *proc_name,
+                                    const gchar  *interpreter_name,
                                     GError      **error)
 {
   GimpPlugInProcedure *proc;
+  GimpProcedure       *procedure;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
   g_return_val_if_fail (proc_name != NULL, FALSE);
@@ -625,7 +627,27 @@ gimp_plug_in_set_batch_interpreter (GimpPlugIn   *plug_in,
       return FALSE;
     }
 
-  gimp_plug_in_procedure_set_batch_interpreter (proc);
+  procedure = GIMP_PROCEDURE (proc);
+
+  if (procedure->num_args < 2                            ||
+      ! GIMP_IS_PARAM_SPEC_RUN_MODE (procedure->args[0]) ||
+      ! G_IS_PARAM_SPEC_STRING   (procedure->args[1]))
+    {
+      g_set_error (error, GIMP_PDB_ERROR, GIMP_PDB_ERROR_FAILED,
+                   "Plug-in \"%s\"\n(%s)\n"
+                   "attempted to register procedure \"%s\" "
+                   "as a batch interpreter which does not take the standard "
+                   "batch interpreter procedure arguments: "
+                   "(GimpRunMode, gchar *) -> ()",
+                   gimp_object_get_name (plug_in),
+                   gimp_file_get_utf8_name (plug_in->file),
+                   proc_name);
+
+      return FALSE;
+    }
+
+  gimp_plug_in_procedure_set_batch_interpreter (proc, interpreter_name);
+  gimp_plug_in_manager_add_batch_procedure (plug_in->manager, proc);
 
   return TRUE;
 }

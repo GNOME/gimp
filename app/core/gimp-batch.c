@@ -34,10 +34,10 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
+#include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
+
 #include "gimp-intl.h"
-
-
-#define BATCH_DEFAULT_EVAL_PROC   "plug-in-script-fu-eval"
 
 
 static void  gimp_batch_exit_after_callback (Gimp          *gimp) G_GNUC_NORETURN;
@@ -54,15 +54,22 @@ gimp_batch_run (Gimp         *gimp,
                 const gchar  *batch_interpreter,
                 const gchar **batch_commands)
 {
+  GSList *batch_procedures;
+  GSList *iter;
   gulong  exit_id;
   gint    retval = EXIT_SUCCESS;
 
   if (! batch_commands || ! batch_commands[0])
     return retval;
 
-  exit_id = g_signal_connect_after (gimp, "exit",
-                                    G_CALLBACK (gimp_batch_exit_after_callback),
-                                    NULL);
+  batch_procedures = gimp_plug_in_manager_get_batch_procedures (gimp->plug_in_manager);
+  if (g_slist_length (batch_procedures) == 0)
+    {
+      g_message (_("No batch interpreters are available. "
+                   "Batch mode disabled."));
+      retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
+      return retval;
+    }
 
   if (! batch_interpreter)
     {
@@ -70,13 +77,76 @@ gimp_batch_run (Gimp         *gimp,
 
       if (! batch_interpreter)
         {
-          batch_interpreter = BATCH_DEFAULT_EVAL_PROC;
+          if (g_slist_length (batch_procedures) == 1)
+            {
+              batch_interpreter = gimp_object_get_name (batch_procedures->data);;
 
-          if (gimp->be_verbose)
-            g_printerr (_("No batch interpreter specified, using the default "
-                          "'%s'.\n"), batch_interpreter);
+              if (gimp->be_verbose)
+                g_printerr (_("No batch interpreter specified, using "
+                              "'%s'.\n"), batch_interpreter);
+            }
+          else
+            {
+              retval = 64; /* EX_USAGE - command line usage error */
+              g_print ("%s\n%s\n",
+                       _("No batch interpreter specified."),
+                       _("Available interpreters are:"));
+
+              for (iter = batch_procedures; iter; iter = iter->next)
+                {
+                  GimpPlugInProcedure *proc = iter->data;
+                  gchar               *locale_name;
+
+                  locale_name = g_locale_from_utf8 (proc->batch_interpreter_name,
+                                                    -1, NULL, NULL, NULL);
+
+                  g_print ("- %s (%s)\n",
+                           gimp_object_get_name (iter->data),
+                           locale_name ? locale_name : proc->batch_interpreter_name);
+
+                  g_free (locale_name);
+                }
+
+              return retval;
+            }
         }
     }
+  for (iter = batch_procedures; iter; iter = iter->next)
+    {
+      if (g_strcmp0 (gimp_object_get_name (iter->data),
+                     batch_interpreter) == 0)
+        break;
+    }
+
+  if (iter == NULL)
+    {
+      retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
+      g_print (_("The procedure '%s' is not a valid batch interpreter."),
+                 batch_interpreter);
+      g_print ("\n%s\n%s\n",
+               _("Batch mode disabled."),
+               _("Available interpreters are:"));
+
+      for (iter = batch_procedures; iter; iter = iter->next)
+        {
+          GimpPlugInProcedure *proc = iter->data;
+          gchar               *locale_name;
+
+          locale_name = g_locale_from_utf8 (proc->batch_interpreter_name,
+                                            -1, NULL, NULL, NULL);
+
+          g_print ("- %s (%s)\n",
+                   gimp_object_get_name (iter->data),
+                   locale_name ? locale_name : proc->batch_interpreter_name);
+
+          g_free (locale_name);
+        }
+      return retval;
+    }
+
+  exit_id = g_signal_connect_after (gimp, "exit",
+                                    G_CALLBACK (gimp_batch_exit_after_callback),
+                                    NULL);
 
   /*  script-fu text console, hardcoded for backward compatibility  */
 

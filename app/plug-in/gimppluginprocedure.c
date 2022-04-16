@@ -171,6 +171,7 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_slist_free_full (proc->mime_types_list, (GDestroyNotify) g_free);
 
   g_free (proc->thumb_loader);
+  g_free (proc->batch_interpreter_name);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -207,6 +208,7 @@ gimp_plug_in_procedure_get_memsize (GimpObject *object,
   memsize += gimp_string_get_memsize (proc->magics);
   memsize += gimp_string_get_memsize (proc->mime_types);
   memsize += gimp_string_get_memsize (proc->thumb_loader);
+  memsize += gimp_string_get_memsize (proc->batch_interpreter_name);
 
   for (slist = proc->extensions_list; slist; slist = g_slist_next (slist))
     memsize += sizeof (GSList) + gimp_string_get_memsize (slist->data);
@@ -1275,11 +1277,17 @@ gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
 }
 
 void
-gimp_plug_in_procedure_set_batch_interpreter (GimpPlugInProcedure *proc)
+gimp_plug_in_procedure_set_batch_interpreter (GimpPlugInProcedure *proc,
+                                              const gchar         *name)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+  g_return_if_fail (name != NULL);
 
-  proc->batch_interpreter = TRUE;
+  if (proc->batch_interpreter_name)
+    g_free (proc->batch_interpreter_name);
+
+  proc->batch_interpreter      = TRUE;
+  proc->batch_interpreter_name = g_strdup (name);
 }
 
 void

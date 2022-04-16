@@ -108,9 +108,14 @@ gimp_batch_procedure_finalize (GObject *object)
 static void
 gimp_batch_procedure_install (GimpProcedure *procedure)
 {
+  GimpBatchProcedure *proc = GIMP_BATCH_PROCEDURE (procedure);
+
+  g_return_if_fail (proc->priv->interpreter_name != NULL);
+
   GIMP_PROCEDURE_CLASS (parent_class)->install (procedure);
 
-  _gimp_pdb_set_batch_interpreter (gimp_procedure_get_name (procedure));
+  _gimp_pdb_set_batch_interpreter (gimp_procedure_get_name (procedure),
+                                   proc->priv->interpreter_name);
 }
 
 #define ARG_OFFSET 2
@@ -175,6 +180,7 @@ gimp_batch_procedure_create_config (GimpProcedure  *procedure,
  * gimp_batch_procedure_new:
  * @plug_in:          a #GimpPlugIn.
  * @name:             the new procedure's name.
+ * @interpreter_name: the public-facing name, e.g. "Python 3".
  * @proc_type:        the new procedure's #GimpPDBProcType.
  * @run_func:         the run function for the new procedure.
  * @run_data:         user data passed to @run_func.
@@ -207,6 +213,7 @@ gimp_batch_procedure_create_config (GimpProcedure  *procedure,
 GimpProcedure  *
 gimp_batch_procedure_new (GimpPlugIn       *plug_in,
                           const gchar      *name,
+                          const gchar      *interpreter_name,
                           GimpPDBProcType   proc_type,
                           GimpBatchFunc     run_func,
                           gpointer          run_data,
@@ -216,6 +223,7 @@ gimp_batch_procedure_new (GimpPlugIn       *plug_in,
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (name), NULL);
+  g_return_val_if_fail (interpreter_name != NULL && g_utf8_validate (interpreter_name, -1, NULL), NULL);
   g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_INTERNAL, NULL);
   g_return_val_if_fail (proc_type != GIMP_PDB_PROC_TYPE_EXTENSION, NULL);
   g_return_val_if_fail (run_func != NULL, NULL);
@@ -229,6 +237,8 @@ gimp_batch_procedure_new (GimpPlugIn       *plug_in,
   procedure->priv->run_func         = run_func;
   procedure->priv->run_data         = run_data;
   procedure->priv->run_data_destroy = run_data_destroy;
+
+  gimp_batch_procedure_set_interpreter_name (procedure, interpreter_name);
 
   return GIMP_PROCEDURE (procedure);
 }
@@ -263,6 +273,7 @@ gimp_batch_procedure_set_interpreter_name (GimpBatchProcedure *procedure,
                                            const gchar        *interpreter_name)
 {
   g_return_if_fail (GIMP_IS_BATCH_PROCEDURE (procedure));
+  g_return_if_fail (interpreter_name != NULL && g_utf8_validate (interpreter_name, -1, NULL));
 
   g_free (procedure->priv->interpreter_name);
   procedure->priv->interpreter_name = g_strdup (interpreter_name);
