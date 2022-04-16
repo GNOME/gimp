@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-05 18:42+0000\n"
-"PO-Revision-Date: 2022-04-06 13:03+0200\n"
+"POT-Creation-Date: 2022-04-15 23:41+0000\n"
+"PO-Revision-Date: 2022-04-16 13:12+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1426,114 +1426,118 @@ msgstr "utilizando %s versión %s (compilado contra la versión %s)"
 msgid "%s version %s"
 msgstr "%s versión %s"
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Show version information and exit"
 msgstr "Mostrar información de la versión y salir"
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Show license information and exit"
 msgstr "Mostrar información de la licencia y salir"
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Be more verbose"
 msgstr "Ser más detallado"
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Start a new GIMP instance"
 msgstr "Iniciar una instancia de GIMP nueva"
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Open images as new"
 msgstr "Abrir imágenes como nuevas"
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Run without a user interface"
 msgstr "Ejecutar sin una interfaz de usuario"
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "No cargar los pinceles, los degradados, los patrones…"
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not load any fonts"
 msgstr "No cargar ninguna tipografía"
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not show a splash screen"
 msgstr "No mostrar una pantalla de arranque"
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "No usar memoria compartida entre GIMP y los complementos"
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
 msgstr "No utilizar las funciones de aceleración especiales de la CPU"
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate sessionrc file"
 msgstr "Usar un archivo «sessionrc» alternativo"
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Use an alternate user gimprc file"
 msgstr "Usar un archivo de usuario «gimprc» alternativo"
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "Use an alternate system gimprc file"
 msgstr "Usar un archivo de sistema «gimprc» alternativo"
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Instrucción por lotes que ejecutar (puede usarse varias veces)"
 
-#: ../app/main.c:240
+#: ../app/main.c:241
 msgid "The procedure to process batch commands with"
 msgstr "El procedimiento con el que se procesarán las instrucciones en lotes"
 
-#: ../app/main.c:245
+#: ../app/main.c:246
+msgid "Quit immediately after performing requested actions"
+msgstr "Salir inmediatamente después de realizar las acciones solicitadas"
+
+#: ../app/main.c:251
 msgid "Send messages to console instead of using a dialog"
 msgstr "Enviar las advertencias a la consola en vez de usar un diálogo"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:251
+#: ../app/main.c:257
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Modo de compatibilidad PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:257
+#: ../app/main.c:263
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Depurar en caso de error (never|query|always)"
 
-#: ../app/main.c:262
+#: ../app/main.c:268
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Activar los manejadores de señales no fatales de depuración"
 
-#: ../app/main.c:267
+#: ../app/main.c:273
 msgid "Make all warnings fatal"
 msgstr "Hacer todas las advertencias fatales"
 
-#: ../app/main.c:272
+#: ../app/main.c:278
 msgid "Output a gimprc file with default settings"
 msgstr "Sacar un archivo gimprc con la configuración predeterminada"
 
-#: ../app/main.c:288
+#: ../app/main.c:294
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr ""
 "Mostrar una lista ordenada de los procedimientos obsoletos dentro del PDB"
 
-#: ../app/main.c:293
+#: ../app/main.c:299
 msgid "Show a preferences page with experimental features"
 msgstr "Mostrar una página de preferencias con características experimentales"
 
-#: ../app/main.c:298
+#: ../app/main.c:304
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar un submenú de imagen con acciones de depurado"
 
-#: ../app/main.c:716
+#: ../app/main.c:722
 msgid "[FILE|URI...]"
 msgstr "[ARCHIVO|URI…]"
 
-#: ../app/main.c:744
+#: ../app/main.c:750
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1541,20 +1545,20 @@ msgstr ""
 "GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
 "Asegúrese de que exista una instalación apropiada para su pantalla."
 
-#: ../app/main.c:763
+#: ../app/main.c:769
 msgid "Another GIMP instance is already running."
 msgstr "Ya se está ejecutando otra instancia de GIMP."
 
-#: ../app/main.c:850
+#: ../app/main.c:857
 msgid "GIMP output. Type any character to close this window."
 msgstr "Salida de GIMP. Teclee un carácter cualquiera para cerrar esta ventana."
 
-#: ../app/main.c:851
+#: ../app/main.c:858
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Teclee un carácter cualquiera para cerrar esta ventana)\n"
 
-#: ../app/main.c:868
+#: ../app/main.c:875
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Salida de GIMP. Puede minimizar esta ventana, pero no la cierre."
 
@@ -9433,8 +9437,8 @@ msgstr "Vertical, izquierda a derecha (orientación vertical)"
 
 #: ../app/actions/text-tool-commands.c:188
 #, c-format
-msgid "Test along path failed: %s"
-msgstr "La prueba sobre la ruta ha fallado: %s"
+msgid "Text along path failed: %s"
+msgstr "El texto sobre la ruta ha fallado: %s"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -19601,19 +19605,19 @@ msgstr "_Muestra combinada"
 msgid "Access the image menu"
 msgstr "Ir al menú de imagen"
 
-#: ../app/display/gimpdisplayshell.c:630
+#: ../app/display/gimpdisplayshell.c:648
 msgid "Zoom image when window size changes"
 msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
-#: ../app/display/gimpdisplayshell.c:659
+#: ../app/display/gimpdisplayshell.c:677
 msgid "Toggle Quick Mask"
 msgstr "Activar máscara rápida"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:692
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: ../app/display/gimpdisplayshell.c:727 ../app/display/gimpdisplayshell.c:1401
+#: ../app/display/gimpdisplayshell.c:745 ../app/display/gimpdisplayshell.c:1420
 #: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
@@ -19822,7 +19826,7 @@ msgstr "(limpia)"
 msgid "(none)"
 msgstr "(ninguna)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1596
+#: ../app/display/gimpdisplayshell-tool-events.c:1705
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Capa seleccionada: «%s»"
