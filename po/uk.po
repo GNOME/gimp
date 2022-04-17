@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-15 23:41+0000\n"
-"PO-Revision-Date: 2022-04-16 19:00+0300\n"
+"POT-Creation-Date: 2022-04-16 21:57+0000\n"
+"PO-Revision-Date: 2022-04-17 09:15+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1520,11 +1520,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: ../app/main.c:722
+#: ../app/main.c:723
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: ../app/main.c:750
+#: ../app/main.c:751
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1532,20 +1532,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: ../app/main.c:769
+#: ../app/main.c:770
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: ../app/main.c:857
+#: ../app/main.c:858
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: ../app/main.c:858
+#: ../app/main.c:859
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: ../app/main.c:875
+#: ../app/main.c:876
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -12850,7 +12850,7 @@ msgstr "Максимальна кількість записів дій, які 
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
-#: ../app/plug-in/plug-in-rc.c:251 ../app/tools/gimp-tools.c:504
+#: ../app/plug-in/plug-in-rc.c:254 ../app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "критична помилка лексичного аналізу"
 
@@ -13899,13 +13899,45 @@ msgstr "Шуми"
 msgid "Modules"
 msgstr "Модулі"
 
-#: ../app/core/gimp-batch.c:75
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
+#: ../app/core/gimp-batch.c:68
+#| msgid "The batch interpreter '%s' is not available. Batch mode disabled."
+msgid "No batch interpreters are available. Batch mode disabled."
 msgstr ""
-"Інтерпретатор пакетної обробки не вказано, використовується типовий «%s».\n"
+"Немає інтерпретаторів пакетної обробки. Режим пакетної обробки вимкнено."
 
-#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#: ../app/core/gimp-batch.c:85
+#, c-format
+#| msgid "No batch interpreter specified, using the default '%s'.\n"
+msgid "No batch interpreter specified, using '%s'.\n"
+msgstr "Інтерпретатор пакетної обробки не вказано, використовуємо «%s».\n"
+
+#: ../app/core/gimp-batch.c:92
+#| msgid "No batch interpreter specified, using the default '%s'.\n"
+msgid "No batch interpreter specified."
+msgstr "Не вказано інтерпретатор пакетної обробки."
+
+#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:131
+#| msgid "Available Filters"
+msgid "Available interpreters are:"
+msgstr "Доступні інтерпретатори:"
+
+#: ../app/core/gimp-batch.c:111 ../app/core/gimp-batch.c:149
+msgid "Specify one of these interpreters as --batch-interpreter option."
+msgstr ""
+"Вкажіть один з цих інтерпретаторів за допомогою параметра --batch-interpreter."
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:127
+#, c-format
+#| msgid "Procedure name '%s' is not a canonical identifier"
+msgid "The procedure '%s' is not a valid batch interpreter."
+msgstr "Процедура «%s» не є коректним інтерпретатор пакетної обробки."
+
+#: ../app/core/gimp-batch.c:130
+msgid "Batch mode disabled."
+msgstr "Режим пакетної обробки вимкнено."
+
+#: ../app/core/gimp-batch.c:172 ../app/core/gimp-batch.c:204
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -20254,7 +20286,7 @@ msgstr "Розширення GIMP"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1029
+#: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "RGB"
 msgstr "RGB"
 
@@ -20279,7 +20311,7 @@ msgstr "RGB-альфа"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1047
+#: ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Grayscale"
 msgstr "Відтінки сірого"
 
@@ -20341,7 +20373,7 @@ msgstr "Складова альфи"
 msgid "Indexed-alpha"
 msgstr "Індексована альфа"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1065
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1067
 msgid "Indexed"
 msgstr "Індексований"
 
@@ -22175,8 +22207,8 @@ msgstr "2D перетворення"
 msgid "2D Transforming"
 msgstr "2D перетворення"
 
-#: ../app/pdb/pdb-cmds.c:1117 ../app/pdb/pdb-cmds.c:1161
-#: ../app/pdb/pdb-cmds.c:1203
+#: ../app/pdb/pdb-cmds.c:1152 ../app/pdb/pdb-cmds.c:1196
+#: ../app/pdb/pdb-cmds.c:1238
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "Мітка даних «%s» не є канонічним ідентифікатором"
@@ -22650,11 +22682,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Скасовано"
 
-#: ../app/plug-in/gimppluginmanager.c:238
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "Інтерпретатори додатків"
 
-#: ../app/plug-in/gimppluginmanager.c:244
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "Середовище додатків"
 
@@ -22707,35 +22739,35 @@ msgstr "Ініціалізація доповнень"
 msgid "Starting Extensions"
 msgstr "Запуск розширень"
 
-#: ../app/plug-in/gimppluginprocedure.c:1033
+#: ../app/plug-in/gimppluginprocedure.c:1035
 msgid "RGB without alpha"
 msgstr "RGB без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1037
+#: ../app/plug-in/gimppluginprocedure.c:1039
 msgid "RGB with alpha"
 msgstr "RGB із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1051
+#: ../app/plug-in/gimppluginprocedure.c:1053
 msgid "Grayscale without alpha"
 msgstr "Відтінки сірого без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1055
+#: ../app/plug-in/gimppluginprocedure.c:1057
 msgid "Grayscale with alpha"
 msgstr "Відтінки сірого із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1069
+#: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "Indexed without alpha"
 msgstr "Індексовані без прозорості"
 
-#: ../app/plug-in/gimppluginprocedure.c:1073
+#: ../app/plug-in/gimppluginprocedure.c:1075
 msgid "Indexed with alpha"
 msgstr "Індексовані із прозорістю"
 
-#: ../app/plug-in/gimppluginprocedure.c:1084
+#: ../app/plug-in/gimppluginprocedure.c:1086
 msgid "This plug-in only works on the following layer types:"
 msgstr "Цей додаток працює лише з такими типами шарів:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1303
+#: ../app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22744,7 +22776,7 @@ msgstr ""
 "Помилка виклику «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1315
+#: ../app/plug-in/gimppluginprocedure.c:1331
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22753,22 +22785,22 @@ msgstr ""
 "Помилка виконання «%s»:\n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:237
+#: ../app/plug-in/plug-in-rc.c:240
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Пропускається \"%s\": неправильна версія протоколу GIMP."
 
-#: ../app/plug-in/plug-in-rc.c:244
+#: ../app/plug-in/plug-in-rc.c:247
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Пропускається \"%s\": неправильна версія файлу формату pluginrc."
 
-#: ../app/plug-in/plug-in-rc.c:550
+#: ../app/plug-in/plug-in-rc.c:553
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "неправильне значення «%s» для значка"
 
-#: ../app/plug-in/plug-in-rc.c:565
+#: ../app/plug-in/plug-in-rc.c:568
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "неправильне значення '%ld' для значка"
