@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-21 14:55+0000\n"
-"PO-Revision-Date: 2022-03-21 18:04+0000\n"
+"POT-Creation-Date: 2022-04-17 21:21+0000\n"
+"PO-Revision-Date: 2022-04-17 21:31+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -423,14 +423,14 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-gegl.c:468 ../plug-ins/common/file-gif-load.c:1036
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:951 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1320
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:803
 #: ../plug-ins/common/smooth-palette.c:331 ../plug-ins/common/tile.c:404
 #: ../plug-ins/file-bmp/bmp-load.c:737 ../plug-ins/file-exr/file-exr.c:272
 #: ../plug-ins/file-faxg3/faxg3.c:574 ../plug-ins/file-fits/fits.c:556
-#: ../plug-ins/file-jpeg/jpeg-load.c:228
+#: ../plug-ins/file-jpeg/jpeg-load.c:225
 #: ../plug-ins/file-psd/psd-image-res-load.c:1067
 #: ../plug-ins/file-psd/psd-load.c:2509 ../plug-ins/file-sgi/sgi.c:474
 #: ../plug-ins/file-tiff/file-tiff-load.c:1358
@@ -980,14 +980,14 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
-#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1503
+#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1146 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
 #: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
-#: ../plug-ins/file-jpeg/jpeg-save.c:314 ../plug-ins/file-psd/psd-save.c:1815
+#: ../plug-ins/file-jpeg/jpeg-save.c:318 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1025
 #: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -1010,7 +1010,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/common/file-cel.c:352 ../plug-ins/common/file-cel.c:403
 #: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
-#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
+#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
 #: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
 #: ../plug-ins/common/file-raw-data.c:439
@@ -1023,7 +1023,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
 #: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
 #: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
-#: ../plug-ins/file-jpeg/jpeg-load.c:99 ../plug-ins/file-jpeg/jpeg-load.c:540
+#: ../plug-ins/file-jpeg/jpeg-load.c:96 ../plug-ins/file-jpeg/jpeg-load.c:550
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
 #: ../plug-ins/file-psd/psd-save.c:1820
 #: ../plug-ins/file-psd/psd-thumb-load.c:82
@@ -1948,7 +1948,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-gegl.c:352 ../plug-ins/common/file-gif-load.c:395
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:658
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
@@ -1956,7 +1956,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
 #: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
-#: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:90
+#: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:87
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
 #: ../plug-ins/file-raw/file-rawtherapee.c:343 ../plug-ins/file-sgi/sgi.c:331
@@ -2033,13 +2033,13 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:912
 #: ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
-#: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1495
+#: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1486
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
 #: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
-#: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:269
+#: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:273
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1015
 #, c-format
@@ -2957,7 +2957,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2250
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2241
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Não foi possível guardar a transparência no modo “sem perda de qualidade”, "
@@ -3373,34 +3373,34 @@ msgstr "O formato PNG não suporta várias camadas."
 msgid "Error loading PNG file: %s\n"
 msgstr "Erro ao carregar o ficheiro PNG: %s\n"
 
-#: ../plug-ins/common/file-png.c:623
+#: ../plug-ins/common/file-png.c:622
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Erro ao criar a estrutura de leitura PNG ao carregar '%s'."
 
-#: ../plug-ins/common/file-png.c:632
+#: ../plug-ins/common/file-png.c:631
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Erro ao ler '%s'. Não foi possível criar a estrutura de informação do "
 "cabeçalho PNG."
 
-#: ../plug-ins/common/file-png.c:640
+#: ../plug-ins/common/file-png.c:639
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Erro ao ler o ficheiro '%s'. Estará corrompido?"
 
-#: ../plug-ins/common/file-png.c:903
+#: ../plug-ins/common/file-png.c:894
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de cor desconhecido no ficheiro PNG '%s'."
 
-#: ../plug-ins/common/file-png.c:916 ../plug-ins/file-exr/file-exr.c:253
+#: ../plug-ins/common/file-png.c:907 ../plug-ins/file-exr/file-exr.c:253
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Não foi possível criar nova imagem para '%s': %s"
 
-#: ../plug-ins/common/file-png.c:984
+#: ../plug-ins/common/file-png.c:975
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3408,19 +3408,19 @@ msgstr ""
 "O ficheiro PNG especifica um desvio que levou a que a camada fosse "
 "posicionada fora da imagem."
 
-#: ../plug-ins/common/file-png.c:1220
+#: ../plug-ins/common/file-png.c:1211
 msgid "Apply PNG Offset"
 msgstr "Aplicar desvio PNG"
 
-#: ../plug-ins/common/file-png.c:1224
+#: ../plug-ins/common/file-png.c:1215
 msgid "Ignore PNG offset"
 msgstr "Ignorar desvio PNG"
 
-#: ../plug-ins/common/file-png.c:1225
+#: ../plug-ins/common/file-png.c:1216
 msgid "Apply PNG offset to layer"
 msgstr "Aplicar desvio PNG à camada"
 
-#: ../plug-ins/common/file-png.c:1250
+#: ../plug-ins/common/file-png.c:1241
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3429,56 +3429,56 @@ msgstr ""
 "A imagem PNG que está a importar especifica um desvio de %d, %d. Quer "
 "realmente aplicar este desvio à camada?"
 
-#: ../plug-ins/common/file-png.c:1460
+#: ../plug-ins/common/file-png.c:1451
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Erro ao criar “struct” de escrita PNG ao exportar '%s'."
 
-#: ../plug-ins/common/file-png.c:1469
+#: ../plug-ins/common/file-png.c:1460
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Erro ao exportar “%s”. Não foi possível criar a estrutura de informação do "
 "cabeçalho PNG."
 
-#: ../plug-ins/common/file-png.c:1477
+#: ../plug-ins/common/file-png.c:1468
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Erro ao exportar '%s'. Não foi possível exportar a imagem."
 
-#: ../plug-ins/common/file-png.c:2289 ../plug-ins/common/file-ps.c:3682
+#: ../plug-ins/common/file-png.c:2280 ../plug-ins/common/file-ps.c:3682
 msgid "Automatic"
 msgstr "Automático"
 
-#: ../plug-ins/common/file-png.c:2290
+#: ../plug-ins/common/file-png.c:2281
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2291
+#: ../plug-ins/common/file-png.c:2282
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2292
+#: ../plug-ins/common/file-png.c:2283
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2293
+#: ../plug-ins/common/file-png.c:2284
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRAYA"
 
-#: ../plug-ins/common/file-png.c:2294
+#: ../plug-ins/common/file-png.c:2285
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2295
+#: ../plug-ins/common/file-png.c:2286
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2296
+#: ../plug-ins/common/file-png.c:2287
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2297
+#: ../plug-ins/common/file-png.c:2288
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
@@ -5025,7 +5025,7 @@ msgstr "Retalhar a imagem em várias imagens usando guias"
 msgid "Guillotine"
 msgstr "Guilhotina"
 
-#: ../plug-ins/common/guillotine.c:266 ../plug-ins/help-browser/dialog.c:1103
+#: ../plug-ins/common/guillotine.c:266 ../plug-ins/help-browser/dialog.c:891
 msgid "Untitled"
 msgstr "Sem título"
 
@@ -6146,7 +6146,7 @@ msgstr "Cor de 1º plano"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
-#: ../plug-ins/common/warp.c:651 ../plug-ins/file-jpeg/jpeg-save.c:877
+#: ../plug-ins/common/warp.c:651 ../plug-ins/file-jpeg/jpeg-save.c:971
 msgid "Advanced Options"
 msgstr "Opções avançadas"
 
@@ -6824,7 +6824,7 @@ msgid "Icon #%i"
 msgstr "Ícone nº %i"
 
 #. ----- Open PSD file -----
-#: ../plug-ins/file-ico/ico-load.c:766 ../plug-ins/file-jpeg/jpeg-load.c:526
+#: ../plug-ins/file-ico/ico-load.c:766 ../plug-ins/file-jpeg/jpeg-load.c:536
 #: ../plug-ins/file-psd/psd-thumb-load.c:72
 #: ../plug-ins/file-raw/file-darktable.c:517
 #: ../plug-ins/file-raw/file-rawtherapee.c:459
@@ -6849,7 +6849,7 @@ msgstr "Ícone do Microsoft Windows"
 msgid "Microsoft Windows cursor"
 msgstr "Cursor do Microsoft Windows"
 
-#: ../plug-ins/file-jpeg/jpeg-load.c:218
+#: ../plug-ins/file-jpeg/jpeg-load.c:215
 msgid "JPEG preview"
 msgstr "Pré-visualização JPEG"
 
@@ -6858,45 +6858,58 @@ msgstr "Pré-visualização JPEG"
 msgid "File size: %s"
 msgstr "Tamanho do ficheiro: %s"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:658
+#: ../plug-ins/file-jpeg/jpeg-save.c:718
 msgid "Calculating file size..."
 msgstr "A calcular o tamanho do ficheiro..."
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:748 ../plug-ins/file-jpeg/jpeg-save.c:817
+#: ../plug-ins/file-jpeg/jpeg-save.c:808 ../plug-ins/file-jpeg/jpeg-save.c:880
 msgid "File size: unknown"
 msgstr "Tamanho do ficheiro: desconhecido"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:824
+#: ../plug-ins/file-jpeg/jpeg-save.c:887
 msgid "Enable preview to obtain the file size."
 msgstr "Ativar a pré-visualização para obter o tamanho do ficheiro."
 
+#: ../plug-ins/file-jpeg/jpeg-save.c:892
+msgid "No soft-proofing profile"
+msgstr "Sem perfil da prova de cor do ecrã"
+
+#: ../plug-ins/file-jpeg/jpeg-save.c:899
+msgid "Name of the color profile used for CMYK export."
+msgstr "Nome do perfil de cor usado para exportação CMYK."
+
+#: ../plug-ins/file-jpeg/jpeg-save.c:910
+#, c-format
+msgid "Profile: %s"
+msgstr "Perfil: %s"
+
 #. Subsampling
-#: ../plug-ins/file-jpeg/jpeg-save.c:847
+#: ../plug-ins/file-jpeg/jpeg-save.c:941
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (melhor qualidade)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:849
+#: ../plug-ins/file-jpeg/jpeg-save.c:943
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 horizontal (meio croma)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:851
+#: ../plug-ins/file-jpeg/jpeg-save.c:945
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 vertical (meio croma)"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:853
+#: ../plug-ins/file-jpeg/jpeg-save.c:947
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (1/4 croma)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:868
+#: ../plug-ins/file-jpeg/jpeg-save.c:962
 msgid "Fast Integer"
 msgstr "Inteiro rápido"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:869
+#: ../plug-ins/file-jpeg/jpeg-save.c:963
 msgid "Integer"
 msgstr "Inteiro"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:870
+#: ../plug-ins/file-jpeg/jpeg-save.c:964
 msgid "Floating-Point"
 msgstr "Vírgula flutuante"
 
@@ -6908,33 +6921,33 @@ msgstr "Imagem JPEG"
 msgid "JPEG"
 msgstr "JPEG (velocidade: ++, compressão: ++++, perda de dados)"
 
-#: ../plug-ins/file-jpeg/jpeg.c:225
+#: ../plug-ins/file-jpeg/jpeg.c:231
 msgid "Su_bsampling"
 msgstr "Su_bamostragem"
 
-#: ../plug-ins/file-jpeg/jpeg.c:243
+#: ../plug-ins/file-jpeg/jpeg.c:249
 msgid "Inter_val (MCU rows):"
 msgstr "Inter_valo (linhas MCU):"
 
-#: ../plug-ins/file-jpeg/jpeg.c:250
+#: ../plug-ins/file-jpeg/jpeg.c:256
 msgid "_DCT method"
 msgstr "Método _DCT"
 
-#: ../plug-ins/file-jpeg/jpeg.c:288
+#: ../plug-ins/file-jpeg/jpeg.c:294
 msgid "Older software may have trouble opening arithmetic-coded images"
 msgstr ""
 "Os programas mais antigos poderão ter dificuldade em abrir imagens com "
 "codificação aritmética"
 
-#: ../plug-ins/file-jpeg/jpeg.c:293
+#: ../plug-ins/file-jpeg/jpeg.c:299
 msgid "Use restart mar_kers"
 msgstr "Use marcadores de re_inicialização"
 
-#: ../plug-ins/file-jpeg/jpeg.c:463
+#: ../plug-ins/file-jpeg/jpeg.c:469
 msgid "Export Preview"
 msgstr "Exportar pré-visualização"
 
-#: ../plug-ins/file-jpeg/jpeg.c:496
+#: ../plug-ins/file-jpeg/jpeg.c:502
 #, c-format
 msgid "JPEG format does not support multiple layers."
 msgstr "O formato JPEG não suporta várias camadas."
@@ -10071,81 +10084,50 @@ msgstr "Semente aleatória:"
 msgid "_Second Flares"
 msgstr "Reflexos _secundários da lente"
 
-#: ../plug-ins/help-browser/dialog.c:177 ../plug-ins/help-browser/dialog.c:1104
+#. the dialog window
+#: ../plug-ins/help-browser/dialog.c:261 ../plug-ins/help-browser/dialog.c:892
 msgid "GIMP Help Browser"
 msgstr "Navegador de ajuda do GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:542
-msgid "Go back one page"
-msgstr "Retroceder uma página"
-
-#: ../plug-ins/help-browser/dialog.c:547
-msgid "Go forward one page"
-msgstr "Avançar uma página"
-
-#: ../plug-ins/help-browser/dialog.c:552
+#: ../plug-ins/help-browser/dialog.c:275
 msgid "_Reload"
 msgstr "_Recarregar"
 
-#: ../plug-ins/help-browser/dialog.c:552
+#: ../plug-ins/help-browser/dialog.c:275
 msgid "Reload current page"
 msgstr "Recarrega a página atual"
 
-#: ../plug-ins/help-browser/dialog.c:557
+#: ../plug-ins/help-browser/dialog.c:276
 msgid "_Stop"
 msgstr "_Parar"
 
-#: ../plug-ins/help-browser/dialog.c:557
+#: ../plug-ins/help-browser/dialog.c:276
 msgid "Stop loading this page"
 msgstr "Pára de carregar esta página"
 
-#: ../plug-ins/help-browser/dialog.c:562
+#: ../plug-ins/help-browser/dialog.c:277
 msgid "Go to the index page"
 msgstr "Ir para a página de índice"
 
-#: ../plug-ins/help-browser/dialog.c:567
-msgid "C_opy location"
-msgstr "C_opiar localização"
-
-#: ../plug-ins/help-browser/dialog.c:568
-msgid "Copy the location of this page to the clipboard"
-msgstr "Copia a localização desta página para a área de transferência"
-
-#: ../plug-ins/help-browser/dialog.c:588
-msgid "Find text in current page"
-msgstr "Localizar texto nesta página"
-
-#: ../plug-ins/help-browser/dialog.c:593
-msgid "Find _Again"
-msgstr "_Localizar novamente"
-
-#: ../plug-ins/help-browser/dialog.c:612
-msgid "S_how Index"
-msgstr "_Mostrar o índice"
-
-#: ../plug-ins/help-browser/dialog.c:613
-msgid "Toggle the visibility of the sidebar"
-msgstr "Alternar a visibilidade da barra lateral"
-
-#: ../plug-ins/help-browser/dialog.c:634
+#: ../plug-ins/help-browser/dialog.c:283
 msgid "Visit the GIMP documentation website"
 msgstr "Visitar a página web da documentação do GIMP"
 
-#: ../plug-ins/help-browser/dialog.c:1146
+#: ../plug-ins/help-browser/dialog.c:1235
 msgid "Find:"
 msgstr "Localizar:"
 
-#: ../plug-ins/help-browser/dialog.c:1163
+#: ../plug-ins/help-browser/dialog.c:1251
 msgctxt "search"
 msgid "_Previous"
 msgstr "_Anterior"
 
-#: ../plug-ins/help-browser/dialog.c:1175
+#: ../plug-ins/help-browser/dialog.c:1260
 msgctxt "search"
 msgid "_Next"
 msgstr "_Seguinte"
 
-#: ../plug-ins/help-browser/dialog.c:1187
+#: ../plug-ins/help-browser/dialog.c:1269
 msgctxt "search"
 msgid "_Close"
 msgstr "_Fechar"
@@ -12582,6 +12564,30 @@ msgstr "_Digitalizador/câmara..."
 #: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador/câmara"
+
+#~ msgid "Go back one page"
+#~ msgstr "Retroceder uma página"
+
+#~ msgid "Go forward one page"
+#~ msgstr "Avançar uma página"
+
+#~ msgid "C_opy location"
+#~ msgstr "C_opiar localização"
+
+#~ msgid "Copy the location of this page to the clipboard"
+#~ msgstr "Copia a localização desta página para a área de transferência"
+
+#~ msgid "Find text in current page"
+#~ msgstr "Localizar texto nesta página"
+
+#~ msgid "Find _Again"
+#~ msgstr "_Localizar novamente"
+
+#~ msgid "S_how Index"
+#~ msgstr "_Mostrar o índice"
+
+#~ msgid "Toggle the visibility of the sidebar"
+#~ msgstr "Alternar a visibilidade da barra lateral"
 
 #~ msgid "_Loop forever"
 #~ msgstr "_Ciclo eterno"
