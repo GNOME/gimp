@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-15 23:41+0000\n"
-"PO-Revision-Date: 2022-04-16 17:12+0100\n"
+"POT-Creation-Date: 2022-04-17 20:55+0000\n"
+"PO-Revision-Date: 2022-04-17 21:41+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -1533,11 +1533,11 @@ msgstr "Mostrar uma página de preferências com funcionalidades experimentais"
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar um submenu de imagem com ações de depuração"
 
-#: ../app/main.c:722
+#: ../app/main.c:723
 msgid "[FILE|URI...]"
 msgstr "[FICHEIRO|URI…]"
 
-#: ../app/main.c:750
+#: ../app/main.c:751
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1545,20 +1545,20 @@ msgstr ""
 "O GIMP não conseguiu iniciar a interface gráfica de utilizador.\n"
 "Certifique-se que o seu ambiente gráfico está configurado corretamente."
 
-#: ../app/main.c:769
+#: ../app/main.c:770
 msgid "Another GIMP instance is already running."
 msgstr "Já existe outra instância do GIMP em execução."
 
-#: ../app/main.c:857
+#: ../app/main.c:858
 msgid "GIMP output. Type any character to close this window."
 msgstr "Saída de dados do GIMP. Prima qualquer tecla para fechar esta janela."
 
-#: ../app/main.c:858
+#: ../app/main.c:859
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(prima qualquer tecla para fechar esta janela)\n"
 
-#: ../app/main.c:875
+#: ../app/main.c:876
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Saída de dados do GIMP. Pode minimizar esta janela, mas não a feche."
 
@@ -11889,8 +11889,8 @@ msgid ""
 "backup of your configuration has been created at '%s'."
 msgstr ""
 "Ocorreu um erro ao processar o seu ficheiro \"%s\". Serão usados os valores "
-"predefinidos. Foi criada uma cópia de segurança da sua configuração em "
-"\"%s\"."
+"predefinidos. Foi criada uma cópia de segurança da sua configuração em \"%s"
+"\"."
 
 #: ../app/config/gimpcoreconfig.c:797 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
@@ -11920,8 +11920,8 @@ msgstr "Caminho"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Quando ativado, uma imagem torna-se a imagem ativa quando a sua janela de "
 "imagem recebe o foco. Isto é útil para gestores de janelas que usem \"clique "
@@ -12514,8 +12514,8 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Quando ativado, os pontos de amostragem estão visíveis por predefinição. "
-"Pode também ser alternado com o comando \"Ver → Mostrar pontos de "
-"amostragem\"."
+"Pode também ser alternado com o comando \"Ver → Mostrar pontos de amostragem"
+"\"."
 
 #: ../app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -12783,8 +12783,8 @@ msgstr ""
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas "
-"visíveis\"."
+"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas visíveis"
+"\"."
 
 #: ../app/config/gimprc-blurbs.h:632
 msgid ""
@@ -13011,7 +13011,7 @@ msgstr ""
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
-#: ../app/plug-in/plug-in-rc.c:251 ../app/tools/gimp-tools.c:504
+#: ../app/plug-in/plug-in-rc.c:254 ../app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "erro fatal de processamento"
 
@@ -14063,15 +14063,43 @@ msgstr "Parasitas"
 msgid "Modules"
 msgstr "Módulos"
 
-#: ../app/core/gimp-batch.c:75
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "Não foi especificado um editor de lote, a usar o predefinido \"%s\".\n"
+#: ../app/core/gimp-batch.c:69
+msgid "No batch interpreters are available. Batch mode disabled."
+msgstr "Não estão disponíveis intérpretes de lote. Modo de lote desativado."
 
-#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#: ../app/core/gimp-batch.c:86
+#, c-format
+msgid "No batch interpreter specified, using '%s'.\n"
+msgstr "Nenhum intérprete de lote especificado, a usar o '%s'.\n"
+
+#: ../app/core/gimp-batch.c:93
+msgid "No batch interpreter specified."
+msgstr "Nenhum intérprete de lote especificado."
+
+#: ../app/core/gimp-batch.c:94 ../app/core/gimp-batch.c:132
+msgid "Available interpreters are:"
+msgstr "Os intérpretes disponíveis são:"
+
+#: ../app/core/gimp-batch.c:112 ../app/core/gimp-batch.c:150
+msgid "Specify one of these interpreters as --batch-interpreter option."
+msgstr "Especifique um destes intérpretes como opção --batch-interpreter."
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:128
+#, c-format
+msgid "The procedure '%s' is not a valid batch interpreter."
+msgstr "O nome do procedimento \"%s\" não é um intérprete de lote."
+
+#: ../app/core/gimp-batch.c:131
+msgid "Batch mode disabled."
+msgstr "Modo de lote desativado."
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:184
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "O editor de lotes \"%s\" não está disponível. Modo de lote desativado."
+msgstr ""
+"O intérprete de lotes \"%s\" não está disponível. Modo de lote desativado."
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:449
@@ -15325,8 +15353,8 @@ msgstr "Desativar “Usar perfil sRGB”"
 #: ../app/core/gimpimage-color-profile.c:198
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgstr ""
-"Não foi possível validar o perfil ICC: o nome do parasita não é \"icc-"
-"profile\""
+"Não foi possível validar o perfil ICC: o nome do parasita não é \"icc-profile"
+"\""
 
 #: ../app/core/gimpimage-color-profile.c:207
 msgid ""
@@ -20484,7 +20512,7 @@ msgstr "Extensão GIMP"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1029
+#: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "RGB"
 msgstr "RGB"
 
@@ -20509,7 +20537,7 @@ msgstr "RGB-alfa"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1047
+#: ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Grayscale"
 msgstr "Tons de cinzento"
 
@@ -20571,7 +20599,7 @@ msgstr "Componente alfa"
 msgid "Indexed-alpha"
 msgstr "Alfa indexado"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1065
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1067
 msgid "Indexed"
 msgstr "Indexado"
 
@@ -22317,14 +22345,14 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor "
-"\"%s\" (n°%d). Esperado %s, obtido %s."
+"O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor \"%s"
+"\" (n°%d). Esperado %s, obtido %s."
 
 #: ../app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
 "argumento \"%s\" (n°%d). Esperado %s, obtido %s."
@@ -22345,9 +22373,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" foi chamado com um ID inválido para o argumento "
-"\"%s\". O mais provável é que um complemento esteja a tentar operar numa "
-"camada que já não existe."
+"O procedimento \"%s\" foi chamado com um ID inválido para o argumento \"%s"
+"\". O mais provável é que um complemento esteja a tentar operar numa camada "
+"que já não existe."
 
 #: ../app/pdb/gimpprocedure.c:923
 #, c-format
@@ -22365,9 +22393,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" foi chamado com um ID inválido para o argumento "
-"\"%s\". O mais provável é que um complemento esteja a tentar operar numa "
-"imagem que já não existe."
+"O procedimento \"%s\" foi chamado com um ID inválido para o argumento \"%s"
+"\". O mais provável é que um complemento esteja a tentar operar numa imagem "
+"que já não existe."
 
 #: ../app/pdb/gimpprocedure.c:957
 #, c-format
@@ -22384,8 +22412,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento "
-"\"%s\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
+"O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s"
+"\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
 
 #: ../app/pdb/gimpprocedure.c:1023
 #, c-format
@@ -22432,8 +22460,8 @@ msgstr "Transformar em 2D"
 msgid "2D Transforming"
 msgstr "A fazer a transformação 2D"
 
-#: ../app/pdb/pdb-cmds.c:1117 ../app/pdb/pdb-cmds.c:1161
-#: ../app/pdb/pdb-cmds.c:1203
+#: ../app/pdb/pdb-cmds.c:1152 ../app/pdb/pdb-cmds.c:1196
+#: ../app/pdb/pdb-cmds.c:1238
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "A etiqueta de dados “%s” não é um identificador canónico"
@@ -22909,11 +22937,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Cancelada"
 
-#: ../app/plug-in/gimppluginmanager.c:238
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "Interpretadores de complementos"
 
-#: ../app/plug-in/gimppluginmanager.c:244
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "Ambiente de complemento"
 
@@ -22967,35 +22995,35 @@ msgstr "A inicializar os complementos"
 msgid "Starting Extensions"
 msgstr "A iniciar as extensões"
 
-#: ../app/plug-in/gimppluginprocedure.c:1033
+#: ../app/plug-in/gimppluginprocedure.c:1035
 msgid "RGB without alpha"
 msgstr "RGB sem alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1037
+#: ../app/plug-in/gimppluginprocedure.c:1039
 msgid "RGB with alpha"
 msgstr "RGB com alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1051
+#: ../app/plug-in/gimppluginprocedure.c:1053
 msgid "Grayscale without alpha"
 msgstr "Tons de cinzento sem alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1055
+#: ../app/plug-in/gimppluginprocedure.c:1057
 msgid "Grayscale with alpha"
 msgstr "Tons de cinzento com alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1069
+#: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "Indexed without alpha"
 msgstr "Indexada sem alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1073
+#: ../app/plug-in/gimppluginprocedure.c:1075
 msgid "Indexed with alpha"
 msgstr "Indexada com alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1084
+#: ../app/plug-in/gimppluginprocedure.c:1086
 msgid "This plug-in only works on the following layer types:"
 msgstr "Este complemento apenas funciona nos seguintes tipos de camadas:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1303
+#: ../app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -23004,7 +23032,7 @@ msgstr ""
 "Erro de chamada de \"%s\":\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1315
+#: ../app/plug-in/gimppluginprocedure.c:1331
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -23013,22 +23041,22 @@ msgstr ""
 "Erro ao executar \"%s\": \n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:237
+#: ../app/plug-in/plug-in-rc.c:240
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "A ignorar \"%s\": versão de protocolo GIMP incorreta."
 
-#: ../app/plug-in/plug-in-rc.c:244
+#: ../app/plug-in/plug-in-rc.c:247
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "A ignorar \"%s\": versão de formato de ficheiro “pluginrc” incorreta."
 
-#: ../app/plug-in/plug-in-rc.c:550
+#: ../app/plug-in/plug-in-rc.c:553
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valor \"%s\" inválido para o tipo de ícone"
 
-#: ../app/plug-in/plug-in-rc.c:565
+#: ../app/plug-in/plug-in-rc.c:568
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valor \"%ld\" inválido para o tipo de ícone"
