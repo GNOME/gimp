@@ -54,10 +54,11 @@ gimp_batch_run (Gimp         *gimp,
                 const gchar  *batch_interpreter,
                 const gchar **batch_commands)
 {
-  GSList *batch_procedures;
-  GSList *iter;
-  gulong  exit_id;
-  gint    retval = EXIT_SUCCESS;
+  GimpProcedure *eval_proc;
+  GSList        *batch_procedures;
+  GSList        *iter;
+  gulong         exit_id;
+  gint           retval = EXIT_SUCCESS;
 
   if (! batch_commands || ! batch_commands[0])
     return retval;
@@ -155,55 +156,33 @@ gimp_batch_run (Gimp         *gimp,
                                     G_CALLBACK (gimp_batch_exit_after_callback),
                                     NULL);
 
-  /*  script-fu text console, hardcoded for backward compatibility  */
-
-  if (strcmp (batch_interpreter, "plug-in-script-fu-eval") == 0 &&
-      strcmp (batch_commands[0], "-") == 0)
+  eval_proc = gimp_pdb_lookup_procedure (gimp->pdb, batch_interpreter);
+  if (eval_proc)
     {
-      const gchar   *proc_name = "plug-in-script-fu-text-console";
-      GimpProcedure *procedure = gimp_pdb_lookup_procedure (gimp->pdb,
-                                                            proc_name);
+      gint i;
 
-      retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
-      if (procedure)
-        retval = gimp_batch_run_cmd (gimp, proc_name, procedure,
-                                     GIMP_RUN_NONINTERACTIVE, NULL);
-      else
-        g_message (_("The batch interpreter '%s' is not available. "
-                     "Batch mode disabled."), proc_name);
+      retval = EXIT_SUCCESS;
+      for (i = 0; batch_commands[i]; i++)
+        {
+          retval = gimp_batch_run_cmd (gimp, batch_interpreter, eval_proc,
+                                       GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
+
+          /* In case of several commands, stop and return last
+           * failed command.
+           */
+          if (retval != EXIT_SUCCESS)
+            {
+              g_printerr ("Stopping at failing batch command [%d]: %s\n",
+                          i, batch_commands[i]);
+              break;
+            }
+        }
     }
   else
     {
-      GimpProcedure *eval_proc = gimp_pdb_lookup_procedure (gimp->pdb,
-                                                            batch_interpreter);
-
       retval = 69; /* EX_UNAVAILABLE - service unavailable (sysexits.h) */
-      if (eval_proc)
-        {
-          gint i;
-
-          retval = EXIT_SUCCESS;
-          for (i = 0; batch_commands[i]; i++)
-            {
-              retval = gimp_batch_run_cmd (gimp, batch_interpreter, eval_proc,
-                                            GIMP_RUN_NONINTERACTIVE, batch_commands[i]);
-
-              /* In case of several commands, stop and return last
-               * failed command.
-               */
-              if (retval != EXIT_SUCCESS)
-                {
-                  g_printerr ("Stopping at failing batch command [%d]: %s\n",
-                              i, batch_commands[i]);
-                  break;
-                }
-            }
-        }
-      else
-        {
-          g_message (_("The batch interpreter '%s' is not available. "
-                       "Batch mode disabled."), batch_interpreter);
-        }
+      g_message (_("The batch interpreter '%s' is not available. "
+                   "Batch mode disabled."), batch_interpreter);
     }
 
   g_signal_handler_disconnect (gimp, exit_id);

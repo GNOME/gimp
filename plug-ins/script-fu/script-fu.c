@@ -339,7 +339,11 @@ script_fu_batch_run (GimpProcedure        *procedure,
        *  A non-interactive "console" (for batch mode)
        */
 
-      return_vals = script_fu_eval_run (procedure, run_mode, code, args);
+      if (g_strcmp0 (code, "-") == 0)
+        /* Redirecting to script-fu text console, for backward compatibility  */
+        return_vals = script_fu_text_console_run (procedure, args);
+      else
+        return_vals = script_fu_eval_run (procedure, run_mode, code, args);
     }
 
   if (! return_vals)
