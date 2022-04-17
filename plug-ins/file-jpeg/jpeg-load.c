@@ -46,11 +46,6 @@ static gboolean  jpeg_load_resolution       (GimpImage *image,
 
 static void      jpeg_load_sanitize_comment (gchar    *comment);
 
-static gpointer  jpeg_load_cmyk_transform   (guint8   *profile_data,
-                                             gsize     profile_len);
-static void      jpeg_load_cmyk_to_rgb      (guchar   *buf,
-                                             glong     pixels,
-                                             gpointer  transform);
 
 GimpImage * volatile  preview_image;
 GimpLayer *           preview_layer;
@@ -72,12 +67,14 @@ load_image (GFile        *file,
   guchar           **rowbuf;
   GimpImageBaseType  image_type;
   GimpImageType      layer_type;
-  GeglBuffer        *buffer = NULL;
+  GeglBuffer        *buffer       = NULL;
   const Babl        *format;
-  const gchar       *layer_name = NULL;
+  const Babl        *space;
+  const gchar       *encoding;
+  const gchar       *layer_name   = NULL;
+  GimpColorProfile  *cmyk_profile = NULL;
   gint               tile_height;
   gint               i;
-  cmsHTRANSFORM      cmyk_transform = NULL;
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -298,17 +295,20 @@ load_image (GFile        *file,
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
       jpeg_icc_read_profile (&cinfo, &icc_data, &icc_length);
 
-      if (cinfo.out_color_space == JCS_CMYK)
-        {
-          cmyk_transform = jpeg_load_cmyk_transform (icc_data, icc_length);
-        }
-      else if (icc_data) /* don't attach the profile if we are transforming */
+      if (icc_data)
         {
           GimpColorProfile *profile;
 
           profile = gimp_color_profile_new_from_icc_profile (icc_data,
                                                              icc_length,
                                                              NULL);
+          if (cinfo.out_color_space == JCS_CMYK)
+            {
+              /* don't attach the profile if we are transforming */
+              cmyk_profile = profile;
+              profile = NULL;
+            }
+
           if (profile)
             {
               gimp_image_set_color_profile (image, profile);
@@ -342,9 +342,25 @@ load_image (GFile        *file,
 
   buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  format = babl_format_with_space (image_type == GIMP_RGB ?
-                                   "R'G'B' u8" : "Y' u8",
-                                   gimp_drawable_get_format (GIMP_DRAWABLE (layer)));
+  if (cinfo.out_color_space == JCS_CMYK)
+    {
+      encoding = "cmyk u8";
+      if (cmyk_profile)
+        space = gimp_color_profile_get_space (cmyk_profile,
+                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                              error);
+      else
+        space = NULL;
+    }
+  else
+    {
+      if (image_type == GIMP_RGB)
+        encoding = "R'G'B' u8";
+      else
+        encoding = "Y' u8";
+      space = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
+    }
+  format = babl_format_with_space (encoding, space);
 
   while (cinfo.output_scanline < cinfo.output_height)
     {
@@ -370,10 +386,6 @@ load_image (GFile        *file,
 
       for (i = 0; i < scanlines; i++)
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
-
-      if (cinfo.out_color_space == JCS_CMYK)
-        jpeg_load_cmyk_to_rgb (buf, cinfo.output_width * scanlines,
-                               cmyk_transform);
 
     set_buffer:
       gegl_buffer_set (buffer,
@@ -403,9 +415,7 @@ load_image (GFile        *file,
 
  finish:
 
-  if (cmyk_transform)
-    cmsDeleteTransform (cmyk_transform);
-
+  g_clear_object (&cmyk_profile);
   /* Step 8: Release JPEG decompression object */
 
   /* This is an important step since it will release a good deal of memory. */
@@ -616,101 +626,4 @@ load_thumbnail_image (GFile         *file,
   fclose (infile);
 
   return image;
-}
-
-static gpointer
-jpeg_load_cmyk_transform (guint8 *profile_data,
-                          gsize   profile_len)
-{
-  GimpColorConfig  *config       = gimp_get_color_configuration ();
-  GimpColorProfile *cmyk_profile = NULL;
-  GimpColorProfile *rgb_profile  = NULL;
-  cmsHPROFILE       cmyk_lcms;
-  cmsHPROFILE       rgb_lcms;
-  cmsUInt32Number   flags        = 0;
-  cmsHTRANSFORM     transform;
-
-  /*  try to load the embedded CMYK profile  */
-  if (profile_data)
-    {
-      cmyk_profile = gimp_color_profile_new_from_icc_profile (profile_data,
-                                                              profile_len,
-                                                              NULL);
-
-      if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
-        {
-          g_object_unref (cmyk_profile);
-          cmyk_profile = NULL;
-        }
-    }
-
-  /*  if that fails, try to load the CMYK profile configured in the prefs  */
-  if (! cmyk_profile)
-    cmyk_profile = gimp_color_config_get_cmyk_color_profile (config, NULL);
-
-  /*  bail out if we can't load any CMYK profile  */
-  if (! cmyk_profile)
-    {
-      g_object_unref (config);
-      return NULL;
-    }
-
-  /*  always convert to sRGB  */
-  rgb_profile = gimp_color_profile_new_rgb_srgb ();
-
-  cmyk_lcms = gimp_color_profile_get_lcms_profile (cmyk_profile);
-  rgb_lcms  = gimp_color_profile_get_lcms_profile (rgb_profile);
-
-  if (gimp_color_config_get_display_intent (config) ==
-      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
-    {
-      flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
-    }
-
-  transform = cmsCreateTransform (cmyk_lcms, TYPE_CMYK_8_REV,
-                                  rgb_lcms,  TYPE_RGB_8,
-                                  gimp_color_config_get_display_intent (config),
-                                  flags);
-
-  g_object_unref (cmyk_profile);
-  g_object_unref (rgb_profile);
-
-  g_object_unref (config);
-
-  return transform;
-}
-
-
-static void
-jpeg_load_cmyk_to_rgb (guchar   *buf,
-                       glong     pixels,
-                       gpointer  transform)
-{
-  const guchar *src  = buf;
-  guchar       *dest = buf;
-
-  if (transform)
-    {
-      cmsDoTransform (transform, buf, buf, pixels);
-      return;
-    }
-
-  /* NOTE: The following code assumes inverted CMYK values, even when an
-     APP14 marker doesn't exist. This is the behavior of recent versions
-     of PhotoShop as well. */
-
-  while (pixels--)
-    {
-      guint c = src[0];
-      guint m = src[1];
-      guint y = src[2];
-      guint k = src[3];
-
-      dest[0] = (c * k) / 255;
-      dest[1] = (m * k) / 255;
-      dest[2] = (y * k) / 255;
-
-      src  += 4;
-      dest += 3;
-    }
 }

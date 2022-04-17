@@ -213,7 +213,9 @@ save_image (GFile                *file,
   FILE             * volatile outfile;
   guchar           *data;
   guchar           *src;
-  GimpColorProfile *profile = NULL;
+  GimpColorConfig  *color_config = gimp_get_color_configuration ();
+  GimpColorProfile *profile      = NULL;
+  GimpColorProfile *cmyk_profile = NULL;
 
   gboolean         has_alpha;
   gboolean         out_linear = FALSE;
@@ -224,6 +226,7 @@ save_image (GFile                *file,
   gdouble          smoothing;
   gboolean         optimize;
   gboolean         progressive;
+  gboolean         cmyk;
   gint             subsmp;
   gboolean         baseline;
   gint             restart;
@@ -241,6 +244,7 @@ save_image (GFile                *file,
                 "smoothing",                 &smoothing,
                 "optimize",                  &optimize,
                 "progressive",               &progressive,
+                "cmyk",                      &cmyk,
                 "sub-sampling",              &subsmp,
                 "baseline",                  &baseline,
                 "restart",                   &restart,
@@ -426,6 +430,43 @@ save_image (GFile                *file,
       return FALSE;
     }
 
+  if (cmyk)
+    {
+      if (save_profile)
+        {
+          GError *err = NULL;
+
+          cmyk_profile = gimp_color_config_get_simulation_color_profile (color_config, &err);
+          if (! cmyk_profile && err)
+            g_printerr ("%s: no soft-proof profile: %s\n", G_STRFUNC, err->message);
+
+          if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
+            g_clear_object (&cmyk_profile);
+
+          g_clear_error (&err);
+        }
+
+      /* As far as I know, without access to JPEG specifications, we
+       * should encode as proper "CMYK" encoding scheme. But every other
+       * program where I test this JPEG, the color are inverted, so I
+       * use the "cmyk" encoding where 0.0 is full ink coverage vs. 1.0
+       * being no ink.
+       * libjpeg-turbo says that Photoshop is wrongly inverting the data
+       * in JPEG files in a 1994 commit! We might imagine that since
+       * then it became the de-facto encoding?
+       * See: https://github.com/libjpeg-turbo/libjpeg-turbo/blob/dfc63d42ee3d1ae8eacb921e89e64ac57861dff6/libjpeg.txt#L1425-L1438
+       */
+      encoding = "cmyk u8";
+
+      if (cmyk_profile)
+        space = gimp_color_profile_get_space (cmyk_profile,
+                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                              error);
+      else
+        /* The NULL space will fallback to a naive CMYK conversion. */
+        space = NULL;
+    }
+
   format = babl_format_with_space (encoding, space);
 
   /* Step 3: set parameters for compression */
@@ -437,14 +478,26 @@ save_image (GFile                *file,
   cinfo.image_width  = gegl_buffer_get_width (buffer);
   cinfo.image_height = gegl_buffer_get_height (buffer);
   /* colorspace of input image */
-  cinfo.in_color_space = (drawable_type == GIMP_RGB_IMAGE ||
-                          drawable_type == GIMP_RGBA_IMAGE)
-    ? JCS_RGB : JCS_GRAYSCALE;
+  if (cmyk)
+    {
+      cinfo.input_components = 4;
+      cinfo.in_color_space   = JCS_CMYK;
+      cinfo.jpeg_color_space = JCS_CMYK;
+    }
+  else
+    {
+      cinfo.in_color_space = (drawable_type == GIMP_RGB_IMAGE ||
+                              drawable_type == GIMP_RGBA_IMAGE)
+        ? JCS_RGB : JCS_GRAYSCALE;
+    }
   /* Now use the library's routine to set default compression parameters.
    * (You must set at least cinfo.in_color_space before calling this,
    * since the defaults depend on the source color space.)
    */
   jpeg_set_defaults (&cinfo);
+
+  if (cmyk_profile)
+    jpeg_set_colorspace (&cinfo, JCS_CMYK);
 
   jpeg_set_quality (&cinfo, quality, baseline);
 
@@ -598,16 +651,23 @@ save_image (GFile                *file,
     }
 
   /* Step 4.2: store the color profile */
-  if (save_profile)
+  if (save_profile &&
+      /* XXX Only case when we don't save a profile even though the
+       * option was requested is if we store as CMYK without setting a
+       * profile. It would actually be better to generate a profile
+       * corresponding to the "naive" CMYK space we use in such case.
+       * But it doesn't look like babl can do this yet.
+       */
+      (! cmyk || cmyk_profile != NULL))
     {
       const guint8 *icc_data;
       gsize         icc_length;
 
-      icc_data = gimp_color_profile_get_icc_profile (profile, &icc_length);
+      icc_data = gimp_color_profile_get_icc_profile (cmyk_profile ? cmyk_profile : profile, &icc_length);
       jpeg_icc_write_profile (&cinfo, icc_data, icc_length);
-
-      g_object_unref (profile);
     }
+  g_clear_object (&profile);
+  g_clear_object (&cmyk_profile);
 
   /* Step 5: while (scan lines remain to be written) */
   /*           jpeg_write_scanlines(...); */
@@ -780,12 +840,15 @@ save_dialog (GimpProcedure       *procedure,
              GimpProcedureConfig *config,
              GimpDrawable        *drawable)
 {
-  GtkWidget    *dialog;
-  GtkWidget    *widget;
-  GtkListStore *store;
-  gint          orig_quality;
-  gint          restart;
-  gboolean      run;
+  GtkWidget        *dialog;
+  GtkWidget        *widget;
+  GtkWidget        *profile_label;
+  GtkListStore     *store;
+  GimpColorConfig  *color_config = gimp_get_color_configuration ();
+  GimpColorProfile *cmyk_profile = NULL;
+  gint              orig_quality;
+  gint              restart;
+  gboolean          run;
 
   g_object_get (config,
                 "original-quality", &orig_quality,
@@ -823,6 +886,37 @@ save_dialog (GimpProcedure       *procedure,
   gimp_help_set_help_data (preview_size,
                            _("Enable preview to obtain the file size."), NULL);
 
+
+  /* Profile label. */
+  profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                   "profile-label", _("No soft-proofing profile"));
+  gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
+  gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (profile_label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  gimp_help_set_help_data (profile_label,
+                           _("Name of the color profile used for CMYK export."), NULL);
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "cmyk-frame", "cmyk", FALSE,
+                                    "profile-label");
+  cmyk_profile = gimp_color_config_get_simulation_color_profile (color_config, NULL);
+  if (cmyk_profile)
+    {
+      if (gimp_color_profile_is_cmyk (cmyk_profile))
+        {
+          gchar *label_text;
+
+          label_text = g_strdup_printf (_("Profile: %s"),
+                                        gimp_color_profile_get_label (cmyk_profile));
+          gtk_label_set_text (GTK_LABEL (profile_label), label_text);
+          gimp_label_set_attributes (GTK_LABEL (profile_label),
+                                     PANGO_ATTR_STYLE, PANGO_STYLE_NORMAL,
+                                     -1);
+          g_free (label_text);
+        }
+      g_object_unref (cmyk_profile);
+    }
 
 #ifdef C_ARITH_CODING_SUPPORTED
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
@@ -895,6 +989,7 @@ save_dialog (GimpProcedure       *procedure,
                                   "advanced-options",
                                   "smoothing",
                                   "progressive",
+                                  "cmyk-frame",
 #ifdef C_ARITH_CODING_SUPPORTED
                                   "arithmetic-frame",
 #else

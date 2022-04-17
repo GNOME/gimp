@@ -221,6 +221,12 @@ jpeg_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+                             "Export as _CMYK",
+                             "Create a CMYK JPEG image using the soft-proofing color profile",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_INT (procedure, "sub-sampling",
                          _("Su_bsampling"),
                          "Sub-sampling type { 0 == 4:2:0 (chroma quartered), "
