@@ -140,8 +140,9 @@ Build:
   - Flatpak manifest upgraded with new version constraints so that the
     flatpak-external-data-checker does not warn wrongly on major update
     when we don't want to or can't update immediately.
-  - meson is now recommended for Windows builds and our official
-    installer is now built (still from CI) with meson.
+  - meson is now recommended for Windows and macOS builds and our
+    official installer and DMG respectively are now built (still from
+    CI) with meson.
   - Flatpak manifest improved with version constraints for dependencies
     where we should not update just yet (hence don't want new version
     notifications).
