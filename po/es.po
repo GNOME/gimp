@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-15 23:41+0000\n"
-"PO-Revision-Date: 2022-04-16 13:12+0200\n"
+"POT-Creation-Date: 2022-04-17 20:55+0000\n"
+"PO-Revision-Date: 2022-04-18 11:57+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -1533,11 +1533,11 @@ msgstr "Mostrar una página de preferencias con características experimentales"
 msgid "Show an image submenu with debug actions"
 msgstr "Mostrar un submenú de imagen con acciones de depurado"
 
-#: ../app/main.c:722
+#: ../app/main.c:723
 msgid "[FILE|URI...]"
 msgstr "[ARCHIVO|URI…]"
 
-#: ../app/main.c:750
+#: ../app/main.c:751
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1545,20 +1545,20 @@ msgstr ""
 "GIMP no ha podido inicializar la interfaz gráfica de usuario.\n"
 "Asegúrese de que exista una instalación apropiada para su pantalla."
 
-#: ../app/main.c:769
+#: ../app/main.c:770
 msgid "Another GIMP instance is already running."
 msgstr "Ya se está ejecutando otra instancia de GIMP."
 
-#: ../app/main.c:857
+#: ../app/main.c:858
 msgid "GIMP output. Type any character to close this window."
 msgstr "Salida de GIMP. Teclee un carácter cualquiera para cerrar esta ventana."
 
-#: ../app/main.c:858
+#: ../app/main.c:859
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Teclee un carácter cualquiera para cerrar esta ventana)\n"
 
-#: ../app/main.c:875
+#: ../app/main.c:876
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Salida de GIMP. Puede minimizar esta ventana, pero no la cierre."
 
@@ -12940,7 +12940,7 @@ msgstr "El número máximo de acciones guardadas en el histórico."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
-#: ../app/plug-in/plug-in-rc.c:251 ../app/tools/gimp-tools.c:504
+#: ../app/plug-in/plug-in-rc.c:254 ../app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "error fatal de análisis"
 
@@ -13993,13 +13993,41 @@ msgstr "Parásitos"
 msgid "Modules"
 msgstr "Módulos"
 
-#: ../app/core/gimp-batch.c:75
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
+#: ../app/core/gimp-batch.c:69
+msgid "No batch interpreters are available. Batch mode disabled."
 msgstr ""
-"No hay un intérprete por lotes especificado, usando el predeterminado «%s».\n"
+"No hay intérpretes de lotes disponibles. El modo por lotes se desactivará."
 
-#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#: ../app/core/gimp-batch.c:86
+#, c-format
+msgid "No batch interpreter specified, using '%s'.\n"
+msgstr "No hay un intérprete de lotes especificado, usando «%s».\n"
+
+#: ../app/core/gimp-batch.c:93
+msgid "No batch interpreter specified."
+msgstr "No hay un intérprete de lotes especificado."
+
+#: ../app/core/gimp-batch.c:94 ../app/core/gimp-batch.c:132
+msgid "Available interpreters are:"
+msgstr "Los intérpretes disponibles son:"
+
+#: ../app/core/gimp-batch.c:112 ../app/core/gimp-batch.c:150
+msgid "Specify one of these interpreters as --batch-interpreter option."
+msgstr ""
+"Especifique uno de estos intérpretes como opción de --batch-interpreter."
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:128
+#, c-format
+msgid "The procedure '%s' is not a valid batch interpreter."
+msgstr "El procedimiento «%s» no es un intérprete de lotes válido."
+
+#: ../app/core/gimp-batch.c:131
+msgid "Batch mode disabled."
+msgstr "Modo por lotes desactivado."
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:184
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -20371,7 +20399,7 @@ msgstr "Extensión de GIMP"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1029
+#: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "RGB"
 msgstr "RGB"
 
@@ -20396,7 +20424,7 @@ msgstr "RGB-alpha"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1047
+#: ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Grayscale"
 msgstr "Escala de grises"
 
@@ -20458,7 +20486,7 @@ msgstr "Componente alfa"
 msgid "Indexed-alpha"
 msgstr "Indexado-alfa"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1065
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1067
 msgid "Indexed"
 msgstr "Indexado"
 
@@ -22295,8 +22323,8 @@ msgstr "Transformación 2D"
 msgid "2D Transforming"
 msgstr "Aplicando transformación 2D"
 
-#: ../app/pdb/pdb-cmds.c:1117 ../app/pdb/pdb-cmds.c:1161
-#: ../app/pdb/pdb-cmds.c:1203
+#: ../app/pdb/pdb-cmds.c:1152 ../app/pdb/pdb-cmds.c:1196
+#: ../app/pdb/pdb-cmds.c:1238
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "La etiqueta de datos «%s» no es un identificador canónico"
@@ -22773,11 +22801,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Cancelado"
 
-#: ../app/plug-in/gimppluginmanager.c:238
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "Intérpretes de complementos"
 
-#: ../app/plug-in/gimppluginmanager.c:244
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "Entorno de complementos"
 
@@ -22830,35 +22858,35 @@ msgstr "Inicializando los complementos"
 msgid "Starting Extensions"
 msgstr "Inicializando los añadidos"
 
-#: ../app/plug-in/gimppluginprocedure.c:1033
+#: ../app/plug-in/gimppluginprocedure.c:1035
 msgid "RGB without alpha"
 msgstr "RGB sin alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1037
+#: ../app/plug-in/gimppluginprocedure.c:1039
 msgid "RGB with alpha"
 msgstr "RGB con alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1051
+#: ../app/plug-in/gimppluginprocedure.c:1053
 msgid "Grayscale without alpha"
 msgstr "Escala de grises sin alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1055
+#: ../app/plug-in/gimppluginprocedure.c:1057
 msgid "Grayscale with alpha"
 msgstr "Escala de grises con alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1069
+#: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "Indexed without alpha"
 msgstr "Indexado sin alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1073
+#: ../app/plug-in/gimppluginprocedure.c:1075
 msgid "Indexed with alpha"
 msgstr "Indexado con alfa"
 
-#: ../app/plug-in/gimppluginprocedure.c:1084
+#: ../app/plug-in/gimppluginprocedure.c:1086
 msgid "This plug-in only works on the following layer types:"
 msgstr "Este complemento solo funciona en los siguientes tipos de capas:"
 
-#: ../app/plug-in/gimppluginprocedure.c:1303
+#: ../app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22867,7 +22895,7 @@ msgstr ""
 "Error de llamada para «%s»:\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1315
+#: ../app/plug-in/gimppluginprocedure.c:1331
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22876,22 +22904,22 @@ msgstr ""
 "Error de ejecución para «%s»:\n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:237
+#: ../app/plug-in/plug-in-rc.c:240
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Ignorando «%s»: versión de protocolo de GIMP incorrecta."
 
-#: ../app/plug-in/plug-in-rc.c:244
+#: ../app/plug-in/plug-in-rc.c:247
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Omitiendo «%s»: versión del formato del archivo pluginrc incorrecta."
 
-#: ../app/plug-in/plug-in-rc.c:550
+#: ../app/plug-in/plug-in-rc.c:553
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "valor no válido «%s» para el tipo de icono"
 
-#: ../app/plug-in/plug-in-rc.c:565
+#: ../app/plug-in/plug-in-rc.c:568
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "valor no válido «%ld» para el tipo de icono"
