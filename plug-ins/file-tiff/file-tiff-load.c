@@ -483,6 +483,7 @@ load_image (GFile        *file,
       GimpPrecision     image_precision;
       const Babl       *type;
       const Babl       *base_format = NULL;
+      const Babl       *space       = NULL;
       guint16           orientation;
       gint              cols;
       gint              rows;
@@ -949,6 +950,47 @@ load_image (GFile        *file,
             fill_4bit2byte (tiff_mode);
           break;
 
+        case PHOTOMETRIC_SEPARATED:
+          layer_type = alpha ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+          /* It's possible that a CMYK image might not have an
+           * attached profile, so we'll check for it and set up
+           * space accordingly
+           */
+          if (profile && gimp_color_profile_is_cmyk (profile))
+            {
+              space = gimp_color_profile_get_space (profile,
+                                                    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                    error);
+              g_clear_object (&profile);
+            }
+          else
+            {
+              space = NULL;
+            }
+
+          if (alpha)
+            base_format = babl_format_new (babl_model ("CMYKA"),
+                                           type,
+                                           babl_component ("Cyan"),
+                                           babl_component ("Magenta"),
+                                           babl_component ("Yellow"),
+                                           babl_component ("Key"),
+                                           babl_component ("A"),
+                                           NULL);
+          else
+            base_format = babl_format_new (babl_model ("CMYK"),
+                                           type,
+                                           babl_component ("Cyan"),
+                                           babl_component ("Magenta"),
+                                           babl_component ("Yellow"),
+                                           babl_component ("Key"),
+                                           NULL);
+
+          base_format =
+            babl_format_with_space (babl_format_get_encoding (base_format),
+                                    space);
+          break;
+
         default:
           g_printerr ("photomet: %d (%d)\n", photomet, PHOTOMETRIC_PALETTE);
           worst_case = TRUE;
@@ -1086,7 +1128,7 @@ load_image (GFile        *file,
             }
         }
 
-      /* attach color profile */
+      /* attach non-CMYK color profile */
       if (profile)
         {
           if (pages.target == GIMP_PAGE_SELECTOR_TARGET_IMAGES || profile == first_profile)
@@ -1374,7 +1416,7 @@ load_image (GFile        *file,
            */
           base_format = gimp_drawable_get_format (GIMP_DRAWABLE (layer));
         }
-      else
+      else if (! space)
         {
           base_format =
             babl_format_with_space (babl_format_get_encoding (base_format),
