@@ -357,8 +357,8 @@ gimp_color_transform_new_proofing (GimpColorProfile         *src_profile,
   priv->transform = cmsCreateProofingTransform (src_lcms,  lcms_src_format,
                                                 dest_lcms, lcms_dest_format,
                                                 proof_lcms,
-                                                proof_intent,
                                                 display_intent,
+                                                proof_intent,
                                                 flags                 |
                                                 cmsFLAGS_SOFTPROOFING |
                                                 cmsFLAGS_COPY_ALPHA);
