@@ -22,16 +22,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-03-13 16:41+0000\n"
-"PO-Revision-Date: 2022-03-14 19:15+0800\n"
+"POT-Creation-Date: 2022-04-18 10:00+0000\n"
+"PO-Revision-Date: 2022-04-20 09:50-0400\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 41.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 2.4.3\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -103,16 +103,20 @@ msgid "Added support for the BigTIFF file format"
 msgstr "添加了对 BigTIFF 文件格式的支持"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
+msgid "New option \"Number of repeats\" in GIF export"
+msgstr "GIF 导出新增“重复次数”选项"
+
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
 "Tool pointer settings reorganized and moved from \"Image Windows\" to "
 "\"Input Devices\" tabs in Preferences"
 msgstr "首选项中的工具指针设置被重新组织并从“图像窗口”标签移到了“输入设备”标签"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Improved handling of unchecked \"Show pointer for paint tools\" option"
 msgstr "提升了对未勾选的“为绘画工具显示鼠标指针”选项的处理"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid ""
 "GIMP 2.99.10 is a notable development release in the 2.99 series, featuring "
 "many changes. Let's mention in particular:"
@@ -120,17 +124,17 @@ msgstr ""
 "GIMP 2.99.10 是 2.99 系列中值得注意的开发版发布，具有很多更新。特别要提到的"
 "是："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "\"Linked layers\" concept superseded by new \"Layer set\" concept"
 msgstr "“链接图层”概念被新的“图层集合”概念取代"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
 "Lock icons in item dockables (Layers, Channels, Paths) moved next to the "
 "visibility (eye) icon"
 msgstr "项目停靠窗口（图层、通道、路径）中的锁定图标移至可见性（眼睛）图标旁边"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
 msgid ""
 "Alt-click on visibility and lock icons in item dockables massively toggles "
 "visibility and locks among selected items"
@@ -138,11 +142,11 @@ msgstr ""
 "在停靠窗口中的可见性和锁定图标上 Alt-单击 可以大规模切换选中项目的可见性和锁"
 "定状态"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:18
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Item dockables now display icon headers for visibility and locks column"
 msgstr "项目停靠窗口现在为可见性栏和锁定栏显示图标标题"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "Our System theme shows visible hints around unset visibility and locks icons "
 "when hovering them in item dockables"
@@ -150,49 +154,49 @@ msgstr ""
 "当鼠标在项目停靠窗口中悬停在未设置的可见性和锁定按钮上面时我们的系统主题可以"
 "在它们周围显示可见提示"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
 "New checkbox to enable or disable dynamics in paint tools' options "
 "(replacing \"Dynamics Off\" dynamics)"
 msgstr "在绘画工具的选项中新增了启用或禁用动态的选择框（取代“动态关闭”动态）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
 msgid "Improved support for Wayland and macOS Big Sur (and newer)"
 msgstr "优化了对 Wayland 和 macOS Big Sur（及更新）的支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:22
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "\"Fill by line art detection\" in Bucket Fill tool has a new option"
 msgstr "在油漆桶填充工具中的“通过线条艺术检测填充”添加了新的选项"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "Channels and paths multi-selectable with part of relevant actions working"
 msgstr "可以用相关动作部分对通道和路径多项选择"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
 "Various file format support improvements, in particular to PSD, JPEG-XL and "
 "HEIF"
 msgstr "多种文件格式的支持优化，特别是 PSD、JPEG-XL 和 HEIF"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "New support of Microsoft Windows Cursor file format (.cur files)"
 msgstr "新增对微软 Windows 光标文件格式的支持（.cur 文件）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Removed KDE and GNOME screenshot portals in favor of Freedesktop one"
 msgstr "用 Freedesktop 的截图门户取代 KDE 和 GNOME 的"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
 msgid ""
 "Windows screenshot implementation now has an \"Include mouse pointer\" option"
 msgstr "Windows 截图实现现在具有“包括鼠标指针”选项"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:28
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New and modified libgimp API for plug-in developers"
 msgstr "为插件开发者新增和修改了 libgimp 开发接口"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
 "While during this fourth cycle of development, many efforts were devoted to "
 "infrastructure, GIMP 2.99.8 still received many welcome improvements, "
@@ -201,29 +205,29 @@ msgstr ""
 "在这第四个开发周期期间，我们对基础架构付出了很多努力，GIMP 2.99.8 仍然得到了"
 "很多受欢迎的提升，值得注意的有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
 msgid ""
 "New modes in Clone, Heal and Perspective Clone tools when multiple layers "
 "are selected"
 msgstr "当选中多个图层时在克隆、修复和透视克隆工具中会有新的模式"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:31
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
 msgid "Windows Ink support for input devices on Windows"
 msgstr "在 Windows 上为输入设备提供了 Windows Ink 支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:32
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Clicking on toolbox or Wilber's drop area actively focuses the canvas"
 msgstr "在工具箱或 Wilber 的拖放区域点击可以聚焦画布"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Marching ants display ported to Wayland and macOS Big Sur logics"
 msgstr "蚂蚁线显示已移植到 Wayland 和 macOS Big Sur"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
 msgid "Initial implementation of config folder migration for GIMP 3"
 msgstr "初步实现为 GIMP 3 迁移配置文件夹"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:35
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
 msgid ""
 "Action \"view-rotate-reset\" renamed to \"view-reset\" and new \"view-rotate-"
 "reset\" and \"view-flip-rotate\" actions"
@@ -231,34 +235,34 @@ msgstr ""
 "动作“视图-旋转-重置”重命名为“视图-重置”和新的“视图-旋转-重置”和“视图-翻转-旋"
 "转”动作"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:36
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
 msgid "PSD: bigger-than-4GiB file support and up to 99 channels"
 msgstr "PSD：支持大于 4 GiB 的文件和至多 99 个通道"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:37
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
 msgid "PSB: new support (loading only)"
 msgstr "PSB：新增支持（仅加载）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:38
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
 msgid "SGI: 16-bit images support"
 msgstr "SGI：支持 16 位图像"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:39
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
 msgid "JPEG XL: new support (loading and exporting)"
 msgstr "JPEG XL：新增支持（加载和导出）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:40
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
 msgid ""
 "New API functions gimp_display_present() and "
 "gimp_procedure_dialog_fill_expander()"
 msgstr ""
 "新的 API 功能 gimp_display_present() 和 gimp_procedure_dialog_fill_expander()"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:41
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
 msgid "Much porting to newer API, code cleanup and bug fixing done"
 msgstr "完成了许多向新 API 移植、代码清理和缺陷修复的工作"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:42
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
 msgid ""
 "For this third development release, more development effort has been shifted "
 "towards the API. Many functions were renamed for consistent naming scheme, "
@@ -272,43 +276,43 @@ msgstr ""
 "试绑定作出修复等等。在进一步的稳定性无法保证的开发版发布上预计会有更多应用接"
 "口更新。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:43
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
 msgid "Regarding end-creator changes, some notable improvements are:"
 msgstr "至于终端创作者的改变，一些值得注意的提升为："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Canvas Size dialog now displays a template selector"
 msgstr "画布大小对话框现在显示模版选择器"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Off-canvas guides are now allowed"
 msgstr "现在允许画布以外的参考线"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "The experimental Paint Select tool got various improvements"
 msgstr "试验性的绘制选择工具得到了多处提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
 msgid "More fixes for Wayland support"
 msgstr "Wayland 支持的更多修复"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:48
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
 msgid ""
 "Dialog dropped for the Freedesktop portal implementation of the screenshot "
 "plug-in"
 msgstr "移除了截屏插件的 Freedesktop portal 实现的对话框"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:49
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "PNG import creates an ICC profile out of the gAMA and/or cHRM chunks"
 msgstr "PNG 导入创建超出 gAMA 和/或 cHRM 区块的 ICC 配置文件"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
 msgid ""
 "TIFF export stores the ICC profile and comment on each layer to prevent "
 "ambiguous files"
 msgstr "TIFF 导出存储每个图层的 ICC 配置文件和注释以防止不明确的文件"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:51
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
 msgid ""
 "This second development release contains various usability and API updates. "
 "A new experimental tool makes an entrance in the playground."
@@ -316,45 +320,45 @@ msgstr ""
 "该第二次开发版本发布包含了多处可用性和应用接口更新。一个新的试验性工具在游乐"
 "场登场。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:52
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
 msgid "Many usability improvements on the slider widget"
 msgstr "在滑块组件上的很多可用性提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
 msgid "Usability cleaning in the Layers dockable"
 msgstr "在图层停靠窗口中的可用性清理"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
 "The action search now shows all actions even inactive ones (yet pushed below)"
 msgstr "动作搜索现在显示所有动作即使是未激活状态（但被推移至下方）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
 msgid ""
 "Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr "用于朝鲜语和日语的字体会显示合适的字符"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:56
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Different default tools depending on pointer device type"
 msgstr "基于指针设备类型会有不同的默认工具"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
 msgid "Default dynamics is now \"Pressure Size\""
 msgstr "默认的动态现在是“压感尺寸”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:58
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
 msgid "Various usability improvements in the Input Device editor"
 msgstr "在输入设备编辑器中的多处可用性提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:59
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "New \"Paint Select\" experimental tool in the playground"
 msgstr "在游乐场中新的“绘制选择”试验性工具"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Plug-in API now provides many dialog generation utilities"
 msgstr "插件应用接口现在提供了很多对话框生成程序"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
 msgid ""
 "This is the first development release for GIMP 3.0, whose focus was the port "
 "to the GTK+3 toolkit. Noteworthy improvements (though some are still work-in-"
@@ -363,39 +367,39 @@ msgstr ""
 "这是致力于迁移到 GTK+3 工具集的 GIMP 3.0 的第一次开发版发布。值得注意的提升"
 "（虽然一些仍在开发中）包括："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:62
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
 msgid "Multi-selection of layers in the Layers dockable"
 msgstr "在图层停靠窗口中多选图层"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Proper high pixel density display support"
 msgstr "更好的高分屏支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Improved input device support"
 msgstr "改进的输入设备支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "Major plug-in API rewrite"
 msgstr "重写主要的插件接口"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
 msgstr "插件接口现可用于 C/C++、Python 3、Javascript、Lua 和 Vala"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "New manageable extension format"
 msgstr "新的可管理扩展格式"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
 msgid "CSS-based themes and actual symbolic icon theme support"
 msgstr "支持基于 CSS 的主题和真实符号图标主题"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:69
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
 msgid "Wayland support"
 msgstr "Wayland 支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:70
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
 msgid ""
 "GIMP 2.10.30 fixes many bugs, updates backend implementations to follow OS "
 "evolutions, improves metadata support as well as support of several formats, "
@@ -404,136 +408,136 @@ msgstr ""
 "GIMP 2.10.30 修复了很多缺陷，更新了后端实现来跟随操作系统演进，提升了元数据支"
 "持和对一些格式如 PSD 和 AVIF 的支持。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:71
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
 msgid ""
 "GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some theme data was "
 "not properly installed."
 msgstr "GIMP 2.10.28 修复了 GIMP 2.10.26 一些主题数据没有正确安装的构建问题。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:72
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
 msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
 "GIMP 2.10.26 是一次缺陷修复发布，包含了一些在核心、脚本和插件代码中的修复。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:73
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr "GIMP 2.10.24 同样主要为缺陷修复发布。明显的改变有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "GeoTIFF metadata support added"
 msgstr "添加了对 GeoTIFF 元数据的支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
 msgid ""
 "PDF import now proposes an option to load layers in reverse orders and "
 "allows fractional pixel density"
 msgstr "PDF 导入现在提示以相反顺序加载图层的选项和允许小数比例的像素密度"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:76
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
 msgid ""
 "Raw image import updated to handle API changes in darktable 3.6 and over"
 msgstr "更新了 Raw 图像导入以处理 darktable 3.6 及更新版本中的应用接口改变"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:77
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
 msgid ""
 "File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD"
 msgstr "优化文件格式支持：HEIF、PSP、TIFF、JPEG、PNG、PDF、DDS、BMP、PSD"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:78
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
 msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr "对元数据查看器和编辑器的很多修复和提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:79
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
 msgid "New Kabyle translation"
 msgstr "新的卡拜尔语翻译"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
 msgstr "允许画布外的点吸附（对网格、参考线、路径）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "GIMP 2.10.22 is mainly a bug fix release. Notable changes:"
 msgstr "GIMP 2.10.22 主要为缺陷修复发布。明显的改变有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid ""
 "HEIF support improvements: optional exporting with high bit depth, AVIF "
 "importing and exporting"
 msgstr "HEIF 支持提升：可选的高位深导出，AVIF 导入和导出"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
 msgid "Multiple improvements in Corel PaintShop Pro support"
 msgstr "Core PaintShop Pro 支持的多项提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:84
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr "“位样合并”现可用于 GEGL 操作的工具选项"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
 msgid "\"Sample merged\" is now enabled by default for color picking"
 msgstr "颜色拾取现在默认启用“位样合并”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
 msgid ""
 "The option enabling OpenCL support has been moved to the Playground tab in "
 "Preferences"
 msgstr "首选项中启用 OpenCL 支持的选项已被移到游乐场标签页"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:87
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
 msgid ""
 "Matting Levin is now the default engine of Foreground Select tool as it "
 "performs a lot better"
 msgstr "莱文抠图由于效果更好现已作为前景选择工具的默认引擎"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:88
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
 msgid "New progressive performance logs and dashboard updates"
 msgstr "新的渐进式性能日志和仪表盘更新"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:89
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
 msgid "Verbose debug now shows Flatpak info when relevant"
 msgstr "详尽调试现在当相关时会显示 Flatpak 信息"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:90
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
 msgid "Various bug fixes"
 msgstr "多种缺陷修复"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:91
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
 msgid ""
 "GIMP 2.10.20 comes with new features as well as important bugfixes. Notable "
 "changes:"
 msgstr "GIMP 2.10.4 带来了新功能和重要的缺陷修复。明显的改变有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:92
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
 msgid "Tool groups now expand on hover rather than click by default"
 msgstr "工具分组默认在鼠标划过时自动展开而不是需要点击"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:93
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
 msgid ""
 "Non-destructive cropping now available by cropping the canvas rather than "
 "actual pixels"
 msgstr "通过剪裁画布而不是真正的像素实现的非破坏性剪裁现已可用"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:94
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
 msgid ""
 "Better PSD support: exporting of 16-bit files now available, reading/writing "
 "channels in the right order"
 msgstr "更好的 PSD 支持：现在可以导出 16 位文件，以正确的顺序读取/写入通道"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:95
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
 msgid "On-canvas controls for the Vignette filter"
 msgstr "晕影滤镜的画布上控制"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:96
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
 msgstr "新滤镜：辉光、对焦模糊、镜头模糊、变量模糊"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:97
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
 msgid "Over 30 bugfixes"
 msgstr "超过 30 个缺陷修复"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:98
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
 msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
@@ -541,7 +545,7 @@ msgstr ""
 "GIMP 2.10.18 修复了一些严重缺陷，引入了对 CMYK PSD 文件的初步支持，添加了符号"
 "图标主题的更高对比度版本。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:99
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
 "GIMP 2.10.16 delivers several major usability improvements, a new tool for "
 "transformations in 3D space, new release checker, and the usual amount of "
@@ -550,39 +554,39 @@ msgstr ""
 "GIMP 2.10.16 交付了几项主要的可用性提升，一个在 3D 空间中变换的新工具，新版本"
 "检测器，像往常一样的缺陷修复。值得注意的提升有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "Tools are now grouped in the toolbox by default"
 msgstr "工具默认以分组形式显示在工具箱中"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
 msgid "Sliders now use a compact style with improved user interaction"
 msgstr "滑动条现在使用优化了用户交互的紧凑样式"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:102
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
 msgid "Vastly improved user experience for the transformation preview"
 msgstr "对变换预览用户体验的大量提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:103
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
 msgid "Dockable areas now highlighted when a dockable dialog is being dragged"
 msgstr "可停靠区域现在当可停靠对话框被拖拽时将高亮显示"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:104
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
 msgid "New 3D Transform tool to rotate and pan items"
 msgstr "新的用来旋转和平移对象的 3D 变换工具"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:105
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
 msgid "Much smoother brush outline motion on the canvas"
 msgstr "笔刷轮廓在画布上移动更加顺滑"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:106
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
 msgid "Consolidated user interface for merging down and anchoring layers"
 msgstr "对向下合并和固定图层的用户界面合并加强"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:107
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
 msgid "Update check to notify users that a new release/installer is available"
 msgstr "更新检查以提醒用户有新发布/安装包可用"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:108
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
 msgid ""
 "GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid. "
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
@@ -591,49 +595,49 @@ msgstr ""
 "GIMP 2.10.14 是又一次以缺陷修复为主的发布，使 GIMP 更加稳固。此外有很多旧滤镜"
 "最终被移植到 GEGL。当然它也有一些值得注意的提升："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:109
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid ""
 "View menu: new \"Show All\" option to reveal pixels outside the canvas "
 "boundary"
 msgstr "视图菜单：新的“显示全部”选项以显示画布边界之外的像素"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
 msgid "Filters: new \"Clipping\" option to allow layer resize when relevant"
 msgstr "滤镜：新的“裁剪”选项以允许图层与其相关时调整大小"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:111
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr "前景选择工具：新的“灰阶”预览模式"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:112
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
 msgstr "前景选择工具：用于“彩色”预览的颜色/不透明度选择器"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:113
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
 msgid "Free Select tool: improved copy-paste interaction"
 msgstr "自由选择工具：提升复制-粘贴交互"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:114
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
 msgid "Transform tools: new Image transform type to transform the whole image"
 msgstr "变换工具：新的变换整个图像的图像变换类型"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:115
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
 msgid "Preferences: new \"Allow editing on non-visible layers\" setting"
 msgstr "首选项：新的“允许在不可见图层上编辑”设置"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:116
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
 msgid "HEIF import/export: color profile support"
 msgstr "HEIF 导入/导出：色彩配置文件支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:117
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
 msgid "PDF export: text layers in layer groups now exported as texts"
 msgstr "PDF 导出：图层组中的文字图层现在可作为文字导出"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:118
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
 msgid "TIFF import: now asks how to process unspecified TIFF channels"
 msgstr "TIFF 导入：现在会询问如何处理未指定的 TIFF 通道"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:119
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
 msgid ""
 "GIMP 2.10.12 is a significant bug fix release, which is to be expected after "
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
@@ -642,118 +646,118 @@ msgstr ""
 "GIMP 2.10.12 是在带有诸多变更的 2.10.10 版本之后又一次重要的缺陷修复版本！它"
 "依旧带来了非常酷的改进，尤其是曲线编辑："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:120
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
 msgid "Improved curves interaction overall"
 msgstr "曲线交互的全面改进"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:121
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
 msgid "A few enhancements specific to the Curves tool"
 msgstr "一些针对曲线工具的增强"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:122
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
 msgid "Layer support in TIFF"
 msgstr "在 TIFF 中支持图层"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:123
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
 msgid "Discovery of user-installed fonts in Windows"
 msgstr "在 Windows 中发现用户安装的字体"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:124
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
 msgid "Incremental mode in the Dodge/Burn tool"
 msgstr "变亮/变暗工具中的渐增模式"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:125
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
 msgid "Free Select tool creates preliminary selection"
 msgstr "自由选择工具创建初步选区"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:126
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
 msgid ""
 "GIMP 2.10.10 is quite a big update with many new features and bug fixes. "
 "Notable improvements include:"
 msgstr ""
 "GIMP 2.10.10 是一次带有很多新特性和缺陷修复的较大的更新。值得关注的改进包括："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:127
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
 msgid ""
 "Bucket Fill tool: new \"Fill by line art detection\" for not perfectly "
 "closed line art zones"
 msgstr ""
 "油漆桶填充工具：为没有完美闭合的线条艺术区域新提供的“通过线条艺术检测填充”"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:128
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
 msgid "Bucket Fill tool can now quickly color-pick with Ctrl+click"
 msgstr "油漆桶填充工具现在可以用“Ctrl+单击”快速吸取颜色"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:129
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
 msgid ""
 "Bucket Fill tool allows holding the mouse when filling \"similar colors\" "
 "and \"by line art detection\""
 msgstr ""
 "油漆桶填充工具允许在使用“相似颜色”和“通过线条艺术检测”填充时持续按住鼠标"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:130
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
 msgid "Scale tool scales around center even when using numeric input"
 msgstr "缩放工具围绕中心缩放即使当使用数字输入时同样"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:131
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
 msgid ""
 "Unified Transform tool now defaults to preserving aspect ratio when scaling "
 "up or down"
 msgstr "统一变换工具现在在缩放时默认保持宽高比"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:132
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
 msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
 msgstr "添加“限制控制柄”和“围绕中心”选项至透视变换工具的界面"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:133
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr "新的常规画布修改器“Alt+中键单击”以拾取图层"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
 msgid "Parametric brushes now 32-bit float to avoid posterization"
 msgstr "变量笔刷限制为 32 位浮点以避免色调分色"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
 msgid "Clipboard brushes and pattern can now be duplicated"
 msgstr "剪贴板笔刷和图案现在可以被再制"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:136
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
 msgid ""
 "Failure to edit locked layers will blink to shift attention to the cause of "
 "the error"
 msgstr "编辑锁定图层失败时将闪烁以转移注意至错误起因"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:137
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
 msgid ""
 "New on-canvas GUI (simple lines) for circular, linear, and zoom motion blur"
 msgstr "为圆周、线性和缩放运动模糊提供的新画布上图形界面（简单线条）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:138
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
 msgid "Several optimizations including faster layer group rendering"
 msgstr "一些包括更快图层组渲染的优化"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:139
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
 msgid ""
 "Swap and cache files are not saved in the configuration directory anymore"
 msgstr "交换和缓存文件不再保存在配置目录"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:140
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
 msgid ""
 "Various file saving/exporting made more robust to error by not saving "
 "partial files"
 msgstr "各种不同的文件保存/导出已被开发的更为完善以致未保存部分文件时提示错误"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:141
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
 msgid "HiDPI support improvements"
 msgstr "高分辨率显示支持的改进"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:142
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
 msgid "New preference to choose the default export file type"
 msgstr "用来选择默认导出文件类型的新配置"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:143
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
 msgid ""
 "New option to export PNG, JPEG and TIFF with a color profile; always export "
 "PSD with a color profile"
@@ -761,123 +765,123 @@ msgstr ""
 "新的导出带有色彩配置文件的 PNG、JPEG 和 TIFF 的选项；导出 PSD 时总是带有色彩"
 "配置文件"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:144
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
 msgid "New DDS format loading/exporting plug-in"
 msgstr "新的 DDS 格式加载/导出插件"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:145
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
 msgid ""
 "Full rewrite of the Spyrogimp plug-in with more options and better "
 "interaction"
 msgstr "拥有更多选项和更好交互经过完全重写的斯派罗丝带插件"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:146
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
 msgid ""
 "GIMP 2.10.8 is mostly a bug fix and optimization release. In particular, it "
 "includes:"
 msgstr "GIMP 2.10.8 是一次以缺陷修复和优化为主的发布。重点包含："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:147
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
 msgid ""
 "Adaptative chunk size when rendering projections, improving responsiveness "
 "dynamically"
 msgstr "渲染投影时自适应分块大小，提升动态响应"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:148
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
 msgid "Detection of RawTherapee (version 5.5 and above) improved on Windows"
 msgstr "在 Windows 上优化对 RawTherapee（5.5 及以上版本）的检测"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:149
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
 msgid ""
 "XCF compatibility information in the Save dialog more understandable and "
 "discoverable"
 msgstr "保存对话框中 XCF 兼容信息更容易理解和发现"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:150
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
 msgid ""
 "Various performance log tools added and log recording made available in the "
 "Dashboard dock"
 msgstr "添加了几种性能日志工具和在仪表盘停靠栏中可记录日志"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:151
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
 msgid ""
 "GIMP 2.10.6 comes with a lot of bug fixes, optimizations and features. Most "
 "notable changes are:"
 msgstr "GIMP 2.10.6 带来许多缺陷修复、优化和特性。最明显的改变有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:152
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
 msgid ""
 "Text layers can now represent vertical texts (with various character "
 "orientations and line directions)"
 msgstr "文字图层现在可以呈现竖排文本（包括几种字符方向和基线方向）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:153
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
 msgid "New \"Little Planet\" (gegl:stereographic-projection) filter"
 msgstr "新的“小行星”（gegl:stereographic-projection）滤镜"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:154
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
 msgid "New \"Long Shadow\" filter"
 msgstr "新的“长阴影”滤镜"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:155
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
 msgid ""
 "The \"Straighten\" option of the Measure Tool now allows vertical "
 "straightening"
 msgstr "测量工具的“校正”选项现在允许竖直校正"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:156
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
 msgid ""
 "Drawable previews are now rendered asynchronously and layer group previews "
 "can be disabled in Preferences"
 msgstr "可绘区预览现在是异步渲染且图层组预览可在首选项中被禁用"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:157
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
 msgid ""
 "New \"async\" field in the Dashboard \"misc\" group, showing the number of "
 "async operations currently running"
 msgstr "新的在仪表盘“杂项”组中的“异步”区域，显示当前运行的异步操作数量"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:158
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
 msgstr "在“打开/保存/导出”对话框中的文件格式过滤已变得不再令人困惑"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
 msgid "New language (having GIMP translated in 81 languages now): Marathi"
 msgstr "新的语言（GIMP 已被翻译为 81 种语言）：马拉地语"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:160
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
 msgid ""
 "GIMP 2.10.4 includes a lot of bug fixes as well as various optimizations. "
 "Most notable changes are:"
 msgstr "GIMP 2.10.4 包含许多缺陷修复和多处优化。最明显的改变有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:161
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
 msgid ""
 "Straightening in Measurement tool: layers can be rotated using the "
 "measurement line as horizon"
 msgstr "测量工具中的校正：图层可以使用测量线作为水平线来旋转"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:162
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
 msgid "Fast startup: fonts loading is not blocking startup anymore"
 msgstr "快速启动：字体加载再也不会阻碍启动了"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:163
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
 msgid ""
 "Fonts Tagging with the same user interface as for brushes, patterns, and "
 "gradients"
 msgstr "字体标签使用和笔刷、图案及渐变相同的用户界面"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:164
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
 msgid "PSD support: a pre-composited version of a PSD image can be imported"
 msgstr "PSD 支持：现在可以导入预合成版本的 PSD 图像了"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:165
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
 msgid ""
 "Dashboard update: new \"Memory\" group and improved \"Swap\" group showing "
 "various metrics"
 msgstr "仪表盘更新：新的“内存”组和改进的“交换”组显示多种单位"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:166
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
 msgid ""
 "This second release in the GIMP 2.10 series, so soon after 2.10.0, is mostly "
 "the usual bug-fixing version after a major release, with a few dozen bugs "
@@ -885,7 +889,7 @@ msgid ""
 msgstr ""
 "这是 GIMP 2.10 系列的第二个版本，是大版本发布后带有一些缺陷修复的普通小版本。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:167
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
 msgid ""
 "It also features a new plug-in for the support of the HEIF format, both for "
 "importing and exporting, as well as 2 new filters: \"Spherize\" and "
@@ -896,7 +900,7 @@ msgstr ""
 "镜：“球面化”和“递归变换”。这些是说明我们对稳定小版本实施宽松更新策略的很好例"
 "子。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:168
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
 msgid ""
 "First release of the 2.10 series which prominently features the port to a "
 "new image processing engine, GEGL. The most outstanding changes are:"
@@ -904,62 +908,62 @@ msgstr ""
 "2.10 系列的第一个发布版本的重要特性为移植到新的图像处理引擎 GEGL 。最显著的改"
 "变有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:169
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
 msgid "High bit depth color processing (16/32-bit per color channel)"
 msgstr "高位深色彩处理（16/32 位每色彩通道）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:170
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
 msgid ""
 "Color management is a core feature now, most widgets and preview areas are "
 "color-managed"
 msgstr "色彩管理现在是一项核心特性，大部分组件和预览区域已获得色彩管理"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:171
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
 msgid ""
 "On-canvas effect preview, with split view for before/after processing pixels"
 msgstr "画布上的效果预览，包含对像素处理前/后的分割视图"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:172
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
 msgid ""
 "Multi-threaded and hardware-accelerated rendering, processing and painting"
 msgstr "多线程和硬件加速渲染、处理及绘画"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:173
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
 msgid "Most tools improved, several new transformation tools"
 msgstr "大部分工具得到改进，并添加了一些新的变换工具"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:174
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
 msgid ""
 "Improved support for many image formats, in particular better PSD importing"
 msgstr "对许多图像格式支持的提升，特别是更好的 PSD 导入支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:175
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
 msgid "Newly supported image formats: OpenEXR, RGBE, WebP, HGT…"
 msgstr "新支持的图像格式：OpenEXR、RGBE、WebP、HGT……"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:176
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
 msgid ""
 "Improved digital painting: canvas rotation and flipping, symmetry painting, "
 "MyPaint brushes…"
 msgstr "数字绘画的提升：画布旋转和翻转、对称绘画、MyPaint 笔刷……"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:177
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:178
 msgid "Metadata viewing and editing for Exif, XMP, IPTC, and DICOM"
 msgstr "对 Exif、XMP、IPTC 和 DICOM 等元数据的查看和编辑"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:178
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:179
 msgid "Basic HiDPI support: automatically or user-selected icon size"
 msgstr "基本的高分屏支持：自动或用户选择的图标大小"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:179
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:180
 msgid "New themes for GIMP: Light, Gray, Dark, and System"
 msgstr "GIMP 的新主题：亮、灰、暗和系统"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:180
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:181
 msgid "And much, much more…"
 msgstr "还有很多很多……"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:181
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:182
 msgid ""
 "In this second release candidate before GIMP 2.10.0, while debugging is "
 "still a prime target, a new focus has been put on speed and optimization in "
@@ -968,23 +972,23 @@ msgstr ""
 "在 2.10.0 正式版之前的第二个候选版中，虽然调试仍然是主要目标，但有侧重地进行"
 "了流畅度优化，以提供顺滑的绘画体验。较大的改动有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:182
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
 msgid ""
 "Major core optimizations for painting and display, including parallelized "
 "painting code"
 msgstr "对绘画和显示的核心优化，包括并行绘画代码"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:184
 msgid "Symmetries are now preserved in XCF files (saved as image parasites)"
 msgstr "对称绘画可被保存在 XCF 文件中（作为图像内嵌信息）"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:184
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:185
 msgid ""
 "\"Light\" and \"Dark\" themes rewritten from scratch to get rid of various "
 "usability issues. \"Lighter\" and \"Darker\" themes removed."
 msgstr "从零重写“亮”和“暗”主题以避免一些可用性问题。删除了“更亮”和“更暗”主题。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:185
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
 msgid ""
 "New GimpToolGyroscope on-canvas control, currently used for the Panorama "
 "Projection filter. The widget provides on-canvas interaction for 3D rotation "
@@ -993,7 +997,7 @@ msgstr ""
 "用于全景投影滤镜的全新 GimpToolGyroscope 画布上控制。该组件为 3D 旋转（偏离、"
 "前冲、转动）提供了画布上的交互。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:186
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:187
 msgid ""
 "Plug-in debugging improved to output stack traces from plug-ins with --stack-"
 "trace-mode command line option not only on receiving signals but also on "
@@ -1002,7 +1006,7 @@ msgstr ""
 "对当“fatal-warnings”键值被设置时，不仅在接受信号上而且在警告和严重错误上，从"
 "带有 --stack-trace-mode 命令行选项插件的输出堆栈追溯的插件调试提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:187
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:188
 msgid ""
 "GIMP 2.10.0-RC1 is the first release candidate before GIMP 2.10.0 stable "
 "release, with a focus on debugging and stability. Other than the many bug "
@@ -1011,88 +1015,88 @@ msgstr ""
 "GIMP 2.10-RC1 是 GIMP 2.10 稳定版发布之前的第一个候选版本，重点关注调试和稳定"
 "性。除了非常多的缺陷修复，最引人注目的提升有："
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:188
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:189
 msgid "New dashboard dockable to monitor GIMP resource usage"
 msgstr "新的仪表盘停靠栏用以监控 GIMP 的资源占用"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:189
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:190
 msgid ""
 "New debug dialog to produce back traces and other debug data, encouraging to "
 "report bugs"
 msgstr "新的调试对话框用以生成追溯和其他调试数据，并鼓励用户报告缺陷"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:190
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:191
 msgid "Unsaved images can now be recovered after a crash"
 msgstr "未保存的图像现在可以在崩溃后恢复"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:191
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:192
 msgid "Layer masks on layer groups"
 msgstr "图层组上的图层蒙版"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:192
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:193
 msgid "JPEG 2000 support improved for high bit depth and various color spaces"
 msgstr "对 JPEG 2000 高位深和多种色彩空间支持的改进"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:193
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:194
 msgid "Screenshot and color picking improved on various platforms"
 msgstr "截图和颜色拾取在多种平台上的提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:194
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:195
 msgid "Metadata defaults preferences now available"
 msgstr "增加元数据默认配置"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:195
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:196
 msgid "Various GUI polishing"
 msgstr "多处用户界面优化"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:196
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:197
 msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
 "GIMP 2.9.8 在聚焦缺陷修复和稳定性的同时引入了画布上渐变编辑和多处增强。"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:197
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
 msgid "On-canvas gradient editing"
 msgstr "画布上渐变编辑"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:199
 msgid "Notification when an image is over/underexposed"
 msgstr "当图像过曝/欠曝时提醒"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:199
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:200
 msgid "Better and faster color management"
 msgstr "更好且更快的色彩管理"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:200
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:201
 msgid "Support for color picker and screenshots in Wayland on KDE Plasma"
 msgstr "对 KDE Plasma 的 Wayland 环境中的颜色拾取器和截图的支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:201
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:202
 msgid "Paste in place feature"
 msgstr "粘贴至原位特性"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:202
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:203
 msgid "Many usability improvements"
 msgstr "很多可用性提升"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:203
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:204
 msgid "Manual can be displayed in the user's preferred language"
 msgstr "手册可以用户的偏好语言显示"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:204
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:205
 msgid "Improvements for the Wavelet Decompose filter"
 msgstr "对微波分解滤镜的改进"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:205
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:206
 msgid "Improved compatibility with Photoshop .psd files"
 msgstr "改进与 Photoshop .psd 文件的兼容性"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:206
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:207
 msgid "New support for password-protected PDF"
 msgstr "新增密码保护 PDF 支持"
 
-#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:207
+#: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:208
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "新增 HGT 格式（数字高程模型数据）支持"
 
@@ -1176,113 +1180,117 @@ msgstr "使用 %s 版本 %s（针对版本 %s 编译）"
 msgid "%s version %s"
 msgstr "%s 版本 %s"
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Show version information and exit"
 msgstr "显示版本信息并退出"
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Show license information and exit"
 msgstr "显示许可信息并退出"
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Be more verbose"
 msgstr "输出更详细信息"
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Start a new GIMP instance"
 msgstr "启动一个新的 GIMP 实例"
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Open images as new"
 msgstr "作为新图像打开"
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Run without a user interface"
 msgstr "不以图形界面运行"
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "不加载笔刷、渐变、图案……"
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not load any fonts"
 msgstr "不加载任何字体"
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not show a splash screen"
 msgstr "不显示启动画面"
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "不在 GIMP 和插件之间使用共享内存"
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
 msgstr "不使用特殊 CPU 加速功能"
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate sessionrc file"
 msgstr "使用代替的 sessionrc 文件"
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Use an alternate user gimprc file"
 msgstr "使用代替的用户 gimprc 文件"
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "Use an alternate system gimprc file"
 msgstr "使用代替的系统 gimprc 文件"
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Batch command to run (can be used multiple times)"
 msgstr "要运行的批处理命令（可以使用多次）"
 
-#: ../app/main.c:240
+#: ../app/main.c:241
 msgid "The procedure to process batch commands with"
 msgstr "处理批处理命令的过程"
 
-#: ../app/main.c:245
+#: ../app/main.c:246
+msgid "Quit immediately after performing requested actions"
+msgstr "执行请求的动作后立即退出"
+
+#: ../app/main.c:251
 msgid "Send messages to console instead of using a dialog"
 msgstr "在控制台而不是对话框中显示警告信息"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:251
+#: ../app/main.c:257
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB 兼容模式 (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:257
+#: ../app/main.c:263
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "崩溃时调试 (never|query|always)"
 
-#: ../app/main.c:262
+#: ../app/main.c:268
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "启用非致命调试信号处理程序"
 
-#: ../app/main.c:267
+#: ../app/main.c:273
 msgid "Make all warnings fatal"
 msgstr "将所有警告作为致命的"
 
-#: ../app/main.c:272
+#: ../app/main.c:278
 msgid "Output a gimprc file with default settings"
 msgstr "输出默认设置的 gimprc 文件"
 
-#: ../app/main.c:288
+#: ../app/main.c:294
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "排序列出 PDB 中的已弃用过程"
 
-#: ../app/main.c:293
+#: ../app/main.c:299
 msgid "Show a preferences page with experimental features"
 msgstr "显示带有实验性特性的首选项页面"
 
-#: ../app/main.c:298
+#: ../app/main.c:304
 msgid "Show an image submenu with debug actions"
 msgstr "显示带有调试动作的图像子菜单"
 
-#: ../app/main.c:716
+#: ../app/main.c:723
 msgid "[FILE|URI...]"
 msgstr "[文件|URI…]"
 
-#: ../app/main.c:744
+#: ../app/main.c:751
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1290,20 +1298,20 @@ msgstr ""
 "GIMP 无法初始化图形用户界面。\n"
 "请确定您已正确安装和配置显示环境。"
 
-#: ../app/main.c:763
+#: ../app/main.c:770
 msgid "Another GIMP instance is already running."
 msgstr "另一个 GIMP 实例已在运行。"
 
-#: ../app/main.c:850
+#: ../app/main.c:858
 msgid "GIMP output. Type any character to close this window."
 msgstr "GIMP 输出。键入任意字符以关闭此窗口。"
 
-#: ../app/main.c:851
+#: ../app/main.c:859
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "（键入任意字符关闭本窗口）\n"
 
-#: ../app/main.c:868
+#: ../app/main.c:876
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "GIMP 输出。您可以最小化该窗口，但请不要关闭窗口。"
 
@@ -1340,7 +1348,7 @@ msgstr "笔刷编辑器"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:3340
 msgid "Brushes"
 msgstr "笔刷"
 
@@ -1424,7 +1432,7 @@ msgstr "滤镜"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:358 ../app/dialogs/preferences-dialog.c:3358
+#: ../app/dialogs/dialogs.c:358 ../app/dialogs/preferences-dialog.c:3370
 msgid "Fonts"
 msgstr "字体"
 
@@ -1435,12 +1443,12 @@ msgstr "渐变编辑器"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3352
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3364
 msgid "Gradients"
 msgstr "渐变"
 
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
-#: ../app/dialogs/dialogs.c:364 ../app/dialogs/preferences-dialog.c:3364
+#: ../app/dialogs/dialogs.c:364 ../app/dialogs/preferences-dialog.c:3376
 msgid "Tool Presets"
 msgstr "工具预设"
 
@@ -1469,7 +1477,7 @@ msgstr "图层"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3370
+#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3382
 msgid "MyPaint Brushes"
 msgstr "MyPaint 笔刷"
 
@@ -1480,17 +1488,17 @@ msgstr "色板编辑器"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
-#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3346
+#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3358
 msgid "Palettes"
 msgstr "色板"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
-#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3340
+#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3352
 msgid "Patterns"
 msgstr "图案"
 
-#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3376
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3388
 msgid "Plug-ins"
 msgstr "插件"
 
@@ -7034,13 +7042,13 @@ msgstr "改变大小"
 msgid "Set Image Print Resolution"
 msgstr "设置图像打印分辨率"
 
-#: ../app/actions/image-commands.c:815 ../app/pdb/item-transform-cmds.c:212
+#: ../app/actions/image-commands.c:815 ../app/pdb/item-transform-cmds.c:214
 #: ../app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "翻转"
 
-#: ../app/actions/image-commands.c:842 ../app/pdb/image-transform-cmds.c:216
-#: ../app/pdb/item-transform-cmds.c:497 ../app/tools/gimprotatetool.c:131
+#: ../app/actions/image-commands.c:842 ../app/pdb/image-transform-cmds.c:218
+#: ../app/pdb/item-transform-cmds.c:499 ../app/tools/gimprotatetool.c:131
 msgid "Rotating"
 msgstr "旋转"
 
@@ -7095,8 +7103,8 @@ msgstr "缩放图像"
 #. Scaling
 #: ../app/actions/image-commands.c:1518 ../app/actions/layers-commands.c:2506
 #: ../app/dialogs/preferences-dialog.c:1737
-#: ../app/pdb/image-transform-cmds.c:122 ../app/pdb/item-transform-cmds.c:593
-#: ../app/pdb/layer-cmds.c:409 ../app/tools/gimpscaletool.c:122
+#: ../app/pdb/image-transform-cmds.c:124 ../app/pdb/item-transform-cmds.c:595
+#: ../app/pdb/layer-cmds.c:411 ../app/tools/gimpscaletool.c:122
 msgid "Scaling"
 msgstr "缩放"
 
@@ -9109,8 +9117,8 @@ msgstr "竖排，从左到右（竖直方向）"
 
 #: ../app/actions/text-tool-commands.c:188
 #, c-format
-msgid "Test along path failed: %s"
-msgstr "沿着路径测试失败：%s"
+msgid "Text along path failed: %s"
+msgstr "文字对齐路径失败：%s"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -11711,52 +11719,64 @@ msgstr "当启用时，将确保打开文件以后图像完整可见，否则将
 
 #: ../app/config/gimprc-blurbs.h:261
 msgid ""
+"Whether to zoom based on distance moved or time spent moving, when zooming "
+"via dragging the mouse."
+msgstr "当通过拖拽鼠标缩放时，是否基于移动距离或移动花费的时间来缩放。"
+
+#: ../app/config/gimprc-blurbs.h:265
+msgid ""
+"Adjusts the rate at which dragging the mouse will zoom the canvas, in "
+"percentage."
+msgstr "按百分比调整拖拽鼠标缩放画布的速率。"
+
+#: ../app/config/gimprc-blurbs.h:269
+msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr "设置用于缩放和其他变换操作的插值计算的等级。"
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:276
 msgid "Specifies the language to use for the user interface."
 msgstr "指定用户界面使用的语言。"
 
-#: ../app/config/gimprc-blurbs.h:271
+#: ../app/config/gimprc-blurbs.h:279
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr "从官方网站查询到的最近已知发布版本的 GIMP。"
 
-#: ../app/config/gimprc-blurbs.h:274
+#: ../app/config/gimprc-blurbs.h:282
 msgid "The version of GIMP config files."
 msgstr "GIMP 配置文件的版本。"
 
-#: ../app/config/gimprc-blurbs.h:277
+#: ../app/config/gimprc-blurbs.h:285
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "在文件菜单中保留的最近打开图像的文件数。"
 
-#: ../app/config/gimprc-blurbs.h:280
+#: ../app/config/gimprc-blurbs.h:288
 msgid "The timestamp for the last known release date."
 msgstr "最近已知发布日期的时间戳。"
 
-#: ../app/config/gimprc-blurbs.h:283
+#: ../app/config/gimprc-blurbs.h:291
 msgid "The last revision number for the release."
 msgstr "该发布最近的修订版本号。"
 
-#: ../app/config/gimprc-blurbs.h:286
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
 msgstr "选区轮廓蚂蚁线的循环速度。该值以毫秒（时间越短速度越快）为单位。"
 
-#: ../app/config/gimprc-blurbs.h:290
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
 msgstr ""
 "如果试图创建一幅所需内存比此处指定的数值还要大的图像，GIMP 将警告用户。"
 
-#: ../app/config/gimprc-blurbs.h:294
+#: ../app/config/gimprc-blurbs.h:302
 msgid "How to handle \"Orientation\" metadata when opening a file."
 msgstr "在打开文件时如何处理“方向”元数据。"
 
-#: ../app/config/gimprc-blurbs.h:303
+#: ../app/config/gimprc-blurbs.h:311
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11765,7 +11785,7 @@ msgstr ""
 "设置显示器的水平分辨率，以每英寸的点数为单位。如果设为 0 则强制向 X 服务器查"
 "询水平和竖直分辨率信息。"
 
-#: ../app/config/gimprc-blurbs.h:308
+#: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -11774,11 +11794,11 @@ msgstr ""
 "设置显示器的竖直分辨率，以每英寸的点数为单位。如果设为 0 则强制向 X 服务器查"
 "询水平和竖直分辨率信息。"
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:321
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr "启用时，不可见图层可以被正常编辑。"
 
-#: ../app/config/gimprc-blurbs.h:316
+#: ../app/config/gimprc-blurbs.h:324
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -11786,17 +11806,17 @@ msgstr ""
 "当启用时，移动工具会将被编辑的图层或路径设为活动的。在旧版本中这曾是默认行"
 "为。"
 
-#: ../app/config/gimprc-blurbs.h:325
+#: ../app/config/gimprc-blurbs.h:333
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
 msgstr "设置图像窗口右下角的导航预览的大小。"
 
-#: ../app/config/gimprc-blurbs.h:329
+#: ../app/config/gimprc-blurbs.h:337
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr "对支持多线程的操作设置 GIMP 应该使用多少个线程。"
 
-#: ../app/config/gimprc-blurbs.h:351
+#: ../app/config/gimprc-blurbs.h:359
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -11805,23 +11825,23 @@ msgstr ""
 "指定 GIMP 是否应该创建图层和通道的预览。在图层和通道对话框中显示预览有利于工"
 "作效率，但图像很大时将会降低性能。"
 
-#: ../app/config/gimprc-blurbs.h:356
+#: ../app/config/gimprc-blurbs.h:364
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
 msgstr "设置 GIMP 是否创建图层组预览。图层组预览比普通图层预览耗费更多资源。"
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:368
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
 msgstr "设置新建对话框中图层和通道的预览大小。"
 
-#: ../app/config/gimprc-blurbs.h:364
+#: ../app/config/gimprc-blurbs.h:372
 msgid "Sets the default quick mask color."
 msgstr "设置默认的快速蒙版颜色。"
 
-#: ../app/config/gimprc-blurbs.h:367
+#: ../app/config/gimprc-blurbs.h:375
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -11830,18 +11850,18 @@ msgstr ""
 "当启用时，每次图像实际大小发生变化时，图像窗口大小都将自动改变（仅多窗口模式"
 "有效）。"
 
-#: ../app/config/gimprc-blurbs.h:372
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
 msgstr ""
 "当启用时，每次缩放图像时，图像窗口大小都将自动改变（仅多窗口模式有效）。"
 
-#: ../app/config/gimprc-blurbs.h:377
+#: ../app/config/gimprc-blurbs.h:385
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr "每次启动时让 GIMP 尝试恢复您上次保存的会话。"
 
-#: ../app/config/gimprc-blurbs.h:380
+#: ../app/config/gimprc-blurbs.h:388
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -11849,12 +11869,12 @@ msgstr ""
 "当启用时，GIMP 将尝试在各个显示器上恢复之前打开的窗口。当禁用时，这些窗口将恢"
 "复到当前使用的显示器上。"
 
-#: ../app/config/gimprc-blurbs.h:385
+#: ../app/config/gimprc-blurbs.h:393
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr "在多个 GIMP 会话间共享当前的工具、图案、颜色和笔刷设置。"
 
-#: ../app/config/gimprc-blurbs.h:389
+#: ../app/config/gimprc-blurbs.h:397
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -11862,32 +11882,32 @@ msgstr ""
 "启用时，所有输入设备将使用同样的工具和工具选项。当输入设备改变时不会发生工具"
 "切换。"
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:402
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
 msgstr "为最近文档列表中的全部打开和保存过的文件保存一份永久记录。"
 
-#: ../app/config/gimprc-blurbs.h:398
+#: ../app/config/gimprc-blurbs.h:406
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr "GIMP 退出时保存主要对话框的位置和大小。"
 
-#: ../app/config/gimprc-blurbs.h:401
+#: ../app/config/gimprc-blurbs.h:409
 msgid "Save the tool options when GIMP exits."
 msgstr "GIMP 退出时保存工具选项。"
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:415
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
 msgstr "当启用时，所有绘画工具都将显示当前笔刷的轮廓预览。"
 
-#: ../app/config/gimprc-blurbs.h:411
+#: ../app/config/gimprc-blurbs.h:419
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr "当启用时，绘画时笔刷轮廓将吸附于单独的笔触。"
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:423
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -11896,7 +11916,7 @@ msgstr ""
 "当启用时，对话框中将显示一个可以访问相关帮助的帮助按钮。如果没有这个按钮，仍"
 "然可以按 F1 打开帮助页面。"
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:428
 msgid ""
 "When enabled, the pointer will be shown over the image while using a paint "
 "tool. If both the brush outline and pointer are disabled, the position will "
@@ -11905,117 +11925,117 @@ msgstr ""
 "当启用时，使用绘画工具时鼠标指针将显示在图像上面。如果笔刷轮廓和鼠标指针都被"
 "禁用，对位置的提示将尽可能不引人注目。"
 
-#: ../app/config/gimprc-blurbs.h:426
+#: ../app/config/gimprc-blurbs.h:434
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr "当启用时，菜单栏将默认可见。这也可以通过“视图->显示菜单栏”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:430
+#: ../app/config/gimprc-blurbs.h:438
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
 msgstr "当启用时，标尺将默认可见。这也可以通过“视图->显示标尺”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:434
+#: ../app/config/gimprc-blurbs.h:442
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
 msgstr "当启用时，滚动条将默认可见。这也可以通过“视图->显示滚动条”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:438
+#: ../app/config/gimprc-blurbs.h:446
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
 msgstr "当启用时，状态栏将默认可见。这也可以通过“视图->显示状态栏”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:442
+#: ../app/config/gimprc-blurbs.h:450
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
 msgstr "当启用时，选区将默认可见。这也可以通过“视图->显示选区”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:446
+#: ../app/config/gimprc-blurbs.h:454
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
 "当启用时，图层边界将默认可见。这也可以通过“视图->显示图层边界”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:450
+#: ../app/config/gimprc-blurbs.h:458
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
 msgstr ""
 "当启用时，画布边界将默认可见。这也可以通过“视图->显示画布边界”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:454
+#: ../app/config/gimprc-blurbs.h:462
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
 msgstr "当启用时，参考线将默认可见。这也可以通过“视图->显示参考线”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:458
+#: ../app/config/gimprc-blurbs.h:466
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
 msgstr "当启用时，网格将默认可见。这也可以通过“视图->显示网格”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:462
+#: ../app/config/gimprc-blurbs.h:470
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
 msgstr "当启用时，采样点将默认可见。这也可以通过“视图->显示采样点”命令切换。"
 
-#: ../app/config/gimprc-blurbs.h:466
+#: ../app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr "当指针悬停在项目上时显示工具提示。"
 
-#: ../app/config/gimprc-blurbs.h:469
+#: ../app/config/gimprc-blurbs.h:477
 msgid "Use GIMP in a single-window mode."
 msgstr "以单窗口模式使用 GIMP。"
 
-#: ../app/config/gimprc-blurbs.h:472
+#: ../app/config/gimprc-blurbs.h:480
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr "隐藏停靠和其他窗口，仅留下图像窗口。"
 
-#: ../app/config/gimprc-blurbs.h:475
+#: ../app/config/gimprc-blurbs.h:483
 msgid "Show the image tabs bar in single window mode."
 msgstr "在单窗口模式中显示图像标签栏。"
 
-#: ../app/config/gimprc-blurbs.h:478
+#: ../app/config/gimprc-blurbs.h:486
 msgid "Enable the N-Point Deformation tool."
 msgstr "启用 N 点变换工具。"
 
-#: ../app/config/gimprc-blurbs.h:481
+#: ../app/config/gimprc-blurbs.h:489
 msgid "Enable the Handle Transform tool."
 msgstr "启用控制柄变换工具。"
 
-#: ../app/config/gimprc-blurbs.h:484
+#: ../app/config/gimprc-blurbs.h:492
 msgid "Enable symmetry on painting."
 msgstr "启用对称绘画。"
 
-#: ../app/config/gimprc-blurbs.h:487
+#: ../app/config/gimprc-blurbs.h:495
 msgid "Enable the MyPaint Brush tool."
 msgstr "启用 MyPaint 笔刷工具。"
 
-#: ../app/config/gimprc-blurbs.h:490
+#: ../app/config/gimprc-blurbs.h:498
 msgid "Enable the Seamless Clone tool."
 msgstr "启用无缝克隆工具。"
 
-#: ../app/config/gimprc-blurbs.h:493
+#: ../app/config/gimprc-blurbs.h:501
 msgid "Enable the Paint Select tool."
 msgstr "启用绘制选择工具。"
 
-#: ../app/config/gimprc-blurbs.h:496
+#: ../app/config/gimprc-blurbs.h:504
 msgid "What to do when the space bar is pressed in the image window."
 msgstr "当在图像窗口中空格键按下时的行为。"
 
-#: ../app/config/gimprc-blurbs.h:499
+#: ../app/config/gimprc-blurbs.h:507
 msgid "The compression method used for tile data stored in the swap file."
 msgstr "用于交换文件中储存的分块数据的压缩方式。"
 
-#: ../app/config/gimprc-blurbs.h:502
+#: ../app/config/gimprc-blurbs.h:510
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -12029,21 +12049,21 @@ msgstr ""
 "另外，如果交换文件所在目录通过 NFS 挂载，程序会变得极为缓慢。因此最好将交换文"
 "件放在“/tmp”目录。"
 
-#: ../app/config/gimprc-blurbs.h:511
+#: ../app/config/gimprc-blurbs.h:519
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr "当启用时，您只要按一个按键组合就可以改变突出显示的菜单项的快捷键。"
 
-#: ../app/config/gimprc-blurbs.h:515
+#: ../app/config/gimprc-blurbs.h:523
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "GIMP 退出时保存已改变的快捷键。"
 
-#: ../app/config/gimprc-blurbs.h:518
+#: ../app/config/gimprc-blurbs.h:526
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "GIMP 启动时恢复已保存的快捷键。"
 
-#: ../app/config/gimprc-blurbs.h:521
+#: ../app/config/gimprc-blurbs.h:529
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -12054,228 +12074,228 @@ msgstr ""
 "出以后将消失，但是个别文件可能会留下来，因此最好不要把这个目录与别的用户共"
 "享。"
 
-#: ../app/config/gimprc-blurbs.h:527
+#: ../app/config/gimprc-blurbs.h:535
 msgid "The name of the theme to use."
 msgstr "要使用主题的名称。"
 
-#: ../app/config/gimprc-blurbs.h:536
+#: ../app/config/gimprc-blurbs.h:544
 msgid "When enabled, symbolic icons will be preferred if available."
 msgstr "启用时，若可用将优先使用符号图标。"
 
-#: ../app/config/gimprc-blurbs.h:542
+#: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr "为“转换到色彩配置文件”对话框设置默认渲染效果。"
 
-#: ../app/config/gimprc-blurbs.h:545
+#: ../app/config/gimprc-blurbs.h:553
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr "为“转换到色彩配置文件”对话框设置默认“黑点补偿”状态。"
 
-#: ../app/config/gimprc-blurbs.h:549
+#: ../app/config/gimprc-blurbs.h:557
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr "为“转换精度”对话框设置默认图层递色方式。"
 
-#: ../app/config/gimprc-blurbs.h:552
+#: ../app/config/gimprc-blurbs.h:560
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr "为“转换精度”对话框设置默认文字图层递色方式。"
 
-#: ../app/config/gimprc-blurbs.h:555
+#: ../app/config/gimprc-blurbs.h:563
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr "为“转换精度”对话框设置默认通道递色方式。"
 
-#: ../app/config/gimprc-blurbs.h:558
+#: ../app/config/gimprc-blurbs.h:566
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认色板类型。"
 
-#: ../app/config/gimprc-blurbs.h:561
+#: ../app/config/gimprc-blurbs.h:569
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr "为“转换到索引”对话框设置默认最大颜色数量。"
 
-#: ../app/config/gimprc-blurbs.h:564
+#: ../app/config/gimprc-blurbs.h:572
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认“移除重复颜色”状态。"
 
-#: ../app/config/gimprc-blurbs.h:567
+#: ../app/config/gimprc-blurbs.h:575
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认递色类型。"
 
-#: ../app/config/gimprc-blurbs.h:570
+#: ../app/config/gimprc-blurbs.h:578
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr "为“转换到索引”对话框设置默认“递色透明”状态。"
 
-#: ../app/config/gimprc-blurbs.h:573
+#: ../app/config/gimprc-blurbs.h:581
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr "为“转换到索引”对话框设置默认“递色文字图层”状态。"
 
-#: ../app/config/gimprc-blurbs.h:576
+#: ../app/config/gimprc-blurbs.h:584
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认填充类型。"
 
-#: ../app/config/gimprc-blurbs.h:579
+#: ../app/config/gimprc-blurbs.h:587
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认的图层缩放设定。"
 
-#: ../app/config/gimprc-blurbs.h:582
+#: ../app/config/gimprc-blurbs.h:590
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr "为“画布大小”对话框设置默认“缩放文字图层”状态。"
 
-#: ../app/config/gimprc-blurbs.h:585
+#: ../app/config/gimprc-blurbs.h:593
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr "设置如何从文本模式中搜索并选择项目。"
 
-#: ../app/config/gimprc-blurbs.h:588
+#: ../app/config/gimprc-blurbs.h:596
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认图层名称。"
 
-#: ../app/config/gimprc-blurbs.h:591
+#: ../app/config/gimprc-blurbs.h:599
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认模式。"
 
-#: ../app/config/gimprc-blurbs.h:594
+#: ../app/config/gimprc-blurbs.h:602
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认混合空间。"
 
-#: ../app/config/gimprc-blurbs.h:597
+#: ../app/config/gimprc-blurbs.h:605
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认合成空间。"
 
-#: ../app/config/gimprc-blurbs.h:600
+#: ../app/config/gimprc-blurbs.h:608
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认合成模式。"
 
-#: ../app/config/gimprc-blurbs.h:603
+#: ../app/config/gimprc-blurbs.h:611
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认不透明度。"
 
-#: ../app/config/gimprc-blurbs.h:606
+#: ../app/config/gimprc-blurbs.h:614
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr "为“新建图层”对话框设置默认填充类型。"
 
-#: ../app/config/gimprc-blurbs.h:609
+#: ../app/config/gimprc-blurbs.h:617
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr "为“图层边界大小”对话框设置默认填充类型。"
 
-#: ../app/config/gimprc-blurbs.h:612
+#: ../app/config/gimprc-blurbs.h:620
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr "为“添加图层蒙版”对话框设置默认蒙版。"
 
-#: ../app/config/gimprc-blurbs.h:615
+#: ../app/config/gimprc-blurbs.h:623
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr "为“添加图层蒙版”对话框设置默认“反转蒙版”状态。"
 
-#: ../app/config/gimprc-blurbs.h:618
+#: ../app/config/gimprc-blurbs.h:626
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认合并类型。"
 
-#: ../app/config/gimprc-blurbs.h:621
+#: ../app/config/gimprc-blurbs.h:629
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认“仅激活图层组”。"
 
-#: ../app/config/gimprc-blurbs.h:624
+#: ../app/config/gimprc-blurbs.h:632
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr "为“合并可见图层”对话框设置默认“丢弃不可见图层”。"
 
-#: ../app/config/gimprc-blurbs.h:627
+#: ../app/config/gimprc-blurbs.h:635
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr "为“新建通道”对话框设置默认通道名称。"
 
-#: ../app/config/gimprc-blurbs.h:630
+#: ../app/config/gimprc-blurbs.h:638
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr "为“新建通道”对话框设置默认颜色和不透明度。"
 
-#: ../app/config/gimprc-blurbs.h:633
+#: ../app/config/gimprc-blurbs.h:641
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr "为“新路径”对话框设置默认路径名称。"
 
-#: ../app/config/gimprc-blurbs.h:636
+#: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "为“导出路径”对话框设置默认文件夹路径。"
 
-#: ../app/config/gimprc-blurbs.h:639
+#: ../app/config/gimprc-blurbs.h:647
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr "为“导出路径”对话框设置默认“导出激活路径”状态。"
 
-#: ../app/config/gimprc-blurbs.h:642
+#: ../app/config/gimprc-blurbs.h:650
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr "为“导入路径”对话框设置默认文件夹路径。"
 
-#: ../app/config/gimprc-blurbs.h:645
+#: ../app/config/gimprc-blurbs.h:653
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr "为“导入路径”对话框设置默认“合并导入的路径”状态。"
 
-#: ../app/config/gimprc-blurbs.h:648
+#: ../app/config/gimprc-blurbs.h:656
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr "为“导入路径”对话框设置默认“缩放导入的路径到适应大小”状态。"
 
-#: ../app/config/gimprc-blurbs.h:651
+#: ../app/config/gimprc-blurbs.h:659
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr "为“羽化选区“对话框设置默认羽化半径。"
 
-#: ../app/config/gimprc-blurbs.h:654
+#: ../app/config/gimprc-blurbs.h:662
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
 msgstr "为“羽化选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: ../app/config/gimprc-blurbs.h:658
+#: ../app/config/gimprc-blurbs.h:666
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr "为”增大选区“对话框设置默认增大半径。"
 
-#: ../app/config/gimprc-blurbs.h:661
+#: ../app/config/gimprc-blurbs.h:669
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr "为”收缩选区“对话框设置默认收缩半径。"
 
-#: ../app/config/gimprc-blurbs.h:664
+#: ../app/config/gimprc-blurbs.h:672
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
 msgstr "为“收缩选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: ../app/config/gimprc-blurbs.h:668
+#: ../app/config/gimprc-blurbs.h:676
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认加边半径。"
 
-#: ../app/config/gimprc-blurbs.h:671
+#: ../app/config/gimprc-blurbs.h:679
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认“选中区域超出图像”配置。"
 
-#: ../app/config/gimprc-blurbs.h:675
+#: ../app/config/gimprc-blurbs.h:683
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr "为“加边选区”对话框设置默认加边样式。"
 
-#: ../app/config/gimprc-blurbs.h:684
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr "设置打开文件对话框中缩略图的大小。"
 
-#: ../app/config/gimprc-blurbs.h:687
+#: ../app/config/gimprc-blurbs.h:695
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
 msgstr "如果预览的文件小于这里设置的大小，打开对话框中的缩略图将会自动更新。"
 
-#: ../app/config/gimprc-blurbs.h:691
+#: ../app/config/gimprc-blurbs.h:699
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -12286,41 +12306,41 @@ msgstr ""
 "理无法载入计算机内存 (RAM) 的超大图像成为可能。如果您的计算机内存(RAM)很大，"
 "您可能希望设置一个更大的数值。"
 
-#: ../app/config/gimprc-blurbs.h:697
+#: ../app/config/gimprc-blurbs.h:705
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr "在工具箱中显示当前的前景色和背景色。"
 
-#: ../app/config/gimprc-blurbs.h:700
+#: ../app/config/gimprc-blurbs.h:708
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr "在工具箱中显示活动笔刷、图案和渐变。"
 
-#: ../app/config/gimprc-blurbs.h:703
+#: ../app/config/gimprc-blurbs.h:711
 msgid "Use a single toolbox button for grouped tools."
 msgstr "为分组工具使用单独工具箱按钮。"
 
-#: ../app/config/gimprc-blurbs.h:706
+#: ../app/config/gimprc-blurbs.h:714
 msgid "Show the currently active image in the toolbox."
 msgstr "在工具箱中显示当前活动的图像。"
 
-#: ../app/config/gimprc-blurbs.h:709
+#: ../app/config/gimprc-blurbs.h:717
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "在工具箱顶部显示 GIMP 吉祥物。"
 
-#: ../app/config/gimprc-blurbs.h:712
+#: ../app/config/gimprc-blurbs.h:720
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "设置图像中透明部分的显示方式。"
 
-#: ../app/config/gimprc-blurbs.h:715
+#: ../app/config/gimprc-blurbs.h:723
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "设置用于表示透明的棋盘格子的大小。"
 
-#: ../app/config/gimprc-blurbs.h:718
+#: ../app/config/gimprc-blurbs.h:726
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
 msgstr "当启用时，如果图像自打开以来没有被修改，GIMP 将不会保存。"
 
-#: ../app/config/gimprc-blurbs.h:722
+#: ../app/config/gimprc-blurbs.h:730
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -12328,7 +12348,7 @@ msgstr ""
 "设置允许撤消操作的最小次数。只要还没有达到撤消次数的限制，就可以保存更多的撤"
 "消操作。"
 
-#: ../app/config/gimprc-blurbs.h:726
+#: ../app/config/gimprc-blurbs.h:734
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -12337,29 +12357,29 @@ msgstr ""
 "设置每幅图像撤销历史中用于保存撤消操作的内存上限。与此设置无关，撤消操作至少"
 "可以达到指定的撤消次数。"
 
-#: ../app/config/gimprc-blurbs.h:731
+#: ../app/config/gimprc-blurbs.h:739
 msgid "Sets the size of the previews in the Undo History."
 msgstr "设置撤销历史的预览大小。"
 
-#: ../app/config/gimprc-blurbs.h:734
+#: ../app/config/gimprc-blurbs.h:742
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "当启用时，按 F1 将打开帮助浏览器。"
 
-#: ../app/config/gimprc-blurbs.h:737
+#: ../app/config/gimprc-blurbs.h:745
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "当启用时，将在某些操作时使用 OpenCL。"
 
-#: ../app/config/gimprc-blurbs.h:755
+#: ../app/config/gimprc-blurbs.h:763
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr "当启用时，对动作的搜索将同样反馈无效动作。"
 
-#: ../app/config/gimprc-blurbs.h:758
+#: ../app/config/gimprc-blurbs.h:766
 msgid "The maximum number of actions saved in history."
 msgstr "历史中保存动作的最大数量。"
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
-#: ../app/plug-in/plug-in-rc.c:251 ../app/tools/gimp-tools.c:504
+#: ../app/plug-in/plug-in-rc.c:254 ../app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "严重解析错误"
 
@@ -13402,19 +13422,46 @@ msgid "Parasites"
 msgstr "内嵌信息"
 
 #. initialize the module list
-#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3388
+#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3400
 msgid "Modules"
 msgstr "模块"
 
-#: ../app/core/gimp-batch.c:75
-#, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "没有指定批处理解释器，使用默认的“%s”。\n"
+#: ../app/core/gimp-batch.c:69
+msgid "No batch interpreters are available. Batch mode disabled."
+msgstr "无批处理解释程序可用。批处理模式已禁用。"
 
-#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#: ../app/core/gimp-batch.c:86
+#, c-format
+msgid "No batch interpreter specified, using '%s'.\n"
+msgstr "没有指定批处理解释程序，使用“%s”。\n"
+
+#: ../app/core/gimp-batch.c:93
+msgid "No batch interpreter specified."
+msgstr "没有指定批处理解释程序。"
+
+#: ../app/core/gimp-batch.c:94 ../app/core/gimp-batch.c:132
+msgid "Available interpreters are:"
+msgstr "可用解释程序为："
+
+#: ../app/core/gimp-batch.c:112 ../app/core/gimp-batch.c:150
+msgid "Specify one of these interpreters as --batch-interpreter option."
+msgstr "指定其中一个解释程序作为 --batch-interpreter 选项。"
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:128
+#, c-format
+msgid "The procedure '%s' is not a valid batch interpreter."
+msgstr "程序“%s”不是有效的批处理解释程序。"
+
+#: ../app/core/gimp-batch.c:131
+msgid "Batch mode disabled."
+msgstr "批处理模式已禁用。"
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:184
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "批处理解析程序“%s”不可用。批处理模式已禁用。"
+msgstr "批处理解释程序“%s”不可用。批处理模式已禁用。"
 
 #: ../app/core/gimp-contexts.c:153 ../app/core/gimp-internal-data.c:338
 #: ../app/core/gimptooloptions.c:361 ../app/gui/session.c:449
@@ -13425,7 +13472,7 @@ msgstr "删除“%s”失败：%s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:707
-#: ../app/dialogs/preferences-dialog.c:3334
+#: ../app/dialogs/preferences-dialog.c:3346
 #: ../app/tools/gimppaintoptions-gui.c:309
 msgid "Dynamics"
 msgstr "动态"
@@ -14066,7 +14113,7 @@ msgid "Pattern"
 msgstr "图案"
 
 #: ../app/core/gimpcontext.c:728 ../app/core/gimpcontext.c:729
-#: ../app/pdb/drawable-edit-cmds.c:253 ../app/tools/gimpgradientoptions.c:269
+#: ../app/pdb/drawable-edit-cmds.c:255 ../app/tools/gimpgradientoptions.c:269
 #: ../app/tools/gimpgradienttool.c:164 ../app/tools/gimppaintoptions-gui.c:365
 msgid "Gradient"
 msgstr "渐变"
@@ -16024,7 +16071,7 @@ msgid "Dithering text layers will make them uneditable"
 msgstr "递色文字图层将使它们不可编辑"
 
 #: ../app/dialogs/convert-indexed-dialog.c:414
-#: ../app/pdb/image-convert-cmds.c:161
+#: ../app/pdb/image-convert-cmds.c:163
 msgid "Cannot convert to a palette with more than 256 colors."
 msgstr "无法转换到多于 256 种颜色的色板。"
 
@@ -17247,7 +17294,7 @@ msgstr "工具选项"
 #: ../app/dialogs/preferences-dialog.c:1709
 #: ../app/dialogs/preferences-dialog.c:2568
 #: ../app/dialogs/preferences-dialog.c:2901
-#: ../app/dialogs/preferences-dialog.c:3125
+#: ../app/dialogs/preferences-dialog.c:3137
 #: ../app/widgets/gimpcontrollereditor.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:298
 msgid "General"
@@ -17432,7 +17479,7 @@ msgstr "工具箱"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2188
-#: ../app/dialogs/preferences-dialog.c:2953 ../app/widgets/gimpgrideditor.c:133
+#: ../app/dialogs/preferences-dialog.c:2965 ../app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "外观"
 
@@ -17951,382 +17998,387 @@ msgstr "显示整张图像"
 msgid "Initial zoom _ratio:"
 msgstr "初始缩放比率(_R)："
 
+#: ../app/dialogs/preferences-dialog.c:2939
+msgid "Dra_g-to-zoom behavior:"
+msgstr "拖拽缩放行为(_G)："
+
+#: ../app/dialogs/preferences-dialog.c:2945
+msgid "Drag-to-zoom spe_ed:"
+msgstr "拖拽缩放速度(_E)："
+
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2937
+#: ../app/dialogs/preferences-dialog.c:2949
 msgid "Space Bar"
 msgstr "空格键"
 
-#: ../app/dialogs/preferences-dialog.c:2943
+#: ../app/dialogs/preferences-dialog.c:2955
 msgid "_While space bar is pressed:"
 msgstr "当空格键被按下时(_W)："
 
-#: ../app/dialogs/preferences-dialog.c:2952
+#: ../app/dialogs/preferences-dialog.c:2964
 msgid "Image Window Appearance"
 msgstr "图像窗口外观"
 
-#: ../app/dialogs/preferences-dialog.c:2962
+#: ../app/dialogs/preferences-dialog.c:2974
 msgid "Default Appearance in Normal Mode"
 msgstr "普通模式下的默认外观"
 
-#: ../app/dialogs/preferences-dialog.c:2967
+#: ../app/dialogs/preferences-dialog.c:2979
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "全屏模式下的默认外观"
 
-#: ../app/dialogs/preferences-dialog.c:2976
+#: ../app/dialogs/preferences-dialog.c:2988
 msgid "Image Title & Statusbar Format"
 msgstr "图像标题和状态栏格式"
 
-#: ../app/dialogs/preferences-dialog.c:2977
+#: ../app/dialogs/preferences-dialog.c:2989
 msgid "Title & Status"
 msgstr "标题和状态"
 
-#: ../app/dialogs/preferences-dialog.c:2995
+#: ../app/dialogs/preferences-dialog.c:3007
 msgid "Current format"
 msgstr "当前格式"
 
-#: ../app/dialogs/preferences-dialog.c:2996
+#: ../app/dialogs/preferences-dialog.c:3008
 msgid "Default format"
 msgstr "默认格式"
 
-#: ../app/dialogs/preferences-dialog.c:2997
+#: ../app/dialogs/preferences-dialog.c:3009
 msgid "Show zoom percentage"
 msgstr "显示缩放百分比"
 
-#: ../app/dialogs/preferences-dialog.c:2998
+#: ../app/dialogs/preferences-dialog.c:3010
 msgid "Show zoom ratio"
 msgstr "显示缩放比率"
 
-#: ../app/dialogs/preferences-dialog.c:2999
+#: ../app/dialogs/preferences-dialog.c:3011
 msgid "Show image size"
 msgstr "显示图像大小"
 
-#: ../app/dialogs/preferences-dialog.c:3000
+#: ../app/dialogs/preferences-dialog.c:3012
 msgid "Show drawable size"
 msgstr "显示可绘区大小"
 
-#: ../app/dialogs/preferences-dialog.c:3013
+#: ../app/dialogs/preferences-dialog.c:3025
 msgid "Image Title Format"
 msgstr "图像标题格式"
 
-#: ../app/dialogs/preferences-dialog.c:3015
+#: ../app/dialogs/preferences-dialog.c:3027
 msgid "Image Statusbar Format"
 msgstr "图像状态栏格式"
 
-#: ../app/dialogs/preferences-dialog.c:3109
+#: ../app/dialogs/preferences-dialog.c:3121
 msgid "Image Window Snapping Behavior"
 msgstr "图像窗口吸附行为"
 
-#: ../app/dialogs/preferences-dialog.c:3110
+#: ../app/dialogs/preferences-dialog.c:3122
 msgid "Snapping"
 msgstr "吸附"
 
-#: ../app/dialogs/preferences-dialog.c:3117
+#: ../app/dialogs/preferences-dialog.c:3129
 msgid "Default Behavior in Normal Mode"
 msgstr "普通模式下的默认行为"
 
-#: ../app/dialogs/preferences-dialog.c:3121
+#: ../app/dialogs/preferences-dialog.c:3133
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "全屏模式下的默认行为"
 
-#: ../app/dialogs/preferences-dialog.c:3130
+#: ../app/dialogs/preferences-dialog.c:3142
 msgid "_Snapping distance:"
 msgstr "吸附距离(_S)："
 
-#: ../app/dialogs/preferences-dialog.c:3139
-#: ../app/dialogs/preferences-dialog.c:3140
+#: ../app/dialogs/preferences-dialog.c:3151
+#: ../app/dialogs/preferences-dialog.c:3152
 msgid "Input Devices"
 msgstr "输入设备"
 
-#: ../app/dialogs/preferences-dialog.c:3151
-#| msgid "Pointer"
+#: ../app/dialogs/preferences-dialog.c:3163
 msgid "Pointers"
 msgstr "鼠标指针"
 
-#: ../app/dialogs/preferences-dialog.c:3158
+#: ../app/dialogs/preferences-dialog.c:3170
 msgid "Pointer _mode:"
 msgstr "指针模式(_M)："
 
-#: ../app/dialogs/preferences-dialog.c:3161
+#: ../app/dialogs/preferences-dialog.c:3173
 msgid "Pointer _handedness:"
 msgstr "指针利手(_N)："
 
-#: ../app/dialogs/preferences-dialog.c:3165
-#| msgctxt "tools-action"
-#| msgid "_Paint Tools"
+#: ../app/dialogs/preferences-dialog.c:3177
 msgid "Paint Tools"
 msgstr "绘画工具"
 
-#: ../app/dialogs/preferences-dialog.c:3169
+#: ../app/dialogs/preferences-dialog.c:3181
 msgid "Show _brush outline"
 msgstr "显示笔刷轮廓(_B)"
 
-#: ../app/dialogs/preferences-dialog.c:3177
+#: ../app/dialogs/preferences-dialog.c:3189
 msgid "S_nap brush outline to stroke"
 msgstr "吸附笔刷轮廓于笔触(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:3181
+#: ../app/dialogs/preferences-dialog.c:3193
 msgid "Show pointer for paint _tools"
 msgstr "为绘画工具显示鼠标指针(_T)"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:3185
+#: ../app/dialogs/preferences-dialog.c:3197
 msgid "Extended Input Devices"
 msgstr "扩展输入设备"
 
-#: ../app/dialogs/preferences-dialog.c:3201
+#: ../app/dialogs/preferences-dialog.c:3213
 msgid "Pointer Input API:"
 msgstr "指针输入 API："
 
-#: ../app/dialogs/preferences-dialog.c:3212
+#: ../app/dialogs/preferences-dialog.c:3224
 msgid "S_hare tool and tool options between input devices"
 msgstr "在输入设备间共享工具和工具选项(_H)"
 
-#: ../app/dialogs/preferences-dialog.c:3216
+#: ../app/dialogs/preferences-dialog.c:3228
 msgid "Configure E_xtended Input Devices..."
 msgstr "配置扩展输入设备(_X)…"
 
-#: ../app/dialogs/preferences-dialog.c:3223
+#: ../app/dialogs/preferences-dialog.c:3235
 msgid "_Save input device settings on exit"
 msgstr "退出时保存输入设备设置(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:3227
+#: ../app/dialogs/preferences-dialog.c:3239
 msgid "Save Input Device Settings _Now"
 msgstr "立即保存输入设备设置(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:3234
+#: ../app/dialogs/preferences-dialog.c:3246
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "将已保存的输入设备设置重置为默认值(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:3249
+#: ../app/dialogs/preferences-dialog.c:3261
 msgid "Additional Input Controllers"
 msgstr "附加输入控制器"
 
-#: ../app/dialogs/preferences-dialog.c:3250
+#: ../app/dialogs/preferences-dialog.c:3262
 msgid "Input Controllers"
 msgstr "输入控制器"
 
-#: ../app/dialogs/preferences-dialog.c:3265
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3277
+#: ../app/dialogs/preferences-dialog.c:3278
 msgid "Folders"
 msgstr "文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3273
+#: ../app/dialogs/preferences-dialog.c:3285
 msgid "Reset _Folders"
 msgstr "重置文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3289
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "_Temporary folder:"
 msgstr "临时文件夹(_T)："
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3302
 msgid "Select Folder for Temporary Files"
 msgstr "为临时文件选择文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3294
+#: ../app/dialogs/preferences-dialog.c:3306
 msgid "_Swap folder:"
 msgstr "交换文件夹(_S)："
 
-#: ../app/dialogs/preferences-dialog.c:3295
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Select Swap Folder"
 msgstr "选择交换文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/preferences-dialog.c:3340
 msgid "Brush Folders"
 msgstr "笔刷文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3331
+#: ../app/dialogs/preferences-dialog.c:3343
 msgid "Reset Brush _Folders"
 msgstr "重置笔刷文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3344
 msgid "Select Brush Folders"
 msgstr "选择笔刷文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3334
+#: ../app/dialogs/preferences-dialog.c:3346
 msgid "Dynamics Folders"
 msgstr "动态文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3337
+#: ../app/dialogs/preferences-dialog.c:3349
 msgid "Reset Dynamics _Folders"
 msgstr "重置动态文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3350
 msgid "Select Dynamics Folders"
 msgstr "选择动态文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3340
+#: ../app/dialogs/preferences-dialog.c:3352
 msgid "Pattern Folders"
 msgstr "图案文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3343
+#: ../app/dialogs/preferences-dialog.c:3355
 msgid "Reset Pattern _Folders"
 msgstr "重置图案文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3356
 msgid "Select Pattern Folders"
 msgstr "选择图案文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3346
+#: ../app/dialogs/preferences-dialog.c:3358
 msgid "Palette Folders"
 msgstr "色板文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3349
+#: ../app/dialogs/preferences-dialog.c:3361
 msgid "Reset Palette _Folders"
 msgstr "重置色板文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3362
 msgid "Select Palette Folders"
 msgstr "选择色板文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3352
+#: ../app/dialogs/preferences-dialog.c:3364
 msgid "Gradient Folders"
 msgstr "渐变文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3355
+#: ../app/dialogs/preferences-dialog.c:3367
 msgid "Reset Gradient _Folders"
 msgstr "重置渐变文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3356
+#: ../app/dialogs/preferences-dialog.c:3368
 msgid "Select Gradient Folders"
 msgstr "选择渐变文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3358
+#: ../app/dialogs/preferences-dialog.c:3370
 msgid "Font Folders"
 msgstr "字体文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3361
+#: ../app/dialogs/preferences-dialog.c:3373
 msgid "Reset Font _Folders"
 msgstr "重置字体文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3362
+#: ../app/dialogs/preferences-dialog.c:3374
 msgid "Select Font Folders"
 msgstr "选择字体文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3364
+#: ../app/dialogs/preferences-dialog.c:3376
 msgid "Tool Preset Folders"
 msgstr "工具预设文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3367
+#: ../app/dialogs/preferences-dialog.c:3379
 msgid "Reset Tool Preset _Folders"
 msgstr "重置工具预设文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3368
+#: ../app/dialogs/preferences-dialog.c:3380
 msgid "Select Tool Preset Folders"
 msgstr "选择工具预设文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3370
+#: ../app/dialogs/preferences-dialog.c:3382
 msgid "MyPaint Brush Folders"
 msgstr "MyPaint 笔刷文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3373
+#: ../app/dialogs/preferences-dialog.c:3385
 msgid "Reset MyPaint Brush _Folders"
 msgstr "重置 MyPaint 笔刷文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3374
+#: ../app/dialogs/preferences-dialog.c:3386
 msgid "Select MyPaint Brush Folders"
 msgstr "选择 MyPaint 笔刷文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3376
+#: ../app/dialogs/preferences-dialog.c:3388
 msgid "Plug-in Folders"
 msgstr "插件文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3379
+#: ../app/dialogs/preferences-dialog.c:3391
 msgid "Reset plug-in _Folders"
 msgstr "重置插件文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3380
+#: ../app/dialogs/preferences-dialog.c:3392
 msgid "Select plug-in Folders"
 msgstr "选择插件文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3382
+#: ../app/dialogs/preferences-dialog.c:3394
 msgid "Scripts"
 msgstr "脚本"
 
-#: ../app/dialogs/preferences-dialog.c:3382
+#: ../app/dialogs/preferences-dialog.c:3394
 msgid "Script-Fu Folders"
 msgstr "脚本文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3385
+#: ../app/dialogs/preferences-dialog.c:3397
 msgid "Reset Script-Fu _Folders"
 msgstr "重置脚本文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3386
+#: ../app/dialogs/preferences-dialog.c:3398
 msgid "Select Script-Fu Folders"
 msgstr "选择脚本文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3388
+#: ../app/dialogs/preferences-dialog.c:3400
 msgid "Module Folders"
 msgstr "模块文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3391
+#: ../app/dialogs/preferences-dialog.c:3403
 msgid "Reset Module _Folders"
 msgstr "重置模块文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3392
+#: ../app/dialogs/preferences-dialog.c:3404
 msgid "Select Module Folders"
 msgstr "选择模块文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3394
+#: ../app/dialogs/preferences-dialog.c:3406
 msgid "Interpreters"
 msgstr "解释器"
 
-#: ../app/dialogs/preferences-dialog.c:3394
+#: ../app/dialogs/preferences-dialog.c:3406
 msgid "Interpreter Folders"
 msgstr "解释器文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3397
+#: ../app/dialogs/preferences-dialog.c:3409
 msgid "Reset Interpreter _Folders"
 msgstr "重置解释器文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3398
+#: ../app/dialogs/preferences-dialog.c:3410
 msgid "Select Interpreter Folders"
 msgstr "选择解释器文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3400
+#: ../app/dialogs/preferences-dialog.c:3412
 msgid "Environment"
 msgstr "环境"
 
-#: ../app/dialogs/preferences-dialog.c:3400
+#: ../app/dialogs/preferences-dialog.c:3412
 msgid "Environment Folders"
 msgstr "环境文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3403
+#: ../app/dialogs/preferences-dialog.c:3415
 msgid "Reset Environment _Folders"
 msgstr "重置环境文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3404
+#: ../app/dialogs/preferences-dialog.c:3416
 msgid "Select Environment Folders"
 msgstr "选择环境文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3406
+#: ../app/dialogs/preferences-dialog.c:3418
 msgid "Themes"
 msgstr "主题"
 
-#: ../app/dialogs/preferences-dialog.c:3406
+#: ../app/dialogs/preferences-dialog.c:3418
 msgid "Theme Folders"
 msgstr "主题文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3409
+#: ../app/dialogs/preferences-dialog.c:3421
 msgid "Reset Theme _Folders"
 msgstr "重置主题文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3410
+#: ../app/dialogs/preferences-dialog.c:3422
 msgid "Select Theme Folders"
 msgstr "选择主题文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3412
+#: ../app/dialogs/preferences-dialog.c:3424
 msgid "Icon Themes"
 msgstr "图标主题"
 
-#: ../app/dialogs/preferences-dialog.c:3412
+#: ../app/dialogs/preferences-dialog.c:3424
 msgid "Icon Theme Folders"
 msgstr "图标主题文件夹"
 
-#: ../app/dialogs/preferences-dialog.c:3415
+#: ../app/dialogs/preferences-dialog.c:3427
 msgid "Reset Icon Theme _Folders"
 msgstr "重置图标主题文件夹(_F)"
 
-#: ../app/dialogs/preferences-dialog.c:3416
+#: ../app/dialogs/preferences-dialog.c:3428
 msgid "Select Icon Theme Folders"
 msgstr "选择图标主题文件夹"
 
@@ -18886,19 +18938,19 @@ msgstr "位样合并(_S)"
 msgid "Access the image menu"
 msgstr "获取图像菜单"
 
-#: ../app/display/gimpdisplayshell.c:630
+#: ../app/display/gimpdisplayshell.c:648
 msgid "Zoom image when window size changes"
 msgstr "当窗口大小改变时缩放图像"
 
-#: ../app/display/gimpdisplayshell.c:659
+#: ../app/display/gimpdisplayshell.c:677
 msgid "Toggle Quick Mask"
 msgstr "切换快速蒙版"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:692
 msgid "Navigate the image display"
 msgstr "导航图像显示"
 
-#: ../app/display/gimpdisplayshell.c:727 ../app/display/gimpdisplayshell.c:1401
+#: ../app/display/gimpdisplayshell.c:745 ../app/display/gimpdisplayshell.c:1420
 #: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "拖动图像到此处以打开"
@@ -19093,11 +19145,11 @@ msgstr "（干净）"
 #: ../app/widgets/gimpactiongroup.c:982
 #: ../app/widgets/gimpbuffersourcebox.c:166
 #: ../app/widgets/gimpbuffersourcebox.c:296
-#: ../app/widgets/gimpdeviceinfo.c:1044 ../app/widgets/gimpdeviceinfo.c:1069
+#: ../app/widgets/gimpdeviceinfo.c:1077 ../app/widgets/gimpdeviceinfo.c:1102
 msgid "(none)"
 msgstr "（无）"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1593
+#: ../app/display/gimpdisplayshell-tool-events.c:1705
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "拾取的图层：“%s”"
@@ -19632,7 +19684,7 @@ msgstr "GIMP 扩展"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1029
+#: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "RGB"
 msgstr "RGB"
 
@@ -19657,7 +19709,7 @@ msgstr "RGB-透明"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1047
+#: ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Grayscale"
 msgstr "灰度"
 
@@ -19719,7 +19771,7 @@ msgstr "透明度分量"
 msgid "Indexed-alpha"
 msgstr "索引色-透明"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1065
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1067
 msgid "Indexed"
 msgstr "索引"
 
@@ -21011,83 +21063,83 @@ msgctxt "source-align-mode"
 msgid "Fixed"
 msgstr "已固定"
 
-#: ../app/pdb/channel-cmds.c:199
+#: ../app/pdb/channel-cmds.c:201
 msgid "Combine Masks"
 msgstr "组合蒙版"
 
-#: ../app/pdb/drawable-cmds.c:524
+#: ../app/pdb/drawable-cmds.c:526
 msgid "Plug-in"
 msgstr "插件"
 
-#: ../app/pdb/drawable-cmds.c:951 ../app/tools/gimpforegroundselecttool.c:1039
+#: ../app/pdb/drawable-cmds.c:953 ../app/tools/gimpforegroundselecttool.c:1039
 msgctxt "command"
 msgid "Foreground Select"
 msgstr "前景选择"
 
-#: ../app/pdb/drawable-color-cmds.c:83
+#: ../app/pdb/drawable-color-cmds.c:85
 msgctxt "undo-type"
 msgid "Brightness-Contrast"
 msgstr "亮度-对比度"
 
-#: ../app/pdb/drawable-color-cmds.c:137
+#: ../app/pdb/drawable-color-cmds.c:139
 msgctxt "undo-type"
 msgid "Color Balance"
 msgstr "色彩平衡"
 
-#: ../app/pdb/drawable-color-cmds.c:185
+#: ../app/pdb/drawable-color-cmds.c:187
 msgctxt "undo-type"
 msgid "Colorize"
 msgstr "单色化"
 
-#: ../app/pdb/drawable-color-cmds.c:233 ../app/pdb/drawable-color-cmds.c:281
+#: ../app/pdb/drawable-color-cmds.c:235 ../app/pdb/drawable-color-cmds.c:283
 msgctxt "undo-type"
 msgid "Curves"
 msgstr "曲线"
 
-#: ../app/pdb/drawable-color-cmds.c:323
+#: ../app/pdb/drawable-color-cmds.c:325
 msgctxt "undo-type"
 msgid "Desaturate"
 msgstr "去色"
 
-#: ../app/pdb/drawable-color-cmds.c:497
+#: ../app/pdb/drawable-color-cmds.c:499
 msgctxt "undo-type"
 msgid "Hue-Saturation"
 msgstr "色相-饱和度"
 
-#: ../app/pdb/drawable-color-cmds.c:532 ../app/pdb/plug-in-compat-cmds.c:1583
+#: ../app/pdb/drawable-color-cmds.c:534 ../app/pdb/plug-in-compat-cmds.c:1585
 msgctxt "undo-type"
 msgid "Invert"
 msgstr "反相"
 
-#: ../app/pdb/drawable-color-cmds.c:600
+#: ../app/pdb/drawable-color-cmds.c:602
 msgctxt "undo-type"
 msgid "Levels"
 msgstr "色阶"
 
-#: ../app/pdb/drawable-color-cmds.c:670
+#: ../app/pdb/drawable-color-cmds.c:672
 msgctxt "undo-type"
 msgid "Posterize"
 msgstr "色相分离"
 
-#: ../app/pdb/drawable-color-cmds.c:716
+#: ../app/pdb/drawable-color-cmds.c:718
 msgctxt "undo-type"
 msgid "Threshold"
 msgstr "阀值"
 
-#: ../app/pdb/edit-cmds.c:93 ../app/pdb/edit-cmds.c:379
-#: ../app/pdb/edit-cmds.c:464
+#: ../app/pdb/edit-cmds.c:95 ../app/pdb/edit-cmds.c:381
+#: ../app/pdb/edit-cmds.c:466
 msgid "All specified drawables must belong to the same image."
 msgstr "所有指定的可绘区必须属于相同图像。"
 
-#: ../app/pdb/floating-sel-cmds.c:69
+#: ../app/pdb/floating-sel-cmds.c:71
 msgid "Cannot remove this layer because it is not a floating selection."
 msgstr "无法移动此图层，因为它不是一个浮动选区。"
 
-#: ../app/pdb/floating-sel-cmds.c:102
+#: ../app/pdb/floating-sel-cmds.c:104
 msgid "Cannot anchor this layer because it is not a floating selection."
 msgstr "无法固定此图层，因为它不是一个浮动选区。"
 
-#: ../app/pdb/floating-sel-cmds.c:135
+#: ../app/pdb/floating-sel-cmds.c:137
 msgid ""
 "Cannot convert this layer to a normal layer because it is not a floating "
 "selection."
@@ -21321,12 +21373,12 @@ msgstr "“%s”(%d) 图像拥有精度“%s”而不是预计的精度“%s”"
 msgid "Image '%s' (%d) must not be of precision '%s'"
 msgstr "“%s” (%d) 图像必须拥有精度“%s”"
 
-#: ../app/pdb/gimppdb-utils.c:792 ../app/pdb/image-guides-cmds.c:179
+#: ../app/pdb/gimppdb-utils.c:792 ../app/pdb/image-guides-cmds.c:181
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
 msgstr "“%s” (%d) 图像没有包含 ID 为 %d 的参考线"
 
-#: ../app/pdb/gimppdb-utils.c:815 ../app/pdb/image-sample-points-cmds.c:144
+#: ../app/pdb/gimppdb-utils.c:815 ../app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
 msgstr "“%s” (%d) 图像没有包含 ID 为 %d 的采样点"
@@ -21341,7 +21393,7 @@ msgstr "矢量对象 %d 不包括 ID 为 %d 的笔触"
 msgid "Procedure name '%s' is not a canonical identifier"
 msgstr "过程名称“%s”不是典型的标识符"
 
-#: ../app/pdb/gimppdb.c:304 ../app/pdb/gimppdb.c:377 ../app/pdb/pdb-cmds.c:69
+#: ../app/pdb/gimppdb.c:304 ../app/pdb/gimppdb.c:377 ../app/pdb/pdb-cmds.c:71
 #, c-format
 msgid "Procedure '%s' not found"
 msgstr "“%s”过程未找到"
@@ -21486,447 +21538,447 @@ msgid ""
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: ../app/pdb/image-cmds.c:2434
+#: ../app/pdb/image-cmds.c:2436
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
 
-#: ../app/pdb/image-select-cmds.c:304 ../app/tools/gimpfreeselecttool.c:105
+#: ../app/pdb/image-select-cmds.c:306 ../app/tools/gimpfreeselecttool.c:105
 msgid "Free Select"
 msgstr "自由选择"
 
-#: ../app/pdb/item-transform-cmds.c:316 ../app/tools/gimpperspectivetool.c:85
+#: ../app/pdb/item-transform-cmds.c:318 ../app/tools/gimpperspectivetool.c:85
 #: ../app/tools/gimptransformgridoptions.c:574
 #: ../app/tools/gimptransformgridoptions.c:583
 msgid "Perspective"
 msgstr "透视"
 
-#: ../app/pdb/item-transform-cmds.c:684 ../app/tools/gimpsheartool.c:111
+#: ../app/pdb/item-transform-cmds.c:686 ../app/tools/gimpsheartool.c:111
 msgid "Shearing"
 msgstr "切变"
 
-#: ../app/pdb/item-transform-cmds.c:786
+#: ../app/pdb/item-transform-cmds.c:788
 msgid "2D Transform"
 msgstr "2D 变换"
 
-#: ../app/pdb/item-transform-cmds.c:896
+#: ../app/pdb/item-transform-cmds.c:898
 msgid "2D Transforming"
 msgstr "2D 变换"
 
-#: ../app/pdb/pdb-cmds.c:1115 ../app/pdb/pdb-cmds.c:1159
-#: ../app/pdb/pdb-cmds.c:1201
+#: ../app/pdb/pdb-cmds.c:1152 ../app/pdb/pdb-cmds.c:1196
+#: ../app/pdb/pdb-cmds.c:1238
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
 msgstr "数据标签“%s”不是典型的标识符"
 
-#: ../app/pdb/plug-in-compat-cmds.c:270
+#: ../app/pdb/plug-in-compat-cmds.c:272
 msgctxt "undo-type"
 msgid "Bump Map"
 msgstr "凹凸映射"
 
-#: ../app/pdb/plug-in-compat-cmds.c:342
+#: ../app/pdb/plug-in-compat-cmds.c:344
 msgctxt "undo-type"
 msgid "Displace"
 msgstr "置换"
 
-#: ../app/pdb/plug-in-compat-cmds.c:376
+#: ../app/pdb/plug-in-compat-cmds.c:378
 msgctxt "undo-type"
 msgid "Gaussian Blur"
 msgstr "高斯模糊"
 
-#: ../app/pdb/plug-in-compat-cmds.c:482
+#: ../app/pdb/plug-in-compat-cmds.c:484
 msgctxt "undo-type"
 msgid "Alien Map"
 msgstr "奇异映射"
 
-#: ../app/pdb/plug-in-compat-cmds.c:519
+#: ../app/pdb/plug-in-compat-cmds.c:521
 msgctxt "undo-type"
 msgid "Antialias"
 msgstr "抗锯齿"
 
-#: ../app/pdb/plug-in-compat-cmds.c:562
+#: ../app/pdb/plug-in-compat-cmds.c:564
 msgctxt "undo-type"
 msgid "Apply Canvas"
 msgstr "应用画布"
 
-#: ../app/pdb/plug-in-compat-cmds.c:622
+#: ../app/pdb/plug-in-compat-cmds.c:624
 msgctxt "undo-type"
 msgid "Apply Lens"
 msgstr "应用镜头"
 
-#: ../app/pdb/plug-in-compat-cmds.c:668
+#: ../app/pdb/plug-in-compat-cmds.c:670
 msgid "Autocrop image"
 msgstr "自动剪裁图像"
 
-#: ../app/pdb/plug-in-compat-cmds.c:731
+#: ../app/pdb/plug-in-compat-cmds.c:733
 msgid "Autocrop layer"
 msgstr "自动裁剪图层"
 
-#: ../app/pdb/plug-in-compat-cmds.c:785
+#: ../app/pdb/plug-in-compat-cmds.c:787
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
 msgstr "拉伸对比度 HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:939
+#: ../app/pdb/plug-in-compat-cmds.c:941
 msgctxt "undo-type"
 msgid "Stretch Contrast"
 msgstr "拉伸对比度"
 
-#: ../app/pdb/plug-in-compat-cmds.c:982
+#: ../app/pdb/plug-in-compat-cmds.c:984
 msgctxt "undo-type"
 msgid "Cartoon"
 msgstr "卡通"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1061
+#: ../app/pdb/plug-in-compat-cmds.c:1063
 msgctxt "undo-type"
 msgid "Channel Mixer"
 msgstr "通道混合器"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1103
+#: ../app/pdb/plug-in-compat-cmds.c:1105
 msgctxt "undo-type"
 msgid "Color to Alpha"
 msgstr "色彩转到透明度"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1149
+#: ../app/pdb/plug-in-compat-cmds.c:1151
 #, c-format
 msgid "Array 'matrix' has only %d members, must have 25"
 msgstr "数组“矩阵”仅拥有 %d 个成员，必须有 25 个"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1157
+#: ../app/pdb/plug-in-compat-cmds.c:1159
 #, c-format
 msgid "Array 'channels' has only %d members, must have 5"
 msgstr "数组“通道”仅拥有 %d 个成员，必须有 5 个"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1229
+#: ../app/pdb/plug-in-compat-cmds.c:1231
 msgctxt "undo-type"
 msgid "Convolution Matrix"
 msgstr "卷积矩阵"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1291
+#: ../app/pdb/plug-in-compat-cmds.c:1293
 msgctxt "undo-type"
 msgid "Cubism"
 msgstr "立体主义"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1336
+#: ../app/pdb/plug-in-compat-cmds.c:1338
 msgctxt "undo-type"
 msgid "Deinterlace"
 msgstr "反交错"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1415
+#: ../app/pdb/plug-in-compat-cmds.c:1417
 msgctxt "undo-type"
 msgid "Diffraction Patterns"
 msgstr "衍射图案"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1552 ../app/pdb/plug-in-compat-cmds.c:1563
+#: ../app/pdb/plug-in-compat-cmds.c:1554 ../app/pdb/plug-in-compat-cmds.c:1565
 msgctxt "undo-type"
 msgid "DoG Edge Detect"
 msgstr "高斯差分边缘检测"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1576 ../app/pdb/plug-in-compat-cmds.c:2917
+#: ../app/pdb/plug-in-compat-cmds.c:1578 ../app/pdb/plug-in-compat-cmds.c:2919
 msgctxt "undo-type"
 msgid "Normalize"
 msgstr "标准化"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1653
+#: ../app/pdb/plug-in-compat-cmds.c:1655
 msgctxt "undo-type"
 msgid "Edge"
 msgstr "描边"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1705
+#: ../app/pdb/plug-in-compat-cmds.c:1707
 msgctxt "undo-type"
 msgid "Emboss"
 msgstr "浮雕"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1748
+#: ../app/pdb/plug-in-compat-cmds.c:1750
 msgctxt "undo-type"
 msgid "Engrave"
 msgstr "雕刻"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1821
+#: ../app/pdb/plug-in-compat-cmds.c:1823
 msgctxt "undo-type"
 msgid "Color Exchange"
 msgstr "颜色交换"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1869
+#: ../app/pdb/plug-in-compat-cmds.c:1871
 msgctxt "undo-type"
 msgid "Lens Flare"
 msgstr "镜头光晕"
 
-#: ../app/pdb/plug-in-compat-cmds.c:1934
+#: ../app/pdb/plug-in-compat-cmds.c:1936
 msgctxt "undo-type"
 msgid "Fractal Trace"
 msgstr "分形追踪"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2118
+#: ../app/pdb/plug-in-compat-cmds.c:2120
 msgctxt "undo-type"
 msgid "Glass Tile"
 msgstr "玻璃瓷片"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2171
+#: ../app/pdb/plug-in-compat-cmds.c:2173
 msgctxt "undo-type"
 msgid "Noise HSV"
 msgstr "噪点 HSV"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2214
+#: ../app/pdb/plug-in-compat-cmds.c:2216
 msgctxt "undo-type"
 msgid "Illusion"
 msgstr "幻想"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2251
+#: ../app/pdb/plug-in-compat-cmds.c:2253
 msgctxt "undo-type"
 msgid "Laplace"
 msgstr "拉普拉斯"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2327
+#: ../app/pdb/plug-in-compat-cmds.c:2329
 msgctxt "undo-type"
 msgid "Lens Distortion"
 msgstr "镜头畸变"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2367
+#: ../app/pdb/plug-in-compat-cmds.c:2369
 msgctxt "undo-type"
 msgid "Tile Seamless"
 msgstr "无缝瓷片"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2434
+#: ../app/pdb/plug-in-compat-cmds.c:2436
 msgctxt "undo-type"
 msgid "Maze"
 msgstr "迷宫"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2517 ../app/pdb/plug-in-compat-cmds.c:2601
+#: ../app/pdb/plug-in-compat-cmds.c:2519 ../app/pdb/plug-in-compat-cmds.c:2603
 msgctxt "undo-type"
 msgid "Motion Blur"
 msgstr "运动模糊"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2648
+#: ../app/pdb/plug-in-compat-cmds.c:2650
 msgctxt "undo-type"
 msgid "Median Blur"
 msgstr "中值模糊"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2745
+#: ../app/pdb/plug-in-compat-cmds.c:2747
 msgctxt "undo-type"
 msgid "Mosaic"
 msgstr "马赛克"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2789
+#: ../app/pdb/plug-in-compat-cmds.c:2791
 msgctxt "undo-type"
 msgid "Neon"
 msgstr "霓虹"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2877
+#: ../app/pdb/plug-in-compat-cmds.c:2879
 msgctxt "undo-type"
 msgid "Newsprint"
 msgstr "报纸"
 
-#: ../app/pdb/plug-in-compat-cmds.c:2979
+#: ../app/pdb/plug-in-compat-cmds.c:2981
 msgctxt "undo-type"
 msgid "Supernova"
 msgstr "超新星"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3023 ../app/pdb/plug-in-compat-cmds.c:3091
+#: ../app/pdb/plug-in-compat-cmds.c:3025 ../app/pdb/plug-in-compat-cmds.c:3093
 msgctxt "undo-type"
 msgid "Oilify"
 msgstr "油画"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3181
+#: ../app/pdb/plug-in-compat-cmds.c:3183
 msgctxt "undo-type"
 msgid "Paper Tile"
 msgstr "纸质瓷片"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3230
+#: ../app/pdb/plug-in-compat-cmds.c:3232
 msgctxt "undo-type"
 msgid "Photocopy"
 msgstr "影印"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3271 ../app/pdb/plug-in-compat-cmds.c:3314
+#: ../app/pdb/plug-in-compat-cmds.c:3273 ../app/pdb/plug-in-compat-cmds.c:3316
 msgctxt "undo-type"
 msgid "Pixelize"
 msgstr "像素化"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3365
+#: ../app/pdb/plug-in-compat-cmds.c:3367
 msgctxt "undo-type"
 msgid "Plasma"
 msgstr "等离子"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3419
+#: ../app/pdb/plug-in-compat-cmds.c:3421
 msgctxt "undo-type"
 msgid "Polar Coordinates"
 msgstr "极坐标"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3459
+#: ../app/pdb/plug-in-compat-cmds.c:3461
 msgctxt "undo-type"
 msgid "Red Eye Removal"
 msgstr "去除红眼"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3512
+#: ../app/pdb/plug-in-compat-cmds.c:3514
 msgctxt "undo-type"
 msgid "Random Hurl"
 msgstr "随机投掷"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3565
+#: ../app/pdb/plug-in-compat-cmds.c:3567
 msgctxt "undo-type"
 msgid "Random Pick"
 msgstr "随机拾取"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3618
+#: ../app/pdb/plug-in-compat-cmds.c:3620
 msgctxt "undo-type"
 msgid "Random Slur"
 msgstr "随机模糊"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3693
+#: ../app/pdb/plug-in-compat-cmds.c:3695
 msgctxt "undo-type"
 msgid "RGB Noise"
 msgstr "RGB 噪点"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3763
+#: ../app/pdb/plug-in-compat-cmds.c:3765
 msgctxt "undo-type"
 msgid "Ripple"
 msgstr "波纹"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3888
+#: ../app/pdb/plug-in-compat-cmds.c:3890
 msgctxt "undo-type"
 msgid "Noisify"
 msgstr "噪点化"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3932
+#: ../app/pdb/plug-in-compat-cmds.c:3934
 msgctxt "undo-type"
 msgid "Selective Gaussian Blur"
 msgstr "选择性高斯模糊"
 
-#: ../app/pdb/plug-in-compat-cmds.c:3976
+#: ../app/pdb/plug-in-compat-cmds.c:3978
 msgctxt "undo-type"
 msgid "Semi-Flatten"
 msgstr "半平整"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4019
+#: ../app/pdb/plug-in-compat-cmds.c:4021
 msgctxt "undo-type"
 msgid "Shift"
 msgstr "偏移"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4122
+#: ../app/pdb/plug-in-compat-cmds.c:4124
 msgctxt "undo-type"
 msgid "Sinus"
 msgstr "正弦"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4170
+#: ../app/pdb/plug-in-compat-cmds.c:4172
 msgctxt "undo-type"
 msgid "Sobel"
 msgstr "索贝尔"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4218
+#: ../app/pdb/plug-in-compat-cmds.c:4220
 msgctxt "undo-type"
 msgid "Softglow"
 msgstr "柔光"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4279
+#: ../app/pdb/plug-in-compat-cmds.c:4281
 msgctxt "undo-type"
 msgid "Solid Noise"
 msgstr "固态噪点"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4323
+#: ../app/pdb/plug-in-compat-cmds.c:4325
 msgctxt "undo-type"
 msgid "Spread"
 msgstr "扩散"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4364
+#: ../app/pdb/plug-in-compat-cmds.c:4366
 msgctxt "undo-type"
 msgid "Threshold Alpha"
 msgstr "临界透明"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4410
+#: ../app/pdb/plug-in-compat-cmds.c:4412
 msgctxt "undo-type"
 msgid "Sharpen (Unsharp Mask)"
 msgstr "锐化（虚光蒙版）"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4456
+#: ../app/pdb/plug-in-compat-cmds.c:4458
 msgctxt "undo-type"
 msgid "Video"
 msgstr "视频"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4493
+#: ../app/pdb/plug-in-compat-cmds.c:4495
 msgctxt "undo-type"
 msgid "Value Invert"
 msgstr "值反转"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4600
+#: ../app/pdb/plug-in-compat-cmds.c:4602
 msgctxt "undo-type"
 msgid "Value Propagate"
 msgstr "值增殖"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4647
+#: ../app/pdb/plug-in-compat-cmds.c:4649
 msgctxt "undo-type"
 msgid "Dilate"
 msgstr "膨胀"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4694
+#: ../app/pdb/plug-in-compat-cmds.c:4696
 msgctxt "undo-type"
 msgid "Erode"
 msgstr "腐蚀"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4757
+#: ../app/pdb/plug-in-compat-cmds.c:4759
 msgctxt "undo-type"
 msgid "Waves"
 msgstr "水波"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4805
+#: ../app/pdb/plug-in-compat-cmds.c:4807
 msgctxt "undo-type"
 msgid "Whirl and Pinch"
 msgstr "旋转和挤压"
 
-#: ../app/pdb/plug-in-compat-cmds.c:4857
+#: ../app/pdb/plug-in-compat-cmds.c:4859
 msgctxt "undo-type"
 msgid "Wind"
 msgstr "风"
 
-#: ../app/pdb/text-layer-cmds.c:95
+#: ../app/pdb/text-layer-cmds.c:97
 #, c-format
 msgid "Failed to create text layer"
 msgstr "创建文字图层失败"
 
-#: ../app/pdb/text-layer-cmds.c:168 ../app/pdb/text-layer-cmds.c:278
-#: ../app/pdb/text-layer-cmds.c:357 ../app/pdb/text-layer-cmds.c:430
-#: ../app/pdb/text-layer-cmds.c:502 ../app/pdb/text-layer-cmds.c:574
-#: ../app/pdb/text-layer-cmds.c:646 ../app/pdb/text-layer-cmds.c:718
-#: ../app/pdb/text-layer-cmds.c:790 ../app/pdb/text-layer-cmds.c:860
-#: ../app/pdb/text-layer-cmds.c:932 ../app/pdb/text-layer-cmds.c:1004
-#: ../app/pdb/text-layer-cmds.c:1076 ../app/pdb/text-layer-cmds.c:1118
+#: ../app/pdb/text-layer-cmds.c:170 ../app/pdb/text-layer-cmds.c:280
+#: ../app/pdb/text-layer-cmds.c:359 ../app/pdb/text-layer-cmds.c:432
+#: ../app/pdb/text-layer-cmds.c:504 ../app/pdb/text-layer-cmds.c:576
+#: ../app/pdb/text-layer-cmds.c:648 ../app/pdb/text-layer-cmds.c:720
+#: ../app/pdb/text-layer-cmds.c:792 ../app/pdb/text-layer-cmds.c:862
+#: ../app/pdb/text-layer-cmds.c:934 ../app/pdb/text-layer-cmds.c:1006
+#: ../app/pdb/text-layer-cmds.c:1078 ../app/pdb/text-layer-cmds.c:1120
 msgid "Set text layer attribute"
 msgstr "设定文字图层属性"
 
-#: ../app/pdb/vectors-cmds.c:328
+#: ../app/pdb/vectors-cmds.c:330
 msgid "Remove path stroke"
 msgstr "删除路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:365
+#: ../app/pdb/vectors-cmds.c:367
 msgid "Close path stroke"
 msgstr "闭合路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:404
+#: ../app/pdb/vectors-cmds.c:406
 msgid "Reverse path stroke"
 msgstr "反转路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:449
+#: ../app/pdb/vectors-cmds.c:451
 msgid "Translate path stroke"
 msgstr "转换路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:494
+#: ../app/pdb/vectors-cmds.c:496
 msgid "Scale path stroke"
 msgstr "缩放路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:541
+#: ../app/pdb/vectors-cmds.c:543
 msgid "Rotate path stroke"
 msgstr "旋转路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:586 ../app/pdb/vectors-cmds.c:635
+#: ../app/pdb/vectors-cmds.c:588 ../app/pdb/vectors-cmds.c:637
 msgid "Flip path stroke"
 msgstr "翻转路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:766 ../app/pdb/vectors-cmds.c:890
-#: ../app/pdb/vectors-cmds.c:1120
+#: ../app/pdb/vectors-cmds.c:768 ../app/pdb/vectors-cmds.c:892
+#: ../app/pdb/vectors-cmds.c:1122
 msgid "Add path stroke"
 msgstr "添加路径笔触"
 
-#: ../app/pdb/vectors-cmds.c:944 ../app/pdb/vectors-cmds.c:1000
-#: ../app/pdb/vectors-cmds.c:1064
+#: ../app/pdb/vectors-cmds.c:946 ../app/pdb/vectors-cmds.c:1002
+#: ../app/pdb/vectors-cmds.c:1066
 msgid "Extend path stroke"
 msgstr "扩展路径笔触"
 
@@ -21988,11 +22040,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "已取消"
 
-#: ../app/plug-in/gimppluginmanager.c:238
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "插件解释器"
 
-#: ../app/plug-in/gimppluginmanager.c:244
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "插件环境"
 
@@ -22043,35 +22095,35 @@ msgstr "正在初始化插件"
 msgid "Starting Extensions"
 msgstr "正在启动扩展"
 
-#: ../app/plug-in/gimppluginprocedure.c:1033
+#: ../app/plug-in/gimppluginprocedure.c:1035
 msgid "RGB without alpha"
 msgstr "RGB 无透明"
 
-#: ../app/plug-in/gimppluginprocedure.c:1037
+#: ../app/plug-in/gimppluginprocedure.c:1039
 msgid "RGB with alpha"
 msgstr "RGB 带透明"
 
-#: ../app/plug-in/gimppluginprocedure.c:1051
+#: ../app/plug-in/gimppluginprocedure.c:1053
 msgid "Grayscale without alpha"
 msgstr "灰度无透明"
 
-#: ../app/plug-in/gimppluginprocedure.c:1055
+#: ../app/plug-in/gimppluginprocedure.c:1057
 msgid "Grayscale with alpha"
 msgstr "灰度带透明"
 
-#: ../app/plug-in/gimppluginprocedure.c:1069
+#: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "Indexed without alpha"
 msgstr "索引色无透明"
 
-#: ../app/plug-in/gimppluginprocedure.c:1073
+#: ../app/plug-in/gimppluginprocedure.c:1075
 msgid "Indexed with alpha"
 msgstr "索引色带透明"
 
-#: ../app/plug-in/gimppluginprocedure.c:1084
+#: ../app/plug-in/gimppluginprocedure.c:1086
 msgid "This plug-in only works on the following layer types:"
 msgstr "该插件仅适用于以下图层类型："
 
-#: ../app/plug-in/gimppluginprocedure.c:1303
+#: ../app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22080,7 +22132,7 @@ msgstr ""
 "“%s”调用错误：\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1315
+#: ../app/plug-in/gimppluginprocedure.c:1331
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22089,22 +22141,22 @@ msgstr ""
 "“%s”执行错误：\n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:237
+#: ../app/plug-in/plug-in-rc.c:240
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "跳过“%s”：错误的 GIMP 协议版本。"
 
-#: ../app/plug-in/plug-in-rc.c:244
+#: ../app/plug-in/plug-in-rc.c:247
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "跳过“%s”：pluginrc 文件格式版本错误。"
 
-#: ../app/plug-in/plug-in-rc.c:550
+#: ../app/plug-in/plug-in-rc.c:553
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "图标类型“%s”无效"
 
-#: ../app/plug-in/plug-in-rc.c:565
+#: ../app/plug-in/plug-in-rc.c:568
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "图标类型“%ld”无效"
@@ -27262,11 +27314,11 @@ msgstr "滑块"
 msgid "Pressure curve"
 msgstr "压力曲线"
 
-#: ../app/widgets/gimpdeviceinfo.c:1029 ../app/widgets/gimpdeviceinfo.c:1054
+#: ../app/widgets/gimpdeviceinfo.c:1062 ../app/widgets/gimpdeviceinfo.c:1087
 msgid "(Device not present)"
 msgstr "（设备不存在）"
 
-#: ../app/widgets/gimpdeviceinfo.c:1037 ../app/widgets/gimpdeviceinfo.c:1062
+#: ../app/widgets/gimpdeviceinfo.c:1070 ../app/widgets/gimpdeviceinfo.c:1095
 msgid "(Virtual device)"
 msgstr "（虚拟设备）"
 
@@ -28222,7 +28274,7 @@ msgid "_Use selected font"
 msgstr "使用选中字体(_U)"
 
 #: ../app/widgets/gimptextstyleeditor.c:210
-#: ../app/widgets/gimptextstyleeditor.c:1321
+#: ../app/widgets/gimptextstyleeditor.c:1324
 msgid "Change font of selected text"
 msgstr "改变选中文字的字体"
 
@@ -28263,7 +28315,7 @@ msgstr "下划线"
 msgid "Strikethrough"
 msgstr "删除线"
 
-#: ../app/widgets/gimptextstyleeditor.c:1313
+#: ../app/widgets/gimptextstyleeditor.c:1316
 #, c-format
 msgid "Font \"%s\" unavailable on this system"
 msgstr "字体“%s”在此系统上不可用"
