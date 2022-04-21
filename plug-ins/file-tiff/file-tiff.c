@@ -229,6 +229,12 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                              TRUE,
                              G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+                             "Export as _CMYK",
+                             "Create a CMYK TIFF image using the soft-proofing color profile",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_AUX_ARG_BOOLEAN (procedure, "save-layers",
                                  "Save La_yers",
                                  "Save Layers",
@@ -262,10 +268,10 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
 
 static GimpValueArray *
 tiff_load (GimpProcedure        *procedure,
-          GimpRunMode           run_mode,
-          GFile                *file,
-          const GimpValueArray *args,
-          gpointer              run_data)
+           GimpRunMode           run_mode,
+           GFile                *file,
+           const GimpValueArray *args,
+           gpointer              run_data)
 {
   GimpValueArray    *return_vals;
   GimpPDBStatusType  status;
