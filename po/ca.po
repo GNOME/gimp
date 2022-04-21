@@ -10925,7 +10925,7 @@ msgid ""
 "The chosen recent dock contains a toolbox. Please close the currently open "
 "toolbox and try again."
 msgstr ""
-"L’acoblador recent seleccionat conté una caixa d'eines. Tanqueu la caixa "
+"L’acoblador seleccionat recentment conté una caixa d'eines. Tanqueu la caixa "
 "d'eines oberta i torneu a intentar-ho."
 
 #: ../app/config/config-enums.c:25
@@ -11501,7 +11501,7 @@ msgid ""
 "resolution information."
 msgstr ""
 "Estableix la resolució horitzontal del monitor, en punts per polzada. Si "
-"s'estableix a 0, força què el servidor X demani informació de les dues "
+"s'estableix a 0, força que el servidor X demani informació de les dues "
 "resolucions, horitzontal i vertical."
 
 #: ../app/config/gimprc-blurbs.h:296
@@ -11511,7 +11511,7 @@ msgid ""
 "resolution information."
 msgstr ""
 "Estableix la resolució vertical del monitor, en punts per polzada. Si "
-"s'estableix a 0, força què el servidor X demani informació de les dues "
+"s'estableix a 0, força que el servidor X demani informació de les dues "
 "resolucions, horitzontal i vertical."
 
 #: ../app/config/gimprc-blurbs.h:301
@@ -15517,7 +15517,7 @@ msgstr "Visiteu el web del GIMP"
 #: ../app/dialogs/about-dialog.c:157
 msgid "translator-credits"
 msgstr ""
-"softcatalà - www.softcatala.org\n"
+"Softcatalà - www.softcatala.org\n"
 " Diversos contribuïdors, 2000-2008.\n"
 " Quim Perez i Noguer <noguer a gmail.com>, 2005-2011\n"
 " Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007\n"
