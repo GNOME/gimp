@@ -99,7 +99,7 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Redesigned and reorganized \"Fill by line art detection\" settings"
 msgstr ""
-"S'han redissenyat i reorganitzat els paràmetres de «Emplenament per detecció de línia artística"
+"S'han redissenyat i reorganitzat els paràmetres d'«Emplenament per detecció de línia artística"
 "»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
@@ -6569,12 +6569,12 @@ msgstr "_RGB"
 #: ../app/actions/gradient-editor-actions.c:361
 msgctxt "gradient-editor-coloring"
 msgid "HSV (_counter-clockwise hue)"
-msgstr "HSV (to en sentit_antihorari)"
+msgstr "HSV (to en sentit _antihorari)"
 
 #: ../app/actions/gradient-editor-actions.c:366
 msgctxt "gradient-editor-coloring"
 msgid "HSV (clockwise _hue)"
-msgstr "HSV (to en sentit_horari)"
+msgstr "HSV (to en sentit _horari)"
 
 #: ../app/actions/gradient-editor-actions.c:371
 msgctxt "gradient-editor-coloring"
@@ -11828,7 +11828,7 @@ msgstr ""
 
 #: ../app/config/gimpcoreconfig.c:797 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
-msgstr "Sintaxi del patró per a ercar i seleccionar elements:"
+msgstr "Sintaxi del patró per a cercar i seleccionar elements:"
 
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:435
 msgid "Layer"
