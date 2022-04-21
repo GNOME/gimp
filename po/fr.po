@@ -1,5 +1,5 @@
 # French translation for The GIMP.
-# Copyright (C) 1998-2020 Free Software Foundation, Inc.
+# Copyright (C) 1998-2022 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Vincent Renardias <vincent@ldsol.com>, 1998-2000.
@@ -14,25 +14,25 @@
 # Laurent Monin <gimp@norz.org>, 2007.
 # Yannick Tailliez <ytdispatch-libre@yahoo.com>, 2008.
 # Robert-André Mauchin <zebob.m@pengzone.org>, 2008.
-# Claude Paroz <claude@2xlibre.net>, 2009-2011, 2018-2020.
+# Claude Paroz <claude@2xlibre.net>, 2009-2011, 2018-2022.
 # Alexandre Franke, <alexandre.franke@gmail.com>, 2012.
 # Julien Hardelin <jhardlin@orange.fr>, 2004-2020.
-# Charles Monzat <charles.monzat@free.fr>, 2019.
+# Charles Monzat <charles.monzat@free.fr>, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-02 10:22+0000\n"
-"PO-Revision-Date: 2020-09-20 10:35+0200\n"
-"Last-Translator: Julien Hardelin <jhardlin@orange.fr>\n"
+"POT-Creation-Date: 2022-04-17 12:26+0000\n"
+"PO-Revision-Date: 2022-04-20 16:46+0200\n"
+"Last-Translator: Charles Monzat <charles.monzat@free.fr>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
-"X-Generator: Lokalize 2.0\n"
+"X-Generator: Gtranslator 40.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -309,14 +309,12 @@ msgid ""
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
-#, fuzzy
 msgid "Many usability improvements on the slider widget"
-msgstr "Nombreuses améliorations d’usage."
+msgstr "Nombreuses améliorations d’usage du composant curseur"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:54
-#, fuzzy
 msgid "Usability cleaning in the Layers dockable"
-msgstr "-Cliquer sur la vignette dans le groupe de calques"
+msgstr "Nettoyages concernant la convivialité du groupe de calques"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:55
 msgid ""
@@ -356,18 +354,16 @@ msgid ""
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:63
-#, fuzzy
 msgid "Multi-selection of layers in the Layers dockable"
-msgstr "-Cliquer sur la vignette dans le groupe de calques"
+msgstr "Sélection multiple de calques dans le groupe de calques"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:64
 msgid "Proper high pixel density display support"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
-#, fuzzy
 msgid "Improved input device support"
-msgstr "Ouvre l’éditeur de périphériques d’entrée"
+msgstr "Amélioration de la prise en charge des périphériques d’entrée"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "Major plug-in API rewrite"
@@ -409,11 +405,10 @@ msgid ""
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
-#, fuzzy
 msgid "GIMP 2.10.24 is again mostly a bug fix release. Notable changes:"
 msgstr ""
-"GIMP 2.10.22 est principalement une version de corrections de bogues. Les "
-"changements notables :"
+"GIMP 2.10.24 est encore une publication essentiellement de correction de "
+"bogues et d’optimisation. Elle contient en particulier :"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:75
 msgid "GeoTIFF metadata support added"
@@ -440,9 +435,8 @@ msgid "Many fixes and improvements to the metadata viewer and editor"
 msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:80
-#, fuzzy
 msgid "New Kabyle translation"
-msgstr "Transformation par poignées"
+msgstr "Nouvelle traduction en kabyle"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:81
 msgid "Off-canvas point snapping (to grid, guides, paths) made possible"
@@ -681,7 +675,7 @@ msgid ""
 "a 2.10.10 with so many changes! Still, very cool improvements are also "
 "available, in particular for curves editing:"
 msgstr ""
-"Gimp 2.10.12 apporte le règlement de nombreux bogues, ce qui était attendu "
+"Gimp 2.10.12 apporte la correction de nombreux bogues, ce qui était attendu "
 "après une version 2.10.10 avec tant de changements ! Il y a également de "
 "nouvelles améliorations, notamment dans le traitement des courbes :"
 
@@ -759,13 +753,13 @@ msgid ""
 "Add \"Constrain handles\" and \"Around center\" options to the perspective-"
 "transform tool's GUI"
 msgstr ""
-"Les options « Poignées contraintes » et « Autour du centre » ont été "
+"Les options « Poignées de contrainte » et « Autour du centre » ont été "
 "ajoutées à l’interface de l’outil Transformation de perspective."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:134
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
-"Nouvelle combinaison de touche « Alt + clic milieu » pour prélever les "
+"Nouvelle combinaison de touches « Alt + clic milieu » pour prélever les "
 "calques."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:135
@@ -930,7 +924,7 @@ msgid ""
 "async operations currently running"
 msgstr ""
 "Nouveau champ « asynchrone » dans le groupe « divers » du tableau de bord, "
-"affichant le nombre d’opérations asynchrones en cours."
+"affichant le nombre d’opérations asynchrones en cours"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:159
 msgid "File format filtering in Open/Save/Export dialogs made less confusing"
@@ -1306,10 +1300,10 @@ msgid ""
 "You should have received a copy of the GNU General Public License along with "
 "GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
-"GIMP est un logiciel libre ; vous pouvez le diffuser et/ou le modifier "
-"suivant les termes de la Licence Publique Générale GNU telle que publiée par "
-"la Free Software Foundation ; soit la version 3 de cette licence, soit (à "
-"votre convenance) une version ultérieure.\n"
+"GIMP est un logiciel libre ; vous pouvez le diffuser et le modifier suivant "
+"les termes de la Licence Publique Générale GNU telle que publiée par la Free "
+"Software Foundation ; soit la version 3 de cette licence, soit (à votre "
+"convenance) une version ultérieure.\n"
 "\n"
 "GIMP est diffusé dans l’espoir qu’il sera utile, mais SANS AUCUNE GARANTIE ; "
 "sans même une garantie implicite de COMMERCIALISATION ou d’ADÉQUATION À UN "
@@ -1317,7 +1311,7 @@ msgstr ""
 "détails.\n"
 "\n"
 "Vous devriez avoir reçu une copie de la Licence Publique Générale GNU avec "
-"GIMP. Sinon, consultez https://www.gnu.org/licenses/"
+"GIMP. Sinon, consultez https://www.gnu.org/licenses/"
 
 #: ../app/gimp-update.c:419
 #, c-format
@@ -1338,115 +1332,119 @@ msgstr "utilisation de %s version %s (compilé avec la version %s)"
 msgid "%s version %s"
 msgstr "%s version %s"
 
-#: ../app/main.c:165
+#: ../app/main.c:166
 msgid "Show version information and exit"
 msgstr "Afficher l’information de version et quitter"
 
-#: ../app/main.c:170
+#: ../app/main.c:171
 msgid "Show license information and exit"
 msgstr "Afficher l’information de licence et quitter"
 
-#: ../app/main.c:175
+#: ../app/main.c:176
 msgid "Be more verbose"
 msgstr "Être plus bavard"
 
-#: ../app/main.c:180
+#: ../app/main.c:181
 msgid "Start a new GIMP instance"
 msgstr "Démarrer une nouvelle instance de GIMP"
 
-#: ../app/main.c:185
+#: ../app/main.c:186
 msgid "Open images as new"
 msgstr "Ouvrir en tant que nouvelles images"
 
-#: ../app/main.c:190
+#: ../app/main.c:191
 msgid "Run without a user interface"
 msgstr "Lancer sans interface utilisateur"
 
-#: ../app/main.c:195
+#: ../app/main.c:196
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ne pas charger les brosses, dégradés, palettes, motifs…"
 
-#: ../app/main.c:200
+#: ../app/main.c:201
 msgid "Do not load any fonts"
 msgstr "Ne charger aucune police"
 
-#: ../app/main.c:205
+#: ../app/main.c:206
 msgid "Do not show a splash screen"
 msgstr "Ne pas afficher d’écran de démarrage"
 
-#: ../app/main.c:210
+#: ../app/main.c:211
 msgid "Do not use shared memory between GIMP and plug-ins"
 msgstr "Ne pas utiliser la mémoire partagée entre GIMP et ses greffons"
 
-#: ../app/main.c:215
+#: ../app/main.c:216
 msgid "Do not use special CPU acceleration functions"
 msgstr "Ne pas utiliser les accélérations propres aux CPU"
 
-#: ../app/main.c:220
+#: ../app/main.c:221
 msgid "Use an alternate sessionrc file"
 msgstr "Utiliser un autre fichier sessionrc"
 
-#: ../app/main.c:225
+#: ../app/main.c:226
 msgid "Use an alternate user gimprc file"
 msgstr "Utiliser un autre fichier utilisateur gimprc"
 
-#: ../app/main.c:230
+#: ../app/main.c:231
 msgid "Use an alternate system gimprc file"
 msgstr "Utiliser un autre fichier système gimprc"
 
-#: ../app/main.c:235
+#: ../app/main.c:236
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Commande batch à lancer (peut être utilisé plusieurs fois)"
 
-#: ../app/main.c:240
+#: ../app/main.c:241
 msgid "The procedure to process batch commands with"
 msgstr "La procédure pour exécuter les commandes batch"
 
-#: ../app/main.c:245
+#: ../app/main.c:246
+msgid "Quit immediately after performing requested actions"
+msgstr ""
+
+#: ../app/main.c:251
 msgid "Send messages to console instead of using a dialog"
 msgstr ""
 "Envoyer les messages dans la console au lieu d’utiliser une boîte de dialogue"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:251
+#: ../app/main.c:257
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Mode compatibilité PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:257
+#: ../app/main.c:263
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Débogage en cas d’arrêt brutal (never|query|always)"
 
-#: ../app/main.c:262
+#: ../app/main.c:268
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Activer le débogage pour les signaux non fatals"
 
-#: ../app/main.c:267
+#: ../app/main.c:273
 msgid "Make all warnings fatal"
 msgstr "Rendre tous les signaux fatals"
 
-#: ../app/main.c:272
+#: ../app/main.c:278
 msgid "Output a gimprc file with default settings"
 msgstr "Créer un fichier gimprc avec les paramètres par défaut"
 
-#: ../app/main.c:288
+#: ../app/main.c:294
 msgid "Output a sorted list of deprecated procedures in the PDB"
 msgstr "Créer une liste triée des procédures invalidées de la BDP"
 
-#: ../app/main.c:293
+#: ../app/main.c:299
 msgid "Show a preferences page with experimental features"
 msgstr ""
 "Afficher une page de préférences avec des caractéristique expérimentales"
 
-#: ../app/main.c:298
+#: ../app/main.c:304
 msgid "Show an image submenu with debug actions"
 msgstr "Afficher un sous-menu d’image avec des actions de débogage"
 
-#: ../app/main.c:716
+#: ../app/main.c:723
 msgid "[FILE|URI...]"
 msgstr "[FICHIER|URI…]"
 
-#: ../app/main.c:744
+#: ../app/main.c:751
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -1455,21 +1453,21 @@ msgstr ""
 "Assurez-vous qu’une configuration adaptée à l’environnement d’affichage "
 "existe."
 
-#: ../app/main.c:763
+#: ../app/main.c:770
 msgid "Another GIMP instance is already running."
 msgstr "Une autre instance de GIMP est déjà lancée."
 
-#: ../app/main.c:850
+#: ../app/main.c:858
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Sortie GIMP. Saisissez n’importe quel caractère pour fermer cette fenêtre."
 
-#: ../app/main.c:851
+#: ../app/main.c:859
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(saisissez n’importe quel caractère pour fermer cette fenêtre)\n"
 
-#: ../app/main.c:868
+#: ../app/main.c:876
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Sortie GIMP. Vous pouvez réduire cette fenêtre mais ne la fermez pas."
 
@@ -1509,7 +1507,7 @@ msgstr "Éditeur de brosses"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:115 ../app/core/gimp-data-factories.c:356
-#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/dialogs.c:340 ../app/dialogs/preferences-dialog.c:3340
 msgid "Brushes"
 msgstr "Brosses"
 
@@ -1593,7 +1591,7 @@ msgstr "Filtres"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:172 ../app/core/gimp-data-factories.c:390
-#: ../app/dialogs/dialogs.c:358 ../app/dialogs/preferences-dialog.c:3358
+#: ../app/dialogs/dialogs.c:358 ../app/dialogs/preferences-dialog.c:3370
 msgid "Fonts"
 msgstr "Polices"
 
@@ -1604,12 +1602,12 @@ msgstr "Éditeur de dégradés"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:178 ../app/core/gimp-data-factories.c:381
-#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3352
+#: ../app/dialogs/dialogs.c:352 ../app/dialogs/preferences-dialog.c:3364
 msgid "Gradients"
 msgstr "Dégradés"
 
 #: ../app/actions/actions.c:181 ../app/core/gimp-data-factories.c:397
-#: ../app/dialogs/dialogs.c:364 ../app/dialogs/preferences-dialog.c:3364
+#: ../app/dialogs/dialogs.c:364 ../app/dialogs/preferences-dialog.c:3376
 msgid "Tool Presets"
 msgstr "Préréglages d’outils"
 
@@ -1638,7 +1636,7 @@ msgstr "Calques"
 
 #. initialize the list of mypaint brushes
 #: ../app/actions/actions.c:199 ../app/core/gimp-data-factories.c:366
-#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3370
+#: ../app/dialogs/dialogs.c:346 ../app/dialogs/preferences-dialog.c:3382
 msgid "MyPaint Brushes"
 msgstr "Brosses MyPaint"
 
@@ -1649,17 +1647,17 @@ msgstr "Éditeur de palette"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:205 ../app/core/gimp-data-factories.c:376
-#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3346
+#: ../app/dialogs/dialogs.c:355 ../app/dialogs/preferences-dialog.c:3358
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:208 ../app/core/gimp-data-factories.c:371
-#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3340
+#: ../app/dialogs/dialogs.c:349 ../app/dialogs/preferences-dialog.c:3352
 msgid "Patterns"
 msgstr "Motifs"
 
-#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3376
+#: ../app/actions/actions.c:211 ../app/dialogs/preferences-dialog.c:3388
 msgid "Plug-ins"
 msgstr "Greffons"
 
@@ -1701,9 +1699,8 @@ msgid "Tools"
 msgstr "Outils"
 
 #: ../app/actions/actions.c:238
-#, fuzzy
 msgid "Path Toolpath"
-msgstr "Outils de _peinture"
+msgstr ""
 
 #: ../app/actions/actions.c:241 ../app/dialogs/dialogs.c:383
 #: ../app/tools/gimpvectortool.c:167
@@ -1916,9 +1913,8 @@ msgstr ""
 #: ../app/actions/buffers-actions.c:128 ../app/actions/buffers-actions.c:129
 #: ../app/actions/buffers-actions.c:130 ../app/actions/buffers-actions.c:131
 #: ../app/actions/buffers-actions.c:132 ../app/actions/buffers-actions.c:133
-#, fuzzy
 msgid "No selected buffer"
-msgstr "Colle le tampon sélectionné"
+msgstr "Aucun tampon sélectionné"
 
 #: ../app/actions/channels-actions.c:45
 msgctxt "channels-action"
@@ -1961,76 +1957,64 @@ msgid "Create a new channel with last used values"
 msgstr "Crée un nouveau canal avec les dernières valeurs utilisées"
 
 #: ../app/actions/channels-actions.c:71
-#, fuzzy
 msgctxt "channels-action"
 msgid "D_uplicate Channels"
-msgstr "D_upliquer le canal"
+msgstr "D_upliquer les canaux"
 
 #: ../app/actions/channels-actions.c:73
-#, fuzzy
 msgctxt "channels-action"
 msgid "Create duplicates of selected channels and add them to the image"
-msgstr "Crée une copie de ce canal et l’ajoute à l’image"
+msgstr "Crée des copies des calques sélectionnés et les ajoute à l’image"
 
 #: ../app/actions/channels-actions.c:78
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Delete Channels"
-msgstr "Su_pprimer le canal"
+msgstr "Su_pprimer les canaux"
 
 #: ../app/actions/channels-actions.c:79
-#, fuzzy
 msgctxt "channels-action"
 msgid "Delete selected channels"
-msgstr "Supprime ce canal"
+msgstr "Supprime les canaux sélectionnés"
 
 #: ../app/actions/channels-actions.c:84
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Raise Channels"
-msgstr "_Remonter le canal"
+msgstr "_Remonter les canaux"
 
 #: ../app/actions/channels-actions.c:85
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise these channels one step in the channel stack"
-msgstr "Remonte ce canal d’un niveau dans la pile des canaux"
+msgstr "Remonte ces canaux d’un niveau dans la pile des canaux"
 
 #: ../app/actions/channels-actions.c:90
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise Channels to _Top"
-msgstr "Remonter le canal tout en _haut"
+msgstr "Remonter les canaux tout en _haut"
 
 #: ../app/actions/channels-actions.c:92
-#, fuzzy
 msgctxt "channels-action"
 msgid "Raise these channels to the top of the channel stack"
-msgstr "Remonte ce canal tout en haut de la pile des canaux"
+msgstr "Remonte ces canaux tout en haut de la pile des canaux"
 
 #: ../app/actions/channels-actions.c:97
-#, fuzzy
 msgctxt "channels-action"
 msgid "_Lower Channels"
-msgstr "_Descendre le canal"
+msgstr "_Descendre les canaux"
 
 #: ../app/actions/channels-actions.c:98
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower these channels one step in the channel stack"
-msgstr "Descend ce canal d’un niveau dans la pile des canaux"
+msgstr "Descend ces canaux d’un niveau dans la pile des canaux"
 
 #: ../app/actions/channels-actions.c:103
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower Channels to _Bottom"
-msgstr "Descendre le canal tout en _bas"
+msgstr "Descendre les canaux tout en _bas"
 
 #: ../app/actions/channels-actions.c:105
-#, fuzzy
 msgctxt "channels-action"
 msgid "Lower these channels to the bottom of the channel stack"
-msgstr "Descend ce canal tout en bas de la pile des canaux"
+msgstr "Descend ces canaux tout en bas de la pile des canaux"
 
 #: ../app/actions/channels-actions.c:113
 msgctxt "channels-action"
@@ -2198,28 +2182,24 @@ msgid "Select the bottommost channel"
 msgstr "Sélectionne le canal le plus bas"
 
 #: ../app/actions/channels-actions.c:230
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select _Previous Channels"
-msgstr "Sélectionner le canal _précédent"
+msgstr "Sélectionner les canaux _précédents"
 
 #: ../app/actions/channels-actions.c:231
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the channels above the selected channels"
-msgstr "Sélectionne le canal juste au-dessus du canal actuel"
+msgstr "Sélectionne les canaux au-dessus des canaux sélectionnés"
 
 #: ../app/actions/channels-actions.c:236
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select _Next Channels"
-msgstr "Sélectionner le canal _suivant"
+msgstr "Sélectionner les canaux _suivants"
 
 #: ../app/actions/channels-actions.c:237
-#, fuzzy
 msgctxt "channels-action"
 msgid "Select the channels below the selected channels"
-msgstr "Sélectionne le canal juste au-dessous du canal actuel"
+msgstr "Sélectionne les canaux en dessous des canaux sélectionnés"
 
 #: ../app/actions/channels-commands.c:114
 #: ../app/actions/channels-commands.c:671
@@ -2253,32 +2233,28 @@ msgid "New Channel Color"
 msgstr "Nouveau canal de couleur"
 
 #: ../app/actions/channels-commands.c:231
-#, fuzzy
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "Remonter le canal"
-msgstr[1] "Remonter le canal"
+msgstr[1] "Remonter les canaux"
 
 #: ../app/actions/channels-commands.c:266
-#, fuzzy
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
 msgstr[0] "Envoyer le canal au sommet de la pile"
-msgstr[1] "Envoyer le canal au sommet de la pile"
+msgstr[1] "Envoyer les canaux au sommet de la pile"
 
 #: ../app/actions/channels-commands.c:303
-#, fuzzy
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "Descendre le canal"
-msgstr[1] "Descendre le canal"
+msgstr[1] "Descendre les canaux"
 
 #: ../app/actions/channels-commands.c:340
-#, fuzzy
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Envoyer le canal au bas de la pile"
-msgstr[1] "Envoyer le canal au bas de la pile"
+msgstr[1] "Envoyer les canaux au bas de la pile"
 
 #: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:460
 #: ../app/display/gimpdisplayshell-dnd.c:707
@@ -2289,15 +2265,14 @@ msgid "%s Channel Copy"
 msgstr "Copie du canal %s"
 
 #: ../app/actions/channels-commands.c:396
-#, fuzzy
 msgid "Duplicate channels"
-msgstr "D_upliquer le canal"
+msgstr "Dupliquer les canaux"
 
 #: ../app/actions/channels-commands.c:439
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Remove %d Channels"
-msgstr "Supprimer le canal"
+msgstr "Supprimer %d canaux"
 
 #: ../app/actions/colormap-actions.c:45
 msgctxt "colormap-action"
@@ -3558,15 +3533,14 @@ msgid "Brush Angle (Editor): Rotate Left by 15°"
 msgstr "Angle de la brosse (éditeur) : tourner vers la gauche de 15°"
 
 #: ../app/actions/context-actions.c:1093
-#, fuzzy
 msgctxt "context-action"
 msgid "_Enable/Disable Dynamics"
-msgstr "D_upliquer la dynamique"
+msgstr "_Activer/désactiver la dynamique"
 
 #: ../app/actions/context-actions.c:1094
 msgctxt "context-action"
 msgid "Apply or ignore the dynamics when painting"
-msgstr ""
+msgstr "Applique ou ignore la dynamique lors du dessin"
 
 #: ../app/actions/context-commands.c:459
 #, c-format
@@ -3589,14 +3563,12 @@ msgid "Brush Angle: %2.2f"
 msgstr "Angle de la brosse : %2.2f"
 
 #: ../app/actions/context-commands.c:827
-#, fuzzy
 msgid "Dynamics disabled"
-msgstr "Dossiers des dynamiques de brosse"
+msgstr "La dynamique est désactivée"
 
 #: ../app/actions/context-commands.c:830
-#, fuzzy
 msgid "Dynamics enabled"
-msgstr "Dossiers des dynamiques de brosse"
+msgstr "La dynamique est activée"
 
 #: ../app/actions/cursor-info-actions.c:41
 msgctxt "cursor-info-action"
@@ -3836,7 +3808,7 @@ msgstr "Progressi_f"
 
 #: ../app/actions/dashboard-commands.c:231
 msgid "Produce complete log even if not properly terminated"
-msgstr "Produire un journal complet même s’il n'est pas terminé correctement"
+msgstr "Produire un journal complet même s’il n’est pas terminé correctement"
 
 #: ../app/actions/dashboard-commands.c:294
 msgid "Add Marker"
@@ -4254,15 +4226,14 @@ msgid "Show some helpful tips on using GIMP"
 msgstr "Affiche des astuces sur l’utilisation de GIMP"
 
 #: ../app/actions/dialogs-actions.c:280
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
-msgstr "Boîtes de dialogue des filtres"
+msgstr "Boîte de dialogue de bienvenue"
 
 #: ../app/actions/dialogs-actions.c:281
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
-msgstr ""
+msgstr "Affiche des informations sur la version GIMP en cours"
 
 #: ../app/actions/dialogs-actions.c:287 ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
@@ -4290,15 +4261,16 @@ msgid "Search commands by keyword, and run them"
 msgstr "Recherche les commandes par mots-clés et les exécute"
 
 #: ../app/actions/dialogs-actions.c:305
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Manage _Extensions"
-msgstr "Démarrage des extensions"
+msgstr "Gérer les _extensions"
 
 #: ../app/actions/dialogs-actions.c:306
 msgctxt "dialogs-action"
 msgid "Manage Extensions: search, install, uninstall, update."
 msgstr ""
+"Gestion des extensions : recherche, installation, désinstallation, mise à "
+"jour."
 
 #: ../app/actions/dialogs-actions.c:369
 msgid "Tool_box"
@@ -4961,7 +4933,7 @@ msgstr "Effacer les pixels sélectionnés"
 #: ../app/actions/edit-actions.c:169
 msgctxt "edit-action"
 msgid "_Paste"
-msgstr "C_oller"
+msgstr "Co_ller"
 
 #: ../app/actions/edit-actions.c:170
 msgctxt "edit-action"
@@ -5089,11 +5061,11 @@ msgstr ""
 "Vider l’historique d’annulation de cette image fera gagner %s de mémoire."
 
 #: ../app/actions/edit-commands.c:243
-#, fuzzy, c-format
+#, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Couper la couche dans le presse-papiers."
-msgstr[1] "Couper la couche dans le presse-papiers."
+msgstr[1] "Couper %d couches dans le presse-papiers."
 
 #: ../app/actions/edit-commands.c:248
 msgid "Cut pixels to the clipboard."
@@ -5126,19 +5098,17 @@ msgid "Copy Named"
 msgstr "Copier (nommé)"
 
 #: ../app/actions/edit-commands.c:463
-#, fuzzy
+#| msgid "Copy Visible Named "
 msgid "Copy Visible Named"
 msgstr "Copier visible (nommé)"
 
 #: ../app/actions/edit-commands.c:511
-#, fuzzy
 msgid "Clear"
 msgstr "Effacer"
 
 #: ../app/actions/edit-commands.c:584
-#, fuzzy
 msgid "A selected layer's alpha channel is locked."
-msgstr "Le canal alpha du calque actif est verrouillé."
+msgstr "Le canal alpha d’un calque sélectionné est verrouillé."
 
 #: ../app/actions/edit-commands.c:655 ../app/display/gimpdisplayshell-dnd.c:497
 msgid "Pasted as new layer because the target is a layer group."
@@ -5150,9 +5120,8 @@ msgstr ""
 "Collé comme nouveau calque car les pixels du calque cible sont verrouillés."
 
 #: ../app/actions/edit-commands.c:705
-#, fuzzy
 msgid "There are no selected layers or channels to cut from."
-msgstr "Il n’y a pas de calque ou de canal actif depuis lequel couper."
+msgstr "Il n’y a pas de calque ou de canal sélectionné depuis lequel couper."
 
 #: ../app/actions/edit-commands.c:710 ../app/actions/edit-commands.c:743
 #: ../app/actions/edit-commands.c:768
@@ -5160,9 +5129,8 @@ msgid "(Unnamed Buffer)"
 msgstr "(Presse-papiers sans nom)"
 
 #: ../app/actions/edit-commands.c:738
-#, fuzzy
 msgid "There are no selected layers or channels to copy from."
-msgstr "Il n’y a pas de calque ou de canal actif depuis lequel copier."
+msgstr "Il n’y a pas de calque ou de canal sélectionné depuis lequel copier."
 
 #: ../app/actions/error-console-actions.c:40
 msgctxt "error-console-action"
@@ -5902,7 +5870,6 @@ msgid "_Selective Gaussian Blur..."
 msgstr "Flou gaussien _sélectif…"
 
 #: ../app/actions/filters-actions.c:382
-#, fuzzy
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
 msgstr "Graphique _GEGL…"
@@ -6336,9 +6303,8 @@ msgid "Re-Show Last"
 msgstr "Réafficher le dernier"
 
 #: ../app/actions/filters-actions.c:1177 ../app/actions/filters-actions.c:1179
-#, fuzzy
 msgid "No last used filters"
-msgstr "Afficher à nouveau la boîte de dialogue du dernier greffon utilisé"
+msgstr "Aucun filtre utilisé en dernier"
 
 #: ../app/actions/fonts-actions.c:44
 msgctxt "fonts-action"
@@ -7071,10 +7037,9 @@ msgid "Display information about this image"
 msgstr "Affiche des informations sur cette image"
 
 #: ../app/actions/image-actions.c:181
-#, fuzzy
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
-msgstr "Profil _RVB :"
+msgstr "Utiliser le Profil _sRVB"
 
 #: ../app/actions/image-actions.c:182
 msgctxt "image-action"
@@ -7083,6 +7048,9 @@ msgid ""
 "discarding the image's color profile, but allows to easily restore the "
 "profile."
 msgstr ""
+"Utilise temporairement un profil sRVB pour l’image. C’est la même chose que "
+"de rejeter le profil colorimétrique de l’image, mais cela permet de "
+"restaurer facilement le profil."
 
 #: ../app/actions/image-actions.c:193 ../app/actions/image-actions.c:466
 msgctxt "image-convert-action"
@@ -7185,22 +7153,20 @@ msgid "Convert the image to linear light"
 msgstr "Convertit l’image en lumière linéaire"
 
 #: ../app/actions/image-actions.c:256
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Non-Linear"
-msgstr "Linéaire"
+msgstr "Non-linéaire"
 
 #: ../app/actions/image-actions.c:258
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Convert the image to non-linear gamma from the color profile"
-msgstr "Convertir l’image en un profil de couleur"
+msgstr ""
+"Convertit l’image en gamma non linéaire à partir du profil colorimétrique"
 
 #: ../app/actions/image-actions.c:262
-#, fuzzy
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
-msgstr "Gamma perceptuel (SRVB)"
+msgstr "Perceptuel (sRVB)"
 
 #: ../app/actions/image-actions.c:264
 msgctxt "image-convert-action"
@@ -7336,9 +7302,8 @@ msgid "Converting to '%s'"
 msgstr "Convertir en « %s »"
 
 #: ../app/actions/image-commands.c:1416
-#, fuzzy
 msgid "Change Canvas Size"
-msgstr "Régler la taille du canevas"
+msgstr "Modifier la taille du canevas"
 
 #: ../app/actions/image-commands.c:1465
 msgid "Change Print Size"
@@ -7393,15 +7358,13 @@ msgstr "Supprime cette image"
 
 #: ../app/actions/items-commands.c:180 ../app/actions/items-commands.c:226
 #: ../app/tools/gimpvectortool.c:737
-#, fuzzy
 msgid "There are no selected layers or channels to fill."
-msgstr "Il n’y a pas de calque ou de canal actif depuis lequel couper."
+msgstr "Il n’y a pas de calque ou de canal sélectionné à remplir."
 
 #: ../app/actions/items-commands.c:267 ../app/actions/items-commands.c:313
 #: ../app/tools/gimpvectortool.c:811
-#, fuzzy
 msgid "There are no selected layers or channels to stroke to."
-msgstr "Il n’y a pas de calque ou de canal actif sur lequel tracer."
+msgstr "Il n’y a pas de calque ou de canal sélectionné sur lequel tracer."
 
 #: ../app/actions/layers-actions.c:52
 msgctxt "layers-action"
@@ -7514,10 +7477,9 @@ msgid "_New Layer"
 msgstr "_Nouveau calque"
 
 #: ../app/actions/layers-actions.c:114
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create new layers with last used values"
-msgstr "Créer un nouveau calque avec les dernières valeurs utilisées"
+msgstr "Créer de nouveaux calques avec les dernières valeurs utilisées"
 
 #: ../app/actions/layers-actions.c:119
 msgctxt "layers-action"
@@ -7545,22 +7507,19 @@ msgid "D_uplicate Layer"
 msgstr "D_upliquer le calque"
 
 #: ../app/actions/layers-actions.c:134
-#, fuzzy
 msgctxt "layers-action"
 msgid "Create duplicates of selected layers and add them to the image"
-msgstr "Créer une copie de ce calque et l’ajouter à l’image"
+msgstr "Créer des copies des calques sélectionnés et les ajouter à l’image"
 
 #: ../app/actions/layers-actions.c:139
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Delete Layers"
-msgstr "_Supprimer le calque"
+msgstr "_Supprimer les calques"
 
 #: ../app/actions/layers-actions.c:140
-#, fuzzy
 msgctxt "layers-action"
 msgid "Delete selected layers"
-msgstr "Supprimer le préréglage sélectionné"
+msgstr "Supprime les calques sélectionnés"
 
 #: ../app/actions/layers-actions.c:145
 msgctxt "layers-action"
@@ -7618,22 +7577,20 @@ msgid "Merge Do_wn"
 msgstr "_Fusionner vers le bas"
 
 #: ../app/actions/layers-actions.c:176 ../app/actions/layers-actions.c:185
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge these layers with the first visible layer below each"
-msgstr "Fusionner ce calque avec le premier calque visible en dessous"
+msgstr ""
+"Fusionner ces calques avec le premier calque visible en dessous de chacun"
 
 #: ../app/actions/layers-actions.c:190
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge Layer Groups"
-msgstr "Fusionner le groupe de calques"
+msgstr "Fusionner les groupes de calques"
 
 #: ../app/actions/layers-actions.c:191
-#, fuzzy
 msgctxt "layers-action"
 msgid "Merge the layer groups' layers into one normal layer"
-msgstr "Fusionner tous les calques du groupe de calques dans un seul"
+msgstr "Fusionner tous les calques des groupes de calques dans un seul"
 
 #: ../app/actions/layers-actions.c:196
 msgctxt "layers-action"
@@ -7707,16 +7664,14 @@ msgid "Adjust the layer dimensions"
 msgstr "Ajuster les dimensions du calque"
 
 #: ../app/actions/layers-actions.c:238
-#, fuzzy
 msgctxt "layers-action"
 msgid "Layers to _Image Size"
-msgstr "Calque aux _dimensions de l’image"
+msgstr "Calques aux _dimensions de l’image"
 
 #: ../app/actions/layers-actions.c:239
-#, fuzzy
 msgctxt "layers-action"
 msgid "Resize the layers to the size of the image"
-msgstr "Redimensionner le calque à la taille de l’image"
+msgstr "Redimensionner les calques à la taille de l’image"
 
 #: ../app/actions/layers-actions.c:244
 msgctxt "layers-action"
@@ -7734,10 +7689,9 @@ msgid "_Crop to Selection"
 msgstr "_Rogner selon la sélection"
 
 #: ../app/actions/layers-actions.c:251
-#, fuzzy
 msgctxt "layers-action"
 msgid "Crop the layers to the extents of the selection"
-msgstr "Rogner le calque suivant le contour de la sélection"
+msgstr "Rogner les calques suivant le contour de la sélection"
 
 #: ../app/actions/layers-actions.c:256
 msgctxt "layers-action"
@@ -7745,42 +7699,39 @@ msgid "Crop to C_ontent"
 msgstr "Rogner selon le c_ontenu"
 
 #: ../app/actions/layers-actions.c:257
-#, fuzzy
 msgctxt "layers-action"
 msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
 "the layer)"
 msgstr ""
-"Rogner le calque suivant le contour du contenu (supprimer les bordures vides "
-"de l’image)"
+"Rogner les calques suivant le contour de leur contenu (supprimer les "
+"bordures vides du calque)"
 
 #: ../app/actions/layers-actions.c:262 ../app/actions/layers-actions.c:272
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add La_yer Masks..."
-msgstr "Ajouter un masque de cal_que…"
+msgstr "Ajouter des masques de cal_que…"
 
 #: ../app/actions/layers-actions.c:264 ../app/actions/layers-actions.c:274
-#, fuzzy
 msgctxt "layers-action"
 msgid ""
 "Add masks to selected layers that allows non-destructive editing of "
 "transparency"
 msgstr ""
-"Ajouter un masque qui permet la modification non destructive de la "
-"transparence"
+"Ajouter des masques aux calques sélectionnés permettant la modification non "
+"destructive de la transparence"
 
 #: ../app/actions/layers-actions.c:279
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add La_yer Masks"
-msgstr "Ajouter un masq_ue de calque"
+msgstr "Ajouter des masques de cal_que"
 
 #: ../app/actions/layers-actions.c:281
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add mask to selected layers with last used values"
-msgstr "Ajouter un masque avec les dernières valeurs utilisées"
+msgstr ""
+"Ajouter un masque aux calques sélectionnés avec les dernières valeurs "
+"utilisées"
 
 #: ../app/actions/layers-actions.c:286
 msgctxt "layers-action"
@@ -7813,16 +7764,14 @@ msgid "Work on the layer mask"
 msgstr "Travailler sur le masque de calque"
 
 #: ../app/actions/layers-actions.c:308
-#, fuzzy
 msgctxt "layers-action"
 msgid "S_how Layer Masks"
-msgstr "Affich_er le masque de calque"
+msgstr "Affich_er les masques de calque"
 
 #: ../app/actions/layers-actions.c:314
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Disable Layer Masks"
-msgstr "_Désactiver le masque de calque"
+msgstr "_Désactiver les masques de calque"
 
 #: ../app/actions/layers-actions.c:315
 msgctxt "layers-action"
@@ -8051,58 +8000,49 @@ msgid "Delete Layer Mas_k"
 msgstr "Supprimer le masque de ca_lque"
 
 #: ../app/actions/layers-actions.c:489
-#, fuzzy
 msgctxt "layers-action"
 msgid "Remove layer masks and their effect"
-msgstr "Supprimer le masque de calque et son effet"
+msgstr "Supprimer les masques de calque et leurs effets"
 
 #: ../app/actions/layers-actions.c:497
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Masks to Selection"
-msgstr "Masque ve_rs sélection"
+msgstr "Masques ve_rs sélection"
 
 #: ../app/actions/layers-actions.c:498
-#, fuzzy
 msgctxt "layers-action"
 msgid "Replace the selection with the layer masks"
-msgstr "Remplacer la sélection par le masque de calque"
+msgstr "Remplacer la sélection par les masques de calque"
 
 #: ../app/actions/layers-actions.c:503
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Add Masks to Selection"
-msgstr "Masque ve_rs sélection"
+msgstr "_Ajouter les masques à la sélection"
 
 #: ../app/actions/layers-actions.c:504
-#, fuzzy
 msgctxt "layers-action"
 msgid "Add the layer masks to the current selection"
-msgstr "Ajoute le masque de calque à la sélection actuelle"
+msgstr "Ajoute les masques de calque à la sélection actuelle"
 
 #: ../app/actions/layers-actions.c:509
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract Masks from Selection"
-msgstr "S_oustraire de la sélection"
+msgstr "S_oustraire les masques de la sélection"
 
 #: ../app/actions/layers-actions.c:510
-#, fuzzy
 msgctxt "layers-action"
 msgid "Subtract the layer masks from the current selection"
-msgstr "Soustraire le masque de calque de la sélection actuelle"
+msgstr "Soustrait les masques de calque de la sélection actuelle"
 
 #: ../app/actions/layers-actions.c:515
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect Masks with Selection"
-msgstr "_Intersection avec la sélection"
+msgstr "_Intersection des masques avec la sélection"
 
 #: ../app/actions/layers-actions.c:516
-#, fuzzy
 msgctxt "layers-action"
 msgid "Intersect the layer masks with the current selection"
-msgstr "Intersection du masque de calque avec la sélection actuelle"
+msgstr "Intersection des masques de calque avec la sélection actuelle"
 
 #: ../app/actions/layers-actions.c:524
 msgctxt "layers-action"
@@ -8115,10 +8055,9 @@ msgid "Replace the selection with the layer's alpha channel"
 msgstr "Remplacer la sélection avec le canal alpha du calque"
 
 #: ../app/actions/layers-actions.c:531
-#, fuzzy
 msgctxt "layers-action"
 msgid "A_dd Alpha to Selection"
-msgstr "Alpha vers sélection"
+msgstr "A_jouter alpha à la sélection"
 
 #: ../app/actions/layers-actions.c:533
 msgctxt "layers-action"
@@ -8126,10 +8065,9 @@ msgid "Add the layer's alpha channel to the current selection"
 msgstr "Ajouter le canal alpha du calque à la sélection actuelle"
 
 #: ../app/actions/layers-actions.c:538
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Subtract Alpha from Selection"
-msgstr "S_oustraire de la sélection"
+msgstr "S_oustraire alpha de la sélection"
 
 #: ../app/actions/layers-actions.c:540
 msgctxt "layers-action"
@@ -8137,10 +8075,9 @@ msgid "Subtract the layer's alpha channel from the current selection"
 msgstr "Soustrait le canal alpha du calque de la sélection actuelle"
 
 #: ../app/actions/layers-actions.c:545
-#, fuzzy
 msgctxt "layers-action"
 msgid "_Intersect Alpha with Selection"
-msgstr "_Intersection avec la sélection"
+msgstr "_Intersection alpha avec la sélection"
 
 #: ../app/actions/layers-actions.c:547
 msgctxt "layers-action"
@@ -8168,28 +8105,24 @@ msgid "Select the bottommost layer"
 msgstr "Sélectionner le calque le plus bas"
 
 #: ../app/actions/layers-actions.c:567
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Previous Layers"
-msgstr "Sélectionner le calque _précédent"
+msgstr "Sélectionner les calques _précédents"
 
 #: ../app/actions/layers-actions.c:568
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layers above the current layers"
-msgstr "Sélectionne le calque juste au-dessus du calque actuel"
+msgstr "Sélectionne les calques juste au-dessus des calques actuels"
 
 #: ../app/actions/layers-actions.c:573
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select _Next Layers"
-msgstr "Sélectionner le calque _suivant"
+msgstr "Sélectionner les calques _suivants"
 
 #: ../app/actions/layers-actions.c:574
-#, fuzzy
 msgctxt "layers-action"
 msgid "Select the layers below the current layers"
-msgstr "Sélectionner le calque juste en dessous du calque actuel"
+msgstr "Sélectionne les calques juste en dessous des calques actuels"
 
 #: ../app/actions/layers-actions.c:582
 msgctxt "layers-action"
@@ -8276,173 +8209,153 @@ msgstr "Modifier les attributs du calque"
 #: ../app/actions/layers-commands.c:338
 #: ../app/widgets/gimpdrawabletreeview.c:359
 #: ../app/widgets/gimplayertreeview.c:1025
-#, fuzzy
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nouveau calque"
-msgstr[1] "Nouveau calque"
+msgstr[1] "Nouveaux calques"
 
 #: ../app/actions/layers-commands.c:339
-#, fuzzy, c-format
+#, c-format
 msgid "Create a New Layer"
 msgid_plural "Create %d New Layers"
 msgstr[0] "Créer un nouveau calque"
-msgstr[1] "Créer un nouveau calque"
+msgstr[1] "Créer %d nouveaux calques"
 
 #: ../app/actions/layers-commands.c:423 ../app/actions/layers-commands.c:2240
-#, fuzzy
 msgid "New layer"
 msgid_plural "New layers"
 msgstr[0] "Nouveau calque"
-msgstr[1] "Nouveau calque"
+msgstr[1] "Nouveaux calques"
 
 #: ../app/actions/layers-commands.c:502
 msgid "Visible"
 msgstr "Visible"
 
 #: ../app/actions/layers-commands.c:531
-#, fuzzy
 msgid "New layer group"
 msgid_plural "New layer groups"
 msgstr[0] "Nouveau _groupe de calques"
-msgstr[1] "Nouveau _groupe de calques"
+msgstr[1] "Nouveaux _groupes de calques"
 
 #: ../app/actions/layers-commands.c:644
-#, fuzzy
 msgid "Raise Layer"
 msgid_plural "Raise Layers"
 msgstr[0] "Remonter le calque"
-msgstr[1] "Remonter le calque"
+msgstr[1] "Remonter les calques"
 
 #: ../app/actions/layers-commands.c:678
-#, fuzzy
 msgid "Raise Layer to Top"
 msgid_plural "Raise Layers to Top"
 msgstr[0] "Envoyer le calque tout en haut"
-msgstr[1] "Envoyer le calque tout en haut"
+msgstr[1] "Envoyer les calques tout en haut"
 
 #: ../app/actions/layers-commands.c:715
-#, fuzzy
 msgid "Lower Layer"
 msgid_plural "Lower Layers"
 msgstr[0] "Descendre le calque"
-msgstr[1] "Descendre le calque"
+msgstr[1] "Descendre les calques"
 
 #: ../app/actions/layers-commands.c:752
-#, fuzzy
 msgid "Lower Layer to Bottom"
 msgid_plural "Lower Layers to Bottom"
 msgstr[0] "Envoyer le calque tout en bas"
-msgstr[1] "Envoyer le calque tout en bas"
+msgstr[1] "Envoyer les calques tout en bas"
 
 #: ../app/actions/layers-commands.c:779
-#, fuzzy
 msgid "Duplicate layers"
-msgstr "D_upliquer le calque"
+msgstr "Dupliquer les calques"
 
 #: ../app/actions/layers-commands.c:889
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Merge %d Layer Groups"
-msgstr "Fusionner le groupe de calques"
+msgstr "Fusionner %d groupes de calques"
 
 #: ../app/actions/layers-commands.c:949
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Remove %d Layers"
-msgstr "Supprimer le calque"
+msgstr "Supprimer %d calques"
 
 #: ../app/actions/layers-commands.c:1095
 msgid "Set Layer Boundary Size"
 msgstr "Régler la taille de la bordure du calque"
 
 #: ../app/actions/layers-commands.c:1125
-#, fuzzy
 msgid "Layers to Image Size"
-msgstr "Calque aux dimensions de l’image"
+msgstr "Calques aux dimensions de l’image"
 
 #: ../app/actions/layers-commands.c:1173
 msgid "Scale Layer"
 msgstr "Échelle et taille du calque"
 
 #: ../app/actions/layers-commands.c:1212
-#, fuzzy, c-format
+#, c-format
 msgid "Crop Layer to Selection"
 msgid_plural "Crop %d Layers to Selection"
 msgstr[0] "Rogner le calque selon la sélection"
-msgstr[1] "Rogner le calque selon la sélection"
+msgstr[1] "Rogner %d calques selon la sélection"
 
 #: ../app/actions/layers-commands.c:1277
-#, fuzzy
 msgid ""
 "Cannot crop because none of the selected layers have content or they are "
 "already cropped to their content."
 msgstr ""
-"Impossible de rogner car le calque actif est déjà rogné jusqu’à son contenu."
+"Impossible de rogner car aucun des calques sélectionnés ne possède de "
+"contenu ou ils sont déjà rognés à leur contenu."
 
 #: ../app/actions/layers-commands.c:1283
-#, fuzzy, c-format
+#, c-format
 msgid "Crop Layer to Content"
 msgid_plural "Crop %d Layers to Content"
 msgstr[0] "Rogner le calque selon le contenu"
-msgstr[1] "Rogner le calque selon le contenu"
+msgstr[1] "Rogner %d calques selon le contenu"
 
 #: ../app/actions/layers-commands.c:1420 ../app/actions/layers-commands.c:2441
-#, fuzzy
 msgid "Add Layer Masks"
-msgstr "Ajouter un masque de calque"
+msgstr "Ajouter des masques de calque"
 
 #: ../app/actions/layers-commands.c:1472
-#, fuzzy
 msgid "Apply Layer Masks"
-msgstr "Appliquer le masque de calque"
+msgstr "Appliquer les masques de calque"
 
 #: ../app/actions/layers-commands.c:1476
-#, fuzzy
 msgid "Delete Layer Masks"
-msgstr "Supprimer le masque de calque"
+msgstr "Supprimer les masques de calque"
 
 #: ../app/actions/layers-commands.c:1563
-#, fuzzy
 msgid "Show Layer Masks"
-msgstr "Afficher le masque de calque"
+msgstr "Afficher les masques de calque"
 
 #: ../app/actions/layers-commands.c:1610
-#, fuzzy
 msgid "Disable Layer Masks"
-msgstr "Désactiver le masque de calque"
+msgstr "Désactiver les masques de calque"
 
 #: ../app/actions/layers-commands.c:1649
-#, fuzzy
 msgctxt "undo-type"
 msgid "Masks to Selection"
-msgstr "Masque ve_rs sélection"
+msgstr "Masques vers sélection"
 
 #: ../app/actions/layers-commands.c:1653
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Masks to Selection"
-msgstr "Masque ve_rs sélection"
+msgstr "Ajouter les masques à la sélection"
 
 #: ../app/actions/layers-commands.c:1657
-#, fuzzy
 msgctxt "undo-type"
 msgid "Subtract Masks from Selection"
-msgstr "S_oustraire de la sélection"
+msgstr "Soustraire les masques de la sélection"
 
 #: ../app/actions/layers-commands.c:1661
-#, fuzzy
 msgctxt "undo-type"
 msgid "Intersect Masks with Selection"
-msgstr "_Intersection avec la sélection"
+msgstr "Intersection des masques avec la sélection"
 
 #: ../app/actions/layers-commands.c:1682
-#, fuzzy
 msgid "Add Alpha Channel"
 msgstr "Ajouter un canal alpha"
 
 #: ../app/actions/layers-commands.c:1703
-#, fuzzy
 msgid "Remove Alpha Channel"
 msgstr "Supprimer le canal alpha"
 
@@ -8453,78 +8366,64 @@ msgid "Alpha to Selection"
 msgstr "Alpha vers sélection"
 
 #: ../app/actions/layers-commands.c:1735 ../app/core/gimpchannel-select.c:427
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add Alpha to Selection"
-msgstr "Alpha vers sélection"
+msgstr "Ajouter alpha à la sélection"
 
 #: ../app/actions/layers-commands.c:1739 ../app/core/gimpchannel-select.c:430
-#, fuzzy
 msgctxt "undo-type"
 msgid "Subtract Alpha from Selection"
-msgstr "Soustraire le chemin de la sélection"
+msgstr "Soustraire alpha de la sélection"
 
 #: ../app/actions/layers-commands.c:1743 ../app/core/gimpchannel-select.c:436
-#, fuzzy
 msgctxt "undo-type"
 msgid "Intersect Alpha with Selection"
-msgstr "Intersection du chemin et de la sélection"
+msgstr "Intersection d’alpha et de la sélection"
 
 #: ../app/actions/layers-commands.c:1754
-#, fuzzy
 msgid "Empty Selection"
-msgstr "Sélection"
+msgstr "Sélection vide"
 
 #: ../app/actions/layers-commands.c:1784 ../app/actions/layers-commands.c:1828
 #: ../app/widgets/gimplayertreeview.c:1536
-#, fuzzy
 msgid "Set layers opacity"
-msgstr "Régler l’opacité du calque"
+msgstr "Définir l’opacité des calques"
 
 #: ../app/actions/layers-commands.c:1898
-#, fuzzy
 msgid "Set layers' blend space"
-msgstr "Régler l’opacité du calque"
+msgstr "Définir l’espace de fusion des calques"
 
 #: ../app/actions/layers-commands.c:1951
-#, fuzzy
 msgid "Set layers' composite space"
-msgstr "Espace composite du calque : auto"
+msgstr "Définir l’espace composite des calques"
 
 #: ../app/actions/layers-commands.c:2004
-#, fuzzy
 msgid "Set layers' composite mode"
-msgstr "Définir le mode de calque"
+msgstr "Définir le mode composite des calques"
 
 #: ../app/actions/layers-commands.c:2061 ../app/widgets/gimpitemtreeview.c:524
-#, fuzzy
 msgid "Lock content"
-msgstr "Verrouiller/déverrouiller le contenu"
+msgstr "Verrouiller le contenu"
 
 #: ../app/actions/layers-commands.c:2063 ../app/widgets/gimpitemtreeview.c:525
-#, fuzzy
 msgid "Unlock content"
-msgstr "Verrouiller/déverrouiller le contenu"
+msgstr "Déverrouiller le contenu"
 
 #: ../app/actions/layers-commands.c:2110 ../app/widgets/gimpitemtreeview.c:540
-#, fuzzy
 msgid "Lock position"
-msgstr "Verrouiller la position du chemin"
+msgstr "Verrouiller la position"
 
 #: ../app/actions/layers-commands.c:2112 ../app/widgets/gimpitemtreeview.c:541
-#, fuzzy
 msgid "Unlock position"
-msgstr "Verrouiller/déverrouiller la position"
+msgstr "Déverrouiller la position"
 
 #: ../app/actions/layers-commands.c:2162
-#, fuzzy
 msgid "Lock alpha channels"
-msgstr "Verrouiller le canal alpha"
+msgstr "Verrouiller les canaux alpha"
 
 #: ../app/actions/layers-commands.c:2162
-#, fuzzy
 msgid "Unlock alpha channels"
-msgstr "Verrouiller le canal alpha"
+msgstr "Déverrouiller les canaux alpha"
 
 #: ../app/actions/mypaint-brushes-actions.c:43
 msgctxt "mypaint-brushes-action"
@@ -9089,17 +8988,15 @@ msgid "Fill the selection outline"
 msgstr "Remplir le contour de la sélection"
 
 #: ../app/actions/select-actions.c:123
-#, fuzzy
 msgctxt "select-action"
 msgid "_Fill Selection Outline with last values"
-msgstr ""
-"Remplir le contour de la sélection avec les dernières valeurs utilisées"
+msgstr "_Remplir contour de sélection avec les dernières valeurs"
 
 #: ../app/actions/select-actions.c:124
 msgctxt "select-action"
 msgid "Fill the selection outline with last used values"
 msgstr ""
-"Remplir le contour de la sélection avec les dernières valeurs utilisées"
+"Remplit le contour de la sélection avec les dernières valeurs utilisées"
 
 #: ../app/actions/select-actions.c:129
 msgctxt "select-action"
@@ -9112,15 +9009,14 @@ msgid "Paint along the selection outline"
 msgstr "Peindre le long du contour de la sélection"
 
 #: ../app/actions/select-actions.c:135
-#, fuzzy
 msgctxt "select-action"
 msgid "_Stroke Selection with last values"
-msgstr "Tracer la sélection avec les dernières valeurs utilisées"
+msgstr "_Tracer la sélection avec les dernières valeurs"
 
 #: ../app/actions/select-actions.c:136
 msgctxt "select-action"
 msgid "Stroke the selection with last used values"
-msgstr "Tracer la sélection avec les dernières valeurs utilisées"
+msgstr "Trace la sélection avec les dernières valeurs utilisées"
 
 #: ../app/actions/select-commands.c:165
 msgid "Feather Selection"
@@ -9470,8 +9366,9 @@ msgstr "Vertical, de gauche à droite (orientation debout)"
 
 #: ../app/actions/text-tool-commands.c:188
 #, fuzzy, c-format
-msgid "Test along path failed: %s"
-msgstr "La suppression de « %s » a échoué : %s"
+#| msgid "Test along path failed: %s"
+msgid "Text along path failed: %s"
+msgstr "Échec de texte le long d’un chemin : %s"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -10140,39 +10037,34 @@ msgid "Tool's Force: Increase Relative"
 msgstr "Force de l’outil : augmenter en proportions"
 
 #: ../app/actions/vector-toolpath-actions.c:45
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "Vector Toolpath Menu"
-msgstr "Menu de l’outil Texte"
+msgstr "Menu de la trajectoire d’outil vectorielle"
 
 #: ../app/actions/vector-toolpath-actions.c:49
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "_Delete Anchor"
-msgstr "Supprimer une ancre"
+msgstr "_Supprimer l’ancre"
 
 #: ../app/actions/vector-toolpath-actions.c:53
 msgctxt "vector-toolpath-action"
 msgid "Shift S_tart"
-msgstr ""
+msgstr "Décaler le _départ"
 
 #: ../app/actions/vector-toolpath-actions.c:58
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "_Insert Anchor"
-msgstr "Insérer une ancre"
+msgstr "_Insérer une ancre"
 
 #: ../app/actions/vector-toolpath-actions.c:62
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "Delete _Segment"
-msgstr "Supprimer un segment"
+msgstr "Supprimer un se_gment"
 
 #: ../app/actions/vector-toolpath-actions.c:66
-#, fuzzy
 msgctxt "vector-toolpath-action"
 msgid "_Reverse Stroke"
-msgstr "Tracer"
+msgstr "_Inverser la trace"
 
 #: ../app/actions/vectors-actions.c:46
 msgctxt "vectors-action"
@@ -10718,16 +10610,14 @@ msgid "Set a custom rotation angle"
 msgstr "Définir un angle de rotation personnalisé"
 
 #: ../app/actions/view-actions.c:136
-#, fuzzy
 msgctxt "view-action"
 msgid "_Reset Flipping"
-msgstr "Retournement"
+msgstr "_Réinitialiser le retournement"
 
 #: ../app/actions/view-actions.c:138
-#, fuzzy
 msgctxt "view-action"
 msgid "Reset flipping to unflipped"
-msgstr "Remettre le miroir en place et l’angle de rotation à 0°"
+msgstr "Réinitialiser le retournement à non retourné"
 
 #: ../app/actions/view-actions.c:143
 msgctxt "view-action"
@@ -11194,16 +11084,14 @@ msgid "Flip the view vertically"
 msgstr "Affichage en miroir vertical"
 
 #: ../app/actions/view-actions.c:516
-#, fuzzy
 msgctxt "view-action"
 msgid "_Reset Rotate"
-msgstr "_Réinitialiser Miroir et rotation"
+msgstr "_Réinitialiser rotation"
 
 #: ../app/actions/view-actions.c:518
-#, fuzzy
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
-msgstr "Remettre le miroir en place et l’angle de rotation à 0°"
+msgstr "Redéfinir l’angle de rotation à 0°"
 
 #: ../app/actions/view-actions.c:526
 msgctxt "view-action"
@@ -11638,9 +11526,8 @@ msgid "Position the tabs on the right"
 msgstr "Placer les onglets tout à droite"
 
 #: ../app/actions/windows-actions.c:286 ../app/actions/windows-actions.c:288
-#, fuzzy
 msgid "Single-window mode disabled"
-msgstr "_Mode fenêtre unique"
+msgstr "Mode fenêtre unique désactivé"
 
 #: ../app/actions/windows-commands.c:208
 msgid ""
@@ -11753,7 +11640,7 @@ msgstr "Navigateur d’aide GIMP"
 #: ../app/config/config-enums.c:187
 msgctxt "help-browser-type"
 msgid "Web browser"
-msgstr "Navigateur Web"
+msgstr "Navigateur web"
 
 #: ../app/config/config-enums.c:217
 msgctxt "position"
@@ -11852,7 +11739,7 @@ msgstr ""
 
 #: ../app/config/gimpcoreconfig.c:797 ../app/dialogs/preferences-dialog.c:1899
 msgid "Pattern syntax for searching and selecting items:"
-msgstr ""
+msgstr "Syntaxe de motifs pour la recherche et la sélection d’éléments :"
 
 #: ../app/config/gimpdialogconfig.c:316 ../app/core/gimplayer.c:435
 msgid "Layer"
@@ -12097,14 +11984,12 @@ msgid "Export the image's color profile by default."
 msgstr "Exporte par défaut le profil de couleur de l’image."
 
 #: ../app/config/gimprc-blurbs.h:227
-#, fuzzy
 msgid "Export the image's comment by default."
-msgstr "Exporte par défaut le profil de couleur de l’image."
+msgstr "Exporte par défaut le commentaire de l’image."
 
 #: ../app/config/gimprc-blurbs.h:230 ../app/dialogs/preferences-dialog.c:1559
-#, fuzzy
 msgid "Export the image's thumbnail by default"
-msgstr "Exporte par défaut le profil de couleur de l’image."
+msgstr "Exporte par défaut la vignette de l’image"
 
 #. Translators: tooltip for configuration option (checkbox).
 #. * It determines how file export plug-ins handle Exif by default.
@@ -12147,38 +12032,50 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:261
 msgid ""
+"Whether to zoom based on distance moved or time spent moving, when zooming "
+"via dragging the mouse."
+msgstr ""
+
+#: ../app/config/gimprc-blurbs.h:265
+msgid ""
+"Adjusts the rate at which dragging the mouse will zoom the canvas, in "
+"percentage."
+msgstr ""
+
+#: ../app/config/gimprc-blurbs.h:269
+msgid ""
 "Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Définit le niveau d’interpolation utilisé pour les changements d’échelle et "
 "autres transformations."
 
-#: ../app/config/gimprc-blurbs.h:268
+#: ../app/config/gimprc-blurbs.h:276
 msgid "Specifies the language to use for the user interface."
 msgstr "Définit la langue à utiliser pour l’interface utilisateur."
 
-#: ../app/config/gimprc-blurbs.h:271
+#: ../app/config/gimprc-blurbs.h:279
 msgid ""
 "The last known release version of GIMP as queried from official website."
 msgstr ""
 "Dernière version de GIMP connue d’après l’interrogation du site web officiel."
 
-#: ../app/config/gimprc-blurbs.h:274
+#: ../app/config/gimprc-blurbs.h:282
 msgid "The version of GIMP config files."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:277
+#: ../app/config/gimprc-blurbs.h:285
 msgid "How many recently opened image filenames to keep on the File menu."
 msgstr "Nombre de fichiers récemment ouverts à conserver dans le menu Fichier."
 
-#: ../app/config/gimprc-blurbs.h:280
+#: ../app/config/gimprc-blurbs.h:288
 msgid "The timestamp for the last known release date."
 msgstr "Horodatage de la dernière version connue."
 
-#: ../app/config/gimprc-blurbs.h:283
+#: ../app/config/gimprc-blurbs.h:291
 msgid "The last revision number for the release."
 msgstr "Dernier numéro de révision pour cette version."
 
-#: ../app/config/gimprc-blurbs.h:286
+#: ../app/config/gimprc-blurbs.h:294
 msgid ""
 "Speed of marching ants in the selection outline.  This value is in "
 "milliseconds (less time indicates faster marching)."
@@ -12186,7 +12083,7 @@ msgstr ""
 "Vitesse de défilement des pointillés qui délimitent la sélection ; valeur en "
 "millisecondes (une durée plus courte correspond à un défilement plus rapide)."
 
-#: ../app/config/gimprc-blurbs.h:290
+#: ../app/config/gimprc-blurbs.h:298
 msgid ""
 "GIMP will warn the user if an attempt is made to create an image that would "
 "take more memory than the size specified here."
@@ -12194,14 +12091,13 @@ msgstr ""
 "GIMP préviendra l’utilisateur si ce dernier tente de créer une image dont la "
 "taille mémoire dépasserait la taille indiquée ici."
 
-#: ../app/config/gimprc-blurbs.h:294
-#, fuzzy
+#: ../app/config/gimprc-blurbs.h:302
 msgid "How to handle \"Orientation\" metadata when opening a file."
 msgstr ""
-"Comment traiter les profils de couleurs embarqués, lors de l’ouverture d’un "
+"Comment traiter la métadonnée « Orientation » lors de l’ouverture d’un "
 "fichier."
 
-#: ../app/config/gimprc-blurbs.h:303
+#: ../app/config/gimprc-blurbs.h:311
 msgid ""
 "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -12211,7 +12107,7 @@ msgstr ""
 "valeur est 0, force l’interrogation du serveur X pour les résolutions "
 "verticale et horizontale."
 
-#: ../app/config/gimprc-blurbs.h:308
+#: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "Sets the monitor's vertical resolution, in dots per inch.  If set to 0, "
 "forces the X server to be queried for both horizontal and vertical "
@@ -12221,13 +12117,13 @@ msgstr ""
 "valeur est 0, force l’interrogation du serveur X pour les résolutions "
 "verticale et horizontale."
 
-#: ../app/config/gimprc-blurbs.h:313
+#: ../app/config/gimprc-blurbs.h:321
 msgid "When enabled, non-visible layers can be edited as normal."
 msgstr ""
 "Si cette option est activée, les calques non visibles peuvent être modifiés "
 "comme les normaux."
 
-#: ../app/config/gimprc-blurbs.h:316
+#: ../app/config/gimprc-blurbs.h:324
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
@@ -12236,7 +12132,7 @@ msgstr ""
 "calque ou un chemin est cliqué. Ceci était le comportement par défaut des "
 "anciennes versions."
 
-#: ../app/config/gimprc-blurbs.h:325
+#: ../app/config/gimprc-blurbs.h:333
 msgid ""
 "Sets the size of the navigation preview available in the lower right corner "
 "of the image window."
@@ -12244,13 +12140,13 @@ msgstr ""
 "Définit la taille de l’aperçu de navigation accessible dans le coin "
 "inférieur droit de la fenêtre d’image."
 
-#: ../app/config/gimprc-blurbs.h:329
+#: ../app/config/gimprc-blurbs.h:337
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
 "Définit combien de fils d’exécution GIMP doit essayer d’utiliser pour les "
 "opérations qui l’acceptent."
 
-#: ../app/config/gimprc-blurbs.h:351
+#: ../app/config/gimprc-blurbs.h:359
 msgid ""
 "Sets whether GIMP should create previews of layers and channels. Previews in "
 "the layers and channels dialog are nice to have but they can slow things "
@@ -12260,7 +12156,7 @@ msgstr ""
 "derniers sont pratiques mais ils peuvent ralentir l’utilisation de GIMP "
 "lorsque vous travaillez sur des images de grande taille."
 
-#: ../app/config/gimprc-blurbs.h:356
+#: ../app/config/gimprc-blurbs.h:364
 msgid ""
 "Sets whether GIMP should create previews of layer groups. Layer group "
 "previews are more expensive than ordinary layer previews."
@@ -12269,7 +12165,7 @@ msgstr ""
 "des groupes de calques sont plus coûteux que les aperçus de calques "
 "ordinaires."
 
-#: ../app/config/gimprc-blurbs.h:360
+#: ../app/config/gimprc-blurbs.h:368
 msgid ""
 "Sets the preview size used for layers and channel previews in newly created "
 "dialogs."
@@ -12277,11 +12173,11 @@ msgstr ""
 "Définit la taille par défaut des aperçus des calques et des canaux dans les "
 "boîtes de dialogue récemment créées."
 
-#: ../app/config/gimprc-blurbs.h:364
+#: ../app/config/gimprc-blurbs.h:372
 msgid "Sets the default quick mask color."
 msgstr "Définit la couleur par défaut du masque rapide."
 
-#: ../app/config/gimprc-blurbs.h:367
+#: ../app/config/gimprc-blurbs.h:375
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes. This setting only takes effect in multi-window "
@@ -12291,7 +12187,7 @@ msgstr ""
 "automatiquement à la taille de l’image. Ce réglage ne prend effet que dans "
 "le mode multi-fenêtres."
 
-#: ../app/config/gimprc-blurbs.h:372
+#: ../app/config/gimprc-blurbs.h:380
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images. This setting only takes effect in multi-window mode."
@@ -12300,13 +12196,13 @@ msgstr ""
 "automatiquement lorsque vous ferez un zoom avant ou arrière. Ce réglage ne "
 "prend effet que dans le mode multi-fenêtres."
 
-#: ../app/config/gimprc-blurbs.h:377
+#: ../app/config/gimprc-blurbs.h:385
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
 "Laisser GIMP tenter de restaurer, à chaque démarrage, votre dernière session "
 "enregistrée."
 
-#: ../app/config/gimprc-blurbs.h:380
+#: ../app/config/gimprc-blurbs.h:388
 msgid ""
 "When enabled, GIMP will try to restore windows on the monitor they were open "
 "before.  When disabled, windows will appear on the currently used monitor."
@@ -12315,14 +12211,14 @@ msgstr ""
 "ont été ouvertes auparavant. Si désactivé, les fenêtres s’afficheront sur le "
 "moniteur actuellement utilisé."
 
-#: ../app/config/gimprc-blurbs.h:385
+#: ../app/config/gimprc-blurbs.h:393
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Se souvenir d’une session à l’autre de l’outil, de la couleur, de la brosse "
 "et du motif actuels."
 
-#: ../app/config/gimprc-blurbs.h:389
+#: ../app/config/gimprc-blurbs.h:397
 msgid ""
 "When enabled, the same tool and tool options will be used for all input "
 "devices. No tool switching will occur when the input device changes."
@@ -12331,7 +12227,7 @@ msgstr ""
 "seront utilisés pour tous les périphériques d’entrée. Aucun basculement "
 "d’outil n’interviendra pendant les changements de périphérique d’entrée."
 
-#: ../app/config/gimprc-blurbs.h:394
+#: ../app/config/gimprc-blurbs.h:402
 msgid ""
 "Keep a permanent record of all opened and saved files in the Recent "
 "Documents list."
@@ -12339,17 +12235,17 @@ msgstr ""
 "Conserver une trace permanente de tous les fichiers ouverts et enregistrés "
 "dans la liste des documents récents."
 
-#: ../app/config/gimprc-blurbs.h:398
+#: ../app/config/gimprc-blurbs.h:406
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "Enregistrer les positions et tailles des fenêtres principales quand on "
 "quitte GIMP."
 
-#: ../app/config/gimprc-blurbs.h:401
+#: ../app/config/gimprc-blurbs.h:409
 msgid "Save the tool options when GIMP exits."
 msgstr "Enregistrer les options des outils quand on quitte GIMP."
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:415
 msgid ""
 "When enabled, all paint tools will show a preview of the current brush's "
 "outline."
@@ -12357,14 +12253,14 @@ msgstr ""
 "Si cette option est activée, tous les outils de dessin à base de brosse "
 "afficheront un aperçu des contours de la brosse actuelle."
 
-#: ../app/config/gimprc-blurbs.h:411
+#: ../app/config/gimprc-blurbs.h:419
 msgid ""
 "When enabled, the brush outline will snap to individual dabs while painting."
 msgstr ""
 "Si cette option est activée, le contour de la brosse collera aux touches de "
 "peinture individuelles."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:423
 msgid ""
 "When enabled, dialogs will show a help button that gives access to the "
 "related help page.  Without this button, the help page can still be reached "
@@ -12374,14 +12270,14 @@ msgstr ""
 "d’aide qui vous permettra d’accéder à la page d’aide idoine. Sans ce bouton, "
 "la page d’aide peut toujours être accédée par la touche F1."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:428
 msgid ""
 "When enabled, the pointer will be shown over the image while using a paint "
 "tool. If both the brush outline and pointer are disabled, the position will "
 "be indicated as unobtrusively as possibly."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:426
+#: ../app/config/gimprc-blurbs.h:434
 msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
@@ -12390,7 +12286,7 @@ msgstr ""
 "peut aussi être activé ou désactivé via le menu « Affichage -> Afficher la "
 "barre de menu »."
 
-#: ../app/config/gimprc-blurbs.h:430
+#: ../app/config/gimprc-blurbs.h:438
 msgid ""
 "When enabled, the rulers are visible by default. This can also be toggled "
 "with the \"View->Show Rulers\" command."
@@ -12399,7 +12295,7 @@ msgstr ""
 "l’affichage de ces dernières peut aussi être contrôlé via le menu "
 "« Affichage -> Afficher les règles »."
 
-#: ../app/config/gimprc-blurbs.h:434
+#: ../app/config/gimprc-blurbs.h:442
 msgid ""
 "When enabled, the scrollbars are visible by default. This can also be "
 "toggled with the \"View->Show Scrollbars\" command."
@@ -12408,7 +12304,7 @@ msgstr ""
 "défaut. Cela peut aussi être activé ou désactivé via le menu « Affichage -> "
 "Afficher les barres de défilement »."
 
-#: ../app/config/gimprc-blurbs.h:438
+#: ../app/config/gimprc-blurbs.h:446
 msgid ""
 "When enabled, the statusbar is visible by default. This can also be toggled "
 "with the \"View->Show Statusbar\" command."
@@ -12417,7 +12313,7 @@ msgstr ""
 "peut aussi être activé ou désactivé via la commande « Affichage -> Afficher "
 "la barre d’état »."
 
-#: ../app/config/gimprc-blurbs.h:442
+#: ../app/config/gimprc-blurbs.h:450
 msgid ""
 "When enabled, the selection is visible by default. This can also be toggled "
 "with the \"View->Show Selection\" command."
@@ -12426,7 +12322,7 @@ msgstr ""
 "aussi être activé ou désactivé via la commande « Affichage -> Afficher la "
 "sélection »."
 
-#: ../app/config/gimprc-blurbs.h:446
+#: ../app/config/gimprc-blurbs.h:454
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
@@ -12435,7 +12331,7 @@ msgstr ""
 "Cela peut aussi être activé ou désactivé via la commande « Affichage -> "
 "Afficher les bords du calque »."
 
-#: ../app/config/gimprc-blurbs.h:450
+#: ../app/config/gimprc-blurbs.h:458
 msgid ""
 "When enabled, the canvas boundary is visible by default. This can also be "
 "toggled with the \"View->Show Canvas Boundary\" command."
@@ -12444,7 +12340,7 @@ msgstr ""
 "Cela peut aussi être activé ou désactivé via la commande « Affichage -> "
 "Afficher les bords du canevas »."
 
-#: ../app/config/gimprc-blurbs.h:454
+#: ../app/config/gimprc-blurbs.h:462
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
@@ -12453,7 +12349,7 @@ msgstr ""
 "peut aussi être activé ou désactivé via la commande « Affichage -> Afficher "
 "les guides »."
 
-#: ../app/config/gimprc-blurbs.h:458
+#: ../app/config/gimprc-blurbs.h:466
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
@@ -12462,7 +12358,7 @@ msgstr ""
 "aussi être activé ou désactivé via la commande « Affichage -> Afficher la "
 "grille »."
 
-#: ../app/config/gimprc-blurbs.h:462
+#: ../app/config/gimprc-blurbs.h:470
 msgid ""
 "When enabled, the sample points are visible by default. This can also be "
 "toggled with the \"View->Show Sample Points\" command."
@@ -12471,63 +12367,62 @@ msgstr ""
 "visibles. l’affichage de ces derniers peut aussi être contrôlé via la "
 "commande « Affichage -> Afficher les points d’échantillonnage »."
 
-#: ../app/config/gimprc-blurbs.h:466
+#: ../app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
 msgstr ""
 "Afficher une bulle d’aide lorsque le pointeur est au-dessus d’un élément."
 
-#: ../app/config/gimprc-blurbs.h:469
+#: ../app/config/gimprc-blurbs.h:477
 msgid "Use GIMP in a single-window mode."
 msgstr "Utiliser GIMP en mode fenêtre unique."
 
-#: ../app/config/gimprc-blurbs.h:472
+#: ../app/config/gimprc-blurbs.h:480
 msgid "Hide docks and other windows, leaving only image windows."
 msgstr ""
 "Masquer les fenêtres, groupées ou isolées. Seules persistent les fenêtres "
 "d’images."
 
-#: ../app/config/gimprc-blurbs.h:475
+#: ../app/config/gimprc-blurbs.h:483
 msgid "Show the image tabs bar in single window mode."
 msgstr "Afficher la barre des onglets d’image en mode fenêtre unique."
 
-#: ../app/config/gimprc-blurbs.h:478
+#: ../app/config/gimprc-blurbs.h:486
 msgid "Enable the N-Point Deformation tool."
 msgstr "Activer l’outil Déformation N-Point."
 
-#: ../app/config/gimprc-blurbs.h:481
+#: ../app/config/gimprc-blurbs.h:489
 msgid "Enable the Handle Transform tool."
 msgstr "Activer l’outil Transformation manuelle."
 
-#: ../app/config/gimprc-blurbs.h:484
+#: ../app/config/gimprc-blurbs.h:492
 msgid "Enable symmetry on painting."
 msgstr "Activer la symétrie lors du dessin."
 
-#: ../app/config/gimprc-blurbs.h:487
+#: ../app/config/gimprc-blurbs.h:495
 msgid "Enable the MyPaint Brush tool."
 msgstr "Activer l’outil Brosse MyPaint."
 
-#: ../app/config/gimprc-blurbs.h:490
+#: ../app/config/gimprc-blurbs.h:498
 msgid "Enable the Seamless Clone tool."
 msgstr "Activer l’outil Clonage sans raccord."
 
-#: ../app/config/gimprc-blurbs.h:493
-#, fuzzy
+#: ../app/config/gimprc-blurbs.h:501
 msgid "Enable the Paint Select tool."
-msgstr "Activer l’outil Brosse MyPaint."
+msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:496
+#: ../app/config/gimprc-blurbs.h:504
 msgid "What to do when the space bar is pressed in the image window."
 msgstr ""
 "Ce qui est à faire lors d’un appui sur la barre d’espace dans la fenêtre "
 "d’image."
 
-#: ../app/config/gimprc-blurbs.h:499
+#: ../app/config/gimprc-blurbs.h:507
 msgid "The compression method used for tile data stored in the swap file."
 msgstr ""
 "Méthode de compression utilisée pour les données de cache stockées dans le "
 "fichier d’échange."
 
-#: ../app/config/gimprc-blurbs.h:502
+#: ../app/config/gimprc-blurbs.h:510
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -12545,7 +12440,7 @@ msgstr ""
 "Samba, etc.). Pour ces raisons il est parfois conseillé de mettre le fichier "
 "d’échange dans « /tmp »."
 
-#: ../app/config/gimprc-blurbs.h:511
+#: ../app/config/gimprc-blurbs.h:519
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
@@ -12554,15 +12449,15 @@ msgstr ""
 "clavier des éléments des menu en appuyant sur une combinaison de touches "
 "tandis que l’élément de menu est surligné."
 
-#: ../app/config/gimprc-blurbs.h:515
+#: ../app/config/gimprc-blurbs.h:523
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Enregistrer les raccourcis clavier modifiés lorsqu’on quitte GIMP."
 
-#: ../app/config/gimprc-blurbs.h:518
+#: ../app/config/gimprc-blurbs.h:526
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Rétablir, à chaque démarrage, les raccourcis clavier enregistrés."
 
-#: ../app/config/gimprc-blurbs.h:521
+#: ../app/config/gimprc-blurbs.h:529
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -12575,25 +12470,22 @@ msgstr ""
 "Ainsi il est préférable que ce répertoire ne soit pas partagé avec d’autres "
 "utilisateurs."
 
-#: ../app/config/gimprc-blurbs.h:527
+#: ../app/config/gimprc-blurbs.h:535
 msgid "The name of the theme to use."
 msgstr "Nom du thème à utiliser."
 
-#: ../app/config/gimprc-blurbs.h:536
-#, fuzzy
+#: ../app/config/gimprc-blurbs.h:544
 msgid "When enabled, symbolic icons will be preferred if available."
-msgstr ""
-"Si cette option est activée, la dynamique sélectionnée sera utilisée pour "
-"tous les outils."
+msgstr "Utiliser les icônes symboliques si elles sont disponibles."
 
-#: ../app/config/gimprc-blurbs.h:542
+#: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
 msgstr ""
 "Définit l’intention de rendu par défaut concernant la boîte de dialogue "
 "« Convertir en profil colorimétrique »."
 
-#: ../app/config/gimprc-blurbs.h:545
+#: ../app/config/gimprc-blurbs.h:553
 msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
@@ -12601,14 +12493,14 @@ msgstr ""
 "Définit l’état « Compensation du point noir » par défaut concernant la boîte "
 "de dialogue « Convertir en profil colorimétrique »."
 
-#: ../app/config/gimprc-blurbs.h:549
+#: ../app/config/gimprc-blurbs.h:557
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Définit la méthode de tramage du calque par défaut concernant la boîte de "
 "dialogue « Convertir la précision »."
 
-#: ../app/config/gimprc-blurbs.h:552
+#: ../app/config/gimprc-blurbs.h:560
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
@@ -12616,20 +12508,20 @@ msgstr ""
 "Définit la méthode de tramage du calque de texte par défaut concernant la "
 "boîte de dialogue « Convertir la précision »."
 
-#: ../app/config/gimprc-blurbs.h:555
+#: ../app/config/gimprc-blurbs.h:563
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
 "Définit la méthode de tramage du canal par défaut concernant la boîte de "
 "dialogue « Convertir la précision »."
 
-#: ../app/config/gimprc-blurbs.h:558
+#: ../app/config/gimprc-blurbs.h:566
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
 "Définit le type de palette par défaut concernant la boîte de dialogue "
 "« Convertir en couleurs indexées »."
 
-#: ../app/config/gimprc-blurbs.h:561
+#: ../app/config/gimprc-blurbs.h:569
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
@@ -12637,7 +12529,7 @@ msgstr ""
 "Définit le nombre maximal de couleurs concernant la boîte de dialogue "
 "« Convertir en couleurs indexées »."
 
-#: ../app/config/gimprc-blurbs.h:564
+#: ../app/config/gimprc-blurbs.h:572
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
@@ -12645,20 +12537,20 @@ msgstr ""
 "Définit l’état par défaut de « Supprimer les couleurs en double » concernant "
 "la boîte de dialogue « Convertir en couleurs indexées »."
 
-#: ../app/config/gimprc-blurbs.h:567
+#: ../app/config/gimprc-blurbs.h:575
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
 "Définit le type de tramage par défaut concernant la boîte de dialogue "
 "« Convertir en couleurs indexées »."
 
-#: ../app/config/gimprc-blurbs.h:570
+#: ../app/config/gimprc-blurbs.h:578
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
 "Définit l’état « Tramer l’alpha » par défaut concernant la boîte de dialogue "
 "« Convertir en couleurs indexées »."
 
-#: ../app/config/gimprc-blurbs.h:573
+#: ../app/config/gimprc-blurbs.h:581
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
@@ -12666,154 +12558,154 @@ msgstr ""
 "Définit l’état « Tramer les calques de texte » par défaut concernant la "
 "boîte de dialogue « Convertir en couleurs indexées »."
 
-#: ../app/config/gimprc-blurbs.h:576
+#: ../app/config/gimprc-blurbs.h:584
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
 msgstr ""
 "Définit le type de remplissage par défaut concernant la boîte de dialogue "
 "« Taille du canevas »."
 
-#: ../app/config/gimprc-blurbs.h:579
+#: ../app/config/gimprc-blurbs.h:587
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
 "Définit le lot de calques par défaut à redimensionner concernant la boîte de "
 "dialogue « Taille du canevas »."
 
-#: ../app/config/gimprc-blurbs.h:582
+#: ../app/config/gimprc-blurbs.h:590
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
 "Définit l’état « Redimensionner les calques de texte » par défaut concernant "
 "la boîte de dialogue « Taille du canevas »."
 
-#: ../app/config/gimprc-blurbs.h:585
+#: ../app/config/gimprc-blurbs.h:593
 msgid "Sets how items are searched and selected from a textual pattern."
 msgstr ""
 
-#: ../app/config/gimprc-blurbs.h:588
+#: ../app/config/gimprc-blurbs.h:596
 msgid "Sets the default layer name for the 'New Layer' dialog."
 msgstr ""
 "Définit le nom du calque par défaut concernant la boîte de dialogue "
 "« Nouveau calque »."
 
-#: ../app/config/gimprc-blurbs.h:591
+#: ../app/config/gimprc-blurbs.h:599
 msgid "Sets the default mode for the 'New Layer' dialog."
 msgstr ""
 "Définit le mode par défaut concernant la boîte de dialogue « Nouveau "
 "calque »."
 
-#: ../app/config/gimprc-blurbs.h:594
+#: ../app/config/gimprc-blurbs.h:602
 msgid "Sets the default blend space for the 'New Layer' dialog."
 msgstr ""
 "Définit l’espace de fusion par défaut concernant la boîte de dialogue "
 "« Nouveau calque »."
 
-#: ../app/config/gimprc-blurbs.h:597
+#: ../app/config/gimprc-blurbs.h:605
 msgid "Sets the default composite space for the 'New Layer' dialog."
 msgstr ""
 "Définit l’espace composite par défaut concernant la boîte de dialogue "
 "« Nouveau calque »."
 
-#: ../app/config/gimprc-blurbs.h:600
+#: ../app/config/gimprc-blurbs.h:608
 msgid "Sets the default composite mode for the 'New Layer' dialog."
 msgstr ""
 "Définit le mode composite par défaut concernant la boîte de dialogue "
 "« Nouveau calque »."
 
-#: ../app/config/gimprc-blurbs.h:603
+#: ../app/config/gimprc-blurbs.h:611
 msgid "Sets the default opacity for the 'New Layer' dialog."
 msgstr ""
 "Définit l’opacité par défaut concernant la boîte de dialogue « Nouveau "
 "calque »."
 
-#: ../app/config/gimprc-blurbs.h:606
+#: ../app/config/gimprc-blurbs.h:614
 msgid "Sets the default fill type for the 'New Layer' dialog."
 msgstr ""
 "Définit le type de remplissage par défaut concernant la boîte de dialogue "
 "« Nouveau calque »."
 
-#: ../app/config/gimprc-blurbs.h:609
+#: ../app/config/gimprc-blurbs.h:617
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
 "Définit le type de remplissage par défaut concernant la boîte de dialogue "
 "« Taille des bords du calque »."
 
-#: ../app/config/gimprc-blurbs.h:612
+#: ../app/config/gimprc-blurbs.h:620
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
 msgstr ""
 "Définit le masque par défaut concernant la boîte de dialogue « Ajouter un "
 "masque de calque »."
 
-#: ../app/config/gimprc-blurbs.h:615
+#: ../app/config/gimprc-blurbs.h:623
 msgid "Sets the default 'invert mask' state for the 'Add Layer Mask' dialog."
 msgstr ""
 "Définit l’état « Inverser le masque » par défaut concernant la boîte de "
 "dialogue « Ajouter un masque de calque »."
 
-#: ../app/config/gimprc-blurbs.h:618
+#: ../app/config/gimprc-blurbs.h:626
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Définit le type de fusion par défaut concernant la boîte de dialogue "
 "« Fusionner les calques visibles »."
 
-#: ../app/config/gimprc-blurbs.h:621
+#: ../app/config/gimprc-blurbs.h:629
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Définit la valeur par défaut « Groupe actif uniquement » concernant la boîte "
 "de dialogue « Fusionner les calques visibles »."
 
-#: ../app/config/gimprc-blurbs.h:624
+#: ../app/config/gimprc-blurbs.h:632
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
 "Définit la valeur « Écarter les calques invisibles » par défaut concernant "
 "la boîte de dialogue « Fusionner les calques visibles »."
 
-#: ../app/config/gimprc-blurbs.h:627
+#: ../app/config/gimprc-blurbs.h:635
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr ""
 "Définit le nom de canal par défaut concernant la boîte de dialogue « Nouveau "
 "canal »."
 
-#: ../app/config/gimprc-blurbs.h:630
+#: ../app/config/gimprc-blurbs.h:638
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
 "Définit l’opacité et la couleur par défaut concernant la boîte de dialogue "
 "« Nouveau canal »."
 
-#: ../app/config/gimprc-blurbs.h:633
+#: ../app/config/gimprc-blurbs.h:641
 msgid "Sets the default path name for the 'New Path' dialog."
 msgstr ""
 "Définit le nom de chemin par défaut concernant la boîte de dialogue "
 "« Nouveau chemin »."
 
-#: ../app/config/gimprc-blurbs.h:636
+#: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
 "Définit le nom de chemin de dossier par défaut concernant la boîte de "
 "dialogue « Exporter le chemin »."
 
-#: ../app/config/gimprc-blurbs.h:639
+#: ../app/config/gimprc-blurbs.h:647
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
 "Définit l’état de « Exporter le chemin actif » par défaut concernant la "
 "boîte de dialogue « Exporter le chemin »."
 
-#: ../app/config/gimprc-blurbs.h:642
+#: ../app/config/gimprc-blurbs.h:650
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
 "Définit le chemin de dossier par défaut concernant la boîte de dialogue "
 "« Importer un chemin »."
 
-#: ../app/config/gimprc-blurbs.h:645
+#: ../app/config/gimprc-blurbs.h:653
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
 "Définit l’état de « Fusionner les chemins importés » par défaut concernant "
 "la boîte de dialogue « Importer un chemin »."
 
-#: ../app/config/gimprc-blurbs.h:648
+#: ../app/config/gimprc-blurbs.h:656
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
@@ -12822,13 +12714,13 @@ msgstr ""
 "à l’image » par défaut concernant la boîte de dialogue « Importer un "
 "chemin »."
 
-#: ../app/config/gimprc-blurbs.h:651
+#: ../app/config/gimprc-blurbs.h:659
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
 msgstr ""
 "Définit le rayon d’adoucissement par défaut concernant la boîte de dialogue "
 "« Adoucir la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:654
+#: ../app/config/gimprc-blurbs.h:662
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Feather Selection' dialog."
@@ -12836,19 +12728,19 @@ msgstr ""
 "Définit le paramétrage par défaut des « Zones sélectionnées étendues en "
 "dehors de l’image » concernant la boîte de dialogue « Adoucir la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:658
+#: ../app/config/gimprc-blurbs.h:666
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
 "Définit le rayon d’agrandissement par défaut concernant la boîte de dialogue "
 "« Agrandir la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:661
+#: ../app/config/gimprc-blurbs.h:669
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
 "Définit le rayon de réduction par défaut concernant la boîte de dialogue "
-"« Réduire la sélection »."
+"« Réduction de la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:664
+#: ../app/config/gimprc-blurbs.h:672
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Shrink Selection' dialog."
@@ -12856,13 +12748,13 @@ msgstr ""
 "Définit le paramétrage par défaut des « Zones sélectionnées étendues en "
 "dehors de l’image » concernant la boîte de dialogue « Réduire la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:668
+#: ../app/config/gimprc-blurbs.h:676
 msgid "Sets the default border radius for the 'Border Selection' dialog."
 msgstr ""
 "Définit le rayon de bordure par défaut concernant la boîte de dialogue "
 "« Border la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:671
+#: ../app/config/gimprc-blurbs.h:679
 msgid ""
 "Sets the default 'Selected areas continue outside the image' setting for the "
 "'Border Selection' dialog."
@@ -12870,19 +12762,19 @@ msgstr ""
 "Définit le paramétrage par défaut des « Zones sélectionnées étendues en "
 "dehors de l’image » concernant la boîte de dialogue « Border la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:675
+#: ../app/config/gimprc-blurbs.h:683
 msgid "Sets the default border style for the 'Border Selection' dialog."
 msgstr ""
 "Définit le style de bordure par défaut concernant la boîte de dialogue "
 "« Border la sélection »."
 
-#: ../app/config/gimprc-blurbs.h:684
+#: ../app/config/gimprc-blurbs.h:692
 msgid "Sets the size of the thumbnail shown in the Open dialog."
 msgstr ""
 "Définit la taille des vignettes affichées dans la fenêtre de dialogue "
 "d’ouverture des fichiers."
 
-#: ../app/config/gimprc-blurbs.h:687
+#: ../app/config/gimprc-blurbs.h:695
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -12891,7 +12783,7 @@ msgstr ""
 "automatiquement mise à jour si le fichier en question est plus petit que la "
 "taille indiquée ici."
 
-#: ../app/config/gimprc-blurbs.h:691
+#: ../app/config/gimprc-blurbs.h:699
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -12903,39 +12795,39 @@ msgstr ""
 "possible de travailler sur des images plus grandes que la mémoire. Si vous "
 "avez beaucoup de RAM, il conviendrait de définir cette valeur plus haut."
 
-#: ../app/config/gimprc-blurbs.h:697
+#: ../app/config/gimprc-blurbs.h:705
 msgid "Show the current foreground and background colors in the toolbox."
 msgstr ""
 "Afficher les couleurs de premier plan et d’arrière-plan dans la boîte à "
 "outils."
 
-#: ../app/config/gimprc-blurbs.h:700
+#: ../app/config/gimprc-blurbs.h:708
 msgid "Show the currently selected brush, pattern and gradient in the toolbox."
 msgstr ""
 "Afficher les brosses, motifs et dégradés actifs dans la boîte à outils."
 
-#: ../app/config/gimprc-blurbs.h:703
+#: ../app/config/gimprc-blurbs.h:711
 msgid "Use a single toolbox button for grouped tools."
 msgstr "Utilise un seul bouton de la boîte à outils pour les outils groupés."
 
-#: ../app/config/gimprc-blurbs.h:706
+#: ../app/config/gimprc-blurbs.h:714
 msgid "Show the currently active image in the toolbox."
 msgstr "Afficher l’image active dans la boîte à outils."
 
-#: ../app/config/gimprc-blurbs.h:709
+#: ../app/config/gimprc-blurbs.h:717
 msgid "Show the GIMP mascot at the top of the toolbox."
 msgstr "Afficher la mascotte de GIMP en haut de la boîte à outils."
 
-#: ../app/config/gimprc-blurbs.h:712
+#: ../app/config/gimprc-blurbs.h:720
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr ""
 "Définit comment les zones transparentes sont représentées dans les images."
 
-#: ../app/config/gimprc-blurbs.h:715
+#: ../app/config/gimprc-blurbs.h:723
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Définit la taille du damier utilisé pour représenter la transparence."
 
-#: ../app/config/gimprc-blurbs.h:718
+#: ../app/config/gimprc-blurbs.h:726
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -12943,7 +12835,7 @@ msgstr ""
 "Si cette option est activée, GIMP n’enregistrera l’image que si elle a été "
 "modifiée depuis son ouverture."
 
-#: ../app/config/gimprc-blurbs.h:722
+#: ../app/config/gimprc-blurbs.h:730
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -12952,7 +12844,7 @@ msgstr ""
 "la taille limite de la mémoire d’annulation n’est pas atteinte, les "
 "opérations supplémentaires sont conservées."
 
-#: ../app/config/gimprc-blurbs.h:726
+#: ../app/config/gimprc-blurbs.h:734
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -12962,33 +12854,33 @@ msgstr ""
 "conserver les opérations de la pile d’annulations. Au minimum, autant de "
 "niveaux d’annulations que configurés par ce paramètre pourront être annulés."
 
-#: ../app/config/gimprc-blurbs.h:731
+#: ../app/config/gimprc-blurbs.h:739
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Définit la taille des aperçus dans l’historique d’annulation."
 
-#: ../app/config/gimprc-blurbs.h:734
+#: ../app/config/gimprc-blurbs.h:742
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr ""
 "Si cette option est activée, l’appui sur la touche F1 ouvrira le navigateur "
 "d’aide."
 
-#: ../app/config/gimprc-blurbs.h:737
+#: ../app/config/gimprc-blurbs.h:745
 msgid "When enabled, uses OpenCL for some operations."
 msgstr "Si cette option est activée, utilise OpenCL pour certaines opérations."
 
-#: ../app/config/gimprc-blurbs.h:755
+#: ../app/config/gimprc-blurbs.h:763
 msgid "When enabled, a search of actions will also return inactive actions."
 msgstr ""
 "Si cette option est activée, une recherche des actions renverra aussi les "
 "actions inactives."
 
-#: ../app/config/gimprc-blurbs.h:758
+#: ../app/config/gimprc-blurbs.h:766
 msgid "The maximum number of actions saved in history."
 msgstr "Nombre maximal d’actions enregistrées dans l’historique."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:130
 #: ../app/core/gimp-units.c:278 ../app/gui/session.c:309
-#: ../app/plug-in/plug-in-rc.c:251 ../app/tools/gimp-tools.c:504
+#: ../app/plug-in/plug-in-rc.c:254 ../app/tools/gimp-tools.c:504
 msgid "fatal parse error"
 msgstr "erreur fatale à l’analyse"
 
@@ -13029,22 +12921,19 @@ msgid "Active path"
 msgstr "Chemin actif"
 
 #: ../app/core/core-enums.c:114
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
-msgstr "Définir un profil de couleur"
+msgstr "Remplir par la couleur de PP"
 
 #: ../app/core/core-enums.c:115
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
-msgstr "Définir un profil de couleur"
+msgstr "Remplir par la couleur d’AP"
 
 #: ../app/core/core-enums.c:116
-#, fuzzy
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
-msgstr "Motif"
+msgstr "Remplir par un motif"
 
 #: ../app/core/core-enums.c:145
 msgctxt "channel-border-style"
@@ -13122,10 +13011,11 @@ msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "Convertir les pixels au profil sRVB ou niveau de gris intégré"
 
 #: ../app/core/core-enums.c:223
-#, fuzzy
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
-msgstr "Convertir les pixels au profil sRVB ou niveau de gris intégré"
+msgstr ""
+"Convertir les pixels au profil RVB ou niveau de gris préféré (réglage par "
+"défaut : intégré)"
 
 #: ../app/core/core-enums.c:317
 msgctxt "convert-dither-type"
@@ -13461,7 +13351,6 @@ msgid "CRITICAL"
 msgstr "CRITIQUE"
 
 #: ../app/core/core-enums.c:935
-#, fuzzy
 msgctxt "metadata-rotation-policy"
 msgid "Ask what to do"
 msgstr "Demander ce qu’il faut faire"
@@ -13479,13 +13368,12 @@ msgstr ""
 #: ../app/core/core-enums.c:1002
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
-msgstr ""
+msgstr "Wintab"
 
 #: ../app/core/core-enums.c:1003
-#, fuzzy
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
-msgstr "Fenêtres"
+msgstr "Encre Windows"
 
 #: ../app/core/core-enums.c:1032
 msgctxt "thumbnail-size"
@@ -13503,22 +13391,19 @@ msgid "Large (256x256)"
 msgstr "Grande (256x256)"
 
 #: ../app/core/core-enums.c:1063
-#, fuzzy
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Linéaire"
 
 #: ../app/core/core-enums.c:1064
-#, fuzzy
 msgctxt "trc-type"
 msgid "Non-Linear"
-msgstr "Linéaire"
+msgstr "Non-linéaire"
 
 #: ../app/core/core-enums.c:1065
-#, fuzzy
 msgctxt "trc-type"
 msgid "Perceptual"
-msgstr "_Perceptuel"
+msgstr "Perceptuel"
 
 #: ../app/core/core-enums.c:1264
 msgctxt "undo-type"
@@ -13622,7 +13507,6 @@ msgid "Item visibility"
 msgstr "Visibilité de l’élément"
 
 #: ../app/core/core-enums.c:1284
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Verrouiller/déverrouiller le contenu"
@@ -13633,10 +13517,9 @@ msgid "Lock/Unlock position"
 msgstr "Verrouiller/déverrouiller la position"
 
 #: ../app/core/core-enums.c:1286 ../app/core/core-enums.c:1333
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
-msgstr "Verrouiller/déverrouiller la position"
+msgstr "Verrouiller/déverrouiller la visibilité"
 
 #: ../app/core/core-enums.c:1287
 msgctxt "undo-type"
@@ -13664,7 +13547,6 @@ msgid "Add layer"
 msgstr "Ajouter un calque"
 
 #: ../app/core/core-enums.c:1292
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Ajouter un canal alpha"
@@ -13680,34 +13562,29 @@ msgid "Apply layer mask"
 msgstr "Appliquer le masque de calque"
 
 #: ../app/core/core-enums.c:1295
-#, fuzzy
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Supprimer le canal alpha"
 
 #: ../app/core/core-enums.c:1296
-#, fuzzy
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
-msgstr "Verrouiller/déverrouiller le canal alpha"
+msgstr "Verrouiller/déverrouiller les canaux alpha"
 
 #: ../app/core/core-enums.c:1297
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layers opacity"
-msgstr "Régler l’opacité du calque"
+msgstr "Définir l’opacité des calques"
 
 #: ../app/core/core-enums.c:1298
-#, fuzzy
 msgctxt "undo-type"
 msgid "Set layers mode"
-msgstr "Définir le mode de calque"
+msgstr "Définir le mode des calques"
 
 #: ../app/core/core-enums.c:1299
-#, fuzzy
 msgctxt "undo-type"
 msgid "Add channels"
-msgstr "Ajouter un canal"
+msgstr "Ajouter des canaux"
 
 #: ../app/core/core-enums.c:1300 ../app/core/core-enums.c:1359
 msgctxt "undo-type"
@@ -13800,16 +13677,14 @@ msgid "Change indexed palette"
 msgstr "Changer la palette indexée"
 
 #: ../app/core/core-enums.c:1319
-#, fuzzy
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
-msgstr "Définir un profil de couleur"
+msgstr "Masquer/afficher le profil colorimétrique"
 
 #: ../app/core/core-enums.c:1324
-#, fuzzy
 msgctxt "undo-type"
 msgid "Layer/Channel format"
-msgstr "Calque/canal"
+msgstr "Format de calque/canal"
 
 #: ../app/core/core-enums.c:1327
 msgctxt "undo-type"
@@ -14027,10 +13902,9 @@ msgid "Selection by regular expression search"
 msgstr ""
 
 #: ../app/core/core-enums.c:1469
-#, fuzzy
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
-msgstr "Sélection vers chemin"
+msgstr ""
 
 #. initialize babl fishes
 #: ../app/core/gimp.c:535 ../app/core/gimp.c:565
@@ -14052,16 +13926,52 @@ msgid "Parasites"
 msgstr "Parasites"
 
 #. initialize the module list
-#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3388
+#: ../app/core/gimp.c:856 ../app/dialogs/preferences-dialog.c:3400
 msgid "Modules"
 msgstr "Modules"
 
-#: ../app/core/gimp-batch.c:75
+#: ../app/core/gimp-batch.c:69
+#, fuzzy
+#| msgid "The batch interpreter '%s' is not available. Batch mode disabled."
+msgid "No batch interpreters are available. Batch mode disabled."
+msgstr ""
+"l’interpréteur batch « %s » n’est pas disponible, le mode batch est "
+"désactivé."
+
+#: ../app/core/gimp-batch.c:86
 #, c-format
-msgid "No batch interpreter specified, using the default '%s'.\n"
+#| msgid "No batch interpreter specified, using the default '%s'.\n"
+msgid "No batch interpreter specified, using '%s'.\n"
+msgstr "Aucun interpréteur par lots indiqué, utilisation de « %s ».\n"
+
+#: ../app/core/gimp-batch.c:93
+#| msgid "No batch interpreter specified, using the default '%s'.\n"
+msgid "No batch interpreter specified."
+msgstr "Aucun interpréteur par lots indiqué."
+
+#: ../app/core/gimp-batch.c:94 ../app/core/gimp-batch.c:132
+#, fuzzy
+#| msgid "Available Filters"
+msgid "Available interpreters are:"
+msgstr "Filtres disponibles"
+
+#: ../app/core/gimp-batch.c:112 ../app/core/gimp-batch.c:150
+msgid "Specify one of these interpreters as --batch-interpreter option."
 msgstr ""
 
-#: ../app/core/gimp-batch.c:93 ../app/core/gimp-batch.c:111
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:128
+#, c-format
+#| msgid "Procedure name '%s' is not a canonical identifier"
+msgid "The procedure '%s' is not a valid batch interpreter."
+msgstr "La procédure « %s » n’est pas un interpréteur par lots valide."
+
+#: ../app/core/gimp-batch.c:131
+msgid "Batch mode disabled."
+msgstr ""
+
+#. EX_UNAVAILABLE - service unavailable (sysexits.h)
+#: ../app/core/gimp-batch.c:184
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
@@ -14077,7 +13987,7 @@ msgstr "La suppression de « %s » a échoué : %s"
 
 #. initialize the list of gimp dynamics
 #: ../app/core/gimp-data-factories.c:361 ../app/core/gimpcontext.c:707
-#: ../app/dialogs/preferences-dialog.c:3334
+#: ../app/dialogs/preferences-dialog.c:3346
 #: ../app/tools/gimppaintoptions-gui.c:309
 msgid "Dynamics"
 msgstr "Dynamique de la brosse"
@@ -14093,11 +14003,11 @@ msgid "Updating tag cache"
 msgstr "Mise à jour du cache des mots-clés"
 
 #: ../app/core/gimp-edit.c:123
-#, fuzzy, c-format
+#, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Couper le calque"
-msgstr[1] "Couper le calque"
+msgstr[1] "Couper %d calques"
 
 #: ../app/core/gimp-edit.c:412 ../app/core/gimpimage-new.c:507
 msgid "Pasted Layer"
@@ -14111,26 +14021,31 @@ msgstr "Presse-papiers global"
 #, c-format
 msgid "Extension AppData must be of type \"addon\", found \"%s\" instead."
 msgstr ""
+"L’extension AppData doit être de type « addon » ; « %s » a été trouvé à la "
+"place."
 
 #: ../app/core/gimpextension.c:381
 #, c-format
 msgid "Extension AppData must extend \"org.gimp.GIMP\"."
-msgstr ""
+msgstr "L’extension AppData doit étendre « org.gimp.GIMP »."
 
 #: ../app/core/gimpextension.c:395
 #, c-format
 msgid "Extension AppData id (\"%s\") and directory (\"%s\") must be the same."
 msgstr ""
+"L’ID de l’extension Appdata (« %s ») et le répertoire (« %s ») doivent être "
+"identiques."
 
 #: ../app/core/gimpextension.c:410
 #, c-format
 msgid "Extension AppData must advertise a version in a <release> tag."
 msgstr ""
+"L’extension AppData doit afficher une version dans une étiquette <release>."
 
 #: ../app/core/gimpextension.c:444
 #, c-format
 msgid "Unsupported <requires> \"%s\" (type %s)."
-msgstr ""
+msgstr "<requires> « %s » non pris en charge (type %s)."
 
 #: ../app/core/gimpextension.c:459
 #, c-format
@@ -14138,41 +14053,44 @@ msgid ""
 "<requires><id>org.gimp.GIMP</id></requires> for version comparison is "
 "mandatory."
 msgstr ""
+"<requires><id>org.gimp.GIMP</id></requires> est obligatoire pour une "
+"comparaison de version."
 
 #: ../app/core/gimpextension.c:754
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a relative path."
-msgstr "La brosse « %s » n’est pas une brosse générée"
+msgstr "« %s » n’est pas un chemin relatif."
 
 #: ../app/core/gimpextension.c:788
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a child of the extension."
-msgstr "« %s » n’est pas un schéma URI valide"
+msgstr "« %s » n’est pas enfant de l’extension."
 
 #: ../app/core/gimpextension.c:802
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a directory."
-msgstr "Impossible de modifier la brosse « %s »"
+msgstr "« %s » n’est pas un répertoire."
 
 #: ../app/core/gimpextension.c:816
-#, fuzzy, c-format
+#, c-format
 msgid "'%s' is not a valid file."
-msgstr "« %s » n’est pas un schéma URI valide"
+msgstr "« %s » n’est pas un fichier valide."
 
 #: ../app/core/gimpextensionmanager.c:810
 #, c-format
 msgid "System extensions cannot be uninstalled."
-msgstr ""
+msgstr "Il n’est pas possible de désinstaller les extensions système."
 
 #: ../app/core/gimpextensionmanager.c:1022
 #, c-format
 msgid "Skipping extension '%s': %s\n"
-msgstr ""
+msgstr "L’extension « %s » est sautée : %s\n"
 
 #: ../app/core/gimpextensionmanager.c:1030
 #, c-format
 msgid "Skipping unknown file '%s' in extension directory.\n"
 msgstr ""
+"Le fichier inconnu « %s » dans le répertoire de l’extension est sauté.\n"
 
 #: ../app/core/gimp-gradients.c:64
 msgid "Custom"
@@ -14283,17 +14201,17 @@ msgstr "Aucun motif disponible pour cette opération."
 #: ../app/core/gimp-utils.c:1396
 #, c-format
 msgid "This parser does not support imbricated lists."
-msgstr ""
+msgstr "Cet analyseur ne gère pas les listes imbriquées."
 
 #: ../app/core/gimp-utils.c:1419
 #, c-format
 msgid "<li> must be inside <ol> or <ul> tags."
-msgstr ""
+msgstr "<li> doit être à l’intérieur des balises <ol> ou <ul>."
 
 #: ../app/core/gimp-utils.c:1424
 #, c-format
 msgid "Unknown tag <%s>."
-msgstr ""
+msgstr "Balise <%s> inconnue."
 
 #: ../app/core/gimpbrush-load.c:173
 #, c-format
@@ -15175,21 +15093,21 @@ msgstr ""
 "Les masques de calque sur des groupes de calques ont été ajoutés dans %s"
 
 #: ../app/core/gimpimage.c:2848
-#, fuzzy, c-format
+#, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr ""
-"Les masques de calque sur des groupes de calques ont été ajoutés dans %s"
+"Les verrous de position sur des groupes de calques ont été ajoutés dans %s"
 
 #: ../app/core/gimpimage.c:2855
-#, fuzzy, c-format
+#, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr ""
-"Les masques de calque sur des groupes de calques ont été ajoutés dans %s"
+"Les verrous de canal alpha sur des groupes de calques ont été ajoutés dans %s"
 
 #: ../app/core/gimpimage.c:2863 ../app/core/gimpimage.c:2877
-#, fuzzy, c-format
+#, c-format
 msgid "Visibility locks were added in %s"
-msgstr "Les groupes de calques ont été ajoutés dans %s"
+msgstr "Les verrous de visibilité ont été ajoutés dans %s"
 
 #: ../app/core/gimpimage.c:2891
 #, c-format
@@ -15197,9 +15115,9 @@ msgid "High bit-depth images were added in %s"
 msgstr "Les images à grande profondeur de bits ont été ajoutées dans %s"
 
 #: ../app/core/gimpimage.c:2899
-#, fuzzy, c-format
+#, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
-msgstr "Les images à grande profondeur de bits ont été ajoutées dans %s"
+msgstr "Le codage d’images de grande profondeur de bits a été corrigé dans %s"
 
 #: ../app/core/gimpimage.c:2907
 #, c-format
@@ -15214,14 +15132,14 @@ msgstr ""
 "%s"
 
 #: ../app/core/gimpimage.c:2931
-#, fuzzy, c-format
+#, c-format
 msgid "Multiple layer selection was added in %s"
-msgstr "Le mode de calque « %s » a été ajouté dans %s"
+msgstr "La sélection de calques multiples a été ajoutée dans %s"
 
 #: ../app/core/gimpimage.c:2948
-#, fuzzy, c-format
+#, c-format
 msgid "Off-canvas guides added in %s"
-msgstr "Modification de dégradé directement sur le canevas."
+msgstr "Les guides hors canevas ont été ajoutés dans %s"
 
 #: ../app/core/gimpimage.c:2959
 #, c-format
@@ -15229,9 +15147,9 @@ msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 
 #: ../app/core/gimpimage.c:2965
-#, fuzzy, c-format
+#, c-format
 msgid "Multiple channel selection was added in %s"
-msgstr "La compression zlib interne a été ajoutée dans %s"
+msgstr "La sélection de canaux multiples a été ajoutée dans %s"
 
 #: ../app/core/gimpimage.c:3069
 msgctxt "undo-type"
@@ -15303,11 +15221,11 @@ msgstr "Arranger les objets"
 
 #: ../app/core/gimpimage-color-profile.c:120
 msgid "Enable 'Use sRGB Profile'"
-msgstr ""
+msgstr "Activer « Utiliser le profil sRVB »"
 
 #: ../app/core/gimpimage-color-profile.c:137
 msgid "Disable 'Use sRGB Profile'"
-msgstr ""
+msgstr "Désactiver « Utiliser le profil sRVB »"
 
 #: ../app/core/gimpimage-color-profile.c:198
 msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
@@ -15341,23 +15259,20 @@ msgstr ""
 "l’espace de couleurs RVB"
 
 #: ../app/core/gimpimage-color-profile.c:478
-#, fuzzy
 msgid "Assigning color profile"
-msgstr "Attribuer un profil de couleur"
+msgstr "Attribution d’un profil colorimétrique"
 
 #: ../app/core/gimpimage-color-profile.c:479
-#, fuzzy
 msgid "Discarding color profile"
-msgstr "_Rejeter le profil de couleur"
+msgstr "Rejet du profil colorimétrique"
 
 #: ../app/core/gimpimage-color-profile.c:483
 msgid "Assign color profile"
-msgstr "Attribuer un profil de couleur"
+msgstr "Attribuer un profil colorimétrique"
 
 #: ../app/core/gimpimage-color-profile.c:484
-#, fuzzy
 msgid "Discard color profile"
-msgstr "_Rejeter le profil de couleur"
+msgstr "Rejeter le profil colorimétrique"
 
 #: ../app/core/gimpimage-color-profile.c:527
 #, c-format
@@ -15411,7 +15326,7 @@ msgid "Converting to indexed colors (stage 3)"
 msgstr "Convertir en couleurs indexées (étape 3)"
 
 #: ../app/core/gimpimage-convert-precision.c:79
-#, fuzzy, c-format
+#, c-format
 msgctxt "undo-type"
 msgid "Convert Image to %s"
 msgstr "Convertir l’image en %s"
@@ -15649,9 +15564,8 @@ msgid "Remove Parasite from Item"
 msgstr "Supprimer un parasite de l’élément"
 
 #: ../app/core/gimpitem-exclusive.c:65
-#, fuzzy
 msgid "Set Item Exclusive Visibility"
-msgstr "Rendre l’élément exclusivement visible"
+msgstr "Définir la visibilité exclusive de l’élément"
 
 #: ../app/core/gimplayer-floating-selection.c:126
 msgctxt "undo-type"
@@ -15810,19 +15724,16 @@ msgid "Layer to Image Size"
 msgstr "Calque aux dimensions de l’image"
 
 #: ../app/core/gimplayer.c:2739
-#, fuzzy
 msgid "Set layer's blend space"
-msgstr "Régler l’opacité du calque"
+msgstr "Définir l’espace de fusion du calque"
 
 #: ../app/core/gimplayer.c:2786
-#, fuzzy
 msgid "Set layer's composite space"
-msgstr "Espace composite du calque : auto"
+msgstr "Définir l’espace composite du calque"
 
 #: ../app/core/gimplayer.c:2833
-#, fuzzy
 msgid "Set layer's composite mode"
-msgstr "Définir le mode de calque"
+msgstr "Définir le mode composite du calque"
 
 #: ../app/core/gimplayermask.c:87
 msgctxt "undo-type"
@@ -15996,13 +15907,13 @@ msgstr ""
 "Les motifs GIMP doivent être TONS DE GRIS ou RVB."
 
 #: ../app/core/gimppattern-load.c:99
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Invalid header data in '%s': width=%lu (maximum %lu), height=%lu (maximum "
 "%lu), bytes=%lu"
 msgstr ""
-"Données d’en-tête non valides dans « %s » : largeur = %lu, hauteur = %lu, "
-"octets = %lu"
+"Données d’en-tête non valides dans « %s » : largeur = %lu (maximum %lu), "
+"hauteur = %lu (maximum %lu), octets = %lu"
 
 #: ../app/core/gimppattern-load.c:116
 #, c-format
@@ -16024,13 +15935,13 @@ msgid "Fatal parse error in pattern file: "
 msgstr "Erreur fatale à l’analyse du fichier de motifs : "
 
 #: ../app/core/gimppattern-save.c:52
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Unsupported pattern dimensions %d x %d.\n"
 "GIMP Patterns have a maximum size of %d x %d."
 msgstr ""
-"Profondeur de motif %d non prise en charge.\n"
-"Les motifs GIMP doivent être TONS DE GRIS ou RVB."
+"Dimensions de motif %d x %d non prises en charge.\n"
+"Les motifs GIMP ont une taille maximale de %d x %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
@@ -16355,9 +16266,8 @@ msgstr "Précision"
 #: ../app/core/gimptemplate.c:206 ../app/operations/gimpcurvesconfig.c:105
 #: ../app/operations/gimplevelsconfig.c:110
 #: ../app/widgets/gimphistogrameditor.c:113
-#, fuzzy
 msgid "Linear/Perceptual"
-msgstr "_Perceptuel"
+msgstr "Linéaire/perceptuel"
 
 #: ../app/core/gimptemplate.c:215
 msgid "Color profile"
@@ -16496,7 +16406,7 @@ msgstr "À propos de GIMP"
 
 #: ../app/dialogs/about-dialog.c:143
 msgid "Visit the GIMP website"
-msgstr "Visitez le site Web de GIMP"
+msgstr "Visitez le site web de GIMP"
 
 #. Translators: insert your names here,
 #. separated by newline
@@ -16515,7 +16425,8 @@ msgstr ""
 "Jonathan Ernst <jonathan@ernstfamily.ch>\n"
 "Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Laurent Monin <gimp@norz.org>\n"
-"Yannick Tailliez <ytdispatch-libre@yahoo.com>"
+"Yannick Tailliez <ytdispatch-libre@yahoo.com>\n"
+"Claude Paroz <claude@2xlibre.net>"
 
 #: ../app/dialogs/about-dialog.c:340
 msgid "Update available!"
@@ -16718,14 +16629,12 @@ msgid "The image '%s' has an embedded color profile"
 msgstr "L’image « %s » possède un profil de couleur intégré"
 
 #: ../app/dialogs/color-profile-import-dialog.c:166
-#, fuzzy
 msgid "Convert the image to the preferred grayscale color profile?"
-msgstr "Convertir l’image au profil niveaux de gris intégré ?"
+msgstr "Convertir l’image au profil niveaux de gris préféré ?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:168
-#, fuzzy
 msgid "Convert the image to the preferred RGB color profile?"
-msgstr "Convertir l’image au profil de couleur sRVB intégré ?"
+msgstr "Convertir l’image au profil de couleur RVB préféré ?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:226
 #: ../app/dialogs/metadata-rotation-import-dialog.c:218
@@ -16791,14 +16700,12 @@ msgid "Linear light"
 msgstr "Lumière linéaire"
 
 #: ../app/dialogs/convert-precision-dialog.c:188
-#, fuzzy
 msgid "Non-Linear"
-msgstr "Linéaire"
+msgstr "Non-linéaire"
 
 #: ../app/dialogs/convert-precision-dialog.c:191
-#, fuzzy
 msgid "Perceptual (sRGB)"
-msgstr "Gamma perceptuel (sRVB)"
+msgstr "Perceptuel (sRVB)"
 
 #: ../app/dialogs/convert-precision-dialog.c:228
 msgid "_Layers:"
@@ -16908,30 +16815,26 @@ msgstr "Extensions"
 #. "gimp-extensions-installed",
 #: ../app/dialogs/extensions-dialog.c:108
 #: ../app/dialogs/extensions-dialog.c:109
-#, fuzzy
 msgid "Installed Extensions"
-msgstr "Démarrage des extensions"
+msgstr "Extensions installées"
 
 #: ../app/dialogs/extensions-dialog.c:124
 #: ../app/dialogs/extensions-dialog.c:125
-#, fuzzy
 msgid "System Extensions"
-msgstr "Selon l’extension"
+msgstr "Extensions système"
 
 #: ../app/dialogs/extensions-dialog.c:140
 #: ../app/dialogs/extensions-dialog.c:141
-#, fuzzy
 msgid "Install Extensions"
-msgstr "Extensions"
+msgstr "Installer des extensions"
 
 #: ../app/dialogs/extensions-dialog.c:158
-#, fuzzy
 msgid "Search extension:"
-msgstr "Recherche d’actions"
+msgstr "Recherche d’extensions :"
 
 #: ../app/dialogs/extensions-dialog.c:174
 msgid "Search extensions matching these keywords"
-msgstr ""
+msgstr "Recherche des extensions correspondant à ces mots-clés"
 
 #: ../app/dialogs/file-open-dialog.c:260
 msgid "Open layers"
@@ -17073,9 +16976,8 @@ msgid "Final, Merged Layer should be:"
 msgstr "Le calque final, fusionné, devra être :"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:138
-#, fuzzy
 msgid "Merge within active _groups only"
-msgstr "Fusionner dans le _groupe actif uniquement"
+msgstr "Fusionner dans les _groupes actifs uniquement"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:151
 msgid "_Discard invisible layers"
@@ -17179,16 +17081,14 @@ msgid "Configure Input Devices"
 msgstr "Configurer les périphériques d’entrée"
 
 #: ../app/dialogs/input-devices-dialog.c:114
-#, fuzzy
 msgid "Reset Input Device Configuration"
-msgstr "Configuration des ressources"
+msgstr "Réinitialiser la configuration des périphériques d’entrée"
 
 #: ../app/dialogs/input-devices-dialog.c:132
-#, fuzzy
 msgid "Do you really want to reset all input devices to default configuration?"
 msgstr ""
-"Voulez-vous vraiment réinitialiser tous les filtres à leurs valeurs par "
-"défaut ?"
+"Voulez-vous vraiment réinitialiser tous les périphériques d’entrée à leur "
+"configuration par défaut ?"
 
 #: ../app/dialogs/item-options-dialog.c:200
 msgid "Color tag:"
@@ -17221,18 +17121,17 @@ msgid "S_ave keyboard shortcuts on exit"
 msgstr "E_nregistrer les raccourcis clavier à la fermeture"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:106
-#, fuzzy
 msgid "Add Layer Mask"
 msgid_plural "Add Layer Masks"
 msgstr[0] "Ajouter un masque de calque"
-msgstr[1] "Ajouter un masque de calque"
+msgstr[1] "Ajouter des masques de calque"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:108
-#, fuzzy, c-format
+#, c-format
 msgid "Add a Mask to the Layer"
 msgid_plural "Add Masks to %d Layers"
 msgstr[0] "Ajouter un masque au calque"
-msgstr[1] "Ajouter un masque au calque"
+msgstr[1] "Ajouter des masques à %d calques"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:121
 msgid "_Add"
@@ -17362,9 +17261,9 @@ msgid "Killer GEGLs from Outer Space"
 msgstr "GEGLs tueurs en provenance de l’espace intersidéral"
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "Rotate %s?"
-msgstr "Rotation"
+msgstr ""
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:101
 msgid "_Keep Original"
@@ -17380,9 +17279,8 @@ msgid "Original"
 msgstr ""
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:177
-#, fuzzy
 msgid "Rotated"
-msgstr "Rotation"
+msgstr ""
 
 #: ../app/dialogs/metadata-rotation-import-dialog.c:194
 msgid "This image contains Exif orientation metadata."
@@ -17928,9 +17826,8 @@ msgid "Export the i_mage's color profile by default"
 msgstr "Exporter par défaut le profil de couleur de l’i_mage"
 
 #: ../app/dialogs/preferences-dialog.c:1556
-#, fuzzy
 msgid "Export the image's comment by default"
-msgstr "Exporte par défaut le profil de couleur de l’image."
+msgstr "Exporter par défaut le commentaire de l’image"
 
 #. Translators: label for
 #. * configuration option (checkbox).
@@ -18027,9 +17924,8 @@ msgid "_Seamless Clone tool"
 msgstr "Outil Clonage _sans raccord"
 
 #: ../app/dialogs/preferences-dialog.c:1677
-#, fuzzy
 msgid "_Paint Select tool"
-msgstr "_Outil de peinture :"
+msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1699
 #: ../app/dialogs/preferences-dialog.c:1700
@@ -18043,7 +17939,7 @@ msgstr "Options des outils"
 #: ../app/dialogs/preferences-dialog.c:1709
 #: ../app/dialogs/preferences-dialog.c:2568
 #: ../app/dialogs/preferences-dialog.c:2901
-#: ../app/dialogs/preferences-dialog.c:3125
+#: ../app/dialogs/preferences-dialog.c:3137
 #: ../app/widgets/gimpcontrollereditor.c:188
 #: ../app/widgets/gimpdeviceinfoeditor.c:298
 msgid "General"
@@ -18202,7 +18098,7 @@ msgstr "Sélectionner un thème"
 
 #: ../app/dialogs/preferences-dialog.c:2034
 msgid "Use dark theme variant if available"
-msgstr ""
+msgstr "Utiliser la variante de thème sombre si elle est disponible"
 
 #: ../app/dialogs/preferences-dialog.c:2042
 msgid "Reload C_urrent Theme"
@@ -18219,7 +18115,7 @@ msgstr "Sélectionner un thème d’icône"
 
 #: ../app/dialogs/preferences-dialog.c:2169
 msgid "Use symbolic icons if available"
-msgstr ""
+msgstr "Utiliser les icônes symboliques si elles sont disponibles"
 
 #: ../app/dialogs/preferences-dialog.c:2179
 #: ../app/dialogs/preferences-dialog.c:2180 ../app/widgets/gimptoolbox.c:457
@@ -18228,7 +18124,7 @@ msgstr "Boîte à outils"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:2188
-#: ../app/dialogs/preferences-dialog.c:2953 ../app/widgets/gimpgrideditor.c:133
+#: ../app/dialogs/preferences-dialog.c:2965 ../app/widgets/gimpgrideditor.c:133
 msgid "Appearance"
 msgstr "Apparence"
 
@@ -18418,9 +18314,8 @@ msgid "Merged layer size:"
 msgstr "Taille du calque fusionné :"
 
 #: ../app/dialogs/preferences-dialog.c:2413
-#, fuzzy
 msgid "Merge within active groups only"
-msgstr "Fusionner dans le groupe actif uniquement"
+msgstr "Fusionner dans les groupes actifs uniquement"
 
 #: ../app/dialogs/preferences-dialog.c:2416
 msgid "Discard invisible layers"
@@ -18591,7 +18486,7 @@ msgid ""
 "instead."
 msgstr ""
 "Le navigateur d’aide de GIMP semble manquer à votre installation. "
-"Utilisation d’un navigateur Web à la place."
+"Utilisation d’un navigateur web à la place."
 
 #. Action Search
 #: ../app/dialogs/preferences-dialog.c:2678
@@ -18626,14 +18521,12 @@ msgstr "_Taille du damier :"
 
 #. Zoom Quality
 #: ../app/dialogs/preferences-dialog.c:2721
-#, fuzzy
 msgid "Zoom Quality"
-msgstr "Qualité"
+msgstr "Qualité du zoom"
 
 #: ../app/dialogs/preferences-dialog.c:2725
-#, fuzzy
 msgid "_Zoom quality:"
-msgstr "Zoom beaucoup en arrière"
+msgstr "Qualité du _zoom :"
 
 #. Monitor Resolution
 #: ../app/dialogs/preferences-dialog.c:2729
@@ -18754,381 +18647,387 @@ msgstr "Afficher l’_image entière"
 msgid "Initial zoom _ratio:"
 msgstr "_Facteur de zoom initial :"
 
+#: ../app/dialogs/preferences-dialog.c:2939
+msgid "Dra_g-to-zoom behavior:"
+msgstr ""
+
+#: ../app/dialogs/preferences-dialog.c:2945
+msgid "Drag-to-zoom spe_ed:"
+msgstr ""
+
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2937
+#: ../app/dialogs/preferences-dialog.c:2949
 msgid "Space Bar"
 msgstr "Barre espace"
 
-#: ../app/dialogs/preferences-dialog.c:2943
+#: ../app/dialogs/preferences-dialog.c:2955
 msgid "_While space bar is pressed:"
 msgstr "T_ant que la barre espace est appuyée :"
 
-#: ../app/dialogs/preferences-dialog.c:2952
+#: ../app/dialogs/preferences-dialog.c:2964
 msgid "Image Window Appearance"
 msgstr "Apparence de la fenêtre d’images"
 
-#: ../app/dialogs/preferences-dialog.c:2962
+#: ../app/dialogs/preferences-dialog.c:2974
 msgid "Default Appearance in Normal Mode"
 msgstr "Apparence par défaut en mode normal"
 
-#: ../app/dialogs/preferences-dialog.c:2967
+#: ../app/dialogs/preferences-dialog.c:2979
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Apparence par défaut en mode plein écran"
 
-#: ../app/dialogs/preferences-dialog.c:2976
+#: ../app/dialogs/preferences-dialog.c:2988
 msgid "Image Title & Statusbar Format"
 msgstr "Format du titre et de la barre d’état de l’image"
 
-#: ../app/dialogs/preferences-dialog.c:2977
+#: ../app/dialogs/preferences-dialog.c:2989
 msgid "Title & Status"
 msgstr "Titre et état"
 
-#: ../app/dialogs/preferences-dialog.c:2995
+#: ../app/dialogs/preferences-dialog.c:3007
 msgid "Current format"
 msgstr "Format actuel"
 
-#: ../app/dialogs/preferences-dialog.c:2996
+#: ../app/dialogs/preferences-dialog.c:3008
 msgid "Default format"
 msgstr "Format par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2997
+#: ../app/dialogs/preferences-dialog.c:3009
 msgid "Show zoom percentage"
 msgstr "Afficher le pourcentage de zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2998
+#: ../app/dialogs/preferences-dialog.c:3010
 msgid "Show zoom ratio"
 msgstr "Afficher le facteur d’échelle"
 
-#: ../app/dialogs/preferences-dialog.c:2999
+#: ../app/dialogs/preferences-dialog.c:3011
 msgid "Show image size"
 msgstr "Afficher la taille de l’image"
 
-#: ../app/dialogs/preferences-dialog.c:3000
+#: ../app/dialogs/preferences-dialog.c:3012
 msgid "Show drawable size"
 msgstr "Afficher la taille des objets graphiques"
 
-#: ../app/dialogs/preferences-dialog.c:3013
+#: ../app/dialogs/preferences-dialog.c:3025
 msgid "Image Title Format"
 msgstr "Format du titre de l’image"
 
-#: ../app/dialogs/preferences-dialog.c:3015
+#: ../app/dialogs/preferences-dialog.c:3027
 msgid "Image Statusbar Format"
 msgstr "Format de la barre d’état de l’image"
 
-#: ../app/dialogs/preferences-dialog.c:3109
+#: ../app/dialogs/preferences-dialog.c:3121
 msgid "Image Window Snapping Behavior"
 msgstr "Comportement de l’alignement de la fenêtre d’image"
 
-#: ../app/dialogs/preferences-dialog.c:3110
+#: ../app/dialogs/preferences-dialog.c:3122
 msgid "Snapping"
 msgstr "Alignement"
 
-#: ../app/dialogs/preferences-dialog.c:3117
+#: ../app/dialogs/preferences-dialog.c:3129
 msgid "Default Behavior in Normal Mode"
 msgstr "Comportement par défaut en mode normal"
 
-#: ../app/dialogs/preferences-dialog.c:3121
+#: ../app/dialogs/preferences-dialog.c:3133
 msgid "Default Behavior in Fullscreen Mode"
 msgstr "Comportement par défaut en mode plein écran"
 
-#: ../app/dialogs/preferences-dialog.c:3130
+#: ../app/dialogs/preferences-dialog.c:3142
 msgid "_Snapping distance:"
 msgstr "Distance d’_alignement :"
 
-#: ../app/dialogs/preferences-dialog.c:3139
-#: ../app/dialogs/preferences-dialog.c:3140
+#: ../app/dialogs/preferences-dialog.c:3151
+#: ../app/dialogs/preferences-dialog.c:3152
 msgid "Input Devices"
 msgstr "Périphériques d’entrée"
 
-#: ../app/dialogs/preferences-dialog.c:3151
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:3163
 msgid "Pointers"
-msgstr "Pointeur"
+msgstr "Pointeurs"
 
-#: ../app/dialogs/preferences-dialog.c:3158
+#: ../app/dialogs/preferences-dialog.c:3170
 msgid "Pointer _mode:"
 msgstr "Mod_e de pointage :"
 
-#: ../app/dialogs/preferences-dialog.c:3161
+#: ../app/dialogs/preferences-dialog.c:3173
 msgid "Pointer _handedness:"
 msgstr "_Manualité  du pointeur :"
 
-#: ../app/dialogs/preferences-dialog.c:3165
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:3177
 msgid "Paint Tools"
-msgstr "Outils de _peinture"
+msgstr "Outils de peinture"
 
-#: ../app/dialogs/preferences-dialog.c:3169
+#: ../app/dialogs/preferences-dialog.c:3181
 msgid "Show _brush outline"
 msgstr "Affi_cher le contour de la brosse"
 
-#: ../app/dialogs/preferences-dialog.c:3177
+#: ../app/dialogs/preferences-dialog.c:3189
 msgid "S_nap brush outline to stroke"
 msgstr "Faire coller le co_ntour de la brosse au coup de pinceau"
 
-#: ../app/dialogs/preferences-dialog.c:3181
+#: ../app/dialogs/preferences-dialog.c:3193
 msgid "Show pointer for paint _tools"
 msgstr "Afficher le pointeur pour les _outils de peinture"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:3185
+#: ../app/dialogs/preferences-dialog.c:3197
 msgid "Extended Input Devices"
 msgstr "Périphériques d’entrée étendus"
 
-#: ../app/dialogs/preferences-dialog.c:3201
+#: ../app/dialogs/preferences-dialog.c:3213
 msgid "Pointer Input API:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:3212
+#: ../app/dialogs/preferences-dialog.c:3224
 msgid "S_hare tool and tool options between input devices"
 msgstr "_Partager l’outil et ses options entre les périphériques d’entrée"
 
-#: ../app/dialogs/preferences-dialog.c:3216
+#: ../app/dialogs/preferences-dialog.c:3228
 msgid "Configure E_xtended Input Devices..."
 msgstr "_Configurer les périphériques d’entrée étendus…"
 
-#: ../app/dialogs/preferences-dialog.c:3223
+#: ../app/dialogs/preferences-dialog.c:3235
 msgid "_Save input device settings on exit"
 msgstr "_Enregistrer l’état des périphériques en quittant"
 
-#: ../app/dialogs/preferences-dialog.c:3227
+#: ../app/dialogs/preferences-dialog.c:3239
 msgid "Save Input Device Settings _Now"
 msgstr "Enregistrer l’état des périphériques _maintenant"
 
-#: ../app/dialogs/preferences-dialog.c:3234
+#: ../app/dialogs/preferences-dialog.c:3246
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Restaurer l’état enregistré des périphériques aux valeurs par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:3249
+#: ../app/dialogs/preferences-dialog.c:3261
 msgid "Additional Input Controllers"
 msgstr "Contrôleurs d’entrée additionnels"
 
-#: ../app/dialogs/preferences-dialog.c:3250
+#: ../app/dialogs/preferences-dialog.c:3262
 msgid "Input Controllers"
 msgstr "Contrôleurs d’entrée"
 
-#: ../app/dialogs/preferences-dialog.c:3265
-#: ../app/dialogs/preferences-dialog.c:3266
+#: ../app/dialogs/preferences-dialog.c:3277
+#: ../app/dialogs/preferences-dialog.c:3278
 msgid "Folders"
 msgstr "Dossiers"
 
-#: ../app/dialogs/preferences-dialog.c:3273
+#: ../app/dialogs/preferences-dialog.c:3285
 msgid "Reset _Folders"
 msgstr "Réinitialiser les _dossiers"
 
-#: ../app/dialogs/preferences-dialog.c:3289
+#: ../app/dialogs/preferences-dialog.c:3301
 msgid "_Temporary folder:"
 msgstr "Dossier _temporaire :"
 
-#: ../app/dialogs/preferences-dialog.c:3290
+#: ../app/dialogs/preferences-dialog.c:3302
 msgid "Select Folder for Temporary Files"
 msgstr "Sélectionner un dossier pour les fichiers temporaires"
 
-#: ../app/dialogs/preferences-dialog.c:3294
+#: ../app/dialogs/preferences-dialog.c:3306
 msgid "_Swap folder:"
 msgstr "Dossier d’é_change (swap) :"
 
-#: ../app/dialogs/preferences-dialog.c:3295
+#: ../app/dialogs/preferences-dialog.c:3307
 msgid "Select Swap Folder"
 msgstr "Sélectionnez un dossier d’échange (swap)"
 
-#: ../app/dialogs/preferences-dialog.c:3328
+#: ../app/dialogs/preferences-dialog.c:3340
 msgid "Brush Folders"
 msgstr "Dossiers des brosses"
 
-#: ../app/dialogs/preferences-dialog.c:3331
+#: ../app/dialogs/preferences-dialog.c:3343
 msgid "Reset Brush _Folders"
 msgstr "Réinitialiser les dossiers de _brosses"
 
-#: ../app/dialogs/preferences-dialog.c:3332
+#: ../app/dialogs/preferences-dialog.c:3344
 msgid "Select Brush Folders"
 msgstr "Sélectionner les dossiers de brosses"
 
-#: ../app/dialogs/preferences-dialog.c:3334
+#: ../app/dialogs/preferences-dialog.c:3346
 msgid "Dynamics Folders"
 msgstr "Dossiers des dynamiques de brosse"
 
-#: ../app/dialogs/preferences-dialog.c:3337
+#: ../app/dialogs/preferences-dialog.c:3349
 msgid "Reset Dynamics _Folders"
 msgstr "Réinitialiser les _dossiers des dynamiques"
 
-#: ../app/dialogs/preferences-dialog.c:3338
+#: ../app/dialogs/preferences-dialog.c:3350
 msgid "Select Dynamics Folders"
 msgstr "Sélectionner les dossiers des dynamiques"
 
-#: ../app/dialogs/preferences-dialog.c:3340
+#: ../app/dialogs/preferences-dialog.c:3352
 msgid "Pattern Folders"
 msgstr "Dossiers des motifs"
 
-#: ../app/dialogs/preferences-dialog.c:3343
+#: ../app/dialogs/preferences-dialog.c:3355
 msgid "Reset Pattern _Folders"
 msgstr "Réinitialiser les _dossiers de motifs"
 
-#: ../app/dialogs/preferences-dialog.c:3344
+#: ../app/dialogs/preferences-dialog.c:3356
 msgid "Select Pattern Folders"
 msgstr "Sélectionner les dossiers de motifs"
 
-#: ../app/dialogs/preferences-dialog.c:3346
+#: ../app/dialogs/preferences-dialog.c:3358
 msgid "Palette Folders"
 msgstr "Dossiers des palettes"
 
-#: ../app/dialogs/preferences-dialog.c:3349
+#: ../app/dialogs/preferences-dialog.c:3361
 msgid "Reset Palette _Folders"
 msgstr "Réinitialiser les _dossiers de palettes"
 
-#: ../app/dialogs/preferences-dialog.c:3350
+#: ../app/dialogs/preferences-dialog.c:3362
 msgid "Select Palette Folders"
 msgstr "Sélectionner les dossiers de palettes"
 
-#: ../app/dialogs/preferences-dialog.c:3352
+#: ../app/dialogs/preferences-dialog.c:3364
 msgid "Gradient Folders"
 msgstr "Dossiers des dégradés"
 
-#: ../app/dialogs/preferences-dialog.c:3355
+#: ../app/dialogs/preferences-dialog.c:3367
 msgid "Reset Gradient _Folders"
 msgstr "Réinitialiser les _dossiers de dégradés"
 
-#: ../app/dialogs/preferences-dialog.c:3356
+#: ../app/dialogs/preferences-dialog.c:3368
 msgid "Select Gradient Folders"
 msgstr "Sélectionner les dossiers de dégradés"
 
-#: ../app/dialogs/preferences-dialog.c:3358
+#: ../app/dialogs/preferences-dialog.c:3370
 msgid "Font Folders"
 msgstr "Dossiers des polices"
 
-#: ../app/dialogs/preferences-dialog.c:3361
+#: ../app/dialogs/preferences-dialog.c:3373
 msgid "Reset Font _Folders"
 msgstr "Réinitialiser les _dossiers des polices"
 
-#: ../app/dialogs/preferences-dialog.c:3362
+#: ../app/dialogs/preferences-dialog.c:3374
 msgid "Select Font Folders"
 msgstr "Sélectionner les dossiers des polices"
 
-#: ../app/dialogs/preferences-dialog.c:3364
+#: ../app/dialogs/preferences-dialog.c:3376
 msgid "Tool Preset Folders"
 msgstr "Dossiers des préréglages d’outils"
 
-#: ../app/dialogs/preferences-dialog.c:3367
+#: ../app/dialogs/preferences-dialog.c:3379
 msgid "Reset Tool Preset _Folders"
 msgstr "Réinitialiser les _dossiers des préréglages d’outils"
 
-#: ../app/dialogs/preferences-dialog.c:3368
+#: ../app/dialogs/preferences-dialog.c:3380
 msgid "Select Tool Preset Folders"
 msgstr "Sélectionner les dossiers des préréglages d’outils"
 
-#: ../app/dialogs/preferences-dialog.c:3370
+#: ../app/dialogs/preferences-dialog.c:3382
 msgid "MyPaint Brush Folders"
 msgstr "Dossiers des brosses MyPaint"
 
-#: ../app/dialogs/preferences-dialog.c:3373
+#: ../app/dialogs/preferences-dialog.c:3385
 msgid "Reset MyPaint Brush _Folders"
 msgstr "Réinitialiser les _dossiers de brosses Mypaint"
 
-#: ../app/dialogs/preferences-dialog.c:3374
+#: ../app/dialogs/preferences-dialog.c:3386
 msgid "Select MyPaint Brush Folders"
 msgstr "Sélectionner les dossiers de brosses Mypaint"
 
-#: ../app/dialogs/preferences-dialog.c:3376
+#: ../app/dialogs/preferences-dialog.c:3388
 msgid "Plug-in Folders"
 msgstr "Dossiers des greffons"
 
-#: ../app/dialogs/preferences-dialog.c:3379
+#: ../app/dialogs/preferences-dialog.c:3391
 msgid "Reset plug-in _Folders"
 msgstr "Réinitialiser les _dossiers de greffons"
 
-#: ../app/dialogs/preferences-dialog.c:3380
+#: ../app/dialogs/preferences-dialog.c:3392
 msgid "Select plug-in Folders"
 msgstr "Sélectionner les dossiers de greffons"
 
-#: ../app/dialogs/preferences-dialog.c:3382
+#: ../app/dialogs/preferences-dialog.c:3394
 msgid "Scripts"
 msgstr "Scripts"
 
-#: ../app/dialogs/preferences-dialog.c:3382
+#: ../app/dialogs/preferences-dialog.c:3394
 msgid "Script-Fu Folders"
 msgstr "Dossiers des Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3385
+#: ../app/dialogs/preferences-dialog.c:3397
 msgid "Reset Script-Fu _Folders"
 msgstr "Réinitialiser les _dossiers de Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3386
+#: ../app/dialogs/preferences-dialog.c:3398
 msgid "Select Script-Fu Folders"
 msgstr "Sélectionner les dossiers de Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:3388
+#: ../app/dialogs/preferences-dialog.c:3400
 msgid "Module Folders"
 msgstr "Dossiers des modules"
 
-#: ../app/dialogs/preferences-dialog.c:3391
+#: ../app/dialogs/preferences-dialog.c:3403
 msgid "Reset Module _Folders"
 msgstr "Réinitialiser les _dossiers de modules"
 
-#: ../app/dialogs/preferences-dialog.c:3392
+#: ../app/dialogs/preferences-dialog.c:3404
 msgid "Select Module Folders"
 msgstr "Sélectionner les dossiers de modules"
 
-#: ../app/dialogs/preferences-dialog.c:3394
+#: ../app/dialogs/preferences-dialog.c:3406
 msgid "Interpreters"
 msgstr "Interpréteurs"
 
-#: ../app/dialogs/preferences-dialog.c:3394
+#: ../app/dialogs/preferences-dialog.c:3406
 msgid "Interpreter Folders"
 msgstr "Dossiers d’interpréteur"
 
-#: ../app/dialogs/preferences-dialog.c:3397
+#: ../app/dialogs/preferences-dialog.c:3409
 msgid "Reset Interpreter _Folders"
 msgstr "Réinitialiser les _dossiers d’interpréteur"
 
-#: ../app/dialogs/preferences-dialog.c:3398
+#: ../app/dialogs/preferences-dialog.c:3410
 msgid "Select Interpreter Folders"
 msgstr "Sélectionner les dossiers d’interpréteur"
 
-#: ../app/dialogs/preferences-dialog.c:3400
+#: ../app/dialogs/preferences-dialog.c:3412
 msgid "Environment"
 msgstr "Environnement"
 
-#: ../app/dialogs/preferences-dialog.c:3400
+#: ../app/dialogs/preferences-dialog.c:3412
 msgid "Environment Folders"
 msgstr "Dossiers d’environnement"
 
-#: ../app/dialogs/preferences-dialog.c:3403
+#: ../app/dialogs/preferences-dialog.c:3415
 msgid "Reset Environment _Folders"
 msgstr "Réinitialiser les _dossiers d’environnement"
 
-#: ../app/dialogs/preferences-dialog.c:3404
+#: ../app/dialogs/preferences-dialog.c:3416
 msgid "Select Environment Folders"
 msgstr "Sélectionner les dossiers d’environnement"
 
-#: ../app/dialogs/preferences-dialog.c:3406
+#: ../app/dialogs/preferences-dialog.c:3418
 msgid "Themes"
 msgstr "Thèmes"
 
-#: ../app/dialogs/preferences-dialog.c:3406
+#: ../app/dialogs/preferences-dialog.c:3418
 msgid "Theme Folders"
 msgstr "Dossiers des thèmes"
 
-#: ../app/dialogs/preferences-dialog.c:3409
+#: ../app/dialogs/preferences-dialog.c:3421
 msgid "Reset Theme _Folders"
 msgstr "Réinitialiser les _dossiers de thèmes"
 
-#: ../app/dialogs/preferences-dialog.c:3410
+#: ../app/dialogs/preferences-dialog.c:3422
 msgid "Select Theme Folders"
 msgstr "Sélectionner les dossiers de thèmes"
 
-#: ../app/dialogs/preferences-dialog.c:3412
+#: ../app/dialogs/preferences-dialog.c:3424
 msgid "Icon Themes"
 msgstr "Thèmes d’icônes"
 
-#: ../app/dialogs/preferences-dialog.c:3412
+#: ../app/dialogs/preferences-dialog.c:3424
 msgid "Icon Theme Folders"
 msgstr "Dossiers des thèmes d’icônes"
 
-#: ../app/dialogs/preferences-dialog.c:3415
+#: ../app/dialogs/preferences-dialog.c:3427
 msgid "Reset Icon Theme _Folders"
 msgstr "Réinitialiser les _dossiers de thèmes d’icônes"
 
-#: ../app/dialogs/preferences-dialog.c:3416
+#: ../app/dialogs/preferences-dialog.c:3428
 msgid "Select Icon Theme Folders"
 msgstr "Sélectionner les dossiers de thèmes d’icônes"
 
@@ -19259,9 +19158,8 @@ msgid "_Resize"
 msgstr "_Redimensionner"
 
 #: ../app/dialogs/resize-dialog.c:293
-#, fuzzy
 msgid "Reset the template selection"
-msgstr "Dupliquer la sélection"
+msgstr "Réinitialiser la sélection du modèle"
 
 #: ../app/dialogs/resize-dialog.c:300
 msgid ""
@@ -19309,14 +19207,14 @@ msgid "Resizing text layers will make them uneditable"
 msgstr "Le redimensionnement des calques de texte les rend non modifiables"
 
 #: ../app/dialogs/resize-dialog.c:751
-#, fuzzy, c-format
+#, c-format
 msgid "Scale template to %.2f ppi"
-msgstr "_Changer l’échelle des chemins importés pour les ajuster à l’image"
+msgstr "Mettre le modèle à l’échelle à %.2f ppp"
 
 #: ../app/dialogs/resize-dialog.c:756
-#, fuzzy, c-format
+#, c-format
 msgid "Set image to %.2f ppi"
-msgstr "Conversion de l’image en %s"
+msgstr "Définir l’image à %.2f ppp"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -19474,14 +19372,14 @@ msgstr "Verrouiller la _position du chemin"
 #: ../app/dialogs/welcome-dialog.c:86
 #, c-format
 msgid "Welcome to GIMP %s"
-msgstr ""
+msgstr "Bienvenue dans GIMP %s"
 
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: ../app/dialogs/welcome-dialog.c:135
 #, c-format
 msgid "You installed GIMP %s!"
-msgstr ""
+msgstr "Vous avez installé GIMP %s !"
 
 #. Welcome message: left
 #: ../app/dialogs/welcome-dialog.c:156
@@ -19489,20 +19387,20 @@ msgid ""
 "GIMP is a Free Software for image authoring and manipulation.\n"
 "Want to know more?"
 msgstr ""
+"GIMP est un logiciel libre pour la création et la manipulation d’images.\n"
+"Souhaitez-vous en savoir plus ?"
 
 #: ../app/dialogs/welcome-dialog.c:185
-#, fuzzy
 msgid "GIMP website"
-msgstr "Visitez le site Web de GIMP"
+msgstr "Site web de GIMP"
 
 #: ../app/dialogs/welcome-dialog.c:189
 msgid "Tutorials"
-msgstr ""
+msgstr "Didacticiels"
 
 #: ../app/dialogs/welcome-dialog.c:194
-#, fuzzy
 msgid "Documentation"
-msgstr "Documents"
+msgstr "Documentation"
 
 #. XXX: should we add API docs for plug-in developers once it's
 #. * properly set up?
@@ -19514,20 +19412,18 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/welcome-dialog.c:227
-#, fuzzy
 msgid "Contributing"
-msgstr "Contraste"
+msgstr "Contributions"
 
 #: ../app/dialogs/welcome-dialog.c:232
-#, fuzzy
 msgid "Donating"
-msgstr "Rotation"
+msgstr "Dons"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: ../app/dialogs/welcome-dialog.c:257
-#, fuzzy, c-format
+#, c-format
 msgid "GIMP %s Release Notes"
-msgstr "Télécharger GIMP %s (publié le %s)\n"
+msgstr "Notes de publication de GIMP %s"
 
 #: ../app/dialogs/welcome-dialog.c:368
 #, c-format
@@ -19695,19 +19591,19 @@ msgstr "_Échantillonner sur tous les calques"
 msgid "Access the image menu"
 msgstr "Accéder au menu d’image"
 
-#: ../app/display/gimpdisplayshell.c:630
+#: ../app/display/gimpdisplayshell.c:648
 msgid "Zoom image when window size changes"
 msgstr "Zoomer l’image quand la fenêtre change de taille"
 
-#: ../app/display/gimpdisplayshell.c:659
+#: ../app/display/gimpdisplayshell.c:677
 msgid "Toggle Quick Mask"
 msgstr "(Dés)activer le masque rapide"
 
-#: ../app/display/gimpdisplayshell.c:674
+#: ../app/display/gimpdisplayshell.c:692
 msgid "Navigate the image display"
 msgstr "Naviguer dans l’affichage d’image"
 
-#: ../app/display/gimpdisplayshell.c:727 ../app/display/gimpdisplayshell.c:1401
+#: ../app/display/gimpdisplayshell.c:745 ../app/display/gimpdisplayshell.c:1420
 #: ../app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Déposer les fichiers d’images ici pour les ouvrir"
@@ -19814,9 +19710,8 @@ msgstr "Impossible de modifier les pixels des groupes de calques."
 
 #: ../app/display/gimpdisplayshell-dnd.c:374
 #: ../app/tools/gimptransformtool.c:682
-#, fuzzy
 msgid "A selected layer's pixels are locked."
-msgstr "Les pixels du calque actif sont verrouillés."
+msgstr "Les pixels d’un calque sélectionné sont verrouillés."
 
 #: ../app/display/gimpdisplayshell-dnd.c:426
 #: ../app/widgets/gimpdrawabletreeview.c:267
@@ -19867,14 +19762,12 @@ msgid "Layer Select"
 msgstr "Sélection de calque"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:276
-#, fuzzy
 msgid "Layer Selection Moved Down"
-msgstr "Calque sous le calque actif"
+msgstr "Sélection de calque déplacée vers le bas"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:277
-#, fuzzy
 msgid "Layer Selection Moved Up"
-msgstr "Sélection de calque"
+msgstr "Sélection de calque déplacée vers le haut"
 
 #: ../app/display/gimpdisplayshell-rotate-dialog.c:114
 msgid "Rotate View"
@@ -19926,7 +19819,7 @@ msgstr "(correct)"
 msgid "(none)"
 msgstr "(aucune)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1596
+#: ../app/display/gimpdisplayshell-tool-events.c:1705
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Calque prélevé : « %s »"
@@ -20129,9 +20022,8 @@ msgid "Restrict editing to polygons"
 msgstr "Restreindre l’édition aux polygones"
 
 #: ../app/display/gimptoolpath.c:550
-#, fuzzy
 msgid "The selected path is locked."
-msgstr "Le chemin actif est verrouillé."
+msgstr "Le chemin sélectionné est verrouillé."
 
 #: ../app/display/gimptoolpath.c:640
 msgid "Add Stroke"
@@ -20266,9 +20158,8 @@ msgid "Delete Anchors"
 msgstr "Supprimer les ancres"
 
 #: ../app/display/gimptoolpath.c:2044
-#, fuzzy
 msgid "Shift start"
-msgstr "Décalage"
+msgstr "Décaler le départ"
 
 #: ../app/display/gimptoolpolygon.c:890
 msgid "Click to close shape"
@@ -20406,39 +20297,42 @@ msgstr "Séquence de caractères non valide dans l’URI"
 #: ../app/file-data/file-data-gex.c:146
 #, c-format
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
-msgstr ""
+msgstr "Les chemins absolus sont interdits dans l’extension GIMP « %s » : %s"
 
 #: ../app/file-data/file-data-gex.c:157
 #, c-format
 msgid "File not allowed in root of GIMP extension '%s': %s"
-msgstr ""
+msgstr "Fichier non autorisé dans la racine de l’extension GIMP « %s » : %s"
 
 #: ../app/file-data/file-data-gex.c:168
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
 msgstr ""
+"Le fichier n’est pas dans le dossier « %s » d’extension GIMP id « %s » : %s"
 
 #: ../app/file-data/file-data-gex.c:264 ../app/file-data/file-data-gex.c:411
 #: ../app/file-data/file-data-gex.c:423 ../app/file-data/file-data-gex.c:435
 #: ../app/file-data/file-data-gex.c:448
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
-msgstr ""
+msgstr "Erreur fatale lors de la décompression de l’extension GIMP « %s » : %s"
 
 #: ../app/file-data/file-data-gex.c:299
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr ""
+"Le répertoire (%s) de l’extension GIMP « %s » est différent de l’id "
+"AppStream : %s"
 
 #: ../app/file-data/file-data-gex.c:308
 #, c-format
 msgid "GIMP extension '%s' requires an AppStream file: %s"
-msgstr ""
+msgstr "L’extension GIMP « %s » nécessite un fichier AppStream : %s"
 
 #: ../app/file-data/file-data-gex.c:323 ../app/file-data/file-data-gex.c:458
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
-msgstr ""
+msgstr "Extension GIMP non valide « %s » : %s"
 
 #: ../app/file-data/file-data-gih.c:292
 #, c-format
@@ -20463,9 +20357,8 @@ msgid "GIMP pattern"
 msgstr "Motif GIMP"
 
 #: ../app/file-data/file-data.c:470
-#, fuzzy
 msgid "GIMP extension"
-msgstr "Selon l’extension"
+msgstr "Extension GIMP"
 
 #: ../app/gegl/gimp-babl.c:184 ../app/gegl/gimp-babl.c:185
 #: ../app/gegl/gimp-babl.c:186 ../app/gegl/gimp-babl.c:187
@@ -20476,7 +20369,7 @@ msgstr "Selon l’extension"
 #: ../app/gegl/gimp-babl.c:196 ../app/gegl/gimp-babl.c:197
 #: ../app/gegl/gimp-babl.c:198 ../app/gegl/gimp-babl.c:199
 #: ../app/gegl/gimp-babl.c:200 ../app/gegl/gimp-babl.c:201
-#: ../app/plug-in/gimppluginprocedure.c:1029
+#: ../app/plug-in/gimppluginprocedure.c:1031
 msgid "RGB"
 msgstr "RVB"
 
@@ -20501,7 +20394,7 @@ msgstr "RVB-Alpha"
 #: ../app/gegl/gimp-babl.c:234 ../app/gegl/gimp-babl.c:235
 #: ../app/gegl/gimp-babl.c:236 ../app/gegl/gimp-babl.c:237
 #: ../app/gegl/gimp-babl.c:238 ../app/gegl/gimp-babl.c:239
-#: ../app/plug-in/gimppluginprocedure.c:1047
+#: ../app/plug-in/gimppluginprocedure.c:1049
 msgid "Grayscale"
 msgstr "Niveaux de gris"
 
@@ -20563,7 +20456,7 @@ msgstr "Composant Alpha"
 msgid "Indexed-alpha"
 msgstr "Alpha-indexé"
 
-#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1065
+#: ../app/gegl/gimp-babl.c:352 ../app/plug-in/gimppluginprocedure.c:1067
 msgid "Indexed"
 msgstr "Indexé"
 
@@ -21167,9 +21060,8 @@ msgstr "Préserver la luminosité"
 
 #: ../app/operations/gimpcurvesconfig.c:106
 #: ../app/operations/gimplevelsconfig.c:111
-#, fuzzy
 msgid "Work on linear or perceptual RGB"
-msgstr "Travailler sur RVB linéaire"
+msgstr "Travailler sur RVB linéaire ou perceptuel"
 
 #: ../app/operations/gimpcurvesconfig.c:113
 #: ../app/operations/gimplevelsconfig.c:118
@@ -21710,9 +21602,8 @@ msgid "Scatter brush as you paint"
 msgstr "Disperse les coups de brosse pendant que vous peignez"
 
 #: ../app/paint/gimppaintoptions.c:309
-#, fuzzy
 msgid "Enable dynamics"
-msgstr "Dynamique de la brosse"
+msgstr "Activer la dynamique"
 
 #: ../app/paint/gimppaintoptions.c:310
 msgid "Apply dynamics curves to paint settings"
@@ -22219,9 +22110,9 @@ msgid "Vectors object %d does not contain stroke with ID %d"
 msgstr "L’objet vectoriel %d ne contient pas de tracé avec l’identificateur %d"
 
 #: ../app/pdb/gimppdb-utils.c:859
-#, fuzzy, c-format
+#, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
-msgstr "Procédure « %s » non trouvée"
+msgstr "Le nom de procédure « %s » n’est pas un identifiant canonique"
 
 #: ../app/pdb/gimppdb.c:304 ../app/pdb/gimppdb.c:377 ../app/pdb/pdb-cmds.c:71
 #, c-format
@@ -22370,18 +22261,20 @@ msgstr ""
 "« %s » (n°%d, type %s). Cette valeur est hors limite."
 
 #: ../app/pdb/gimpprocedure.c:1023
-#, fuzzy, c-format
+#, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
-msgstr "La procédure « %s » n’a renvoyé aucune valeur"
+msgstr ""
+"La procédure « %s » a renvoyé une chaîne UTF-8 non valide pour le paramètre "
+"« %s »."
 
 #: ../app/pdb/gimpprocedure.c:1033
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"La procédure « %s » a été appelée avec un type de valeur erroné pour le "
-"paramètre « %s » (n°%d). %s attendu, %s obtenu."
+"La procédure « %s » a été appelée avec une chaîne UTF-8 non valide pour le "
+"paramètre « %s »."
 
 #: ../app/pdb/image-cmds.c:2436
 msgid ""
@@ -22412,11 +22305,11 @@ msgstr "Transformation 2D"
 msgid "2D Transforming"
 msgstr "Transformation 2D en cours"
 
-#: ../app/pdb/pdb-cmds.c:1117 ../app/pdb/pdb-cmds.c:1161
-#: ../app/pdb/pdb-cmds.c:1203
+#: ../app/pdb/pdb-cmds.c:1152 ../app/pdb/pdb-cmds.c:1196
+#: ../app/pdb/pdb-cmds.c:1238
 #, c-format
 msgid "Data label '%s' is not a canonical identifier"
-msgstr ""
+msgstr "L’étiquette de données « %s » n’est pas un identifiant canonique"
 
 #: ../app/pdb/plug-in-compat-cmds.c:272
 msgctxt "undo-type"
@@ -22472,10 +22365,9 @@ msgid "Stretch Contrast"
 msgstr "Réduire le contraste"
 
 #: ../app/pdb/plug-in-compat-cmds.c:984
-#, fuzzy
 msgctxt "undo-type"
 msgid "Cartoon"
-msgstr "_Bande dessinée…"
+msgstr "Bande dessinée"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1063
 msgctxt "undo-type"
@@ -22518,10 +22410,9 @@ msgid "Diffraction Patterns"
 msgstr "Motifs de diffraction"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1554 ../app/pdb/plug-in-compat-cmds.c:1565
-#, fuzzy
 msgctxt "undo-type"
 msgid "DoG Edge Detect"
-msgstr "Dé_tection de bord"
+msgstr "Détection de bord DdG"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1578 ../app/pdb/plug-in-compat-cmds.c:2919
 msgctxt "undo-type"
@@ -22534,10 +22425,9 @@ msgid "Edge"
 msgstr "Bord"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1707
-#, fuzzy
 msgctxt "undo-type"
 msgid "Emboss"
-msgstr "Relie_f…"
+msgstr "Relief"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1750
 msgctxt "undo-type"
@@ -22555,10 +22445,9 @@ msgid "Lens Flare"
 msgstr "Effet d’éblouissement"
 
 #: ../app/pdb/plug-in-compat-cmds.c:1936
-#, fuzzy
 msgctxt "undo-type"
 msgid "Fractal Trace"
-msgstr "Tracé de _fractale…"
+msgstr "Tracé de fractale"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2120
 msgctxt "undo-type"
@@ -22601,10 +22490,9 @@ msgid "Motion Blur"
 msgstr "Flou cinétique"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2650
-#, fuzzy
 msgctxt "undo-type"
 msgid "Median Blur"
-msgstr "Flou _médiane…"
+msgstr "Flou médiane"
 
 #: ../app/pdb/plug-in-compat-cmds.c:2747
 msgctxt "undo-type"
@@ -22637,10 +22525,9 @@ msgid "Paper Tile"
 msgstr "Morceaux de papier"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3232
-#, fuzzy
 msgctxt "undo-type"
 msgid "Photocopy"
-msgstr "Ph_otocopie…"
+msgstr "Photocopie"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3273 ../app/pdb/plug-in-compat-cmds.c:3316
 msgctxt "undo-type"
@@ -22718,10 +22605,9 @@ msgid "Sobel"
 msgstr "Sobel"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4220
-#, fuzzy
 msgctxt "undo-type"
 msgid "Softglow"
-msgstr "_Lueur douce…"
+msgstr "Lueur douce"
 
 #: ../app/pdb/plug-in-compat-cmds.c:4281
 msgctxt "undo-type"
@@ -22807,9 +22693,8 @@ msgid "Close path stroke"
 msgstr "Fermer le tracé du chemin"
 
 #: ../app/pdb/vectors-cmds.c:406
-#, fuzzy
 msgid "Reverse path stroke"
-msgstr "Supprimer le tracé du chemin"
+msgstr "Inverser le tracé du chemin"
 
 #: ../app/pdb/vectors-cmds.c:451
 msgid "Translate path stroke"
@@ -22895,11 +22780,11 @@ msgstr ""
 msgid "Cancelled"
 msgstr "Annulé"
 
-#: ../app/plug-in/gimppluginmanager.c:238
+#: ../app/plug-in/gimppluginmanager.c:240
 msgid "Plug-in Interpreters"
 msgstr "Interpréteurs de greffons"
 
-#: ../app/plug-in/gimppluginmanager.c:244
+#: ../app/plug-in/gimppluginmanager.c:246
 msgid "Plug-in Environment"
 msgstr "Environnement du greffon"
 
@@ -22915,9 +22800,8 @@ msgid "Unknown file type"
 msgstr "Type de fichier inconnu"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:231
-#, fuzzy
 msgid "Loading extension plug-ins"
-msgstr "Démarrage des extensions"
+msgstr "Chargement des greffons d’extension"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:251
 msgid "Searching plug-ins"
@@ -22929,11 +22813,13 @@ msgid ""
 "Skipping potential plug-in '%s': plug-ins must be installed in "
 "subdirectories.\n"
 msgstr ""
+"Sauter le greffon potentiel « %s » : les greffons doivent être installés "
+"dans des sous-répertoires.\n"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:383
 #, c-format
 msgid "Skipping unknown file '%s' in plug-in directory.\n"
-msgstr ""
+msgstr "Le fichier inconnu « %s » dans le répertoire de greffons est sauté.\n"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:430
 msgid "Resource configuration"
@@ -22951,35 +22837,35 @@ msgstr "Initialisation des greffons"
 msgid "Starting Extensions"
 msgstr "Démarrage des extensions"
 
-#: ../app/plug-in/gimppluginprocedure.c:1033
+#: ../app/plug-in/gimppluginprocedure.c:1035
 msgid "RGB without alpha"
 msgstr "RVB sans alpha"
 
-#: ../app/plug-in/gimppluginprocedure.c:1037
+#: ../app/plug-in/gimppluginprocedure.c:1039
 msgid "RGB with alpha"
 msgstr "RVB avec alpha"
 
-#: ../app/plug-in/gimppluginprocedure.c:1051
+#: ../app/plug-in/gimppluginprocedure.c:1053
 msgid "Grayscale without alpha"
 msgstr "Niveaux de gris sans alpha"
 
-#: ../app/plug-in/gimppluginprocedure.c:1055
+#: ../app/plug-in/gimppluginprocedure.c:1057
 msgid "Grayscale with alpha"
 msgstr "Niveaux de gris avec alpha"
 
-#: ../app/plug-in/gimppluginprocedure.c:1069
+#: ../app/plug-in/gimppluginprocedure.c:1071
 msgid "Indexed without alpha"
 msgstr "Couleurs indexées sans alpha"
 
-#: ../app/plug-in/gimppluginprocedure.c:1073
+#: ../app/plug-in/gimppluginprocedure.c:1075
 msgid "Indexed with alpha"
 msgstr "Couleurs indexées avec alpha"
 
-#: ../app/plug-in/gimppluginprocedure.c:1084
+#: ../app/plug-in/gimppluginprocedure.c:1086
 msgid "This plug-in only works on the following layer types:"
 msgstr "Ce greffon ne fonctionne que pour les types de calques suivants :"
 
-#: ../app/plug-in/gimppluginprocedure.c:1303
+#: ../app/plug-in/gimppluginprocedure.c:1319
 #, c-format
 msgid ""
 "Calling error for '%s':\n"
@@ -22988,7 +22874,7 @@ msgstr ""
 "Erreur d’appel pour « %s » :\n"
 "%s"
 
-#: ../app/plug-in/gimppluginprocedure.c:1315
+#: ../app/plug-in/gimppluginprocedure.c:1331
 #, c-format
 msgid ""
 "Execution error for '%s':\n"
@@ -22997,22 +22883,22 @@ msgstr ""
 "Erreur d’exécution « %s » :\n"
 "%s"
 
-#: ../app/plug-in/plug-in-rc.c:237
+#: ../app/plug-in/plug-in-rc.c:240
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
 msgstr "Ignore « %s » : version de protocole GIMP erronée."
 
-#: ../app/plug-in/plug-in-rc.c:244
+#: ../app/plug-in/plug-in-rc.c:247
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
 msgstr "Ignore « %s » : version de format du fichier pluginrc erronée."
 
-#: ../app/plug-in/plug-in-rc.c:550
+#: ../app/plug-in/plug-in-rc.c:553
 #, c-format
 msgid "invalid value '%s' for icon type"
 msgstr "Valeur « %s » non valide pour le type d’icône"
 
-#: ../app/plug-in/plug-in-rc.c:565
+#: ../app/plug-in/plug-in-rc.c:568
 #, c-format
 msgid "invalid value '%ld' for icon type"
 msgstr "Valeur « %ld » non valide pour le type d’icône"
@@ -23297,80 +23183,80 @@ msgstr "Supernova : "
 
 #: ../app/propgui/gimppropgui-utils.c:64
 msgid "1,700 K – Match flame"
-msgstr "1,700 K - Flamme d’allumette"
+msgstr "1700 K - Flamme d’allumette"
 
 #: ../app/propgui/gimppropgui-utils.c:65
 msgid "1,850 K – Candle flame, sunset/sunrise"
-msgstr "1,850 K - Flamme de bougie, lever / coucher du soleil"
+msgstr "1850 K - Flamme de bougie, lever / coucher du soleil"
 
 #: ../app/propgui/gimppropgui-utils.c:66
 msgid "2,700 K - Soft (or warm) LED lamps"
-msgstr "2,700 K - Lampes LED douces (ou chaudes)"
+msgstr "2700 K - Lampes LED douces (ou chaudes)"
 
 #: ../app/propgui/gimppropgui-utils.c:67
 msgid "3,000 K – Soft (or warm) white compact fluorescent lamps"
 msgstr ""
-"3,000 K - Lampes fluorescentes blanches compactes, lumière douce (ou chaude)"
+"3000 K - Lampes fluorescentes blanches compactes, lumière douce (ou chaude)"
 
 #: ../app/propgui/gimppropgui-utils.c:68
 msgid "3,200 K – Studio lamps, photofloods, etc."
-msgstr "3,200 K - Lampes de studio, photofloods, etc."
+msgstr "3200 K - Lampes de studio, photofloods, etc."
 
 #: ../app/propgui/gimppropgui-utils.c:69
 msgid "3,300 K – Incandescent lamps"
-msgstr "3,300 K - Lampes à incandescence"
+msgstr "3300 K - Lampes à incandescence"
 
 #: ../app/propgui/gimppropgui-utils.c:70
 msgid "3,350 K – Studio \"CP\" light"
-msgstr "3,500 K - Lumière « CP » de studio"
+msgstr "3500 K - Lumière « CP » de studio"
 
 #: ../app/propgui/gimppropgui-utils.c:71
 msgid "4,000 K - Cold (daylight) LED lamps"
-msgstr "4,000 K - Lampes LED froides (lumière du jour)"
+msgstr "4000 K - Lampes LED froides (lumière du jour)"
 
 #: ../app/propgui/gimppropgui-utils.c:72
 msgid "4,100 K – Moonlight"
-msgstr "4,100 K - Clair de lune"
+msgstr "4100 K - Clair de lune"
 
 #: ../app/propgui/gimppropgui-utils.c:73
 msgid "5,000 K – D50"
-msgstr "5,000 K – D50"
+msgstr "5000 K – D50"
 
 #: ../app/propgui/gimppropgui-utils.c:74
 msgid "5,000 K – Cool white/daylight compact fluorescent lamps"
-msgstr "5,000 K - Lampes fluorescentes compactes blanc froid / lumière du jour"
+msgstr "5000 K - Lampes fluorescentes compactes blanc froid / lumière du jour"
 
 #: ../app/propgui/gimppropgui-utils.c:75
 msgid "5,000 K – Horizon daylight"
-msgstr "5,000 K - Lumière du jour horizontale"
+msgstr "5000 K - Lumière du jour horizontale"
 
 #: ../app/propgui/gimppropgui-utils.c:76
 msgid "5,500 K – D55"
-msgstr "5,500 K - D55"
+msgstr "5500 K - D55"
 
 #: ../app/propgui/gimppropgui-utils.c:77
 msgid "5,500 K – Vertical daylight, electronic flash"
-msgstr "5,500 K - Lumière du jour verticale, flash électronique"
+msgstr "5500 K - Lumière du jour verticale, flash électronique"
 
 #: ../app/propgui/gimppropgui-utils.c:78
 msgid "6,200 K – Xenon short-arc lamp"
-msgstr "6,200 K - Lampe à arc court au xénon"
+msgstr "6200 K - Lampe à arc court au xénon"
 
 #: ../app/propgui/gimppropgui-utils.c:79
 msgid "6,500 K – D65"
-msgstr "6,500 K - D65"
+msgstr "6500 K - D65"
 
 #: ../app/propgui/gimppropgui-utils.c:80
 msgid "6,500 K – Daylight, overcast"
-msgstr "6,500 K - Lumière du jour, ciel couvert"
+msgstr "6500 K - Lumière du jour, ciel couvert"
 
 #: ../app/propgui/gimppropgui-utils.c:81
 msgid "7,500 K – D75"
-msgstr "7,500 K - D75"
+msgstr "7500 K - D75"
 
 #: ../app/propgui/gimppropgui-utils.c:82
 msgid "9,300 K"
-msgstr "9,300 K"
+msgstr "9300 K"
 
 #: ../app/propgui/gimppropgui-utils.c:97
 msgid "Choose from a list of common color temperatures"
@@ -23722,27 +23608,24 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#, fuzzy
 msgid "Stroke borders"
-msgstr "Défilement vers le bord gauche"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:254
 msgid "Stroke fill borders with last stroke options"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:260
-#, fuzzy
 msgid "Stroke tool"
-msgstr "Tracer le chemin"
+msgstr "Outil de tracé"
 
 #: ../app/tools/gimpbucketfilloptions.c:261
 msgid "The tool to stroke the fill borders with"
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:266
-#, fuzzy
 msgid "Automatic closure"
-msgstr "Automatique"
+msgstr "Fermeture automatique"
 
 #: ../app/tools/gimpbucketfilloptions.c:267
 msgid ""
@@ -23774,14 +23657,12 @@ msgid ""
 msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:633
-#, fuzzy
 msgid "No valid source drawable selected"
-msgstr "Aucune source valide de dessin au trait sélectionnée."
+msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:635
-#, fuzzy
 msgid "The source drawable has no alpha channel"
-msgstr "Le calque actif ne possède pas de canal alpha."
+msgstr ""
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:677
@@ -23814,15 +23695,13 @@ msgstr ""
 
 #. Line Art Closure: frame label
 #: ../app/tools/gimpbucketfilloptions.c:788
-#, fuzzy
 msgid "Line Art Closure"
-msgstr "Style de ligne"
+msgstr ""
 
 #. Line Art Borders: frame label
 #: ../app/tools/gimpbucketfilloptions.c:819
-#, fuzzy
 msgid "Fill borders"
-msgstr "Couleur de remplissage"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill"
@@ -23865,9 +23744,8 @@ msgstr "Le calque actif n’est pas visible."
 #: ../app/tools/gimpbucketfilltool.c:625
 #: ../app/tools/gimpeditselectiontool.c:1111
 #: ../app/tools/gimpgradienttool.c:281 ../app/tools/gimpmovetool.c:349
-#, fuzzy
 msgid "The selected layer's pixels are locked."
-msgstr "Les pixels du calque actif sont verrouillés."
+msgstr "Les pixels du calque sélectionné sont verrouillés."
 
 #: ../app/tools/gimpbucketfilltool.c:634
 msgid "No valid line art source selected."
@@ -23931,14 +23809,12 @@ msgstr ""
 
 #: ../app/tools/gimpcagetool.c:248 ../app/tools/gimppainttool.c:329
 #: ../app/tools/gimpwarptool.c:804
-#, fuzzy
 msgid "The selected item's pixels are locked."
-msgstr "Les pixels du calque actif sont verrouillés."
+msgstr "Les pixels de l’élément sélectionné sont verrouillés."
 
 #: ../app/tools/gimpcagetool.c:258
-#, fuzzy
 msgid "The active item is not visible."
-msgstr "Le calque actif n’est pas visible."
+msgstr "L’élément actif n’est pas visible."
 
 #: ../app/tools/gimpcagetool.c:764 ../app/tools/gimpwarptool.c:391
 msgid "Press ENTER to commit the transform"
@@ -23954,9 +23830,8 @@ msgstr "Transformation par cage"
 
 #: ../app/tools/gimpcloneoptions-gui.c:145
 #: ../app/tools/gimpcloneoptions-gui.c:251
-#, fuzzy
 msgid "No source selected"
-msgstr "Aucun filtre sélectionné"
+msgstr "Aucune source sélectionnée"
 
 #: ../app/tools/gimpcloneoptions-gui.c:161
 #, c-format
@@ -23966,28 +23841,27 @@ msgstr[0] ""
 msgstr[1] ""
 
 #: ../app/tools/gimpcloneoptions-gui.c:175
-#, fuzzy
 msgid "All composited visible layers"
-msgstr "Tous les calques visibles"
+msgstr "Tous les calques composites visibles"
 
 #: ../app/tools/gimpcloneoptions-gui.c:177
-#, fuzzy, c-format
+#, c-format
 msgid "All composited visible layers from '%s'"
-msgstr "Tous les calques visibles"
+msgstr "Tous les calques composites visibles de « %s »"
 
 #: ../app/tools/gimpcloneoptions-gui.c:183
-#, fuzzy, c-format
+#, c-format
 msgid "Source: %d item"
 msgid_plural "Source: %d items"
-msgstr[0] "Échelle de l’élément"
-msgstr[1] "Échelle de l’élément"
+msgstr[0] "Source : %d élément"
+msgstr[1] "Source : %d éléments"
 
 #: ../app/tools/gimpcloneoptions-gui.c:188
 #, c-format
 msgid "Source: %d item from '%s'"
 msgid_plural "Source: %d items from '%s'"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Source : %d élément de « %s »"
+msgstr[1] "Source : %d éléments de « %s »"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
@@ -24157,14 +24031,12 @@ msgstr ""
 "Importance de l’obscurcissement de tout ce qui est en dehors de la sélection"
 
 #: ../app/tools/gimpcropoptions.c:95
-#, fuzzy
 msgid "Selected layers only"
-msgstr "Pixels _sélectionnés seulement"
+msgstr "Calques sélectionnés seulement"
 
 #: ../app/tools/gimpcropoptions.c:96
-#, fuzzy
 msgid "Crop only currently selected layers"
-msgstr "Ne découpe que le calque sélectionné"
+msgstr "Ne découpe que les calques sélectionnés"
 
 #: ../app/tools/gimpcropoptions.c:102
 msgid "Delete cropped pixels"
@@ -24222,21 +24094,19 @@ msgid "Crop to: "
 msgstr "Rogner jusqu’à : "
 
 #: ../app/tools/gimpcroptool.c:459
-#, fuzzy
 msgid "There are no selected layers to crop."
-msgstr "Il n’y a pas de calque actif à découper."
+msgstr "Il n’y a pas de calque sélectionné à découper."
 
 #: ../app/tools/gimpcroptool.c:470
-#, fuzzy
 msgid "All selected layers' pixels are locked."
-msgstr "Les pixels du calque actif sont verrouillés."
+msgstr "Tous les pixels des calques sélectionnés sont verrouillés."
 
 #: ../app/tools/gimpcroptool.c:475
-#, fuzzy, c-format
+#, c-format
 msgid "Resize Layer"
 msgid_plural "Resize %d layers"
 msgstr[0] "Redimensionner le calque"
-msgstr[1] "Redimensionner le calque"
+msgstr[1] "Redimensionner %d calques"
 
 #: ../app/tools/gimpcurvestool.c:154
 msgid "Curves"
@@ -24373,9 +24243,8 @@ msgstr "Il n’y a pas de chemin à déplacer."
 
 #: ../app/tools/gimpeditselectiontool.c:1086
 #: ../app/tools/gimptransformtool.c:729
-#, fuzzy
 msgid "The selected path's position is locked."
-msgstr "La position du chemin actif est verrouillée."
+msgstr "La position du chemin sélectionné est verrouillée."
 
 #: ../app/tools/gimpeditselectiontool.c:1097 ../app/tools/gimpmovetool.c:338
 msgid "There is no layer to move."
@@ -24383,19 +24252,17 @@ msgstr "Il n’y a pas de calque à déplacer."
 
 #: ../app/tools/gimpeditselectiontool.c:1106
 #: ../app/tools/gimpeditselectiontool.c:1135 ../app/tools/gimpmovetool.c:347
-#, fuzzy
 msgid "The selected layer's position is locked."
-msgstr "La position du calque actif est verrouillée."
+msgstr "La position du calque sélectionné est verrouillée."
 
 #: ../app/tools/gimpeditselectiontool.c:1126
-#, fuzzy
 msgid "All selected channels' positions or pixels are locked."
-msgstr "Les pixels du canal actif sont verrouillés."
+msgstr ""
+"Toutes les positions ou les pixels des canaux sélectionnés sont verrouillés."
 
 #: ../app/tools/gimpeditselectiontool.c:1149
-#, fuzzy
 msgid "All selected layers' positions are locked."
-msgstr "La position et la taille du calque actif sont verrouillées."
+msgstr "Toutes les positions des calques sélectionnés sont verrouillées."
 
 #: ../app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -24455,15 +24322,14 @@ msgid "Show on-canvas filter controls"
 msgstr "Afficher les contrôles de filtre sur canevas"
 
 #: ../app/tools/gimpfiltertool.c:316 ../app/tools/gimpselectiontool.c:578
-#, fuzzy, c-format
+#, c-format
 msgid "A selected item's pixels are locked."
-msgstr "Les pixels du calque actif sont verrouillés."
+msgstr "Les pixels d’un élément sélectionné sont verrouillés."
 
 #: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimppainttool.c:359
 #: ../app/tools/gimptransformtool.c:691
-#, fuzzy
 msgid "A selected layer is not visible."
-msgstr "Le calque actif n’est pas visible."
+msgstr "Un calque sélectionné n’est pas visible."
 
 #: ../app/tools/gimpfiltertool.c:643
 msgid "Click to switch the original and filtered sides"
@@ -24639,9 +24505,8 @@ msgid "F_oreground Select"
 msgstr "Extraction du _premier plan"
 
 #: ../app/tools/gimpforegroundselecttool.c:293
-#, fuzzy
 msgid "Cannot select from multiple layers."
-msgstr "Sélection fondée sur tous les calques visibles"
+msgstr "Impossible de sélectionner à partir de plusieurs calques."
 
 #: ../app/tools/gimpforegroundselecttool.c:326
 msgid "Dialog for foreground select"
@@ -24729,13 +24594,12 @@ msgid "GEGL Operation"
 msgstr "Action GEGL"
 
 #: ../app/tools/gimpgegltool.c:79
-#, fuzzy
 msgid "Run an arbitrary GEGL operation"
-msgstr "Outil GEGL : utilise une action GEGL arbitraire"
+msgstr "Lancer une opération GEGL arbitraire"
 
 #: ../app/tools/gimpgegltool.c:80
 msgid "_GEGL Operation..."
-msgstr "Action _GEGL…"
+msgstr "Opération _GEGL…"
 
 #. The options vbox
 #: ../app/tools/gimpgegltool.c:497
@@ -24825,9 +24689,8 @@ msgid "No active drawables."
 msgstr ""
 
 #: ../app/tools/gimpgradienttool.c:291 ../app/tools/gimpwarptool.c:818
-#, fuzzy
 msgid "The selected item is not visible."
-msgstr "Le calque actif n’est pas visible."
+msgstr "L’élément sélectionné n’est pas visible."
 
 #: ../app/tools/gimpgradienttool.c:298
 msgid "No gradient available for use with this tool."
@@ -25302,9 +25165,8 @@ msgid "Pick a layer or guide"
 msgstr "Pointer un calque ou un guide"
 
 #: ../app/tools/gimpmoveoptions.c:156
-#, fuzzy
 msgid "Move the selected layers"
-msgstr "Déplacer vers le haut le filtre sélectionné"
+msgstr "Déplacer les calques sélectionnés"
 
 #: ../app/tools/gimpmoveoptions.c:160
 msgid "Pick a path"
@@ -25333,24 +25195,20 @@ msgid "_Move"
 msgstr "_Déplacement"
 
 #: ../app/tools/gimpmovetool.c:293
-#, fuzzy
 msgid "There are no paths to move."
 msgstr "Il n’y a pas de chemin à déplacer."
 
 #: ../app/tools/gimpmovetool.c:306
-#, fuzzy
 msgid "All selected path's position are locked."
-msgstr "La position du chemin actif est verrouillée."
+msgstr "Toutes les positions du chemin sélectionné sont verrouillées."
 
 #: ../app/tools/gimpmovetool.c:358
-#, fuzzy
 msgid "A selected channel's position or pixels are locked."
-msgstr "La position du chemin actif est verrouillée."
+msgstr "La position ou les pixels d’un canal sélectionné sont verrouillés."
 
 #: ../app/tools/gimpmovetool.c:366
-#, fuzzy
 msgid "A selected layer's position is locked."
-msgstr "La position du calque actif est verrouillée."
+msgstr "La position d’un calque sélectionné est verrouillée."
 
 #: ../app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25533,49 +25391,41 @@ msgid "Link to brush default"
 msgstr "Lier à la brosse par défaut"
 
 #: ../app/tools/gimppaintselectoptions.c:74
-#, fuzzy
 msgid ""
 "Paint over areas to mark pixels for inclusion or exclusion from selection"
 msgstr ""
-"Peint des zones pour marquer les valeurs de couleur qui seront incluses dans "
-"ou exclues de la sélection"
+"Peint des zones pour marquer les pixels qui seront inclus dans ou exclus de "
+"la sélection"
 
 #: ../app/tools/gimppaintselectoptions.c:89
 #: ../app/tools/gimppaintselectoptions.c:90
-#, fuzzy
 msgid "Show scribbles"
-msgstr "Afficher les _règles"
+msgstr ""
 
 #: ../app/tools/gimppaintselecttool.c:167
-#, fuzzy
 msgid "Paint Select"
-msgstr "Chemin vers sélection"
+msgstr "Sélection par peinture"
 
 #: ../app/tools/gimppaintselecttool.c:168
-#, fuzzy
 msgid "Paint Select Tool: Select objects by painting roughly"
 msgstr ""
-"Outil de sélection rectangulaire : sélectionne des régions rectangulaires"
 
 #: ../app/tools/gimppaintselecttool.c:169
-#, fuzzy
 msgid "P_aint Select"
-msgstr "_Sélectionner"
+msgstr "Sélection par pe_inture"
 
 #: ../app/tools/gimppaintselecttool.c:346
 msgid "Cannot paint select on multiple layers. Select only one layer."
 msgstr ""
 
 #: ../app/tools/gimppaintselecttool.c:365
-#, fuzzy
 msgid "Cannot paint select on layer groups."
-msgstr "Impossible de peindre sur des groupes de calques."
+msgstr "Impossible de sélectionner par peinture sur des groupes de calques."
 
 #: ../app/tools/gimppaintselecttool.c:641
-#, fuzzy
 msgctxt "command"
 msgid "Paint Select"
-msgstr "Chemin vers sélection"
+msgstr "Sélection par peinture"
 
 #: ../app/tools/gimppainttool.c:176
 msgid "Click to paint"
@@ -25593,6 +25443,7 @@ msgstr "%s pour prélever une couleur"
 #: ../app/tools/gimppainttool.c:305
 msgid "Cannot paint on multiple layers. Select only one layer."
 msgstr ""
+"Impossible de peindre sur plusieurs calques. Choisissez un seul calque."
 
 #: ../app/tools/gimppainttool.c:320
 msgid "Cannot paint on layer groups."
@@ -25604,14 +25455,12 @@ msgid "%s for a straight line"
 msgstr "%s pour une ligne droite"
 
 #: ../app/tools/gimppainttool.c:940
-#, fuzzy
 msgid "The selected drawable does not have an alpha channel."
-msgstr "Le calque actif ne possède pas de canal alpha."
+msgstr "La surface de dessin sélectionnée ne possède pas de canal alpha."
 
 #: ../app/tools/gimppainttool.c:951
-#, fuzzy
 msgid "The selected layer's alpha channel is locked."
-msgstr "Le canal alpha du calque actif est verrouillé."
+msgstr "Le canal alpha du calque sélectionné est verrouillé."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
@@ -26174,22 +26023,19 @@ msgstr ""
 
 #: ../app/tools/gimptexttool.c:2347
 msgid "Text is required."
-msgstr ""
+msgstr "Du texte est obligatoire."
 
 #: ../app/tools/gimptexttool.c:2350
-#, fuzzy
 msgid "No image."
-msgstr "Découper l’image"
+msgstr "Aucune image."
 
 #: ../app/tools/gimptexttool.c:2353
-#, fuzzy
 msgid "No layer."
-msgstr "Nouveau calque"
+msgstr "Aucun calque."
 
 #: ../app/tools/gimptexttool.c:2364
-#, fuzzy
 msgid "Exactly one path must be selected."
-msgstr "Aucune source valide de dessin au trait sélectionnée."
+msgstr "Un et un seul chemin doit être sélectionné."
 
 #: ../app/tools/gimptexttool-editor.c:1358
 msgid "GIMP Text Editor"
@@ -26548,14 +26394,12 @@ msgid "There is no layer to transform."
 msgstr "Il n’y a pas de calque à transformer."
 
 #: ../app/tools/gimptransformtool.c:684
-#, fuzzy
 msgid "A selected layer's position and size are locked."
-msgstr "La position et la taille du calque actif sont verrouillées."
+msgstr "La position et la taille d’un calque sélectionné sont verrouillées."
 
 #: ../app/tools/gimptransformtool.c:698
-#, fuzzy
 msgid "The selection does not intersect with a selected layer."
-msgstr "La sélection n’a pas d’intersection avec le calque."
+msgstr "La sélection n’a pas d’intersection avec un calque sélectionné."
 
 #: ../app/tools/gimptransformtool.c:705
 msgid "There is no selection to transform."
@@ -26566,14 +26410,12 @@ msgid "There is no path to transform."
 msgstr "Il n’y a pas de chemin à transformer."
 
 #: ../app/tools/gimptransformtool.c:727
-#, fuzzy
 msgid "The selected path's strokes are locked."
-msgstr "Les tracés de chemin actifs sont verrouillés."
+msgstr "Les tracés des chemins sélectionnés sont verrouillés."
 
 #: ../app/tools/gimptransformtool.c:731
-#, fuzzy
 msgid "The selected path has no strokes."
-msgstr "Le chemin actif n’a aucun tracé."
+msgstr "Le chemin sélectionné n’a aucun tracé."
 
 #: ../app/tools/gimptransformtool.c:808
 msgid "The current transform is invalid"
@@ -26801,22 +26643,19 @@ msgid "All visible layers"
 msgstr "Tous les calques visibles"
 
 #: ../app/tools/tools-enums.c:58
-#, fuzzy
 msgctxt "line-art-source"
 msgid "Selected layer"
-msgstr "Supprimer le calque"
+msgstr "Calque sélectionné"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgctxt "line-art-source"
 msgid "Layer below the selected one"
-msgstr "Calque sous le calque actif"
+msgstr "Calque sous le calque sélectionné"
 
 #: ../app/tools/tools-enums.c:60
-#, fuzzy
 msgctxt "line-art-source"
 msgid "Layer above the selected one"
-msgstr "Calque au-dessus du calque actif"
+msgstr "Calque au-dessus du calque sélectionné"
 
 #: ../app/tools/tools-enums.c:89
 msgctxt "rect-select-mode"
@@ -26879,13 +26718,11 @@ msgid "Grayscale"
 msgstr "Niveaux de gris"
 
 #: ../app/tools/tools-enums.c:277
-#, fuzzy
 msgctxt "3-dtransform-lens-mode"
 msgid "Focal length"
 msgstr "Distance focale"
 
 #: ../app/tools/tools-enums.c:278
-#, fuzzy
 msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to image)"
 msgstr "Champ visuel (relatif à l’image)"
@@ -26893,13 +26730,11 @@ msgstr "Champ visuel (relatif à l’image)"
 #. Translators: this is an abbreviated version of "Field of view (relative to image)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:281
-#, fuzzy
 msgctxt "3-dtransform-lens-mode"
 msgid "FOV (image)"
 msgstr "CV (image)"
 
 #: ../app/tools/tools-enums.c:282
-#, fuzzy
 msgctxt "3-dtransform-lens-mode"
 msgid "Field of view (relative to item)"
 msgstr "Champ visuel (relatif à l’élément)"
@@ -26907,7 +26742,6 @@ msgstr "Champ visuel (relatif à l’élément)"
 #. Translators: this is an abbreviated version of "Field of view (relative to item)".
 #. Keep it short.
 #: ../app/tools/tools-enums.c:285
-#, fuzzy
 msgctxt "3-dtransform-lens-mode"
 msgid "FOV (item)"
 msgstr "CV (élément)"
@@ -26948,16 +26782,14 @@ msgid "Smooth warping"
 msgstr "Lisser le gauchissement"
 
 #: ../app/tools/tools-enums.c:352
-#, fuzzy
 msgctxt "paint-select-mode"
 msgid "Add to selection"
-msgstr "A_jouter à la sélection"
+msgstr "Ajouter à la sélection"
 
 #: ../app/tools/tools-enums.c:353
-#, fuzzy
 msgctxt "paint-select-mode"
 msgid "Subtract from selection"
-msgstr "S_oustraire de la sélection"
+msgstr "Soustraire de la sélection"
 
 #: ../app/vectors/gimpvectors.c:225
 msgctxt "undo-type"
@@ -28336,23 +28168,20 @@ msgstr "Inclinaison Y"
 #. * feature.
 #.
 #: ../app/widgets/gimpdeviceinfo.c:65
-#, fuzzy
 msgid "Wheel"
-msgstr "Roulette de la souris"
+msgstr "Roulette"
 
 #: ../app/widgets/gimpdeviceinfo.c:66
-#, fuzzy
 msgid "Distance"
-msgstr "Distance :"
+msgstr "Distance"
 
 #: ../app/widgets/gimpdeviceinfo.c:67
-#, fuzzy
 msgid "Rotation"
 msgstr "Rotation"
 
 #: ../app/widgets/gimpdeviceinfo.c:68
 msgid "Slider"
-msgstr ""
+msgstr "Curseur"
 
 #: ../app/widgets/gimpdeviceinfo.c:248
 msgid "Pressure curve"
@@ -28360,11 +28189,11 @@ msgstr "Courbe de pression"
 
 #: ../app/widgets/gimpdeviceinfo.c:1062 ../app/widgets/gimpdeviceinfo.c:1087
 msgid "(Device not present)"
-msgstr ""
+msgstr "(Périphérique absent)"
 
 #: ../app/widgets/gimpdeviceinfo.c:1070 ../app/widgets/gimpdeviceinfo.c:1095
 msgid "(Virtual device)"
-msgstr ""
+msgstr "(Périphérique virtuel)"
 
 #. The list of axes of an input device
 #: ../app/widgets/gimpdeviceinfoeditor.c:238
@@ -28372,31 +28201,28 @@ msgid "Axes"
 msgstr "Axes"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:317
-#, fuzzy
 msgid "Source:"
-msgstr "Source"
+msgstr "Source :"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:322
 msgid "Vendor ID:"
-msgstr ""
+msgstr "ID du fournisseur :"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:327
 msgid "Product ID:"
-msgstr ""
+msgstr "ID du produit :"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:332
-#, fuzzy
 msgid "Tool type:"
-msgstr "Type de remplissage :"
+msgstr "Type d’outil :"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:337
-#, fuzzy
 msgid "Tool serial:"
-msgstr "Préréglage d’outil"
+msgstr "N° de série de l’outil :"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:342
 msgid "Tool hardware ID:"
-msgstr ""
+msgstr "ID du matériel d’outil :"
 
 #: ../app/widgets/gimpdeviceinfoeditor.c:354
 #: ../app/widgets/gimpdeviceinfoeditor.c:672
@@ -28503,15 +28329,13 @@ msgstr "Verrouiller la position et la taille"
 
 #: ../app/widgets/gimpdrawabletreeview.c:126
 #: ../app/widgets/gimpitemtreeview.c:556
-#, fuzzy
 msgid "Lock visibility"
-msgstr "Visibilité de l’élément"
+msgstr "Verrouiller la visibilité"
 
 #: ../app/widgets/gimpdrawabletreeview.c:192
-#, fuzzy
 msgid "Cannot select items while a floating selection is active."
 msgstr ""
-"Impossible de sélectionner un élément alors qu’une sélection flottante est "
+"Impossible de sélectionner des éléments alors qu’une sélection flottante est "
 "active."
 
 #: ../app/widgets/gimpdynamicseditor.c:162
@@ -28740,7 +28564,7 @@ msgid ""
 "You may instead use the web browser for reading the help pages."
 msgstr ""
 "Le greffon du navigateur d’aide de GIMP semble manquer à votre installation. "
-"Vous pouvez utiliser un navigateur Web à la place pour consulter l’aide en "
+"Vous pouvez utiliser un navigateur web à la place pour consulter l’aide en "
 "ligne."
 
 #: ../app/widgets/gimphelp.c:411
@@ -28754,12 +28578,12 @@ msgstr "Impossible de démarrer le greffon du navigateur d’aide de GIMP."
 #: ../app/widgets/gimphelp.c:414
 msgid "You may instead use the web browser for reading the help pages."
 msgstr ""
-"Vous pouvez utiliser un navigateur Web à la place pour consulter l’aide en "
+"Vous pouvez utiliser un navigateur web à la place pour consulter l’aide en "
 "ligne."
 
 #: ../app/widgets/gimphelp.c:440
 msgid "Use _Web Browser"
-msgstr "Utiliser un navigateur _Web"
+msgstr "Utiliser un navigateur _web"
 
 #: ../app/widgets/gimphelp.c:776
 msgid "GIMP user manual is missing"
@@ -28930,31 +28754,27 @@ msgid "%g × %g %s"
 msgstr "%g x %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:483
-#, fuzzy, c-format
+#, c-format
 msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
-msgstr[0] "Conversion en couleurs indexées"
-msgstr[1] "Conversion en couleurs indexées"
+msgstr[0] "Couleur indexée (monochrome)"
+msgstr[1] "Couleur indexée (%d couleurs)"
 
 #: ../app/widgets/gimpitemtreeview.c:526
-#, fuzzy
 msgid "Set Item Exclusive Content Lock"
-msgstr "Rendre l’élément exclusivement lié"
+msgstr "Définir le verrou de contenu exclusif de l’élément"
 
 #: ../app/widgets/gimpitemtreeview.c:542
-#, fuzzy
 msgid "Set Item Exclusive Position Lock"
-msgstr "Rendre l’élément exclusivement lié"
+msgstr "Définir le verrou de position exclusif de l’élément"
 
 #: ../app/widgets/gimpitemtreeview.c:557
-#, fuzzy
 msgid "Unlock visibility"
-msgstr "Visibilité de l’élément"
+msgstr "Déverrouiller la visibilité"
 
 #: ../app/widgets/gimpitemtreeview.c:558
-#, fuzzy
 msgid "Set Item Exclusive Visibility Lock"
-msgstr "Rendre l’élément exclusivement visible"
+msgstr "Définir le verrou de visibilité exclusif de l’élément"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
@@ -28965,19 +28785,17 @@ msgid "Switch to another group of modes"
 msgstr "Basculer vers un autre groupe de modes"
 
 #: ../app/widgets/gimplayertreeview.c:435
-#, fuzzy
 msgid "Select layers by patterns and store layer sets"
-msgstr "Sélectionne le calque juste au-dessus du calque actuel"
+msgstr ""
+"Sélectionner les calques par motifs et stocker les ensembles de calques"
 
 #: ../app/widgets/gimplayertreeview.c:479
-#, fuzzy
 msgid "No layer set stored"
-msgstr "Aucun filtre sélectionné"
+msgstr "Aucun ensemble de calques stocké"
 
 #: ../app/widgets/gimplayertreeview.c:501
-#, fuzzy
 msgid "New layer set's name"
-msgstr "Modifier le nom du calque"
+msgstr "Nom du nouvel ensemble de calques"
 
 #: ../app/widgets/gimplayertreeview.c:539
 #: ../app/widgets/gimplayertreeview.c:542
@@ -28985,73 +28803,65 @@ msgid "Lock alpha channel"
 msgstr "Verrouiller le canal alpha"
 
 #: ../app/widgets/gimplayertreeview.c:540
-#, fuzzy
 msgid "Unlock alpha channel"
-msgstr "Verrouiller le canal alpha"
+msgstr "Déverrouiller le canal alpha"
 
 #: ../app/widgets/gimplayertreeview.c:541
-#, fuzzy
 msgid "Set Item Exclusive Alpha Channel lock"
-msgstr "Rendre l’élément exclusivement lié"
+msgstr "Définir le verrou de canal alpha exclusif de l’élément"
 
 #: ../app/widgets/gimplayertreeview.c:1130
-#, fuzzy
 msgid "search"
-msgstr "_Rechercher :"
+msgstr "recherche"
 
 #: ../app/widgets/gimplayertreeview.c:1131
 msgid "glob"
-msgstr ""
+msgstr "glob"
 
 #: ../app/widgets/gimplayertreeview.c:1131
 msgid "regexp"
-msgstr ""
+msgstr "regexp"
 
 #: ../app/widgets/gimplayertreeview.c:1235
 #: ../app/widgets/gimplayertreeview.c:1248
-#, fuzzy
 msgid "Select layers by text search"
-msgstr "Sélectionne le calque juste au-dessus du calque actuel"
+msgstr "Sélectionner des calques par recherche de texte"
 
 #: ../app/widgets/gimplayertreeview.c:1237
 #: ../app/widgets/gimplayertreeview.c:1250
-#, fuzzy
 msgid "Text search"
-msgstr "Calque de texte"
+msgstr "Recherche de texte"
 
 #: ../app/widgets/gimplayertreeview.c:1254
 msgid "Select layers by glob patterns"
-msgstr ""
+msgstr "Sélectionner des calques par motifs de style glob"
 
 #: ../app/widgets/gimplayertreeview.c:1256
-#, fuzzy
 msgid "Glob pattern search"
-msgstr "_Verrouiller les motifs"
+msgstr "Recherche par motif glob"
 
 #: ../app/widgets/gimplayertreeview.c:1260
 msgid "Select layers by regular expressions"
-msgstr ""
+msgstr "Sélectionner des calques par expressions régulières"
 
 #: ../app/widgets/gimplayertreeview.c:1262
 msgid "Regular Expression search"
-msgstr ""
+msgstr "Recherche par expression régulière"
 
 #: ../app/widgets/gimplayertreeview.c:1326
 #, c-format
 msgid "Invalid regular expression: %s\n"
-msgstr ""
+msgstr "Expression régulière non valide : %s\n"
 
 #: ../app/widgets/gimplayertreeview.c:1479
-#, fuzzy
 msgid "Set layers mode"
-msgstr "Définir le mode de calque"
+msgstr "Définir le mode des calques"
 
 #. No channel. We cannot perform the add
 #. * mask action.
 #: ../app/widgets/gimplayertreeview.c:1960
-#, fuzzy
 msgid "No channels to create a layer mask from."
-msgstr "Impossible de renommer les masques de calque."
+msgstr "Aucun canal à partir duquel créer un masque de calque."
 
 #: ../app/widgets/gimpmessagebox.c:452
 #, c-format
@@ -29630,14 +29440,14 @@ msgstr "%s (essayez %s, %s, %s)"
 #. * in some dockable GUI.
 #.
 #: ../app/widgets/gimpwidgets-utils.c:1532
-#, fuzzy, c-format
+#, c-format
 msgid "Switch \"%s\" ON"
-msgstr "Commutateurs"
+msgstr "Commutateur « %s » actif"
 
 #: ../app/widgets/gimpwidgets-utils.c:1534
-#, fuzzy, c-format
+#, c-format
 msgid "Switch \"%s\" OFF"
-msgstr "Commutateurs"
+msgstr "Commutateur « %s » inactif"
 
 #. TRANSLATORS: the %s will be replaced
 #. * by the localized label of a
@@ -29645,17 +29455,17 @@ msgstr "Commutateurs"
 #. * in some dockable GUI.
 #.
 #: ../app/widgets/gimpwidgets-utils.c:1553
-#, fuzzy, c-format
+#, c-format
 msgid "Select \"%s\""
-msgstr "Supprimer « %s » ?"
+msgstr "Sélectionner « %s »"
 
 #. TRANSLATORS: %s will be a tool name, so we'll get a
 #. * final string looking like 'Activate the "Bucket fill" tool'.
 #.
 #: ../app/widgets/gimpwidgets-utils.c:1576
-#, fuzzy, c-format
+#, c-format
 msgid "Activate the \"%s\" tool"
-msgstr "Activer le _focus sur image"
+msgstr "Activer l’outil « %s »"
 
 #: ../app/widgets/gimpwidgets-utils.c:2175
 #, c-format
@@ -29836,19 +29646,16 @@ msgid ""
 msgstr ""
 
 #: ../app/xcf/xcf-load.c:699
-#, fuzzy
 msgid "Linked Layers"
-msgstr "Tous les calques enchaînés"
+msgstr "Calques chaînés"
 
 #: ../app/xcf/xcf-load.c:709
-#, fuzzy
 msgid "Linked Channels"
-msgstr "Réduire le canal"
+msgstr "Canaux chaînés"
 
 #: ../app/xcf/xcf-load.c:734
-#, fuzzy
 msgid "Linked Paths"
-msgstr "Monter le chemin"
+msgstr "Chemins chaînés"
 
 #: ../app/xcf/xcf-load.c:781
 msgid ""
@@ -29914,38 +29721,70 @@ msgid "fuzzy"
 msgstr "flou"
 
 #~ msgctxt "channels-action"
-#~ msgid "Toggle Channel _Linked State"
-#~ msgstr "Activer/désactiver l’état _lié du canal"
+#~ msgid "Create a duplicate of this channel and add it to the image"
+#~ msgstr "Crée une copie de ce canal et l’ajoute à l’image"
 
-#~ msgctxt "drawable-action"
-#~ msgid "Toggle Drawable _Linked State"
-#~ msgstr "Activer/désactiver l’état _lié de l’objet graphique"
+#~ msgctxt "channels-action"
+#~ msgid "Delete this channel"
+#~ msgstr "Supprime ce canal"
+
+#~ msgctxt "text-tool-action"
+#~ msgid "Input _Methods"
+#~ msgstr "_Méthodes de saisie"
+
+#~ msgctxt "vectors-action"
+#~ msgid "Toggle Path _Linked State"
+#~ msgstr "Activer/Désactiver l’état _lié du chemin"
+
+#~ msgid ""
+#~ "When enabled, the mouse pointer will be shown over the image while using "
+#~ "a paint tool."
+#~ msgstr ""
+#~ "Si cette option est activée, le pointeur sera affiché par dessus l’image "
+#~ "quand vous utilisez un outil de peinture."
+
+#~ msgctxt "undo-type"
+#~ msgid "Link/Unlink item"
+#~ msgstr "Élément chaîné/non chaîné"
+
+#~ msgid "Index %d"
+#~ msgstr "Index %d"
+
+#~ msgid "_Linked"
+#~ msgstr "_Lié"
+
+#~ msgid "Mouse Pointers"
+#~ msgstr "Pointeurs de souris"
+
+#~ msgid "Dynamics Options"
+#~ msgstr "Options de dynamique"
+
+#~ msgid "The active layer's pixels are locked."
+#~ msgstr "Les pixels du calque actif sont verrouillés."
+
+#~ msgid "The active path's position is locked."
+#~ msgstr "La position du chemin actif est verrouillée."
+
+#~ msgid "The active layer's position is locked."
+#~ msgstr "La position du calque actif est verrouillée."
+
+#~ msgid "The active layer's alpha channel is locked."
+#~ msgstr "Le canal alpha du calque actif est verrouillé."
+
+#~ msgid ""
+#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
+#~ "XMP data could not be migrated: %s"
+#~ msgstr ""
+#~ "Un parasite « gimp-metadata » altéré a été détecté.\n"
+#~ "Les données XMP ne peuvent pas être déplacées : %s"
 
 #~ msgctxt "image-action"
 #~ msgid "Pr_ecision"
 #~ msgstr "Préci_sion"
 
-#~ msgctxt "image-action"
-#~ msgid "_Enable Color Management"
-#~ msgstr "Activer la _gestion des couleurs"
-
-#~ msgctxt "image-action"
-#~ msgid ""
-#~ "Whether the image is color managed. Disabling color management is "
-#~ "equivalent to assigning a built-in sRGB color profile. Better leave color "
-#~ "management enabled."
-#~ msgstr ""
-#~ "Indique si les couleurs de l’image sont gérées. La désactivation de la "
-#~ "gestion des couleurs équivaut à attribuer un profil de couleur sRVB "
-#~ "intégré. Mieux vaut laisser la gestion des couleurs activée."
-
 #~ msgctxt "layers-action"
 #~ msgid "Delete this layer"
 #~ msgstr "Supprimer ce calque"
-
-#~ msgctxt "layers-action"
-#~ msgid "Toggle Layer _Linked State"
-#~ msgstr "Activer/désactiver l’état _lié du calque"
 
 #~ msgctxt "layers-action"
 #~ msgid "_Add to Selection"
@@ -29966,209 +29805,17 @@ msgstr "flou"
 #~ msgid "_Stroke Selection"
 #~ msgstr "_Tracer la sélection"
 
-#~ msgctxt "text-tool-action"
-#~ msgid "Input _Methods"
-#~ msgstr "_Méthodes de saisie"
-
-#~ msgctxt "vectors-action"
-#~ msgid "Toggle Path _Linked State"
-#~ msgstr "Activer/désactiver l’état _lié du chemin"
-
-#~ msgctxt "icon-size"
-#~ msgid "Guess ideal size"
-#~ msgstr "Estimer la taille idéale"
-
-#~ msgctxt "icon-size"
-#~ msgid "Theme-set size"
-#~ msgstr "Taille définie par le thème"
-
-#~ msgctxt "icon-size"
-#~ msgid "Small size"
-#~ msgstr "Petite taille"
-
-#~ msgctxt "icon-size"
-#~ msgid "Medium size"
-#~ msgstr "Taille moyenne"
-
-#~ msgctxt "icon-size"
-#~ msgid "Large size"
-#~ msgstr "Grande taille"
-
-#~ msgctxt "icon-size"
-#~ msgid "Huge size"
-#~ msgstr "Taille énorme"
-
-#~ msgctxt "tool-group-menu-mode"
-#~ msgid "Show on click"
-#~ msgstr "Afficher au clic"
-
-#~ msgctxt "tool-group-menu-mode"
-#~ msgid "Show on hover"
-#~ msgstr "Afficher au survol"
-
-#~ msgctxt "tool-group-menu-mode"
-#~ msgid "Show on hover in single column"
-#~ msgstr "Afficher au survol dans une seule colonne"
-
-#~ msgid "Use compact style for sliders."
-#~ msgstr "Utiliser un style compact pour les curseurs."
-
-#~ msgid ""
-#~ "When enabled, the mouse pointer will be shown over the image while using "
-#~ "a paint tool."
-#~ msgstr ""
-#~ "Si cette option est activée, le pointeur sera affiché par-dessus l’image "
-#~ "quand vous utilisez un outil de peinture."
-
-#~ msgid "When enabled, menus can be torn off."
-#~ msgstr "Si cette option est activée, les menus peuvent être détachés."
-
-#~ msgid "Menu mode of grouped tools."
-#~ msgstr "Mode de menu des outils groupés."
-
-#~ msgctxt "undo-type"
-#~ msgid "Link/Unlink item"
-#~ msgstr "Élément chaîné/non chaîné"
-
-#~ msgctxt "undo-type"
-#~ msgid "Change color managed state"
-#~ msgstr "Modifier l’état de gestion des couleurs"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 8 bit linear integer"
-#~ msgstr "Convertir l’image en entier 8 bits (linéaire)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 8 bit gamma integer"
-#~ msgstr "Convertir l’image en entier 8 bits (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit linear integer"
-#~ msgstr "Convertir l’image en entier 16 bits (linéaire)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit gamma integer"
-#~ msgstr "Convertir l’image en entier 16 bits (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit linear integer"
-#~ msgstr "Convertir l’image en entier 32 bits (linéaire)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit gamma integer"
-#~ msgstr "Convertir l’image en entier 32 bits (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit linear floating point"
-#~ msgstr "Convertir l’image en virgule flottante 16 bits (linéaire)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 16 bit gamma floating point"
-#~ msgstr "Convertir l’image en virgule flottante 16 bits (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit linear floating point"
-#~ msgstr "Convertir l’image en virgule flottante 32 bits (linéaire)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 32 bit gamma floating point"
-#~ msgstr "Convertir l’image en virgule flottante 32 bits (gamma)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 64 bit linear floating point"
-#~ msgstr "Convertir l’image en virgule flottante 64 bits (linéaire)"
-
-#~ msgctxt "undo-type"
-#~ msgid "Convert Image to 64 bit gamma floating point"
-#~ msgstr "Convertir l’image en virgule flottante 64 bits (gamma)"
-
-#, c-format
-#~ msgid "Index %d"
-#~ msgstr "Index %d"
-
-#~ msgid "Color managed"
-#~ msgstr "Gestion des couleurs"
-
-#~ msgid ""
-#~ "Whether the image is color managed. Disabling color management is "
-#~ "equivalent to choosing a built-in sRGB profile. Better leave color "
-#~ "management enabled."
-#~ msgstr ""
-#~ "Indique si les couleurs de l’image sont gérées. La désactivation de la "
-#~ "gestion des couleurs équivaut à choisir un profil sRVB intégré. Mieux "
-#~ "vaut laisser la gestion des couleurs activée."
-
-#~ msgid "Precision Conversion"
-#~ msgstr "Conversion de précision"
-
-#~ msgid "_Linked"
-#~ msgstr "_Lié"
-
-#~ msgid "Use co_mpact sliders"
-#~ msgstr "Utiliser des curseurs c_ompacts"
-
-#~ msgid "_Menu mode:"
-#~ msgstr "_Mode de menu :"
-
-#~ msgid "Show _tooltips"
-#~ msgstr "Afficher les _bulles d’aide"
-
 #~ msgid "Show _unavailable actions"
 #~ msgstr "Afficher les actions _non-disponibles"
 
-#~ msgid "Mouse Pointers"
-#~ msgstr "Pointeurs de souris"
-
-#~ msgid "not color managed"
-#~ msgstr "couleurs non gérées"
-
-#~ msgid "Color _managed"
-#~ msgstr "Couleurs _gérées"
-
-#~ msgid "default:LTR"
-#~ msgstr "default:LTR"
-
-#~ msgid "Dynamics Options"
-#~ msgstr "Options de dynamique"
-
-#~ msgid "Invert"
-#~ msgstr "Inverser"
-
-#~ msgid "Hue-Saturation"
-#~ msgstr "Teinte-Saturation"
-
-#~ msgid "Current layer only"
-#~ msgstr "Calque actuel seulement"
-
-#~ msgid "Adjust curves in linear light"
-#~ msgstr "Ajuster les courbes en lumière linéaire"
-
-#~ msgid "Adjust curves perceptually"
-#~ msgstr "Ajuster les courbes perceptuellement"
-
-#~ msgid "Convert pixels to built-in sRGB to apply filter (slow)"
-#~ msgstr ""
-#~ "Convertir les pixels en sRVB intégré en vue d’appliquer le filtre (lent)"
-
-#~ msgid "Assume pixels are built-in sRGB (ignore actual image color space)"
-#~ msgstr ""
-#~ "Supposer que les pixels sont en sRVB intégré (ignorer l’espace de couleur "
-#~ "effectif de l’image)"
-
-#~ msgid "Adjust levels in linear light"
-#~ msgstr "Ajuster les niveaux en lumière linéaire"
-
-#~ msgid "Adjust levels perceptually"
-#~ msgstr "Ajuster les niveaux perceptuellement"
+#~ msgid "The active channel's position is locked."
+#~ msgstr "La position du chemin actif est verrouillée."
 
 #~ msgid "Move the active layer"
 #~ msgstr "Déplacer le calque actif"
 
-#~ msgid "Preview linked items"
-#~ msgstr "Aperçu des éléments liés"
-
-#~ msgid "Include linked items in the preview"
-#~ msgstr "Inclure les éléments liés dans l’aperçu"
+#~ msgid "Aux%d Input"
+#~ msgstr "Entrée _Aux%d"
 
 #~ msgid "There is no active layer or channel to fill"
 #~ msgstr "Il n’y a pas de calque ou de canal actif à remplir"
@@ -30176,66 +29823,5 @@ msgstr "flou"
 #~ msgid "There is no active layer or channel to stroke to"
 #~ msgstr "Il n’y a pas de calque ou de canal actif sur lequel tracer"
 
-#~ msgctxt "line-art-source"
-#~ msgid "Active layer"
-#~ msgstr "Calque actif"
-
-#~ msgid "Keys"
-#~ msgstr "Touches"
-
-#~ msgid "Show values in linear space"
-#~ msgstr "Afficher les valeurs dans l’espace linéaire"
-
-#~ msgid "Show values in perceptual space"
-#~ msgstr "Afficher les valeurs dans l’espace perceptuel"
-
-#~ msgid "Guess icon size from resolution"
-#~ msgstr "Estimer la taille d’icône à partir de la résolution"
-
-#~ msgid "Use icon size from the theme"
-#~ msgstr "Utiliser la taille d’icône du thème"
-
-#~ msgid "Custom icon size"
-#~ msgstr "Taille d’icône personnalisée"
-
-#~ msgctxt "icon-size"
-#~ msgid "Small"
-#~ msgstr "Petite"
-
-#~ msgctxt "icon-size"
-#~ msgid "Medium"
-#~ msgstr "Moyenne"
-
-#~ msgctxt "icon-size"
-#~ msgid "Large"
-#~ msgstr "Grande"
-
-#~ msgctxt "icon-size"
-#~ msgid "Huge"
-#~ msgstr "Immense"
-
-#~ msgid "colors"
-#~ msgstr "couleurs"
-
-#~ msgid "Lock:"
-#~ msgstr "Verrouiller :"
-
-#~ msgid "Color _manage this image"
-#~ msgstr "Gérer les couleurs de ce_tte image"
-
-#~ msgctxt "tab-style"
-#~ msgid "Undefined"
-#~ msgstr "Non définie"
-
-#~ msgid ""
-#~ "Corrupt 'gimp-metadata' parasite discovered.\n"
-#~ "XMP data could not be migrated: %s"
-#~ msgstr ""
-#~ "Un parasite « gimp-metadata » altéré a été détecté.\n"
-#~ "Les données XMP ne peuvent pas être déplacées : %s"
-
-#~ msgid "Go to download page"
-#~ msgstr "Aller sur la page de téléchargement"
-
-#~ msgid "Aux%d Input"
-#~ msgstr "Entrée Aux%d"
+#~ msgid "You can drop dockable dialogs here"
+#~ msgstr "Vous pouvez déposer les fenêtres ancrables ici"
