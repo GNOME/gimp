@@ -53,8 +53,7 @@ static void gimp_clone_options_gui_context_image_changed (GimpContext       *con
                                                           GimpImage         *image,
                                                           GimpSourceOptions *options);
 
-static void gimp_clone_options_gui_update_src_label       (GimpSourceOptions *options,
-                                                           GtkWidget         *label);
+static gboolean gimp_clone_options_gui_update_src_label  (GimpSourceOptions *options);
 
 
 static gboolean
@@ -84,7 +83,12 @@ gimp_clone_options_gui_drawables_changed (GimpImage         *image,
   gtk_widget_set_sensitive (button, (g_list_length (drawables) < 2));
   g_list_free (drawables);
 
-  gimp_clone_options_gui_update_src_label (options, NULL);
+  /* In case this was called several times in a row by threads. */
+  g_idle_remove_by_data (options);
+
+  g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                   (GSourceFunc) gimp_clone_options_gui_update_src_label,
+                   g_object_ref (options), (GDestroyNotify) g_object_unref);
 }
 
 static void
@@ -92,7 +96,18 @@ gimp_clone_options_gui_src_changed (GimpSourceOptions *options,
                                     GParamSpec        *pspec,
                                     GtkWidget         *label)
 {
-  gimp_clone_options_gui_update_src_label (options, label);
+  /* In case this was called several times in a row by threads. */
+  g_idle_remove_by_data (options);
+
+  /* Why we need absolutely to run this in a thread is that it updates
+   * the GUI. And sometimes this src_changed callback may be called by
+   * paint threads (see gimppainttool-paint.c). This may cause crashes
+   * as in recent GTK, all GTK/GDK calls should be main from the main
+   * thread. Idle functions are ensured to be run in this main thread.
+   */
+  g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
+                   (GSourceFunc) gimp_clone_options_gui_update_src_label,
+                   g_object_ref (options), (GDestroyNotify) g_object_unref);
 }
 
 static void
@@ -131,14 +146,13 @@ gimp_clone_options_gui_context_image_changed (GimpContext       *context,
     }
 }
 
-static void
-gimp_clone_options_gui_update_src_label (GimpSourceOptions *options,
-                                         GtkWidget         *label)
+static gboolean
+gimp_clone_options_gui_update_src_label (GimpSourceOptions *options)
 {
-  gchar *markup = NULL;
+  GtkWidget *label;
+  gchar     *markup = NULL;
 
-  if (! label)
-    label = g_object_get_data (G_OBJECT (options), "src-label");
+  label = g_object_get_data (G_OBJECT (options), "src-label");
 
   if (options->src_drawables == NULL)
     {
@@ -200,6 +214,8 @@ gimp_clone_options_gui_update_src_label (GimpSourceOptions *options,
 
   gtk_label_set_markup (GTK_LABEL (label), markup);
   g_free (markup);
+
+  return G_SOURCE_REMOVE;
 }
 
 
@@ -250,7 +266,9 @@ gimp_clone_options_gui (GimpToolOptions *tool_options)
   gtk_label_set_use_markup (GTK_LABEL (label), TRUE);
   str = g_strdup_printf ("<i>%s</i>", _("No source selected"));
   gtk_label_set_markup (GTK_LABEL (label), str);
-  g_object_set_data (G_OBJECT (tool_options), "src-label", label);
+  g_object_set_data_full (G_OBJECT (tool_options), "src-label",
+                          g_object_ref (label),
+                          (GDestroyNotify) g_object_unref);
   g_free (str);
 
   gtk_box_pack_start (GTK_BOX (source_vbox), label, FALSE, FALSE, 0);
