@@ -156,12 +156,14 @@ save_layer (GFile         *file,
   gboolean          lossless;
   gdouble           quality;
   gdouble           alpha_quality;
+  gboolean          use_sharp_yuv;
 
   g_object_get (config,
                 "preset",        &preset,
                 "lossless",      &lossless,
                 "quality",       &quality,
                 "alpha-quality", &alpha_quality,
+                "use-sharp-yuv", &use_sharp_yuv,
                 NULL);
 
   webp_decide_output (image, config, &profile, &out_linear);
@@ -238,9 +240,10 @@ save_layer (GFile         *file,
        * remaining values */
       WebPConfigPreset (&webp_config, preset, quality);
 
-      webp_config.lossless      = lossless;
-      webp_config.method        = 6;  /* better quality */
-      webp_config.alpha_quality = alpha_quality;
+      webp_config.lossless       = lossless;
+      webp_config.method         = 6;  /* better quality */
+      webp_config.alpha_quality  = alpha_quality;
+      webp_config.use_sharp_yuv  = use_sharp_yuv ? 1 : 0;
 
       /* Prepare the WebP structure */
       WebPPictureInit (&picture);
@@ -532,6 +535,7 @@ save_animation (GFile         *file,
   gdouble                alpha_quality;
   gint                   default_delay;
   gboolean               force_delay;
+  gboolean               use_sharp_yuv;
 
   g_return_val_if_fail (n_drawables > 0, FALSE);
 
@@ -546,6 +550,7 @@ save_animation (GFile         *file,
                 "alpha-quality",      &alpha_quality,
                 "default-delay",      &default_delay,
                 "force-delay",        &force_delay,
+                "use-sharp-yuv",      &use_sharp_yuv,
                 NULL);
 
   layers = gimp_image_list_layers (image);
@@ -704,6 +709,7 @@ save_animation (GFile         *file,
           webp_config.method        = 6;  /* better quality */
           webp_config.alpha_quality = alpha_quality;
           webp_config.exact         = 1;
+          webp_config.use_sharp_yuv = use_sharp_yuv ? 1 : 0;
 
           WebPMemoryWriterInit (&mw);
 

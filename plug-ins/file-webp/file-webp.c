@@ -187,6 +187,12 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                             0, 100, 100,
                             G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "use-sharp-yuv",
+                             "Use Sharp YU_V",
+                             "Use sharper (but slower) RGB->YUV conversion",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_BOOLEAN (procedure, "animation-loop",
                              _("Loop _forever"),
                              "Loop animation infinitely",

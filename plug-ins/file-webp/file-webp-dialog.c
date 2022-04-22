@@ -103,6 +103,19 @@ save_dialog (GimpImage     *image,
                                     "quality-frame", "lossless", TRUE,
                                     "quality-options");
 
+  /* Create frame for additional features like Sharp YUV */
+  gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                   "advanced-title", _("Advanced Options"));
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "advanced-options",
+                                  "use-sharp-yuv",
+                                  NULL);
+
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "advanced-frame", "advanced-title", FALSE,
+                                    "advanced-options");
+
   if (animation_supported)
     {
       GtkWidget      *label_kf;
@@ -144,14 +157,15 @@ save_dialog (GimpImage     *image,
 
       /* Fill dialog with containers*/
       gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "preset", "quality-frame", "animation-frame",
+                                  "preset", "quality-frame",
+                                  "advanced-frame", "animation-frame",
                                   NULL);
     }
   else
     {
       /* Fill dialog with containers*/
       gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                                  "preset", "quality-frame",
+                                  "preset", "quality-frame", "advanced-frame",
                                   NULL);
     }
 
