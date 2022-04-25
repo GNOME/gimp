@@ -99,7 +99,7 @@ print_surface_from_drawable (GimpDrawable  *drawable,
   guchar             *pixels;
   gint                stride;
   guint               count    = 0;
-  guint               done     = 0;
+  guint64             done     = 0;
 
   if (gimp_drawable_has_alpha (drawable))
     format = babl_format ("cairo-ARGB32");
@@ -145,7 +145,7 @@ print_surface_from_drawable (GimpDrawable  *drawable,
   while (gegl_buffer_iterator_next (iter))
     {
       const guchar *src  = iter->items[0].data;
-      guchar       *dest = pixels + iter->items[0].roi.y * stride + iter->items[0].roi.x * 4;
+      guchar       *dest = pixels + (guint64) iter->items[0].roi.y * stride + iter->items[0].roi.x * 4;
       gint          y;
 
       for (y = 0; y < iter->items[0].roi.height; y++)
@@ -156,10 +156,10 @@ print_surface_from_drawable (GimpDrawable  *drawable,
           dest += stride;
         }
 
-      done += iter->items[0].roi.height * iter->items[0].roi.width;
+      done += (guint64) iter->items[0].roi.height * iter->items[0].roi.width;
 
       if (count++ % 16 == 0)
-        gimp_progress_update ((gdouble) done / (width * height));
+        gimp_progress_update ((gdouble) done / ((gdouble) width * height));
     }
 
   g_object_unref (buffer);
