@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python 1.0\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-05-05 22:22+0000\n"
-"PO-Revision-Date: 2021-05-07 09:16+0300\n"
+"POT-Creation-Date: 2022-04-25 09:18+0000\n"
+"PO-Revision-Date: 2022-04-25 13:56+0300\n"
 "Last-Translator: Dimitris Spingos (Δημήτρης Σπίγγος) <dmtrs32@gmail.com>\n"
 "Language-Team: www.gnome.gr\n"
 "Language: el\n"
@@ -15,7 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.3\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Project-Style: gnome\n"
 
 #: ../plug-ins/python/colorxhtml.py:89
@@ -93,47 +93,47 @@ msgstr "Αποθήκευση ως έγχρωμου κειμένου HTML"
 msgid "Colored HTML text"
 msgstr "Έγχρωμο κείμενο HTML"
 
-#: ../plug-ins/python/foggify.py:105
+#: ../plug-ins/python/foggify.py:104
 msgid "Layer _name"
 msgstr "Ό_νομα στρώσης"
 
-#: ../plug-ins/python/foggify.py:106
+#: ../plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Όνομα στρώσης"
 
-#: ../plug-ins/python/foggify.py:107
+#: ../plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Σύννεφα"
 
-#: ../plug-ins/python/foggify.py:110
+#: ../plug-ins/python/foggify.py:109
 msgid "_Turbulence"
 msgstr "Ανα_τάραξη"
 
-#: ../plug-ins/python/foggify.py:111
+#: ../plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Αναταράξεις"
 
-#: ../plug-ins/python/foggify.py:115
+#: ../plug-ins/python/foggify.py:114
 msgid "O_pacity"
 msgstr "Α_διαφάνεια"
 
-#: ../plug-ins/python/foggify.py:116
+#: ../plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Αδιαφάνεια"
 
-#: ../plug-ins/python/foggify.py:125
-msgid "Fog _color"
-msgstr "_Χρώμα ομίχλης"
+#: ../plug-ins/python/foggify.py:124
+msgid "_Fog color"
+msgstr "Χρώμα ο_μίχλης"
 
-#: ../plug-ins/python/foggify.py:126
+#: ../plug-ins/python/foggify.py:125
 msgid "Fog color"
 msgstr "Χρώμα ομίχλης"
 
-#: ../plug-ins/python/foggify.py:142
+#: ../plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Προσθήκη μιας στρώσης ομίχλης"
 
-#: ../plug-ins/python/foggify.py:145
+#: ../plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Ομίχλη..."
 
@@ -809,6 +809,9 @@ msgstr "Παρακαλούμε περιμένετε: Αποδίδεται το �
 #: ../plug-ins/python/spyro-plus.py:2301
 msgid "Spyrogimp..."
 msgstr "Σπειρογράφημα gimp..."
+
+#~ msgid "Fog _color"
+#~ msgstr "_Χρώμα ομίχλης"
 
 #~ msgid "Slice"
 #~ msgstr "Τεμαχισμός"
