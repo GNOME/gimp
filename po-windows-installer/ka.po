@@ -1,0 +1,452 @@
+# Georgian translation for gimp.
+# Copyright (C) 2022 gimp's COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp package.
+# NorwayFun <temuri.doghonadze@gmail.com>, 2022.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp master\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2022-04-23 16:32+0000\n"
+"PO-Revision-Date: 2022-04-24 17:41+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: Georgian <ka@li.org>\n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.0.1\n"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:1
+msgid "License Agreement"
+msgstr "სა&ლიცენზიო შეთანხმება"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:2
+msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
+msgstr "დასაყენებელი პროგრამის ავტორი: Jernej Simonèiè, jernej-gimp@ena.si"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:3
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
+msgstr "GIMP-ის ამ ვერსიას Windows 7 ან უფრო ახალი ვერსია სჭირდება."
+
+#. Shown before the wizard starts on development versions of GIMP
+#: ../build/windows/installer/lang/setup.isl.ini.h:5
+msgid "Development version"
+msgstr "შემუშავების სტადიაზე მყოფი ვერსია"
+
+#. Shown before the wizard starts on development versions of GIMP
+#: ../build/windows/installer/lang/setup.isl.ini.h:8
+#, no-c-format
+msgid ""
+"This is a development version of GIMP where some features may not be "
+"finished, or it may be unstable.%nThis version of GIMP is not intended for "
+"day-to-day work as it may be unstable, and you could lose your work.%nIf you "
+"encounter any problems, first verify that they haven't already been fixed in "
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
+msgstr ""
+"ეს არის GIMP-ის დეველოპერული ვერსია, სადაც ზოგიერთი ფუნქცია შეიძლება არ იყოს "
+"დასრულებული, ან შეიძლება იყოს არასტაბილური.%nGIMP-ის ეს ვერსია არ არის "
+"განკუთვნილი ყოველდღიური მუშაობისთვის, რადგან ის შეიძლება იყოს არასტაბილური "
+"და შეიძლება დაკარგოთ სამუშაო.% nთუ რაიმე პრობლემა შეგექმნათ, ჯერ "
+"გადაამოწმეთ, რომ ისინი ჯერ არ გამოსწორებულა GIT-ში, სანამ დაუკავშირდებით "
+"დეველოპერებს ან შეატყობინეთ ამის შესახებ GIMP gitlab-ში:%n_https://gitlab."
+"gnome.org/GNOME/gimp/issues%n%nDo მაინც გსურთ ინსტალაციის გაგრძელება?"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:9
+msgid "&Continue"
+msgstr "&გაგრძელება"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:10
+msgid "Exit"
+msgstr "გასვლა"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:11
+msgid ""
+"This version of GIMP requires a processor that supports SSE instructions."
+msgstr "GIMP-ის ამ ვერსიას სჭირდება პროცესორი SSE-ის მხარდაჭერით."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:12
+msgid "Display settings problem"
+msgstr "ეკრანის პარამეტრების პრობლემა"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:13
+msgid ""
+"Setup has detected that your Windows is not running in 32 bits-per-pixel "
+"display mode. This has been known to cause stability problems with GIMP, so "
+"it's recommended to change the display colour depth to 32BPP before "
+"continuing."
+msgstr ""
+"დასაყენებელმა პროგრამამ აღმოაჩნია, რომ თქვენი Windows-ი არაა გაშვებული 32 "
+"ბიტიანი ფერების რეჟიმში. ეს GIMP-ის მუშაობაში უკვე ცნობილ ხარვეზებს იწვევს. "
+"რეკომენდებულია, რომ ფერების სიღრმე 32-ბიტზე გადართოთ."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:14
+msgid "E&xit"
+msgstr "&გამოსვლა"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:15
+msgid ""
+"GIMP is now ready to be installed. Click the Install now button to install "
+"using the default settings, or click the Customize button if you'd like to "
+"have more control over what gets installed."
+msgstr ""
+"GIMP-ი დასაყენებლად მზადაა. დააწკაპუნეთ \"დააყენე ახლა\" ღილაკზე "
+"ნაგულისხმები პარამეტრებით დაყენებისთვის ან დააწკაპუნეთ \"მორგების\" ღილაკზე, "
+"თუ პარამეტრების ზუსტი მორგება გნებავთ."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:16
+msgid "&Install"
+msgstr "&დაყენება"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:17
+msgid "&Customize"
+msgstr "&მორგება"
+
+#. Setup types
+#: ../build/windows/installer/lang/setup.isl.ini.h:19
+msgid "Compact installation"
+msgstr "შემცირებული დაყენება"
+
+#. Setup types
+#: ../build/windows/installer/lang/setup.isl.ini.h:21
+msgid "Custom installation"
+msgstr "დაყენების მორგება"
+
+#. Setup types
+#: ../build/windows/installer/lang/setup.isl.ini.h:23
+msgid "Full installation"
+msgstr "სრულად დაყენება"
+
+#. Text above component description
+#: ../build/windows/installer/lang/setup.isl.ini.h:25
+msgid "Description"
+msgstr "აღწერა"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:27
+msgid "GIMP"
+msgstr "GIMP"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:29
+msgid "GIMP and all default plug-ins"
+msgstr "GIMP-ი და ყველა ნაგულიხმები დამატება"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:31
+msgid "Run-time libraries"
+msgstr "გამშვები ბიბლიოთეკები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:33
+msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgstr "ბიბლიოთეკები, რომლებიც GIMP-ს სჭირდება. მაგალითად GTK+"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:35
+msgid "Debug symbols"
+msgstr "გამართვის სიმბოლოები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:37
+msgid "Include information to help with debugging GIMP"
+msgstr "GIMP-ის გამართვის ინფორმაციის ჩართვა"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:39
+msgid "MS-Windows engine for GTK+"
+msgstr "MS-Windows-ის ძრავა GTK+-ისთვის"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:41
+msgid "Native Windows look for GIMP"
+msgstr "GIMP-ის Windows-ის მსგავსი გარეგნობა"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:43
+msgid "Support for old plug-ins"
+msgstr "ძველი დამატებების მხარდაჭერა"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:45
+msgid "Install libraries needed by old third-party plug-ins"
+msgstr "დააყენეთ ძველი დამატებებისთვის საჭირო ბიბლიოთეკები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:47
+msgid "Translations"
+msgstr "თარგმანები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:49
+msgid "Python scripting"
+msgstr "Python-ის სკრიპტები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:51
+msgid "Allows you to use GIMP plugins written in Python scripting language."
+msgstr ""
+"საშუალებას გაძლევთ გამოიყენოთ GIMP-ის დამატებები, რომლებიც Python-შია "
+"დაწერილი."
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:53
+msgid "Lua scripting"
+msgstr "Lua-ის სკრიპტები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:55
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr ""
+"საშუალებას გაძლევთ გამოიყენოთ GIMP-ის დამატებები, რომლებიც Lua-შია დაწერილი."
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:57
+msgid "MyPaint brushes"
+msgstr "MyPaint-ის ფუნჯები"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:59
+msgid "Install the default set of MyPaint brushes"
+msgstr "MyPaint-ის ფუნჯების ნაგულისხმები ნაკრების დაყენება"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:61
+msgid "PostScript support"
+msgstr "PostScript-ის მხარდაჭერა"
+
+#. Components
+#: ../build/windows/installer/lang/setup.isl.ini.h:63
+msgid "Allow GIMP to load PostScript files"
+msgstr "GIMP-ში PostScript-ის ფაილების ჩატვირთვის მხარდაჭერა"
+
+#. Components, only when installing on x64 Windows
+#: ../build/windows/installer/lang/setup.isl.ini.h:65
+msgid "Support for 32-bit plug-ins"
+msgstr "32-ბიტიანი დამატებების მხარდაჭერა"
+
+#. Compoments, only when installing on x64 Windows
+#: ../build/windows/installer/lang/setup.isl.ini.h:68
+#, no-c-format
+msgid ""
+"Include files necessary for using 32-bit plug-ins.%nRequired for Python "
+"support."
+msgstr ""
+"32-ბიტიანი დამატებების მხარდაჭერის ჩართვა.%nსაჭიროა Python-ის "
+"მხარდაჭერისთვის."
+
+#. Additional installation tasks
+#: ../build/windows/installer/lang/setup.isl.ini.h:70
+msgid "Additional icons:"
+msgstr "დამატებითი ხატულები:"
+
+#. Additional installation tasks
+#: ../build/windows/installer/lang/setup.isl.ini.h:72
+msgid "Create a &desktop icon"
+msgstr "სამუშაო &დაფის ხატულის შექმნა"
+
+#. Additional installation tasks
+#: ../build/windows/installer/lang/setup.isl.ini.h:74
+msgid "Create a &Quick Launch icon"
+msgstr "სწრაფი გაშვების &ზოლის ხატულის შექმნა"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:75
+msgid "Remove previous GIMP version"
+msgstr "GIMP-ის წინა ვერსიის წაშლა"
+
+#. %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment)
+#: ../build/windows/installer/lang/setup.isl.ini.h:78
+#, no-c-format
+msgid ""
+"There was a problem updating GIMP's environment in %1. If you get any errors "
+"loading the plug-ins, try uninstalling and re-installing GIMP."
+msgstr ""
+"პრობლემა %1-ში GIMP-ის გარემოს განახლებისას. თუ დაინახავთ დამატებების "
+"ჩატვირთვის შეცდომას, სცადეთ GIMP-ი თავიდან დააყენოთ."
+
+#. This message should never appear (unless user runs out of disk space at the exact right moment)
+#: ../build/windows/installer/lang/setup.isl.ini.h:80
+msgid "Error extracting temporary data."
+msgstr "დროებითი მონაცემების გაშლის შეცდომა."
+
+#. This message should never appear (unless user runs out of disk space at the exact right moment)
+#: ../build/windows/installer/lang/setup.isl.ini.h:82
+msgid "Error updating Python interpreter info."
+msgstr "Python-ის ინტერპრეტატორის ინფორმაციის განახლების შეცდომა."
+
+#. This message should never appear (unless user runs out of disk space at the exact right moment)
+#: ../build/windows/installer/lang/setup.isl.ini.h:84
+msgid "Error updating MyPaint brushes info."
+msgstr "MyPaint-ის ფუნჯების ინფორმაციის განახლების შეცდომა."
+
+#. %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment)
+#: ../build/windows/installer/lang/setup.isl.ini.h:87
+#, no-c-format
+msgid "There was an error updating %1."
+msgstr "%1-ის განახლების შეცდომა."
+
+#. %1 is replaced by file name; this message should never appear (unless user runs out of disk space at the exact right moment)
+#: ../build/windows/installer/lang/setup.isl.ini.h:90
+#, no-c-format
+msgid "There was an error updating GIMP's configuration file %1."
+msgstr "GIMP-ის კონფიგურაციის ფაილის განახლების შეცდომა: %1."
+
+#. Displayed in Explorer's right-click menu
+#: ../build/windows/installer/lang/setup.isl.ini.h:92
+msgid "Edit with GIMP"
+msgstr "ჩაასწორეთ GIMP-ით"
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:94
+msgid "Select file associations"
+msgstr "ფაილების ასოციაციების დაყენება"
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:96
+msgid "Extensions:"
+msgstr "გაფართოებები:"
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:98
+msgid "Select the file types you wish to associate with GIMP"
+msgstr "აირჩიეთ GIMP-ზე მისაბმელი ფაილების ტიპები"
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:100
+msgid ""
+"This will make selected files open in GIMP when you double-click them in "
+"Explorer."
+msgstr ""
+"თუ მონიშნავთ, Explorer-ში ამ ტიპის ფაილებზე ორჯერ დაწკაპუნებით ის GIMP-ში "
+"გაიხსნება."
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:102
+msgid "Select &All"
+msgstr "ყველაფრის &მონიშვნა"
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:104
+msgid "Unselect &All"
+msgstr "მონიშვნის &ყველაფერზე მოხსნა"
+
+#. File associations page
+#: ../build/windows/installer/lang/setup.isl.ini.h:106
+msgid "Select &Unused"
+msgstr "&გამოუყენებლების მოხსნა"
+
+#. Shown on summary screen just before starting the install
+#: ../build/windows/installer/lang/setup.isl.ini.h:108
+msgid "File types to associate with GIMP:"
+msgstr "GIMP-ზე მიბმული ფაილების ტიპები:"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:109
+msgid "Removing previous version of GIMP:"
+msgstr "GIMP-ის ძველი ფაილების წაშლა:"
+
+#. %1 = version, %2 = installation directory; ran uninstaller, but it returned an error, or didn't remove everything
+#: ../build/windows/installer/lang/setup.isl.ini.h:112
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"the automatic uninstall of old version has failed.%n%nPlease remove the "
+"previous version of GIMP yourself before installing this version in %2, or "
+"choose a Custom install, and select a different installation folder.%n%nThe "
+"Setup will now exit."
+msgstr ""
+"GIMP %1 შეუძლებელია დადგეს GIMP-ის თქვენი უკვე არსებული ვერსიის თავზე და "
+"ძველი ვერსიის წაშლა წარუმატებლად დასრულდა. %n%nწაშალეთ GIMP-ის ძველი ვერსია "
+"ხელით, სანამ %2 ვერსიის დაყენებას თავიდან სცდიდეთ, ან აირჩიეთ ხელით მორგება "
+"და სხვა საქაღალდეში დააყენეთ. %n%nპროგრამა ამთავრებს მუშაობას."
+
+#. %1 = version, %2 = installation directory; couldn't find an uninstaller, or found several uninstallers
+#: ../build/windows/installer/lang/setup.isl.ini.h:115
+#, no-c-format
+msgid ""
+"GIMP %1 cannot be installed over your currently installed GIMP version, and "
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
+msgstr ""
+"GIMP %1 შეუძლებელია დადგეს GIMP-ის თქვენი უკვე არსებული ვერსიის თავზე და "
+"ძველი ვერსიის წაშლა წარუმატებლად დასრულდა. %n%nწაშალეთ GIMP-ის ძველი ვერსია "
+"და ყველა დამატება ხელით, სანამ %2 ვერსიის დაყენებას თავიდან სცდიდეთ, ან "
+"აირჩიეთ ხელით მორგება და სხვა საქაღალდეში დააყენეთ. %n%nპროგრამა ამთავრებს "
+"მუშაობას."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:117
+#, no-c-format
+msgid ""
+"Previous GIMP version was removed successfully, but Windows has to be "
+"restarted before the Setup can continue.%n%nAfter restarting your computer, "
+"Setup will continue next time an administrator logs in."
+msgstr ""
+"GIMP-ის წინა ვერსია წარმატებით წაიშალა, მაგრამ გასაგრძელებლად საჭიროა "
+"Windows-ის გადატვირთვა.%n%nკომპიუტერის გადატვირთვის შემდეგ, როცა "
+"ადმინისტრატორი შევა, დაყენება ჩვეულებრივ გაგრძელდება."
+
+#. Displayed if restart settings couldn't be read, or if the setup couldn't re-run itself
+#: ../build/windows/installer/lang/setup.isl.ini.h:120
+#, no-c-format
+msgid "There was an error restarting the Setup. (%1)"
+msgstr "შეცდომა დაყენების პროგრამის თავიდან გაშვებისას. (%1)"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:121
+msgid "Cleaning up old files..."
+msgstr "ძველი ფაილების გასუფთავება..."
+
+#. Displayed while the files are being extracted; note the capitalisation!
+#: ../build/windows/installer/lang/setup.isl.ini.h:124
+#, no-c-format
+msgid "Remember: GIMP is Free Software.%n%nPlease visit"
+msgstr "დაიმახსოვრეთ; GIMP-ი უფასო პროგრამაა. %n%ეწვიეთ"
+
+#. www.gimp.org (displayed between Billboard1 and Billboard2)
+#: ../build/windows/installer/lang/setup.isl.ini.h:126
+msgid "for free updates."
+msgstr "უფასო განახლებებისათვის."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:127
+msgid "Setting up file associations..."
+msgstr "ფაილების ასოციაციების დაყენება..."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:128
+msgid "Setting up environment for GIMP Python extension..."
+msgstr "GIMP Python-ის გაფართოების გარემოს მორგება..."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:129
+msgid "Setting up MyPaint brushes..."
+msgstr "MyPaint-ის ფუნჯების დაყენება..."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:130
+msgid "Setting up GIMP environment..."
+msgstr "GIMP-ის გარემოს მორგება..."
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:131
+msgid "Setting up GIMP configuration for 32-bit plug-in support..."
+msgstr "GIMP-ის გარემოს 32-ბიტიანი დამატებების მხარდასაჭერად მორგება..."
+
+#. Displayed on last page
+#: ../build/windows/installer/lang/setup.isl.ini.h:133
+msgid "Launch GIMP"
+msgstr "GIMP-ის გაშვება"
+
+#. Shown during uninstall when removing add-ons
+#: ../build/windows/installer/lang/setup.isl.ini.h:135
+msgid "Removing add-on"
+msgstr "დამატების წაშლა"
+
+#: ../build/windows/installer/lang/setup.isl.ini.h:137
+#, no-c-format
+msgid "Internal error (%1)."
+msgstr "შიდა შეცდომა (%1)"
+
+#. Used by installer for add-ons (currently only help)
+#: ../build/windows/installer/lang/setup.isl.ini.h:139
+msgid ""
+"GIMP does not appear to be installed in the selected directory. Continue "
+"anyway?"
+msgstr "როგორც ჩანს, მითითებულ საქაღალდეში GIMP-ი არ აყენია. მაინც გავაგრძელო?"
