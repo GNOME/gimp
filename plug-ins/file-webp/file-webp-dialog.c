@@ -107,6 +107,9 @@ save_dialog (GimpImage     *image,
   gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
                                    "advanced-title", _("Advanced Options"));
 
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "use-sharp-yuv",
+                                       TRUE, config, "lossless", TRUE);
   gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                   "advanced-options",
                                   "use-sharp-yuv",
