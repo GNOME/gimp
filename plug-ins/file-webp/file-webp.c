@@ -163,70 +163,73 @@ webp_create_procedure (GimpPlugIn  *plug_in,
                                           "webp");
 
       GIMP_PROC_ARG_INT (procedure, "preset",
-                         "Source _type",
-                         "WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
-                         "Icon=4, Text=5)",
+                         _("Source _type"),
+                         _("WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, "
+                           "Icon=4, Text=5)"),
                          0, 5, WEBP_PRESET_DEFAULT,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "lossless",
-                             "L_ossless",
-                             "Use lossless encoding",
+                             _("L_ossless"),
+                             _("Use lossless encoding"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "quality",
-                            "Image _quality",
-                            "Quality of the image",
+                            _("Image _quality"),
+                            _("Quality of the image"),
                             0, 100, 90,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_DOUBLE (procedure, "alpha-quality",
-                            "Alpha q_uality",
-                            "Quality of the image's alpha channel",
+                            _("Alpha q_uality"),
+                            _("Quality of the image's alpha channel"),
                             0, 100, 100,
                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "use-sharp-yuv",
-                             "Use Sharp YU_V",
-                             "Use sharper (but slower) RGB->YUV conversion",
+                             _("Use Sharp YU_V"),
+                             /* TRANSLATORS: \xe2\x86\x92 is a Unicode
+                              * "Rightward Arrow" in UTF-8 encoding.
+                              */
+                             _("Use sharper (but slower) RGB\xe2\x86\x92YUV conversion"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "animation-loop",
                              _("Loop _forever"),
-                             "Loop animation infinitely",
+                             _("Loop animation infinitely"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "minimize-size",
                              _("_Minimize output size (slower)"),
-                             "Minimize output file size",
+                             _("Minimize output file size"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "keyframe-distance",
                          _("Max distance between _key-frames"),
-                         "Maximum distance between keyframes",
+                         _("Maximum distance between keyframes"),
                          0, G_MAXINT, 50,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "default-delay",
                          _("_Default delay between frames"),
-                         "Default delay (in milliseconds) to use when timestamps"
-                         " for frames are not available or forced.",
+                         _("Default delay (in milliseconds) to use when timestamps"
+                           " for frames are not available or forced."),
                          0, G_MAXINT, 200,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "force-delay",
                              _("Use default dela_y for all frames"),
-                             "Force default delay on all frames",
+                             _("Force default delay on all frames"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "animation",
                              _("Save a_nimation"),
-                             "Use layers for animation",
+                             _("Use layers for animation"),
                              FALSE,
                              G_PARAM_READWRITE);
 
