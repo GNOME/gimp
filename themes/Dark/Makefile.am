@@ -107,8 +107,11 @@ themeui_DATA =	\
 	ui/notebook.png	\
 	ui/null.png	\
 	ui/option1.png	\
+	ui/option1-prelight.png	\
 	ui/option2.png	\
+	ui/option2-prelight.png	\
 	ui/option3.png	\
+	ui/option3-prelight.png	\
 	ui/plus.png	\
 	ui/progressbar.png	\
 	ui/progressbar-trough.png	\

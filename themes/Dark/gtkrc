@@ -784,6 +784,36 @@ style "gimp-dark-menu-item"
       image
         {
           function = OPTION
+          state = PRELIGHT
+          shadow = OUT
+          recolorable = TRUE
+          overlay_file = "ui/option1-prelight.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = OPTION
+          state = PRELIGHT
+          shadow = IN
+          recolorable = TRUE
+          overlay_file = "ui/option2-prelight.png"
+          overlay_stretch = FALSE
+        }
+        
+      image
+        {
+          function = OPTION
+          state = PRELIGHT
+          shadow = ETCHED_IN
+          recolorable = TRUE
+          overlay_file = "ui/option3-prelight.png"
+          overlay_stretch = FALSE
+        }
+
+      image
+        {
+          function = OPTION
           shadow = OUT
           recolorable = TRUE
           overlay_file = "ui/option1.png"
