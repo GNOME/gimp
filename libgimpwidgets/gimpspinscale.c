@@ -462,7 +462,14 @@ gimp_spin_scale_draw (GtkWidget *widget,
       cairo_clip (cr);
       cairo_set_fill_rule (cr, CAIRO_FILL_RULE_WINDING);
 
-      cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y);
+      /* Center the label on the widget text area. Do not necessarily
+       * try to align the label with the number characters in the entry
+       * layout, because the size might actually be different, in
+       * particular when the label's actual font ends up different
+       * (typically when displaying non-Western languages).
+       */
+      cairo_move_to (cr, layout_offset_x,
+                     text_area.y - ink.y + text_area.height / 2 - ink.height / 2);
       gdk_cairo_set_source_rgba (cr, &text_color);
       pango_cairo_show_layout (cr, private->layout);
 
@@ -472,7 +479,8 @@ gimp_spin_scale_draw (GtkWidget *widget,
                        progress_width, progress_height);
       cairo_clip (cr);
 
-      cairo_move_to (cr, layout_offset_x, text_area.y + layout_offset_y);
+      cairo_move_to (cr, layout_offset_x,
+                     text_area.y - ink.y + text_area.height / 2 - ink.height / 2);
       gdk_cairo_set_source_rgba (cr, &bar_text_color);
       pango_cairo_show_layout (cr, private->layout);
     }
