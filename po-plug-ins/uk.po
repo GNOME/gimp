@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-17 21:21+0000\n"
-"PO-Revision-Date: 2022-04-18 14:22+0300\n"
+"POT-Creation-Date: 2022-04-26 17:12+0000\n"
+"PO-Revision-Date: 2022-04-26 20:37+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -2856,7 +2856,7 @@ msgstr "Завантажує файли у форматі JPEG XL"
 msgid "Saves files in the JPEG XL file format"
 msgstr "Зберігає файли у форматі JPEG XL"
 
-#: ../plug-ins/common/file-jpegxl.c:163
+#: ../plug-ins/common/file-jpegxl.c:163 ../plug-ins/file-webp/file-webp.c:173
 msgid "L_ossless"
 msgstr "_Без втрат"
 
@@ -4631,8 +4631,8 @@ msgstr "Введіть бажаний коментар"
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1373
-#: ../plug-ins/file-webp/file-webp-save.c:194
-#: ../plug-ins/file-webp/file-webp-save.c:589
+#: ../plug-ins/file-webp/file-webp-save.c:196
+#: ../plug-ins/file-webp/file-webp-save.c:594
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
@@ -6139,6 +6139,7 @@ msgstr "Колір переднього плану"
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
 #: ../plug-ins/common/warp.c:651 ../plug-ins/file-jpeg/jpeg-save.c:971
+#: ../plug-ins/file-webp/file-webp-dialog.c:108
 msgid "Advanced Options"
 msgstr "Додаткові параметри"
 
@@ -7575,31 +7576,112 @@ msgstr "Зображення WebP"
 msgid "WebP"
 msgstr "WebP"
 
+#: ../plug-ins/file-webp/file-webp.c:166
+#| msgid "Source _type:"
+msgid "Source _type"
+msgstr "_Тип джерела"
+
+#: ../plug-ins/file-webp/file-webp.c:167
+msgid ""
+"WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, "
+"Text=5)"
+msgstr ""
+"Набір параметрів WebP (типовий=0, зображення=1, фотографія=2, графіка=3,"
+" піктограма=4, текст=5)"
+
+#: ../plug-ins/file-webp/file-webp.c:174
+#| msgid "Use lossless compression"
+msgid "Use lossless encoding"
+msgstr "Кодування без втрати якості"
+
+#: ../plug-ins/file-webp/file-webp.c:179
+#| msgid "Image _quality:"
+msgid "Image _quality"
+msgstr "_Якість зображення"
+
+#: ../plug-ins/file-webp/file-webp.c:180
+#| msgid "Print the image"
+msgid "Quality of the image"
+msgstr "Якість зображення"
+
+#: ../plug-ins/file-webp/file-webp.c:185
+#| msgid "Alpha q_uality:"
+msgid "Alpha q_uality"
+msgstr "Якість а_льфи"
+
+#: ../plug-ins/file-webp/file-webp.c:186
+#| msgid "Cannot export images with alpha channel."
+msgid "Quality of the image's alpha channel"
+msgstr "Якість каналу прозорості зображення"
+
 #: ../plug-ins/file-webp/file-webp.c:191
+msgid "Use Sharp YU_V"
+msgstr "Різкий YU_V"
+
+#. TRANSLATORS: \xe2\x86\x92 is a Unicode
+#. * "Rightward Arrow" in UTF-8 encoding.
+#.
+#: ../plug-ins/file-webp/file-webp.c:195
+msgid "Use sharper (but slower) RGB→YUV conversion"
+msgstr "Скористатися різкішим (але повільнішим) перетворенням RGB→YUV"
+
+#: ../plug-ins/file-webp/file-webp.c:200
 msgid "Loop _forever"
 msgstr "_Нескінченний цикл"
 
-#: ../plug-ins/file-webp/file-webp.c:197
+#: ../plug-ins/file-webp/file-webp.c:201
+msgid "Loop animation infinitely"
+msgstr "Нескінченне циклічне відтворення анімації"
+
+#: ../plug-ins/file-webp/file-webp.c:206
 msgid "_Minimize output size (slower)"
 msgstr "_Мінімізувати кінцевий розмір (повільніше)"
 
-#: ../plug-ins/file-webp/file-webp.c:203
+#: ../plug-ins/file-webp/file-webp.c:207
+#| msgid "_Minimize output size (slower)"
+msgid "Minimize output file size"
+msgstr "Мінімізувати кінцевий розмір файла"
+
+#: ../plug-ins/file-webp/file-webp.c:212
 msgid "Max distance between _key-frames"
 msgstr "Найбільша відстань між к_лючовими кадрами"
 
-#: ../plug-ins/file-webp/file-webp.c:209
+#: ../plug-ins/file-webp/file-webp.c:213
+#| msgid "Max distance between _key-frames"
+msgid "Maximum distance between keyframes"
+msgstr "Максимальна відстань між ключовими кадрами"
+
+#: ../plug-ins/file-webp/file-webp.c:218
 msgid "_Default delay between frames"
 msgstr "_Типова затримка між кадрами"
 
-#: ../plug-ins/file-webp/file-webp.c:216
+#: ../plug-ins/file-webp/file-webp.c:219
+msgid ""
+"Default delay (in milliseconds) to use when timestamps for frames are not "
+"available or forced."
+msgstr ""
+"Типова затримка (у мілісекундах), якою слід скористатися для часових"
+" позначок, коли кадри недоступні, або примусово."
+
+#: ../plug-ins/file-webp/file-webp.c:225
 msgid "Use default dela_y for all frames"
 msgstr "Використати типову затри_мку для всіх кадрів"
 
-#: ../plug-ins/file-webp/file-webp.c:222
+#: ../plug-ins/file-webp/file-webp.c:226
+#| msgid "Use default dela_y for all frames"
+msgid "Force default delay on all frames"
+msgstr "Використати типову затримку для всіх кадрів"
+
+#: ../plug-ins/file-webp/file-webp.c:231
 msgid "Save a_nimation"
 msgstr "З_берегти анімацію"
 
-#: ../plug-ins/file-webp/file-webp.c:340
+#: ../plug-ins/file-webp/file-webp.c:232
+#| msgid "Save a_nimation"
+msgid "Use layers for animation"
+msgstr "Використати шари для анімації"
+
+#: ../plug-ins/file-webp/file-webp.c:349
 #, c-format
 msgid ""
 "The WebP plug-in cannot export multiple layer, except in animation mode."
@@ -7688,13 +7770,13 @@ msgstr "ознака кінця списку"
 msgid "unknown error"
 msgstr "невідома помилка"
 
-#: ../plug-ins/file-webp/file-webp-save.c:204
-#: ../plug-ins/file-webp/file-webp-save.c:599
+#: ../plug-ins/file-webp/file-webp-save.c:206
+#: ../plug-ins/file-webp/file-webp-save.c:604
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Не вдається відкрити «%s» для запису: %s"
 
-#: ../plug-ins/file-webp/file-webp-save.c:288
+#: ../plug-ins/file-webp/file-webp-save.c:291
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Помилка WebP: «%s»"
@@ -12565,15 +12647,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Export Image as WebP"
 #~ msgstr "Експортувати зображення як WebP"
-
-#~ msgid "Image _quality:"
-#~ msgstr "_Якість зображення:"
-
-#~ msgid "Alpha q_uality:"
-#~ msgstr "Якість а_льфи:"
-
-#~ msgid "Source _type:"
-#~ msgstr "_Тип джерела:"
 
 #~ msgid "WebP encoder \"preset\""
 #~ msgstr "Передустановки кодувальника WebP"
