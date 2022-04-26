@@ -169,6 +169,7 @@ png_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
+  INIT_I18N ();
   if (! strcmp (name, LOAD_PROC))
     {
       procedure = gimp_load_procedure_new (plug_in, name,
@@ -228,50 +229,50 @@ png_create_procedure (GimpPlugIn  *plug_in,
                                           "png");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "interlaced",
-                             "_Interlacing (Adam7)",
-                             "Use Adam7 interlacing?",
+                             _("_Interlacing (Adam7)"),
+                             _("Use Adam7 interlacing"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "compression",
-                         "Co_mpression level",
-                         "Deflate Compression factor (0..9)",
+                         _("Co_mpression level"),
+                         _("Deflate Compression factor (0..9)"),
                          0, 9, 9,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "bkgd",
-                             "Save _background color",
-                             "Write bKGD chunk (PNG metadata)",
+                             _("Save _background color"),
+                             _("Write bKGD chunk (PNG metadata)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "offs",
-                             "Save layer o_ffset",
-                             "Write oFFs chunk (PNG metadata)",
+                             _("Save layer o_ffset"),
+                             _("Write oFFs chunk (PNG metadata)"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "phys",
-                             "Save resol_ution",
-                             "Write pHYs chunk (PNG metadata)",
+                             _("Save resol_ution"),
+                             _("Write pHYs chunk (PNG metadata)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "time",
-                             "Save creation _time",
-                             "Write tIME chunk (PNG metadata)",
+                             _("Save creation _time"),
+                             _("Write tIME chunk (PNG metadata)"),
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "save-transparent",
-                             "Save color _values from transparent pixels",
-                             "Preserve color of transparent pixels?",
+                             _("Save color _values from transparent pixels"),
+                             _("Preserve color of completely transparent pixels"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_AUX_ARG_INT (procedure, "format",
-                             "_Pixel format",
-                             "PNG export format",
+                             _("_Pixel format"),
+                             _("PNG export format"),
                              PNG_FORMAT_AUTO, PNG_FORMAT_GRAYA16,
                              PNG_FORMAT_AUTO,
                              G_PARAM_READWRITE);
