@@ -194,6 +194,29 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   g_object_unref (context);
 }
 
+/*
+ * This function can be used to force to query() all plug-ins at next
+ * GIMP start. It basically empties out the pluginrc file.
+ *
+ * E.g. this is useful when updating the GUI language since some
+ * strings localization may happen in the query() step, such as the
+ * localization of procedure documentation and parameters' titles or
+ * descriptions.
+ */
+void
+gimp_plug_in_manager_force_query_all (GimpPlugInManager *manager)
+{
+  GError *error = NULL;
+  GFile  *pluginrc;
+
+  pluginrc = gimp_plug_in_manager_get_pluginrc (manager);
+  if (! plug_in_rc_write (NULL, pluginrc, &error))
+    {
+      g_printerr ("%s: %s", G_STRFUNC, error->message);
+      g_clear_error (&error);
+    }
+  g_object_unref (pluginrc);
+}
 
 /* search for binaries in the plug-in directory path */
 static void
