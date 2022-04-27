@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-17 21:21+0000\n"
-"PO-Revision-Date: 2022-04-17 21:31+0100\n"
+"POT-Creation-Date: 2022-04-27 07:26+0000\n"
+"PO-Revision-Date: 2022-04-27 10:42+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -423,7 +423,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-gegl.c:468 ../plug-ins/common/file-gif-load.c:1036
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:943 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1320
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:803
@@ -980,7 +980,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
-#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
+#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1146 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
@@ -1010,7 +1010,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/common/file-cel.c:352 ../plug-ins/common/file-cel.c:403
 #: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
-#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
+#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
 #: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
 #: ../plug-ins/common/file-raw-data.c:439
@@ -1948,7 +1948,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-gegl.c:352 ../plug-ins/common/file-gif-load.c:395
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:658
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
@@ -2033,7 +2033,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:912
 #: ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
-#: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1486
+#: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1487
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
@@ -2859,7 +2859,7 @@ msgstr "Carrega ficheiros no formato de ficheiro JPEG XL"
 msgid "Saves files in the JPEG XL file format"
 msgstr "Guarda ficheiros no formato de ficheiro JPEG XL"
 
-#: ../plug-ins/common/file-jpegxl.c:163
+#: ../plug-ins/common/file-jpegxl.c:163 ../plug-ins/file-webp/file-webp.c:173
 msgid "L_ossless"
 msgstr "_Sem perda"
 
@@ -2957,7 +2957,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2241
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2242
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Não foi possível guardar a transparência no modo “sem perda de qualidade”, "
@@ -2971,7 +2971,7 @@ msgstr "Exportar imagem como MNG"
 msgid "MNG Options"
 msgstr "Opções MNG"
 
-#: ../plug-ins/common/file-mng.c:1612
+#: ../plug-ins/common/file-mng.c:1612 ../plug-ins/common/file-png.c:244
 msgid "Save _background color"
 msgstr "_Guardar cor do fundo"
 
@@ -2983,11 +2983,11 @@ msgstr "Guardar g_ama"
 msgid "Save resolution"
 msgstr "Guardar resolução"
 
-#: ../plug-ins/common/file-mng.c:1628
+#: ../plug-ins/common/file-mng.c:1628 ../plug-ins/common/file-png.c:262
 msgid "Save creation _time"
 msgstr "Guardar _data de criação"
 
-#: ../plug-ins/common/file-mng.c:1640 ../plug-ins/common/file-png.c:224
+#: ../plug-ins/common/file-mng.c:1640 ../plug-ins/common/file-png.c:225
 msgid "PNG"
 msgstr "PNG"
 
@@ -3359,48 +3359,104 @@ msgstr "Imagem Alias Pix"
 msgid "PIX format does not support multiple layers."
 msgstr "O formato PIX não suporta várias camadas."
 
-#: ../plug-ins/common/file-png.c:178 ../plug-ins/common/file-png.c:208
+#: ../plug-ins/common/file-png.c:179 ../plug-ins/common/file-png.c:209
 msgid "PNG image"
 msgstr "Imagem PNG"
 
-#: ../plug-ins/common/file-png.c:415
+#: ../plug-ins/common/file-png.c:232
+msgid "_Interlacing (Adam7)"
+msgstr "_Entrelaçar (Adam7)"
+
+#: ../plug-ins/common/file-png.c:233
+msgid "Use Adam7 interlacing"
+msgstr "Usar entrelaçamento Adam7"
+
+#: ../plug-ins/common/file-png.c:238
+msgid "Co_mpression level"
+msgstr "_Nível de compressão"
+
+#: ../plug-ins/common/file-png.c:239
+msgid "Deflate Compression factor (0..9)"
+msgstr "Deflacionar o factor de compressão (0..9)"
+
+#: ../plug-ins/common/file-png.c:245
+msgid "Write bKGD chunk (PNG metadata)"
+msgstr "Gravar parte de bKGD (metadados PNG)"
+
+#: ../plug-ins/common/file-png.c:250
+msgid "Save layer o_ffset"
+msgstr "Gravar desvio da _camada"
+
+#: ../plug-ins/common/file-png.c:251
+msgid "Write oFFs chunk (PNG metadata)"
+msgstr "Gravar parte de oFFs (metadados PNG)"
+
+#: ../plug-ins/common/file-png.c:256
+msgid "Save resol_ution"
+msgstr "Guardar resol_ução"
+
+#: ../plug-ins/common/file-png.c:257
+msgid "Write pHYs chunk (PNG metadata)"
+msgstr "Gravar parte de pHYs (metadados PNG)"
+
+#: ../plug-ins/common/file-png.c:263
+msgid "Write tIME chunk (PNG metadata)"
+msgstr "Gravar parte de tIME (metadados PNG)"
+
+#: ../plug-ins/common/file-png.c:268
+msgid "Save color _values from transparent pixels"
+msgstr "Gravar valores de cor dos pixeis _Transparentes"
+
+#: ../plug-ins/common/file-png.c:269
+msgid "Preserve color of completely transparent pixels"
+msgstr "Preservar a cor de pixéis completamente transparentes"
+
+#: ../plug-ins/common/file-png.c:274
+msgid "_Pixel format"
+msgstr "Formato do _píxel"
+
+#: ../plug-ins/common/file-png.c:275
+msgid "PNG export format"
+msgstr "Formato de exportação PNG"
+
+#: ../plug-ins/common/file-png.c:416
 #, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "O formato PNG não suporta várias camadas."
 
-#: ../plug-ins/common/file-png.c:491
+#: ../plug-ins/common/file-png.c:492
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Erro ao carregar o ficheiro PNG: %s\n"
 
-#: ../plug-ins/common/file-png.c:622
+#: ../plug-ins/common/file-png.c:623
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Erro ao criar a estrutura de leitura PNG ao carregar '%s'."
 
-#: ../plug-ins/common/file-png.c:631
+#: ../plug-ins/common/file-png.c:632
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Erro ao ler '%s'. Não foi possível criar a estrutura de informação do "
 "cabeçalho PNG."
 
-#: ../plug-ins/common/file-png.c:639
+#: ../plug-ins/common/file-png.c:640
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Erro ao ler o ficheiro '%s'. Estará corrompido?"
 
-#: ../plug-ins/common/file-png.c:894
+#: ../plug-ins/common/file-png.c:895
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modelo de cor desconhecido no ficheiro PNG '%s'."
 
-#: ../plug-ins/common/file-png.c:907 ../plug-ins/file-exr/file-exr.c:253
+#: ../plug-ins/common/file-png.c:908 ../plug-ins/file-exr/file-exr.c:253
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Não foi possível criar nova imagem para '%s': %s"
 
-#: ../plug-ins/common/file-png.c:975
+#: ../plug-ins/common/file-png.c:976
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3408,19 +3464,19 @@ msgstr ""
 "O ficheiro PNG especifica um desvio que levou a que a camada fosse "
 "posicionada fora da imagem."
 
-#: ../plug-ins/common/file-png.c:1211
+#: ../plug-ins/common/file-png.c:1212
 msgid "Apply PNG Offset"
 msgstr "Aplicar desvio PNG"
 
-#: ../plug-ins/common/file-png.c:1215
+#: ../plug-ins/common/file-png.c:1216
 msgid "Ignore PNG offset"
 msgstr "Ignorar desvio PNG"
 
-#: ../plug-ins/common/file-png.c:1216
+#: ../plug-ins/common/file-png.c:1217
 msgid "Apply PNG offset to layer"
 msgstr "Aplicar desvio PNG à camada"
 
-#: ../plug-ins/common/file-png.c:1241
+#: ../plug-ins/common/file-png.c:1242
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3429,56 +3485,56 @@ msgstr ""
 "A imagem PNG que está a importar especifica um desvio de %d, %d. Quer "
 "realmente aplicar este desvio à camada?"
 
-#: ../plug-ins/common/file-png.c:1451
+#: ../plug-ins/common/file-png.c:1452
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Erro ao criar “struct” de escrita PNG ao exportar '%s'."
 
-#: ../plug-ins/common/file-png.c:1460
+#: ../plug-ins/common/file-png.c:1461
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Erro ao exportar “%s”. Não foi possível criar a estrutura de informação do "
 "cabeçalho PNG."
 
-#: ../plug-ins/common/file-png.c:1468
+#: ../plug-ins/common/file-png.c:1469
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Erro ao exportar '%s'. Não foi possível exportar a imagem."
 
-#: ../plug-ins/common/file-png.c:2280 ../plug-ins/common/file-ps.c:3682
+#: ../plug-ins/common/file-png.c:2281 ../plug-ins/common/file-ps.c:3682
 msgid "Automatic"
 msgstr "Automático"
 
-#: ../plug-ins/common/file-png.c:2281
+#: ../plug-ins/common/file-png.c:2282
 msgid "8 bpc RGB"
 msgstr "8 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2282
+#: ../plug-ins/common/file-png.c:2283
 msgid "8 bpc GRAY"
 msgstr "8 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2283
+#: ../plug-ins/common/file-png.c:2284
 msgid "8 bpc RGBA"
 msgstr "8 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2284
+#: ../plug-ins/common/file-png.c:2285
 msgid "8 bpc GRAYA"
 msgstr "8 bpc GRAYA"
 
-#: ../plug-ins/common/file-png.c:2285
+#: ../plug-ins/common/file-png.c:2286
 msgid "16 bpc RGB"
 msgstr "16 bpc RGB"
 
-#: ../plug-ins/common/file-png.c:2286
+#: ../plug-ins/common/file-png.c:2287
 msgid "16 bpc GRAY"
 msgstr "16 bpc GRAY"
 
-#: ../plug-ins/common/file-png.c:2287
+#: ../plug-ins/common/file-png.c:2288
 msgid "16 bpc RGBA"
 msgstr "16 bpc RGBA"
 
-#: ../plug-ins/common/file-png.c:2288
+#: ../plug-ins/common/file-png.c:2289
 msgid "16 bpc GRAYA"
 msgstr "16 bpc GRAYA"
 
@@ -4634,8 +4690,8 @@ msgstr "Introduza outros comentários que pretenda incluir."
 
 #. Begin displaying export progress
 #: ../plug-ins/common/file-xmc.c:1373
-#: ../plug-ins/file-webp/file-webp-save.c:194
-#: ../plug-ins/file-webp/file-webp-save.c:589
+#: ../plug-ins/file-webp/file-webp-save.c:196
+#: ../plug-ins/file-webp/file-webp-save.c:594
 #, c-format
 msgid "Saving '%s'"
 msgstr "A guardar '%s'"
@@ -6147,6 +6203,7 @@ msgstr "Cor de 1º plano"
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
 #: ../plug-ins/common/warp.c:651 ../plug-ins/file-jpeg/jpeg-save.c:971
+#: ../plug-ins/file-webp/file-webp-dialog.c:108
 msgid "Advanced Options"
 msgstr "Opções avançadas"
 
@@ -7575,31 +7632,102 @@ msgstr "Imagem WebP"
 msgid "WebP"
 msgstr "WebP"
 
+#: ../plug-ins/file-webp/file-webp.c:166
+msgid "Source _type"
+msgstr "_Tipo de fonte"
+
+#: ../plug-ins/file-webp/file-webp.c:167
+msgid ""
+"WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, "
+"Text=5)"
+msgstr ""
+"Predefinição do codificador WebP (Padrão=0, Imagem=1, Foto=2, Desenho=3, "
+"Ícone=4, Texto=5)"
+
+#: ../plug-ins/file-webp/file-webp.c:174
+msgid "Use lossless encoding"
+msgstr "Usar codificação sem perdas"
+
+#: ../plug-ins/file-webp/file-webp.c:179
+msgid "Image _quality"
+msgstr "_Qualidade de imagem"
+
+#: ../plug-ins/file-webp/file-webp.c:180
+msgid "Quality of the image"
+msgstr "Qualidade da imagem"
+
+#: ../plug-ins/file-webp/file-webp.c:185
+msgid "Alpha q_uality"
+msgstr "Q_ualidade alfa"
+
+#: ../plug-ins/file-webp/file-webp.c:186
+msgid "Quality of the image's alpha channel"
+msgstr "Qualidade do canal alfa da imagem"
+
 #: ../plug-ins/file-webp/file-webp.c:191
+msgid "Use Sharp YU_V"
+msgstr "Usar Sharp YU_V"
+
+#. TRANSLATORS: \xe2\x86\x92 is a Unicode
+#. * "Rightward Arrow" in UTF-8 encoding.
+#.
+#: ../plug-ins/file-webp/file-webp.c:195
+msgid "Use sharper (but slower) RGB→YUV conversion"
+msgstr "Usar uma conversão RGB→YUV mais nítida (mas mais lenta)"
+
+#: ../plug-ins/file-webp/file-webp.c:200
 msgid "Loop _forever"
 msgstr "Ciclo _eterno"
 
-#: ../plug-ins/file-webp/file-webp.c:197
+#: ../plug-ins/file-webp/file-webp.c:201
+msgid "Loop animation infinitely"
+msgstr "Repetir animação indefinidamente"
+
+#: ../plug-ins/file-webp/file-webp.c:206
 msgid "_Minimize output size (slower)"
 msgstr "Minimizar tamanho de saída (mais lento)"
 
-#: ../plug-ins/file-webp/file-webp.c:203
+#: ../plug-ins/file-webp/file-webp.c:207
+msgid "Minimize output file size"
+msgstr "Minimizar tamanho do ficheiro de saída"
+
+#: ../plug-ins/file-webp/file-webp.c:212
 msgid "Max distance between _key-frames"
 msgstr "Distância máxima entre fotogramas-_chave"
 
-#: ../plug-ins/file-webp/file-webp.c:209
+#: ../plug-ins/file-webp/file-webp.c:213
+msgid "Maximum distance between keyframes"
+msgstr "Distância máxima entre fotogramas-chave"
+
+#: ../plug-ins/file-webp/file-webp.c:218
 msgid "_Default delay between frames"
 msgstr "_Atraso predefinido entre fotogramas"
 
-#: ../plug-ins/file-webp/file-webp.c:216
+#: ../plug-ins/file-webp/file-webp.c:219
+msgid ""
+"Default delay (in milliseconds) to use when timestamps for frames are not "
+"available or forced."
+msgstr ""
+"Atraso predefinido (em milissegundos) a usar quando os carimbos temporais "
+"para fotogramas não estão disponíveis ou são forçados."
+
+#: ../plug-ins/file-webp/file-webp.c:225
 msgid "Use default dela_y for all frames"
 msgstr "Utilizar o _atraso predefinido em todos os fotogramas"
 
-#: ../plug-ins/file-webp/file-webp.c:222
+#: ../plug-ins/file-webp/file-webp.c:226
+msgid "Force default delay on all frames"
+msgstr "Forçar atraso predefinido em todos os fotogramas"
+
+#: ../plug-ins/file-webp/file-webp.c:231
 msgid "Save a_nimation"
 msgstr "Guardar a_nimação"
 
-#: ../plug-ins/file-webp/file-webp.c:340
+#: ../plug-ins/file-webp/file-webp.c:232
+msgid "Use layers for animation"
+msgstr "Usar camadas para animação"
+
+#: ../plug-ins/file-webp/file-webp.c:349
 #, c-format
 msgid ""
 "The WebP plug-in cannot export multiple layer, except in animation mode."
@@ -7688,13 +7816,13 @@ msgstr "terminador de lista"
 msgid "unknown error"
 msgstr "erro desconhecido"
 
-#: ../plug-ins/file-webp/file-webp-save.c:204
-#: ../plug-ins/file-webp/file-webp-save.c:599
+#: ../plug-ins/file-webp/file-webp-save.c:206
+#: ../plug-ins/file-webp/file-webp-save.c:604
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Não foi possível abrir '%s' para escrita: %s"
 
-#: ../plug-ins/file-webp/file-webp-save.c:288
+#: ../plug-ins/file-webp/file-webp-save.c:291
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Erro WebP: '%s'"
@@ -13499,17 +13627,8 @@ msgstr "A transferir imagem do digitalizador/câmara"
 #~ msgid "Image quality:"
 #~ msgstr "Qualidade da imagem:"
 
-#~ msgid "Image quality"
-#~ msgstr "Qualidade da imagem\t"
-
-#~ msgid "Alpha quality:"
-#~ msgstr "Qualidade da transparência:"
-
 #~ msgid "Alpha channel quality"
 #~ msgstr "Qualidade do canal de transparência"
-
-#~ msgid "Source type:"
-#~ msgstr "Tipo de fonte:"
 
 #~ msgid "WebP encoder \"preset\""
 #~ msgstr "Predefinição de Codificador WebP"
@@ -13535,20 +13654,8 @@ msgstr "A transferir imagem do digitalizador/câmara"
 #~ msgid "GIF Options"
 #~ msgstr "Opções GIF"
 
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Entrelaçar (Adam7)"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "Gravar desvio da _camada"
-
 #~ msgid "Save _resolution"
 #~ msgstr "Gravar _resolução"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Gravar valores de cor dos pixeis _Transparentes"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "_Nível de compressão:"
 
 #~ msgid "S_ave Defaults"
 #~ msgstr "Gravar _predefinições"
@@ -13564,9 +13671,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "RGB Save Type"
 #~ msgstr "Tipo de gravação RGB"
-
-#~ msgid "Save color values from transparent pixels"
-#~ msgstr "Gravar os valores das cores dos pixeis transparentes"
 
 #~ msgid "<b>Comment</b>"
 #~ msgstr "<b>Comentário</b>"
@@ -13613,9 +13717,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "Preset:"
 #~ msgstr "Predefinição"
-
-#~ msgid "Loop infinitely"
-#~ msgstr "Repetir indefinidamente"
 
 #~ msgid "Blur neighboring pixels, but only in low-contrast areas"
 #~ msgstr "Desfocar pixels vizinhos, mas só em áreas de baixo contraste"
