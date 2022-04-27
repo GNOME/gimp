@@ -105,6 +105,12 @@ Plug-ins:
     non-linear backend.
   - python-fu-eval and plug-in-script-fu-eval ported to new
     GimpBatchProcedure class.
+  - JPEG:
+    * CMYK export is now possible. It currently uses the "Soft-proofing"
+      profile as set in Preferences
+    * CMYK imported ported to GEGL/babl conversion.
+  - WebP: new option "Use Sharp YUV" available in non-lossless export.
+    It renders sharper edges at the cost of a slower export.
 
 API:
 
