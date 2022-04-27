@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-26 17:12+0000\n"
-"PO-Revision-Date: 2022-04-26 20:37+0300\n"
+"POT-Creation-Date: 2022-04-26 21:39+0000\n"
+"PO-Revision-Date: 2022-04-27 10:22+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -418,7 +418,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-gegl.c:468 ../plug-ins/common/file-gif-load.c:1036
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
-#: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
+#: ../plug-ins/common/file-png.c:943 ../plug-ins/common/file-pnm.c:764
 #: ../plug-ins/common/file-raw-data.c:1320
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:803
@@ -977,7 +977,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/cml-explorer.c:2166 ../plug-ins/common/curve-bend.c:836
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
-#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
+#: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1495
 #: ../plug-ins/common/file-raw-data.c:1117
 #: ../plug-ins/common/file-raw-data.c:1146 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
@@ -1007,7 +1007,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-cel.c:352 ../plug-ins/common/file-cel.c:403
 #: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
-#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
+#: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
 #: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
 #: ../plug-ins/common/file-raw-data.c:439
@@ -1941,7 +1941,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-gegl.c:352 ../plug-ins/common/file-gif-load.c:395
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
-#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
+#: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:658
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
@@ -2026,7 +2026,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: ../plug-ins/common/file-cel.c:842 ../plug-ins/common/file-gif-save.c:912
 #: ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
-#: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1486
+#: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1487
 #: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
@@ -2954,7 +2954,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2241
+#: ../plug-ins/common/file-mng.c:726 ../plug-ins/common/file-png.c:2242
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -2967,7 +2967,7 @@ msgstr "Експортувати зображення як PNG"
 msgid "MNG Options"
 msgstr "Параметри MNG"
 
-#: ../plug-ins/common/file-mng.c:1612
+#: ../plug-ins/common/file-mng.c:1612 ../plug-ins/common/file-png.c:244
 msgid "Save _background color"
 msgstr "Зберегти колір _тла"
 
@@ -2979,11 +2979,11 @@ msgstr "З_берегти гаму"
 msgid "Save resolution"
 msgstr "Зберегти роздільну здатність"
 
-#: ../plug-ins/common/file-mng.c:1628
+#: ../plug-ins/common/file-mng.c:1628 ../plug-ins/common/file-png.c:262
 msgid "Save creation _time"
 msgstr "Зберегти час _створення"
 
-#: ../plug-ins/common/file-mng.c:1640 ../plug-ins/common/file-png.c:224
+#: ../plug-ins/common/file-mng.c:1640 ../plug-ins/common/file-png.c:225
 msgid "PNG"
 msgstr "PNG"
 
@@ -3355,48 +3355,112 @@ msgstr "Зображення Alias Pix"
 msgid "PIX format does not support multiple layers."
 msgstr "Для формату PIX не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-png.c:178 ../plug-ins/common/file-png.c:208
+#: ../plug-ins/common/file-png.c:179 ../plug-ins/common/file-png.c:209
 msgid "PNG image"
 msgstr "Зображення PNG"
 
-#: ../plug-ins/common/file-png.c:415
+#: ../plug-ins/common/file-png.c:232
+msgid "_Interlacing (Adam7)"
+msgstr "_Черезрядковість (Adam7)"
+
+#: ../plug-ins/common/file-png.c:233
+#| msgid "Use _Anti-aliasing"
+msgid "Use Adam7 interlacing"
+msgstr "Застосувати згладжування Adam7"
+
+#: ../plug-ins/common/file-png.c:238
+#| msgid "Co_mpression level:"
+msgid "Co_mpression level"
+msgstr "Рівень _стиснення"
+
+#: ../plug-ins/common/file-png.c:239
+#| msgid "Data Compression"
+msgid "Deflate Compression factor (0..9)"
+msgstr "Параметр стискання deflate (0..9)"
+
+#: ../plug-ins/common/file-png.c:245
+msgid "Write bKGD chunk (PNG metadata)"
+msgstr "Записати фрагмент bKGD (метадані PNG)"
+
+#: ../plug-ins/common/file-png.c:250
+msgid "Save layer o_ffset"
+msgstr "Зберегти зсув шарів:"
+
+#: ../plug-ins/common/file-png.c:251
+msgid "Write oFFs chunk (PNG metadata)"
+msgstr "Записати фрагмент oFFs (метадані PNG)"
+
+#: ../plug-ins/common/file-png.c:256
+#| msgid "Save resolution"
+msgid "Save resol_ution"
+msgstr "Зберегти _роздільну здатність"
+
+#: ../plug-ins/common/file-png.c:257
+msgid "Write pHYs chunk (PNG metadata)"
+msgstr "Записати фрагмент pHYs (метадані PNG)"
+
+#: ../plug-ins/common/file-png.c:263
+#| msgid "_Write Metadata"
+msgid "Write tIME chunk (PNG metadata)"
+msgstr "Записати фрагмент tIME (метадані PNG)"
+
+#: ../plug-ins/common/file-png.c:268
+msgid "Save color _values from transparent pixels"
+msgstr "Зберігати значення _кольору прозорих точок"
+
+#: ../plug-ins/common/file-png.c:269
+#| msgid "Save color values from transparent pixels"
+msgid "Preserve color of completely transparent pixels"
+msgstr "Зберігати колір повністю прозорих пікселів"
+
+#: ../plug-ins/common/file-png.c:274
+#| msgid "_Pixel format:"
+msgid "_Pixel format"
+msgstr "_Формат пікселів"
+
+#: ../plug-ins/common/file-png.c:275
+#| msgid "Pixel format:"
+msgid "PNG export format"
+msgstr "Формат експортування PNG"
+
+#: ../plug-ins/common/file-png.c:416
 #, c-format
 msgid "PNG format does not support multiple layers."
 msgstr "Для формату PNG не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-png.c:491
+#: ../plug-ins/common/file-png.c:492
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Помилка при завантаженні файла PNG: «%s»\n"
 
-#: ../plug-ins/common/file-png.c:622
+#: ../plug-ins/common/file-png.c:623
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Помилка створення PNG (читання struct) протягом завантаження «%s»."
 
-#: ../plug-ins/common/file-png.c:631
+#: ../plug-ins/common/file-png.c:632
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при читанні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:639
+#: ../plug-ins/common/file-png.c:640
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Помилка при читанні «%s». Файл пошкоджений?"
 
-#: ../plug-ins/common/file-png.c:894
+#: ../plug-ins/common/file-png.c:895
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: ../plug-ins/common/file-png.c:907 ../plug-ins/file-exr/file-exr.c:253
+#: ../plug-ins/common/file-png.c:908 ../plug-ins/file-exr/file-exr.c:253
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: ../plug-ins/common/file-png.c:975
+#: ../plug-ins/common/file-png.c:976
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3404,19 +3468,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: ../plug-ins/common/file-png.c:1211
+#: ../plug-ins/common/file-png.c:1212
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1215
+#: ../plug-ins/common/file-png.c:1216
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1216
+#: ../plug-ins/common/file-png.c:1217
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: ../plug-ins/common/file-png.c:1241
+#: ../plug-ins/common/file-png.c:1242
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3425,56 +3489,56 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: ../plug-ins/common/file-png.c:1451
+#: ../plug-ins/common/file-png.c:1452
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
 msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: ../plug-ins/common/file-png.c:1460
+#: ../plug-ins/common/file-png.c:1461
 #, c-format
 msgid "Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: ../plug-ins/common/file-png.c:1468
+#: ../plug-ins/common/file-png.c:1469
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: ../plug-ins/common/file-png.c:2280 ../plug-ins/common/file-ps.c:3682
+#: ../plug-ins/common/file-png.c:2281 ../plug-ins/common/file-ps.c:3682
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: ../plug-ins/common/file-png.c:2281
+#: ../plug-ins/common/file-png.c:2282
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2282
+#: ../plug-ins/common/file-png.c:2283
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2283
+#: ../plug-ins/common/file-png.c:2284
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2284
+#: ../plug-ins/common/file-png.c:2285
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: ../plug-ins/common/file-png.c:2285
+#: ../plug-ins/common/file-png.c:2286
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: ../plug-ins/common/file-png.c:2286
+#: ../plug-ins/common/file-png.c:2287
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: ../plug-ins/common/file-png.c:2287
+#: ../plug-ins/common/file-png.c:2288
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: ../plug-ins/common/file-png.c:2288
+#: ../plug-ins/common/file-png.c:2289
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
@@ -7577,7 +7641,6 @@ msgid "WebP"
 msgstr "WebP"
 
 #: ../plug-ins/file-webp/file-webp.c:166
-#| msgid "Source _type:"
 msgid "Source _type"
 msgstr "_Тип джерела"
 
@@ -7586,31 +7649,26 @@ msgid ""
 "WebP encoder preset (Default=0, Picture=1, Photo=2, Drawing=3, Icon=4, "
 "Text=5)"
 msgstr ""
-"Набір параметрів WebP (типовий=0, зображення=1, фотографія=2, графіка=3,"
-" піктограма=4, текст=5)"
+"Набір параметрів WebP (типовий=0, зображення=1, фотографія=2, графіка=3, "
+"піктограма=4, текст=5)"
 
 #: ../plug-ins/file-webp/file-webp.c:174
-#| msgid "Use lossless compression"
 msgid "Use lossless encoding"
 msgstr "Кодування без втрати якості"
 
 #: ../plug-ins/file-webp/file-webp.c:179
-#| msgid "Image _quality:"
 msgid "Image _quality"
 msgstr "_Якість зображення"
 
 #: ../plug-ins/file-webp/file-webp.c:180
-#| msgid "Print the image"
 msgid "Quality of the image"
 msgstr "Якість зображення"
 
 #: ../plug-ins/file-webp/file-webp.c:185
-#| msgid "Alpha q_uality:"
 msgid "Alpha q_uality"
 msgstr "Якість а_льфи"
 
 #: ../plug-ins/file-webp/file-webp.c:186
-#| msgid "Cannot export images with alpha channel."
 msgid "Quality of the image's alpha channel"
 msgstr "Якість каналу прозорості зображення"
 
@@ -7638,7 +7696,6 @@ msgid "_Minimize output size (slower)"
 msgstr "_Мінімізувати кінцевий розмір (повільніше)"
 
 #: ../plug-ins/file-webp/file-webp.c:207
-#| msgid "_Minimize output size (slower)"
 msgid "Minimize output file size"
 msgstr "Мінімізувати кінцевий розмір файла"
 
@@ -7647,7 +7704,6 @@ msgid "Max distance between _key-frames"
 msgstr "Найбільша відстань між к_лючовими кадрами"
 
 #: ../plug-ins/file-webp/file-webp.c:213
-#| msgid "Max distance between _key-frames"
 msgid "Maximum distance between keyframes"
 msgstr "Максимальна відстань між ключовими кадрами"
 
@@ -7660,15 +7716,14 @@ msgid ""
 "Default delay (in milliseconds) to use when timestamps for frames are not "
 "available or forced."
 msgstr ""
-"Типова затримка (у мілісекундах), якою слід скористатися для часових"
-" позначок, коли кадри недоступні, або примусово."
+"Типова затримка (у мілісекундах), якою слід скористатися для часових "
+"позначок, коли кадри недоступні, або примусово."
 
 #: ../plug-ins/file-webp/file-webp.c:225
 msgid "Use default dela_y for all frames"
 msgstr "Використати типову затри_мку для всіх кадрів"
 
 #: ../plug-ins/file-webp/file-webp.c:226
-#| msgid "Use default dela_y for all frames"
 msgid "Force default delay on all frames"
 msgstr "Використати типову затримку для всіх кадрів"
 
@@ -7677,7 +7732,6 @@ msgid "Save a_nimation"
 msgstr "З_берегти анімацію"
 
 #: ../plug-ins/file-webp/file-webp.c:232
-#| msgid "Save a_nimation"
 msgid "Use layers for animation"
 msgstr "Використати шари для анімації"
 
@@ -12669,17 +12723,8 @@ msgstr "Отримання даних зі сканера/камери"
 #~ msgid "Export Image as TIFF"
 #~ msgstr "Експортувати зображення як TIFF"
 
-#~ msgid "_Interlacing (Adam7)"
-#~ msgstr "_Черезрядковість (Adam7)"
-
-#~ msgid "Save layer o_ffset"
-#~ msgstr "Зберегти зсув шарів:"
-
 #~ msgid "Save _resolution"
 #~ msgstr "Зберегти _роздільність"
-
-#~ msgid "Save color _values from transparent pixels"
-#~ msgstr "Зберігати значення _кольору прозорих точок"
 
 #~ msgid "Save comme_nt"
 #~ msgstr "З_берегти коментар"
@@ -12695,12 +12740,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Save thumbnail"
 #~ msgstr "Зберегти мініатюру"
-
-#~ msgid "_Pixel format:"
-#~ msgstr "_Формат пікселів:"
-
-#~ msgid "Co_mpression level:"
-#~ msgstr "Рівень _стиснення:"
 
 #~ msgid "_Quality:"
 #~ msgstr "_Якість:"
@@ -12758,9 +12797,6 @@ msgstr "Отримання даних зі сканера/камери"
 
 #~ msgid "Crop layers"
 #~ msgstr "Обрізати шари"
-
-#~ msgid "Save color values from transparent pixels"
-#~ msgstr "Зберігати значення кольору прозорих точок"
 
 #~ msgid "Save Exif data"
 #~ msgstr "Зберегти дані Exif"
