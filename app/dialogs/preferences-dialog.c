@@ -388,7 +388,10 @@ prefs_response (GtkWidget *widget,
               {
                 GParamSpec *param_spec = list->data;
 
-                g_string_append_printf (string, "%s\n", param_spec->name);
+                /* The first 3 bytes are the bullet unicode character
+                 * for doing a list (U+2022).
+                 */
+                g_string_append_printf (string, "\xe2\x80\xa2 %s\n", g_param_spec_get_nick (param_spec));
 
                 if (g_strcmp0 (param_spec->name, "language") == 0)
                   {
