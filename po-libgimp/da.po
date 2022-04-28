@@ -17,8 +17,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP libgimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-27 10:19+0000\n"
-"PO-Revision-Date: 2022-04-21 19:22+0200\n"
+"POT-Creation-Date: 2022-04-27 07:26+0000\n"
+"PO-Revision-Date: 2022-04-28 18:25+0200\n"
 "Last-Translator: Alan Mortensen <alanmortensen.am@gmail.com>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "Language: da\n"
@@ -34,7 +34,8 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Penselvalg"
 
-#: ../libgimp/gimpbrushselectbutton.c:887 ../libgimp/gimppatternselectbutton.c:674
+#: ../libgimp/gimpbrushselectbutton.c:887
+#: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "G_ennemse …"
 
@@ -150,7 +151,8 @@ msgstr "Udvidelsesmodulet %s kan kun håndtere RGB- eller indekserede billeder"
 #: ../libgimp/gimpexport.c:461
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "Udvidelsesmodulet %s kan kun håndtere gråtone- eller indekserede billeder"
+msgstr ""
+"Udvidelsesmodulet %s kan kun håndtere gråtone- eller indekserede billeder"
 
 #: ../libgimp/gimpexport.c:472
 #, c-format
@@ -164,7 +166,8 @@ msgstr "Tilføj alfakanal"
 #: ../libgimp/gimpexport.c:481
 #, c-format
 msgid "%s plug-in needs to crop the layers to the image bounds"
-msgstr "Udvidelsesmodulet %s har brug for at beskære lagene til billedets grænser"
+msgstr ""
+"Udvidelsesmodulet %s har brug for at beskære lagene til billedets grænser"
 
 #: ../libgimp/gimpexport.c:482
 msgid "Crop Layers"
@@ -319,8 +322,8 @@ msgid "by type"
 msgstr "efter type"
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:369 ../libgimp/gimpprocbrowserdialog.c:527
-#: ../libgimpwidgets/gimpbrowser.c:168
+#: ../libgimp/gimpprocbrowserdialog.c:369
+#: ../libgimp/gimpprocbrowserdialog.c:527 ../libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Ingen fundet"
 
@@ -397,20 +400,20 @@ msgstr ""
 #: ../libgimp/gimpprocedure.c:2009
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#%d). "
-"Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
-"Proceduren “%s” blev kaldt med en forkert værditype for parameteren “%s"
-"” (nr. %d). Forventede %s, modtog %s."
+"Proceduren “%s” blev kaldt med en forkert værditype for parameteren "
+"“%s” (nr. %d). Forventede %s, modtog %s."
 
 #: ../libgimp/gimpprocedure.c:2044
 #, c-format
 msgid ""
-"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value is "
-"out of range."
+"Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
+"is out of range."
 msgstr ""
-"Proceduren “%s” returnerede “%s” som returværdien “%s” (nr. %d, typen "
-"%s). Denne værdi er uden for det gyldige interval."
+"Proceduren “%s” returnerede “%s” som returværdien “%s” (nr. %d, typen %s). "
+"Denne værdi er uden for det gyldige interval."
 
 #: ../libgimp/gimpprocedure.c:2058
 #, c-format
@@ -430,7 +433,8 @@ msgstr ""
 #: ../libgimp/gimpprocedure.c:2113
 #, c-format
 msgid ""
-"Procedure '%s' has been called with an invalid UTF-8 string for argument '%s'."
+"Procedure '%s' has been called with an invalid UTF-8 string for argument "
+"'%s'."
 msgstr ""
 "Proceduren “%s” blev kaldt med en ugyldig UTF-8-streng til argumentet “%s”."
 
@@ -455,7 +459,7 @@ msgid "_Load Saved Settings"
 msgstr "_Indlæs gemte indstillinger"
 
 #: ../libgimp/gimpproceduredialog.c:338
-msgid "Load settings saved with “Save Settings” button"
+msgid "Load settings saved with \"Save Settings\" button"
 msgstr "Indlæs indstillinger gemt med knappen “Gem indstillinger“"
 
 #: ../libgimp/gimpproceduredialog.c:350
@@ -1713,27 +1717,29 @@ msgstr "Farveprofilen for den (primære) skærm."
 # vinduessystemet til grafiske miljø (GUI)
 #: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
-"When enabled, GIMP will try to use the display color profile from the windowing "
-"system.  The configured monitor profile is then only used as a fallback."
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
 msgstr ""
 "Hvis aktiveret vil GIMP forsøge at bruge farveprofilen for skærmen fra "
-"vinduessystemet. Den konfigurerede skærmprofil bliver så kun brugt som nødplan."
+"vinduessystemet. Den konfigurerede skærmprofil bliver så kun brugt som "
+"nødplan."
 
 #: ../libgimpconfig/gimpcolorconfig.c:63
 msgid ""
-"The preferred RGB working space color profile. It will be offered next to the "
-"built-in RGB profile when a color profile can be chosen."
+"The preferred RGB working space color profile. It will be offered next to "
+"the built-in RGB profile when a color profile can be chosen."
 msgstr ""
 "Den foretrukne farveprofil for RGB-arbejdsområdet. Den vil blive tilbudt ved "
 "siden af den indbyggede RGB-profil ved valg af farveprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:67
 msgid ""
-"The preferred grayscale working space color profile. It will be offered next to "
-"the built-in grayscale profile when a color profile can be chosen."
+"The preferred grayscale working space color profile. It will be offered next "
+"to the built-in grayscale profile when a color profile can be chosen."
 msgstr ""
-"Den foretrukne farveprofil for gråtonearbejdsområdet. Den vil blive tilbudt ved "
-"siden af den indbyggede gråtoneprofil ved valg af farveprofil."
+"Den foretrukne farveprofil for gråtonearbejdsområdet. Den vil blive tilbudt "
+"ved siden af den indbyggede gråtoneprofil ved valg af farveprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:71
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -1751,15 +1757,15 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
-"How colors are converted from your image's color space to your display device. "
-"Relative colorimetric is usually the best choice. Unless you use a LUT monitor "
-"profile (most monitor profiles are matrix), choosing perceptual intent really "
-"gives you relative colorimetric."
+"How colors are converted from your image's color space to your display "
+"device. Relative colorimetric is usually the best choice. Unless you use a "
+"LUT monitor profile (most monitor profiles are matrix), choosing perceptual "
+"intent really gives you relative colorimetric."
 msgstr ""
 "Hvordan farver konverteres fra dit billedes farverum til skærmens. Relativ "
 "kolorimetrisk er oftest det bedste valg. Med mindre du bruger en LUT-"
-"skærmprofil (de fleste skærmprofiler er matrix), vil sanselig gengivelsesmetode "
-"i virkeligheden være det samme som relativ kolorimetrisk."
+"skærmprofil (de fleste skærmprofiler er matrix), vil sanselig "
+"gengivelsesmetode i virkeligheden være det samme som relativ kolorimetrisk."
 
 #: ../libgimpconfig/gimpcolorconfig.c:86
 msgid ""
@@ -1778,27 +1784,29 @@ msgstr ""
 # Simulation lader til at være overflødig
 #: ../libgimpconfig/gimpcolorconfig.c:94
 msgid ""
-"How colors are converted from your image's color space to the output simulation "
-"device (usually your monitor). Try them all and choose what looks the best."
+"How colors are converted from your image's color space to the output "
+"simulation device (usually your monitor). Try them all and choose what looks "
+"the best."
 msgstr ""
 "Hvordan farver konverteres fra dit billedes farverum til outputenheden "
 "(sædvanligvis din skærm). Prøv dem alle og vælg den, der ser bedst ud."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
-msgid "Try with and without black point compensation and choose what looks best."
+msgid ""
+"Try with and without black point compensation and choose what looks best."
 msgstr "Prøv med og uden sortpunktskompensation og vælg det, der ser bedst ud."
 
 #: ../libgimpconfig/gimpcolorconfig.c:103
 msgid ""
 "When disabled, soft-proofing might be of better quality at the cost of speed."
 msgstr ""
-"Når deaktiveret vil kvaliteten af skærmkorrekturen være bedre på bekostning af "
-"hastighed."
+"Når deaktiveret vil kvaliteten af skærmkorrekturen være bedre på bekostning "
+"af hastighed."
 
 #: ../libgimpconfig/gimpcolorconfig.c:107
 msgid ""
-"When enabled, the soft-proofing will mark colors which can not be represented "
-"in the target color space."
+"When enabled, the soft-proofing will mark colors which can not be "
+"represented in the target color space."
 msgstr ""
 "Når aktiveret vil skærmkorrekturen markere farver, som ikke kan gengives i "
 "målfarverummet."
@@ -1809,7 +1817,8 @@ msgstr ""
 #: ../libgimpconfig/gimpcolorconfig.c:111
 msgid "The color to use for marking colors which are out of gamut."
 msgstr ""
-"Farven der skal bruges som for markering af farver, som er udenfor farveskala."
+"Farven der skal bruges som for markering af farver, som er udenfor "
+"farveskala."
 
 #: ../libgimpconfig/gimpcolorconfig.c:210
 msgid "Mode of operation"
@@ -1871,17 +1880,20 @@ msgstr "Markér farver uden for farveskalaen"
 msgid "Out of gamut warning color"
 msgstr "Advarselsfarve for farver uden for farveskalaen"
 
-#: ../libgimpconfig/gimpcolorconfig.c:661 ../libgimpconfig/gimpcolorconfig.c:854
+#: ../libgimpconfig/gimpcolorconfig.c:661
+#: ../libgimpconfig/gimpcolorconfig.c:854
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Farveprofilen “%s” er ikke til RGB-farverummet."
 
-#: ../libgimpconfig/gimpcolorconfig.c:705 ../libgimpconfig/gimpcolorconfig.c:904
+#: ../libgimpconfig/gimpcolorconfig.c:705
+#: ../libgimpconfig/gimpcolorconfig.c:904
 #, c-format
 msgid "Color profile '%s' is not for GRAY color space."
 msgstr "Farveprofilen “%s” er ikke til gråtonefarverummet."
 
-#: ../libgimpconfig/gimpcolorconfig.c:749 ../libgimpconfig/gimpcolorconfig.c:954
+#: ../libgimpconfig/gimpcolorconfig.c:749
+#: ../libgimpconfig/gimpcolorconfig.c:954
 #, c-format
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "Farveprofilen “%s” er ikke til CMYK-farverummet."
@@ -1912,8 +1924,9 @@ msgstr "ugyldig værdi “%ld” for symbolet %s"
 msgid "while parsing token '%s': %s"
 msgstr "under fortolkning af symbolet “%s”: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:664 ../libgimpconfig/gimpconfig-iface.c:677
-#: ../libgimpconfig/gimpscanner.c:774 ../libgimpconfig/gimpscanner.c:856
+#: ../libgimpconfig/gimpconfig-iface.c:664
+#: ../libgimpconfig/gimpconfig-iface.c:677 ../libgimpconfig/gimpscanner.c:774
+#: ../libgimpconfig/gimpscanner.c:856
 #: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
 msgstr "fatal fortolkningsfejl"
@@ -1928,7 +1941,8 @@ msgstr "Filen har ikke nogen stirepræsentation"
 msgid "Cannot expand ${%s}"
 msgstr "Kan ikke udfolde ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:95 ../libgimpconfig/gimpconfigwriter.c:725
+#: ../libgimpconfig/gimpconfigwriter.c:95
+#: ../libgimpconfig/gimpconfigwriter.c:725
 #, c-format
 msgid "Error writing to '%s': %s"
 msgstr "Fejl under skrivning til “%s”: %s"
@@ -2036,8 +2050,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Hexadecimal farvenotation ligesom i HTML og CSS. Dette felt virker også med CSS-"
-"farvenavne."
+"Hexadecimal farvenotation ligesom i HTML og CSS. Dette felt virker også med "
+"CSS-farvenavne."
 
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:108
 msgid "All files (*.*)"
@@ -2225,8 +2239,8 @@ msgstr "Skrivbar"
 # Eyedropper findes ikke mere og er erstattet af color picker
 #: ../libgimpwidgets/gimppickbutton.c:116
 msgid ""
-"Click the eyedropper, then click a color anywhere on your screen to select that "
-"color."
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
 msgstr ""
 "Klik på farvevælgeren og klik derefter et vilkårligt sted på skærmen for at "
 "vælge den pågældende farve."
@@ -2253,8 +2267,8 @@ msgstr[1] "Dette felt til tekstindtastning er begrænset til %d tegn."
 
 #: ../libgimpwidgets/gimpwidgets.c:259
 msgid ""
-"Use this value for random number generator seed - this allows you to repeat a "
-"given “random” operation"
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
 msgstr ""
 "Benyt denne værdi som basistal til generatoren af tilfældige tal - dette "
 "tillader dig at gentage en given “tilfældig” handling"
@@ -2517,8 +2531,8 @@ msgstr "Hjul"
 msgid "DirectX DirectInput event controller"
 msgstr "DirectX DirectInput-hændelsesstyreenhed"
 
-#: ../modules/controller-dx-dinput.c:196 ../modules/controller-linux-input.c:218
-#: ../modules/controller-midi.c:212
+#: ../modules/controller-dx-dinput.c:196
+#: ../modules/controller-linux-input.c:218 ../modules/controller-midi.c:212
 msgid "Device:"
 msgstr "Enhed:"
 
@@ -2581,15 +2595,18 @@ msgstr "x-akse hæld tættere"
 msgid "Y Axis Tilt Right"
 msgstr "y-akse hæld højre"
 
-#: ../modules/controller-dx-dinput.c:481 ../modules/controller-linux-input.c:100
+#: ../modules/controller-dx-dinput.c:481
+#: ../modules/controller-linux-input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "y-akse hæld venstre"
 
-#: ../modules/controller-dx-dinput.c:487 ../modules/controller-linux-input.c:101
+#: ../modules/controller-dx-dinput.c:487
+#: ../modules/controller-linux-input.c:101
 msgid "Z Axis Turn Left"
 msgstr "z-akse drej venstre"
 
-#: ../modules/controller-dx-dinput.c:490 ../modules/controller-linux-input.c:102
+#: ../modules/controller-dx-dinput.c:490
+#: ../modules/controller-linux-input.c:102
 msgid "Z Axis Turn Right"
 msgstr "z-akse drej højre"
 
@@ -2622,12 +2639,13 @@ msgstr "POV %d returnér"
 msgid "DirectInput Events"
 msgstr "DirectInput-hændelser"
 
-#: ../modules/controller-dx-dinput.c:1092 ../modules/controller-linux-input.c:525
-#: ../modules/controller-midi.c:505
+#: ../modules/controller-dx-dinput.c:1092
+#: ../modules/controller-linux-input.c:525 ../modules/controller-midi.c:505
 msgid "No device configured"
 msgstr "Ingen enhed konfigureret"
 
-#: ../modules/controller-dx-dinput.c:1117 ../modules/controller-linux-input.c:588
+#: ../modules/controller-dx-dinput.c:1117
+#: ../modules/controller-linux-input.c:588
 msgid "Device not available"
 msgstr "Enhed ikke tilgængelig"
 
@@ -2781,9 +2799,9 @@ msgstr "Linux-inputhændelser"
 msgid "Reading from %s"
 msgstr "Læser fra %s"
 
-#: ../modules/controller-linux-input.c:569 ../modules/controller-linux-input.c:623
-#: ../modules/controller-midi.c:436 ../modules/controller-midi.c:497
-#: ../modules/controller-midi.c:568
+#: ../modules/controller-linux-input.c:569
+#: ../modules/controller-linux-input.c:623 ../modules/controller-midi.c:436
+#: ../modules/controller-midi.c:497 ../modules/controller-midi.c:568
 #, c-format
 msgid "Device not available: %s"
 msgstr "Enheden ikke tilgængelig: %s"
@@ -2813,8 +2831,8 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Den MIDI-kanal der skal læses hændelser fra. Vælg -1 for at læse fra alle MIDI-"
-"kanaler."
+"Den MIDI-kanal der skal læses hændelser fra. Vælg -1 for at læse fra alle "
+"MIDI-kanaler."
 
 #: ../modules/controller-midi.c:226
 msgid "MIDI"
@@ -2848,7 +2866,8 @@ msgstr "GIMP MIDI-inputstyreenhed"
 msgid ""
 "ACES RRT (RRT = Reference Rendering Transform). An HDR to SDR proof color "
 "display filter, using a luminance-only approximation of the ACES RRT, a pre-"
-"defined filmic look to be used before ODT (display or output space ICC profile)"
+"defined filmic look to be used before ODT (display or output space ICC "
+"profile)"
 msgstr ""
 "ACES RRT (RRT = Reference Rendering Transform). Et HDR- til SDR-"
 "korrekturfarveskærmsfilter, der anvender en kun-luminans-tilnærmelse af ACES "
