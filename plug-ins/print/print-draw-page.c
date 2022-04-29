@@ -66,7 +66,9 @@ print_draw_page (GtkPrintContext *context,
       scale_x = gtk_print_context_get_dpi_x (context) / data->xres;
       scale_y = gtk_print_context_get_dpi_y (context) / data->yres;
 
-      cairo_translate (cr, data->offset_x, data->offset_y);
+      cairo_translate (cr,
+                       data->offset_x / 72.0 * gtk_print_context_get_dpi_x (context),
+                       data->offset_y / 72.0 * gtk_print_context_get_dpi_y (context));
 
       if (data->draw_crop_marks)
         print_draw_crop_marks (context,
