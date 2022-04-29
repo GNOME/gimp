@@ -1168,7 +1168,12 @@ xcf_load_image_props (XcfInfo   *info,
           break;
 
         case PROP_PATHS:
-          xcf_load_old_paths (info, image);
+          {
+            goffset base = info->cp;
+
+            if (! xcf_load_old_paths (info, image))
+              xcf_seek_pos (info, base + prop_size, NULL);
+          }
           break;
 
         case PROP_USER_UNIT:
@@ -3035,8 +3040,11 @@ xcf_load_old_paths (XcfInfo   *info,
   xcf_read_int32 (info, &last_selected_row, 1);
   xcf_read_int32 (info, &num_paths,         1);
 
+  GIMP_LOG (XCF, "Number of old paths: %u", num_paths);
+
   while (num_paths-- > 0)
-    xcf_load_old_path (info, image);
+    if (! xcf_load_old_path (info, image))
+      return FALSE;
 
   active_vectors =
     GIMP_VECTORS (gimp_container_get_child_by_index (gimp_image_get_vectors (image),
@@ -3087,7 +3095,7 @@ xcf_load_old_path (XcfInfo   *info,
     }
   else if (version != 1)
     {
-      g_printerr ("Unknown path type. Possibly corrupt XCF file");
+      g_printerr ("Unknown path type (version: %u). Possibly corrupt XCF file.\n", version);
 
       g_free (name);
       return FALSE;
