@@ -40,6 +40,8 @@
   <url type="donation">https://www.gimp.org/donating/</url>
   <url type="help">https://www.gimp.org/docs/</url>
   <url type="homepage">https://www.gimp.org/</url>
+  <url type="vcs-browser">https://gitlab.gnome.org/GNOME/gimp/</url>
+  <url type="contribute">https://www.gimp.org/develop/</url>
   <screenshots>
     <screenshot type="default">
       <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-painting.jpg</image>
