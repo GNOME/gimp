@@ -34,6 +34,7 @@
 #include "core/gimp-palettes.h"
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpmarshal.h"
 #include "core/gimppalettemru.h"
@@ -104,6 +105,8 @@ static void   gimp_color_dialog_history_selected (GimpColorHistory   *history,
 
 static void   gimp_color_dialog_image_changed    (GimpContext        *context,
                                                   GimpImage          *image,
+                                                  GimpColorDialog    *dialog);
+static void   gimp_color_dialog_update_simulation(GimpImage          *image,
                                                   GimpColorDialog    *dialog);
 static void   gimp_color_dialog_update           (GimpColorDialog    *dialog);
 static void   gimp_color_dialog_show             (GimpColorDialog    *dialog);
@@ -712,6 +715,9 @@ gimp_color_dialog_image_changed (GimpContext     *context,
           g_signal_handlers_disconnect_by_func (dialog->active_image,
                                                 G_CALLBACK (gimp_color_dialog_update),
                                                 dialog);
+          g_signal_handlers_disconnect_by_func (dialog->active_image,
+                                                gimp_color_dialog_update_simulation,
+                                                dialog);
         }
       dialog->active_image = image;
       if (image)
@@ -721,10 +727,37 @@ gimp_color_dialog_image_changed (GimpContext     *context,
           g_signal_connect_swapped (image, "notify::base-type",
                                     G_CALLBACK (gimp_color_dialog_update),
                                     dialog);
+          g_signal_connect (image, "simulation-profile-changed",
+                            G_CALLBACK (gimp_color_dialog_update_simulation),
+                            dialog);
+          g_signal_connect (image, "simulation-intent-changed",
+                            G_CALLBACK (gimp_color_dialog_update_simulation),
+                            dialog);
+          g_signal_connect (image, "simulation-bpc-changed",
+                            G_CALLBACK (gimp_color_dialog_update_simulation),
+                            dialog);
+
+          gimp_color_dialog_update_simulation (image, dialog);
         }
       gimp_color_dialog_update (dialog);
     }
 }
+
+static void
+gimp_color_dialog_update_simulation (GimpImage       *image,
+                                     GimpColorDialog *dialog)
+{
+  g_return_if_fail (GIMP_IS_COLOR_DIALOG (dialog));
+
+  if (image && GIMP_IS_COLOR_DIALOG (dialog))
+    {
+      gimp_color_selection_set_simulation (GIMP_COLOR_SELECTION (dialog->selection),
+                                           gimp_image_get_simulation_profile (image),
+                                           gimp_image_get_simulation_intent (image),
+                                           gimp_image_get_simulation_bpc (image));
+    }
+}
+
 
 static void
 gimp_color_dialog_update (GimpColorDialog *dialog)

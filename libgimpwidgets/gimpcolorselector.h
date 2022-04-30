@@ -105,6 +105,11 @@ struct _GimpColorSelectorClass
   void (* set_config)            (GimpColorSelector        *selector,
                                   GimpColorConfig          *config);
 
+  void (* set_simulation)        (GimpColorSelector        *selector,
+                                  GimpColorProfile         *profile,
+                                  GimpColorRenderingIntent  intent,
+                                  gboolean                  bpc);
+
   /*  signals  */
   void (* color_changed)         (GimpColorSelector        *selector,
                                   const GimpRGB            *rgb,
@@ -170,6 +175,11 @@ void     gimp_color_selector_emit_model_visible_changed (GimpColorSelector *sele
 
 void     gimp_color_selector_set_config            (GimpColorSelector *selector,
                                                     GimpColorConfig   *config);
+
+void     gimp_color_selector_set_simulation        (GimpColorSelector *selector,
+                                                    GimpColorProfile  *profile,
+                                                    GimpColorRenderingIntent intent,
+                                                    gboolean           bpc);
 
 
 G_END_DECLS

@@ -561,6 +561,33 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
 }
 
 /**
+ * gimp_color_selection_set_simulation:
+ * @selection: A #GimpColorSelection widget.
+ * @profile:   A #GimpColorProfile object.
+ * @intent:    A #GimpColorRenderingIntent enum.
+ * @bpc:       A gboolean.
+ *
+ * Sets the simulation options to use with this color selection.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_selection_set_simulation (GimpColorSelection *selection,
+                                     GimpColorProfile   *profile,
+                                     GimpColorRenderingIntent intent,
+                                     gboolean            bpc)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+
+  gimp_color_notebook_set_simulation (GIMP_COLOR_NOTEBOOK (selection->priv->notebook),
+                                      profile,
+                                      intent,
+                                      bpc);
+
+  g_signal_emit (selection, selection_signals[COLOR_CHANGED], 0);
+}
+
+/**
  * gimp_color_selection_set_config:
  * @selection: A #GimpColorSelection widget.
  * @config:    A #GimpColorConfig object.

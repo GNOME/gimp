@@ -44,9 +44,10 @@ struct _ColorselCmyk
 {
   GimpColorSelector   parent_instance;
 
-  GimpColorConfig    *config;
-  GimpColorTransform *rgb2cmyk;
-  GimpColorTransform *cmyk2rgb;
+  GimpColorConfig          *config;
+  GimpColorProfile         *simulation_profile;
+  GimpColorRenderingIntent  simulation_intent;
+  gboolean                  simulation_bpc;
 
   GimpCMYK            cmyk;
   GtkWidget          *scales[4];
@@ -70,6 +71,10 @@ static void   colorsel_cmyk_set_color      (GimpColorSelector *selector,
                                             const GimpHSV     *hsv);
 static void   colorsel_cmyk_set_config     (GimpColorSelector *selector,
                                             GimpColorConfig   *config);
+static void   colorsel_cmyk_set_simulation (GimpColorSelector *selector,
+                                            GimpColorProfile  *profile,
+                                            GimpColorRenderingIntent intent,
+                                            gboolean           bpc);
 
 static void   colorsel_cmyk_scale_update   (GimpLabelSpin     *scale,
                                             ColorselCmyk      *module);
@@ -111,13 +116,14 @@ colorsel_cmyk_class_init (ColorselCmykClass *klass)
   GObjectClass           *object_class   = G_OBJECT_CLASS (klass);
   GimpColorSelectorClass *selector_class = GIMP_COLOR_SELECTOR_CLASS (klass);
 
-  object_class->dispose      = colorsel_cmyk_dispose;
+  object_class->dispose                  = colorsel_cmyk_dispose;
 
-  selector_class->name       = _("CMYK");
-  selector_class->help_id    = "gimp-colorselector-cmyk";
-  selector_class->icon_name  = GIMP_ICON_COLOR_SELECTOR_CMYK;
-  selector_class->set_color  = colorsel_cmyk_set_color;
-  selector_class->set_config = colorsel_cmyk_set_config;
+  selector_class->name                   = _("CMYK");
+  selector_class->help_id                = "gimp-colorselector-cmyk";
+  selector_class->icon_name              = GIMP_ICON_COLOR_SELECTOR_CMYK;
+  selector_class->set_color              = colorsel_cmyk_set_color;
+  selector_class->set_config             = colorsel_cmyk_set_config;
+  selector_class->set_simulation         = colorsel_cmyk_set_simulation;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "ColorselCmyk");
 }
@@ -152,9 +158,7 @@ colorsel_cmyk_init (ColorselCmyk *module)
     N_("Black")
   };
 
-  module->config   = NULL;
-  module->rgb2cmyk = NULL;
-  module->cmyk2rgb = NULL;
+  module->config = NULL;
 
   gtk_box_set_spacing (GTK_BOX (module), 6);
 
@@ -198,6 +202,7 @@ colorsel_cmyk_dispose (GObject *object)
   module->in_destruction = TRUE;
 
   colorsel_cmyk_set_config (GIMP_COLOR_SELECTOR (object), NULL);
+  g_clear_object (&module->simulation_profile);
 
   G_OBJECT_CLASS (colorsel_cmyk_parent_class)->dispose (object);
 }
@@ -207,40 +212,34 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                          const GimpRGB     *rgb,
                          const GimpHSV     *hsv)
 {
-  ColorselCmyk *module = COLORSEL_CMYK (selector);
-  gdouble       values[4];
-  gint          i;
+  GimpColorProfile        *cmyk_profile = NULL;
+  GimpColorRenderingIntent intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  const Babl              *fish         = NULL;
+  const Babl              *space        = NULL;
+  ColorselCmyk            *module       = COLORSEL_CMYK (selector);
+  gfloat                   values[4];
+  gint                     i;
 
-  if (module->rgb2cmyk)
+  /* Try Image Soft-proofing profile first, then default CMYK profile */
+  if (module->simulation_profile)
+    cmyk_profile = module->simulation_profile;
+
+  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+                                                             NULL);
+
+  if (cmyk_profile && gimp_color_profile_is_cmyk (cmyk_profile))
     {
-      gdouble rgb_values[3];
-      gdouble cmyk_values[4];
+      intent = module->simulation_intent;
 
-      rgb_values[0] = rgb->r;
-      rgb_values[1] = rgb->g;
-      rgb_values[2] = rgb->b;
-
-      gimp_color_transform_process_pixels (module->rgb2cmyk,
-                                           babl_format ("R'G'B' double"),
-                                           rgb_values,
-                                           babl_format ("CMYK double"),
-                                           cmyk_values,
-                                           1);
-
-      module->cmyk.c = cmyk_values[0] / 100.0;
-      module->cmyk.m = cmyk_values[1] / 100.0;
-      module->cmyk.y = cmyk_values[2] / 100.0;
-      module->cmyk.k = cmyk_values[3] / 100.0;
-    }
-  else
-    {
-      gimp_rgb_to_cmyk (rgb, 1.0, &module->cmyk);
+      space = gimp_color_profile_get_space (cmyk_profile, intent,
+                                            NULL);
     }
 
-  values[0] = module->cmyk.c * 100.0;
-  values[1] = module->cmyk.m * 100.0;
-  values[2] = module->cmyk.y * 100.0;
-  values[3] = module->cmyk.k * 100.0;
+  fish = babl_fish (babl_format ("R'G'B'A double"),
+                    babl_format_with_space ("CMYK float", space));
+
+  babl_process (fish, rgb, values, 1);
 
   for (i = 0; i < 4; i++)
     {
@@ -248,12 +247,16 @@ colorsel_cmyk_set_color (GimpColorSelector *selector,
                                        colorsel_cmyk_scale_update,
                                        module);
 
+      values[i] *= 100.0;
       gimp_label_spin_set_value (GIMP_LABEL_SPIN (module->scales[i]), values[i]);
 
       g_signal_handlers_unblock_by_func (module->scales[i],
                                          colorsel_cmyk_scale_update,
                                          module);
     }
+
+  if (cmyk_profile && ! module->simulation_profile)
+    g_object_unref (cmyk_profile);
 }
 
 static void
@@ -281,66 +284,90 @@ colorsel_cmyk_set_config (GimpColorSelector *selector,
 }
 
 static void
+colorsel_cmyk_set_simulation (GimpColorSelector *selector,
+                              GimpColorProfile  *profile,
+                              GimpColorRenderingIntent intent,
+                              gboolean           bpc)
+{
+  ColorselCmyk     *module = COLORSEL_CMYK (selector);
+  GimpColorProfile *cmyk_profile = NULL;
+  gchar            *text;
+
+  gtk_label_set_text (GTK_LABEL (module->name_label), _("Profile: (none)"));
+  gimp_help_set_help_data (module->name_label, NULL, NULL);
+
+  g_set_object (&module->simulation_profile, profile);
+
+  cmyk_profile = module->simulation_profile;
+
+  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+                                                             NULL);
+
+  if (cmyk_profile && gimp_color_profile_is_cmyk (cmyk_profile))
+    {
+      text = g_strdup_printf (_("Profile: %s"),
+                              gimp_color_profile_get_label (cmyk_profile));
+      gtk_label_set_text (GTK_LABEL (module->name_label), text);
+      g_free (text);
+
+      gimp_help_set_help_data (module->name_label,
+                              gimp_color_profile_get_summary (cmyk_profile),
+                              NULL);
+    }
+
+  module->simulation_intent = intent;
+  module->simulation_bpc    = bpc;
+
+  if (! module->in_destruction)
+    colorsel_cmyk_set_color (selector, &selector->rgb, &selector->hsv);
+}
+
+static void
 colorsel_cmyk_scale_update (GimpLabelSpin *scale,
                             ColorselCmyk  *module)
 {
-  GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
-  gint               i;
-  gdouble            value;
+  GimpColorProfile        *cmyk_profile = NULL;
+  GimpColorSelector       *selector     = GIMP_COLOR_SELECTOR (module);
+  GimpColorRenderingIntent intent       = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  const Babl              *fish         = NULL;
+  const Babl              *space        = NULL;
+  gfloat                   cmyk_values[4];
+  gfloat                   rgb_values[3];
+  gint                     i;
 
   for (i = 0; i < 4; i++)
-    if (GIMP_LABEL_SPIN (module->scales[i]) == scale)
-      break;
+    cmyk_values[i] = gimp_label_spin_get_value (GIMP_LABEL_SPIN (module->scales[i])) / 100.0;
 
-  value = gimp_label_spin_get_value (scale) / 100.0;
+  if (module->simulation_profile)
+    cmyk_profile = module->simulation_profile;
 
-  switch (i)
+  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+                                                             NULL);
+  if (cmyk_profile)
     {
-    case 0:
-      module->cmyk.c = value;
-      break;
-    case 1:
-      module->cmyk.m = value;
-      break;
-    case 2:
-      module->cmyk.y = value;
-      break;
-    case 3:
-      module->cmyk.k = value;
-      break;
-    default:
-      return;
+      intent = module->simulation_intent;
+
+      space = gimp_color_profile_get_space (cmyk_profile, intent,
+                                            NULL);
     }
 
-  if (module->cmyk2rgb)
-    {
-      gdouble cmyk_values[4];
-      gdouble rgb_values[3];
+  fish = babl_fish (babl_format_with_space ("CMYK float", space),
+                    babl_format ("R'G'B'A float"));
 
-      cmyk_values[0] = module->cmyk.c * 100.0;
-      cmyk_values[1] = module->cmyk.m * 100.0;
-      cmyk_values[2] = module->cmyk.y * 100.0;
-      cmyk_values[3] = module->cmyk.k * 100.0;
+  babl_process (fish, cmyk_values, rgb_values, 1);
 
-      gimp_color_transform_process_pixels (module->cmyk2rgb,
-                                           babl_format ("CMYK double"),
-                                           cmyk_values,
-                                           babl_format ("R'G'B' double"),
-                                           rgb_values,
-                                           1);
-
-      selector->rgb.r = rgb_values[0];
-      selector->rgb.g = rgb_values[1];
-      selector->rgb.b = rgb_values[2];
-    }
-  else
-    {
-      gimp_cmyk_to_rgb (&module->cmyk, &selector->rgb);
-    }
+  selector->rgb.r = rgb_values[0];
+  selector->rgb.g = rgb_values[1];
+  selector->rgb.b = rgb_values[2];
 
   gimp_rgb_to_hsv (&selector->rgb, &selector->hsv);
 
   gimp_color_selector_emit_color_changed (selector);
+
+  if (cmyk_profile && ! module->simulation_profile)
+    g_object_unref (cmyk_profile);
 }
 
 static void
@@ -348,22 +375,9 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 {
   GimpColorSelector       *selector     = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig         *config       = module->config;
-  GimpColorTransformFlags  flags        = 0;
   GimpColorProfile        *rgb_profile  = NULL;
   GimpColorProfile        *cmyk_profile = NULL;
   gchar                   *text;
-
-  if (module->rgb2cmyk)
-    {
-      g_object_unref (module->rgb2cmyk);
-      module->rgb2cmyk = NULL;
-    }
-
-  if (module->cmyk2rgb)
-    {
-      g_object_unref (module->cmyk2rgb);
-      module->cmyk2rgb = NULL;
-    }
 
   gtk_label_set_text (GTK_LABEL (module->name_label), _("Profile: (none)"));
   gimp_help_set_help_data (module->name_label, NULL, NULL);
@@ -371,7 +385,13 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (! config)
     goto out;
 
-  cmyk_profile = gimp_color_config_get_cmyk_color_profile (config, NULL);
+  if (module->simulation_profile)
+    cmyk_profile = module->simulation_profile;
+
+  if (! cmyk_profile && GIMP_IS_COLOR_CONFIG (module->config))
+    cmyk_profile = gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (module->config),
+                                                             NULL);
+
   if (! cmyk_profile)
     goto out;
 
@@ -386,28 +406,12 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
                            gimp_color_profile_get_summary (cmyk_profile),
                            NULL);
 
-  flags |= GIMP_COLOR_TRANSFORM_FLAGS_NOOPTIMIZE;
-  flags |= GIMP_COLOR_TRANSFORM_FLAGS_BLACK_POINT_COMPENSATION;
-
-  module->rgb2cmyk = gimp_color_transform_new (rgb_profile,
-                                               babl_format ("R'G'B' double"),
-                                               cmyk_profile,
-                                               babl_format ("CMYK double"),
-                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                               flags);
-  module->cmyk2rgb = gimp_color_transform_new (cmyk_profile,
-                                               babl_format ("CMYK double"),
-                                               rgb_profile,
-                                               babl_format ("R'G'B' double"),
-                                               GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
-                                               flags);
-
  out:
 
   if (rgb_profile)
     g_object_unref (rgb_profile);
 
-  if (cmyk_profile)
+  if (cmyk_profile && ! module->simulation_profile)
     g_object_unref (cmyk_profile);
 
   if (! module->in_destruction)

@@ -638,3 +638,31 @@ gimp_color_selector_set_config (GimpColorSelector *selector,
   if (selector_class->set_config)
     selector_class->set_config (selector, config);
 }
+
+/**
+ * gimp_color_selector_set_simulation
+ * @selector: a #GimpColorSelector widget.
+ * @profile:  a #GimpColorProfile object.
+ * @intent:   a #GimpColorRenderingIntent enum.
+ * @bpc:      a gboolean.
+ *
+ * Sets the simulation options to use with this color selector.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_selector_set_simulation (GimpColorSelector *selector,
+                                    GimpColorProfile  *profile,
+                                    GimpColorRenderingIntent intent,
+                                    gboolean           bpc)
+{
+  GimpColorSelectorClass *selector_class;
+
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+
+  if (selector_class->set_simulation)
+    selector_class->set_simulation (selector, profile, intent, bpc);
+}

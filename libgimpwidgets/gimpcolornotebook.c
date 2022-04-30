@@ -595,3 +595,34 @@ gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook)
 
   return notebook->priv->cur_page;
 }
+
+/**
+ * gimp_color_notebook_set_simulation:
+ * @notebook:  A #GimpColorNotebook widget.
+ * @profile:   A #GimpColorProfile object.
+ * @intent:    A #GimpColorRenderingIntent enum.
+ * @bpc:       A gboolean.
+ *
+ * Updates all selectors with the current simulation settings.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_notebook_set_simulation (GimpColorNotebook *notebook,
+                                    GimpColorProfile  *profile,
+                                    GimpColorRenderingIntent intent,
+                                    gboolean           bpc)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  for (list = notebook->priv->selectors; list; list = g_list_next (list))
+    {
+      GimpColorSelector *selector = list->data;
+
+      if (selector)
+        gimp_color_selector_set_simulation (selector, profile, intent, bpc);
+    }
+}

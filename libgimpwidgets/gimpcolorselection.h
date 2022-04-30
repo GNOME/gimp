@@ -89,6 +89,11 @@ void        gimp_color_selection_reset          (GimpColorSelection *selection);
 
 void        gimp_color_selection_color_changed  (GimpColorSelection *selection);
 
+void        gimp_color_selection_set_simulation (GimpColorSelection *selection,
+                                                 GimpColorProfile   *profile,
+                                                 GimpColorRenderingIntent intent,
+                                                 gboolean            bpc);
+
 void        gimp_color_selection_set_config     (GimpColorSelection *selection,
                                                  GimpColorConfig    *config);
 
