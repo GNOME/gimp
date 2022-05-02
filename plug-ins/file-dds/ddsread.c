@@ -214,6 +214,31 @@ read_dds (GFile          *file,
         hdr.pixelfmt.flags |= DDPF_ALPHAPIXELS;
     }
 
+  d.rshift = color_shift (hdr.pixelfmt.rmask);
+  d.gshift = color_shift (hdr.pixelfmt.gmask);
+  d.bshift = color_shift (hdr.pixelfmt.bmask);
+  d.ashift = color_shift (hdr.pixelfmt.amask);
+  d.rbits  = color_bits (hdr.pixelfmt.rmask);
+  d.gbits  = color_bits (hdr.pixelfmt.gmask);
+  d.bbits  = color_bits (hdr.pixelfmt.bmask);
+  d.abits  = color_bits (hdr.pixelfmt.amask);
+  if (d.rbits <= 8)
+    d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (8 - d.rbits);
+  else
+    d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (16 - d.rbits);
+  if (d.gbits <= 8)
+    d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (8 - d.gbits);
+  else
+    d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (16 - d.gbits);
+  if (d.bbits <= 8)
+    d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (8 - d.bbits);
+  else
+    d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (16 - d.bbits);
+  if (d.abits <= 8)
+    d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (8 - d.abits);
+  else
+    d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (16 - d.abits);
+
   d.gimp_bps = 1; /* Most formats will be converted to 1 byte per sample */
   if (hdr.pixelfmt.flags & DDPF_FOURCC)
     {
@@ -353,19 +378,6 @@ read_dds (GFile          *file,
 
   pixels = g_new (guchar, d.tile_height * hdr.width * d.gimp_bpp);
   buf = g_malloc (hdr.pitch_or_linsize);
-
-  d.rshift = color_shift (hdr.pixelfmt.rmask);
-  d.gshift = color_shift (hdr.pixelfmt.gmask);
-  d.bshift = color_shift (hdr.pixelfmt.bmask);
-  d.ashift = color_shift (hdr.pixelfmt.amask);
-  d.rbits  = color_bits (hdr.pixelfmt.rmask);
-  d.gbits  = color_bits (hdr.pixelfmt.gmask);
-  d.bbits  = color_bits (hdr.pixelfmt.bmask);
-  d.abits  = color_bits (hdr.pixelfmt.amask);
-  d.rmask  = (hdr.pixelfmt.rmask >> d.rshift) << (8 - d.rbits);
-  d.gmask  = (hdr.pixelfmt.gmask >> d.gshift) << (8 - d.gbits);
-  d.bmask  = (hdr.pixelfmt.bmask >> d.bshift) << (8 - d.bbits);
-  d.amask  = (hdr.pixelfmt.amask >> d.ashift) << (8 - d.abits);
 
   if (! (hdr.caps.caps2 & DDSCAPS2_CUBEMAP) &&
       ! (hdr.caps.caps2 & DDSCAPS2_VOLUME) &&
