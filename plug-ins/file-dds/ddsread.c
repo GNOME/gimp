@@ -1175,7 +1175,7 @@ load_layer (FILE             *fp,
                       if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS)
                         pixels[pos + 3] = (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
                     }
-                  else
+                  else if (d->rmask > 0 && d->gmask > 0 && d->bmask > 0)
                     {
                       pixels[pos] =
                         (pixel >> d->rshift << (8 - d->rbits) & d->rmask) * 255 / d->rmask;
@@ -1183,10 +1183,13 @@ load_layer (FILE             *fp,
                         (pixel >> d->gshift << (8 - d->gbits) & d->gmask) * 255 / d->gmask;
                       pixels[pos + 2] =
                         (pixel >> d->bshift << (8 - d->bbits) & d->bmask) * 255 / d->bmask;
-                      if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS)
+                      if (hdr->pixelfmt.flags & DDPF_ALPHAPIXELS && d->bpp == 4)
                         {
-                          pixels[pos + 3] =
-                            (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                          if (d->amask > 0)
+                            pixels[pos + 3] =
+                              (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
+                          else
+                            pixels[pos + 3] = 255;
                         }
                     }
                 }
