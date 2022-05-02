@@ -319,6 +319,19 @@ read_dds (GFile          *file,
               type = GIMP_RGB;
               d.gimp_bpp = 3;
             }
+          else if (d.bpp == 4)
+            {
+              type = GIMP_RGB;
+              if (d.rbits > 8 || d.gbits > 8 || d.bbits > 8 || d.abits > 8)
+                {
+                  d.gimp_bps = 2;
+                  d.gimp_bpp = 8;
+                }
+              else
+                {
+                  d.gimp_bpp = d.bpp;
+                }
+            }
           else
             {
               /* test alpha only image */
@@ -782,6 +795,7 @@ validate_header (dds_header_t  *hdr,
             case 16:
             case 24:
             case 32:
+            case 64:
               hdr->pixelfmt.flags |= DDPF_RGB;
               break;
             default:
@@ -1058,7 +1072,16 @@ load_layer (FILE             *fp,
         }
       break;
     case 3: type = GIMP_RGB_IMAGE;  bablfmt = babl_format ("R'G'B' u8");  break;
-    case 4: type = GIMP_RGBA_IMAGE; bablfmt = babl_format ("R'G'B'A u8"); break;
+    case 4:
+    case 8:
+      {
+        type = GIMP_RGBA_IMAGE;
+        if (d->gimp_bps == 1)
+          bablfmt = babl_format ("R'G'B'A u8");
+        else if (d->gimp_bps == 2)
+          bablfmt = babl_format ("R'G'B'A u16");
+      }
+      break;
     }
 
   layer_name = (level) ? g_strdup_printf ("mipmap %d %s", level, prefix) :
@@ -1190,6 +1213,46 @@ load_layer (FILE             *fp,
                               (pixel >> d->ashift << (8 - d->abits) & d->amask) * 255 / d->amask;
                           else
                             pixels[pos + 3] = 255;
+                        }
+                    }
+                  else if (d->bpp == 4)
+                    {
+                      if (d->gimp_bps == 2)
+                        {
+                          guint16 *pixels16 = (guint16 *) &pixels[pos];
+
+                          if (d->rbits == 16) /* red */
+                            {
+                              pixels16[0] = (guint16) (pixel >> d->rshift & d->rmask);
+                            }
+                          else
+                            {
+                              pixels16[0] = 0;
+                            }
+                          if (d->gbits == 16) /* green */
+                            {
+                              pixels16[1] = (guint16) (pixel >> d->gshift & d->gmask);
+                            }
+                          else
+                            {
+                              pixels16[1] = 0;
+                            }
+                          if (d->bbits == 16) /* blue */
+                            {
+                              pixels16[2] = (guint16) (pixel >> d->bshift & d->bmask);
+                            }
+                          else
+                            {
+                              pixels16[2] = 0;
+                            }
+                          if (d->abits == 16) /* alpha */
+                            {
+                              pixels16[3] = (guint16) (pixel >> d->ashift & d->amask);
+                            }
+                          else
+                            {
+                              pixels16[3] = 0xffff;
+                            }
                         }
                     }
                 }
