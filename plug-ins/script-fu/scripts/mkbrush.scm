@@ -49,7 +49,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-save 1 img drawable filename spacing name)
+    (file-gbr-save 1 img 1 (vector drawable) filename spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
@@ -119,7 +119,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-save 1 img drawable filename spacing name)
+    (file-gbr-save 1 img 1 (vector drawable) filename spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
@@ -175,7 +175,7 @@
 
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-save 1 img drawable filename spacing name)
+    (file-gbr-save 1 img 1 (vector drawable) filename spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)
@@ -244,7 +244,7 @@
     (gimp-context-set-background '(0 0 0))
     (gimp-drawable-edit-fill drawable FILL-BACKGROUND)
 
-    (file-gbr-save 1 img drawable filename spacing name)
+    (file-gbr-save 1 img 1 (vector drawable) filename spacing name)
     (gimp-image-delete img)
 
     (gimp-context-pop)

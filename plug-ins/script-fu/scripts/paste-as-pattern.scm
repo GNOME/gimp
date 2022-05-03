@@ -33,7 +33,9 @@
                              ".pat"))
 
         (file-pat-save RUN-NONINTERACTIVE
-                       pattern-image pattern-draw path
+                       pattern-image
+                       1 (vector pattern-draw)
+                       path
                        name)
 
         (gimp-image-delete pattern-image)

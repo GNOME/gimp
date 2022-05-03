@@ -267,7 +267,7 @@
                       (gimp-file-save
                         RUN-NONINTERACTIVE
                         sheet-img
-                        sheet-layer
+                        1 (vector sheet-layer)
                         (string-append dir DIR-SEPARATOR
                             "index" (number->string sheet-num) ".jpg")
                       )
@@ -292,7 +292,7 @@
             (gimp-file-save
               RUN-NONINTERACTIVE
               sheet-img
-              sheet-layer
+              1 (vector sheet-layer)
               (string-append dir DIR-SEPARATOR
                   "index" (number->string sheet-num) ".jpg")
             )

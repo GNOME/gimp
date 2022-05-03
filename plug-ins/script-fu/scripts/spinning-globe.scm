@@ -49,7 +49,8 @@
                                         (number->string (- inFrames n) 10)
                                         " (replace)"))
     (plug-in-map-object RUN-NONINTERACTIVE
-                        theImage theFrame    ; mapping
+                        theImage             ; mapping image
+                        1 (vector theFrame)  ; mapping drawables
                         1                    ; viewpoint
                         0.5 0.5 2.0          ; object pos
                         0.5 0.5 0.0          ; first axis
