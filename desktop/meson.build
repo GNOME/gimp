@@ -101,10 +101,10 @@ if desktop_validate.found()
   )
 endif
 
-if appstream_util.found()
+if appstreamcli.found()
   test('appdata_file',
-    appstream_util,
-    args: [ 'validate-relax', appdatafile ],
+    appstreamcli,
+    args: [ 'validate', appdatafile ],
     env: [
       'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
     ],
@@ -112,8 +112,8 @@ if appstream_util.found()
   )
 
   test('metainfo_file',
-    appstream_util,
-    args: [ 'validate-relax', metainfofile ],
+    appstreamcli,
+    args: [ 'validate', metainfofile ],
     env: [
       'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
     ],

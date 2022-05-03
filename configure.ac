@@ -2656,24 +2656,24 @@ if test "x$with_xvfb_run" != "xno"; then
 fi
 AM_CONDITIONAL(HAVE_XVFB_RUN, test "x$have_xvfb_run" = "xyes")
 
-##########################
-# Check for appstream-util
-##########################
+########################
+# Check for appstreamcli
+########################
 
 AC_ARG_WITH(appdata-test,  [  --without-appdata-test  do not validate the appdata file])
 
-have_appstream_util="no (disabled)"
+have_appstreamcli="no (disabled)"
 if test "x$with_appdata_test" != "xno"; then
-  AC_PATH_PROG(APPSTREAM_UTIL, appstream-util, no)
+  AC_PATH_PROG(APPSTREAM_UTIL, appstreamcli, no)
   if test "x$APPSTREAM_UTIL" != "xno"; then
-    have_appstream_util="yes"
+    have_appstreamcli="yes"
   else
-    have_appstream_util="no (appstream-util not found)"
+    have_appstreamcli="no (appstreamcli not found)"
   fi
 fi
-AM_CONDITIONAL(HAVE_APPSTREAM_UTIL, test "x$have_appstream_util" = "xyes")
-if test "x$have_appstream_util" = "xyes"; then
-  have_appstream_util="yes (this test requires network access; --without-appdata-test to disable)"
+AM_CONDITIONAL(HAVE_APPSTREAM_UTIL, test "x$have_appstreamcli" = "xyes")
+if test "x$have_appstreamcli" = "xyes"; then
+  have_appstreamcli="yes (this test requires network access; --without-appdata-test to disable)"
 fi
 
 
@@ -3321,7 +3321,7 @@ Optional Modules:
 
 Tests:
   Use xvfb-run               $have_xvfb_run
-  Test appdata               $have_appstream_util
+  Test appdata               $have_appstreamcli
   Test desktop file          $have_desktop_file_validate
 
 Documentation:

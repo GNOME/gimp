@@ -1020,7 +1020,7 @@ xsltproc            = find_program('xsltproc')
 intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate', required: false)
 
-appstream_util = find_program('appstream-util', required: get_option('appdata-test'))
+appstreamcli = find_program('appstreamcli', required: get_option('appdata-test'))
 
 # Check for doc generation tools
 
@@ -1863,7 +1863,7 @@ final_message = [
 '',
 '''Tests:''',
 '''  Use xvfb-run         @0@'''.format(xvfb_run.found()),
-'''  Test appdata         @0@'''.format(appstream_util.found()),
+'''  Test appdata         @0@'''.format(appstreamcli.found()),
 '',
 '''Documentation:''',
 '''  libgimp API Reference: @0@'''.format(gi_docgen.found()),
