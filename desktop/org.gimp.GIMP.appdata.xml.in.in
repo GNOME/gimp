@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="2.99.11" type="development">
+    <release version="2.99.12" date="2022-05-29" type="development">
       <description>
         <_p>
         One step further towards GIMP 3.0, GIMP 2.99.12 comes along with the following noteworthy improvements:
