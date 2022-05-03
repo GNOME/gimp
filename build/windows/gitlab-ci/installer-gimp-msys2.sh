@@ -41,6 +41,7 @@ add_bom ChineseTraditional.isl
 download_lang EnglishBritish.isl
 download_lang Esperanto.isl
 download_lang Galician.isl
+download_lang Georgian.isl
 download_lang Greek.isl
 download_lang Hungarian.isl
 download_lang Indonesian.isl

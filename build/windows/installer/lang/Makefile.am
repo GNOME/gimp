@@ -27,6 +27,7 @@ languages = \
 	is:[is]		\
 	it:[it]		\
 	ja:[ja]		\
+	ka:[ka]		\
 	kab:[kab]	\
 	ko:[ko]		\
 	lt:[lt]		\

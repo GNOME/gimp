@@ -42,6 +42,7 @@ languages = [
   { 'code': 'is',    },
   { 'code': 'it',    },
   { 'code': 'ja',    },
+  { 'code': 'ka',    },
   { 'code': 'kab',   },
   { 'code': 'ko',    },
   { 'code': 'lt',    },
