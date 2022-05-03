@@ -234,6 +234,35 @@ gimp_position_get_type (void)
 }
 
 GType
+gimp_drag_zoom_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { PROP_DRAG_ZOOM_MODE_DISTANCE, "PROP_DRAG_ZOOM_MODE_DISTANCE", "distance" },
+    { PROP_DRAG_ZOOM_MODE_DURATION, "PROP_DRAG_ZOOM_MODE_DURATION", "duration" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { PROP_DRAG_ZOOM_MODE_DISTANCE, NC_("drag-zoom-mode", "By distance"), NULL },
+    { PROP_DRAG_ZOOM_MODE_DURATION, NC_("drag-zoom-mode", "By duration"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpDragZoomMode", values);
+      gimp_type_set_translation_context (type, "drag-zoom-mode");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_space_bar_action_get_type (void)
 {
   static const GEnumValue values[] =
