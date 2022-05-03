@@ -7,7 +7,7 @@ desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
 appstream_in_files = \
 	org.gimp.GIMP.appdata.xml.in	\
-	gimp-data-extras.metainfo.xml.in
+	org.gimp.GIMP.data_extras.metainfo.xml.in
 
 appstream_files = $(appstream_in_files:.xml.in=.xml)
 

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2015 Jiri Eischmann <eischmann@redhat.com> -->
 <component type="addon">
-  <id>gimp-data-extras</id>
+  <id>org.gimp.GIMP.data_extras</id>
   <extends>org.gimp.GIMP</extends>
   <_name>Extra files for GIMP</_name>
   <_summary>Patterns, gradients, and other extra files for GIMP</_summary>

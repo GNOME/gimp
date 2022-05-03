@@ -71,7 +71,7 @@ appdatafile = custom_target(appdatafilename,
   install_dir: get_option('datadir') / 'metainfo',
 )
 
-metainfofilename = 'gimp-data-extras.metainfo.xml'
+metainfofilename = 'org.gimp.GIMP.data_extras.metainfo.xml'
 metainfofilein = configure_file(
   input : metainfofilename+'.in.in',
   output: metainfofilename+'.in',
@@ -90,7 +90,7 @@ metainfofile = custom_target(metainfofilename,
     '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
   ],
   install: true,
-  install_dir: get_option('datadir') / 'appdata',
+  install_dir: get_option('datadir') / 'metainfo',
 )
 
 if desktop_validate.found()

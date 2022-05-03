@@ -3212,7 +3212,7 @@ data/tool-presets/Paint/Makefile
 data/tool-presets/Selection/Makefile
 data/tool-presets/Sketch/Makefile
 desktop/Makefile
-desktop/gimp-data-extras.metainfo.xml.in
+desktop/org.gimp.GIMP.data_extras.metainfo.xml.in
 desktop/gimp.desktop.in
 desktop/org.gimp.GIMP.appdata.xml.in
 desktop/test-appdata.sh
