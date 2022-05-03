@@ -31,6 +31,7 @@
 
 #include "file-tiff-io.h"
 
+static gboolean tiff_file_size_error = FALSE;
 
 typedef struct
 {
@@ -107,7 +108,11 @@ tiff_open (GFile        *file,
 
       tiff_io.stream = G_OBJECT (tiff_io.input);
     }
+#ifdef TIFF_VERSION_BIG
+  else if(! strcmp (mode, "w") || ! strcmp (mode, "w8"))
+#else
   else if(! strcmp (mode, "w"))
+#endif
     {
       tiff_io.output = G_OUTPUT_STREAM (g_file_replace (file,
                                                         NULL, FALSE,
@@ -148,6 +153,18 @@ tiff_open (GFile        *file,
                          tiff_io_close,
                          tiff_io_get_file_size,
                          NULL, NULL);
+}
+
+gboolean
+tiff_got_file_size_error (void)
+{
+  return tiff_file_size_error;
+}
+
+void
+tiff_reset_file_size_error (void)
+{
+  tiff_file_size_error = FALSE;
 }
 
 static void
@@ -246,6 +263,25 @@ tiff_io_error (const gchar *module,
    */
   if (! strcmp (fmt, "Compression algorithm does not support random access"))
     return;
+
+#ifdef TIFF_VERSION_BIG
+  if (g_strcmp0 (fmt, "Maximum TIFF file size exceeded") == 0)
+    {
+      /* @module in my tests were "TIFFAppendToStrip" but I wonder if
+       * this same error could not happen with other "modules".
+       */
+      tiff_file_size_error = TRUE;
+    }
+  else
+    {
+      gchar *msg = g_strdup_vprintf (fmt, ap);
+
+      /* Easier for debugging to at least print messages on stderr; */
+      g_printerr ("LibTiff error: [%s] %s\n", module, msg);
+      g_free (msg);
+    }
+
+#endif
 
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }

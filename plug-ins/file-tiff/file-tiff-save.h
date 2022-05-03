@@ -36,6 +36,7 @@ typedef struct
   gboolean  save_profile;
   gboolean  save_layers;
   gboolean  crop_layers;
+  gboolean  bigtiff;
 } TiffSaveVals;
 
 
@@ -55,7 +56,9 @@ gboolean  save_dialog (TiffSaveVals *tsvals,
                        gboolean      has_alpha,
                        gboolean      is_monochrome,
                        gboolean      is_indexed,
-                       gchar       **image_comment);
+                       gchar       **image_comment,
+                       GError      **error,
+                       gboolean      classic_tiff_failed);
 
 
 #endif /* __FILE_TIFF_SAVE_H__ */

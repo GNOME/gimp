@@ -737,9 +737,10 @@ save_layer (TIFF         *tif,
               break;
             }
 
-          if (!success)
+          if (! success)
             {
-              g_message (_("Failed a scanline write on row %d"), row);
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Failed a scanline write on row %d"), row);
               goto out;
             }
         }
@@ -956,7 +957,11 @@ save_image (GFile                  *file,
                              gimp_file_get_utf8_name (file));
 
   /* Open file and write some global data */
+#ifdef TIFF_VERSION_BIG
+  tif = tiff_open (file, (tsvals->bigtiff ? "w8" : "w"), error);
+#else
   tif = tiff_open (file, "w", error);
+#endif
 
   if (! tif)
     {
@@ -1117,14 +1122,16 @@ save_dialog (TiffSaveVals  *tsvals,
              gboolean       has_alpha,
              gboolean       is_monochrome,
              gboolean       is_indexed,
-             gchar        **image_comment)
+             gchar        **image_comment,
+             GError       **error,
+             gboolean       classic_tiff_failed)
 {
-  GError      *error = NULL;
   GtkWidget   *dialog;
   GtkWidget   *vbox;
   GtkWidget   *frame;
   GtkWidget   *entry;
   GtkWidget   *toggle;
+  GtkWidget   *label;
   GtkWidget   *cmp_g3;
   GtkWidget   *cmp_g4;
   GtkWidget   *cmp_jpeg;
@@ -1153,12 +1160,12 @@ save_dialog (TiffSaveVals  *tsvals,
   ui_file = g_build_filename (gimp_data_directory (),
                               "ui", "plug-ins", "plug-in-file-tiff.ui",
                               NULL);
-  if (! gtk_builder_add_from_file (builder, ui_file, &error))
+  if (! gtk_builder_add_from_file (builder, ui_file, error))
     {
       gchar *display_name = g_filename_display_name (ui_file);
 
       g_printerr (_("Error loading UI file '%s': %s"),
-                  display_name, error ? error->message : _("Unknown error"));
+                  display_name, error ? (*error)->message : _("Unknown error"));
 
       g_free (display_name);
     }
@@ -1172,6 +1179,22 @@ save_dialog (TiffSaveVals  *tsvals,
   gtk_widget_show (vbox);
 
   vbox = GTK_WIDGET (gtk_builder_get_object (builder, "radio_button_box"));
+
+  label = GTK_WIDGET (gtk_builder_get_object (builder, "bigtiff-warning"));
+#ifdef TIFF_VERSION_BIG
+  if (classic_tiff_failed)
+    {
+      gtk_label_set_markup (GTK_LABEL (label),
+                            _("<i>Warning: maximum TIFF file size exceeded.\n Retry as BigTIFF or cancel.</i>"));
+      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
+      gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
+      gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
+    }
+#endif
+  if (! classic_tiff_failed)
+    {
+      gtk_widget_hide (label);
+    }
 
   frame = gimp_int_radio_group_new (TRUE, _("Compression"),
                                     G_CALLBACK (gimp_radio_button_update),
@@ -1268,6 +1291,17 @@ save_dialog (TiffSaveVals  *tsvals,
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
                     &tsvals->save_profile);
+#else
+  gtk_widget_hide (toggle);
+#endif
+
+  toggle = GTK_WIDGET (gtk_builder_get_object (builder, "bigtiff"));
+#ifdef TIFF_VERSION_BIG
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
+                                tsvals->bigtiff);
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &tsvals->bigtiff);
 #else
   gtk_widget_hide (toggle);
 #endif
