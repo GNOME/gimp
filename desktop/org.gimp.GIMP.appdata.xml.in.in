@@ -63,7 +63,6 @@
     <kudo>ModernToolkit</kudo>
     <kudo>UserDocs</kudo>
   </kudos>
-  <project_group>GNOME</project_group>
   <translation type="gettext">gimp20</translation>
 
   <launchable type="desktop-id">gimp.desktop</launchable>
