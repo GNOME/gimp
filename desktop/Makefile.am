@@ -6,8 +6,7 @@ desktop_in_files = \
 desktop_files = $(desktop_in_files:.desktop.in.in=.desktop)
 
 appstream_in_files = \
-	org.gimp.GIMP.appdata.xml.in	\
-	org.gimp.GIMP.data_extras.metainfo.xml.in
+	org.gimp.GIMP.appdata.xml.in
 
 appstream_files = $(appstream_in_files:.xml.in=.xml)
 
@@ -87,7 +86,7 @@ TESTS_ENVIRONMENT = \
 	GIMP_TESTING_ABS_TOP_BUILDDIR=@abs_top_builddir@
 TESTS =
 
-if HAVE_APPSTREAM_UTIL
+if HAVE_APPSTREAMCLI
 TESTS += test-appdata.sh
 endif
 

@@ -71,28 +71,6 @@ appdatafile = custom_target(appdatafilename,
   install_dir: get_option('datadir') / 'metainfo',
 )
 
-metainfofilename = 'org.gimp.GIMP.data_extras.metainfo.xml'
-metainfofilein = configure_file(
-  input : metainfofilename+'.in.in',
-  output: metainfofilename+'.in',
-  configuration: desktop_conf,
-)
-metainfofile = custom_target(metainfofilename,
-  input : [ metainfofilein, ],
-  output: [ metainfofilename, ],
-  command: [
-    intltool_merge,
-    po_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-    '--xml-style',
-    '--utf8',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-  ],
-  install: true,
-  install_dir: get_option('datadir') / 'metainfo',
-)
-
 if desktop_validate.found()
   test('validate-desktop',
     desktop_validate,
@@ -105,15 +83,6 @@ if appstreamcli.found()
   test('appdata_file',
     appstreamcli,
     args: [ 'validate', appdatafile ],
-    env: [
-      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
-    ],
-    suite: 'desktop',
-  )
-
-  test('metainfo_file',
-    appstreamcli,
-    args: [ 'validate', metainfofile ],
     env: [
       'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
     ],

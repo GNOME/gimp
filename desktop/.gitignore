@@ -4,7 +4,5 @@
 /org.gimp.GIMP.appdata.xml
 /gimp.desktop.in
 /gimp.desktop
-/org.gimp.GIMP.data_extras.metainfo.xml.in
-/org.gimp.GIMP.data_extras.metainfo.xml
 /test-appdata.sh
 /.thumbnails

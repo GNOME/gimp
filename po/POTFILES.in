@@ -4,7 +4,6 @@
 [encoding: UTF-8]
 
 desktop/org.gimp.GIMP.appdata.xml.in.in
-desktop/org.gimp.GIMP.data_extras.metainfo.xml.in.in
 desktop/gimp.desktop.in.in
 
 app/about.h

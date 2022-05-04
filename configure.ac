@@ -2671,7 +2671,7 @@ if test "x$with_appdata_test" != "xno"; then
     have_appstreamcli="no (appstreamcli not found)"
   fi
 fi
-AM_CONDITIONAL(HAVE_APPSTREAM_UTIL, test "x$have_appstreamcli" = "xyes")
+AM_CONDITIONAL(HAVE_APPSTREAMCLI, test "x$have_appstreamcli" = "xyes")
 if test "x$have_appstreamcli" = "xyes"; then
   have_appstreamcli="yes (this test requires network access; --without-appdata-test to disable)"
 fi
@@ -3212,7 +3212,6 @@ data/tool-presets/Paint/Makefile
 data/tool-presets/Selection/Makefile
 data/tool-presets/Sketch/Makefile
 desktop/Makefile
-desktop/org.gimp.GIMP.data_extras.metainfo.xml.in
 desktop/gimp.desktop.in
 desktop/org.gimp.GIMP.appdata.xml.in
 desktop/test-appdata.sh
