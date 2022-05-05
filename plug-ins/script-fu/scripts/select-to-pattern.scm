@@ -69,10 +69,15 @@
 
   (gimp-image-insert-layer pattern-image pattern-draw 0 0)
 
-  (gimp-edit-copy drawable)
+  (gimp-edit-copy 1 (vector drawable))
 
-  (let ((floating-sel (car (gimp-edit-paste pattern-draw FALSE))))
-    (gimp-floating-sel-anchor floating-sel))
+  (let* (
+           (pasted (gimp-edit-paste pattern-draw FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+    (gimp-floating-sel-anchor floating-sel)
+  )
 
   (set! filename2 (string-append gimp-directory
                                  "/patterns/"
