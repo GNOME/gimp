@@ -12,18 +12,18 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP Script-Fu 2.8\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 09:49+0300\n"
-"PO-Revision-Date: 2018-12-04 01:32+0300\n"
-"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
-"Language-Team: русский <gnome-cyr@lists.gnome.org>\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2022-04-17 18:49+0000\n"
+"PO-Revision-Date: 2022-02-21 22:24+0300\n"
+"Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
+"Language-Team: Basealt Translation Team <official159ru@mail.ru>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 3.31.0\n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/script-fu/script-fu.c:111
 msgid "Interactive console for Script-Fu development"
@@ -75,7 +75,7 @@ msgstr "Темы _веб-страниц"
 
 #: ../plug-ins/script-fu/script-fu.c:324
 msgid "_Alien Glow"
-msgstr "_Чужое свечение..."
+msgstr "_Чужое свечение"
 
 #: ../plug-ins/script-fu/script-fu.c:326
 msgid "_Beveled Pattern"
@@ -141,8 +141,8 @@ msgid "Save Script-Fu Console Output"
 msgstr "Сохранить вывод консоли Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:292
-#: ../plug-ins/script-fu/script-fu-interface.c:236
-#: ../plug-ins/script-fu/script-fu-server.c:836
+#: ../plug-ins/script-fu/script-fu-interface.c:238
+#: ../plug-ins/script-fu/script-fu-server.c:839
 msgid "_Cancel"
 msgstr "О_тмена"
 
@@ -153,7 +153,7 @@ msgstr "Не удалось открыть '%s' для записи: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:366
 msgid "Script-Fu Procedure Browser"
-msgstr "Просмотр процедур Скрипт-Фу"
+msgstr "Просмотр процедур Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:370
 msgid "_Apply"
@@ -163,69 +163,69 @@ msgstr "_Применить"
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Режим оценки в Script-Fu допускает только неинтерактивный вызов"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:200
+#: ../plug-ins/script-fu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu не может выполнять два сценария одновременно."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:202
+#: ../plug-ins/script-fu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Вы уже запустили сценарий \"%s\"."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:228
+#: ../plug-ins/script-fu/script-fu-interface.c:230
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:235
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 msgid "_Reset"
 msgstr "С_бросить"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:239
 msgid "_OK"
 msgstr "_ОК"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: ../plug-ins/script-fu/script-fu-interface.c:291
+#: ../plug-ins/script-fu/script-fu-interface.c:293
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:341
+#: ../plug-ins/script-fu/script-fu-interface.c:343
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu: Выбор цвета"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu: Выбор файла"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:460
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu: Выбор каталога"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu: Выбор шрифта"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:481
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu: Выбор выбор палитры"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:490
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu: Выбор текстуры"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:499
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu: Выбор градиента"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:508
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu: Выбор кисти"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:877
+#: ../plug-ins/script-fu/script-fu-interface.c:880
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Ошибка при исполнении %s:"
@@ -239,27 +239,27 @@ msgstr "Недостаточно аргументов для вызова 'scrip
 msgid "Error while loading %s:"
 msgstr "Ошибка при загрузке %s:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:832
+#: ../plug-ins/script-fu/script-fu-server.c:835
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu: параметры сервера"
 
-#: ../plug-ins/script-fu/script-fu-server.c:837
+#: ../plug-ins/script-fu/script-fu-server.c:840
 msgid "_Start Server"
 msgstr "_Запустить сервер"
 
-#: ../plug-ins/script-fu/script-fu-server.c:870
+#: ../plug-ins/script-fu/script-fu-server.c:873
 msgid "Listen on IP:"
 msgstr "Слушать на IP-адресе:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:877
+#: ../plug-ins/script-fu/script-fu-server.c:880
 msgid "Server port:"
 msgstr "Порт сервера:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:883
+#: ../plug-ins/script-fu/script-fu-server.c:886
 msgid "Server logfile:"
 msgstr "Журнал сервера:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:896
+#: ../plug-ins/script-fu/script-fu-server.c:899
 msgid ""
 "Listening on an IP address other than 127.0.0.1 (especially 0.0.0.0) can "
 "allow attackers to remotely execute arbitrary code on this machine."
@@ -287,7 +287,7 @@ msgstr "Толщина"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm:198
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:163
 #: ../plug-ins/script-fu/scripts/old-photo.scm:104
-#: ../plug-ins/script-fu/scripts/round-corners.scm:143
+#: ../plug-ins/script-fu/scripts/round-corners.scm:145
 #: ../plug-ins/script-fu/scripts/slide.scm:257
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm:106
 msgid "Work on copy"
@@ -351,11 +351,11 @@ msgstr "Переходные кадры"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:237
 msgid "Max. blur radius"
-msgstr "Макс. радиус размывания"
+msgstr "Макс. радиус размытия"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm:238
 msgid "Looped"
-msgstr "Циклическое"
+msgstr "Цикличное"
 
 #. --- false form of "if-1"
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:217
@@ -388,7 +388,7 @@ msgstr "Угасание"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:234
 msgid "Fadeout width"
-msgstr "Размер кромки угасания"
+msgstr "Ширина затухания"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm:235
 msgid "Corona width"
@@ -568,11 +568,11 @@ msgstr "Сделать область или альфа-канал похожи�
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:60
 msgid "Blur X"
-msgstr "Размывание по X"
+msgstr "Размытие по X"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:61
 msgid "Blur Y"
-msgstr "Размывание по Y"
+msgstr "Размытие по Y"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm:62
 msgid "Azimuth"
@@ -600,16 +600,15 @@ msgstr "Заляпать изображение реалистичными ко�
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:90
 msgid "Stains"
-msgstr "Число пятен:"
+msgstr "Пятна"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm:91
 msgid "Darken only"
 msgstr "Наложить пятна в режиме «Только темное»"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:70
-#, fuzzy
 msgid "_Difference Clouds..."
-msgstr "Разностные облака..."
+msgstr "_Облака с наложением..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm:71
 msgid "Solid noise applied with Difference layer mode"
@@ -624,34 +623,28 @@ msgid "Distress the selection"
 msgstr "Сгладить выделение"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:113
-#, fuzzy
 msgid "_Threshold (bigger 1<-->254 smaller)"
-msgstr "Порог (больше 1, но меньше 254)"
+msgstr "_Порог (Чем меньше значение, тем он выше)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:114
-#, fuzzy
 msgid "_Spread"
-msgstr "Распространение"
+msgstr "_Распространение"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:115
-#, fuzzy
 msgid "_Granularity (1 is low)"
-msgstr "Зернистость (1 - низкая)"
+msgstr "_Детализация (1 - низкая)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:116
-#, fuzzy
 msgid "S_mooth"
-msgstr "Сгладить"
+msgstr "С_гладить"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:117
-#, fuzzy
 msgid "Smooth hor_izontally"
-msgstr "Сгладить горизонтально"
+msgstr "Сгладить по _горизонтали"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm:118
-#, fuzzy
 msgid "Smooth _vertically"
-msgstr "Сгладить вертикально"
+msgstr "Сгладить по _вертикали"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:170
 msgid "_Drop Shadow (legacy)..."
@@ -671,9 +664,9 @@ msgstr "Смещение по Y"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:180
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:209
-#: ../plug-ins/script-fu/scripts/round-corners.scm:141
+#: ../plug-ins/script-fu/scripts/round-corners.scm:143
 msgid "Blur radius"
-msgstr "Радиус размывания"
+msgstr "Радиус размытия"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm:181
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:157
@@ -692,49 +685,63 @@ msgstr "Непрозрачность"
 msgid "Allow resizing"
 msgstr "Позволить изменение размера"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:41
-msgid "_Erase Every Other Row..."
-msgstr "_Очистить каждую вторую строку..."
-
 #: ../plug-ins/script-fu/scripts/erase-rows.scm:42
-msgid "Erase every other row or column"
-msgstr "Очистить каждую вторую строку или столбец"
+msgid "_Erase Every Nth Row..."
+msgstr "_Очистить каждую N-ую строку..."
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:43
+msgid "Erase every nth row or column"
+msgstr "Очистить каждую N-ую строку или столбец"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows/cols"
 msgstr "Строки/столбцы"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Rows"
 msgstr "Строки"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:49
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:65
 msgid "Columns"
 msgstr "Столбцы"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even/odd"
-msgstr "Чётные/Нечётные"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Even"
-msgstr "Четные"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:50
-msgid "Odd"
-msgstr "Нечётные"
-
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase/fill"
 msgstr "Очистить/Заполнить"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Erase"
 msgstr "Очистить"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm:51
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:52
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:67
 msgid "Fill with BG"
 msgstr "Заполнить цветом фона"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:57
+msgid "_Erase Every Other Row..."
+msgstr "_Очистить каждую вторую строку..."
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:58
+msgid "Erase every other row or column"
+msgstr "Очистить каждую вторую строку или столбец"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even/odd"
+msgstr "Чётные/Нечётные"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Even"
+msgstr "Четные"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm:66
+msgid "Odd"
+msgstr "Нечётные"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm:152
 msgid "Render _Font Map..."
@@ -802,7 +809,7 @@ msgstr "Размывать рамку"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:160
 msgid "Granularity (1 is Low)"
-msgstr "Зернистость (1 - низкая)"
+msgstr "Детализация (1 - низкая)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm:161
 msgid "Add shadow"
@@ -833,7 +840,7 @@ msgstr "Ссылка на руководство пользователя"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:72
 msgid "_Preparing your Images for the Web"
-msgstr "По_дготовка _изображений к публикации в Интернете"
+msgstr "По_дготовка изображений к публикации в Интернете"
 
 #: ../plug-ins/script-fu/scripts/gimp-online.scm:85
 msgid "_Working with Digital Camera Photos"
@@ -953,7 +960,7 @@ msgstr "Создать из _выделения"
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm:33
 msgid "Create four guides around the bounding box of the current selection"
-msgstr "Создать четыре направляющие вокруг площадки (BB) текущего выделения"
+msgstr "Создать четыре направляющие вокруг текущего выделения"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:27
 msgid "New Guide (by _Percent)..."
@@ -967,9 +974,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
-#, fuzzy
 msgid "_Direction"
-msgstr "Ориентация"
+msgstr "_Ориентация"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:35
 #: ../plug-ins/script-fu/scripts/guides-new.scm:35
@@ -982,9 +988,8 @@ msgid "Vertical"
 msgstr "Вертикаль"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm:37
-#, fuzzy
 msgid "_Position (in %)"
-msgstr "Расположение (в %)"
+msgstr "_Расположение (в %)"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:27
 msgid "New _Guide..."
@@ -995,9 +1000,8 @@ msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr "Добавить направляющую к положению, заданному в пикселах"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm:36
-#, fuzzy
 msgid "_Position"
-msgstr "Положение"
+msgstr "_Расположение"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm:19
 msgid "_Remove all Guides"
@@ -1096,7 +1100,7 @@ msgstr "Создать прямоугольную кисть с растушёв
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:142
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:267
 msgid "Feathering"
-msgstr "Размывание"
+msgstr "Растушёвка"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm:189
 msgid "_Elliptical..."
@@ -1146,9 +1150,8 @@ msgid ""
 "The name of the file to create (if a file with this name already exist, it "
 "will be replaced)"
 msgstr ""
-"Имя создаваемого файла\n"
-"(если файл с этим именем\n"
-"уже существует, он будет заменён)"
+"Имя создаваемого файла (если файл с этим именем уже существует, он будет "
+"заменён)"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:235
 msgid "The filename you entered is not a suitable name for a file."
@@ -1167,7 +1170,7 @@ msgid ""
 "Export the active palette as a CSS stylesheet with the color entry name as "
 "their class name, and the color itself as the color attribute"
 msgstr ""
-"Экспортировать активную палитру как таблицу стилей CSS с именем цветовой "
+"Экспортировать активную палитру, как таблицу стилей CSS, с именем цветовой "
 "записи в качестве имени класса и самим цветом в качестве атрибута цвета"
 
 #: ../plug-ins/script-fu/scripts/palette-export.scm:291
@@ -1205,23 +1208,20 @@ msgstr "Вставить содержимое буфера в новую кис�
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:68
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:141
-#, fuzzy
 msgid "_Brush name"
-msgstr "Название кисти"
+msgstr "_Название кисти"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:69
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:57
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:142
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:102
-#, fuzzy
 msgid "_File name"
-msgstr "Имя файла"
+msgstr "_Имя файла"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm:70
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:143
-#, fuzzy
 msgid "_Spacing"
-msgstr "Интервал"
+msgstr "_Интервал"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:50
 msgid "New _Pattern..."
@@ -1233,9 +1233,8 @@ msgstr "Вставить содержимое буфера обмена в но�
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm:56
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm:101
-#, fuzzy
 msgid "_Pattern name"
-msgstr "Имя текстуры"
+msgstr "_Имя текстуры"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm:198
 msgid "_Perspective..."
@@ -1282,9 +1281,8 @@ msgid "Pixel amount"
 msgstr "Количество точек растра"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:42
-#, fuzzy
 msgid "Reverse Layer _Order"
-msgstr "Обратный порядок слоёв"
+msgstr "Обратный порядок _слоёв"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm:43
 msgid "Reverse the order of layers in the image"
@@ -1324,38 +1322,38 @@ msgstr "Размывать"
 msgid "Black"
 msgstr "Заполнять чёрным"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:129
+#: ../plug-ins/script-fu/scripts/round-corners.scm:131
 msgid "_Round Corners..."
 msgstr "С_круглённые углы..."
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:130
+#: ../plug-ins/script-fu/scripts/round-corners.scm:132
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "Скруглить углы и, по желанию, добавить отбрасываемые тени и фон"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:137
+#: ../plug-ins/script-fu/scripts/round-corners.scm:139
 msgid "Edge radius"
 msgstr "Радиус края"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:138
+#: ../plug-ins/script-fu/scripts/round-corners.scm:140
 msgid "Add drop-shadow"
 msgstr "Добавить падающую тень"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:139
+#: ../plug-ins/script-fu/scripts/round-corners.scm:141
 msgid "Shadow X offset"
 msgstr "Смещение тени по X"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:140
+#: ../plug-ins/script-fu/scripts/round-corners.scm:142
 msgid "Shadow Y offset"
 msgstr "Смещение тени по Y"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm:142
+#: ../plug-ins/script-fu/scripts/round-corners.scm:144
 msgid "Add background"
 msgstr "Добавить фон"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:53
 msgid "Se_t Colormap..."
-msgstr "_Изменить цветовую карту"
+msgstr "Уст_ановить цветовую карту..."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm:54
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -1374,14 +1372,12 @@ msgid "Round the corners of the current selection"
 msgstr "Закруглить углы активного выделения"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:147
-#, fuzzy
 msgid "R_adius (%)"
-msgstr "Радиус (%)"
+msgstr "Р_адиус (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm:148
-#, fuzzy
 msgid "Co_ncave"
-msgstr "Вогнутое"
+msgstr "Во_гнутое"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm:133
 msgid "To _Brush..."
@@ -1461,11 +1457,11 @@ msgstr "Визуализация спирографа"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:314
 msgid "_Spyrogimp (older script-fu version)..."
-msgstr ""
+msgstr "_Спирограф (старая версия script-fu)..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:315
 msgid "This procedure is deprecated! Use 'plug-in-spyrogimp' instead."
-msgstr ""
+msgstr "Эта версия устарела! Вместо этого используйте «Спирограф»."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm:323
 msgid "Type"
@@ -1582,7 +1578,7 @@ msgstr "_Сфера..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:68
 msgid "_Tileable Blur..."
-msgstr "_Бесшовное размывание..."
+msgstr "_Размытие Бесшовное..."
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:69
 msgid "Blur the edges of an image so the result tiles seamlessly"
@@ -1602,7 +1598,7 @@ msgstr "Размыть по горизонтали"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "Blur type"
-msgstr "Тип размывания"
+msgstr "Тип размытия"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm:79
 msgid "IIR"
@@ -1724,7 +1720,7 @@ msgstr "Непрозрачность падающей тени"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:135
 msgid "Drop shadow blur radius"
-msgstr "Радиус размывания падающей тени"
+msgstr "Радиус размытия падающей тени"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:136
 msgid "Drop shadow X offset"
@@ -1733,874 +1729,3 @@ msgstr "Смещение падающей тени по X"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Смещение падающей тени по Y"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "Спиро_граф..."
-
-#~ msgid ""
-#~ "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-#~ msgstr "Рисование спирографов, эпитрохоид и кривых Лиссажу в активном слое"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "_Реестр расширений"
-
-#~ msgid "3D _Outline..."
-#~ msgstr "О_бъемный контур..."
-
-#~ msgid "Bumpmap (alpha layer) blur radius"
-#~ msgstr "Радиус размывания рельефа (Альфа-слой)"
-
-#~ msgid "Create a logo with outlined text and a drop shadow"
-#~ msgstr "Создать логотип с обведённым текстом и отбрасываемой тенью"
-
-#~ msgid "Default bumpmap settings"
-#~ msgstr "Исходные настройки рельефа"
-
-#~ msgid "Font size (pixels)"
-#~ msgstr "Кегль шрифта (точек)"
-
-#~ msgid "Outline blur radius"
-#~ msgstr "Радиус размывания контура"
-
-#~ msgid ""
-#~ "Outline the selected region (or alpha) with a pattern and add a drop "
-#~ "shadow"
-#~ msgstr ""
-#~ "Очертить выделенную область (или альфа-канал) с текстурой и добавить "
-#~ "отбрасываемую тень"
-
-#~ msgid "Pattern"
-#~ msgstr "Текстура"
-
-#~ msgid "Shadow blur radius"
-#~ msgstr "Радиус размывания тени"
-
-#~ msgid "3_D Truchet..."
-#~ msgstr "3_D Трюше..."
-
-#~ msgid "Background color"
-#~ msgstr "Цвет фона"
-
-#~ msgid "Block size"
-#~ msgstr "Размер блока"
-
-#~ msgid "Create an image filled with a 3D Truchet pattern"
-#~ msgstr "Создать изображение, заполненное 3D-плиткой Трюше"
-
-#~ msgid "End blend"
-#~ msgstr "Конечный цвет градиента"
-
-#~ msgid "Number of X tiles"
-#~ msgstr "Число разрезов по X"
-
-#~ msgid "Number of Y tiles"
-#~ msgstr "Число разрезов по Y"
-
-#~ msgid "Start blend"
-#~ msgstr "Начальный цвет градиента"
-
-#~ msgid "Supersample"
-#~ msgstr "Улучшенный вариант"
-
-#~ msgid "Alien Glow"
-#~ msgstr "Свечение как в «Чужих»"
-
-#~ msgid "Arrow"
-#~ msgstr "Стрелка"
-
-#~ msgid "Create an arrow graphic with an eerie glow for web pages"
-#~ msgstr "Создать стрелку со зловещим свечением для веб-страницы"
-
-#~ msgid "Down"
-#~ msgstr "Вниз"
-
-#~ msgid "Left"
-#~ msgstr "Влево"
-
-#~ msgid "Orientation"
-#~ msgstr "Ориентация"
-
-#~ msgid "Right"
-#~ msgstr "Вправо"
-
-#~ msgid "Up"
-#~ msgstr "Верх"
-
-#~ msgid "_Arrow..."
-#~ msgstr "Стрелка..."
-
-#~ msgid "Bar height"
-#~ msgstr "Высота линейки"
-
-#~ msgid "Bar length"
-#~ msgstr "Длина линейки"
-
-#~ msgid "Create an Hrule graphic with an eerie glow for web pages"
-#~ msgstr "Создать горизонтальную линию со зловещим свечением для веб-страницы"
-
-#~ msgid "_Hrule..."
-#~ msgstr "Линейка..."
-
-#~ msgid "Bullet"
-#~ msgstr "Маркер"
-
-#~ msgid "Create a bullet graphic with an eerie glow for web pages"
-#~ msgstr "Создать буллит со зловещим свечением для веб-страниц"
-
-#~ msgid "_Bullet..."
-#~ msgstr "_Маркер..."
-
-#~ msgid "B_utton..."
-#~ msgstr "_Кнопка..."
-
-#~ msgid "Button"
-#~ msgstr "Кнопка"
-
-#~ msgid "Create a button graphic with an eerie glow for web pages"
-#~ msgstr "Создать кнопку со зловещим свечением для веб-страниц"
-
-#~ msgid "Glow"
-#~ msgstr "Свечение"
-
-#~ msgid "Glow radius"
-#~ msgstr "Радиус свечения"
-
-#~ msgid "Padding"
-#~ msgstr "Заполнение"
-
-#~ msgid "Text color"
-#~ msgstr "Цвет текста"
-
-#~ msgid "Add an eerie glow around the selected region (or alpha)"
-#~ msgstr "Добавить жуткое свечение вокруг выделения"
-
-#~ msgid "Alien _Glow..."
-#~ msgstr "_Чужое свечение..."
-
-#~ msgid "Create a logo with an alien glow around the text"
-#~ msgstr "Создать изображение со свечением чужих вокруг текста"
-
-#~ msgid "Glow size (pixels * 4)"
-#~ msgstr "Размер свечения (точек * 4)"
-
-#~ msgid "Add psychedelic outlines to the selected region (or alpha)"
-#~ msgstr "Добавить выделению психоделические контуры"
-
-#~ msgid "Alien _Neon..."
-#~ msgstr "Чужой _неон..."
-
-#~ msgid "Create a logo with psychedelic outlines around the text"
-#~ msgstr "Создать логотип с психоделической обводкой текста"
-
-#~ msgid "Fade away"
-#~ msgstr "Угасание"
-
-#~ msgid "Number of bands"
-#~ msgstr "Число обводов"
-
-#~ msgid "Width of bands"
-#~ msgstr "Ширина обводов"
-
-#~ msgid "Width of gaps"
-#~ msgstr "Ширина зазора"
-
-#~ msgid ""
-#~ "Add a gradient effect, a drop shadow, and a background to the selected "
-#~ "region (or alpha)"
-#~ msgstr ""
-#~ "Добавить эффект градиента, отбрасываемую тень и фон к выделенной области "
-#~ "(или альфа-каналу)"
-
-#~ msgid ""
-#~ "Create a plain text logo with a gradient effect, a drop shadow, and a "
-#~ "background"
-#~ msgstr ""
-#~ "Создать логотип, состоящий из текста, градиентной заливки, отбрасываемой "
-#~ "тени и фона"
-
-#~ msgid "_Basic I..."
-#~ msgstr "_Основной I..."
-
-#~ msgid "Add a shadow and a highlight to the selected region (or alpha)"
-#~ msgstr "Добавить тень и подсветку к выделенной области (или альфа-каналу)"
-
-#~ msgid "B_asic II..."
-#~ msgstr "О_сновной II..."
-
-#~ msgid "Create a simple logo with a shadow and a highlight"
-#~ msgstr "Создать простой логотип с тенью и подсветкой"
-
-#~ msgid "Bevel width"
-#~ msgstr "Ширина скоса"
-
-#~ msgid "Create a simple, beveled button graphic for webpages"
-#~ msgstr "Создать простую рельефную кнопку для веб-страниц"
-
-#~ msgid "Lower-right color"
-#~ msgstr "Нижний-правый цвет"
-
-#~ msgid "Pressed"
-#~ msgstr "Нажатая"
-
-#~ msgid "Simple _Beveled Button..."
-#~ msgstr "Простая выпуклая кнопка..."
-
-#~ msgid "Upper-left color"
-#~ msgstr "Верхний-левый цвет"
-
-#~ msgid "Create a beveled pattern arrow for webpages"
-#~ msgstr "Создать рельефную текстурную стрелку для веб-страниц"
-
-#~ msgid "Create a beveled pattern bullet for webpages"
-#~ msgstr "Создать рельефный текстурный буллит для веб-страниц"
-
-#~ msgid "Diameter"
-#~ msgstr "Диаметр"
-
-#~ msgid "Create a beveled pattern button for webpages"
-#~ msgstr "Создать рельефную текстурную кнопку для веб-страниц"
-
-#~ msgid "Create a beveled pattern heading for webpages"
-#~ msgstr "Создать рельефный текстурный заголовок для веб-страниц"
-
-#~ msgid "H_eading..."
-#~ msgstr "_Заголовок..."
-
-#~ msgid "Create a beveled pattern hrule for webpages"
-#~ msgstr "Создать рельефную горизонтальную линию для веб-страниц"
-
-#~ msgid ""
-#~ "Add blended backgrounds, highlights, and shadows to the selected region "
-#~ "(or alpha)"
-#~ msgstr ""
-#~ "Добавить смешанный фон, подсветку и тени к выделенной области (или альфа-"
-#~ "каналу)"
-
-#~ msgid "Blen_ded..."
-#~ msgstr "Г_радиентный..."
-
-#~ msgid "Blend mode"
-#~ msgstr "Режим смешивания"
-
-#~ msgid "Create a logo with blended backgrounds, highlights, and shadows"
-#~ msgstr "Создать логотип с сочетанием фона, подсветки и теней"
-
-#~ msgid "Custom Gradient"
-#~ msgstr "Другой градиент"
-
-#~ msgid "FG-BG-HSV"
-#~ msgstr "П.план-Фон-HSV"
-
-#~ msgid "FG-BG-RGB"
-#~ msgstr "П.план-Фон-RGB"
-
-#~ msgid "FG-Transparent"
-#~ msgstr "П.план-Прозрачное"
-
-#~ msgid "Offset (pixels)"
-#~ msgstr "Смещение (точек)"
-
-#~ msgid "Add 'cow spots' to the selected region (or alpha)"
-#~ msgstr "Добавить коровьи пятна к выделенной области (или альфа-каналу)"
-
-#~ msgid "Background Color"
-#~ msgstr "Цвет фона"
-
-#~ msgid "Bo_vination..."
-#~ msgstr "_Пятнистая корова..."
-
-#~ msgid "Create a logo with text in the style of 'cow spots'"
-#~ msgstr "Создать логотип с текстом в стиле пятен на шкуре коровы"
-
-#~ msgid "Spots density X"
-#~ msgstr "Плотность пятен по X"
-
-#~ msgid "Spots density Y"
-#~ msgstr "Плотность пятен по Y"
-
-#~ msgid "Color 1"
-#~ msgstr "Цвет 1"
-
-#~ msgid "Color 2"
-#~ msgstr "Цвет 2"
-
-#~ msgid "Color 3"
-#~ msgstr "Цвет 3"
-
-#~ msgid "Create an image filled with a camouflage pattern"
-#~ msgstr "Создать изображение, заполненное камуфляжной текстурой"
-
-#~ msgid "Granularity"
-#~ msgstr "Крупность разбиения"
-
-#~ msgid "Image size"
-#~ msgstr "Размер изображения"
-
-#~ msgid "_Camouflage..."
-#~ msgstr "_Камуфляж..."
-
-#~ msgid "Background Image"
-#~ msgstr "Фоновое изображение"
-
-#~ msgid "Carve raised text"
-#~ msgstr "Вырезать поднятый текст"
-
-#~ msgid "Carved..."
-#~ msgstr "Выгравированный текст…"
-
-#~ msgid ""
-#~ "Create a logo with text raised above or carved in to the specified "
-#~ "background image"
-#~ msgstr ""
-#~ "Создать логотип с текстом, приподнятым либо выгравированным в указанном "
-#~ "фоновом изображении"
-
-#~ msgid "Padding around text"
-#~ msgstr "Заполнение вокруг текста"
-
-#~ msgid "Chalk color"
-#~ msgstr "Цвет мелка"
-
-#~ msgid "Create a chalk drawing effect for the selected region (or alpha)"
-#~ msgstr ""
-#~ "Создать эффект рисунка мелками в указанной области (или альфа-канале)"
-
-#~ msgid "Create a logo resembling chalk scribbled on a blackboard"
-#~ msgstr "Создать логотип, стилизованный под рисунок мелом на доске"
-
-#~ msgid "_Chalk..."
-#~ msgstr "_Мел..."
-
-#~ msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Создать эффект резьбы по дереву для выделенной области (или альфа-канала)"
-
-#~ msgid "Blur amount"
-#~ msgstr "Округлость рельефа"
-
-#~ msgid "Chip Awa_y..."
-#~ msgstr "Р_езной..."
-
-#~ msgid "Chip amount"
-#~ msgstr "Зернистость"
-
-#~ msgid "Create a logo resembling a chipped wood carving"
-#~ msgstr "Создать логотип, стилизованный под резьбу по дереву"
-
-#~ msgid "Drop shadow"
-#~ msgstr "Падающая тень"
-
-#~ msgid "Fill BG with pattern"
-#~ msgstr "Залить фон текстурой"
-
-#~ msgid "Invert"
-#~ msgstr "Инвертировать"
-
-#~ msgid "Keep background"
-#~ msgstr "Сохранить фон"
-
-#~ msgid "Add a simple chrome effect to the selected region (or alpha)"
-#~ msgstr "«Хромировать» выделенную область или альфа-канал"
-
-#~ msgid "Create a simplistic, but cool, chromed logo"
-#~ msgstr "Создать простой, но эффектно выглядящий хромированный логотип"
-
-#~ msgid "Offsets (pixels * 2)"
-#~ msgstr "Смещения (точек * 2)"
-
-#~ msgid ""
-#~ "Add a comic-book effect to the selected region (or alpha) by outlining "
-#~ "and filling with a gradient"
-#~ msgstr ""
-#~ "Создать эффект комикса для выделенной области, очерчивая её и заполняя "
-#~ "градиентом"
-
-#~ msgid "Comic Boo_k..."
-#~ msgstr "_Комикс..."
-
-#~ msgid ""
-#~ "Create a comic-book style logo by outlining and filling with a gradient"
-#~ msgstr ""
-#~ "Создать логотип в стиле комиксов, очерченный и заполненный градиентом"
-
-#~ msgid "Outline color"
-#~ msgstr "Цвет контура"
-
-#~ msgid "Outline size"
-#~ msgstr "Размер контура"
-
-#~ msgid ""
-#~ "Add a metallic effect to the selected region (or alpha) with reflections "
-#~ "and perspective shadows"
-#~ msgstr ""
-#~ "Добавить эффект блестящего металла к выделенной области с отражениями и "
-#~ "тенями в перспективе"
-
-#~ msgid "Cool _Metal..."
-#~ msgstr "Прох_ладный металл..."
-
-#~ msgid "Create a metallic logo with reflections and perspective shadows"
-#~ msgstr ""
-#~ "Создать логотип, стилизованный под металл, с отражениями и тенями в "
-#~ "перспективе"
-
-#~ msgid "Effect size (pixels)"
-#~ msgstr "Размер эффекта (точек)"
-
-#~ msgid "Background image"
-#~ msgstr "Фоновое изображение"
-
-#~ msgid ""
-#~ "Create a logo with a crystal/gel effect displacing the image underneath"
-#~ msgstr "Создать логотип с эффектом хрусталя/геля поверх изображения"
-
-#~ msgid "Crystal..."
-#~ msgstr "Кристалл..."
-
-#~ msgid "Create an image filled with a Land Pattern"
-#~ msgstr "Создать изображение, заполненное текстурой земли"
-
-#~ msgid "Detail level"
-#~ msgstr "Уровень детализации"
-
-#~ msgid "Image height"
-#~ msgstr "Высота изображения"
-
-#~ msgid "Image width"
-#~ msgstr "Ширина изображения"
-
-#~ msgid "Random seed"
-#~ msgstr "Случайное зерно"
-
-#~ msgid "Scale X"
-#~ msgstr "Масштаб X"
-
-#~ msgid "Scale Y"
-#~ msgstr "Масштаб Y"
-
-#~ msgid "_Flatland..."
-#~ msgstr "_Карта высот..."
-
-#~ msgid ""
-#~ "Add a frost effect to the selected region (or alpha) with an added drop "
-#~ "shadow"
-#~ msgstr ""
-#~ "Добавить эффект заморозки к выделенной области (или альфа-каналу) и "
-#~ "отбросить тень"
-
-#~ msgid "Create frozen logo with an added drop shadow"
-#~ msgstr "Создать замороженный логотип, отбрасывающий тень"
-
-#~ msgid "_Frosty..."
-#~ msgstr "_Лед..."
-
-#~ msgid ""
-#~ "Add gradients, patterns, shadows, and bump maps to the selected region "
-#~ "(or alpha)"
-#~ msgstr ""
-#~ "Добавить градиенты, текстуры, тени и рельефы к выделенной области (или "
-#~ "альфа-каналу)"
-
-#~ msgid "Blend gradient (outline)"
-#~ msgstr "Градиент (Контур)"
-
-#~ msgid "Blend gradient (text)"
-#~ msgstr "Градиент (текст)"
-
-#~ msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-#~ msgstr "Создать логотип с градиентами, текстурами, тенями и рельефами"
-
-#~ msgid "Glo_ssy..."
-#~ msgstr "Гл_янцевый..."
-
-#~ msgid "Outline gradient reverse"
-#~ msgstr "Перевернуть градиент контура"
-
-#~ msgid "Pattern (outline)"
-#~ msgstr "Текстура (контур)"
-
-#~ msgid "Pattern (overlay)"
-#~ msgstr "Текстура (наложение)"
-
-#~ msgid "Pattern (text)"
-#~ msgstr "Текстура (текст)"
-
-#~ msgid "Text gradient reverse"
-#~ msgstr "Перевернуть градиент текста"
-
-#~ msgid "Use pattern for outline instead of gradient"
-#~ msgstr "Использовать для контура текстуру вместо градиента"
-
-#~ msgid "Use pattern for text instead of gradient"
-#~ msgstr "Использовать для текста текстуру вместо градиента"
-
-#~ msgid "Use pattern overlay"
-#~ msgstr "Использовать наложение текстур"
-
-#~ msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Добавить эффект переливающегося расплавленного метала к выделению (или "
-#~ "альфа-каналу)"
-
-#~ msgid "Create a logo that looks like glowing hot metal"
-#~ msgstr "Создать логотип, выглядящий как переливающийся расплавленный метал"
-
-#~ msgid "Glo_wing Hot..."
-#~ msgstr "_Горячее свечение..."
-
-#~ msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Добавить сверкания и скосить углы в выделенной области (или альфа-канале)"
-
-#~ msgid "Bevel height (sharpness)"
-#~ msgstr "Высота скоса (резкость)"
-
-#~ msgid "Border size (pixels)"
-#~ msgstr "Размер рамки (точек)"
-
-#~ msgid "Create a logo with a shiny look and beveled edges"
-#~ msgstr "Создать блестящий логотип с фаской"
-
-#~ msgid "Gradient Beve_l..."
-#~ msgstr "Гр_адиентный с фаской..."
-
-#~ msgid "Create a logo in a two-color, scribbled text style"
-#~ msgstr "Создать двухцветный логотип, похожий на небрежный текст"
-
-#~ msgid "Frame color"
-#~ msgstr "Цвет обрамления"
-
-#~ msgid "Frame size"
-#~ msgstr "Размер обрамления"
-
-#~ msgid "Imigre-_26..."
-#~ msgstr "Imigre-_26..."
-
-#~ msgid "Create an image filled with a topographic map pattern"
-#~ msgstr "Создать изображение, заполненное текстурой топографической карты"
-
-#~ msgid "Land height"
-#~ msgstr "Высота земли"
-
-#~ msgid "Sea depth"
-#~ msgstr "Морская глубина"
-
-#~ msgid "_Land..."
-#~ msgstr "_Земля..."
-
-#~ msgid "Convert the selected region (or alpha) into a neon-sign like object"
-#~ msgstr ""
-#~ "Преобразовать выделенную область (или альфа-канал) в неоновую рекламу"
-
-#~ msgid "Create a logo in the style of a neon sign"
-#~ msgstr "Создать логотип в стиле неоновой рекламы"
-
-#~ msgid "Create shadow"
-#~ msgstr "Создать тень"
-
-#~ msgid "N_eon..."
-#~ msgstr "_Неон..."
-
-#~ msgid "Cell size (pixels)"
-#~ msgstr "Размер ячейки (точек)"
-
-#~ msgid "Create a logo in the style of newspaper printing"
-#~ msgstr "Создать логотип в стиле газетного текста"
-
-#~ msgid "Density (%)"
-#~ msgstr "Плотность (%)"
-
-#~ msgid "Newsprint Te_xt..."
-#~ msgstr "_Газетный текст..."
-
-#~ msgid "Create images, each containing an oval button graphic"
-#~ msgstr "Создать изображения, каждое из которых содержит овальную кнопку"
-
-#~ msgid "Lower color"
-#~ msgstr "Нижний цвет"
-
-#~ msgid "Lower color (active)"
-#~ msgstr "Нижний цвет (активный)"
-
-#~ msgid "Not pressed"
-#~ msgstr "Не нажатая"
-
-#~ msgid "Not pressed (active)"
-#~ msgstr "Не нажата (активная)"
-
-#~ msgid "Padding X"
-#~ msgstr "Заполнение X"
-
-#~ msgid "Padding Y"
-#~ msgstr "Заполнение Y"
-
-#~ msgid "Round ratio"
-#~ msgstr "Отношение радиусов"
-
-#~ msgid "Text color (active)"
-#~ msgstr "Цвет текста (активный)"
-
-#~ msgid "Upper color"
-#~ msgstr "Верхний цвет"
-
-#~ msgid "Upper color (active)"
-#~ msgstr "Верхний цвет (активный)"
-
-#~ msgid "_Round Button..."
-#~ msgstr "Круглая кнопка..."
-
-#~ msgid "Behavior"
-#~ msgstr "Поведение"
-
-#~ msgid "Create an image filled with an Earth-like map pattern"
-#~ msgstr "Создать изображение, заполненное текстурой в виде карты Земли"
-
-#~ msgid "Detail in Middle"
-#~ msgstr "Мелкие острова посередине"
-
-#~ msgid "Render _Map..."
-#~ msgstr "_Визуализация карты..."
-
-#~ msgid "Tile"
-#~ msgstr "Плитка"
-
-#~ msgid "Create a State Of The Art chromed logo"
-#~ msgstr "Создать современный хромированный логотип"
-
-#~ msgid "SOTA Chrome..."
-#~ msgstr "SOTA хром..."
-
-#~ msgid "Create a logo with a speedy text effect"
-#~ msgstr "Создать логотип с эффектом скоростного текста"
-
-#~ msgid "Speed Text..."
-#~ msgstr "_Скоростной текст..."
-
-#~ msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-#~ msgstr "Создать логотип, используя камни, отблески звёзд и тени"
-
-#~ msgid "Sta_rscape..."
-#~ msgstr "Звездный _фон..."
-
-#~ msgid "Create an image filled with a swirled tile effect"
-#~ msgstr "Создать изображение, заполненное размноженными вихрями"
-
-#~ msgid "Swirl-_Tile..."
-#~ msgstr "_Размноженные вихри..."
-
-#~ msgid "Whirl amount"
-#~ msgstr "Количество вихрей"
-
-#~ msgid "Create an image filled with a swirly pattern"
-#~ msgstr "Создать изображение, заполненное вихрями"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Число повторов для вихря"
-
-#~ msgid "Quarter size"
-#~ msgstr "Размер четверти"
-
-#~ msgid "Whirl angle"
-#~ msgstr "Угол вихря"
-
-#~ msgid "_Swirly..."
-#~ msgstr "_Вихрь..."
-
-#~ msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-#~ msgstr ""
-#~ "Добавить эффект разлетающихся частичек к выделенной области (или альфа-"
-#~ "каналу)"
-
-#~ msgid "Base color"
-#~ msgstr "Основной цвет"
-
-#~ msgid "Create a logo using a Trace Of Particles effect"
-#~ msgstr "Создать логотип, используя эффект разлетающихся частичек"
-
-#~ msgid "Edge only"
-#~ msgstr "Только край"
-
-#~ msgid "Edge width"
-#~ msgstr "Ширина края"
-
-#~ msgid "Hit rate"
-#~ msgstr "Скорость попаданий"
-
-#~ msgid "_Particle Trace..."
-#~ msgstr "След _частицы..."
-
-#~ msgid "Antialias"
-#~ msgstr "Сглаживание"
-
-#~ msgid ""
-#~ "Create a logo by rendering the specified text along the perimeter of a "
-#~ "circle"
-#~ msgstr "Создать логотип, расположив текст по кругу"
-
-#~ msgid "Fill angle"
-#~ msgstr "Заполнить угол"
-
-#~ msgid "Text C_ircle..."
-#~ msgstr "Текст по _кругу..."
-
-#~ msgid ""
-#~ "Create a textured logo with highlights, shadows, and a mosaic background"
-#~ msgstr "Создать текстурный логотип с подсветкой, тенями и мозаичным фоном"
-
-#~ msgid "Ending blend"
-#~ msgstr "Конечный цвет"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a texture and add highlights, "
-#~ "shadows, and a mosaic background"
-#~ msgstr ""
-#~ "Заполнить выделение (или альфа-канал) текстурой и добавить подсветку, "
-#~ "тени и мозаику на заднем фоне"
-
-#~ msgid "Hexagons"
-#~ msgstr "Шестиугольники"
-
-#~ msgid "Mosaic tile type"
-#~ msgstr "Тип мозаики"
-
-#~ msgid "Octagons"
-#~ msgstr "Восьмиугольники"
-
-#~ msgid "Squares"
-#~ msgstr "Квадраты"
-
-#~ msgid "Starting blend"
-#~ msgstr "Начальный цвет"
-
-#~ msgid "Text pattern"
-#~ msgstr "Текстура текста"
-
-#~ msgid "_Textured..."
-#~ msgstr "_Текстуризованный..."
-
-#~ msgid "Create a decorative web title header"
-#~ msgstr "Создать декоративный заголовок для веб-страницы"
-
-#~ msgid "Web Title Header..."
-#~ msgstr "_Заголовок веб-страницы..."
-
-#~ msgid "Create an image filled with a Truchet pattern"
-#~ msgstr "Создать изображение, заполненное плиткой Трюше"
-
-#~ msgid "Foreground color"
-#~ msgstr "Цвет переднего плана"
-
-#~ msgid "T_ruchet..."
-#~ msgstr "_Трюше..."
-
-#~ msgid "<Palettes>/Export as"
-#~ msgstr "<Palettes>/Экспортировать как"
-
-#~ msgid "Autocrop"
-#~ msgstr "Автокадрирование"
-
-#~ msgid "Create an image of a large header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Создать изображение большого заголовка, используя тему сайта gimp.org"
-
-#~ msgid "Create an image of a small header using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Создать изображение для маленького заголовка, используя тему сайта gimp."
-#~ "org"
-
-#~ msgid "Dark color"
-#~ msgstr "Темный цвет"
-
-#~ msgid "Index image"
-#~ msgstr "Индексировать изображение"
-
-#~ msgid "Number of colors"
-#~ msgstr "Число цветов"
-
-#~ msgid "Remove background"
-#~ msgstr "Удалить фон"
-
-#~ msgid "Select-by-color threshold"
-#~ msgstr "Порог выбора по цвету"
-
-#~ msgid "Shadow color"
-#~ msgstr "Цвет тени"
-
-#~ msgid "_Big Header..."
-#~ msgstr "_Большой заголовок..."
-
-#~ msgid "_Small Header..."
-#~ msgstr "_Маленький заголовок..."
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label Header using the gimp.org webpage "
-#~ "theme"
-#~ msgstr "Создать изображение заголовка используя тему сайта gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a Tube Button Label using the gimp.org webpage theme"
-#~ msgstr ""
-#~ "Создать изображение отметки первого уровня используя тему сайта gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a second level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Создать изображение отметки второго уровня используя тему сайта gimp.org"
-
-#~ msgid ""
-#~ "Create an image of a third level Tube Button Label using the gimp.org "
-#~ "webpage theme"
-#~ msgstr ""
-#~ "Создать изображение отметки третьего уровня используя тему сайта gimp.org"
-
-#~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "Метки доп. кнопок трубы..."
-
-#~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "Дважды вложенные метки..."
-
-#~ msgid "_General Tube Labels..."
-#~ msgstr "Метки главной трубы..."
-
-#~ msgid "_Tube Button Label..."
-#~ msgstr "Метки кнопок трубы..."
-
-#, fuzzy
-#~ msgid "Matte"
-#~ msgstr "Крап"
-
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Размер эффекта (точек * 3)"
-
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Размер эффекта (точек * 5)"
-
-#~ msgid "Burst color"
-#~ msgstr "Цвет вспышки"
-
-#~ msgid "Create a logo using a starburst gradient"
-#~ msgstr "Создать логотип, используя градиент звёздной вспышки"
-
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Размер эффекта (точек * 30)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a starburst gradient and add a "
-#~ "shadow"
-#~ msgstr ""
-#~ "Заполнить выделенную область (или альфа-канал) звёздными вспышками и "
-#~ "добавить тень"
-
-#~ msgid "Starb_urst..."
-#~ msgstr "З_вездная вспышка..."
-
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Размер эффекта (точек * 4)"
-
-#~ msgid ""
-#~ "Fill the selected region (or alpha) with a rock-like texture, a nova "
-#~ "glow, and shadow"
-#~ msgstr ""
-#~ "Заполнить выделенную область (или альфа-канал) камнями, отблесками звёзд "
-#~ "и тенями"
