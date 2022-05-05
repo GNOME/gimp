@@ -1020,7 +1020,7 @@ xsltproc            = find_program('xsltproc')
 intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate', required: false)
 
-appstreamcli = find_program('appstreamcli', required: get_option('appdata-test'))
+appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_option('appdata-test'))
 
 # Check for doc generation tools
 
