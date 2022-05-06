@@ -25,10 +25,14 @@
         )
 
     (define (pasteat xoff yoff)
-      (let ((theFloat (car(gimp-edit-paste theLayer 0))))
-        (gimp-layer-set-offsets theFloat (* xoff theWidth) (* yoff theHeight) )
-        (gimp-floating-sel-anchor theFloat)
-       )
+      (let* (
+             (pasted (gimp-edit-paste theLayer FALSE))
+             (num-pasted (car pasted))
+             (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+            )
+        (gimp-layer-set-offsets floating-sel (* xoff theWidth) (* yoff theHeight) )
+        (gimp-floating-sel-anchor floating-sel)
+      )
     )
 
     (gimp-context-push)
@@ -38,7 +42,7 @@
     (gimp-layer-resize theLayer (* 3 theWidth) (* 3 theHeight) 0 0)
 
     (gimp-image-select-rectangle theImage CHANNEL-OP-REPLACE 0 0 theWidth theHeight)
-    (gimp-edit-cut theLayer)
+    (gimp-edit-cut 1 (vector theLayer))
 
     (gimp-selection-none theImage)
     (gimp-layer-set-offsets theLayer theWidth theHeight)

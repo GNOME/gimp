@@ -54,7 +54,7 @@
         )
     )
 
-    (gimp-edit-copy drawable)
+    (gimp-edit-copy 1 (vector drawable))
 
     (set! new-image (car (gimp-image-new selection-width
                                          selection-height image-type)))
@@ -64,7 +64,11 @@
     (gimp-image-insert-layer new-image new-draw 0 0)
     (gimp-drawable-fill new-draw FILL-BACKGROUND)
 
-    (let ((floating-sel (car (gimp-edit-paste new-draw FALSE))))
+    (let* (
+           (pasted (gimp-edit-paste new-draw FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
       (gimp-floating-sel-anchor floating-sel)
     )
 

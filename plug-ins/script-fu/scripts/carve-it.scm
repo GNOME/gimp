@@ -25,9 +25,15 @@
   (gimp-drawable-edit-clear dest-drawable)
   (gimp-selection-none dest-image)
   (gimp-selection-all source-image)
-  (gimp-edit-copy source-drawable)
-      (let ((floating-sel (car (gimp-edit-paste dest-drawable FALSE))))
-        (gimp-floating-sel-anchor floating-sel)))
+  (gimp-edit-copy 1 (vector source-drawable))
+  (let* (
+         (pasted (gimp-edit-paste dest-drawable FALSE))
+         (num-pasted (car pasted))
+         (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+        )
+        (gimp-floating-sel-anchor floating-sel)
+  )
+)
 
 
 
@@ -48,7 +54,6 @@
         (feather (carve-scale size 0.3))
         (brush-size (carve-scale size 0.3))
         (brush-name (car (gimp-brush-new "Carve It")))
-        (mask-fs 0)
         (mask (car (gimp-channel-new img width height "Engraving Mask" 50 '(0 0 0))))
         (inset-gamma (calculate-inset-gamma (car (gimp-item-get-image bg-layer)) bg-layer))
         (mask-fat 0)
@@ -80,12 +85,17 @@
     (gimp-selection-none img)
     (copy-layer-carve-it img layer1 bg-image bg-layer)
 
-    (gimp-edit-copy mask-drawable)
+    (gimp-edit-copy 1 (vector mask-drawable))
     (gimp-image-insert-channel img mask -1 0)
 
-    (plug-in-tile RUN-NONINTERACTIVE img layer1 width height FALSE)
-    (set! mask-fs (car (gimp-edit-paste mask FALSE)))
-    (gimp-floating-sel-anchor mask-fs)
+    (plug-in-tile RUN-NONINTERACTIVE img 1 (vector layer1) width height FALSE)
+    (let* (
+           (pasted (gimp-edit-paste mask FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+          (gimp-floating-sel-anchor floating-sel)
+    )
     (if (= carve-white FALSE)
         (gimp-drawable-invert mask FALSE))
 
@@ -133,21 +143,40 @@
 			  1.0
 			  0.0 1.0 TRUE)
 
-    (gimp-edit-copy mask-shadow)
-    (set! shadow-layer (car (gimp-edit-paste layer1 FALSE)))
-    (gimp-floating-sel-to-layer shadow-layer)
+    (gimp-edit-copy 1 (vector mask-shadow))
+    (let* (
+           (pasted (gimp-edit-paste layer1 FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+          (set! shadow-layer floating-sel)
+          (gimp-floating-sel-to-layer shadow-layer)
+    )
     (gimp-layer-set-mode shadow-layer LAYER-MODE-MULTIPLY)
 
-    (gimp-edit-copy mask-highlight)
-    (set! highlight-layer (car (gimp-edit-paste shadow-layer FALSE)))
-    (gimp-floating-sel-to-layer highlight-layer)
+    (gimp-edit-copy 1 (vector mask-highlight))
+    (let* (
+           (pasted (gimp-edit-paste shadow-layer FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+          (set! highlight-layer floating-sel)
+          (gimp-floating-sel-to-layer highlight-layer)
+    )
     (gimp-layer-set-mode highlight-layer LAYER-MODE-SCREEN)
 
-    (gimp-edit-copy mask)
-    (set! cast-shadow-layer (car (gimp-edit-paste highlight-layer FALSE)))
-    (gimp-floating-sel-to-layer cast-shadow-layer)
+    (gimp-edit-copy 1 (vector mask))
+    (let* (
+           (pasted (gimp-edit-paste highlight-layer FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+          (set! cast-shadow-layer floating-sel)
+          (gimp-floating-sel-to-layer cast-shadow-layer)
+    )
     (gimp-layer-set-mode cast-shadow-layer LAYER-MODE-MULTIPLY)
     (gimp-layer-set-opacity cast-shadow-layer 75)
+
     (plug-in-gauss-rle RUN-NONINTERACTIVE img cast-shadow-layer feather TRUE TRUE)
     (gimp-item-transform-translate cast-shadow-layer offx offy)
 

@@ -85,10 +85,16 @@
           (gimp-drawable-edit-clear effect-layer)
 
           (gimp-image-select-item image CHANNEL-OP-REPLACE active-selection)
-          (gimp-edit-copy drawable)
-          (let ((floating-sel (car (gimp-edit-paste effect-layer FALSE))))
+          (gimp-edit-copy 1 (vector drawable))
+
+          (let* (
+                 (pasted (gimp-edit-paste effect-layer FALSE))
+                 (num-pasted (car pasted))
+                 (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+                 )
             (gimp-floating-sel-anchor floating-sel)
           )
+
           (gimp-image-set-active-layer image effect-layer)
         )
         (set! effect-layer drawable)

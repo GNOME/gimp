@@ -64,11 +64,13 @@
     (gimp-drawable-edit-clear dest-drawable)
     (gimp-selection-none dest-image)
     (gimp-selection-all source-image)
-    (gimp-edit-copy source-drawable)
-    (let (
-         (floating-sel (car (gimp-edit-paste dest-drawable FALSE)))
-         )
-         (gimp-floating-sel-anchor floating-sel)
+    (gimp-edit-copy 1 (vector source-drawable))
+    (let* (
+           (pasted (gimp-edit-paste dest-drawable FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+     (gimp-floating-sel-anchor floating-sel)
     )
   )
 
@@ -95,7 +97,6 @@
         (layer2 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 2" 100 LAYER-MODE-DIFFERENCE)))
         (layer3 (car (gimp-layer-new img width height GRAYA-IMAGE _"Layer 3" 100 LAYER-MODE-NORMAL)))
         (shadow (car (gimp-layer-new img width height GRAYA-IMAGE _"Drop Shadow" 100 LAYER-MODE-NORMAL)))
-        (mask-fs 0)
         (layer-mask 0)
         )
 
@@ -110,9 +111,17 @@
     (gimp-image-insert-layer img layer3 0 0)
     (gimp-image-insert-layer img layer2 0 0)
 
-    (gimp-edit-copy mask-drawable)
-    (set! mask-fs (car (gimp-edit-paste mask FALSE)))
-    (gimp-floating-sel-anchor mask-fs)
+    (gimp-edit-copy 1 (vector mask-drawable))
+
+    ; Clipboard is copy of mask-drawable.  Paste into mask, a channel, and anchor it.
+    (let* (
+           (pasted (gimp-edit-paste mask FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+     (gimp-floating-sel-anchor floating-sel)
+    )
+
     (if (= carve-white FALSE)
         (gimp-drawable-invert mask FALSE)
     )

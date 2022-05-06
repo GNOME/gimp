@@ -21,13 +21,19 @@
         )
 
     (gimp-selection-all img)
-    (gimp-edit-copy drw)
+    (gimp-edit-copy 1 (vector drw))
 
     (gimp-image-undo-disable new-image)
 
     (gimp-image-insert-layer new-image original-layer 0 0)
-    (gimp-floating-sel-anchor
-      (car (gimp-edit-paste original-layer FALSE)))
+
+    (let* (
+           (pasted (gimp-edit-paste original-layer FALSE))
+           (num-pasted (car pasted))
+           (floating-sel (aref (cadr pasted) (- num-pasted 1)))
+          )
+     (gimp-floating-sel-anchor floating-sel)
+    )
 
     (set! original-layer-for-darker (car (gimp-layer-copy original-layer TRUE)))
     (set! original-layer-for-lighter (car (gimp-layer-copy original-layer TRUE)))
