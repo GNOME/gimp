@@ -231,14 +231,15 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                           "fli,flc");
 
       GIMP_PROC_ARG_INT (procedure, "from-frame",
-                         "From frame",
+                         "_From:",
                          "Export beginning from this frame",
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "to-frame",
-                         "To frame",
-                         "End exporting with this frame",
+                         "_To:",
+                         "End exporting with this frame "
+                         "(or -1 for all frames)",
                          -1, G_MAXINT, -1,
                          G_PARAM_READWRITE);
     }
@@ -958,12 +959,6 @@ save_dialog (GimpImage     *image,
    * But for now you can set a start- and a end-frame:
    */
 
-  gimp_labeled_set_text (GIMP_LABELED (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                                         "from-frame", GIMP_TYPE_LABEL_SPIN)),
-                         "_From:");
-  gimp_labeled_set_text (GIMP_LABELED (gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
-                                                                         "to-frame", GIMP_TYPE_LABEL_SPIN)),
-                         "_To:");
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
 
   gtk_widget_show (dialog);
