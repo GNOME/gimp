@@ -544,7 +544,7 @@ load_image (GFile    *file,
       return NULL;
     }
 
-  if (from_frame >= fli_header.frames)
+  if (from_frame > fli_header.frames)
     {
       /* nothing to do ... */
       fclose (fp);
