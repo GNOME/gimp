@@ -79,76 +79,96 @@ typedef struct _fli_chunk
 #define W_ALL           0xFFFF
 
 /** functions */
-void fli_read_header   (FILE          *f,
-                        s_fli_header  *fli_header);
+gboolean fli_read_header     (FILE          *f,
+                              s_fli_header  *fli_header,
+                              GError       **error);
 
-void fli_read_frame    (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_framebuf,
-                        guchar        *old_cmap,
-                        guchar        *framebuf,
-                        guchar        *cmap);
+gboolean fli_read_frame      (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_framebuf,
+                              guchar        *old_cmap,
+                              guchar        *framebuf,
+                              guchar        *cmap,
+                              GError       **error);
 
-void fli_read_color    (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_cmap,
-                        guchar        *cmap);
-void fli_read_color_2  (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_cmap,
-                        guchar        *cmap);
-void fli_read_black    (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *framebuf);
-void fli_read_brun     (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *framebuf);
-void fli_read_copy     (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *framebuf);
-void fli_read_lc       (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_framebuf,
-                        guchar        *framebuf);
-void fli_read_lc_2     (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_framebuf,
-                        guchar        *framebuf);
+gboolean fli_read_color      (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_cmap,
+                              guchar        *cmap,
+                              GError       **error);
+gboolean fli_read_color_2    (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_cmap,
+                              guchar        *cmap,
+                              GError       **error);
+gboolean fli_read_black      (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_read_brun       (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_read_copy       (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_read_lc         (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_framebuf,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_read_lc_2       (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_framebuf,
+                              guchar        *framebuf,
+                              GError       **error);
 
-void fli_write_header  (FILE          *f,
-                        s_fli_header  *fli_header);
-void fli_write_frame   (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_framebuf,
-                        guchar        *old_cmap,
-                        guchar        *framebuf,
-                        guchar        *cmap,
-                        gushort        codec_mask);
+gboolean fli_write_header    (FILE          *f,
+                              s_fli_header  *fli_header,
+                              GError       **error);
+gboolean fli_write_frame     (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_framebuf,
+                              guchar        *old_cmap,
+                              guchar        *framebuf,
+                              guchar        *cmap,
+                              gushort        codec_mask,
+                              GError       **error);
 
-int  fli_write_color   (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_cmap,
-                        guchar        *cmap);
-int  fli_write_color_2 (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_cmap,
-                        guchar        *cmap);
-void fli_write_black   (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *framebuf);
-void fli_write_brun    (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *framebuf);
-void fli_write_copy    (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *framebuf);
-void fli_write_lc      (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_framebuf,
-                        guchar        *framebuf);
-void fli_write_lc_2    (FILE          *f,
-                        s_fli_header  *fli_header,
-                        guchar        *old_framebuf,
-                        guchar        *framebuf);
+gboolean  fli_write_color    (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_cmap,
+                              guchar        *cmap,
+                              gboolean      *more,
+                              GError       **error);
+gboolean  fli_write_color_2  (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_cmap,
+                              guchar        *cmap,
+                              gboolean      *more,
+                              GError       **error);
+gboolean fli_write_black     (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_write_brun      (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_write_copy      (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_write_lc        (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_framebuf,
+                              guchar        *framebuf,
+                              GError       **error);
+gboolean fli_write_lc_2      (FILE          *f,
+                              s_fli_header  *fli_header,
+                              guchar        *old_framebuf,
+                              guchar        *framebuf,
+                              GError       **error);
 
 #endif

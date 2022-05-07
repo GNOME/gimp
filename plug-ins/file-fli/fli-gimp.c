@@ -460,7 +460,11 @@ get_info (GFile   *file,
       return FALSE;
     }
 
-  fli_read_header (fp, &fli_header);
+  if (! fli_read_header (fp, &fli_header, error))
+    {
+      fclose (fp);
+      return FALSE;
+    }
   fclose (fp);
 
   *width  = fli_header.width;
@@ -507,16 +511,13 @@ load_image (GFile    *file,
       return NULL;
     }
 
-  fli_read_header (fp, &fli_header);
-  if (fli_header.magic == NO_HEADER)
+  if (! fli_read_header (fp, &fli_header, error))
     {
       fclose (fp);
       return NULL;
     }
-  else
-    {
-      fseek (fp, 128, SEEK_SET);
-    }
+
+  fseek (fp, 128, SEEK_SET);
 
   /*
    * Fix parameters
@@ -568,7 +569,13 @@ load_image (GFile    *file,
    */
   for (cnt = 1; cnt < from_frame; cnt++)
     {
-      fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm);
+      if (! fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm, error))
+        {
+          fclose (fp);
+          g_free (fb);
+          g_free (ofb);
+          return FALSE;
+        }
       memcpy (ocm, cm, 768);
       fb_x = fb; fb = ofb; ofb = fb_x;
     }
@@ -577,7 +584,9 @@ load_image (GFile    *file,
    */
   for (cnt = from_frame; cnt <= to_frame; cnt++)
     {
-      gchar *name_buf = g_strdup_printf (_("Frame (%i)"), cnt);
+      gchar *name_buf = g_strdup_printf (_("Frame %d (%ums)"), cnt, fli_header.speed);
+
+      g_debug ("Loading frame %d", cnt);
 
       layer = gimp_layer_new (image, name_buf,
                               fli_header.width, fli_header.height,
@@ -586,9 +595,31 @@ load_image (GFile    *file,
                               gimp_image_get_default_new_layer_mode (image));
       g_free (name_buf);
 
-      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
+      if (! fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm, error))
+        {
+          /* Since some of the frames could have been read, let's not make
+           * this fatal, unless it's the first frame. */
+          if (error && *error)
+            {
+              gimp_item_delete (GIMP_ITEM(layer));
+              if (cnt > from_frame)
+                {
+                  g_warning ("Failed to read frame %d. Possibly corrupt animation.\n%s",
+                              cnt, (*error)->message);
+                  g_clear_error (error);
+                }
+              else
+                {
+                  gimp_image_delete (image);
+                  g_prefix_error (error, _("Failed to read frame %d. Possibly corrupt animation.\n"), cnt);
+                  return FALSE;
+                }
+            }
 
-      fli_read_frame (fp, &fli_header, ofb, ocm, fb, cm);
+          break;
+        }
+
+      buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
       gegl_buffer_set (buffer, GEGL_RECTANGLE (0, 0,
                                                fli_header.width,
@@ -608,7 +639,8 @@ load_image (GFile    *file,
           fb_x = fb; fb = ofb; ofb = fb_x;
         }
 
-      gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
+      if (to_frame > from_frame)
+        gimp_progress_update ((double) cnt + 1 / (double)(to_frame - from_frame));
     }
 
   gimp_image_set_colormap (image, cm, 256);
@@ -655,6 +687,7 @@ save_image (GFile      *file,
   gint          cnt;
   gint          from_frame;
   gint          to_frame;
+  gboolean      write_ok = FALSE;
 
   g_object_get (config,
                 "from-frame", &from_frame,
@@ -738,7 +771,10 @@ save_image (GFile      *file,
       break;
 
     default:
-      g_message (_("Sorry, I can export only INDEXED and GRAY images."));
+      /* Not translating this, since we should never get this error, unless
+       * someone messed up setting supported image types. */
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                   "Exporting of RGB images is not supported!");
       return FALSE;
     }
 
@@ -845,13 +881,15 @@ save_image (GFile      *file,
       if (cnt > from_frame)
         {
           /* save frame, allow all codecs */
-          fli_write_frame (fp, &fli_header, ofb, cm, fb, cm, W_ALL);
+          write_ok = fli_write_frame (fp, &fli_header, ofb, cm, fb, cm, W_ALL, error);
         }
       else
         {
           /* save first frame, no delta information, allow all codecs */
-          fli_write_frame (fp, &fli_header, NULL, NULL, fb, cm, W_ALL);
+          write_ok = fli_write_frame (fp, &fli_header, NULL, NULL, fb, cm, W_ALL, error);
         }
+      if (! write_ok)
+        break;
 
       if (cnt < to_frame)
         memcpy (ofb, fb, fli_header.width * fli_header.height);
@@ -862,7 +900,8 @@ save_image (GFile      *file,
   /*
    * finish fli
    */
-  fli_write_header (fp, &fli_header);
+  if (write_ok)
+    write_ok = fli_write_header (fp, &fli_header, error);
   fclose (fp);
 
   g_free (fb);
@@ -871,7 +910,7 @@ save_image (GFile      *file,
 
   gimp_progress_update (1.0);
 
-  return TRUE;
+  return write_ok;
 }
 
 /*

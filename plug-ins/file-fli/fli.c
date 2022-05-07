@@ -27,7 +27,11 @@
 
 #include <glib/gstdio.h>
 
+#include <libgimp/gimp.h>
+
 #include "fli.h"
+
+#include "libgimp/stdplugins-intl.h"
 
 /*
  * To avoid endian-problems I wrote these functions:
@@ -91,9 +95,10 @@ fli_write_uint32 (FILE    *f,
   fwrite (&b, 1, 4, f);
 }
 
-void
-fli_read_header (FILE         *f,
-                 s_fli_header *fli_header)
+gboolean
+fli_read_header (FILE          *f,
+                 s_fli_header  *fli_header,
+                 GError       **error)
 {
   fli_header->filesize = fli_read_uint32 (f);  /* 0 */
   fli_header->magic    = fli_read_short (f);   /* 4 */
@@ -117,8 +122,10 @@ fli_read_header (FILE         *f,
         }
       else
         {
-          fprintf (stderr, "error: magic number is wrong !\n");
           fli_header->magic = NO_HEADER;
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid header: not a FLI/FLC animation!"));
+          return FALSE;
         }
     }
 
@@ -127,11 +134,14 @@ fli_read_header (FILE         *f,
 
   if (fli_header->height == 0)
     fli_header->height = 200;
+
+  return TRUE;
 }
 
-void
-fli_write_header (FILE         *f,
-                  s_fli_header *fli_header)
+gboolean
+fli_write_header (FILE          *f,
+                  s_fli_header  *fli_header,
+                  GError       **error)
 {
   fli_header->filesize = ftell (f);
   fseek (f, 0, SEEK_SET);
@@ -159,18 +169,23 @@ fli_write_header (FILE         *f,
         }
       else
         {
-          fprintf (stderr, "error: magic number in header is wrong !\n");
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Invalid header: magic number is wrong!"));
+          return FALSE;
         }
     }
+
+  return TRUE;
 }
 
-void
+gboolean
 fli_read_frame (FILE          *f,
                 s_fli_header  *fli_header,
                 guchar        *old_framebuf,
                 guchar        *old_cmap,
                 guchar        *framebuf,
-                guchar        *cmap)
+                guchar        *cmap,
+                GError       **error)
 {
   s_fli_frame   fli_frame;
   guint64       framepos;
@@ -182,6 +197,16 @@ fli_read_frame (FILE          *f,
   fli_frame.magic  = fli_read_short (f);
   fli_frame.chunks = fli_read_short (f);
 
+  g_debug ("Frame size: %u, magic: %x, chunks: %u\n",
+           fli_frame.size, fli_frame.magic, fli_frame.chunks);
+
+  if (framepos + fli_frame.size >= fli_header->filesize)
+    {
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("Invalid frame size points past end of file!"));
+      return FALSE;
+    }
+
   if (fli_frame.magic == FRAME)
     {
       fseek (f, framepos + 16, SEEK_SET);
@@ -189,32 +214,34 @@ fli_read_frame (FILE          *f,
         {
           s_fli_chunk  chunk;
           guint32      chunkpos;
+          gboolean     read_ok;
 
           chunkpos = ftell (f);
           chunk.size = fli_read_uint32 (f);
           chunk.magic = fli_read_short (f);
+          read_ok = TRUE;
           switch (chunk.magic)
             {
             case FLI_COLOR:
-              fli_read_color (f, fli_header, old_cmap, cmap);
+              read_ok = fli_read_color (f, fli_header, old_cmap, cmap, error);
               break;
             case FLI_COLOR_2:
-              fli_read_color_2 (f, fli_header, old_cmap, cmap);
+              read_ok = fli_read_color_2 (f, fli_header, old_cmap, cmap, error);
               break;
             case FLI_BLACK:
-              fli_read_black (f, fli_header, framebuf);
+              read_ok = fli_read_black (f, fli_header, framebuf, error);
               break;
             case FLI_BRUN:
-              fli_read_brun (f, fli_header, framebuf);
+              read_ok = fli_read_brun (f, fli_header, framebuf, error);
               break;
             case FLI_COPY:
-              fli_read_copy (f, fli_header, framebuf);
+              read_ok = fli_read_copy (f, fli_header, framebuf, error);
               break;
             case FLI_LC:
-              fli_read_lc (f, fli_header, old_framebuf, framebuf);
+              read_ok = fli_read_lc (f, fli_header, old_framebuf, framebuf, error);
               break;
             case FLI_LC_2:
-              fli_read_lc_2 (f, fli_header, old_framebuf, framebuf);
+              read_ok = fli_read_lc_2 (f, fli_header, old_framebuf, framebuf, error);
               break;
             case FLI_MINI:
               /* unused, skip */
@@ -223,6 +250,9 @@ fli_read_frame (FILE          *f,
               /* unknown, skip */
               break;
             }
+          if (! read_ok)
+            return FALSE;
+
           if (chunk.size & 1)
             chunk.size++;
           fseek (f, chunkpos + chunk.size, SEEK_SET);
@@ -231,16 +261,19 @@ fli_read_frame (FILE          *f,
   /* else: unknown, skip */
 
   fseek (f, framepos + fli_frame.size, SEEK_SET);
+
+  return TRUE;
 }
 
-void
+gboolean
 fli_write_frame (FILE          *f,
                  s_fli_header  *fli_header,
                  guchar        *old_framebuf,
                  guchar        *old_cmap,
                  guchar        *framebuf,
                  guchar        *cmap,
-                 gushort        codec_mask)
+                 gushort        codec_mask,
+                 GError       **error)
 {
   s_fli_frame  fli_frame;
   guint32      framepos, frameend;
@@ -267,19 +300,39 @@ fli_write_frame (FILE          *f,
    */
   if (fli_header->magic == HEADER_FLI)
     {
-      if (fli_write_color (f, fli_header, old_cmap, cmap))
-        fli_frame.chunks++;
+      gboolean more = FALSE;
+
+      if (fli_write_color (f, fli_header, old_cmap, cmap, &more, error))
+        {
+          if (more)
+            fli_frame.chunks++;
+        }
+      else
+        {
+          return FALSE;
+        }
     }
   else
     {
       if (fli_header->magic == HEADER_FLC)
         {
-          if (fli_write_color_2 (f, fli_header, old_cmap, cmap))
-            fli_frame.chunks++;
+          gboolean more = FALSE;
+
+          if (fli_write_color_2 (f, fli_header, old_cmap, cmap, &more, error))
+            {
+              if (more)
+                fli_frame.chunks++;
+            }
+          else
+            {
+              return FALSE;
+            }
         }
       else
         {
-          fprintf (stderr, "error: magic number in header is wrong !\n");
+          g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
+                       _("Invalid header: magic number is wrong!"));
+          return FALSE;
         }
     }
 
@@ -298,11 +351,13 @@ fli_write_frame (FILE          *f,
   /* create bitmap chunk */
   if (old_framebuf == NULL)
     {
-      fli_write_brun (f, fli_header, framebuf);
+      if (! fli_write_brun (f, fli_header, framebuf, error))
+        return FALSE;
     }
   else
     {
-      fli_write_lc (f, fli_header, old_framebuf, framebuf);
+      if (! fli_write_lc (f, fli_header, old_framebuf, framebuf, error))
+        return FALSE;
     }
   fli_frame.chunks++;
 
@@ -314,16 +369,19 @@ fli_write_frame (FILE          *f,
   fli_write_short (f, fli_frame.chunks);
   fseek (f, frameend, SEEK_SET);
   fli_header->frames++;
+
+  return TRUE;
 }
 
 /*
  * palette chunks from the classical Autodesk Animator.
  */
-void
+gboolean
 fli_read_color (FILE          *f,
                 s_fli_header  *fli_header,
                 guchar        *old_cmap,
-                guchar        *cmap)
+                guchar        *cmap,
+                GError       **error)
 {
   gushort num_packets, cnt_packets, col_pos;
 
@@ -341,7 +399,7 @@ fli_read_color (FILE          *f,
             {
               cmap[col_pos] = fli_read_char (f) << 2;
             }
-          return;
+          return TRUE;
         }
       for (col_cnt = skip_col; (col_cnt > 0) && (col_pos < 768); col_cnt--)
         {
@@ -356,18 +414,23 @@ fli_read_color (FILE          *f,
           cmap[col_pos++] = fli_read_char (f) << 2;
         }
     }
+
+  return TRUE;
 }
 
-int
+gboolean
 fli_write_color (FILE          *f,
                  s_fli_header  *fli_header,
                  guchar        *old_cmap,
-                 guchar        *cmap)
+                 guchar        *cmap,
+                 gboolean      *more,
+                 GError       **error)
 {
   guint32       chunkpos;
   gushort       num_packets;
   s_fli_chunk   chunk;
 
+  *more = FALSE;
   chunkpos = ftell (f);
   fseek (f, chunkpos + 8, SEEK_SET);
   num_packets = 0;
@@ -440,21 +503,23 @@ fli_write_color (FILE          *f,
         chunk.size++;
 
       fseek (f, chunkpos + chunk.size, SEEK_SET);
-      return 1;
+      *more = TRUE;
+      return TRUE;
     }
 
   fseek (f, chunkpos, SEEK_SET);
-  return 0;
+  return TRUE;
 }
 
 /*
  * palette chunks from Autodesk Animator pro
  */
-void
+gboolean
 fli_read_color_2 (FILE          *f,
                   s_fli_header  *fli_header,
                   guchar        *old_cmap,
-                  guchar        *cmap)
+                  guchar        *cmap,
+                  GError       **error)
 {
   gushort num_packets, cnt_packets, col_pos;
 
@@ -472,7 +537,7 @@ fli_read_color_2 (FILE          *f,
             {
               cmap[col_pos] = fli_read_char (f);
             }
-          return;
+          return TRUE;
         }
       for (col_cnt = skip_col; (col_cnt > 0) && (col_pos < 768); col_cnt--)
         {
@@ -490,18 +555,23 @@ fli_read_color_2 (FILE          *f,
           cmap[col_pos++] = fli_read_char (f);
         }
     }
+
+  return TRUE;
 }
 
-int
+gboolean
 fli_write_color_2 (FILE          *f,
                    s_fli_header  *fli_header,
                    guchar        *old_cmap,
-                   guchar        *cmap)
+                   guchar        *cmap,
+                   gboolean      *more,
+                   GError       **error)
 {
   guint32       chunkpos;
   gushort       num_packets;
   s_fli_chunk   chunk;
 
+  *more = FALSE;
   chunkpos = ftell (f);
   fseek (f, chunkpos + 8, SEEK_SET);
   num_packets = 0;
@@ -571,27 +641,33 @@ fli_write_color_2 (FILE          *f,
       if (chunk.size & 1)
         chunk.size++;
       fseek (f, chunkpos + chunk.size, SEEK_SET);
-      return 1;
+      *more = TRUE;
+      return TRUE;
     }
   fseek (f, chunkpos, SEEK_SET);
-  return 0;
+
+  return TRUE;
 }
 
 /*
  * completely black frame
  */
-void
+gboolean
 fli_read_black (FILE          *f,
                 s_fli_header  *fli_header,
-                guchar        *framebuf)
+                guchar        *framebuf,
+                GError       **error)
 {
   memset (framebuf, 0, fli_header->width * fli_header->height);
+
+  return TRUE;
 }
 
-void
+gboolean
 fli_write_black (FILE          *f,
                  s_fli_header  *fli_header,
-                 guchar        *framebuf)
+                 guchar        *framebuf,
+                 GError       **error)
 {
   s_fli_chunk chunk;
 
@@ -600,23 +676,29 @@ fli_write_black (FILE          *f,
 
   fli_write_uint32 (f, chunk.size);
   fli_write_short (f, chunk.magic);
+
+  return TRUE;
 }
 
 /*
  * Uncompressed frame
  */
-void
+gboolean
 fli_read_copy (FILE          *f,
                s_fli_header  *fli_header,
-               guchar        *framebuf)
+               guchar        *framebuf,
+               GError       **error)
 {
   fread (framebuf, fli_header->width, fli_header->height, f);
+
+  return TRUE;
 }
 
-void
+gboolean
 fli_write_copy (FILE          *f,
                 s_fli_header  *fli_header,
-                guchar        *framebuf)
+                guchar        *framebuf,
+                GError       **error)
 {
   guint32      chunkpos;
   s_fli_chunk  chunk;
@@ -634,15 +716,17 @@ fli_write_copy (FILE          *f,
   if (chunk.size & 1)
     chunk.size++;
   fseek (f, chunkpos + chunk.size, SEEK_SET);
+  return TRUE;
 }
 
 /*
  * This is a RLE algorithm, used for the first image of an animation
  */
-void
+gboolean
 fli_read_brun (FILE          *f,
                s_fli_header  *fli_header,
-               guchar        *framebuf)
+               guchar        *framebuf,
+               GError       **error)
 {
   gushort  yc;
   guchar  *pos;
@@ -682,12 +766,14 @@ fli_read_brun (FILE          *f,
             }
         }
     }
+  return TRUE;
 }
 
-void
+gboolean
 fli_write_brun (FILE          *f,
                 s_fli_header  *fli_header,
-                guchar        *framebuf)
+                guchar        *framebuf,
+                GError       **error)
 {
   guint32       chunkpos;
   s_fli_chunk   chunk;
@@ -766,6 +852,7 @@ fli_write_brun (FILE          *f,
   if (chunk.size & 1)
     chunk.size++;
   fseek (f, chunkpos + chunk.size, SEEK_SET);
+  return TRUE;
 }
 
 /*
@@ -775,11 +862,12 @@ fli_write_brun (FILE          *f,
  * image, and unchanged pixels in a line. This chunk is used in FLI
  * files.
  */
-void
+gboolean
 fli_read_lc (FILE          *f,
              s_fli_header  *fli_header,
              guchar        *old_framebuf,
-             guchar        *framebuf)
+             guchar        *framebuf,
+             GError       **error)
 {
   gushort  yc, firstline, numline;
   guchar  *pos;
@@ -788,7 +876,7 @@ fli_read_lc (FILE          *f,
   firstline = fli_read_short (f);
   numline = fli_read_short (f);
   if (numline > fli_header->height || fli_header->height - numline < firstline)
-    return;
+    return TRUE;
 
   for (yc = 0; yc < numline; yc++)
     {
@@ -827,13 +915,15 @@ fli_read_lc (FILE          *f,
             }
         }
     }
+  return TRUE;
 }
 
-void
+gboolean
 fli_write_lc (FILE          *f,
               s_fli_header  *fli_header,
               guchar        *old_framebuf,
-              guchar        *framebuf)
+              guchar        *framebuf,
+              GError       **error)
 {
   guint32       chunkpos;
   s_fli_chunk   chunk;
@@ -953,6 +1043,7 @@ fli_write_lc (FILE          *f,
   if (chunk.size & 1)
     chunk.size++;
   fseek (f, chunkpos + chunk.size, SEEK_SET);
+  return TRUE;
 }
 
 
@@ -962,11 +1053,12 @@ fli_write_lc (FILE          *f,
  * skipping larger parts of the image. This chunk is used in FLC
  * files.
  */
-void
+gboolean
 fli_read_lc_2 (FILE          *f,
                s_fli_header  *fli_header,
                guchar        *old_framebuf,
-               guchar        *framebuf)
+               guchar        *framebuf,
+               GError       **error)
 {
   gushort  yc, lc, numline;
   guchar  *pos;
@@ -1032,4 +1124,5 @@ fli_read_lc_2 (FILE          *f,
         pos[xc] = lpn;
       yc++;
     }
+  return TRUE;
 }
