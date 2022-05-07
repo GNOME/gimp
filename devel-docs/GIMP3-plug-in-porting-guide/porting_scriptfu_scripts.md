@@ -28,6 +28,8 @@ This table summarizes the changes:
 | pass drawable  | GimpDrawable          | gint, GimpObjectArray | int   (an ID)   | int (a length) vector |
 | Pass obj array | gint, GimpInt32Array  | gint, GimpObjectArray | int  vector     | int vector            |
 | Recv obj array | gint, GimpInt32Array  | gint, GimpObjectArray | int  vector     | int vector            |
+| Pass set of str | gint, GimpStringArray | GStrv                 | int  list       | list                  |
+| Recv set of str | gint, GimpStringArray | GStrv                 | int  list       | list                  |
 
 (Where "obj" means an object of a GIMP type such as GimpDrawable or similar.)
 
@@ -123,6 +125,21 @@ would print:
 Meaning a list length of zero, and an empty vector.
 (Since a new image has no layers.)
 
+### Passing or receiving a set of strings
+
+Formerly, you passed an integer count of strings, and a list of strings.
+Now you only pass the list.
+ScriptFu converts to/from the C type GStrv
+(which is an object knowing its own length.)
+An example is the PDB procedure file-gih-save.
+
+Formerly, you received an integer count of strings, and a list of strings.
+Now you only receive the list
+(and subsequently get its length using "(length list)").
+Examples are the many PDB procedures whose name ends in "-list".
+Remember that the result of a call to the PDB is a list of values,
+in this case the result is a list containing a list,
+and for example you get the list of strings like "(car (gimp-fonts-get-list ".*"))"
 
 ## Changes in error messages
 

@@ -1,5 +1,13 @@
-;; font-select
+;; font-map
 ;; Spencer Kimball
+
+;; To test, open the Font tool dialog,
+;; press right mouse button in the list of fonts, choose "Render Font Map"
+
+;; Test cases for font filter regex
+;;   ".*"  expect render all installed fonts
+;;   "foo" expect render blank image (no matching fonts)
+;;   "Sans" expect render subset of installed fonts
 
 (define (script-fu-font-map text
                             use-name
@@ -64,9 +72,10 @@
   )
 
   (let* (
-        (font-data  (gimp-fonts-get-list font-filter))
-        (font-list  (cadr font-data))
-        (num-fonts  (car font-data))
+        ; gimp-fonts-get-list returns a one element list of results,
+        ; the only element is itself a list of fonts, possibly empty.
+        (font-list  (car (gimp-fonts-get-list font-filter)))
+        (num-fonts  (length font-list))
         (label-size (/ font-size 2))
         (border     (+ border (* labels (/ label-size 2))))
         (y          border)
