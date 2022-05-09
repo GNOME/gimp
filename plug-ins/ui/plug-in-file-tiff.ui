@@ -41,7 +41,7 @@
         <property name="can_focus">False</property>
         <child>
           <object class="GtkLabel" id="bigtiff-warning">
-            <property name="label" translatable="yes">Warning: maximum TIFF file size exceeded. Retry as BigTIFF or cancel.</property>
+            <property name="label" translatable="yes">Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a different compression algorithm, or cancel.</property>
             <property name="visible">True</property>
           </object>
           <packing>
