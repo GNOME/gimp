@@ -1228,12 +1228,16 @@ save_dialog (GimpImage     *image,
   if (classic_tiff_failed)
     {
       GtkWidget *label;
+      gchar     *text;
 
+      /* Warning sign emoticone. */
+      text = g_strdup_printf ("\xe2\x9a\xa0 %s",
+                              _("Warning: maximum TIFF file size exceeded. "
+                                "Retry as BigTIFF or with a different compression algorithm, "
+                                "or cancel."));
       label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                               "big-tif-warning",
-                                               "\xe2\x9a\xa0 Warning: maximum TIFF file size exceeded. "
-                                               "Retry as BigTIFF or with a different compression algorithm, "
-                                               "or cancel.");
+                                               "big-tif-warning", text);
+      g_free (text);
       gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
       gtk_label_set_line_wrap_mode (GTK_LABEL (label), PANGO_WRAP_WORD);
       gtk_label_set_max_width_chars (GTK_LABEL (label), 60);
