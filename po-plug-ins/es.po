@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-04-27 07:26+0000\n"
-"PO-Revision-Date: 2022-05-01 11:22+0200\n"
+"POT-Creation-Date: 2022-05-09 20:08+0000\n"
+"PO-Revision-Date: 2022-05-10 14:57+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -1001,7 +1001,7 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:777 ../plug-ins/file-ico/ico-save.c:1252
+#: ../plug-ins/file-fli/fli-gimp.c:778 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:318 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1025
 #: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
@@ -1036,7 +1036,7 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: ../plug-ins/common/file-xwd.c:481 ../plug-ins/common/sphere-designer.c:2088
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
-#: ../plug-ins/file-fli/fli-gimp.c:457 ../plug-ins/file-fli/fli-gimp.c:504
+#: ../plug-ins/file-fli/fli-gimp.c:458 ../plug-ins/file-fli/fli-gimp.c:505
 #: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
 #: ../plug-ins/file-jpeg/jpeg-load.c:96 ../plug-ins/file-jpeg/jpeg-load.c:550
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
@@ -1969,7 +1969,7 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
-#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:496
+#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:497
 #: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:87
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
@@ -2052,7 +2052,7 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
-#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:744
+#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:745
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:273
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1015
@@ -3364,7 +3364,7 @@ msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Error: para guardar el archivo, debe añadirse al menos una imagen."
 
 #: ../plug-ins/common/file-pdf-save.c:1548
-#: ../plug-ins/print/print-draw-page.c:123
+#: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr ""
 "No se puede manejar el tamaño (ya sea la anchura o la altura) de la imagen."
@@ -6609,55 +6609,55 @@ msgstr "Decodificar YCoCg (escalado)"
 msgid "Decode Alpha exponent"
 msgstr "Decodificar exponente Alfa"
 
-#: ../plug-ins/file-dds/ddsread.c:325
+#: ../plug-ins/file-dds/ddsread.c:366
 #, c-format
 msgid "Could not allocate a new image."
 msgstr "No se puede reservar una imagen nueva."
 
-#: ../plug-ins/file-dds/ddsread.c:338
+#: ../plug-ins/file-dds/ddsread.c:379
 #, c-format
 msgid "Error reading palette."
 msgstr "Error al leer la paleta."
 
-#: ../plug-ins/file-dds/ddsread.c:634
+#: ../plug-ins/file-dds/ddsread.c:662
 #, c-format
 msgid "Invalid DDS format magic number."
 msgstr "Formato de número mágico DDS no válido."
 
-#: ../plug-ins/file-dds/ddsread.c:713
+#: ../plug-ins/file-dds/ddsread.c:741
 #, c-format
 msgid "Invalid bpp value for RGB data: %d"
 msgstr "Valor bpp para datos de RGB no válido: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:724
+#: ../plug-ins/file-dds/ddsread.c:752
 #, c-format
 msgid "Invalid bpp value for luminance data: %d"
 msgstr "Valor bpp para datos de luminosidad no válido: %d"
 
-#: ../plug-ins/file-dds/ddsread.c:774
+#: ../plug-ins/file-dds/ddsread.c:803
 #, c-format
 msgid "Invalid pixel format."
 msgstr "Formato de píxel no válido."
 
-#: ../plug-ins/file-dds/ddsread.c:943
+#: ../plug-ins/file-dds/ddsread.c:972
 #, c-format
 msgid "Unsupported DXGI format (%d)"
 msgstr "Formato DXGI (%d) no soportado"
 
-#: ../plug-ins/file-dds/ddsread.c:1096 ../plug-ins/file-dds/ddsread.c:1135
+#: ../plug-ins/file-dds/ddsread.c:1137 ../plug-ins/file-dds/ddsread.c:1176
 #, c-format
 msgid "Unexpected EOF.\n"
 msgstr "EOF no esperado.\n"
 
-#: ../plug-ins/file-dds/ddsread.c:1430
+#: ../plug-ins/file-dds/ddsread.c:1517
 msgid "Open DDS"
 msgstr "Abrir DDS"
 
-#: ../plug-ins/file-dds/ddsread.c:1439
+#: ../plug-ins/file-dds/ddsread.c:1526
 msgid "_Load mipmaps"
 msgstr "_Cargar mipmaps"
 
-#: ../plug-ins/file-dds/ddsread.c:1443
+#: ../plug-ins/file-dds/ddsread.c:1530
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "Decodificar _automáticamente imágenes YCoCg/AExp al detectarlas"
 
@@ -6825,30 +6825,30 @@ msgstr "_Ninguno"
 msgid "AutoDesk FLIC animation"
 msgstr "Animación FLIC de Autodesk"
 
-#: ../plug-ins/file-fli/fli-gimp.c:579
+#: ../plug-ins/file-fli/fli-gimp.c:580
 #, c-format
 msgid "Frame (%i)"
 msgstr "Cuadro (%i)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:740
+#: ../plug-ins/file-fli/fli-gimp.c:741
 msgid "Sorry, I can export only INDEXED and GRAY images."
 msgstr "Sólo se pueden exportar imágenes ÍNDEXADAS y en GRIS."
 
-#: ../plug-ins/file-fli/fli-gimp.c:901
+#: ../plug-ins/file-fli/fli-gimp.c:902
 msgid "Open FLIC Animation"
 msgstr "Abrir animación FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:919
+#: ../plug-ins/file-fli/fli-gimp.c:920
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_De:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:925
+#: ../plug-ins/file-fli/fli-gimp.c:926
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Para:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:955
+#: ../plug-ins/file-fli/fli-gimp.c:956
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagen como animación FLI"
 
@@ -7008,7 +7008,7 @@ msgstr "Coma flotante"
 msgid "JPEG image"
 msgstr "Imagen JPEG"
 
-#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1247
+#: ../plug-ins/file-jpeg/jpeg.c:191 ../plug-ins/file-tiff/file-tiff-save.c:1251
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7639,30 +7639,39 @@ msgstr "Ha fallado un trazo de la imagen por lícnea escrita en la fila %d"
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escribir páginas con distinta profundidad de bit es extraño."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1243
+#: ../plug-ins/file-tiff/file-tiff-save.c:1235
+msgid ""
+"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
+"different compression algorithm, or cancel."
+msgstr ""
+"Advertencia: se ha superado el tamaño máximo del archivo TIFF. Vuelva a "
+"intentarlo como BigTIFF o con un algoritmo de compresión diferente, o "
+"cancele."
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1247
 #: ../plug-ins/metadata/metadata-tags.c:195
 #: ../plug-ins/metadata/metadata-tags.c:207
 #: ../plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Ninguna"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1244
+#: ../plug-ins/file-tiff/file-tiff-save.c:1248
 msgid "LZW"
 msgstr "LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1245
+#: ../plug-ins/file-tiff/file-tiff-save.c:1249
 msgid "Pack Bits"
 msgstr "Empaquetar bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1246
+#: ../plug-ins/file-tiff/file-tiff-save.c:1250
 msgid "Deflate"
 msgstr "Desinflar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1248
+#: ../plug-ins/file-tiff/file-tiff-save.c:1252
 msgid "CCITT Group 3 fax"
 msgstr "Fax CCITT grupo 3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1249
+#: ../plug-ins/file-tiff/file-tiff-save.c:1253
 msgid "CCITT Group 4 fax"
 msgstr "Fax CCITT grupo 4"
 
