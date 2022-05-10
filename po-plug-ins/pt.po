@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-01-19 11:13+0000\n"
-"PO-Revision-Date: 2022-01-19 16:16+0000\n"
+"POT-Creation-Date: 2022-05-10 13:08+0000\n"
+"PO-Revision-Date: 2022-05-10 22:13+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -56,7 +56,7 @@ msgstr "Alinhar camadas visíveis"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1896
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1898
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
@@ -121,7 +121,7 @@ msgstr "_Cancelar"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1897
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1899
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -462,7 +462,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
-#: ../plug-ins/screenshot/screenshot-win32.c:312 ../plug-ins/twain/twain.c:646
+#: ../plug-ins/screenshot/screenshot-win32.c:315 ../plug-ins/twain/twain.c:646
 msgid "Background"
 msgstr "Fundo"
 
@@ -1052,11 +1052,11 @@ msgstr "Gravar parâmetros do explorador CML"
 #: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
-#: ../plug-ins/file-bmp/bmp-save.c:320 ../plug-ins/file-fits/fits.c:481
+#: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
 #: ../plug-ins/file-fli/fli-gimp.c:757 ../plug-ins/file-ico/ico-save.c:1087
 #: ../plug-ins/file-jpeg/jpeg-save.c:333 ../plug-ins/file-psd/psd-save.c:1728
-#: ../plug-ins/file-tiff/file-tiff-save.c:965
-#: ../plug-ins/file-tiff/file-tiff-save.c:1067 ../plug-ins/flame/flame.c:450
+#: ../plug-ins/file-tiff/file-tiff-save.c:970
+#: ../plug-ins/file-tiff/file-tiff-save.c:1072 ../plug-ins/flame/flame.c:450
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1548
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/ifs-compose/ifs-compose.c:2390
 #: ../plug-ins/lighting/lighting-ui.c:1232
@@ -2243,11 +2243,11 @@ msgstr "\"%s\": EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-pnm.c:1249 ../plug-ins/common/file-ps.c:1237
 #: ../plug-ins/common/file-sunras.c:602 ../plug-ins/common/file-tga.c:1216
 #: ../plug-ins/common/file-xbm.c:1040 ../plug-ins/common/file-xpm.c:674
-#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:312
+#: ../plug-ins/common/file-xwd.c:652 ../plug-ins/file-bmp/bmp-save.c:319
 #: ../plug-ins/file-fits/fits.c:473 ../plug-ins/file-fli/fli-gimp.c:725
 #: ../plug-ins/file-ico/ico-save.c:1081 ../plug-ins/file-jpeg/jpeg-save.c:290
 #: ../plug-ins/file-psd/psd-save.c:1699 ../plug-ins/file-sgi/sgi.c:584
-#: ../plug-ins/file-tiff/file-tiff-save.c:955
+#: ../plug-ins/file-tiff/file-tiff-save.c:956
 #, c-format
 msgid "Exporting '%s'"
 msgstr "A exportar \"%s\""
@@ -2634,61 +2634,61 @@ msgstr ""
 msgid "image content"
 msgstr "conteúdo da imagem"
 
-#: ../plug-ins/common/file-heif.c:1316
+#: ../plug-ins/common/file-heif.c:1318
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "A exportar '%s' usando o codificador %s"
 
-#: ../plug-ins/common/file-heif.c:1367 ../plug-ins/common/file-heif.c:1621
+#: ../plug-ins/common/file-heif.c:1369 ../plug-ins/common/file-heif.c:1623
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "A codificação da imagem HEIF falhou: %s"
 
-#: ../plug-ins/common/file-heif.c:1658
+#: ../plug-ins/common/file-heif.c:1660
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Falha ao escrever a imagem HEIF: %s"
 
-#: ../plug-ins/common/file-heif.c:1747
+#: ../plug-ins/common/file-heif.c:1749
 msgid "primary"
 msgstr "primário"
 
-#: ../plug-ins/common/file-heif.c:1892
+#: ../plug-ins/common/file-heif.c:1894
 msgid "Load HEIF Image"
 msgstr "Carregar imagem HEIF"
 
-#: ../plug-ins/common/file-heif.c:1906
+#: ../plug-ins/common/file-heif.c:1908
 msgid "Select Image"
 msgstr "Selecionar imagem"
 
-#: ../plug-ins/common/file-heif.c:2072
+#: ../plug-ins/common/file-heif.c:2074
 msgid "Nearly _lossless"
 msgstr "Quase _sem perdas"
 
-#: ../plug-ins/common/file-heif.c:2076 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2078 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Qualidade:"
 
-#: ../plug-ins/common/file-heif.c:2119
+#: ../plug-ins/common/file-heif.c:2121
 msgid "Bit depth:"
 msgstr "Profundidade de cor:"
 
-#: ../plug-ins/common/file-heif.c:2125
+#: ../plug-ins/common/file-heif.c:2127
 msgid "8 bit/channel"
 msgstr "8 bit / canal"
 
-#: ../plug-ins/common/file-heif.c:2126
+#: ../plug-ins/common/file-heif.c:2128
 msgid "10 bit/channel"
 msgstr "10 bit / canal"
 
-#: ../plug-ins/common/file-heif.c:2127
+#: ../plug-ins/common/file-heif.c:2129
 msgid "12 bit/channel"
 msgstr "12 bit / canal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2136 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:387
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
 msgstr "Guardar perfil de _cor"
 
@@ -3313,7 +3313,7 @@ msgstr ""
 "Erro! Para gravar este ficheiro, tem de adicionar pelo menos uma imagem!"
 
 #: ../plug-ins/common/file-pdf-save.c:1312
-#: ../plug-ins/print/print-draw-page.c:123
+#: ../plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Impossível gerir o tamanho (largura ou altura) da imagem."
 
@@ -3405,13 +3405,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr "Erro ao exportar \"%s\". Impossível exportar imagem."
 
 #: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2131
-#: ../plug-ins/file-tiff/file-tiff-save.c:1160
+#: ../plug-ins/file-tiff/file-tiff-save.c:1167
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Erro ao carregar ficheiro de UI \"%s\": %s"
 
 #: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2132
-#: ../plug-ins/file-tiff/file-tiff-save.c:1161
+#: ../plug-ins/file-tiff/file-tiff-save.c:1168
 msgid "Unknown error"
 msgstr "Erro desconhecido"
 
@@ -6646,31 +6646,31 @@ msgstr "Profundidade de bit não suportada."
 msgid "The bitmap ends unexpectedly."
 msgstr "O mapa de bits termina inesperadamente."
 
-#: ../plug-ins/file-bmp/bmp-save.c:183 ../plug-ins/file-bmp/bmp-save.c:216
+#: ../plug-ins/file-bmp/bmp-save.c:186 ../plug-ins/file-bmp/bmp-save.c:219
 msgid "Cannot export indexed image with transparency in BMP file format."
 msgstr ""
 "Impossível exportar imagem indexada com transparência no formato de ficheiro "
 "BMP."
 
-#: ../plug-ins/file-bmp/bmp-save.c:185 ../plug-ins/file-bmp/bmp-save.c:218
+#: ../plug-ins/file-bmp/bmp-save.c:188 ../plug-ins/file-bmp/bmp-save.c:221
 msgid "Alpha channel will be ignored."
 msgstr "O canal alfa será ignorado."
 
 #. Run-Length Encoded
-#: ../plug-ins/file-bmp/bmp-save.c:924
+#: ../plug-ins/file-bmp/bmp-save.c:952
 msgid "_Run-Length Encoded"
 msgstr "_Run-Length Encoded (RLE)"
 
 #. Compatibility Options
-#: ../plug-ins/file-bmp/bmp-save.c:937
+#: ../plug-ins/file-bmp/bmp-save.c:965
 msgid "Co_mpatibility Options"
 msgstr "Opções de co_mpatibilidade"
 
-#: ../plug-ins/file-bmp/bmp-save.c:947
+#: ../plug-ins/file-bmp/bmp-save.c:975
 msgid "_Do not write color space information"
 msgstr "_Não escrever informação do espaço de cor"
 
-#: ../plug-ins/file-bmp/bmp-save.c:949
+#: ../plug-ins/file-bmp/bmp-save.c:977
 msgid ""
 "Some applications can not read BMP images that include color space "
 "information. GIMP writes color space information by default. Enabling this "
@@ -6682,24 +6682,25 @@ msgstr ""
 
 #. Advanced Options
 #. Advanced expander
-#: ../plug-ins/file-bmp/bmp-save.c:965 ../plug-ins/file-jpeg/jpeg-save.c:1014
+#: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
 #: ../plug-ins/file-webp/file-webp-dialog.c:221
 msgid "_Advanced Options"
 msgstr "_Opções avançadas"
 
-#: ../plug-ins/file-bmp/bmp-save.c:980
+#: ../plug-ins/file-bmp/bmp-save.c:1008
 msgid "16 bits"
 msgstr "16 bits"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1016
+#: ../plug-ins/file-bmp/bmp-save.c:1044
 msgid "24 bits"
 msgstr "24 bits"
 
-#: ../plug-ins/file-bmp/bmp-save.c:1033
+#: ../plug-ins/file-bmp/bmp-save.c:1061
 msgid "32 bits"
 msgstr "32 bits"
 
-#: ../plug-ins/file-bmp/bmp.c:120 ../plug-ins/file-bmp/bmp.c:139
+#: ../plug-ins/file-bmp/bmp.c:132 ../plug-ins/file-bmp/bmp.c:151
+#: ../plug-ins/file-bmp/bmp.c:168
 msgid "Windows BMP image"
 msgstr "Imagem BMP do Windows"
 
@@ -7035,17 +7036,17 @@ msgstr "Gravar dados _EXIF"
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
 #: ../plug-ins/file-webp/file-webp-dialog.c:377
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _XMP data"
 msgstr "Gravar dados _XMP"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:946
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:10
 msgid "Save _IPTC data"
 msgstr "Gravar dados _IPTC"
 
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _thumbnail"
 msgstr "Gravar minia_tura"
 
@@ -7445,8 +7446,8 @@ msgstr ""
 "RLE agressiva\n"
 "(não suportada em SGI)"
 
-#: ../plug-ins/file-tiff/file-tiff.c:141 ../plug-ins/file-tiff/file-tiff.c:163
-#: ../plug-ins/file-tiff/file-tiff.c:181
+#: ../plug-ins/file-tiff/file-tiff.c:165 ../plug-ins/file-tiff/file-tiff.c:187
+#: ../plug-ins/file-tiff/file-tiff.c:205 ../plug-ins/file-tiff/file-tiff.c:222
 msgid "TIFF image"
 msgstr "Imagem TIFF"
 
@@ -7689,12 +7690,12 @@ msgstr ""
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Imagens indexadas não podem ser comprimidas com \"JPEG\"."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:742
+#: ../plug-ins/file-tiff/file-tiff-save.c:743
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Falhou a escrita de uma scanline na linha %d"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:980
+#: ../plug-ins/file-tiff/file-tiff-save.c:985
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7702,44 +7703,52 @@ msgstr ""
 "O formato TIFF só suporta comentários com\n"
 "codificação ASCII 7bit. Nenhum comentário gravado."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1090
+#: ../plug-ins/file-tiff/file-tiff-save.c:1095
 #, c-format
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escrever páginas com profundidades de cores diferentes é estranho."
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1150
+#: ../plug-ins/file-tiff/file-tiff-save.c:1157
 msgid "TIFF"
 msgstr "TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1176
+#: ../plug-ins/file-tiff/file-tiff-save.c:1188
+msgid ""
+"<i>Warning: maximum TIFF file size exceeded.\n"
+" Retry as BigTIFF or cancel.</i>"
+msgstr ""
+"<i>Aviso: o tamanho máximo do ficheiro TIFF foi excedido.\n"
+"Tente novamente como BigTIFF ou cancele.</i>"
+
+#: ../plug-ins/file-tiff/file-tiff-save.c:1199
 msgid "Compression"
 msgstr "Compressão"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1180
+#: ../plug-ins/file-tiff/file-tiff-save.c:1203
 msgid "_None"
 msgstr "_Nenhuma"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1181
+#: ../plug-ins/file-tiff/file-tiff-save.c:1204
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1182
+#: ../plug-ins/file-tiff/file-tiff-save.c:1205
 msgid "_Pack Bits"
 msgstr "_Empacotar bits"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1183
+#: ../plug-ins/file-tiff/file-tiff-save.c:1206
 msgid "_Deflate"
 msgstr "_Esvaziar"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1184
+#: ../plug-ins/file-tiff/file-tiff-save.c:1207
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1185
+#: ../plug-ins/file-tiff/file-tiff-save.c:1208
 msgid "CCITT Group _3 fax"
 msgstr "Fax CCIT Group _3"
 
-#: ../plug-ins/file-tiff/file-tiff-save.c:1186
+#: ../plug-ins/file-tiff/file-tiff-save.c:1209
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT Group _4"
 
@@ -9613,7 +9622,7 @@ msgid "Save comme_nt"
 msgstr "Gravar comentári_O"
 
 #: ../plug-ins/ui/plug-in-file-png.ui.h:8
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
 msgid "Save color _values from transparent pixels"
 msgstr "Gravar valores de cor dos pixeis _Transparentes"
 
@@ -9707,30 +9716,42 @@ msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (estilo BMP)"
 
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:1
+msgid ""
+"Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
+"different compression algorithm, or cancel."
+msgstr ""
+"Aviso: o tamanho máximo do ficheiro TIFF foi excedido. Tente novamente como "
+"BigTIFF ou com um algoritmo de compressão diferente ou cancele."
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+msgid "Export in _BigTIFF variant file format"
+msgstr "Exportar no formato de ficheiro da variante _BigTIFF"
+
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:3
 msgid "Save _layers"
 msgstr "Gravar desvio da _camada"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:2
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
 msgid "Cr_op layers to image bounds"
 msgstr "Impossível obter camadas para a imagem %d"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:4
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
 msgid "Colors are not stored premultiplied by the associated alpha"
 msgstr "As cores não são armazenadas pré-multiplicadas pelo alfa associado"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:5
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:7
 msgid "<b>Comment</b>"
 msgstr "<b>Comentário</b>"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:6
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:8
 msgid "S_ave Exif data"
 msgstr "Gravar dados Exif"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:13
 msgid "Save _GeoTIFF data"
 msgstr "Gravar dados _IPTC"
 
-#: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
+#: ../plug-ins/ui/plug-in-file-tiff.ui.h:14
 msgid "Keep the GeoTIFF metadata if it was present on import"
 msgstr ""
 "Mantenha os metadados GeoTIFF se estes estivessem presentes na importação"
@@ -12656,7 +12677,7 @@ msgstr "Marcar imagem com perfil de _monitor"
 msgid "Convert image to sR_GB"
 msgstr "Converter imagem para sR_GB"
 
-#: ../plug-ins/screenshot/screenshot-win32.c:299
+#: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
 msgstr "Não foi capturado nada"
 
