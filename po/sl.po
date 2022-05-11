@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-02 11:02+0000\n"
-"PO-Revision-Date: 2022-05-02 22:03+0200\n"
+"POT-Creation-Date: 2022-05-11 09:35+0000\n"
+"PO-Revision-Date: 2022-05-11 11:59+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1260,14 +1260,6 @@ msgstr "Dodana podpora za dokumente PDF, zaščitene z gesli"
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:208
 msgid "New support for HGT format (Digital Elevation Model data)"
 msgstr "Dodana podpora za zapis HGT (podatki Digital Elevation Model)"
-
-#: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:1
-msgid "Extra files for GIMP"
-msgstr "Dodatne datoteke za GIMP"
-
-#: ../desktop/gimp-data-extras.metainfo.xml.in.in.h:2
-msgid "Patterns, gradients, and other extra files for GIMP"
-msgstr "Vzorci, prelivi in druge dodatne datoteke za GIMP"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "Image Editor"
@@ -11643,42 +11635,52 @@ msgctxt "position"
 msgid "Right"
 msgstr "Desno"
 
+#: ../app/config/config-enums.c:248
+msgctxt "drag-zoom-mode"
+msgid "By distance"
+msgstr "Glede na razdaljo"
+
 #: ../app/config/config-enums.c:249
+msgctxt "drag-zoom-mode"
+msgid "By duration"
+msgstr "Glede na trajanje"
+
+#: ../app/config/config-enums.c:278
 msgctxt "space-bar-action"
 msgid "No action"
 msgstr "Brez dejanj"
 
-#: ../app/config/config-enums.c:250
+#: ../app/config/config-enums.c:279
 msgctxt "space-bar-action"
 msgid "Pan view"
 msgstr "Pogled s zasukom"
 
-#: ../app/config/config-enums.c:251
+#: ../app/config/config-enums.c:280
 msgctxt "space-bar-action"
 msgid "Switch to Move tool"
 msgstr "Preklopi na orodje Premakni"
 
-#: ../app/config/config-enums.c:280
+#: ../app/config/config-enums.c:309
 msgctxt "window-hint"
 msgid "Normal window"
 msgstr "Navadno okno"
 
-#: ../app/config/config-enums.c:281
+#: ../app/config/config-enums.c:310
 msgctxt "window-hint"
 msgid "Utility window"
 msgstr "Okno pripomočka"
 
-#: ../app/config/config-enums.c:282
+#: ../app/config/config-enums.c:311
 msgctxt "window-hint"
 msgid "Keep above"
 msgstr "Obdrži na vrhu"
 
-#: ../app/config/config-enums.c:310
+#: ../app/config/config-enums.c:339
 msgctxt "zoom-quality"
 msgid "Low"
 msgstr "nizko"
 
-#: ../app/config/config-enums.c:311
+#: ../app/config/config-enums.c:340
 msgctxt "zoom-quality"
 msgid "High"
 msgstr "visoko"
@@ -19628,7 +19630,7 @@ msgstr "(čisto)"
 msgid "(none)"
 msgstr "(brez)"
 
-#: ../app/display/gimpdisplayshell-tool-events.c:1705
+#: ../app/display/gimpdisplayshell-tool-events.c:1676
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "Izbrana plast: »%s«"
