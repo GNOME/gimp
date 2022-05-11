@@ -36,31 +36,48 @@
 /*
  * To avoid endian-problems I wrote these functions:
  */
-static guchar
-fli_read_char (FILE *f)
+static gboolean
+fli_read_char (FILE *f, guchar *value, GError **error)
 {
-  guchar b;
-
-  fread (&b, 1, 1, f);
-  return b;
+  if (fread (value, 1, 1, f) != 1)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error reading from file."));
+      return FALSE;
+    }
+  return TRUE;
 }
 
 static gushort
-fli_read_short (FILE *f)
+fli_read_short (FILE *f, gushort *value, GError **error)
 {
   guchar b[2];
 
-  fread (&b, 1, 2, f);
-  return (gushort) (b[1]<<8) | b[0];
+  if (fread (&b, 1, 2, f) != 2)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error reading from file."));
+      return FALSE;
+    }
+
+  *value = (gushort) (b[1]<<8) | b[0];
+  return TRUE;
 }
 
 static guint32
-fli_read_uint32 (FILE *f)
+fli_read_uint32 (FILE *f, guint32 *value, GError **error)
 {
   guchar b[4];
 
-  fread (&b, 1, 4, f);
-  return (guint32) (b[3]<<24) | (b[2]<<16) | (b[1]<<8) | b[0];
+  if (fread (&b, 1, 4, f) != 4)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error reading from file."));
+      return FALSE;
+    }
+
+  *value = (guint32) (b[3]<<24) | (b[2]<<16) | (b[1]<<8) | b[0];
+  return TRUE;
 }
 
 static void
@@ -100,25 +117,46 @@ fli_read_header (FILE          *f,
                  s_fli_header  *fli_header,
                  GError       **error)
 {
-  fli_header->filesize = fli_read_uint32 (f);  /* 0 */
-  fli_header->magic    = fli_read_short (f);   /* 4 */
-  fli_header->frames   = fli_read_short (f);   /* 6 */
-  fli_header->width    = fli_read_short (f);   /* 8 */
-  fli_header->height   = fli_read_short (f);   /* 10 */
-  fli_header->depth    = fli_read_short (f);   /* 12 */
-  fli_header->flags    = fli_read_short (f);   /* 14 */
+  goffset actual_size;
+
+  /* Get the actual file size, since filesize in header could be wrong. */
+  fseek(f, 0, SEEK_END);
+  actual_size = ftell(f);
+  fseek(f, 0, SEEK_SET);
+
+  if (! fli_read_uint32 (f, &fli_header->filesize, error) ||  /*  0 */
+      ! fli_read_short (f, &fli_header->magic, error)     ||  /*  4 */
+      ! fli_read_short (f, &fli_header->frames, error)    ||  /*  6 */
+      ! fli_read_short (f, &fli_header->width, error)     ||  /*  8 */
+      ! fli_read_short (f, &fli_header->height, error)    ||  /* 10 */
+      ! fli_read_short (f, &fli_header->depth, error)     ||  /* 12 */
+      ! fli_read_short (f, &fli_header->flags, error))        /* 14 */
+    {
+      g_prefix_error (error, _("Error reading header. "));
+      return FALSE;
+    }
 
   if (fli_header->magic == HEADER_FLI)
     {
+      gushort speed;
       /* FLI saves speed in 1/70s */
-      fli_header->speed = fli_read_short (f) * 14; /* 16 */
+      if (! fli_read_short (f, &speed, error))  /* 16 */
+        {
+          g_prefix_error (error, _("Error reading header. "));
+          return FALSE;
+        }
+      fli_header->speed = speed * 14;
     }
   else
     {
       if (fli_header->magic == HEADER_FLC)
         {
           /* FLC saves speed in 1/1000s */
-          fli_header->speed = fli_read_uint32 (f); /* 16 */
+          if (! fli_read_uint32 (f, &fli_header->speed, error))  /* 16 */
+            {
+              g_prefix_error (error, _("Error reading header. "));
+              return FALSE;
+            }
         }
       else
         {
@@ -134,6 +172,32 @@ fli_read_header (FILE          *f,
 
   if (fli_header->height == 0)
     fli_header->height = 200;
+
+if (actual_size != fli_header->filesize && actual_size >= 0)
+  {
+    g_warning (_("Incorrect file size in header: %u, should be: %u."),
+               fli_header->filesize, (guint) actual_size);
+    fli_header->filesize = actual_size;
+  }
+
+if (fli_header->frames == 0)
+  {
+    g_warning (_("Number of frames is 0. Setting to 2."));
+    fli_header->frames = 2;
+  }
+
+/* A delay longer than 10 seconds is suspicious. */
+if (fli_header->speed > 10000 || fli_header->speed == 0)
+  {
+    g_warning (_("Suspicious frame delay of %ums. Setting delay to 70ms."),
+               fli_header->speed);
+    fli_header->speed = 70;
+  }
+
+  g_debug ("Filesize: %u, magic: %x, frames: %u, wxh: %ux%u, depth: %u, flags: %x, speed: %u",
+           fli_header->filesize, fli_header->magic, fli_header->frames,
+           fli_header->width, fli_header->height, fli_header->depth,
+           fli_header->flags, fli_header->speed);
 
   return TRUE;
 }
@@ -170,7 +234,7 @@ fli_write_header (FILE          *f,
       else
         {
           g_set_error (error, GIMP_PLUG_IN_ERROR, 0,
-                       _("Invalid header: magic number is wrong!"));
+                       _("Invalid header: unrecognized magic number!"));
           return FALSE;
         }
     }
@@ -188,23 +252,34 @@ fli_read_frame (FILE          *f,
                 GError       **error)
 {
   s_fli_frame   fli_frame;
-  guint64       framepos;
+  gint64        framepos;
   int           c;
 
-  framepos = ftell (f);
-
-  fli_frame.size   = fli_read_uint32 (f);
-  fli_frame.magic  = fli_read_short (f);
-  fli_frame.chunks = fli_read_short (f);
-
-  g_debug ("Frame size: %u, magic: %x, chunks: %u\n",
-           fli_frame.size, fli_frame.magic, fli_frame.chunks);
-
-  if (framepos + fli_frame.size >= fli_header->filesize)
+  while (TRUE)
     {
-      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Invalid frame size points past end of file!"));
-      return FALSE;
+      framepos = ftell (f);
+
+      if (framepos < 0 ||
+          ! fli_read_uint32 (f, &fli_frame.size, error) ||
+          ! fli_read_short (f, &fli_frame.magic, error) ||
+          ! fli_read_short (f, &fli_frame.chunks, error))
+        {
+          g_prefix_error (error, _("Error reading frame. "));
+          return FALSE;
+        }
+
+      g_debug ("Offset: %u, frame size: %u, magic: %x, chunks: %u",
+               (guint) framepos, fli_frame.size, fli_frame.magic, fli_frame.chunks);
+
+      if (framepos + fli_frame.size > fli_header->filesize)
+        {
+          g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                       _("Invalid frame size points past end of file!"));
+          return FALSE;
+        }
+      if (fli_frame.magic == FRAME)
+        break;
+      fseek (f, framepos + fli_frame.size, SEEK_SET);
     }
 
   if (fli_frame.magic == FRAME)
@@ -213,12 +288,26 @@ fli_read_frame (FILE          *f,
       for (c = 0; c < fli_frame.chunks; c++)
         {
           s_fli_chunk  chunk;
-          guint32      chunkpos;
+          gint64       chunkpos;
           gboolean     read_ok;
 
           chunkpos = ftell (f);
-          chunk.size = fli_read_uint32 (f);
-          chunk.magic = fli_read_short (f);
+          if (chunkpos < 0 ||
+              ! fli_read_uint32 (f, &chunk.size, error) ||
+              ! fli_read_short (f, &chunk.magic, error))
+            {
+              g_prefix_error (error, _("Error reading frame. "));
+              return FALSE;
+            }
+          g_debug ("Chunk offset: %u, chunk size: %u, chunk type: %u",
+                   (guint) chunkpos, chunk.size, chunk.magic);
+          if (chunkpos + chunk.size >= fli_header->filesize)
+            {
+              g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                           _("Invalid chunk size points past end of file!"));
+              return FALSE;
+            }
+
           read_ok = TRUE;
           switch (chunk.magic)
             {
@@ -248,17 +337,23 @@ fli_read_frame (FILE          *f,
               break;
             default:
               /* unknown, skip */
+              g_debug ("Unrecognized chunk magic: %u", chunk.magic);
               break;
             }
           if (! read_ok)
             return FALSE;
 
-          if (chunk.size & 1)
-            chunk.size++;
           fseek (f, chunkpos + chunk.size, SEEK_SET);
         }
+      if (fli_frame.chunks == 0)
+        {
+          memcpy (framebuf, old_framebuf, fli_header->width * fli_header->height);
+        }
     }
-  /* else: unknown, skip */
+  else /* unknown, skip */
+    {
+      g_debug ("Unrecognized frame magic: %u (%x)", fli_frame.magic, fli_frame.magic);
+    }
 
   fseek (f, framepos + fli_frame.size, SEEK_SET);
 
@@ -386,18 +481,31 @@ fli_read_color (FILE          *f,
   gushort num_packets, cnt_packets, col_pos;
 
   col_pos = 0;
-  num_packets = fli_read_short (f);
+  if (! fli_read_short (f, &num_packets, error))
+    {
+      g_prefix_error (error, _("Error reading palette. "));
+      return FALSE;
+    }
   for (cnt_packets = num_packets; cnt_packets > 0; cnt_packets--)
     {
-      gushort skip_col, num_col, col_cnt;
+      guchar skip_col, num_col, col_cnt;
 
-      skip_col = fli_read_char (f);
-      num_col = fli_read_char (f);
+      if (! fli_read_char (f, &skip_col, error) ||
+          ! fli_read_char (f, &num_col, error))
+        {
+          g_prefix_error (error, _("Error reading palette. "));
+          return FALSE;
+        }
       if (num_col == 0)
         {
           for (col_pos = 0; col_pos < 768; col_pos++)
             {
-              cmap[col_pos] = fli_read_char (f) << 2;
+              if (! fli_read_char (f, &cmap[col_pos], error))
+                {
+                  g_prefix_error (error, _("Error reading palette. "));
+                  return FALSE;
+                }
+              cmap[col_pos] = cmap[col_pos] << 2;
             }
           return TRUE;
         }
@@ -409,9 +517,16 @@ fli_read_color (FILE          *f,
         }
       for (col_cnt = num_col; (col_cnt > 0) && (col_pos < 768); col_cnt--)
         {
-          cmap[col_pos++] = fli_read_char (f) << 2;
-          cmap[col_pos++] = fli_read_char (f) << 2;
-          cmap[col_pos++] = fli_read_char (f) << 2;
+          if (! fli_read_char (f, &cmap[col_pos  ], error) ||
+              ! fli_read_char (f, &cmap[col_pos+1], error) ||
+              ! fli_read_char (f, &cmap[col_pos+2], error))
+            {
+              g_prefix_error (error, _("Error reading palette. "));
+              return FALSE;
+            }
+          cmap[col_pos] = cmap[col_pos] << 2; col_pos++;
+          cmap[col_pos] = cmap[col_pos] << 2; col_pos++;
+          cmap[col_pos] = cmap[col_pos] << 2; col_pos++;
         }
     }
 
@@ -523,19 +638,31 @@ fli_read_color_2 (FILE          *f,
 {
   gushort num_packets, cnt_packets, col_pos;
 
-  num_packets = fli_read_short (f);
+  if (! fli_read_short (f, &num_packets, error))
+    {
+      g_prefix_error (error, _("Error reading palette. "));
+      return FALSE;
+    }
   col_pos = 0;
   for (cnt_packets = num_packets; cnt_packets > 0; cnt_packets--)
     {
-      gushort skip_col, num_col, col_cnt;
+      guchar skip_col, num_col, col_cnt;
 
-      skip_col = fli_read_char (f);
-      num_col = fli_read_char (f);
+      if (! fli_read_char (f, &skip_col, error) ||
+          ! fli_read_char (f, &num_col, error))
+        {
+          g_prefix_error (error, _("Error reading palette. "));
+          return FALSE;
+        }
       if (num_col == 0)
         {
           for (col_pos = 0; col_pos < 768; col_pos++)
             {
-              cmap[col_pos] = fli_read_char (f);
+              if (! fli_read_char (f, &cmap[col_pos], error))
+                {
+                  g_prefix_error (error, _("Error reading palette. "));
+                  return FALSE;
+                }
             }
           return TRUE;
         }
@@ -550,9 +677,13 @@ fli_read_color_2 (FILE          *f,
         }
       for (col_cnt = num_col; (col_cnt > 0) && (col_pos < 768); col_cnt--)
         {
-          cmap[col_pos++] = fli_read_char (f);
-          cmap[col_pos++] = fli_read_char (f);
-          cmap[col_pos++] = fli_read_char (f);
+          if (! fli_read_char (f, &cmap[col_pos++], error) ||
+              ! fli_read_char (f, &cmap[col_pos++], error) ||
+              ! fli_read_char (f, &cmap[col_pos++], error))
+            {
+              g_prefix_error (error, _("Error reading palette. "));
+              return FALSE;
+            }
         }
     }
 
@@ -689,7 +820,12 @@ fli_read_copy (FILE          *f,
                guchar        *framebuf,
                GError       **error)
 {
-  fread (framebuf, fli_header->width, fli_header->height, f);
+  if (fread (framebuf, fli_header->width, fli_header->height, f) != fli_header->height)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error reading from file."));
+      return FALSE;
+    }
 
   return TRUE;
 }
@@ -733,25 +869,43 @@ fli_read_brun (FILE          *f,
 
   for (yc = 0; yc < fli_header->height; yc++)
     {
-      gushort pc, pcnt;
+      guchar pc, pcnt;
       size_t n, xc;
 
-      pc = fli_read_char (f);
+      if (! fli_read_char (f, &pc, error))
+        {
+          g_prefix_error (error, _("Error reading compressed data. "));
+          return FALSE;
+        }
       xc = 0;
       pos = framebuf + (fli_header->width * yc);
       n = (size_t) fli_header->width * (fli_header->height - yc);
       for (pcnt = pc; pcnt > 0; pcnt--)
         {
-          gushort ps;
+          guchar ps;
 
-          ps = fli_read_char (f);
+          if (! fli_read_char (f, &ps, error))
+            {
+              g_prefix_error (error, _("Error reading compressed data. "));
+              return FALSE;
+            }
           if (ps & 0x80)
             {
               gushort len;
 
               for (len = -(signed char) ps; len > 0 && xc < n; len--)
                 {
-                  pos[xc++] = fli_read_char (f);
+                  if (! fli_read_char (f, &pos[xc++], error))
+                    {
+                      g_prefix_error (error, _("Error reading compressed data. "));
+                      return FALSE;
+                    }
+                }
+              if (len > 0 && xc >= n)
+                {
+                  g_set_error (error, G_FILE_ERROR, 0,
+                               _("Overflow reading compressed data. Possibly corrupt file."));
+                  return FALSE;
                 }
             }
           else
@@ -760,7 +914,11 @@ fli_read_brun (FILE          *f,
               size_t  len;
 
               len = MIN (n - xc, ps);
-              val = fli_read_char (f);
+              if (! fli_read_char (f, &val, error))
+                {
+                  g_prefix_error (error, _("Error reading compressed data. "));
+                  return FALSE;
+                }
               memset (&(pos[xc]), val, len);
               xc+=len;
             }
@@ -873,45 +1031,74 @@ fli_read_lc (FILE          *f,
   guchar  *pos;
 
   memcpy (framebuf, old_framebuf, fli_header->width * fli_header->height);
-  firstline = fli_read_short (f);
-  numline = fli_read_short (f);
+
+  if (! fli_read_short (f, &firstline, error) ||
+      ! fli_read_short (f, &numline, error))
+    {
+      g_prefix_error (error, _("Error reading compressed data. "));
+      return FALSE;
+    }
+
   if (numline > fli_header->height || fli_header->height - numline < firstline)
     return TRUE;
 
   for (yc = 0; yc < numline; yc++)
     {
-      gushort pc, pcnt;
+      guchar  pc, pcnt;
       size_t  n, xc;
 
-      pc = fli_read_char (f);
+      if (! fli_read_char (f, &pc, error))
+        {
+          g_prefix_error (error, _("Error reading compressed data. "));
+          return FALSE;
+        }
       xc = 0;
       pos = framebuf + (fli_header->width * (firstline + yc));
       n = (size_t) fli_header->width * (fli_header->height - firstline - yc);
       for (pcnt = pc; pcnt > 0; pcnt--)
         {
-          gushort ps, skip;
+          guchar ps, skip;
 
-          skip = fli_read_char (f);
-          ps = fli_read_char (f);
-          xc+=MIN (n - xc, skip);
+          if (! fli_read_char (f, &skip, error) ||
+              ! fli_read_char (f, &ps, error))
+            {
+              g_prefix_error (error, _("Error reading compressed data. "));
+              return FALSE;
+            }
+
+          xc += MIN (n - xc, skip);
           if (ps & 0x80)
             {
               guchar val;
               size_t len;
 
               ps = -(signed char) ps;
-              val = fli_read_char (f);
+              if (! fli_read_char (f, &val, error))
+                {
+                  g_prefix_error (error, _("Error reading compressed data. "));
+                  return FALSE;
+                }
               len = MIN (n - xc, ps);
               memset (&(pos[xc]), val, len);
-              xc+=len;
+              xc += len;
             }
           else
             {
-              size_t len;
+              size_t len, len_read;
 
               len = MIN (n - xc, ps);
-              fread (&(pos[xc]), len, 1, f);
-              xc+=len;
+              if (len > 0)
+                {
+                  len_read = fread (&pos[xc], len, 1, f);
+                  if (len_read != 1)
+                    {
+                      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                                   _("Error reading from file."));
+                      g_prefix_error (error, _("Error reading compressed data. "));
+                      return FALSE;
+                    }
+                }
+              xc += len;
             }
         }
     }
@@ -1062,16 +1249,33 @@ fli_read_lc_2 (FILE          *f,
 {
   gushort  yc, lc, numline;
   guchar  *pos;
+  guint32  len_read;
 
   memcpy (framebuf, old_framebuf, fli_header->width * fli_header->height);
   yc = 0;
-  numline = fli_read_short (f);
+
+  if (! fli_read_short (f, &numline, error))
+    {
+      g_prefix_error (error, _("Error reading compressed data. "));
+      return FALSE;
+    }
+  if (numline > fli_header->height)
+    {
+      g_warning ("Number of lines %u larger than frame height %u.", numline, fli_header->height);
+      numline = fli_header->height;
+    }
+
   for (lc = 0; lc < numline; lc++)
     {
       gushort pc, pcnt, lpf, lpn;
       size_t  n, xc;
 
-      pc = fli_read_short (f);
+      if (! fli_read_short (f, &pc, error))
+        {
+          g_prefix_error (error, _("Error reading compressed data. "));
+          return FALSE;
+        }
+
       lpf = 0; lpn = 0;
       while (pc & 0x8000)
         {
@@ -1084,7 +1288,12 @@ fli_read_lc_2 (FILE          *f,
               lpf = 1;
               lpn = pc & 0xFF;
             }
-          pc = fli_read_short (f);
+
+          if (! fli_read_short (f, &pc, error))
+            {
+              g_prefix_error (error, _("Error reading compressed data. "));
+              return FALSE;
+            }
         }
       yc = MIN (yc, fli_header->height);
       xc = 0;
@@ -1092,18 +1301,27 @@ fli_read_lc_2 (FILE          *f,
       n = (size_t) fli_header->width * (fli_header->height - yc);
       for (pcnt = pc; pcnt > 0; pcnt--)
         {
-          gushort ps, skip;
+          guchar ps, skip;
 
-          skip = fli_read_char (f);
-          ps = fli_read_char (f);
+          if (! fli_read_char (f, &skip, error) ||
+              ! fli_read_char (f, &ps, error))
+            {
+              g_prefix_error (error, _("Error reading compressed data. "));
+              return FALSE;
+            }
+
           xc += MIN (n - xc, skip);
           if (ps & 0x80)
             {
               guchar v1, v2;
 
               ps = -(signed char) ps;
-              v1 = fli_read_char (f);
-              v2 = fli_read_char (f);
+              if (! fli_read_char (f, &v1, error) ||
+                  ! fli_read_char (f, &v2, error))
+                {
+                  g_prefix_error (error, _("Error reading compressed data. "));
+                  return FALSE;
+                }
               while (ps > 0 && xc + 1 < n)
                 {
                   pos[xc++] = v1;
@@ -1116,7 +1334,17 @@ fli_read_lc_2 (FILE          *f,
               size_t len;
 
               len = MIN ((n - xc)/2, ps);
-              fread (&(pos[xc]), len, 2, f);
+              if (len > 0)
+                {
+                  len_read = fread (&pos[xc], len, 2, f);
+                  if (len_read != 2)
+                    {
+                      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                                   _("Error reading from file."));
+                      g_prefix_error (error, _("Error reading compressed data. "));
+                      return FALSE;
+                    }
+                }
               xc += len << 1;
             }
         }
