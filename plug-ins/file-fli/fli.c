@@ -48,7 +48,7 @@ fli_read_char (FILE *f, guchar *value, GError **error)
   return TRUE;
 }
 
-static gushort
+static gboolean
 fli_read_short (FILE *f, gushort *value, GError **error)
 {
   guchar b[2];
@@ -64,7 +64,7 @@ fli_read_short (FILE *f, gushort *value, GError **error)
   return TRUE;
 }
 
-static guint32
+static gboolean
 fli_read_uint32 (FILE *f, guint32 *value, GError **error)
 {
   guchar b[4];
