@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-09 20:08+0000\n"
-"PO-Revision-Date: 2022-05-10 22:09+0100\n"
+"POT-Creation-Date: 2022-05-11 20:34+0000\n"
+"PO-Revision-Date: 2022-05-12 23:05+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -986,7 +986,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
-#: ../plug-ins/file-fli/fli-gimp.c:778 ../plug-ins/file-ico/ico-save.c:1252
+#: ../plug-ins/file-fli/fli-gimp.c:814 ../plug-ins/file-ico/ico-save.c:1252
 #: ../plug-ins/file-jpeg/jpeg-save.c:318 ../plug-ins/file-psd/psd-save.c:1815
 #: ../plug-ins/file-tiff/file-tiff-save.c:1025
 #: ../plug-ins/file-tiff/file-tiff-save.c:1101 ../plug-ins/flame/flame.c:508
@@ -1021,7 +1021,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/common/file-xwd.c:481 ../plug-ins/common/sphere-designer.c:2088
 #: ../plug-ins/file-bmp/bmp-load.c:226 ../plug-ins/file-dds/ddsread.c:155
 #: ../plug-ins/file-faxg3/faxg3.c:255 ../plug-ins/file-fits/fits.c:381
-#: ../plug-ins/file-fli/fli-gimp.c:458 ../plug-ins/file-fli/fli-gimp.c:505
+#: ../plug-ins/file-fli/fli-gimp.c:458 ../plug-ins/file-fli/fli-gimp.c:509
 #: ../plug-ins/file-ico/ico-load.c:677 ../plug-ins/file-ico/ico-load.c:774
 #: ../plug-ins/file-jpeg/jpeg-load.c:96 ../plug-ins/file-jpeg/jpeg-load.c:550
 #: ../plug-ins/file-psd/psd-load.c:158 ../plug-ins/file-psd/psd-load.c:163
@@ -1955,7 +1955,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
 #: ../plug-ins/file-bmp/bmp-load.c:218 ../plug-ins/file-exr/file-exr.c:187
-#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:497
+#: ../plug-ins/file-faxg3/faxg3.c:239 ../plug-ins/file-fli/fli-gimp.c:501
 #: ../plug-ins/file-ico/ico-load.c:669 ../plug-ins/file-jpeg/jpeg-load.c:87
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:415
@@ -2038,7 +2038,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
-#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:745
+#: ../plug-ins/file-fits/fits.c:504 ../plug-ins/file-fli/fli-gimp.c:781
 #: ../plug-ins/file-ico/ico-save.c:1244 ../plug-ins/file-jpeg/jpeg-save.c:273
 #: ../plug-ins/file-psd/psd-save.c:1777 ../plug-ins/file-sgi/sgi.c:645
 #: ../plug-ins/file-tiff/file-tiff-save.c:1015
@@ -6792,30 +6792,31 @@ msgstr "_Nenhuma"
 msgid "AutoDesk FLIC animation"
 msgstr "Animação FLIC AutoDesk"
 
-#: ../plug-ins/file-fli/fli-gimp.c:580
+#: ../plug-ins/file-fli/fli-gimp.c:587
 #, c-format
-msgid "Frame (%i)"
-msgstr "Fotograma (%i)"
+msgid "Frame %d (%ums)"
+msgstr "Fotograma %d (%ums)"
 
-#: ../plug-ins/file-fli/fli-gimp.c:741
-msgid "Sorry, I can export only INDEXED and GRAY images."
-msgstr "Só podem ser guardadas imagens INDEXADAS e TONS DE CINZENTO."
+#: ../plug-ins/file-fli/fli-gimp.c:614
+#, c-format
+msgid "Failed to read frame %d. Possibly corrupt animation.\n"
+msgstr "Falha ao ler o fotograma %d. Possível animação corrupta.\n"
 
-#: ../plug-ins/file-fli/fli-gimp.c:902
+#: ../plug-ins/file-fli/fli-gimp.c:941
 msgid "Open FLIC Animation"
 msgstr "Abrir animação FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:920
+#: ../plug-ins/file-fli/fli-gimp.c:959
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_De:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:926
+#: ../plug-ins/file-fli/fli-gimp.c:965
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Para:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:956
+#: ../plug-ins/file-fli/fli-gimp.c:995
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagem como animação FLIC"
 
@@ -12700,6 +12701,13 @@ msgstr "_Digitalizador/câmara..."
 #: ../plug-ins/twain/twain.c:520
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador/câmara"
+
+#, c-format
+#~ msgid "Frame (%i)"
+#~ msgstr "Fotograma (%i)"
+
+#~ msgid "Sorry, I can export only INDEXED and GRAY images."
+#~ msgstr "Só podem ser guardadas imagens INDEXADAS e TONS DE CINZENTO."
 
 #~ msgid "Go back one page"
 #~ msgstr "Retroceder uma página"
