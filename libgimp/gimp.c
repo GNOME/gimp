@@ -806,6 +806,8 @@ gimp_check_type (void)
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the _check_custom_color1 value
+ *
+ * Since: 3.0
  **/
 const GimpRGB *
 gimp_check_custom_color1 (void)
@@ -822,6 +824,8 @@ gimp_check_custom_color1 (void)
  * This is a constant value given at plug-in configuration time.
  *
  * Return value: the _check_custom_color2 value
+ *
+ * Since: 3.0
  **/
 const GimpRGB *
 gimp_check_custom_color2 (void)

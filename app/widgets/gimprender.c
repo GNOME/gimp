@@ -88,18 +88,19 @@ gimp_render_setup_notify (gpointer    config,
                           GParamSpec *param_spec,
                           Gimp       *gimp)
 {
-  GimpCheckType check_type;
   GimpRGB       *color1_custom;
   GimpRGB       *color2_custom;
+  GimpCheckType  check_type;
 
   g_object_get (config,
-                "transparency-type", &check_type,
+                "transparency-type",          &check_type,
                 "transparency-custom-color1", &color1_custom,
                 "transparency-custom-color2", &color2_custom,
                 NULL);
 
-  gimp_checks_get_colors (check_type, &color1, &color2, *color1_custom, *color2_custom);
-
+  color1 = *color1_custom;
+  color2 = *color2_custom;
+  gimp_checks_get_colors (check_type, &color1, &color2);
   g_free (color1_custom);
   g_free (color2_custom);
 }

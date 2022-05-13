@@ -181,12 +181,12 @@ gimp_preview_area_init (GimpPreviewArea *area)
 
   priv = area->priv;
 
-  priv->check_size = DEFAULT_CHECK_SIZE;
-  priv->check_type = DEFAULT_CHECK_TYPE;
+  priv->check_size          = DEFAULT_CHECK_SIZE;
+  priv->check_type          = DEFAULT_CHECK_TYPE;
   priv->check_custom_color1 = GIMP_CHECKS_CUSTOM_COLOR1;
   priv->check_custom_color2 = GIMP_CHECKS_CUSTOM_COLOR2;
-  priv->max_width  = -1;
-  priv->max_height = -1;
+  priv->max_width           = -1;
+  priv->max_height          = -1;
 
   gimp_widget_track_monitor (GTK_WIDGET (area),
                              G_CALLBACK (gimp_preview_area_destroy_transform),
@@ -461,6 +461,20 @@ gimp_preview_area_destroy_transform (GimpPreviewArea *area)
  *
  * Creates a new #GimpPreviewArea widget.
  *
+ * If the preview area is used to draw an image with transparency, you
+ * might want to default the checkboard size and colors to user-set
+ * Preferences. To do this, you may set the following properties on the
+ * newly created #GimpPreviewArea:
+ *
+ * |[<!-- language="C" -->
+ * g_object_set (area,
+ *               "check-size",          gimp_check_size (),
+ *               "check-type",          gimp_check_type (),
+ *               "check-custom-color1", gimp_check_custom_color1 (),
+ *               "check-custom-color2", gimp_check_custom_color2 (),
+ *               NULL);
+ * ]|
+ *
  * Returns: a new #GimpPreviewArea widget.
  *
  * Since GIMP 2.2
@@ -559,11 +573,9 @@ gimp_preview_area_draw (GimpPreviewArea *area,
     }
 
   size = 1 << (2 + priv->check_size);
-  gimp_checks_get_colors (priv->check_type,
-                          &color1,
-                          &color2,
-                          priv->check_custom_color1,
-                          priv->check_custom_color2);
+  color1 = priv->check_custom_color1;
+  color2 = priv->check_custom_color2;
+  gimp_checks_get_colors (priv->check_type, &color1, &color2);
   gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
   gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
 
@@ -869,11 +881,9 @@ gimp_preview_area_blend (GimpPreviewArea *area,
     }
 
   size = 1 << (2 + priv->check_size);
-  gimp_checks_get_colors (priv->check_type,
-                          &color1,
-                          &color2,
-                          priv->check_custom_color1,
-                          priv->check_custom_color2);
+  color1 = priv->check_custom_color1;
+  color2 = priv->check_custom_color2;
+  gimp_checks_get_colors (priv->check_type, &color1, &color2);
   gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
   gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
 
@@ -1270,11 +1280,9 @@ gimp_preview_area_mask (GimpPreviewArea *area,
     }
 
   size = 1 << (2 + priv->check_size);
-  gimp_checks_get_colors (priv->check_type,
-                          &color1,
-                          &color2,
-                          priv->check_custom_color1,
-                          priv->check_custom_color2);
+  color1 = priv->check_custom_color1;
+  color2 = priv->check_custom_color2;
+  gimp_checks_get_colors (priv->check_type, &color1, &color2);
   gimp_rgb_get_uchar (&color1, &r1, &g1, &b1);
   gimp_rgb_get_uchar (&color2, &r2, &g2, &b2);
 
@@ -2136,10 +2144,15 @@ gimp_preview_area_menu_popup (GimpPreviewArea *area,
                          gimp_preview_area_menu_new (area, "check-type"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-size"));
+#if 0
+  /* gimp_preview_area_menu_new() currently only handles enum types, and
+   * in particular not color properties.
+   */
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-custom-color1"));
   gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                          gimp_preview_area_menu_new (area, "check-custom-color2"));
+#endif
 
   gtk_menu_popup_at_pointer (GTK_MENU (menu), (GdkEvent *) event);
 }

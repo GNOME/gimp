@@ -141,9 +141,7 @@ void  gimp_checks_get_shades (GimpCheckType  type,
 
 void  gimp_checks_get_colors (GimpCheckType  type,
                               GimpRGB       *color1,
-                              GimpRGB       *color2,
-                              GimpRGB        color1_custom,
-                              GimpRGB        color2_custom);
+                              GimpRGB       *color2);
 
 
 G_END_DECLS

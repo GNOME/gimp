@@ -76,21 +76,32 @@ gimp_checks_get_shades (GimpCheckType  type,
 
 /**
  * gimp_checks_get_colors:
- * @type:          the checkerboard type
- * @color1:        return location for the first color,
- *                 usually the light color
- * @color2:        return location for the second color,
- *                 usually the dark color
- * @color1_custom: the first color to return if type is custom
- * @color2_custom: the second color to return if type is custom
+ * @type:            the checkerboard type
+ * @color1: (inout): current custom color and return location for the first color.
+ * @color2: (inout): current custom color and return location for the second color.
+ *
+ * Retrieves the colors to use when drawing a checkerboard for a certain
+ * #GimpCheckType and custom colors.
+ * If @type is %GIMP_CHECK_TYPE_CUSTOM_CHECKS, then @color1 and @color2
+ * will remain untouched, which means you must initialize them to the
+ * values expected for custom checks.
+ *
+ * To obtain the user-set colors in Preferences, just call:
+ * |[<!-- language="C" -->
+ * GimpRGB color1 = *(gimp_check_custom_color1 ());
+ * GimpRGB color2 = *(gimp_check_custom_color2 ());
+ * gimp_checks_get_colors (gimp_check_type (), &color1, &color2);
+ * ]|
+ *
+ * Since: 3.0
  **/
 void
 gimp_checks_get_colors (GimpCheckType  type,
                         GimpRGB       *color1,
-                        GimpRGB       *color2,
-                        GimpRGB        color1_custom,
-                        GimpRGB        color2_custom)
+                        GimpRGB       *color2)
 {
+  g_return_if_fail (color1 != NULL || color2 != NULL);
+
   if (color1)
     {
       switch (type)
@@ -111,7 +122,7 @@ gimp_checks_get_colors (GimpCheckType  type,
           *color1 = GIMP_CHECKS_BLACK_COLOR;
           break;
         case GIMP_CHECK_TYPE_CUSTOM_CHECKS:
-          *color1 = color1_custom;
+          /* Keep the current value. */
           break;
         default:
           *color1 = GIMP_CHECKS_GRAY_COLOR_LIGHT;
@@ -139,7 +150,7 @@ gimp_checks_get_colors (GimpCheckType  type,
           *color2 = GIMP_CHECKS_BLACK_COLOR;
           break;
         case GIMP_CHECK_TYPE_CUSTOM_CHECKS:
-          *color2 = color2_custom;
+          /* Keep the current value. */
           break;
         default:
           *color2 = GIMP_CHECKS_GRAY_COLOR_DARK;
