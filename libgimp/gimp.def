@@ -55,6 +55,8 @@ EXPORTS
 	gimp_channel_set_color
 	gimp_channel_set_opacity
 	gimp_channel_set_show_masked
+	gimp_check_custom_color1
+	gimp_check_custom_color2
 	gimp_check_size
 	gimp_check_type
 	gimp_clone
