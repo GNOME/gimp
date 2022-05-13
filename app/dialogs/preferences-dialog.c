@@ -139,6 +139,9 @@ static void   prefs_help_language_change_callback  (GtkComboBox  *combo,
                                                     Gimp         *gimp);
 static void   prefs_help_language_change_callback2 (GtkComboBox  *combo,
                                                     GtkContainer *box);
+static void   prefs_check_style_callback           (GObject      *config,
+                                                    GParamSpec   *pspec,
+                                                    GtkWidget    *widget);
 
 
 /*  private variables  */
@@ -914,6 +917,17 @@ prefs_help_language_change_callback2 (GtkComboBox  *combo,
     }
 
   g_list_free (children);
+}
+
+static void
+prefs_check_style_callback (GObject    *config,
+                            GParamSpec *pspec,
+                            GtkWidget  *widget)
+{
+  GimpDisplayConfig *display_config = GIMP_DISPLAY_CONFIG (config);
+
+  gtk_widget_set_sensitive (widget,
+                            display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
 }
 
 static void
@@ -2727,29 +2741,35 @@ prefs_dialog_new (Gimp       *gimp,
                             _("_Check style:"),
                             GTK_GRID (grid), 0, size_group);
 
-  button = gimp_prop_color_button_new (object,
-                                       "transparency-custom-color1",
-                                       _("Transparency Custom Color 1"),
-                                       PREFS_COLOR_BUTTON_WIDTH,
-                                       PREFS_COLOR_BUTTON_HEIGHT,
-                                       GIMP_COLOR_AREA_FLAT);
+  button = gimp_prop_label_color_new (object,
+                                      "transparency-custom-color1",
+                                      TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
-                            _("_Custom color 1:"), 0.0, 0.5,
+                            NULL, 0.0, 0.5,
                             button, 1);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+  gtk_widget_set_hexpand (button, FALSE);
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (button))),
+                                      gimp->config->color_management);
+  gtk_widget_set_sensitive (button,
+                            display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
+  g_signal_connect (object, "notify::transparency-type",
+                    G_CALLBACK (prefs_check_style_callback),
+                    button);
 
-  button = gimp_prop_color_button_new (object,
-                                       "transparency-custom-color2",
-                                       _("Transparency Custom Color 2"),
-                                       PREFS_COLOR_BUTTON_WIDTH,
-                                       PREFS_COLOR_BUTTON_HEIGHT,
-                                       GIMP_COLOR_AREA_FLAT);
+  button = gimp_prop_label_color_new (object,
+                                      "transparency-custom-color2",
+                                      TRUE);
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("_Custom color 2:"), 0.0, 0.5,
+                            NULL, 0.0, 0.5,
                             button, 1);
-  gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
-                                gimp_get_user_context (gimp));
+  gtk_widget_set_hexpand (button, FALSE);
+  gimp_color_button_set_color_config (GIMP_COLOR_BUTTON (gimp_label_color_get_color_widget (GIMP_LABEL_COLOR (button))),
+                                      gimp->config->color_management);
+  gtk_widget_set_sensitive (button,
+                            display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
+  g_signal_connect (object, "notify::transparency-type",
+                    G_CALLBACK (prefs_check_style_callback),
+                    button);
 
   prefs_enum_combo_box_add (object, "transparency-size", 0, 0,
                             _("Check _size:"),
