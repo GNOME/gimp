@@ -474,6 +474,12 @@ tileit_dialog (GimpDrawable *drawable)
   gtk_widget_show (frame);
 
   tint.preview = gimp_preview_area_new ();
+  g_object_set (tint.preview,
+                "check-size",          gimp_check_size (),
+                "check-type",          gimp_check_type (),
+                "check-custom-color1", gimp_check_custom_color1 (),
+                "check-custom-color2", gimp_check_custom_color2 (),
+                NULL);
   gtk_widget_set_size_request (tint.preview, preview_width, preview_height);
   gtk_widget_set_events (GTK_WIDGET (tint.preview), PREVIEW_MASK);
   gtk_container_add (GTK_CONTAINER (frame), tint.preview);
