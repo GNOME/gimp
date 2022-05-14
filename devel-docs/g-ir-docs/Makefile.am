@@ -6,6 +6,7 @@ Gimp-%-docs: $(top_builddir)/libgimp/Gimp-@GIMP_API_VERSION@.gir
 		-o "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)"	\
 		$<
 	sed -i 's/<\(Prefix\|Image\)/\&lt;\1/g' "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/Gimp.Procedure.add_menu_path.page"
+	sed -i 's/&\([a-z0-9_]\+[^a-z0-9_;]\)/\&amp;\1/g' "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/Gimp.checks_get_colors.page"
 	$(YELP_BUILD) cache								\
 		-o "$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/index.cache"	\
 		"$(builddir)/pages/$*/Gimp-$(GIMP_API_VERSION)/"
