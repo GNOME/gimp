@@ -490,14 +490,11 @@ repaint_da (GtkWidget *darea,
             gpointer   data)
 {
   cairo_pattern_t *check;
-  GimpRGB          light;
-  GimpRGB          dark;
+  GimpRGB          light = *(gimp_check_custom_color1 ());
+  GimpRGB          dark  = *(gimp_check_custom_color2 ());;
   guchar           l, d;
 
-  gimp_checks_get_shades (GIMP_CHECK_SIZE_SMALL_CHECKS, &l, &d);
-
-  gimp_rgba_set_uchar (&light, l, l, l, 255);
-  gimp_rgba_set_uchar (&dark,  d, d, d, 255);
+  gimp_checks_get_colors (gimp_check_type (), &light, &dark);
 
   check = gimp_cairo_checkerboard_create (cr, 32, &light, &dark);
 
