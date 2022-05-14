@@ -27,6 +27,13 @@ Core:
     in the dock to after GIMP is fully initialized.
   - Some code reorganization and factorization of image colormap and
     palette handling.
+  - Language changes will trigger plug-in query() call at next GIMP
+    restart. This allows to have strings in query() and stored in GIMP
+    config being re-localized.
+  - Keyboard grab removed from the canvas display, hence getting rid of
+    annoying grab permission warnings on Wayland.
+  - Preferences > Display > Transparency > Check style has now a new
+    option "Custom checks" allowing to select any RGB colors.
 
 Tools:
 
@@ -57,6 +64,9 @@ Graphical User Interface:
     GIMP will detect the expected behavior through the initial movement
     and will therefore lock on either rotation or scaling for the whole
     duration of the pinch.
+  - Slight tweak of the "You will have to restart GIMP" popup: the list
+    now uses nicer "bullet point" characters and the nick (short
+    description) is shown rather than the internal property name.
 
 Command Line Interface:
 
@@ -107,23 +117,53 @@ Plug-ins:
     GimpBatchProcedure class.
   - JPEG:
     * CMYK export is now possible. It currently uses the "Soft-proofing"
-      profile as set in Preferences
+      profile as set in Preferences.
     * CMYK imported ported to GEGL/babl conversion.
   - WebP: new option "Use Sharp YUV" available in non-lossless export.
     It renders sharper edges at the cost of a slower export.
+  - DDS:
+    * 16-bit masks now supported.
+    * DDS images with single 16-bit channel support added.
+    * DDS images with 2 16-bit channels correctly converted to 16-bit
+      RGB images.
+    * More robust DDS loading.
+  - script-fu:
+    * Various updates to get the API back in shape.
+    * Porting doc updated.
+  - FLI:
+    * Internal type usage improvements, mnemonics added, etc.
+    * 1-frame animation now loaded correctly (it's not really an
+      animation then, yet it should still open!).
+    * Better error handling.
+    * Layer names now include the delay in ms.
+    * More robust FLI/FLC loading, double-checking data rather than
+      assuming that the file writer properly followed the specs.
+  - Several plug-ins now follow the user-set checkboard color
+    preferences, when relevant.
 
 API:
 
+  - Changes in libgimpbase:
+    * gimp_checks_get_colors() added.
+    * gimp_checks_get_shades() removed (replaced by gimp_checks_get_colors())
   - Changes in libgimp:
     * New functions:
       + gimp_image_metadata_save_filter()
+      + gimp_check_custom_color1()
+      + gimp_check_custom_color2()
     * New class:
       + GimpBatchProcedure: procedure usable as a batch interpreter on
         command line.
+    * Protocol bumped to handle the check colors passed at call time on
+      the wire.
+  - Changes in libgimpwidgets:
+    * Freedesktop portal implementation of GimpPickButton now checks the
+      version of the XDG portal since `PickColor()` API only got added
+      in version 2.
 
 Translations:
 
-  - New Galician translation for the installer.
+  - New Galician and Georgian translations for the installer.
 
 Build:
 
@@ -152,6 +192,8 @@ Build:
   - Flatpak manifest improved with version constraints for dependencies
     where we should not update just yet (hence don't want new version
     notifications).
+  - appstream-util replaced by appstreamcli for AppStream file testing
+    (requires appstreamcli 0.15.3 or over).
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
