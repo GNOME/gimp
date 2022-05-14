@@ -26,7 +26,7 @@ G_BEGIN_DECLS
 
 /* Increment every time the protocol changes
  */
-#define GIMP_PROTOCOL_VERSION  0x010E
+#define GIMP_PROTOCOL_VERSION  0x010F
 
 
 enum
@@ -106,8 +106,6 @@ struct _GPConfig
   gint32   shm_id;
   gint8    check_size;
   gint8    check_type;
-  GimpRGB  check_custom_color1;
-  GimpRGB  check_custom_color2;
   gint8    show_help_button;
   gint8    use_cpu_accel;
   gint8    use_opencl;
@@ -127,6 +125,10 @@ struct _GPConfig
   gchar   *swap_path;
   gchar   *swap_compression;
   gint32   num_processors;
+
+  /* since protocol version 0x010F: */
+  GimpRGB  check_custom_color1;
+  GimpRGB  check_custom_color2;
 };
 
 struct _GPTileReq
