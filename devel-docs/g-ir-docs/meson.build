@@ -60,6 +60,7 @@ foreach lang : [ 'python', 'gjs' ]
     command: [
       docs_pages_fix_sh,
       '@OUTDIR@' + '/pages/' + lang + '/Gimp-' + gimp_api_version + '/Gimp.Procedure.add_menu_path.page',
+      '@OUTDIR@' + '/pages/' + lang + '/Gimp-' + gimp_api_version + '/Gimp.checks_get_colors.page',
     ],
     build_by_default: true)
 
