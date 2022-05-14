@@ -21,6 +21,7 @@ possible in the previous API is obviously still possible.
 | `gimp_by_color_select()`                        | `gimp_image_select_color()`                       |
 | `gimp_by_color_select_full()`                   | `gimp_image_select_color()`                       |
 | `gimp_channel_menu_new()`                       | `gimp_channel_combo_box_new()`                    |
+| `gimp_checks_get_shades()`                      | `gimp_checks_get_colors()`                        |
 | `gimp_color_balance()`                          | `gimp_drawable_color_color_balance()`             |
 | `gimp_color_display_convert()`                  | `gimp_color_display_convert_buffer()`             |
 | `gimp_color_display_convert_surface()`          | `gimp_color_display_convert_buffer()`             |

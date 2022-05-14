@@ -135,11 +135,6 @@ G_BEGIN_DECLS
 #define GIMP_CHECKS_CUSTOM_COLOR2 GIMP_CHECKS_GRAY_COLOR_DARK
 
 
-GIMP_DEPRECATED_FOR(gimp_checks_get_colors)
-void  gimp_checks_get_shades (GimpCheckType  type,
-                              guchar        *light,
-                              guchar        *dark);
-
 void  gimp_checks_get_colors (GimpCheckType  type,
                               GimpRGB       *color1,
                               GimpRGB       *color2);
