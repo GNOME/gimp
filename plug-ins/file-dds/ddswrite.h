@@ -27,7 +27,8 @@ extern GimpPDBStatusType write_dds (GFile         *file,
                                     GimpDrawable  *drawable,
                                     gboolean       interactive,
                                     GimpProcedure *procedure,
-                                    GObject       *config);
+                                    GObject       *config,
+                                    gboolean       is_duplicate_image);
 
 
 #endif /* __DDSWRITE_H__ */

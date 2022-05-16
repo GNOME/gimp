@@ -91,6 +91,7 @@ static GtkWidget *mipmap_filter_opt;
 static GtkWidget *mipmap_wrap_opt;
 static GtkWidget *transparent_spin;
 static GtkWidget *srgb_check;
+static GtkWidget *flip_check;
 static GtkWidget *gamma_check;
 static GtkWidget *gamma_spin;
 static GtkWidget *pm_check;
@@ -510,7 +511,8 @@ write_dds (GFile         *file,
            GimpDrawable  *drawable,
            gboolean       interactive,
            GimpProcedure *procedure,
-           GObject       *config)
+           GObject       *config,
+           gboolean       is_duplicate_image)
 {
   FILE *fp;
   gint  rc = 0;
@@ -578,7 +580,19 @@ write_dds (GFile         *file,
 
   gimp_progress_init_printf ("Saving %s:", gimp_file_get_utf8_name (file));
 
-  rc = write_image (fp, image, drawable, config);
+  /* If destructive changes are going to happen to the image,
+   * make sure we send a duplicate of it to write_image()
+   */
+  if (! is_duplicate_image)
+    {
+      GimpImage *duplicate_image = gimp_image_duplicate (image);
+      rc = write_image (fp, duplicate_image, drawable, config);
+      gimp_image_delete (duplicate_image);
+    }
+  else
+    {
+      rc = write_image (fp, image, drawable, config);
+    }
 
   fclose (fp);
 
@@ -1329,6 +1343,7 @@ write_image (FILE         *fp,
   gint               savetype;
   gint               pixel_format;
   gint               transindex;
+  gboolean           flip_export;
 
   g_object_get (config,
                 "compression-format", &compression,
@@ -1336,7 +1351,14 @@ write_image (FILE         *fp,
                 "save-type",          &savetype,
                 "format",             &pixel_format,
                 "transparent-index",  &transindex,
+                "flip-image",         &flip_export,
                 NULL);
+
+  if (flip_export)
+    {
+      gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
+      drawable = gimp_image_get_active_drawable (image);
+    }
 
   layers = gimp_image_list_layers (image);
   num_layers = g_list_length (layers);
@@ -1642,7 +1664,8 @@ write_image (FILE         *fp,
 
   if (is_dx10)
     {
-      array_size = ((savetype == DDS_SAVE_SELECTED_LAYER) ?
+      array_size = ((savetype == DDS_SAVE_SELECTED_LAYER ||
+                    savetype == DDS_SAVE_VISIBLE_LAYERS) ?
                     1 : get_array_size (image));
 
       PUTL32 (hdr10 +  0, dxgi_format);
@@ -1724,6 +1747,9 @@ write_image (FILE         *fp,
     }
   else
     {
+      if (savetype == DDS_SAVE_VISIBLE_LAYERS)
+        drawable = GIMP_DRAWABLE (gimp_image_merge_visible_layers (image,
+                                                                   GIMP_CLIP_TO_IMAGE));
       write_layer (fp, image, drawable, config,
                    w, h, bpp, fmtbpp, num_mipmaps);
     }
@@ -1807,6 +1833,7 @@ config_notify (GObject          *config,
       switch (savetype)
         {
         case DDS_SAVE_SELECTED_LAYER:
+        case DDS_SAVE_VISIBLE_LAYERS:
         case DDS_SAVE_CUBEMAP:
         case DDS_SAVE_ARRAY:
           gtk_widget_set_sensitive (compress_opt, TRUE);
@@ -2014,10 +2041,11 @@ save_dialog (GimpImage     *image,
                             0.0, 0.5,
                             format_opt, 1);
 
-  store = gimp_int_store_new ("Image / Selected layer", DDS_SAVE_SELECTED_LAYER,
-                              "As cube map",            DDS_SAVE_CUBEMAP,
-                              "As volume map",          DDS_SAVE_VOLUMEMAP,
-                              "As texture array",       DDS_SAVE_ARRAY,
+  store = gimp_int_store_new (_("Selected layer"),         DDS_SAVE_SELECTED_LAYER,
+                              _("All visible layers"),     DDS_SAVE_VISIBLE_LAYERS,
+                              _("As cube map"),            DDS_SAVE_CUBEMAP,
+                              _("As volume map"),          DDS_SAVE_VOLUMEMAP,
+                              _("As texture array"),       DDS_SAVE_ARRAY,
                               NULL);
   opt = gimp_prop_int_combo_box_new (config, "save-type",
                                      GIMP_INT_STORE (store));
@@ -2034,13 +2062,17 @@ save_dialog (GimpImage     *image,
   combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
   combo_set_item_sensitive (opt, DDS_SAVE_ARRAY,     is_array);
 
-  store = gimp_int_store_new ("No mipmaps",           DDS_MIPMAP_NONE,
-                              "Generate mipmaps",     DDS_MIPMAP_GENERATE,
-                              "Use existing mipmaps", DDS_MIPMAP_EXISTING,
+  flip_check = gimp_prop_check_button_new (config, "flip-image",
+                                           _("Flip image _vertically on export"));
+  gtk_grid_attach (GTK_GRID (grid), flip_check, 1, 4, 1, 1);
+
+  store = gimp_int_store_new (_("No mipmaps"),           DDS_MIPMAP_NONE,
+                              _("Generate mipmaps"),     DDS_MIPMAP_GENERATE,
+                              _("Use existing mipmaps"), DDS_MIPMAP_EXISTING,
                               NULL);
   mipmap_opt = gimp_prop_int_combo_box_new (config, "mipmaps",
                                             GIMP_INT_STORE (store));
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 4,
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
                             _("_Mipmaps:"),
                             0.0, 0.5,
                             mipmap_opt, 1);

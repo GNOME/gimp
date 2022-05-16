@@ -216,8 +216,9 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "save-type",
                          "Save type",
                          "How to save the image (0 = selected layer, "
-                         "1 = cube map, 2 = volume map, 3 = texture array",
-                         0, 3, DDS_SAVE_SELECTED_LAYER,
+                         "1 = cube map, 2 = volume map, 3 = texture array, "
+                         "4 = all visible layers)",
+                         0, 4, DDS_SAVE_SELECTED_LAYER,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "format",
@@ -232,6 +233,12 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                          "14 = DDS_FORMAT_YCOCG)",
                          0, 14, DDS_FORMAT_DEFAULT,
                          G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "flip-image",
+                             "Flip image vertically",
+                             "Flip the image vertically on export",
+                             FALSE,
+                             G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "transparent-color",
                              "Transparent color",
@@ -263,7 +270,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "gamma-correct",
-                             "Gamme correct",
+                             "Gamma correct",
                              "Use gamma correct mipmap filtering",
                              FALSE,
                              G_PARAM_READWRITE);
@@ -476,7 +483,8 @@ dds_save (GimpProcedure        *procedure,
    */
   status = write_dds (file, image, drawables[0],
                       run_mode == GIMP_RUN_INTERACTIVE,
-                      procedure, G_OBJECT (config));
+                      procedure, G_OBJECT (config),
+                      export == GIMP_EXPORT_EXPORT);
 
   if (export == GIMP_EXPORT_EXPORT)
     {
