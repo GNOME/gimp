@@ -80,27 +80,43 @@ fli_read_uint32 (FILE *f, guint32 *value, GError **error)
   return TRUE;
 }
 
-static void
-fli_write_char (FILE   *f,
-                guchar  b)
+static gboolean
+fli_write_char (FILE    *f,
+                guchar   b,
+                GError **error)
 {
-  fwrite (&b, 1, 1, f);
+  if (fwrite (&b, 1, 1, f) != 1)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error writing to file."));
+      return FALSE;
+    }
+  return TRUE;
 }
 
-static void
-fli_write_short (FILE    *f,
-                 gushort  w)
+static gboolean
+fli_write_short (FILE     *f,
+                 gushort   w,
+                 GError  **error)
 {
   guchar b[2];
 
   b[0] = w & 255;
   b[1] = (w >> 8) & 255;
-  fwrite (&b, 1, 2, f);
+
+  if (fwrite (&b, 1, 2, f) != 2)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error writing to file."));
+      return FALSE;
+    }
+  return TRUE;
 }
 
-static void
-fli_write_uint32 (FILE    *f,
-                  guint32  l)
+static gboolean
+fli_write_uint32 (FILE     *f,
+                  guint32   l,
+                  GError  **error)
 {
   guchar b[4];
 
@@ -109,7 +125,13 @@ fli_write_uint32 (FILE    *f,
   b[2] = (l >> 16) & 255;
   b[3] = (l >> 24) & 255;
 
-  fwrite (&b, 1, 4, f);
+  if (fwrite (&b, 1, 4, f) != 4)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Error writing to file."));
+      return FALSE;
+    }
+  return TRUE;
 }
 
 gboolean
@@ -209,27 +231,45 @@ fli_write_header (FILE          *f,
 {
   fli_header->filesize = ftell (f);
   fseek (f, 0, SEEK_SET);
-  fli_write_uint32 (f, fli_header->filesize); /* 0 */
-  fli_write_short (f, fli_header->magic);     /* 4 */
-  fli_write_short (f, fli_header->frames);    /* 6 */
-  fli_write_short (f, fli_header->width);     /* 8 */
-  fli_write_short (f, fli_header->height);    /* 10 */
-  fli_write_short (f, fli_header->depth);     /* 12 */
-  fli_write_short (f, fli_header->flags);     /* 14 */
+
+  if (! fli_write_uint32 (f, fli_header->filesize, error) || /* 0 */
+      ! fli_write_short (f, fli_header->magic, error)     || /* 4 */
+      ! fli_write_short (f, fli_header->frames, error)    || /* 6 */
+      ! fli_write_short (f, fli_header->width, error)     || /* 8 */
+      ! fli_write_short (f, fli_header->height, error)    || /* 10 */
+      ! fli_write_short (f, fli_header->depth, error)     || /* 12 */
+      ! fli_write_short (f, fli_header->flags, error))       /* 14 */
+    {
+      g_prefix_error (error, _("Error writing header. "));
+      return FALSE;
+    }
+
   if (fli_header->magic == HEADER_FLI)
     {
       /* FLI saves speed in 1/70s */
-      fli_write_short (f, fli_header->speed / 14); /* 16 */
+      if (! fli_write_short (f, (fli_header->speed + 7) / 14, error)) /* 16 */
+        {
+          g_prefix_error (error, _("Error writing header. "));
+          return FALSE;
+        }
     }
   else
     {
       if (fli_header->magic == HEADER_FLC)
         {
           /* FLC saves speed in 1/1000s */
-          fli_write_uint32 (f, fli_header->speed);   /* 16 */
+          if (! fli_write_uint32 (f, fli_header->speed, error))   /* 16 */
+            {
+              g_prefix_error (error, _("Error writing header. "));
+              return FALSE;
+            }
           fseek (f, 80, SEEK_SET);
-          fli_write_uint32 (f, fli_header->oframe1); /* 80 */
-          fli_write_uint32 (f, fli_header->oframe2); /* 84 */
+          if (! fli_write_uint32 (f, fli_header->oframe1, error) || /* 80 */
+              ! fli_write_uint32 (f, fli_header->oframe2, error))   /* 84 */
+            {
+              g_prefix_error (error, _("Error writing header. "));
+              return FALSE;
+            }
         }
       else
         {
@@ -459,9 +499,13 @@ fli_write_frame (FILE          *f,
   frameend = ftell (f);
   fli_frame.size = frameend - framepos;
   fseek (f, framepos, SEEK_SET);
-  fli_write_uint32 (f, fli_frame.size);
-  fli_write_short (f, fli_frame.magic);
-  fli_write_short (f, fli_frame.chunks);
+  if (! fli_write_uint32 (f, fli_frame.size, error) ||
+      ! fli_write_short (f, fli_frame.magic, error) ||
+      ! fli_write_short (f, fli_frame.chunks, error))
+    {
+      g_prefix_error (error, _("Error writing frame header. "));
+      return FALSE;
+    }
   fseek (f, frameend, SEEK_SET);
   fli_header->frames++;
 
@@ -554,11 +598,20 @@ fli_write_color (FILE          *f,
       gushort col_pos;
 
       num_packets = 1;
-      fli_write_char (f, 0); /* skip no color */
-      fli_write_char (f, 0); /* 256 color */
+      if (! fli_write_char (f, 0, error) || /* skip no color */
+          ! fli_write_char (f, 0, error))   /* 256 color */
+        {
+          g_prefix_error (error, _("Error writing color map. "));
+          return FALSE;
+        }
+
       for (col_pos = 0; col_pos < 768; col_pos++)
         {
-          fli_write_char (f, cmap[col_pos] >> 2);
+          if (! fli_write_char (f, cmap[col_pos] >> 2, error))
+            {
+              g_prefix_error (error, _("Error writing color map. "));
+              return FALSE;
+            }
         }
     }
   else
@@ -591,13 +644,21 @@ fli_write_color (FILE          *f,
             {
               num_packets++;
 
-              fli_write_char (f, cnt_skip & 255);
-              fli_write_char (f, cnt_col & 255);
+              if (! fli_write_char (f, cnt_skip & 255, error) ||
+                  ! fli_write_char (f, cnt_col & 255, error))
+                {
+                  g_prefix_error (error, _("Error writing color map. "));
+                  return FALSE;
+                }
               while (cnt_col > 0)
                 {
-                  fli_write_char (f, cmap[col_start++] >> 2);
-                  fli_write_char (f, cmap[col_start++] >> 2);
-                  fli_write_char (f, cmap[col_start++] >> 2);
+                  if (! fli_write_char (f, cmap[col_start++] >> 2, error) ||
+                      ! fli_write_char (f, cmap[col_start++] >> 2, error) ||
+                      ! fli_write_char (f, cmap[col_start++] >> 2, error))
+                    {
+                      g_prefix_error (error, _("Error writing color map. "));
+                      return FALSE;
+                    }
                   cnt_col--;
                 }
             }
@@ -610,9 +671,13 @@ fli_write_color (FILE          *f,
       chunk.magic = FLI_COLOR;
 
       fseek (f, chunkpos, SEEK_SET);
-      fli_write_uint32 (f, chunk.size);
-      fli_write_short (f, chunk.magic);
-      fli_write_short (f, num_packets);
+      if (! fli_write_uint32 (f, chunk.size, error) ||
+          ! fli_write_short (f, chunk.magic, error) ||
+          ! fli_write_short (f, num_packets, error))
+        {
+          g_prefix_error (error, _("Error writing color map. "));
+          return FALSE;
+        }
 
       if (chunk.size & 1)
         chunk.size++;
@@ -711,11 +776,20 @@ fli_write_color_2 (FILE          *f,
       gushort col_pos;
 
       num_packets = 1;
-      fli_write_char (f, 0); /* skip no color */
-      fli_write_char (f, 0); /* 256 color */
+      if (! fli_write_char (f, 0, error) || /* skip no color */
+          ! fli_write_char (f, 0, error))   /* 256 color */
+        {
+          g_prefix_error (error, _("Error writing color map. "));
+          return FALSE;
+        }
+
       for (col_pos = 0; col_pos < 768; col_pos++)
         {
-          fli_write_char (f, cmap[col_pos]);
+          if (! fli_write_char (f, cmap[col_pos], error))
+            {
+              g_prefix_error (error, _("Error writing color map. "));
+              return FALSE;
+            }
         }
     }
   else
@@ -745,14 +819,23 @@ fli_write_color_2 (FILE          *f,
           if (cnt_col > 0)
             {
               num_packets++;
-              fli_write_char (f, cnt_skip);
-              fli_write_char (f, cnt_col);
+              if (! fli_write_char (f, cnt_skip, error) ||
+                  ! fli_write_char (f, cnt_col, error))
+                {
+                  g_prefix_error (error, _("Error writing color map. "));
+                  return FALSE;
+                }
 
               while (cnt_col > 0)
                 {
-                  fli_write_char (f, cmap[col_start++]);
-                  fli_write_char (f, cmap[col_start++]);
-                  fli_write_char (f, cmap[col_start++]);
+                  if (! fli_write_char (f, cmap[col_start++], error) ||
+                      ! fli_write_char (f, cmap[col_start++], error) ||
+                      ! fli_write_char (f, cmap[col_start++], error))
+                    {
+                      g_prefix_error (error, _("Error writing color map. "));
+                      return FALSE;
+                    }
+
                   cnt_col--;
                 }
             }
@@ -765,9 +848,13 @@ fli_write_color_2 (FILE          *f,
       chunk.magic = FLI_COLOR_2;
 
       fseek (f, chunkpos, SEEK_SET);
-      fli_write_uint32 (f, chunk.size);
-      fli_write_short (f, chunk.magic);
-      fli_write_short (f, num_packets);
+      if (! fli_write_uint32 (f, chunk.size, error) ||
+          ! fli_write_short (f, chunk.magic, error) ||
+          ! fli_write_short (f, num_packets, error))
+        {
+          g_prefix_error (error, _("Error writing color map. "));
+          return FALSE;
+        }
 
       if (chunk.size & 1)
         chunk.size++;
@@ -805,8 +892,12 @@ fli_write_black (FILE          *f,
   chunk.size = 6;
   chunk.magic = FLI_BLACK;
 
-  fli_write_uint32 (f, chunk.size);
-  fli_write_short (f, chunk.magic);
+  if (! fli_write_uint32 (f, chunk.size, error) ||
+      ! fli_write_short (f, chunk.magic, error))
+    {
+      g_prefix_error (error, _("Error writing black. "));
+      return FALSE;
+    }
 
   return TRUE;
 }
@@ -841,16 +932,33 @@ fli_write_copy (FILE          *f,
 
   chunkpos = ftell (f);
   fseek (f, chunkpos + 6, SEEK_SET);
-  fwrite (framebuf, fli_header->width, fli_header->height, f);
+  if (fwrite (framebuf, fli_header->width, fli_header->height, f) != fli_header->height)
+    {
+      g_prefix_error (error, _("Error writing frame. "));
+      return FALSE;
+    }
   chunk.size = ftell (f) - chunkpos;
   chunk.magic = FLI_COPY;
 
-  fseek (f, chunkpos, SEEK_SET);
-  fli_write_uint32 (f, chunk.size);
-  fli_write_short (f, chunk.magic);
-
   if (chunk.size & 1)
-    chunk.size++;
+    {
+      /* Dummy char to make the chunk end on an even boundary. */
+      if (! fli_write_char (f, 0, error))
+        {
+          g_prefix_error (error, _("Error writing frame. "));
+          return FALSE;
+        }
+      chunk.size++;
+    }
+
+  fseek (f, chunkpos, SEEK_SET);
+  if (! fli_write_uint32 (f, chunk.size, error) ||
+      ! fli_write_short (f, chunk.magic, error))
+    {
+      g_prefix_error (error, _("Error writing frame. "));
+      return FALSE;
+    }
+
   fseek (f, chunkpos + chunk.size, SEEK_SET);
   return TRUE;
 }
@@ -964,13 +1072,21 @@ fli_write_brun (FILE          *f,
               if (tc > 0)
                 {
                   bc++;
-                  fli_write_char (f, (tc - 1)^0xFF);
-                  fwrite (linebuf + t1, 1, tc, f);
+                  if (! fli_write_char (f, (tc - 1)^0xFF, error) ||
+                      fwrite (linebuf + t1, 1, tc, f) != tc)
+                    {
+                      g_prefix_error (error, _("Error writing frame. "));
+                      return FALSE;
+                    }
                   tc = 0;
                 }
               bc++;
-              fli_write_char (f, pc);
-              fli_write_char (f, linebuf[xc]);
+              if (! fli_write_char (f, pc, error) ||
+                  ! fli_write_char (f, linebuf[xc], error))
+                {
+                  g_prefix_error (error, _("Error writing frame. "));
+                  return FALSE;
+                }
               t1 = xc + pc;
             }
           else
@@ -979,8 +1095,12 @@ fli_write_brun (FILE          *f,
               if (tc > 120)
                 {
                   bc++;
-                  fli_write_char (f, (tc - 1)^0xFF);
-                  fwrite (linebuf + t1, 1, tc, f);
+                  if (! fli_write_char (f, (tc - 1)^0xFF, error) ||
+                      fwrite (linebuf + t1, 1, tc, f) != tc)
+                    {
+                      g_prefix_error (error, _("Error writing frame. "));
+                      return FALSE;
+                    }
                   tc = 0;
                   t1 = xc + pc;
                 }
@@ -990,25 +1110,46 @@ fli_write_brun (FILE          *f,
       if (tc > 0)
         {
           bc++;
-          fli_write_char (f, (tc - 1)^0xFF);
-          fwrite (linebuf + t1, 1, tc, f);
+          if (! fli_write_char (f, (tc - 1)^0xFF, error) ||
+              fwrite (linebuf + t1, 1, tc, f) != tc)
+            {
+              g_prefix_error (error, _("Error writing frame. "));
+              return FALSE;
+            }
           tc = 0;
         }
       lineend = ftell (f);
       fseek (f, linepos, SEEK_SET);
-      fli_write_char (f, bc);
+      if (! fli_write_char (f, bc, error))
+        {
+          g_prefix_error (error, _("Error writing frame. "));
+          return FALSE;
+        }
       fseek (f, lineend, SEEK_SET);
     }
 
   chunk.size = ftell (f) - chunkpos;
   chunk.magic = FLI_BRUN;
 
-  fseek (f, chunkpos, SEEK_SET);
-  fli_write_uint32 (f, chunk.size);
-  fli_write_short (f, chunk.magic);
-
   if (chunk.size & 1)
-    chunk.size++;
+    {
+      /* Dummy char to make the chunk end on an even boundary. */
+      if (! fli_write_char (f, 0, error))
+        {
+          g_prefix_error (error, _("Error writing frame. "));
+          return FALSE;
+        }
+      chunk.size++;
+    }
+
+  fseek (f, chunkpos, SEEK_SET);
+  if (! fli_write_uint32 (f, chunk.size, error) ||
+      ! fli_write_short (f, chunk.magic, error))
+    {
+      g_prefix_error (error, _("Error writing frame. "));
+      return FALSE;
+    }
+
   fseek (f, chunkpos + chunk.size, SEEK_SET);
   return TRUE;
 }
@@ -1146,8 +1287,12 @@ fli_write_lc (FILE          *f,
   if (numline == 0)
     firstline = 0;
 
-  fli_write_short (f, firstline);
-  fli_write_short (f, numline);
+  if (! fli_write_short (f, firstline, error) ||
+      ! fli_write_short (f, numline, error))
+    {
+      g_prefix_error (error, _("Error writing frame. "));
+      return FALSE;
+    }
 
   for (yc = 0; yc < numline; yc++)
     {
@@ -1170,7 +1315,11 @@ fli_write_lc (FILE          *f,
               xc++;
               sc++;
             }
-          fli_write_char (f, sc);
+          if (! fli_write_char (f, sc, error))
+            {
+              g_prefix_error (error, _("Error writing frame. "));
+              return FALSE;
+            }
           cc = 1;
           while ((linebuf[xc] == linebuf[xc + cc]) &&
                  ((xc + cc)<fli_header->width)     &&
@@ -1181,9 +1330,13 @@ fli_write_lc (FILE          *f,
           if (cc > 2)
             {
               bc++;
-              fli_write_char (f, (cc - 1)^0xFF);
-              fli_write_char (f, linebuf[xc]);
-              xc+=cc;
+              if (! fli_write_char (f, (cc - 1)^0xFF, error) ||
+                  ! fli_write_char (f, linebuf[xc], error))
+                {
+                  g_prefix_error (error, _("Error writing frame. "));
+                  return FALSE;
+                }
+              xc += cc;
             }
           else
             {
@@ -1209,26 +1362,47 @@ fli_write_lc (FILE          *f,
                        (sc < 4)   &&
                        ((xc + tc) < fli_header->width));
               bc++;
-              fli_write_char (f, tc);
-              fwrite (linebuf + xc, tc, 1, f);
-              xc+=tc;
+              if (! fli_write_char (f, tc, error) ||
+                  fwrite (linebuf + xc, tc, 1, f) != 1)
+                {
+                  g_prefix_error (error, _("Error writing frame. "));
+                  return FALSE;
+                }
+              xc += tc;
             }
         }
       lineend = ftell (f);
       fseek (f, linepos, SEEK_SET);
-      fli_write_char (f, bc);
+      if (! fli_write_char (f, bc, error))
+        {
+          g_prefix_error (error, _("Error writing frame. "));
+          return FALSE;
+        }
       fseek (f, lineend, SEEK_SET);
     }
 
   chunk.size = ftell (f) - chunkpos;
   chunk.magic = FLI_LC;
 
-  fseek (f, chunkpos, SEEK_SET);
-  fli_write_uint32 (f, chunk.size);
-  fli_write_short (f, chunk.magic);
-
   if (chunk.size & 1)
-    chunk.size++;
+    {
+      /* Dummy char to make the chunk end on an even boundary. */
+      if (! fli_write_char (f, 0, error))
+        {
+          g_prefix_error (error, _("Error writing frame. "));
+          return FALSE;
+        }
+      chunk.size++;
+    }
+
+  fseek (f, chunkpos, SEEK_SET);
+  if (! fli_write_uint32 (f, chunk.size, error) ||
+      ! fli_write_short (f, chunk.magic, error))
+    {
+      g_prefix_error (error, _("Error writing frame. "));
+      return FALSE;
+    }
+
   fseek (f, chunkpos + chunk.size, SEEK_SET);
   return TRUE;
 }

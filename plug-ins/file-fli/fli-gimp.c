@@ -836,6 +836,8 @@ save_image (GFile      *file,
 
       buffer = gimp_drawable_get_buffer (drawable);
 
+      g_debug ("Writing frame: %d", cnt);
+
       if (gimp_drawable_is_gray (drawable))
         {
           if (gimp_drawable_has_alpha (drawable))
