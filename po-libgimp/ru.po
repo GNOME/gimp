@@ -4,23 +4,23 @@
 # Valek Filippov <frob@df.ru>, 1999-2002.
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2018, 2018.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-05-15 14:16+0000\n"
-"PO-Revision-Date: 2022-05-15 17:33+0300\n"
-"Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
-"Language-Team: русский <>\n"
+"PO-Revision-Date: 2022-05-16 22:01+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
+"Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
-"n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 41.0\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:178
 msgid "Brush Selection"
@@ -175,7 +175,7 @@ msgstr "Обрезать слои"
 
 #: ../libgimp/gimpexport.c:482
 msgid "Resize Image to Layers"
-msgstr "Изменение размера изображения в слоях"
+msgstr "Привести размер изображения к размеру слоев"
 
 #: ../libgimp/gimpexport.c:541
 msgid "Confirm Save"
@@ -479,7 +479,7 @@ msgstr "Сброс к _начальным значениям"
 
 #: ../libgimp/gimpproceduredialog.c:1796
 msgid "Reset to _Factory Defaults"
-msgstr "Сброс к _заводским настройкам по умолчанию"
+msgstr "Сброс к _настройкам по умолчанию"
 
 #: ../libgimp/gimpprocview.c:176
 msgid "Image types:"
@@ -925,7 +925,7 @@ msgstr "Линейное"
 #: ../libgimpbase/gimpbaseenums.c:652
 msgctxt "gradient-segment-type"
 msgid "Curved"
-msgstr "Криволинейный"
+msgstr "Криволинейное"
 
 #: ../libgimpbase/gimpbaseenums.c:653
 msgctxt "gradient-segment-type"
@@ -935,31 +935,31 @@ msgstr "По синусоиде"
 #: ../libgimpbase/gimpbaseenums.c:654
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
-msgstr "Cферический (расширение)"
+msgstr "Cферическое (нарастание)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
-msgstr "Cферический (расш.)"
+msgstr "Cферическое (нараст.)"
 
 #: ../libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
-msgstr "Сферический (сжатие)"
+msgstr "Cферическое (сокращение)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
 #: ../libgimpbase/gimpbaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
-msgstr "Cферический (сж.)"
+msgstr "Cферическое (сокр.)"
 
 #: ../libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Step"
-msgstr "Опорная точка"
+msgstr "Ступенька"
 
 #: ../libgimpbase/gimpbaseenums.c:700
 msgctxt "gradient-type"
@@ -1722,7 +1722,7 @@ msgid ""
 "The preferred RGB working space color profile. It will be offered next to "
 "the built-in RGB profile when a color profile can be chosen."
 msgstr ""
-"Предпочитаемый цветовой профиль рабочего пространства RGB. Он будет доступен "
+"Предпочитаемый цветовой профиль рабочего RGB-пространства. Он будет доступен "
 "для выбора рядом со встроенным профилем RGB (когда предоставляется "
 "возможность выбора цветового профиля)."
 
@@ -1745,9 +1745,9 @@ msgid ""
 "some other color space, including soft-proofing to a printer or other output "
 "device profile."
 msgstr ""
-"Цветовой профиль, используемый для мягкой коррекции из цветового "
-"пространства вашего изображения в другое цветовое пространство, включая "
-"мягкую коррекцию в профиль принтера или другого устройства вывода."
+"Цветовой профиль, используемый для цветопробы из цветового пространства "
+"вашего изображения в другом цветовом пространстве, включая цветопробу по "
+"профилю принтера или другого устройства вывода."
 
 #: ../libgimpconfig/gimpcolorconfig.c:79
 msgid ""
@@ -1759,7 +1759,7 @@ msgstr ""
 "Способ преобразования цветов из цветового пространства изображения при "
 "выводе на экран. Обычно рекомендуется выбирать относительную "
 "колориметрическую цветопередачу. За исключением тех случаев, когда "
-"используется профиль монитора LUT (большинство профилей мониторов — "
+"используется LUT-профиль монитора (большинство профилей мониторов — "
 "матричные), при выборе воспринимаемой цветопередачи на самом деле также "
 "выбирается относительная колориметрическая."
 
@@ -1784,7 +1784,7 @@ msgid ""
 "the best."
 msgstr ""
 "Способ преобразования цветов из цветового пространства вашего изображения в "
-"устройство имитации вывода (обычно ваш монитор). Попробуйте их все и "
+"устройство имитации вывода (обычно это ваш монитор). Попробуйте их все и "
 "выберите то, что выглядит лучше всего."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
@@ -2877,7 +2877,7 @@ msgstr ""
 
 #: ../modules/display-filter-aces-rrt.c:121
 msgid "Pre-transform change in stops"
-msgstr "Изменение остановок до преобразования"
+msgstr "Коррекция до преобразования, в шагах экспозиции"
 
 #: ../modules/display-filter-aces-rrt.c:126
 msgid "Aces RRT"
@@ -2953,7 +2953,7 @@ msgstr "Включать прозрачные пиксели"
 
 #: ../modules/display-filter-clip-warning.c:226
 msgid "Include fully transparent pixels in the warning"
-msgstr "Включить полностью прозрачные пикселы в предупреждение"
+msgstr "Включить полностью прозрачные пиксели в предупреждение"
 
 #: ../modules/display-filter-clip-warning.c:230
 msgid "Clip Warning"
