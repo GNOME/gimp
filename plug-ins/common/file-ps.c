@@ -242,15 +242,17 @@ static gint      get_bbox         (GFile             *file,
                                    gint              *x1,
                                    gint              *y1);
 
-static FILE    * ps_open         (GFile             *file,
-                                  const PSLoadVals  *loadopt,
-                                  gint              *llx,
-                                  gint              *lly,
-                                  gint              *urx,
-                                  gint              *ury,
-                                  gboolean          *is_epsf);
+static FILE    * ps_open          (GFile             *file,
+                                   const PSLoadVals  *loadopt,
+                                   gint              *llx,
+                                   gint              *lly,
+                                   gint              *urx,
+                                   gint              *ury,
+                                   gboolean          *is_epsf,
+                                   gchar            **tmp_filename);
 
-static void      ps_close         (FILE              *ifp);
+static void      ps_close         (FILE              *ifp,
+                                   gchar             *tmp_filename);
 
 static gboolean  skip_ps          (FILE              *ifp);
 
@@ -1124,6 +1126,8 @@ load_image (GFile   *file,
   gint          llx, lly, urx, ury;
   gint          k, n_images, max_images, max_pagenum;
   gboolean      is_epsf;
+  GdkPixbuf    *pixbuf = NULL;
+  gchar        *tmp_filename = NULL;
 
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
@@ -1150,7 +1154,7 @@ load_image (GFile   *file,
     }
   fclose (ifp);
 
-  ifp = ps_open (file, &plvals, &llx, &lly, &urx, &ury, &is_epsf);
+  ifp = ps_open (file, &plvals, &llx, &lly, &urx, &ury, &is_epsf, &tmp_filename);
   if (!ifp)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR,
@@ -1165,7 +1169,13 @@ load_image (GFile   *file,
 
   max_pagenum = 9999;  /* Try to get the maximum pagenumber to read */
   if (is_epsf)
-    max_pagenum = 1;
+    {
+      max_pagenum = 1;
+      /* Use pixbuf to load transparent EPS as PNGs */
+      pixbuf = gdk_pixbuf_new_from_file (tmp_filename, error);
+      if (! pixbuf)
+        return NULL;
+    }
 
   if (!page_in_list (plvals.pages, max_pagenum)) /* Is there a limit in list ? */
     {
@@ -1217,7 +1227,38 @@ load_image (GFile   *file,
         }
     }
 
-  ps_close (ifp);
+  ps_close (ifp, tmp_filename);
+
+  /* EPS are now imported using pngalpha, so they can be converted
+   * to a layer with gimp_layer_new_from_pixbuf () and exported at
+   * this part of the loading process
+   */
+  if (is_epsf)
+    {
+      GimpLayer *layer;
+
+      image = gimp_image_new (urx, ury, GIMP_RGB);
+
+      gimp_image_undo_disable (image);
+
+      gimp_image_set_file (image, file);
+      gimp_image_set_resolution (image,
+                                 plvals.resolution,
+                                 plvals.resolution);
+
+      layer = gimp_layer_new_from_pixbuf (image, _("Rendered EPS"), pixbuf,
+                                          100,
+                                          gimp_image_get_default_new_layer_mode (image),
+                                          0.0, 1.0);
+      gimp_image_insert_layer (image, layer, NULL, 0);
+
+      gimp_image_undo_enable (image);
+
+      g_free (image_list);
+      g_object_unref (pixbuf);
+
+      return image;
+    }
 
   if (ps_pagemode == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
     {
@@ -1683,8 +1724,6 @@ get_bbox (GFile *file,
   return retval;
 }
 
-static gchar *pnmfilename;
-
 /* Open the PostScript file. On failure, NULL is returned. */
 /* The filepointer returned will give a PNM-file generated */
 /* by the PostScript-interpreter. */
@@ -1695,7 +1734,8 @@ ps_open (GFile            *file,
          gint             *lly,
          gint             *urx,
          gint             *ury,
-         gboolean         *is_epsf)
+         gboolean         *is_epsf,
+         gchar           **tmp_filename)
 {
   const gchar  *filename;
   const gchar  *driver;
@@ -1813,7 +1853,15 @@ ps_open (GFile            *file,
    * using standard output as output file.
    * Thus, use a real output file.
    */
-  pnmfilename = g_file_get_path (gimp_temp_file ("pnm"));
+  if (*is_epsf)
+    {
+      driver = "pngalpha";
+      *tmp_filename = g_file_get_path (gimp_temp_file ("png"));
+    }
+  else
+    {
+      *tmp_filename = g_file_get_path (gimp_temp_file ("pnm"));
+    }
 
   /* Build command array */
   cmdA = g_ptr_array_new ();
@@ -1851,7 +1899,7 @@ ps_open (GFile            *file,
     g_ptr_array_add (cmdA, g_strdup ("-dSAFER"));
 
   /* Output file name */
-  g_ptr_array_add (cmdA, g_strdup_printf ("-sOutputFile=%s", pnmfilename));
+  g_ptr_array_add (cmdA, g_strdup_printf ("-sOutputFile=%s", *tmp_filename));
 
   /* Offset command for gs to get image part with negative x/y-coord. */
   if ((offx != 0) || (offy != 0))
@@ -1902,7 +1950,7 @@ ps_open (GFile            *file,
   /* Don't care about exit status of ghostscript. */
   /* Just try to read what it wrote. */
 
-  fd_popen = g_fopen (pnmfilename, "rb");
+  fd_popen = g_fopen (*tmp_filename, "rb");
 
   g_ptr_array_free (cmdA, FALSE);
   g_strfreev (pcmdA);
@@ -1913,11 +1961,11 @@ ps_open (GFile            *file,
 
 /* Close the PNM-File of the PostScript interpreter */
 static void
-ps_close (FILE *ifp)
+ps_close (FILE *ifp, gchar *tmp_filename)
 {
  /* If a real outputfile was used, close the file and remove it. */
   fclose (ifp);
-  g_unlink (pnmfilename);
+  g_unlink (tmp_filename);
 }
 
 
