@@ -197,9 +197,15 @@ fli_read_header (FILE          *f,
 
 if (actual_size != fli_header->filesize && actual_size >= 0)
   {
-    g_warning (_("Incorrect file size in header: %u, should be: %u."),
-               fli_header->filesize, (guint) actual_size);
-    fli_header->filesize = actual_size;
+    /* Older versions of GIMP or other apps may incorrectly finish chunks on
+     * an odd length, but write filesize as if that last byte was written.
+     * Don't fail on off-by-one file size. */
+    if (actual_size + 1 != fli_header->filesize)
+      {
+        g_warning (_("Incorrect file size in header: %u, should be: %u."),
+                   fli_header->filesize, (guint) actual_size);
+        fli_header->filesize = actual_size;
+      }
   }
 
 if (fli_header->frames == 0)
@@ -341,7 +347,7 @@ fli_read_frame (FILE          *f,
             }
           g_debug ("Chunk offset: %u, chunk size: %u, chunk type: %u",
                    (guint) chunkpos, chunk.size, chunk.magic);
-          if (chunkpos + chunk.size >= fli_header->filesize)
+          if (chunkpos + chunk.size > fli_header->filesize)
             {
               g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                            _("Invalid chunk size points past end of file!"));
