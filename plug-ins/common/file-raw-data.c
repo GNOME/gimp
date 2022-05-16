@@ -743,12 +743,15 @@ raw_read_row (FILE   *fp,
               gint32  offset,
               gint32  size)
 {
+  size_t bread;
+
   fseek (fp, offset, SEEK_SET);
 
-  if (! fread (buf, size, 1, fp))
+  memset (buf, 0xFF, size);
+  bread = fread (buf, 1, size, fp);
+  if (bread < size)
     {
-      g_printerr ("fread failed\n");
-      memset (buf, 0xFF, size);
+      g_printerr ("fread failed: read %u instead of %u bytes\n", (guint) bread, (guint) size);
     }
 }
 
