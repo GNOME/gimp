@@ -7,23 +7,23 @@
 # Anatoly A. Yakushin <jaa@altlinux.ru>, 2003, 2004.
 # Roxana Kolosova <mavka@justos.org>, 2003-2006.
 # Julia Dronova <juliette.tux@gmail.com>, 2019, 2020.
-# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2021.
+# Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 13:45+0000\n"
-"PO-Revision-Date: 2022-04-05 20:57+0300\n"
-"Last-Translator: Aleksandr Melman <Alexmelman88@gmail.com>\n"
+"PO-Revision-Date: 2022-05-17 10:33+0300\n"
+"Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: Poedit 3.0.1\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"X-Generator: Gtranslator 41.0\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -70,7 +70,7 @@ msgstr ""
 "плагинами и расширениями, позволяющими делать практически все. Продвинутый "
 "интерфейс сценариев позволяет легко создавать сценарии от простейших задач "
 "до самых сложных процедур работы с изображениями. GIMP доступен для Linux, "
-"Microsoft Windows и OS X."
+"Microsoft Windows и macOS."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:6
 msgid "Painting in GIMP"
@@ -85,22 +85,21 @@ msgid ""
 "One step further towards GIMP 3.0, GIMP 2.99.12 comes along with the "
 "following noteworthy improvements:"
 msgstr ""
-"Еще один шаг на пути к GIMP 3.0, GIMP 2.99.12 поставляется со следующими "
-"примечательными улучшениями:"
+"GIMP 2.99.12 — еще один шаг на пути к GIMP 3.0. Новая версия поставляется со "
+"следующими примечательными улучшениями:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid ""
 "New \"Stroke borders\" option in Bucket Fill tool's \"Fill by line art "
 "detection\""
 msgstr ""
-"Новая опция \"Границы штриховой обводки\" в инструменте \"Заливка ковшом\" "
-"инструмента \"Заливка с помощью определения линейного искусства\""
+"Новая опция «Границы штриховой обводки» в опции «Определение контурного "
+"рисунка» инструмента «Плоская заливка»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
 msgid "Redesigned and reorganized \"Fill by line art detection\" settings"
 msgstr ""
-"Переработаны и реорганизованы настройки \"Заливка с помощью определения "
-"линейного искусства\""
+"Переработаны и реорганизованы настройки «Определение контурного рисунка»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:11
 msgid "Added support for the BigTIFF file format"
@@ -108,7 +107,7 @@ msgstr "Добавлена поддержка формата файлов BigTIF
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New option \"Number of repeats\" in GIF export"
-msgstr "Новая опция \"Количество повторов\" в экспорте GIF"
+msgstr "Новая опция «Количество повторов… в экспорте GIF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
@@ -116,25 +115,25 @@ msgid ""
 "\"Input Devices\" tabs in Preferences"
 msgstr ""
 "Настройки указателей инструментов реорганизованы и перемещены из вкладок "
-"\"Окна изображений\" в \"Устройства ввода\" в Параметрах"
+"«Окна изображений» в «Устройства ввода» в «Параметрах»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid "Improved handling of unchecked \"Show pointer for paint tools\" option"
 msgstr ""
-"Улучшена обработка не отмеченной опции \"Показывать указатель для "
-"инструментов рисования\""
+"Улучшена обработка не отмеченной опции «Показывать указатель для "
+"инструментов рисования»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid ""
 "GIMP 2.99.10 is a notable development release in the 2.99 series, featuring "
 "many changes. Let's mention in particular:"
 msgstr ""
-"GIMP 2.99.10 - это заметный релиз развития в серии 2.99, содержащий "
-"множество изменений. Упомянем, в частности:"
+"GIMP 2.99.10 — существенное обновление нестабильной серии 2.99 со множеством "
+"изменений. Упомянем, в частности:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:16
 msgid "\"Linked layers\" concept superseded by new \"Layer set\" concept"
-msgstr "Концепция \"Связанные слои\" заменена новой концепцией \"Набор слоев\""
+msgstr "Концепция cвязанных слоев заменена новой концепцией набора слоев"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid ""
@@ -149,22 +148,22 @@ msgid ""
 "Alt-click on visibility and lock icons in item dockables massively toggles "
 "visibility and locks among selected items"
 msgstr ""
-"Alt-клик на иконках видимости и блокировки в док-станциях элементов массово "
-"переключает видимость и блокировку среди выбранных элементов"
+"Alt-клик на значках видимости и блокировки в в панелях с объектами массово "
+"переключает видимость и блокировку среди выбранных объектов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
 msgid "Item dockables now display icon headers for visibility and locks column"
 msgstr ""
-"Прикрепляемые элементы теперь отображают заголовки иконок для видимости и "
-"колонки замков"
+"В панелях с объектами теперь есть заголовки таблиц со значками видимости и "
+"блокировки"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:20
 msgid ""
 "Our System theme shows visible hints around unset visibility and locks icons "
 "when hovering them in item dockables"
 msgstr ""
-"Наша системная тема отображает видимые подсказки вокруг неустановленной "
-"видимости и блокирует значки при наведении на них в докстанциях элементов"
+"Наша системная тема отображает видимые подсказки вокруг значков снятой "
+"видимости и блокировки при наведении на них указателем в панелях объектов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:21
 msgid ""
@@ -181,15 +180,15 @@ msgstr "Улучшенная поддержка Wayland и macOS Big Sur (и б�
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:23
 msgid "\"Fill by line art detection\" in Bucket Fill tool has a new option"
 msgstr ""
-"\"Заливка с помощью определения линейного искусства\" в инструменте "
-"\"Плоская заливка\" имеет новую опцию"
+"В «Определение контурного рисунка» в инструменте «Плоская заливка» добавлена "
+"новая опция"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:24
 msgid ""
 "Channels and paths multi-selectable with part of relevant actions working"
 msgstr ""
-"Каналы и контуры многократно выбираются с частью соответствующих рабочих "
-"действий"
+"Теперь можно выбирать больше одного слоя или канала, с поддержкой части "
+"сопутствующих операций"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:25
 msgid ""
@@ -200,7 +199,8 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:26
 msgid "New support of Microsoft Windows Cursor file format (.cur files)"
-msgstr "Новая поддержка формата файлов Microsoft Windows Cursor (файлы .cur)"
+msgstr ""
+"Добавлена поддержка формата файлов Microsoft Windows Cursor (файлы .cur)"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:27
 msgid "Removed KDE and GNOME screenshot portals in favor of Freedesktop one"
@@ -210,12 +210,12 @@ msgstr "Удалены порталы скриншотов KDE и GNOME в по�
 msgid ""
 "Windows screenshot implementation now has an \"Include mouse pointer\" option"
 msgstr ""
-"Реализация снимков экрана Windows теперь имеет опцию \"Включить указатель "
-"мыши\""
+"В плагине для снятия скриншотов в Windows появилась функция «Добавить "
+"указатель мыши»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:29
 msgid "New and modified libgimp API for plug-in developers"
-msgstr "Новый и модифицированный API libgimp для разработчиков плагинов"
+msgstr "Изменен и расширен libgimp API для разработчиков плагинов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:30
 msgid ""
@@ -239,8 +239,8 @@ msgstr "Поддержка Windows Ink API для устройств ввода 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:33
 msgid "Clicking on toolbox or Wilber's drop area actively focuses the canvas"
 msgstr ""
-"При щелчке на панели инструментов или области капли Уилбера происходит "
-"активная фокусировка холста"
+"Щелчок по панели инструментов или логотипу с Уилбером переносит фокусировку "
+"на холст"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:34
 msgid "Marching ants display ported to Wayland and macOS Big Sur logics"
@@ -298,10 +298,10 @@ msgid ""
 "be expected on further development releases where stability is not "
 "guaranteed."
 msgstr ""
-"В третьем предварительно выпуске программы фокус смещен на доработку API."
+"В третьем предварительном выпуске программы фокус смещен на доработку API. "
 "Многие функции были переименованы ради единообразия, появилось несколько "
-"новыхфункций, улучшены привязки интроспекции. В следующих выпусках "
-"ожидаетсядальнейшая доработка API, стабильность прграммы пока не "
+"новых функций, улучшены привязки интроспекции. В следующих выпусках "
+"ожидается дальнейшая доработка API, стабильность прграммы пока не "
 "гарантируется."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:44
@@ -310,11 +310,11 @@ msgstr "Вот наиболее заметные изменения для ко�
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "Canvas Size dialog now displays a template selector"
-msgstr "В диалоге \"Размер холста\" теперь отображается выбор шаблона"
+msgstr "В диалоге «Размер холста» теперь можно выбрать шаблон"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Off-canvas guides are now allowed"
-msgstr "Теперь разрешено использовать направляющие вне холста"
+msgstr "Теперь можно создавать направляющие за пределами холста"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:47
 msgid "The experimental Paint Select tool got various improvements"
@@ -328,7 +328,9 @@ msgstr "Улучшена поддержка Wayland"
 msgid ""
 "Dialog dropped for the Freedesktop portal implementation of the screenshot "
 "plug-in"
-msgstr "Убран диалог для реализации плагина скриншотов для портала Freedesktop"
+msgstr ""
+"При использовании плагина для снятия скриншотов в Wayland (через портал "
+"Freedesktop) больше нет диалогового окна"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:50
 msgid "PNG import creates an ICC profile out of the gAMA and/or cHRM chunks"
@@ -350,7 +352,7 @@ msgid ""
 "A new experimental tool makes an entrance in the playground."
 msgstr ""
 "Во вторую нестабильную версию включены различные обновления, касающиеся "
-"эргономики и APi плагинов. Добавлен новый экспериментальный инструмент "
+"эргономики и API плагинов. Добавлен новый экспериментальный инструмент "
 "выделения."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:53
@@ -374,8 +376,8 @@ msgstr ""
 msgid ""
 "Fonts targeted for Korean and Japanese language show appropriate characters"
 msgstr ""
-"Шрифты, предназначенные для корейского и японского языков, отображают "
-"соответствующие символы"
+"В предпросмотре шрифтов с корейским или японским алфавитом теперь "
+"показывается репрезентативная выборка глифов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:57
 msgid "Different default tools depending on pointer device type"
@@ -469,7 +471,7 @@ msgid ""
 "GIMP 2.10.26 is a bug fix release, containing dozens of fixes, both in core, "
 "scripts and plug-in code."
 msgstr ""
-"GIMP 2.10.26 - это релиз с исправлением ошибок, содержащий десятки "
+"GIMP 2.10.26 — это релиз с исправлением ошибок, содержащий десятки "
 "исправлений как в ядре, так и в скриптах и коде плагинов."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:74
@@ -537,7 +539,7 @@ msgstr "Множественные улучшения в поддержке Core
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:85
 msgid "\"Sample merged\" now available in GEGL operation tool options"
 msgstr ""
-"в параметрах операций GEGL теперь доступен пункт «Объединить цвета всех "
+"В параметрах операций GEGL теперь доступен пункт «Объединить цвета всех "
 "слоёв»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:86
@@ -627,9 +629,9 @@ msgid ""
 "GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD "
 "files, and adds a higher-contrast variation of the symbolic icon theme."
 msgstr ""
-"В GIMP 2.10.18 исправлены некоторые критические ошибки, реализована наивная "
-"поддержка файлов CMYK PSD, а также добавлена более контрастная вариация темы "
-"символических значков."
+"В GIMP 2.10.18 исправлены некоторые критические ошибки, реализована "
+"минимальная поддержка файлов CMYK PSD, а также добавлена более контрастная "
+"вариация темы символьных значков."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:100
 msgid ""
@@ -637,9 +639,9 @@ msgid ""
 "transformations in 3D space, new release checker, and the usual amount of "
 "bug fixes. Notable improvements:"
 msgstr ""
-"GIMP 2.10.16 предлагает несколько значительных улучшений удобства работы, "
-"новый инструмент для преобразований в трехмерном пространстве, новую "
-"проверку релиза и обычное количество исправлений ошибок. Заметные улучшения:"
+"В GIMP 2.10.16 значительно улучшена эргономика, добавлен инструмент для "
+"преобразований в трехмерном пространстве, а также проверка на доступность "
+"обновлений; как обычно, исправлены ошибки. Заметные улучшения:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:101
 msgid "Tools are now grouped in the toolbox by default"
@@ -683,9 +685,9 @@ msgid ""
 "Furthermore many old filters got finally ported to GEGL. Of course it also "
 "has a few noteworthy improvements:"
 msgstr ""
-"GIMP 2.10.14 - это в основном исправление ошибок, что делает GIMP более "
-"надежным. Кроме того, многие старые фильтры наконец-то перенесены в GEGL. "
-"Конечно, в нем также есть несколько заслуживающих внимания улучшений:"
+"В GIMP 2.10.14 преимущественно исправлены ошибки, что делает программу более "
+"надежной. Кроме того, многие старые фильтры наконец-то перенесены в GEGL. "
+"Конечно, в новом релизе есть и несколько заслуживающих внимания улучшений:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:110
 msgid ""
@@ -1152,10 +1154,9 @@ msgid ""
 "still a prime target, a new focus has been put on speed and optimization in "
 "order to provide a smoother painting experience. Bigger changes are:"
 msgstr ""
-"В этом втором кандидате на выпуск GIMP 2.10.0, хотя отладка по-прежнему "
-"остается главной целью, основное внимание уделяется скорости и оптимизации, "
-"чтобы обеспечить более плавный процесс рисования. Более значительными "
-"изменениями являются:"
+"В этом втором кандидате на выпуск GIMP 2.10.0 основное внимание уделено "
+"скорости и оптимизации, чтобы обеспечить более плавный процесс рисования. "
+"Более значительными изменениями являются:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:183
 msgid ""
@@ -1254,9 +1255,9 @@ msgid ""
 "GIMP 2.9.8 introduces on-canvas gradient editing and various enhancements "
 "while focusing on bugfixing and stability."
 msgstr ""
-"GIMP 2.9.8 представляет градиентное редактирование на холсте и различные "
-"усовершенствования, при этом основное внимание уделяется исправлению ошибок "
-"и стабильности."
+"В GIMP 2.9.8 появилось редактирование градиентов непосредственно на холсте, "
+"а также были внесены различные улучшения. Однако в основном разработчики все "
+"же исправляли ошибки."
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:198
 msgid "On-canvas gradient editing"
@@ -2284,29 +2285,29 @@ msgstr "Цвет нового канала"
 msgid "Raise Channel"
 msgid_plural "Raise Channels"
 msgstr[0] "Поднять канал"
-msgstr[1] "Поднять канал"
-msgstr[2] "Поднять канал"
+msgstr[1] "Поднять каналы"
+msgstr[2] "Поднять каналы"
 
 #: ../app/actions/channels-commands.c:266
 msgid "Raise Channel to Top"
 msgid_plural "Raise Channels to Top"
-msgstr[0] "Поднять канала на самый верх"
-msgstr[1] "Поднять канала на самый верх"
-msgstr[2] "Поднять канала на самый верх"
+msgstr[0] "Поднять канал на самый верх"
+msgstr[1] "Поднять каналы на самый верх"
+msgstr[2] "Поднять каналы на самый верх"
 
 #: ../app/actions/channels-commands.c:303
 msgid "Lower Channel"
 msgid_plural "Lower Channels"
 msgstr[0] "Опустить канал"
-msgstr[1] "Опустить канал"
-msgstr[2] "Опустить канал"
+msgstr[1] "Опустить каналы"
+msgstr[2] "Опустить каналы"
 
 #: ../app/actions/channels-commands.c:340
 msgid "Lower Channel to Bottom"
 msgid_plural "Lower Channels to Bottom"
 msgstr[0] "Опустить канал в самый низ"
-msgstr[1] "Опустить канал в самый низ"
-msgstr[2] "Опустить канал в самый низ"
+msgstr[1] "Опустить каналы в самый низ"
+msgstr[2] "Опустить каналы в самый низ"
 
 #: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:460
 #: ../app/display/gimpdisplayshell-dnd.c:707
@@ -4277,7 +4278,7 @@ msgstr "Показать подборку полезных советов по �
 #: ../app/actions/dialogs-actions.c:280
 msgctxt "dialogs-action"
 msgid "Welcome Dialog"
-msgstr "Диалог приветствия"
+msgstr "Приветствие"
 
 #: ../app/actions/dialogs-actions.c:281
 msgctxt "dialogs-action"
@@ -5708,22 +5709,22 @@ msgstr "Увеличить тёмные части изображения"
 #: ../app/actions/filters-actions.c:177
 msgctxt "filters-action"
 msgid "_Alien Map..."
-msgstr "_Чужая карта..."
+msgstr "_Чужая карта…"
 
 #: ../app/actions/filters-actions.c:182
 msgctxt "filters-action"
 msgid "_Apply Canvas..."
-msgstr "Текстура _холста..."
+msgstr "Текстура _холста…"
 
 #: ../app/actions/filters-actions.c:187
 msgctxt "filters-action"
 msgid "Apply _Lens..."
-msgstr "_Линза..."
+msgstr "_Линза…"
 
 #: ../app/actions/filters-actions.c:192
 msgctxt "filters-action"
 msgid "_Bayer Matrix..."
-msgstr "_Матрица Байера..."
+msgstr "_Матрица Байера…"
 
 #: ../app/actions/filters-actions.c:197
 msgctxt "filters-action"
@@ -5733,32 +5734,32 @@ msgstr "_Свечение…"
 #: ../app/actions/filters-actions.c:202
 msgctxt "filters-action"
 msgid "B_rightness-Contrast..."
-msgstr "_Яркость-контраст..."
+msgstr "_Яркость-контраст…"
 
 #: ../app/actions/filters-actions.c:207
 msgctxt "filters-action"
 msgid "_Bump Map..."
-msgstr "Проекция _рельефа..."
+msgstr "Проекция _рельефа…"
 
 #: ../app/actions/filters-actions.c:212
 msgctxt "filters-action"
 msgid "_Color to Gray..."
-msgstr "_Цвет в градации серого..."
+msgstr "_Цвет в градации серого…"
 
 #: ../app/actions/filters-actions.c:217
 msgctxt "filters-action"
 msgid "Ca_rtoon..."
-msgstr "Ко_микс..."
+msgstr "Ко_микс…"
 
 #: ../app/actions/filters-actions.c:222
 msgctxt "filters-action"
 msgid "_Channel Mixer..."
-msgstr "_Микшер каналов..."
+msgstr "_Микшер каналов…"
 
 #: ../app/actions/filters-actions.c:227
 msgctxt "filters-action"
 msgid "_Checkerboard..."
-msgstr "_Шахматная доска..."
+msgstr "_Шахматная доска…"
 
 #: ../app/actions/filters-actions.c:232
 msgctxt "filters-action"
@@ -5783,17 +5784,17 @@ msgstr "Подмешать _шум…"
 #: ../app/actions/filters-actions.c:252
 msgctxt "filters-action"
 msgid "_Rotate Colors..."
-msgstr "_Вращение цветов..."
+msgstr "_Вращение цветов…"
 
 #: ../app/actions/filters-actions.c:257
 msgctxt "filters-action"
 msgid "Color T_emperature..."
-msgstr "Температура _цвета..."
+msgstr "Температура _цвета…"
 
 #: ../app/actions/filters-actions.c:262
 msgctxt "filters-action"
 msgid "Color to _Alpha..."
-msgstr "Цвет в _альфа-канал..."
+msgstr "Цвет в _альфа-канал…"
 
 #: ../app/actions/filters-actions.c:267
 msgctxt "filters-action"
@@ -5803,32 +5804,32 @@ msgstr "_Извлечь составляющую…"
 #: ../app/actions/filters-actions.c:272
 msgctxt "filters-action"
 msgid "_Convolution Matrix..."
-msgstr "_Матрица свёртки..."
+msgstr "_Матрица свёртки…"
 
 #: ../app/actions/filters-actions.c:277
 msgctxt "filters-action"
 msgid "_Cubism..."
-msgstr "Ку_бизм..."
+msgstr "Ку_бизм…"
 
 #: ../app/actions/filters-actions.c:282
 msgctxt "filters-action"
 msgid "_Curves..."
-msgstr "_Кривые..."
+msgstr "_Кривые…"
 
 #: ../app/actions/filters-actions.c:287
 msgctxt "filters-action"
 msgid "_Deinterlace..."
-msgstr "Убрать _череcстрочность..."
+msgstr "Убрать _череcстрочность…"
 
 #: ../app/actions/filters-actions.c:292
 msgctxt "filters-action"
 msgid "_Desaturate..."
-msgstr "_Обесцвечивание..."
+msgstr "_Обесцвечивание…"
 
 #: ../app/actions/filters-actions.c:297
 msgctxt "filters-action"
 msgid "Difference of _Gaussians..."
-msgstr "Ра_зница по Гауссу..."
+msgstr "Ра_зница по Гауссу…"
 
 #: ../app/actions/filters-actions.c:302
 msgctxt "filters-action"
@@ -5838,7 +5839,7 @@ msgstr "_Дифракционные узоры…"
 #: ../app/actions/filters-actions.c:307
 msgctxt "filters-action"
 msgid "_Displace..."
-msgstr "Сме_щение..."
+msgstr "Сме_щение…"
 
 #: ../app/actions/filters-actions.c:312
 msgctxt "filters-action"
@@ -5848,12 +5849,12 @@ msgstr "Карта _расстояний…"
 #: ../app/actions/filters-actions.c:317
 msgctxt "filters-action"
 msgid "_Drop Shadow..."
-msgstr "Отбросить _тень..."
+msgstr "Отбросить _тень…"
 
 #: ../app/actions/filters-actions.c:322
 msgctxt "filters-action"
 msgid "_Edge..."
-msgstr "_Край..."
+msgstr "_Край…"
 
 #: ../app/actions/filters-actions.c:327
 msgctxt "filters-action"
@@ -5868,27 +5869,27 @@ msgstr "_Неон…"
 #: ../app/actions/filters-actions.c:337
 msgctxt "filters-action"
 msgid "_Sobel..."
-msgstr "Оператор _Собеля..."
+msgstr "Оператор _Собеля…"
 
 #: ../app/actions/filters-actions.c:342
 msgctxt "filters-action"
 msgid "_Emboss..."
-msgstr "_Тиснение..."
+msgstr "_Тиснение…"
 
 #: ../app/actions/filters-actions.c:347
 msgctxt "filters-action"
 msgid "En_grave..."
-msgstr "_Гравировка..."
+msgstr "_Гравировка…"
 
 #: ../app/actions/filters-actions.c:352
 msgctxt "filters-action"
 msgid "E_xposure..."
-msgstr "_Экспозиция..."
+msgstr "_Экспозиция…"
 
 #: ../app/actions/filters-actions.c:357
 msgctxt "filters-action"
 msgid "_Fattal et al. 2002..."
-msgstr "_Фаттал и др. 2002..."
+msgstr "_Фаттал и др. 2002…"
 
 #: ../app/actions/filters-actions.c:362
 msgctxt "filters-action"
@@ -5898,37 +5899,37 @@ msgstr "_Размывание фокуса…"
 #: ../app/actions/filters-actions.c:367
 msgctxt "filters-action"
 msgid "_Fractal Trace..."
-msgstr "_Фрактальный след..."
+msgstr "_Фрактальный след…"
 
 #: ../app/actions/filters-actions.c:372
 msgctxt "filters-action"
 msgid "_Gaussian Blur..."
-msgstr "_Гауссово размывание..."
+msgstr "_Гауссово размывание…"
 
 #: ../app/actions/filters-actions.c:377
 msgctxt "filters-action"
 msgid "_Selective Gaussian Blur..."
-msgstr "_Выборочное гауссово размывание..."
+msgstr "_Выборочное гауссово размывание…"
 
 #: ../app/actions/filters-actions.c:382
 msgctxt "filters-action"
 msgid "_GEGL Graph..."
-msgstr "_Граф GEGL..."
+msgstr "_Граф GEGL…"
 
 #: ../app/actions/filters-actions.c:387
 msgctxt "filters-action"
 msgid "_Grid..."
-msgstr "С_етка..."
+msgstr "С_етка…"
 
 #: ../app/actions/filters-actions.c:392
 msgctxt "filters-action"
 msgid "_High Pass..."
-msgstr "_Высокочастотный фильтр..."
+msgstr "_Высокочастотный фильтр…"
 
 #: ../app/actions/filters-actions.c:397
 msgctxt "filters-action"
 msgid "Hue-_Chroma..."
-msgstr "Тон-цве_тность..."
+msgstr "Тон-цве_тность…"
 
 #: ../app/actions/filters-actions.c:402
 msgctxt "filters-action"
@@ -5938,12 +5939,12 @@ msgstr "Тон-насыще_нность…"
 #: ../app/actions/filters-actions.c:407
 msgctxt "filters-action"
 msgid "_Illusion..."
-msgstr "Иллю_зия..."
+msgstr "Иллю_зия…"
 
 #: ../app/actions/filters-actions.c:412
 msgctxt "filters-action"
 msgid "_Image Gradient..."
-msgstr "_Градиент изображения..."
+msgstr "_Градиент изображения…"
 
 #: ../app/actions/filters-actions.c:417
 msgctxt "filters-action"
@@ -5968,32 +5969,32 @@ msgstr "_Блик линзы…"
 #: ../app/actions/filters-actions.c:437
 msgctxt "filters-action"
 msgid "_Levels..."
-msgstr "_Уровни..."
+msgstr "_Уровни…"
 
 #: ../app/actions/filters-actions.c:442
 msgctxt "filters-action"
 msgid "_Linear Sinusoid..."
-msgstr "_Линейный синусоид..."
+msgstr "_Линейная синусоида…"
 
 #: ../app/actions/filters-actions.c:447
 msgctxt "filters-action"
 msgid "_Little Planet..."
-msgstr "_Маленькая планета..."
+msgstr "_Маленькая планета…"
 
 #: ../app/actions/filters-actions.c:452
 msgctxt "filters-action"
 msgid "_Long Shadow..."
-msgstr "_Длинная тень..."
+msgstr "_Длинная тень…"
 
 #: ../app/actions/filters-actions.c:457
 msgctxt "filters-action"
 msgid "_Mantiuk 2006..."
-msgstr "_Мантиук 2006..."
+msgstr "_Мантиук 2006…"
 
 #: ../app/actions/filters-actions.c:462
 msgctxt "filters-action"
 msgid "_Maze..."
-msgstr "_Лабиринт..."
+msgstr "_Лабиринт…"
 
 #: ../app/actions/filters-actions.c:467
 msgctxt "filters-action"
@@ -6008,37 +6009,37 @@ msgstr "_Медианный фильтр…"
 #: ../app/actions/filters-actions.c:477
 msgctxt "filters-action"
 msgid "_Mono Mixer..."
-msgstr "_Монохромный микшер каналов..."
+msgstr "_Монохромный микшер каналов…"
 
 #: ../app/actions/filters-actions.c:482
 msgctxt "filters-action"
 msgid "_Mosaic..."
-msgstr "Мо_заика..."
+msgstr "Мо_заика…"
 
 #: ../app/actions/filters-actions.c:487
 msgctxt "filters-action"
 msgid "_Circular Motion Blur..."
-msgstr "Размывание _вращением камеры..."
+msgstr "Размывание _вращением камеры…"
 
 #: ../app/actions/filters-actions.c:492
 msgctxt "filters-action"
 msgid "_Linear Motion Blur..."
-msgstr "Размывание проводкой _камеры..."
+msgstr "Размывание проводкой _камеры…"
 
 #: ../app/actions/filters-actions.c:497
 msgctxt "filters-action"
 msgid "_Zoom Motion Blur..."
-msgstr "Размывание _наездом камеры..."
+msgstr "Размывание _наездом камеры…"
 
 #: ../app/actions/filters-actions.c:502
 msgctxt "filters-action"
 msgid "_Cell Noise..."
-msgstr "_Клеточный шум..."
+msgstr "_Клеточный шум…"
 
 #: ../app/actions/filters-actions.c:507
 msgctxt "filters-action"
 msgid "_Newsprint..."
-msgstr "_Газетная бумага..."
+msgstr "_Газетная бумага…"
 
 #: ../app/actions/filters-actions.c:512
 msgctxt "filters-action"
@@ -6053,47 +6054,47 @@ msgstr "Шум в HS_V…"
 #: ../app/actions/filters-actions.c:522
 msgctxt "filters-action"
 msgid "_Hurl..."
-msgstr "_Бросок..."
+msgstr "_Бросок…"
 
 #: ../app/actions/filters-actions.c:527
 msgctxt "filters-action"
 msgid "Perlin _Noise..."
-msgstr "_Перлинов шум..."
+msgstr "_Перлинов шум…"
 
 #: ../app/actions/filters-actions.c:532
 msgctxt "filters-action"
 msgid "_Pick..."
-msgstr "_Случайный выбор..."
+msgstr "_Случайный выбор…"
 
 #: ../app/actions/filters-actions.c:537
 msgctxt "filters-action"
 msgid "_RGB Noise..."
-msgstr "Шум в _RGB..."
+msgstr "Шум в _RGB…"
 
 #: ../app/actions/filters-actions.c:542
 msgctxt "filters-action"
 msgid "Noise R_eduction..."
-msgstr "_Подавление шума..."
+msgstr "_Подавление шума…"
 
 #: ../app/actions/filters-actions.c:547
 msgctxt "filters-action"
 msgid "_Simplex Noise..."
-msgstr "_Симплексный шум..."
+msgstr "_Симплексный шум…"
 
 #: ../app/actions/filters-actions.c:552
 msgctxt "filters-action"
 msgid "_Slur..."
-msgstr "_Таяние..."
+msgstr "_Таяние…"
 
 #: ../app/actions/filters-actions.c:557
 msgctxt "filters-action"
 msgid "_Solid Noise..."
-msgstr "С_плошной шум..."
+msgstr "С_плошной шум…"
 
 #: ../app/actions/filters-actions.c:562
 msgctxt "filters-action"
 msgid "Sp_read..."
-msgstr "_Рассеивание..."
+msgstr "_Рассеивание…"
 
 #: ../app/actions/filters-actions.c:567
 msgctxt "filters-action"
@@ -6103,42 +6104,42 @@ msgstr "Проекция _нормалей…"
 #: ../app/actions/filters-actions.c:572
 msgctxt "filters-action"
 msgid "_Offset..."
-msgstr "_Сместить..."
+msgstr "_Сместить…"
 
 #: ../app/actions/filters-actions.c:577
 msgctxt "filters-action"
 msgid "Oili_fy..."
-msgstr "_Масляная краска..."
+msgstr "_Масляная краска…"
 
 #: ../app/actions/filters-actions.c:582
 msgctxt "filters-action"
 msgid "_Panorama Projection..."
-msgstr "Па_норамная проекция..."
+msgstr "Па_норамная проекция…"
 
 #: ../app/actions/filters-actions.c:587
 msgctxt "filters-action"
 msgid "_Photocopy..."
-msgstr "_Фотокопия..."
+msgstr "_Фотокопия…"
 
 #: ../app/actions/filters-actions.c:592
 msgctxt "filters-action"
 msgid "_Pixelize..."
-msgstr "_Пикселизация..."
+msgstr "_Пикселизация…"
 
 #: ../app/actions/filters-actions.c:597
 msgctxt "filters-action"
 msgid "_Plasma..."
-msgstr "П_лазма..."
+msgstr "П_лазма…"
 
 #: ../app/actions/filters-actions.c:602
 msgctxt "filters-action"
 msgid "P_olar Coordinates..."
-msgstr "По_лярные координаты..."
+msgstr "По_лярные координаты…"
 
 #: ../app/actions/filters-actions.c:607
 msgctxt "filters-action"
 msgid "_Posterize..."
-msgstr "_Постеризация..."
+msgstr "_Постеризация…"
 
 #: ../app/actions/filters-actions.c:612
 msgctxt "filters-action"
@@ -6148,12 +6149,12 @@ msgstr "_Рекурсивная трансформация…"
 #: ../app/actions/filters-actions.c:617
 msgctxt "filters-action"
 msgid "_Red Eye Removal..."
-msgstr "_Удаление эффекта красных глаз..."
+msgstr "_Удаление эффекта красных глаз…"
 
 #: ../app/actions/filters-actions.c:622
 msgctxt "filters-action"
 msgid "_Reinhard 2005..."
-msgstr "_Рейнхард 2005..."
+msgstr "_Рейнхард 2005…"
 
 #: ../app/actions/filters-actions.c:627
 msgctxt "filters-action"
@@ -6163,37 +6164,37 @@ msgstr "Обре_зка RGB…"
 #: ../app/actions/filters-actions.c:632
 msgctxt "filters-action"
 msgid "_Ripple..."
-msgstr "_Рябь..."
+msgstr "_Рябь…"
 
 #: ../app/actions/filters-actions.c:637
 msgctxt "filters-action"
 msgid "Sat_uration..."
-msgstr "_Насыщенность..."
+msgstr "_Насыщенность…"
 
 #: ../app/actions/filters-actions.c:642
 msgctxt "filters-action"
 msgid "_Semi-Flatten..."
-msgstr "По_лусведение..."
+msgstr "По_лусведение…"
 
 #: ../app/actions/filters-actions.c:647
 msgctxt "filters-action"
 msgid "_Sepia..."
-msgstr "_Сепия..."
+msgstr "_Сепия…"
 
 #: ../app/actions/filters-actions.c:652
 msgctxt "filters-action"
 msgid "S_hadows-Highlights..."
-msgstr "Тени-световые _пятна..."
+msgstr "Тени-световые _пятна…"
 
 #: ../app/actions/filters-actions.c:657
 msgctxt "filters-action"
 msgid "_Shift..."
-msgstr "С_мещение..."
+msgstr "С_мещение…"
 
 #: ../app/actions/filters-actions.c:662
 msgctxt "filters-action"
 msgid "_Sinus..."
-msgstr "_Синус..."
+msgstr "_Синус…"
 
 #: ../app/actions/filters-actions.c:667
 msgctxt "filters-action"
@@ -6203,12 +6204,12 @@ msgstr "_Простой линейный итеративный кластери
 #: ../app/actions/filters-actions.c:672
 msgctxt "filters-action"
 msgid "_Symmetric Nearest Neighbor..."
-msgstr "_Симметрия ближайших соседних точек..."
+msgstr "_Симметрия ближайших соседних точек…"
 
 #: ../app/actions/filters-actions.c:677
 msgctxt "filters-action"
 msgid "_Softglow..."
-msgstr "_Мягкое свечение..."
+msgstr "_Мягкое свечение…"
 
 #: ../app/actions/filters-actions.c:682
 msgctxt "filters-action"
@@ -6223,7 +6224,7 @@ msgstr "Сп_ираль…"
 #: ../app/actions/filters-actions.c:692
 msgctxt "filters-action"
 msgid "_Stretch Contrast..."
-msgstr "Растянуть _контраст..."
+msgstr "Растянуть _контраст…"
 
 #: ../app/actions/filters-actions.c:697
 msgctxt "filters-action"
@@ -6233,27 +6234,27 @@ msgstr "_Нагрузка…"
 #: ../app/actions/filters-actions.c:702
 msgctxt "filters-action"
 msgid "Super_nova..."
-msgstr "Свер_хновая..."
+msgstr "Свер_хновая…"
 
 #: ../app/actions/filters-actions.c:707
 msgctxt "filters-action"
 msgid "_Threshold..."
-msgstr "Поро_г..."
+msgstr "Поро_г…"
 
 #: ../app/actions/filters-actions.c:712
 msgctxt "filters-action"
 msgid "_Threshold Alpha..."
-msgstr "Поро_г альфа-канала..."
+msgstr "Поро_г альфа-канала…"
 
 #: ../app/actions/filters-actions.c:717
 msgctxt "filters-action"
 msgid "_Glass Tile..."
-msgstr "Стеклянные _блоки..."
+msgstr "Стеклянные _блоки…"
 
 #: ../app/actions/filters-actions.c:722
 msgctxt "filters-action"
 msgid "_Paper Tile..."
-msgstr "_Разрез бумаги..."
+msgstr "_Разрез бумаги…"
 
 #: ../app/actions/filters-actions.c:727
 msgctxt "filters-action"
@@ -6263,17 +6264,17 @@ msgstr "_Бесшовная мозаика…"
 #: ../app/actions/filters-actions.c:732
 msgctxt "filters-action"
 msgid "Sharpen (_Unsharp Mask)..."
-msgstr "Повысить резкость (_нерезкая маска)..."
+msgstr "Повысить резкость (_нерезкая маска)…"
 
 #: ../app/actions/filters-actions.c:737
 msgctxt "filters-action"
 msgid "_Value Propagate..."
-msgstr "_Распространение значений..."
+msgstr "_Распространение значений…"
 
 #: ../app/actions/filters-actions.c:742
 msgctxt "filters-action"
 msgid "_Variable Blur..."
-msgstr "_Выборочное размывание..."
+msgstr "_Выборочное размытие…"
 
 #: ../app/actions/filters-actions.c:747
 msgctxt "filters-action"
@@ -6283,27 +6284,27 @@ msgstr "Ухудшение _видео…"
 #: ../app/actions/filters-actions.c:752
 msgctxt "filters-action"
 msgid "_Vignette..."
-msgstr "_Виньетирование..."
+msgstr "_Виньетирование…"
 
 #: ../app/actions/filters-actions.c:757
 msgctxt "filters-action"
 msgid "_Waterpixels..."
-msgstr "_Водяные пиксели..."
+msgstr "_Водяные пиксели…"
 
 #: ../app/actions/filters-actions.c:762
 msgctxt "filters-action"
 msgid "_Waves..."
-msgstr "_Волны..."
+msgstr "_Волны…"
 
 #: ../app/actions/filters-actions.c:767
 msgctxt "filters-action"
 msgid "W_hirl and Pinch..."
-msgstr "В_ихрь и щипок..."
+msgstr "В_ихрь и щипок…"
 
 #: ../app/actions/filters-actions.c:772
 msgctxt "filters-action"
 msgid "W_ind..."
-msgstr "В_етер..."
+msgstr "В_етер…"
 
 #: ../app/actions/filters-actions.c:780
 msgctxt "filters-action"
@@ -8121,7 +8122,7 @@ msgstr "Пересечь альфа-канал слоя с текущим выд
 #: ../app/actions/layers-actions.c:555
 msgctxt "layers-action"
 msgid "Select _Top Layer"
-msgstr "Выбрать верхний слой"
+msgstr "Выбрать _верхний слой"
 
 #: ../app/actions/layers-actions.c:556
 msgctxt "layers-action"
@@ -9404,7 +9405,7 @@ msgstr "По вертикали, слева направо (прямое ото�
 #: ../app/actions/text-tool-commands.c:188
 #, c-format
 msgid "Test along path failed: %s"
-msgstr "Тест по пути не пройден: %s"
+msgstr "Не удалось разместить текст по контуру: %s"
 
 #: ../app/actions/tool-options-actions.c:58
 msgctxt "tool-options-action"
@@ -11798,8 +11799,8 @@ msgstr "Контур"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Если включено, изображение становится активным, когда его окно получает "
 "фокус. Это удобно в работе с оконными менеджерами, где для переноса фокуса "
@@ -13855,7 +13856,7 @@ msgstr "Просмотр в виде таблицы"
 #: ../app/core/core-enums.c:1467
 msgctxt "select-method"
 msgid "Selection by basic text search"
-msgstr "Выбор с помощью основного текстового поиска"
+msgstr "Выбор с помощью простого текстового поиска"
 
 #: ../app/core/core-enums.c:1468
 msgctxt "select-method"
@@ -15843,8 +15844,8 @@ msgid ""
 "Unsupported pattern dimensions %d x %d.\n"
 "GIMP Patterns have a maximum size of %d x %d."
 msgstr ""
-"Неподдерживаемые размеры шаблона %d x %d.\n"
-"Шаблоны GIMP имеют максимальный размер %d x %d."
+"Неподдерживаемые размеры текстуры %d × %d.\n"
+"Текстуры GIMP имеют максимальный размер %d × %d."
 
 #: ../app/core/gimppdbprogress.c:268
 #, c-format
@@ -18632,11 +18633,11 @@ msgstr "Указатели"
 
 #: ../app/dialogs/preferences-dialog.c:3170
 msgid "Pointer _mode:"
-msgstr "_Режим курсора:"
+msgstr "_Режим указателя:"
 
 #: ../app/dialogs/preferences-dialog.c:3173
 msgid "Pointer _handedness:"
-msgstr "_Направление курсора:"
+msgstr "_Направление указателя:"
 
 #: ../app/dialogs/preferences-dialog.c:3177
 msgid "Paint Tools"
@@ -19102,7 +19103,7 @@ msgstr "Масштабирование шаблона до %.2f ppi"
 #: ../app/dialogs/resize-dialog.c:756
 #, c-format
 msgid "Set image to %.2f ppi"
-msgstr "Установить для изображения значение %.2f ppi"
+msgstr "Установить разрешение %.2f ppi"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:67
 msgid "Calibrate Monitor Resolution"
@@ -19274,7 +19275,7 @@ msgid ""
 "GIMP is a Free Software for image authoring and manipulation.\n"
 "Want to know more?"
 msgstr ""
-"GIMP - это бесплатное программное обеспечение для создания и обработки "
+"GIMP — свободное программное обеспечение для создания и обработки "
 "изображений.\n"
 "Хотите узнать больше?"
 
@@ -19284,7 +19285,7 @@ msgstr "Веб-сайт GIMP"
 
 #: ../app/dialogs/welcome-dialog.c:189
 msgid "Tutorials"
-msgstr "Обучающие материалы"
+msgstr "Уроки"
 
 #: ../app/dialogs/welcome-dialog.c:194
 msgid "Documentation"
@@ -19299,28 +19300,29 @@ msgid ""
 "Want to contribute?"
 msgstr ""
 "GIMP является общественным программным обеспечением под лицензией GNU "
-"general public license v3.\n"
+"General Public License v3.\n"
 "Хотите внести свой вклад?"
 
 #: ../app/dialogs/welcome-dialog.c:227
 msgid "Contributing"
-msgstr "Вклад в развитие"
+msgstr "Как поучаствовать в проекте"
 
 #: ../app/dialogs/welcome-dialog.c:232
 msgid "Donating"
-msgstr "Пожертвование"
+msgstr "Как спонсировать проект"
 
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: ../app/dialogs/welcome-dialog.c:257
 #, c-format
 msgid "GIMP %s Release Notes"
-msgstr "GIMP %s Примечания к выпуску"
+msgstr "Изменения в GIMP %s"
 
 #: ../app/dialogs/welcome-dialog.c:368
 #, c-format
 msgid "Click on release items with a %s bullet point to get a tour."
 msgstr ""
-"Нажмите на детали релиза с жирным знаком %s, чтобы ознакомиться с ними."
+"Щелкните по элементу списка %s с описанием изменения, чтобы просмотреть его "
+"демонстрацию."
 
 #: ../app/dialogs/welcome-dialog.c:416
 msgid ""
@@ -19328,7 +19330,7 @@ msgid ""
 "from the \"Help\" menu."
 msgstr ""
 "Этот диалог приветствия отображается только при первом запуске. Вы можете "
-"показать его снова из меню \"Справка\"."
+"открыть его снова из меню «Справка»."
 
 #: ../app/display/display-enums.c:88
 msgctxt "compass-orientation"
@@ -20207,7 +20209,7 @@ msgstr "Файл запрещён в корне расширения GIMP '%s': 
 #: ../app/file-data/file-data-gex.c:168
 #, c-format
 msgid "File not in GIMP extension '%s' folder id '%s': %s"
-msgstr "Файл не в папке GIMP расширения '%s' id папки '%s': %s"
+msgstr "Файл не в папке GIMP с расширениями '%s' с id '%s': %s"
 
 #: ../app/file-data/file-data-gex.c:264 ../app/file-data/file-data-gex.c:411
 #: ../app/file-data/file-data-gex.c:423 ../app/file-data/file-data-gex.c:435
@@ -21628,7 +21630,7 @@ msgstr "Укажите исходное изображение."
 #: ../app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr ""
-"\"Зарегистрированное\" выравнивание не может рисовать на нескольких областях "
+"При выравнивании «С регистрацией» нельзя рисовать в нескольких областях "
 "рисования."
 
 #: ../app/paint/gimpsourceoptions.c:102 ../app/tools/gimpaligntool.c:123
@@ -22103,11 +22105,11 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
-"Процедура '%s' была вызвана с некорректным типом значения аргумента '%s' (#"
-"%d). Ожидалось %s, получено %s."
+"Процедура '%s' была вызвана с некорректным типом значения аргумента "
+"'%s' (#%d). Ожидалось %s, получено %s."
 
 #: ../app/pdb/gimpprocedure.c:893
 #, c-format
@@ -23188,8 +23190,8 @@ msgid ""
 "Pack my box with\n"
 "five dozen liquor jugs."
 msgstr ""
-"Упакуйте мой ящик\n"
-"пятью дюжинами кувшинов с ликером."
+"В чащах юга жил-был цитрус.\n"
+"Да, но фальшивый экземпляръ!"
 
 #: ../app/text/gimpfontfactory.c:399
 #, c-format
@@ -23511,19 +23513,19 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:253
 msgid "Stroke borders"
-msgstr "Границы штриховой обводки"
+msgstr "Обводить границы"
 
 #: ../app/tools/gimpbucketfilloptions.c:254
 msgid "Stroke fill borders with last stroke options"
-msgstr "Границы заливки штрихами с опциями последнего штриха"
+msgstr "Обводить границы заливки с параметрами последней обводки"
 
 #: ../app/tools/gimpbucketfilloptions.c:260
 msgid "Stroke tool"
-msgstr "Инструмент Штрих"
+msgstr "Инструмент обводки"
 
 #: ../app/tools/gimpbucketfilloptions.c:261
 msgid "The tool to stroke the fill borders with"
-msgstr "Инструмент для штриховой обводки границ заливки"
+msgstr "Инструмент для обводки границ заливки"
 
 #: ../app/tools/gimpbucketfilloptions.c:266
 msgid "Automatic closure"
@@ -23534,8 +23536,8 @@ msgid ""
 "Geometric analysis of the stroke contours to close line arts by splines/"
 "segments"
 msgstr ""
-"Геометрический анализ контуров штриха для замыкания линейных искусств "
-"сплайнами/сегментами"
+"Геометрический анализ контуров обводки для замыкания штрихов в контурных "
+"рисунках сплайнами/сегментами"
 
 #: ../app/tools/gimpbucketfilloptions.c:273
 msgid "Maximum gap length"
@@ -23559,16 +23561,16 @@ msgstr "Критерий, по которому определяется схо�
 msgid ""
 "Opaque pixels will be considered as line art instead of low luminance pixels"
 msgstr ""
-"Непрозрачные пиксели будут рассматриваться как линейный рисунок, а не как "
-"пиксели низкой яркости"
+"Непрозрачные пиксели будут рассматриваться как контурный рисунок, а не как "
+"пиксели с низкой светимостью"
 
 #: ../app/tools/gimpbucketfilloptions.c:633
 msgid "No valid source drawable selected"
-msgstr "Не выбран ни один действительный источник для рисования"
+msgstr "Не выбрана ни одна действительная исходная область рисования"
 
 #: ../app/tools/gimpbucketfilloptions.c:635
 msgid "The source drawable has no alpha channel"
-msgstr "Источник рисуемого объекта не имеет альфа-канала"
+msgstr "У исходной области рисования нет альфа-канала"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:677
@@ -23602,7 +23604,7 @@ msgstr "Определять непрозрачность, а не градац�
 #. Line Art Closure: frame label
 #: ../app/tools/gimpbucketfilloptions.c:788
 msgid "Line Art Closure"
-msgstr "Замыкание линейного изображения"
+msgstr "Замыкание контурного рисунка"
 
 #. Line Art Borders: frame label
 #: ../app/tools/gimpbucketfilloptions.c:819
@@ -24214,7 +24216,7 @@ msgstr "Показывать элементы управления фильтр�
 #: ../app/tools/gimpfiltertool.c:316 ../app/tools/gimpselectiontool.c:578
 #, c-format
 msgid "A selected item's pixels are locked."
-msgstr "Изменения пикселей выбранного эелемена запрещены."
+msgstr "Изменения пикселей выбранного элемента запрещены."
 
 #: ../app/tools/gimpfiltertool.c:328 ../app/tools/gimppainttool.c:359
 #: ../app/tools/gimptransformtool.c:691
@@ -25294,7 +25296,7 @@ msgstr "Выделение рисованием"
 #: ../app/tools/gimppaintselecttool.c:168
 msgid "Paint Select Tool: Select objects by painting roughly"
 msgstr ""
-"Инструмент \"Выделение краской\": Выделение объектов путем грубого "
+"Инструмент «Выделение рисованием»: выделение объектов путем грубого "
 "закрашивания"
 
 #: ../app/tools/gimppaintselecttool.c:169
@@ -25308,7 +25310,7 @@ msgstr ""
 
 #: ../app/tools/gimppaintselecttool.c:365
 msgid "Cannot paint select on layer groups."
-msgstr "Невозможно рисовать, выбирая группы слоев."
+msgstr "Невозможно рисовать выделение на группе слоев."
 
 #: ../app/tools/gimppaintselecttool.c:641
 msgctxt "command"
@@ -25334,7 +25336,7 @@ msgstr "Невозможно рисовать в нескольких слоях
 
 #: ../app/tools/gimppainttool.c:320
 msgid "Cannot paint on layer groups."
-msgstr "Невозможно рисовать в группе слоев."
+msgstr "Невозможно рисовать на группе слоев."
 
 #: ../app/tools/gimppainttool.c:706
 #, c-format
@@ -25343,7 +25345,7 @@ msgstr "%s для рисования прямой линии"
 
 #: ../app/tools/gimppainttool.c:940
 msgid "The selected drawable does not have an alpha channel."
-msgstr "У выбранного рисуемого объекта нет альфа-канала."
+msgstr "У выбранной области рисования нет альфа-канала."
 
 #: ../app/tools/gimppainttool.c:951
 msgid "The selected layer's alpha channel is locked."
@@ -25467,7 +25469,7 @@ msgstr "Текущее"
 
 #: ../app/tools/gimprectangleoptions.c:862
 msgid "Fixed"
-msgstr "Фиксированный"
+msgstr "Фикс."
 
 #: ../app/tools/gimprectangleoptions.c:1010 ../app/tools/gimptextoptions.c:565
 msgid "Size:"
@@ -26285,11 +26287,11 @@ msgstr "Нет контура для преобразования."
 
 #: ../app/tools/gimptransformtool.c:727
 msgid "The selected path's strokes are locked."
-msgstr "Изменения обводок выбранного контура запрещены."
+msgstr "Изменения сегментов выбранного контура запрещены."
 
 #: ../app/tools/gimptransformtool.c:731
 msgid "The selected path has no strokes."
-msgstr "У выбранного контура нет обводки."
+msgstr "У выбранного контура нет сегментов."
 
 #: ../app/tools/gimptransformtool.c:808
 msgid "The current transform is invalid"
@@ -27726,8 +27728,8 @@ msgstr "Остановки очереди"
 msgid ""
 "Number of times the writing to the swap has been stalled, due to a full queue"
 msgstr ""
-"Количество раз, когда запись в своп была остановлена из-за переполненной "
-"очереди"
+"Количество раз, когда запись в файл подкачки была остановлена из-за "
+"переполненной очереди"
 
 #: ../app/widgets/gimpdashboard.c:573
 msgctxt "dashboard-variable"
@@ -28629,19 +28631,19 @@ msgstr[2] "Индексированный цвет (%d цветов)"
 
 #: ../app/widgets/gimpitemtreeview.c:526
 msgid "Set Item Exclusive Content Lock"
-msgstr "Установить элемент Блокировка эксклюзивного содержимого"
+msgstr "Запретить правку содержимого только в этом элементе"
 
 #: ../app/widgets/gimpitemtreeview.c:542
 msgid "Set Item Exclusive Position Lock"
-msgstr "Установить элемент Исключительная фиксация положения"
+msgstr "Запретить перемещение на холсте только этого элемента"
 
 #: ../app/widgets/gimpitemtreeview.c:557
 msgid "Unlock visibility"
-msgstr "Разблокировка видимости"
+msgstr "Разблокировать переключатель видимости"
 
 #: ../app/widgets/gimpitemtreeview.c:558
 msgid "Set Item Exclusive Visibility Lock"
-msgstr "Установить блокировку исключительной видимости элемента"
+msgstr "Запретить смену видимости только этого элемента"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
@@ -28674,7 +28676,7 @@ msgstr "Разблокировать альфа-канал"
 
 #: ../app/widgets/gimplayertreeview.c:541
 msgid "Set Item Exclusive Alpha Channel lock"
-msgstr "Установить элемент Эксклюзивная блокировка альфа-канала"
+msgstr "Запретить правку альфа-канала только в этом элементе"
 
 #: ../app/widgets/gimplayertreeview.c:1130
 msgid "search"
