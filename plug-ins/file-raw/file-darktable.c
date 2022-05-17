@@ -401,7 +401,7 @@ load_image (const gchar  *filename,
 
   if (debug_prints)
     {
-      gchar **environ = g_get_environ ();
+      gchar **environ_ = g_get_environ ();
       gint    i;
 
       g_printf ("[%s] trying to call\n", __FILE__);
@@ -410,9 +410,9 @@ load_image (const gchar  *filename,
       g_printf ("\n");
 
       g_printf ("## Environment ##\n");
-      for (i = 0; environ[i]; i++)
-        g_printf ("- %s\n", environ[i]);
-      g_strfreev (environ) ;
+      for (i = 0; environ_[i]; i++)
+        g_printf ("- %s\n", environ_[i]);
+      g_strfreev (environ_) ;
     }
 
   if (g_spawn_sync (NULL,
