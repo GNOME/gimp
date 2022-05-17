@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-16 14:32+0000\n"
-"PO-Revision-Date: 2022-05-16 19:18+0300\n"
+"POT-Creation-Date: 2022-05-16 18:57+0000\n"
+"PO-Revision-Date: 2022-05-17 19:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -44,7 +44,7 @@ msgstr "Потренувати козу у мові Сі"
 #: ../plug-ins/common/sphere-designer.c:3178 ../plug-ins/common/tile.c:219
 #: ../plug-ins/common/tile-small.c:307 ../plug-ins/common/van-gogh-lic.c:912
 #: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
-#: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
+#: ../plug-ins/file-dds/dds.c:519 ../plug-ins/flame/flame.c:240
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:398
 #: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
 #: ../plug-ins/gradient-flare/gradient-flare.c:934
@@ -79,7 +79,7 @@ msgstr "Потренувати козу (Сі)"
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
 #: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3587
-#: ../plug-ins/common/file-raw-data.c:1766 ../plug-ins/common/file-svg.c:679
+#: ../plug-ins/common/file-raw-data.c:1769 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:546 ../plug-ins/common/film.c:1314
 #: ../plug-ins/common/grid.c:760 ../plug-ins/common/hot.c:678
 #: ../plug-ins/common/jigsaw.c:2497 ../plug-ins/common/mail.c:568
@@ -419,7 +419,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
 #: ../plug-ins/common/file-png.c:943 ../plug-ins/common/file-pnm.c:764
-#: ../plug-ins/common/file-raw-data.c:1320
+#: ../plug-ins/common/file-raw-data.c:1323
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:803
 #: ../plug-ins/common/smooth-palette.c:331 ../plug-ins/common/tile.c:404
@@ -764,7 +764,7 @@ msgstr "База випадковості"
 #: ../plug-ins/common/cml-explorer.c:2248 ../plug-ins/common/curve-bend.c:1480
 #: ../plug-ins/common/curve-bend.c:1995 ../plug-ins/common/file-cel.c:1004
 #: ../plug-ins/common/file-jp2-load.c:976
-#: ../plug-ins/common/file-raw-data.c:1767 ../plug-ins/common/qbist.c:848
+#: ../plug-ins/common/file-raw-data.c:1770 ../plug-ins/common/qbist.c:848
 #: ../plug-ins/common/qbist.c:1031 ../plug-ins/common/sphere-designer.c:2288
 #: ../plug-ins/common/sphere-designer.c:2679 ../plug-ins/flame/flame.c:541
 #: ../plug-ins/flame/flame.c:1103
@@ -978,8 +978,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1495
-#: ../plug-ins/common/file-raw-data.c:1117
-#: ../plug-ins/common/file-raw-data.c:1146 ../plug-ins/common/file-sunras.c:635
+#: ../plug-ins/common/file-raw-data.c:1120
+#: ../plug-ins/common/file-raw-data.c:1149 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
@@ -1011,7 +1011,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-ps.c:1151 ../plug-ins/common/file-ps.c:3537
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
 #: ../plug-ins/common/file-raw-data.c:439
-#: ../plug-ins/common/file-raw-data.c:1229 ../plug-ins/common/file-sunras.c:455
+#: ../plug-ins/common/file-raw-data.c:1232 ../plug-ins/common/file-sunras.c:455
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:445 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:900
@@ -1228,7 +1228,7 @@ msgstr "_Redness cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2490 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2490 ../plug-ins/common/file-raw-data.c:1873
 msgid "RGB"
 msgstr "RGB"
 
@@ -1801,7 +1801,7 @@ msgstr "Джерело 2:"
 msgid "O_verlap:"
 msgstr "_Перекриття:"
 
-#: ../plug-ins/common/depth-merge.c:844 ../plug-ins/common/file-raw-data.c:1903
+#: ../plug-ins/common/depth-merge.c:844 ../plug-ins/common/file-raw-data.c:1906
 msgid "O_ffset:"
 msgstr "_Зсув:"
 
@@ -1869,7 +1869,7 @@ msgstr "Прибирання штрихів"
 
 #: ../plug-ins/common/destripe.c:509 ../plug-ins/common/file-html-table.c:711
 #: ../plug-ins/common/file-ps.c:3662 ../plug-ins/common/file-ps.c:3862
-#: ../plug-ins/common/file-raw-data.c:1917
+#: ../plug-ins/common/file-raw-data.c:1920
 #: ../plug-ins/common/smooth-palette.c:530 ../plug-ins/common/tile.c:518
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:398
@@ -1895,7 +1895,7 @@ msgstr ""
 msgid "Export Image as Text"
 msgstr "Експортувати зображення як текст"
 
-#: ../plug-ins/common/file-aa.c:392 ../plug-ins/file-dds/ddswrite.c:2013
+#: ../plug-ins/common/file-aa.c:392 ../plug-ins/file-dds/ddswrite.c:2040
 msgid "_Format:"
 msgstr "_Формат:"
 
@@ -1943,7 +1943,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:658
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1141
-#: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:447
+#: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
@@ -2730,7 +2730,7 @@ msgid "_Border:"
 msgstr "_Рамка:"
 
 #: ../plug-ins/common/file-html-table.c:717 ../plug-ins/common/file-ps.c:3675
-#: ../plug-ins/common/file-ps.c:3873 ../plug-ins/common/file-raw-data.c:1931
+#: ../plug-ins/common/file-ps.c:3873 ../plug-ins/common/file-raw-data.c:1934
 #: ../plug-ins/common/film.c:1058 ../plug-ins/common/smooth-palette.c:535
 #: ../plug-ins/common/tile.c:522 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:405
@@ -3642,7 +3642,6 @@ msgid "Could not interpret PostScript file '%s'"
 msgstr "Не вдається інтерпретувати файл PostScript «%s»"
 
 #: ../plug-ins/common/file-ps.c:1249
-#| msgid "Rendered SVG"
 msgid "Rendered EPS"
 msgstr "Оброблений EPS"
 
@@ -3988,7 +3987,7 @@ msgid "Raw image data"
 msgstr "Raw Image Data"
 
 #: ../plug-ins/common/file-raw-data.c:278
-#: ../plug-ins/common/file-raw-data.c:1815
+#: ../plug-ins/common/file-raw-data.c:1818
 msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
 
@@ -4022,7 +4021,7 @@ msgstr ""
 msgid "RAW export does not support multiple layers."
 msgstr "Для експортування RAW не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-raw-data.c:1762
+#: ../plug-ins/common/file-raw-data.c:1765
 msgid "Load Image from Raw Data"
 msgstr "Завантаження зображення з Raw-даних"
 
@@ -4030,15 +4029,15 @@ msgstr "Завантаження зображення з Raw-даних"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:1811
+#: ../plug-ins/common/file-raw-data.c:1814
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Дані цифрової моделі рельєфу (1 кутова сек)"
 
-#: ../plug-ins/common/file-raw-data.c:1813
+#: ../plug-ins/common/file-raw-data.c:1816
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Дані цифрової моделі рельєфу (3 кутові сек)"
 
-#: ../plug-ins/common/file-raw-data.c:1819
+#: ../plug-ins/common/file-raw-data.c:1822
 msgid "Image"
 msgstr "Зображення"
 
@@ -4050,141 +4049,141 @@ msgstr "Зображення"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1849
+#: ../plug-ins/common/file-raw-data.c:1852
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1  (1 кутова сек)"
 
-#: ../plug-ins/common/file-raw-data.c:1850
+#: ../plug-ins/common/file-raw-data.c:1853
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3  (3 кутові сек)"
 
-#: ../plug-ins/common/file-raw-data.c:1853
+#: ../plug-ins/common/file-raw-data.c:1856
 msgid "_Sample Spacing:"
 msgstr "_Простір вибірки:"
 
-#: ../plug-ins/common/file-raw-data.c:1871
+#: ../plug-ins/common/file-raw-data.c:1874
 msgid "RGB Alpha"
 msgstr "RGB з альфа-каналом"
 
-#: ../plug-ins/common/file-raw-data.c:1872
+#: ../plug-ins/common/file-raw-data.c:1875
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1873
+#: ../plug-ins/common/file-raw-data.c:1876
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1874
+#: ../plug-ins/common/file-raw-data.c:1877
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1875
+#: ../plug-ins/common/file-raw-data.c:1878
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1876
+#: ../plug-ins/common/file-raw-data.c:1879
 msgid "Planar RGB"
 msgstr "Планарний RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1877
+#: ../plug-ins/common/file-raw-data.c:1880
 msgid "B&W 1 bit"
 msgstr "Чорно-біле, 1 біт"
 
-#: ../plug-ins/common/file-raw-data.c:1878
+#: ../plug-ins/common/file-raw-data.c:1881
 msgid "Gray 2 bit"
 msgstr "Сірий 2 біт"
 
-#: ../plug-ins/common/file-raw-data.c:1879
+#: ../plug-ins/common/file-raw-data.c:1882
 msgid "Gray 4 bit"
 msgstr "Сірий 4 біт"
 
-#: ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-raw-data.c:1883
 msgid "Gray 8 bit"
 msgstr "Сірий 8 біт"
 
-#: ../plug-ins/common/file-raw-data.c:1881
+#: ../plug-ins/common/file-raw-data.c:1884
 msgid "Indexed"
 msgstr "Індексований"
 
-#: ../plug-ins/common/file-raw-data.c:1882
+#: ../plug-ins/common/file-raw-data.c:1885
 msgid "Indexed Alpha"
 msgstr "Індексоване з альфа-каналом"
 
-#: ../plug-ins/common/file-raw-data.c:1883
+#: ../plug-ins/common/file-raw-data.c:1886
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Сірий беззнаковий 16 біт Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1884
+#: ../plug-ins/common/file-raw-data.c:1887
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Сірий беззнаковий 16 біт Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1885
+#: ../plug-ins/common/file-raw-data.c:1888
 msgid "Gray 16 bit Big Endian"
 msgstr "Сірий 16 біт Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1886
+#: ../plug-ins/common/file-raw-data.c:1889
 msgid "Gray 16 bit Little Endian"
 msgstr "Сірий 16 біт Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1891
+#: ../plug-ins/common/file-raw-data.c:1894
 msgid "Image _Type:"
 msgstr "_Тип зображення:"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1950
 msgid "Palette"
 msgstr "Палітра"
 
-#: ../plug-ins/common/file-raw-data.c:1957
+#: ../plug-ins/common/file-raw-data.c:1960
 msgid "R, G, B (normal)"
 msgstr "R, G, B (звичайний)"
 
-#: ../plug-ins/common/file-raw-data.c:1958
+#: ../plug-ins/common/file-raw-data.c:1961
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (у стилі BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1963
+#: ../plug-ins/common/file-raw-data.c:1966
 msgid "_Palette Type:"
 msgstr "Тип _палітри:"
 
-#: ../plug-ins/common/file-raw-data.c:1973
+#: ../plug-ins/common/file-raw-data.c:1976
 msgid "Off_set:"
 msgstr "_Зсув:"
 
-#: ../plug-ins/common/file-raw-data.c:1985
+#: ../plug-ins/common/file-raw-data.c:1988
 msgid "Select Palette File"
 msgstr "Виберіть файл палітри"
 
-#: ../plug-ins/common/file-raw-data.c:1991
+#: ../plug-ins/common/file-raw-data.c:1994
 msgid "Pal_ette File:"
 msgstr "Файл _палітри:"
 
-#: ../plug-ins/common/file-raw-data.c:2022
+#: ../plug-ins/common/file-raw-data.c:2025
 msgid "Export Image as Raw Data"
 msgstr "Експортувати зображення як дані RAW"
 
 #. Image type combo
-#: ../plug-ins/common/file-raw-data.c:2031
+#: ../plug-ins/common/file-raw-data.c:2034
 msgid "_Standard (R,G,B)"
 msgstr "С_тандартний (R,G,B)"
 
-#: ../plug-ins/common/file-raw-data.c:2032
+#: ../plug-ins/common/file-raw-data.c:2035
 msgid "_Planar (RRR,GGG,BBB)"
 msgstr "П_ланарний (RRR,GGG,BBB)"
 
-#: ../plug-ins/common/file-raw-data.c:2035
+#: ../plug-ins/common/file-raw-data.c:2038
 msgid "Image Type"
 msgstr "Тип зображення"
 
 #. Palette type combo
-#: ../plug-ins/common/file-raw-data.c:2041
+#: ../plug-ins/common/file-raw-data.c:2044
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (звичайний)"
 
-#: ../plug-ins/common/file-raw-data.c:2042
+#: ../plug-ins/common/file-raw-data.c:2045
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (у стилі BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2045
+#: ../plug-ins/common/file-raw-data.c:2048
 msgid "Palette Type"
 msgstr "Тип палітри"
 
@@ -6560,15 +6559,15 @@ msgstr "Для формату BMP не передбачено підтримку
 msgid "DDS image"
 msgstr "Зображення DDS"
 
-#: ../plug-ins/file-dds/dds.c:314
+#: ../plug-ins/file-dds/dds.c:321
 msgid "Decode YCoCg"
 msgstr "Декодувати YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:336
+#: ../plug-ins/file-dds/dds.c:343
 msgid "Decode YCoCg (scaled)"
 msgstr "Декодувати YCoCg (масштабоване)"
 
-#: ../plug-ins/file-dds/dds.c:360
+#: ../plug-ins/file-dds/dds.c:367
 msgid "Decode Alpha exponent"
 msgstr "Декодувати Alpha exponent"
 
@@ -6624,59 +6623,100 @@ msgstr "_Завантажити MIP-текстури"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Автоматично декодувати виявлені зображення YCoCg/AExp"
 
-#: ../plug-ins/file-dds/ddswrite.c:1955
+#: ../plug-ins/file-dds/ddswrite.c:1982
 msgid "Export Image as DDS"
 msgstr "Експортувати зображення як DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1986
+#: ../plug-ins/file-dds/ddswrite.c:2013
 msgid "_Compression:"
 msgstr "С_тиснення:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1991
+#: ../plug-ins/file-dds/ddswrite.c:2018
 msgid "Use _perceptual error metric"
 msgstr "_Використати нелінійну метрику помилок"
 
-#: ../plug-ins/file-dds/ddswrite.c:2025
+#: ../plug-ins/file-dds/ddswrite.c:2044
+#| msgid "Selected:"
+msgid "Selected layer"
+msgstr "Позначений шар"
+
+#: ../plug-ins/file-dds/ddswrite.c:2045
+#| msgid "Align Visible Layers"
+msgid "All visible layers"
+msgstr "Всі видимі шари"
+
+#: ../plug-ins/file-dds/ddswrite.c:2046
+msgid "As cube map"
+msgstr "Як кубічні текстури"
+
+#: ../plug-ins/file-dds/ddswrite.c:2047
+msgid "As volume map"
+msgstr "Як об'ємні текстури"
+
+#: ../plug-ins/file-dds/ddswrite.c:2048
+msgid "As texture array"
+msgstr "Як масив текстур"
+
+#: ../plug-ins/file-dds/ddswrite.c:2053
 msgid "_Save:"
 msgstr "_Зберегти:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2044
+#: ../plug-ins/file-dds/ddswrite.c:2066
+msgid "Flip image _vertically on export"
+msgstr "Віддзеркалити зображення _вертикально при експортуванні"
+
+#: ../plug-ins/file-dds/ddswrite.c:2069
+#| msgid "_Load mipmaps"
+msgid "No mipmaps"
+msgstr "Без MIP-текстур"
+
+#: ../plug-ins/file-dds/ddswrite.c:2070
+#| msgid "_Load mipmaps"
+msgid "Generate mipmaps"
+msgstr "Створити MIP-текстури"
+
+#: ../plug-ins/file-dds/ddswrite.c:2071
+#| msgid "Select existing area"
+msgid "Use existing mipmaps"
+msgstr "Використати наявні MIP-текстури"
+
+#: ../plug-ins/file-dds/ddswrite.c:2076
 msgid "_Mipmaps:"
 msgstr "MIP-_текстури:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2062
+#: ../plug-ins/file-dds/ddswrite.c:2094
 msgid "Transparent index:"
 msgstr "Показник прозорості:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2070
+#: ../plug-ins/file-dds/ddswrite.c:2102
 msgid "Mipmap Options"
 msgstr "Параметри MIP-текстур"
 
-#: ../plug-ins/file-dds/ddswrite.c:2093
+#: ../plug-ins/file-dds/ddswrite.c:2125
 msgid "F_ilter:"
 msgstr "_Фільтр:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2105
+#: ../plug-ins/file-dds/ddswrite.c:2137
 msgid "_Wrap mode:"
 msgstr "Режим об_гортання:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2110
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Appl_y gamma correction"
 msgstr "Зас_тосувати корекцію гами"
 
-#: ../plug-ins/file-dds/ddswrite.c:2114
+#: ../plug-ins/file-dds/ddswrite.c:2146
 msgid "Use s_RGB colorspace"
 msgstr "В_икористати колірний простір sRGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2120 ../plug-ins/flame/flame.c:1160
+#: ../plug-ins/file-dds/ddswrite.c:2152 ../plug-ins/flame/flame.c:1160
 msgid "_Gamma:"
 msgstr "Г_ама:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2125
+#: ../plug-ins/file-dds/ddswrite.c:2157
 msgid "Preserve alpha _test coverage"
 msgstr "Зберег_ти покриття альфа-тесту"
 
-#: ../plug-ins/file-dds/ddswrite.c:2132
+#: ../plug-ins/file-dds/ddswrite.c:2164
 msgid "_Alpha test threshold:"
 msgstr "Поріг _альфа-тесту:"
 
@@ -6797,21 +6837,21 @@ msgstr "Кадр %d (%uмс)"
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Не вдалося прочитати кадр %d. Ймовірно, анімацію пошкоджено.\n"
 
-#: ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-gimp.c:943
 msgid "Open FLIC Animation"
 msgstr "Відкрити анімацію FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:959
+#: ../plug-ins/file-fli/fli-gimp.c:961
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_Від:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:965
+#: ../plug-ins/file-fli/fli-gimp.c:967
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Кому:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:995
+#: ../plug-ins/file-fli/fli-gimp.c:997
 msgid "Export Image as FLI Animation"
 msgstr "Експортувати зображення як анімацію FLI"
 
