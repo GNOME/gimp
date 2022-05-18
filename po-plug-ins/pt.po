@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-11 20:34+0000\n"
-"PO-Revision-Date: 2022-05-12 23:05+0100\n"
+"POT-Creation-Date: 2022-05-16 18:57+0000\n"
+"PO-Revision-Date: 2022-05-18 15:38+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -51,7 +51,7 @@ msgstr "Exercitar uma cabra na linguagem C"
 #: ../plug-ins/common/sphere-designer.c:3178 ../plug-ins/common/tile.c:219
 #: ../plug-ins/common/tile-small.c:307 ../plug-ins/common/van-gogh-lic.c:912
 #: ../plug-ins/common/warp.c:374 ../plug-ins/common/wavelet-decompose.c:189
-#: ../plug-ins/file-dds/dds.c:511 ../plug-ins/flame/flame.c:240
+#: ../plug-ins/file-dds/dds.c:519 ../plug-ins/flame/flame.c:240
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:398
 #: ../plug-ins/gfig/gfig.c:212 ../plug-ins/gimpressionist/gimp.c:177
 #: ../plug-ins/gradient-flare/gradient-flare.c:934
@@ -85,8 +85,8 @@ msgstr "Exercitar uma cabra (C)"
 #: ../plug-ins/common/file-jp2-load.c:975
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
-#: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3539
-#: ../plug-ins/common/file-raw-data.c:1766 ../plug-ins/common/file-svg.c:679
+#: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3587
+#: ../plug-ins/common/file-raw-data.c:1769 ../plug-ins/common/file-svg.c:679
 #: ../plug-ins/common/file-wmf.c:546 ../plug-ins/common/film.c:1314
 #: ../plug-ins/common/grid.c:760 ../plug-ins/common/hot.c:678
 #: ../plug-ins/common/jigsaw.c:2497 ../plug-ins/common/mail.c:568
@@ -153,8 +153,8 @@ msgstr "_Executar"
 #, c-format, python-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
+"Check out the last version of the source code online by clicking the "
+"\"Source\" button."
 msgstr ""
 "Este complemento é um exercício em “%s” para a criação de um complemento de "
 "demonstração.\n"
@@ -404,12 +404,12 @@ msgstr "Persianas"
 msgid "Orientation"
 msgstr "Orientação"
 
-#: ../plug-ins/common/blinds.c:335 ../plug-ins/common/tile-small.c:504
+#: ../plug-ins/common/blinds.c:335 ../plug-ins/common/tile-small.c:510
 #: ../plug-ins/pagecurl/pagecurl.c:621
 msgid "_Horizontal"
 msgstr "_Horizontal"
 
-#: ../plug-ins/common/blinds.c:338 ../plug-ins/common/tile-small.c:514
+#: ../plug-ins/common/blinds.c:338 ../plug-ins/common/tile-small.c:520
 #: ../plug-ins/pagecurl/pagecurl.c:620
 msgid "_Vertical"
 msgstr "_Vertical"
@@ -424,7 +424,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-jp2-load.c:1312 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
 #: ../plug-ins/common/file-png.c:943 ../plug-ins/common/file-pnm.c:764
-#: ../plug-ins/common/file-raw-data.c:1320
+#: ../plug-ins/common/file-raw-data.c:1323
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:803
 #: ../plug-ins/common/smooth-palette.c:331 ../plug-ins/common/tile.c:404
@@ -767,7 +767,7 @@ msgstr "Semente aleatória"
 #: ../plug-ins/common/cml-explorer.c:2248 ../plug-ins/common/curve-bend.c:1480
 #: ../plug-ins/common/curve-bend.c:1995 ../plug-ins/common/file-cel.c:1004
 #: ../plug-ins/common/file-jp2-load.c:976
-#: ../plug-ins/common/file-raw-data.c:1767 ../plug-ins/common/qbist.c:848
+#: ../plug-ins/common/file-raw-data.c:1770 ../plug-ins/common/qbist.c:848
 #: ../plug-ins/common/qbist.c:1031 ../plug-ins/common/sphere-designer.c:2288
 #: ../plug-ins/common/sphere-designer.c:2679 ../plug-ins/flame/flame.c:541
 #: ../plug-ins/flame/flame.c:1103
@@ -981,8 +981,8 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:873
 #: ../plug-ins/common/file-mng.c:1220 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1495
-#: ../plug-ins/common/file-raw-data.c:1117
-#: ../plug-ins/common/file-raw-data.c:1146 ../plug-ins/common/file-sunras.c:635
+#: ../plug-ins/common/file-raw-data.c:1120
+#: ../plug-ins/common/file-raw-data.c:1149 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1386
 #: ../plug-ins/common/sphere-designer.c:2199
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
@@ -1011,10 +1011,10 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/common/file-cel.c:643 ../plug-ins/common/file-dicom.c:377
 #: ../plug-ins/common/file-gif-load.c:403 ../plug-ins/common/file-mng.c:1404
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:666
-#: ../plug-ins/common/file-ps.c:1147 ../plug-ins/common/file-ps.c:3489
+#: ../plug-ins/common/file-ps.c:1151 ../plug-ins/common/file-ps.c:3537
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
 #: ../plug-ins/common/file-raw-data.c:439
-#: ../plug-ins/common/file-raw-data.c:1229 ../plug-ins/common/file-sunras.c:455
+#: ../plug-ins/common/file-raw-data.c:1232 ../plug-ins/common/file-sunras.c:455
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:445 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:659 ../plug-ins/common/file-xmc.c:900
@@ -1111,7 +1111,7 @@ msgstr "Reordenar mapa de cores"
 #: ../plug-ins/common/colormap-remap.c:664 ../plug-ins/common/curve-bend.c:1463
 #: ../plug-ins/common/sample-colorize.c:1412
 #: ../plug-ins/common/sphere-designer.c:2629
-#: ../plug-ins/common/tile-small.c:524
+#: ../plug-ins/common/tile-small.c:530
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:814
 #: ../plug-ins/gimpressionist/preview.c:182
 #: ../plug-ins/ifs-compose/ifs-compose.c:808
@@ -1231,7 +1231,7 @@ msgstr "A_vermelhado cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:241 ../plug-ins/common/decompose.c:192
-#: ../plug-ins/common/file-heif.c:2490 ../plug-ins/common/file-raw-data.c:1870
+#: ../plug-ins/common/file-heif.c:2490 ../plug-ins/common/file-raw-data.c:1873
 msgid "RGB"
 msgstr "RGB"
 
@@ -1808,7 +1808,7 @@ msgstr "Origem 2:"
 msgid "O_verlap:"
 msgstr "_Sobreposição:"
 
-#: ../plug-ins/common/depth-merge.c:844 ../plug-ins/common/file-raw-data.c:1903
+#: ../plug-ins/common/depth-merge.c:844 ../plug-ins/common/file-raw-data.c:1906
 msgid "O_ffset:"
 msgstr "_Desvio:"
 
@@ -1875,8 +1875,8 @@ msgid "Destripe"
 msgstr "Remover riscas"
 
 #: ../plug-ins/common/destripe.c:509 ../plug-ins/common/file-html-table.c:711
-#: ../plug-ins/common/file-ps.c:3614 ../plug-ins/common/file-ps.c:3814
-#: ../plug-ins/common/file-raw-data.c:1917
+#: ../plug-ins/common/file-ps.c:3662 ../plug-ins/common/file-ps.c:3862
+#: ../plug-ins/common/file-raw-data.c:1920
 #: ../plug-ins/common/smooth-palette.c:530 ../plug-ins/common/tile.c:518
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:398
@@ -1901,7 +1901,7 @@ msgstr "A arte ASCII não suporta várias camadas."
 msgid "Export Image as Text"
 msgstr "Exportar imagem como Texto"
 
-#: ../plug-ins/common/file-aa.c:392 ../plug-ins/file-dds/ddswrite.c:2013
+#: ../plug-ins/common/file-aa.c:392 ../plug-ins/file-dds/ddswrite.c:2040
 msgid "_Format:"
 msgstr "_Formato:"
 
@@ -1949,8 +1949,8 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-heif.c:847 ../plug-ins/common/file-jp2-load.c:1084
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:658
-#: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1137
-#: ../plug-ins/common/file-raw-data.c:1221 ../plug-ins/common/file-sunras.c:447
+#: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1141
+#: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:649
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
@@ -2034,7 +2034,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: ../plug-ins/common/file-html-table.c:361
 #: ../plug-ins/common/file-jpegxl.c:718 ../plug-ins/common/file-pcx.c:793
 #: ../plug-ins/common/file-pix.c:562 ../plug-ins/common/file-png.c:1487
-#: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1323
+#: ../plug-ins/common/file-pnm.c:1336 ../plug-ins/common/file-ps.c:1364
 #: ../plug-ins/common/file-sunras.c:626 ../plug-ins/common/file-tga.c:1223
 #: ../plug-ins/common/file-xbm.c:1049 ../plug-ins/common/file-xpm.c:701
 #: ../plug-ins/common/file-xwd.c:675 ../plug-ins/file-bmp/bmp-save.c:332
@@ -2164,7 +2164,7 @@ msgstr "%s não é suportada pelo GIMP em combinação com amostras por pixel: %
 msgid "Cannot save images with alpha channel."
 msgstr "Não é possível guardar imagens com canal alfa."
 
-#: ../plug-ins/common/file-dicom.c:1543 ../plug-ins/common/file-ps.c:1318
+#: ../plug-ins/common/file-dicom.c:1543 ../plug-ins/common/file-ps.c:1359
 #: ../plug-ins/common/file-xwd.c:670 ../plug-ins/file-fits/fits.c:499
 #, c-format
 msgid "Cannot operate on unknown image types."
@@ -2736,8 +2736,8 @@ msgstr "Opções da tabela"
 msgid "_Border:"
 msgstr "_Contorno:"
 
-#: ../plug-ins/common/file-html-table.c:717 ../plug-ins/common/file-ps.c:3627
-#: ../plug-ins/common/file-ps.c:3825 ../plug-ins/common/file-raw-data.c:1931
+#: ../plug-ins/common/file-html-table.c:717 ../plug-ins/common/file-ps.c:3675
+#: ../plug-ins/common/file-ps.c:3873 ../plug-ins/common/file-raw-data.c:1934
 #: ../plug-ins/common/film.c:1058 ../plug-ins/common/smooth-palette.c:535
 #: ../plug-ins/common/tile.c:522 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:405
@@ -3187,7 +3187,7 @@ msgstr "Não foi possível carregar '%s': %s"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/file-pdf-load.c:863 ../plug-ins/common/file-ps.c:1236
+#: ../plug-ins/common/file-pdf-load.c:863 ../plug-ins/common/file-ps.c:1277
 #, c-format
 msgid "%s-pages"
 msgstr "%s-páginas"
@@ -3196,7 +3196,7 @@ msgstr "%s-páginas"
 msgid "Import from PDF"
 msgstr "Importar a partir de PDF"
 
-#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3540
+#: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3588
 #: ../plug-ins/file-tiff/file-tiff-load.c:2545
 #: ../plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
@@ -3334,7 +3334,7 @@ msgstr "Camadas como páginas (%s)"
 
 #: ../plug-ins/common/file-pdf-save.c:1330
 #: ../plug-ins/common/file-pdf-save.c:1403
-#: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2031
+#: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2079
 #: ../plug-ins/file-tiff/file-tiff-load.c:1360
 #, c-format
 msgid "Page %d"
@@ -3502,7 +3502,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Erro ao exportar '%s'. Não foi possível exportar a imagem."
 
-#: ../plug-ins/common/file-png.c:2281 ../plug-ins/common/file-ps.c:3682
+#: ../plug-ins/common/file-png.c:2281 ../plug-ins/common/file-ps.c:3730
 msgid "Automatic"
 msgstr "Automático"
 
@@ -3627,131 +3627,135 @@ msgstr "_Raw"
 msgid "_ASCII"
 msgstr "_ASCII"
 
-#: ../plug-ins/common/file-ps.c:377 ../plug-ins/common/file-ps.c:490
+#: ../plug-ins/common/file-ps.c:379 ../plug-ins/common/file-ps.c:492
 msgid "PostScript document"
 msgstr "Documento PostScript"
 
-#: ../plug-ins/common/file-ps.c:394 ../plug-ins/common/file-ps.c:507
+#: ../plug-ins/common/file-ps.c:396 ../plug-ins/common/file-ps.c:509
 msgid "Encapsulated PostScript image"
 msgstr "Imagem PostScript encapsulada"
 
-#: ../plug-ins/common/file-ps.c:761
+#: ../plug-ins/common/file-ps.c:763
 #, c-format
 msgid "PostScript plug-in does not support multiple layers."
 msgstr "O complemento PostScript não suporta várias camadas."
 
-#: ../plug-ins/common/file-ps.c:1157
+#: ../plug-ins/common/file-ps.c:1161
 #, c-format
 msgid "Could not interpret PostScript file '%s'"
 msgstr "Não foi possível interpretar o ficheiro PostScript '%s'"
 
-#: ../plug-ins/common/file-ps.c:1305
+#: ../plug-ins/common/file-ps.c:1249
+msgid "Rendered EPS"
+msgstr "EPS renderizados"
+
+#: ../plug-ins/common/file-ps.c:1346
 #, c-format
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Exportar em PostScript não suporta imagens com canais alfa"
 
-#: ../plug-ins/common/file-ps.c:3535
+#: ../plug-ins/common/file-ps.c:3583
 msgid "Import from PostScript"
 msgstr "Importar de ficheiro PostScript"
 
 #. Rendering
-#: ../plug-ins/common/file-ps.c:3579
+#: ../plug-ins/common/file-ps.c:3627
 msgid "Rendering"
 msgstr "A renderizar"
 
 #. Resolution
-#: ../plug-ins/common/file-ps.c:3598 ../plug-ins/common/file-svg.c:851
+#: ../plug-ins/common/file-ps.c:3646 ../plug-ins/common/file-svg.c:851
 #: ../plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Resolução:"
 
-#: ../plug-ins/common/file-ps.c:3640
+#: ../plug-ins/common/file-ps.c:3688
 msgid "Pages:"
 msgstr "Páginas:"
 
-#: ../plug-ins/common/file-ps.c:3647
+#: ../plug-ins/common/file-ps.c:3695
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Abrir as páginas indicadas usando, por exemplo, 1-4 ou 1, 3, 5-7"
 
-#: ../plug-ins/common/file-ps.c:3652 ../plug-ins/common/sphere-designer.c:2726
+#: ../plug-ins/common/file-ps.c:3700 ../plug-ins/common/sphere-designer.c:2726
 msgid "Layers"
 msgstr "Camadas"
 
-#: ../plug-ins/common/file-ps.c:3655
+#: ../plug-ins/common/file-ps.c:3703
 msgid "Images"
 msgstr "Imagens"
 
-#: ../plug-ins/common/file-ps.c:3658
+#: ../plug-ins/common/file-ps.c:3706
 msgid "Open as"
 msgstr "Abrir como"
 
-#: ../plug-ins/common/file-ps.c:3662
+#: ../plug-ins/common/file-ps.c:3710
 msgid "Try Bounding Box"
 msgstr "Tentar caixa delimitadora"
 
 #. Coloring
-#: ../plug-ins/common/file-ps.c:3675
+#: ../plug-ins/common/file-ps.c:3723
 msgid "Coloring"
 msgstr "A colorir"
 
-#: ../plug-ins/common/file-ps.c:3679
+#: ../plug-ins/common/file-ps.c:3727
 msgid "B/W"
 msgstr "P/B"
 
-#: ../plug-ins/common/file-ps.c:3680 ../plug-ins/imagemap/imap_menu.c:228
+#: ../plug-ins/common/file-ps.c:3728 ../plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Cinzento"
 
-#: ../plug-ins/common/file-ps.c:3681 ../plug-ins/common/file-xpm.c:507
+#: ../plug-ins/common/file-ps.c:3729 ../plug-ins/common/file-xpm.c:507
 #: ../plug-ins/gimpressionist/color.c:65
 #: ../plug-ins/gimpressionist/general.c:169
 #: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Cor"
 
-#: ../plug-ins/common/file-ps.c:3693
+#: ../plug-ins/common/file-ps.c:3741
 msgid "Text antialiasing"
 msgstr "Suavização de texto"
 
-#: ../plug-ins/common/file-ps.c:3697 ../plug-ins/common/file-ps.c:3709
+#: ../plug-ins/common/file-ps.c:3745 ../plug-ins/common/file-ps.c:3757
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Nenhuma"
 
-#: ../plug-ins/common/file-ps.c:3698 ../plug-ins/common/file-ps.c:3710
+#: ../plug-ins/common/file-ps.c:3746 ../plug-ins/common/file-ps.c:3758
 msgid "Weak"
 msgstr "Fraca"
 
-#: ../plug-ins/common/file-ps.c:3699 ../plug-ins/common/file-ps.c:3711
+#: ../plug-ins/common/file-ps.c:3747 ../plug-ins/common/file-ps.c:3759
 msgid "Strong"
 msgstr "Forte"
 
-#: ../plug-ins/common/file-ps.c:3705
+#: ../plug-ins/common/file-ps.c:3753
 msgid "Graphic antialiasing"
 msgstr "Suavização de gráficos"
 
-#: ../plug-ins/common/file-ps.c:3779
+#: ../plug-ins/common/file-ps.c:3827
 msgid "PostScript"
 msgstr "Documento PostScript"
 
 #. Image Size
-#: ../plug-ins/common/file-ps.c:3796
+#: ../plug-ins/common/file-ps.c:3844
 msgid "Image Size"
 msgstr "Tamanho da imagem"
 
-#: ../plug-ins/common/file-ps.c:3836
+#: ../plug-ins/common/file-ps.c:3884
 msgid "_X offset:"
 msgstr "Desvio _X:"
 
-#: ../plug-ins/common/file-ps.c:3847
+#: ../plug-ins/common/file-ps.c:3895
 msgid "_Y offset:"
 msgstr "Desvio _Y:"
 
-#: ../plug-ins/common/file-ps.c:3853
+#: ../plug-ins/common/file-ps.c:3901
 msgid "_Keep aspect ratio"
 msgstr "_Manter proporções"
 
-#: ../plug-ins/common/file-ps.c:3859
+#: ../plug-ins/common/file-ps.c:3907
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3760,42 +3764,42 @@ msgstr ""
 "ao tamanho da janela sem alterar as proporções."
 
 #. Unit
-#: ../plug-ins/common/file-ps.c:3869
+#: ../plug-ins/common/file-ps.c:3917
 msgid "Unit"
 msgstr "Unidade"
 
-#: ../plug-ins/common/file-ps.c:3873
+#: ../plug-ins/common/file-ps.c:3921
 msgid "_Inch"
 msgstr "_Polegada"
 
-#: ../plug-ins/common/file-ps.c:3874
+#: ../plug-ins/common/file-ps.c:3922
 msgid "_Millimeter"
 msgstr "_Milímetro"
 
 #. Rotation
-#: ../plug-ins/common/file-ps.c:3885
+#: ../plug-ins/common/file-ps.c:3933
 #: ../plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
 msgstr "Rotação"
 
 #. Format
-#: ../plug-ins/common/file-ps.c:3900
+#: ../plug-ins/common/file-ps.c:3948
 msgid "Output"
 msgstr "Saída"
 
-#: ../plug-ins/common/file-ps.c:3906
+#: ../plug-ins/common/file-ps.c:3954
 msgid "_PostScript level 2"
 msgstr "_PostScript nível 2"
 
-#: ../plug-ins/common/file-ps.c:3915
+#: ../plug-ins/common/file-ps.c:3963
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _Encapsulado"
 
-#: ../plug-ins/common/file-ps.c:3924
+#: ../plug-ins/common/file-ps.c:3972
 msgid "P_review"
 msgstr "P_ré-visualização"
 
-#: ../plug-ins/common/file-ps.c:3948
+#: ../plug-ins/common/file-ps.c:3996
 msgid "Preview _size:"
 msgstr "_Tamanho da pré-visualização:"
 
@@ -3987,7 +3991,7 @@ msgid "Raw image data"
 msgstr "Dados de imagem Raw"
 
 #: ../plug-ins/common/file-raw-data.c:278
-#: ../plug-ins/common/file-raw-data.c:1815
+#: ../plug-ins/common/file-raw-data.c:1818
 msgid "Digital Elevation Model data"
 msgstr "Dados do modelo de elevação digital (DEM)"
 
@@ -4021,7 +4025,7 @@ msgstr ""
 msgid "RAW export does not support multiple layers."
 msgstr "A exportação RAW não suporta várias camadas."
 
-#: ../plug-ins/common/file-raw-data.c:1762
+#: ../plug-ins/common/file-raw-data.c:1765
 msgid "Load Image from Raw Data"
 msgstr "Carregar imagem a partir de dados Raw"
 
@@ -4029,15 +4033,15 @@ msgstr "Carregar imagem a partir de dados Raw"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:1811
+#: ../plug-ins/common/file-raw-data.c:1814
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dados do modelo digital de elevação DEM (1 arco-segundo)"
 
-#: ../plug-ins/common/file-raw-data.c:1813
+#: ../plug-ins/common/file-raw-data.c:1816
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Dados do modelo digital de elevação DEM (3 arco-segundos)"
 
-#: ../plug-ins/common/file-raw-data.c:1819
+#: ../plug-ins/common/file-raw-data.c:1822
 msgid "Image"
 msgstr "Imagem"
 
@@ -4049,141 +4053,141 @@ msgstr "Imagem"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1849
+#: ../plug-ins/common/file-raw-data.c:1852
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arco-segundo)"
 
-#: ../plug-ins/common/file-raw-data.c:1850
+#: ../plug-ins/common/file-raw-data.c:1853
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 arcos-segundos)"
 
-#: ../plug-ins/common/file-raw-data.c:1853
+#: ../plug-ins/common/file-raw-data.c:1856
 msgid "_Sample Spacing:"
 msgstr "_Espaçamento da amostra:"
 
-#: ../plug-ins/common/file-raw-data.c:1871
+#: ../plug-ins/common/file-raw-data.c:1874
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1872
+#: ../plug-ins/common/file-raw-data.c:1875
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1873
+#: ../plug-ins/common/file-raw-data.c:1876
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1874
+#: ../plug-ins/common/file-raw-data.c:1877
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1875
+#: ../plug-ins/common/file-raw-data.c:1878
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1876
+#: ../plug-ins/common/file-raw-data.c:1879
 msgid "Planar RGB"
 msgstr "RGB plano"
 
-#: ../plug-ins/common/file-raw-data.c:1877
+#: ../plug-ins/common/file-raw-data.c:1880
 msgid "B&W 1 bit"
 msgstr "Preto e branco 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1878
+#: ../plug-ins/common/file-raw-data.c:1881
 msgid "Gray 2 bit"
 msgstr "Cinzento 2 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1879
+#: ../plug-ins/common/file-raw-data.c:1882
 msgid "Gray 4 bit"
 msgstr "Cinzento 4 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-raw-data.c:1883
 msgid "Gray 8 bit"
 msgstr "Cinzento 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:1881
+#: ../plug-ins/common/file-raw-data.c:1884
 msgid "Indexed"
 msgstr "Indexada"
 
-#: ../plug-ins/common/file-raw-data.c:1882
+#: ../plug-ins/common/file-raw-data.c:1885
 msgid "Indexed Alpha"
 msgstr "Alfa indexada"
 
-#: ../plug-ins/common/file-raw-data.c:1883
+#: ../plug-ins/common/file-raw-data.c:1886
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Cinzento unsigned 16 bits Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1884
+#: ../plug-ins/common/file-raw-data.c:1887
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Cinzento unsigned 16 bits Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1885
+#: ../plug-ins/common/file-raw-data.c:1888
 msgid "Gray 16 bit Big Endian"
 msgstr "Cinzento 16 bits Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1886
+#: ../plug-ins/common/file-raw-data.c:1889
 msgid "Gray 16 bit Little Endian"
 msgstr "Cinzento 16 bits Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1891
+#: ../plug-ins/common/file-raw-data.c:1894
 msgid "Image _Type:"
 msgstr "_Tipo de imagem:"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1950
 msgid "Palette"
 msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1957
+#: ../plug-ins/common/file-raw-data.c:1960
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:1958
+#: ../plug-ins/common/file-raw-data.c:1961
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (estilo BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1963
+#: ../plug-ins/common/file-raw-data.c:1966
 msgid "_Palette Type:"
 msgstr "_Tipo de paleta:"
 
-#: ../plug-ins/common/file-raw-data.c:1973
+#: ../plug-ins/common/file-raw-data.c:1976
 msgid "Off_set:"
 msgstr "_Desvio:"
 
-#: ../plug-ins/common/file-raw-data.c:1985
+#: ../plug-ins/common/file-raw-data.c:1988
 msgid "Select Palette File"
 msgstr "Selecione o ficheiro de paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1991
+#: ../plug-ins/common/file-raw-data.c:1994
 msgid "Pal_ette File:"
 msgstr "Ficheiro de pal_eta:"
 
-#: ../plug-ins/common/file-raw-data.c:2022
+#: ../plug-ins/common/file-raw-data.c:2025
 msgid "Export Image as Raw Data"
 msgstr "Exportar imagem como dados Raw"
 
 #. Image type combo
-#: ../plug-ins/common/file-raw-data.c:2031
+#: ../plug-ins/common/file-raw-data.c:2034
 msgid "_Standard (R,G,B)"
 msgstr "_Padrão (R,G,B)"
 
-#: ../plug-ins/common/file-raw-data.c:2032
+#: ../plug-ins/common/file-raw-data.c:2035
 msgid "_Planar (RRR,GGG,BBB)"
 msgstr "_Plano (RRR, GGG, BBB)"
 
-#: ../plug-ins/common/file-raw-data.c:2035
+#: ../plug-ins/common/file-raw-data.c:2038
 msgid "Image Type"
 msgstr "Tipos de imagem"
 
 #. Palette type combo
-#: ../plug-ins/common/file-raw-data.c:2041
+#: ../plug-ins/common/file-raw-data.c:2044
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:2042
+#: ../plug-ins/common/file-raw-data.c:2045
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (estilo BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2045
+#: ../plug-ins/common/file-raw-data.c:2048
 msgid "Palette Type"
 msgstr "Tipo de paleta"
 
@@ -5413,7 +5417,7 @@ msgid "Get _Sample Colors"
 msgstr "_Obter cores da amostra"
 
 #: ../plug-ins/common/sample-colorize.c:1415
-#: ../plug-ins/common/tile-small.c:628
+#: ../plug-ins/common/tile-small.c:634
 #: ../plug-ins/fractal-explorer/fractal-explorer.c:1224
 #: ../plug-ins/gimpressionist/orientmap.c:527
 #: ../plug-ins/gimpressionist/presets.c:1060
@@ -5894,38 +5898,38 @@ msgstr "Pequenos mosaicos"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tile-small.c:491
+#: ../plug-ins/common/tile-small.c:497
 #: ../plug-ins/ifs-compose/ifs-compose.c:642
 msgid "Flip"
 msgstr "Inverter"
 
-#: ../plug-ins/common/tile-small.c:540
+#: ../plug-ins/common/tile-small.c:546
 msgid "A_ll tiles"
 msgstr "_Todos os mosaicos"
 
-#: ../plug-ins/common/tile-small.c:553
+#: ../plug-ins/common/tile-small.c:559
 msgid "Al_ternate tiles"
 msgstr "_Mosaicos alternados"
 
-#: ../plug-ins/common/tile-small.c:566
+#: ../plug-ins/common/tile-small.c:572
 msgid "_Explicit tile"
 msgstr "_Especificar mosaico"
 
-#: ../plug-ins/common/tile-small.c:571
+#: ../plug-ins/common/tile-small.c:577
 msgid "Ro_w:"
 msgstr "_Linha:"
 
-#: ../plug-ins/common/tile-small.c:596
+#: ../plug-ins/common/tile-small.c:602
 msgid "Col_umn:"
 msgstr "_Coluna:"
 
 #. Widget for selecting the Opacity
-#: ../plug-ins/common/tile-small.c:644
+#: ../plug-ins/common/tile-small.c:650
 msgid "O_pacity:"
 msgstr "_Opacidade:"
 
 #. Lower frame saying how many segments
-#: ../plug-ins/common/tile-small.c:654
+#: ../plug-ins/common/tile-small.c:660
 msgid "Number of Segments"
 msgstr "Número de segmentos"
 
@@ -6565,15 +6569,15 @@ msgstr "O formato BMP não suporta várias camadas."
 msgid "DDS image"
 msgstr "Imagem DDS"
 
-#: ../plug-ins/file-dds/dds.c:314
+#: ../plug-ins/file-dds/dds.c:321
 msgid "Decode YCoCg"
 msgstr "Descodificação YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:336
+#: ../plug-ins/file-dds/dds.c:343
 msgid "Decode YCoCg (scaled)"
 msgstr "Decodificar YCoCg (em escala)"
 
-#: ../plug-ins/file-dds/dds.c:360
+#: ../plug-ins/file-dds/dds.c:367
 msgid "Decode Alpha exponent"
 msgstr "Decodificar expoente alfa"
 
@@ -6629,59 +6633,97 @@ msgstr "_Carregar mapas MIP"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Decodificar automaticamente imagens YCoCg/AExp quando detetadas"
 
-#: ../plug-ins/file-dds/ddswrite.c:1955
+#: ../plug-ins/file-dds/ddswrite.c:1982
 msgid "Export Image as DDS"
 msgstr "Exportar imagem como DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1986
+#: ../plug-ins/file-dds/ddswrite.c:2013
 msgid "_Compression:"
 msgstr "_Compressão:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1991
+#: ../plug-ins/file-dds/ddswrite.c:2018
 msgid "Use _perceptual error metric"
 msgstr "Use a métrica de erro _percetual"
 
-#: ../plug-ins/file-dds/ddswrite.c:2025
+#: ../plug-ins/file-dds/ddswrite.c:2044
+msgid "Selected layer"
+msgstr "Camada selecionada"
+
+#: ../plug-ins/file-dds/ddswrite.c:2045
+msgid "All visible layers"
+msgstr "Todas as camadas visíveis"
+
+#: ../plug-ins/file-dds/ddswrite.c:2046
+msgid "As cube map"
+msgstr "Como mapa em cubo"
+
+#: ../plug-ins/file-dds/ddswrite.c:2047
+msgid "As volume map"
+msgstr "Como mapa de volume"
+
+#: ../plug-ins/file-dds/ddswrite.c:2048
+msgid "As texture array"
+msgstr "Como matriz de textura"
+
+#: ../plug-ins/file-dds/ddswrite.c:2053
 msgid "_Save:"
 msgstr "_Guardar:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2044
+#: ../plug-ins/file-dds/ddswrite.c:2066
+msgid "Flip image _vertically on export"
+msgstr "Virar imagem _verticalmente ao exportar"
+
+#: ../plug-ins/file-dds/ddswrite.c:2069
+#| msgid "_Load mipmaps"
+msgid "No mipmaps"
+msgstr "Nenhum mipmaps"
+
+#: ../plug-ins/file-dds/ddswrite.c:2070
+#| msgid "I_nvert bumpmap"
+msgid "Generate mipmaps"
+msgstr "Gerar mipmaps"
+
+#: ../plug-ins/file-dds/ddswrite.c:2071
+msgid "Use existing mipmaps"
+msgstr "Usar mipmaps existentes"
+
+#: ../plug-ins/file-dds/ddswrite.c:2076
 msgid "_Mipmaps:"
 msgstr "_Mapas MIP:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2062
+#: ../plug-ins/file-dds/ddswrite.c:2094
 msgid "Transparent index:"
 msgstr "Índice transparente:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2070
+#: ../plug-ins/file-dds/ddswrite.c:2102
 msgid "Mipmap Options"
 msgstr "Opções mapa MIP"
 
-#: ../plug-ins/file-dds/ddswrite.c:2093
+#: ../plug-ins/file-dds/ddswrite.c:2125
 msgid "F_ilter:"
 msgstr "F_iltro:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2105
+#: ../plug-ins/file-dds/ddswrite.c:2137
 msgid "_Wrap mode:"
 msgstr "_Modo de envolver:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2110
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Appl_y gamma correction"
 msgstr "Aplicar c_orreção de gama"
 
-#: ../plug-ins/file-dds/ddswrite.c:2114
+#: ../plug-ins/file-dds/ddswrite.c:2146
 msgid "Use s_RGB colorspace"
 msgstr "Usar espaço de cores s_RGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2120 ../plug-ins/flame/flame.c:1160
+#: ../plug-ins/file-dds/ddswrite.c:2152 ../plug-ins/flame/flame.c:1160
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2125
+#: ../plug-ins/file-dds/ddswrite.c:2157
 msgid "Preserve alpha _test coverage"
 msgstr "Preservar a cobertura do _teste alfa"
 
-#: ../plug-ins/file-dds/ddswrite.c:2132
+#: ../plug-ins/file-dds/ddswrite.c:2164
 msgid "_Alpha test threshold:"
 msgstr "_Limiar do teste alfa:"
 
@@ -6802,21 +6844,21 @@ msgstr "Fotograma %d (%ums)"
 msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgstr "Falha ao ler o fotograma %d. Possível animação corrupta.\n"
 
-#: ../plug-ins/file-fli/fli-gimp.c:941
+#: ../plug-ins/file-fli/fli-gimp.c:943
 msgid "Open FLIC Animation"
 msgstr "Abrir animação FLIC"
 
-#: ../plug-ins/file-fli/fli-gimp.c:959
+#: ../plug-ins/file-fli/fli-gimp.c:961
 msgctxt "frame-range"
 msgid "_From:"
 msgstr "_De:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:965
+#: ../plug-ins/file-fli/fli-gimp.c:967
 msgctxt "frame-range"
 msgid "_To:"
 msgstr "_Para:"
 
-#: ../plug-ins/file-fli/fli-gimp.c:995
+#: ../plug-ins/file-fli/fli-gimp.c:997
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagem como animação FLIC"
 
@@ -12632,8 +12674,8 @@ msgid ""
 "detect the cases where we didn't find any corners."
 msgstr ""
 "Quantidade de erro para a qual já não há motivo para re-parametrizar. Isto "
-"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um \"O"
-"\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
+"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um "
+"\"O\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
 "iteração de Newton-Raphson o melhorarem. Pode ser que seja melhor detetar "
 "casos onde não encontramos cantos."
 
@@ -14029,9 +14071,6 @@ msgstr "A transferir imagem do digitalizador/câmara"
 
 #~ msgid "Co_mpensate for darkening"
 #~ msgstr "Co_mpensar escurecimento"
-
-#~ msgid "I_nvert bumpmap"
-#~ msgstr "I_nverter o mapa de relevos"
 
 #~ msgid "_Tile bumpmap"
 #~ msgstr "_Mosaicos de Mapa de relevos"
