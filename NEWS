@@ -127,6 +127,9 @@ Plug-ins:
     * DDS images with 2 16-bit channels correctly converted to 16-bit
       RGB images.
     * More robust DDS loading.
+    * New "Flip image" option: some game engine require a flipped image.
+      Rather than flipping, exporting, unflipping process, let's have an
+      option to flip the result at export time.
   - script-fu:
     * Various updates to get the API back in shape.
     * Porting doc updated.
