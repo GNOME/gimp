@@ -29,6 +29,11 @@ User Interface:
   - Removed titlebar/borders from Windows Splash Screen.
   - All official themes now have on-hover indicator around eye and link
     toggles in Layer/Channel/Path Dialog tree-views.
+  - Dark theme:
+    * Hover-on effect on radio menu items to improve readability.
+  - Color icon theme:
+    * Thin contrast border for 'close' and 'detach' to improve their
+      readability against dark backgrounds on mouse-hover.
 
 Plug-ins:
 
@@ -46,6 +51,30 @@ Plug-ins:
     changing its signature.
   - BMP: new PDB procedure "file-bmp-save2" which supports all options
     available interactively.
+  - BigTIFF: our TIFF plug-in now officially supports BigTIFF import and
+    export.
+    * Import was actually already working transparently if you had
+      a recent enough libtiff. Now the recent libtiff is enforced by
+      dependency requirements.
+    * Export support was added with a checkbox in the interactive dialog
+      and a new "bigtiff" argument in the "file-tiff-save" PDB
+      procedure.
+    * When an interactive export of ClassicTIFF fails for the explicit
+      reason of "Maximum TIFF file size exceeded", the export dialog is
+      raised again with a message proposing to try again as BigTIFF or
+      trying another compression algorithm.
+      This allows because discoverability and understandibility of the
+      issue, while not forcing BigTIFF export (since it might not be
+      supported everywhere).
+    * Unlike the same change on the main dev branch, this backport comes
+      without a dependency requirement bump, which means this will only
+      work if GIMP is built with recent enough libtiff.
+  - Raw: more robust load able to load as much as possible from the
+    file, then fill the rest with white, when offset and dimensions are
+    bigger than actual file size.
+  - Improved support of a few plug-in code for building under UCRT
+    Windows environment (more modern C runtime library than MINGW).
+  - EPS: loading transparent EPS files now supported.
 
 Libgimp:
 
