@@ -787,6 +787,8 @@ gimp_color_wheel_drag_end (GtkGestureDrag *gesture,
       compute_sv (wheel, x, y, &s, &v);
       gimp_color_wheel_set_color (wheel, priv->h, s, v);
     }
+
+  gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (wheel)), NULL);
 }
 
 static void
@@ -798,6 +800,7 @@ gimp_color_wheel_drag_cancel (GtkGesture       *gesture,
   GimpColorWheelPrivate *priv  = gimp_color_wheel_get_instance_private (wheel);
 
   priv->mode = DRAG_NONE;
+  gdk_window_set_cursor (gtk_widget_get_window (GTK_WIDGET (wheel)), NULL);
 }
 
 
