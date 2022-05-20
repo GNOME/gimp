@@ -32,20 +32,21 @@
 
 typedef struct
 {
-  int compression;
-  int mipmaps;
-  int savetype;
-  int format;
-  int transindex;
-  int mipmap_filter;
-  int mipmap_wrap;
-  int gamma_correct;
-  int srgb;
-  float gamma;
-  int perceptual_metric;
-  int show_adv_opt;
-  int preserve_alpha_coverage;
-  float alpha_test_threshold;
+  int      compression;
+  int      mipmaps;
+  int      savetype;
+  int      format;
+  int      transindex;
+  int      mipmap_filter;
+  int      mipmap_wrap;
+  int      gamma_correct;
+  int      srgb;
+  float    gamma;
+  int      perceptual_metric;
+  int      show_adv_opt;
+  int      preserve_alpha_coverage;
+  float    alpha_test_threshold;
+  gboolean flip_image;
 } DDSWriteVals;
 
 typedef struct
@@ -63,11 +64,13 @@ extern GimpPDBStatusType read_dds  (gchar    *filename,
 extern GimpPDBStatusType write_dds (gchar    *filename,
                                     gint32    image_id,
                                     gint32    drawable_id,
-                                    gboolean  interactive_dds);
+                                    gboolean  interactive_dds,
+                                    gboolean  is_duplicate_image);
 
 
 #define LOAD_PROC                "file-dds-load"
 #define SAVE_PROC                "file-dds-save"
+#define SAVE_PROC2               "file-dds-save2"
 
 #define DECODE_YCOCG_PROC        "color-decode-ycocg"
 #define DECODE_YCOCG_SCALED_PROC "color-decode-ycocg-scaled"

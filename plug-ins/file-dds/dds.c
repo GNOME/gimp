@@ -101,7 +101,7 @@ static GimpParamDef save_args[] =
   { GIMP_PDB_STRING, "raw_filename", "The name entered"},
   { GIMP_PDB_INT32, "compression_format", "Compression format (0 = None, 1 = BC1/DXT1, 2 = BC2/DXT3, 3 = BC3/DXT5, 4 = BC3n/DXT5nm, 5 = BC4/ATI1N, 6 = BC5/ATI2N, 7 = RXGB (DXT5), 8 = Alpha Exponent (DXT5), 9 = YCoCg (DXT5), 10 = YCoCg scaled (DXT5))"},
   { GIMP_PDB_INT32, "mipmaps", "How to handle mipmaps (0 = No mipmaps, 1 = Generate mipmaps, 2 = Use existing mipmaps (layers)"},
-  { GIMP_PDB_INT32, "savetype", "How to save the image (0 = selected layer, 1 = cube map, 2 = volume map, 3 = texture array"},
+  { GIMP_PDB_INT32, "savetype", "How to save the image (0 = selected layer, 1 = cube map, 2 = volume map, 3 = texture array, 4 = all visible layers"},
   { GIMP_PDB_INT32, "format", "Custom pixel format (0 = default, 1 = R5G6B5, 2 = RGBA4, 3 = RGB5A1, 4 = RGB10A2)"},
   { GIMP_PDB_INT32, "transparent_index", "Index of transparent color or -1 to disable (for indexed images only)."},
   { GIMP_PDB_INT32, "mipmap_filter", "Filtering to use when generating mipmaps (0 = default, 1 = nearest, 2 = box, 3 = triangle, 4 = quadratic, 5 = bspline, 6 = mitchell, 7 = lanczos, 8 = kaiser)"},
@@ -112,6 +112,29 @@ static GimpParamDef save_args[] =
   { GIMP_PDB_INT32, "perceptual_metric", "Use a perceptual error metric during compression"},
   { GIMP_PDB_INT32, "preserve_alpha_coverage", "Preserve alpha test converage for alpha channel maps"},
   { GIMP_PDB_FLOAT, "alpha_test_threshold", "Alpha test threshold value for which alpha test converage should be preserved"}
+};
+
+static GimpParamDef save_args2[] =
+{
+  { GIMP_PDB_INT32, "run_mode", "Interactive, non-interactive"},
+  { GIMP_PDB_IMAGE, "image", "Input image"},
+  { GIMP_PDB_DRAWABLE, "drawable", "Drawable to save"},
+  { GIMP_PDB_STRING, "filename", "The name of the file to save the image as"},
+  { GIMP_PDB_STRING, "raw_filename", "The name entered"},
+  { GIMP_PDB_INT32, "compression_format", "Compression format (0 = None, 1 = BC1/DXT1, 2 = BC2/DXT3, 3 = BC3/DXT5, 4 = BC3n/DXT5nm, 5 = BC4/ATI1N, 6 = BC5/ATI2N, 7 = RXGB (DXT5), 8 = Alpha Exponent (DXT5), 9 = YCoCg (DXT5), 10 = YCoCg scaled (DXT5))"},
+  { GIMP_PDB_INT32, "mipmaps", "How to handle mipmaps (0 = No mipmaps, 1 = Generate mipmaps, 2 = Use existing mipmaps (layers)"},
+  { GIMP_PDB_INT32, "savetype", "How to save the image (0 = selected layer, 1 = cube map, 2 = volume map, 3 = texture array, 4 = all visible layers"},
+  { GIMP_PDB_INT32, "format", "Custom pixel format (0 = default, 1 = R5G6B5, 2 = RGBA4, 3 = RGB5A1, 4 = RGB10A2)"},
+  { GIMP_PDB_INT32, "transparent_index", "Index of transparent color or -1 to disable (for indexed images only)."},
+  { GIMP_PDB_INT32, "mipmap_filter", "Filtering to use when generating mipmaps (0 = default, 1 = nearest, 2 = box, 3 = triangle, 4 = quadratic, 5 = bspline, 6 = mitchell, 7 = lanczos, 8 = kaiser)"},
+  { GIMP_PDB_INT32, "mipmap_wrap", "Wrap mode to use when generating mipmaps (0 = default, 1 = mirror, 2 = repeat, 3 = clamp)"},
+  { GIMP_PDB_INT32, "gamma_correct", "Use gamma correct mipmap filtering"},
+  { GIMP_PDB_INT32, "srgb", "Use sRGB colorspace for gamma correction"},
+  { GIMP_PDB_FLOAT, "gamma", "Gamma value to use for gamma correction (i.e. 2.2)"},
+  { GIMP_PDB_INT32, "perceptual_metric", "Use a perceptual error metric during compression"},
+  { GIMP_PDB_INT32, "preserve_alpha_coverage", "Preserve alpha test converage for alpha channel maps"},
+  { GIMP_PDB_FLOAT, "alpha_test_threshold", "Alpha test threshold value for which alpha test converage should be preserved"},
+  { GIMP_PDB_INT32, "flip_image", "Flip image vertically on export"}
 };
 
 #if 0
@@ -166,6 +189,24 @@ query (void)
                               "dds",
                               "");
 
+  gimp_install_procedure (SAVE_PROC2,
+                          "Saves files in DDS image format "
+                          "with additional export options",
+                          "Saves files in DDS image format "
+                          "with additional export options",
+                          "Shawn Kirst",
+                          "Shawn Kirst",
+                          "2008",
+                          N_("DDS image"),
+                          "INDEXED, GRAY, RGB",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (save_args2), 0,
+                          save_args2, 0);
+
+  gimp_register_file_handler_mime (SAVE_PROC2, "image/dds");
+  gimp_register_save_handler (SAVE_PROC2,
+                              "dds",
+                              "");
 #if 0
   gimp_install_procedure (DECODE_YCOCG_PROC,
                           "Converts YCoCg encoded pixels to RGB",
@@ -270,7 +311,8 @@ run (const gchar      *name,
             }
         }
     }
-  else if (! strcmp (name, SAVE_PROC))
+  else if (! strcmp (name, SAVE_PROC) ||
+           ! strcmp (name, SAVE_PROC2))
     {
       imageID    = param[1].data.d_int32;
       drawableID = param[2].data.d_int32;
@@ -322,6 +364,10 @@ run (const gchar      *name,
               dds_write_vals.perceptual_metric       = param[15].data.d_int32;
               dds_write_vals.preserve_alpha_coverage = param[16].data.d_int32;
               dds_write_vals.alpha_test_threshold    = param[17].data.d_float;
+              if (nparams > 18)
+                dds_write_vals.flip_image            = param[18].data.d_int32;
+              else
+                dds_write_vals.flip_image            = FALSE;
 
               if ((dds_write_vals.compression <  DDS_COMPRESS_NONE) ||
                  (dds_write_vals.compression >= DDS_COMPRESS_MAX))
@@ -379,7 +425,8 @@ run (const gchar      *name,
       if (status == GIMP_PDB_SUCCESS)
         {
           status = write_dds (param[3].data.d_string, imageID, drawableID,
-                              run_mode == GIMP_RUN_INTERACTIVE);
+                              run_mode == GIMP_RUN_INTERACTIVE,
+                              export == GIMP_EXPORT_EXPORT);
           if (status == GIMP_PDB_SUCCESS)
             gimp_set_data (SAVE_PROC, &dds_write_vals, sizeof (dds_write_vals));
         }

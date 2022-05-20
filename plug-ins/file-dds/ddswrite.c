@@ -181,10 +181,11 @@ static string_value_t mipmap_wrap_strings[] =
 
 static string_value_t save_type_strings[] =
 {
-  { DDS_SAVE_SELECTED_LAYER, "Image / Selected layer" },
+  { DDS_SAVE_SELECTED_LAYER, "Selected layer" },
   { DDS_SAVE_CUBEMAP,        "As cube map" },
   { DDS_SAVE_VOLUMEMAP,      "As volume map" },
   { DDS_SAVE_ARRAY,          "As texture array" },
+  { DDS_SAVE_VISIBLE_LAYERS, "All visible layers" },
   { -1, 0}
 };
 
@@ -553,7 +554,8 @@ GimpPDBStatusType
 write_dds (gchar    *filename,
            gint32    image_id,
            gint32    drawable_id,
-           gboolean  interactive_dds)
+           gboolean  interactive_dds,
+           gboolean  is_duplicate_image)
 {
   FILE  *fp;
   gchar *tmp;
@@ -617,7 +619,20 @@ write_dds (gchar    *filename,
   gimp_progress_init (tmp);
   g_free (tmp);
 
-  rc = write_image (fp, image_id, drawable_id);
+  /* If destructive changes are going to happen to the image,
+   * make sure we send a duplicate of it to write_image
+   */
+  if (! is_duplicate_image)
+    {
+      gint32 duplicate_image = gimp_image_duplicate (image_id);
+      rc = write_image (fp, duplicate_image, drawable_id);
+      gimp_image_delete (duplicate_image);
+    }
+  else
+    {
+      rc = write_image (fp, image_id, drawable_id);
+    }
+
 
   fclose (fp);
 
@@ -1268,6 +1283,12 @@ write_image (FILE   *fp,
   gint is_dx10 = 0;
   gint array_size = 1;
 
+  if (dds_write_vals.flip_image)
+    {
+      gimp_image_flip (image_id, GIMP_ORIENTATION_VERTICAL);
+      drawable_id = gimp_image_get_active_drawable (image_id);
+    }
+
   layers = gimp_image_get_layers (image_id, &num_layers);
 
   if (dds_write_vals.mipmaps == DDS_MIPMAP_EXISTING)
@@ -1571,7 +1592,8 @@ write_image (FILE   *fp,
 
   if (is_dx10)
     {
-      array_size = (dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER) ? 1 : get_array_size (image_id);
+      array_size = (dds_write_vals.savetype == DDS_SAVE_SELECTED_LAYER ||
+                    dds_write_vals.savetype == DDS_SAVE_VISIBLE_LAYERS) ? 1 : get_array_size (image_id);
 
       PUTL32 (hdr10 +  0, dxgi_format);
       PUTL32 (hdr10 +  4, D3D10_RESOURCE_DIMENSION_TEXTURE2D);
@@ -1646,6 +1668,8 @@ write_image (FILE   *fp,
     }
   else
     {
+      if (dds_write_vals.savetype == DDS_SAVE_VISIBLE_LAYERS)
+        drawable_id = gimp_image_merge_visible_layers (image_id, 1);
       write_layer (fp, image_id, drawable_id, w, h, bpp, fmtbpp, num_mipmaps);
     }
 
@@ -1798,6 +1822,7 @@ savetype_selected (GtkWidget *widget,
   switch (dds_write_vals.savetype)
     {
     case DDS_SAVE_SELECTED_LAYER:
+    case DDS_SAVE_VISIBLE_LAYERS:
     case DDS_SAVE_CUBEMAP:
     case DDS_SAVE_ARRAY:
       gtk_widget_set_sensitive (compress_opt, TRUE);
@@ -2034,8 +2059,19 @@ save_dialog (gint32 image_id,
   string_value_combo_set_item_sensitive (opt, DDS_SAVE_VOLUMEMAP, is_volume);
   string_value_combo_set_item_sensitive (opt, DDS_SAVE_ARRAY, is_array);
 
+  check = gtk_check_button_new_with_mnemonic (_("Flip the image _vertically on export"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (check),
+                                dds_write_vals.flip_image);
+  gtk_table_attach (GTK_TABLE (table), check, 1, 2, 4, 5,
+                    GTK_FILL, 0, 0, 0);
+  gtk_widget_show (check);
+
+  g_signal_connect (check, "clicked",
+                    G_CALLBACK (toggle_clicked),
+                    &dds_write_vals.flip_image);
+
   opt = string_value_combo_new (mipmap_strings, dds_write_vals.mipmaps);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("_Mipmaps:"),
                              0.0, 0.5,
                              opt, 1, FALSE);
