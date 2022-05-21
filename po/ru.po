@@ -14,7 +14,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-04-05 13:45+0000\n"
-"PO-Revision-Date: 2022-05-17 10:33+0300\n"
+"PO-Revision-Date: 2022-05-21 09:45+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -93,7 +93,7 @@ msgid ""
 "New \"Stroke borders\" option in Bucket Fill tool's \"Fill by line art "
 "detection\""
 msgstr ""
-"Новая опция «Границы штриховой обводки» в опции «Определение контурного "
+"Новая опция «Обводить границы заливки» в опции «Определение контурного "
 "рисунка» инструмента «Плоская заливка»"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:10
@@ -107,7 +107,7 @@ msgstr "Добавлена поддержка формата файлов BigTIF
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:12
 msgid "New option \"Number of repeats\" in GIF export"
-msgstr "Новая опция «Количество повторов… в экспорте GIF"
+msgstr "Новая опция «Количество повторов» в экспорте GIF"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid ""
@@ -148,7 +148,7 @@ msgid ""
 "Alt-click on visibility and lock icons in item dockables massively toggles "
 "visibility and locks among selected items"
 msgstr ""
-"Alt-клик на значках видимости и блокировки в в панелях с объектами массово "
+"Alt-клик на значках видимости и блокировки в панелях с объектами массово "
 "переключает видимость и блокировку среди выбранных объектов"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:19
