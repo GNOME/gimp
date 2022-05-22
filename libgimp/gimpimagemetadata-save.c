@@ -270,6 +270,30 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       g_date_time_unref (datetime);
       g_clear_pointer (&comment, g_free);
+
+      /* EXIF Thumbnail */
+
+      if (gimp_export_thumbnail () && gexiv2_metadata_has_exif (g2metadata))
+        {
+          gchar *value;
+
+          /* Check a required tag for a thumbnail to be present. */
+          value = gexiv2_metadata_try_get_tag_string (g2metadata,
+                                                      "Exif.Thumbnail.ImageLength",
+                                                      NULL);
+          if (! value)
+            {
+              *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+            }
+          else
+            {
+              g_free (value);
+            }
+        }
+      else
+        {
+          *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
+        }
     }
   else
     {
@@ -283,12 +307,10 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
 
       if (! gimp_export_iptc ())
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
+
+      if (! gimp_export_thumbnail ())
+        *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
     }
-
-  /* Thumbnail */
-
-  if (! gimp_export_thumbnail () /* FIXME if (original image had a thumbnail) */)
-    *suggested_flags &= ~GIMP_METADATA_SAVE_THUMBNAIL;
 
   /* Color profile */
 
@@ -730,7 +752,7 @@ gimp_image_metadata_save_filter (GimpImage            *image,
       g_strfreev (iptc_data);
     }
 
-  if (flags & GIMP_METADATA_SAVE_THUMBNAIL)
+  if (flags & GIMP_METADATA_SAVE_THUMBNAIL && support_exif)
     {
       GdkPixbuf *thumb_pixbuf;
       gchar     *thumb_buffer;
@@ -837,6 +859,17 @@ gimp_image_metadata_save_filter (GimpImage            *image,
         }
 
       g_object_unref (thumb_pixbuf);
+    }
+  else
+    {
+      /* Remove Thumbnail */
+      gexiv2_metadata_try_erase_exif_thumbnail (new_g2metadata, &code_error);
+      if (code_error)
+        {
+          g_warning ("%s: failed to erase EXIF thumbnail: %s\n",
+                     G_STRFUNC, code_error->message);
+          g_clear_error (&code_error);
+        }
     }
 
   if (flags & GIMP_METADATA_SAVE_COLOR_PROFILE)

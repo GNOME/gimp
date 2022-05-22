@@ -73,11 +73,6 @@ gimp_image_metadata_load_prepare (GimpImage    *image,
 
   metadata = gimp_metadata_load_from_file (file, error);
 
-  if (metadata)
-    {
-      gexiv2_metadata_erase_exif_thumbnail (GEXIV2_METADATA (metadata));
-    }
-
   return metadata;
 }
 
