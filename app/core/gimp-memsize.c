@@ -232,13 +232,13 @@ gimp_g_value_get_memsize (GValue *value)
         }
       else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
         {
-          char **array = g_value_get_boxed (value);
+          gchar **array = g_value_get_boxed (value);
 
           if (array)
             {
               guint length = g_strv_length (array);
 
-              memsize += length * sizeof (gchar *);
+              memsize += (length + 1) * sizeof (gchar *);
               for (gint i = 0; i < length; i++)
                 memsize += gimp_string_get_memsize (array[i]);
             }
