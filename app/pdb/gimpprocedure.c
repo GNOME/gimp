@@ -986,7 +986,7 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
 
           /*  UTT-8 validate all strings  */
           if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_STRING ||
-              (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_BOXED &&
+              (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_BOXED &&
                G_PARAM_SPEC_VALUE_TYPE (pspec) == G_TYPE_STRV))
             {
               gboolean valid = TRUE;
@@ -1000,16 +1000,18 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 }
               else
                 {
-                  const GimpArray *array = g_value_get_boxed (arg);
+                  const gchar **array = g_value_get_boxed (arg);
 
                   if (array)
                     {
-                      const gchar **strings = (const gchar **) array->data;
-                      gint          i;
+                      gint i;
 
-                      for (i = 0; i < array->length && valid; i++)
-                        if (strings[i])
-                          valid = g_utf8_validate (strings[i], -1, NULL);
+                      for (i = 0; array[i]; i++)
+                        {
+                          valid = g_utf8_validate (array[i], -1, NULL);
+                          if (! valid)
+                            break;
+                        }
                     }
                 }
 
