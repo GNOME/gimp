@@ -1000,13 +1000,11 @@ gimp_container_get_name_array (GimpContainer *container)
 {
   gchar **names;
   gchar **iter;
-  gint length;
+  gint    length;
 
   g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
 
   length = gimp_container_get_n_children (container);
-  if (length == 0)
-    return NULL;
 
   names = iter = g_new0 (gchar *, length + 1);
 
