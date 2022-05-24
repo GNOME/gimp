@@ -68,7 +68,6 @@ struct _PDBQuery
   GRegex   *proc_type_regex;
 
   gchar   **list_of_procs;
-  gint      num_procs;
   gboolean  querying_compat;
 };
 
@@ -182,7 +181,7 @@ gimp_pdb_query (GimpPDB       *pdb,
   g_return_val_if_fail (procs != NULL, FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
-  *procs     = NULL;
+  *procs = NULL;
 
   pdb_query.name_regex = g_regex_new (name, PDB_REGEX_FLAGS, 0, error);
   if (! pdb_query.name_regex)
@@ -215,8 +214,7 @@ gimp_pdb_query (GimpPDB       *pdb,
   success = TRUE;
 
   pdb_query.pdb             = pdb;
-  pdb_query.list_of_procs   = NULL;
-  pdb_query.num_procs       = 0;
+  pdb_query.list_of_procs   = g_new0 (gchar *, 1);
   pdb_query.querying_compat = FALSE;
 
   g_hash_table_foreach (pdb->procedures,
@@ -252,7 +250,7 @@ gimp_pdb_query (GimpPDB       *pdb,
 
   if (success)
     {
-      *procs     = pdb_query.list_of_procs;
+      *procs = pdb_query.list_of_procs;
     }
 
   return success;
@@ -310,11 +308,12 @@ gimp_pdb_query_entry (gpointer key,
       match_string (pdb_query->date_regex,      strings.date)      &&
       match_string (pdb_query->proc_type_regex, type_desc->value_desc))
     {
-      pdb_query->num_procs++;
+      guint num_procs = g_strv_length (pdb_query->list_of_procs);
+
       pdb_query->list_of_procs = g_renew (gchar *, pdb_query->list_of_procs,
-                                          pdb_query->num_procs + 1);
-      pdb_query->list_of_procs[pdb_query->num_procs - 1] = g_strdup (proc_name);
-      pdb_query->list_of_procs[pdb_query->num_procs] = NULL;
+                                          num_procs + 2);
+      pdb_query->list_of_procs[num_procs] = g_strdup (proc_name);
+      pdb_query->list_of_procs[num_procs + 1] = NULL;
     }
 
   gimp_pdb_free_strings (&strings);
