@@ -798,7 +798,7 @@ gimp_value_to_gp_param (const GValue *value,
     }
   else if (G_VALUE_HOLDS (value, G_TYPE_STRV))
     {
-      char **array = g_value_get_boxed (value);
+      gchar **array = g_value_get_boxed (value);
 
       param->param_type = GP_PARAM_TYPE_STRV;
 

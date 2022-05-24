@@ -2086,11 +2086,10 @@ gimp_procedure_validate_args (GimpProcedure   *procedure,
                 }
               else
                 {
-                  const char **strings = g_value_get_boxed (arg);
+                  const gchar **strings = g_value_get_boxed (arg);
 
-                  for (const char **sp = strings; sp && *sp && valid; sp++)
-                    if (*sp)
-                      valid = g_utf8_validate (*sp, -1, NULL);
+                  for (const gchar **sp = strings; sp && *sp && valid; sp++)
+                    valid = g_utf8_validate (*sp, -1, NULL);
                 }
 
               if (! valid)
