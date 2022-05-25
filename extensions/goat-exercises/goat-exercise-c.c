@@ -142,8 +142,6 @@ goat_run (GimpProcedure        *procedure,
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               x, y, width, height;
 
-  INIT_I18N();
-
   if (n_drawables != 1)
     {
       GError *error = NULL;

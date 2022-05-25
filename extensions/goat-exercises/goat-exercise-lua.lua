@@ -33,6 +33,14 @@ local Gdk     = lgi.Gdk
 local Goat = lgi.package 'Goat'
 local Goat = lgi.Goat
 
+function N_(message)
+  return message;
+end
+
+function _(message)
+  return GLib.dgettext(nil, message);
+end
+
 function run(procedure, run_mode, image, drawables, args, run_data)
   -- procedure:new_return_values() crashes LGI so we construct the
   -- GimpValueArray manually.
@@ -56,13 +64,13 @@ function run(procedure, run_mode, image, drawables, args, run_data)
   if run_mode == "INTERACTIVE" then
     GimpUi.init("goat-exercise-lua");
     local dialog = GimpUi.Dialog {
-      title          = "Exercise a goat (Lua)",
+      title          = N_("Exercise a goat (Lua)"),
       role           = "goat-exercise-Lua",
       use_header_bar = 1
     }
-    dialog:add_button("_Cancel", Gtk.ResponseType.CANCEL);
-    dialog:add_button("_Source", Gtk.ResponseType.APPLY);
-    dialog:add_button("_OK", Gtk.ResponseType.OK);
+    dialog:add_button(_("_Cancel"), Gtk.ResponseType.CANCEL);
+    dialog:add_button(_("_Source"), Gtk.ResponseType.APPLY);
+    dialog:add_button(_("_OK"), Gtk.ResponseType.OK);
 
     local geometry = Gdk.Geometry()
     geometry.min_aspect = 0.5;

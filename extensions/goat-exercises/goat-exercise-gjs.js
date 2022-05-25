@@ -44,6 +44,8 @@ ARGV.unshift(System.programInvocationName);
 
 let url = "https://gitlab.gnome.org/GNOME/gimp/blob/master/extensions/goat-exercises/goat-exercise-gjs.js";
 
+function _(message) { return GLib.dgettext(null, message); }
+
 var Goat = GObject.registerClass({
     GTypeName: 'Goat',
 }, class Goat extends Gimp.PlugIn {
@@ -58,12 +60,12 @@ var Goat = GObject.registerClass({
         procedure.set_image_types("*");
         procedure.set_sensitivity_mask(Gimp.ProcedureSensitivityMask.DRAWABLE);
 
-        procedure.set_menu_label("Exercise a JavaScript goat");
+        procedure.set_menu_label(_("Exercise a JavaScript goat"));
         procedure.set_icon_name(GimpUi.ICON_GEGL);
         procedure.add_menu_path ('<Image>/Filters/Development/Goat exercises/');
 
-        procedure.set_documentation("Exercise a goat in the JavaScript language (GJS)",
-                                    "Takes a goat for a walk in Javascript with the GJS interpreter",
+        procedure.set_documentation(_("Exercise a goat in the JavaScript language (GJS)"),
+                                    _("Takes a goat for a walk in Javascript with the GJS interpreter"),
                                     name);
         procedure.set_attribution("Jehan", "Jehan", "2019");
 
@@ -85,13 +87,13 @@ var Goat = GObject.registerClass({
             GimpUi.init("goat-exercise-gjs");
             /* TODO: help function and ID. */
             let dialog = new GimpUi.Dialog({
-              title: "Exercise a goat (JavaScript)",
+              title: _("Exercise a goat (JavaScript)"),
               role: "goat-exercise-JavaScript",
               use_header_bar: true,
             });
-            dialog.add_button("_Cancel", Gtk.ResponseType.CANCEL);
-            dialog.add_button("_Source", Gtk.ResponseType.APPLY);
-            dialog.add_button("_OK", Gtk.ResponseType.OK);
+            dialog.add_button(_("_Cancel"), Gtk.ResponseType.CANCEL);
+            dialog.add_button(_("_Source"), Gtk.ResponseType.APPLY);
+            dialog.add_button(_("_OK"), Gtk.ResponseType.OK);
 
             let geometry = new Gdk.Geometry();
             geometry.min_aspect = 0.5;

@@ -24,28 +24,15 @@ from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
 
-import gettext
 import os
 import sys
 
-# Set-up localization for your plug-in with your own text domain.
-# This is complementary to the gimp_plug_in_set_translation_domain()
-# which is only useful for the menu entries inside GIMP interface,
-# whereas the below calls are used for localization within the plug-in.
-textdomain = 'gimp30-std-plug-ins'
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
-gettext.textdomain(textdomain)
-_ = gettext.gettext
 def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
 
 class Goat (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        # Localization for the menu entries. It has to be called in the
-        # query function only.
-        self.set_translation_domain(textdomain,
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
-
         return [ "plug-in-goat-exercise-python" ]
 
     def do_create_procedure(self, name):

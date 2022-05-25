@@ -50,7 +50,7 @@ if have_vala and have_gobject_introspection
       libgimp_vapi, libgimpui_vapi, gtk3, gegl, math,
     ],
     c_args: [
-      '-DGETTEXT_PACKAGE="@0@"'.format(gettext_package),
+      '-DGETTEXT_PACKAGE="@0@"'.format('org.gimp.extension.goat-exercises'),
     ],
     install: true,
     install_dir: gimpplugindir /  'extensions' / extension_name,
