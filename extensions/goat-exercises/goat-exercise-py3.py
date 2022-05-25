@@ -34,7 +34,6 @@ import sys
 # whereas the below calls are used for localization within the plug-in.
 textdomain = 'gimp30-std-plug-ins'
 gettext.bindtextdomain(textdomain, Gimp.locale_directory())
-gettext.bind_textdomain_codeset(textdomain, 'UTF-8')
 gettext.textdomain(textdomain)
 _ = gettext.gettext
 def N_(message): return message
