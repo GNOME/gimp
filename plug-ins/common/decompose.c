@@ -150,6 +150,7 @@ static gchar   *   generate_filename           (GimpImage           *image,
 G_DEFINE_TYPE (Decompose, decompose, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DECOMPOSE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 #define CPN_RGBA_R      { "R",          N_("red"),           0.0, 1.0, FALSE }
@@ -232,6 +233,7 @@ decompose_class_init (DecomposeClass *klass)
 
   plug_in_class->query_procedures = decompose_query_procedures;
   plug_in_class->create_procedure = decompose_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -364,7 +366,6 @@ decompose_run (GimpProcedure        *procedure,
   gchar               *tmp;
   gint                 j;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

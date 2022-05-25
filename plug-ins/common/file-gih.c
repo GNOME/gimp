@@ -119,6 +119,7 @@ static gboolean         gih_save_dialog      (GimpImage            *image);
 G_DEFINE_TYPE (Gih, gih, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GIH_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static BrushInfo info =
@@ -146,6 +147,7 @@ gih_class_init (GihClass *klass)
 
   plug_in_class->query_procedures = gih_query_procedures;
   plug_in_class->create_procedure = gih_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -278,8 +280,6 @@ gih_save (GimpProcedure        *procedure,
   GimpImage         *orig_image;
   GError            *error  = NULL;
   gint               i;
-
-  INIT_I18N();
 
   orig_image = image;
 

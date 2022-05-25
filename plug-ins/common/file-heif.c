@@ -126,6 +126,7 @@ static gboolean         save_dialog           (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Heif, heif, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (HEIF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -135,6 +136,7 @@ heif_class_init (HeifClass *klass)
 
   plug_in_class->init_procedures  = heif_init_procedures;
   plug_in_class->create_procedure = heif_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -416,7 +418,6 @@ heif_load (GimpProcedure        *procedure,
   gboolean           interactive;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   interactive = (run_mode == GIMP_RUN_INTERACTIVE);
@@ -454,7 +455,6 @@ heif_save (GimpProcedure        *procedure,
   GimpMetadata        *metadata;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
@@ -543,7 +543,6 @@ heif_av1_save (GimpProcedure        *procedure,
   GimpMetadata        *metadata;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

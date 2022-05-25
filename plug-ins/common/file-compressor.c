@@ -204,6 +204,7 @@ static goffset             get_file_info  (GFile                 *file);
 G_DEFINE_TYPE (Compressor, compressor, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (COMPRESSOR_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static const CompressorEntry compressors[] =
@@ -274,6 +275,7 @@ compressor_class_init (CompressorClass *klass)
 
   plug_in_class->query_procedures = compressor_query_procedures;
   plug_in_class->create_procedure = compressor_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void

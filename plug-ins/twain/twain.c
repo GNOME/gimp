@@ -161,6 +161,8 @@ static GimpValueArray * twain_run              (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Twain, twain, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TWAIN_TYPE)
+DEFINE_STD_SET_I18N
+
 
 static void
 twain_class_init (TwainClass *klass)
@@ -169,6 +171,7 @@ twain_class_init (TwainClass *klass)
 
   plug_in_class->query_procedures = twain_query_procedures;
   plug_in_class->create_procedure = twain_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -401,8 +404,6 @@ twain_run (GimpProcedure        *procedure,
   gint                num_images;
   gint                i;
 
-
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   /* Before we get any further, verify that we have

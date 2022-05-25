@@ -99,6 +99,7 @@ static void           lic_scale_entry_update (GimpLabelSpin        *entry,
 G_DEFINE_TYPE (Lic, lic, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (LIC_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -108,6 +109,7 @@ lic_class_init (LicClass *klass)
 
   plug_in_class->query_procedures = lic_query_procedures;
   plug_in_class->create_procedure = lic_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -901,7 +903,6 @@ lic_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

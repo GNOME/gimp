@@ -130,6 +130,7 @@ static gboolean    find_existing_mpath            (GtkTreeModel     *model,
 G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (BROWSER_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -139,6 +140,7 @@ browser_class_init (BrowserClass *klass)
 
   plug_in_class->query_procedures = browser_query_procedures;
   plug_in_class->create_procedure = browser_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -200,8 +202,6 @@ browser_run (GimpProcedure        *procedure,
              const GimpValueArray *args,
              gpointer              run_data)
 {
-  INIT_I18N ();
-
   browser_dialog_new ();
   gtk_main ();
 

@@ -672,6 +672,7 @@ static void gradient_scale_entry_update_int     (GimpLabelSpin  *entry,
 G_DEFINE_TYPE (Gflare, gflare, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GFLARE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 PluginValues pvals =
@@ -785,6 +786,7 @@ gflare_class_init (GflareClass *klass)
 
   plug_in_class->query_procedures = gflare_query_procedures;
   plug_in_class->create_procedure = gflare_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -921,7 +923,6 @@ gflare_run (GimpProcedure        *procedure,
 {
   gchar *path;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = _image;

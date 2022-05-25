@@ -108,6 +108,7 @@ static GimpValueArray * bmp_save             (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Bmp, bmp, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (BMP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -117,6 +118,7 @@ bmp_class_init (BmpClass *klass)
 
   plug_in_class->query_procedures = bmp_query_procedures;
   plug_in_class->create_procedure = bmp_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -226,7 +228,6 @@ bmp_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -260,7 +261,6 @@ bmp_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   GError              *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

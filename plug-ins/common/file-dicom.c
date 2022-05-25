@@ -129,6 +129,7 @@ static gboolean         write_group_to_file    (FILE                 *dicom,
 G_DEFINE_TYPE (Dicom, dicom, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DICOM_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -138,6 +139,7 @@ dicom_class_init (DicomClass *klass)
 
   plug_in_class->query_procedures = dicom_query_procedures;
   plug_in_class->create_procedure = dicom_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -240,7 +242,6 @@ dicom_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -273,7 +274,6 @@ dicom_save (GimpProcedure        *procedure,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)

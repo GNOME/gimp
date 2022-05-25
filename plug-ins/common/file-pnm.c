@@ -223,6 +223,7 @@ static void         pnmscanner_getsmalltoken (PNMScanner           *s,
 G_DEFINE_TYPE (Pnm, pnm, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PNM_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static const struct
@@ -253,6 +254,7 @@ pnm_class_init (PnmClass *klass)
 
   plug_in_class->query_procedures = pnm_query_procedures;
   plug_in_class->create_procedure = pnm_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -494,7 +496,6 @@ pnm_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -530,7 +531,6 @@ pnm_save (GimpProcedure        *procedure,
   const gchar         *format_name = NULL;
   GError              *error       = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

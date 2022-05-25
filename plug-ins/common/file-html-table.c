@@ -112,6 +112,7 @@ static gboolean         color_comp             (guchar               *buffer,
 G_DEFINE_TYPE (Html, html, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (HTML_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -121,6 +122,7 @@ html_class_init (HtmlClass *klass)
 
   plug_in_class->query_procedures = html_query_procedures;
   plug_in_class->create_procedure = html_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -264,7 +266,6 @@ html_save (GimpProcedure        *procedure,
   GeglBuffer          *buffer;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (run_mode != GIMP_RUN_INTERACTIVE)

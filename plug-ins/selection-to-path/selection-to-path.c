@@ -95,6 +95,7 @@ static gboolean         sel2path                  (GimpImage            *image);
 G_DEFINE_TYPE (Sel2path, sel2path, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SEL2PATH_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gint         sel_x1, sel_y1, sel_x2, sel_y2;
@@ -111,6 +112,7 @@ sel2path_class_init (Sel2pathClass *klass)
 
   plug_in_class->query_procedures = sel2path_query_procedures;
   plug_in_class->create_procedure = sel2path_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -284,7 +286,6 @@ sel2path_run (GimpProcedure        *procedure,
               const GimpValueArray *args,
               gpointer              run_data)
 {
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (gimp_selection_is_empty (image))

@@ -254,6 +254,7 @@ static void             find_hotspots_and_dimensions
 G_DEFINE_TYPE (Xmc, xmc, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (XMC_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -263,6 +264,7 @@ xmc_class_init (XmcClass *klass)
 
   plug_in_class->query_procedures = xmc_query_procedures;
   plug_in_class->create_procedure = xmc_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -446,7 +448,6 @@ xmc_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -479,7 +480,6 @@ xmc_load_thumb (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_thumbnail (file, size,
@@ -525,7 +525,6 @@ xmc_save (GimpProcedure        *procedure,
   gint                 hot_spot_y;
   GError              *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   orig_image = image;

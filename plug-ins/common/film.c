@@ -152,6 +152,7 @@ static void    film_scale_entry_update_double (GimpLabelSpin        *entry,
 G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FILM_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gdouble advanced_defaults[] =
@@ -199,6 +200,7 @@ film_class_init (FilmClass *klass)
 
   plug_in_class->query_procedures = film_query_procedures;
   plug_in_class->create_procedure = film_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -321,7 +323,6 @@ film_run (GimpProcedure        *procedure,
   GimpImage         **images;
   gint                i;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)

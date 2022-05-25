@@ -875,8 +875,6 @@ server_interface (void)
   GtkWidget *image;
   GtkWidget *label;
 
-  INIT_I18N();
-
   gimp_ui_init ("script-fu");
 
   dlg = gimp_dialog_new (_("Script-Fu Server Options"), "gimp-script-fu",

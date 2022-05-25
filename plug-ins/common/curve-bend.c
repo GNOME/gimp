@@ -377,6 +377,7 @@ static int              p_save_pointfile              (BenderDialog  *cd,
 G_DEFINE_TYPE (Bender, bender, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (BENDER_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static CRMatrix CR_basis =
@@ -397,6 +398,7 @@ bender_class_init (BenderClass *klass)
 
   plug_in_class->query_procedures = bender_query_procedures;
   plug_in_class->create_procedure = bender_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -666,7 +668,6 @@ bender_run (GimpProcedure        *procedure,
   GimpLayer      *bent_layer      = NULL;
   GError         *error           = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

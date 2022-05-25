@@ -122,6 +122,7 @@ static FILE             * sendmail_pipe           (gchar           **cmd,
 G_DEFINE_TYPE (Mail, mail, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (MAIL_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static m_info mail_info =
@@ -139,6 +140,7 @@ mail_class_init (MailClass *klass)
 
   plug_in_class->init_procedures  = mail_init_procedures;
   plug_in_class->create_procedure = mail_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -265,8 +267,6 @@ mail_run (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-
-  INIT_I18N ();
 
   switch (run_mode)
     {

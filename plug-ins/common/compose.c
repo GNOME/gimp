@@ -194,6 +194,7 @@ static void        type_combo_callback    (GimpIntComboBox *combo,
 G_DEFINE_TYPE (Compose, compose, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (COMPOSE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /* Decompositions availables.
@@ -344,6 +345,7 @@ compose_class_init (ComposeClass *klass)
 
   plug_in_class->query_procedures = compose_query_procedures;
   plug_in_class->create_procedure = compose_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -541,7 +543,6 @@ compose_run (GimpProcedure        *procedure,
   gint            compose_by_drawable;
   gint            i;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   compose_by_drawable = ! strcmp (name, DRAWABLE_COMPOSE_PROC);

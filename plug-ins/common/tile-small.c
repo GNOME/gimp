@@ -153,6 +153,7 @@ static gboolean  tileit_preview_events  (GtkWidget     *widget,
 G_DEFINE_TYPE (Tile, tile, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TILE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /* Values when first invoked */
@@ -231,6 +232,7 @@ tile_class_init (TileClass *klass)
 
   plug_in_class->query_procedures = tile_query_procedures;
   plug_in_class->create_procedure = tile_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -296,7 +298,6 @@ tile_run (GimpProcedure        *procedure,
   gint          pwidth;
   gint          pheight;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

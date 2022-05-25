@@ -69,6 +69,7 @@ struct _GimpHelpBrowser
 G_DEFINE_TYPE (GimpHelpBrowser, gimp_help_browser, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GIMP_TYPE_HELP_BROWSER)
+DEFINE_STD_SET_I18N
 
 static GList *
 help_browser_query_procedures (GimpPlugIn *plug_in)
@@ -151,8 +152,6 @@ help_browser_run (GimpProcedure        *procedure,
                   gpointer              user_data)
 {
   GimpHelpBrowser *browser = GIMP_HELP_BROWSER (user_data);
-
-  INIT_I18N ();
 
   if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 1),
                         GIMP_VALUES_GET_STRV (args, 2)))
@@ -352,6 +351,7 @@ gimp_help_browser_class_init (GimpHelpBrowserClass *klass)
 
   plug_in_class->query_procedures = help_browser_query_procedures;
   plug_in_class->create_procedure = help_browser_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void

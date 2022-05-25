@@ -73,6 +73,7 @@ static GimpImage      * load_image               (GFile                *file,
 G_DEFINE_TYPE (Desktop, desktop, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DESKTOP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -82,6 +83,7 @@ desktop_class_init (DesktopClass *klass)
 
   plug_in_class->query_procedures = desktop_query_procedures;
   plug_in_class->create_procedure = desktop_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void

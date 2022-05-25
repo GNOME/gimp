@@ -80,6 +80,7 @@ static gboolean            shoot_delay_timeout (gpointer          data);
 G_DEFINE_TYPE (Screenshot, screenshot, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SCREENSHOT_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static ScreenshotBackend       backend           = SCREENSHOT_BACKEND_NONE;
@@ -110,6 +111,7 @@ screenshot_class_init (ScreenshotClass *klass)
 
   plug_in_class->query_procedures = screenshot_query_procedures;
   plug_in_class->create_procedure = screenshot_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -229,7 +231,6 @@ screenshot_run (GimpProcedure        *procedure,
   GimpImage         *image   = NULL;
   GError            *error   = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   run_mode = GIMP_VALUES_GET_ENUM (args, 0);

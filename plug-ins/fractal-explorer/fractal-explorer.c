@@ -134,6 +134,7 @@ static void       fractalexplorer_rescan_list      (GtkWidget *widget,
 G_DEFINE_TYPE (Explorer, explorer, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (EXPLORER_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /**********************************************************************
@@ -207,6 +208,7 @@ explorer_class_init (ExplorerClass *klass)
 
   plug_in_class->query_procedures = explorer_query_procedures;
   plug_in_class->create_procedure = explorer_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -387,7 +389,6 @@ explorer_run (GimpProcedure        *procedure,
   gint               sel_width;
   gint               sel_height;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

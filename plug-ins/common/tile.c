@@ -92,6 +92,7 @@ static gboolean         tile_dialog           (GimpImage            *image,
 G_DEFINE_TYPE (Tile, tile, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TILE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static TileVals tvals =
@@ -110,6 +111,7 @@ tile_class_init (TileClass *klass)
 
   plug_in_class->query_procedures = tile_query_procedures;
   plug_in_class->create_procedure = tile_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -208,7 +210,6 @@ tile_run (GimpProcedure        *procedure,
   GimpImage      *new_image;
   GimpDrawable   *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

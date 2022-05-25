@@ -94,6 +94,7 @@ static GimpValueArray * cur_save             (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Ico, ico, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (ICO_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -103,6 +104,7 @@ ico_class_init (IcoClass *klass)
 
   plug_in_class->query_procedures = ico_query_procedures;
   plug_in_class->create_procedure = ico_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -290,7 +292,6 @@ ico_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = ico_load_image (file, &error);
@@ -322,7 +323,6 @@ ico_load_thumb (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   width  = size;
@@ -362,7 +362,6 @@ ico_save (GimpProcedure        *procedure,
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   status = ico_save_image (file, image, run_mode, &error);
@@ -388,7 +387,6 @@ cur_save (GimpProcedure        *procedure,
   gint                 n_hot_spot_x = 0;
   gint                 n_hot_spot_y = 0;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

@@ -175,6 +175,7 @@ static void      util_fillReducedBuffer             (guchar        *dest,
 G_DEFINE_TYPE (Merge, merge, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (MERGE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -184,6 +185,7 @@ merge_class_init (MergeClass *klass)
 
   plug_in_class->query_procedures = merge_query_procedures;
   plug_in_class->create_procedure = merge_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -295,7 +297,6 @@ merge_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   DepthMerge    dm;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

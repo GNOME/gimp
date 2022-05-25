@@ -114,6 +114,7 @@ static GtkPrintOperation *print_operation = NULL;
 G_DEFINE_TYPE (Print, print, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PRINT_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -123,6 +124,7 @@ print_class_init (PrintClass *klass)
 
   plug_in_class->query_procedures = print_query_procedures;
   plug_in_class->create_procedure = print_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -219,7 +221,6 @@ print_run (GimpProcedure        *procedure,
   GimpPDBStatusType  status;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (strcmp (gimp_procedure_get_name (procedure),

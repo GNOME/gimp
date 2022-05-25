@@ -98,6 +98,7 @@ static gboolean         save_dialog          (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Sgi, sgi, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SGI_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -107,6 +108,7 @@ sgi_class_init (SgiClass *klass)
 
   plug_in_class->query_procedures = sgi_query_procedures;
   plug_in_class->create_procedure = sgi_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -203,7 +205,6 @@ sgi_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -237,7 +238,6 @@ sgi_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

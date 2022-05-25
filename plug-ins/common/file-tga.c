@@ -207,6 +207,7 @@ static GimpImage      * ReadImage            (FILE                 *fp,
 G_DEFINE_TYPE (Tga, tga, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TGA_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /* TRUEVISION-XFILE magic signature string */
@@ -224,6 +225,7 @@ tga_class_init (TgaClass *klass)
 
   plug_in_class->query_procedures = tga_query_procedures;
   plug_in_class->create_procedure = tga_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -323,7 +325,6 @@ tga_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -357,7 +358,6 @@ tga_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

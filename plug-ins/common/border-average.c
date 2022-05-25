@@ -81,6 +81,7 @@ static void      thickness_callback   (GtkWidget    *widget,
 G_DEFINE_TYPE (BorderAverage, border_average, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (BORDER_AVERAGE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gint  borderaverage_thickness       = 3;
@@ -105,6 +106,7 @@ border_average_class_init (BorderAverageClass *klass)
 
   plug_in_class->query_procedures = border_average_query_procedures;
   plug_in_class->create_procedure = border_average_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -183,7 +185,6 @@ border_average_run (GimpProcedure        *procedure,
   GimpRGB            result_color = { 0.0, };
   GeglBuffer        *buffer;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

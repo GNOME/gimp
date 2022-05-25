@@ -112,6 +112,7 @@ static void    flame_scale_entry_update_double (GimpLabelSpin        *entry,
 G_DEFINE_TYPE (Flame, flame, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FLAME_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gchar      buffer[BUFFER_SIZE];
@@ -141,6 +142,7 @@ flame_class_init (FlameClass *klass)
 
   plug_in_class->query_procedures = flame_query_procedures;
   plug_in_class->create_procedure = flame_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -229,7 +231,6 @@ flame_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

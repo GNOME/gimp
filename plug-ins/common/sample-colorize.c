@@ -239,6 +239,7 @@ static void             clear_preview             (GtkWidget    *preview);
 G_DEFINE_TYPE (Colorize, colorize, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (COLORIZE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static t_samp_interface  g_di;  /* global dialog interface variables */
@@ -262,6 +263,7 @@ colorize_class_init (ColorizeClass *klass)
 
   plug_in_class->query_procedures = colorize_query_procedures;
   plug_in_class->create_procedure = colorize_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -419,7 +421,6 @@ colorize_run (GimpProcedure        *procedure,
   const gchar  *env;
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

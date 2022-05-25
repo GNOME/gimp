@@ -101,6 +101,7 @@ static guchar         * wmf_load_file        (GFile                *file,
 G_DEFINE_TYPE (Wmf, wmf, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (WMF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static WmfLoadVals load_vals =
@@ -118,6 +119,7 @@ wmf_class_init (WmfClass *klass)
 
   plug_in_class->query_procedures = wmf_query_procedures;
   plug_in_class->create_procedure = wmf_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -220,7 +222,6 @@ wmf_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)
@@ -273,7 +274,6 @@ wmf_load_thumb (GimpProcedure        *procedure,
   gint            height;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (load_wmf_size (file, &load_vals) &&

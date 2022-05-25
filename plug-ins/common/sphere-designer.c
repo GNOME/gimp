@@ -311,6 +311,7 @@ static gdouble     turbulence    (gdouble              *point,
 G_DEFINE_TYPE (Designer, designer, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DESIGNER_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static GtkWidget *drawarea = NULL;
@@ -376,6 +377,7 @@ designer_class_init (DesignerClass *klass)
 
   plug_in_class->query_procedures = designer_query_procedures;
   plug_in_class->create_procedure = designer_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -3167,7 +3169,6 @@ designer_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   gint          x, y, w, h;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

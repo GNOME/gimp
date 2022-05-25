@@ -35,6 +35,9 @@ def code_eval(procedure, run_mode, code, args, data):
 
 class PythonEval (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
+    def do_set_i18n(self, procname):
+        return True, 'gimp30-python', None
+
     def do_query_procedures(self):
         return ['python-fu-eval']
 

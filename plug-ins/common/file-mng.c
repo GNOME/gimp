@@ -210,6 +210,7 @@ static gboolean  mng_save_dialog (GimpImage        *image,
 G_DEFINE_TYPE (Mng, mng, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (MNG_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static struct mng_globals_t mngg;
@@ -222,6 +223,7 @@ mng_class_init (MngClass *klass)
 
   plug_in_class->query_procedures = mng_query_procedures;
   plug_in_class->create_procedure = mng_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -365,7 +367,6 @@ mng_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_IGNORE;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

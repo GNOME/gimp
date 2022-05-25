@@ -81,6 +81,7 @@ static GimpValueArray * jpeg_save             (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Jpeg, jpeg, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (JPEG_TYPE)
+DEFINE_STD_SET_I18N
 
 
 gboolean         undo_touched      = FALSE;
@@ -97,6 +98,7 @@ jpeg_class_init (JpegClass *klass)
 
   plug_in_class->query_procedures = jpeg_query_procedures;
   plug_in_class->create_procedure = jpeg_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -323,7 +325,6 @@ jpeg_load (GimpProcedure        *procedure,
   gboolean        resolution_loaded = FALSE;
   GError         *error             = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   preview_image = NULL;
@@ -392,7 +393,6 @@ jpeg_load_thumb (GimpProcedure        *procedure,
   GimpImageType   type   = -1;
   GError         *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   preview_image = NULL;
@@ -441,7 +441,6 @@ jpeg_save (GimpProcedure        *procedure,
   gint                   orig_quality          = -1;
   JpegSubsampling        orig_subsmp           = JPEG_SUBSAMPLING_2x2_1x1_1x1;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

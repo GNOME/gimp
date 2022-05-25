@@ -95,6 +95,7 @@ static GimpImage      *  emitgimp              (gint                  hcol,
 G_DEFINE_TYPE (Faxg3, faxg3, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FAXG3_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -104,6 +105,7 @@ faxg3_class_init (Faxg3Class *klass)
 
   plug_in_class->query_procedures = faxg3_query_procedures;
   plug_in_class->create_procedure = faxg3_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -163,7 +165,6 @@ faxg3_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);

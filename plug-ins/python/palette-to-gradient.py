@@ -21,11 +21,9 @@ from gi.repository import GLib
 from gi.repository import Gio
 import sys
 
-import gettext
-textdomain = "gimp30-python"
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
-gettext.textdomain(textdomain)
-_ = gettext.gettext
+def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
+
 
 def make_gradient(palette, num_segments, num_colors):
     gradient = Gimp.gradient_new(palette)
@@ -125,6 +123,9 @@ class PaletteToGradient (Gimp.PlugIn):
         self.new_gradient = new_gradient
 
     ## GimpPlugIn virtual methods ##
+    def do_set_i18n(self, procname):
+        return True, 'gimp30-python', None
+
     def do_query_procedures(self):
         return ['python-fu-palette-to-gradient',
                 'python-fu-palette-to-gradient-repeating']

@@ -105,6 +105,7 @@ static gboolean          save_dialog          (GimpImage            *image,
 G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GIF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gint Interlace; /* For compression code */
@@ -117,6 +118,7 @@ gif_class_init (GifClass *klass)
 
   plug_in_class->query_procedures = gif_query_procedures;
   plug_in_class->create_procedure = gif_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -263,7 +265,6 @@ gif_save (GimpProcedure        *procedure,
   GimpImage           *sanitized_image = NULL;
   GError              *error           = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

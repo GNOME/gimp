@@ -25,11 +25,9 @@ from gi.repository import Gio
 import time
 import sys
 
-import gettext
-textdomain = "gimp30-python"
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
-gettext.textdomain(textdomain)
-_ = gettext.gettext
+def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
+
 
 def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
     config = procedure.create_config()
@@ -127,6 +125,9 @@ class Foggify (Gimp.PlugIn):
                              blurb=_("Fog color"))
 
     ## GimpPlugIn virtual methods ##
+    def do_set_i18n(self, procname):
+        return True, 'gimp30-python', None
+
     def do_query_procedures(self):
         return [ 'python-fu-foggify' ]
 

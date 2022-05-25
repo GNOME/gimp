@@ -77,6 +77,7 @@ static GimpValueArray * webp_save             (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Webp, webp, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (WEBP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -86,6 +87,7 @@ webp_class_init (WebpClass *klass)
 
   plug_in_class->query_procedures = webp_query_procedures;
   plug_in_class->create_procedure = webp_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -254,7 +256,6 @@ webp_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, FALSE, &error);
@@ -290,7 +291,6 @@ webp_save (GimpProcedure        *procedure,
   gboolean             animation;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

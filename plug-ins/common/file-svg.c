@@ -104,6 +104,7 @@ static gboolean            load_dialog       (GFile                *file,
 G_DEFINE_TYPE (Svg, svg, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SVG_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static SvgLoadVals load_vals =
@@ -123,6 +124,7 @@ svg_class_init (SvgClass *klass)
 
   plug_in_class->query_procedures = svg_query_procedures;
   plug_in_class->create_procedure = svg_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -235,7 +237,6 @@ svg_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)
@@ -304,7 +305,6 @@ svg_load_thumb (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (load_rsvg_size (file, &load_vals, NULL))

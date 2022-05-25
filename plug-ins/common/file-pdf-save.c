@@ -293,6 +293,7 @@ static gboolean         draw_layer               (GimpLayer           **layers,
 G_DEFINE_TYPE (Pdf, pdf, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PDF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gboolean     dnd_remove = TRUE;
@@ -322,6 +323,7 @@ pdf_class_init (PdfClass *klass)
 
   plug_in_class->query_procedures = pdf_query_procedures;
   plug_in_class->create_procedure = pdf_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -499,7 +501,6 @@ pdf_save (GimpProcedure        *procedure,
   gboolean had_saved_list = FALSE;
   gboolean defaults = FALSE;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   /* Initializing all the settings */
@@ -571,7 +572,6 @@ pdf_save_multi (GimpProcedure        *procedure,
   GFile       *file;
   gboolean     had_saved_list = FALSE;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   run_mode = GIMP_VALUES_GET_ENUM (args, 0);

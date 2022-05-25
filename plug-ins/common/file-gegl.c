@@ -105,6 +105,7 @@ static gboolean         save_image            (GFile                *file,
 G_DEFINE_TYPE (Goat, goat, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GOAT_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static const FileFormat file_formats[] =
@@ -149,6 +150,7 @@ goat_class_init (GoatClass *klass)
 
   plug_in_class->query_procedures = goat_query_procedures;
   plug_in_class->create_procedure = goat_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -246,7 +248,6 @@ goat_load (GimpProcedure        *procedure,
   GimpImage        *image;
   GError           *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, format->load_op, &error);
@@ -280,7 +281,6 @@ goat_save (GimpProcedure        *procedure,
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)

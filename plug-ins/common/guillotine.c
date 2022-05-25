@@ -68,6 +68,7 @@ static GList          * guillotine                  (GimpImage            *image
 G_DEFINE_TYPE (Guillotine, guillotine, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GUILLOTINE_TYPE)
+DEFINE_STD_SET_I18N
 
 static void
 guillotine_class_init (GuillotineClass *klass)
@@ -76,6 +77,7 @@ guillotine_class_init (GuillotineClass *klass)
 
   plug_in_class->query_procedures = guillotine_query_procedures;
   plug_in_class->create_procedure = guillotine_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -150,8 +152,6 @@ guillotine_run (GimpProcedure        *procedure,
 {
   GimpValueArray    *return_vals = NULL;
   GimpPDBStatusType  status      = GIMP_PDB_SUCCESS;
-
-  INIT_I18N();
 
   return_vals = gimp_procedure_new_return_values (procedure, status,
                                                   NULL);

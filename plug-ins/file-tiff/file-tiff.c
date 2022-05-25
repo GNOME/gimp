@@ -115,6 +115,7 @@ static gboolean          image_is_multi_layer (GimpImage            *image);
 G_DEFINE_TYPE (Tiff, tiff, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (TIFF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -124,6 +125,7 @@ tiff_class_init (TiffClass *klass)
 
   plug_in_class->query_procedures = tiff_query_procedures;
   plug_in_class->create_procedure = tiff_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -273,7 +275,6 @@ tiff_load (GimpProcedure        *procedure,
   GimpMetadata      *metadata;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -331,7 +332,6 @@ tiff_save (GimpProcedure        *procedure,
   GError              *error  = NULL;
   GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

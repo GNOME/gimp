@@ -131,6 +131,8 @@ static void             align_layers_scale_entry_update_int (GimpLabelSpin      
 G_DEFINE_TYPE (AlignLayers, align_layers, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (ALIGN_LAYERS_TYPE)
+DEFINE_STD_SET_I18N
+
 
 /* dialog variables */
 typedef struct
@@ -162,6 +164,7 @@ align_layers_class_init (AlignLayersClass *klass)
 
   plug_in_class->query_procedures = align_layers_query_procedures;
   plug_in_class->create_procedure = align_layers_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -241,8 +244,6 @@ align_layers_run (GimpProcedure        *procedure,
   GError            *error  = NULL;
   GList             *layers;
   gint               layer_num;
-
-  INIT_I18N ();
 
   switch ( run_mode )
     {

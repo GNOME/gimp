@@ -97,6 +97,7 @@ static GimpValueArray * dds_decode           (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Dds, dds, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DDS_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -106,6 +107,7 @@ dds_class_init (DdsClass *klass)
 
   plug_in_class->query_procedures = dds_query_procedures;
   plug_in_class->create_procedure = dds_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -396,7 +398,6 @@ dds_load (GimpProcedure        *procedure,
   GimpImage           *image;
   GError              *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
@@ -436,7 +437,6 @@ dds_save (GimpProcedure        *procedure,
   GError              *error = NULL;
   gdouble              gamma;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

@@ -143,6 +143,7 @@ static void     MSRCR                       (guchar       *src,
 G_DEFINE_TYPE (Retinex, retinex, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (RETINEX_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static RetinexParams rvals =
@@ -161,6 +162,7 @@ retinex_class_init (RetinexClass *klass)
 
   plug_in_class->query_procedures = retinex_query_procedures;
   plug_in_class->create_procedure = retinex_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -250,7 +252,6 @@ retinex_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   gint          x, y, width, height;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

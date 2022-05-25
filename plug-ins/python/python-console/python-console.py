@@ -343,6 +343,9 @@ class PythonConsole (Gimp.PlugIn):
         self.runmode = runmode
 
     ## GimpPlugIn virtual methods ##
+    def do_set_i18n(self, name):
+        return True, 'gimp30-python', None
+
     def do_query_procedures(self):
         return [ PROC_NAME ]
 

@@ -67,6 +67,7 @@ static void             sanitize_comment     (gchar                *comment);
 G_DEFINE_TYPE (Exr, exr, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (EXR_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -76,6 +77,7 @@ exr_class_init (ExrClass *klass)
 
   plug_in_class->query_procedures = exr_query_procedures;
   plug_in_class->create_procedure = exr_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -136,7 +138,6 @@ exr_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, run_mode == GIMP_RUN_INTERACTIVE,

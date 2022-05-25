@@ -92,6 +92,7 @@ static gboolean         need_palette         (GFile                *file,
 G_DEFINE_TYPE (Cel, cel, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (CEL_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gchar *palette_file = NULL;
@@ -105,6 +106,7 @@ cel_class_init (CelClass *klass)
 
   plug_in_class->query_procedures = cel_query_procedures;
   plug_in_class->create_procedure = cel_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -207,7 +209,6 @@ cel_load (GimpProcedure        *procedure,
   gboolean        needs_palette = FALSE;
   GError         *error         = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (run_mode != GIMP_RUN_NONINTERACTIVE)
@@ -280,7 +281,6 @@ cel_save (GimpProcedure        *procedure,
   GimpExportReturn       export = GIMP_EXPORT_CANCEL;
   GError                *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)

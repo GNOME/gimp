@@ -81,6 +81,7 @@ static GimpImage      * load_thumbnail_image         (GFile                *file
 G_DEFINE_TYPE (Rawtherapee, rawtherapee, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (RAWTHERAPEE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -90,6 +91,7 @@ rawtherapee_class_init (RawtherapeeClass *klass)
 
   plug_in_class->init_procedures  = rawtherapee_init_procedures;
   plug_in_class->create_procedure = rawtherapee_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -261,8 +263,6 @@ rawtherapee_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
-
   image = load_image (file, run_mode, &error);
 
   if (! image)
@@ -289,8 +289,6 @@ rawtherapee_load_thumb (GimpProcedure        *procedure,
   GimpValueArray *return_vals;
   GimpImage      *image;
   GError         *error = NULL;
-
-  INIT_I18N ();
 
   image = load_thumbnail_image (file, size, &error);
 

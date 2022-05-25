@@ -104,6 +104,7 @@ static void     unit_list_init         (GtkTreeView           *tv);
 G_DEFINE_TYPE (Editor, editor, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (EDITOR_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static const UnitColumn columns[] =
@@ -154,6 +155,7 @@ editor_class_init (EditorClass *klass)
 
   plug_in_class->query_procedures = editor_query_procedures;
   plug_in_class->create_procedure = editor_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -208,8 +210,6 @@ editor_run (GimpProcedure        *procedure,
             const GimpValueArray *args,
             gpointer              run_data)
 {
-  INIT_I18N ();
-
   unit_editor_dialog ();
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);

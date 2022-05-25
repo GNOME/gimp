@@ -85,6 +85,7 @@ static void                busy_dialog_response            (GtkDialog        *di
 G_DEFINE_TYPE (BusyDialog, busy_dialog, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (BUSY_DIALOG_TYPE)
+DEFINE_STD_SET_I18N
 
 static void
 busy_dialog_class_init (BusyDialogClass *klass)
@@ -93,6 +94,7 @@ busy_dialog_class_init (BusyDialogClass *klass)
 
   plug_in_class->query_procedures = busy_dialog_query_procedures;
   plug_in_class->create_procedure = busy_dialog_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -177,8 +179,6 @@ busy_dialog_run (GimpProcedure        *procedure,
   GimpValueArray    *return_vals = NULL;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
-
-  INIT_I18N ();
 
   run_mode = GIMP_VALUES_GET_ENUM (args, 0);
   switch (run_mode)

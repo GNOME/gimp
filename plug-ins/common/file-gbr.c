@@ -83,6 +83,7 @@ static gboolean         save_dialog          (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Gbr, gbr, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GBR_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -92,6 +93,7 @@ gbr_class_init (GbrClass *klass)
 
   plug_in_class->query_procedures = gbr_query_procedures;
   plug_in_class->create_procedure = gbr_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -173,8 +175,6 @@ gbr_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   gchar               *description;
   GError              *error  = NULL;
-
-  INIT_I18N ();
 
   config = gimp_procedure_create_config (procedure);
   gimp_procedure_config_begin_run (config, image, run_mode, args);

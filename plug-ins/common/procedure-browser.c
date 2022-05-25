@@ -87,6 +87,7 @@ static GimpValueArray * browser_run              (GimpProcedure        *procedur
 G_DEFINE_TYPE (Browser, browser, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (BROWSER_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -96,6 +97,7 @@ browser_class_init (BrowserClass *klass)
 
   plug_in_class->query_procedures = browser_query_procedures;
   plug_in_class->create_procedure = browser_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -150,8 +152,6 @@ browser_run (GimpProcedure        *procedure,
              gpointer              run_data)
 {
   GimpRunMode run_mode = GIMP_VALUES_GET_ENUM (args, 0);
-
-  INIT_I18N ();
 
   switch (run_mode)
     {

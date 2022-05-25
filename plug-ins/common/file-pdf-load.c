@@ -287,6 +287,7 @@ static GimpLayer       * layer_from_surface  (GimpImage            *image,
 G_DEFINE_TYPE (Pdf, pdf, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PDF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -296,6 +297,7 @@ pdf_class_init (PdfClass *klass)
 
   plug_in_class->query_procedures = pdf_query_procedures;
   plug_in_class->create_procedure = pdf_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -409,7 +411,6 @@ pdf_load (GimpProcedure        *procedure,
   PdfSelectedPages   pages    = { 0, NULL };
   GError            *error    = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)
@@ -560,7 +561,6 @@ pdf_load_thumb (GimpProcedure        *procedure,
   cairo_surface_t *surface   = NULL;
   GError          *error     = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   doc = open_document (file,

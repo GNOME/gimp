@@ -184,6 +184,7 @@ static gdouble       warp_map_mag_give_value  (guchar         *pt,
 G_DEFINE_TYPE (Warp, warp, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (WARP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static WarpVals dvals =
@@ -216,6 +217,7 @@ warp_class_init (WarpClass *klass)
 
   plug_in_class->query_procedures = warp_query_procedures;
   plug_in_class->create_procedure = warp_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -363,7 +365,6 @@ warp_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   GimpRGB       color;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

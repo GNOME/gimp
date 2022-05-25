@@ -80,6 +80,7 @@ static gboolean         save_dialog              (GimpProcedure        *procedur
 G_DEFINE_TYPE (Csource, csource, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (CSOURCE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -89,6 +90,7 @@ csource_class_init (CsourceClass *klass)
 
   plug_in_class->query_procedures = csource_query_procedures;
   plug_in_class->create_procedure = csource_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -213,7 +215,6 @@ csource_save (GimpProcedure        *procedure,
   gchar               *comment;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (run_mode != GIMP_RUN_INTERACTIVE)

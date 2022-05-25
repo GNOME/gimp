@@ -136,6 +136,7 @@ static gint        find_unused_ia_color      (GeglBuffer       *buffer,
 G_DEFINE_TYPE (Png, png, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PNG_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -145,6 +146,7 @@ png_class_init (PngClass *klass)
 
   plug_in_class->query_procedures = png_query_procedures;
   plug_in_class->create_procedure = png_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -169,7 +171,6 @@ png_create_procedure (GimpPlugIn  *plug_in,
 {
   GimpProcedure *procedure = NULL;
 
-  INIT_I18N ();
   if (! strcmp (name, LOAD_PROC))
     {
       procedure = gimp_load_procedure_new (plug_in, name,
@@ -305,7 +306,6 @@ png_load (GimpProcedure        *procedure,
   GimpMetadata   *metadata;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)
@@ -377,7 +377,6 @@ png_save (GimpProcedure        *procedure,
   gboolean             alpha;
   GError              *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

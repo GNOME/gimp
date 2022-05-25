@@ -71,6 +71,7 @@ static void             do_zcrop              (GimpDrawable         *drawable,
 G_DEFINE_TYPE (Crop, crop, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (CROP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -80,6 +81,7 @@ crop_class_init (CropClass *klass)
 
   plug_in_class->query_procedures = crop_query_procedures;
   plug_in_class->create_procedure = crop_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -137,7 +139,6 @@ crop_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   gimp_progress_init (_("Zealous cropping"));

@@ -85,6 +85,7 @@ static gboolean         remap_dialog           (GimpImage            *image,
 G_DEFINE_TYPE (Remap, remap, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (REMAP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -94,6 +95,7 @@ remap_class_init (RemapClass *klass)
 
   plug_in_class->query_procedures = remap_query_procedures;
   plug_in_class->create_procedure = remap_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -214,7 +216,6 @@ remap_run (GimpProcedure        *procedure,
   guchar map[256];
   gint   i;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   /*  Make sure that the image is indexed  */

@@ -205,6 +205,7 @@ static void             build_tab            (gint                  m);
 G_DEFINE_TYPE (Hot, hot, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (HOT_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gint     tab[3][3][MAXPIX+1]; /* multiply lookup table */
@@ -221,6 +222,7 @@ hot_class_init (HotClass *klass)
 
   plug_in_class->query_procedures = hot_query_procedures;
   plug_in_class->create_procedure = hot_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -305,7 +307,6 @@ hot_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   piArgs        pi_args;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

@@ -125,6 +125,7 @@ static GimpImage      * load_image           (GFile                *file,
 G_DEFINE_TYPE (Gif, gif, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GIF_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static guchar        used_cmap[3][256];
@@ -141,6 +142,7 @@ gif_class_init (GifClass *klass)
 
   plug_in_class->query_procedures = gif_query_procedures;
   plug_in_class->create_procedure = gif_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -228,7 +230,6 @@ gif_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, FALSE, &error);
@@ -276,7 +277,6 @@ gif_load_thumb (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, TRUE, &error);

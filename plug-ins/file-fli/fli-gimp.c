@@ -136,6 +136,7 @@ static gboolean         get_info             (GFile                *file,
 G_DEFINE_TYPE (Fli, fli, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (FLI_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -145,6 +146,7 @@ fli_class_init (FliClass *klass)
 
   plug_in_class->query_procedures = fli_query_procedures;
   plug_in_class->create_procedure = fli_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -298,7 +300,6 @@ fli_load (GimpProcedure        *procedure,
   GimpImage           *image;
   GError              *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
@@ -347,7 +348,6 @@ fli_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

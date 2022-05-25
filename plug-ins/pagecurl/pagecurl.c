@@ -150,6 +150,7 @@ static GimpRGB        * get_gradient_samples      (GimpDrawable     *drawable,
 G_DEFINE_TYPE (Pagecurl, pagecurl, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PAGECURL_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /***** Variables *****/
@@ -197,6 +198,7 @@ pagecurl_class_init (PagecurlClass *klass)
 
   plug_in_class->query_procedures = pagecurl_query_procedures;
   plug_in_class->create_procedure = pagecurl_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -288,7 +290,6 @@ pagecurl_run (GimpProcedure        *procedure,
   GimpDrawable   *drawable;
   GimpValueArray *return_vals = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = _image;

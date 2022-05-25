@@ -88,6 +88,7 @@ static GimpImage      * webpage_capture          (void);
 G_DEFINE_TYPE (Webpage, webpage, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (WEBPAGE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static WebpageVals webpagevals;
@@ -100,6 +101,7 @@ webpage_class_init (WebpageClass *klass)
 
   plug_in_class->query_procedures = webpage_query_procedures;
   plug_in_class->create_procedure = webpage_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -182,8 +184,6 @@ webpage_run (GimpProcedure        *procedure,
   GimpRunMode      run_mode;
   GimpImage       *image;
   WebpageSaveVals  save = { "https://www.gimp.org/", 1024, 12 };
-
-  INIT_I18N ();
 
   gimp_get_data (PLUG_IN_PROC, &save);
 

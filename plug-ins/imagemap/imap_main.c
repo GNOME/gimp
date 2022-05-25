@@ -100,6 +100,7 @@ static gint             zoom_out              (void);
 G_DEFINE_TYPE (Imap, imap, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (IMAP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /* Global variables */
@@ -134,6 +135,7 @@ imap_class_init (ImapClass *klass)
 
   plug_in_class->query_procedures = imap_query_procedures;
   plug_in_class->create_procedure = imap_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -188,7 +190,6 @@ imap_run (GimpProcedure        *procedure,
          const GimpValueArray *args,
          gpointer              run_data)
 {
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

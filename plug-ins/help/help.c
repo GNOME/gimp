@@ -94,6 +94,7 @@ static GMainLoop *main_loop = NULL;
 G_DEFINE_TYPE (Help, help, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (HELP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -103,6 +104,7 @@ help_class_init (HelpClass *klass)
 
   plug_in_class->query_procedures = help_query_procedures;
   plug_in_class->create_procedure = help_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -155,8 +157,6 @@ help_run (GimpProcedure        *procedure,
           gpointer              run_data)
 {
   GimpPDBStatusType status = GIMP_PDB_SUCCESS;
-
-  INIT_I18N ();
 
   if (! gimp_help_init (GIMP_VALUES_GET_STRV (args, 0),
                         GIMP_VALUES_GET_STRV (args, 1)))

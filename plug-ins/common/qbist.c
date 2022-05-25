@@ -138,6 +138,7 @@ static void             qbist                  (ExpInfo              *info,
 G_DEFINE_TYPE (Qbist, qbist, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (QBIST_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static QbistInfo  qbist_info;
@@ -151,6 +152,7 @@ qbist_class_init (QbistClass *klass)
 
   plug_in_class->query_procedures = qbist_query_procedures;
   plug_in_class->create_procedure = qbist_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -241,7 +243,6 @@ qbist_run (GimpProcedure        *procedure,
   gint                 total_pixels;
   gint                 done_pixels;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

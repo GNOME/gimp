@@ -148,6 +148,7 @@ jp2_class_init (Jp2Class *klass)
 
   plug_in_class->query_procedures = jp2_query_procedures;
   plug_in_class->create_procedure = jp2_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -259,7 +260,6 @@ jp2_load (GimpProcedure        *procedure,
   gboolean         profile_loaded = FALSE;
   GError          *error          = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)

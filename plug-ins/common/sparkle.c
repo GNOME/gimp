@@ -145,6 +145,7 @@ static void             rpnt                     (GeglBuffer           *dest_buf
 G_DEFINE_TYPE (Sparkle, sparkle, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SPARKLE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static SparkleVals svals =
@@ -174,6 +175,7 @@ sparkle_class_init (SparkleClass *klass)
 
   plug_in_class->query_procedures = sparkle_query_procedures;
   plug_in_class->create_procedure = sparkle_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -316,7 +318,6 @@ sparkle_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   gint          x, y, w, h;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

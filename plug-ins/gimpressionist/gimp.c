@@ -73,6 +73,7 @@ static void             gimpressionist_main             (void);
 G_DEFINE_TYPE (Gimpressionist, gimpressionist, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GIMPRESSIONIST_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static GimpDrawable *drawable;
@@ -87,6 +88,7 @@ gimpressionist_class_init (GimpressionistClass *klass)
 
   plug_in_class->query_procedures = gimpressionist_query_procedures;
   plug_in_class->create_procedure = gimpressionist_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -166,7 +168,6 @@ gimpressionist_run (GimpProcedure        *procedure,
 {
   const gchar *preset_name;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

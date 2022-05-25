@@ -613,6 +613,7 @@ static gboolean         save_dialog          (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Psp, psp, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PSP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static guint16 psp_ver_major;
@@ -626,6 +627,7 @@ psp_class_init (PspClass *klass)
 
   plug_in_class->query_procedures = psp_query_procedures;
   plug_in_class->create_procedure = psp_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -730,7 +732,6 @@ psp_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -764,7 +765,6 @@ psp_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

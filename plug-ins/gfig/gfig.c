@@ -96,6 +96,7 @@ static gint             load_options          (GFigObj              *gfig,
 G_DEFINE_TYPE (Gfig, gfig, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GFIG_TYPE)
+DEFINE_STD_SET_I18N
 
 
 gint line_no;
@@ -134,6 +135,7 @@ gfig_class_init (GfigClass *klass)
 
   plug_in_class->query_procedures = gfig_query_procedures;
   plug_in_class->create_procedure = gfig_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -201,8 +203,6 @@ gfig_run (GimpProcedure        *procedure,
   GimpDrawable      *drawable;
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   gint               pwidth, pheight;
-
-  INIT_I18N ();
 
   if (n_drawables != 1)
     {

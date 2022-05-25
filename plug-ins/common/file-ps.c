@@ -294,6 +294,7 @@ static void      save_unit_toggle_update  (GtkWidget *widget,
 G_DEFINE_TYPE (PostScript, ps, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PS_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static PSLoadVals plvals =
@@ -340,6 +341,7 @@ ps_class_init (PostScriptClass *klass)
 
   plug_in_class->query_procedures = ps_query_procedures;
   plug_in_class->create_procedure = ps_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -610,7 +612,6 @@ ps_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   l_run_mode = run_mode;
@@ -681,7 +682,6 @@ ps_load_thumb (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   /*  We should look for an embedded preview but for now we
@@ -728,7 +728,6 @@ ps_save (GimpProcedure        *procedure,
   GimpImage         *orig_image;
   GError            *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   psvals.eps = strcmp (gimp_procedure_get_name (procedure), SAVE_PS_PROC);

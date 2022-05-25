@@ -70,6 +70,7 @@ static gboolean         save_dialog          (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Pat, pat, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PAT_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -79,6 +80,7 @@ pat_class_init (PatClass *klass)
 
   plug_in_class->query_procedures = pat_query_procedures;
   plug_in_class->create_procedure = pat_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -152,8 +154,6 @@ pat_save (GimpProcedure        *procedure,
   GimpExportReturn     export = GIMP_EXPORT_CANCEL;
   gchar               *description;
   GError              *error  = NULL;
-
-  INIT_I18N ();
 
   config = gimp_procedure_create_config (procedure);
   gimp_procedure_config_begin_run (config, image, run_mode, args);

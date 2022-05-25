@@ -79,6 +79,7 @@ static GimpValueArray * psd_save             (GimpProcedure        *procedure,
 G_DEFINE_TYPE (Psd, psd, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PSD_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -88,6 +89,7 @@ psd_class_init (PsdClass *klass)
 
   plug_in_class->query_procedures = psd_query_procedures;
   plug_in_class->create_procedure = psd_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -240,7 +242,6 @@ psd_load (GimpProcedure        *procedure,
   GimpMetadata   *metadata;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)
@@ -305,7 +306,6 @@ psd_load_thumb (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_thumbnail_image (file, &width, &height, &error);
@@ -344,7 +344,6 @@ psd_save (GimpProcedure        *procedure,
   GimpExportReturn       export = GIMP_EXPORT_IGNORE;
   GError                *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)

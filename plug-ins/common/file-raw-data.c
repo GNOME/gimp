@@ -205,6 +205,7 @@ static void  file_raw_scale_entry_update_int (GimpLabelSpin        *entry,
 G_DEFINE_TYPE (Raw, raw, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (RAW_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static RawConfig *runtime             = NULL;
@@ -221,6 +222,7 @@ raw_class_init (RawClass *klass)
 
   plug_in_class->query_procedures = raw_query_procedures;
   plug_in_class->create_procedure = raw_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -357,7 +359,6 @@ raw_load (GimpProcedure        *procedure,
   GimpImage         *image  = NULL;
   GError            *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   is_hgt = (! strcmp (gimp_procedure_get_name (procedure), LOAD_HGT_PROC));
@@ -561,7 +562,6 @@ raw_save (GimpProcedure        *procedure,
   RawType              image_type;
   GError              *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

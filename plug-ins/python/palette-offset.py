@@ -23,11 +23,9 @@ from gi.repository import GLib
 from gi.repository import Gio
 import sys
 
-import gettext
-textdomain = "gimp30-python"
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
-gettext.textdomain(textdomain)
-_ = gettext.gettext
+def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
+
 
 class PaletteOffset (Gimp.PlugIn):
     ## Parameter: run-mode ##
@@ -79,6 +77,9 @@ class PaletteOffset (Gimp.PlugIn):
         self.new_palette = new_palette
 
     ## GimpPlugIn virtual methods ##
+    def do_set_i18n(self, procname):
+        return True, 'gimp30-python', None
+
     def do_query_procedures(self):
         return [ "python-fu-palette-offset" ]
 

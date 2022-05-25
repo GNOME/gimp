@@ -81,6 +81,7 @@ static GimpValueArray * script_fu_refresh_proc     (GimpProcedure        *proced
 G_DEFINE_TYPE (ScriptFu, script_fu, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (SCRIPT_FU_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -90,6 +91,7 @@ script_fu_class_init (ScriptFuClass *klass)
 
   plug_in_class->query_procedures = script_fu_query_procedures;
   plug_in_class->create_procedure = script_fu_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -101,9 +103,6 @@ static GList *
 script_fu_query_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
-
-  gimp_plug_in_set_translation_domain (plug_in,
-                                       GETTEXT_PACKAGE "-script-fu", NULL);
 
   list = g_list_append (list, g_strdup ("extension-script-fu"));
   list = g_list_append (list, g_strdup ("plug-in-script-fu-console"));
@@ -361,8 +360,6 @@ script_fu_run_init (GimpProcedure *procedure,
   GimpPlugIn     *plug_in     = gimp_procedure_get_plug_in (procedure);
   const gchar    *name        = gimp_procedure_get_name (procedure);
   GList          *path;
-
-  INIT_I18N();
 
   path = script_fu_search_path ();
 

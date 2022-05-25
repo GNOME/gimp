@@ -31,11 +31,9 @@ from gi.repository import Gio
 import time
 import sys
 
-import gettext
-textdomain = "gimp30-python"
-gettext.bindtextdomain(textdomain, Gimp.locale_directory())
-gettext.textdomain(textdomain)
-_ = gettext.gettext
+def N_(message): return message
+def _(message): return GLib.dgettext(None, message)
+
 
 w3c_template = """background-image: linear-gradient(top, %s);\n"""
 moz_template = """background-image: -moz-linear-gradient(center top, %s);\n"""
@@ -151,6 +149,9 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
     }
 
     ## GimpPlugIn virtual methods ##
+    def do_set_i18n(self, procname):
+        return True, 'gimp30-python', None
+
     def do_query_procedures(self):
         return [ 'gradient-save-as-css' ]
 

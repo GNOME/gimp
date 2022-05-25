@@ -294,6 +294,7 @@ static void ifs_compose_response          (GtkWidget *widget,
 G_DEFINE_TYPE (Ifs, ifs, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (IFS_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static IfsDialog        *ifsD       = NULL;
@@ -338,6 +339,7 @@ ifs_class_init (IfsClass *klass)
 
   plug_in_class->query_procedures = ifs_query_procedures;
   plug_in_class->create_procedure = ifs_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -405,7 +407,6 @@ ifs_run (GimpProcedure        *procedure,
   GimpParasite *parasite = NULL;
   gboolean      found_parasite = FALSE;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

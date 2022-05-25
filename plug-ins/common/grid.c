@@ -114,6 +114,7 @@ static gint             dialog                (GimpImage            *image,
 G_DEFINE_TYPE (Grid, grid, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (GRID_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static gint sx1, sy1, sx2, sy2;
@@ -137,6 +138,7 @@ grid_class_init (GridClass *klass)
 
   plug_in_class->query_procedures = grid_query_procedures;
   plug_in_class->create_procedure = grid_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -271,7 +273,6 @@ grid_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

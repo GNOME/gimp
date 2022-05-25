@@ -80,6 +80,7 @@ static void       wavelet_scale_entry_update_int (GimpLabelSpin        *entry,
 G_DEFINE_TYPE (Wavelet, wavelet, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (WAVELET_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static WaveletDecomposeParams wavelet_params =
@@ -97,6 +98,7 @@ wavelet_class_init (WaveletClass *klass)
 
   plug_in_class->query_procedures = wavelet_query_procedures;
   plug_in_class->create_procedure = wavelet_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -178,7 +180,6 @@ wavelet_run (GimpProcedure        *procedure,
   GimpLayerMode  grain_merge_mode   = GIMP_LAYER_MODE_GRAIN_MERGE;
   gint           id;
 
-  INIT_I18N();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

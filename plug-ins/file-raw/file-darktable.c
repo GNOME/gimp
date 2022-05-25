@@ -82,6 +82,7 @@ static GimpImage      * load_thumbnail_image       (GFile                *file,
 G_DEFINE_TYPE (Darktable, darktable, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DARKTABLE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -91,6 +92,7 @@ darktable_class_init (DarktableClass *klass)
 
   plug_in_class->init_procedures  = darktable_init_procedures;
   plug_in_class->create_procedure = darktable_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -310,8 +312,6 @@ darktable_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error = NULL;
 
-  INIT_I18N ();
-
   image = load_image (file, run_mode, &error);
 
   if (! image)
@@ -340,8 +340,6 @@ darktable_load_thumb (GimpProcedure        *procedure,
   gint            height;
   GimpImage      *image = NULL;
   GError         *error = NULL;
-
-  INIT_I18N ();
 
   width  = size;
   height = size;

@@ -76,6 +76,7 @@ static void             check_drawables           (void);
 G_DEFINE_TYPE (Lighting, lighting, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (LIGHTING_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -85,6 +86,7 @@ lighting_class_init (LightingClass *klass)
 
   plug_in_class->query_procedures = lighting_query_procedures;
   plug_in_class->create_procedure = lighting_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -392,7 +394,6 @@ lighting_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

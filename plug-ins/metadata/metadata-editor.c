@@ -410,6 +410,7 @@ cell_edited_callback_combo                      (GtkCellRendererCombo *cell,
 G_DEFINE_TYPE (Metadata, metadata, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (METADATA_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static int last_gpsaltsys_sel;
@@ -433,6 +434,7 @@ metadata_class_init (MetadataClass *klass)
 
   plug_in_class->query_procedures = metadata_query_procedures;
   plug_in_class->create_procedure = metadata_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -501,8 +503,6 @@ metadata_run (GimpProcedure        *procedure,
   GimpImage    *image;
   GimpMetadata *metadata;
   GError       *error  = NULL;
-
-  INIT_I18N ();
 
   gimp_ui_init (PLUG_IN_BINARY);
 

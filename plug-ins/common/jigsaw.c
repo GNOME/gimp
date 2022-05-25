@@ -346,6 +346,7 @@ static void check_config           (gint width, gint height);
 G_DEFINE_TYPE (Jigsaw, jigsaw, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (JIGSAW_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static config_t config =
@@ -367,6 +368,7 @@ jigsaw_class_init (JigsawClass *klass)
 
   plug_in_class->query_procedures = jigsaw_query_procedures;
   plug_in_class->create_procedure = jigsaw_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -455,7 +457,6 @@ jigsaw_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)

@@ -62,6 +62,7 @@ static GimpValueArray * placeholder_load             (GimpProcedure        *proc
 G_DEFINE_TYPE (Placeholder, placeholder, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PLACEHOLDER_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -71,6 +72,7 @@ placeholder_class_init (PlaceholderClass *klass)
 
   plug_in_class->query_procedures = placeholder_query_procedures;
   plug_in_class->create_procedure = placeholder_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -165,8 +167,6 @@ placeholder_load (GimpProcedure        *procedure,
 {
   const FileFormat *format = run_data;
   GError           *error = NULL;
-
-  INIT_I18N ();
 
   g_set_error (&error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
                _("There is no RAW loader installed to open '%s' files.\n"

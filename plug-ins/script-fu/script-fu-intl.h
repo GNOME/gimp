@@ -28,16 +28,18 @@
 #include <glib/gi18n.h>
 
 
-#ifndef HAVE_BIND_TEXTDOMAIN_CODESET
-#    define bind_textdomain_codeset(Domain, Codeset) (Domain)
-#endif
+#define DEFINE_STD_SET_I18N                                          \
+static gboolean                                                      \
+set_i18n (GimpPlugIn   *plug_in,                                     \
+          const gchar  *procedure_name,                              \
+          gchar       **gettext_domain,                              \
+          gchar       **catalog_dir)                                 \
+{                                                                    \
+  *gettext_domain = g_strdup (GETTEXT_PACKAGE"-script-fu");       \
+  return TRUE;                                                       \
+};
 
-#define INIT_I18N()	G_STMT_START{			          \
-  bindtextdomain (GETTEXT_PACKAGE"-script-fu",                    \
-                  gimp_locale_directory ());                      \
-  bind_textdomain_codeset (GETTEXT_PACKAGE"-script-fu", "UTF-8"); \
-  textdomain (GETTEXT_PACKAGE"-script-fu");                       \
-}G_STMT_END
+#define STD_SET_I18N set_i18n
 
 
 #endif /* __SCRIPT_FU_INTL_H__ */

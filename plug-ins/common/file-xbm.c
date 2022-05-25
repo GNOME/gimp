@@ -114,6 +114,7 @@ static gboolean         print                (GOutputStream        *output,
 G_DEFINE_TYPE (Xbm, xbm, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (XBM_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -123,6 +124,7 @@ xbm_class_init (XbmClass *klass)
 
   plug_in_class->query_procedures = xbm_query_procedures;
   plug_in_class->create_procedure = xbm_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -276,7 +278,6 @@ xbm_load (GimpProcedure        *procedure,
   GimpImage         *image;
   GError            *error = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = load_image (file, &error);
@@ -341,7 +342,6 @@ xbm_save (GimpProcedure        *procedure,
   gchar               *mask_basename = NULL;
   GError              *error         = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

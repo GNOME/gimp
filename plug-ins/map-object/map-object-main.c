@@ -76,6 +76,7 @@ static void             check_drawables      (GimpDrawable         *drawable);
 G_DEFINE_TYPE (Map, map, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (MAP_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
@@ -85,6 +86,7 @@ map_class_init (MapClass *klass)
 
   plug_in_class->query_procedures = map_query_procedures;
   plug_in_class->create_procedure = map_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -482,7 +484,6 @@ map_run (GimpProcedure        *procedure,
   GimpDrawable *drawable;
   gint          i;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = _image;

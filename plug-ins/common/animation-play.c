@@ -162,6 +162,7 @@ static gboolean    is_ms_tag                 (const gchar     *str,
 G_DEFINE_TYPE (Play, play, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (PLAY_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /* Global widgets'n'stuff */
@@ -217,6 +218,7 @@ play_class_init (PlayClass *klass)
 
   plug_in_class->query_procedures = play_query_procedures;
   plug_in_class->create_procedure = play_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -275,7 +277,6 @@ play_run (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   image = _image;

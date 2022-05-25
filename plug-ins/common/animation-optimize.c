@@ -115,6 +115,7 @@ static  gboolean        is_ms_tag                 (const gchar *str,
 G_DEFINE_TYPE (Optimize, optimize, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (OPTIMIZE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 /* Global widgets'n'stuff */
@@ -134,6 +135,7 @@ optimize_class_init (OptimizeClass *klass)
 
   plug_in_class->query_procedures = optimize_query_procedures;
   plug_in_class->create_procedure = optimize_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -316,7 +318,6 @@ optimize_run (GimpProcedure        *procedure,
   const gchar    *name      = gimp_procedure_get_name (procedure);
   gboolean        diff_only = FALSE;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (! strcmp (name, OPTIMIZE_PROC))

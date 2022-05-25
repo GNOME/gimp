@@ -76,6 +76,7 @@ static GimpValueArray *jpegxl_save (GimpProcedure        *procedure,
 G_DEFINE_TYPE (JpegXL, jpegxl, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (JPEGXL_TYPE)
+DEFINE_STD_SET_I18N
 
 static void
 jpegxl_class_init (JpegXLClass *klass)
@@ -84,6 +85,7 @@ jpegxl_class_init (JpegXLClass *klass)
 
   plug_in_class->query_procedures = jpegxl_query_procedures;
   plug_in_class->create_procedure = jpegxl_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -642,7 +644,6 @@ jpegxl_load (GimpProcedure        *procedure,
   GimpImage      *image;
   GError         *error             = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   switch (run_mode)
@@ -1165,7 +1166,6 @@ jpegxl_save (GimpProcedure        *procedure,
   GimpExportReturn       export = GIMP_EXPORT_CANCEL;
   GError                *error  = NULL;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);

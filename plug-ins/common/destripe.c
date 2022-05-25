@@ -90,6 +90,7 @@ static void       destripe_scale_entry_update_int (GimpLabelSpin        *entry,
 G_DEFINE_TYPE (Destripe, destripe, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (DESTRIPE_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static DestripeValues vals =
@@ -107,6 +108,7 @@ destripe_class_init (DestripeClass *klass)
 
   plug_in_class->query_procedures = destripe_query_procedures;
   plug_in_class->create_procedure = destripe_create_procedure;
+  plug_in_class->set_i18n         = STD_SET_I18N;
 }
 
 static void
@@ -171,7 +173,6 @@ destripe_run (GimpProcedure        *procedure,
 {
   GimpDrawable *drawable;
 
-  INIT_I18N ();
   gegl_init (NULL, NULL);
 
   if (n_drawables != 1)
