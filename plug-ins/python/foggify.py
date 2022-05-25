@@ -26,8 +26,10 @@ import time
 import sys
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 def foggify(procedure, run_mode, image, n_drawables, drawables, args, data):
     config = procedure.create_config()
@@ -126,9 +128,6 @@ class Foggify (Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
-
         return [ 'python-fu-foggify' ]
 
     def do_create_procedure(self, name):
@@ -138,10 +137,10 @@ class Foggify (Gimp.PlugIn):
         procedure.set_image_types("RGB*, GRAY*");
         procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE |
                                         Gimp.ProcedureSensitivityMask.DRAWABLES)
-        procedure.set_documentation (N_("Add a layer of fog"),
-                                     "Adds a layer of fog to the image.",
+        procedure.set_documentation (_("Add a layer of fog"),
+                                     _("Adds a layer of fog to the image."),
                                      name)
-        procedure.set_menu_label(N_("_Fog..."))
+        procedure.set_menu_label(_("_Fog..."))
         procedure.set_attribution("James Henstridge",
                                   "James Henstridge",
                                   "1999,2007")

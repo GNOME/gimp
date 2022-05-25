@@ -29,8 +29,10 @@ from gi.repository import GLib
 from gi.repository import Gio
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 escape_table = {
     '&': '&amp;',
@@ -299,8 +301,6 @@ class ColorXhtml(Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
         return [ 'file-colorxhtml-save' ]
 
     def do_create_procedure(self, name):
@@ -311,10 +311,10 @@ class ColorXhtml(Gimp.PlugIn):
                                            save_colorxhtml, None)
             procedure.set_image_types("RGB")
             procedure.set_documentation (
-                N_("Save as colored HTML text"),
+                _("Save as colored HTML text"),
                 "Saves the image as colored XHTML text (based on Perl version by Marc Lehmann)",
                 name)
-            procedure.set_menu_label(N_("Colored HTML text"))
+            procedure.set_menu_label(_("Colored HTML text"))
             procedure.set_attribution("Manish Singh and Carol Spears",
                                       "(c) GPL V3.0 or later",
                                       "2003")

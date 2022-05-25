@@ -22,8 +22,10 @@ from gi.repository import Gio
 import sys
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 def make_gradient(palette, num_segments, num_colors):
     gradient = Gimp.gradient_new(palette)
@@ -112,8 +114,8 @@ class PaletteToGradient (Gimp.PlugIn):
     ## Properties: return values ##
     @GObject.Property(type=str,
                       default="",
-                      nick="Name of the newly created gradient",
-                      blurb="Name of the newly created gradient")
+                      nick=_("Name of the newly created gradient"),
+                      blurb=_("Name of the newly created gradient"))
     def new_gradient(self):
         """Read-write integer property."""
         return self.new_gradient
@@ -124,10 +126,6 @@ class PaletteToGradient (Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        # Localization
-        self.set_translation_domain ("gimp30-python",
-                                     Gio.file_new_for_path(Gimp.locale_directory()))
-
         return ['python-fu-palette-to-gradient',
                 'python-fu-palette-to-gradient-repeating']
 
@@ -136,14 +134,14 @@ class PaletteToGradient (Gimp.PlugIn):
                                        Gimp.PDBProcType.PLUGIN,
                                        run, None)
         if name == 'python-fu-palette-to-gradient':
-            procedure.set_menu_label(N_("Palette to _Gradient"))
-            procedure.set_documentation(N_("Create a gradient using colors from the palette"),
-                                        "Create a new gradient using colors from the palette.",
+            procedure.set_menu_label(_("Palette to _Gradient"))
+            procedure.set_documentation(_("Create a gradient using colors from the palette"),
+                                        _("Create a new gradient using colors from the palette."),
                                         "")
         elif name == 'python-fu-palette-to-gradient-repeating':
-            procedure.set_menu_label(N_("Palette to _Repeating Gradient"))
-            procedure.set_documentation(N_("Create a repeating gradient using colors from the palette"),
-                                        "Create a new repeating gradient using colors from the palette.",
+            procedure.set_menu_label(_("Palette to _Repeating Gradient"))
+            procedure.set_documentation(_("Create a repeating gradient using colors from the palette"),
+                                        _("Create a new repeating gradient using colors from the palette."),
                                         "")
         else:
             procedure = None

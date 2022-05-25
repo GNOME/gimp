@@ -454,9 +454,6 @@ def load_ora(procedure, run_mode, file, args, data):
 class FileOpenRaster (Gimp.PlugIn):
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
-
         return [ 'file-openraster-load-thumb',
                  'file-openraster-load',
                  'file-openraster-save' ]

@@ -24,8 +24,10 @@ from gi.repository import Gio
 import sys
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 class PaletteOffset (Gimp.PlugIn):
     ## Parameter: run-mode ##
@@ -67,8 +69,8 @@ class PaletteOffset (Gimp.PlugIn):
     ## Return: new-palette ##
     @GObject.Property(type=str,
                       default=None,
-                      nick="Name of the edited palette",
-                      blurb="Name of the newly created palette if read-only or the input palette otherwise")
+                      nick=_("Name of the edited palette"),
+                      blurb=_("Name of the newly created palette if read-only or the input palette otherwise"))
     def new_palette(self):
         return self.new_palette
 
@@ -78,10 +80,6 @@ class PaletteOffset (Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        # Localization
-        self.set_translation_domain ("gimp30-python",
-                                     Gio.file_new_for_path(Gimp.locale_directory()))
-
         return [ "python-fu-palette-offset" ]
 
     def do_create_procedure(self, name):
@@ -89,8 +87,8 @@ class PaletteOffset (Gimp.PlugIn):
                                        Gimp.PDBProcType.PLUGIN,
                                        self.run, None)
         if name == 'python-fu-palette-offset':
-            procedure.set_menu_label(N_("_Offset Palette..."))
-            procedure.set_documentation(N_("Offset the colors in a palette"),
+            procedure.set_menu_label(_("_Offset Palette..."))
+            procedure.set_documentation(_("Offset the colors in a palette"),
                                         "palette_offset (palette, amount) -> modified_palette",
                                         "")
             procedure.set_attribution("Joao S. O. Bueno Calligaris, Carol Spears",

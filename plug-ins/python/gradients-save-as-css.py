@@ -32,8 +32,10 @@ import time
 import sys
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 w3c_template = """background-image: linear-gradient(top, %s);\n"""
 moz_template = """background-image: -moz-linear-gradient(center top, %s);\n"""
@@ -136,8 +138,8 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
    ## Parameters ##
     __gproperties__ = {
         "run-mode": (Gimp.RunMode,
-                     "Run mode",
-                     "The run mode",
+                     _("Run mode"),
+                     _("The run mode"),
                      Gimp.RunMode.NONINTERACTIVE,
                      GObject.ParamFlags.READWRITE),
         "gradient": (str,
@@ -150,8 +152,6 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
         return [ 'gradient-save-as-css' ]
 
     def do_create_procedure(self, name):
@@ -161,8 +161,8 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                                            Gimp.PDBProcType.PLUGIN,
                                            gradient_css_save, None)
             procedure.set_image_types("*")
-            procedure.set_documentation ("Creates a new palette from a given gradient",
-                                         "palette_from_gradient (gradient, number, segment_colors) -> None",
+            procedure.set_documentation (_("Creates a new palette from a given gradient"),
+                                         _("palette_from_gradient (gradient, number, segment_colors) -> None"),
                                          name)
             procedure.set_menu_label("Save as CSS...")
             procedure.set_attribution("Joao S. O. Bueno",

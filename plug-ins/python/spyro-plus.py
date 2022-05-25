@@ -31,8 +31,10 @@ import time
 import sys
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 from math import pi, sin, cos, atan, atan2, fmod, radians, sqrt
 import gettext
@@ -2209,82 +2211,78 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
     ## Parameters ##
     __gproperties__ = {
         "curve_type" : (int,
-                        "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }",
-                        "The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }",
+                        _("The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
+                        _("The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"),
                         0, 3, 0,
                         GObject.ParamFlags.READWRITE),
         "shape": (int,
-                  "Shape of fixed gear",
-                  "Shape of fixed gear",
+                  _("Shape of fixed gear"),
+                  _("Shape of fixed gear"),
                   0, GLib.MAXINT, 0,
                   GObject.ParamFlags.READWRITE),
         "sides": (int,
-                  "Number of sides of fixed gear (3 or greater). Only used by some shapes.",
-                  "Number of sides of fixed gear (3 or greater). Only used by some shapes.",
+                  _("Number of sides of fixed gear (3 or greater). Only used by some shapes."),
+                  _("Number of sides of fixed gear (3 or greater). Only used by some shapes."),
                   3, GLib.MAXINT, 3,
                   GObject.ParamFlags.READWRITE),
         "morph": (float,
-                  "Morph shape of fixed gear, between 0 and 1. Only used by some shapes.",
-                  "Morph shape of fixed gear, between 0 and 1. Only used by some shapes.",
+                  _("Morph shape of fixed gear, between 0 and 1. Only used by some shapes."),
+                  _("Morph shape of fixed gear, between 0 and 1. Only used by some shapes."),
                   0.0, 1.0, 0.0,
                   GObject.ParamFlags.READWRITE),
         "fixed_teeth": (int,
-                        "Number of teeth for fixed gear",
-                        "Number of teeth for fixed gear",
+                        _("Number of teeth for fixed gear"),
+                        _("Number of teeth for fixed gear"),
                         0, GLib.MAXINT, 96,
                         GObject.ParamFlags.READWRITE),
         "moving_teeth": (int,
-                         "Number of teeth for moving gear",
-                         "Number of teeth for moving gear",
+                         _("Number of teeth for moving gear"),
+                         _("Number of teeth for moving gear"),
                          0, GLib.MAXINT, 36,
                          GObject.ParamFlags.READWRITE),
         "hole_percent": (float,
-                         "Location of hole in moving gear in percent, where 100 means that "
-                         "the hole is at the edge of the gear, and 0 means the hole is at the center",
-                         "Location of hole in moving gear in percent, where 100 means that "
-                         "the hole is at the edge of the gear, and 0 means the hole is at the center",
+                         _("Location of hole in moving gear in percent, where 100 means that "
+                         "the hole is at the edge of the gear, and 0 means the hole is at the center"),
+                         _("Location of hole in moving gear in percent, where 100 means that "
+                         "the hole is at the edge of the gear, and 0 means the hole is at the center"),
                          0.0, 100.0, 100.0,
                          GObject.ParamFlags.READWRITE),
         "margin": (int,
-                   "Margin from selection, in pixels",
-                   "Margin from selection, in pixels",
+                   _("Margin from selection, in pixels"),
+                   _("Margin from selection, in pixels"),
                    0, GLib.MAXINT, 0,
                    GObject.ParamFlags.READWRITE),
         "equal_w_h": (bool,
-                      "Make height and width equal",
-                      "Make height and width equal",
+                      _("Make height and width equal"),
+                      _("Make height and width equal"),
                       False,
                       GObject.ParamFlags.READWRITE),
         "pattern_rotation": (float,
-                             "Pattern rotation, in degrees",
-                             "Pattern rotation, in degrees",
+                             _("Pattern rotation, in degrees"),
+                             _("Pattern rotation, in degrees"),
                              -360.0, 360.0, 0.0,
                              GObject.ParamFlags.READWRITE),
         "shape_rotation": (float,
-                           "Shape rotation of fixed gear, in degrees",
-                           "Shape rotation of fixed gear, in degrees",
+                           _("Shape rotation of fixed gear, in degrees"),
+                           _("Shape rotation of fixed gear, in degrees"),
                            -360.0, 360.0, 0.0,
                            GObject.ParamFlags.READWRITE),
         "tool": (int,
-                 "Tool to use for drawing the pattern.",
-                 "Tool to use for drawing the pattern.",
+                 _("Tool to use for drawing the pattern."),
+                 _("Tool to use for drawing the pattern."),
                  0, GLib.MAXINT, 1,
                  GObject.ParamFlags.READWRITE),
         "long_gradient" : (bool,
-                           "Whether to apply a long gradient to match the length of the pattern. "
-                           "Only applicable to some of the tools.",
-                           "Whether to apply a long gradient to match the length of the pattern. "
-                           "Only applicable to some of the tools.",
+                           _("Whether to apply a long gradient to match the length of the pattern. "
+                           "Only applicable to some of the tools."),
+                           _("Whether to apply a long gradient to match the length of the pattern. "
+                           "Only applicable to some of the tools."),
                            False,
                            GObject.ParamFlags.READWRITE),
     }
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        # Localization
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
-
         return [PROC_NAME]
 
     def do_create_procedure(self, name):
@@ -2294,11 +2292,11 @@ class SpyrogimpPlusPlugin(Gimp.PlugIn):
                                                 self.plug_in_spyrogimp, None)
             procedure.set_image_types("*")
             procedure.set_sensitivity_mask (Gimp.ProcedureSensitivityMask.DRAWABLE)
-            procedure.set_documentation (N_("Draw spyrographs using current tool settings and selection."),
-                                         "Uses current tool settings to draw Spyrograph patterns. "
-                                         "The size and location of the pattern is based on the current selection.",
+            procedure.set_documentation (_("Draw spyrographs using current tool settings and selection."),
+                                         _("Uses current tool settings to draw Spyrograph patterns. "
+                                         "The size and location of the pattern is based on the current selection."),
                                          name)
-            procedure.set_menu_label(N_("Spyrogimp..."))
+            procedure.set_menu_label(_("Spyrogimp..."))
             procedure.set_attribution("Elad Shahar",
                                       "Elad Shahar",
                                       "2018")

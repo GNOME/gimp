@@ -51,9 +51,10 @@ gi.require_version('Gtk', '3.0')
 from gi.repository import Gtk
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
-
 
 class StringEnum:
     """
@@ -335,8 +336,6 @@ class HistogramExport(Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
         return ['histogram-export']
 
     def do_create_procedure(self, name):
@@ -348,10 +347,10 @@ class HistogramExport(Gimp.PlugIn):
 
             procedure.set_image_types("*")
             procedure.set_documentation (
-                N_("Exports the image histogram to a text file (CSV)"),
+                _("Exports the image histogram to a text file (CSV)"),
                 globals()["__doc__"],  # This includes the docstring, on the top of the file
                 name)
-            procedure.set_menu_label(N_("_Export histogram..."))
+            procedure.set_menu_label(_("_Export histogram..."))
             procedure.set_attribution("João S. O. Bueno",
                                       "(c) GPL V3.0 or later",
                                       "2014")

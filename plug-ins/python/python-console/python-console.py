@@ -32,8 +32,10 @@ import pyconsole
 #import gimpshelf, gimpui, pyconsole
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
 
 PROC_NAME = 'python-fu-console'
 
@@ -331,7 +333,7 @@ class PythonConsole (Gimp.PlugIn):
     ## Properties: parameters ##
     @GObject.Property(type=Gimp.RunMode,
                       default=Gimp.RunMode.NONINTERACTIVE,
-                      nick="Run mode", blurb="The run mode")
+                      nick=_("Run mode"), blurb=_("The run mode"))
     def run_mode(self):
         """Read-write integer property."""
         return self.runmode
@@ -342,10 +344,6 @@ class PythonConsole (Gimp.PlugIn):
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        # Localization
-        self.set_translation_domain ("gimp30-python",
-                                     Gio.file_new_for_path(Gimp.locale_directory()))
-
         return [ PROC_NAME ]
 
     def do_create_procedure(self, name):
@@ -353,9 +351,9 @@ class PythonConsole (Gimp.PlugIn):
             procedure = Gimp.Procedure.new(self, name,
                                            Gimp.PDBProcType.PLUGIN,
                                            run, None)
-            procedure.set_menu_label(N_("Python _Console"))
-            procedure.set_documentation(N_("Interactive GIMP Python interpreter"),
-                                        "Type in commands and see results",
+            procedure.set_menu_label(_("Python _Console"))
+            procedure.set_documentation(_("Interactive GIMP Python interpreter"),
+                                        _("Type in commands and see results"),
                                         "")
             procedure.set_attribution("James Henstridge",
                                       "James Henstridge",

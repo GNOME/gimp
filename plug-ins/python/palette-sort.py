@@ -34,9 +34,10 @@ from gi.repository import Gtk
 import sys
 
 import gettext
+textdomain = "gimp30-python"
+gettext.bindtextdomain(textdomain, Gimp.locale_directory())
+gettext.textdomain(textdomain)
 _ = gettext.gettext
-def N_(message): return message
-
 
 AVAILABLE_CHANNELS = (_("Red"), _("Green"), _("Blue"),
                       _("Luma (Y)"),
@@ -330,15 +331,15 @@ class PaletteSort (Gimp.PlugIn):
     ## Parameters ##
     __gproperties__ = {
         "run-mode": (Gimp.RunMode,
-                     "Run mode",
-                     "The run mode",
+                     _("Run mode"),
+                     _("The run mode"),
                      Gimp.RunMode.NONINTERACTIVE,
                      GObject.ParamFlags.READWRITE),
         # TODO. originally was:   (PF_PALETTE, "palette",  _("Palette"), ""),
         # Should probably be of type Gimp.Palette .
         "palette": (str,
                     _("Palette"),
-                    "Palette",
+                    _("Palette"),
                     "",
                     GObject.ParamFlags.READWRITE),
         "selections": (int,
@@ -362,7 +363,7 @@ class PaletteSort (Gimp.PlugIn):
                      GObject.ParamFlags.READWRITE),
         "ascending1": (bool,
                        _("_Ascending"),
-                        "Ascending",
+                       _("Ascending"),
                        True,
                        GObject.ParamFlags.READWRITE),
         # TODO: was  (PF_OPTION,   "channel2",    _("Secondary Channel to s_ort"), 5,
@@ -374,12 +375,12 @@ class PaletteSort (Gimp.PlugIn):
                      GObject.ParamFlags.READWRITE),
         "ascending2": (bool,
                        _("_Ascending"),
-                       "Ascending",
+                       _("Ascending"),
                        True,
                        GObject.ParamFlags.READWRITE),
         "quantize": (float,
                      _("_Quantization"),
-                     "Quantization",
+                     _("Quantization"),
                      0.0, 1.0, 0.0,
                      GObject.ParamFlags.READWRITE),
         # TODO: was (PF_OPTION,  "pchannel",    _("_Partitioning channel"), 3, AVAILABLE_CHANNELS),
@@ -390,22 +391,20 @@ class PaletteSort (Gimp.PlugIn):
                      GObject.ParamFlags.READWRITE),
         "pquantize": (float,
                      _("Partition q_uantization"),
-                     "Partition quantization",
+                     _("Partition quantization"),
                      0.0, 1.0, 0.0,
                      GObject.ParamFlags.READWRITE),
 
         # Returned value
         "new_palette": (str,
                         _("Palette"),
-                        "Palette",
+                        _("Palette"),
                         "",
                         GObject.ParamFlags.READWRITE),
     }
 
     ## GimpPlugIn virtual methods ##
     def do_query_procedures(self):
-        self.set_translation_domain("gimp30-python",
-                                    Gio.file_new_for_path(Gimp.locale_directory()))
         return ["python-fu-palette-sort"]
 
     def do_create_procedure(self, name):
@@ -414,12 +413,12 @@ class PaletteSort (Gimp.PlugIn):
             procedure = Gimp.Procedure.new(self, name,
                                            Gimp.PDBProcType.PLUGIN,
                                            self.run, None)
-            procedure.set_menu_label(N_("_Sort Palette..."))
+            procedure.set_menu_label(_("_Sort Palette..."))
 
             # FIXME: Write humanly readable help -
             # See for reference: https://gitlab.gnome.org/GNOME/gimp/-/issues/4368#note_763460
             procedure.set_documentation(
-                N_("Sort the colors in a palette"),
+                _("Sort the colors in a palette"),
                 dedent("""\
                     palette_sort (palette, selection, slice_expr, channel,
                     channel2, quantize, ascending, pchannel, pquantize) -> new_palette
