@@ -37,6 +37,11 @@ void            _gimp_plug_in_read_expect_msg   (GimpPlugIn      *plug_in,
                                                  GimpWireMessage *msg,
                                                  gint             type);
 
+gboolean        _gimp_plug_in_set_i18n          (GimpPlugIn      *plug_in,
+                                                 const gchar     *procedure_name,
+                                                 gchar          **gettext_domain,
+                                                 gchar          **catalog_dir);
+
 GimpProcedure * _gimp_plug_in_create_procedure  (GimpPlugIn      *plug_in,
                                                  const gchar     *procedure_name);
 

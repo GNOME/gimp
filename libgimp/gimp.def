@@ -704,7 +704,6 @@ EXPORTS
 	gimp_plug_in_remove_temp_procedure
 	gimp_plug_in_set_help_domain
 	gimp_plug_in_set_pdb_error_handler
-	gimp_plug_in_set_translation_domain
 	gimp_procedure_add_argument
 	gimp_procedure_add_argument_from_property
 	gimp_procedure_add_aux_argument

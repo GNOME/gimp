@@ -22,6 +22,7 @@
 #include "config.h"
 
 #include <errno.h>
+#include <libintl.h>
 #include <string.h>
 
 #include "gimp.h"
@@ -166,6 +167,11 @@ static void       gimp_plug_in_get_property      (GObject         *object,
                                                   GValue          *value,
                                                   GParamSpec      *pspec);
 
+static gboolean   gimp_plug_in_real_set_i18n     (GimpPlugIn      *plug_in,
+                                                  const gchar     *procedure_name,
+                                                  gchar          **gettext_domain,
+                                                  gchar          **catalog_dir);
+
 static void       gimp_plug_in_register          (GimpPlugIn      *plug_in,
                                                   GList           *procedures);
 
@@ -203,6 +209,8 @@ static void       gimp_plug_in_destroy_hashes    (GimpPlugIn      *plug_in);
 static void       gimp_plug_in_destroy_proxies   (GHashTable      *hash_table,
                                                   gboolean         destroy_all);
 
+static void       gimp_plug_in_init_i18n         (GimpPlugIn      *plug_in);
+
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpPlugIn, gimp_plug_in, G_TYPE_OBJECT)
 
@@ -221,6 +229,8 @@ gimp_plug_in_class_init (GimpPlugInClass *klass)
   object_class->finalize     = gimp_plug_in_finalize;
   object_class->set_property = gimp_plug_in_set_property;
   object_class->get_property = gimp_plug_in_get_property;
+
+  klass->set_i18n            = gimp_plug_in_real_set_i18n;
 
   /**
    * GimpPlugIn:read-channel:
@@ -373,45 +383,21 @@ gimp_plug_in_get_property (GObject    *object,
     }
 }
 
+static gboolean
+gimp_plug_in_real_set_i18n (GimpPlugIn   *plug_in,
+                            const gchar  *procedure_name,
+                            gchar       **gettext_domain,
+                            gchar       **catalog_dir)
+{
+  /* Default to enabling localization by gettext. It will have the good
+   * side-effect of warning plug-in developers of the existence of the
+   * ability through stderr if the catalog directory is missing.
+   */
+  return TRUE;
+}
+
 
 /*  public functions  */
-
-/**
- * gimp_plug_in_set_translation_domain:
- * @plug_in:     A #GimpPlugIn.
- * @domain_name: The name of the textdomain (must be unique).
- * @domain_path: (nullable): A file pointing to the compiled message catalog
- *               (may be %NULL).
- *
- * Sets a textdomain for localisation for the @plug_in.
- *
- * This function adds a textdomain to the list of domains Gimp
- * searches for strings when translating its menu entries. There is no
- * need to call this function for plug-ins that have their strings
- * included in the 'gimp-std-plugins' domain as that is used by
- * default. If the compiled message catalog is not in the standard
- * location, you may specify an absolute path to another
- * location.
- *
- * This function can only be called in the
- * [vfunc@PlugIn.query_procedures] function of a plug-in.
- *
- * Since: 3.0
- **/
-void
-gimp_plug_in_set_translation_domain (GimpPlugIn  *plug_in,
-                                     const gchar *domain_name,
-                                     GFile       *domain_path)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-  g_return_if_fail (domain_name != NULL);
-  g_return_if_fail (domain_path == NULL || G_IS_FILE (domain_path));
-
-  g_free (plug_in->priv->translation_domain_name);
-  plug_in->priv->translation_domain_name = g_strdup (domain_name);
-
-  g_set_object (&plug_in->priv->translation_domain_path, domain_path);
-}
 
 /**
  * gimp_plug_in_set_help_domain:
@@ -890,12 +876,132 @@ _gimp_plug_in_read_expect_msg (GimpPlugIn      *plug_in,
     }
 }
 
+gboolean
+_gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
+                        const gchar  *procedure_name,
+                        gchar       **gettext_domain,
+                        gchar       **catalog_dir)
+{
+  gboolean use_gettext;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), FALSE);
+  g_return_val_if_fail (gettext_domain && *gettext_domain == NULL, FALSE);
+  g_return_val_if_fail (catalog_dir && *catalog_dir == NULL, FALSE);
+
+  if (! plug_in->priv->translation_domain_path ||
+      ! plug_in->priv->translation_domain_name)
+    gimp_plug_in_init_i18n (plug_in);
+
+  if (! GIMP_PLUG_IN_GET_CLASS (plug_in)->set_i18n)
+    {
+      use_gettext = FALSE;
+    }
+  else
+    {
+      use_gettext = GIMP_PLUG_IN_GET_CLASS (plug_in)->set_i18n (plug_in,
+                                                                procedure_name,
+                                                                gettext_domain,
+                                                                catalog_dir);
+      if (use_gettext)
+        {
+          if (! (*gettext_domain))
+            *gettext_domain = g_strdup (plug_in->priv->translation_domain_name);
+
+          if (*catalog_dir)
+            {
+              if (g_path_is_absolute (*catalog_dir))
+                {
+                  g_printerr ("[%s] The catalog directory set by set_i18n() is not relative: %s\n",
+                              procedure_name, *catalog_dir);
+                  g_printerr ("[%s] Localization disabled\n", procedure_name);
+
+                  use_gettext = FALSE;
+                }
+              else
+                {
+                  gchar *rootdir   = g_path_get_dirname (gimp_get_progname ());
+                  GFile *root_file = g_file_new_for_path (rootdir);
+                  GFile *catalog_file;
+                  GFile *parent;
+
+                  catalog_file = g_file_resolve_relative_path (root_file, *catalog_dir);
+
+                  /* Verify that the catalog is a subdir of the plug-in folder.
+                   * We do not want to allow plug-ins to look outside their own
+                   * realm.
+                   */
+                  parent = g_file_dup (catalog_file);
+                  do
+                    {
+                      if (g_file_equal (parent, root_file))
+                        break;
+                      g_clear_object (&parent);
+                    }
+                  while ((parent = g_file_get_parent (parent)));
+
+                  if (parent == NULL)
+                    {
+                      g_printerr ("[%s] The catalog directory set by set_i18n() is not a subdirectory: %s\n",
+                                  procedure_name, *catalog_dir);
+                      g_printerr ("[%s] Localization disabled\n", procedure_name);
+
+                      use_gettext = FALSE;
+                    }
+
+                  g_free (rootdir);
+                  g_object_unref (root_file);
+                  g_clear_object (&parent);
+                  g_object_unref (catalog_file);
+                }
+            }
+          else
+            {
+              *catalog_dir = g_file_get_path (plug_in->priv->translation_domain_path);
+            }
+        }
+    }
+
+  if (use_gettext && ! g_file_test (*catalog_dir, G_FILE_TEST_IS_DIR))
+    {
+      g_printerr ("[%s] The catalog directory does not exist: %s\n",
+                  procedure_name, *catalog_dir);
+      g_printerr ("[%s] Override method set_i18n() for the plug-in to customize or disable localization.\n",
+                  procedure_name);
+      g_printerr ("[%s] Localization disabled\n", procedure_name);
+
+      use_gettext = FALSE;
+    }
+
+  if (! use_gettext)
+    {
+      g_clear_pointer (gettext_domain, g_free);
+      g_clear_pointer (catalog_dir, g_free);
+    }
+
+  return use_gettext;
+}
+
 GimpProcedure *
 _gimp_plug_in_create_procedure (GimpPlugIn  *plug_in,
                                 const gchar *procedure_name)
 {
+  gchar *gettext_domain = NULL;
+  gchar *catalog_dir    = NULL;
+
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
   g_return_val_if_fail (gimp_is_canonical_identifier (procedure_name), NULL);
+
+  if (_gimp_plug_in_set_i18n (plug_in, procedure_name, &gettext_domain, &catalog_dir))
+    {
+      bindtextdomain (gettext_domain, catalog_dir);
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+      bind_textdomain_codeset (gettext_domain, "UTF-8");
+#endif
+      textdomain (gettext_domain);
+
+      g_free (gettext_domain);
+      g_free (catalog_dir);
+    }
 
   if (GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure)
     return GIMP_PLUG_IN_GET_CLASS (plug_in)->create_procedure (plug_in,
@@ -931,12 +1037,6 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
     }
 
   g_list_free_full (procedures, g_free);
-
-  if (plug_in->priv->translation_domain_name)
-    {
-      _gimp_plug_in_domain_register (plug_in->priv->translation_domain_name,
-                                     plug_in->priv->translation_domain_path);
-    }
 
   if (plug_in->priv->help_domain_name)
     {
@@ -1216,7 +1316,22 @@ gimp_plug_in_proc_run_internal (GimpPlugIn    *plug_in,
                                 GPProcReturn  *proc_return)
 {
   GimpValueArray *arguments;
-  GimpValueArray *return_values = NULL;
+  GimpValueArray *return_values  = NULL;
+  gchar          *gettext_domain = NULL;
+  gchar          *catalog_dir    = NULL;
+
+  if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
+                              &gettext_domain, &catalog_dir))
+    {
+      bindtextdomain (gettext_domain, catalog_dir);
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+      bind_textdomain_codeset (gettext_domain, "UTF-8");
+#endif
+      textdomain (gettext_domain);
+
+      g_free (gettext_domain);
+      g_free (catalog_dir);
+    }
 
   gimp_plug_in_push_procedure (plug_in, procedure);
 
@@ -1492,4 +1607,28 @@ gimp_plug_in_destroy_proxies (GHashTable *hash_table,
           g_hash_table_iter_remove (&iter);
         }
     }
+}
+
+static void
+gimp_plug_in_init_i18n (GimpPlugIn *plug_in)
+{
+  gchar *rootdir      = g_path_get_dirname (gimp_get_progname ());
+  GFile *root_file    = g_file_new_for_path (rootdir);
+  GFile *catalog_file = NULL;
+
+  g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
+
+  /* Default domain name is the program directory name. */
+  g_free (plug_in->priv->translation_domain_name);
+  plug_in->priv->translation_domain_name = g_path_get_basename (rootdir);
+
+  /* Default catalog path is the locale/ directory under the root
+   * directory.
+   */
+  catalog_file = g_file_resolve_relative_path (root_file, "locale");
+  g_set_object (&plug_in->priv->translation_domain_path, catalog_file);
+
+  g_free (rootdir);
+  g_object_unref (root_file);
+  g_object_unref (catalog_file);
 }

@@ -127,6 +127,57 @@ struct _GimpPlugInClass
    */
   void             (* quit)             (GimpPlugIn  *plug_in);
 
+  /**
+   * GimpPlugInClass::set_i18n:
+   * @plug_in:        a #GimpPlugIn.
+   * @procedure_name: procedure name.
+   * @gettext_domain: (out) (nullable): Gettext domain. If %NULL, it
+   *                  defaults to the plug-in name as determined by the
+   *                  directory the binary is called from.
+   * @catalog_dir:    (out) (nullable): relative path to a subdirectory
+   *                  of the plug-in folder containing the compiled
+   *                  Gettext message catalogs. If %NULL, it defaults to
+   *                  "locale/".
+   *
+   * This method can be overridden by all plug-ins to customize
+   * internationalization of the plug-in.
+   *
+   * This method will be called before initializing, querying or running
+   * @procedure_name (respectively with [vfunc@PlugIn.init_procedures],
+   * [vfunc@PlugIn.query_procedures] or with the `run()` function set in
+   * `gimp_image_procedure_new()`).
+   *
+   * By default, GIMP plug-ins look up gettext compiled message catalogs
+   * in the subdirectory `locale/` under the plug-in folder (same folder
+   * as `gimp_get_progname()`) with a text domain equal to the plug-in
+   * name (regardless @procedure_name). It is unneeded to override this
+   * method if you follow this localization scheme.
+   *
+   * If you wish to disable localization or localize with another system,
+   * simply set the method to %NULL, or possibly implement this method
+   * to do something useful for your usage while returning %FALSE.
+   *
+   * If you wish to tweak the @gettext_domain or the @localedir, return
+   * %TRUE and allocate appropriate @gettext_domain and/or @localedir
+   * (these use the default if set %NULL).
+   *
+   * Note that @localedir must be a relative path, subdirectory of the
+   * directory of `gimp_get_progname()`.
+   *
+   * When localizing your plug-in this way, GIMP also binds
+   * @gettext_domain to the UTF-8 encoding.
+   *
+   * Returns: %TRUE if this plug-in will use Gettext localization. You
+   *          may return %FALSE if you wish to disable localization or
+   *          set it up differently.
+   *
+   * Since: 3.0
+   */
+  gboolean         (* set_i18n)         (GimpPlugIn   *plug_in,
+                                         const gchar  *procedure_name,
+                                         gchar       **gettext_domain,
+                                         gchar       **catalog_dir);
+
   /* Padding for future expansion */
   /*< private >*/
   void (* _gimp_reserved1) (void);
@@ -144,9 +195,6 @@ GQuark          gimp_plug_in_error_quark            (void);
 
 GType           gimp_plug_in_get_type               (void) G_GNUC_CONST;
 
-void            gimp_plug_in_set_translation_domain (GimpPlugIn    *plug_in,
-                                                     const gchar   *domain_name,
-                                                     GFile         *domain_path);
 void            gimp_plug_in_set_help_domain        (GimpPlugIn    *plug_in,
                                                      const gchar   *domain_name,
                                                      GFile         *domain_uri);
