@@ -28571,7 +28571,7 @@ msgstr "El manual d'usuari del GIMP no està instal·lat en el vostre idioma."
 
 #: ../app/widgets/gimphelp.c:803
 msgid "Read Selected _Language"
-msgstr "_Llegeix el llenguatge seleccionat"
+msgstr "_Llegeix en l'idioma seleccionat"
 
 #: ../app/widgets/gimphelp.c:807
 msgid "Available manuals..."
