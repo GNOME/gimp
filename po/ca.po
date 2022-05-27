@@ -17470,7 +17470,7 @@ msgstr "Manual d'u_suari:"
 
 #: ../app/dialogs/preferences-dialog.c:2570
 msgid "User interface language"
-msgstr "Llenguatge de la interfície d'usuari"
+msgstr "Idioma de la interfície d'usuari"
 
 #. If there is no webkit available, assume we are on a platform
 #. *  that doesn't use the help browser, so don't bother showing
@@ -27061,15 +27061,15 @@ msgstr "Falta el manual d'usuari del GIMP"
 #: ../app/widgets/gimphelp.c:809
 msgid "The GIMP user manual is not installed in your language."
 msgstr ""
-"El manual d'usuari del GIMP no està instal·lat en el vostre llenguatge."
+"El manual d'usuari del GIMP no està instal·lat en el vostre idioma."
 
 #: ../app/widgets/gimphelp.c:820
 msgid "Read Selected _Language"
-msgstr "Llegeix el llenguatge seleccionat"
+msgstr "_Llegeix en l'idioma seleccionat"
 
 #: ../app/widgets/gimphelp.c:824
 msgid "Available manuals..."
-msgstr "Manuals disponibles ..."
+msgstr "Manuals disponibles..."
 
 #: ../app/widgets/gimphelp.c:836
 msgid ""
@@ -27272,7 +27272,7 @@ msgstr "Bloqueja:"
 
 #: ../app/widgets/gimplanguagestore-parser.c:253
 msgid "System Language"
-msgstr "Idioma"
+msgstr "Idioma del sistema"
 
 #: ../app/widgets/gimplayermodebox.c:153
 msgid "Switch to another group of modes"
