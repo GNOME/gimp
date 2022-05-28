@@ -293,9 +293,9 @@ gimp_gegl_buffer_get_memsize (GeglBuffer *buffer)
     {
       const Babl *format = gegl_buffer_get_format (buffer);
 
-      return (babl_format_get_bytes_per_pixel (format) *
-              gegl_buffer_get_width (buffer) *
-              gegl_buffer_get_height (buffer) +
+      return ((gint64) babl_format_get_bytes_per_pixel (format) *
+              (gint64) gegl_buffer_get_width (buffer) *
+              (gint64) gegl_buffer_get_height (buffer) +
               gimp_g_object_get_memsize (G_OBJECT (buffer)));
     }
 
