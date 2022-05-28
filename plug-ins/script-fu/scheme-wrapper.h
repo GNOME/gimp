@@ -20,6 +20,9 @@
 
 #include "tinyscheme/scheme.h"
 
+typedef void (*TsCallbackFunc) (void);
+
+
 void          tinyscheme_init         (GList        *path,
                                        gboolean      register_scripts);
 
@@ -43,5 +46,7 @@ void          ts_gstring_output_func  (TsOutputType  type,
                                        const char   *string,
                                        int           len,
                                        gpointer      user_data);
+void          ts_register_quit_callback         (TsCallbackFunc callback);
+void          ts_register_post_command_callback (TsCallbackFunc callback);
 
 #endif /* __SCHEME_WRAPPER_H__ */

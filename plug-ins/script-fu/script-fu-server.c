@@ -15,6 +15,32 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+/*
+ * Testing
+ *
+ * Use a scriptfu server client such as https://github.com/vit1-irk/gimp-exec.
+ *
+ * In a console, export G_MESSAGES_DEBUG=scriptfu (to see more logging from scriptfu)
+ * (script-fu-server does not use g_logging but rolls its own.)
+ *
+ * In the console, start GIMP app e.g. ">gimp"
+ * Choose menu item "Filters>Development>Script-Fu>Start Server..."
+ * and choose the "Start Server" button in the dialog.
+ * Expect in the console: "ScriptFu server: initialized and listening..."
+ *
+ * Using the client, send a file of Scheme language text e.g. "./gimp-exec test.scheme"
+ * (where the text can be a GIMP PDB call like (gimp-message "hello")  )
+ * Expect on the console, many log messages like  "ScriptFu server: <foo>"
+ * Expect log like "(script-fu:223): scriptfu-DEBUG:.<fu>" from inner scriptfu
+ * Expect log "ScriptFu server: post command callback"
+ * Expect that the GIMP gui shows no progress, or other messages.
+ *
+ * In the client send text "(script-fu-quit)"
+ * Expect:
+ *     on the console: "ScriptFu server: quitting"
+ *     The client cannot connect to the server again.
+ */
+
 #include "config.h"
 
 #include <stdlib.h>
@@ -178,6 +204,8 @@ static void      response_callback  (GtkWidget   *widget,
                                      gpointer     data);
 static void      print_socket_api_error (const gchar *api_name);
 
+static void      script_fu_server_listen (gint        timeout);
+
 /*
  *  Local variables
  */
@@ -191,7 +219,6 @@ static gint         request_no      = 0;
 static FILE        *server_log_file = NULL;
 static GHashTable  *clients         = NULL;
 static gboolean     script_fu_done  = FALSE;
-static gboolean     server_mode     = FALSE;
 
 static ServerInterface sint =
 {
@@ -206,20 +233,40 @@ static ServerInterface sint =
   FALSE  /*  run                  */
 };
 
+
 /*
- *  Server interface functions
+ * Server interface functions.
+ * scheme-wrapper.c callback's these.
  */
 
-void
+static void
 script_fu_server_quit (void)
 {
+  /*
+   * Set the flag that the IO loop checks, in server_start().
+   * We just processed a command, and the loop will now terminate.
+   */
+  server_log ("quit callback\n");
   script_fu_done = TRUE;
 }
 
-gint
-script_fu_server_get_mode (void)
+static void
+script_fu_server_post_command (void)
 {
-  return server_mode;
+  /*
+   * Callback from inner scriptfu after a command is executed.
+   * See server_start(), the server is in a loop on the queue.
+   *
+   * The original reason for this callback is not documented.
+   * Possibly, we listen i.e. refresh the queue
+   * because command executions from the queue may take a long time
+   * and we want to service the connection more often?
+   *
+   * Also, why is a callback needed, since the code could just as well call
+   * script_fu_server_listen (10) in the loop on the queue?
+   */
+  server_log ("post command callback\n");
+  script_fu_server_listen (10);
 }
 
 GimpValueArray *
@@ -240,23 +287,20 @@ script_fu_server_run (GimpProcedure        *procedure,
   ts_set_run_mode (run_mode);
   ts_set_print_flag (1);
 
+  ts_register_quit_callback (script_fu_server_quit);
+  ts_register_post_command_callback (script_fu_server_post_command);
+
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
       if (server_interface ())
         {
-          server_mode = TRUE;
-
-          /*  Start the server  */
+          /* Blocks, an event loop on IO. */
           server_start (sint.listen_ip, sint.port, sint.logfile);
         }
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /*  Set server_mode to TRUE  */
-      server_mode = TRUE;
-
-      /*  Start the server  */
       server_start (ip ? ip : "127.0.0.1", port, logfile);
       break;
 
@@ -293,7 +337,7 @@ script_fu_server_read_fd (gpointer key,
         {
           GList *list;
 
-          server_log ("Server: disconnect from host %s.\n", (gchar *) value);
+          server_log ("disconnect from host %s.\n", (gchar *) value);
 
           CLOSESOCKET (fd);
 
@@ -314,7 +358,7 @@ script_fu_server_read_fd (gpointer key,
   return FALSE;
 }
 
-void
+static void
 script_fu_server_listen (gint timeout)
 {
   struct timeval  tv;
@@ -395,7 +439,7 @@ script_fu_server_listen (gint timeout)
             portno = 0;
         }
 
-      server_log ("Server: connect from host %s, port %d.\n",
+      server_log ("connect from host %s, port %d.\n",
                   clientname, portno);
     }
 
@@ -514,7 +558,7 @@ server_start (const gchar *listen_ip,
 
   progress = server_progress_install ();
 
-  server_log ("Script-Fu server initialized and listening...\n");
+  server_log ("initialized and listening...\n");
 
   /*  Loop until the server is finished  */
   while (! script_fu_done)
@@ -683,11 +727,14 @@ read_from_client (gint filedes)
   /*  Get the client address from the address/socket table  */
   clientaddr = g_hash_table_lookup (clients, GINT_TO_POINTER (cmd->filedes));
   time (&clock);
-  server_log ("Received request #%d from IP address %s: %s on %s,"
-              "[Request queue length: %d]",
+  /* ! ctime has trailing newline so put it last. */
+  server_log ("received request #%d from IP address %s: %s,"
+              "[queue length: %d] on %s",
               cmd->request_no,
-                  clientaddr ? clientaddr : "<invalid>",
-                      cmd->command, ctime (&clock), queue_length);
+              clientaddr ? clientaddr : "<invalid>",
+              cmd->command,
+              queue_length,
+              ctime (&clock));
 
   return 0;
 }
@@ -762,6 +809,9 @@ server_log (const gchar *format,
   buf = g_strdup_vprintf (format, args);
   va_end (args);
 
+  /* Prefix line with name of the server. */
+  fputs ("ScriptFu server: ", server_log_file);
+
   fputs (buf, server_log_file);
   g_free (buf);
 
@@ -805,6 +855,8 @@ server_quit (void)
   g_list_free (command_queue);
   command_queue = NULL;
   queue_length  = 0;
+
+  server_log ("quitting\n");
 
   /*  Close the server log file  */
   if (server_log_file != stdout)

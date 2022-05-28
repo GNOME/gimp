@@ -40,7 +40,6 @@
 #include "script-fu-interface.h"
 #include "script-fu-regex.h"
 #include "script-fu-scripts.h"
-#include "script-fu-server.h"
 #include "script-fu-errors.h"
 #include "script-fu-compat.h"
 
@@ -136,6 +135,14 @@ static const NamedConstant script_constants[] =
 
 
 static scheme sc;
+
+/*
+ * These callbacks break the backwards compile-time dependence
+ * of inner scheme-wrapper on the outer script-fu-server.
+ * Only script-fu-server registers, when it runs.
+ */
+static TsCallbackFunc post_command_callback = NULL;
+static TsCallbackFunc quit_callback         = NULL;
 
 
 void
@@ -272,6 +279,18 @@ ts_gstring_output_func (TsOutputType  type,
   GString *gstr = (GString *) user_data;
 
   g_string_append_len (gstr, string, len);
+}
+
+void
+ts_register_quit_callback (TsCallbackFunc callback)
+{
+  quit_callback = callback;
+}
+
+void
+ts_register_post_command_callback (TsCallbackFunc callback)
+{
+  post_command_callback = callback;
 }
 
 
@@ -1535,9 +1554,9 @@ script_fu_marshal_procedure_call (scheme   *sc,
   /*  free arguments and values  */
   gimp_value_array_unref (args);
 
-  /*  if we're in server mode, listen for additional commands for 10 ms  */
-  if (script_fu_server_get_mode ())
-    script_fu_server_listen (10);
+  /* The callback is NULL except for script-fu-server.  See explanation there. */
+  if (post_command_callback != NULL)
+    post_command_callback ();
 
 #ifdef GDK_WINDOWING_WIN32
   /* This seems to help a lot on Windoze. */
@@ -1587,7 +1606,9 @@ static pointer
 script_fu_quit_call (scheme  *sc,
                      pointer  a)
 {
-  script_fu_server_quit ();
+  /* If script-fu-server running, tell it. */
+  if (quit_callback != NULL)
+    quit_callback ();
 
   scheme_deinit (sc);
 
