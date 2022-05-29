@@ -3151,10 +3151,11 @@ plug-ins/python/Makefile
 plug-ins/python/python-console/Makefile
 plug-ins/screenshot/Makefile
 plug-ins/script-fu/Makefile
-plug-ins/script-fu/ftx/Makefile
+plug-ins/script-fu/libscriptfu/Makefile
+plug-ins/script-fu/libscriptfu/ftx/Makefile
+plug-ins/script-fu/libscriptfu/tinyscheme/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
-plug-ins/script-fu/tinyscheme/Makefile
 plug-ins/selection-to-path/Makefile
 plug-ins/twain/Makefile
 plug-ins/common/Makefile

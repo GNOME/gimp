@@ -9,9 +9,10 @@ AM_CFLAGS = \
 	-I$(top_srcdir)		\
 	$(GLIB_CFLAGS)
 
-noinst_LIBRARIES = libtinyscheme.a
+# Is "libtool convenience" not installed and not versioned
+noinst_LTLIBRARIES = libtinyscheme.la
 
-libtinyscheme_a_SOURCES = \
+libtinyscheme_la_SOURCES = \
 	scheme.c		\
 	opdefines.h		\
 	scheme-private.h	\

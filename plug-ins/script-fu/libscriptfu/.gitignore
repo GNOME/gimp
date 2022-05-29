@@ -1,0 +1,5 @@
+/.deps
+/Makefile.in
+/Makefile
+/libscriptfu.a
+/libscriptfu*.so

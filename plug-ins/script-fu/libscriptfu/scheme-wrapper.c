@@ -36,7 +36,6 @@
 
 #include "script-fu-types.h"
 
-#include "script-fu-console.h"
 #include "script-fu-interface.h"
 #include "script-fu-regex.h"
 #include "script-fu-scripts.h"

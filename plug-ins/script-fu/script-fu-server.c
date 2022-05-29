@@ -97,8 +97,8 @@ typedef short sa_family_t; /* Not defined by winsock */
 #include "libgimp/gimpui.h"
 
 #include "script-fu-intl.h"
+#include "script-fu-lib.h"
 
-#include "scheme-wrapper.h"
 #include "script-fu-server.h"
 
 #ifdef G_OS_WIN32
@@ -284,11 +284,11 @@ script_fu_server_run (GimpProcedure        *procedure,
   port     = GIMP_VALUES_GET_INT    (args, 2);
   logfile  = GIMP_VALUES_GET_STRING (args, 3);
 
-  ts_set_run_mode (run_mode);
-  ts_set_print_flag (1);
+  script_fu_set_run_mode (run_mode);
+  script_fu_set_print_flag (1);
 
-  ts_register_quit_callback (script_fu_server_quit);
-  ts_register_post_command_callback (script_fu_server_post_command);
+  script_fu_register_quit_callback (script_fu_server_quit);
+  script_fu_register_post_command_callback (script_fu_server_post_command);
 
   switch (run_mode)
     {
@@ -603,10 +603,10 @@ execute_command (SFCommand *cmd)
   timer = g_timer_new ();
 
   response = g_string_new (NULL);
-  ts_register_output_func (ts_gstring_output_func, response);
+  script_fu_redirect_output_to_gstr (response);
 
   /*  run the command  */
-  if (ts_interpret_string (cmd->command) != 0)
+  if (script_fu_interpret_string (cmd->command) != 0)
     {
       error = TRUE;
 
@@ -617,7 +617,7 @@ execute_command (SFCommand *cmd)
       error = FALSE;
 
       if (response->len == 0)
-        g_string_assign (response, ts_get_success_msg ());
+        g_string_assign (response, script_fu_get_success_msg ());
 
       total_time = g_timer_elapsed (timer, NULL);
       time (&clocknow);

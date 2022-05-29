@@ -5,9 +5,10 @@ AM_CFLAGS = \
 	-I$(srcdir)/..		\
 	$(GLIB_CFLAGS)
 
-noinst_LIBRARIES = libftx.a
+# Is "libtool convenience" not installed and not versioned
+noinst_LTLIBRARIES = libftx.la
 
-libftx_a_SOURCES = ftx.c ftx.h
+libftx_la_SOURCES = ftx.c ftx.h
 
 EXTRA_DIST = \
 	LICENSE			\

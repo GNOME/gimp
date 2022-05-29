@@ -27,9 +27,9 @@
 
 #include <gdk/gdkkeysyms.h>
 
-#include "scheme-wrapper.h"
 #include "script-fu-console.h"
 
+#include "script-fu-lib.h"
 #include "script-fu-intl.h"
 
 
@@ -82,7 +82,7 @@ static gboolean  script_fu_cc_key_function       (GtkWidget        *widget,
                                                   GdkEventKey      *event,
                                                   ConsoleInterface *console);
 
-static void      script_fu_output_to_console     (TsOutputType      type,
+static void      script_fu_output_to_console     (gboolean          is_error,
                                                   const gchar      *text,
                                                   gint              len,
                                                   gpointer          user_data);
@@ -101,7 +101,7 @@ script_fu_console_run (GimpProcedure        *procedure,
   GtkWidget        *scrolled_window;
   GtkWidget        *hbox;
 
-  ts_set_print_flag (1);
+  script_fu_set_print_flag (1);
 
   gimp_ui_init ("script-fu");
 
@@ -473,7 +473,7 @@ script_fu_console_scroll_end (GtkWidget *view)
 }
 
 static void
-script_fu_output_to_console (TsOutputType  type,
+script_fu_output_to_console (gboolean      is_error_msg,
                              const gchar  *text,
                              gint          len,
                              gpointer      user_data)
@@ -489,7 +489,7 @@ script_fu_output_to_console (TsOutputType  type,
 
       gtk_text_buffer_get_end_iter (buffer, &cursor);
 
-      if (type == TS_OUTPUT_NORMAL)
+      if (! is_error_msg)
         {
           gtk_text_buffer_insert (buffer, &cursor, text, len);
         }
@@ -532,6 +532,7 @@ script_fu_cc_key_function (GtkWidget        *widget,
   gint         direction = 0;
   GtkTextIter  cursor;
   GString     *output;
+  gboolean     is_error;
 
   switch (event->keyval)
     {
@@ -566,25 +567,17 @@ script_fu_cc_key_function (GtkWidget        *widget,
       gtk_entry_set_text (GTK_ENTRY (console->cc), "");
 
       output = g_string_new (NULL);
-      ts_register_output_func (ts_gstring_output_func, output);
+      script_fu_redirect_output_to_gstr (output);
 
       gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                           GIMP_PDB_ERROR_HANDLER_PLUGIN);
 
-      if (ts_interpret_string (list->data) != 0)
-        {
-          script_fu_output_to_console (TS_OUTPUT_ERROR,
-                                       output->str,
-                                       output->len,
-                                       console);
-        }
-      else
-        {
-          script_fu_output_to_console (TS_OUTPUT_NORMAL,
-                                       output->str,
-                                       output->len,
-                                       console);
-        }
+      is_error = script_fu_interpret_string (list->data);
+
+      script_fu_output_to_console (is_error,
+                                   output->str,
+                                   output->len,
+                                   console);
 
       gimp_plug_in_set_pdb_error_handler (gimp_get_plug_in (),
                                           GIMP_PDB_ERROR_HANDLER_INTERNAL);

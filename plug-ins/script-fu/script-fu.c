@@ -20,22 +20,14 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
-
-#include "tinyscheme/scheme.h"
-
-#include "script-fu-types.h"
 
 #include "script-fu-console.h"
 #include "script-fu-eval.h"
-#include "script-fu-interface.h"
-#include "script-fu-scripts.h"
 #include "script-fu-server.h"
 #include "script-fu-text-console.h"
 
-#include "scheme-wrapper.h"
-
-#include "script-fu-intl.h"
+#include "libscriptfu/script-fu-lib.h"
+#include "libscriptfu/script-fu-intl.h"
 
 
 typedef struct _ScriptFu      ScriptFu;
@@ -371,19 +363,16 @@ script_fu_run_init (GimpProcedure *procedure,
       /*  Setup auxiliary temporary procedures for the base extension  */
       script_fu_extension_init (plug_in);
 
-      /*  Init the interpreter and register scripts */
-      tinyscheme_init (path, TRUE);
+      /*  Init the interpreter, allow register scripts */
+      script_fu_init_embedded_interpreter (path, TRUE, run_mode);
     }
   else
     {
-      /*  Init the interpreter  */
-      tinyscheme_init (path, FALSE);
+      /*  Init the interpreter, not allow register scripts */
+      script_fu_init_embedded_interpreter (path, FALSE, run_mode);
     }
 
-  ts_set_run_mode (run_mode);
-
-  /*  Load all of the available scripts  */
-  script_fu_find_scripts (plug_in, path);
+  script_fu_find_and_register_scripts (plug_in, path);
 
   g_list_free_full (path, (GDestroyNotify) g_object_unref);
 }
@@ -479,7 +468,7 @@ script_fu_refresh_proc (GimpProcedure        *procedure,
                         const GimpValueArray *args,
                         gpointer              run_data)
 {
-  if (script_fu_interface_is_active ())
+  if (script_fu_extension_is_busy ())
     {
       g_message (_("You can not use \"Refresh Scripts\" while a "
                    "Script-Fu dialog box is open.  Please close "
@@ -494,7 +483,7 @@ script_fu_refresh_proc (GimpProcedure        *procedure,
       /*  Reload all of the available scripts  */
       GList *path = script_fu_search_path ();
 
-      script_fu_find_scripts (gimp_procedure_get_plug_in (procedure), path);
+      script_fu_find_and_register_scripts (gimp_procedure_get_plug_in (procedure), path);
 
       g_list_free_full (path, (GDestroyNotify) g_object_unref);
     }

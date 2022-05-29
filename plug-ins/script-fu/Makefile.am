@@ -22,8 +22,8 @@ libgimpbase = $(top_builddir)/libgimpbase/libgimpbase-$(GIMP_API_VERSION).la
 libgimpconfig = $(top_builddir)/libgimpconfig/libgimpconfig-$(GIMP_API_VERSION).la
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la $(libm)
 
-libtinyscheme=tinyscheme/libtinyscheme.a $(libm)
-libftx=ftx/libftx.a
+# link to libscriptfu
+libgimp_scriptfu = $(top_builddir)/plug-ins/script-fu/libscriptfu/libgimp-scriptfu-$(GIMP_API_VERSION).la
 
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
@@ -35,6 +35,8 @@ AM_CPPFLAGS = \
 	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)		\
+	-I$(srcdir)/libscriptfu \
+	-DG_LOG_DOMAIN=\"scriptfu\"	\
 	-DSTANDALONE=0		\
 	-DUSE_INTERFACE=1	\
 	-DUSE_STRLWR=0
@@ -50,47 +52,28 @@ AM_LDFLAGS = \
 	$(framework_cocoa)	\
 	$(xnone)
 
-SUBDIRS = tinyscheme ftx scripts
-
+SUBDIRS = libscriptfu scripts
 
 libexecdir = $(gimpplugindir)/plug-ins/script-fu
 
 libexec_PROGRAMS = script-fu
 
 script_fu_SOURCES = \
-	script-fu-types.h		\
-	script-fu-enums.h		\
+	script-fu.c              \
 	\
-	script-fu.c			\
-	script-fu-console.c		\
-	script-fu-console.h		\
-	script-fu-eval.c		\
-	script-fu-eval.h		\
-	script-fu-interface.c		\
-	script-fu-interface.h		\
-	script-fu-text-console.h	\
-	script-fu-text-console.c	\
-	script-fu-intl.h		\
-	script-fu-regex.c		\
-	script-fu-regex.h		\
-	script-fu-script.c		\
-	script-fu-script.h		\
-	script-fu-scripts.c		\
-	script-fu-scripts.h		\
-	script-fu-server.c		\
-	script-fu-server.h		\
-	script-fu-utils.c		\
-	script-fu-utils.h		\
-	script-fu-errors.c		\
-	script-fu-errors.h		\
-	script-fu-compat.c 		\
-	script-fu-compat.h		\
-	scheme-marshal.c		\
-	scheme-marshal.h		\
-	scheme-wrapper.c		\
-	scheme-wrapper.h
+	script-fu-console.c      \
+	script-fu-console.h      \
+	script-fu-eval.c         \
+	script-fu-eval.h         \
+	script-fu-text-console.h \
+	script-fu-text-console.c \
+	script-fu-server.c       \
+	script-fu-server.h
 
-LDADD = \
+# link with libgimp-scriptfu and the usual gimp suspects
+# LibTool will add rpath to private shared libgimp-scriptfu in gimppluginsdir/lib
+script_fu_LDADD = \
+	$(libgimp_scriptfu)  \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpconfig)	\
@@ -98,8 +81,6 @@ LDADD = \
 	$(libgimp)		\
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
-	$(libtinyscheme)	\
-	$(libftx)		\
 	$(GTK_LIBS)		\
 	$(SOCKET_LIBS)		\
 	$(WINSOCK_LIBS)		\

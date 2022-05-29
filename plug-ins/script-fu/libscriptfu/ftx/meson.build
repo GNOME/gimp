@@ -1,7 +1,7 @@
 
 scriptfu_ftx = static_library('scriptfu-ftx',
   'ftx.c',
-  include_directories: [ rootInclude, scriptfu_incdir, ],
+  include_directories: [ rootInclude, libscriptfuInclude, ],
   dependencies: [
     glib,
   ],

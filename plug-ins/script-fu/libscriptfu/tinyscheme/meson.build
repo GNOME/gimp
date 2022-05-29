@@ -1,4 +1,6 @@
 
+# No include_directories('.') here; use libscriptfuInclude 
+
 scriptfu_tinyscheme = static_library('scriptfu-tinyscheme',
   'scheme.c',
   include_directories: [ rootInclude, ],

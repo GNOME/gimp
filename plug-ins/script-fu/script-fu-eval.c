@@ -19,9 +19,9 @@
 
 #include "libgimp/gimp.h"
 
-#include "scheme-wrapper.h"
 #include "script-fu-eval.h"
 
+#include "script-fu-lib.h"
 #include "script-fu-intl.h"
 
 
@@ -34,13 +34,13 @@ script_fu_eval_run (GimpProcedure        *procedure,
   GString           *output = g_string_new (NULL);
   GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
 
-  ts_set_run_mode (run_mode);
-  ts_register_output_func (ts_gstring_output_func, output);
+  script_fu_set_run_mode (run_mode);
+  script_fu_redirect_output_to_gstr (output);
 
   switch (run_mode)
     {
     case GIMP_RUN_NONINTERACTIVE:
-      if (ts_interpret_string (code) != 0)
+      if (script_fu_interpret_string (code) != 0)
         status = GIMP_PDB_EXECUTION_ERROR;
       break;
 
