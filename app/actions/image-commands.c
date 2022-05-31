@@ -22,6 +22,7 @@
 
 #include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -171,6 +172,15 @@ static void   image_merge_layers_callback      (GtkWidget              *dialog,
                                                 gboolean                merge_active_group,
                                                 gboolean                discard_invisible,
                                                 gpointer                user_data);
+
+static void   image_softproof_profile_callback  (GtkWidget                *dialog,
+                                                 GimpImage                *image,
+                                                 GimpColorProfile         *new_profile,
+                                                 GFile                    *new_file,
+                                                 GimpColorRenderingIntent  intent,
+                                                 gboolean                  bpc,
+                                                 gpointer                  user_data);
+
 
 
 /*  private variables  */
@@ -1562,4 +1572,106 @@ image_merge_layers_callback (GtkWidget     *dialog,
   gimp_image_flush (image);
 
   g_clear_pointer (&dialog, gtk_widget_destroy);
+}
+
+void
+image_softproof_profile_cmd_callback (GimpAction *action,
+                                      GVariant   *value,
+                                      gpointer    data)
+{
+  GimpImage        *image;
+  GimpDisplayShell *shell;
+  GtkWidget        *dialog;
+  return_if_no_image (image, data);
+  return_if_no_shell (shell, data);
+
+#define SOFTPROOF_PROFILE_DIALOG_KEY "gimp-softproof-profile-dialog"
+
+  dialog = dialogs_get_dialog (G_OBJECT (shell), SOFTPROOF_PROFILE_DIALOG_KEY);
+
+  if (! dialog)
+    {
+      GimpColorProfile *current_profile;
+
+      current_profile = gimp_image_get_simulation_profile (image);
+
+      dialog = color_profile_dialog_new (COLOR_PROFILE_DIALOG_SELECT_SOFTPROOF_PROFILE,
+                                         image,
+                                         action_data_get_context (data),
+                                         GTK_WIDGET (shell),
+                                         current_profile,
+                                         NULL,
+                                         0, 0,
+                                         image_softproof_profile_callback,
+                                         shell);
+
+      dialogs_attach_dialog (G_OBJECT (shell),
+                             SOFTPROOF_PROFILE_DIALOG_KEY, dialog);
+    }
+
+  gtk_window_present (GTK_WINDOW (dialog));
+}
+
+static void
+image_softproof_profile_callback (GtkWidget                *dialog,
+                                  GimpImage                *image,
+                                  GimpColorProfile         *new_profile,
+                                  GFile                    *new_file,
+                                  GimpColorRenderingIntent  intent,
+                                  gboolean                  bpc,
+                                  gpointer                  user_data)
+{
+  GimpDisplayShell *shell = user_data;
+
+  /* Update image's simulation profile */
+  gimp_image_set_simulation_profile (image, new_profile);
+  gimp_color_managed_simulation_profile_changed (GIMP_COLOR_MANAGED (shell));
+
+  gtk_widget_destroy (dialog);
+}
+
+void
+image_softproof_intent_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
+{
+  GimpDisplayShell          *shell;
+  GimpColorConfig           *color_config;
+  GimpColorRenderingIntent   intent;
+  return_if_no_shell (shell, data);
+
+  intent = (GimpColorRenderingIntent) g_variant_get_int32 (value);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  if (intent != gimp_color_config_get_simulation_intent (color_config))
+    {
+      g_object_set (color_config,
+                    "simulation-rendering-intent", intent,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
+}
+
+void
+image_softproof_bpc_cmd_callback (GimpAction *action,
+                                  GVariant   *value,
+                                  gpointer    data)
+{
+  GimpDisplayShell *shell;
+  GimpColorConfig  *color_config;
+  gboolean          active;
+  return_if_no_shell (shell, data);
+
+  color_config = gimp_display_shell_get_color_config (shell);
+
+  active = g_variant_get_boolean (value);
+
+  if (active != gimp_color_config_get_simulation_bpc (color_config))
+    {
+      g_object_set (color_config,
+                    "simulation-use-black-point-compensation", active,
+                    NULL);
+      shell->color_config_set = TRUE;
+    }
 }

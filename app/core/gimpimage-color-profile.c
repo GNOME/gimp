@@ -391,6 +391,32 @@ gimp_image_set_color_profile (GimpImage         *image,
   return gimp_image_set_icc_profile (image, data, length, error);
 }
 
+GimpColorProfile *
+gimp_image_get_simulation_profile (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->simulation_profile;
+}
+
+void
+gimp_image_set_simulation_profile (GimpImage         *image,
+                                   GimpColorProfile  *profile)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (profile != private->simulation_profile)
+    {
+      g_set_object (&private->simulation_profile, profile);
+      gimp_color_managed_simulation_profile_changed (GIMP_COLOR_MANAGED (image));
+    }
+}
+
 gboolean
 gimp_image_validate_color_profile_by_format (const Babl         *format,
                                              GimpColorProfile   *profile,

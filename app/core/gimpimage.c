@@ -198,6 +198,11 @@ static GimpColorProfile *
 static void
         gimp_image_color_managed_profile_changed (GimpColorManaged  *managed);
 
+static GimpColorProfile *
+      gimp_image_color_managed_get_simulation_profile     (GimpColorManaged  *managed);
+static void
+      gimp_image_color_managed_simulation_profile_changed (GimpColorManaged  *managed);
+
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
 static GeglRectangle gimp_image_get_bounding_box (GimpProjectable   *projectable);
@@ -697,9 +702,11 @@ gimp_image_class_init (GimpImageClass *klass)
 static void
 gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
 {
-  iface->get_icc_profile   = gimp_image_color_managed_get_icc_profile;
-  iface->get_color_profile = gimp_image_color_managed_get_color_profile;
-  iface->profile_changed   = gimp_image_color_managed_profile_changed;
+  iface->get_icc_profile            = gimp_image_color_managed_get_icc_profile;
+  iface->get_color_profile          = gimp_image_color_managed_get_color_profile;
+  iface->profile_changed            = gimp_image_color_managed_profile_changed;
+  iface->get_simulation_profile     = gimp_image_color_managed_get_simulation_profile;
+  iface->simulation_profile_changed = gimp_image_color_managed_simulation_profile_changed;
 }
 
 static void
@@ -1436,6 +1443,26 @@ gimp_image_color_managed_profile_changed (GimpColorManaged *managed)
   gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
   gimp_item_stack_profile_changed (layers);
+}
+
+static GimpColorProfile *
+gimp_image_color_managed_get_simulation_profile (GimpColorManaged *managed)
+{
+  GimpImage        *image = GIMP_IMAGE (managed);
+  GimpColorProfile *profile;
+
+  profile = gimp_image_get_simulation_profile (image);
+
+  return profile;
+}
+
+static void
+gimp_image_color_managed_simulation_profile_changed (GimpColorManaged *managed)
+{
+  GimpImage *image = GIMP_IMAGE (managed);
+
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 static void

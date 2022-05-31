@@ -43,6 +43,8 @@ G_DECLARE_INTERFACE (GimpColorManaged, gimp_color_managed, GIMP, COLOR_MANAGED, 
  *                   has changed
  * @get_color_profile: Returns the #GimpColorProfile of the pixels managed
  *                     by the object
+ * @get_simulation_profile: Returns the simulation #GimpColorProfile of the
+ *                          pixels managed by the object
  **/
 struct _GimpColorManagedInterface
 {
@@ -58,22 +60,29 @@ struct _GimpColorManagedInterface
    *
    * Since: 2.4
    */
-  const guint8     * (* get_icc_profile)   (GimpColorManaged *managed,
-                                            gsize            *len);
+  const guint8     * (* get_icc_profile)            (GimpColorManaged *managed,
+                                                     gsize            *len);
 
   /*  signals  */
-  void               (* profile_changed)   (GimpColorManaged *managed);
+  void               (* profile_changed)            (GimpColorManaged *managed);
+
+  void               (* simulation_profile_changed) (GimpColorManaged *managed);
 
   /*  virtual functions  */
-  GimpColorProfile * (* get_color_profile) (GimpColorManaged *managed);
+  GimpColorProfile * (* get_color_profile)      (GimpColorManaged *managed);
+  GimpColorProfile * (* get_simulation_profile) (GimpColorManaged *managed);
 };
 
 
-const guint8     * gimp_color_managed_get_icc_profile   (GimpColorManaged *managed,
-                                                         gsize            *len);
-GimpColorProfile * gimp_color_managed_get_color_profile (GimpColorManaged *managed);
+const guint8     * gimp_color_managed_get_icc_profile            (GimpColorManaged *managed,
+                                                                  gsize            *len);
+GimpColorProfile * gimp_color_managed_get_color_profile          (GimpColorManaged *managed);
 
-void               gimp_color_managed_profile_changed   (GimpColorManaged *managed);
+GimpColorProfile * gimp_color_managed_get_simulation_profile     (GimpColorManaged *managed);
+
+void               gimp_color_managed_profile_changed            (GimpColorManaged *managed);
+
+void               gimp_color_managed_simulation_profile_changed (GimpColorManaged *managed);
 
 
 G_END_DECLS

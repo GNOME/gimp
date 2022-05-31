@@ -97,5 +97,14 @@ void   image_properties_cmd_callback               (GimpAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
 
+void   image_softproof_profile_cmd_callback          (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   image_softproof_intent_cmd_callback           (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
+void   image_softproof_bpc_cmd_callback              (GimpAction *action,
+                                                      GVariant   *value,
+                                                      gpointer    data);
 
 #endif /* __IMAGE_COMMANDS_H__ */

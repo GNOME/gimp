@@ -42,6 +42,7 @@
 enum
 {
   PROFILE_CHANGED,
+  SIMULATION_PROFILE_CHANGED,
   LAST_SIGNAL
 };
 
@@ -64,6 +65,15 @@ gimp_color_managed_default_init (GimpColorManagedInterface *iface)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorManagedInterface,
                                    profile_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_color_managed_signals[SIMULATION_PROFILE_CHANGED] =
+    g_signal_new ("simulation-profile-changed",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                                   simulation_profile_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
@@ -128,8 +138,33 @@ gimp_color_managed_get_color_profile (GimpColorManaged *managed)
 }
 
 /**
- * gimp_color_managed_profile_changed:
+ * gimp_color_managed_get_simulation_profile:
  * @managed: an object the implements the #GimpColorManaged interface
+ *
+ * This function always returns a #GimpColorProfile
+ *
+ * Returns: (transfer full): The @managed's simulation #GimpColorProfile.
+ *
+ * Since: 3.0
+ **/
+GimpColorProfile *
+gimp_color_managed_get_simulation_profile (GimpColorManaged *managed)
+{
+  GimpColorManagedInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), NULL);
+
+  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+
+  if (iface->get_simulation_profile)
+    return iface->get_simulation_profile (managed);
+
+  return NULL;
+}
+
+/**
+ * gimp_color_managed_profile_changed:
+ * @managed: an object that implements the #GimpColorManaged interface
  *
  * Emits the "profile-changed" signal.
  *
@@ -141,4 +176,20 @@ gimp_color_managed_profile_changed (GimpColorManaged *managed)
   g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
 
   g_signal_emit (managed, gimp_color_managed_signals[PROFILE_CHANGED], 0);
+}
+
+/**
+ * gimp_color_managed_simulation_profile_changed:
+ * @managed: an object that implements the #GimpColorManaged interface
+ *
+ * Emits the "simulation-profile-changed" signal.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_managed_simulation_profile_changed (GimpColorManaged *managed)
+{
+  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+
+  g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_PROFILE_CHANGED], 0);
 }

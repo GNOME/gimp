@@ -114,15 +114,6 @@ void   view_display_intent_cmd_callback             (GimpAction *action,
 void   view_display_bpc_cmd_callback                (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);
-void   view_softproof_profile_cmd_callback          (GimpAction *action,
-                                                     GVariant   *value,
-                                                     gpointer    data);
-void   view_softproof_intent_cmd_callback           (GimpAction *action,
-                                                     GVariant   *value,
-                                                     gpointer    data);
-void   view_softproof_bpc_cmd_callback              (GimpAction *action,
-                                                     GVariant   *value,
-                                                     gpointer    data);
 void   view_softproof_gamut_check_cmd_callback      (GimpAction *action,
                                                      GVariant   *value,
                                                      gpointer    data);

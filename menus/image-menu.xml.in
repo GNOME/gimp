@@ -320,16 +320,7 @@
 	</menu>
         <menuitem action="view-display-black-point-compensation" />
         <separator />
-        <menuitem action="view-softproof-profile" />
-	<menu action="view-softproof-intent-menu" name="Softproof Rendering Intent">
-          <menuitem action="view-softproof-intent-perceptual" />
-          <menuitem action="view-softproof-intent-relative-colorimetric" />
-          <menuitem action="view-softproof-intent-saturation" />
-          <menuitem action="view-softproof-intent-absolute-colorimetric" />
-	</menu>
-        <menuitem action="view-softproof-black-point-compensation" />
         <menuitem action="view-softproof-gamut-check" />
-        <separator />
         <menuitem action="view-color-management-reset" />
       </menu>
       <separator />
@@ -394,6 +385,16 @@
         <menuitem action="image-color-profile-discard" />
         <separator />
         <menuitem action="image-color-profile-save" />
+        <separator />
+        <menuitem action="image-softproof-profile" />
+        <separator />
+    <menu action="image-softproof-intent-menu" name="Softproof Rendering Intent">
+          <menuitem action="image-softproof-intent-perceptual" />
+          <menuitem action="image-softproof-intent-relative-colorimetric" />
+          <menuitem action="image-softproof-intent-saturation" />
+          <menuitem action="image-softproof-intent-absolute-colorimetric" />
+	</menu>
+        <menuitem action="image-softproof-black-point-compensation" />
      </menu>
       <separator />
       <menu action="image-transform-menu" name="Transform">

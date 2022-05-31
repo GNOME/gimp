@@ -21,8 +21,10 @@ EXPORTS
 	gimp_cmyka_set_uchar
 	gimp_color_managed_get_color_profile
 	gimp_color_managed_get_icc_profile
+	gimp_color_managed_get_simulation_profile
 	gimp_color_managed_get_type
 	gimp_color_managed_profile_changed
+	gimp_color_managed_simulation_profile_changed
 	gimp_color_profile_get_copyright
 	gimp_color_profile_get_description
 	gimp_color_profile_get_format

@@ -34,6 +34,10 @@ GimpColorProfile * gimp_image_get_color_profile           (GimpImage            
 gboolean           gimp_image_set_color_profile           (GimpImage                 *image,
                                                            GimpColorProfile          *profile);
 
+GimpColorProfile * gimp_image_get_simulation_profile      (GimpImage                 *image);
+gboolean           gimp_image_set_simulation_profile      (GimpImage                 *image,
+                                                           GimpColorProfile          *profile);
+
 GimpColorProfile * gimp_image_get_effective_color_profile (GimpImage                 *image);
 
 gboolean           gimp_image_convert_color_profile       (GimpImage                 *image,

@@ -942,7 +942,8 @@ gimp_color_scale_create_transform (GimpColorScale *scale)
                                                          priv->config,
                                                          profile,
                                                          format,
-                                                         format);
+                                                         format,
+                                                         NULL);
     }
 }
 

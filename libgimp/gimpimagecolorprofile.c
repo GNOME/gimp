@@ -93,6 +93,75 @@ gimp_image_set_color_profile (GimpImage        *image,
 }
 
 /**
+ * gimp_image_get_simulation_profile:
+ * @image: The image.
+ *
+ * Returns the image's simulation color profile
+ *
+ * This procedure returns the image's simulation color profile, or NULL if
+ * the image has no simulation color profile assigned.
+ *
+ * Returns: (transfer full): The image's simulation color profile. The
+ *          returned value must be freed with g_object_unref().
+ *
+ * Since: 3.0
+ **/
+GimpColorProfile *
+gimp_image_get_simulation_profile (GimpImage *image)
+{
+  guint8 *data;
+  gint    length;
+
+  data = _gimp_image_get_simulation_profile (image, &length);
+
+  if (data)
+    {
+      GimpColorProfile *profile;
+
+      profile = gimp_color_profile_new_from_icc_profile (data, length, NULL);
+      g_free (data);
+
+      return profile;
+    }
+
+  return NULL;
+}
+
+/**
+ * gimp_image_set_simulation_profile:
+ * @image:   The image.
+ * @profile: A #GimpColorProfile, or %NULL.
+ *
+ * Sets the image's simulation color profile
+ *
+ * This procedure sets the image's simulation color profile.
+ *
+ * Returns: %TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_set_simulation_profile (GimpImage        *image,
+                                   GimpColorProfile *profile)
+{
+  const guint8 *data   = NULL;
+  gint          length = 0;
+
+  g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
+                        FALSE);
+
+  if (profile)
+    {
+      gsize l;
+
+      data = gimp_color_profile_get_icc_profile (profile, &l);
+      length = l;
+    }
+
+  return _gimp_image_set_simulation_profile (image, length, data);
+}
+
+/**
  * gimp_image_get_effective_color_profile:
  * @image: The image.
  *

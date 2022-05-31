@@ -420,6 +420,7 @@ EXPORTS
 	gimp_image_get_sample_point_position
 	gimp_image_get_selected_layers
 	gimp_image_get_selection
+	gimp_image_get_simulation_profile
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail
 	gimp_image_get_thumbnail_data
@@ -498,6 +499,8 @@ EXPORTS
 	gimp_image_set_metadata
 	gimp_image_set_resolution
 	gimp_image_set_selected_layers
+	gimp_image_set_simulation_profile
+	gimp_image_set_simulation_profile_from_file
 	gimp_image_set_tattoo_state
 	gimp_image_set_unit
 	gimp_image_take_selected_layers

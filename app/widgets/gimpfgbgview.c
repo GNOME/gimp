@@ -255,7 +255,8 @@ gimp_fg_bg_view_create_transform (GimpFgBgView *view)
                                          view->color_config,
                                          profile,
                                          babl_format ("R'G'B'A double"),
-                                         babl_format ("R'G'B'A double"));
+                                         babl_format ("R'G'B'A double"),
+                                         NULL);
     }
 }
 

@@ -1956,7 +1956,8 @@ gimp_color_select_create_transform (GimpColorSelect *select)
                                                            select->config,
                                                            profile,
                                                            format,
-                                                           format);
+                                                           format,
+                                                           NULL);
     }
 }
 

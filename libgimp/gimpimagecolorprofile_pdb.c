@@ -221,6 +221,136 @@ gimp_image_set_color_profile_from_file (GimpImage *image,
 }
 
 /**
+ * _gimp_image_get_simulation_profile:
+ * @image: The image.
+ * @num_bytes: (out): Number of bytes in the color_profile array.
+ *
+ * Returns the image's simulation color profile
+ *
+ * This procedure returns the image's simulation color profile, or NULL
+ * if the image has no simulation color profile assigned.
+ *
+ * Returns: (array length=num_bytes) (element-type guint8) (transfer full):
+ *          The image's serialized simulation color profile.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0
+ **/
+guint8 *
+_gimp_image_get_simulation_profile (GimpImage *image,
+                                    gint      *num_bytes)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  guint8 *profile_data = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-get-simulation-profile",
+                                              args);
+  gimp_value_array_unref (args);
+
+  *num_bytes = 0;
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      *num_bytes = GIMP_VALUES_GET_INT (return_vals, 1);
+      profile_data = GIMP_VALUES_DUP_UINT8_ARRAY (return_vals, 2);
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return profile_data;
+}
+
+/**
+ * _gimp_image_set_simulation_profile:
+ * @image: The image.
+ * @num_bytes: Number of bytes in the color_profile array.
+ * @color_profile: (array length=num_bytes) (element-type guint8): The new serialized simulation color profile.
+ *
+ * Sets the image's simulation color profile
+ *
+ * This procedure sets the image's simulation color profile, or unsets
+ * it if NULL is passed as 'color_profile'. This procedure does no
+ * color conversion.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_image_set_simulation_profile (GimpImage    *image,
+                                    gint          num_bytes,
+                                    const guint8 *color_profile)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_INT, num_bytes,
+                                          GIMP_TYPE_UINT8_ARRAY, NULL,
+                                          G_TYPE_NONE);
+  gimp_value_set_uint8_array (gimp_value_array_index (args, 2), color_profile, num_bytes);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-set-simulation-profile",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_set_simulation_profile_from_file:
+ * @image: The image.
+ * @file: The file containing the new simulation color profile.
+ *
+ * Sets the image's simulation color profile from an ICC file
+ *
+ * This procedure sets the image's simulation color profile from a file
+ * containing an ICC profile, or unsets it if NULL is passed as 'file'.
+ * This procedure does no color conversion.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_set_simulation_profile_from_file (GimpImage *image,
+                                             GFile     *file)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_FILE, file,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-set-simulation-profile-from-file",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_image_convert_color_profile:
  * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.

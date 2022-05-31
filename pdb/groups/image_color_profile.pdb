@@ -213,6 +213,149 @@ CODE
     );
 }
 
+sub image_get_simulation_profile {
+    $blurb = "Returns the image's simulation color profile";
+
+    $help = <<'HELP';
+This procedure returns the image's simulation color profile, or NULL if the image
+has no simulation color profile assigned.
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'profile_data', type => 'int8array',
+          desc => "The image's serialized simulation color profile.",
+          array => { name => 'num_bytes',
+                     desc => 'Number of bytes in the color_profile array' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GimpColorProfile *profile;
+
+  profile = gimp_image_get_simulation_profile (image);
+
+  if (profile)
+    {
+      const guint8 *data;
+      gsize         length;
+
+      data = gimp_color_profile_get_icc_profile (profile, &length);
+
+      profile_data = g_memdup2 (data, length);
+      num_bytes = length;
+    }
+}
+CODE
+    );
+}
+
+sub image_set_simulation_profile {
+    $blurb = "Sets the image's simulation color profile";
+
+    $help = <<'HELP';
+This procedure sets the image's simulation color profile, or unsets it if NULL is
+passed as 'color_profile'. This procedure does no color conversion.
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    $lib_private = 1;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'color_profile', type => 'int8array',
+          desc => 'The new serialized simulation color profile',
+          array => { name => 'num_bytes',
+                     desc => 'Number of bytes in the color_profile array' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (color_profile)
+    {
+      GimpColorProfile *profile;
+
+      profile = gimp_color_profile_new_from_icc_profile (color_profile,
+                                                         num_bytes,
+                                                         error);
+
+      if (profile)
+        {
+          gimp_image_set_simulation_profile (image, profile);
+          g_object_unref (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+  else
+    {
+      gimp_image_set_simulation_profile (image, NULL);
+    }
+}
+CODE
+    );
+}
+
+sub image_set_simulation_profile_from_file {
+    $blurb = "Sets the image's simulation color profile from an ICC file";
+
+    $help = <<'HELP';
+This procedure sets the image's simulation color profile from a file containing
+an ICC profile, or unsets it if NULL is passed as 'file'. This
+procedure does no color conversion.
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'file', type => 'file',
+          desc => 'The file containing the new simulation color profile' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  if (file)
+    {
+      GimpColorProfile *profile;
+
+      profile = gimp_color_profile_new_from_file (file, error);
+
+      if (profile)
+        {
+          gimp_image_set_simulation_profile (image, profile);
+          g_object_unref (profile);
+        }
+      else
+        {
+          success = FALSE;
+        }
+    }
+  else
+    {
+      gimp_image_set_simulation_profile (image, NULL);
+    }
+}
+CODE
+    );
+}
+
 sub image_convert_color_profile {
     $blurb = "Convert the image's layers to a color profile";
 
@@ -326,6 +469,9 @@ CODE
             image_get_effective_color_profile
             image_set_color_profile
             image_set_color_profile_from_file
+            image_get_simulation_profile
+            image_set_simulation_profile
+            image_set_simulation_profile_from_file
             image_convert_color_profile
             image_convert_color_profile_from_file);
 

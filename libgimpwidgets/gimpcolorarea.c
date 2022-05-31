@@ -1024,7 +1024,8 @@ gimp_color_area_create_transform (GimpColorArea *area)
                                                          priv->config,
                                                          profile,
                                                          format,
-                                                         format);
+                                                         format,
+                                                         NULL);
     }
 }
 

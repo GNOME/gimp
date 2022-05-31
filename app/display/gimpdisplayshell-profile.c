@@ -89,6 +89,7 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
   GimpColorProfile *filter_profile;
   const Babl       *filter_format;
   const Babl       *dest_format;
+  GimpColorProfile *proof_profile;
 
   gimp_display_shell_profile_free (shell);
 
@@ -101,6 +102,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
 
   if (! src_profile)
     return;
+
+  proof_profile = gimp_color_managed_get_simulation_profile (GIMP_COLOR_MANAGED (image));
 
   src_format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
 
@@ -154,7 +157,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
                                      gimp_display_shell_get_color_config (shell),
                                      filter_profile,
                                      filter_format,
-                                     dest_format);
+                                     dest_format,
+                                     proof_profile);
 
   if (shell->filter_transform || shell->profile_transform)
     {
@@ -261,7 +265,7 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
           break;
         }
 
-      SET_ACTIVE ("view-color-management-enable",    managed);
+      SET_ACTIVE ("view-color-management-enable", managed);
       SET_ACTIVE ("view-color-management-softproof", softproof);
 
       switch (gimp_color_config_get_display_intent (config))
@@ -293,39 +297,6 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
       SET_SENSITIVE ("view-display-black-point-compensation", managed);
       SET_ACTIVE    ("view-display-black-point-compensation",
                      gimp_color_config_get_display_bpc (config));
-
-      SET_SENSITIVE ("view-softproof-profile", softproof);
-
-      switch (gimp_color_config_get_simulation_intent (config))
-        {
-        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
-          action = "view-softproof-intent-perceptual";
-          break;
-
-        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
-          action = "view-softproof-intent-relative-colorimetric";
-          break;
-
-        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
-          action = "view-softproof-intent-saturation";
-          break;
-
-        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
-          action = "view-softproof-intent-absolute-colorimetric";
-          break;
-        }
-
-      SET_SENSITIVE ("view-softproof-intent-perceptual",            softproof);
-      SET_SENSITIVE ("view-softproof-intent-relative-colorimetric", softproof);
-      SET_SENSITIVE ("view-softproof-intent-saturation",            softproof);
-      SET_SENSITIVE ("view-softproof-intent-absolute-colorimetric", softproof);
-
-      SET_ACTIVE (action, TRUE);
-
-      SET_SENSITIVE ("view-softproof-black-point-compensation", softproof);
-      SET_ACTIVE    ("view-softproof-black-point-compensation",
-                     gimp_color_config_get_simulation_bpc (config));
-
       SET_SENSITIVE ("view-softproof-gamut-check", softproof);
       SET_ACTIVE    ("view-softproof-gamut-check",
                      gimp_color_config_get_simulation_gamut_check (config));

@@ -20,6 +20,7 @@
 #include <gegl.h>
 #include <gtk/gtk.h>
 
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "actions-types.h"
@@ -34,6 +35,9 @@
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
 #include "core/gimpitemstack.h"
+
+#include "display/gimpdisplay.h"
+#include "display/gimpdisplayshell.h"
 
 #include "widgets/gimpactiongroup.h"
 #include "widgets/gimphelp-ids.h"
@@ -102,11 +106,20 @@ static const GimpActionEntry image_actions[] =
     image_color_profile_discard_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_DISCARD },
 
+  { "image-softproof-profile", NULL,
+    NC_("image-action", "_Softproof Profile..."), NULL,
+    NC_("image-action", "Set the softproofing profile"),
+    image_softproof_profile_cmd_callback,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
   { "image-color-profile-save", NULL,
     NC_("image-action", "_Save Color Profile to File..."), NULL,
     NC_("image-action", "Save the image's color profile to an ICC file"),
     image_color_profile_save_cmd_callback,
     GIMP_HELP_IMAGE_COLOR_PROFILE_SAVE },
+
+  { "image-softproof-intent-menu", NULL,
+    NC_("image-action", "Soft-Proofing Re_ndering Intent") },
 
   { "image-resize", GIMP_ICON_OBJECT_RESIZE,
     NC_("image-action", "Can_vas Size..."), NULL,
@@ -184,7 +197,14 @@ static const GimpToggleActionEntry image_toggle_actions[] =
         "allows to easily restore the profile."),
     image_color_profile_use_srgb_cmd_callback,
     TRUE,
-    GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB }
+    GIMP_HELP_IMAGE_COLOR_PROFILE_USE_SRGB },
+
+  { "image-softproof-black-point-compensation", NULL,
+    NC_("image-action", "_Black Point Compensation"), NULL,
+    NC_("image-action", "Use black point compensation for soft-proofing"),
+    image_softproof_bpc_cmd_callback,
+    TRUE,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT }
 };
 
 static const GimpRadioActionEntry image_convert_base_type_actions[] =
@@ -301,6 +321,33 @@ static const GimpEnumActionEntry image_rotate_actions[] =
     GIMP_HELP_IMAGE_ROTATE_270 }
 };
 
+static const GimpRadioActionEntry image_softproof_intent_actions[] =
+{
+  { "image-softproof-intent-perceptual", NULL,
+    NC_("image-action", "_Perceptual"), NULL,
+    NC_("image-action", "Soft-proofing rendering intent is perceptual"),
+    GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "image-softproof-intent-relative-colorimetric", NULL,
+    NC_("image-action", "_Relative Colorimetric"), NULL,
+    NC_("image-action", "Soft-proofing rendering intent is relative colorimetric"),
+    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "image-softproof-intent-saturation", NULL,
+    NC_("image-action", "_Saturation"), NULL,
+    NC_("image-action", "Soft-proofing rendering intent is saturation"),
+    GIMP_COLOR_RENDERING_INTENT_SATURATION,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT },
+
+  { "image-softproof-intent-absolute-colorimetric", NULL,
+    NC_("image-action", "_Absolute Colorimetric"), NULL,
+    NC_("image-action", "Soft-proofing rendering intent is absolute colorimetric"),
+    GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC,
+    GIMP_HELP_VIEW_COLOR_MANAGEMENT }
+};
+
 
 void
 image_actions_setup (GimpActionGroup *group)
@@ -312,6 +359,13 @@ image_actions_setup (GimpActionGroup *group)
   gimp_action_group_add_toggle_actions (group, "image-action",
                                         image_toggle_actions,
                                         G_N_ELEMENTS (image_toggle_actions));
+
+  gimp_action_group_add_radio_actions (group, "image-action",
+                                       image_softproof_intent_actions,
+                                       G_N_ELEMENTS (image_softproof_intent_actions),
+                                       NULL,
+                                       GIMP_COLOR_MANAGEMENT_DISPLAY,
+                                       image_softproof_intent_cmd_callback);
 
   gimp_action_group_add_radio_actions (group, "image-convert-action",
                                        image_convert_base_type_actions,
@@ -355,17 +409,21 @@ void
 image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
-  GimpImage *image          = action_data_get_image (data);
-  gboolean   is_indexed     = FALSE;
-  gboolean   is_u8_gamma    = FALSE;
-  gboolean   is_double      = FALSE;
-  gboolean   aux            = FALSE;
-  gboolean   lp             = FALSE;
-  gboolean   sel            = FALSE;
-  gboolean   groups         = FALSE;
-  gboolean   profile_srgb   = FALSE;
-  gboolean   profile_hidden = FALSE;
-  gboolean   profile        = FALSE;
+  GimpImage        *image          = action_data_get_image (data);
+  GimpDisplay      *display        = action_data_get_display (data);
+  GimpDisplayShell *shell          = NULL;
+  GimpColorConfig  *color_config   = NULL;
+  gboolean          is_indexed     = FALSE;
+  gboolean          is_u8_gamma    = FALSE;
+  gboolean          is_double      = FALSE;
+  gboolean          aux            = FALSE;
+  gboolean          lp             = FALSE;
+  gboolean          sel            = FALSE;
+  gboolean          groups         = FALSE;
+  gboolean          profile_srgb   = FALSE;
+  gboolean          profile_hidden = FALSE;
+  gboolean          profile        = FALSE;
+  gboolean          s_bpc          = FALSE;
 
 #define SET_LABEL(action,label) \
         gimp_action_group_set_action_label (group, action, (label))
@@ -445,6 +503,35 @@ image_actions_update (GimpActionGroup *group,
 
       profile_srgb = gimp_image_get_use_srgb_profile (image, &profile_hidden);
       profile      = (gimp_image_get_color_profile (image) != NULL);
+
+      if (display)
+        {
+          shell        = gimp_display_get_shell (display);
+          color_config = gimp_display_shell_get_color_config (shell);
+
+          switch (gimp_color_config_get_simulation_intent (color_config))
+            {
+            case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+              action = "image-softproof-intent-perceptual";
+              break;
+
+            case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+              action = "image-softproof-intent-relative-colorimetric";
+              break;
+
+            case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+              action = "image-softproof-intent-saturation";
+              break;
+
+            case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+              action = "image-softproof-intent-absolute-colorimetric";
+              break;
+            }
+
+          gimp_action_group_set_action_active (group, action, TRUE);
+
+          s_bpc  = gimp_color_config_get_simulation_bpc (color_config);
+        }
     }
   else
     {
@@ -471,6 +558,14 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-convert-rgb",       image);
   SET_SENSITIVE ("image-convert-grayscale", image);
   SET_SENSITIVE ("image-convert-indexed",   image && !groups && is_u8_gamma);
+
+  SET_SENSITIVE ("image-softproof-profile",                      image);
+  SET_SENSITIVE ("image-softproof-intent-perceptual",            image);
+  SET_SENSITIVE ("image-softproof-intent-relative-colorimetric", image);
+  SET_SENSITIVE ("image-softproof-intent-saturation",            image);
+  SET_SENSITIVE ("image-softproof-intent-absolute-colorimetric", image);
+  SET_SENSITIVE ("image-softproof-black-point-compensation",     image);
+  SET_ACTIVE    ("image-softproof-black-point-compensation",     s_bpc);
 
   SET_SENSITIVE ("image-convert-u8",     image);
   SET_SENSITIVE ("image-convert-u16",    image && !is_indexed);

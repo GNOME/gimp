@@ -1029,6 +1029,8 @@ gimp_view_renderer_get_color_transform (GimpViewRenderer *renderer,
                                         const Babl       *dest_format)
 {
   GimpColorProfile *profile;
+  GimpColorProfile *proof_profile = NULL;
+  GimpImage        *image;
 
   g_return_val_if_fail (GIMP_IS_VIEW_RENDERER (renderer), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
@@ -1060,12 +1062,21 @@ gimp_view_renderer_get_color_transform (GimpViewRenderer *renderer,
       profile = srgb_profile;
     }
 
+  if (renderer->context)
+    {
+      image = gimp_context_get_image (GIMP_CONTEXT (renderer->context));
+      if (image)
+        proof_profile =
+          gimp_color_managed_get_simulation_profile (GIMP_COLOR_MANAGED (image));
+    }
+
   renderer->priv->profile_transform =
     gimp_widget_get_color_transform (widget,
                                      renderer->priv->color_config,
                                      profile,
                                      src_format,
-                                     dest_format);
+                                     dest_format,
+                                     proof_profile);
 
   return renderer->priv->profile_transform;
 }
