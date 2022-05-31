@@ -86,6 +86,7 @@ file_header_libexecdir = $(gimpplugindir)/plug-ins/file-header
 file_heif_libexecdir = $(gimpplugindir)/plug-ins/file-heif
 file_html_table_libexecdir = $(gimpplugindir)/plug-ins/file-html-table
 file_jp2_load_libexecdir = $(gimpplugindir)/plug-ins/file-jp2-load
+file_jpegxl_libexecdir = $(gimpplugindir)/plug-ins/file-jpegxl
 file_mng_libexecdir = $(gimpplugindir)/plug-ins/file-mng
 file_pat_libexecdir = $(gimpplugindir)/plug-ins/file-pat
 file_pcx_libexecdir = $(gimpplugindir)/plug-ins/file-pcx
@@ -177,6 +178,7 @@ file_header_libexec_PROGRAMS = file-header
 file_heif_libexec_PROGRAMS = $(FILE_HEIF)
 file_html_table_libexec_PROGRAMS = file-html-table
 file_jp2_load_libexec_PROGRAMS = $(FILE_JP2_LOAD)
+file_jpegxl_libexec_PROGRAMS = $(FILE_JPEGXL)
 file_mng_libexec_PROGRAMS = $(FILE_MNG)
 file_pat_libexec_PROGRAMS = file-pat
 file_pcx_libexec_PROGRAMS = file-pcx
@@ -232,6 +234,7 @@ EXTRA_PROGRAMS = \
 	file-aa \
 	file-heif \
 	file-jp2-load \
+	file-jpegxl \
 	file-mng \
 	file-pdf-save \
 	file-ps \
@@ -918,12 +921,12 @@ file_heif_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(GEXIV2_LIBS)		\
 	$(GEGL_LIBS)		\
 	$(LIBHEIF_LIBS)		\
+	$(LCMS_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
-	$(LCMS_LIBS)		\
 	$(file_heif_RC)
 
 file_html_table_SOURCES = \
@@ -964,6 +967,28 @@ file_jp2_load_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_jp2_load_RC)
+
+file_jpegxl_CFLAGS = $(JXL_CFLAGS)
+
+file_jpegxl_SOURCES = \
+	file-jpegxl.c
+
+file_jpegxl_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(JXL_THREADS_LIBS)		\
+	$(JXL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(file_jpegxl_RC)
 
 file_mng_CFLAGS = $(MNG_CFLAGS)
 
