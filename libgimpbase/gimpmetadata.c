@@ -757,8 +757,8 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
                              G_STRFUNC, parse_data->name, error->message);
                   g_clear_error (&error);
                 }
-              g_free (value);
             }
+          g_free (value);
         }
     }
 }
