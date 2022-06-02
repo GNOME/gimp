@@ -730,7 +730,7 @@ gimp_metadata_deserialize_text (GMarkupParseContext  *context,
               else
                 {
                   values = g_renew (gchar *, values, length + 2);
-                  values[length]     = value;
+                  values[length]     = g_strdup (value);
                   values[length + 1] = NULL;
 
                   gexiv2_metadata_try_set_tag_multiple (g2_metadata,
