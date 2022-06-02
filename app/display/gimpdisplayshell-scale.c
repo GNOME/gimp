@@ -79,8 +79,15 @@ static gboolean  gimp_display_shell_scale_image_starts_to_fit
                                                          (GimpDisplayShell *shell,
                                                           gdouble           new_scale,
                                                           gdouble           current_scale,
-                                                          gboolean         *vertically,
-                                                          gboolean         *horizontally);
+                                                          gboolean         *horizontally,
+                                                          gboolean         *vertically);
+static gboolean  gimp_display_shell_scale_image_stops_to_fit
+                                                         (GimpDisplayShell *shell,
+                                                          gdouble           new_scale,
+                                                          gdouble           current_scale,
+                                                          gboolean         *horizontally,
+                                                          gboolean         *vertically);
+
 static gboolean  gimp_display_shell_scale_viewport_coord_almost_centered
                                                          (GimpDisplayShell *shell,
                                                           gint              x,
@@ -1249,8 +1256,8 @@ static gboolean
 gimp_display_shell_scale_image_starts_to_fit (GimpDisplayShell *shell,
                                               gdouble           new_scale,
                                               gdouble           current_scale,
-                                              gboolean         *vertically,
-                                              gboolean         *horizontally)
+                                              gboolean         *horizontally,
+                                              gboolean         *vertically)
 {
   gboolean vertically_dummy;
   gboolean horizontally_dummy;
@@ -1295,14 +1302,14 @@ static gboolean
 gimp_display_shell_scale_image_stops_to_fit (GimpDisplayShell *shell,
                                              gdouble           new_scale,
                                              gdouble           current_scale,
-                                             gboolean         *vertically,
-                                             gboolean         *horizontally)
+                                             gboolean         *horizontally,
+                                             gboolean         *vertically)
 {
   return gimp_display_shell_scale_image_starts_to_fit (shell,
                                                        current_scale,
                                                        new_scale,
-                                                       vertically,
-                                                       horizontally);
+                                                       horizontally,
+                                                       vertically);
 }
 
 /**
