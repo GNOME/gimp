@@ -612,6 +612,9 @@ load_image (GFile    *file,
                 {
                   gimp_image_delete (image);
                   g_prefix_error (error, _("Failed to read frame %d. Possibly corrupt animation.\n"), cnt);
+                  fclose (fp);
+                  g_free (fb);
+                  g_free (ofb);
                   return FALSE;
                 }
             }
