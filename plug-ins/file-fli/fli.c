@@ -393,7 +393,8 @@ fli_read_frame (FILE          *f,
         }
       if (fli_frame.chunks == 0)
         {
-          memcpy (framebuf, old_framebuf, fli_header->width * fli_header->height);
+          /* Silence a warning: wxh could in theory be more than INT_MAX. */
+          memcpy (framebuf, old_framebuf, (gint64) fli_header->width * fli_header->height);
         }
     }
   else /* unknown, skip */
