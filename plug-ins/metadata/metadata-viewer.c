@@ -115,14 +115,12 @@ static void      metadata_dialog_append_tags      (GExiv2Metadata       *metadat
                                                    gint                  value_column,
                                                    gboolean              load_iptc);
 static void metadata_dialog_add_tag               (GtkListStore         *store,
-                                                   GtkTreeIter           iter,
                                                    gint                  tag_column,
                                                    gint                  value_column,
                                                    const gchar          *tag,
                                                    const gchar          *value);
 static void metadata_dialog_add_translated_tag    (GExiv2Metadata       *metadata,
                                                    GtkListStore         *store,
-                                                   GtkTreeIter           iter,
                                                    gint                  tag_column,
                                                    gint                  value_column,
                                                    const gchar          *tag);
@@ -402,7 +400,6 @@ metadata_tag_is_string (const gchar *tag)
 
 static void
 metadata_dialog_add_tag (GtkListStore    *store,
-                         GtkTreeIter      iter,
                          gint             tag_column,
                          gint             value_column,
                          const gchar     *tag,
@@ -410,6 +407,8 @@ metadata_dialog_add_tag (GtkListStore    *store,
 {
   if (value)
     {
+      GtkTreeIter iter;
+
       gtk_list_store_append (store, &iter);
       gtk_list_store_set (store, &iter,
                           tag_column,   tag,
@@ -421,7 +420,6 @@ metadata_dialog_add_tag (GtkListStore    *store,
 static void
 metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
                                     GtkListStore    *store,
-                                    GtkTreeIter      iter,
                                     gint             tag_column,
                                     gint             value_column,
                                     const gchar     *tag)
@@ -437,7 +435,7 @@ metadata_dialog_add_translated_tag (GExiv2Metadata  *metadata,
       g_clear_error (&error);
     }
 
-  metadata_dialog_add_tag (store, iter, tag_column, value_column,
+  metadata_dialog_add_tag (store, tag_column, value_column,
                            tag, gettext (value));
   g_free (value);
 }
@@ -526,7 +524,6 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                              gint             value_column,
                              gboolean         load_iptc)
 {
-  GtkTreeIter  iter;
   const gchar *tag;
   const gchar *last_tag = NULL;
   gboolean     gps_done = FALSE;
@@ -575,7 +572,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                                                          &lng, &error))
                 {
                   str = metadata_format_gps_longitude_latitude (lng);
-                  metadata_dialog_add_tag (store, iter,
+                  metadata_dialog_add_tag (store,
                                            tag_column, value_column,
                                            "Exif.GPSInfo.GPSLongitude",
                                            str);
@@ -588,7 +585,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                   g_clear_error (&error);
                 }
 
-              metadata_dialog_add_translated_tag (metadata, store, iter,
+              metadata_dialog_add_translated_tag (metadata, store,
                                                   tag_column, value_column,
                                                   "Exif.GPSInfo.GPSLongitudeRef");
 
@@ -596,7 +593,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                                                         &lat, &error))
                 {
                   str = metadata_format_gps_longitude_latitude (lat);
-                  metadata_dialog_add_tag (store, iter,
+                  metadata_dialog_add_tag (store,
                                            tag_column, value_column,
                                            "Exif.GPSInfo.GPSLatitude",
                                            str);
@@ -609,7 +606,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                   g_clear_error (&error);
                 }
 
-              metadata_dialog_add_translated_tag (metadata, store, iter,
+              metadata_dialog_add_translated_tag (metadata, store,
                                                   tag_column, value_column,
                                                   "Exif.GPSInfo.GPSLatitudeRef");
 
@@ -622,7 +619,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                   str  = metadata_format_gps_altitude (alt, TRUE,  _(" meter"));
                   str2 = metadata_format_gps_altitude (alt, FALSE, _(" feet"));
                   str3 = g_strdup_printf ("%s (%s)", str, str2);
-                  metadata_dialog_add_tag (store, iter,
+                  metadata_dialog_add_tag (store,
                                            tag_column, value_column,
                                            "Exif.GPSInfo.GPSAltitude",
                                            str3);
@@ -650,7 +647,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
                         index = 2;
                       else
                         index = 0;
-                      metadata_dialog_add_tag (store, iter,
+                      metadata_dialog_add_tag (store,
                                               tag_column, value_column,
                                               "Exif.GPSInfo.GPSAltitudeRef",
                                               gettext (gpsaltref[index]));
@@ -681,7 +678,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
           /* Can start with charset. Remove part that is not relevant. */
           value = metadata_interpret_user_comment (value);
 
-          metadata_dialog_add_tag (store, iter,
+          metadata_dialog_add_tag (store,
                                    tag_column, value_column,
                                    tag, value);
           g_free (value);
@@ -712,7 +709,7 @@ metadata_dialog_append_tags (GExiv2Metadata  *metadata,
 
           value = metadata_dialog_format_tag_value (metadata, tag,
                                                     /* truncate = */ TRUE);
-          metadata_dialog_add_tag (store, iter,
+          metadata_dialog_add_tag (store,
                                    tag_column, value_column,
                                    tag, value);
           g_free (value);
