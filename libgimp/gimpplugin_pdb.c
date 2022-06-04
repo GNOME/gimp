@@ -34,14 +34,13 @@
  *
  * Registers a textdomain for localisation.
  *
- * This procedure adds a textdomain to the list of domains Gimp
- * searches for strings when translating its menu entries. There is no
- * need to call this function for plug-ins that have their strings
- * included in the 'gimp-std-plugins' domain as that is used by
- * default. If the compiled message catalog is not in the standard
- * location, you may specify an absolute path to another location. This
- * procedure can only be called in the query function of a plug-in and
- * it has to be called before any procedure is installed.
+ * This procedure adds a textdomain to the list of domains GIMP
+ * searches for strings when translating its menu entries.
+ * Only core plug-ins should call this function directly. Third-party
+ * plug-ins are expected instead to define a custom `set_i18n()` method
+ * returning their domain and a path relative to their folder. In other
+ * words, this should be considered an internal PDB function which
+ * should not be used except by core developers.
  *
  * Returns: TRUE on success.
  **/
