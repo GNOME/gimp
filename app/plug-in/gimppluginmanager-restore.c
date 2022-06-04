@@ -151,20 +151,16 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   /* create locale and help domain lists */
   for (list = manager->plug_in_defs; list; list = list->next)
     {
-      GimpPlugInDef *plug_in_def = list->data;
+      GimpPlugInDef *plug_in_def   = list->data;
+      const gchar   *locale_domain = NULL;
 
       if (plug_in_def->locale_domain_name)
-        gimp_plug_in_manager_add_locale_domain (manager,
-                                                plug_in_def->file,
-                                                plug_in_def->locale_domain_name,
-                                                plug_in_def->locale_domain_path);
-      else
-        /* set the default plug-in locale domain */
-        gimp_plug_in_def_set_locale_domain (plug_in_def,
-                                            gimp_plug_in_manager_get_locale_domain (manager,
-                                                                                    plug_in_def->file,
-                                                                                    NULL),
-                                            NULL);
+        {
+          gimp_plug_in_manager_add_locale_domain (manager,
+                                                  plug_in_def->file,
+                                                  plug_in_def->locale_domain_name,
+                                                  plug_in_def->locale_domain_path);
+        }
 
       if (plug_in_def->help_domain_name)
         gimp_plug_in_manager_add_help_domain (manager,

@@ -138,12 +138,13 @@ plug_in_menus_setup (GimpUIManager *manager,
           ! plug_in_proc->file_proc)
         {
           GFile       *file = gimp_plug_in_procedure_get_file (plug_in_proc);
-          const gchar *locale_domain;
           GList       *path;
+          const gchar *locale_domain = NULL;
+          gboolean     localize;
 
-          locale_domain =
-            gimp_plug_in_manager_get_locale_domain (plug_in_manager,
-                                                    file, NULL);
+          localize =
+            gimp_plug_in_manager_get_i18n (plug_in_manager,
+                                           file, &locale_domain, NULL);
 
           for (path = plug_in_proc->menu_paths; path; path = g_list_next (path))
             {
@@ -155,12 +156,21 @@ plug_in_menus_setup (GimpUIManager *manager,
                   entry->proc      = plug_in_proc;
                   entry->menu_path = path->data;
 
-                  menu = g_strconcat (dgettext (locale_domain,
-                                                path->data),
-                                      "/",
-                                      dgettext (locale_domain,
-                                                plug_in_proc->menu_label),
-                                      NULL);
+                  if (localize)
+                    {
+                      menu = g_strconcat (dgettext (locale_domain,
+                                                    path->data),
+                                          "/",
+                                          dgettext (locale_domain,
+                                                    plug_in_proc->menu_label),
+                                          NULL);
+                    }
+                  else
+                    {
+                      menu = g_strconcat (path->data, "/",
+                                          plug_in_proc->menu_label,
+                                          NULL);
+                    }
 
                   plug_in_menus_tree_insert (menu_entries, menu, entry);
                   g_free (menu);

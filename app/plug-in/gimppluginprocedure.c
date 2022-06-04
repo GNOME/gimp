@@ -255,8 +255,14 @@ gimp_plug_in_procedure_get_menu_label (GimpProcedure *procedure)
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
   if (proc->menu_label)
-    return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     proc->menu_label);
+    {
+      const gchar *locale_domain = NULL;
+
+      if (gimp_plug_in_procedure_get_i18n (proc, &locale_domain))
+        return dgettext (locale_domain, proc->menu_label);
+      else
+        return proc->menu_label;
+    }
 
   return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
@@ -268,8 +274,14 @@ gimp_plug_in_procedure_get_blurb (GimpProcedure *procedure)
 
   /*  do not to pass the empty string to gettext()  */
   if (procedure->blurb && strlen (procedure->blurb))
-    return dgettext (gimp_plug_in_procedure_get_locale_domain (proc),
-                     procedure->blurb);
+    {
+      const gchar *locale_domain = NULL;
+
+      if (gimp_plug_in_procedure_get_i18n (proc, &locale_domain))
+        return dgettext (locale_domain, procedure->blurb);
+      else
+        return procedure->blurb;
+    }
 
   return NULL;
 }
@@ -560,20 +572,27 @@ gimp_plug_in_procedure_get_file (GimpPlugInProcedure *proc)
 }
 
 void
-gimp_plug_in_procedure_set_locale_domain (GimpPlugInProcedure *proc,
-                                          const gchar         *locale_domain)
+gimp_plug_in_procedure_set_i18n (GimpPlugInProcedure *proc,
+                                 gboolean             localize,
+                                 const gchar         *locale_domain)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
-  proc->locale_domain = locale_domain ? g_quark_from_string (locale_domain) : 0;
+  proc->localize      = localize;
+  proc->locale_domain = localize && locale_domain ? g_quark_from_string (locale_domain) : 0;
 }
 
-const gchar *
-gimp_plug_in_procedure_get_locale_domain (GimpPlugInProcedure *proc)
+gboolean
+gimp_plug_in_procedure_get_i18n (GimpPlugInProcedure  *proc,
+                                 const gchar         **domain)
 {
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
+  g_return_val_if_fail (domain && *domain == NULL, FALSE);
 
-  return g_quark_to_string (proc->locale_domain);
+  if (proc->localize)
+    *domain = g_quark_to_string (proc->locale_domain);
+
+  return proc->localize;
 }
 
 void

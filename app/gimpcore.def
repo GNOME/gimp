@@ -738,7 +738,7 @@ gimp_pickable_get_tiles
 gimp_plug_in_manager_data_free
 gimp_plug_in_manager_get_help_domain
 gimp_plug_in_manager_get_help_domains
-gimp_plug_in_manager_get_locale_domain
+gimp_plug_in_manager_get_i18n
 gimp_procedure_execute_async
 gimp_procedure_get_arguments
 gimp_procedure_get_type
@@ -774,6 +774,7 @@ gimp_plug_in_procedure_get_label
 gimp_plug_in_procedure_get_type
 gimp_plug_in_procedure_new
 gimp_plug_in_procedure_set_file_proc
+gimp_plug_in_procedure_set_i18n
 gimp_plug_in_procedure_set_icon
 gimp_plug_in_procedure_set_image_types
 gimp_plug_in_procedure_set_mime_type
@@ -833,7 +834,7 @@ gimp_message_valist
 gimp_viewable_set_stock_id
 
 gimp_plug_in_procedure_get_blurb
-gimp_plug_in_procedure_get_locale_domain
+gimp_plug_in_procedure_get_i18n
 
 gimp_channel_select_round_rect
 gimp_drawable_undo_get_type

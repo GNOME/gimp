@@ -186,21 +186,25 @@ plug_in_actions_menu_branch_added (GimpPlugInManager *manager,
                                    const gchar       *menu_label,
                                    GimpActionGroup   *group)
 {
-  const gchar *locale_domain;
-  const gchar *path_translated;
-  const gchar *label_translated;
+  const gchar *locale_domain   = NULL;
+  gchar       *full_translated = NULL;
   gchar       *full;
-  gchar       *full_translated;
 
-  locale_domain = gimp_plug_in_manager_get_locale_domain (manager, file, NULL);
+  full = g_strconcat (menu_path, "/", menu_label, NULL);
 
-  path_translated  = dgettext (locale_domain, menu_path);
-  label_translated = dgettext (locale_domain, menu_label);
+  if (gimp_plug_in_manager_get_i18n (manager, file, &locale_domain, NULL))
+    {
+      const gchar *path_translated;
+      const gchar *label_translated;
 
-  full            = g_strconcat (menu_path,       "/", menu_label,       NULL);
-  full_translated = g_strconcat (path_translated, "/", label_translated, NULL);
+      path_translated  = dgettext (locale_domain, menu_path);
+      label_translated = dgettext (locale_domain, menu_label);
 
-  if (plug_in_actions_check_translation (full, full_translated))
+      full_translated = g_strconcat (path_translated, "/", label_translated, NULL);
+    }
+
+  if (full_translated != NULL &&
+      plug_in_actions_check_translation (full, full_translated))
     plug_in_actions_build_path (group, full, full_translated);
   else
     plug_in_actions_build_path (group, full, full);
@@ -272,19 +276,19 @@ plug_in_actions_menu_path_added (GimpPlugInProcedure *plug_in_proc,
                                  const gchar         *menu_path,
                                  GimpActionGroup     *group)
 {
-  const gchar *locale_domain;
-  const gchar *path_translated;
+  const gchar *locale_domain   = NULL;
+  const gchar *path_translated = NULL;
 
 #if 0
   g_print ("%s: %s (%s)\n", G_STRFUNC,
            gimp_object_get_name (plug_in_proc), menu_path);
 #endif
 
-  locale_domain = gimp_plug_in_procedure_get_locale_domain (plug_in_proc);
+  if (gimp_plug_in_procedure_get_i18n (plug_in_proc, &locale_domain))
+    path_translated = dgettext (locale_domain, menu_path);
 
-  path_translated = dgettext (locale_domain, menu_path);
-
-  if (plug_in_actions_check_translation (menu_path, path_translated))
+  if (path_translated &&
+      plug_in_actions_check_translation (menu_path, path_translated))
     plug_in_actions_build_path (group, menu_path, path_translated);
   else
     plug_in_actions_build_path (group, menu_path, menu_path);
@@ -295,10 +299,11 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
                           GimpPlugInProcedure *proc)
 {
   GimpProcedureActionEntry  entry;
-  const gchar              *locale_domain;
+  const gchar              *locale_domain = NULL;
   GList                    *list;
+  gboolean                  localize;
 
-  locale_domain = gimp_plug_in_procedure_get_locale_domain (proc);
+  localize = gimp_plug_in_procedure_get_i18n (proc, &locale_domain);
 
   entry.name        = gimp_object_get_name (proc);
   entry.icon_name   = gimp_viewable_get_icon_name (GIMP_VIEWABLE (proc));
@@ -314,9 +319,9 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   for (list = proc->menu_paths; list; list = g_list_next (list))
     {
       const gchar *original   = list->data;
-      const gchar *translated = dgettext (locale_domain, original);
+      const gchar *translated = localize ? dgettext (locale_domain, original) : NULL;
 
-      if (plug_in_actions_check_translation (original, translated))
+      if (translated && plug_in_actions_check_translation (original, translated))
         plug_in_actions_build_path (group, original, translated);
       else
         plug_in_actions_build_path (group, original, original);

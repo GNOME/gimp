@@ -904,10 +904,33 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                                                                 catalog_dir);
       if (use_gettext)
         {
-          if (! (*gettext_domain))
-            *gettext_domain = g_strdup (plug_in->priv->translation_domain_name);
+          gboolean reserved = FALSE;
 
-          if (*catalog_dir)
+          if (! (*gettext_domain))
+            {
+              *gettext_domain = g_strdup (plug_in->priv->translation_domain_name);
+            }
+          else if (g_strcmp0 (*gettext_domain, GETTEXT_PACKAGE "-std-plug-ins") == 0 ||
+                   g_strcmp0 (*gettext_domain, GETTEXT_PACKAGE "-script-fu") == 0 ||
+                   g_strcmp0 (*gettext_domain, GETTEXT_PACKAGE "-python") == 0)
+            {
+              /* We special-case these 3 domains as the only ones where
+               * it is allowed to set an absolute system dir (actually
+               * set by the lib itself; devs must set NULL). See docs of
+               * set_i18n() method.
+               */
+              if (*catalog_dir)
+                {
+                  g_printerr ("[%s] Do not set a catalog directory with set_i18n() with reserved domain: %s\n",
+                              procedure_name, *gettext_domain);
+                  g_clear_pointer (catalog_dir, g_free);
+                }
+
+              *catalog_dir = g_strdup (gimp_locale_directory ());
+              reserved = TRUE;
+            }
+
+          if (*catalog_dir && ! reserved)
             {
               if (g_path_is_absolute (*catalog_dir))
                 {
@@ -954,7 +977,7 @@ _gimp_plug_in_set_i18n (GimpPlugIn   *plug_in,
                   g_object_unref (catalog_file);
                 }
             }
-          else
+          else if (! *catalog_dir)
             {
               *catalog_dir = g_file_get_path (plug_in->priv->translation_domain_path);
             }
@@ -1023,11 +1046,26 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
     {
       const gchar   *name = list->data;
       GimpProcedure *procedure;
+      gchar *gettext_domain = NULL;
+      gchar *catalog_dir    = NULL;
 
       procedure = _gimp_plug_in_create_procedure (plug_in, name);
       if (procedure)
         {
           GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
+
+          if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
+                                      &gettext_domain, &catalog_dir))
+            {
+              GFile *file = g_file_new_for_path (catalog_dir);
+
+              _gimp_plug_in_domain_register (gettext_domain, file);
+
+              g_free (gettext_domain);
+              g_free (catalog_dir);
+              g_object_unref (file);
+            }
+
           g_object_unref (procedure);
         }
       else

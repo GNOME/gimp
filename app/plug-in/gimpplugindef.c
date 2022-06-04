@@ -126,8 +126,9 @@ gimp_plug_in_def_add_procedure (GimpPlugInDef       *plug_in_def,
 
   proc->mtime = plug_in_def->mtime;
 
-  gimp_plug_in_procedure_set_locale_domain (proc,
-                                            plug_in_def->locale_domain_name);
+  if (plug_in_def->locale_domain_name)
+    gimp_plug_in_procedure_set_i18n (proc, TRUE,
+                                     plug_in_def->locale_domain_name);
   gimp_plug_in_procedure_set_help_domain (proc,
                                           plug_in_def->help_domain_name);
 
@@ -167,8 +168,8 @@ gimp_plug_in_def_set_locale_domain (GimpPlugInDef *plug_in_def,
     {
       GimpPlugInProcedure *procedure = list->data;
 
-      gimp_plug_in_procedure_set_locale_domain (procedure,
-                                                plug_in_def->locale_domain_name);
+      gimp_plug_in_procedure_set_i18n (procedure, TRUE,
+                                       plug_in_def->locale_domain_name);
     }
 }
 

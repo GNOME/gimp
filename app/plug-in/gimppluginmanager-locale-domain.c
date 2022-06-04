@@ -93,22 +93,28 @@ gimp_plug_in_manager_add_locale_domain (GimpPlugInManager *manager,
 #endif
 }
 
-const gchar *
-gimp_plug_in_manager_get_locale_domain (GimpPlugInManager  *manager,
-                                        GFile              *file,
-                                        const gchar       **domain_path)
+gboolean
+gimp_plug_in_manager_get_i18n (GimpPlugInManager  *manager,
+                               GFile              *file,
+                               const gchar       **locale_domain,
+                               const gchar       **domain_path)
 {
   GSList *list;
 
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
-  g_return_val_if_fail (file == NULL || G_IS_FILE (file), NULL);
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), FALSE);
+  g_return_val_if_fail (file == NULL || G_IS_FILE (file), FALSE);
 
   if (domain_path)
     *domain_path = gimp_locale_directory ();
 
   /*  A NULL prog_name is GIMP itself, return the default domain  */
   if (! file)
-    return NULL;
+    {
+      if (locale_domain)
+        *locale_domain = NULL;
+
+      return TRUE;
+    }
 
   for (list = manager->locale_domains; list; list = list->next)
     {
@@ -120,11 +126,14 @@ gimp_plug_in_manager_get_locale_domain (GimpPlugInManager  *manager,
           if (domain_path && domain->domain_path)
             *domain_path = domain->domain_path;
 
-          return domain->domain_name;
+          if (locale_domain)
+            *locale_domain = domain->domain_name;
+
+          return TRUE;
         }
     }
 
-  return STD_PLUG_INS_LOCALE_DOMAIN;
+  return FALSE;
 }
 
 gint

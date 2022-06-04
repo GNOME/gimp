@@ -163,6 +163,13 @@ struct _GimpPlugInClass
    *
    * Note that @localedir must be a relative path, subdirectory of the
    * directory of `gimp_get_progname()`.
+   * The domain names "gimp30-std-plug-ins", "gimp30-script-fu" and
+   * "gimp30-python" are reserved and can only be used with a %NULL
+   * @catalog_dir. These will use the translation catalogs installed for
+   * core plug-ins, so you are not expected to use these for your
+   * plug-ins, except if you are making a core plug-in. More domain
+   * names may become reserved so we discourage using a gettext domain
+   * starting with "gimp30-".
    *
    * When localizing your plug-in this way, GIMP also binds
    * @gettext_domain to the UTF-8 encoding.
