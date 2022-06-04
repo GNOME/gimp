@@ -995,12 +995,12 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Flip the specified item either vertically or horizontally.",
                                   "This procedure flips the specified item.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to TRUE, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. If auto_center is set to TRUE, the flip is around the selection's center. Otherwise, the coordinate of the axis needs to be specified. The return value is the ID of the flipped floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be flipped around its center if auto_center is set to TRUE, otherwise the coordinate of the axis needs to be specified. The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1051,12 +1051,12 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Flip the specified item around a given line.",
                                   "This procedure flips the specified item.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then flipped. The axis to flip around is specified by specifying two points from that line. The return value is the ID of the flipped floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be flipped around the specified axis. The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1110,15 +1110,15 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Perform a possibly non-affine transformation on the specified item.",
                                   "This procedure performs a possibly non-affine transformation on the specified item by allowing the corners of the original bounding box to be arbitrarily remapped to any values.\n"
-                                     "\n"
-                                     "The 4 coordinates specify the new locations of each corner of the original bounding box. By specifying these values, any affine transformation (rotation, scaling, translation) can be affected. Additionally, these values can be specified such that the resulting transformed item will appear to have been projected via a perspective transform.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "The 4 coordinates specify the new locations of each corner of the original bounding box. By specifying these values, any affine transformation (rotation, scaling, translation) can be affected. Additionally, these values can be specified such that the resulting transformed item will appear to have been projected via a perspective transform.\n"
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified mapping.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1196,13 +1196,13 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Rotate the specified item about given coordinates through the specified angle.",
                                   "This function rotates the specified item.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1257,13 +1257,13 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Rotate the specified item about given coordinates through the specified angle.",
                                   "This function rotates the specified item.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then rotated by the specified amount. If auto_center is set to TRUE, the rotation is around the selection's center. Otherwise, the coordinate of the center point needs to be specified. The return value is the ID of the rotated floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be rotated around its center if auto_center is set to TRUE, otherwise the coordinate of the center point needs to be specified.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1317,15 +1317,15 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Scale the specified item.",
                                   "This procedure scales the specified item.\n"
-                                     "\n"
-                                     "The 2 coordinates specify the new locations of the top-left and bottom-roght corners of the original bounding box.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled as specified. The return value is the ID of the scaled floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "The 2 coordinates specify the new locations of the top-left and bottom-roght corners of the original bounding box.\n"
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then scaled as specified. The return value is the ID of the scaled floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be scaled according to the specified coordinates.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1379,15 +1379,15 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Shear the specified item about its center by the specified magnitude.",
                                   "This procedure shears the specified item.\n"
-                                     "\n"
-                                     "The shear type parameter indicates whether the shear will be applied horizontally or vertically. The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheared as specified. The return value is the ID of the sheared floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "The shear type parameter indicates whether the shear will be applied horizontally or vertically. The magnitude can be either positive or negative and indicates the extent (in pixels) to shear by.\n"
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then sheared as specified. The return value is the ID of the sheared floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be sheared according to the specified parameters.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1432,15 +1432,15 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Transform the specified item in 2d.",
                                   "This procedure transforms the specified item.\n"
-                                     "\n"
-                                     "The transformation is done by scaling by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y).\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "The transformation is done by scaling by the x and y scale factors about the point (source_x, source_y), then rotating around the same point, then translating that point to the new position (dest_x, dest_y).\n"
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified parameters.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1512,15 +1512,15 @@ register_item_transform_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Transform the specified item in 2d.",
                                   "This procedure transforms the specified item.\n"
-                                     "\n"
-                                     "The transformation is done by assembling a 3x3 matrix from the coefficients passed.\n"
-                                     "\n"
-                                     "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
-                                     "\n"
-                                     "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix.\n"
-                                     "The return value will be equal to the item ID supplied as input.\n"
-                                     "\n"
-                                     "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
+                                  "\n"
+                                  "The transformation is done by assembling a 3x3 matrix from the coefficients passed.\n"
+                                  "\n"
+                                  "If a selection exists and the item is a drawable, the portion of the drawable which lies under the selection is cut from the drawable and made into a floating selection which is then transformed as specified. The return value is the ID of the transformed floating selection.\n"
+                                  "\n"
+                                  "If there is no selection or the item is not a drawable, the entire item will be transformed according to the specified matrix.\n"
+                                  "The return value will be equal to the item ID supplied as input.\n"
+                                  "\n"
+                                  "This procedure is affected by the following context setters: 'gimp-context-set-interpolation', 'gimp-context-set-transform-direction', 'gimp-context-set-transform-resize'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

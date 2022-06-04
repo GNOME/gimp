@@ -759,7 +759,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Paste buffer to the specified drawable.",
                                   "This procedure pastes a copy of the internal GIMP edit buffer to the specified drawable. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. The \"paste_into\" option specifies whether to clear the current image selection, or to paste the buffer \"behind\" the selection. This allows the selection to act as a mask for the pasted buffer. Anywhere that the selection mask is non-zero, the pasted buffer will show through. The pasted data may be a floating selection when relevant, layers otherwise. If the image has a floating selection at the time of pasting, the old floating selection will be anchored to its drawable before the new floating selection is added.\n"
-                                     "This procedure returns the new layers (floating or not). If the result is a floating selection, it will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
+                                  "This procedure returns the new layers (floating or not). If the result is a floating selection, it will already be attached to the specified drawable, and a subsequent call to floating_sel_attach is not needed.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

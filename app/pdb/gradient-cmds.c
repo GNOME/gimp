@@ -1952,7 +1952,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Sets the left endpoint position of the specified segment",
                                   "This procedure sets the left endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point to the left to the middle point of the current segment.\n"
-                                     "This procedure returns the final position.",
+                                  "This procedure returns the final position.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Shlomi Fish <shlomif@iglu.org.il>",
@@ -2031,7 +2031,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Sets the middle point position of the specified segment",
                                   "This procedure sets the middle point position of the specified segment of the specified gradient. The final position will be between the two endpoints of the segment.\n"
-                                     "This procedure returns the final position.",
+                                  "This procedure returns the final position.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Shlomi Fish <shlomif@iglu.org.il>",
@@ -2110,7 +2110,7 @@ register_gradient_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Sets the right endpoint position of the specified segment",
                                   "This procedure sets the right endpoint position of the specified segment of the specified gradient. The final position will be between the position of the middle point of the current segment and the middle point of the segment to the right.\n"
-                                     "This procedure returns the final position.",
+                                  "This procedure returns the final position.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Shlomi Fish <shlomif@iglu.org.il>",

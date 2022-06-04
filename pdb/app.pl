@@ -698,8 +698,8 @@ sub generate {
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "$procedure_name");
   gimp_procedure_set_static_help (procedure,
-                                  @{[ &quotewrap($blurb, 2, 37) ]},
-                                  @{[ &quotewrap($help,  2, 37) ]},
+                                  @{[ &quotewrap($blurb, 2, 34) ]},
+                                  @{[ &quotewrap($help,  2, 34) ]},
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "$proc->{author}",

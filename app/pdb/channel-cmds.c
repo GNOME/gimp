@@ -384,8 +384,8 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Create a new channel.",
                                   "This procedure creates a new channel with the specified width, height, name, opacity and color.\n"
-                                     "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
-                                     "The channel's contents are undefined initially.",
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.\n"
+                                  "The channel's contents are undefined initially.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -447,7 +447,7 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Create a new channel from a color component",
                                   "This procedure creates a new channel from a color component.\n"
-                                     "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'. Other attributes, such as channel visibility, should be set with explicit procedure calls.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Shlomi Fish <shlomif@iglu.org.il>",
@@ -491,7 +491,7 @@ register_channel_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Copy a channel.",
                                   "This procedure copies the specified channel and returns the copy.\n"
-                                     "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
+                                  "The new channel still needs to be added to the image, as this is not automatic. Add the new channel with 'gimp-image-insert-channel'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

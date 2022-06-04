@@ -983,7 +983,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Returns the drawable's Babl format",
                                   "This procedure returns the drawable's Babl format.\n"
-                                     "Note that the actual PDB procedure only transfers the format's encoding. In order to get to the real format, the libbgimp C wrapper must be used.",
+                                  "Note that the actual PDB procedure only transfers the format's encoding. In order to get to the real format, the libbgimp C wrapper must be used.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1014,7 +1014,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Returns the drawable's thumbnail Babl format",
                                   "This procedure returns the drawable's thumbnail Babl format.\n"
-                                     "Thumbnails are always 8-bit images, see 'gimp-drawable-thumbnail' and 'gimp-drawable-sub-thmbnail'.",
+                                  "Thumbnails are always 8-bit images, see 'gimp-drawable-thumbnail' and 'gimp-drawable-sub-thmbnail'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1349,7 +1349,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Find the bounding box of the current selection in relation to the specified drawable.",
                                   "This procedure returns whether there is a selection. If there is one, the upper left and lower right-hand corners of its bounding box are returned. These coordinates are specified relative to the drawable's origin, and bounded by the drawable's extents. Please note that the pixel specified by the lower right-hand coordinate of the bounding box is not part of the selection. The selection ends at the upper left corner of this pixel. This means the width of the selection can be calculated as (x2 - x1), its height as (y2 - y1).\n"
-                                     "Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See 'gimp-drawable-mask-intersect' for a boolean return value which is more useful in most cases.",
+                                  "Note that the returned boolean does NOT correspond with the returned region being empty or not, it always returns whether the selection is non_empty. See 'gimp-drawable-mask-intersect' for a boolean return value which is more useful in most cases.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -1403,7 +1403,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Find the bounding box of the current selection in relation to the specified drawable.",
                                   "This procedure returns whether there is an intersection between the drawable and the selection. Unlike 'gimp-drawable-mask-bounds', the intersection's bounds are returned as x, y, width, height.\n"
-                                     "If there is no selection this function returns TRUE and the returned bounds are the extents of the whole drawable.",
+                                  "If there is no selection this function returns TRUE and the returned bounds are the extents of the whole drawable.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -1648,7 +1648,7 @@ register_drawable_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Fill the drawable with the specified fill mode.",
                                   "This procedure fills the drawable. If the fill mode is foreground the current foreground color is used. If the fill mode is background, the current background color is used. If the fill type is white, then white is used. Transparent fill only affects layers with an alpha channel, in which case the alpha channel is set to transparent. If the drawable has no alpha channel, it is filled to white. No fill leaves the drawable's contents undefined.\n"
-                                     "This procedure is unlike 'gimp-drawable-edit-fill' or the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.",
+                                  "This procedure is unlike 'gimp-drawable-edit-fill' or the bucket fill tool because it fills regardless of a selection. Its main purpose is to fill a newly created drawable before adding it to the image. This operation cannot be undone.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",

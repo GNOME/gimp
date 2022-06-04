@@ -3509,8 +3509,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line width setting.",
                                   "This procedure modifies the line width setting for stroking lines.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -3559,8 +3559,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line width unit setting.",
                                   "This procedure modifies the line width unit setting for stroking lines.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -3610,8 +3610,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line cap style setting.",
                                   "This procedure modifies the line cap style setting for stroking lines.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -3660,8 +3660,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line join style setting.",
                                   "This procedure modifies the line join style setting for stroking lines.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -3709,9 +3709,9 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line miter limit setting.",
                                   "This procedure modifies the line miter limit setting for stroking lines.\n"
-                                     "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "A mitered join is converted to a bevelled join if the miter would extend to a distance of more than (miter-limit * line-width) from the actual join point.\n"
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -3758,8 +3758,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line dash offset setting.",
                                   "This procedure modifies the line dash offset setting for stroking lines.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -3811,10 +3811,10 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the line dash pattern setting.",
                                   "This procedure modifies the line dash pattern setting for stroking lines.\n"
-                                     "\n"
-                                     "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
+                                  "\n"
+                                  "The unit of the dash pattern segments is the actual line width used for the stroke operation, in other words a segment length of 1.0 results in a square segment shape (or gap shape).\n"
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-stroke-selection', 'gimp-drawable-edit-stroke-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4218,7 +4218,7 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Retrieve the currently active paint dynamics.",
                                   "This procedure returns the name of the currently active paint dynamics. If enabled, all paint operations and stroke operations use this paint dynamics to control the application of paint to the image. If disabled, the dynamics will be ignored during paint actions.\n"
-                                     "See 'gimp-context-are-dynamics-enabled' to enquire whether dynamics are used or ignored.",
+                                  "See 'gimp-context-are-dynamics-enabled' to enquire whether dynamics are used or ignored.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4786,8 +4786,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the antialias setting.",
                                   "This procedure modifies the antialias setting. If antialiasing is turned on, the edges of selected region will contain intermediate values which give the appearance of a sharper, less pixelized edge. This should be set as TRUE most of the time unless a binary-only selection is wanted.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item', 'gimp-drawable-edit-bucket-fill', 'gimp-drawable-edit-stroke-item', 'gimp-drawable-edit-stroke-selection'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item', 'gimp-drawable-edit-bucket-fill', 'gimp-drawable-edit-stroke-item', 'gimp-drawable-edit-stroke-selection'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4834,8 +4834,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the feather setting.",
                                   "This procedure modifies the feather setting. If the feather option is enabled, selections will be blurred before combining. The blur is a gaussian blur; its radii can be controlled using 'gimp-context-set-feather-radius'.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-image-select-rectangle', 'gimp-image-select-round-rectangle', 'gimp-image-select-ellipse', 'gimp-image-select-polygon', 'gimp-image-select-item'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4888,8 +4888,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the feather radius setting.",
                                   "This procedure modifies the feather radius setting.\n"
-                                     "\n"
-                                     "This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
+                                  "\n"
+                                  "This setting affects all procedures that are affected by 'gimp-context-set-feather'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4942,8 +4942,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the sample merged setting.",
                                   "This procedure modifies the sample merged setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether the pixel data from the specified drawable is used ('sample-merged' is FALSE), or the pixel data from the composite image ('sample-merged' is TRUE. This is equivalent to sampling for colors after merging all visible layers).\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -4991,8 +4991,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the sample criterion setting.",
                                   "This procedure modifies the sample criterion setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls how color similarity is determined. SELECT_CRITERION_COMPOSITE is the default value.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -5040,8 +5040,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the sample threshold setting.",
                                   "This procedure modifies the sample threshold setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls what is \"sufficiently close\" to be considered a similar color. If the sample threshold has not been set explicitly, the default threshold set in gimprc will be used.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -5134,8 +5134,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the sample transparent setting.",
                                   "This procedure modifies the sample transparent setting. If an operation depends on the colors of the pixels present in a drawable, like when doing a seed fill, this setting controls whether transparency is considered to be a unique selectable color. When this setting is TRUE, transparent areas can be selected or filled.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-color', 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -5182,8 +5182,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the diagonal neighbors setting.",
                                   "This procedure modifies the diagonal neighbors setting. If the affected region of an operation is based on a seed point, like when doing a seed fill, then, when this setting is TRUE, all eight neighbors of each pixel are considered when calculating the affected region; in contrast, when this setting is FALSE, only the four orthogonal neighbors of each pixel are considered.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-image-select-contiguous-color', 'gimp-drawable-edit-bucket-fill'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -5231,8 +5231,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the distance metric used in some computations.",
                                   "This procedure modifies the distance metric used in some computations, such as 'gimp-drawable-edit-gradient-fill'. In particular, it does not change the metric used in generic distance computation on canvas, as in the Measure tool.\n"
-                                     "\n"
-                                     "This setting affects the following procedures: 'gimp-drawable-edit-gradient-fill'.",
+                                  "\n"
+                                  "This setting affects the following procedures: 'gimp-drawable-edit-gradient-fill'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -5281,8 +5281,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the interpolation type.",
                                   "This procedure modifies the interpolation setting.\n"
-                                     "\n"
-                                     "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
+                                  "\n"
+                                  "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix', 'gimp-image-scale', 'gimp-layer-scale'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -5331,8 +5331,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the transform direction.",
                                   "This procedure modifies the transform direction setting.\n"
-                                     "\n"
-                                     "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
+                                  "\n"
+                                  "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -5381,8 +5381,8 @@ register_context_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Set the transform resize type.",
                                   "This procedure modifies the transform resize setting. When transforming pixels, if the result of a transform operation has a different size than the original area, this setting determines how the resulting area is sized.\n"
-                                     "\n"
-                                     "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
+                                  "\n"
+                                  "This setting affects affects the following procedures: 'gimp-item-transform-flip', 'gimp-item-transform-flip-simple', 'gimp-item-transform-perspective', 'gimp-item-transform-rotate', 'gimp-item-transform-rotate-simple', 'gimp-item-transform-scale', 'gimp-item-transform-shear', 'gimp-item-transform-2d', 'gimp-item-transform-matrix'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

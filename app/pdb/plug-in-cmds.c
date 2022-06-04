@@ -315,7 +315,7 @@ register_plug_in_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Registers a textdomain for localisation.",
                                   "This procedure adds a textdomain to the list of domains GIMP searches for strings when translating its menu entries.\n"
-                                     "Only core plug-ins should call this function directly. Third-party plug-ins are expected instead to define a custom `set_i18n()` method returning their domain and a path relative to their folder. In other words, this should be considered an internal PDB function which should not be used except by core developers.",
+                                  "Only core plug-ins should call this function directly. Third-party plug-ins are expected instead to define a custom `set_i18n()` method returning their domain and a path relative to their folder. In other words, this should be considered an internal PDB function which should not be used except by core developers.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Sven Neumann <sven@gimp.org>",

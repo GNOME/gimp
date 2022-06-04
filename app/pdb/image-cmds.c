@@ -2973,8 +2973,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Creates a new image with the specified width, height, and type.",
                                   "Creates a new image, undisplayed, with the specified extents and type. A layer should be created and added before this image is displayed, or subsequent calls to 'gimp-display-new' with this image as an argument will fail. Layers can be created using the 'gimp-layer-new' commands. They can be added to an image using the 'gimp-image-insert-layer' command.\n"
-                                     "\n"
-                                     "If your image's type if INDEXED, a colormap must also be added with 'gimp-image-set-colormap'. An indexed image without a colormap will output unexpected colors.",
+                                  "\n"
+                                  "If your image's type if INDEXED, a colormap must also be added with 'gimp-image-set-colormap'. An indexed image without a colormap will output unexpected colors.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -3266,7 +3266,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Returns the list of root layers contained in the specified image.",
                                   "This procedure returns the list of root layers contained in the specified image. The order of layers is from topmost to bottommost.\n"
-                                     "Note that this is not the full list of layers, but only the root layers, i.e. layers with no parents themselves. If you need all layers, it is up to you to verify that any of these layers is a group layer with 'gimp-item-is-group' and to obtain its children with 'gimp-item-get-children' (possibly recursively checking if these have children too).",
+                                  "Note that this is not the full list of layers, but only the root layers, i.e. layers with no parents themselves. If you need all layers, it is up to you to verify that any of these layers is a group layer with 'gimp-item-is-group' and to obtain its children with 'gimp-item-get-children' (possibly recursively checking if these have children too).",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -3482,8 +3482,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Determine the color at the given coordinates",
                                   "This tool determines the color at the specified coordinates. The returned color is an RGB triplet even for grayscale and indexed drawables. If the coordinates lie outside of the extents of the specified drawables, then an error is returned. All drawables must belong to the image and be of the same type.\n"
-                                     "If only one drawable is given and it has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. With several drawables specified, the composite image with only these drawables is used.\n"
-                                     "If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawables. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawables are ignored.",
+                                  "If only one drawable is given and it has an alpha channel, the algorithm examines the alpha value of the drawable at the coordinates. If the alpha value is completely transparent (0), then an error is returned. With several drawables specified, the composite image with only these drawables is used.\n"
+                                  "If the sample_merged parameter is TRUE, the data of the composite image will be used instead of that for the specified drawables. This is equivalent to sampling for colors after merging all visible layers. In the case of a merged sampling, the supplied drawables are ignored.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
@@ -3667,8 +3667,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Freeze the image's layer list.",
                                   "This procedure freezes the layer list of the image, suppressing any updates to the Layers dialog in response to changes to the image's layers. This can significantly improve performance while applying changes affecting the layer list.\n"
-                                     "\n"
-                                     "Each call to 'gimp-image-freeze-layers' should be matched by a corresponding call to 'gimp-image-thaw-layers', undoing its effects.",
+                                  "\n"
+                                  "Each call to 'gimp-image-freeze-layers' should be matched by a corresponding call to 'gimp-image-thaw-layers', undoing its effects.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -3692,8 +3692,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Thaw the image's layer list.",
                                   "This procedure thaws the layer list of the image, re-enabling updates to the Layers dialog.\n"
-                                     "\n"
-                                     "This procedure should match a corresponding call to 'gimp-image-freeze-layers'.",
+                                  "\n"
+                                  "This procedure should match a corresponding call to 'gimp-image-freeze-layers'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -3787,8 +3787,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Freeze the image's channel list.",
                                   "This procedure freezes the channel list of the image, suppressing any updates to the Channels dialog in response to changes to the image's channels. This can significantly improve performance while applying changes affecting the channel list.\n"
-                                     "\n"
-                                     "Each call to 'gimp-image-freeze-channels' should be matched by a corresponding call to 'gimp-image-thaw-channels', undoing its effects.",
+                                  "\n"
+                                  "Each call to 'gimp-image-freeze-channels' should be matched by a corresponding call to 'gimp-image-thaw-channels', undoing its effects.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -3812,8 +3812,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Thaw the image's channel list.",
                                   "This procedure thaws the channel list of the image, re-enabling updates to the Channels dialog.\n"
-                                     "\n"
-                                     "This procedure should match a corresponding call to 'gimp-image-freeze-channels'.",
+                                  "\n"
+                                  "This procedure should match a corresponding call to 'gimp-image-freeze-channels'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -3907,8 +3907,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Freeze the image's vectors list.",
                                   "This procedure freezes the vectors list of the image, suppressing any updates to the Paths dialog in response to changes to the image's vectors. This can significantly improve performance while applying changes affecting the vectors list.\n"
-                                     "\n"
-                                     "Each call to 'gimp-image-freeze-vectors' should be matched by a corresponding call to 'gimp-image-thaw-vectors', undoing its effects.",
+                                  "\n"
+                                  "Each call to 'gimp-image-freeze-vectors' should be matched by a corresponding call to 'gimp-image-thaw-vectors', undoing its effects.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -3932,8 +3932,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Thaw the image's vectors list.",
                                   "This procedure thaws the vectors list of the image, re-enabling updates to the Paths dialog.\n"
-                                     "\n"
-                                     "This procedure should match a corresponding call to 'gimp-image-freeze-vectors'.",
+                                  "\n"
+                                  "This procedure should match a corresponding call to 'gimp-image-freeze-vectors'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ell",
@@ -5656,8 +5656,8 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Execute the \"Orientation\" metadata policy.",
                                   "Process the image according to the rotation policy as set in Preferences. If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the set policy. Otherwise, if the policy does not mandate the action to perform, the image will be rotated following the Orientation metadata.\n"
-                                     "If you wish absolutely to rotate a loaded image following the Orientation metadata, do not use this function and process the metadata yourself. Indeed even with `interactive` to FALSE, user settings may leave the image unrotated.\n"
-                                     "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
+                                  "If you wish absolutely to rotate a loaded image following the Orientation metadata, do not use this function and process the metadata yourself. Indeed even with `interactive` to FALSE, user settings may leave the image unrotated.\n"
+                                  "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",
@@ -5687,9 +5687,9 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Execute the color profile conversion policy.",
                                   "Process the image according to the color profile policy as set in Preferences.\n"
-                                     "If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the policy. Otherwise, if the policy does not mandate the conversion to perform, the conversion to the preferred RGB or grayscale profile will happen, defaulting to built-in profiles if no preferred profiles were set in `Preferences`.\n"
-                                     "This function should be used only if you want to follow user settings. If you intend to convert to a specific profile, call preferably 'gimp-image-convert-color-profile'. And if you wish to leave whatever profile an image has, do not call any of these functions.\n"
-                                     "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
+                                  "If GIMP is running as a GUI and interactive is TRUE, a dialog may be presented to the user depending on the policy. Otherwise, if the policy does not mandate the conversion to perform, the conversion to the preferred RGB or grayscale profile will happen, defaulting to built-in profiles if no preferred profiles were set in `Preferences`.\n"
+                                  "This function should be used only if you want to follow user settings. If you intend to convert to a specific profile, call preferably 'gimp-image-convert-color-profile'. And if you wish to leave whatever profile an image has, do not call any of these functions.\n"
+                                  "Finally it is unnecessary to call this function in a format load procedure because this is called automatically by the core code when loading any image. You should only call this function explicitly when loading an image through a PDB call.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Jehan",

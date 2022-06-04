@@ -1403,7 +1403,7 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Create a new layer group.",
                                   "This procedure creates a new layer group. Attributes such as layer mode and opacity should be set with explicit procedure calls. Add the new layer group (which is a kind of layer) with the 'gimp-image-insert-layer' command.\n"
-                                     "Other procedures useful with layer groups: 'gimp-image-reorder-item', 'gimp-item-get-parent', 'gimp-item-get-children', 'gimp-item-is-group'.",
+                                  "Other procedures useful with layer groups: 'gimp-image-reorder-item', 'gimp-item-get-parent', 'gimp-item-get-children', 'gimp-item-is-group'.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Barak Itkin <lightningismyname@gmail.com>",
@@ -1660,17 +1660,17 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_help (procedure,
                                   "Create a layer mask for the specified layer.",
                                   "This procedure creates a layer mask for the specified layer.\n"
-                                     "Layer masks serve as an additional alpha channel for a layer. Different types of masks are allowed for initialisation:\n"
-                                     "- white mask (leaves the layer fully visible);\n"
-                                     "- black mask (gives the layer complete transparency);\n"
-                                     "- the layer's alpha channel (either a copy, or a transfer, which leaves the layer fully visible, but which may be more useful than a white mask);\n"
-                                     "- the current selection;\n"
-                                     "- a grayscale copy of the layer;\n"
-                                     "- or a copy of the active channel.\n"
-                                     "\n"
-                                     "The layer mask still needs to be added to the layer. This can be done with a call to 'gimp-layer-add-mask'.\n"
-                                     "\n"
-                                     "'gimp-layer-create-mask' will fail if there are no active channels on the image, when called with 'ADD-CHANNEL-MASK'. It will return a black mask when called with 'ADD-ALPHA-MASK' or 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with 'ADD-SELECTION-MASK' when there is no selection on the image.",
+                                  "Layer masks serve as an additional alpha channel for a layer. Different types of masks are allowed for initialisation:\n"
+                                  "- white mask (leaves the layer fully visible);\n"
+                                  "- black mask (gives the layer complete transparency);\n"
+                                  "- the layer's alpha channel (either a copy, or a transfer, which leaves the layer fully visible, but which may be more useful than a white mask);\n"
+                                  "- the current selection;\n"
+                                  "- a grayscale copy of the layer;\n"
+                                  "- or a copy of the active channel.\n"
+                                  "\n"
+                                  "The layer mask still needs to be added to the layer. This can be done with a call to 'gimp-layer-add-mask'.\n"
+                                  "\n"
+                                  "'gimp-layer-create-mask' will fail if there are no active channels on the image, when called with 'ADD-CHANNEL-MASK'. It will return a black mask when called with 'ADD-ALPHA-MASK' or 'ADD-ALPHA-TRANSFER-MASK' on a layer with no alpha channels, or with 'ADD-SELECTION-MASK' when there is no selection on the image.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Spencer Kimball & Peter Mattis",
