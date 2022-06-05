@@ -286,3 +286,26 @@ gimp_version_get_revision (void)
 
   return revision;
 }
+
+gboolean
+gimp_version_check_update (void)
+{
+  GKeyFile *key_file;
+  gchar    *gimp_release;
+  gboolean  check_update = FALSE;
+
+  key_file = g_key_file_new ();
+
+  gimp_release = g_build_filename (gimp_data_directory (), "gimp-release", NULL);
+  if (g_key_file_load_from_file (key_file, gimp_release, G_KEY_FILE_NONE, NULL))
+    {
+      check_update = TRUE;
+
+      if (g_key_file_has_key (key_file, "package", "check-update", NULL))
+        check_update = g_key_file_get_boolean (key_file, "package", "check-update", NULL);
+    }
+  g_key_file_free (key_file);
+  g_free (gimp_release);
+
+  return check_update;
+}
