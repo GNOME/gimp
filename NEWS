@@ -75,6 +75,7 @@ Plug-ins:
   - Improved support of a few plug-in code for building under UCRT
     Windows environment (more modern C runtime library than MINGW).
   - EPS: loading transparent EPS files now supported.
+  - JPEG XL: import backported from the `master` (2.99) branch.
 
 Libgimp:
 
