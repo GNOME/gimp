@@ -183,9 +183,18 @@ xcf_load_image (Gimp     *gimp,
   xcf_read_int32 (info, (guint32 *) &width, 1);
   xcf_read_int32 (info, (guint32 *) &height, 1);
   xcf_read_int32 (info, (guint32 *) &image_type, 1);
-  if (image_type < GIMP_RGB || image_type > GIMP_INDEXED ||
-      width <= 0 || height <= 0)
+  if (image_type < GIMP_RGB || image_type > GIMP_INDEXED)
     goto hard_error;
+
+  /* Be lenient with corrupt image dimensions.
+   * Hopefully layer dimensions will be valid. */
+  if (width <= 0 || height <= 0 ||
+      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+    {
+      GIMP_LOG (XCF, "Invalid image size %d x %d, setting to 1x1.", width, height);
+      width  = 1;
+      height = 1;
+    }
 
   if (info->file_version >= 4)
     {
@@ -1933,7 +1942,8 @@ xcf_load_layer (XcfInfo    *info,
       return NULL;
     }
 
-  if (width <= 0 || height <= 0)
+  if (width <= 0 || height <= 0 ||
+      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
     {
       gboolean is_group_layer = FALSE;
       gboolean is_text_layer  = FALSE;
@@ -2095,10 +2105,16 @@ xcf_load_channel (XcfInfo   *info,
   /* read in the layer width, height and name */
   xcf_read_int32 (info, (guint32 *) &width,  1);
   xcf_read_int32 (info, (guint32 *) &height, 1);
-  if (width <= 0 || height <= 0)
-    return NULL;
+  if (width <= 0 || height <= 0 ||
+      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+    {
+      GIMP_LOG (XCF, "Invalid channel size %d x %d.", width, height);
+      return NULL;
+    }
 
   xcf_read_string (info, &name, 1);
+  GIMP_LOG (XCF, "Channel width=%d, height=%d, name='%s'",
+            width, height, name);
 
   /* create a new channel */
   channel = gimp_channel_new (image, width, height, name, &color);
@@ -2167,10 +2183,16 @@ xcf_load_layer_mask (XcfInfo   *info,
   /* read in the layer width, height and name */
   xcf_read_int32 (info, (guint32 *) &width,  1);
   xcf_read_int32 (info, (guint32 *) &height, 1);
-  if (width <= 0 || height <= 0)
-    return NULL;
+  if (width <= 0 || height <= 0 ||
+      width > GIMP_MAX_IMAGE_SIZE || height > GIMP_MAX_IMAGE_SIZE)
+    {
+      GIMP_LOG (XCF, "Invalid layer mask size %d x %d.", width, height);
+      return NULL;
+    }
 
   xcf_read_string (info, &name, 1);
+  GIMP_LOG (XCF, "Layer mask width=%d, height=%d, name='%s'",
+            width, height, name);
 
   /* create a new layer mask */
   layer_mask = gimp_layer_mask_new (image, width, height, name, &color);
