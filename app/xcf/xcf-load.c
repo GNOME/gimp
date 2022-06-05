@@ -499,6 +499,13 @@ xcf_load_image (Gimp     *gimp,
        */
       saved_pos = info->cp;
 
+      if (offset < saved_pos)
+        {
+          GIMP_LOG (XCF, "Invalid layer offset: %" G_GOFFSET_FORMAT
+                    " at offset: %" G_GOFFSET_FORMAT, offset, saved_pos);
+          goto error;
+        }
+
       /* seek to the layer offset */
       if (! xcf_seek_pos (info, offset, NULL))
         goto error;
@@ -639,6 +646,13 @@ xcf_load_image (Gimp     *gimp,
        */
       saved_pos = info->cp;
 
+      if (offset < saved_pos)
+        {
+          GIMP_LOG (XCF, "Invalid channel offset: %" G_GOFFSET_FORMAT
+                    " at offset: % "G_GOFFSET_FORMAT, offset, saved_pos);
+          goto error;
+        }
+
       /* seek to the channel offset */
       if (! xcf_seek_pos (info, offset, NULL))
         goto error;
@@ -648,6 +662,7 @@ xcf_load_image (Gimp     *gimp,
       if (!channel)
         {
           n_broken_channels++;
+          GIMP_LOG (XCF, "Failed to load channel.");
 
           if (! xcf_seek_pos (info, saved_pos, NULL))
             goto error;
@@ -2143,6 +2158,7 @@ xcf_load_layer (XcfInfo    *info,
   const Babl        *format;
   gboolean           is_fs_drawable;
   gchar             *name;
+  goffset            cur_offset;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment in our caller.
@@ -2286,6 +2302,7 @@ xcf_load_layer (XcfInfo    *info,
     gimp_layer_fix_format_space (layer, FALSE, FALSE);
 
   /* read the hierarchy and layer mask offsets */
+  cur_offset = info->cp;
   xcf_read_offset (info, &hierarchy_offset,  1);
   xcf_read_offset (info, &layer_mask_offset, 1);
 
@@ -2295,6 +2312,11 @@ xcf_load_layer (XcfInfo    *info,
    */
   if (! gimp_viewable_get_children (GIMP_VIEWABLE (layer)))
     {
+      if (hierarchy_offset < cur_offset)
+        {
+          GIMP_LOG (XCF, "Invalid layer hierarchy offset!");
+          goto error;
+        }
       if (! xcf_seek_pos (info, hierarchy_offset, NULL))
         goto error;
 
@@ -2318,6 +2340,11 @@ xcf_load_layer (XcfInfo    *info,
   /* read in the layer mask */
   if (layer_mask_offset != 0)
     {
+      if (layer_mask_offset < cur_offset)
+        {
+          GIMP_LOG (XCF, "Invalid layer mask offset!");
+          goto error;
+        }
       if (! xcf_seek_pos (info, layer_mask_offset, NULL))
         goto error;
 
@@ -2373,6 +2400,7 @@ xcf_load_channel (XcfInfo   *info,
   gboolean     is_fs_drawable;
   gchar       *name;
   GimpRGB      color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  goffset      cur_offset;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment in our caller.
@@ -2405,8 +2433,15 @@ xcf_load_channel (XcfInfo   *info,
 
   xcf_progress_update (info);
 
-  /* read the hierarchy and layer mask offsets */
+  /* read the hierarchy offset */
+  cur_offset = info->cp;
   xcf_read_offset (info, &hierarchy_offset, 1);
+
+  if (hierarchy_offset < cur_offset)
+    {
+      GIMP_LOG (XCF, "Invalid hierarchy offset!");
+      goto error;
+    }
 
   /* read in the hierarchy */
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
@@ -2458,6 +2493,7 @@ xcf_load_layer_mask (XcfInfo   *info,
   gboolean       is_fs_drawable;
   gchar         *name;
   GimpRGB        color = { 0.0, 0.0, 0.0, GIMP_OPACITY_OPAQUE };
+  goffset        cur_offset;
 
   /* check and see if this is the drawable the floating selection
    *  is attached to. if it is then we'll do the attachment in our caller.
@@ -2491,8 +2527,15 @@ xcf_load_layer_mask (XcfInfo   *info,
 
   xcf_progress_update (info);
 
-  /* read the hierarchy and layer mask offsets */
+  /* read the hierarchy offset */
+  cur_offset = info->cp;
   xcf_read_offset (info, &hierarchy_offset, 1);
+
+  if (hierarchy_offset < cur_offset)
+    {
+      GIMP_LOG (XCF, "Invalid hierarchy offset!");
+      goto error;
+    }
 
   /* read in the hierarchy */
   if (! xcf_seek_pos (info, hierarchy_offset, NULL))
@@ -2535,6 +2578,7 @@ xcf_load_buffer (XcfInfo    *info,
   gint        width;
   gint        height;
   gint        bpp;
+  goffset     cur_offset;
 
   format = gegl_buffer_get_format (buffer);
 
@@ -2550,7 +2594,14 @@ xcf_load_buffer (XcfInfo    *info,
       bpp    != babl_format_get_bytes_per_pixel (format))
     return FALSE;
 
+  cur_offset = info->cp;
   xcf_read_offset (info, &offset, 1); /* top level */
+
+  if (offset < cur_offset)
+    {
+      GIMP_LOG (XCF, "Invalid buffer offset!");
+      return FALSE;
+    }
 
   /* seek to the level offset */
   if (! xcf_seek_pos (info, offset, NULL))
