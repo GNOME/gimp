@@ -139,6 +139,7 @@ static OPJ_COLOR_SPACE  open_dialog          (GFile               *file,
 G_DEFINE_TYPE (Jp2, jp2, GIMP_TYPE_PLUG_IN)
 
 GIMP_MAIN (JP2_TYPE)
+DEFINE_STD_SET_I18N
 
 
 static void
