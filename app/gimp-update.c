@@ -545,7 +545,14 @@ gimp_update_auto_check (GimpCoreConfig *config,
 
   /* Builds with update check deactivated just always return FALSE. */
 #ifdef CHECK_UPDATE
-  if (! config->check_updates)
+  /* Allows to disable updates at package level with a build having the
+   * version check code built-in.
+   * For instance, it would allow to use the same Windows installer for
+   * the Windows Store (with update check disabled because it comes with
+   * its own update channel).
+   */
+  if (! gimp_version_check_update () ||
+      ! config->check_updates)
 #endif
     return FALSE;
 

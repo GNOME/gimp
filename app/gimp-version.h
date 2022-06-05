@@ -19,10 +19,13 @@
 #define __APP_GIMP_VERSION_H__
 
 
-void    gimp_version_show         (gboolean be_verbose);
-gchar * gimp_version              (gboolean be_verbose,
-                                   gboolean localized);
+void       gimp_version_show         (gboolean be_verbose);
+gchar    * gimp_version              (gboolean be_verbose,
+                                      gboolean localized);
 
-gint    gimp_version_get_revision (void);
+gint       gimp_version_get_revision (void);
+
+gboolean   gimp_version_check_update (void);
+
 
 #endif /* __APP_GIMP_VERSION_H__ */

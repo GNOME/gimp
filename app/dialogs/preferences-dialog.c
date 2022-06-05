@@ -30,6 +30,8 @@
 
 #include "dialogs-types.h"
 
+#include "gimp-version.h"
+
 #include "config/gimprc.h"
 
 #include "core/gimp.h"
@@ -1248,13 +1250,16 @@ prefs_dialog_new (Gimp       *gimp,
 
   /*  Internet access  */
 #ifdef CHECK_UPDATE
-  vbox2 = prefs_frame_new (_("Network access"), GTK_CONTAINER (vbox),
-                           FALSE);
+  if (gimp_version_check_update ())
+    {
+      vbox2 = prefs_frame_new (_("Network access"), GTK_CONTAINER (vbox),
+                               FALSE);
 
-  prefs_switch_add (object, "check-updates",
-                    _("Check for updates (requires internet)"),
-                    GTK_BOX (vbox2),
-                    size_group);
+      prefs_switch_add (object, "check-updates",
+                        _("Check for updates (requires internet)"),
+                        GTK_BOX (vbox2),
+                        size_group);
+    }
 #endif
 
   /*  Image Thumbnails  */
