@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-02-25 18:41+0000\n"
-"PO-Revision-Date: 2022-03-04 23:38+0100\n"
+"POT-Creation-Date: 2022-05-25 12:25+0000\n"
+"PO-Revision-Date: 2022-06-04 23:51+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -3966,7 +3966,7 @@ msgstr "St_atus och text"
 #: ../app/actions/dockable-actions.c:117 ../app/widgets/widgets-enums.c:222
 msgctxt "tab-style"
 msgid "Automatic"
-msgstr "Automatiskt"
+msgstr "Automatisk"
 
 #: ../app/actions/dockable-actions.c:127
 msgctxt "dockable-action"
@@ -21878,7 +21878,7 @@ msgstr ""
 "Vissa textegenskaper kan vara felaktiga. Om du inte vill redigera textlagret "
 "behöver du inte oroa dig för detta."
 
-#: ../app/text/gimptextlayout.c:585
+#: ../app/text/gimptextlayout.c:594
 msgid ""
 "The new text layout cannot be generated. Most likely the font size is too "
 "big."
