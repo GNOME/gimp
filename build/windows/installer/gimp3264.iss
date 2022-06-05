@@ -884,6 +884,21 @@ begin
 			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
 		end;
 	end;
+
+	// Disable check-update when run with specific option
+        if ExpandConstant('{param:disablecheckupdate|false}') = 'true' then
+	begin
+		EnvFile := ExpandConstant('{app}\share\gimp\{#DIR_VER}\gimp-release');
+		DebugMsg('DisableCheckUpdate','Disabling check-update in ' + EnvFile);
+
+                Env := 'check-update=false'
+
+		if not SaveStringToUTF8File(EnvFile,Env,True) then
+		begin
+			DebugMsg('PrepareGimpEnvironment','Problem appending');
+			SuppressibleMsgBox(FmtMessage(CustomMessage('ErrorChangingEnviron'),[EnvFile]),mbInformation,mb_ok,IDOK);
+		end;
+	end;
 end;
 
 
