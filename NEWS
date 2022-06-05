@@ -154,11 +154,26 @@ API:
       + gimp_image_metadata_save_filter()
       + gimp_check_custom_color1()
       + gimp_check_custom_color2()
+    * Removed functions:
+      + gimp_plug_in_set_translation_domain()
     * New class:
       + GimpBatchProcedure: procedure usable as a batch interpreter on
         command line.
     * Protocol bumped to handle the check colors passed at call time on
       the wire.
+    * Plug-ins are now expected to have their localization in a Gettext
+      catalog folder locale/ under their main directory, named the same
+      way as this directory (i.e. usually the plug-in name). If the
+      catalog is absent, a message will be outputted on stderr. To
+      override this behavior, a GimpPlugIn is encouraged to override the
+      new set_i18n() method. If it returns FALSE, localization is
+      disabled (or it may be implemented in a different way, for
+      instance with another system than Gettext); if it returns TRUE,
+      you can set a different subfolder and catalog name.
+    * The core does not localize menu items using a default catalog
+      "gimp30-std-plugins" anymore. It is done explicitly for our core
+      plug-ins, but third-party plug-ins have to handle localization
+      explicitly (cf. previous point) to avoid weird translations.
   - Changes in libgimpwidgets:
     * Freedesktop portal implementation of GimpPickButton now checks the
       version of the XDG portal since `PickColor()` API only got added
