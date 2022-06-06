@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-14 14:38+0000\n"
-"PO-Revision-Date: 2022-05-14 18:17+0300\n"
+"POT-Creation-Date: 2022-06-06 13:41+0000\n"
+"PO-Revision-Date: 2022-06-06 20:01+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -242,11 +242,11 @@ msgstr "Вибір шрифту"
 msgid "Gradient Selection"
 msgstr "Вибір градієнта"
 
-#: ../libgimp/gimpimagemetadata.c:311
+#: ../libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Тло"
 
-#: ../libgimp/gimpimagemetadata-save.c:643 ../modules/controller-midi.c:426
+#: ../libgimp/gimpimagemetadata-save.c:665 ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -409,12 +409,12 @@ msgstr ""
 "Процедура «%s» викликана із значенням «%s» аргументу «%s» (#%d, тип %s). "
 "Значення знаходиться поза межами допустимого діапазону."
 
-#: ../libgimp/gimpprocedure.c:2103
+#: ../libgimp/gimpprocedure.c:2102
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура «%s» повернула некоректний рядок UTF-8 для аргументу «%s»"
 
-#: ../libgimp/gimpprocedure.c:2113
+#: ../libgimp/gimpprocedure.c:2112
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -678,8 +678,6 @@ msgid "Black only"
 msgstr "Лише чорний"
 
 #: ../libgimpbase/gimpbaseenums.c:242
-#| msgctxt "check-type"
-#| msgid "Mid-tone checks"
 msgctxt "check-type"
 msgid "Custom checks"
 msgstr "Нетипові клітинки"
@@ -1664,7 +1662,7 @@ msgstr "Придатне для сприйняття"
 #: ../libgimpconfig/gimpconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
-msgstr "Відносну колориметричне"
+msgstr "Відносне колориметричне"
 
 #: ../libgimpconfig/gimpconfigenums.c:59
 msgctxt "color-rendering-intent"
