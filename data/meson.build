@@ -15,12 +15,14 @@ meson.add_install_script('sh', '-c',
   'mkdir -p $MESON_INSTALL_DESTDIR_PREFIX/@0@'.format(gimpdatadir / 'fonts')
 )
 
-custom_target('gimp-release',
-  output: [ 'gimp-release' ],
-  command: [
-    'echo', ['[package]' + '\nrevision=@0@'.format(get_option('revision'))]
-  ],
-  capture: true,
+release_conf = configuration_data()
+release_conf.set('REVISION', get_option('revision'))
+
+gimp_release = 'gimp-release'
+configure_file(
+  input : gimp_release + '.in',
+  output: gimp_release,
+  configuration: release_conf,
   install: true,
   install_dir: gimpdatadir,
 )
