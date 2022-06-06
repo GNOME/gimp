@@ -92,7 +92,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
       gdouble         xres;
       gdouble         yres;
       gchar           buffer[32];
-      gchar          *str;
+      gchar          *datetime_buf = NULL;
       GExiv2Metadata *g2metadata = GEXIV2_METADATA (metadata);
 
       image_width  = gimp_image_get_width  (image);
@@ -191,6 +191,28 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
           g_clear_error (&error);
         }
 
+      /* XMP uses datetime in ISO 8601 format */
+      datetime_buf = g_date_time_format (datetime, "%Y:%m:%dT%T\%:z");
+
+      gexiv2_metadata_try_set_tag_string (g2metadata,
+                                          "Xmp.xmp.ModifyDate",
+                                          datetime_buf, &error);
+      if (error)
+        {
+          g_warning ("%s: failed to set metadata '%s': %s\n",
+                      G_STRFUNC, "Xmp.xmp.ModifyDate", error->message);
+          g_clear_error (&error);
+        }
+      gexiv2_metadata_try_set_tag_string (g2metadata,
+                                          "Xmp.xmp.MetadataDate",
+                                          datetime_buf, &error);
+      if (error)
+        {
+          g_warning ("%s: failed to set metadata '%s': %s\n",
+                      G_STRFUNC, "Xmp.xmp.MetadataDate", error->message);
+          g_clear_error (&error);
+        }
+
       if (! g_strcmp0 (mime_type, "image/tiff"))
         {
           /* TIFF specific XMP data */
@@ -217,17 +239,9 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
               g_clear_error (&error);
             }
 
-          g_snprintf (buffer, sizeof (buffer),
-                      "%d:%02d:%02d %02d:%02d:%02d",
-                      g_date_time_get_year (datetime),
-                      g_date_time_get_month (datetime),
-                      g_date_time_get_day_of_month (datetime),
-                      g_date_time_get_hour (datetime),
-                      g_date_time_get_minute (datetime),
-                      g_date_time_get_second (datetime));
           gexiv2_metadata_try_set_tag_string (g2metadata,
                                               "Xmp.tiff.DateTime",
-                                              buffer, &error);
+                                              datetime_buf, &error);
           if (error)
             {
               g_warning ("%s: failed to set metadata '%s': %s\n",
@@ -242,32 +256,7 @@ gimp_image_metadata_save_prepare (GimpImage             *image,
           ! gexiv2_metadata_has_iptc (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
-      str = g_date_time_format (datetime, "%Y-%m-%d");
-      gexiv2_metadata_try_set_tag_string (g2metadata,
-                                          "Iptc.Application2.DateCreated",
-                                          str, &error);
-      if (error)
-        {
-          g_warning ("%s: failed to set metadata '%s': %s\n",
-                     G_STRFUNC, "Iptc.Application2.DateCreated",
-                     error->message);
-          g_clear_error (&error);
-        }
-      g_free (str);
-
-      str = g_date_time_format (datetime, "%H:%M:%S%:z");
-      gexiv2_metadata_try_set_tag_string (g2metadata,
-                                          "Iptc.Application2.TimeCreated",
-                                          str, &error);
-      if (error)
-        {
-          g_warning ("%s: failed to set metadata '%s': %s\n",
-                     G_STRFUNC, "Iptc.Application2.TimeCreated",
-                     error->message);
-          g_clear_error (&error);
-        }
-      g_free (str);
-
+      g_free (datetime_buf);
       g_date_time_unref (datetime);
       g_clear_pointer (&comment, g_free);
 
