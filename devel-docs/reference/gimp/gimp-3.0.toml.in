@@ -72,3 +72,4 @@ base_url = "https://gitlab.gnome.org/GNOME/gimp/-/blob/master/"
 [extra]
 content_files = [
 ]
+urlmap_file = "urlmap.js"

@@ -106,3 +106,4 @@ content_images = [
   'images/string-combo-box.png',
   'images/unit-combo-box.png',
 ]
+urlmap_file = "urlmap.js"
