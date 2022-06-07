@@ -154,6 +154,44 @@ static gboolean           load_dialog      (TIFF              *tif,
                                             DefaultExtra      *default_extra);
 
 
+/* Grayscale conversion mappings */
+static const guchar _1_to_8_bitmap [2] =
+{
+  0, 255
+};
+
+static const guchar _1_to_8_bitmap_rev [2] =
+{
+  255, 0
+};
+
+static const guchar _2_to_8_bitmap [4] =
+{
+  0, 85, 170, 255
+};
+
+static const guchar _2_to_8_bitmap_rev [4] =
+{
+  255, 170, 85, 0
+};
+
+static const guchar _4_to_8_bitmap [16] =
+{
+  0,    17,  34,  51,  68,  85, 102, 119,
+  136, 153, 170, 187, 204, 221, 238, 255
+};
+
+static const guchar _4_to_8_bitmap_rev [16] =
+{
+  255, 238, 221, 204, 187, 170, 153, 136,
+  119, 102,  85,  68,  51,  34,  17,   0
+};
+
+static guchar   bit2byte[256 * 8];
+static guchar _2bit2byte[256 * 4];
+static guchar _4bit2byte[256 * 2];
+
+
 /* returns a pointer into the TIFF */
 static const gchar *
 tiff_get_page_name (TIFF *tif)
@@ -2254,43 +2292,6 @@ load_separate (TIFF         *tif,
   g_free (buffer);
   g_free (bw_buffer);
 }
-
-
-static guchar   bit2byte[256 * 8];
-static guchar _2bit2byte[256 * 4];
-static guchar _4bit2byte[256 * 2];
-
-static const guchar _1_to_8_bitmap [2] =
-{
-  0, 255
-};
-
-static const guchar _1_to_8_bitmap_rev [2] =
-{
-  255, 0
-};
-
-static const guchar _2_to_8_bitmap [4] =
-{
-  0, 85, 170, 255
-};
-
-static const guchar _2_to_8_bitmap_rev [4] =
-{
-  255, 170, 85, 0
-};
-
-static const guchar _4_to_8_bitmap [16] =
-{
-  0,    17,  34,  51,  68,  85, 102, 119,
-  136, 153, 170, 187, 204, 221, 238, 255
-};
-
-static const guchar _4_to_8_bitmap_rev [16] =
-{
-  255, 238, 221, 204, 187, 170, 153, 136,
-  119, 102,  85,  68,  51,  34,  17,   0
-};
 
 static void
 fill_bit2byte (TiffColorMode tiff_mode)
