@@ -829,26 +829,54 @@ load_image (GFile        *file,
 
       switch (photomet)
         {
+        case PHOTOMETRIC_PALETTE:
         case PHOTOMETRIC_MINISBLACK:
         case PHOTOMETRIC_MINISWHITE:
-          if (photomet == PHOTOMETRIC_MINISWHITE)
-            tiff_mode = GIMP_TIFF_GRAY_MINISWHITE;
-          else
-            tiff_mode = GIMP_TIFF_GRAY;
-
-          if ((bps == 1 || bps == 2 || bps == 4) && ! alpha && spp == 1)
+          if (bps < 8)
             {
-              if (bps == 1)
-                fill_bit2byte (tiff_mode);
-              else if (bps == 2)
-                fill_2bit2byte (tiff_mode);
-              else if (bps == 4)
-                fill_4bit2byte (tiff_mode);
-            }
-          image_type = GIMP_GRAY;
-          layer_type = alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+              if (photomet == PHOTOMETRIC_PALETTE)
+                tiff_mode = GIMP_TIFF_INDEXED;
+              else if (photomet == PHOTOMETRIC_MINISBLACK)
+                tiff_mode = GIMP_TIFF_GRAY;
+              else if (photomet == PHOTOMETRIC_MINISWHITE)
+                tiff_mode = GIMP_TIFF_GRAY_MINISWHITE;
 
-          if (alpha)
+              /* FIXME: It should be a user choice whether this should be
+               * interpreted as indexed or grayscale. For now we will
+               * use indexed (see issue #6766). */
+              image_type = GIMP_INDEXED;
+              layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+
+              if ((bps == 1 || bps == 2 || bps == 4) && ! alpha && spp == 1)
+                {
+                  if (bps == 1)
+                    fill_bit2byte (tiff_mode);
+                  else if (bps == 2)
+                    fill_2bit2byte (tiff_mode);
+                  else if (bps == 4)
+                    fill_4bit2byte (tiff_mode);
+                }
+            }
+          else
+            {
+              if (photomet == PHOTOMETRIC_PALETTE)
+                {
+                  image_type = GIMP_INDEXED;
+                  layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
+                }
+              else
+                {
+                  image_type = GIMP_GRAY;
+                  layer_type = alpha ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+                }
+            }
+
+          if (photomet == PHOTOMETRIC_PALETTE)
+            {
+              /* Do nothing here, handled later.
+               * Didn't want more indenting in the next part. */
+            }
+          else if (alpha)
             {
               if (tsvals.save_transp_pixels)
                 {
@@ -982,21 +1010,6 @@ load_image (GFile        *file,
                                                  NULL);
                 }
             }
-          break;
-
-        case PHOTOMETRIC_PALETTE:
-          image_type = GIMP_INDEXED;
-          layer_type = alpha ? GIMP_INDEXEDA_IMAGE : GIMP_INDEXED_IMAGE;
-
-          if (bps < 8)
-            tiff_mode = GIMP_TIFF_INDEXED; /* Only bps < 8 needs special handling. */
-
-          if (bps == 1)
-            fill_bit2byte (tiff_mode);
-          else if (bps == 2)
-            fill_2bit2byte (tiff_mode);
-          else if (bps == 4)
-            fill_4bit2byte (tiff_mode);
           break;
 
         case PHOTOMETRIC_SEPARATED:
@@ -1361,25 +1374,94 @@ load_image (GFile        *file,
       if (image_type == GIMP_INDEXED)
         {
           guchar   cmap[768];
-          gushort *redmap;
-          gushort *greenmap;
-          gushort *bluemap;
-          gint     i, j;
 
-          if (! TIFFGetField (tif, TIFFTAG_COLORMAP,
-                              &redmap, &greenmap, &bluemap))
+          if (photomet == PHOTOMETRIC_PALETTE)
             {
-              TIFFClose (tif);
-              g_message (_("Could not get colormaps from '%s'"),
-                         gimp_file_get_utf8_name (file));
-              return GIMP_PDB_EXECUTION_ERROR;
+              gushort *redmap;
+              gushort *greenmap;
+              gushort *bluemap;
+              gint     i, j;
+
+              if (! TIFFGetField (tif, TIFFTAG_COLORMAP,
+                                  &redmap, &greenmap, &bluemap))
+                {
+                  TIFFClose (tif);
+                  g_message (_("Could not get colormaps from '%s'"),
+                             gimp_file_get_utf8_name (file));
+                  return GIMP_PDB_EXECUTION_ERROR;
+                }
+
+              for (i = 0, j = 0; i < (1 << bps); i++)
+                {
+                  cmap[j++] = redmap[i] >> 8;
+                  cmap[j++] = greenmap[i] >> 8;
+                  cmap[j++] = bluemap[i] >> 8;
+                }
+
             }
-
-          for (i = 0, j = 0; i < (1 << bps); i++)
+          else if (photomet == PHOTOMETRIC_MINISBLACK)
             {
-              cmap[j++] = redmap[i] >> 8;
-              cmap[j++] = greenmap[i] >> 8;
-              cmap[j++] = bluemap[i] >> 8;
+              gint i, j;
+
+              if (bps == 1)
+                {
+                  for (i = 0, j = 0; i < (1 << bps); i++)
+                    {
+                      cmap[j++] = _1_to_8_bitmap[i];
+                      cmap[j++] = _1_to_8_bitmap[i];
+                      cmap[j++] = _1_to_8_bitmap[i];
+                    }
+                }
+              else if (bps == 2)
+                {
+                  for (i = 0, j = 0; i < (1 << bps); i++)
+                    {
+                      cmap[j++] = _2_to_8_bitmap[i];
+                      cmap[j++] = _2_to_8_bitmap[i];
+                      cmap[j++] = _2_to_8_bitmap[i];
+                    }
+                }
+              else if (bps == 4)
+                {
+                  for (i = 0, j = 0; i < (1 << bps); i++)
+                    {
+                      cmap[j++] = _4_to_8_bitmap[i];
+                      cmap[j++] = _4_to_8_bitmap[i];
+                      cmap[j++] = _4_to_8_bitmap[i];
+                    }
+                }
+            }
+          else if (photomet == PHOTOMETRIC_MINISWHITE)
+            {
+              gint i, j;
+
+              if (bps == 1)
+                {
+                  for (i = 0, j = 0; i < (1 << bps); i++)
+                    {
+                      cmap[j++] = _1_to_8_bitmap_rev[i];
+                      cmap[j++] = _1_to_8_bitmap_rev[i];
+                      cmap[j++] = _1_to_8_bitmap_rev[i];
+                    }
+                }
+              else if (bps == 2)
+                {
+                  for (i = 0, j = 0; i < (1 << bps); i++)
+                    {
+                      cmap[j++] = _2_to_8_bitmap_rev[i];
+                      cmap[j++] = _2_to_8_bitmap_rev[i];
+                      cmap[j++] = _2_to_8_bitmap_rev[i];
+                    }
+                }
+              else if (bps == 4)
+                {
+                  for (i = 0, j = 0; i < (1 << bps); i++)
+                    {
+                      cmap[j++] = _4_to_8_bitmap_rev[i];
+                      cmap[j++] = _4_to_8_bitmap_rev[i];
+                      cmap[j++] = _4_to_8_bitmap_rev[i];
+                    }
+                }
             }
 
           gimp_image_set_colormap (*image, cmap, (1 << bps));
