@@ -73,6 +73,48 @@
   </provides>
 
   <releases>
+    <release version="2.10.32" date="2022-06-12">
+      <description>
+        <_p>
+          GIMP continues strengthening its bases with this new version 2.10.32 fixing many bugs and improving format support.
+          Notable changes:
+        </_p>
+        <ul>
+          <_li>
+            8 and 16-bit CMYK(A) TIFF files import is now supported
+          </_li>
+          <_li>
+            BIGTIFF import and export are now supported
+          </_li>
+          <_li>
+            JPEG XL files import is now supported
+          </_li>
+          <_li>
+            DDS export has new "Flip" (useful for some game engine) and "Visible layers" options
+          </_li>
+          <_li>
+            Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP
+          </_li>
+          <_li>
+            The screenshot plug-in on Windows has now an option to capture the cursor
+          </_li>
+          <_li>
+            Several usability improvements in official themes and icons
+          </_li>
+          <_li>
+            New support for localized glyphs ('locl') in Text tool
+            depending on the value of the "Language" tool option
+          </_li>
+          <_li>
+            More robust XCF import
+          </_li>
+          <_li>
+            Several metadata handling improvements
+          </_li>
+        </ul>
+      </description>
+    </release>
+
     <release version="2.10.30" date="2021-12-19">
       <description>
         <_p>
