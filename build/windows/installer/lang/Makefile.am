@@ -13,22 +13,24 @@ languages = \
 	de:[de]		\
 	el:[el]		\
 	en:		\
-	en_GB:[en_GB]		\
+	en_GB:[en_GB]	\
 	eo:[eo]		\
 	es:[es]		\
 	eu:[eu]		\
 	fi:[fi]		\
 	fr:[fr]		\
+	gl:[gl]		\
 	hr:[hr]		\
 	hu:[hu]		\
 	id:[id]		\
 	is:[is]		\
 	it:[it]		\
-	ja:[ja]			\
-	ko:[ko]			\
+	ja:[ja]		\
+	ka:[ka]		\
+	ko:[ko]		\
 	lt:[lt]		\
 	lv:[lv]		\
-	mr:[mr]   		\
+	mr:[mr]   	\
 	nl:[nl]		\
 	pl:[pl]		\
 	pt:[pt]		\
