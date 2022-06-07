@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-17 22:06+0000\n"
-"PO-Revision-Date: 2022-05-18 15:33+0100\n"
+"POT-Creation-Date: 2022-06-07 04:00+0000\n"
+"PO-Revision-Date: 2022-06-07 14:45+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -76,9 +76,9 @@ msgstr "Alinhar camadas visíveis"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1958
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2547 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -458,7 +458,7 @@ msgstr "_Vertical"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1334
+#: ../plug-ins/file-tiff/file-tiff-load.c:1376
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -862,7 +862,7 @@ msgstr "_Abrir"
 #: ../plug-ins/imagemap/imap_file.c:125 ../plug-ins/lighting/lighting-ui.c:593
 #: ../plug-ins/lighting/lighting-ui.c:1163
 msgid "_Save"
-msgstr "_Guardar"
+msgstr "_Gravar"
 
 #: ../plug-ins/common/cml-explorer.c:1336 ../plug-ins/common/filter-pack.c:758
 #: ../plug-ins/common/van-gogh-lic.c:677
@@ -2092,7 +2092,7 @@ msgstr "Arte ASCII"
 msgid "Text"
 msgstr "Texto"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2036
 msgid "_Format:"
 msgstr "_Formato:"
 
@@ -2607,8 +2607,7 @@ msgstr "Exporta imagens HEIF"
 #: ../plug-ins/common/file-heif.c:174
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr ""
-"Guardar imagem armazenada no formato HEIF (High Efficiency Image File "
-"Format)."
+"Gravar imagem armazenada no formato HEIF (High Efficiency Image File Format)."
 
 #: ../plug-ins/common/file-heif.c:194
 msgid "Exports AVIF images"
@@ -2616,7 +2615,7 @@ msgstr "Exporta imagens AVIF"
 
 #: ../plug-ins/common/file-heif.c:195
 msgid "Save image in AV1 Image File Format (AVIF)"
-msgstr "Guardar imagem armazenada no formato AV1 Image File Format (AVIF)"
+msgstr "Gravar imagem armazenada no formato AV1 Image File Format (AVIF)"
 
 #: ../plug-ins/common/file-heif.c:736 ../plug-ins/common/file-heif.c:769
 #: ../plug-ins/common/file-heif.c:808 ../plug-ins/common/file-heif.c:874
@@ -2687,10 +2686,10 @@ msgstr "12 bit / canal"
 
 #. Color profile
 #: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
-#: ../plug-ins/file-webp/file-webp-dialog.c:387
+#: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
-msgstr "Guardar perfil de _cor"
+msgstr "Gravar perfil de _cor"
 
 #: ../plug-ins/common/file-html-table.c:153
 #: ../plug-ins/common/file-html-table.c:472
@@ -2944,7 +2943,7 @@ msgstr "_Gravar cor do fundo"
 
 #: ../plug-ins/common/file-mng.c:1378
 msgid "Save _gamma"
-msgstr "Guardar g_ama"
+msgstr "Gravar g_ama"
 
 #: ../plug-ins/common/file-mng.c:1388
 msgid "Save resolution"
@@ -3025,7 +3024,7 @@ msgstr "Atraso de moldura predefinido:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1551
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:351
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "milissegundos"
@@ -3176,7 +3175,7 @@ msgid "Import from PDF"
 msgstr "Importar a partir de PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
-#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/file-tiff/file-tiff-load.c:2548
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importar"
@@ -3248,7 +3247,7 @@ msgstr "Converter mapas de _bits para gráficos vetoriais sempre que possível"
 #: ../plug-ins/common/file-pdf-save.c:833
 #: ../plug-ins/common/file-pdf-save.c:993
 msgid "_Apply layer masks before saving"
-msgstr "_Aplicar máscaras de camada antes de guardar"
+msgstr "_Aplicar máscaras de camada antes de gravar"
 
 #: ../plug-ins/common/file-pdf-save.c:837
 #: ../plug-ins/common/file-pdf-save.c:997
@@ -3302,7 +3301,7 @@ msgstr "Camadas como páginas (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
-#: ../plug-ins/file-tiff/file-tiff-load.c:1336
+#: ../plug-ins/file-tiff/file-tiff-load.c:1378
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -4572,8 +4571,8 @@ msgid ""
 "Try to change the hot spot position, layer geometry or export without auto-"
 "crop."
 msgstr ""
-"Impossível gravar o cursor porque o ponto quente não está na moldura "
-"\"%s\".\n"
+"Impossível gravar o cursor porque o ponto quente não está na moldura \"%s"
+"\".\n"
 "Tente mudar a posição do ponto quente, a geometria da camada ou grave sem "
 "recorte automático."
 
@@ -6068,7 +6067,7 @@ msgstr "Pequenos mosaicos"
 #: ../plug-ins/common/tile-small.c:410
 #: ../plug-ins/ifs-compose/ifs-compose.c:596
 msgid "Flip"
-msgstr "Inverter"
+msgstr "Virar"
 
 #: ../plug-ins/common/tile-small.c:459
 msgid "A_ll tiles"
@@ -6687,7 +6686,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-webp/file-webp-dialog.c:221
+#: ../plug-ins/file-webp/file-webp-dialog.c:222
 msgid "_Advanced Options"
 msgstr "_Opções avançadas"
 
@@ -6708,19 +6707,20 @@ msgstr "32 bits"
 msgid "Windows BMP image"
 msgstr "Imagem BMP do Windows"
 
-#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
+#: ../plug-ins/file-dds/dds.c:162 ../plug-ins/file-dds/dds.c:181
+#: ../plug-ins/file-dds/dds.c:200
 msgid "DDS image"
 msgstr "Imagem DDS"
 
-#: ../plug-ins/file-dds/dds.c:176
+#: ../plug-ins/file-dds/dds.c:217
 msgid "Decode YCoCg"
 msgstr "Descodificação YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:189
+#: ../plug-ins/file-dds/dds.c:230
 msgid "Decode YCoCg (scaled)"
 msgstr "Decodificar YCoCg (em escala)"
 
-#: ../plug-ins/file-dds/dds.c:202
+#: ../plug-ins/file-dds/dds.c:243
 msgid "Decode Alpha exponent"
 msgstr "Decodificar expoente alfa"
 
@@ -6736,64 +6736,68 @@ msgstr "_Carregar mapas MIP"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Decodificar automaticamente imagens YCoCg / AExp quando detetadas"
 
-#: ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddswrite.c:1981
 msgid "Export as DDS"
 msgstr "Exportar como DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1959
+#: ../plug-ins/file-dds/ddswrite.c:1984
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "_Exportar"
 
-#: ../plug-ins/file-dds/ddswrite.c:1986
+#: ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Compression:"
 msgstr "_Compressão:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1996
+#: ../plug-ins/file-dds/ddswrite.c:2021
 msgid "Use _perceptual error metric"
 msgstr "Use a métrica de erro _percetual"
 
-#: ../plug-ins/file-dds/ddswrite.c:2025
+#: ../plug-ins/file-dds/ddswrite.c:2050
 msgid "_Save:"
-msgstr "_Guardar:"
+msgstr "_Gravar:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2039
+#: ../plug-ins/file-dds/ddswrite.c:2062
+msgid "Flip the image _vertically on export"
+msgstr "Virar a imagem _verticalmente ao exportar"
+
+#: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
 msgstr "_Mapas MIP:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2062
+#: ../plug-ins/file-dds/ddswrite.c:2098
 msgid "Transparent index:"
 msgstr "Índice transparente:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2106
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Mipmap Options"
 msgstr "Opções mapa MIP"
 
-#: ../plug-ins/file-dds/ddswrite.c:2119
+#: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "F_ilter:"
 msgstr "F_iltro:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2132
+#: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "_Wrap mode:"
 msgstr "_Modo de envolver:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2142
+#: ../plug-ins/file-dds/ddswrite.c:2178
 msgid "Appl_y gamma correction"
 msgstr "Aplicar c_orreção de gama"
 
-#: ../plug-ins/file-dds/ddswrite.c:2156
+#: ../plug-ins/file-dds/ddswrite.c:2192
 msgid "Use s_RGB colorspace"
 msgstr "Usar espaço de cores s_RGB"
 
-#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2211 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2185
+#: ../plug-ins/file-dds/ddswrite.c:2221
 msgid "Preserve alpha _test coverage"
 msgstr "Preservar a cobertura do _teste alfa"
 
-#: ../plug-ins/file-dds/ddswrite.c:2204
+#: ../plug-ins/file-dds/ddswrite.c:2240
 msgid "_Alpha test threshold:"
 msgstr "_Limiar do teste alfa:"
 
@@ -7039,7 +7043,7 @@ msgstr "Gravar dados _EXIF"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
-#: ../plug-ins/file-webp/file-webp-dialog.c:377
+#: ../plug-ins/file-webp/file-webp-dialog.c:390
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _XMP data"
 msgstr "Gravar dados _XMP"
@@ -7049,7 +7053,9 @@ msgstr "Gravar dados _XMP"
 msgid "Save _IPTC data"
 msgstr "Gravar dados _IPTC"
 
+#. Save Thumbnail
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
+#: ../plug-ins/file-webp/file-webp-dialog.c:414
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _thumbnail"
 msgstr "Gravar minia_tura"
@@ -7495,13 +7501,13 @@ msgstr "Canais extra com dados não especificados."
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF não conforme: canais extras sem campo “ExtraSamples”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:522
+#: ../plug-ins/file-tiff/file-tiff-load.c:523
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Não foi possível ler a página %d de %d. A imagem pode estar corrompida.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:551
+#: ../plug-ins/file-tiff/file-tiff-load.c:552
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7511,7 +7517,7 @@ msgstr ""
 "camada. As camadas abaixo da camada nº %d serão interpretadas como não "
 "lineares."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:559
+#: ../plug-ins/file-tiff/file-tiff-load.c:560
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7521,36 +7527,36 @@ msgstr ""
 "a resultados incorretos, considere carregar cada camada como uma imagem "
 "separada."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#: ../plug-ins/file-tiff/file-tiff-load.c:572
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Profundidade de cor suspeita: %d para a página %d. A imagem pode estar "
 "corrompida."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:645
+#: ../plug-ins/file-tiff/file-tiff-load.c:646
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Profundidade de cor não suportada: %d para a página %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:660
+#: ../plug-ins/file-tiff/file-tiff-load.c:661
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Não foi possível obter a largura da imagem de \"%s\""
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:668
+#: ../plug-ins/file-tiff/file-tiff-load.c:669
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Não foi possível obter o comprimento da imagem de “%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:676
+#: ../plug-ins/file-tiff/file-tiff-load.c:677
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Dimensões de imagem inválidas (%u x %u) para a página %d. A imagem pode "
 "estar corrompida."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:697
+#: ../plug-ins/file-tiff/file-tiff-load.c:698
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7559,7 +7565,7 @@ msgstr ""
 "Não foi possível obter fotometria de “%s”. A imagem é comprimida com CCITT, "
 "a supor que “min-is-white”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:704
+#: ../plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "Não foi possível obter fotometria de “%s”. A supor que “min-is-black”"
@@ -7567,7 +7573,7 @@ msgstr "Não foi possível obter fotometria de “%s”. A supor que “min-is-b
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:736
+#: ../plug-ins/file-tiff/file-tiff-load.c:737
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7575,7 +7581,7 @@ msgstr ""
 "Tipo de canal alfa não definido para %s. A supor que o alfa não seja pré-"
 "multiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:761
+#: ../plug-ins/file-tiff/file-tiff-load.c:762
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7586,75 +7592,75 @@ msgstr ""
 "“ExtraSamples” não está definido e no entanto existem canais extras. A supor "
 "que o primeiro canal extra seja alfa não pré-multiplicado."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:994
+#: ../plug-ins/file-tiff/file-tiff-load.c:1036
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Compressão “%u” inválida ou desconhecida. A definir a compressão para "
 "“nenhuma compressão”."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1052
+#: ../plug-ins/file-tiff/file-tiff-load.c:1094
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Não foi possível criar uma nova imagem: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1072
+#: ../plug-ins/file-tiff/file-tiff-load.c:1114
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d de %d páginas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1217
+#: ../plug-ins/file-tiff/file-tiff-load.c:1259
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo de unidade de resolução desconhecido %d, a assumir ppp (dpi)"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1227
+#: ../plug-ins/file-tiff/file-tiff-load.c:1269
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Aviso: resolução especificada sem tipo de unidade, a assumir ppp (dpi)"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1235
+#: ../plug-ins/file-tiff/file-tiff-load.c:1277
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Aviso: nenhuma informação de resolução de y, a assumir o mesmo que x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1294
+#: ../plug-ins/file-tiff/file-tiff-load.c:1336
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Não foi possível obter os mapas de cores de “%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1367
+#: ../plug-ins/file-tiff/file-tiff-load.c:1415
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1505
+#: ../plug-ins/file-tiff/file-tiff-load.c:1553
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Não puderam ser lidos nenhuns dados do TIFF “%s”. Provavelmente o ficheiro "
 "está corrompido."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1576
+#: ../plug-ins/file-tiff/file-tiff-load.c:1624
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: formato de imagem não suportado, nenhum carregador RGBA disponível"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1888
-#: ../plug-ins/file-tiff/file-tiff-load.c:2085
+#: ../plug-ins/file-tiff/file-tiff-load.c:1936
+#: ../plug-ins/file-tiff/file-tiff-load.c:2133
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "A leitura do bloco falhou. A imagem pode estar corrompida na linha %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1897
-#: ../plug-ins/file-tiff/file-tiff-load.c:2094
+#: ../plug-ins/file-tiff/file-tiff-load.c:1945
+#: ../plug-ins/file-tiff/file-tiff-load.c:2142
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "A leitura do “scanline” falhou. A imagem pode estar corrompida na linha %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2495
+#: ../plug-ins/file-tiff/file-tiff-load.c:2543
 msgid "Import from TIFF"
 msgstr "Importar de imagem TIFF"
 
@@ -7662,23 +7668,23 @@ msgstr "Importar de imagem TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2552
+#: ../plug-ins/file-tiff/file-tiff-load.c:2600
 msgid "_Keep empty space around imported layers"
 msgstr "_Manter espaço vazio em torno das camadas importadas"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2569
+#: ../plug-ins/file-tiff/file-tiff-load.c:2617
 msgid "Process extra channel as:"
 msgstr "Processar canal extra como:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2572
+#: ../plug-ins/file-tiff/file-tiff-load.c:2620
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa não pré-_multiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2573
+#: ../plug-ins/file-tiff/file-tiff-load.c:2621
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pré-_multiplicado"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2574
+#: ../plug-ins/file-tiff/file-tiff-load.c:2622
 msgid "Channe_l"
 msgstr "Cana_l"
 
@@ -7756,7 +7762,8 @@ msgstr "Fax CCIT Group _3"
 msgid "CCITT Group _4 fax"
 msgstr "Fax CCITT Group _4"
 
-#: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
+#: ../plug-ins/file-webp/file-webp.c:124 ../plug-ins/file-webp/file-webp.c:145
+#: ../plug-ins/file-webp/file-webp.c:163
 msgid "WebP image"
 msgstr "Imagem WebP"
 
@@ -7769,73 +7776,78 @@ msgid "(all frames are keyframes)"
 msgstr "(todos os fotogramas são fotogramas-chave)"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:108
+#: ../plug-ins/file-webp/file-webp-dialog.c:109
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
 msgid "_Lossless"
 msgstr "_Sem perda"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:141
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Image _quality:"
 msgstr "Qualidade da imagem:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:149
+#: ../plug-ins/file-webp/file-webp-dialog.c:150
 msgid "Image quality"
 msgstr "Qualidade da imagem"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:160
+#: ../plug-ins/file-webp/file-webp-dialog.c:161
 msgid "Alpha q_uality:"
 msgstr "Qualidade da transparência:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:169
 msgid "Alpha channel quality"
 msgstr "Qualidade do canal de transparência"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:193
+#: ../plug-ins/file-webp/file-webp-dialog.c:194
 msgid "Source _type:"
 msgstr "Tipo de fonte:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:196
+#: ../plug-ins/file-webp/file-webp-dialog.c:197
 msgid "WebP encoder \"preset\""
 msgstr "Predefinição de Codificador WebP"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:228
+#: ../plug-ins/file-webp/file-webp-dialog.c:229
 msgid "As A_nimation"
 msgstr "Como a_nimação"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:257
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "Loop _forever"
 msgstr "Ciclo _eterno"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:274
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
 msgid "Max distance between key-frames:"
 msgstr "Distância máxima entre quadros-chave:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:309
+#: ../plug-ins/file-webp/file-webp-dialog.c:310
 msgid "_Minimize output size (slower)"
 msgstr "Minimizar tamanho de saída (mais lento)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:332
+#: ../plug-ins/file-webp/file-webp-dialog.c:333
 msgid "Delay between frames where unspecified:"
 msgstr "Atraso entre quadros onde não especificado:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:355
+#: ../plug-ins/file-webp/file-webp-dialog.c:356
 msgid "Use _delay entered above for all frames"
 msgstr "Utilizar o atraso inserido acima em todas os quadros"
 
 #. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:367
+#: ../plug-ins/file-webp/file-webp-dialog.c:368
 msgid "_Save Exif data"
-msgstr "_Guardar dados Exif"
+msgstr "_Gravar dados Exif"
+
+#. IPTC metadata
+#: ../plug-ins/file-webp/file-webp-dialog.c:378
+msgid "Save _IPTC"
+msgstr "Gravar _IPTC"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -8941,7 +8953,7 @@ msgstr "Selecionar:"
 
 #: ../plug-ins/gimpressionist/brush.c:611
 msgid "Save _as"
-msgstr "Guardar _como"
+msgstr "Gravar _como"
 
 #: ../plug-ins/gimpressionist/brush.c:624
 msgid "Aspect ratio:"
@@ -12130,7 +12142,7 @@ msgstr "Editor de metadados: %s"
 
 #: ../plug-ins/metadata/metadata-editor.c:591
 msgid "_Write Metadata"
-msgstr "_Guardar metadados"
+msgstr "_Gravar metadados"
 
 #: ../plug-ins/metadata/metadata-editor.c:615
 msgid "Import metadata"
@@ -12906,8 +12918,8 @@ msgid ""
 "detect the cases where we didn't find any corners."
 msgstr ""
 "Quantidade de erro para a qual já não há motivo para re-parametrizar. Isto "
-"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um "
-"\"O\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
+"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um \"O"
+"\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
 "iteração de Newton-Raphson o melhorarem. Pode ser que seja melhor detetar "
 "casos onde não encontramos cantos."
 
