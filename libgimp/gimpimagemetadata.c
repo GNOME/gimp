@@ -288,6 +288,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
       gdouble             xres;
       gdouble             yres;
       gchar               buffer[32];
+      gchar              *datetime_buf = NULL;
       GExiv2Metadata     *g2metadata = GEXIV2_METADATA (metadata);
 
       image_width  = gimp_image_width  (image_ID);
@@ -348,6 +349,16 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
                                       "Xmp.dc.Format",
                                       mime_type);
 
+      /* XMP uses datetime in ISO 8601 format */
+      datetime_buf = g_date_time_format (datetime, "%Y:%m:%dT%T\%:z");
+
+      gexiv2_metadata_set_tag_string (g2metadata,
+                                      "Xmp.xmp.ModifyDate",
+                                      datetime_buf);
+      gexiv2_metadata_set_tag_string (g2metadata,
+                                      "Xmp.xmp.MetadataDate",
+                                      datetime_buf);
+
       if (! g_strcmp0 (mime_type, "image/tiff"))
         {
           /* TIFF specific XMP data */
@@ -362,17 +373,9 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
                                           "Xmp.tiff.ImageLength",
                                           buffer);
 
-          g_snprintf (buffer, sizeof (buffer),
-                      "%d:%02d:%02d %02d:%02d:%02d",
-                      g_date_time_get_year (datetime),
-                      g_date_time_get_month (datetime),
-                      g_date_time_get_day_of_month (datetime),
-                      g_date_time_get_hour (datetime),
-                      g_date_time_get_minute (datetime),
-                      g_date_time_get_second (datetime));
           gexiv2_metadata_set_tag_string (g2metadata,
                                           "Xmp.tiff.DateTime",
-                                          buffer);
+                                          datetime_buf);
         }
 
       /* IPTC */
@@ -381,26 +384,7 @@ gimp_image_metadata_save_prepare (gint32                 image_ID,
           ! gexiv2_metadata_has_iptc (g2metadata))
         *suggested_flags &= ~GIMP_METADATA_SAVE_IPTC;
 
-      g_snprintf (buffer, sizeof (buffer),
-                  "%d-%d-%d",
-                  g_date_time_get_year (datetime),
-                  g_date_time_get_month (datetime),
-                  g_date_time_get_day_of_month (datetime));
-      gexiv2_metadata_set_tag_string (g2metadata,
-                                      "Iptc.Application2.DateCreated",
-                                      buffer);
-
-      g_snprintf (buffer, sizeof (buffer),
-                  "%02d:%02d:%02d-%02d:%02d",
-                  g_date_time_get_hour (datetime),
-                  g_date_time_get_minute (datetime),
-                  g_date_time_get_second (datetime),
-                  g_date_time_get_hour (datetime),
-                  g_date_time_get_minute (datetime));
-      gexiv2_metadata_set_tag_string (g2metadata,
-                                      "Iptc.Application2.TimeCreated",
-                                      buffer);
-
+      g_free (datetime_buf);
       g_date_time_unref (datetime);
 
     }
