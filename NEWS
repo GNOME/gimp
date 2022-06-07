@@ -19,10 +19,16 @@ Core:
     of them, similarly to what libgimpbase now does. This could happen
     in XCF files which were created e.g. from a PSD import before we
     handled the issue in libgimpbase.
-  - XCF import made more robust by ignoring (with a warning) invalid
-    parasites and continuing to load the rest of the file (which might
-    be valid). This way, we are able to salvage more cases of partially
-    corrupted XCF files.
+  - XCF import:
+    * made more robust by ignoring (with a warning) invalid
+      parasites and continuing to load the rest of the file (which might
+      be valid). This way, we are able to salvage more cases of
+      partially corrupted XCF files.
+    * additional safety checks to detect broken XCF files.
+  - Version check can be globally disabled through a value in the
+    `gimp-release` file. This would allow to use the same build on
+    repositories with an update channels (where we don't want update
+    check notifications) and on standalone (where we want them).
 
 User Interface:
 
@@ -76,6 +82,12 @@ Plug-ins:
     Windows environment (more modern C runtime library than MINGW).
   - EPS: loading transparent EPS files now supported.
   - JPEG XL: import backported from the `master` (2.99) branch.
+  - WebP: export has a new IPTC checkbox (saved through XMP) as well as
+    a thumbnail checkbox. (backported from dev branch, since 2.99.8)
+  - DDS: export has a new flip option (useful for some game engine) as
+    well as a new savetype option to export all visible layers (not only
+    the active one).
+  - TIFF: import support for 8 and 16 bit CMYK(A) TIFF files.
 
 Libgimp:
 
@@ -84,6 +96,13 @@ Libgimp:
   - gimp_drawable_brightness_contrast() now works in the [-1.0, 1.0]
     range (it's more of a fix than a change because it's what it should
     have been from the start).
+  - Better management of modification time in metadata: IPTC tag
+    Iptc.Application2.DateCreated is not overridden anymore as it is the
+    original creation date of the image. Instead we set the XMP tag
+    Xmp.xmp.ModifyDate for file modification time and
+    Xmp.xmp.MetadataDate for metadata modification time.
+  - Format of Xmp.tiff.DateTime is now properly set with timezone as a
+    consequence of the previous improvement.
 
 Libgimpbase:
 
@@ -101,9 +120,17 @@ Icons:
     versions (with contrast borders to work on any background color) so
     that the "broken" and full variants are easily distinguishable.
 
+Translations:
+
+  - New Galician and Georgian translations for the Windows installer.
+
 Build:
 
   - Bumping minimum GEGL to version 0.4.36.
+  - The Windows installer now has an option /DISABLECHECKUPDATE=true to
+    install the same build but editing the `gimp-release` file to
+    disable update check as newly implemented (see above in Core
+    section).
 
 
 Overview of Changes from GIMP 2.10.28 to GIMP 2.10.30
