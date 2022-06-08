@@ -821,15 +821,17 @@ load_image (GFile        *file,
         case PHOTOMETRIC_PALETTE:
         case PHOTOMETRIC_MINISBLACK:
         case PHOTOMETRIC_MINISWHITE:
+          /* Even for bps >= we may need to use tiff_mode, so always set it.
+           * Currently we use it to detect the need to convert 8 bps miniswhite. */
+          if (photomet == PHOTOMETRIC_PALETTE)
+            tiff_mode = GIMP_TIFF_INDEXED;
+          else if (photomet == PHOTOMETRIC_MINISBLACK)
+            tiff_mode = GIMP_TIFF_GRAY;
+          else if (photomet == PHOTOMETRIC_MINISWHITE)
+            tiff_mode = GIMP_TIFF_GRAY_MINISWHITE;
+
           if (bps < 8)
             {
-              if (photomet == PHOTOMETRIC_PALETTE)
-                tiff_mode = GIMP_TIFF_INDEXED;
-              else if (photomet == PHOTOMETRIC_MINISBLACK)
-                tiff_mode = GIMP_TIFF_GRAY;
-              else if (photomet == PHOTOMETRIC_MINISWHITE)
-                tiff_mode = GIMP_TIFF_GRAY_MINISWHITE;
-
               /* FIXME: It should be a user choice whether this should be
                * interpreted as indexed or grayscale. For now we will
                * use indexed (see issue #6766). */
