@@ -36,9 +36,9 @@
 
  ( ) Notify the maintainers of the official builds for Windows
      (irc:ender/@jernejs), macOS (irc:Samm/@samm-git and
-     irc:DesMcG/@DesMcGuinness) and flatpak (irc:Jehan/@Jehan) of the
-     upcoming release so they have some time to sort out issues with
-     their builds.
+     irc:DesMcG/@DesMcGuinness) and flatpak (irc:Jehan/@Jehan,
+     @harrymichal and @hfiguiere) of the upcoming release so they have
+     some time to sort out issues with their builds.
 
  ( ) Wait until the date specified in the announcements, use this time
      to get bug fixes applied which don't modify strings.
@@ -244,9 +244,18 @@
          we publish with most mirrors lagging behind, many download
          errors will occur.
 
- ( ) When confident about the installers availability, announce the
-     release on gimp.org and send a release announcement to the
-     gimp-user and gimp-developer mailing lists.
+ ( ) When confident about the installers availability, if this is a
+     stable release, create a new package on the Microsoft Partner
+     Center so that GIMP becomes available on the Microsoft Store:
+     https://partner.microsoft.com/en-us/dashboard/apps-and-games/overview
+
+     The URL to provide is the mirror URL, not the direct URL.
+
+     Current people with admin access to this platform:
+     irc:ender/@jernejs and irc:Jehan/@Jehan.
+
+ ( ) Announce the release on gimp.org and send a release announcement to
+     the gimp-user and gimp-developer mailing lists.
 
      [ ] Check out the gimp-web master branch and merge or cherry-pick
          the changes you did in the testing branch.
