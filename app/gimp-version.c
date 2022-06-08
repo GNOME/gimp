@@ -38,6 +38,102 @@
 #include "gimp-version.h"
 
 
+static gchar * gimp_library_version          (const gchar *package,
+                                              gint         build_time_major,
+                                              gint         build_time_minor,
+                                              gint         build_time_micro,
+                                              gint         run_time_major,
+                                              gint         run_time_minor,
+                                              gint         run_time_micro,
+                                              gboolean     localized);
+static gchar * gimp_library_versions         (gboolean     localized);
+static void    gimp_version_get_release_info (gint        *package_revision,
+                                              gboolean    *package_check_update);
+
+void
+gimp_version_show (gboolean be_verbose)
+{
+  gchar *version = gimp_version (be_verbose, TRUE);
+
+  g_print ("%s", version);
+
+  g_free (version);
+}
+
+gchar *
+gimp_version (gboolean be_verbose,
+              gboolean localized)
+{
+  gchar *version;
+  gchar *temp;
+
+  version = g_strdup_printf (localized ? _("%s version %s") : "%s version %s",
+                             GIMP_NAME, GIMP_VERSION);;
+  temp = g_strconcat (version, "\n", NULL);
+  g_free (version);
+  version = temp;
+
+  if (be_verbose)
+    {
+      gchar *verbose_info;
+      gchar *lib_versions;
+      gchar *flatpak_info = NULL;
+
+      lib_versions = gimp_library_versions (localized);
+      verbose_info = g_strdup_printf ("git-describe: %s\n"
+                                      "Build: %s rev %d for %s\n"
+                                      "# C compiler #\n%s\n"
+                                      "# Libraries #\n%s",
+                                      GIMP_GIT_VERSION,
+                                      GIMP_BUILD_ID,
+                                      gimp_version_get_revision (),
+                                      GIMP_BUILD_PLATFORM_FAMILY,
+                                      CC_VERSION,
+                                      lib_versions);
+      g_free (lib_versions);
+
+      /* This file should be available at root path in a flatpak
+       * environment. Just add its contents to the verbose output if it
+       * exists. Silently ignore otherwise.
+       */
+      if (g_file_get_contents ("/.flatpak-info", &flatpak_info, NULL, NULL))
+        {
+          temp = g_strdup_printf ("\n# Flatpak info #\n%s",
+                                  flatpak_info);
+          g_free (flatpak_info);
+          flatpak_info = temp;
+        }
+      temp = g_strconcat (version, verbose_info, flatpak_info, NULL);
+      g_free (version);
+      g_free (verbose_info);
+      g_free (flatpak_info);
+
+      version = temp;
+    }
+
+  return version;
+}
+
+gint
+gimp_version_get_revision (void)
+{
+  gint revision;
+
+  gimp_version_get_release_info (&revision, NULL);
+
+  return revision;
+}
+
+gboolean
+gimp_version_check_update (void)
+{
+  gboolean check_update;
+
+  gimp_version_get_release_info (NULL, &check_update);
+
+  return check_update;
+}
+
 static gchar *
 gimp_library_version (const gchar *package,
                       gint         build_time_major,
@@ -193,119 +289,47 @@ gimp_library_versions (gboolean localized)
   return lib_versions;
 }
 
-void
-gimp_version_show (gboolean be_verbose)
+static void
+gimp_version_get_release_info (gint     *package_revision,
+                               gboolean *package_check_update)
 {
-  gchar *version = gimp_version (be_verbose, TRUE);
+  static gint     revision     = -1;
+  static gboolean check_update = FALSE;
 
-  g_print ("%s", version);
-
-  g_free (version);
-}
-
-gchar *
-gimp_version (gboolean be_verbose,
-              gboolean localized)
-{
-  gchar *version;
-  gchar *temp;
-
-  version = g_strdup_printf (localized ? _("%s version %s") : "%s version %s",
-                             GIMP_NAME, GIMP_VERSION);;
-  temp = g_strconcat (version, "\n", NULL);
-  g_free (version);
-  version = temp;
-
-  if (be_verbose)
+  if (revision == -1)
     {
-      gchar *verbose_info;
-      gchar *lib_versions;
-      gchar *flatpak_info = NULL;
+      GKeyFile *key_file;
+      gchar    *gimp_release;
 
-      lib_versions = gimp_library_versions (localized);
-      verbose_info = g_strdup_printf ("git-describe: %s\n"
-                                      "Build: %s rev %d for %s\n"
-                                      "# C compiler #\n%s\n"
-                                      "# Libraries #\n%s",
-                                      GIMP_GIT_VERSION,
-                                      GIMP_BUILD_ID,
-                                      gimp_version_get_revision (),
-                                      GIMP_BUILD_PLATFORM_FAMILY,
-                                      CC_VERSION,
-                                      lib_versions);
-      g_free (lib_versions);
+      revision = 0;
+      key_file = g_key_file_new ();
 
-      /* This file should be available at root path in a flatpak
-       * environment. Just add its contents to the verbose output if it
-       * exists. Silently ignore otherwise.
+      /* The gimp-release file is inspired by /etc/os-release and similar
+       * distribution files. Right now its main use is to number the package
+       * revision. This information is not a build variable because a new
+       * package version does not necessarily imply a rebuild (maybe just
+       * installed data or dependencies change).
        */
-      if (g_file_get_contents ("/.flatpak-info", &flatpak_info, NULL, NULL))
+      gimp_release = g_build_filename (gimp_data_directory (), "gimp-release", NULL);
+      /* Absence of the file is not an error. Actually most third-party
+       * builds probably won't install such file.
+       */
+      if (g_key_file_load_from_file (key_file, gimp_release, G_KEY_FILE_NONE, NULL))
         {
-          temp = g_strdup_printf ("\n# Flatpak info #\n%s",
-                                  flatpak_info);
-          g_free (flatpak_info);
-          flatpak_info = temp;
+          check_update = TRUE;
+
+          if (g_key_file_has_key (key_file, "package", "revision", NULL))
+            revision = g_key_file_get_integer (key_file, "package", "revision", NULL);
+
+          if (g_key_file_has_key (key_file, "package", "check-update", NULL))
+            check_update = g_key_file_get_boolean (key_file, "package", "check-update", NULL);
         }
-      temp = g_strconcat (version, verbose_info, flatpak_info, NULL);
-      g_free (version);
-      g_free (verbose_info);
-      g_free (flatpak_info);
-
-      version = temp;
+      g_key_file_free (key_file);
+      g_free (gimp_release);
     }
 
-  return version;
-}
-
-gint
-gimp_version_get_revision (void)
-{
-  GKeyFile *key_file;
-  gchar    *gimp_release;
-  gint      revision = 0;
-
-  key_file = g_key_file_new ();
-
-  /* The gimp-release file is inspired by /etc/os-release and similar
-   * distribution files. Right now its main use is to number the package
-   * revision. This information is not a build variable because a new
-   * package version does not necessarily imply a rebuild (maybe just
-   * installed data or dependencies change).
-   */
-  gimp_release = g_build_filename (gimp_data_directory (), "gimp-release", NULL);
-  /* Absence of the file is not an error. Actually most third-party
-   * builds probably won't install such file.
-   */
-  if (g_key_file_load_from_file (key_file, gimp_release, G_KEY_FILE_NONE, NULL))
-    {
-      if (g_key_file_has_key (key_file, "package", "revision", NULL))
-        revision = g_key_file_get_integer (key_file, "package", "revision", NULL);
-    }
-  g_key_file_free (key_file);
-  g_free (gimp_release);
-
-  return revision;
-}
-
-gboolean
-gimp_version_check_update (void)
-{
-  GKeyFile *key_file;
-  gchar    *gimp_release;
-  gboolean  check_update = FALSE;
-
-  key_file = g_key_file_new ();
-
-  gimp_release = g_build_filename (gimp_data_directory (), "gimp-release", NULL);
-  if (g_key_file_load_from_file (key_file, gimp_release, G_KEY_FILE_NONE, NULL))
-    {
-      check_update = TRUE;
-
-      if (g_key_file_has_key (key_file, "package", "check-update", NULL))
-        check_update = g_key_file_get_boolean (key_file, "package", "check-update", NULL);
-    }
-  g_key_file_free (key_file);
-  g_free (gimp_release);
-
-  return check_update;
+  if (package_revision)
+    *package_revision = revision;
+  if (package_check_update)
+    *package_check_update = check_update;
 }
