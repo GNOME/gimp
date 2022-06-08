@@ -1,8 +1,6 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
-[encoding: UTF-8]
-
 extensions/goat-exercises/goat-exercise-c.c
 extensions/goat-exercises/goat-exercise-gjs.js
 extensions/goat-exercises/goat-exercise-lua.lua
@@ -150,8 +148,8 @@ plug-ins/gimpressionist/repaint.c
 plug-ins/gimpressionist/size.c
 plug-ins/gimpressionist/sizemap.c
 plug-ins/gimpressionist/utils.c
-[type: gettext/glade]plug-ins/ui/plug-in-metadata-editor.ui
-[type: gettext/glade]plug-ins/ui/plug-in-metadata-viewer.ui
+plug-ins/ui/plug-in-metadata-editor.ui
+plug-ins/ui/plug-in-metadata-viewer.ui
 plug-ins/gradient-flare/gradient-flare.c
 plug-ins/help-browser/dialog.c
 plug-ins/help-browser/help-browser.c

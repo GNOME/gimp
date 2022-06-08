@@ -1017,7 +1017,6 @@ endif
 # Check for XML tools
 xmllint             = find_program('xmllint', required: false)
 xsltproc            = find_program('xsltproc')
-intltool_merge      = find_program('intltool-merge')
 desktop_validate    = find_program('desktop-file-validate', required: false)
 
 appstreamcli = find_program('appstreamcli', version: '>=0.15.3', required: get_option('appdata-test'))
@@ -1552,7 +1551,6 @@ install_conf.set('GEXIV2_REQUIRED_VERSION',       gexiv2_minver)
 install_conf.set('GLIB_REQUIRED_VERSION',         glib_minver)
 install_conf.set('GTK_REQUIRED_VERSION',          gtk3_minver)
 install_conf.set('HARFBUZZ_REQUIRED_VERSION',     harfbuzz_minver)
-install_conf.set('INTLTOOL_REQUIRED_VERSION',     '0.40.1')
 install_conf.set('LCMS_REQUIRED_VERSION',         lcms_minver)
 install_conf.set('LIBHEIF_REQUIRED_VERSION',      libheif_minver)
 install_conf.set('LIBLZMA_REQUIRED_VERSION',      liblzma_minver)

@@ -69,7 +69,6 @@ m4_define([gtk_mac_integration_required_version], [2.0.0])
 m4_define([gtk_required_version], [3.22.29])
 m4_define([gtkdoc_required_version], [1.0])
 m4_define([harfbuzz_required_version], [1.0.5])
-m4_define([intltool_required_version], [0.40.1])
 m4_define([introspection_required_version], [1.32.0])
 m4_define([json_glib_required_version], [1.2.6])
 m4_define([lcms_required_version], [2.8])
@@ -94,10 +93,6 @@ m4_define([webkitgtk_required_version], [2.20.3])
 m4_define([webp_required_version], [0.6.0])
 m4_define([wmf_required_version], [0.2.8])
 
-# Current test considers only 2 version numbers. If we update the recommended
-# version of gettext with more version numbers, please update the tests.
-m4_define([xgettext_required_version], [0.19])
-
 # required versions for build-time only tools
 m4_define([native_glib_required_version], [2.2.0])
 
@@ -109,7 +104,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_SRCDIR([app/core/gimp.c])
 AC_CONFIG_MACRO_DIR([m4macros])
 
-AM_INIT_AUTOMAKE(no-define dist-bzip2 dist-xz no-dist-gzip -Wno-portability)
+AM_INIT_AUTOMAKE(no-define dist-bzip2 dist-xz no-dist-gzip foreign)
 
 # Enable silent build rules by default, requires at least
 # Automake-1.11. Disable by either passing --disable-silent-rules to
@@ -178,7 +173,6 @@ GEXIV2_REQUIRED_VERSION=gexiv2_required_version
 GLIB_REQUIRED_VERSION=glib_required_version
 GTK_REQUIRED_VERSION=gtk_required_version
 HARFBUZZ_REQUIRED_VERSION=harfbuzz_required_version
-INTLTOOL_REQUIRED_VERSION=intltool_required_version
 LCMS_REQUIRED_VERSION=lcms_required_version
 LIBHEIF_REQUIRED_VERSION=libheif_required_version
 LIBJXL_REQUIRED_VERSION=libjxl_required_version
@@ -199,7 +193,6 @@ WEBKITGTK_REQUIRED_VERSION=webkitgtk_required_version
 WEBP_REQUIRED_VERSION=webp_required_version
 WMF_REQUIRED_VERSION=wmf_required_version
 LIBUNWIND_REQUIRED_VERSION=libunwind_required_version
-XGETTEXT_REQUIRED_VERSION=xgettext_required_version
 AC_SUBST(APPSTREAM_GLIB_REQUIRED_VERSION)
 AC_SUBST(ATK_REQUIRED_VERSION)
 AC_SUBST(BABL_MAJOR_MINOR_VERSION)
@@ -215,7 +208,6 @@ AC_SUBST(GEXIV2_REQUIRED_VERSION)
 AC_SUBST(GLIB_REQUIRED_VERSION)
 AC_SUBST(GTK_REQUIRED_VERSION)
 AC_SUBST(HARFBUZZ_REQUIRED_VERSION)
-AC_SUBST(INTLTOOL_REQUIRED_VERSION)
 AC_SUBST(LCMS_REQUIRED_VERSION)
 AC_SUBST(LIBHEIF_REQUIRED_VERSION)
 AC_SUBST(LIBJXL_REQUIRED_VERSION)
@@ -236,7 +228,6 @@ AC_SUBST(WEBKITGTK_REQUIRED_VERSION)
 AC_SUBST(WEBP_REQUIRED_VERSION)
 AC_SUBST(WMF_REQUIRED_VERSION)
 AC_SUBST(LIBUNWIND_REQUIRED_VERSION)
-AC_SUBST(XGETTEXT_REQUIRED_VERSION)
 
 # The symbol GIMP_UNSTABLE is defined above for substitution in
 # Makefiles and conditionally defined here as a preprocessor symbol
@@ -263,11 +254,6 @@ GETTEXT_PACKAGE=gimp30
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE, "$GETTEXT_PACKAGE",
                    [The prefix for our gettext translation domains.])
-
-# work around intltool-update issues during 'make distcheck'
-AS_IF([test "x$0" != "x./configure"], [
-        AC_SUBST([INTLTOOL_UPDATE], [/bin/true])
-])
 
 # Determine a C compiler to use
 AC_PROG_CC
@@ -672,36 +658,8 @@ m4_define([add_deps_error], [
 # Internationalisation
 ######################
 
-IT_PROG_INTLTOOL(intltool_required_version)
-
-# Testing xgettext version since we had some problem with localizing script-fu. See bug 720052.
-AC_MSG_CHECKING([for xgettext version (>= xgettext_required_version)])
-XGETTEXT_REQUIRED_VERSION_MAJOR=`echo $XGETTEXT_REQUIRED_VERSION | awk -F. '{ print $ 1; }'`
-XGETTEXT_REQUIRED_VERSION_MINOR_1=`echo $XGETTEXT_REQUIRED_VERSION | awk -F. '{ print $ 2; }'`
-
-XGETTEXT_APPLIED_VERSION=`$XGETTEXT --version | head -1 | cut -d" " -f4`
-XGETTEXT_APPLIED_VERSION_MAJOR=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 1; }'`
-XGETTEXT_APPLIED_VERSION_MINOR_1=`echo $XGETTEXT_APPLIED_VERSION | awk -F. '{ print $ 2; }'`
-
-have_required_xgettext="no"
-if test -n "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-    if test "$XGETTEXT_REQUIRED_VERSION_MAJOR" -lt "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-        have_required_xgettext="yes"
-    elif test "$XGETTEXT_REQUIRED_VERSION_MAJOR" -eq "$XGETTEXT_APPLIED_VERSION_MAJOR"; then
-        if test -n "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-            if test "$XGETTEXT_REQUIRED_VERSION_MINOR_1" -le "$XGETTEXT_APPLIED_VERSION_MINOR_1"; then
-                have_required_xgettext="yes"
-            fi
-        fi
-    fi
-fi
-AC_MSG_RESULT($have_required_xgettext)
-
-if test "x$have_required_xgettext" = "xno"; then
-    add_deps_error([xgettext], [xgettext >= xgettext_required_version])
-fi
-
-AM_GLIB_GNU_GETTEXT
+AM_GNU_GETTEXT([external])
+AM_GNU_GETTEXT_VERSION([0.19.8])
 
 ###########
 # iso-codes
@@ -2844,13 +2802,6 @@ AC_ARG_ENABLE(windows-installer,
                           (default=no)],,
               enable_windows_installer=no)
 
-if test "x$enable_windows_installer" != xno; then
-  if test ! -e "$srcdir/build/windows/installer/lang/setup.isl.ini"; then
-    AC_MSG_RESULT([no (not building from git)])
-    AC_MSG_ERROR([Building the Windows installer is only supported when building from git.])
-  fi
-fi
-
 AC_MSG_RESULT([$enable_windows_installer])
 AM_CONDITIONAL(BUILD_WINDOWS_INSTALLER, test "x$enable_windows_installer" != xno)
 
@@ -3240,37 +3191,6 @@ gimp-gimp_pkgconfig_version.pc:gimp.pc.in
 gimpthumb-gimp_pkgconfig_version.pc:gimpthumb.pc.in
 gimpui-gimp_pkgconfig_version.pc:gimpui.pc.in
 )
-
-# By default, autoconf will create only po/Makefile.
-# This code is used to create the POTFILES and Makefile for all
-# additional gettext catalogs.
-m4_define([generate_po_makefile], [
-  AC_MSG_NOTICE([Generating POTFILES and Makefile for $1])
-
-  AC_CONFIG_COMMANDS([$1/stamp-it],
-  [[
-    if  ! grep "^# INTLTOOL_MAKEFILE$" "$1/Makefile.in" > /dev/null ; then
-       as_fn_error $? "$1/Makefile.in.in was not created by intltoolize." "$LINENO" 5
-    fi
-    rm -f "$1/stamp-it" "$1/POTFILES"
-    sed -e '/^#/d' -e 's/^[[].*] *//' \
-        -e '/^[ 	]*$/d'        \
-        -e "s|^|	$ac_top_srcdir/|" \
-        "$srcdir/$1/POTFILES.in" | sed '$!s/$/ \\/' >"$1/POTFILES" && \
-    sed -e "/^# This comment gets stripped out/ {"  \
-        -e 'r $1/POTFILES'                          \
-        -e "d" -e "}"                               \
-        "$1/Makefile.in" >"$1/Makefile" && \
-    touch "$1/stamp-it"
-  ]])
-])
-
-generate_po_makefile([po-libgimp])
-generate_po_makefile([po-python])
-generate_po_makefile([po-plug-ins])
-generate_po_makefile([po-script-fu])
-generate_po_makefile([po-tips])
-generate_po_makefile([po-windows-installer])
 
 # Print a summary of features enabled/disabled:
 optional_deps="

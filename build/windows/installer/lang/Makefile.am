@@ -1,77 +1,71 @@
-isl_in_files = \
-	setup.isl.in
-isl_files = $(isl_in_files:.isl.in=.isl)
+isl_xml_in_files = setup.isl.xml.in
+isl_xml_files = $(isl_xml_in_files:.isl.xml.in=.isl.xml)
 
 stamp_files = \
 	stamp-isl
 
-CLEANFILES = $(isl_files) $(stamp_files)
+CLEANFILES = $(isl_xml_files) $(stamp_files)
 
+# First we use the XML file to be able to do gettext translation
+$(isl_xml_files): $(is_xml_in_files) $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
+	$(AM_V_GEN) GETTEXT_DATA_DIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-windows-installer -o $@
+
+# Then, we generate the .isl file for each language using some xsltproc magic
 languages = \
-	ca:[ca]		\
-	cs:[cs]		\
-	da:[da]		\
-	de:[de]		\
-	el:[el]		\
+	ca:ca		\
+	cs:cs		\
+	da:da		\
+	de:de		\
+	el:el		\
 	en:		\
-	en_GB:[en_GB]	\
-	eo:[eo]		\
-	es:[es]		\
-	eu:[eu]		\
-	fi:[fi]		\
-	fr:[fr]		\
-	gl:[gl]		\
-	he:[he]		\
-	hu:[hu]		\
-	id:[id]		\
-	is:[is]		\
-	it:[it]		\
-	ja:[ja]		\
-	ka:[ka]		\
-	kab:[kab]	\
-	ko:[ko]		\
-	lt:[lt]		\
-	lv:[lv]		\
-	mr:[mr]   	\
-	ms:[ms]   	\
-	nl:[nl]		\
-	pl:[pl]		\
-	pt:[pt]		\
-	pt_BR:[pt_BR]	\
-	ro:[ro]		\
-	ru:[ru]		\
-	sk:[sk]		\
-	sl:[sl]		\
-	sv:[sv]		\
-	tr:[tr]		\
-	uk:[uk]		\
-	vi:[vi]		\
-	zh_CN:[zh_CN]	\
-	zh_TW:[zh_TW]
+	en_GB:en_GB	\
+	eo:eo		\
+	es:es		\
+	eu:eu		\
+	fi:fi		\
+	fr:fr		\
+	gl:gl		\
+	he:he		\
+	hu:hu		\
+	id:id		\
+	is:is		\
+	it:it		\
+	ja:ja		\
+	ka:ka		\
+	kab:kab	\
+	ko:ko		\
+	lt:lt		\
+	lv:lv		\
+	mr:mr   	\
+	ms:ms   	\
+	nl:nl		\
+	pl:pl		\
+	pt:pt		\
+	pt_BR:pt_BR	\
+	ro:ro		\
+	ru:ru		\
+	sk:sk		\
+	sl:sl		\
+	sv:sv		\
+	tr:tr		\
+	uk:uk		\
+	vi:vi		\
+	zh_CN:zh_CN	\
+	zh_TW:zh_TW
 
-stamp-isl: setup.isl Makefile.am
+stamp-isl: setup.isl gimp-ms-installer-config.xsl.in Makefile.am
 	@										\
 	for lang in $(languages); do							\
 		code=`echo $$lang | cut -d: -f1`;					\
-		prefix=`echo $$lang | cut -d: -f2 | sed 's/[][]/\\\\\\0/g'`;		\
+		prefix=`echo $$lang | cut -d: -f2`;		\
+		lang_check=`[ "$$prefix" ] && echo "value[lang('$$code')]" || echo "value"`;		\
+		xsl="$(builddir)/gimp-ms-installer-config.xsl";					\
 		isl="$(builddir)/$$code.setup.isl";					\
 		echo "  GEN      $$isl";						\
-		echo -ne "\\xEF\\xBB\\xBF" > "$$isl";					\
-		sed '/^\w\+'"$$prefix"'=/{s/\(.\)'"$$prefix"'/\1/;n};/^\w.*=/d' $<  >> "$$isl";	\
+		sed 's/@LANG_CHECK@/$$lang_check/' "$$xsl"  > "$$xsl.in";	\
+		$(XSLTPROC) --xinclude "$$xsl" $< --output "$$isl" || rm -f "$$isl"; \
 	done &&										\
 	echo timestamp > stamp-isl
-
-# * setup.isl.ini is used by intltool-extract to extract the localizable
-#   strings. We needed to use the ini syntax for leaving comments to
-#   translators (with '#' instead of ';').
-# * setup.isl.in is in the actual .isl format except for the gettext
-#   underscoring.
-# * setup.isl is in the .isl format but mixing all languages.
-setup.isl: setup.isl.in $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
-	$(AM_V_GEN) $(INTLTOOL_MERGE) $(top_srcdir)/po-windows-installer $< $(@) -d -u -c $(top_builddir)/po-windows-installer/.intltool-merge-cache
-
-setup.isl.in: setup.isl.ini Makefile.am
-	$(AM_V_GEN) sed 's/^#/;/' $< > $@
 
 all-local: $(stamp_files)
 

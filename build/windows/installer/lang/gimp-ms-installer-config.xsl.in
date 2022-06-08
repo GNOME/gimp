@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+<xsl:output method="text" omit-xml-declaration="yes" />
+
+<xsl:template match="/">
+<xsl:apply-templates select="gimp-ms-installer-config" />
+</xsl:template>
+
+<xsl:template match="gimp-ms-installer-config">
+<xsl:apply-templates select="section" />
+</xsl:template>
+
+<xsl:template match="section">[<xsl:value-of select="@name"/>]
+<xsl:apply-templates select="config" />
+<xsl:text>&#xA;</xsl:text>
+</xsl:template>
+
+<xsl:template match="config">
+<xsl:value-of select="@name"/>=<xsl:value-of select="."/>
+<xsl:apply-templates select="@LANG_CHECK@" />
+<xsl:text>&#xA;</xsl:text>
+</xsl:template>
+<xsl:template match="config">
+<xsl:choose>
+  <xsl:when test="@LANG_CHECK@">
+    <xsl:value-of select="@name"/>=<xsl:apply-templates select="@LANG_CHECK@" />
+  </xsl:when>
+  <xsl:otherwise>
+    <xsl:value-of select="@name"/>=<xsl:apply-templates select="value[not(xml:lang)]" />
+  </xsl:otherwise>
+</xsl:choose>
+<xsl:text>&#xA;</xsl:text>
+</xsl:template>
+
+</xsl:stylesheet>

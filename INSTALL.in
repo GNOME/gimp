@@ -32,11 +32,8 @@ header files installed.
   1. You need to have installed a recent version of pkg-config (>= @GIMP_PKGCONFIG_VERSION@) available
      from https://www.freedesktop.org/software/pkgconfig/.
 
-  2. You need intltool (at least @INTLTOOL_REQUIRED_VERSION@, but preferably a newer version).
-     Intltool can be downloaded from
-     https://ftp.gnome.org/pub/gnome/sources/intltool/
-     You also need gettext version @XGETTEXT_REQUIRED_VERSION@ or over. Earlier gettext had
-     issues with script-fu localization, ending up in incomplete GIMP localization.
+  2. You need gettext version 0.19.8 or newer. Older versions did not have support yet
+     for certain file formats.
 
   3. You need to have GEGL version @GEGL_REQUIRED_VERSION@ or newer and babl version
      @BABL_REQUIRED_VERSION@ or newer. You can get them from https://gegl.org/ or clone

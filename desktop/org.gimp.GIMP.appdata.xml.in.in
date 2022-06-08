@@ -13,28 +13,28 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0+ AND LGPL-3.0+</project_license>
   <developer_name>The GIMP team</developer_name>
-  <_name>GNU Image Manipulation Program</_name>
-  <_summary>Create images and edit photographs</_summary>
+  <name>GNU Image Manipulation Program</name>
+  <summary>Create images and edit photographs</summary>
   <description>
-    <_p>
+    <p>
       GIMP is an acronym for GNU Image Manipulation Program. It is a
       freely distributed program for such tasks as photo retouching,
       image composition and image authoring.
-    </_p>
-    <_p>
+    </p>
+    <p>
       It has many capabilities. It can be used as a simple paint
       program, an expert quality photo retouching program, an online
       batch processing system, a mass production image renderer, an
       image format converter, etc.
-    </_p>
-    <_p>
+    </p>
+    <p>
       GIMP is expandable and extensible. It is designed to be
       augmented with plug-ins and extensions to do just about
       anything. The advanced scripting interface allows everything
       from the simplest task to the most complex image manipulation
       procedures to be easily scripted. GIMP is available for Linux,
       Microsoft Windows and OS X.
-    </_p>
+    </p>
   </description>
   <url type="bugtracker">@BUG_REPORT_URL@</url>
   <url type="donation">https://www.gimp.org/donating/</url>
@@ -45,11 +45,11 @@
   <screenshots>
     <screenshot type="default">
       <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-painting.jpg</image>
-      <_caption>Painting in GIMP</_caption>
+      <caption>Painting in GIMP</caption>
     </screenshot>
     <screenshot type="default">
       <image>https://www.gimp.org/screenshots/Screenshot-gimp-2.10-photo-editing.jpg</image>
-      <_caption>Photo editing in GIMP</_caption>
+      <caption>Photo editing in GIMP</caption>
     </screenshot>
   </screenshots>
   <update_contact>gimp-developer-list_at_gnome.org</update_contact>
@@ -76,772 +76,772 @@
   <releases>
     <release version="2.99.12" date="2022-05-29" type="development">
       <description>
-        <_p>
+        <p>
         One step further towards GIMP 3.0, GIMP 2.99.12 comes along with the following noteworthy improvements:
-        </_p>
+        </p>
         <ul>
-          <_li demo="toolbox:bucket-fill,
-                     tool-options:fill-area=2,
-                     tool-options:line-art-stroke-border=1">
+          <li demo="toolbox:bucket-fill,
+                    tool-options:fill-area=2,
+                    tool-options:line-art-stroke-border=1">
           New "Stroke borders" option in Bucket Fill tool's "Fill by line art detection"
-          </_li>
-          <_li demo="toolbox:bucket-fill,
-                     tool-options:fill-area=2,
-                     tool-options:line-art-settings">
+          </li>
+          <li demo="toolbox:bucket-fill,
+                    tool-options:fill-area=2,
+                    tool-options:line-art-settings">
           Redesigned and reorganized "Fill by line art detection" settings
-          </_li>
-          <_li>Added support for the BigTIFF file format</_li>
-          <_li>New option "Number of repeats" in GIF export</_li>
-          <_li>Tool pointer settings reorganized and moved from "Image Windows" to "Input Devices" tabs in Preferences</_li>
-          <_li>Improved handling of unchecked "Show pointer for paint tools" option</_li>
+          </li>
+          <li>Added support for the BigTIFF file format</li>
+          <li>New option "Number of repeats" in GIF export</li>
+          <li>Tool pointer settings reorganized and moved from "Image Windows" to "Input Devices" tabs in Preferences</li>
+          <li>Improved handling of unchecked "Show pointer for paint tools" option</li>
         </ul>
       </description>
     </release>
     <release version="2.99.10" date="2022-02-22" type="development">
       <description>
-        <_p>
+        <p>
         GIMP 2.99.10 is a notable development release in the 2.99 series, featuring many changes.
         Let's mention in particular:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           "Linked layers" concept superseded by new "Layer set" concept
-          </_li>
-          <_li>
+          </li>
+          <li>
           Lock icons in item dockables (Layers, Channels, Paths) moved next to the visibility (eye) icon
-          </_li>
-          <_li>
+          </li>
+          <li>
           Alt-click on visibility and lock icons in item dockables massively toggles visibility and locks among selected items
-          </_li>
-          <_li>
+          </li>
+          <li>
           Item dockables now display icon headers for visibility and locks column
-          </_li>
-          <_li>
+          </li>
+          <li>
           Our System theme shows visible hints around unset visibility and locks icons when hovering them in item dockables
-          </_li>
-          <_li>
+          </li>
+          <li>
           New checkbox to enable or disable dynamics in paint tools' options (replacing "Dynamics Off" dynamics)
-          </_li>
-          <_li>
+          </li>
+          <li>
           Improved support for Wayland and macOS Big Sur (and newer)
-          </_li>
-          <_li>
+          </li>
+          <li>
           "Fill by line art detection" in Bucket Fill tool has a new option
-          </_li>
-          <_li>
+          </li>
+          <li>
           Channels and paths multi-selectable with part of relevant actions working
-          </_li>
-          <_li>
+          </li>
+          <li>
           Various file format support improvements, in particular to PSD, JPEG-XL and HEIF
-          </_li>
-          <_li>
+          </li>
+          <li>
           New support of Microsoft Windows Cursor file format (.cur files)
-          </_li>
-          <_li>
+          </li>
+          <li>
           Removed KDE and GNOME screenshot portals in favor of Freedesktop one
-          </_li>
-          <_li>
+          </li>
+          <li>
           Windows screenshot implementation now has an "Include mouse pointer" option
-          </_li>
-          <_li>
+          </li>
+          <li>
           New and modified libgimp API for plug-in developers
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.99.8" date="2021-10-17" type="development">
       <description>
-        <_p>
+        <p>
         While during this fourth cycle of development, many efforts were devoted to
         infrastructure, GIMP 2.99.8 still received many welcome improvements, notably:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           New modes in Clone, Heal and Perspective Clone tools when multiple layers are selected
-          </_li>
-          <_li>
+          </li>
+          <li>
           Windows Ink support for input devices on Windows
-          </_li>
-          <_li>
+          </li>
+          <li>
           Clicking on toolbox or Wilber's drop area actively focuses the canvas
-          </_li>
-          <_li>
+          </li>
+          <li>
           Marching ants display ported to Wayland and macOS Big Sur logics
-          </_li>
-          <_li>
+          </li>
+          <li>
           Initial implementation of config folder migration for GIMP 3
-          </_li>
-          <_li>
+          </li>
+          <li>
           Action "view-rotate-reset" renamed to "view-reset" and new "view-rotate-reset" and "view-flip-rotate" actions
-          </_li>
-          <_li>
+          </li>
+          <li>
           PSD: bigger-than-4GiB file support and up to 99 channels
-          </_li>
-          <_li>
+          </li>
+          <li>
           PSB: new support (loading only)
-          </_li>
-          <_li>
+          </li>
+          <li>
           SGI: 16-bit images support
-          </_li>
-          <_li>
+          </li>
+          <li>
           JPEG XL: new support (loading and exporting)
-          </_li>
-          <_li>
+          </li>
+          <li>
           New API functions gimp_display_present() and gimp_procedure_dialog_fill_expander()
-          </_li>
-          <_li>
+          </li>
+          <li>
           Much porting to newer API, code cleanup and bug fixing done
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.99.6" date="2021-04-26" type="development">
       <url type="details">https://www.gimp.org/news/2021/04/29/gimp-2-99-6-released/</url>
       <description>
-        <_p>
+        <p>
         For this third development release, more development effort has been shifted towards the API.
         Many functions were renamed for consistent naming scheme, some
         new functions appeared, some had signature changes, fixes were
         made to improve introspection binding of others, and so on.
         More API updates are to be expected on further development releases where stability is not guaranteed.
-        </_p>
-        <_p>
+        </p>
+        <p>
         Regarding end-creator changes, some notable improvements are:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Canvas Size dialog now displays a template selector
-          </_li>
-          <_li>
+          </li>
+          <li>
           Off-canvas guides are now allowed
-          </_li>
-          <_li>
+          </li>
+          <li>
           The experimental Paint Select tool got various improvements
-          </_li>
-          <_li>
+          </li>
+          <li>
           More fixes for Wayland support
-          </_li>
-          <_li>
+          </li>
+          <li>
           Dialog dropped for the Freedesktop portal implementation of the screenshot plug-in
-          </_li>
-          <_li>
+          </li>
+          <li>
           PNG import creates an ICC profile out of the gAMA and/or cHRM chunks
-          </_li>
-          <_li>
+          </li>
+          <li>
           TIFF export stores the ICC profile and comment on each layer to prevent ambiguous files
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.99.4" date="2020-12-22" type="development">
       <url type="details">https://www.gimp.org/news/2020/12/25/gimp-2-99-4-released/</url>
       <description>
-        <_p>
+        <p>
         This second development release contains various usability and API updates.
         A new experimental tool makes an entrance in the playground.
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Many usability improvements on the slider widget
-          </_li>
-          <_li>
+          </li>
+          <li>
           Usability cleaning in the Layers dockable
-          </_li>
-          <_li>
+          </li>
+          <li>
           The action search now shows all actions even inactive ones (yet pushed below)
-          </_li>
-          <_li>
+          </li>
+          <li>
           Fonts targeted for Korean and Japanese language show appropriate characters
-          </_li>
-          <_li>
+          </li>
+          <li>
           Different default tools depending on pointer device type
-          </_li>
-          <_li>
+          </li>
+          <li>
           Default dynamics is now "Pressure Size"
-          </_li>
-          <_li>
+          </li>
+          <li>
           Various usability improvements in the Input Device editor
-          </_li>
-          <_li>
+          </li>
+          <li>
           New "Paint Select" experimental tool in the playground
-          </_li>
-          <_li>
+          </li>
+          <li>
           Plug-in API now provides many dialog generation utilities
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.99.2" date="2020-10-25" type="development">
       <url type="details">https://www.gimp.org/news/2020/10/25/gimp-2-99-2-released/</url>
       <description>
-        <_p>
+        <p>
         This is the first development release for GIMP 3.0, whose focus
         was the port to the GTK+3 toolkit. Noteworthy improvements
         (though some are still work-in-progress) include:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             Multi-selection of layers in the Layers dockable
-          </_li>
-          <_li>
+          </li>
+          <li>
             Proper high pixel density display support
-          </_li>
-          <_li>
+          </li>
+          <li>
             Improved input device support
-          </_li>
-          <_li>
+          </li>
+          <li>
             Major plug-in API rewrite
-          </_li>
-          <_li>
+          </li>
+          <li>
             Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala
-          </_li>
-          <_li>
+          </li>
+          <li>
             New manageable extension format
-          </_li>
-          <_li>
+          </li>
+          <li>
             CSS-based themes and actual symbolic icon theme support
-          </_li>
-          <_li>
+          </li>
+          <li>
             Wayland support
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
 
     <release version="2.10.32" date="2022-06-12">
       <description>
-        <_p>
+        <p>
           GIMP continues strengthening its bases with this new version 2.10.32 fixing many bugs and improving format support.
           Notable changes:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             8 and 16-bit CMYK(A) TIFF files import is now supported
-          </_li>
-          <_li>
+          </li>
+          <li>
             BIGTIFF import and export are now supported
-          </_li>
-          <_li>
+          </li>
+          <li>
             JPEG XL files import is now supported
-          </_li>
-          <_li>
+          </li>
+          <li>
             DDS export has new "Flip" (useful for some game engine) and "Visible layers" options
-          </_li>
-          <_li>
+          </li>
+          <li>
             Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP
-          </_li>
-          <_li>
+          </li>
+          <li>
             The screenshot plug-in on Windows has now an option to capture the cursor
-          </_li>
-          <_li>
+          </li>
+          <li>
             Several usability improvements in official themes and icons
-          </_li>
-          <_li>
+          </li>
+          <li>
             New support for localized glyphs ('locl') in Text tool
             depending on the value of the "Language" tool option
-          </_li>
-          <_li>
+          </li>
+          <li>
             More robust XCF import
-          </_li>
-          <_li>
+          </li>
+          <li>
             Several metadata handling improvements
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
 
     <release version="2.10.30" date="2021-12-19">
       <description>
-        <_p>
+        <p>
           GIMP 2.10.30 fixes many bugs, updates backend implementations
           to follow OS evolutions, improves metadata support as well as
           support of several formats, such as PSD and AVIF.
-        </_p>
+        </p>
       </description>
     </release>
     <release version="2.10.28" date="2021-09-14">
       <description>
-        <_p>
+        <p>
           GIMP 2.10.28 fixes a build issue of GIMP 2.10.26, where some
           theme data was not properly installed.
-        </_p>
+        </p>
       </description>
     </release>
     <release version="2.10.26" date="2021-09-05">
       <description>
-        <_p>
+        <p>
           GIMP 2.10.26 is a bug fix release, containing dozens of
           fixes, both in core, scripts and plug-in code.
-        </_p>
+        </p>
       </description>
     </release>
     <release version="2.10.24" date="2021-03-28">
       <url type="details">https://www.gimp.org/news/2021/03/29/gimp-2-10-24-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.24 is again mostly a bug fix release. Notable changes:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             GeoTIFF metadata support added
-          </_li>
-          <_li>
+          </li>
+          <li>
             PDF import now proposes an option to load layers in reverse
             orders and allows fractional pixel density
-          </_li>
-          <_li>
+          </li>
+          <li>
             Raw image import updated to handle API changes in darktable 3.6 and over
-          </_li>
-          <_li>
+          </li>
+          <li>
             File format improved support: HEIF, PSP, TIFF, JPEG, PNG, PDF, DDS, BMP, PSD
-          </_li>
-          <_li>
+          </li>
+          <li>
             Many fixes and improvements to the metadata viewer and editor
-          </_li>
-          <_li>
+          </li>
+          <li>
             New Kabyle translation
-          </_li>
-          <_li>
+          </li>
+          <li>
             Off-canvas point snapping (to grid, guides, paths) made possible
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.22" date="2020-10-04">
       <url type="details">https://www.gimp.org/news/2020/10/04/gimp-2-10-22-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.22 is mainly a bug fix release. Notable changes:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             HEIF support improvements: optional exporting with high bit depth,
             AVIF importing and exporting
-          </_li>
-          <_li>
+          </li>
+          <li>
             Multiple improvements in Corel PaintShop Pro support
-          </_li>
-          <_li>
+          </li>
+          <li>
             "Sample merged" now available in GEGL operation tool options
-          </_li>
-          <_li>
+          </li>
+          <li>
             "Sample merged" is now enabled by default for color picking
-          </_li>
-          <_li>
+          </li>
+          <li>
             The option enabling OpenCL support has been moved to the
             Playground tab in Preferences
-          </_li>
-          <_li>
+          </li>
+          <li>
             Matting Levin is now the default engine of Foreground Select
             tool as it performs a lot better
-          </_li>
-          <_li>
+          </li>
+          <li>
             New progressive performance logs and dashboard updates
-          </_li>
-          <_li>
+          </li>
+          <li>
             Verbose debug now shows Flatpak info when relevant
-          </_li>
-          <_li>
+          </li>
+          <li>
             Various bug fixes
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.20" date="2020-06-07">
       <url type="details">https://www.gimp.org/news/2020/06/07/gimp-2-10-20-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.20 comes with new features as well as important bugfixes.
           Notable changes:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             Tool groups now expand on hover rather than click by default
-          </_li>
-          <_li>
+          </li>
+          <li>
             Non-destructive cropping now available by cropping the canvas rather
             than actual pixels
-          </_li>
-          <_li>
+          </li>
+          <li>
             Better PSD support: exporting of 16-bit files now available,
             reading/writing channels in the right order
-          </_li>
-          <_li>
+          </li>
+          <li>
             On-canvas controls for the Vignette filter
-          </_li>
-          <_li>
+          </li>
+          <li>
             New filters: Bloom, Focus Blur, Lens Blur, Variable Blur
-          </_li>
-          <_li>
+          </li>
+          <li>
             Over 30 bugfixes
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.18" date="2020-02-23">
       <url type="details">https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.18 fixes some critical bugs, introduces naive support for CMYK PSD files,
           and adds a higher-contrast variation of the symbolic icon theme.
-        </_p>
+        </p>
       </description>
     </release>
     <release version="2.10.16" date="2020-02-19">
       <url type="details">https://www.gimp.org/news/2020/02/24/gimp-2-10-18-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.16 delivers several major usability improvements, a new tool
           for transformations in 3D space, new release checker, and the usual amount
           of bug fixes. Notable improvements:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             Tools are now grouped in the toolbox by default 
-          </_li>
-          <_li>
+          </li>
+          <li>
             Sliders now use a compact style with improved user interaction
-          </_li>
-          <_li>
+          </li>
+          <li>
             Vastly improved user experience for the transformation preview
-          </_li>
-          <_li>
+          </li>
+          <li>
             Dockable areas now highlighted when a dockable dialog is being dragged      
-          </_li>
-          <_li>
+          </li>
+          <li>
             New 3D Transform tool to rotate and pan items
-          </_li>
-          <_li>
+          </li>
+          <li>
             Much smoother brush outline motion on the canvas
-          </_li>
-          <_li>
+          </li>
+          <li>
             Consolidated user interface for merging down and anchoring layers
-          </_li>
-          <_li>
+          </li>
+          <li>
             Update check to notify users that a new release/installer is available
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.14" date="2019-10-27">
       <url type="details">https://www.gimp.org/news/2019/10/27/gimp-2-10-14-released/</url>
       <description>
-        <_p>
+        <p>
         GIMP 2.10.14 is again mostly a bug fix release, making GIMP rock-solid.
         Furthermore many old filters got finally ported to GEGL.
 
         Of course it also has a few noteworthy improvements:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           View menu: new "Show All" option to reveal pixels outside the canvas boundary
-          </_li>
-          <_li>
+          </li>
+          <li>
           Filters: new "Clipping" option to allow layer resize when relevant
-          </_li>
-          <_li>
+          </li>
+          <li>
           Foreground Select tool: new "Grayscale" Preview Mode
-          </_li>
-          <_li>
+          </li>
+          <li>
           Foreground Select tool: color/opacity selector for "Color" preview
-          </_li>
-          <_li>
+          </li>
+          <li>
           Free Select tool: improved copy-paste interaction
-          </_li>
-          <_li>
+          </li>
+          <li>
           Transform tools: new Image transform type to transform the whole image
-          </_li>
-          <_li>
+          </li>
+          <li>
           Preferences: new "Allow editing on non-visible layers" setting
-          </_li>
-          <_li>
+          </li>
+          <li>
           HEIF import/export: color profile support
-          </_li>
-          <_li>
+          </li>
+          <li>
           PDF export: text layers in layer groups now exported as texts
-          </_li>
-          <_li>
+          </li>
+          <li>
           TIFF import: now asks how to process unspecified TIFF channels
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.12" date="2019-06-12">
       <url type="details">https://www.gimp.org/news/2019/06/12/gimp-2-10-12-released/</url>
       <description>
-        <_p>
+        <p>
         GIMP 2.10.12 is a significant bug fix release, which is to be expected
         after a 2.10.10 with so many changes!
         Still, very cool improvements are also available, in particular for
         curves editing:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Improved curves interaction overall
-          </_li>
-          <_li>
+          </li>
+          <li>
           A few enhancements specific to the Curves tool
-          </_li>
-          <_li>
+          </li>
+          <li>
           Layer support in TIFF
-          </_li>
-          <_li>
+          </li>
+          <li>
           Discovery of user-installed fonts in Windows
-          </_li>
-          <_li>
+          </li>
+          <li>
           Incremental mode in the Dodge/Burn tool
-          </_li>
-          <_li>
+          </li>
+          <li>
           Free Select tool creates preliminary selection
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.10" date="2019-04-07">
       <url type="details">https://www.gimp.org/news/2019/04/07/gimp-2-10-10-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.10 is quite a big update with many new features and
           bug fixes. Notable improvements include:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Bucket Fill tool: new "Fill by line art detection" for not
           perfectly closed line art zones
-          </_li>
-          <_li>
+          </li>
+          <li>
           Bucket Fill tool can now quickly color-pick with Ctrl+click
-          </_li>
-          <_li>
+          </li>
+          <li>
           Bucket Fill tool allows holding the mouse when filling
           "similar colors" and "by line art detection"
-          </_li>
-          <_li>
+          </li>
+          <li>
           Scale tool scales around center even when using numeric input
-          </_li>
-          <_li>
+          </li>
+          <li>
           Unified Transform tool now defaults to preserving aspect ratio
           when scaling up or down
-          </_li>
-          <_li>
+          </li>
+          <li>
           Add "Constrain handles" and "Around center" options to the
           perspective-transform tool's GUI
-          </_li>
-          <_li>
+          </li>
+          <li>
           New generic canvas modifier 'Alt + middle click' to pick
           layers
-          </_li>
-          <_li>
+          </li>
+          <li>
           Parametric brushes now 32-bit float to avoid posterization
-          </_li>
-          <_li>
+          </li>
+          <li>
           Clipboard brushes and pattern can now be duplicated
-          </_li>
-          <_li>
+          </li>
+          <li>
           Failure to edit locked layers will blink to shift attention to
           the cause of the error
-          </_li>
-          <_li>
+          </li>
+          <li>
           New on-canvas GUI (simple lines) for circular, linear, and
           zoom motion blur
-          </_li>
-          <_li>
+          </li>
+          <li>
           Several optimizations including faster layer group rendering
-          </_li>
-          <_li>
+          </li>
+          <li>
           Swap and cache files are not saved in the configuration
           directory anymore
-          </_li>
-          <_li>
+          </li>
+          <li>
           Various file saving/exporting made more robust to error by not
           saving partial files
-          </_li>
-          <_li>
+          </li>
+          <li>
           HiDPI support improvements
-          </_li>
-          <_li>
+          </li>
+          <li>
           New preference to choose the default export file type
-          </_li>
-          <_li>
+          </li>
+          <li>
           New option to export PNG, JPEG and TIFF with a color profile;
           always export PSD with a color profile
-          </_li>
-          <_li>
+          </li>
+          <li>
           New DDS format loading/exporting plug-in
-          </_li>
-          <_li>
+          </li>
+          <li>
           Full rewrite of the Spyrogimp plug-in with more options and
           better interaction
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.8" date="2018-11-07">
       <url type="details">https://www.gimp.org/news/2018/11/08/gimp-2-10-8-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.8 is mostly a bug fix and optimization release. In
           particular, it includes:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Adaptative chunk size when rendering projections, improving
           responsiveness dynamically
-          </_li>
-          <_li>
+          </li>
+          <li>
           Detection of RawTherapee (version 5.5 and above) improved on
           Windows
-          </_li>
-          <_li>
+          </li>
+          <li>
           XCF compatibility information in the Save dialog more
           understandable and discoverable
-          </_li>
-          <_li>
+          </li>
+          <li>
           Various performance log tools added and log recording made
           available in the Dashboard dock
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.6" date="2018-08-19">
       <url type="details">https://www.gimp.org/news/2018/08/19/gimp-2-10-6-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.6 comes with a lot of bug fixes, optimizations and
           features. Most notable changes are:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Text layers can now represent vertical texts (with various
           character orientations and line directions)
-          </_li>
-          <_li>
+          </li>
+          <li>
           New "Little Planet" (gegl:stereographic-projection) filter
-          </_li>
-          <_li>
+          </li>
+          <li>
           New "Long Shadow" filter
-          </_li>
-          <_li>
+          </li>
+          <li>
           The "Straighten" option of the Measure Tool now allows
           vertical straightening
-          </_li>
-          <_li>
+          </li>
+          <li>
           Drawable previews are now rendered asynchronously and layer
           group previews can be disabled in Preferences
-          </_li>
-          <_li>
+          </li>
+          <li>
           New "async" field in the Dashboard "misc" group, showing the
           number of async operations currently running
-          </_li>
-          <_li>
+          </li>
+          <li>
           File format filtering in Open/Save/Export dialogs made less
           confusing
-          </_li>
-          <_li>
+          </li>
+          <li>
           New language (having GIMP translated in 81 languages now):
           Marathi
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.4" date="2018-07-04">
       <url type="details">https://www.gimp.org/news/2018/07/04/gimp-2-10-4-released/</url>
       <description>
-        <_p>
+        <p>
           GIMP 2.10.4 includes a lot of bug fixes as well as various
           optimizations. Most notable changes are:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
           Straightening in Measurement tool: layers can be rotated using
           the measurement line as horizon
-          </_li>
-          <_li>
+          </li>
+          <li>
           Fast startup: fonts loading is not blocking startup anymore
-          </_li>
-          <_li>
+          </li>
+          <li>
           Fonts Tagging with the same user interface as for brushes,
           patterns, and gradients
-          </_li>
-          <_li>
+          </li>
+          <li>
           PSD support: a pre-composited version of a PSD image can be
           imported
-          </_li>
-          <_li>
+          </li>
+          <li>
           Dashboard update: new "Memory" group and improved "Swap"
           group showing various metrics
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
     <release version="2.10.2" date="2018-05-20">
       <url type="details">https://www.gimp.org/news/2018/05/20/gimp-2-10-2-released/</url>
       <description>
-        <_p>
+        <p>
           This second release in the GIMP 2.10 series, so soon after
           2.10.0, is mostly the usual bug-fixing version after a major
           release, with a few dozen bugs fixed.
-        </_p>
-        <_p>
+        </p>
+        <p>
           It also features a new plug-in for the support of the HEIF
           format, both for importing and exporting, as well as 2 new
           filters: "Spherize" and "Recursive Transform". These are
           nice examples of our relaxed feature policy in stable micro
           releases.
-        </_p>
+        </p>
       </description>
     </release>
 
     <release version="2.10.0" date="2018-04-27">
       <url type="details">https://www.gimp.org/news/2018/04/27/gimp-2-10-0-released/</url>
       <description>
-        <_p>
+        <p>
           First release of the 2.10 series which prominently features
           the port to a new image processing engine, GEGL.
           The most outstanding changes are:
-        </_p>
+        </p>
         <ul>
-          <_li>
+          <li>
             High bit depth color processing (16/32-bit per color channel)
-          </_li>
-          <_li>
+          </li>
+          <li>
 	    Color management is a core feature now, most widgets
 	    and preview areas are color-managed
-          </_li>
-          <_li>
+          </li>
+          <li>
 	    On-canvas effect preview, with split view for before/after
 	    processing pixels
-          </_li>
-          <_li>
+          </li>
+          <li>
             Multi-threaded and hardware-accelerated rendering,
             processing and painting
-          </_li>
-          <_li>
+          </li>
+          <li>
             Most tools improved, several new transformation tools
-          </_li>
-          <_li>
+          </li>
+          <li>
 	    Improved support for many image formats, in particular better
 	    PSD importing
-          </_li>
-          <_li>
+          </li>
+          <li>
             Newly supported image formats: OpenEXR, RGBE, WebP, HGT…
-          </_li>
-          <_li>
+          </li>
+          <li>
             Improved digital painting: canvas rotation and
             flipping, symmetry painting, MyPaint brushes…
-          </_li>
-          <_li>
+          </li>
+          <li>
 	    Metadata viewing and editing for Exif, XMP, IPTC, and DICOM
-          </_li>
-          <_li>
+          </li>
+          <li>
             Basic HiDPI support: automatically or user-selected icon size
-          </_li>
-          <_li>
+          </li>
+          <li>
             New themes for GIMP: Light, Gray, Dark, and System
-          </_li>
-          <_li>
+          </li>
+          <li>
             And much, much more…
-          </_li>
+          </li>
         </ul>
       </description>
     </release>
@@ -849,49 +849,49 @@
     <release version="2.10.0~rc2" date="2018-04-17" type="development">
       <url type="details">https://www.gimp.org/news/2018/04/17/gimp-2-10-0-rc2-released/</url>
       <description>
-        <_p>
+        <p>
         In this second release candidate before GIMP 2.10.0, while
         debugging is still a prime target, a new focus has been put on
         speed and optimization in order to provide a smoother painting
         experience. Bigger changes are:
-        </_p>
+        </p>
         <ul>
-          <_li>Major core optimizations for painting and display,
-          including parallelized painting code</_li>
-          <_li>Symmetries are now preserved in XCF files (saved as image
-          parasites)</_li>
-          <_li>"Light" and "Dark" themes rewritten from scratch to get
+          <li>Major core optimizations for painting and display,
+          including parallelized painting code</li>
+          <li>Symmetries are now preserved in XCF files (saved as image
+          parasites)</li>
+          <li>"Light" and "Dark" themes rewritten from scratch to get
           rid of various usability issues. "Lighter" and "Darker" themes
-          removed.</_li>
-          <_li> New GimpToolGyroscope on-canvas control, currently used
+          removed.</li>
+          <li> New GimpToolGyroscope on-canvas control, currently used
           for the Panorama Projection filter. The widget provides
-          on-canvas interaction for 3D rotation (yaw, pitch, roll).</_li>
-          <_li>Plug-in debugging improved to output stack traces from
+          on-canvas interaction for 3D rotation (yaw, pitch, roll).</li>
+          <li>Plug-in debugging improved to output stack traces from
           plug-ins with --stack-trace-mode command line option not only
           on receiving signals but also on warnings and critical errors
-          when "fatal-warnings" debug key is set</_li>
+          when "fatal-warnings" debug key is set</li>
         </ul>
       </description>
     </release>
     <release version="2.10.0~rc1" date="2018-03-26" type="development">
       <url type="details">https://www.gimp.org/news/2018/03/26/gimp-2-10-0-rc1-released/</url>
       <description>
-        <_p>
+        <p>
         GIMP 2.10.0-RC1 is the first release candidate before GIMP
         2.10.0 stable release, with a focus on debugging and stability.
         Other than the many bug fixes, most notable improvements are:
-        </_p>
+        </p>
         <ul>
-          <_li>New dashboard dockable to monitor GIMP resource usage</_li>
-          <_li>New debug dialog to produce back traces and other debug
-          data, encouraging to report bugs</_li>
-          <_li>Unsaved images can now be recovered after a crash</_li>
-          <_li>Layer masks on layer groups</_li>
-          <_li>JPEG 2000 support improved for high bit depth and various
-          color spaces</_li>
-          <_li>Screenshot and color picking improved on various platforms</_li>
-          <_li>Metadata defaults preferences now available</_li>
-          <_li>Various GUI polishing</_li>
+          <li>New dashboard dockable to monitor GIMP resource usage</li>
+          <li>New debug dialog to produce back traces and other debug
+          data, encouraging to report bugs</li>
+          <li>Unsaved images can now be recovered after a crash</li>
+          <li>Layer masks on layer groups</li>
+          <li>JPEG 2000 support improved for high bit depth and various
+          color spaces</li>
+          <li>Screenshot and color picking improved on various platforms</li>
+          <li>Metadata defaults preferences now available</li>
+          <li>Various GUI polishing</li>
         </ul>
       </description>
     </release>
@@ -899,21 +899,21 @@
     <release version="2.9.8" date="2017-12-12" type="development">
       <url type="details">https://www.gimp.org/news/2017/12/12/gimp-2-9-8-released/</url>
       <description>
-        <_p>GIMP 2.9.8 introduces on-canvas gradient
+        <p>GIMP 2.9.8 introduces on-canvas gradient
         editing and various enhancements while focusing on bugfixing
-        and stability.</_p>
+        and stability.</p>
         <ul>
-          <_li>On-canvas gradient editing</_li>
-          <_li>Notification when an image is over/underexposed</_li>
-          <_li>Better and faster color management</_li>
-          <_li>Support for color picker and screenshots in Wayland on KDE Plasma</_li>
-          <_li>Paste in place feature</_li>
-          <_li>Many usability improvements</_li>
-          <_li>Manual can be displayed in the user's preferred language</_li>
-          <_li>Improvements for the Wavelet Decompose filter</_li>
-          <_li>Improved compatibility with Photoshop .psd files</_li>
-          <_li>New support for password-protected PDF</_li>
-          <_li>New support for HGT format (Digital Elevation Model data)</_li>
+          <li>On-canvas gradient editing</li>
+          <li>Notification when an image is over/underexposed</li>
+          <li>Better and faster color management</li>
+          <li>Support for color picker and screenshots in Wayland on KDE Plasma</li>
+          <li>Paste in place feature</li>
+          <li>Many usability improvements</li>
+          <li>Manual can be displayed in the user's preferred language</li>
+          <li>Improvements for the Wavelet Decompose filter</li>
+          <li>Improved compatibility with Photoshop .psd files</li>
+          <li>New support for password-protected PDF</li>
+          <li>New support for HGT format (Digital Elevation Model data)</li>
         </ul>
       </description>
     </release>

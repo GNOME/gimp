@@ -15,10 +15,14 @@ EXTRA_DIST = \
 
 DISTCLEANFILES = $(tagsdata_data_files)
 
+itsdir = $(datadir)/gettext/its
+its_DATA = its/gimp-tags.loc its/gimp-tags.its
+
+EXTRA_DIST += $(its_DATA)
+
 
 gimp-tags-default.xml: gimp-tags-default.xml.in $(wildcard $(top_srcdir)/po-tags/*.po)
-	mkdir -p $(top_builddir)/po-tags/
-	$(INTLTOOL_MERGE) $(top_srcdir)/po-tags $< $(@) -x -u -c $(top_builddir)/po-tags/.intltool-merge-cache
+	$(AM_V_GEN) GETTEXT_DATA_DIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tags -o $@
 
 
 validate: gimp-tags-default.xml

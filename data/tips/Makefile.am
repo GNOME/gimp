@@ -16,9 +16,14 @@ EXTRA_DIST = \
 
 DISTCLEANFILES = $(tipsdata_data_files)
 
+itsdir = $(datadir)/gettext/its
+its_DATA = its/gimp-tips.loc its/gimp-tips.its
+
+EXTRA_DIST += $(its_DATA)
+
 
 gimp-tips.xml: gimp-tips.xml.in $(wildcard $(top_srcdir)/po-tips/*.po)
-	$(INTLTOOL_MERGE) $(top_srcdir)/po-tips $< $(@) -x -u -c $(top_builddir)/po-tips/.intltool-merge-cache
+	$(AM_V_GEN) GETTEXT_DATA_DIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tips -o $@
 
 
 validate: gimp-tips.xml

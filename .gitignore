@@ -44,13 +44,6 @@
 /git-version.h
 /gtk-doc.make
 /install-sh
-/intltool-extract
-/intltool-extract.in
-/intltool-merge
-/intltool-merge.in
-/intltool-modules
-/intltool-update
-/intltool-update.in
 /libtool
 /ltmain.sh
 /missing

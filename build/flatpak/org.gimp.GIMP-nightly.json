@@ -355,26 +355,6 @@
             ]
         },
         {
-            "//": "Copy from shared-modules to avoid submodules on dev repo.",
-            "name": "intltool",
-            "cleanup": [
-                "*"
-            ],
-            "sources": [
-                {
-                    "type": "archive",
-                    "url": "https://launchpad.net/intltool/trunk/0.51.0/+download/intltool-0.51.0.tar.gz",
-                    "sha256": "67c74d94196b153b774ab9f89b2fa6c6ba79352407037c8c14d5aeb334e959cd",
-                    "x-checker-data": {
-                        "type": "anitya",
-                        "project-id": 1385,
-                        "stable-only": true,
-                        "url-template": "https://launchpad.net/intltool/trunk/$version/+download/intltool-$version.tar.gz"
-                    }
-                }
-            ]
-        },
-        {
             "name": "libmypaint",
             "config-opts": [
                 "--disable-gegl",

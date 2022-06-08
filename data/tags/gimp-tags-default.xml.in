@@ -8,15 +8,15 @@
 <tags>
   <resource identifier="${gimp_data_dir}/brushes/Round.vbr" checksum="a7f02530d3bc7484c8f9240cbe9c65b1">
     <tag>
-      <_thetag>round</_thetag>
+      <thetag>round</thetag>
     </tag>
   </resource>
 
   <resource identifier="${gimp_data_dir}/brushes/Round-Fuzzy.vbr" checksum="f8cb2466841104a55e42afce4568d103">
     <tag>
       <!-- fuzzy as in a feathered, blurred, unfocused, soft brush -->
-      <_thetag>fuzzy</_thetag>
-      <_thetag>round</_thetag>
+      <thetag>fuzzy</thetag>
+      <thetag>round</thetag>
     </tag>
   </resource>
 </tags>

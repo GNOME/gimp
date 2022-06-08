@@ -15,63 +15,63 @@
 <!--                                                                       -->
 
   <tip level="beginner">
-    <_thetip>
+    <thetip>
       You can get context-sensitive help for most of GIMP's features by
       pressing the F1 key at any time.  This also works inside the menus.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner" help="gimp-layer-dialog">
-    <_thetip>
+    <thetip>
       GIMP uses layers to let you organize your image.  Think of them
       as a stack of slides or filters, such that looking through them you
       see a composite of their contents.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner" help="gimp-layer-menu">
-    <_thetip>
+    <thetip>
       You can perform many layer operations by right-clicking on the text
       label of a layer in the Layers dialog.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner" help="gimp-file-save">
-    <_thetip>
+    <thetip>
       Saving an image uses XCF, GIMP's native file format (file extension
       <tt>.xcf</tt>). This preserves the layers and many aspects of your
       work-in-progress, allowing to work on it again later.
       Once a project is completed, you can export it as JPEG, PNG, GIF, etc.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner" help="gimp-image-flatten">
-    <_thetip>
+    <thetip>
       Most plug-ins work on the current layer of the current image.  In
       some cases, you will have to merge all layers (Image→Flatten Image)
       if you want the plug-in to work on the whole image.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner" help="gimp-layer-alpha-add">
-    <_thetip>
+    <thetip>
       If a layer's name in the Layers dialog is displayed in <b>bold</b>,
       this layer doesn't have an alpha-channel. You can add an alpha-channel
       using Layer→Transparency→Add Alpha Channel.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner">
-    <_thetip>
+    <thetip>
       Not all effects can be applied to all kinds of images.  This is
       indicated by a grayed-out menu-entry.  You may need to change
       the image mode to RGB (Image→Mode→RGB), add an alpha-channel
       (Layer→Transparency→Add Alpha Channel) or flatten it
       (Image→Flatten Image).
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="beginner">
-    <_thetip>
+    <thetip>
       You can adjust or move a selection by using <tt>Alt</tt>-drag.
       If this makes the window move, your window manager uses the
       <tt>Alt</tt> key already.  Most window managers can be
       configured to ignore the <tt>Alt</tt> key or to use
       the <tt>Super</tt> key (or "Windows logo") instead.
-    </_thetip>
+    </thetip>
   </tip>
 
 <!--                                                                       -->
@@ -79,91 +79,91 @@
 <!--                                                                       -->
 
   <tip level="intermediate">
-    <_thetip>
+    <thetip>
       You can drag and drop many things in GIMP.  For example, dragging
       a color from the toolbox or from a color palette and dropping it into
       an image will fill the current selection with that color.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate">
-    <_thetip>
+    <thetip>
       You can use the middle mouse button to pan around the image 
       (or optionally hold <tt>Spacebar</tt> while you move the mouse).
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-concepts-image-grid">
-    <_thetip>
+    <thetip>
       Click and drag on a ruler to place a guide on an image.  All
       dragged selections will snap to the guides.  You can remove
       guides by dragging them off the image with the Move tool.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-file-new">
-    <_thetip>
+    <thetip>
       You can drag a layer from the Layers dialog and drop it onto the
       toolbox.  This will create a new image containing only that layer.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate">
-    <_thetip>
+    <thetip>
       A floating selection must be anchored to a new layer or to the last
       active layer before doing other operations on the image.  Click on the
       &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the
       Layers dialog, or use the menus to do the same.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate">
-    <_thetip>
+    <thetip>
       GIMP supports gzip compression on the fly.  Just add <tt>.gz</tt>
       (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and
       your image will be saved compressed.  Of course loading compressed
       images works too.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate">
-    <_thetip>
+    <thetip>
       Pressing and holding the <tt>Shift</tt> key before making a selection
       allows you to add to the current selection instead of replacing it.
       Using <tt>Ctrl</tt> before making a selection subtracts from the
       current one.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-selection-stroke">
-    <_thetip>
+    <thetip>
       You can draw simple squares or circles using Edit→Stroke Selection.
       It strokes the edge of your current selection. More complex shapes
       can be drawn using the Path tool or with Filters→Render→Gfig.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-path-stroke">
-    <_thetip>
+    <thetip>
       If you stroke a path (Edit→Stroke Path), the paint tools can
       be used with their current settings.  You can use the Paintbrush in
       gradient mode or even the Eraser or the Smudge tool.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-using-paths">
-    <_thetip>
+    <thetip>
       You can create and edit complex selections using the Path tool.
       The Paths dialog allows you to work on multiple paths and to convert
       them to selections.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-using-quickmask">
-    <_thetip>
+    <thetip>
       You can use the paint tools to change the selection.  Click on the
       &quot;Quick Mask&quot; button at the bottom left of an image window.
       Change your selection by painting in the image and click on the button
       again to convert it back to a normal selection.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="intermediate" help="gimp-channel-dialog">
-    <_thetip>
+    <thetip>
       You can save a selection to a channel (Select→Save to Channel) and
       then modify this channel with any paint tools.  Using the buttons in
       the Channels dialog, you can toggle the visibility of this new channel
       or convert it to a selection.
-    </_thetip>
+    </thetip>
   </tip>
 
 <!--                                                                       -->
@@ -172,7 +172,7 @@
 <!--                                                                       -->
 
   <tip level="advanced">
-    <_thetip>
+    <thetip>
       After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the
       Preferences dialog, you can reassign shortcut keys. Do so by bringing
       up the menu, selecting a menu item, and pressing the desired key
@@ -180,56 +180,56 @@
       key bindings are saved when you exit GIMP.
       You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; 
       afterwards, to prevent accidentally assigning/reassigning shortcuts.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced">
-    <_thetip>
+    <thetip>
       If your screen is too cluttered, you can press <tt>Tab</tt> 
       in an image window to toggle the visibility of the toolbox 
       and other dialogs.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced">
-    <_thetip>
+    <thetip>
       <tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all
       layers but that one.  <tt>Shift</tt>-click again to show all layers.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced">
-    <_thetip>
+    <thetip>
       <tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog
       toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer 
       mask's preview in the Layers dialog toggles viewing the mask directly.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced">
-    <_thetip>
+    <thetip>
       You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in
       an image (if your window manager doesn't trap those keys...).
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced" help="gimp-tool-bucket-fill">
-    <_thetip>
+    <thetip>
       <tt>Ctrl</tt>-click with the Bucket Fill tool to have it use
       the background color instead of the foreground color.
       Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool 
       sets the background color instead of the foreground color.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced" help="gimp-tools-transform">
-    <_thetip>
+    <thetip>
       <tt>Ctrl</tt>-drag with the Rotate tool will constrain the
       rotation to 15 degree angles.
-    </_thetip>
+    </thetip>
   </tip>
   <tip level="advanced">
-    <_thetip>
+    <thetip>
       If some of your scanned photos do not look colorful enough, you
       can easily improve their tonal range with the &quot;Auto&quot;
       button in the Levels tool (Colors→Levels).  If there are any
       color casts, you can correct them with the Curves tool
       (Colors→Curves).
-    </_thetip>
+    </thetip>
   </tip>
 
 </gimp-tips>

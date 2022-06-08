@@ -33,18 +33,11 @@ desktopfilein = configure_file(
   configuration: desktop_conf,
 )
 
-desktopfile = custom_target(desktopfilename,
-  input : [ desktopfilein, ],
-  output: [ desktopfilename, ],
-  command: [
-    intltool_merge,
-    po_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-    '--desktop-style',
-    '--utf8',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-  ],
+desktopfile = i18n.merge_file(
+  input : desktopfilein,
+  output: desktopfilename,
+  type: 'desktop',
+  po_dir: po_dir,
   install: true,
   install_dir: get_option('datadir') / 'applications',
 )
@@ -55,18 +48,10 @@ appdatafilein = configure_file(
   output: appdatafilename+'.in',
   configuration: desktop_conf,
 )
-appdatafile = custom_target(appdatafilename,
-  input : [ appdatafilein, ],
-  output: [ appdatafilename, ],
-  command: [
-    intltool_merge,
-    po_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-    '--xml-style',
-    '--utf8',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-  ],
+appdatafile = i18n.merge_file(
+  input : appdatafilein,
+  output: appdatafilename,
+  po_dir: po_dir,
   install: true,
   install_dir: get_option('datadir') / 'metainfo',
 )

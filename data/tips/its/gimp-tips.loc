@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<locatingRules>
+  <locatingRule name="GimpTips" pattern="*.xml">
+    <documentRule localName="gimp-tips" target="gimp-tips.its"/>
+  </locatingRule>
+</locatingRules>

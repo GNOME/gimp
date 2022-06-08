@@ -130,7 +130,7 @@ appdatadir = $(goat_exercise_c_libexecdir)
 appdata_DATA = $(appstream_files)
 
 org.gimp.extension.goat-exercises.metainfo.xml: org.gimp.extension.goat-exercises.metainfo.xml.in $(wildcard $(top_srcdir)/po-plug-ins/*.po)
-	$(INTLTOOL_MERGE) $(top_srcdir)/po-plug-ins $< $(@) -x -u -c $(top_builddir)/po-plug-ins/.intltool-merge-cache
+	$(AM_V_GEN) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-plug-ins -o $@
 
 .PHONY: org.gimp.extension.goat-exercises.metainfo.xml
 

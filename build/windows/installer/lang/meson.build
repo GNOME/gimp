@@ -1,25 +1,11 @@
-isl_in_input = custom_target('setup.isl.in',
-  input : 'setup.isl.ini',
-  output: 'setup.isl.in',
-  capture: true,
-  command: [
-    'sed', 's/^#/;/', '@INPUT@',
-  ]
-)
-
-isl_input = custom_target('setup.isl',
-  input : isl_in_input,
-  output: 'setup.isl',
-  command: [
-    intltool_merge,
-    '--desktop-style',
-    '--utf8',
-    '--multiple-output',
-    '--cache=' + '@OUTDIR@' / 'intltool-merge-cache',
-    po_windows_installer_dir,
-    '@INPUT@',
-    '@OUTPUT@',
-  ]
+# First we use the XML file to be able to do gettext translation
+ms_installer_config_xml = i18n.merge_file(
+  input : 'setup.isl.xml.in',
+  output: '@BASENAME@',
+  data_dirs: meson.current_source_dir(),
+  po_dir: po_windows_installer_dir,
+  install: true,
+  install_dir: gimpdatadir / 'tags',
 )
 
 languages = [
@@ -65,20 +51,34 @@ languages = [
   { 'code': 'zh_TW', },
 ]
 
-extractlang = find_program('extractlang.sh')
-
+# Then, we generate the .isl file for each language using some xsltproc magic
 all_isl = []
 foreach language : languages
-  lang_code    = language.get('code')
-  lang_prefix  = language.get('prefix', '[@0@]'.format(lang_code))
+  lang_code = language.get('code')
 
-  islfile = '@0@.setup.isl'.format(lang_code)
+  if 'prefix' in language
+    lang_check = 'value[lang(\'@0@\')]'.format(lang_code)
+  else
+    lang_check = 'value'.format(lang_code)
+  endif
 
-  all_isl += custom_target(islfile,
-    input : isl_input,
-    output: islfile,
-    command: [ extractlang, lang_prefix, '@INPUT@' ],
-    capture: true,
+  gimp_ms_installer_lang_xsl = configure_file(
+    input: 'gimp-ms-installer-config.xsl.in',
+    output: '@BASENAME@',
+    configuration: { 'LANG_CHECK': lang_check },
+  )
+
+  setup_isl = '@0@.setup.isl'.format(lang_code)
+  all_isl += custom_target(setup_isl,
+    input : [ ms_installer_config_xml, gimp_ms_installer_lang_xsl  ],
+    output: setup_isl,
+    command: [
+      xsltproc,
+      '--xinclude',
+      '--output', '@OUTPUT@',
+      '@INPUT1@',
+      '@INPUT0@',
+    ],
     build_by_default: true,
   )
 endforeach

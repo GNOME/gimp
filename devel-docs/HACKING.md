@@ -92,16 +92,15 @@ running:
 Basically this does the following for you:
 
     gimp/trunk$ aclocal-1.9; libtoolize; automake-1.9 -a;
-    gimp/trunk$ autoconf; intltoolize --automake
+    gimp/trunk$ autoconf;
 
 The above commands create the "configure" script.  Now you can run the
 configure script in gimp/trunk to create all the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool in
-your path. Also make sure glib-2.0.m4 glib-gettext.m4, gtk-3.0.m4,
-pkg.m4 and intltool.m4 are either installed in the same
-$prefix/share/aclocal relative to your automake/aclocal installation
-or call autogen.sh as follows:
+your path. Also make sure glib-2.0.m4 glib-gettext.m4, gtk-3.0.m4 and
+pkg.m4 are either installed in the same $prefix/share/aclocal relative to your
+automake/aclocal installation or call autogen.sh as follows:
 
     $ ACLOCAL_FLAGS="-I $prefix/share/aclocal" ./autogen.sh
 
