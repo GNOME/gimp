@@ -2478,26 +2478,21 @@ convert_bit2byte (const guchar *src,
                   gint          width,
                   gint          height)
 {
-  gint y;
+  gint64 x = width * height;
 
-  for (y = 0; y < height; y++)
+  while (x >= 8)
     {
-      gint x = width;
+      memcpy (dest, bit2byte + *src * 8, 8);
+      dest += 8;
+      x -= 8;
+      src++;
+    }
 
-      while (x >= 8)
-        {
-          memcpy (dest, bit2byte + *src * 8, 8);
-          dest += 8;
-          x -= 8;
-          src++;
-        }
-
-      if (x > 0)
-        {
-          memcpy (dest, bit2byte + *src * 8, x);
-          dest += x;
-          src++;
-        }
+  if (x > 0)
+    {
+      memcpy (dest, bit2byte + *src * 8, x);
+      dest += x;
+      src++;
     }
 }
 
@@ -2507,26 +2502,21 @@ convert_2bit2byte (const guchar *src,
                    gint          width,
                    gint          height)
 {
-  gint y;
+  gint64 x = width * height;
 
-  for (y = 0; y < height; y++)
+  while (x >= 4)
     {
-      gint x = width;
+      memcpy (dest, _2bit2byte + *src * 4, 4);
+      dest += 4;
+      x -= 4;
+      src++;
+    }
 
-      while (x >= 4)
-        {
-          memcpy (dest, _2bit2byte + *src * 4, 4);
-          dest += 4;
-          x -= 4;
-          src++;
-        }
-
-      if (x > 0)
-        {
-          memcpy (dest, _2bit2byte + *src * 4, x);
-          dest += x;
-          src++;
-        }
+  if (x > 0)
+    {
+      memcpy (dest, _2bit2byte + *src * 4, x);
+      dest += x;
+      src++;
     }
 }
 
@@ -2536,26 +2526,21 @@ convert_4bit2byte (const guchar *src,
                    gint          width,
                    gint          height)
 {
-  gint y;
+  gint64 x = width * height;
 
-  for (y = 0; y < height; y++)
+  while (x >= 2)
     {
-      gint x = width;
+      memcpy (dest, _4bit2byte + *src * 2, 2);
+      dest += 2;
+      x -= 2;
+      src++;
+    }
 
-      while (x >= 2)
-        {
-          memcpy (dest, _4bit2byte + *src * 2, 2);
-          dest += 2;
-          x -= 2;
-          src++;
-        }
-
-      if (x > 0)
-        {
-          memcpy (dest, _4bit2byte + *src * 2, x);
-          dest += x;
-          src++;
-        }
+  if (x > 0)
+    {
+      memcpy (dest, _4bit2byte + *src * 2, x);
+      dest += x;
+      src++;
     }
 }
 
