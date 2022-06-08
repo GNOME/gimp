@@ -74,6 +74,7 @@ glob_class_init (GlobClass *klass)
 
   plug_in_class->query_procedures = glob_query_procedures;
   plug_in_class->create_procedure = glob_create_procedure;
+  plug_in_class->set_i18n         = NULL;
 }
 
 static void
