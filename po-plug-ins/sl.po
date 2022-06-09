@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-07 07:44+0000\n"
-"PO-Revision-Date: 2022-06-07 16:40+0200\n"
+"POT-Creation-Date: 2022-06-09 14:35+0000\n"
+"PO-Revision-Date: 2022-06-09 23:11+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -22,7 +22,7 @@ msgstr ""
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Project-Style: gnome\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -94,7 +94,7 @@ msgstr "Povadi kozo (C)"
 #: ../plug-ins/common/tile-small.c:446 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:709 ../plug-ins/common/warp.c:490
 #: ../plug-ins/common/wavelet-decompose.c:409 ../plug-ins/common/web-page.c:278
-#: ../plug-ins/file-tiff/file-tiff-load.c:2586 ../plug-ins/flame/flame.c:540
+#: ../plug-ins/file-tiff/file-tiff-load.c:2656 ../plug-ins/flame/flame.c:540
 #: ../plug-ins/flame/flame.c:716 ../plug-ins/flame/flame.c:1033
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -441,7 +441,7 @@ msgstr "_Navpične"
 #: ../plug-ins/file-jpeg/jpeg-load.c:225
 #: ../plug-ins/file-psd/psd-image-res-load.c:1067
 #: ../plug-ins/file-psd/psd-load.c:2509 ../plug-ins/file-sgi/sgi.c:474
-#: ../plug-ins/file-tiff/file-tiff-load.c:1400
+#: ../plug-ins/file-tiff/file-tiff-load.c:1522
 #: ../plug-ins/file-webp/file-webp-load.c:166
 #: ../plug-ins/gfig/gfig-dialog.c:1325 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -1961,7 +1961,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/file-psd/psd-load.c:171
 #: ../plug-ins/file-raw/file-darktable.c:413
 #: ../plug-ins/file-raw/file-rawtherapee.c:341 ../plug-ins/file-sgi/sgi.c:331
-#: ../plug-ins/file-tiff/file-tiff-load.c:247
+#: ../plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s« ..."
@@ -3187,7 +3187,7 @@ msgid "Import from PDF"
 msgstr "Uvozi iz PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1066 ../plug-ins/common/file-ps.c:3587
-#: ../plug-ins/file-tiff/file-tiff-load.c:2587
+#: ../plug-ins/file-tiff/file-tiff-load.c:2657
 #: ../plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_Uvozi"
@@ -3324,7 +3324,7 @@ msgstr "Plasti kot strani ( %s)"
 #: ../plug-ins/common/file-pdf-save.c:1330
 #: ../plug-ins/common/file-pdf-save.c:1403
 #: ../plug-ins/common/file-pdf-save.c:1501 ../plug-ins/common/file-ps.c:2078
-#: ../plug-ins/file-tiff/file-tiff-load.c:1402
+#: ../plug-ins/file-tiff/file-tiff-load.c:1524
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
@@ -6799,6 +6799,124 @@ msgctxt "composing"
 msgid "_None"
 msgstr "_brez"
 
+#: ../plug-ins/file-fli/fli.c:45 ../plug-ins/file-fli/fli.c:59
+#: ../plug-ins/file-fli/fli.c:75 ../plug-ins/file-fli/fli.c:924
+#: ../plug-ins/file-fli/fli.c:1244 ../plug-ins/file-fli/fli.c:1524
+#, c-format
+msgid "Error reading from file."
+msgstr "Napaka pri branju iz datoteke."
+
+#: ../plug-ins/file-fli/fli.c:91 ../plug-ins/file-fli/fli.c:110
+#: ../plug-ins/file-fli/fli.c:131
+#, c-format
+msgid "Error writing to file."
+msgstr "Napaka pri zapisovanju datoteke."
+
+#: ../plug-ins/file-fli/fli.c:157 ../plug-ins/file-fli/fli.c:167
+#: ../plug-ins/file-fli/fli.c:179
+msgid "Error reading header. "
+msgstr "Napaka pri branju glave. "
+
+#: ../plug-ins/file-fli/fli.c:187
+#, c-format
+msgid "Invalid header: not a FLI/FLC animation!"
+msgstr "Neveljavna glava: ni animacija FLI/FLC!"
+
+#: ../plug-ins/file-fli/fli.c:205
+#, c-format
+msgid "Incorrect file size in header: %u, should be: %u."
+msgstr "Nepravilna velikost datoteke v glavi: %u, mora biti: %u."
+
+#: ../plug-ins/file-fli/fli.c:213
+msgid "Number of frames is 0. Setting to 2."
+msgstr "Število sličic je 0. Nastavljanje na 2."
+
+#: ../plug-ins/file-fli/fli.c:220
+#, c-format
+msgid "Suspicious frame delay of %ums. Setting delay to 70ms."
+msgstr "Sumljiva zamuda sličice %u ms. Nastavitev zamude na 70 ms."
+
+#: ../plug-ins/file-fli/fli.c:249 ../plug-ins/file-fli/fli.c:258
+#: ../plug-ins/file-fli/fli.c:269 ../plug-ins/file-fli/fli.c:276
+msgid "Error writing header. "
+msgstr "Napaka pri zapisovanju glave. "
+
+#: ../plug-ins/file-fli/fli.c:283
+#, c-format
+msgid "Invalid header: unrecognized magic number!"
+msgstr "Neveljavna glava: neprepoznano magično število!"
+
+#: ../plug-ins/file-fli/fli.c:313 ../plug-ins/file-fli/fli.c:345
+msgid "Error reading frame. "
+msgstr "Napaka pri branju sličice. "
+
+#: ../plug-ins/file-fli/fli.c:323
+#, fuzzy, c-format
+msgid "Invalid frame size points past end of file!"
+msgstr "Neveljavne točke velikosti sličice prek konca datoteke!"
+
+#: ../plug-ins/file-fli/fli.c:353
+#, fuzzy, c-format
+msgid "Invalid chunk size points past end of file!"
+msgstr "Neveljavne točke velikosti kosa prek konca datoteke!"
+
+#: ../plug-ins/file-fli/fli.c:476
+#, c-format
+msgid "Invalid header: magic number is wrong!"
+msgstr "Neveljavna glava: magično število je napačno!"
+
+#: ../plug-ins/file-fli/fli.c:513
+msgid "Error writing frame header. "
+msgstr "Napaka pri zapisovanju glave sličice. "
+
+#: ../plug-ins/file-fli/fli.c:537 ../plug-ins/file-fli/fli.c:547
+#: ../plug-ins/file-fli/fli.c:556 ../plug-ins/file-fli/fli.c:575
+#: ../plug-ins/file-fli/fli.c:715 ../plug-ins/file-fli/fli.c:726
+#: ../plug-ins/file-fli/fli.c:735 ../plug-ins/file-fli/fli.c:756
+msgid "Error reading palette. "
+msgstr "Napaka pri branju palete. "
+
+#: ../plug-ins/file-fli/fli.c:611 ../plug-ins/file-fli/fli.c:619
+#: ../plug-ins/file-fli/fli.c:657 ../plug-ins/file-fli/fli.c:666
+#: ../plug-ins/file-fli/fli.c:685 ../plug-ins/file-fli/fli.c:789
+#: ../plug-ins/file-fli/fli.c:797 ../plug-ins/file-fli/fli.c:832
+#: ../plug-ins/file-fli/fli.c:842 ../plug-ins/file-fli/fli.c:862
+#, fuzzy
+msgid "Error writing color map. "
+msgstr "Napaka pri zapisovanju barvne palete. "
+
+#: ../plug-ins/file-fli/fli.c:905
+msgid "Error writing black. "
+msgstr "Napaka pri zapisovanju črne. "
+
+#: ../plug-ins/file-fli/fli.c:944 ../plug-ins/file-fli/fli.c:955
+#: ../plug-ins/file-fli/fli.c:965 ../plug-ins/file-fli/fli.c:1085
+#: ../plug-ins/file-fli/fli.c:1094 ../plug-ins/file-fli/fli.c:1108
+#: ../plug-ins/file-fli/fli.c:1123 ../plug-ins/file-fli/fli.c:1132
+#: ../plug-ins/file-fli/fli.c:1146 ../plug-ins/file-fli/fli.c:1156
+#: ../plug-ins/file-fli/fli.c:1300 ../plug-ins/file-fli/fli.c:1327
+#: ../plug-ins/file-fli/fli.c:1343 ../plug-ins/file-fli/fli.c:1375
+#: ../plug-ins/file-fli/fli.c:1385 ../plug-ins/file-fli/fli.c:1399
+#: ../plug-ins/file-fli/fli.c:1409
+msgid "Error writing frame. "
+msgstr "Napaka pri zapisovanju sličice. "
+
+#: ../plug-ins/file-fli/fli.c:992 ../plug-ins/file-fli/fli.c:1004
+#: ../plug-ins/file-fli/fli.c:1015 ../plug-ins/file-fli/fli.c:1034
+#: ../plug-ins/file-fli/fli.c:1186 ../plug-ins/file-fli/fli.c:1200
+#: ../plug-ins/file-fli/fli.c:1213 ../plug-ins/file-fli/fli.c:1226
+#: ../plug-ins/file-fli/fli.c:1245 ../plug-ins/file-fli/fli.c:1440
+#: ../plug-ins/file-fli/fli.c:1456 ../plug-ins/file-fli/fli.c:1475
+#: ../plug-ins/file-fli/fli.c:1490 ../plug-ins/file-fli/fli.c:1503
+#: ../plug-ins/file-fli/fli.c:1525
+msgid "Error reading compressed data. "
+msgstr "Napaka pri branju stisnjenih podatkov. "
+
+#: ../plug-ins/file-fli/fli.c:1022
+#, c-format
+msgid "Overflow reading compressed data. Possibly corrupt file."
+msgstr "Prekoračitev pri branju stisnjenih podatkov. Morda okvarjena datoteka."
+
 #: ../plug-ins/file-fli/fli-gimp.c:181 ../plug-ins/file-fli/fli-gimp.c:218
 msgid "AutoDesk FLIC animation"
 msgstr "Animacija AutoDesk FLIC"
@@ -7348,17 +7466,17 @@ msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Možnost »Shrani plasti« ni nastavljena, ko skušate izvoziti več plasti."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:255
+#: ../plug-ins/file-tiff/file-tiff-load.c:293
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Ni slika TIFF ali pa je slika okvarjena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:286
+#: ../plug-ins/file-tiff/file-tiff-load.c:324
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF »%s« ne vsebuje nobenih map"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:293
+#: ../plug-ins/file-tiff/file-tiff-load.c:331
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7379,7 +7497,7 @@ msgstr[3] ""
 "Štetje map TIFF »%s« po glavi je spodletelo, čeprav se zdi, da so %d strani. "
 "Sledi poskus nalaganja datoteke s to predpostavko."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:417
+#: ../plug-ins/file-tiff/file-tiff-load.c:455
 msgid "Extra channels with unspecified data."
 msgstr "Dodatni kanali z nedoločenimi podatki."
 
@@ -7390,16 +7508,16 @@ msgstr "Dodatni kanali z nedoločenimi podatki."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:429
+#: ../plug-ins/file-tiff/file-tiff-load.c:467
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "Nekonformni TIFF: dodatni kanali brez polja »ExtraSamples«."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:511
+#: ../plug-ins/file-tiff/file-tiff-load.c:549
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Strani %d od %d ni možno prebrati. Slika je morda okvarjena.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:540
+#: ../plug-ins/file-tiff/file-tiff-load.c:578
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7408,7 +7526,7 @@ msgstr ""
 "Ta slika ima linearen barvni profil, vendar ni nastavljen na prvi plasti. "
 "Plasti pod plastjo št. %d bodo tolmačene kot nelinearne."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:548
+#: ../plug-ins/file-tiff/file-tiff-load.c:586
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7418,32 +7536,32 @@ msgstr ""
 "v nepravilne rezultate, poskusite naložiti vsako plast posebej kot ločeno "
 "sliko."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:560
+#: ../plug-ins/file-tiff/file-tiff-load.c:598
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Sumljiva bitna globina: %d za stran %d. Slika je morda okvarjena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:634
+#: ../plug-ins/file-tiff/file-tiff-load.c:672
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Nepodprta bitna globina: %d za stran %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:649
+#: ../plug-ins/file-tiff/file-tiff-load.c:687
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Širine slike iz »%s« ni mogoče pridobiti"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:657
+#: ../plug-ins/file-tiff/file-tiff-load.c:695
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Dolžine slike iz »%s« ni mogoče pridobiti"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:665
+#: ../plug-ins/file-tiff/file-tiff-load.c:703
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "Neveljavne mere slike (%u x %u) za stran %d. Slika je morda okvarjena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:686
+#: ../plug-ins/file-tiff/file-tiff-load.c:724
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7452,7 +7570,7 @@ msgstr ""
 "Fotometrije ni mogoče pridobiti iz »%s«. Slika je stisnjeni CCITT, predviden "
 "bo parameter min-is-white"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:693
+#: ../plug-ins/file-tiff/file-tiff-load.c:731
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -7461,7 +7579,7 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:725
+#: ../plug-ins/file-tiff/file-tiff-load.c:763
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7469,7 +7587,7 @@ msgstr ""
 "Vrsta kanala alfa ni določena za %s. Predvideno bo, da alfa ni vnaprej "
 "množena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:750
+#: ../plug-ins/file-tiff/file-tiff-load.c:788
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7480,74 +7598,74 @@ msgstr ""
 "nastavljeno, medtem ko so prisotni dodatni kanali. Predvideno bo, da je prvi "
 "dodatni kanal ne vnaprej množena alfa."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1024
+#: ../plug-ins/file-tiff/file-tiff-load.c:1077
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Neveljavno ali neznano stiskanje %u. Nastavljanje stiskanja na »brez«."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1082
+#: ../plug-ins/file-tiff/file-tiff-load.c:1135
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Nove slike ni mogoče ustvariti: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1114
+#: ../plug-ins/file-tiff/file-tiff-load.c:1167
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-od-%d-strani"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1283
+#: ../plug-ins/file-tiff/file-tiff-load.c:1336
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Neznana vrsta enot ločljivosti %d, predvidevamo dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1293
+#: ../plug-ins/file-tiff/file-tiff-load.c:1346
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 "Opozorilo: navedena je ločljivost brez vrste enot, predvideno gre za dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1301
+#: ../plug-ins/file-tiff/file-tiff-load.c:1354
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Opozorilo: ni podatkov ločljivosti x, predvideno bo enako kot x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1360
+#: ../plug-ins/file-tiff/file-tiff-load.c:1416
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Barvnih vnosov oz. kataloga barv iz »%s« ni mogoče prebrati"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1439
+#: ../plug-ins/file-tiff/file-tiff-load.c:1561
 msgid "TIFF Channel"
 msgstr "Kanal TIFF"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1592
+#: ../plug-ins/file-tiff/file-tiff-load.c:1714
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Podatkov ni mogoče prebrati iz TIFF »%s«. Datoteka je najverjetneje "
 "okvarjena."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1663
+#: ../plug-ins/file-tiff/file-tiff-load.c:1785
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: nepodprta vrsta slike, nalagalnik RGBA ni na voljo"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1975
-#: ../plug-ins/file-tiff/file-tiff-load.c:2172
+#: ../plug-ins/file-tiff/file-tiff-load.c:2097
+#: ../plug-ins/file-tiff/file-tiff-load.c:2294
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 "Branje datoteke je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1984
-#: ../plug-ins/file-tiff/file-tiff-load.c:2181
+#: ../plug-ins/file-tiff/file-tiff-load.c:2106
+#: ../plug-ins/file-tiff/file-tiff-load.c:2303
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Branje vrstice je spodletelo. Slika je morda okvarjena pri vrstici %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2582
+#: ../plug-ins/file-tiff/file-tiff-load.c:2652
 msgid "Import from TIFF"
 msgstr "Uvozi iz TIFF"
 
@@ -7555,23 +7673,23 @@ msgstr "Uvozi iz TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2639
+#: ../plug-ins/file-tiff/file-tiff-load.c:2709
 msgid "_Keep empty space around imported layers"
 msgstr "O_hrani prazni prostor okoli uvoženih plasti"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2656
+#: ../plug-ins/file-tiff/file-tiff-load.c:2726
 msgid "Process extra channel as:"
 msgstr "Obdelaj dodatni kanal kot:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2659
+#: ../plug-ins/file-tiff/file-tiff-load.c:2729
 msgid "_Non-premultiplied alpha"
 msgstr "Vnaprej _ne pomnožena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2660
+#: ../plug-ins/file-tiff/file-tiff-load.c:2730
 msgid "Pre_multiplied alpha"
 msgstr "_Vnaprej pomnožena alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2661
+#: ../plug-ins/file-tiff/file-tiff-load.c:2731
 msgid "Channe_l"
 msgstr "Kana_l"
 
