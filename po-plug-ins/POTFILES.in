@@ -93,6 +93,7 @@ plug-ins/file-dds/ddswrite.c
 plug-ins/file-exr/file-exr.c
 plug-ins/file-faxg3/faxg3.c
 plug-ins/file-fits/fits.c
+plug-ins/file-fli/fli.c
 plug-ins/file-fli/fli-gimp.c
 plug-ins/file-ico/ico-dialog.c
 plug-ins/file-ico/ico-load.c
