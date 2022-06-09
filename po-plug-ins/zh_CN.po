@@ -11,16 +11,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-17 22:06+0000\n"
-"PO-Revision-Date: 2022-05-22 09:54+0800\n"
-"Last-Translator: lumingzh <lumingzh@qq.com>\n"
+"POT-Creation-Date: 2022-06-09 18:51+0000\n"
+"PO-Revision-Date: 2022-06-09 17:22-0400\n"
+"Last-Translator: Boyuan Yang <073plan@gmail.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=1; plural=0\n"
-"X-Generator: Gtranslator 42.0\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.0.1\n"
 
 #: ../plug-ins/common/align-layers.c:158
 msgid "Align all visible layers of the image"
@@ -71,9 +71,9 @@ msgstr "对齐可见图层"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1958
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2616 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -453,7 +453,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1334
+#: ../plug-ins/file-tiff/file-tiff-load.c:1497
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -2076,7 +2076,7 @@ msgstr "ASCII 艺术"
 msgid "Text"
 msgstr "文字"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2036
 msgid "_Format:"
 msgstr "格式(_F)："
 
@@ -2147,7 +2147,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:259
+#: ../plug-ins/file-tiff/file-tiff-load.c:296
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
@@ -2651,7 +2651,7 @@ msgstr "12 位/通道"
 
 #. Color profile
 #: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
-#: ../plug-ins/file-webp/file-webp-dialog.c:387
+#: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
 msgstr "保存色彩配置文件(_P)"
@@ -2876,6 +2876,10 @@ msgstr "无法转换“%s”中的 xvYCC JP2 图像为 RGB。"
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "不支持 JP2 图像“%s”中的色彩空间。"
 
+#: ../plug-ins/common/file-jpegxl.c:71
+msgid "JPEG XL image"
+msgstr "JPEG XL 图像"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
@@ -2981,7 +2985,7 @@ msgstr "默认帧延时："
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1551
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:351
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "毫秒"
@@ -3126,7 +3130,7 @@ msgid "Import from PDF"
 msgstr "从 PDF 导入"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
-#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/file-tiff/file-tiff-load.c:2617
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "导入(_I)"
@@ -3251,7 +3255,7 @@ msgstr "图层作为页面（%s）"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
-#: ../plug-ins/file-tiff/file-tiff-load.c:1336
+#: ../plug-ins/file-tiff/file-tiff-load.c:1499
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
@@ -6577,7 +6581,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-webp/file-webp-dialog.c:221
+#: ../plug-ins/file-webp/file-webp-dialog.c:222
 msgid "_Advanced Options"
 msgstr "高级选项(_A)"
 
@@ -6598,19 +6602,20 @@ msgstr "32 位"
 msgid "Windows BMP image"
 msgstr "Windows BMP 图像"
 
-#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
+#: ../plug-ins/file-dds/dds.c:162 ../plug-ins/file-dds/dds.c:181
+#: ../plug-ins/file-dds/dds.c:200
 msgid "DDS image"
 msgstr "DDS 图像"
 
-#: ../plug-ins/file-dds/dds.c:176
+#: ../plug-ins/file-dds/dds.c:217
 msgid "Decode YCoCg"
 msgstr "解码 YCoCg"
 
-#: ../plug-ins/file-dds/dds.c:189
+#: ../plug-ins/file-dds/dds.c:230
 msgid "Decode YCoCg (scaled)"
 msgstr "解码 YCoCg（已缩放）"
 
-#: ../plug-ins/file-dds/dds.c:202
+#: ../plug-ins/file-dds/dds.c:243
 msgid "Decode Alpha exponent"
 msgstr "解码透明指数"
 
@@ -6626,64 +6631,68 @@ msgstr "载入多级纹理(_L)"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "当检测到时自动解码 YCoCg/AExp 图像(_A)"
 
-#: ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddswrite.c:1981
 msgid "Export as DDS"
 msgstr "导出为 DDS"
 
-#: ../plug-ins/file-dds/ddswrite.c:1959
+#: ../plug-ins/file-dds/ddswrite.c:1984
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "导出(_E)"
 
-#: ../plug-ins/file-dds/ddswrite.c:1986
+#: ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Compression:"
 msgstr "压缩(_C)："
 
-#: ../plug-ins/file-dds/ddswrite.c:1996
+#: ../plug-ins/file-dds/ddswrite.c:2021
 msgid "Use _perceptual error metric"
 msgstr "使用感官错误度量(_P)"
 
-#: ../plug-ins/file-dds/ddswrite.c:2025
+#: ../plug-ins/file-dds/ddswrite.c:2050
 msgid "_Save:"
 msgstr "保存(_S)："
 
-#: ../plug-ins/file-dds/ddswrite.c:2039
+#: ../plug-ins/file-dds/ddswrite.c:2062
+msgid "Flip the image _vertically on export"
+msgstr "导出时竖直翻转图像(_V)"
+
+#: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
 msgstr "多级纹理(_M)："
 
-#: ../plug-ins/file-dds/ddswrite.c:2062
+#: ../plug-ins/file-dds/ddswrite.c:2098
 msgid "Transparent index:"
 msgstr "透明索引："
 
-#: ../plug-ins/file-dds/ddswrite.c:2106
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Mipmap Options"
 msgstr "多级纹理选项"
 
-#: ../plug-ins/file-dds/ddswrite.c:2119
+#: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "F_ilter:"
 msgstr "滤镜(_I)："
 
-#: ../plug-ins/file-dds/ddswrite.c:2132
+#: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "_Wrap mode:"
 msgstr "包裹模式(_W)："
 
-#: ../plug-ins/file-dds/ddswrite.c:2142
+#: ../plug-ins/file-dds/ddswrite.c:2178
 msgid "Appl_y gamma correction"
 msgstr "应用伽马校正(_Y)"
 
-#: ../plug-ins/file-dds/ddswrite.c:2156
+#: ../plug-ins/file-dds/ddswrite.c:2192
 msgid "Use s_RGB colorspace"
 msgstr "使用 sRGB 色彩空间(_R)"
 
-#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2211 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "伽马(_G)："
 
-#: ../plug-ins/file-dds/ddswrite.c:2185
+#: ../plug-ins/file-dds/ddswrite.c:2221
 msgid "Preserve alpha _test coverage"
 msgstr "保持透明测试覆盖(_T)"
 
-#: ../plug-ins/file-dds/ddswrite.c:2204
+#: ../plug-ins/file-dds/ddswrite.c:2240
 msgid "_Alpha test threshold:"
 msgstr "透明测试阈值(_A)："
 
@@ -6925,7 +6934,7 @@ msgstr "保存 _Exif 数据"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
-#: ../plug-ins/file-webp/file-webp-dialog.c:377
+#: ../plug-ins/file-webp/file-webp-dialog.c:390
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _XMP data"
 msgstr "保存 _XMP 数据"
@@ -6935,7 +6944,9 @@ msgstr "保存 _XMP 数据"
 msgid "Save _IPTC data"
 msgstr "保存 _IPTC 数据"
 
+#. Save Thumbnail
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
+#: ../plug-ins/file-webp/file-webp-dialog.c:414
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _thumbnail"
 msgstr "保存缩略图(_T)"
@@ -7335,17 +7346,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF 图像"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:267
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "不是 TIFF 图像或图像已损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:298
+#: ../plug-ins/file-tiff/file-tiff-load.c:335
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF “%s”不包含任何目录"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:305
+#: ../plug-ins/file-tiff/file-tiff-load.c:342
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7357,7 +7368,7 @@ msgstr[0] ""
 "TIFF“%s”虽然看起来存在 %d 页但通过文件头计算目录失败。正在尝试使用该假设值加"
 "载文件。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:429
+#: ../plug-ins/file-tiff/file-tiff-load.c:466
 msgid "Extra channels with unspecified data."
 msgstr "具有未指明数据的额外通道。"
 
@@ -7368,16 +7379,16 @@ msgstr "具有未指明数据的额外通道。"
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:441
+#: ../plug-ins/file-tiff/file-tiff-load.c:478
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "非一致性 TIFF：没有“额外采样”区域的额外通道。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:522
+#: ../plug-ins/file-tiff/file-tiff-load.c:560
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "无法读取 %2$d 页中的第 %1$d 页。图像可能是损坏的。\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:551
+#: ../plug-ins/file-tiff/file-tiff-load.c:589
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7386,7 +7397,7 @@ msgstr ""
 "该图像具有线性色彩配置文件但未在第一个图层上设置。第 %d # 图层以下的图层将视"
 "为非线性。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:559
+#: ../plug-ins/file-tiff/file-tiff-load.c:597
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7395,39 +7406,39 @@ msgstr ""
 "该图像具有多个色彩配置文件。我们将使用第一个。如果这导致不正确的结果您应考虑"
 "将每个图层作为单独图像载入。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#: ../plug-ins/file-tiff/file-tiff-load.c:609
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "可疑的位深度：%2$d 页中的 %1$d。图像可能是损坏的。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:645
+#: ../plug-ins/file-tiff/file-tiff-load.c:683
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "不支持的位深度：第 %2$d 页的 %1$d。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:660
+#: ../plug-ins/file-tiff/file-tiff-load.c:698
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "无法从“%s”获取图像宽度"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:668
+#: ../plug-ins/file-tiff/file-tiff-load.c:706
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "无法从“%s”获取图像长度"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:676
+#: ../plug-ins/file-tiff/file-tiff-load.c:714
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "第 %3$d 页有无效图像尺寸（%1$u x %2$u）。图像可能已损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:697
+#: ../plug-ins/file-tiff/file-tiff-load.c:735
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr "无法从“%s”获取测光。图像是 CCITT 压缩的，假定最小值为白色"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:704
+#: ../plug-ins/file-tiff/file-tiff-load.c:742
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "无法从“%s”获取测光。假定最小值为黑色"
@@ -7435,13 +7446,13 @@ msgstr "无法从“%s”获取测光。假定最小值为黑色"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:736
+#: ../plug-ins/file-tiff/file-tiff-load.c:774
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "没有为 %s 定义透明通道类型。假定透明不是自左乘的"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:761
+#: ../plug-ins/file-tiff/file-tiff-load.c:799
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7451,70 +7462,70 @@ msgstr ""
 "图像“%s”不符合 TIFF 标准：额外通道呈现的情况下未设置额外采样域。假定第一个额"
 "外通道是非自左乘透明。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:994
+#: ../plug-ins/file-tiff/file-tiff-load.c:1088
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "无效或未知的压缩方式 %u。将设置压缩为无。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1052
+#: ../plug-ins/file-tiff/file-tiff-load.c:1146
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "无法创建新图像：%s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1072
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-第 %d 页-共 %d 页"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1217
+#: ../plug-ins/file-tiff/file-tiff-load.c:1311
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "未知的分辨率单位类型 %d，假定为 dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1227
+#: ../plug-ins/file-tiff/file-tiff-load.c:1321
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "警告：指定的分辨率没有单位类型，假定为 dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1235
+#: ../plug-ins/file-tiff/file-tiff-load.c:1329
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "警告：没有 y 分辨率信息，假定与 x 相同"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1294
+#: ../plug-ins/file-tiff/file-tiff-load.c:1391
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "无法从“%s”获取颜色表"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1367
+#: ../plug-ins/file-tiff/file-tiff-load.c:1536
 msgid "TIFF Channel"
 msgstr "TIFF 通道"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1505
+#: ../plug-ins/file-tiff/file-tiff-load.c:1674
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "从 TIFF“%s”读取不到数据。该文件可能已损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1576
+#: ../plug-ins/file-tiff/file-tiff-load.c:1745
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s：不支持的图像格式，没有可用的 RGBA 加载器"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1888
-#: ../plug-ins/file-tiff/file-tiff-load.c:2085
+#: ../plug-ins/file-tiff/file-tiff-load.c:2057
+#: ../plug-ins/file-tiff/file-tiff-load.c:2254
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "读取分块失败。图像可能在第 %d 行损坏。"
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1897
-#: ../plug-ins/file-tiff/file-tiff-load.c:2094
+#: ../plug-ins/file-tiff/file-tiff-load.c:2066
+#: ../plug-ins/file-tiff/file-tiff-load.c:2263
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "读取扫描线失败。图像可能在第 %d 行损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2495
+#: ../plug-ins/file-tiff/file-tiff-load.c:2612
 msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
 
@@ -7522,23 +7533,23 @@ msgstr "从 TIFF 导入"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2552
+#: ../plug-ins/file-tiff/file-tiff-load.c:2669
 msgid "_Keep empty space around imported layers"
 msgstr "保持导入图层周围的空白空间(_K)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2569
+#: ../plug-ins/file-tiff/file-tiff-load.c:2686
 msgid "Process extra channel as:"
 msgstr "处理额外通道为："
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2572
+#: ../plug-ins/file-tiff/file-tiff-load.c:2689
 msgid "_Non-premultiplied alpha"
 msgstr "非自左乘透明(_N)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2573
+#: ../plug-ins/file-tiff/file-tiff-load.c:2690
 msgid "Pre_multiplied alpha"
 msgstr "自左乘透明(_M)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2574
+#: ../plug-ins/file-tiff/file-tiff-load.c:2691
 msgid "Channe_l"
 msgstr "通道(_L)"
 
@@ -7614,7 +7625,8 @@ msgstr "CCITT Group _3 传真"
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 传真"
 
-#: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
+#: ../plug-ins/file-webp/file-webp.c:124 ../plug-ins/file-webp/file-webp.c:145
+#: ../plug-ins/file-webp/file-webp.c:163
 msgid "WebP image"
 msgstr "WebP 图像"
 
@@ -7627,73 +7639,78 @@ msgid "(all frames are keyframes)"
 msgstr "（所有帧为关键帧）"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:108
+#: ../plug-ins/file-webp/file-webp-dialog.c:109
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
 msgid "_Lossless"
 msgstr "无损(_L)"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:141
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Image _quality:"
 msgstr "图像质量(_Q)："
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:149
+#: ../plug-ins/file-webp/file-webp-dialog.c:150
 msgid "Image quality"
 msgstr "图像质量"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:160
+#: ../plug-ins/file-webp/file-webp-dialog.c:161
 msgid "Alpha q_uality:"
 msgstr "透明质量(_U)："
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:169
 msgid "Alpha channel quality"
 msgstr "透明通道质量"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:193
+#: ../plug-ins/file-webp/file-webp-dialog.c:194
 msgid "Source _type:"
 msgstr "源类型(_T)："
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:196
+#: ../plug-ins/file-webp/file-webp-dialog.c:197
 msgid "WebP encoder \"preset\""
 msgstr "WebP 编码器“预设”"
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:228
+#: ../plug-ins/file-webp/file-webp-dialog.c:229
 msgid "As A_nimation"
 msgstr "作为动画(_N)"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:257
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "Loop _forever"
 msgstr "永远循环(_F)"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:274
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
 msgid "Max distance between key-frames:"
 msgstr "关键帧最大间距："
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:309
+#: ../plug-ins/file-webp/file-webp-dialog.c:310
 msgid "_Minimize output size (slower)"
 msgstr "最小输出大小（较慢）(_M)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:332
+#: ../plug-ins/file-webp/file-webp-dialog.c:333
 msgid "Delay between frames where unspecified:"
 msgstr "未指定帧之间的延迟："
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:355
+#: ../plug-ins/file-webp/file-webp-dialog.c:356
 msgid "Use _delay entered above for all frames"
 msgstr "对所有帧使用上面输入的延迟(_D)"
 
 #. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:367
+#: ../plug-ins/file-webp/file-webp-dialog.c:368
 msgid "_Save Exif data"
 msgstr "保存 Exif 数据(_S)"
+
+#. IPTC metadata
+#: ../plug-ins/file-webp/file-webp-dialog.c:378
+msgid "Save _IPTC"
+msgstr "保存 _IPTC"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -12900,9 +12917,6 @@ msgstr "从扫描仪/相机传送数据"
 
 #~ msgid "Failed to initialize decoder for '%s', out of memory?"
 #~ msgstr "为“%s”初始化解码器失败，内存不足吗？"
-
-#~ msgid "JPEG XL image"
-#~ msgstr "JPEG XL 图像"
 
 #~ msgid "Loads files in the JPEG XL file format"
 #~ msgstr "加载 JPEG XL 格式的文件"
