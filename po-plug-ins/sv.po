@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-05 18:45+0000\n"
-"PO-Revision-Date: 2022-06-05 21:59+0200\n"
+"POT-Creation-Date: 2022-06-09 15:00+0000\n"
+"PO-Revision-Date: 2022-06-09 20:48+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -74,7 +74,7 @@ msgstr "Justera synliga lager"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2616 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -455,7 +455,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1334
+#: ../plug-ins/file-tiff/file-tiff-load.c:1497
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -2160,7 +2160,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:259
+#: ../plug-ins/file-tiff/file-tiff-load.c:296
 #, c-format
 msgid "Opening '%s'"
 msgstr "Öppnar ”%s”"
@@ -2907,6 +2907,10 @@ msgstr "Kunde inte konvertera xvYCC JP2-bild i ”%s” till RGB."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "JP2-bilden ”%s” har en okänd färgrymd."
 
+#: ../plug-ins/common/file-jpegxl.c:71
+msgid "JPEG XL image"
+msgstr "JPEG XL-bild"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
@@ -3164,7 +3168,7 @@ msgid "Import from PDF"
 msgstr "Importera från PDF"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
-#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/file-tiff/file-tiff-load.c:2617
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "_Importera"
@@ -3290,7 +3294,7 @@ msgstr "Lager som sidor (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
-#: ../plug-ins/file-tiff/file-tiff-load.c:1336
+#: ../plug-ins/file-tiff/file-tiff-load.c:1499
 #, c-format
 msgid "Page %d"
 msgstr "Sida %d"
@@ -7436,17 +7440,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF-bild"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:267
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "Inte en TIFF-bild eller så är bilden skadad."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:298
+#: ../plug-ins/file-tiff/file-tiff-load.c:335
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF ”%s” innehåller inga kataloger"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:305
+#: ../plug-ins/file-tiff/file-tiff-load.c:342
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7461,7 +7465,7 @@ msgstr[1] ""
 "Katalogantal enligt huvud för TIFF ”%s” misslyckades även om det verkar vara "
 "%d sidor. Försöker läsa in filen med detta antagande."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:429
+#: ../plug-ins/file-tiff/file-tiff-load.c:466
 msgid "Extra channels with unspecified data."
 msgstr "Extra kanaler med ospecificerade data."
 
@@ -7472,16 +7476,16 @@ msgstr "Extra kanaler med ospecificerade data."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:441
+#: ../plug-ins/file-tiff/file-tiff-load.c:478
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF följer ej specifikation: extra kanaler utan ”ExtraSamples”-fält."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:522
+#: ../plug-ins/file-tiff/file-tiff-load.c:560
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "Kunde inte läsa sida %d av %d. Bilden kan vara skadad.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:551
+#: ../plug-ins/file-tiff/file-tiff-load.c:589
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7490,7 +7494,7 @@ msgstr ""
 "Denna bild har en linjär färgprofil men den ställdes inte in på första "
 "lagret. Lagren under lager %d kommer tolkas som ickelinjära."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:559
+#: ../plug-ins/file-tiff/file-tiff-load.c:597
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7500,33 +7504,33 @@ msgstr ""
 "leder till felaktiga resultat bör du överväga att läsa in varje lager som en "
 "separat bild."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#: ../plug-ins/file-tiff/file-tiff-load.c:609
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "Misstänkt bitdjup: %d för sida %d. Bilden kan vara skadad."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:645
+#: ../plug-ins/file-tiff/file-tiff-load.c:683
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Bitdjupet stöds inte: %d för sida %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:660
+#: ../plug-ins/file-tiff/file-tiff-load.c:698
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Kunde inte få bildbredd från ”%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:668
+#: ../plug-ins/file-tiff/file-tiff-load.c:706
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Kunde inte få bildlängd från ”%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:676
+#: ../plug-ins/file-tiff/file-tiff-load.c:714
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Ogiltiga bilddimensioner (%u × %u) för sida %d. Bilden kan vara skadad."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:697
+#: ../plug-ins/file-tiff/file-tiff-load.c:735
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7535,7 +7539,7 @@ msgstr ""
 "Kunde inte få fotometrisk tolkning från ”%s”. Bilden är CCITT-komprimerad, "
 "antar min-is-white"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:704
+#: ../plug-ins/file-tiff/file-tiff-load.c:742
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "Kunde inte få fotometrisk tolkning från ”%s”. Antar min-is-black"
@@ -7543,14 +7547,14 @@ msgstr "Kunde inte få fotometrisk tolkning från ”%s”. Antar min-is-black"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:736
+#: ../plug-ins/file-tiff/file-tiff-load.c:774
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
 "Alfakanaltyp inte definierad för %s. Antar att alfa ej förmultiplicerad"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:761
+#: ../plug-ins/file-tiff/file-tiff-load.c:799
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7561,70 +7565,70 @@ msgstr ""
 "satts medan extra kanaler är tillgängliga. Antar att den första extra "
 "kanalen är ej förmultiplicerad alfa."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:994
+#: ../plug-ins/file-tiff/file-tiff-load.c:1088
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "Ogiltig eller okänd komprimering %u. Sätter komprimering till ingen."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1052
+#: ../plug-ins/file-tiff/file-tiff-load.c:1146
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Kunde inte skapa ny bild: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1072
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d-av-%d-sidor"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1217
+#: ../plug-ins/file-tiff/file-tiff-load.c:1311
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Okänd enhetstyp %d för upplösning, antar dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1227
+#: ../plug-ins/file-tiff/file-tiff-load.c:1321
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Varning: upplösning angiven utan enhetstyp, antar dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1235
+#: ../plug-ins/file-tiff/file-tiff-load.c:1329
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Varning: ingen y-upplösningsinfo, antar samma som x"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1294
+#: ../plug-ins/file-tiff/file-tiff-load.c:1391
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Kunde inte få färgkartor från ”%s”"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1367
+#: ../plug-ins/file-tiff/file-tiff-load.c:1536
 msgid "TIFF Channel"
 msgstr "TIFF-kanal"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1505
+#: ../plug-ins/file-tiff/file-tiff-load.c:1674
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "Inga data kunde läsas från TIFF ”%s”. Filen är troligen skadad."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1576
+#: ../plug-ins/file-tiff/file-tiff-load.c:1745
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Bildformatet stöds inte, ingen RGBA-inläsare tillgänglig"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1888
-#: ../plug-ins/file-tiff/file-tiff-load.c:2085
+#: ../plug-ins/file-tiff/file-tiff-load.c:2057
+#: ../plug-ins/file-tiff/file-tiff-load.c:2254
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Läsning av platta misslyckades. Bilden kan vara skadad på rad %d."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1897
-#: ../plug-ins/file-tiff/file-tiff-load.c:2094
+#: ../plug-ins/file-tiff/file-tiff-load.c:2066
+#: ../plug-ins/file-tiff/file-tiff-load.c:2263
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Läsning av scanline misslyckades. Bilden kan vara skadad på rad %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2495
+#: ../plug-ins/file-tiff/file-tiff-load.c:2612
 msgid "Import from TIFF"
 msgstr "Importera från TIFF"
 
@@ -7632,23 +7636,23 @@ msgstr "Importera från TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2552
+#: ../plug-ins/file-tiff/file-tiff-load.c:2669
 msgid "_Keep empty space around imported layers"
 msgstr "_Behåll tomt utrymme runt importerade lager"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2569
+#: ../plug-ins/file-tiff/file-tiff-load.c:2686
 msgid "Process extra channel as:"
 msgstr "Bearbeta extra kanal som:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2572
+#: ../plug-ins/file-tiff/file-tiff-load.c:2689
 msgid "_Non-premultiplied alpha"
 msgstr "_Ej förmultiplicerad alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2573
+#: ../plug-ins/file-tiff/file-tiff-load.c:2690
 msgid "Pre_multiplied alpha"
 msgstr "För_multiplicerad alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2574
+#: ../plug-ins/file-tiff/file-tiff-load.c:2691
 msgid "Channe_l"
 msgstr "Kana_l"
 
