@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-09 14:35+0000\n"
-"PO-Revision-Date: 2022-06-09 23:11+0200\n"
+"POT-Creation-Date: 2022-06-09 21:13+0000\n"
+"PO-Revision-Date: 2022-06-09 23:15+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -6851,12 +6851,12 @@ msgid "Error reading frame. "
 msgstr "Napaka pri branju sličice. "
 
 #: ../plug-ins/file-fli/fli.c:323
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid frame size points past end of file!"
 msgstr "Neveljavne točke velikosti sličice prek konca datoteke!"
 
 #: ../plug-ins/file-fli/fli.c:353
-#, fuzzy, c-format
+#, c-format
 msgid "Invalid chunk size points past end of file!"
 msgstr "Neveljavne točke velikosti kosa prek konca datoteke!"
 
@@ -6881,9 +6881,8 @@ msgstr "Napaka pri branju palete. "
 #: ../plug-ins/file-fli/fli.c:685 ../plug-ins/file-fli/fli.c:789
 #: ../plug-ins/file-fli/fli.c:797 ../plug-ins/file-fli/fli.c:832
 #: ../plug-ins/file-fli/fli.c:842 ../plug-ins/file-fli/fli.c:862
-#, fuzzy
 msgid "Error writing color map. "
-msgstr "Napaka pri zapisovanju barvne palete. "
+msgstr "Napaka pri zapisovanju kataloga barv. "
 
 #: ../plug-ins/file-fli/fli.c:905
 msgid "Error writing black. "
