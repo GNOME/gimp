@@ -1146,29 +1146,7 @@ save_image (const gchar  *filename,
   /* get info about the current image */
   buffer = gimp_drawable_get_buffer (drawable_id);
 
-  switch (gimp_drawable_type (drawable_id))
-    {
-    case GIMP_RGB_IMAGE:
-      format = babl_format ("R'G'B' u8");
-      break;
-
-    case GIMP_RGBA_IMAGE:
-      format = babl_format ("R'G'B'A u8");
-      break;
-
-    case GIMP_GRAY_IMAGE:
-      format = babl_format ("Y' u8");
-      break;
-
-    case GIMP_GRAYA_IMAGE:
-      format = babl_format ("Y'A u8");
-      break;
-
-    case GIMP_INDEXED_IMAGE:
-    case GIMP_INDEXEDA_IMAGE:
-      format = gimp_drawable_get_format (drawable_id);
-      break;
-    }
+  format = gimp_drawable_get_format (drawable_id);
 
   n_components = babl_format_get_n_components (format);
   bpp          = babl_format_get_bytes_per_pixel (format);
