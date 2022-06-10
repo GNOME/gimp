@@ -849,6 +849,9 @@ win64-nightly:
     - cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
     - cp -fr ${GIMP_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
 
+    # Remove files for older GIMP
+    - rm -fr ${GIMP_DISTRIB}/lib/gimp/2.0/
+
     # Generate share/glib-2.0/schemas/gschemas.compiled
     - glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
 
