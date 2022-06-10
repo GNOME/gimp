@@ -7,14 +7,14 @@
 # Arpad Biro <biro arpad gmail>, 2004, 2007, 2008.
 # András Prim <gimme_at_primandras.hu>, 2012.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2008, 2012, 2016, 2018.
-# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2017, 2019, 2020, 2021.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2013, 2014, 2015, 2017, 2019, 2020, 2021, 2022.
 # Balázs Meskó <mesko.balazs at fsf dot hu>, 2017, 2018, 2019, 2020, 2021.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2021-02-07 11:05+0000\n"
-"PO-Revision-Date: 2021-02-14 01:16+0100\n"
+"POT-Creation-Date: 2022-06-10 13:05+0000\n"
+"PO-Revision-Date: 2022-06-11 00:46+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -24,11 +24,11 @@ msgstr ""
 "X-Generator: Lokalize 19.12.3\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../libgimp/gimpbrushselectbutton.c:177
+#: ../libgimp/gimpbrushselectbutton.c:178
 msgid "Brush Selection"
 msgstr "Ecset kiválasztása"
 
-#: ../libgimp/gimpbrushselectbutton.c:884
+#: ../libgimp/gimpbrushselectbutton.c:887
 #: ../libgimp/gimppatternselectbutton.c:674
 msgid "_Browse..."
 msgstr "_Tallózás…"
@@ -160,8 +160,6 @@ msgid "%s plug-in needs to crop the layers to the image bounds"
 msgstr "A(z) %s bővítmény szükséges a rétegek képkeretre történő vágásához"
 
 #: ../libgimp/gimpexport.c:482
-#| msgctxt "page-selector-target"
-#| msgid "Layers"
 msgid "Crop Layers"
 msgstr "Rétegek levágása"
 
@@ -174,7 +172,7 @@ msgid "Confirm Save"
 msgstr "Mentés megerősítése"
 
 #: ../libgimp/gimpexport.c:546 ../libgimp/gimpexport.c:628
-#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:204
+#: ../libgimp/gimpexport.c:1199 ../libgimp/gimpproceduredialog.c:303
 #: ../libgimpwidgets/gimpcolorbutton.c:553
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:173
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:183
@@ -197,7 +195,7 @@ msgid "_Ignore"
 msgstr "_Kihagyás"
 
 #: ../libgimp/gimpexport.c:629 ../libgimp/gimpexport.c:1200
-#: ../libgimp/gimpproceduredialog.c:176
+#: ../libgimp/gimpproceduredialog.c:275
 msgid "_Export"
 msgstr "_Exportálás"
 
@@ -250,11 +248,11 @@ msgstr "Betűkészlet kiválasztása"
 msgid "Gradient Selection"
 msgstr "Színátmenet kiválasztása"
 
-#: ../libgimp/gimpimagemetadata.c:239
+#: ../libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Háttér"
 
-#: ../libgimp/gimpimagemetadata-save.c:378 ../modules/controller-midi.c:426
+#: ../libgimp/gimpimagemetadata-save.c:654 ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -267,22 +265,22 @@ msgid "Pattern Selection"
 msgstr "Minta kiválasztása"
 
 #. procedure executed successfully
-#: ../libgimp/gimppdb.c:518
+#: ../libgimp/gimppdb.c:552
 msgid "success"
 msgstr "siker"
 
 #. procedure execution failed
-#: ../libgimp/gimppdb.c:522
+#: ../libgimp/gimppdb.c:556
 msgid "execution error"
 msgstr "végrehajtási hiba"
 
 #. procedure called incorrectly
-#: ../libgimp/gimppdb.c:526
+#: ../libgimp/gimppdb.c:560
 msgid "calling error"
 msgstr "hívási hiba"
 
 #. procedure execution cancelled
-#: ../libgimp/gimppdb.c:530
+#: ../libgimp/gimppdb.c:564
 msgid "cancelled"
 msgstr "megszakítva"
 
@@ -316,7 +314,7 @@ msgstr "típus alapján"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:369
-#: ../libgimp/gimpprocbrowserdialog.c:525 ../libgimpwidgets/gimpbrowser.c:168
+#: ../libgimp/gimpprocbrowserdialog.c:527 ../libgimpwidgets/gimpbrowser.c:168
 msgid "No matches"
 msgstr "Nincs találat"
 
@@ -356,30 +354,30 @@ msgstr "Keresés dátum alapján"
 msgid "Searching by type"
 msgstr "Keresés típus alapján"
 
-#: ../libgimp/gimpprocbrowserdialog.c:465
+#: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
 msgstr[0] "%d eljárás"
 msgstr[1] "%d eljárás"
 
-#: ../libgimp/gimpprocbrowserdialog.c:474
+#: ../libgimp/gimpprocbrowserdialog.c:476
 msgid "No matches for your query"
 msgstr "Nincs találat a lekérdezésre"
 
-#: ../libgimp/gimpprocbrowserdialog.c:478
+#: ../libgimp/gimpprocbrowserdialog.c:480
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
 msgstr[0] "%d eljárás felel meg a lekérdezésnek"
 msgstr[1] "%d eljárás felel meg a lekérdezésnek"
 
-#: ../libgimp/gimpprocedure.c:1828
+#: ../libgimp/gimpprocedure.c:1906
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "A(z) „%s” eljárás nem adott visszatérési értéket"
 
-#: ../libgimp/gimpprocedure.c:1920
+#: ../libgimp/gimpprocedure.c:1997
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -388,7 +386,7 @@ msgstr ""
 "A(z) „%s” eljárás helytelen típusú értéket adott vissza a(z) „%s” "
 "visszatérési értékben (#%d). A várt típus: %s, a kapott típus: %s."
 
-#: ../libgimp/gimpprocedure.c:1932
+#: ../libgimp/gimpprocedure.c:2009
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
@@ -397,7 +395,7 @@ msgstr ""
 "A(z) „%s” eljárás hibás értéktípussal lett meghívva ezen argumentumhoz: "
 "„%s” (#%d). A várt típus: %s, a kapott típus: %s."
 
-#: ../libgimp/gimpprocedure.c:1967
+#: ../libgimp/gimpprocedure.c:2044
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -406,7 +404,7 @@ msgstr ""
 "A(z) „%s” eljárás „%s” értéket adott vissza ezen visszatérési értékként: "
 "„%s” (#%d, típus: %s). Ez az érték kívül esik a tartományon."
 
-#: ../libgimp/gimpprocedure.c:1981
+#: ../libgimp/gimpprocedure.c:2058
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -415,14 +413,14 @@ msgstr ""
 "A(z) „%s” eljárás „%s” értékkel lett meghívva ezen argumentumhoz: „%s” (#%d, "
 "típus: %s). Ez az érték kívül esik a tartományon."
 
-#: ../libgimp/gimpprocedure.c:2031
+#: ../libgimp/gimpprocedure.c:2102
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "A(z) „%s” eljárás érvénytelen UTF-8 karakterláncot adott vissza a(z) „%s” "
 "argumentumhoz."
 
-#: ../libgimp/gimpprocedure.c:2041
+#: ../libgimp/gimpprocedure.c:2112
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -431,44 +429,43 @@ msgstr ""
 "A(z) „%s” eljárás érvénytelen UTF-8 karakterlánccal lett meghívva ezen "
 "argumentumhoz: „%s”."
 
-#: ../libgimp/gimpproceduredialog.c:174
+#: ../libgimp/gimpproceduredialog.c:273
 #: ../libgimpwidgets/gimpcolorprofilechooserdialog.c:184
 msgid "_Open"
 msgstr "Me_gnyitás"
 
-#: ../libgimp/gimpproceduredialog.c:178 ../libgimpwidgets/gimpcolorbutton.c:554
+#: ../libgimp/gimpproceduredialog.c:277 ../libgimpwidgets/gimpcolorbutton.c:554
 #: ../libgimpwidgets/gimpfileentry.c:467 ../libgimpwidgets/gimpquerybox.c:274
 #: ../libgimpwidgets/gimpquerybox.c:337 ../libgimpwidgets/gimpquerybox.c:403
 #: ../libgimpwidgets/gimpquerybox.c:479
 msgid "_OK"
 msgstr "_OK"
 
-#: ../libgimp/gimpproceduredialog.c:186 ../libgimpwidgets/gimpcolorbutton.c:552
+#: ../libgimp/gimpproceduredialog.c:285 ../libgimpwidgets/gimpcolorbutton.c:552
 msgid "_Reset"
 msgstr "_Visszaállítás"
 
-#: ../libgimp/gimpproceduredialog.c:238
+#: ../libgimp/gimpproceduredialog.c:337
 msgid "_Load Saved Settings"
 msgstr "Mentett beállítások _betöltése"
 
-#: ../libgimp/gimpproceduredialog.c:239
+#: ../libgimp/gimpproceduredialog.c:338
 msgid "Load settings saved with \"Save Settings\" button"
 msgstr "A „Beállítások mentése” gombbal elmentett beállítások betöltése"
 
-#: ../libgimp/gimpproceduredialog.c:251
-#| msgid "_Save Defaults"
+#: ../libgimp/gimpproceduredialog.c:350
 msgid "_Save Settings"
 msgstr "Beállítások _mentése"
 
-#: ../libgimp/gimpproceduredialog.c:252
+#: ../libgimp/gimpproceduredialog.c:351
 msgid "Store current settings for later reuse"
 msgstr "Jelenlegi beállítások eltárolása későbbi újrahasználathoz"
 
-#: ../libgimp/gimpproceduredialog.c:1226
+#: ../libgimp/gimpproceduredialog.c:1787
 msgid "Reset to _Initial Values"
 msgstr "Visszaállítás a _kezdeti értékekre"
 
-#: ../libgimp/gimpproceduredialog.c:1235
+#: ../libgimp/gimpproceduredialog.c:1796
 msgid "Reset to _Factory Defaults"
 msgstr "Visszaállítás a gyá_ri alapbeállításokra"
 
@@ -654,933 +651,935 @@ msgctxt "check-size"
 msgid "Large"
 msgstr "Nagy"
 
-#: ../libgimpbase/gimpbaseenums.c:235
+#: ../libgimpbase/gimpbaseenums.c:236
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Világos négyzetháló"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libgimpbase/gimpbaseenums.c:237
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Középszürke négyzetháló"
 
-#: ../libgimpbase/gimpbaseenums.c:237
+#: ../libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Sötét négyzetháló"
 
-#: ../libgimpbase/gimpbaseenums.c:238
+#: ../libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "White only"
 msgstr "Csak fehér"
 
-#: ../libgimpbase/gimpbaseenums.c:239
+#: ../libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Csak szürke"
 
-#: ../libgimpbase/gimpbaseenums.c:240
+#: ../libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Csak fekete"
 
-#: ../libgimpbase/gimpbaseenums.c:269
+#: ../libgimpbase/gimpbaseenums.c:242
+#| msgctxt "check-type"
+#| msgid "Mid-tone checks"
+msgctxt "check-type"
+msgid "Custom checks"
+msgstr "Egyéni négyzetháló"
+
+#: ../libgimpbase/gimpbaseenums.c:271
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Kép"
 
-#: ../libgimpbase/gimpbaseenums.c:270
+#: ../libgimpbase/gimpbaseenums.c:272
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Minta"
 
-#: ../libgimpbase/gimpbaseenums.c:306
+#: ../libgimpbase/gimpbaseenums.c:308
 msgctxt "color-tag"
 msgid "None"
 msgstr "Nincs"
 
-#: ../libgimpbase/gimpbaseenums.c:307
+#: ../libgimpbase/gimpbaseenums.c:309
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Kék"
 
-#: ../libgimpbase/gimpbaseenums.c:308
+#: ../libgimpbase/gimpbaseenums.c:310
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Zöld"
 
-#: ../libgimpbase/gimpbaseenums.c:309
+#: ../libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Sárga"
 
-#: ../libgimpbase/gimpbaseenums.c:310
+#: ../libgimpbase/gimpbaseenums.c:312
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Narancs"
 
-#: ../libgimpbase/gimpbaseenums.c:311
+#: ../libgimpbase/gimpbaseenums.c:313
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Barna"
 
-#: ../libgimpbase/gimpbaseenums.c:312
+#: ../libgimpbase/gimpbaseenums.c:314
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Vörös"
 
-#: ../libgimpbase/gimpbaseenums.c:313
+#: ../libgimpbase/gimpbaseenums.c:315
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Ibolya"
 
-#: ../libgimpbase/gimpbaseenums.c:314
+#: ../libgimpbase/gimpbaseenums.c:316
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Szürke"
 
-#: ../libgimpbase/gimpbaseenums.c:347
+#: ../libgimpbase/gimpbaseenums.c:349
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8-bites egész"
 
-#: ../libgimpbase/gimpbaseenums.c:348
+#: ../libgimpbase/gimpbaseenums.c:350
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16-bites egész"
 
-#: ../libgimpbase/gimpbaseenums.c:349
+#: ../libgimpbase/gimpbaseenums.c:351
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32-bites egész"
 
-#: ../libgimpbase/gimpbaseenums.c:350
+#: ../libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16-bites lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:351
+#: ../libgimpbase/gimpbaseenums.c:353
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32-bites lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:352
+#: ../libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64-bites lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:383
+#: ../libgimpbase/gimpbaseenums.c:385
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Optimális paletta előállítása"
 
-#: ../libgimpbase/gimpbaseenums.c:384
+#: ../libgimpbase/gimpbaseenums.c:386
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Webre optimalizált paletta használata"
 
-#: ../libgimpbase/gimpbaseenums.c:385
+#: ../libgimpbase/gimpbaseenums.c:387
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Fekete-fehér (1 bites) paletta használata"
 
-#: ../libgimpbase/gimpbaseenums.c:386
+#: ../libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Egyéni paletta használata"
 
-#: ../libgimpbase/gimpbaseenums.c:415
+#: ../libgimpbase/gimpbaseenums.c:417
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Elmosás"
 
-#: ../libgimpbase/gimpbaseenums.c:416
+#: ../libgimpbase/gimpbaseenums.c:418
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Élesítés"
 
-#: ../libgimpbase/gimpbaseenums.c:448
+#: ../libgimpbase/gimpbaseenums.c:450
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Fényesség (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:449
+#: ../libgimpbase/gimpbaseenums.c:451
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Luma"
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: ../libgimpbase/gimpbaseenums.c:452
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Átlag (HSI intenzitás)"
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: ../libgimpbase/gimpbaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Fénysűrűség"
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: ../libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Érték (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:481
+#: ../libgimpbase/gimpbaseenums.c:483
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Fakítás"
 
-#: ../libgimpbase/gimpbaseenums.c:482
+#: ../libgimpbase/gimpbaseenums.c:484
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Sötétítés"
 
-#: ../libgimpbase/gimpbaseenums.c:514
+#: ../libgimpbase/gimpbaseenums.c:516
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Előtérszín"
 
-#: ../libgimpbase/gimpbaseenums.c:515
+#: ../libgimpbase/gimpbaseenums.c:517
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Háttérszín"
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: ../libgimpbase/gimpbaseenums.c:518
 msgctxt "fill-type"
 msgid "White"
 msgstr "Fehér"
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: ../libgimpbase/gimpbaseenums.c:519
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Átlátszóság"
 
-#: ../libgimpbase/gimpbaseenums.c:518
+#: ../libgimpbase/gimpbaseenums.c:520
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Minta"
 
-#: ../libgimpbase/gimpbaseenums.c:576
+#: ../libgimpbase/gimpbaseenums.c:578
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Észlelési RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:577
+#: ../libgimpbase/gimpbaseenums.c:579
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Lineáris RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:578
+#: ../libgimpbase/gimpbaseenums.c:580
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "CIE Lab"
 
-#: ../libgimpbase/gimpbaseenums.c:608
+#: ../libgimpbase/gimpbaseenums.c:610
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:609
+#: ../libgimpbase/gimpbaseenums.c:611
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (árnyalat óramutató ellen)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:612
+#: ../libgimpbase/gimpbaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (ó. e.)"
 
-#: ../libgimpbase/gimpbaseenums.c:613
+#: ../libgimpbase/gimpbaseenums.c:615
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (árnyalat óramutató szerint)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:616
+#: ../libgimpbase/gimpbaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (ó. sz.)"
 
-#: ../libgimpbase/gimpbaseenums.c:649
+#: ../libgimpbase/gimpbaseenums.c:651
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Lineáris"
 
-#: ../libgimpbase/gimpbaseenums.c:650
+#: ../libgimpbase/gimpbaseenums.c:652
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "Görbe"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:653
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "Szinuszos"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:654
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "Gömbszerű (növekvő)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:655
+#: ../libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Gömbszerű (növ.)"
 
-#: ../libgimpbase/gimpbaseenums.c:656
+#: ../libgimpbase/gimpbaseenums.c:658
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "Gömbszerű (csökkenő)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:659
+#: ../libgimpbase/gimpbaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Gömbszerű (csökk.)"
 
-#: ../libgimpbase/gimpbaseenums.c:660
+#: ../libgimpbase/gimpbaseenums.c:662
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Lépés"
 
-#: ../libgimpbase/gimpbaseenums.c:698
+#: ../libgimpbase/gimpbaseenums.c:700
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Lineáris"
 
-#: ../libgimpbase/gimpbaseenums.c:699
+#: ../libgimpbase/gimpbaseenums.c:701
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Bilineáris"
 
-#: ../libgimpbase/gimpbaseenums.c:700
+#: ../libgimpbase/gimpbaseenums.c:702
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Sugaras"
 
-#: ../libgimpbase/gimpbaseenums.c:701
+#: ../libgimpbase/gimpbaseenums.c:703
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Négyzet"
 
-#: ../libgimpbase/gimpbaseenums.c:702
+#: ../libgimpbase/gimpbaseenums.c:704
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Kúpos (szimmetrikus)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:705
+#: ../libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Kúpos (szimm.)"
 
-#: ../libgimpbase/gimpbaseenums.c:706
+#: ../libgimpbase/gimpbaseenums.c:708
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Kúpos (aszimmetrikus)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:709
+#: ../libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Kúpos (aszimm.)"
 
-#: ../libgimpbase/gimpbaseenums.c:710
+#: ../libgimpbase/gimpbaseenums.c:712
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Formázott (szögletes)"
 
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:713
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Formázott (gömbölyű)"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libgimpbase/gimpbaseenums.c:714
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Formázott (gödrös)"
 
-#: ../libgimpbase/gimpbaseenums.c:713
+#: ../libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Spirál (óramutató szerint)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:716
+#: ../libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Spirál (ó. sz.)"
 
-#: ../libgimpbase/gimpbaseenums.c:717
+#: ../libgimpbase/gimpbaseenums.c:719
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Spirál (óramutató ellen)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:720
+#: ../libgimpbase/gimpbaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Spirál (ó. e.)"
 
-#: ../libgimpbase/gimpbaseenums.c:752
+#: ../libgimpbase/gimpbaseenums.c:754
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Metszéspontok (pontok)"
 
-#: ../libgimpbase/gimpbaseenums.c:753
+#: ../libgimpbase/gimpbaseenums.c:755
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Metszéspontok (keresztek)"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libgimpbase/gimpbaseenums.c:756
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Szaggatott"
 
-#: ../libgimpbase/gimpbaseenums.c:755
+#: ../libgimpbase/gimpbaseenums.c:757
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Dupla szaggatott"
 
-#: ../libgimpbase/gimpbaseenums.c:756
+#: ../libgimpbase/gimpbaseenums.c:758
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Egyenletes"
 
-#: ../libgimpbase/gimpbaseenums.c:826
+#: ../libgimpbase/gimpbaseenums.c:828
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Ikonnév"
 
-#: ../libgimpbase/gimpbaseenums.c:827
+#: ../libgimpbase/gimpbaseenums.c:829
 msgctxt "icon-type"
 msgid "Pixbuf"
 msgstr "Pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:828
+#: ../libgimpbase/gimpbaseenums.c:830
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Képfájl"
 
-#: ../libgimpbase/gimpbaseenums.c:858
+#: ../libgimpbase/gimpbaseenums.c:860
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "RGB szín"
 
-#: ../libgimpbase/gimpbaseenums.c:859
+#: ../libgimpbase/gimpbaseenums.c:861
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Szürkeárnyalatos"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: ../libgimpbase/gimpbaseenums.c:862
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Indexelt szín"
 
-#: ../libgimpbase/gimpbaseenums.c:893
+#: ../libgimpbase/gimpbaseenums.c:895
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:894
+#: ../libgimpbase/gimpbaseenums.c:896
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: ../libgimpbase/gimpbaseenums.c:897
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Szürkeárnyalatos"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: ../libgimpbase/gimpbaseenums.c:898
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Szürkeárnyalatos-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:897
+#: ../libgimpbase/gimpbaseenums.c:899
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Indexelt"
 
-#: ../libgimpbase/gimpbaseenums.c:898
+#: ../libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Indexelt-alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:928
+#: ../libgimpbase/gimpbaseenums.c:930
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Kör"
 
-#: ../libgimpbase/gimpbaseenums.c:929
+#: ../libgimpbase/gimpbaseenums.c:931
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Négyzet"
 
-#: ../libgimpbase/gimpbaseenums.c:930
+#: ../libgimpbase/gimpbaseenums.c:932
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Gyémánt"
 
-#: ../libgimpbase/gimpbaseenums.c:962
+#: ../libgimpbase/gimpbaseenums.c:964
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Nincs"
 
-#: ../libgimpbase/gimpbaseenums.c:963
+#: ../libgimpbase/gimpbaseenums.c:965
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Lineáris"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: ../libgimpbase/gimpbaseenums.c:966
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Köbös"
 
-#: ../libgimpbase/gimpbaseenums.c:965
+#: ../libgimpbase/gimpbaseenums.c:967
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "NoHalo"
 
-#: ../libgimpbase/gimpbaseenums.c:966
+#: ../libgimpbase/gimpbaseenums.c:968
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "LoHalo"
 
-#: ../libgimpbase/gimpbaseenums.c:996
+#: ../libgimpbase/gimpbaseenums.c:998
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Gérvágás"
 
-#: ../libgimpbase/gimpbaseenums.c:997
+#: ../libgimpbase/gimpbaseenums.c:999
 msgctxt "join-style"
 msgid "Round"
 msgstr "Kerekítés"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: ../libgimpbase/gimpbaseenums.c:1000
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "Ferde vágás"
 
-#: ../libgimpbase/gimpbaseenums.c:1059
+#: ../libgimpbase/gimpbaseenums.c:1061
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Szükség szerint bővítve"
 
-#: ../libgimpbase/gimpbaseenums.c:1060
+#: ../libgimpbase/gimpbaseenums.c:1062
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "A képre illesztve"
 
-#: ../libgimpbase/gimpbaseenums.c:1061
+#: ../libgimpbase/gimpbaseenums.c:1063
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "A legalsó rétegre illesztve"
 
-#: ../libgimpbase/gimpbaseenums.c:1062
+#: ../libgimpbase/gimpbaseenums.c:1064
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Lapítás"
 
-#: ../libgimpbase/gimpbaseenums.c:1156
+#: ../libgimpbase/gimpbaseenums.c:1158
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "Vízszintes"
 
-#: ../libgimpbase/gimpbaseenums.c:1157
+#: ../libgimpbase/gimpbaseenums.c:1159
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "Függőleges"
 
-#: ../libgimpbase/gimpbaseenums.c:1158
+#: ../libgimpbase/gimpbaseenums.c:1160
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Ismeretlen"
 
-#: ../libgimpbase/gimpbaseenums.c:1187
+#: ../libgimpbase/gimpbaseenums.c:1189
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Állandó"
 
-#: ../libgimpbase/gimpbaseenums.c:1188
+#: ../libgimpbase/gimpbaseenums.c:1190
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Összeadódó"
 
-#: ../libgimpbase/gimpbaseenums.c:1249
+#: ../libgimpbase/gimpbaseenums.c:1251
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Belső GIMP-eljárás"
 
-#: ../libgimpbase/gimpbaseenums.c:1250
+#: ../libgimpbase/gimpbaseenums.c:1252
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "GIMP-bővítmény"
 
-#: ../libgimpbase/gimpbaseenums.c:1251
+#: ../libgimpbase/gimpbaseenums.c:1253
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "GIMP-kiterjesztés"
 
-#: ../libgimpbase/gimpbaseenums.c:1252
+#: ../libgimpbase/gimpbaseenums.c:1254
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Ideiglenes eljárás"
 
-#: ../libgimpbase/gimpbaseenums.c:1339
+#: ../libgimpbase/gimpbaseenums.c:1341
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8 bites lineáris egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1340
+#: ../libgimpbase/gimpbaseenums.c:1342
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "8 bites nemlineáris egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1341
+#: ../libgimpbase/gimpbaseenums.c:1343
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "8 bites észlelési egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1342
+#: ../libgimpbase/gimpbaseenums.c:1344
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16 bites lineáris egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1343
+#: ../libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "16 bites nemlineáris egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1344
+#: ../libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "16 bites észlelési egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1345
+#: ../libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32 bites lineáris egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1346
+#: ../libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "32 bites nemlineáris egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1347
+#: ../libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "32 bites észlelési egész"
 
-#: ../libgimpbase/gimpbaseenums.c:1348
+#: ../libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16 bites lineáris lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1349
+#: ../libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "16 bites nemlineáris lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1350
+#: ../libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "16 bites észlelési lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1351
+#: ../libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32 bites lineáris lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1352
+#: ../libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "32 bites nemlineáris lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1353
+#: ../libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "32 bites észlelési lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1354
+#: ../libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64 bites lineáris lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1355
+#: ../libgimpbase/gimpbaseenums.c:1357
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "64 bites nemlineáris lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1356
+#: ../libgimpbase/gimpbaseenums.c:1358
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "64 bites észlelési lebegőpontos"
 
-#: ../libgimpbase/gimpbaseenums.c:1431
+#: ../libgimpbase/gimpbaseenums.c:1469
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Nincs (kiterjeszt)"
 
-#: ../libgimpbase/gimpbaseenums.c:1432
+#: ../libgimpbase/gimpbaseenums.c:1470
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Fűrészhullám"
 
-#: ../libgimpbase/gimpbaseenums.c:1433
+#: ../libgimpbase/gimpbaseenums.c:1471
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Háromszöghullám"
 
-#: ../libgimpbase/gimpbaseenums.c:1434
+#: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Csonkítás"
 
-#: ../libgimpbase/gimpbaseenums.c:1496
+#: ../libgimpbase/gimpbaseenums.c:1534
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Interaktív működés"
 
-#: ../libgimpbase/gimpbaseenums.c:1497
+#: ../libgimpbase/gimpbaseenums.c:1535
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Nem interaktív működés"
 
-#: ../libgimpbase/gimpbaseenums.c:1498
+#: ../libgimpbase/gimpbaseenums.c:1536
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Végrehajtás a legutóbb használt értékekkel"
 
-#: ../libgimpbase/gimpbaseenums.c:1536
+#: ../libgimpbase/gimpbaseenums.c:1574
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Összesített"
 
-#: ../libgimpbase/gimpbaseenums.c:1537
+#: ../libgimpbase/gimpbaseenums.c:1575
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Vörös"
 
-#: ../libgimpbase/gimpbaseenums.c:1538
+#: ../libgimpbase/gimpbaseenums.c:1576
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Zöld"
 
-#: ../libgimpbase/gimpbaseenums.c:1539
+#: ../libgimpbase/gimpbaseenums.c:1577
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Kék"
 
-#: ../libgimpbase/gimpbaseenums.c:1540
+#: ../libgimpbase/gimpbaseenums.c:1578
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "HSV árnyalat"
 
-#: ../libgimpbase/gimpbaseenums.c:1541
+#: ../libgimpbase/gimpbaseenums.c:1579
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "HSV telítettség"
 
-#: ../libgimpbase/gimpbaseenums.c:1542
+#: ../libgimpbase/gimpbaseenums.c:1580
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "HSV érték"
 
-#: ../libgimpbase/gimpbaseenums.c:1543
+#: ../libgimpbase/gimpbaseenums.c:1581
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "LCh fényesség"
 
-#: ../libgimpbase/gimpbaseenums.c:1544
+#: ../libgimpbase/gimpbaseenums.c:1582
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "LCh színesség"
 
-#: ../libgimpbase/gimpbaseenums.c:1545
+#: ../libgimpbase/gimpbaseenums.c:1583
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "LCh árnyalat"
 
-#: ../libgimpbase/gimpbaseenums.c:1546
+#: ../libgimpbase/gimpbaseenums.c:1584
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../libgimpbase/gimpbaseenums.c:1575
+#: ../libgimpbase/gimpbaseenums.c:1613
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Képpont"
 
-#: ../libgimpbase/gimpbaseenums.c:1576
+#: ../libgimpbase/gimpbaseenums.c:1614
 msgctxt "size-type"
 msgid "Points"
 msgstr "Pont"
 
-#: ../libgimpbase/gimpbaseenums.c:1637
+#: ../libgimpbase/gimpbaseenums.c:1675
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Körberajzolás"
 
-#: ../libgimpbase/gimpbaseenums.c:1638
+#: ../libgimpbase/gimpbaseenums.c:1676
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Körberajzolás a festék eszközzel"
 
-#: ../libgimpbase/gimpbaseenums.c:1671
+#: ../libgimpbase/gimpbaseenums.c:1709
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Balról jobbra"
 
-#: ../libgimpbase/gimpbaseenums.c:1672
+#: ../libgimpbase/gimpbaseenums.c:1710
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Jobbról balra"
 
-#: ../libgimpbase/gimpbaseenums.c:1673
+#: ../libgimpbase/gimpbaseenums.c:1711
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "Függőleges, jobbról balra (vegyes tájolás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1674
+#: ../libgimpbase/gimpbaseenums.c:1712
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "Függőleges, jobbról balra (függőleges tájolás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1675
+#: ../libgimpbase/gimpbaseenums.c:1713
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "Függőleges, balról jobbra (vegyes tájolás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1676
+#: ../libgimpbase/gimpbaseenums.c:1714
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "Függőleges, balról jobbra (függőleges tájolás)"
 
-#: ../libgimpbase/gimpbaseenums.c:1707
+#: ../libgimpbase/gimpbaseenums.c:1745
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Nincs"
 
-#: ../libgimpbase/gimpbaseenums.c:1708
+#: ../libgimpbase/gimpbaseenums.c:1746
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Enyhe"
 
-#: ../libgimpbase/gimpbaseenums.c:1709
+#: ../libgimpbase/gimpbaseenums.c:1747
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Közepes"
 
-#: ../libgimpbase/gimpbaseenums.c:1710
+#: ../libgimpbase/gimpbaseenums.c:1748
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Teljes"
 
-#: ../libgimpbase/gimpbaseenums.c:1741
+#: ../libgimpbase/gimpbaseenums.c:1779
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Balra igazított"
 
-#: ../libgimpbase/gimpbaseenums.c:1742
+#: ../libgimpbase/gimpbaseenums.c:1780
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Jobbra igazított"
 
-#: ../libgimpbase/gimpbaseenums.c:1743
+#: ../libgimpbase/gimpbaseenums.c:1781
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Középre igazított"
 
-#: ../libgimpbase/gimpbaseenums.c:1744
+#: ../libgimpbase/gimpbaseenums.c:1782
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Sorkizárt"
 
-#: ../libgimpbase/gimpbaseenums.c:1774
+#: ../libgimpbase/gimpbaseenums.c:1812
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Árnyékok"
 
-#: ../libgimpbase/gimpbaseenums.c:1775
+#: ../libgimpbase/gimpbaseenums.c:1813
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Középszínek"
 
-#: ../libgimpbase/gimpbaseenums.c:1776
+#: ../libgimpbase/gimpbaseenums.c:1814
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Fényes színek"
 
-#: ../libgimpbase/gimpbaseenums.c:1805
+#: ../libgimpbase/gimpbaseenums.c:1843
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Normál (előre)"
 
-#: ../libgimpbase/gimpbaseenums.c:1806
+#: ../libgimpbase/gimpbaseenums.c:1844
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Javítási (hátra)"
 
-#: ../libgimpbase/gimpbaseenums.c:1837
+#: ../libgimpbase/gimpbaseenums.c:1875
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "Igazítás"
 
-#: ../libgimpbase/gimpbaseenums.c:1838
+#: ../libgimpbase/gimpbaseenums.c:1876
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Vágás"
 
-#: ../libgimpbase/gimpbaseenums.c:1839
+#: ../libgimpbase/gimpbaseenums.c:1877
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "Vágás az eredményre"
 
-#: ../libgimpbase/gimpbaseenums.c:1840
+#: ../libgimpbase/gimpbaseenums.c:1878
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Vágás méretarányosan"
 
-#: ../libgimpbase/gimpmetadata.c:907
+#: ../libgimpbase/gimpmetadata.c:1072
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metaadatok betöltése csak helyi fájlokból lehetséges"
 
-#: ../libgimpbase/gimpmetadata.c:921 ../libgimpbase/gimpmetadata.c:991
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr "A fájlnév átalakítása a rendszer kódlapjára meghiúsult."
-
-#: ../libgimpbase/gimpmetadata.c:978
+#: ../libgimpbase/gimpmetadata.c:1128
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metaadatok mentése csak helyi fájlokba lehetséges"
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1176
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Érvénytelen Exif adatméret."
 
-#: ../libgimpbase/gimpmetadata.c:1069
+#: ../libgimpbase/gimpmetadata.c:1205
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Az Exif adatok feldolgozása nem sikerült."
 
-#: ../libgimpbase/gimpmetadata.c:1119
+#: ../libgimpbase/gimpmetadata.c:1255
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Az IPTC adatok feldolgozása nem sikerült."
 
-#: ../libgimpbase/gimpmetadata.c:1167
+#: ../libgimpbase/gimpmetadata.c:1303
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Az XMP adatok feldolgozása nem sikerült."
@@ -1728,10 +1727,6 @@ msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Az RGB és a CMYK közti átalakításhoz használt CMYK színprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:74
-#| msgid ""
-#| "The color profile to use for soft-proofing from your image's color space "
-#| "to some other color space, including soft-proofing to a printer or other "
-#| "output device profile. "
 msgid ""
 "The color profile to use for soft-proofing from your image's color space to "
 "some other color space, including soft-proofing to a printer or other output "
@@ -1766,10 +1761,6 @@ msgstr ""
 "kárára."
 
 #: ../libgimpconfig/gimpcolorconfig.c:94
-#| msgid ""
-#| "How colors are converted from your image's color space to the output "
-#| "simulation device (usually your monitor). Try them all and choose what "
-#| "looks the best. "
 msgid ""
 "How colors are converted from your image's color space to the output "
 "simulation device (usually your monitor). Try them all and choose what looks "
@@ -1780,8 +1771,6 @@ msgstr ""
 "amelyik a legjobban néz ki."
 
 #: ../libgimpconfig/gimpcolorconfig.c:99
-#| msgid ""
-#| "Try with and without black point compensation and choose what looks best. "
 msgid ""
 "Try with and without black point compensation and choose what looks best."
 msgstr ""
@@ -1885,36 +1874,36 @@ msgstr "A(z) „%s” színprofil nem szürkeárnyalatos színtérhez való."
 msgid "Color profile '%s' is not for CMYK color space."
 msgstr "A(z) „%s” színprofil nem CMYK színtérhez való."
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:113
+#: ../libgimpconfig/gimpconfig-deserialize.c:116
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s kifejezés értéke nem egy érvényes UTF-8 szöveg"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:473
+#: ../libgimpconfig/gimpconfig-deserialize.c:480
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "csak „yes” vagy „no” érték szerepelhetne %s logikai kifejezésben, de „%s” "
 "szerepel"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:588
+#: ../libgimpconfig/gimpconfig-deserialize.c:595
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "érvénytelen érték („%s”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:603
+#: ../libgimpconfig/gimpconfig-deserialize.c:610
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "érvénytelen érték („%ld”) %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:672
+#: ../libgimpconfig/gimpconfig-deserialize.c:679
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "„%s” kifejezés elemzése közben: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:666
-#: ../libgimpconfig/gimpconfig-iface.c:679 ../libgimpconfig/gimpscanner.c:774
+#: ../libgimpconfig/gimpconfig-iface.c:664
+#: ../libgimpconfig/gimpconfig-iface.c:677 ../libgimpconfig/gimpscanner.c:774
 #: ../libgimpconfig/gimpscanner.c:856
 #: ../libgimpwidgets/gimpcolorprofilestore.c:682
 msgid "fatal parse error"
@@ -2006,12 +1995,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "A(z) „%s” bélyegképmappa létrehozása sikertelen."
 
-#: ../libgimpthumb/gimpthumbnail.c:479
+#: ../libgimpthumb/gimpthumbnail.c:481
 #, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "A bélyegkép nem tartalmaz „Thumb::URI” címkét"
 
-#: ../libgimpthumb/gimpthumbnail.c:876
+#: ../libgimpthumb/gimpthumbnail.c:878
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nem sikerült létrehozni bélyegképet ehhez: %s: %s"
@@ -2102,15 +2091,15 @@ msgstr "LCh"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpcolorselection.c:249
+#: ../libgimpwidgets/gimpcolorselection.c:247
 msgid "Current:"
 msgstr "Jelenlegi:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:258
+#: ../libgimpwidgets/gimpcolorselection.c:256
 msgid "Old:"
 msgstr "Régi:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:345
+#: ../libgimpwidgets/gimpcolorselection.c:343
 msgid "HTML _notation:"
 msgstr "H_TML-jelölés:"
 
@@ -2159,17 +2148,14 @@ msgid "(Empty)"
 msgstr "(Üres)"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:252
-#| msgid "Kilobytes"
 msgid "Kibibyte"
 msgstr "Kibibájt"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:253
-#| msgid "Megabytes"
 msgid "Mebibyte"
 msgstr "Mebibájt"
 
 #: ../libgimpwidgets/gimpmemsizeentry.c:254
-#| msgid "Gigabytes"
 msgid "Gibibyte"
 msgstr "Gibibájt"
 
@@ -2229,7 +2215,7 @@ msgstr "Kiválasztott mappa eltávolítása a listából"
 msgid "Writable"
 msgstr "Írható"
 
-#: ../libgimpwidgets/gimppickbutton.c:115
+#: ../libgimpwidgets/gimppickbutton.c:116
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2238,19 +2224,27 @@ msgstr ""
 "kívánt képernyőpontra."
 
 #. toggle button to (de)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:282
+#: ../libgimpwidgets/gimppreview.c:288
 msgid "_Preview"
 msgstr "Előké_p"
 
-#: ../libgimpwidgets/gimppreviewarea.c:134
+#: ../libgimpwidgets/gimppreviewarea.c:146
 msgid "Check Size"
 msgstr "Négyzetek mérete"
 
-#: ../libgimpwidgets/gimppreviewarea.c:142
+#: ../libgimpwidgets/gimppreviewarea.c:154
 msgid "Check Style"
 msgstr "Négyzetek stílusa"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2199
+#: ../libgimpwidgets/gimppreviewarea.c:162
+msgid "Custom Checks Color 1"
+msgstr "Egyéni négyzetháló 1. színe"
+
+#: ../libgimpwidgets/gimppreviewarea.c:169
+msgid "Custom Checks Color 2"
+msgstr "Egyéni négyzetháló 2. színe"
+
+#: ../libgimpwidgets/gimppropwidgets.c:2533
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2998,34 +2992,3 @@ msgstr "Kontrasztciklusok"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontraszt"
-
-#~ msgid "Rotate %s?"
-#~ msgstr "%s forgatása?"
-
-#~ msgid "_Keep Original"
-#~ msgstr "_Eredeti megtartása"
-
-#~ msgid "_Rotate"
-#~ msgstr "_Forgatás"
-
-#~ msgid "Original"
-#~ msgstr "Eredeti"
-
-#~ msgid "Rotated"
-#~ msgstr "Elforgatott"
-
-#~ msgid "This image contains Exif orientation metadata."
-#~ msgstr "Ez a kép Exif tájolási metaadatokat tartalmaz."
-
-#~ msgid "Would you like to rotate the image?"
-#~ msgstr "El szeretné forgatni a képet?"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "A jövőben _ne kérdezze meg"
-
-#~ msgid "GIMP 2.10"
-#~ msgstr "GIMP 2.10"
-
-#~| msgid "Load failed"
-#~ msgid "_Load Defaults"
-#~ msgstr "Alapértelmezések _betöltése"
