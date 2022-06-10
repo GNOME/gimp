@@ -1329,7 +1329,7 @@ register_paint_tools_procs (GimpPDB *pdb)
                                                   "hardness",
                                                   "How to apply the brush",
                                                   GIMP_TYPE_BRUSH_APPLICATION_MODE,
-                                                  GIMP_BRUSH_HARD,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("method",

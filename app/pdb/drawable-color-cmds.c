@@ -887,7 +887,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "channel",
                                                   "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                  GIMP_HISTOGRAM_VALUE,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-values",
@@ -928,7 +928,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "channel",
                                                   "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                  GIMP_HISTOGRAM_VALUE,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_int ("num-points",
@@ -1028,7 +1028,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "channel",
                                                   "The channel to query",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                  GIMP_HISTOGRAM_VALUE,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("start-range",
@@ -1189,7 +1189,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "channel",
                                                   "The channel to modify",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                  GIMP_HISTOGRAM_VALUE,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("low-input",
@@ -1313,7 +1313,7 @@ register_drawable_color_procs (GimpPDB *pdb)
                                                   "channel",
                                                   "The channel to base the threshold on",
                                                   GIMP_TYPE_HISTOGRAM_CHANNEL,
-                                                  GIMP_HISTOGRAM_VALUE,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("low-threshold",

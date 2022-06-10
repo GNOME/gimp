@@ -338,7 +338,7 @@ register_image_convert_procs (GimpPDB *pdb)
                                                   "dither type",
                                                   "The dither type to use",
                                                   GIMP_TYPE_CONVERT_DITHER_TYPE,
-                                                  GIMP_CONVERT_DITHER_NONE,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("palette-type",

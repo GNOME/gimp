@@ -2219,7 +2219,7 @@ register_layer_procs (GimpPDB *pdb)
                                                       "blend space",
                                                       "The layer blend space",
                                                       GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                      ,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2249,7 +2249,7 @@ register_layer_procs (GimpPDB *pdb)
                                                   "blend space",
                                                   "The new layer blend space",
                                                   GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2279,7 +2279,7 @@ register_layer_procs (GimpPDB *pdb)
                                                       "composite space",
                                                       "The layer composite space",
                                                       GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                      GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                      ,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2309,7 +2309,7 @@ register_layer_procs (GimpPDB *pdb)
                                                   "composite space",
                                                   "The new layer composite space",
                                                   GIMP_TYPE_LAYER_COLOR_SPACE,
-                                                  GIMP_LAYER_COLOR_SPACE_AUTO,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2339,7 +2339,7 @@ register_layer_procs (GimpPDB *pdb)
                                                       "composite mode",
                                                       "The layer composite mode",
                                                       GIMP_TYPE_LAYER_COMPOSITE_MODE,
-                                                      GIMP_LAYER_COMPOSITE_AUTO,
+                                                      ,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2369,7 +2369,7 @@ register_layer_procs (GimpPDB *pdb)
                                                   "composite mode",
                                                   "The new layer composite mode",
                                                   GIMP_TYPE_LAYER_COMPOSITE_MODE,
-                                                  GIMP_LAYER_COMPOSITE_AUTO,
+                                                  ,
                                                   GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
