@@ -195,6 +195,7 @@ static gboolean         load_dialog          (GFile                *file,
                                               gboolean              is_hgt);
 static gboolean         save_dialog          (GimpImage            *image,
                                               GimpProcedure        *procedure,
+                                              gboolean              has_alpha,
                                               GObject              *config);
 static void             palette_callback     (GtkFileChooser       *button,
                                               GimpPreviewArea      *preview);
@@ -610,7 +611,9 @@ raw_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! save_dialog (image, procedure, G_OBJECT (config)))
+      if (! save_dialog (image, procedure,
+                         gimp_drawable_has_alpha (drawables[0]),
+                         G_OBJECT (config)))
         status = GIMP_PDB_CANCEL;
     }
 
@@ -1991,24 +1994,79 @@ load_dialog (GFile    *file,
 static gboolean
 save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
+             gboolean       has_alpha,
              GObject       *config)
 {
   GtkWidget    *dialog;
   GtkListStore *store;
+  const gchar  *contiguous_sample = NULL;
+  const gchar  *planar_sample = NULL;
+  gchar        *contiguous_label;
+  gchar        *planar_label;
   gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
+
+  switch (gimp_image_get_base_type (image))
+    {
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      if (has_alpha)
+        {
+          contiguous_sample = "RGBA,RGBA,RGBA";
+          planar_sample     = "RRR,GGG,BBB,AAA";
+        }
+      else
+        {
+          contiguous_sample = "RGB,RGB,RGB";
+          planar_sample     = "RRR,GGG,BBB";
+        }
+      break;
+    case GIMP_GRAY:
+      if (has_alpha)
+        {
+          contiguous_sample = "YA,YA,YA";
+          planar_sample     = "YYY,AAA";
+        }
+      break;
+    default:
+      break;
+    }
+
+  if (contiguous_sample)
+    /* TRANSLATORS: %s is a sample to describe the planar configuration
+     * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
+     */
+    contiguous_label = g_strdup_printf (_("_Contiguous (%s)"), contiguous_sample);
+  else
+    contiguous_label = g_strdup (_("_Contiguous"));
+
+  if (planar_sample)
+    /* TRANSLATORS: %s is a sample to describe the planar configuration
+     * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
+     */
+    planar_label = g_strdup_printf (_("_Planar (%s)"), planar_sample);
+  else
+    planar_label = g_strdup (_("_Planar"));
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
                                            GIMP_PROCEDURE_CONFIG (config),
                                            image);
 
   /* Image type combo */
-  store = gimp_int_store_new (_("_Contiguous (RGB,RGB,RGB)"), RAW_RGB,
-                              _("_Planar (RRR,GGG,BBB)"),     RAW_PLANAR,
+  store = gimp_int_store_new (contiguous_label, RAW_RGB,
+                              planar_label,     RAW_PLANAR,
                               NULL);
   gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
                                        "image-type", GIMP_INT_STORE (store));
+
+  /* No need to give a choice for 1-channel cases where both contiguous
+   * and planar are the same.
+   */
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "image-type",
+                                       contiguous_sample != NULL,
+                                       NULL, NULL, FALSE);
 
   /* Palette type combo */
   store = gimp_int_store_new (_("_R, G, B (normal)"),       RAW_PALETTE_RGB,
@@ -2027,6 +2085,9 @@ save_dialog (GimpImage     *image,
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
+
+  g_free (contiguous_label);
+  g_free (planar_label);
 
   return run;
 }
