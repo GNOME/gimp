@@ -61,6 +61,7 @@ typedef struct _GimpFileEntry                 GimpFileEntry;
 typedef struct _GimpFrame                     GimpFrame;
 typedef struct _GimpHintBox                   GimpHintBox;
 typedef struct _GimpIntComboBox               GimpIntComboBox;
+typedef struct _GimpIntRadioFrame             GimpIntRadioFrame;
 typedef struct _GimpIntStore                  GimpIntStore;
 typedef struct _GimpLabeled                   GimpLabeled;
 typedef struct _GimpLabelColor                GimpLabelColor;

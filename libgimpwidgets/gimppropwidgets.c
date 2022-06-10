@@ -991,63 +991,9 @@ gimp_prop_int_radio_frame_new (GObject      *config,
                                const gchar  *title,
                                GimpIntStore *store)
 {
-  GParamSpec *param_spec;
-  GtkWidget  *frame;
-  GtkWidget  *box;
-
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
-  g_return_val_if_fail (GIMP_IS_INT_STORE (store), NULL);
-
-  param_spec = check_param_spec_w (config, property_name,
-                                   G_TYPE_PARAM_INT, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
-
-  if (! title)
-    title = g_param_spec_get_nick (param_spec);
-
-  frame = gimp_frame_new (title);
-
-  box = gimp_prop_int_radio_box_new (config, property_name, store);
-  gtk_container_add (GTK_CONTAINER (frame), box);
-  gtk_widget_show (box);
-
-  gimp_widget_set_bound_property (frame, config, property_name);
-
-  gtk_widget_show (frame);
-
-  return frame;
-}
-
-/**
- * gimp_prop_int_radio_box_new:
- * @config:        Object to which property is attached.
- * @property_name: Name of enum property controlled by the radio buttons.
- * @store:         #GimpIntStore holding list of labels, values, etc.
- *
- * Creates a group of radio buttons which function to set and display
- * the specified int property. If you want to assign a label to the
- * group of radio buttons, use gimp_prop_int_radio_frame_new()
- * instead of this function.
- *
- * Returns: (transfer full): A #GtkBox containing the radio buttons.
- *
- * Since: 3.0
- */
-GtkWidget *
-gimp_prop_int_radio_box_new (GObject      *config,
-                             const gchar  *property_name,
-                             GimpIntStore *store)
-{
-  GParamSpec   *param_spec;
-  GtkWidget    *vbox;
-  GtkWidget    *button = NULL;
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gboolean      iter_valid;
-  GSList       *group = NULL;
-  gint          value;
+  GParamSpec  *param_spec;
+  const gchar *tooltip;
+  GtkWidget   *frame;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
@@ -1058,56 +1004,21 @@ gimp_prop_int_radio_box_new (GObject      *config,
   if (! param_spec)
     return NULL;
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 2);
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
 
-  model = GTK_TREE_MODEL (store);
+  tooltip = g_param_spec_get_blurb (param_spec);
 
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      gchar *label;
+  frame = gimp_int_radio_frame_new_from_store (title, store);
+  g_object_bind_property (config, property_name,
+                          frame, "value",
+                          G_BINDING_BIDIRECTIONAL | G_BINDING_SYNC_CREATE);
+  gimp_help_set_help_data (frame, tooltip, NULL);
+  gtk_widget_show (frame);
 
-      gtk_tree_model_get (model, &iter,
-                          GIMP_INT_STORE_LABEL, &label,
-                          GIMP_INT_STORE_VALUE, &value,
-                          -1);
+  gimp_widget_set_bound_property (frame, config, property_name);
 
-      button = gtk_radio_button_new_with_mnemonic (group, label);
-      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-      gtk_widget_show (button);
-
-      g_free (label);
-
-      group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
-
-      g_object_set_data (G_OBJECT (button), "gimp-item-data",
-                         GINT_TO_POINTER (value));
-
-      g_signal_connect (button, "toggled",
-                        G_CALLBACK (gimp_prop_radio_button_callback),
-                        config);
-    }
-
-  g_object_get (config,
-                property_name, &value,
-                NULL);
-
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (button), value);
-
-  set_radio_spec (G_OBJECT (button), param_spec);
-
-  connect_notify (config, property_name,
-                  G_CALLBACK (gimp_prop_radio_button_notify),
-                  button);
-
-  g_object_set_data (G_OBJECT (vbox), "radio-button", button);
-
-  gimp_widget_set_bound_property (vbox, config, property_name);
-
-  gtk_widget_show (vbox);
-
-  return vbox;
+  return frame;
 }
 
 

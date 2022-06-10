@@ -63,9 +63,6 @@ GtkWidget     * gimp_prop_int_radio_frame_new     (GObject      *config,
                                                    const gchar  *property_name,
                                                    const gchar  *title,
                                                    GimpIntStore *store);
-GtkWidget     * gimp_prop_int_radio_box_new       (GObject      *config,
-                                                   const gchar  *property_name,
-                                                   GimpIntStore *store);
 
 /*  GParamGType  */
 
