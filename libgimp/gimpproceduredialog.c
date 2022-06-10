@@ -933,6 +933,76 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
 }
 
 /**
+ * gimp_procedure_dialog_get_int_radio:
+ * @dialog:   the associated #GimpProcedureDialog.
+ * @property: name of the int property to build radio buttons for. It
+ *            must be a property of the #GimpProcedure @dialog has been
+ *            created for.
+ * @store: (transfer full): the #GimpIntStore which will be used..
+ *
+ * Creates a new #GimpLabelIntRadioFrame for @property which must
+ * necessarily be an integer, enum or boolean property.
+ * This must be used instead of gimp_procedure_dialog_get_widget() when
+ * you want to create a group of %GtkRadioButton-s from an integer
+ * property.
+ *
+ * If a widget has already been created for this procedure, it will be
+ * returned instead (whatever its actual widget type).
+ *
+ * Returns: (transfer none): the #GtkWidget representing @property. The
+ *                           object belongs to @dialog and must not be
+ *                           freed.
+ */
+GtkWidget *
+gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
+                                     const gchar         *property,
+                                     GimpIntStore        *store)
+{
+  GtkWidget  *widget = NULL;
+  GParamSpec *pspec;
+
+  g_return_val_if_fail (property != NULL, NULL);
+
+  /* First check if it already exists. */
+  widget = g_hash_table_lookup (dialog->priv->widgets, property);
+
+  if (widget)
+    return widget;
+
+  pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
+                                        property);
+  if (! pspec)
+    {
+      g_warning ("%s: parameter %s does not exist.",
+                 G_STRFUNC, property);
+      return NULL;
+    }
+
+  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_BOOLEAN ||
+      G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT)
+    {
+      widget = gimp_prop_int_radio_frame_new (G_OBJECT (dialog->priv->config),
+                                              property, NULL, store);
+      gtk_widget_set_vexpand (widget, FALSE);
+      gtk_widget_set_hexpand (widget, TRUE);
+    }
+
+  if (! widget)
+    {
+      g_warning ("%s: parameter '%s' of type %s not suitable as GimpIntRadioFrame",
+                 G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
+      return NULL;
+    }
+
+  gimp_procedure_dialog_check_mnemonic (dialog, widget, property, NULL);
+  g_hash_table_insert (dialog->priv->widgets, g_strdup (property), widget);
+  if (g_object_is_floating (widget))
+    g_object_ref_sink (widget);
+
+  return widget;
+}
+
+/**
  * gimp_procedure_dialog_get_spin_scale:
  * @dialog:   the associated #GimpProcedureDialog.
  * @property: name of the int or double property to build a
