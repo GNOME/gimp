@@ -330,18 +330,21 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                           "data,raw");
 
       GIMP_PROC_ARG_INT (procedure, "image-type",
-                         "Image type",
-                         "The image type { RAW_RGB (0), RAW_PLANAR (6) }",
+                         "Planar configuration",
+                         "How color pixel data are stored { RAW_RGB (0), RAW_PLANAR (6) }",
                          RAW_RGB, RAW_PLANAR, RAW_RGB,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "palette-type",
-                         "Palette type",
-                         "The palette type "
+                         "Palette's configuration",
+                         "The layout for the palette's color channels"
                          "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
                          G_PARAM_READWRITE);
     }
+
+  gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                       _("Raw Data"));
 
   return procedure;
 }
@@ -2013,43 +2016,34 @@ save_dialog (GimpImage     *image,
              GObject       *config)
 {
   GtkWidget    *dialog;
-  GtkWidget    *main_vbox;
   GtkListStore *store;
-  GtkWidget    *frame;
   gboolean      run;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_procedure_dialog_new (procedure,
-                                      GIMP_PROCEDURE_CONFIG (config),
-                                      _("Export Image as Raw Data"));
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
   /* Image type combo */
-  store = gimp_int_store_new (_("_Standard (R,G,B)"),     RAW_RGB,
-                              _("_Planar (RRR,GGG,BBB)"), RAW_PLANAR,
+  store = gimp_int_store_new (_("_Contiguous (RGB,RGB,RGB)"), RAW_RGB,
+                              _("_Planar (RRR,GGG,BBB)"),     RAW_PLANAR,
                               NULL);
-  frame = gimp_prop_int_radio_frame_new (config, "image-type",
-                                         _("Image Type"),
-                                         GIMP_INT_STORE (store));
-  g_object_unref (store);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "image-type", GIMP_INT_STORE (store));
 
   /* Palette type combo */
   store = gimp_int_store_new (_("_R, G, B (normal)"),       RAW_PALETTE_RGB,
                               _("_B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
                               NULL);
-  frame = gimp_prop_int_radio_frame_new (config, "palette-type",
-                                         _("Palette Type"),
-                                         GIMP_INT_STORE (store));
-  g_object_unref (store);
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+  gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "palette-type", GIMP_INT_STORE (store));
 
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "palette-type",
+                                       gimp_image_get_base_type (image) == GIMP_INDEXED,
+                                       NULL, NULL, FALSE);
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog), NULL);
   gtk_widget_show (dialog);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
