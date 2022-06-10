@@ -73,10 +73,7 @@ EXTRA_DIST = \
 
 enum_headers = \
 	../libgimpbase/gimpbaseenums.h		\
-	../libgimpconfig/gimpconfigenums.h	\
-	../app/operations/operations-enums.h	\
-	../app/core/core-enums.h		\
-	../app/paint/paint-enums.h
+	../libgimpconfig/gimpconfigenums.h
 
 pdb_scripts = \
 	pdbgen.pl	\
