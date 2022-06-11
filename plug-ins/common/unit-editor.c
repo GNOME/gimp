@@ -32,7 +32,6 @@
 #define PLUG_IN_PROC     "plug-in-unit-editor"
 #define PLUG_IN_BINARY   "unit-editor"
 #define PLUG_IN_ROLE     "gimp-unit-editor"
-#define RESPONSE_REFRESH 1
 
 enum
 {
@@ -58,52 +57,50 @@ typedef struct
 } UnitColumn;
 
 
-typedef struct _Editor      Editor;
-typedef struct _EditorClass EditorClass;
+#define GIMP_UNIT_EDITOR_TYPE  (gimp_unit_editor_get_type ())
+G_DECLARE_FINAL_TYPE (GimpUnitEditor, gimp_unit_editor, GIMP, UNIT_EDITOR, GimpPlugIn)
 
-struct _Editor
+struct _GimpUnitEditor
 {
   GimpPlugIn      parent_instance;
+
+  GtkApplication *app;
+
+  GtkWindow      *window;
+  GtkWidget      *tv;
 };
 
-struct _EditorClass
-{
-  GimpPlugInClass parent_class;
-};
-
-
-#define EDITOR_TYPE  (editor_get_type ())
-#define EDITOR (obj) (G_TYPE_CHECK_INSTANCE_CAST ((obj), EDITOR_TYPE, Editor))
-
-GType                   editor_get_type         (void) G_GNUC_CONST;
 
 static GList          * editor_query_procedures (GimpPlugIn           *plug_in);
 static GimpProcedure  * editor_create_procedure (GimpPlugIn           *plug_in,
-                                               const gchar          *name);
+                                                 const gchar          *name);
 
 static GimpValueArray * editor_run              (GimpProcedure        *procedure,
                                                  const GimpValueArray *args,
                                                  gpointer              run_data);
 
-static GimpUnit new_unit_dialog        (GtkWidget             *main_dialog,
+static GimpUnit new_unit_dialog        (GtkWindow             *main_window,
                                         GimpUnit               template);
-static void     unit_editor_dialog     (void);
-static void     unit_editor_response   (GtkWidget             *widget,
-                                        gint                   response_id,
-                                        gpointer               data);
-static void     new_callback           (GtkAction             *action,
-                                        GtkTreeView           *tv);
-static void     duplicate_callback     (GtkAction             *action,
-                                        GtkTreeView           *tv);
+static void     on_app_activate        (GApplication          *gapp,
+                                        gpointer               user_data);
+static void     new_unit_action        (GSimpleAction         *action,
+                                        GVariant              *param,
+                                        gpointer               user_data);
+static void     duplicate_unit_action  (GSimpleAction         *action,
+                                        GVariant              *param,
+                                        gpointer               user_data);
+static void     refresh_action         (GSimpleAction         *action,
+                                        GVariant              *param,
+                                        gpointer               user_data);
 static void     saved_toggled_callback (GtkCellRendererToggle *celltoggle,
                                         gchar                 *path_string,
                                         GtkListStore          *list_store);
 static void     unit_list_init         (GtkTreeView           *tv);
 
 
-G_DEFINE_TYPE (Editor, editor, GIMP_TYPE_PLUG_IN)
+G_DEFINE_TYPE (GimpUnitEditor, gimp_unit_editor, GIMP_TYPE_PLUG_IN)
 
-GIMP_MAIN (EDITOR_TYPE)
+GIMP_MAIN (GIMP_UNIT_EDITOR_TYPE)
 DEFINE_STD_SET_I18N
 
 
@@ -128,28 +125,16 @@ static const UnitColumn columns[] =
   { N_("Plural"),       N_("The unit's plural form.")                       }
 };
 
-static GtkActionEntry actions[] =
+static GActionEntry ACTIONS[] =
 {
-  { "unit-editor-toolbar", NULL,
-    "Unit Editor Toolbar", NULL, NULL, NULL
-  },
-
-  { "unit-editor-new", GIMP_ICON_DOCUMENT_NEW,
-    NULL, "<control>N",
-    N_("Create a new unit from scratch"),
-    G_CALLBACK (new_callback)
-  },
-
-  { "unit-editor-duplicate", GIMP_ICON_OBJECT_DUPLICATE,
-    NULL,  "<control>D",
-    N_("Create a new unit using the currently selected unit as template"),
-    G_CALLBACK (duplicate_callback)
-  }
+  { "new-unit", new_unit_action },
+  { "duplicate-unit", duplicate_unit_action },
+  { "refresh", refresh_action },
 };
 
 
 static void
-editor_class_init (EditorClass *klass)
+gimp_unit_editor_class_init (GimpUnitEditorClass *klass)
 {
   GimpPlugInClass *plug_in_class = GIMP_PLUG_IN_CLASS (klass);
 
@@ -159,7 +144,7 @@ editor_class_init (EditorClass *klass)
 }
 
 static void
-editor_init (Editor *editor)
+gimp_unit_editor_init (GimpUnitEditor *self)
 {
 }
 
@@ -179,7 +164,7 @@ editor_create_procedure (GimpPlugIn  *plug_in,
     {
       procedure = gimp_procedure_new (plug_in, name,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
-                                      editor_run, NULL, NULL);
+                                      editor_run, plug_in, NULL);
 
       gimp_procedure_set_menu_label (procedure, _("U_nits"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_TOOL_MEASURE);
@@ -205,18 +190,190 @@ editor_create_procedure (GimpPlugIn  *plug_in,
   return procedure;
 }
 
+static void
+on_app_activate (GApplication *gapp, gpointer user_data)
+{
+  GimpUnitEditor    *self = GIMP_UNIT_EDITOR (user_data);
+  GtkWidget         *headerbar;
+  GtkWidget         *vbox;
+  GtkWidget         *button_box;
+  GtkWidget         *scrolled_win;
+  GtkListStore      *list_store;
+  GtkTreeViewColumn *col;
+  GtkWidget         *col_widget;
+  GtkWidget         *button;
+  GtkCellRenderer   *rend;
+
+  list_store = gtk_list_store_new (NUM_COLUMNS,
+                                   G_TYPE_BOOLEAN,   /*  SAVE          */
+                                   G_TYPE_STRING,    /*  IDENTIFIER    */
+                                   G_TYPE_DOUBLE,    /*  FACTOR        */
+                                   G_TYPE_INT,       /*  DIGITS        */
+                                   G_TYPE_STRING,    /*  SYMBOL        */
+                                   G_TYPE_STRING,    /*  ABBREVIATION  */
+                                   G_TYPE_STRING,    /*  SINGULAR      */
+                                   G_TYPE_STRING,    /*  PLURAL        */
+                                   GIMP_TYPE_UNIT,   /*  UNIT          */
+                                   G_TYPE_BOOLEAN,   /*  USER_UNIT     */
+                                   GDK_TYPE_RGBA);   /*  BG_COLOR      */
+
+  self->tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
+  g_object_unref (list_store);
+
+  self->window = GTK_WINDOW (gtk_application_window_new (self->app));
+  gtk_window_set_title (self->window, _("Unit Editor"));
+  gtk_window_set_role (self->window, PLUG_IN_ROLE);
+  gimp_help_connect (GTK_WIDGET (self->window),
+                     gimp_standard_help_func, PLUG_IN_PROC,
+                     self->window, NULL);
+
+  /* Actions */
+  g_action_map_add_action_entries (G_ACTION_MAP (self->window),
+                                   ACTIONS, G_N_ELEMENTS (ACTIONS),
+                                   self);
+  gtk_application_set_accels_for_action (self->app, "win.new-unit",
+                                         (const char*[]) { "<Ctrl>N", NULL });
+  gtk_application_set_accels_for_action (self->app, "win.duplicate-unit",
+                                         (const char*[]) { "<ctrl>D", NULL });
+  gtk_application_set_accels_for_action (self->app, "win.refresh",
+                                         (const char*[]) { "<ctrl>R", NULL });
+
+  /* Titlebar */
+  headerbar = gtk_header_bar_new ();
+  gtk_header_bar_set_title (GTK_HEADER_BAR (headerbar), _("Unit Editor"));
+  gtk_header_bar_set_has_subtitle (GTK_HEADER_BAR (headerbar), FALSE);
+  gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
+
+  button = gtk_button_new_from_icon_name (GIMP_ICON_VIEW_REFRESH,
+                                          GTK_ICON_SIZE_BUTTON);
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.refresh");
+  gtk_widget_set_tooltip_text (button, _("Refresh"));
+  gtk_widget_show (button);
+  gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
+
+  if (gimp_show_help_button ())
+    {
+      button = gtk_button_new_from_icon_name (GIMP_ICON_HELP,
+                                              GTK_ICON_SIZE_BUTTON);
+      gtk_widget_set_tooltip_text (button, _("Help"));
+      gtk_widget_show (button);
+      gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
+    }
+
+  gtk_window_set_titlebar (self->window, headerbar);
+  gtk_widget_show (headerbar);
+
+  /* Content */
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_widget_show (vbox);
+  gtk_container_add (GTK_CONTAINER (self->window), vbox);
+
+  button_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 12);
+  gtk_widget_show (button_box);
+  gtk_container_add (GTK_CONTAINER (vbox), button_box);
+
+  button = gtk_button_new_from_icon_name (GIMP_ICON_DOCUMENT_NEW,
+                                          GTK_ICON_SIZE_BUTTON);
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.new-unit");
+  gtk_widget_set_tooltip_text (button, _("Create a new unit from scratch"));
+  gtk_widget_show (button);
+  gtk_container_add (GTK_CONTAINER (button_box), button);
+
+  button = gtk_button_new_from_icon_name (GIMP_ICON_OBJECT_DUPLICATE,
+                                          GTK_ICON_SIZE_BUTTON);
+  gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.duplicate-unit");
+  gtk_widget_set_tooltip_text (button, _("Create a new unit using the currently selected unit as template"));
+  gtk_widget_show (button);
+  gtk_container_add (GTK_CONTAINER (button_box), button);
+
+  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_win, -1, 200);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
+                                       GTK_SHADOW_IN);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_ALWAYS);
+  gtk_container_add (GTK_CONTAINER (vbox), scrolled_win);
+  gtk_widget_show (scrolled_win);
+
+  gtk_widget_set_size_request (self->tv, -1, 220);
+  gtk_container_add (GTK_CONTAINER (scrolled_win), self->tv);
+  gtk_widget_show (self->tv);
+
+  rend = gtk_cell_renderer_toggle_new ();
+  col =
+    gtk_tree_view_column_new_with_attributes (gettext (columns[SAVE].title),
+                                              rend,
+                                              "active",               SAVE,
+                                              "activatable",          USER_UNIT,
+                                              "cell-background-rgba", BG_COLOR,
+                                              NULL);
+
+  gtk_tree_view_append_column (GTK_TREE_VIEW (self->tv), col);
+
+  col_widget = gtk_tree_view_column_get_widget (col);
+  if (col_widget)
+    {
+      button = gtk_widget_get_ancestor (col_widget, GTK_TYPE_BUTTON);
+
+      if (button)
+        gimp_help_set_help_data (button,
+                                 gettext (columns[SAVE].help), NULL);
+    }
+
+  g_signal_connect (rend, "toggled",
+                    G_CALLBACK (saved_toggled_callback),
+                    list_store);
+
+  for (int i = 0; i < G_N_ELEMENTS (columns); i++)
+    {
+      if (i == SAVE)
+        continue;
+
+      col =
+        gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
+                                                  gtk_cell_renderer_text_new (),
+                                                  "text",                 i,
+                                                  "cell-background-rgba", BG_COLOR,
+                                                  NULL);
+
+      gtk_tree_view_append_column (GTK_TREE_VIEW (self->tv), col);
+
+      col_widget = gtk_tree_view_column_get_widget (col);
+      if (col_widget)
+        {
+          button = gtk_widget_get_ancestor (col_widget, GTK_TYPE_BUTTON);
+
+          if (button)
+            gimp_help_set_help_data (button, gettext (columns[i].help), NULL);
+        }
+    }
+
+  unit_list_init (GTK_TREE_VIEW (self->tv));
+
+  gtk_widget_show (GTK_WIDGET (self->window));
+}
+
 static GimpValueArray *
 editor_run (GimpProcedure        *procedure,
             const GimpValueArray *args,
             gpointer              run_data)
 {
-  unit_editor_dialog ();
+  GimpUnitEditor *editor = GIMP_UNIT_EDITOR (run_data);
+
+  editor->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
+  g_signal_connect (editor->app, "activate", G_CALLBACK (on_app_activate), editor);
+
+  g_application_run (G_APPLICATION (editor->app), 0, NULL);
+
+  g_clear_object (&editor->app);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }
 
 static GimpUnit
-new_unit_dialog (GtkWidget *main_dialog,
+new_unit_dialog (GtkWindow *main_window,
                  GimpUnit   template)
 {
   GtkWidget     *dialog;
@@ -235,7 +392,7 @@ new_unit_dialog (GtkWidget *main_dialog,
   GimpUnit       unit = GIMP_UNIT_PIXEL;
 
   dialog = gimp_dialog_new (_("Add a New Unit"), PLUG_IN_ROLE,
-                            main_dialog, GTK_DIALOG_MODAL,
+                            GTK_WIDGET (main_window), GTK_DIALOG_MODAL,
                             gimp_standard_help_func, PLUG_IN_PROC,
 
                             _("_Cancel"), GTK_RESPONSE_CANCEL,
@@ -406,219 +563,52 @@ new_unit_dialog (GtkWidget *main_dialog,
 }
 
 static void
-unit_editor_dialog (void)
+new_unit_action (GSimpleAction *action,
+                 GVariant      *param,
+                 gpointer       user_data)
 {
-  GtkWidget         *dialog;
-  GtkWidget         *scrolled_win;
-  GtkUIManager      *ui_manager;
-  GtkActionGroup    *group;
-  GtkWidget         *toolbar;
-  GtkListStore      *list_store;
-  GtkWidget         *tv;
-  GtkTreeViewColumn *col;
-  GtkWidget         *col_widget;
-  GtkWidget         *button;
-  GtkCellRenderer   *rend;
-  gint               i;
+  GimpUnitEditor   *self = GIMP_UNIT_EDITOR (user_data);
+  GimpUnit          unit;
 
-  gimp_ui_init (PLUG_IN_BINARY);
-
-  list_store = gtk_list_store_new (NUM_COLUMNS,
-                                   G_TYPE_BOOLEAN,   /*  SAVE          */
-                                   G_TYPE_STRING,    /*  IDENTIFIER    */
-                                   G_TYPE_DOUBLE,    /*  FACTOR        */
-                                   G_TYPE_INT,       /*  DIGITS        */
-                                   G_TYPE_STRING,    /*  SYMBOL        */
-                                   G_TYPE_STRING,    /*  ABBREVIATION  */
-                                   G_TYPE_STRING,    /*  SINGULAR      */
-                                   G_TYPE_STRING,    /*  PLURAL        */
-                                   GIMP_TYPE_UNIT,   /*  UNIT          */
-                                   G_TYPE_BOOLEAN,   /*  USER_UNIT     */
-                                   GDK_TYPE_COLOR);  /*  BG_COLOR      */
-
-  tv = gtk_tree_view_new_with_model (GTK_TREE_MODEL (list_store));
-  g_object_unref (list_store);
-
-  dialog = gimp_dialog_new (_("Unit Editor"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            _("_Refresh"), RESPONSE_REFRESH,
-                            _("_Close"),   GTK_RESPONSE_CLOSE,
-
-                            NULL);
-
-  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CLOSE);
-
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (unit_editor_response),
-                    tv);
-  g_signal_connect (dialog, "destroy",
-                    G_CALLBACK (gtk_main_quit),
-                    NULL);
-
-  /*  the toolbar  */
-  ui_manager = gtk_ui_manager_new ();
-
-  group = gtk_action_group_new ("unit-editor");
-
-  gtk_action_group_set_translation_domain (group, NULL);
-  gtk_action_group_add_actions (group, actions, G_N_ELEMENTS (actions), tv);
-
-  gtk_window_add_accel_group (GTK_WINDOW (dialog),
-                              gtk_ui_manager_get_accel_group (ui_manager));
-  gtk_accel_group_lock (gtk_ui_manager_get_accel_group (ui_manager));
-
-  gtk_ui_manager_insert_action_group (ui_manager, group, -1);
-  g_object_unref (group);
-
-  gtk_ui_manager_add_ui_from_string
-    (ui_manager,
-     "<ui>\n"
-     "  <toolbar action=\"unit-editor-toolbar\">\n"
-     "    <toolitem action=\"unit-editor-new\" />\n"
-     "    <toolitem action=\"unit-editor-duplicate\" />\n"
-     "  </toolbar>\n"
-     "</ui>\n",
-     -1, NULL);
-
-  toolbar = gtk_ui_manager_get_widget (ui_manager, "/unit-editor-toolbar");
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      toolbar, FALSE, FALSE, 0);
-  gtk_widget_show (toolbar);
-
-  scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_size_request (scrolled_win, -1, 200);
-  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_win),
-                                       GTK_SHADOW_IN);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
-                                  GTK_POLICY_NEVER,
-                                  GTK_POLICY_ALWAYS);
-  gtk_container_set_border_width (GTK_CONTAINER (scrolled_win), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
-
-  gtk_widget_set_size_request (tv, -1, 220);
-  gtk_container_add (GTK_CONTAINER (scrolled_win), tv);
-  gtk_widget_show (tv);
-
-  rend = gtk_cell_renderer_toggle_new ();
-  col =
-    gtk_tree_view_column_new_with_attributes (gettext (columns[SAVE].title),
-                                              rend,
-                                              "active",              SAVE,
-                                              "activatable",         USER_UNIT,
-                                              "cell-background-gdk", BG_COLOR,
-                                              NULL);
-
-  gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-  col_widget = gtk_tree_view_column_get_widget (col);
-  if (col_widget)
-    {
-      button = gtk_widget_get_ancestor (col_widget, GTK_TYPE_BUTTON);
-
-      if (button)
-        gimp_help_set_help_data (button,
-                                 gettext (columns[SAVE].help), NULL);
-    }
-
-  g_signal_connect (rend, "toggled",
-                    G_CALLBACK (saved_toggled_callback),
-                    list_store);
-
-  for (i = 0; i < G_N_ELEMENTS (columns); i++)
-    {
-      if (i == SAVE)
-        continue;
-
-      col =
-        gtk_tree_view_column_new_with_attributes (gettext (columns[i].title),
-                                                  gtk_cell_renderer_text_new (),
-                                                  "text",                i,
-                                                  "cell-background-gdk", BG_COLOR,
-                                                  NULL);
-
-      gtk_tree_view_append_column (GTK_TREE_VIEW (tv), col);
-
-      col_widget = gtk_tree_view_column_get_widget (col);
-      if (col_widget)
-        {
-          button = gtk_widget_get_ancestor (col_widget, GTK_TYPE_BUTTON);
-
-          if (button)
-            gimp_help_set_help_data (button, gettext (columns[i].help), NULL);
-        }
-    }
-
-  unit_list_init (GTK_TREE_VIEW (tv));
-
-  gtk_widget_show (dialog);
-
-  gtk_main ();
-}
-
-static void
-unit_editor_response (GtkWidget *widget,
-                      gint       response_id,
-                      gpointer   data)
-{
-  switch (response_id)
-    {
-    case RESPONSE_REFRESH:
-      unit_list_init (GTK_TREE_VIEW (data));
-      break;
-
-    default:
-      gtk_widget_destroy (widget);
-      break;
-    }
-}
-
-static void
-new_callback (GtkAction   *action,
-              GtkTreeView *tv)
-{
-  GimpUnit  unit;
-
-  unit = new_unit_dialog (gtk_widget_get_toplevel (GTK_WIDGET (tv)),
-                          GIMP_UNIT_PIXEL);
+  unit = new_unit_dialog (self->window, GIMP_UNIT_PIXEL);
 
   if (unit != GIMP_UNIT_PIXEL)
     {
       GtkTreeModel *model;
       GtkTreeIter   iter;
 
-      unit_list_init (tv);
+      unit_list_init (GTK_TREE_VIEW (self->tv));
 
-      model = gtk_tree_view_get_model (tv);
+      model = gtk_tree_view_get_model (GTK_TREE_VIEW (self->tv));
 
       if (gtk_tree_model_get_iter_first (model, &iter) &&
           gtk_tree_model_iter_nth_child (model, &iter,
                                          NULL, unit - GIMP_UNIT_INCH))
         {
+          GtkTreeSelection *selection;
           GtkAdjustment *adj;
 
-          gtk_tree_selection_select_iter (gtk_tree_view_get_selection (tv),
-                                          &iter);
+          selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (self->tv));
+          gtk_tree_selection_select_iter (selection, &iter);
 
-          adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (tv));
+          adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (self->tv));
           gtk_adjustment_set_value (adj, gtk_adjustment_get_upper (adj));
         }
     }
 }
 
 static void
-duplicate_callback (GtkAction   *action,
-                    GtkTreeView *tv)
+duplicate_unit_action (GSimpleAction *action,
+                       GVariant      *param,
+                       gpointer       user_data)
 {
+  GimpUnitEditor   *self = GIMP_UNIT_EDITOR (user_data);
   GtkTreeModel     *model;
   GtkTreeSelection *sel;
   GtkTreeIter       iter;
 
-  model = gtk_tree_view_get_model (tv);
-  sel   = gtk_tree_view_get_selection (tv);
+  model = gtk_tree_view_get_model (GTK_TREE_VIEW (self->tv));
+  sel   = gtk_tree_view_get_selection (GTK_TREE_VIEW (self->tv));
 
   if (gtk_tree_selection_get_selected (sel, NULL, &iter))
     {
@@ -628,14 +618,13 @@ duplicate_callback (GtkAction   *action,
                           UNIT, &unit,
                           -1);
 
-      unit = new_unit_dialog (gtk_widget_get_toplevel (GTK_WIDGET (tv)),
-                              unit);
+      unit = new_unit_dialog (self->window, unit);
 
       if (unit != GIMP_UNIT_PIXEL)
         {
           GtkTreeIter iter;
 
-          unit_list_init (tv);
+          unit_list_init (GTK_TREE_VIEW (self->tv));
 
           if (gtk_tree_model_get_iter_first (model, &iter) &&
               gtk_tree_model_iter_nth_child (model, &iter,
@@ -645,11 +634,21 @@ duplicate_callback (GtkAction   *action,
 
               gtk_tree_selection_select_iter (sel, &iter);
 
-              adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (tv));
+              adj = gtk_scrollable_get_vadjustment (GTK_SCROLLABLE (self->tv));
               gtk_adjustment_set_value (adj, gtk_adjustment_get_upper (adj));
             }
         }
     }
+}
+
+static void
+refresh_action (GSimpleAction *action,
+                GVariant      *param,
+                gpointer       user_data)
+{
+  GimpUnitEditor *self = GIMP_UNIT_EDITOR (user_data);
+
+  unit_list_init (GTK_TREE_VIEW (self->tv));
 }
 
 static void
@@ -692,7 +691,7 @@ unit_list_init (GtkTreeView *tv)
   GtkTreeIter   iter;
   gint          num_units;
   GimpUnit      unit;
-  GdkColor      color;
+  GdkRGBA       color;
 
   list_store = GTK_LIST_STORE (gtk_tree_view_get_model (tv));
 
@@ -700,9 +699,10 @@ unit_list_init (GtkTreeView *tv)
 
   num_units = gimp_unit_get_number_of_units ();
 
-  color.red   = 0xdddd;
-  color.green = 0xdddd;
-  color.blue  = 0xffff;
+  color.red   = 0.87;
+  color.green = 0.87;
+  color.blue  = 1;
+  color.alpha = 1;
 
   for (unit = GIMP_UNIT_INCH; unit < num_units; unit++)
     {
