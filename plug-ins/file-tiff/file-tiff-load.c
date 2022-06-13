@@ -147,11 +147,14 @@ static void               convert_int2uint (guchar            *buffer,
                                             gint               height,
                                             gint               stride);
 
-static gboolean           load_dialog      (TIFF              *tif,
-                                            const gchar       *help_id,
+static gboolean           load_dialog      (const gchar       *help_id,
                                             TiffSelectedPages *pages,
                                             const gchar       *extra_message,
                                             DefaultExtra      *default_extra);
+
+static void       tiff_dialog_show_reduced (GtkWidget         *toggle,
+                                            gpointer           data);
+
 
 
 /* Grayscale conversion mappings */
@@ -280,6 +283,7 @@ load_image (GFile        *file,
   GimpColorProfile  *first_profile      = NULL;
   const gchar       *extra_message      = NULL;
   gint               li;
+  gint               selectable_pages;
 
   *image = NULL;
   gimp_progress_init_printf (_("Opening '%s'"),
@@ -340,6 +344,7 @@ load_image (GFile        *file,
 
   pages.pages = NULL;
   pages.n_filtered_pages = pages.n_pages;
+  pages.n_reducedimage_pages = pages.n_pages;
 
   pages.filtered_pages  = g_new0 (gint, pages.n_pages);
   for (li = 0; li < pages.n_pages; li++)
@@ -421,7 +426,7 @@ load_image (GFile        *file,
             {
               /* file_type is a mask but we will only filter out pages
                * that only have FILETYPE_REDUCEDIMAGE set */
-              pages.filtered_pages[li] = -1;
+              pages.filtered_pages[li] = TIFF_REDUCEDFILE;
               pages.n_filtered_pages--;
               g_debug ("Page %d is a FILETYPE_REDUCEDIMAGE thumbnail.\n", li);
             }
@@ -436,8 +441,12 @@ load_image (GFile        *file,
               if (TIFFGetField (tif, TIFFTAG_COMPRESSION, &compression) &&
                   compression == COMPRESSION_OJPEG)
                 {
-                  pages.filtered_pages[li] = -1;
+                  pages.filtered_pages[li] = TIFF_MISC_THUMBNAIL;
                   pages.n_filtered_pages--;
+                  /* This is used to conditionally show reduced images
+                   * if they're not a thumbnail
+                   */
+                  pages.n_reducedimage_pages--;
                   g_debug ("Page %d is most likely a thumbnail.\n", li);
                 }
             }
@@ -471,9 +480,15 @@ load_image (GFile        *file,
     }
   TIFFSetDirectory (tif, 0);
 
+  pages.show_reduced = FALSE;
+  if (pages.n_reducedimage_pages - pages.n_filtered_pages > 1)
+    pages.show_reduced = TRUE;
+
+  pages.tif = tif;
+
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       (pages.n_pages > 1 || extra_message) &&
-      ! load_dialog (tif, LOAD_PROC, &pages,
+      ! load_dialog (LOAD_PROC, &pages,
                      extra_message, &default_extra))
     {
       TIFFClose (tif);
@@ -481,8 +496,13 @@ load_image (GFile        *file,
 
       return GIMP_PDB_CANCEL;
     }
+
+  selectable_pages = pages.n_filtered_pages;
+  if (pages.show_reduced)
+    selectable_pages = pages.n_reducedimage_pages;
+
   /* Adjust pages to take filtered out pages into account. */
-  if (pages.o_pages > pages.n_filtered_pages)
+  if (pages.o_pages > selectable_pages)
     {
       gint fi;
       gint sel_index = 0;
@@ -490,7 +510,8 @@ load_image (GFile        *file,
 
       for (fi = 0; fi < pages.o_pages && sel_index < pages.n_pages; fi++)
         {
-          if (pages.filtered_pages[fi] == -1)
+          if ((pages.show_reduced && pages.filtered_pages[fi] == TIFF_MISC_THUMBNAIL) ||
+              (! pages.show_reduced && pages.filtered_pages[fi] <= TIFF_MISC_THUMBNAIL))
             {
               sel_add++;
             }
@@ -2669,18 +2690,19 @@ convert_int2uint (guchar *buffer,
 }
 
 static gboolean
-load_dialog (TIFF              *tif,
-             const gchar       *help_id,
+load_dialog (const gchar       *help_id,
              TiffSelectedPages *pages,
              const gchar       *extra_message,
              DefaultExtra      *default_extra)
 {
   GtkWidget  *dialog;
   GtkWidget  *vbox;
-  GtkWidget  *selector    = NULL;
-  GtkWidget  *crop_option = NULL;
-  GtkWidget  *extra_radio = NULL;
+  GtkWidget  *show_reduced = NULL;
+  GtkWidget  *crop_option  = NULL;
+  GtkWidget  *extra_radio  = NULL;
   gboolean    run;
+
+  pages->selector = NULL;
 
   dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_ROLE,
                             NULL, 0,
@@ -2703,35 +2725,33 @@ load_dialog (TIFF              *tif,
   gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
                       vbox, TRUE, TRUE, 0);
 
+  show_reduced = gtk_check_button_new_with_mnemonic (_("_Show reduced images"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (show_reduced),
+                                pages->show_reduced);
+  gtk_box_pack_start (GTK_BOX (vbox), show_reduced, TRUE, TRUE, 0);
+
+  g_signal_connect (show_reduced, "toggled",
+                    G_CALLBACK (tiff_dialog_show_reduced),
+                    pages);
+
   if (pages->n_pages > 1)
     {
-      gint i, j;
-
       /* Page Selector */
-      selector = gimp_page_selector_new ();
-      gtk_widget_set_size_request (selector, 300, 200);
-      gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
+      pages->selector = gimp_page_selector_new ();
+      gtk_widget_set_size_request (pages->selector, 300, 200);
+      gtk_box_pack_start (GTK_BOX (vbox), pages->selector, TRUE, TRUE, 0);
 
-      gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector),
+      gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector),
                                       pages->n_filtered_pages);
-      gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), pages->target);
+      gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (pages->selector),
+                                     pages->target);
 
-      for (i = 0, j = 0; i < pages->n_pages && j < pages->n_filtered_pages; i++)
-        {
-          if (pages->filtered_pages[i] != -1)
-            {
-              const gchar *name = tiff_get_page_name (tif);
+      /* Load a set number of pages, based on whether "Show Reduced Images"
+       * is checked
+       */
+      tiff_dialog_show_reduced (show_reduced, pages);
 
-              if (name)
-                gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector),
-                                                   j, name);
-              j++;
-            }
-
-          TIFFReadDirectory (tif);
-        }
-
-      g_signal_connect_swapped (selector, "activate",
+      g_signal_connect_swapped (pages->selector, "activate",
                                 G_CALLBACK (gtk_window_activate_default),
                                 dialog);
 
@@ -2778,10 +2798,10 @@ load_dialog (TIFF              *tif,
       if (pages->n_pages > 1)
         {
           pages->target =
-            gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+            gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (pages->selector));
 
           pages->pages =
-            gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+            gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (pages->selector),
                                                    &pages->n_pages);
 
           pages->keep_empty_space =
@@ -2790,14 +2810,53 @@ load_dialog (TIFF              *tif,
           /* select all if none selected */
           if (pages->n_pages == 0)
             {
-              gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+              gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (pages->selector));
 
               pages->pages =
-                gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+                gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (pages->selector),
                                                        &pages->n_pages);
             }
         }
     }
 
   return run;
+}
+
+static void
+tiff_dialog_show_reduced (GtkWidget *toggle,
+                          gpointer   data)
+{
+  gint selectable_pages;
+  gint i, j;
+
+  TiffSelectedPages *pages = (TiffSelectedPages *) data;
+  pages->show_reduced = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (toggle));
+
+  /* Clear current pages from selection */
+  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector), 0);
+  /* Jump back to start of the TIFF file */
+  TIFFSetDirectory (pages->tif, 0);
+
+  selectable_pages = pages->n_filtered_pages;
+  if (pages->show_reduced)
+    selectable_pages = pages->n_reducedimage_pages;
+
+  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (pages->selector),
+                                  selectable_pages);
+
+  for (i = 0, j = 0; i < pages->n_pages && j < selectable_pages; i++)
+    {
+      if ((pages->show_reduced && pages->filtered_pages[i] != TIFF_MISC_THUMBNAIL) ||
+          (! pages->show_reduced && pages->filtered_pages[i] > TIFF_MISC_THUMBNAIL))
+        {
+          const gchar *name = tiff_get_page_name (pages->tif);
+
+          if (name)
+            gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (pages->selector),
+                                               j, name);
+          j++;
+        }
+
+      TIFFReadDirectory (pages->tif);
+    }
 }

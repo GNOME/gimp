@@ -24,15 +24,25 @@
 
 #define LOAD_PROC      "file-tiff-load"
 
+typedef enum
+{
+  TIFF_REDUCEDFILE    = -2,
+  TIFF_MISC_THUMBNAIL = -1
+} TIFF_THUMBNAIL_TYPE;
+
 typedef struct
 {
+  TIFF                   *tif;
   gint                    o_pages;
   gint                    n_pages;
   gint                   *pages;
-  gint                   *filtered_pages;   /* thumbnail is marked as -1 */
+  gint                   *filtered_pages; /* thumbnail is marked as < 0 */
   gint                    n_filtered_pages;
+  gint                    n_reducedimage_pages;
+  GtkWidget              *selector;
   GimpPageSelectorTarget  target;
   gboolean                keep_empty_space;
+  gboolean                show_reduced;
 } TiffSelectedPages;
 
 
