@@ -6,7 +6,7 @@
 plug-ins/script-fu/script-fu.c
 plug-ins/script-fu/script-fu-console.c
 plug-ins/script-fu/script-fu-eval.c
-plug-ins/script-fu/script-fu-server.c
+plug-ins/script-fu/server/script-fu-server.c
 plug-ins/script-fu/libscriptfu/script-fu-interface.c
 plug-ins/script-fu/libscriptfu/script-fu-scripts.c
 plug-ins/script-fu/script-fu-text-console.c

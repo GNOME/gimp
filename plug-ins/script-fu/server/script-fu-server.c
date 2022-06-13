@@ -96,8 +96,8 @@ typedef short sa_family_t; /* Not defined by winsock */
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
-#include "script-fu-intl.h"
-#include "script-fu-lib.h"
+#include "libscriptfu/script-fu-lib.h"
+#include "libscriptfu/script-fu-intl.h"
 
 #include "script-fu-server.h"
 

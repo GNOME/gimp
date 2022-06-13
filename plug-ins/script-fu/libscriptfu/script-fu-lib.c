@@ -139,3 +139,37 @@ script_fu_register_post_command_callback (void (*func) (void))
 {
   ts_register_post_command_callback (func);
 }
+
+/*
+ * Return list of paths to directories containing .scm and .init scripts.
+ * Usually at least GIMP's directory named like "/scripts."
+ * List can also contain dirs custom or private to a user.
+ " The GIMP dir often contain: plugins, init scripts, and utility scripts.
+ *
+ * Caller must free the returned list.
+ */
+GList *
+script_fu_search_path (void)
+{
+  gchar *path_str;
+  GList *path = NULL;
+
+  path_str = gimp_gimprc_query ("script-fu-path");
+
+  if (path_str)
+    {
+      GError *error = NULL;
+
+      path = gimp_config_path_expand_to_files (path_str, &error);
+      g_free (path_str);
+
+      if (! path)
+        {
+          g_warning ("Can't convert script-fu-path to filesystem encoding: %s",
+                     error->message);
+          g_clear_error (&error);
+        }
+    }
+
+  return path;
+}

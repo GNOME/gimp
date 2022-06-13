@@ -12,3 +12,4 @@ EXPORTS
   script_fu_run_read_eval_print_loop
   script_fu_register_quit_callback
   script_fu_register_post_command_callback
+  script_fu_search_path

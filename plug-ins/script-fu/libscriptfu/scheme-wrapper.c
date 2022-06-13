@@ -171,6 +171,8 @@ tinyscheme_init (GList    *path,
     {
       GList *list;
 
+      g_debug ("Loading init and compat scripts.");
+
       for (list = path; list; list = g_list_next (list))
         {
           gchar *dir = g_file_get_path (list->data);
@@ -198,6 +200,8 @@ tinyscheme_init (GList    *path,
       if (list == NULL)
         g_warning ("Unable to read initialization file script-fu.init\n");
     }
+  else
+    g_warning ("Not loading initialization or compatibility scripts.");
 }
 
 /* Create an SF-RUN-MODE constant for use in scripts.

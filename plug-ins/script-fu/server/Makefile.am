@@ -27,15 +27,16 @@ libgimp_scriptfu = $(top_builddir)/plug-ins/script-fu/libscriptfu/libgimp-script
 
 if HAVE_WINDRES
 include $(top_srcdir)/build/windows/gimprc-plug-ins.rule
-script_fu_RC = script-fu.rc.o
+script_fu_server_RC = script-fu-server.rc.o
 endif
 
+# include srcdir parent to find libscriptfu include files
 AM_CPPFLAGS = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(GEGL_CFLAGS)		\
 	-I$(includedir)		\
-	-I$(srcdir)/libscriptfu \
+	-I$(srcdir)/.. \
 	-DG_LOG_DOMAIN=\"scriptfu\"
 
 AM_CFLAGS = \
@@ -49,26 +50,19 @@ AM_LDFLAGS = \
 	$(framework_cocoa)	\
 	$(xnone)
 
-SUBDIRS = libscriptfu scripts server
-
 # Each plugin must be installed in a dir of the same name as the executable
-script_fudir = $(gimpplugindir)/plug-ins/script-fu
+script_fu_serverdir = $(gimpplugindir)/plug-ins/script-fu-server
 
-script_fu_PROGRAMS = script-fu
+script_fu_server_PROGRAMS = script-fu-server
 
-script_fu_SOURCES = \
-	script-fu.c              \
-	\
-	script-fu-console.c      \
-	script-fu-console.h      \
-	script-fu-eval.c         \
-	script-fu-eval.h         \
-	script-fu-text-console.h \
-	script-fu-text-console.c
-
+script_fu_server_SOURCES = \
+	script-fu-server.c       \
+	script-fu-server.h       \
+	script-fu-server-plugin.c
 
 # link with libgimp-scriptfu and the usual gimp suspects
-script_fu_LDADD = \
+# Also link w socket libs
+script_fu_server_LDADD = \
 	$(libgimp_scriptfu)  \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
@@ -78,21 +72,8 @@ script_fu_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
+	$(SOCKET_LIBS)		\
+	$(WINSOCK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
-	$(script_fu_RC)
-
-
-# Perform static analysis on all *.scm files and look for usage of
-# deprecated pdb procedures
-check-for-deprecated-procedures-in-script-fu:
-	@echo "Looking for deprecated procedures in *.scm files"
-	@scm_files=`find $(top_srcdir)/plug-ins/script-fu -name "*.scm"`;       \
-	deprecated_procs=`$(top_builddir)/app/gimp-$(GIMP_APP_VERSION)$(EXEEXT) --dump-pdb-procedures-deprecated`; \
-	for scm_file in $$scm_files; do                                         \
-	  for proc in $$deprecated_procs; do                                    \
-	    if grep -Eq "^([^;]*[[:blank:](])?$$proc([[:blank:])]|$$)" $$scm_file; then \
-	      echo "$${scm_file} uses deprecated procedure '$${proc}'";         \
-	    fi                                                                  \
-	  done                                                                  \
-	done
+	$(script_fu_server_RC)

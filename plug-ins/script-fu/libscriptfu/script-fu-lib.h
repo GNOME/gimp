@@ -20,6 +20,7 @@
 
 gboolean     script_fu_extension_is_busy         (void);
 
+GList *      script_fu_search_path               (void);
 void         script_fu_find_and_register_scripts (GimpPlugIn     *plugin,
                                                   GList          *paths);
 
