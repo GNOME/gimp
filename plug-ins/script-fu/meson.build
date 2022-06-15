@@ -43,7 +43,6 @@ endif
 
 executable(executable_name,
   plugin_sources,
-  libscriptfu,
   dependencies: [
     libgimpui_dep,
     math,
