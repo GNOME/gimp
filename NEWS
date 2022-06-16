@@ -143,6 +143,9 @@ Plug-ins:
       assuming that the file writer properly followed the specs.
   - Several plug-ins now follow the user-set checkboard color
     preferences, when relevant.
+  - RAW:
+    * Improved export dialog with better labels and ported to new dialog
+      generation API.
 
 API:
 
@@ -154,6 +157,7 @@ API:
       + gimp_image_metadata_save_filter()
       + gimp_check_custom_color1()
       + gimp_check_custom_color2()
+      + gimp_procedure_dialog_get_int_radio()
     * Removed functions:
       + gimp_plug_in_set_translation_domain()
     * New class:
@@ -178,6 +182,10 @@ API:
     * Freedesktop portal implementation of GimpPickButton now checks the
       version of the XDG portal since `PickColor()` API only got added
       in version 2.
+    * New classes:
+      + GimpIntRadioFrame
+    * Removed functions:
+      + gimp_prop_int_radio_box_new()
 
 Translations:
 
@@ -212,6 +220,10 @@ Build:
     notifications).
   - appstream-util replaced by appstreamcli for AppStream file testing
     (requires appstreamcli 0.15.3 or over).
+  - gi-docgen API documentation will now properly link to other API
+    namespaces thanks to a new urlmap file.
+  - Separate libgimp-scriptfu-3.0 library for a future where it will be
+    shared by several binaries.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
