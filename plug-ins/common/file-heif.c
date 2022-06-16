@@ -1344,6 +1344,12 @@ load_image (GFile              *file,
               }
           }
 
+        gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
+                                             GEXIV2_ORIENTATION_NORMAL, NULL);
+        gexiv2_metadata_try_set_metadata_pixel_width (GEXIV2_METADATA (metadata),
+                                                      width, NULL);
+        gexiv2_metadata_try_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
+                                                       height, NULL);
         gimp_image_metadata_load_finish (image, "image/heif",
                                          metadata, flags);
       }
