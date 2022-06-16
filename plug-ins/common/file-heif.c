@@ -1195,6 +1195,10 @@ load_image (GFile     *file,
 
         gexiv2_metadata_set_orientation (GEXIV2_METADATA (metadata),
                                          GEXIV2_ORIENTATION_NORMAL);
+        gexiv2_metadata_set_metadata_pixel_width (GEXIV2_METADATA (metadata),
+                                                  width);
+        gexiv2_metadata_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
+                                                   height);
         gimp_image_metadata_load_finish (image_ID, "image/heif",
                                          metadata, flags,
                                          interactive);
