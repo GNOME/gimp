@@ -70,6 +70,19 @@ gimp_plugin_hgt_load_error_quark (void)
 
 typedef enum
 {
+  HGT_SRTM_AUTO_DETECT,
+  HGT_SRTM_1,
+  HGT_SRTM_3,
+} HgtSampleSpacing;
+
+typedef enum
+{
+  RAW_PLANAR_CONTIGUOUS,   /* Contiguous/chunky format RGBRGB */
+  RAW_PLANAR_SEPARATE,     /* Planar format RRGGBB            */
+} RawPlanarConfiguration;
+
+typedef enum
+{
   RAW_RGB,          /* RGB Image */
   RAW_RGBA,         /* RGB Image with an Alpha channel */
   RAW_RGB565_BE,    /* RGB Image 16bit, 5,6,5 bits per channel, big-endian */
@@ -94,16 +107,6 @@ typedef enum
   RAW_PALETTE_RGB,  /* standard RGB */
   RAW_PALETTE_BGR   /* Windows BGRX */
 } RawPaletteType;
-
-typedef struct
-{
-  gint32         file_offset;    /* offset to beginning of image in raw data */
-  gint32         image_width;    /* width of the raw image                   */
-  gint32         image_height;   /* height of the raw image                  */
-  RawType        image_type;     /* type of image (RGB, INDEXED, etc)        */
-  gint32         palette_offset; /* offset inside the palette file, if any   */
-  RawPaletteType palette_type;   /* type of palette (RGB/BGR)                */
-} RawConfig;
 
 typedef struct
 {
@@ -153,14 +156,33 @@ static GimpValueArray * raw_save             (GimpProcedure        *procedure,
 
 /* prototypes for the new load functions */
 static gboolean         raw_load_standard    (RawGimpData          *data,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  offset,
                                               gint                  bpp);
+static gboolean         raw_load_gray16      (RawGimpData          *data,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  offset,
+                                              RawType               type);
 static gboolean         raw_load_gray        (RawGimpData          *data,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  offset,
                                               gint                  bpp,
                                               gint                  bitspp);
 static gboolean         raw_load_rgb565      (RawGimpData          *data,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  offset,
                                               RawType               type);
-static gboolean         raw_load_planar      (RawGimpData          *data);
+static gboolean         raw_load_planar      (RawGimpData          *data,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  offset);
 static gboolean         raw_load_palette     (RawGimpData          *data,
+                                              gint                  palette_offset,
+                                              RawPaletteType        palette_type,
                                               GFile                *palette_file);
 
 /* support functions */
@@ -180,28 +202,44 @@ static void             rgb_565_to_888       (guint16              *in,
                                               RawType               type);
 
 static GimpImage      * load_image           (GFile                *file,
+                                              GimpProcedureConfig  *config,
                                               GError              **error);
 static gboolean         save_image           (GFile                *file,
                                               GimpImage            *image,
                                               GimpDrawable         *drawable,
-                                              GObject              *config,
+                                              GimpProcedureConfig  *config,
                                               GError              **error);
 
-/* gui functions */
-static void             preview_update_size  (GimpPreviewArea      *preview);
-static void             preview_update       (GimpPreviewArea      *preview);
-static void             palette_update       (GimpPreviewArea      *preview);
-static gboolean         load_dialog          (GFile                *file,
-                                              gboolean              is_hgt);
-static gboolean         save_dialog          (GimpImage            *image,
-                                              GimpProcedure        *procedure,
-                                              gboolean              has_alpha,
-                                              GObject              *config);
-static void             palette_callback     (GtkFileChooser       *button,
-                                              GimpPreviewArea      *preview);
+static gboolean        detect_sample_spacing (GimpProcedureConfig     *config,
+                                              GFile                   *file,
+                                              GError                 **error);
+static void           get_load_config_values (GimpProcedureConfig     *config,
+                                              gint32                  *file_offset,
+                                              gint32                  *image_width,
+                                              gint32                  *image_height,
+                                              RawType                 *image_type,
+                                              gint32                  *palette_offset,
+                                              RawPaletteType          *palette_type,
+                                              GFile                  **palette_file);
 
-static void  file_raw_scale_entry_update_int (GimpLabelSpin        *entry,
-                                              gint                 *value);
+/* gui functions */
+static void             preview_update       (GimpPreviewArea         *preview,
+                                              gboolean                 preview_cmap_update);
+static void             preview_update_size  (GimpPreviewArea         *preview);
+static void             load_config_notify   (GimpProcedureConfig     *config,
+                                              GParamSpec              *pspec,
+                                              GimpPreviewArea         *preview);
+static void             preview_allocate     (GimpPreviewArea         *preview,
+                                              GtkAllocation           *allocation,
+                                              gpointer                 user_data);
+static gboolean         load_dialog          (GFile                   *file,
+                                              GimpProcedure           *procedure,
+                                              GObject                 *config,
+                                              gboolean                 is_hgt);
+static gboolean         save_dialog          (GimpImage               *image,
+                                              GimpProcedure           *procedure,
+                                              gboolean                 has_alpha,
+                                              GObject                 *config);
 
 G_DEFINE_TYPE (Raw, raw, GIMP_TYPE_PLUG_IN)
 
@@ -209,11 +247,8 @@ GIMP_MAIN (RAW_TYPE)
 DEFINE_STD_SET_I18N
 
 
-static RawConfig *runtime             = NULL;
-static GFile     *palfile             = NULL;
 static gint       preview_fd          = -1;
 static guchar     preview_cmap[1024];
-static gboolean   preview_cmap_update = TRUE;
 
 
 static void
@@ -270,6 +305,48 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "data");
+
+      /* Properties for image data. */
+
+      GIMP_PROC_ARG_INT (procedure, "width",
+                         "_Width",
+                         "Image width in number of pixels",
+                         1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
+                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "height",
+                         "_Height",
+                         "Image height in number of pixels",
+                         1, GIMP_MAX_IMAGE_SIZE, PREVIEW_SIZE,
+                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "offset",
+                         "O_ffset",
+                         "Offset to beginning of image in raw data",
+                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_INT (procedure, "color-representation",
+                         "Pixel r_epresentation",
+                         "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
+                         RAW_RGB, RAW_GRAY_16BPP_SLE, RAW_RGB,
+                         G_PARAM_READWRITE);
+
+      /* Properties for palette data. */
+
+      GIMP_PROC_ARG_INT (procedure, "palette-offset",
+                         "Pallette Offse_t",
+                         "Offset to beginning of data in the palette file",
+                         0, GIMP_MAX_IMAGE_SIZE, 0,
+                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "palette-type",
+                         "Palette's la_yout",
+                         "The layout for the palette's color channels"
+                         "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
+                         RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
+                         G_PARAM_READWRITE);
+      GIMP_PROC_ARG_FILE (procedure, "palette-file",
+                          "_Palette File",
+                          "The file containing palette data",
+                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, LOAD_HGT_PROC))
     {
@@ -302,10 +379,10 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                           "hgt");
 
       GIMP_PROC_ARG_INT (procedure, "sample-spacing",
-                         "Sample spacing",
+                         "_Sample spacing",
                          "The sample spacing of the data. "
                          "(0: auto-detect, 1: SRTM-1, 2: SRTM-3 data)",
-                         0, 2, 0,
+                         HGT_SRTM_AUTO_DETECT, HGT_SRTM_3, HGT_SRTM_AUTO_DETECT,
                          G_PARAM_READWRITE);
     }
   else if (! strcmp (name, SAVE_PROC))
@@ -330,14 +407,14 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "data,raw");
 
-      GIMP_PROC_ARG_INT (procedure, "image-type",
+      GIMP_PROC_ARG_INT (procedure, "planar-configuration",
                          "Planar configuration",
-                         "How color pixel data are stored { RAW_RGB (0), RAW_PLANAR (6) }",
-                         RAW_RGB, RAW_PLANAR, RAW_RGB,
+                         "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
+                         RAW_PLANAR_CONTIGUOUS, RAW_PLANAR_SEPARATE, RAW_PLANAR_CONTIGUOUS,
                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_INT (procedure, "palette-type",
-                         "Palette's configuration",
+                         "Palette's layout",
                          "The layout for the palette's color channels"
                          "{ RAW_PALETTE_RGB (0), RAW_PALETTE_BGR (1) }",
                          RAW_PALETTE_RGB, RAW_PALETTE_BGR, RAW_PALETTE_RGB,
@@ -357,85 +434,22 @@ raw_load (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpValueArray    *return_vals;
-  gboolean           is_hgt;
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
-  GimpImage         *image  = NULL;
-  GError            *error  = NULL;
+  GimpValueArray      *return_vals;
+  GimpProcedureConfig *config;
+  gboolean             is_hgt;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpImage           *image  = NULL;
+  GError              *error  = NULL;
 
   gegl_init (NULL, NULL);
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, image, run_mode, args);
+
   is_hgt = (! strcmp (gimp_procedure_get_name (procedure), LOAD_HGT_PROC));
-
-  /* allocate config structure and fill with defaults */
-  runtime = g_new0 (RawConfig, 1);
-
-  runtime->file_offset    = 0;
-  runtime->palette_offset = 0;
-  runtime->palette_type   = RAW_PALETTE_RGB;
-
-  if (is_hgt)
-    {
-      FILE  *fp;
-      glong  pos;
-      gint   hgt_size;
-
-      runtime->image_type = RAW_GRAY_16BPP_SBE;
-
-      fp = g_fopen (g_file_peek_path (file), "rb");
-      if (! fp)
-        {
-          g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
-                       _("Could not open '%s' for size verification: %s"),
-                       gimp_file_get_utf8_name (file),
-                       g_strerror (errno));
-
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
-      else
-        {
-          fseek (fp, 0, SEEK_END);
-          pos = ftell (fp);
-
-          /* HGT files have always the same size, either 1201*1201
-           * or 3601*3601 of 16-bit values.
-           */
-          if (pos == 1201*1201*2)
-            {
-              hgt_size = 1201;
-            }
-          else if (pos == 3601*3601*2)
-            {
-              hgt_size = 3601;
-            }
-          else
-            {
-              /* As a special exception, if the file looks like an HGT
-               * format from extension, yet it doesn't have the right
-               * size, we will degrade a bit the experience by adding
-               * sample spacing choice.
-               */
-              hgt_size = 0;
-            }
-
-          runtime->image_width  = hgt_size;
-          runtime->image_height = hgt_size;
-
-          fclose (fp);
-        }
-    }
-  else
-    {
-      runtime->image_width  = PREVIEW_SIZE;
-      runtime->image_height = PREVIEW_SIZE;
-      runtime->image_type   = RAW_RGB;
-    }
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! is_hgt)
-        gimp_get_data (LOAD_PROC, runtime);
-
       preview_fd = g_open (g_file_peek_path (file), O_RDONLY, 0);
       if (preview_fd < 0)
         {
@@ -449,7 +463,15 @@ raw_load (GimpProcedure        *procedure,
         }
       else
         {
-          if (! load_dialog (file, is_hgt))
+          /* As a special exception, if the file looks like an HGT format
+           * from extension, yet it doesn't have the right size, we will
+           * degrade a bit the experience by adding sample spacing choice.
+           */
+          gboolean show_dialog = (! is_hgt || ! detect_sample_spacing (config, file, &error));
+
+          if (error != NULL)
+            status = GIMP_PDB_EXECUTION_ERROR;
+          else if (show_dialog && ! load_dialog (file, procedure, G_OBJECT (config), is_hgt))
             status = GIMP_PDB_CANCEL;
 
           close (preview_fd);
@@ -457,11 +479,14 @@ raw_load (GimpProcedure        *procedure,
     }
   else if (is_hgt) /* HGT file in non-interactive mode. */
     {
-      gint32 sample_spacing = GIMP_VALUES_GET_INT (args, 0);
+      HgtSampleSpacing sample_spacing = HGT_SRTM_AUTO_DETECT;
 
-      if (sample_spacing != 0 &&
-          sample_spacing != 1 &&
-          sample_spacing != 3)
+      g_object_get (config,
+                    "sample-spacing", &sample_spacing,
+                    NULL);
+
+      if (sample_spacing < HGT_SRTM_AUTO_DETECT ||
+          sample_spacing > HGT_SRTM_3)
         {
           g_set_error (&error,
                        GIMP_PLUGIN_HGT_LOAD_ERROR,
@@ -472,40 +497,21 @@ raw_load (GimpProcedure        *procedure,
 
           status = GIMP_PDB_CALLING_ERROR;
         }
-      else
+      else if (sample_spacing == HGT_SRTM_AUTO_DETECT &&
+               ! detect_sample_spacing (config, file, &error))
         {
-          switch (sample_spacing)
-            {
-            case 0:
-              /* Auto-detection already occurred. Let's just check if
-               *it was successful.
-               */
-              if (runtime->image_width != 1201 &&
-                  runtime->image_width != 3601)
-                {
-                  g_set_error (&error,
-                               G_FILE_ERROR, G_FILE_ERROR_INVAL,
-                               _("Auto-detection of sample spacing failed. "
-                                 "\"%s\" does not appear to be a valid HGT file "
-                                 "or its variant is not supported yet. "
-                                 "Supported HGT files are: SRTM-1 and SRTM-3. "
-                                 "If you know the variant, run with argument 1 or 3."),
-                               gimp_file_get_utf8_name (file));
+          if (error == NULL)
+            /* Auto-detection occurred and was not successful. */
+            g_set_error (&error,
+                         G_FILE_ERROR, G_FILE_ERROR_INVAL,
+                         _("Auto-detection of sample spacing failed. "
+                           "\"%s\" does not appear to be a valid HGT file "
+                           "or its variant is not supported yet. "
+                           "Supported HGT files are: SRTM-1 and SRTM-3. "
+                           "If you know the variant, run with argument 1 or 3."),
+                         gimp_file_get_utf8_name (file));
 
-                  status = GIMP_PDB_CALLING_ERROR;
-                }
-              break;
-
-            case 1:
-              runtime->image_width  = 3601;
-              runtime->image_height = 3601;
-              break;
-
-            default: /* 3 */
-              runtime->image_width  = 1201;
-              runtime->image_height = 1201;
-              break;
-            }
+          status = GIMP_PDB_CALLING_ERROR;
         }
     }
   else
@@ -519,15 +525,7 @@ raw_load (GimpProcedure        *procedure,
 
   /* we are okay, and the user clicked OK in the load dialog */
   if (status == GIMP_PDB_SUCCESS)
-    {
-      image = load_image (file, &error);
-
-      if (image)
-        {
-          if (! is_hgt)
-            gimp_set_data (LOAD_PROC, runtime, sizeof (RawConfig));
-        }
-    }
+    image = load_image (file, config, &error);
 
   if (status != GIMP_PDB_SUCCESS && error)
     {
@@ -536,7 +534,8 @@ raw_load (GimpProcedure        *procedure,
                   error->message);
     }
 
-  g_free (runtime);
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
 
   if (! image)
     return gimp_procedure_new_return_values (procedure, status, error);
@@ -560,11 +559,11 @@ raw_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  GimpProcedureConfig *config;
-  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
-  GimpExportReturn     export = GIMP_EXPORT_CANCEL;
-  RawType              image_type;
-  GError              *error  = NULL;
+  GimpProcedureConfig    *config;
+  GimpPDBStatusType       status = GIMP_PDB_SUCCESS;
+  GimpExportReturn        export = GIMP_EXPORT_CANCEL;
+  RawPlanarConfiguration  planar_conf;
+  GError                 *error  = NULL;
 
   gegl_init (NULL, NULL);
 
@@ -572,10 +571,10 @@ raw_save (GimpProcedure        *procedure,
   gimp_procedure_config_begin_export (config, image, run_mode, args, NULL);
 
   g_object_get (config,
-                "image-type", &image_type,
+                "planar-configuration", &planar_conf,
                 NULL);
 
-  if ((image_type != RAW_RGB) && (image_type != RAW_PLANAR))
+  if ((planar_conf != RAW_PLANAR_CONTIGUOUS) && (planar_conf != RAW_PLANAR_SEPARATE))
     {
       return gimp_procedure_new_return_values (procedure,
                                                GIMP_PDB_CALLING_ERROR,
@@ -619,8 +618,7 @@ raw_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, image, drawables[0], G_OBJECT (config),
-                        &error))
+      if (! save_image (file, image, drawables[0], config, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -698,21 +696,21 @@ mmap_read (gint    fd,
 /* this handles 1, 2, 3, 4 bpp "standard" images */
 static gboolean
 raw_load_standard (RawGimpData *data,
+                   gint         width,
+                   gint         height,
+                   gint         offset,
                    gint         bpp)
 {
   guchar *row = NULL;
 
-  row = g_try_malloc (runtime->image_width * runtime->image_height * bpp);
+  row = g_try_malloc (width * height * bpp);
   if (! row)
     return FALSE;
 
-  raw_read_row (data->fp, row, runtime->file_offset,
-                runtime->image_width * runtime->image_height * bpp);
+  raw_read_row (data->fp, row, offset, width * height * bpp);
 
-  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
-                                                 runtime->image_width,
-                                                 runtime->image_height), 0,
-                   NULL, row, GEGL_AUTO_ROWSTRIDE);
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
+                   0, NULL, row, GEGL_AUTO_ROWSTRIDE);
 
   g_free (row);
 
@@ -721,6 +719,9 @@ raw_load_standard (RawGimpData *data,
 
 static gboolean
 raw_load_gray16 (RawGimpData *data,
+                 gint         width,
+                 gint         height,
+                 gint         offset,
                  RawType      type)
 {
   guint16 *in_raw = NULL;
@@ -729,8 +730,8 @@ raw_load_gray16 (RawGimpData *data,
   gsize    out_size;
   gsize    i;
 
-  in_size  = runtime->image_width * runtime->image_height;
-  out_size = runtime->image_width * runtime->image_height * 3 * sizeof (*out_raw);
+  in_size  = width * height;
+  out_size = width * height * 3 * sizeof (*out_raw);
 
   in_raw = g_try_malloc (in_size * sizeof (*in_raw));
   if (! in_raw)
@@ -743,7 +744,7 @@ raw_load_gray16 (RawGimpData *data,
       return FALSE;
     }
 
-  raw_read_row (data->fp, (guchar*) in_raw, runtime->file_offset,
+  raw_read_row (data->fp, (guchar*) in_raw, offset,
                 in_size * sizeof (*in_raw));
 
   for (i = 0; i < in_size; i++)
@@ -764,10 +765,8 @@ raw_load_gray16 (RawGimpData *data,
       out_raw[3 * i + 2] = pixel_val;
     }
 
-  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
-                                                 runtime->image_width,
-                                                 runtime->image_height), 0,
-                   NULL, out_raw, GEGL_AUTO_ROWSTRIDE);
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
+                   0, NULL, out_raw, GEGL_AUTO_ROWSTRIDE);
 
   g_free (in_raw);
   g_free (out_raw);
@@ -780,6 +779,9 @@ raw_load_gray16 (RawGimpData *data,
  */
 static gboolean
 raw_load_gray (RawGimpData *data,
+               gint         width,
+               gint         height,
+               gint         offset,
                gint         bpp,
                gint         bitspp)
 {
@@ -792,8 +794,8 @@ raw_load_gray (RawGimpData *data,
   guint   x;
   gint    i;
 
-  in_size  = runtime->image_width * runtime->image_height / (8 / bitspp);
-  out_size = runtime->image_width * runtime->image_height * 3;
+  in_size  = width * height / (8 / bitspp);
+  out_size = width * height * 3;
 
   in_raw = g_try_malloc (in_size);
   if (! in_raw)
@@ -823,8 +825,7 @@ raw_load_gray (RawGimpData *data,
       pixel_mask_lo |= pixel_mask_lo << 1;
     }
 
-  raw_read_row (data->fp, in_raw, runtime->file_offset,
-                in_size);
+  raw_read_row (data->fp, in_raw, offset, in_size);
 
   x = 0; /* walks though all output pixels */
   for (i = 0; i < in_size; i++)
@@ -847,10 +848,8 @@ raw_load_gray (RawGimpData *data,
         }
     }
 
-  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
-                                                 runtime->image_width,
-                                                 runtime->image_height), 0,
-                   NULL, out_raw, GEGL_AUTO_ROWSTRIDE);
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
+                   0, NULL, out_raw, GEGL_AUTO_ROWSTRIDE);
 
   g_free (in_raw);
   g_free (out_raw);
@@ -861,19 +860,20 @@ raw_load_gray (RawGimpData *data,
 /* this handles RGB565 images */
 static gboolean
 raw_load_rgb565 (RawGimpData *data,
+                 gint         width,
+                 gint         height,
+                 gint         offset,
                  RawType      type)
 {
-  gint32   num_pixels = runtime->image_width * runtime->image_height;
+  gint32   num_pixels = width * height;
   guint16 *in         = g_malloc (num_pixels * 2);
   guchar  *row        = g_malloc (num_pixels * 3);
 
-  raw_read_row (data->fp, (guchar *)in, runtime->file_offset, num_pixels * 2);
+  raw_read_row (data->fp, (guchar *)in, offset, num_pixels * 2);
   rgb_565_to_888 (in, row, num_pixels, type);
 
-  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0,
-                                                 runtime->image_width,
-                                                 runtime->image_height), 0,
-                   NULL, row, GEGL_AUTO_ROWSTRIDE);
+  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
+                   0, NULL, row, GEGL_AUTO_ROWSTRIDE);
 
   g_free (in);
   g_free (row);
@@ -936,54 +936,54 @@ rgb_565_to_888 (guint16 *in,
       break;
 
     default:
-      /*This conversion function does not handle the passed in image-type*/
+      /*This conversion function does not handle the passed in
+       * planar-configuration*/
       g_assert_not_reached ();
     }
 }
 
 /* this handles 3 bpp "planar" images */
 static gboolean
-raw_load_planar (RawGimpData *data)
+raw_load_planar (RawGimpData *data,
+                 gint         width,
+                 gint         height,
+                 gint         offset)
 {
   gint32  r_offset, g_offset, b_offset, i, j, k;
   guchar *r_row, *b_row, *g_row, *row;
   gint    bpp = 3; /* adding support for alpha channel should be easy */
 
   /* red, green, blue rows temporary data */
-  r_row = g_malloc (runtime->image_width);
-  g_row = g_malloc (runtime->image_width);
-  b_row = g_malloc (runtime->image_width);
+  r_row = g_malloc (width);
+  g_row = g_malloc (width);
+  b_row = g_malloc (width);
 
   /* row for the pixel region, after combining RGB together */
-  row = g_malloc (runtime->image_width * bpp);
+  row = g_malloc (width * bpp);
 
-  r_offset = runtime->file_offset;
-  g_offset = r_offset + runtime->image_width * runtime->image_height;
-  b_offset = g_offset + runtime->image_width * runtime->image_height;
+  r_offset = offset;
+  g_offset = r_offset + width * height;
+  b_offset = g_offset + width * height;
 
-  for (i = 0; i < runtime->image_height; i++)
+  for (i = 0; i < height; i++)
     {
       /* Read R, G, B rows */
-      raw_read_row (data->fp, r_row, r_offset + (runtime->image_width * i),
-                    runtime->image_width);
-      raw_read_row (data->fp, g_row, g_offset + (runtime->image_width * i),
-                    runtime->image_width);
-      raw_read_row (data->fp, b_row, b_offset + (runtime->image_width * i),
-                    runtime->image_width);
+      raw_read_row (data->fp, r_row, r_offset + (width * i), width);
+      raw_read_row (data->fp, g_row, g_offset + (width * i), width);
+      raw_read_row (data->fp, b_row, b_offset + (width * i), width);
 
       /* Combine separate R, G and B rows into RGB triples */
-      for (j = 0, k = 0; j < runtime->image_width; j++)
+      for (j = 0, k = 0; j < width; j++)
         {
           row[k++] = r_row[j];
           row[k++] = g_row[j];
           row[k++] = b_row[j];
         }
 
-      gegl_buffer_set (data->buffer,
-                       GEGL_RECTANGLE (0, i, runtime->image_width, 1), 0,
-                       NULL, row, GEGL_AUTO_ROWSTRIDE);
+      gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, i, width, 1),
+                       0, NULL, row, GEGL_AUTO_ROWSTRIDE);
 
-      gimp_progress_update ((gfloat) i / (gfloat) runtime->image_height);
+      gimp_progress_update ((gfloat) i / (gfloat) height);
     }
 
   gimp_progress_update (1.0);
@@ -997,8 +997,10 @@ raw_load_planar (RawGimpData *data)
 }
 
 static gboolean
-raw_load_palette (RawGimpData *data,
-                  GFile       *palette_file)
+raw_load_palette (RawGimpData    *data,
+                  gint            palette_offset,
+                  RawPaletteType  palette_type,
+                  GFile          *palette_file)
 {
   guchar temp[1024];
   gint   fd, i, j;
@@ -1010,9 +1012,9 @@ raw_load_palette (RawGimpData *data,
       if (! fd)
         return FALSE;
 
-      lseek (fd, runtime->palette_offset, SEEK_SET);
+      lseek (fd, palette_offset, SEEK_SET);
 
-      switch (runtime->palette_type)
+      switch (palette_type)
         {
         case RAW_PALETTE_RGB:
           read (fd, data->cmap, 768);
@@ -1050,29 +1052,29 @@ raw_load_palette (RawGimpData *data,
 /* end new image handle functions */
 
 static gboolean
-save_image (GFile         *file,
-            GimpImage     *image,
-            GimpDrawable  *drawable,
-            GObject       *config,
-            GError       **error)
+save_image (GFile                *file,
+            GimpImage            *image,
+            GimpDrawable         *drawable,
+            GimpProcedureConfig  *config,
+            GError              **error)
 {
-  GeglBuffer     *buffer;
-  const Babl     *format = NULL;
-  guchar         *cmap   = NULL;  /* colormap for indexed images */
-  guchar         *buf;
-  guchar         *components[4] = { 0, };
-  gint            n_components;
-  gint32          width, height, bpp;
-  FILE           *fp;
-  gint            i, j, c;
-  gint            palsize = 0;
-  RawType         image_type;     /* type of image (RGB, PLANAR) */
-  RawPaletteType  palette_type;   /* type of palette (RGB/BGR)   */
-  gboolean        ret = FALSE;
+  GeglBuffer             *buffer;
+  const Babl             *format = NULL;
+  guchar                 *cmap   = NULL;  /* colormap for indexed images */
+  guchar                 *buf;
+  guchar                 *components[4] = { 0, };
+  gint                    n_components;
+  gint32                  width, height, bpp;
+  FILE                   *fp;
+  gint                    i, j, c;
+  gint                    palsize = 0;
+  RawPlanarConfiguration  planar_conf;    /* Planar Configuration (CONTIGUOUS, PLANAR) */
+  RawPaletteType          palette_type;   /* type of palette (RGB/BGR)   */
+  gboolean                ret = FALSE;
 
   g_object_get (config,
-                "image-type",   &image_type,
-                "palette-type", &palette_type,
+                "planar-configuration", &planar_conf,
+                "palette-type",         &palette_type,
                 NULL);
 
   buffer = gimp_drawable_get_buffer (drawable);
@@ -1108,9 +1110,9 @@ save_image (GFile         *file,
 
   ret = TRUE;
 
-  switch (image_type)
+  switch (planar_conf)
     {
-    case RAW_RGB:
+    case RAW_PLANAR_CONTIGUOUS:
       if (! fwrite (buf, width * height * bpp, 1, fp))
         {
           fclose (fp);
@@ -1161,7 +1163,7 @@ save_image (GFile         *file,
         }
       break;
 
-    case RAW_PLANAR:
+    case RAW_PLANAR_SEPARATE:
       for (c = 0; c < n_components; c++)
         components[c] = g_new (guchar, width * height);
 
@@ -1191,17 +1193,113 @@ save_image (GFile         *file,
   return ret;
 }
 
+static gboolean
+detect_sample_spacing (GimpProcedureConfig  *config,
+                       GFile                *file,
+                       GError              **error)
+{
+  HgtSampleSpacing  sample_spacing = HGT_SRTM_AUTO_DETECT;
+  FILE             *fp;
+  glong             pos;
+
+  fp = g_fopen (g_file_peek_path (file), "rb");
+  if (! fp)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for size verification: %s"),
+                   gimp_file_get_utf8_name (file),
+                   g_strerror (errno));
+    }
+  else
+    {
+      fseek (fp, 0, SEEK_END);
+      pos = ftell (fp);
+
+      /* HGT files have always the same size, either 1201*1201
+       * or 3601*3601 of 16-bit values.
+       */
+      if (pos == 1201*1201*2)
+        sample_spacing = HGT_SRTM_3;
+      else if (pos == 3601*3601*2)
+        sample_spacing = HGT_SRTM_1;
+
+      g_object_set (config,
+                    "sample-spacing", sample_spacing,
+                    NULL);
+
+      fclose (fp);
+    }
+
+  return (sample_spacing != HGT_SRTM_AUTO_DETECT);
+}
+
+static void
+get_load_config_values (GimpProcedureConfig     *config,
+                        gint32                  *file_offset,
+                        gint32                  *image_width,
+                        gint32                  *image_height,
+                        RawType                 *image_type,
+                        gint32                  *palette_offset,
+                        RawPaletteType          *palette_type,
+                        GFile                  **palette_file)
+{
+  GimpProcedure *procedure;
+
+  procedure = gimp_procedure_config_get_procedure (config);
+
+  if (g_strcmp0 (gimp_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
+    {
+      gint sample_spacing;
+
+      g_object_get (config,
+                    "sample-spacing", &sample_spacing,
+                    NULL);
+
+      if (sample_spacing == HGT_SRTM_3)
+        *image_width = *image_height = 1201;
+      else
+        *image_width = *image_height = 3601;
+
+      *file_offset    = 0;
+      *image_type     = RAW_GRAY_16BPP_SBE;
+      *palette_offset = 0;
+      *palette_type   = RAW_PALETTE_RGB;
+      *palette_file   = NULL;
+    }
+  else
+    {
+      g_object_get (config,
+                    "offset",               file_offset,
+                    "width",                image_width,
+                    "height",               image_height,
+                    "color-representation", image_type,
+                    "palette-offset",       palette_offset,
+                    "palette-type",         palette_type,
+                    "palette-file",         palette_file,
+                    NULL);
+    }
+}
+
 static GimpImage *
-load_image (GFile   *file,
-            GError **error)
+load_image (GFile                *file,
+            GimpProcedureConfig  *config,
+            GError              **error)
 {
   RawGimpData       *data;
   GimpLayer         *layer = NULL;
   GimpImageType      ltype = GIMP_RGB_IMAGE;
   GimpImageBaseType  itype = GIMP_RGB;
+  RawType            color_rep;
   goffset            size;
+  gint               width;
+  gint               height;
+  gint               offset;
   gint               bpp    = 0;
   gint               bitspp = 8;
+
+  gint               palette_offset;
+  RawPaletteType     palette_type;
+  GFile             *palette_file;
 
   data = g_new0 (RawGimpData, 1);
 
@@ -1218,9 +1316,12 @@ load_image (GFile   *file,
       return NULL;
     }
 
+  get_load_config_values (config, &offset, &width, &height, &color_rep,
+                          &palette_offset, &palette_type, &palette_file);
+
   size = get_file_info (file);
 
-  switch (runtime->image_type)
+  switch (color_rep)
     {
     case RAW_RGB:             /* standard RGB */
     case RAW_PLANAR:          /* planar RGB */
@@ -1291,76 +1392,71 @@ load_image (GFile   *file,
     }
 
   /* make sure we don't load image bigger than file size */
-  if (runtime->image_height > (size / runtime->image_width / bpp * 8 / bitspp))
-    runtime->image_height = size / runtime->image_width / bpp * 8 / bitspp;
+  if (height > (size / width / bpp * 8 / bitspp))
+    height = size / width / bpp * 8 / bitspp;
 
-  if (runtime->image_type >= RAW_GRAY_16BPP_BE)
-    data->image = gimp_image_new_with_precision (runtime->image_width,
-                                                 runtime->image_height,
-                                                 itype,
+  if (color_rep >= RAW_GRAY_16BPP_BE)
+    data->image = gimp_image_new_with_precision (width, height, itype,
                                                  GIMP_PRECISION_U16_NON_LINEAR);
   else
-    data->image = gimp_image_new (runtime->image_width,
-                                  runtime->image_height,
-                                  itype);
+    data->image = gimp_image_new (width, height, itype);
   gimp_image_set_file (data->image, file);
   layer = gimp_layer_new (data->image, _("Background"),
-                          runtime->image_width, runtime->image_height,
-                          ltype,
-                          100,
+                          width, height, ltype, 100,
                           gimp_image_get_default_new_layer_mode (data->image));
   gimp_image_insert_layer (data->image, layer, NULL, 0);
 
   data->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  switch (runtime->image_type)
+  switch (color_rep)
     {
     case RAW_RGB:
     case RAW_RGBA:
-      raw_load_standard (data, bpp);
+      raw_load_standard (data, width, height, offset, bpp);
       break;
 
     case RAW_RGB565_BE:
     case RAW_RGB565_LE:
     case RAW_BGR565_BE:
     case RAW_BGR565_LE:
-      raw_load_rgb565 (data, runtime->image_type);
+      raw_load_rgb565 (data, width, height, offset, color_rep);
       break;
 
     case RAW_PLANAR:
-      raw_load_planar (data);
+      raw_load_planar (data, width, height, offset);
       break;
 
     case RAW_GRAY_1BPP:
-      raw_load_gray (data, bpp, bitspp);
+      raw_load_gray (data, width, height, offset, bpp, bitspp);
       break;
     case RAW_GRAY_2BPP:
-      raw_load_gray (data, bpp, bitspp);
+      raw_load_gray (data, width, height, offset, bpp, bitspp);
       break;
     case RAW_GRAY_4BPP:
-      raw_load_gray (data, bpp, bitspp);
+      raw_load_gray (data, width, height, offset, bpp, bitspp);
       break;
     case RAW_GRAY_8BPP:
-      raw_load_gray (data, bpp, bitspp);
+      raw_load_gray (data, width, height, offset, bpp, bitspp);
       break;
 
     case RAW_INDEXED:
     case RAW_INDEXEDA:
-      raw_load_palette (data, palfile);
-      raw_load_standard (data, bpp);
+      raw_load_palette (data, palette_offset, palette_type, palette_file);
+      raw_load_standard (data, width, height, offset, bpp);
       break;
 
     case RAW_GRAY_16BPP_BE:
     case RAW_GRAY_16BPP_LE:
     case RAW_GRAY_16BPP_SBE:
     case RAW_GRAY_16BPP_SLE:
-      raw_load_gray16 (data, runtime->image_type);
+      raw_load_gray16 (data, width, height, offset, color_rep);
       break;
     }
 
   fclose (data->fp);
 
   g_object_unref (data->buffer);
+  g_clear_object (&palette_file);
 
   return data->image;
 }
@@ -1369,33 +1465,40 @@ load_image (GFile   *file,
 /* misc GUI stuff */
 
 static void
-preview_update_size (GimpPreviewArea *preview)
+preview_update (GimpPreviewArea *preview,
+                gboolean         preview_cmap_update)
 {
-  gtk_widget_set_size_request (GTK_WIDGET (preview),
-                               runtime->image_width, runtime->image_height);
-}
+  gint                 preview_width;
+  gint                 preview_height;
+  gint32               pos;
+  gint                 x, y;
+  gint                 bitspp = 0;
 
-static void
-preview_update (GimpPreviewArea *preview)
-{
-  gint     preview_width;
-  gint     preview_height;
-  gint     width;
-  gint     height;
-  gint32   pos;
-  gint     x, y;
-  gint     bitspp = 0;
+  GimpProcedureConfig *config;
+  RawType              color_rep;
+  gint                 width;
+  gint                 height;
+  gint                 offset;
+
+  GFile               *palette_file;
+  gint                 palette_offset;
+  RawPaletteType       palette_type;
+
 
   gimp_preview_area_get_size (preview, &preview_width, &preview_height);
 
-  width  = MIN (runtime->image_width,  preview_width);
-  height = MIN (runtime->image_height, preview_height);
+  config = g_object_get_data (G_OBJECT (preview), "procedure-config");
+
+  get_load_config_values (config, &offset, &width, &height, &color_rep,
+                          &palette_offset, &palette_type, &palette_file);
+  width  = MIN (width,  preview_width);
+  height = MIN (height, preview_height);
 
   gimp_preview_area_fill (preview,
                           0, 0, preview_width, preview_height,
                           255, 255, 255);
 
-  switch (runtime->image_type)
+  switch (color_rep)
     {
     case RAW_RGB:
       /* standard RGB image */
@@ -1404,7 +1507,7 @@ preview_update (GimpPreviewArea *preview)
 
         for (y = 0; y < height; y++)
           {
-            pos = runtime->file_offset + runtime->image_width * y * 3;
+            pos = offset + width * y * 3;
             mmap_read (preview_fd, row, width * 3, pos, width * 3);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
@@ -1422,7 +1525,7 @@ preview_update (GimpPreviewArea *preview)
 
         for (y = 0; y < height; y++)
           {
-            pos = runtime->file_offset + runtime->image_width * y * 4;
+            pos = offset + width * y * 4;
             mmap_read (preview_fd, row, width * 4, pos, width * 4);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
@@ -1444,9 +1547,9 @@ preview_update (GimpPreviewArea *preview)
 
         for (y = 0; y < height; y++)
           {
-            pos = runtime->file_offset + runtime->image_width * y * 2;
+            pos = offset + width * y * 2;
             mmap_read (preview_fd, in, width * 2, pos, width * 2);
-            rgb_565_to_888 (in, row, width, runtime->image_type);
+            rgb_565_to_888 (in, row, width, color_rep);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
                                     GIMP_RGB_IMAGE, row, width * 3);
@@ -1468,16 +1571,13 @@ preview_update (GimpPreviewArea *preview)
           {
             gint j, k;
 
-            pos = (runtime->file_offset +
-                   (y * runtime->image_width));
+            pos = (offset + (y * width));
             mmap_read (preview_fd, r_row, width, pos, width);
 
-            pos = (runtime->file_offset +
-                   (runtime->image_width * (runtime->image_height + y)));
+            pos = (offset + (width * (height + y)));
             mmap_read (preview_fd, g_row, width, pos, width);
 
-            pos = (runtime->file_offset +
-                   (runtime->image_width * (runtime->image_height * 2 + y)));
+            pos = (offset + (width * (height * 2 + y)));
             mmap_read (preview_fd, b_row, width, pos, width);
 
             for (j = 0, k = 0; j < width; j++)
@@ -1536,9 +1636,7 @@ preview_update (GimpPreviewArea *preview)
             pixel_mask_lo |= pixel_mask_lo << 1;
           }
 
-        mmap_read (preview_fd, in_raw, in_size,
-                   runtime->file_offset,
-                   in_size);
+        mmap_read (preview_fd, in_raw, in_size, offset, in_size);
 
         x = 0; /* walks though all output pixels */
         for (i = 0; i < in_size; i++)
@@ -1572,21 +1670,21 @@ preview_update (GimpPreviewArea *preview)
     case RAW_INDEXEDA:
       /* indexed image */
       {
-        gboolean  alpha = (runtime->image_type == RAW_INDEXEDA);
+        gboolean  alpha = (color_rep == RAW_INDEXEDA);
         guchar   *index = g_malloc0 (width * (alpha ? 2 : 1));
         guchar   *row   = g_malloc0 (width * (alpha ? 4 : 3));
 
         if (preview_cmap_update)
           {
-            if (palfile)
+            if (palette_file)
               {
                 gint fd;
 
-                fd = g_open (g_file_peek_path (palfile), O_RDONLY, 0);
+                fd = g_open (g_file_peek_path (palette_file), O_RDONLY, 0);
 
-                lseek (fd, runtime->palette_offset, SEEK_SET);
+                lseek (fd, palette_offset, SEEK_SET);
                 read (fd, preview_cmap,
-                      (runtime->palette_type == RAW_PALETTE_RGB) ? 768 : 1024);
+                      (palette_type == RAW_PALETTE_RGB) ? 768 : 1024);
                 close (fd);
               }
             else
@@ -1597,7 +1695,7 @@ preview_update (GimpPreviewArea *preview)
                     preview_cmap[x++] = y;
                     preview_cmap[x++] = y;
 
-                    if (runtime->palette_type == RAW_PALETTE_RGB)
+                    if (palette_type == RAW_PALETTE_RGB)
                       {
                         preview_cmap[x++] = y;
                       }
@@ -1608,8 +1706,6 @@ preview_update (GimpPreviewArea *preview)
                       }
                   }
               }
-
-            preview_cmap_update = FALSE;
           }
 
         for (y = 0; y < height; y++)
@@ -1618,12 +1714,12 @@ preview_update (GimpPreviewArea *preview)
 
             if (alpha)
               {
-                pos = runtime->file_offset + runtime->image_width * 2 * y;
+                pos = offset + width * 2 * y;
                 mmap_read (preview_fd, index, width * 2, pos, width);
 
                 for (x = 0; x < width; x++)
                   {
-                    switch (runtime->palette_type)
+                    switch (palette_type)
                       {
                       case RAW_PALETTE_RGB:
                         *p++ = preview_cmap[index[2 * x] * 3 + 0];
@@ -1645,12 +1741,12 @@ preview_update (GimpPreviewArea *preview)
               }
             else
               {
-                pos = runtime->file_offset + runtime->image_width * y;
+                pos = offset + width * y;
                 mmap_read (preview_fd, index, width, pos, width);
 
                 for (x = 0; x < width; x++)
                   {
-                    switch (runtime->palette_type)
+                    switch (palette_type)
                       {
                       case RAW_PALETTE_RGB:
                         *p++ = preview_cmap[index[x] * 3 + 0];
@@ -1687,20 +1783,20 @@ preview_update (GimpPreviewArea *preview)
           {
             gint j;
 
-            pos = (runtime->file_offset + (y * runtime->image_width * 2));
+            pos = (offset + (y * width * 2));
             mmap_read (preview_fd, (guchar*) r_row, 2 * width, pos, width);
 
             for (j = 0; j < width; j++)
               {
                 gint pixel_val;
 
-                if (runtime->image_type == RAW_GRAY_16BPP_BE)
+                if (color_rep == RAW_GRAY_16BPP_BE)
                   pixel_val = GUINT16_FROM_BE (r_row[j]);
-                else if (runtime->image_type == RAW_GRAY_16BPP_LE)
+                else if (color_rep == RAW_GRAY_16BPP_LE)
                   pixel_val = GUINT16_FROM_LE (r_row[j]);
-                else if (runtime->image_type == RAW_GRAY_16BPP_SBE)
+                else if (color_rep == RAW_GRAY_16BPP_SBE)
                   pixel_val = GINT16_FROM_BE (r_row[j]) - G_MININT16;
-                else /* if (runtime->image_type == RAW_GRAY_16BPP_SLE)*/
+                else /* if (color_rep == RAW_GRAY_16BPP_SLE)*/
                   pixel_val = GINT16_FROM_LE (r_row[j]) - G_MININT16;
 
                 row[j] = pixel_val / 257;
@@ -1715,62 +1811,104 @@ preview_update (GimpPreviewArea *preview)
         }
       break;
     }
+
+  g_clear_object (&palette_file);
 }
 
 static void
-palette_update (GimpPreviewArea *preview)
+preview_update_size (GimpPreviewArea *preview)
 {
-  preview_cmap_update = TRUE;
+  GObject *config;
+  gint     width;
+  gint     height;
 
-  preview_update (preview);
+  config = g_object_get_data (G_OBJECT (preview), "procedure-config");
+
+  if (g_object_class_find_property (G_OBJECT_GET_CLASS (config), "width") != NULL)
+    {
+      g_object_get (config,
+                    "width",  &width,
+                    "height", &height,
+                    NULL);
+    }
+  else
+    {
+      gint sample_spacing;
+
+      g_object_get (config,
+                    "sample-spacing", &sample_spacing,
+                    NULL);
+
+      if (sample_spacing == HGT_SRTM_3)
+        width = height = 1201;
+      else
+        width = height = 3601;
+
+    }
+  gtk_widget_set_size_request (GTK_WIDGET (preview), width, height);
+}
+
+static void
+load_config_notify (GimpProcedureConfig  *config,
+                    GParamSpec           *pspec,
+                    GimpPreviewArea      *preview)
+{
+  gboolean preview_cmap_update = FALSE;
+
+  if (g_str_has_prefix (pspec->name, "palette-"))
+    preview_cmap_update = TRUE;
+
+  preview_update (preview, preview_cmap_update);
+}
+
+static void
+preview_allocate (GimpPreviewArea   *preview,
+                  GtkAllocation     *allocation,
+                  gpointer           user_data)
+{
+  preview_update (preview, FALSE);
 }
 
 static gboolean
-load_dialog (GFile    *file,
-             gboolean  is_hgt)
+load_dialog (GFile         *file,
+             GimpProcedure *procedure,
+             GObject       *config,
+             gboolean       is_hgt)
 {
   GtkWidget *dialog;
-  GtkWidget *main_vbox;
   GtkWidget *preview;
   GtkWidget *sw;
   GtkWidget *viewport;
   GtkWidget *frame;
-  GtkWidget *grid;
-  GtkWidget *combo;
-  GtkWidget *button;
-  GtkWidget *scale;
-  goffset    file_size;
   gboolean   run;
+  gint       sample_spacing;
+  gint       width  = 0;
+  gint       height = 0;
 
-  file_size = get_file_info (file);
+  GtkListStore *store;
+
+  if (is_hgt)
+    g_object_get (config,
+                  "sample-spacing", &sample_spacing,
+                  NULL);
+  else
+    g_object_get (config,
+                  "width",  &width,
+                  "height", &height,
+                  NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = gimp_dialog_new (_("Load Image from Raw Data"), PLUG_IN_ROLE,
-                            NULL, 0,
-                            gimp_standard_help_func,
-                            is_hgt ? LOAD_HGT_PROC : LOAD_PROC,
-                            _("_Cancel"), GTK_RESPONSE_CANCEL,
-                            _("_Open"),   GTK_RESPONSE_OK,
+  dialog = gimp_procedure_dialog_new (GIMP_PROCEDURE (procedure),
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Load Image from Raw Data"));
 
-                            NULL);
-
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
-
-  main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-  gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (dialog))),
-                      main_vbox, TRUE, TRUE, 0);
-  gtk_widget_show (main_vbox);
+  /* Preview frame. */
 
   sw = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (sw),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (main_vbox), sw, TRUE, TRUE, 0);
   gtk_widget_set_size_request (sw, PREVIEW_SIZE, PREVIEW_SIZE);
   gtk_widget_show (sw);
 
@@ -1779,51 +1917,38 @@ load_dialog (GFile    *file,
   gtk_widget_show (viewport);
 
   preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview,
-                               runtime->image_width, runtime->image_height);
+  if (is_hgt)
+    gtk_widget_set_size_request (preview,
+                                 sample_spacing == HGT_SRTM_3 ? 1201 : 3601,
+                                 sample_spacing == HGT_SRTM_3 ? 1201 : 3601);
+  else
+    gtk_widget_set_size_request (preview, width, height);
+
   gtk_container_add (GTK_CONTAINER (viewport), preview);
   gtk_widget_show (preview);
 
+  g_object_set_data (G_OBJECT (preview), "procedure-config",
+                     config);
+
   g_signal_connect_after (preview, "size-allocate",
-                          G_CALLBACK (preview_update),
+                          G_CALLBACK (preview_allocate),
                           NULL);
 
-  if (is_hgt)
-    {
-      if (runtime->image_width == 1201)
-        /* Translators: Digital Elevation Model (DEM) is a technical term
-         * used for 3D surface modeling or relief maps; so it must be
-         * translated by the proper technical term in your language.
-         */
-        frame = gimp_frame_new (_("Digital Elevation Model data (1 arc-second)"));
-      else if (runtime->image_width == 3601)
-        frame = gimp_frame_new (_("Digital Elevation Model data (3 arc-seconds)"));
-      else
-        frame = gimp_frame_new (_("Digital Elevation Model data"));
-    }
-  else
-    {
-      frame = gimp_frame_new (_("Image"));
-    }
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "preview-frame", NULL, FALSE,
+                                            NULL);
+  gtk_container_add (GTK_CONTAINER (frame), sw);
 
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
+  /* Image frame. */
 
-  combo = NULL;
-  if (is_hgt                       &&
-      runtime->image_width != 1201 &&
-      runtime->image_width != 3601)
+  if (is_hgt && sample_spacing == HGT_SRTM_AUTO_DETECT)
     {
       /* When auto-detection of the HGT variant failed, let's just
        * default to SRTM-3 and show a dropdown list.
        */
-      runtime->image_width  = 1201;
-      runtime->image_height = 1201;
+      g_object_set (config,
+                    "sample-spacing", HGT_SRTM_3,
+                    NULL);
 
       /* 2 types of HGT files are possible: SRTM-1 and SRTM-3.
        * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
@@ -1833,158 +1958,129 @@ load_dialog (GFile    *file,
        * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
        * 1201 samples with similar overlapping rows and columns."
        */
-      combo = gimp_int_combo_box_new (_("SRTM-1 (1 arc-second)"),  3601,
-                                      _("SRTM-3 (3 arc-seconds)"), 1201,
-                                      NULL);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                _("_Sample Spacing:"), 0.0, 0.5,
-                                combo, 2);
-
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
-                        &runtime->image_width);
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
-                        &runtime->image_height);
-      /* By default, SRTM-3 is active. */
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), 1201);
+      store = gimp_int_store_new (_("SRTM-1 (1 arc-second)"),  HGT_SRTM_1,
+                                  _("SRTM-3 (3 arc-seconds)"), HGT_SRTM_3,
+                                  NULL);
+      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "sample-spacing",
+                                           GIMP_INT_STORE (store));
     }
   else if (! is_hgt)
     {
       /* Generic case for any data. Let's leave choice to select the
        * right type of raw data.
        */
-      combo = gimp_int_combo_box_new (_("RGB"),                  RAW_RGB,
-                                      _("RGB Alpha"),            RAW_RGBA,
-                                      _("RGB565 Big Endian"),    RAW_RGB565_BE,
-                                      _("RGB565 Little Endian"), RAW_RGB565_LE,
-                                      _("BGR565 Big Endian"),    RAW_BGR565_BE,
-                                      _("BGR565 Little Endian"), RAW_BGR565_LE,
-                                      _("Planar RGB"),           RAW_PLANAR,
-                                      _("B&W 1 bit"),            RAW_GRAY_1BPP,
-                                      _("Gray 2 bit"),           RAW_GRAY_2BPP,
-                                      _("Gray 4 bit"),           RAW_GRAY_4BPP,
-                                      _("Gray 8 bit"),           RAW_GRAY_8BPP,
-                                      _("Indexed"),              RAW_INDEXED,
-                                      _("Indexed Alpha"),        RAW_INDEXEDA,
-                                      _("Gray unsigned 16 bit Big Endian"),    RAW_GRAY_16BPP_BE,
-                                      _("Gray unsigned 16 bit Little Endian"), RAW_GRAY_16BPP_LE,
-                                      _("Gray 16 bit Big Endian"),             RAW_GRAY_16BPP_SBE,
-                                      _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
-                                      NULL);
-      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                     runtime->image_type);
-      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                                _("Image _Type:"), 0.0, 0.5,
-                                combo, 2);
-
-      g_signal_connect (combo, "changed",
-                        G_CALLBACK (gimp_int_combo_box_get_active),
-                        &runtime->image_type);
-    }
-  if (combo)
-    g_signal_connect_swapped (combo, "changed",
-                              G_CALLBACK (preview_update),
-                              preview);
-
-  scale = gimp_scale_entry_new (_("O_ffset:"), runtime->file_offset, 0, file_size, 0);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1, 1000);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (file_raw_scale_entry_update_int),
-                    &runtime->file_offset);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (preview_update),
-                            preview);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
-
-  if (! is_hgt)
-    {
-      scale = gimp_scale_entry_new (_("_Width:"), runtime->image_width, 1, file_size, 0);
-
-      g_signal_connect (scale, "value-changed",
-                        G_CALLBACK (file_raw_scale_entry_update_int),
-                        &runtime->image_width);
-      g_signal_connect_swapped (scale, "value-changed",
-                                G_CALLBACK (preview_update_size),
-                                preview);
-      g_signal_connect_swapped (scale, "value-changed",
-                                G_CALLBACK (preview_update),
-                                preview);
-      gtk_grid_attach (GTK_GRID (grid), scale, 0, 2, 3, 1);
-      gtk_widget_show (scale);
-
-      scale = gimp_scale_entry_new (_("_Height:"), runtime->image_height, 1, file_size, 0);
-
-      g_signal_connect (scale, "value-changed",
-                        G_CALLBACK (file_raw_scale_entry_update_int),
-                        &runtime->image_height);
-      g_signal_connect_swapped (scale, "value-changed",
-                                G_CALLBACK (preview_update_size),
-                                preview);
-      g_signal_connect_swapped (scale, "value-changed",
-                                G_CALLBACK (preview_update),
-                                preview);
-      gtk_grid_attach (GTK_GRID (grid), scale, 0, 3, 3, 1);
-      gtk_widget_show (scale);
-    }
-
-
-  frame = gimp_frame_new (_("Palette"));
-  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  grid = gtk_grid_new ();
-  gtk_grid_set_row_spacing (GTK_GRID (grid), 4);
-  gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
-  gtk_widget_show (grid);
-
-  combo = gimp_int_combo_box_new (_("R, G, B (normal)"),       RAW_PALETTE_RGB,
-                                  _("B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
+      store = gimp_int_store_new (_("RGB"),                                RAW_RGB,
+                                  _("RGB Alpha"),                          RAW_RGBA,
+                                  _("RGB565 Big Endian"),                  RAW_RGB565_BE,
+                                  _("RGB565 Little Endian"),               RAW_RGB565_LE,
+                                  _("BGR565 Big Endian"),                  RAW_BGR565_BE,
+                                  _("BGR565 Little Endian"),               RAW_BGR565_LE,
+                                  _("Planar RGB"),                         RAW_PLANAR,
+                                  _("B&W 1 bit"),                          RAW_GRAY_1BPP,
+                                  _("Gray 2 bit"),                         RAW_GRAY_2BPP,
+                                  _("Gray 4 bit"),                         RAW_GRAY_4BPP,
+                                  _("Gray 8 bit"),                         RAW_GRAY_8BPP,
+                                  _("Indexed"),                            RAW_INDEXED,
+                                  _("Indexed Alpha"),                      RAW_INDEXEDA,
+                                  _("Gray unsigned 16 bit Big Endian"),    RAW_GRAY_16BPP_BE,
+                                  _("Gray unsigned 16 bit Little Endian"), RAW_GRAY_16BPP_LE,
+                                  _("Gray 16 bit Big Endian"),             RAW_GRAY_16BPP_SBE,
+                                  _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
                                   NULL);
-  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
-                                 runtime->palette_type);
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 0,
-                            _("_Palette Type:"), 0.0, 0.5,
-                            combo, 2);
+      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "color-representation",
+                                           GIMP_INT_STORE (store));
+    }
 
-  g_signal_connect (combo, "changed",
-                    G_CALLBACK (gimp_int_combo_box_get_active),
-                    &runtime->palette_type);
-  g_signal_connect_swapped (combo, "changed",
-                            G_CALLBACK (palette_update),
+  if (is_hgt)
+    {
+      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                      "image-box", "sample-spacing", NULL);
+    }
+  else
+    {
+      GtkWidget *entry;
+      goffset    file_size;
+
+      file_size = get_file_info (file);
+
+      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "offset", 1.0);
+      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 0, file_size, FALSE);
+      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "width", 1.0);
+      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
+      entry = gimp_procedure_dialog_get_scale_entry (GIMP_PROCEDURE_DIALOG (dialog),
+                                                     "height", 1.0);
+      gimp_scale_entry_set_bounds (GIMP_SCALE_ENTRY (entry), 1, file_size, FALSE);
+
+      gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                      "image-box",
+                                      "color-representation",
+                                      "offset", "width", "height",
+                                      NULL);
+    }
+
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "image-frame", NULL, FALSE,
+                                            "image-box");
+  if (is_hgt)
+    {
+      if (sample_spacing == HGT_SRTM_3)
+        gtk_frame_set_label (GTK_FRAME (frame),
+                             /* Translators: Digital Elevation Model (DEM) is a technical term
+                              * used for 3D surface modeling or relief maps; so it must be
+                              * translated by the proper technical term in your language.
+                              */
+                             _("Digital Elevation Model data (1 arc-second)"));
+      else if (sample_spacing == HGT_SRTM_1)
+        gtk_frame_set_label (GTK_FRAME (frame),
+                             _("Digital Elevation Model data (3 arc-seconds)"));
+      else
+        gtk_frame_set_label (GTK_FRAME (frame),
+                             _("Digital Elevation Model data"));
+    }
+  else
+    {
+      gtk_frame_set_label (GTK_FRAME (frame), _("Image"));
+    }
+
+  store = gimp_int_store_new (_("R, G, B (normal)"),       RAW_PALETTE_RGB,
+                              _("B, G, R, X (BMP style)"), RAW_PALETTE_BGR,
+                              NULL);
+  gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "palette-type",
+                                       GIMP_INT_STORE (store));
+
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
+                                  "palette-box",
+                                  "palette-offset",
+                                  "palette-type",
+                                  "palette-file",
+                                  NULL);
+  frame = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                            "palette-frame", NULL, FALSE,
+                                            "palette-box");
+  gtk_frame_set_label (GTK_FRAME (frame), _("Palette"));
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "preview-frame",
+                              "image-frame",
+                              "palette-frame",
+                              NULL);
+
+  g_signal_connect_swapped (config, "notify::width",
+                            G_CALLBACK (preview_update_size),
                             preview);
-
-  scale = gimp_scale_entry_new (_("Off_set:"), runtime->palette_offset, 0, 1 << 24, 0);
-  gimp_label_spin_set_increments (GIMP_LABEL_SPIN (scale), 1, 768);
-
-  g_signal_connect (scale, "value-changed",
-                    G_CALLBACK (file_raw_scale_entry_update_int),
-                    &runtime->palette_offset);
-  g_signal_connect_swapped (scale, "value-changed",
-                            G_CALLBACK (palette_update),
+  g_signal_connect_swapped (config, "notify::height",
+                            G_CALLBACK (preview_update_size),
                             preview);
-  gtk_grid_attach (GTK_GRID (grid), scale, 0, 1, 3, 1);
-  gtk_widget_show (scale);
+  g_signal_connect_after (config, "notify",
+                          G_CALLBACK (load_config_notify),
+                          preview);
 
-  button = gtk_file_chooser_button_new (_("Select Palette File"),
-                                        GTK_FILE_CHOOSER_ACTION_OPEN);
-  if (palfile)
-    gtk_file_chooser_set_file (GTK_FILE_CHOOSER (button), palfile, NULL);
-
-  gimp_grid_attach_aligned (GTK_GRID (grid), 0, 2,
-                            _("Pal_ette File:"), 0.0, 0.5,
-                            button, 2);
-
-  g_signal_connect (button, "selection-changed",
-                    G_CALLBACK (palette_callback),
-                    preview);
-
-  gtk_widget_show (dialog);
-
-  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
 
   gtk_widget_destroy (dialog);
 
@@ -2054,17 +2150,17 @@ save_dialog (GimpImage     *image,
                                            image);
 
   /* Image type combo */
-  store = gimp_int_store_new (contiguous_label, RAW_RGB,
-                              planar_label,     RAW_PLANAR,
+  store = gimp_int_store_new (contiguous_label, RAW_PLANAR_CONTIGUOUS,
+                              planar_label,     RAW_PLANAR_SEPARATE,
                               NULL);
   gimp_procedure_dialog_get_int_radio (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "image-type", GIMP_INT_STORE (store));
+                                       "planar-configuration", GIMP_INT_STORE (store));
 
   /* No need to give a choice for 1-channel cases where both contiguous
    * and planar are the same.
    */
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
-                                       "image-type",
+                                       "planar-configuration",
                                        contiguous_sample != NULL,
                                        NULL, NULL, FALSE);
 
@@ -2090,23 +2186,4 @@ save_dialog (GimpImage     *image,
   g_free (planar_label);
 
   return run;
-}
-
-static void
-palette_callback (GtkFileChooser  *button,
-                  GimpPreviewArea *preview)
-{
-  if (palfile)
-    g_object_unref (palfile);
-
-  palfile = gtk_file_chooser_get_file (button);
-
-  palette_update (preview);
-}
-
-static void
-file_raw_scale_entry_update_int (GimpLabelSpin *entry,
-                                 gint          *value)
-{
-  *value = (gint) gimp_label_spin_get_value (entry);
 }
