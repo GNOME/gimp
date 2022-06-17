@@ -237,8 +237,7 @@ gimp_int_radio_frame_get_property (GObject    *object,
 /**
  * gimp_int_radio_frame_new_from_store:
  * @title: the frame label.
- * @store: (transfer full): the %GimpIntStore to generate radio buttons
- *                          from.
+ * @store: the %GimpIntStore to generate radio buttons from.
  *
  * Creates a %GimpIntRadioFrame containing radio buttons for each item
  * in the @store. The created widget takes ownership of @store.
@@ -704,7 +703,7 @@ gimp_int_radio_frame_set_store (GimpIntRadioFrame *frame,
       g_object_unref (priv->store);
     }
 
-  priv->store = store;
+  priv->store = g_object_ref (store);
 
   if (priv->store)
     {

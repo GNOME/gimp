@@ -866,7 +866,7 @@ gimp_procedure_dialog_get_color_widget (GimpProcedureDialog *dialog,
  * @property: name of the int property to build a combo for. It must be
  *            a property of the #GimpProcedure @dialog has been created
  *            for.
- * @store:    the #GimpIntStore which will be used by the combo box.
+ * @store: (transfer full): the #GimpIntStore which will be used.
  *
  * Creates a new #GimpLabelIntWidget for @property which must
  * necessarily be an integer or boolean property.
@@ -888,20 +888,25 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_INT_STORE (store), NULL);
 
   /* First check if it already exists. */
   widget = g_hash_table_lookup (dialog->priv->widgets, property);
 
   if (widget)
-    return widget;
+    {
+      g_object_unref (store);
+      return widget;
+    }
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
                                         property);
   if (! pspec)
     {
-      g_warning ("%s: parameter %s does not exist.",
-                 G_STRFUNC, property);
+      g_warning ("%s: parameter %s does not exist.", G_STRFUNC, property);
+      g_object_unref (store);
       return NULL;
     }
 
@@ -915,6 +920,7 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
       widget = gimp_label_int_widget_new (_(g_param_spec_get_nick (pspec)),
                                           widget);
     }
+  g_object_unref (store);
 
   if (! widget)
     {
@@ -949,7 +955,7 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
  * @property: name of the int property to build radio buttons for. It
  *            must be a property of the #GimpProcedure @dialog has been
  *            created for.
- * @store: (transfer full): the #GimpIntStore which will be used..
+ * @store: (transfer full): the #GimpIntStore which will be used.
  *
  * Creates a new #GimpLabelIntRadioFrame for @property which must
  * necessarily be an integer, enum or boolean property.
@@ -972,20 +978,25 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
   GtkWidget  *widget = NULL;
   GParamSpec *pspec;
 
+  g_return_val_if_fail (GIMP_IS_PROCEDURE_DIALOG (dialog), NULL);
   g_return_val_if_fail (property != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_INT_STORE (store), NULL);
 
   /* First check if it already exists. */
   widget = g_hash_table_lookup (dialog->priv->widgets, property);
 
   if (widget)
-    return widget;
+    {
+      g_object_unref (store);
+      return widget;
+    }
 
   pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (dialog->priv->config),
                                         property);
   if (! pspec)
     {
-      g_warning ("%s: parameter %s does not exist.",
-                 G_STRFUNC, property);
+      g_warning ("%s: parameter %s does not exist.", G_STRFUNC, property);
+      g_object_unref (store);
       return NULL;
     }
 
@@ -997,6 +1008,7 @@ gimp_procedure_dialog_get_int_radio (GimpProcedureDialog *dialog,
       gtk_widget_set_vexpand (widget, FALSE);
       gtk_widget_set_hexpand (widget, TRUE);
     }
+  g_object_unref (store);
 
   if (! widget)
     {
