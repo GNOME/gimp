@@ -2289,7 +2289,6 @@ save_dialog (GimpImage     *image,
                               NULL);
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "format", GIMP_INT_STORE (store));
-  g_object_unref (store);
 
   gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-transparent",

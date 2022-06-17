@@ -86,7 +86,6 @@ save_dialog (GimpImage     *image,
                               NULL);
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "preset", GIMP_INT_STORE (store));
-  g_object_unref (store);
 
   /* Create scale for image and alpha quality */
   gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),

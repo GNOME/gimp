@@ -1118,7 +1118,6 @@ save_dialog (GimpImage     *image,
 
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "speed", GIMP_INT_STORE (store));
-  g_object_unref (store);
 
   store = gimp_int_store_new (_("8 bit/channel"),   8,
                               _("16 bit/channel"), 16,
@@ -1126,7 +1125,6 @@ save_dialog (GimpImage     *image,
 
   gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                        "save-bit-depth", GIMP_INT_STORE (store));
-  g_object_unref (store);
 
   orig_profile_check = gimp_procedure_dialog_get_widget (GIMP_PROCEDURE_DIALOG (dialog),
                                                          "uses-original-profile",

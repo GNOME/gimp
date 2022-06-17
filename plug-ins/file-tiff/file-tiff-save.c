@@ -1254,7 +1254,6 @@ save_dialog (GimpImage     *image,
                         NULL);
   combo = gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                                "compression", GIMP_INT_STORE (store));
-  g_object_unref (store);
   combo = gimp_label_int_widget_get_widget (GIMP_LABEL_INT_WIDGET (combo));
   gimp_int_combo_box_set_sensitivity (GIMP_INT_COMBO_BOX (combo),
                                       combo_sensitivity_func,
