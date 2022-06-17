@@ -2639,10 +2639,12 @@ static void        gimp_prop_file_chooser_button_notify   (GObject        *confi
  * gimp_prop_file_chooser_button_new:
  * @config:        object to which property is attached.
  * @property_name: name of path property.
- * @title:         the title of the browse dialog.
+ * @title: (nullable): the title of the browse dialog.
  * @action:        the open mode for the widget.
  *
  * Creates a #GtkFileChooserButton to edit the specified path property.
+ * @property_name must represent either a GIMP_PARAM_SPEC_CONFIG_PATH or
+ * a G_PARAM_SPEC_OBJECT where `value_type == G_TYPE_FILE`.
  *
  * Note that #GtkFileChooserButton implements the #GtkFileChooser
  * interface; you can use the #GtkFileChooser API with it.
@@ -2663,10 +2665,27 @@ gimp_prop_file_chooser_button_new (GObject              *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
   if (! param_spec)
-    return NULL;
+    {
+      g_warning ("%s: %s has no property named '%s'",
+                 G_STRFUNC, g_type_name (G_TYPE_FROM_INSTANCE (config)),
+                 property_name);
+      return NULL;
+    }
+
+  if (! GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec) &&
+      (! G_IS_PARAM_SPEC_OBJECT (param_spec) || param_spec->value_type != G_TYPE_FILE))
+    {
+      g_warning ("%s: property '%s' of %s is neither a GIMP_PARAM_SPEC_CONFIG_PATH "
+                 "nor a G_PARAM_SPEC_OBJECT of value type G_TYPE_FILE.",
+                 G_STRFUNC, param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return NULL;
+    }
+
+  if (! title)
+    title = g_param_spec_get_nick (param_spec);
 
   button = gtk_file_chooser_button_new (title, action);
 
@@ -2719,17 +2738,27 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
                                      GObject    *config,
                                      GParamSpec *param_spec)
 {
-  gchar *value;
   GFile *file = NULL;
 
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
-
-  if (value)
+  if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {
-      file = gimp_file_new_for_config_path (value, NULL);
-      g_free (value);
+      gchar *value;
+
+      g_object_get (config,
+                    param_spec->name, &value,
+                    NULL);
+
+      if (value)
+        {
+          file = gimp_file_new_for_config_path (value, NULL);
+          g_free (value);
+        }
+    }
+  else /* G_FILE */
+    {
+      g_object_get (config,
+                    param_spec->name, &file,
+                    NULL);
     }
 
   if (file)
@@ -2766,8 +2795,6 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
 {
   GParamSpec *param_spec;
   GFile      *file;
-  gchar      *value = NULL;
-  gchar      *v;
 
   param_spec = get_param_spec (G_OBJECT (button));
   if (! param_spec)
@@ -2775,29 +2802,56 @@ gimp_prop_file_chooser_button_callback (GtkFileChooser *button,
 
   file = gtk_file_chooser_get_file (button);
 
-  if (file)
+  if (GIMP_IS_PARAM_SPEC_CONFIG_PATH (param_spec))
     {
-      value = gimp_file_get_config_path (file, NULL);
-      g_object_unref (file);
+      gchar *value = NULL;
+      gchar *v;
+
+      if (file)
+        {
+          value = gimp_file_get_config_path (file, NULL);
+          g_object_unref (file);
+        }
+
+      g_object_get (config, param_spec->name, &v, NULL);
+
+      if (g_strcmp0 (v, value))
+        {
+          g_signal_handlers_block_by_func (config,
+                                           gimp_prop_file_chooser_button_notify,
+                                           button);
+
+          g_object_set (config, param_spec->name, value, NULL);
+
+          g_signal_handlers_unblock_by_func (config,
+                                             gimp_prop_file_chooser_button_notify,
+                                             button);
+        }
+
+      g_free (value);
+      g_free (v);
     }
-
-  g_object_get (config, param_spec->name, &v, NULL);
-
-  if (g_strcmp0 (v, value))
+  else /* G_FILE */
     {
-      g_signal_handlers_block_by_func (config,
-                                       gimp_prop_file_chooser_button_notify,
-                                       button);
+      GFile *f = NULL;
 
-      g_object_set (config, param_spec->name, value, NULL);
+      g_object_get (config, param_spec->name, &f, NULL);
 
-      g_signal_handlers_unblock_by_func (config,
-                                         gimp_prop_file_chooser_button_notify,
-                                         button);
+      if (! f || ! file || ! g_file_equal (f, file))
+        {
+          g_signal_handlers_block_by_func (config,
+                                           gimp_prop_file_chooser_button_notify,
+                                           button);
+
+          g_object_set (config, param_spec->name, file, NULL);
+
+          g_signal_handlers_unblock_by_func (config,
+                                             gimp_prop_file_chooser_button_notify,
+                                             button);
+        }
+      g_clear_object (&f);
     }
-
-  g_free (value);
-  g_free (v);
+  g_clear_object (&file);
 }
 
 static void

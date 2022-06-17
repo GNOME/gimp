@@ -97,6 +97,9 @@ GtkWidget * gimp_procedure_dialog_get_scale_entry   (GimpProcedureDialog *dialog
 GtkWidget * gimp_procedure_dialog_get_label         (GimpProcedureDialog *dialog,
                                                      const gchar         *label_id,
                                                      const gchar         *text);
+GtkWidget * gimp_procedure_dialog_get_file_chooser  (GimpProcedureDialog *dialog,
+                                                     const gchar         *property,
+                                                     GtkFileChooserAction action);
 
 GtkWidget * gimp_procedure_dialog_fill_box          (GimpProcedureDialog *dialog,
                                                      const gchar         *container_id,
