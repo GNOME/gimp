@@ -335,7 +335,7 @@ gimp_scale_entry_get_range (GimpScaleEntry *entry)
  *               %FALSE, or only for the #GtkSpinButton if %TRUE.
  * @limit_scale: Whether the range should only apply to the #GtkScale or
  *               if it should share its #GtkAdjustement with the
- *               #GtkScale. If %TRUE, both @lower and @upper must be
+ *               #GtkSpinButton. If %TRUE, both @lower and @upper must be
  *               included in current #GtkSpinButton range.
  *
  * By default the #GtkSpinButton and #GtkScale will have the same range.
