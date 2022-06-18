@@ -210,6 +210,9 @@ static gboolean         save_image           (GFile                *file,
                                               GimpProcedureConfig  *config,
                                               GError              **error);
 
+static void            get_bpp               (GimpProcedureConfig     *config,
+                                              gint                    *bpp,
+                                              gint                    *bitspp);
 static gboolean        detect_sample_spacing (GimpProcedureConfig     *config,
                                               GFile                   *file,
                                               GError                 **error);
@@ -1193,6 +1196,79 @@ save_image (GFile                *file,
   return ret;
 }
 
+static void
+get_bpp (GimpProcedureConfig *config,
+         gint                *bpp,
+         gint                *bitspp)
+{
+  GimpProcedure *procedure;
+
+  procedure = gimp_procedure_config_get_procedure (config);
+
+  *bitspp = 8;
+  if (g_strcmp0 (gimp_procedure_get_name (procedure), LOAD_HGT_PROC) == 0)
+    {
+      *bpp = 2;
+    }
+  else
+    {
+      RawType image_type;
+
+      g_object_get (config,
+                    "color-representation", &image_type,
+                    NULL);
+      switch (image_type)
+        {
+        case RAW_RGB:
+        case RAW_PLANAR:
+          *bpp = 3;
+          break;
+
+        case RAW_RGB565_BE:
+        case RAW_RGB565_LE:
+        case RAW_BGR565_BE:
+        case RAW_BGR565_LE:
+          *bpp = 2;
+          break;
+
+        case RAW_RGBA:
+          *bpp = 4;
+          break;
+
+        case RAW_GRAY_1BPP:
+          *bpp    = 1;
+          *bitspp = 1;
+          break;
+        case RAW_GRAY_2BPP:
+          *bpp    = 1;
+          *bitspp = 2;
+          break;
+        case RAW_GRAY_4BPP:
+          *bpp    = 1;
+          *bitspp = 4;
+          break;
+        case RAW_GRAY_8BPP:
+          *bpp   = 1;
+          break;
+
+        case RAW_INDEXED:
+          *bpp   = 1;
+          break;
+
+        case RAW_INDEXEDA:
+          *bpp   = 2;
+          break;
+
+        case RAW_GRAY_16BPP_BE:
+        case RAW_GRAY_16BPP_LE:
+        case RAW_GRAY_16BPP_SBE:
+        case RAW_GRAY_16BPP_SLE:
+          *bpp   = 2;
+          break;
+        }
+    }
+}
+
 static gboolean
 detect_sample_spacing (GimpProcedureConfig  *config,
                        GFile                *file,
@@ -1854,10 +1930,77 @@ load_config_notify (GimpProcedureConfig  *config,
                     GimpPreviewArea      *preview)
 {
   gboolean preview_cmap_update = FALSE;
+  gboolean width_update        = FALSE;
+  gboolean height_update       = FALSE;
+  gboolean offset_update       = FALSE;
 
   if (g_str_has_prefix (pspec->name, "palette-"))
     preview_cmap_update = TRUE;
 
+  if ((width_update  = (g_strcmp0 (pspec->name, "width") == 0))  ||
+      (height_update = (g_strcmp0 (pspec->name, "height") == 0)) ||
+      (offset_update = (g_strcmp0 (pspec->name, "offset") == 0)))
+    {
+      GimpProcedure *procedure;
+      GFile         *file;
+      goffset        file_size;
+      gint           width;
+      gint           height;
+      gint           offset;
+      gint           bpp;
+      gint           bitspp;
+      goffset        max_pixels;
+
+      get_bpp (config, &bpp, &bitspp);
+      g_object_get (config,
+                    "width",  &width,
+                    "height", &height,
+                    "offset", &offset,
+                    NULL);
+
+      procedure = gimp_procedure_config_get_procedure (config);
+      file = g_object_get_data (G_OBJECT (preview), "procedure-file");
+      file_size = get_file_info (file);
+
+      max_pixels = (file_size - offset) / (bpp * bitspp / 8);
+      if ((goffset) width * height > max_pixels)
+        {
+          g_signal_handlers_block_by_func (config,
+                                           G_CALLBACK (load_config_notify),
+                                           preview);
+          if (width_update && width >= max_pixels)
+            {
+              g_object_set (config,
+                            "width",  (gint) max_pixels,
+                            "height", 1,
+                            NULL);
+            }
+          else if (height_update && height >= max_pixels)
+            {
+              g_object_set (config,
+                            "width",  1,
+                            "height", (gint) max_pixels,
+                            NULL);
+            }
+          else if (width_update || offset_update)
+            {
+              height = MAX (max_pixels / width, 1);
+              g_object_set (config,
+                            "height", height,
+                            NULL);
+            }
+          else /* height_update */
+            {
+              width = MAX (max_pixels / height, 1);
+              g_object_set (config,
+                            "width", width,
+                            NULL);
+            }
+          g_signal_handlers_unblock_by_func (config,
+                                             G_CALLBACK (load_config_notify),
+                                             preview);
+        }
+    }
   preview_update (preview, preview_cmap_update);
 }
 
@@ -1929,6 +2072,8 @@ load_dialog (GFile         *file,
 
   g_object_set_data (G_OBJECT (preview), "procedure-config",
                      config);
+  g_object_set_data (G_OBJECT (preview), "procedure-file",
+                     file);
 
   g_signal_connect_after (preview, "size-allocate",
                           G_CALLBACK (preview_allocate),
