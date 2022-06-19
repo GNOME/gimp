@@ -119,7 +119,9 @@ libgimp_scriptfu_@GIMP_API_VERSION@_la_SOURCES = \
 	scheme-wrapper.c    \
 	scheme-wrapper.h    \
 	script-fu-lib.c     \
-	script-fu-lib.h
+	script-fu-lib.h     \
+	script-fu-proc-factory.h \
+	script-fu-proc-factory.c
 
 EXTRA_libgimp_scriptfu_@GIMP_API_VERSION@_la_DEPENDENCIES = $(scriptfu_def)
 

@@ -43,6 +43,8 @@ static gboolean   script_fu_script_param_init (SFScript             *script,
                                                gint                  n);
 
 
+
+
 /*
  *  Function definitions
  */
@@ -165,26 +167,59 @@ script_fu_script_free (SFScript *script)
   g_slice_free (SFScript, script);
 }
 
+
+/*
+ * From the script, create a temporary PDB procedure,
+ * and install it as owned by the scriptfu extension PDB proc.
+ */
 void
 script_fu_script_install_proc (GimpPlugIn  *plug_in,
                                SFScript    *script,
                                GimpRunFunc  run_func)
 {
   GimpProcedure *procedure;
-  const gchar   *menu_label            = NULL;
-  gint           arg_count[SF_DISPLAY] = { 0, };
-  gint           i;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (script != NULL);
   g_return_if_fail (run_func != NULL);
+
+  procedure = script_fu_script_create_PDB_procedure (plug_in,
+                                                     script,
+                                                     run_func,
+                                                     GIMP_PDB_PROC_TYPE_TEMPORARY);
+
+  gimp_plug_in_add_temp_procedure (plug_in, procedure);
+  g_object_unref (procedure);
+}
+
+
+/*
+ * Create and return a GimpProcedure.
+ * Caller typically either:
+ *    install it owned by self as TEMPORARY type procedure
+ *    OR return it as the result of a create_procedure callback from GIMP (PLUGIN type procedure.)
+ *
+ * Caller must unref the procedure.
+ */
+GimpProcedure *
+script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
+                                       SFScript       *script,
+                                       GimpRunFunc     run_func,
+                                       GimpPDBProcType plug_in_type)
+{
+  GimpProcedure *procedure;
+  const gchar   *menu_label            = NULL;
+  gint           arg_count[SF_DISPLAY] = { 0, };
+  gint           i;
+
+  g_debug ("script_fu_script_create_PDB_procedure: %s of type %i", script->name, plug_in_type);
 
   /* Allow scripts with no menus */
   if (strncmp (script->menu_label, "<None>", 6) != 0)
     menu_label = script->menu_label;
 
   procedure = gimp_procedure_new (plug_in, script->name,
-                                  GIMP_PDB_PROC_TYPE_TEMPORARY,
+                                  plug_in_type,
                                   run_func, script, NULL);
 
   gimp_procedure_set_image_types (procedure, script->image_types);
@@ -509,8 +544,7 @@ script_fu_script_install_proc (GimpPlugIn  *plug_in,
       gimp_procedure_add_argument (procedure, pspec);
     }
 
-  gimp_plug_in_add_temp_procedure (plug_in, procedure);
-  g_object_unref (procedure);
+  return procedure;
 }
 
 void

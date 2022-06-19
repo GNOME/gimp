@@ -26,5 +26,13 @@ pointer   script_fu_add_script    (scheme     *sc,
 pointer   script_fu_add_menu      (scheme     *sc,
                                    pointer     a);
 
+GTree          * script_fu_find_scripts_into_tree (GimpPlugIn  *plug_in,
+                                                   GList       *path);
+SFScript       * script_fu_find_script            (const gchar *name);
+GList          * script_fu_get_menu_list          (void);
+GimpValueArray * script_fu_script_proc            (GimpProcedure        *procedure,
+                                                   const GimpValueArray *args,
+                                                   gpointer              data);
+gboolean         script_fu_is_defined             (const gchar          *name);
 
 #endif /*  __SCRIPT_FU_SCRIPTS__  */

@@ -10,6 +10,7 @@
 subdir('libscriptfu')
 subdir('scripts')
 subdir('server')
+subdir('interpreter')
 
 
 executable_name = 'script-fu'

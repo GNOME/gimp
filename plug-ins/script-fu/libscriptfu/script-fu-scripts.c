@@ -43,13 +43,6 @@
 #include "script-fu-intl.h"
 
 
-typedef struct
-{
-  SFScript *script;
-  gchar    *menu_path;
-} SFMenu;
-
-
 /*
  *  Local Functions
  */
@@ -65,11 +58,6 @@ static void             script_fu_install_menu   (SFMenu               *menu);
 static gboolean         script_fu_remove_script  (gpointer              foo,
                                                   GList                *scripts,
                                                   gpointer              data);
-static GimpValueArray * script_fu_script_proc    (GimpProcedure        *procedure,
-                                                  const GimpValueArray *args,
-                                                  gpointer              data);
-
-static SFScript       * script_fu_find_script    (const gchar          *name);
 
 static gchar          * script_fu_menu_map       (const gchar          *menu_path);
 static gint             script_fu_menu_compare   (gconstpointer         a,
@@ -88,13 +76,25 @@ static GList *script_menu_list = NULL;
  *  Function definitions
  */
 
-void
-script_fu_find_scripts (GimpPlugIn *plug_in,
-                        GList      *path)
+/* Traverse list of paths, finding .scm files.
+ * Load and eval any found script texts.
+ * Script texts will call Scheme functions script-fu-register()
+ * and script-fu-menu-register(),
+ * which insert a SFScript record into script_tree,
+ * and insert a SFMenu record into script_menu_list.
+ * These are side effects on the state of the outer (SF) interpreter.
+ *
+ * Return the tree of scripts, as well as keeping a local pointer to the tree.
+ * The other result (script_menu_list) is not returned, see script_fu_get_menu_list().
+ *
+ * Caller should free script_tree and script_menu_list,
+ * This should only be called once.
+ */
+GTree *
+script_fu_find_scripts_into_tree ( GimpPlugIn *plug_in,
+                                   GList      *paths)
 {
-  GList *list;
-
-  /*  Make sure to clear any existing scripts  */
+  /*  Clear any existing scripts  */
   if (script_tree != NULL)
     {
       g_tree_foreach (script_tree,
@@ -103,15 +103,45 @@ script_fu_find_scripts (GimpPlugIn *plug_in,
       g_tree_destroy (script_tree);
     }
 
-  if (! path)
-    return;
-
   script_tree = g_tree_new ((GCompareFunc) g_utf8_collate);
 
-  for (list = path; list; list = g_list_next (list))
+  if (paths)
     {
-      script_fu_load_directory (list->data);
+      GList *list;
+
+      for (list = paths; list; list = g_list_next (list))
+        {
+          script_fu_load_directory (list->data);
+        }
     }
+
+  /*
+   * Assert result is not NULL, but may be an empty tree.
+   * When paths is NULL, or no scripts found at paths.
+   */
+
+  g_debug ("script_fu_find_scripts_into_tree found %i scripts", g_tree_nnodes (script_tree));
+  return script_tree;
+}
+
+/*
+ * Return list of SFMenu for recently loaded scripts.
+ * List is non-empty only after a call to script_fu_find_scripts_into_tree().
+ */
+GList *
+script_fu_get_menu_list (void)
+{
+  return script_menu_list;
+}
+
+/* Find scripts, create and install TEMPORARY PDB procedures,
+ * owned by self PDB procedure (e.g. extension-script-fu.)
+ */
+void
+script_fu_find_scripts (GimpPlugIn *plug_in,
+                        GList      *path)
+{
+  script_fu_find_scripts_into_tree (plug_in, path);
 
   /*  Now that all scripts are read in and sorted, tell gimp about them  */
   g_tree_foreach (script_tree,
@@ -571,12 +601,13 @@ script_fu_run_command (const gchar  *command,
   GString  *output;
   gboolean  success = FALSE;
 
+  g_debug ("script_fu_run_command: %s", command);
   output = g_string_new (NULL);
   ts_register_output_func (ts_gstring_output_func, output);
 
   if (ts_interpret_string (command))
     {
-      g_set_error (error, 0, 0, "%s", output->str);
+      g_set_error (error, GIMP_PLUG_IN_ERROR, 0, "%s", output->str);
     }
   else
     {
@@ -592,6 +623,8 @@ static void
 script_fu_load_directory (GFile *directory)
 {
   GFileEnumerator *enumerator;
+
+  g_debug ("Load dir: %s", g_file_get_parse_name (directory));
 
   enumerator = g_file_enumerate_children (directory,
                                           G_FILE_ATTRIBUTE_STANDARD_NAME ","
@@ -665,8 +698,10 @@ script_fu_load_script (GFile *file)
     }
 }
 
-/*
- *  The following function is a GTraverseFunction.
+/* This is-a GTraverseFunction.
+ *
+ * Traverse.  For each, install TEMPORARY PDB proc.
+ * Returning FALSE means entire list was traversed.
  */
 static gboolean
 script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
@@ -680,8 +715,12 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
     {
       SFScript *script = list->data;
 
-      script_fu_script_install_proc (plug_in, script,
-                                     script_fu_script_proc);
+      const gchar* name = script->name;
+      if (script_fu_is_defined (name))
+        script_fu_script_install_proc (plug_in, script,
+                                       script_fu_script_proc);
+      else
+        g_warning ("Run function not defined, or does not match PDB procedure name: %s", name);
     }
 
   return FALSE;
@@ -690,13 +729,14 @@ script_fu_install_script (gpointer  foo G_GNUC_UNUSED,
 static void
 script_fu_install_menu (SFMenu *menu)
 {
-  GimpPlugIn    *plug_in = gimp_get_plug_in ();
-  GimpProcedure *procedure;
+  GimpPlugIn    *plug_in   = gimp_get_plug_in ();
+  GimpProcedure *procedure = NULL;
 
   procedure = gimp_plug_in_get_temp_procedure (plug_in,
                                                menu->script->name);
 
-  gimp_procedure_add_menu_path (procedure, menu->menu_path);
+  if (procedure)
+    gimp_procedure_add_menu_path (procedure, menu->menu_path);
 
   g_free (menu->menu_path);
   g_slice_free (SFMenu, menu);
@@ -726,7 +766,15 @@ script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
   return FALSE;
 }
 
-static GimpValueArray *
+/* This is the outer "run func" for this plugin.
+ * When called, the name of the inner run func (code in Scheme language)
+ * is the first element of the value array.
+ * Form a command (text in Scheme language) that is a call to the the inner run func,
+ * evaluate it, and return the result, marshalled into a GimpValueArray.
+ *
+ * In the name 'script_fu_script_proc',  'proc' is a verb meaning 'process the script'
+ */
+GimpValueArray *
 script_fu_script_proc (GimpProcedure        *procedure,
                        const GimpValueArray *args,
                        gpointer              data)
@@ -841,7 +889,7 @@ script_fu_lookup_script (gpointer      *foo G_GNUC_UNUSED,
   return FALSE;
 }
 
-static SFScript *
+SFScript *
 script_fu_find_script (const gchar *name)
 {
   gconstpointer script = name;
@@ -915,4 +963,44 @@ script_fu_menu_compare (gconstpointer a,
     }
 
   return retval;
+}
+
+/* Is name a defined symbol in the interpreter state?
+ * (Defined in any script already loaded.)
+ * Where "symbol" has the usual lisp meaning: a unique name associated with
+ * a variable or function.
+ *
+ * The most common use is
+ * test the name of a PDB proc, which in ScriptFu must match
+ * a defined function that is the inner run function.
+ * I.E. check for typos by author of script.
+ * Used during query, to preflight so that we don't install a PDB proc
+ * that won't run later (during the run phase)
+ * giving "undefined symbol" for extension-script-fu.
+ * Note that if instead we create a PDB proc having no defined run func,
+ * script-fu-interpreter would load and define a same-named scheme function
+ * that calls the PDB, and can enter an infinite loop.
+ */
+gboolean
+script_fu_is_defined (const gchar * name)
+{
+  gchar   *scheme_text;
+  GError  *error = NULL;
+  gboolean result;
+
+  /* text to be interpreted is a call to an internal scheme function. */
+  scheme_text = g_strdup_printf (" (symbol? %s ) ",  name);
+
+  /* Use script_fu_run_command, it correctly handles the string yielded.
+   * But we don't need the string yielded.
+   * If defined, string yielded is "#t", else is "Undefined symbol" or "#f"
+   */
+  result = script_fu_run_command (scheme_text, &error);
+  if (!result)
+    {
+      g_debug ("script_fu_is_defined returns false");
+      /* error contains string yielded by interpretation. */
+      g_error_free (error);
+    }
+  return result;
 }

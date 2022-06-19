@@ -25,7 +25,7 @@
 ;Install script for GIMP and GTK+
 ;requires Inno Setup 6
 ;
-;See directories.isi 
+;See directories.isi
 ;
 ;Changelog:
 ;
@@ -751,7 +751,7 @@ begin
 	begin
 
 		DebugMsg('DoConfigOverride', 'First call');
-		
+
 		Result := False;
 		ConfigOverride := coDontOverride;
 
@@ -819,7 +819,7 @@ begin
 		          '/usr/bin/python=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
 		          '/usr/bin/python3=' + ExpandConstant('{app}\bin\{#PYTHON}') + #10 +
 		          ':Python:E::py::python:'#10;
-		
+
 		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 		begin
 			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
@@ -840,7 +840,7 @@ begin
 		          '/usr/bin/luajit=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
 		          '/usr/bin/lua=' + ExpandConstant('{app}\bin\luajit.exe') + #10 +
 		          ':Lua:E::lua::luajit:'#10;
-		
+
 		if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
 		begin
 			DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
@@ -848,13 +848,32 @@ begin
 		end;
 	end;
 #endif
+
+// not optional
+// !!! use comma for binfmt delimiter and full Windows path in interpreter field of binfmt
+begin
+	InterpFile := ExpandConstant('{app}\lib\gimp\{#DIR_VER}\interpreters\gimp-script-fu-interpreter.interp');
+			DebugMsg('PrepareInterp','Writing interpreter file for gimp-script-fu-interpreter: ' + InterpFile);
+
+	InterpContent := 'gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
+						'gimp-script-fu-interpreter-3.0=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
+						'/usr/bin/gimp-script-fu-interpreter=' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + #10 +
+						',ScriptFu,E,,scm,,' + ExpandConstant('{app}\bin\gimp-script-fu-interpreter-3.0.exe') + ','#10;
+
+	if not SaveStringToUTF8File(InterpFile,InterpContent,False) then
+	begin
+		DebugMsg('PrepareInterp','Problem writing the file. [' + InterpContent + ']');
+		SuppressibleMsgBox(CustomMessage('ErrorUpdatingScriptFu') + ' (2)',mbInformation,mb_ok,IDOK);
+	end;
+end;
+
 end;
 
 
 procedure PrepareGimpEnvironment();
 var EnvFile,Env: String;
 begin
-	
+
 	StatusLabel(CustomMessage('SettingUpEnvironment'),'');
 
 	//set PATH to be used by plug-ins
@@ -862,7 +881,7 @@ begin
 	DebugMsg('PrepareGimpEnvironment','Setting environment in ' + EnvFile);
 
 	Env := #10'PATH=${gimp_installation_dir}\bin';
-	
+
 	if IsComponentSelected('gimp32on64') then
 	begin
 
@@ -941,7 +960,7 @@ procedure CustomizeOnClick(Sender: TObject);
 begin
 	DebugMsg('Install mode','Custom');
 	InstallMode := imCustom;
-	
+
 	CleanUpCustomWelcome();
 
 	WizardForm.NextButton.OnClick(TNewButton(Sender).Parent);
@@ -1044,9 +1063,9 @@ begin
 	else
 		exit;
 	DebugMsg('SelectComponentsFaceLift','2');
-			
+
 	WizardForm.ComponentsList.OnClick := @ComponentsListOnClick;
-			
+
 	lblDescription := TNewStaticText.Create(WizardForm.ComponentsList.Parent)
 	with lblDescription do
 	begin
@@ -1055,7 +1074,7 @@ begin
 		AutoSize := True;
 		Caption := CustomMessage('ComponentsDescription');
 	end;
-			
+
 	pnlDescription := TPanel.Create(WizardForm.ComponentsList.Parent);
 	with pnlDescription do
 	begin
@@ -1069,7 +1088,7 @@ begin
 	end;
 
 	lblDescription.Parent := WizardForm.ComponentsList.Parent; //place lblDescription above pnlDescription
-			
+
 	lblComponentDescription := TNewStaticText.Create(pnlDescription);
 	with lblComponentDescription do
 	begin
@@ -1081,7 +1100,7 @@ begin
 		Height := Parent.Height - ScaleY(20);
 		Top := ScaleY(12);
 	end;
-			
+
 end;
 
 
@@ -1090,7 +1109,7 @@ var rtfNewReadyMemo: TRichEditViewer;
 begin
 	DebugMsg('ReadyFaceLift','');
 	WizardForm.ReadyMemo.Visible := False;
-		
+
 	rtfNewReadyMemo := TRichEditViewer.Create(WizardForm.ReadyMemo.Parent);
 	with rtfNewReadyMemo do
 	begin
@@ -1214,7 +1233,7 @@ begin
 
 	Components := ['Gimp','Deps','Debug','Translations','MyPaint','Python','Ghostscript','Lua','Gimp32'];
 	ComponentDesc := '';
-	
+
 	for i := 0 to TNewCheckListBox(pSender).Items.Count - 1 do
 		if TNewCheckListBox(pSender).Selected[i] then
 		begin
@@ -1277,7 +1296,7 @@ var sText: String;
 begin
 	DebugMsg('UpdateReadyMemo','');
 	(* Prepare the text for new Ready Memo *)
-	
+
 	sText := RTFHeader;
 	if pMemoDirInfo <> '' then
 		sText := sText + ParseReadyMemoText(pSpace,pMemoDirInfo) + '\sb100';
@@ -1286,7 +1305,7 @@ begin
 
 	If pMemoTasksInfo<>'' then
 		sText := sText + '\sb100' + ParseReadyMemoText(pSpace,pMemoTasksInfo);
-		
+
 	ReadyMemoRichText := Copy(sText,1,Length(sText)-6) + '}';
 
 	Result := 'If you see this, something went wrong';
@@ -1299,7 +1318,7 @@ var NewBitmap1,NewBitmap2: TFileStream;
 begin
 	WelcomeBitmapBottom := TBitmapImage.Create(WizardForm);
 	with WelcomeBitmapBottom do
-	begin 
+	begin
 		Left := 0;
 		Top := 0;
 		Parent := WizardForm;
@@ -1309,7 +1328,7 @@ begin
 	end;
 
 	DebugMsg('UpdateWizardImages','Height: ' + IntToStr(WizardForm.WizardBitmapImage.Height));
-	
+
 	if WizardForm.WizardBitmapImage.Height < 386 then //use smaller image when not using Large Fonts
 	begin
 		try
@@ -1375,7 +1394,7 @@ begin
 			DebugMsg('DoUninstall','Install directory doesn'#39't exist: ' + InstallDir + ', resuming install');
 			oResult := InResult
 		end else
-		begin	
+		begin
 			oResult := rogUninstallFailed;
 		end;
 
@@ -1472,7 +1491,7 @@ begin
 			UninstallString := UninstallString + ' /NORESTART';
 
 			DoUninstall(UninstallString, OldPath, lblInfo2, Result);
-					
+
 		end;
 
 	end;
@@ -1509,7 +1528,7 @@ begin
 end;
 
 
-procedure CurPageChanged(pCurPageID: Integer); 
+procedure CurPageChanged(pCurPageID: Integer);
 begin
 	DebugMsg('CurPageChanged','ID: '+IntToStr(pCurPageID));
 	case pCurPageID of
@@ -1678,15 +1697,15 @@ begin
 		SetArrayLength(Buttons,2);
 		Message[0] := CustomMessage('Require32BPP');
 		Buttons[0] := CustomMessage('Require32BPPContinue');
-		Buttons[1] := CustomMessage('Require32BPPExit');		
-		if (not WizardSilent) and 
+		Buttons[1] := CustomMessage('Require32BPPExit');
+		if (not WizardSilent) and
 		   (MessageWithURL(Message, CustomMessage('Require32BPPTitle'), Buttons, mbError, 2, 2) = 2) then
 			Result := False
 		else
 			Result := True;
 	end
 	else
-		Result := True;	
+		Result := True;
 end;
 
 
@@ -1733,7 +1752,7 @@ begin
 	Result := RestartSetupAfterReboot(); //resume install after reboot - skip all setting pages, and install directly
 
 	if Result then
-		Result := BPPTooLowWarning();		
+		Result := BPPTooLowWarning();
 
 	if not Result then //no need to do anything else
 		exit;
@@ -1743,7 +1762,7 @@ begin
 	SetArrayLength(Buttons,2);
 	Buttons[0] := CustomMessage('DevelopmentButtonContinue');
 	Buttons[1] := CustomMessage('DevelopmentButtonExit');
-	if (not WizardSilent) and 
+	if (not WizardSilent) and
 	   (MessageWithURL(Message, CustomMessage('DevelopmentWarningTitle'), Buttons, mbError, 2, 2) = 2) then
 	begin
 		Result := False;
@@ -1810,4 +1829,3 @@ end;
 #include "uninst.isi"
 
 #expr SaveToFile(AddBackslash(SourcePath) + "Preprocessed.iss")
-

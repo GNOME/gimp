@@ -46,5 +46,11 @@ gchar    * script_fu_script_get_command             (SFScript             *scrip
 gchar    * script_fu_script_get_command_from_params (SFScript             *script,
                                                      const GimpValueArray *args);
 
+GimpProcedure * script_fu_script_create_PDB_procedure (GimpPlugIn         *plug_in,
+                                                       SFScript           *script,
+                                                       GimpRunFunc         run_func,
+                                                       GimpPDBProcType     plug_in_type);
+
+
 
 #endif /*  __SCRIPT_FU_SCRIPT__  */

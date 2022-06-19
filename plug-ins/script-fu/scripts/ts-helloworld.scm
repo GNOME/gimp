@@ -1,3 +1,5 @@
+#!/usr/bin/env gimp-script-fu-interpreter-3.0
+
 ; "Hello, World" Test v1.00 February 29, 2004
 ; by Kevin Cozens <kcozens@interlog.com>
 ;

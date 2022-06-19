@@ -19,7 +19,7 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
-/* FIXME script-fu-types.h refers to GtkAdjustment. */
+/* FIXME We only need gimpui because script-fu-types.h refers to GtkAdjustment. */
 #include <libgimp/gimpui.h>
 
 #include "script-fu-lib.h"
@@ -28,6 +28,7 @@
 #include "scheme-wrapper.h"      /* tinyscheme_init etc, */
 #include "script-fu-scripts.h"   /* script_fu_find_scripts */
 #include "script-fu-interface.h" /* script_fu_interface_is_active */
+#include "script-fu-proc-factory.h"
 
 
 /*
@@ -67,13 +68,43 @@ script_fu_find_and_register_scripts ( GimpPlugIn     *plugin,
   script_fu_find_scripts (plugin, paths);
 }
 
+/*
+ * Init the embedded interpreter.
+ *
+ * allow_register:
+ * TRUE: allow loaded scripts to register PDB procedures.
+ * The scheme functions script-fu-register and script-fu-menu-register are
+ * defined to do something.
+ * FALSE:  The scheme functions script-fu-register and script-fu-menu-register are
+ * defined but do nothing.
+ *
+ * Note that the embedded interpreter always defines scheme functions
+ * for all PDB procedures already existing when the interpreter starts
+ * (currently bound at startup, but its possible to lazy bind.)
+ * allow_register doesn't affect that.
+ */
 void
 script_fu_init_embedded_interpreter ( GList          *paths,
                                       gboolean        allow_register,
                                       GimpRunMode     run_mode)
 {
+  g_debug ("script_fu_init_embedded_interpreter");
   tinyscheme_init (paths, allow_register);
   ts_set_run_mode (run_mode);
+  /*
+   * Ensure the embedded interpreter is running
+   * and has loaded its internal Scheme scripts
+   * and has defined existing PDB procs as Scheme foreign functions
+   * (is ready to interpret PDB-like function calls in scheme scripts.)
+   *
+   * scripts/...init and scripts/...compat.scm are loaded
+   * iff paths includes the "/scripts" dir.
+   *
+   * The .scm file(s) for plugins are loaded
+   * iff paths includes their parent directory (e.g. /scripts)
+   * Loaded does not imply yet registered in the PDB
+   * (yet, they soon might be for some phases of the plugin.)
+   */
 }
 
 void
@@ -155,7 +186,6 @@ script_fu_search_path (void)
   GList *path = NULL;
 
   path_str = gimp_gimprc_query ("script-fu-path");
-
   if (path_str)
     {
       GError *error = NULL;
@@ -170,6 +200,23 @@ script_fu_search_path (void)
           g_clear_error (&error);
         }
     }
-
   return path;
+}
+
+
+GimpProcedure *
+script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
+                                               GList       *paths,
+                                               const gchar *name)
+{
+  /* Delegate to factory. */
+  return script_fu_proc_factory_make_PLUGIN (plug_in, paths, name);
+}
+
+GList *
+script_fu_find_scripts_list_proc_names (GimpPlugIn *plug_in,
+                                        GList      *paths)
+{
+  /* Delegate to factory. */
+  return script_fu_proc_factory_list_names (plug_in, paths);
 }

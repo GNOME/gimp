@@ -1,0 +1,5 @@
+Scripts to test script-fu-interpreter.
+
+Not usually installed.
+
+To use, copy the test<x> dirs into /plugins and ensure the .scm files have execute permission.

@@ -49,7 +49,7 @@ AM_LDFLAGS = \
 	$(framework_cocoa)	\
 	$(xnone)
 
-SUBDIRS = libscriptfu scripts server
+SUBDIRS = libscriptfu scripts server interpreter
 
 # Each plugin must be installed in a dir of the same name as the executable
 script_fudir = $(gimpplugindir)/plug-ins/script-fu

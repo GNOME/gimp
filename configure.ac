@@ -3106,6 +3106,7 @@ plug-ins/script-fu/libscriptfu/Makefile
 plug-ins/script-fu/libscriptfu/ftx/Makefile
 plug-ins/script-fu/libscriptfu/tinyscheme/Makefile
 plug-ins/script-fu/server/Makefile
+plug-ins/script-fu/interpreter/Makefile
 plug-ins/script-fu/scripts/Makefile
 plug-ins/script-fu/scripts/images/Makefile
 plug-ins/selection-to-path/Makefile

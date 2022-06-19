@@ -42,4 +42,10 @@ void         script_fu_run_read_eval_print_loop  (void);
 void         script_fu_register_quit_callback         (void (*func) (void));
 void         script_fu_register_post_command_callback (void (*func) (void));
 
+GimpProcedure *script_fu_find_scripts_create_PDB_proc_plugin (GimpPlugIn  *plug_in,
+                                                              GList       *paths,
+                                                              const gchar *name);
+GList         *script_fu_find_scripts_list_proc_names        (GimpPlugIn  *plug_in,
+                                                              GList       *paths);
+
 #endif /* __SCRIPT_FU_LIB_H__ */

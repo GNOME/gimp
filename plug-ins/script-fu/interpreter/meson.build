@@ -1,0 +1,42 @@
+
+scriptfuInclude = include_directories('..')
+
+executable_name = 'gimp-script-fu-interpreter-' + gimp_api_version
+
+plugin_sources = [
+  'script-fu-interpreter.c',
+  'script-fu-interpreter-plugin.c',
+]
+
+if platform_windows
+  plugin_sources += windows.compile_resources(
+    plugin_rc,
+    args: [
+      '--define', 'ORIGINALFILENAME_STR="@0@"'.format(executable_name+'.exe'),
+      '--define', 'INTERNALNAME_STR="@0@"'    .format(executable_name),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+    ],
+    include_directories: [
+      rootInclude, appInclude,
+    ],
+  )
+endif
+
+# !!! Installs as a usual binary say to /usr/bin, unlike extension-script-fu
+# GIMP queries scripts with shebangs, which invokes gimp-script-fu-interpreter-3.0.
+
+executable(executable_name,
+  plugin_sources,
+  dependencies: [
+    libgimpui_dep,
+    math,
+  ],
+  c_args: [
+    '-DG_LOG_DOMAIN="scriptfu"',
+  ],
+  include_directories: [
+    scriptfuInclude,
+  ],
+  link_with : libscriptfu,
+  install: true,
+)
