@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-09 21:13+0000\n"
-"PO-Revision-Date: 2022-06-09 23:15+0200\n"
+"POT-Creation-Date: 2022-06-18 23:26+0000\n"
+"PO-Revision-Date: 2022-06-19 09:06+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -77,19 +77,18 @@ msgstr "Povadi kozo (C)"
 #: ../plug-ins/common/curve-bend.c:1221 ../plug-ins/common/curve-bend.c:1995
 #: ../plug-ins/common/curve-bend.c:2030 ../plug-ins/common/depth-merge.c:733
 #: ../plug-ins/common/destripe.c:484 ../plug-ins/common/file-cel.c:1003
-#: ../plug-ins/common/file-gif-save.c:1160 ../plug-ins/common/file-heif.c:2300
+#: ../plug-ins/common/file-gif-save.c:1160 ../plug-ins/common/file-heif.c:2306
 #: ../plug-ins/common/file-jp2-load.c:976
 #: ../plug-ins/common/file-pdf-load.c:655
 #: ../plug-ins/common/file-pdf-load.c:1065
 #: ../plug-ins/common/file-pdf-save.c:1167 ../plug-ins/common/file-ps.c:3586
-#: ../plug-ins/common/file-raw-data.c:1769 ../plug-ins/common/file-svg.c:679
-#: ../plug-ins/common/file-wmf.c:546 ../plug-ins/common/film.c:1315
-#: ../plug-ins/common/grid.c:761 ../plug-ins/common/hot.c:679
-#: ../plug-ins/common/jigsaw.c:2498 ../plug-ins/common/mail.c:568
-#: ../plug-ins/common/nl-filter.c:1126 ../plug-ins/common/qbist.c:848
-#: ../plug-ins/common/qbist.c:890 ../plug-ins/common/qbist.c:944
-#: ../plug-ins/common/smooth-palette.c:511 ../plug-ins/common/sparkle.c:426
-#: ../plug-ins/common/sphere-designer.c:2287
+#: ../plug-ins/common/file-svg.c:679 ../plug-ins/common/file-wmf.c:546
+#: ../plug-ins/common/film.c:1315 ../plug-ins/common/grid.c:761
+#: ../plug-ins/common/hot.c:679 ../plug-ins/common/jigsaw.c:2498
+#: ../plug-ins/common/mail.c:568 ../plug-ins/common/nl-filter.c:1126
+#: ../plug-ins/common/qbist.c:848 ../plug-ins/common/qbist.c:890
+#: ../plug-ins/common/qbist.c:944 ../plug-ins/common/smooth-palette.c:511
+#: ../plug-ins/common/sparkle.c:426 ../plug-ins/common/sphere-designer.c:2287
 #: ../plug-ins/common/sphere-designer.c:2632 ../plug-ins/common/tile.c:492
 #: ../plug-ins/common/tile-small.c:446 ../plug-ins/common/unit-editor.c:241
 #: ../plug-ins/common/van-gogh-lic.c:709 ../plug-ins/common/warp.c:490
@@ -183,7 +182,7 @@ msgstr "Povadi kozo (Python 3)"
 #: ../plug-ins/common/colormap-remap.c:667 ../plug-ins/common/compose.c:1184
 #: ../plug-ins/common/contrast-retinex.c:352
 #: ../plug-ins/common/curve-bend.c:1222 ../plug-ins/common/depth-merge.c:734
-#: ../plug-ins/common/destripe.c:485 ../plug-ins/common/file-heif.c:2301
+#: ../plug-ins/common/destripe.c:485 ../plug-ins/common/file-heif.c:2307
 #: ../plug-ins/common/file-pdf-load.c:656 ../plug-ins/common/file-svg.c:680
 #: ../plug-ins/common/file-wmf.c:547 ../plug-ins/common/film.c:1316
 #: ../plug-ins/common/grid.c:762 ../plug-ins/common/hot.c:680
@@ -432,7 +431,7 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-jp2-load.c:1313 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
 #: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
-#: ../plug-ins/common/file-raw-data.c:1323
+#: ../plug-ins/common/file-raw-data.c:1480
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:804
 #: ../plug-ins/common/smooth-palette.c:332 ../plug-ins/common/tile.c:405
@@ -774,8 +773,7 @@ msgstr "Naključno zrno"
 #: ../plug-ins/common/cml-explorer.c:1425
 #: ../plug-ins/common/cml-explorer.c:2248 ../plug-ins/common/curve-bend.c:1481
 #: ../plug-ins/common/curve-bend.c:1996 ../plug-ins/common/file-cel.c:1004
-#: ../plug-ins/common/file-jp2-load.c:977
-#: ../plug-ins/common/file-raw-data.c:1770 ../plug-ins/common/qbist.c:849
+#: ../plug-ins/common/file-jp2-load.c:977 ../plug-ins/common/qbist.c:849
 #: ../plug-ins/common/qbist.c:1032 ../plug-ins/common/sphere-designer.c:2290
 #: ../plug-ins/common/sphere-designer.c:2681 ../plug-ins/flame/flame.c:542
 #: ../plug-ins/flame/flame.c:1104
@@ -989,8 +987,8 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:874
 #: ../plug-ins/common/file-mng.c:1221 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
-#: ../plug-ins/common/file-raw-data.c:1120
-#: ../plug-ins/common/file-raw-data.c:1149 ../plug-ins/common/file-sunras.c:635
+#: ../plug-ins/common/file-raw-data.c:1109
+#: ../plug-ins/common/file-raw-data.c:1138 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1385
 #: ../plug-ins/common/sphere-designer.c:2201
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
@@ -1021,8 +1019,8 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
 #: ../plug-ins/common/file-ps.c:1150 ../plug-ins/common/file-ps.c:3536
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
-#: ../plug-ins/common/file-raw-data.c:440
-#: ../plug-ins/common/file-raw-data.c:1232 ../plug-ins/common/file-sunras.c:455
+#: ../plug-ins/common/file-raw-data.c:461
+#: ../plug-ins/common/file-raw-data.c:1390 ../plug-ins/common/file-sunras.c:455
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:445 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:658 ../plug-ins/common/file-xmc.c:899
@@ -1240,7 +1238,7 @@ msgstr "_Pordelost cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:242 ../plug-ins/common/decompose.c:193
-#: ../plug-ins/common/file-heif.c:2489 ../plug-ins/common/file-raw-data.c:1873
+#: ../plug-ins/common/file-heif.c:2495 ../plug-ins/common/file-raw-data.c:2118
 msgid "RGB"
 msgstr "RGB"
 
@@ -1810,7 +1808,7 @@ msgstr "Vir 2:"
 msgid "O_verlap:"
 msgstr "Pre_krivanje:"
 
-#: ../plug-ins/common/depth-merge.c:845 ../plug-ins/common/file-raw-data.c:1906
+#: ../plug-ins/common/depth-merge.c:845
 msgid "O_ffset:"
 msgstr "_Zamik:"
 
@@ -1878,7 +1876,6 @@ msgstr "Odstrani trakove"
 
 #: ../plug-ins/common/destripe.c:510 ../plug-ins/common/file-html-table.c:712
 #: ../plug-ins/common/file-ps.c:3661 ../plug-ins/common/file-ps.c:3861
-#: ../plug-ins/common/file-raw-data.c:1920
 #: ../plug-ins/common/smooth-palette.c:531 ../plug-ins/common/tile.c:519
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:398
@@ -1951,7 +1948,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1140
-#: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:447
+#: ../plug-ins/common/file-raw-data.c:1382 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:648
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
@@ -2508,102 +2505,102 @@ msgstr ""
 msgid "image content"
 msgstr "Vsebina slike"
 
-#: ../plug-ins/common/file-heif.c:1498
+#: ../plug-ins/common/file-heif.c:1504
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Izvažanje »%s« z uporabo kodirnika %s ..."
 
-#: ../plug-ins/common/file-heif.c:1548 ../plug-ins/common/file-heif.c:1941
+#: ../plug-ins/common/file-heif.c:1554 ../plug-ins/common/file-heif.c:1947
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodiranje slike HEIF je spodletelo: %s"
 
-#: ../plug-ins/common/file-heif.c:2062
+#: ../plug-ins/common/file-heif.c:2068
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Zapisovanje slike HEIF ni uspelo: %s"
 
-#: ../plug-ins/common/file-heif.c:2151
+#: ../plug-ins/common/file-heif.c:2157
 msgid "primary"
 msgstr "Primarno"
 
-#: ../plug-ins/common/file-heif.c:2296
+#: ../plug-ins/common/file-heif.c:2302
 msgid "Load HEIF Image"
 msgstr "Naloži sliko HEIF"
 
-#: ../plug-ins/common/file-heif.c:2310
+#: ../plug-ins/common/file-heif.c:2316
 msgid "Select Image"
 msgstr "Izberi sliko"
 
-#: ../plug-ins/common/file-heif.c:2454
+#: ../plug-ins/common/file-heif.c:2460
 msgid "Export Image as AVIF"
 msgstr "Izvozi sliko kot AVIF"
 
-#: ../plug-ins/common/file-heif.c:2454
+#: ../plug-ins/common/file-heif.c:2460
 msgid "Export Image as HEIF"
 msgstr "Izvozi sliko kot HEIF"
 
-#: ../plug-ins/common/file-heif.c:2467
+#: ../plug-ins/common/file-heif.c:2473
 msgid "_Lossless"
 msgstr "_Brez izgub"
 
-#: ../plug-ins/common/file-heif.c:2485
+#: ../plug-ins/common/file-heif.c:2491
 msgid "_Quality"
 msgstr "_Kakovost"
 
-#: ../plug-ins/common/file-heif.c:2490
+#: ../plug-ins/common/file-heif.c:2496
 msgid "YUV444"
 msgstr "YUV444"
 
-#: ../plug-ins/common/file-heif.c:2491
+#: ../plug-ins/common/file-heif.c:2497
 msgid "YUV420"
 msgstr "YUV420"
 
-#: ../plug-ins/common/file-heif.c:2498
+#: ../plug-ins/common/file-heif.c:2504
 msgid "Pixel format:"
 msgstr "Oblika slikovnih točk:"
 
-#: ../plug-ins/common/file-heif.c:2509 ../plug-ins/common/file-jpegxl.c:1123
+#: ../plug-ins/common/file-heif.c:2515 ../plug-ins/common/file-jpegxl.c:1122
 msgid "8 bit/channel"
 msgstr "8 bitov/kanal"
 
-#: ../plug-ins/common/file-heif.c:2510
+#: ../plug-ins/common/file-heif.c:2516
 msgid "10 bit/channel"
 msgstr "10 bitov/kanal"
 
-#: ../plug-ins/common/file-heif.c:2511
+#: ../plug-ins/common/file-heif.c:2517
 msgid "12 bit/channel"
 msgstr "12 bitov/kanal"
 
-#: ../plug-ins/common/file-heif.c:2518
+#: ../plug-ins/common/file-heif.c:2524
 msgid "Bit depth:"
 msgstr "Bitna globina:"
 
-#: ../plug-ins/common/file-heif.c:2521
+#: ../plug-ins/common/file-heif.c:2527
 msgid "Slow"
 msgstr "Počasi"
 
-#: ../plug-ins/common/file-heif.c:2522
+#: ../plug-ins/common/file-heif.c:2528
 msgid "Balanced"
 msgstr "Uravnoteženo"
 
-#: ../plug-ins/common/file-heif.c:2523
+#: ../plug-ins/common/file-heif.c:2529
 msgid "Fast"
 msgstr "Hitro"
 
-#: ../plug-ins/common/file-heif.c:2530
+#: ../plug-ins/common/file-heif.c:2536
 msgid "Speed:"
 msgstr "Hitrost:"
 
-#: ../plug-ins/common/file-heif.c:2536
+#: ../plug-ins/common/file-heif.c:2542
 msgid "Save color _profile"
 msgstr "Shrani _barvni profil"
 
-#: ../plug-ins/common/file-heif.c:2542
+#: ../plug-ins/common/file-heif.c:2548
 msgid "_Save Exif data"
 msgstr "_Shrani podatke Exif"
 
-#: ../plug-ins/common/file-heif.c:2547
+#: ../plug-ins/common/file-heif.c:2553
 msgid "Save _XMP data"
 msgstr "Shrani podatke _XMP"
 
@@ -2731,9 +2728,9 @@ msgid "_Border:"
 msgstr "Ro_b:"
 
 #: ../plug-ins/common/file-html-table.c:718 ../plug-ins/common/file-ps.c:3674
-#: ../plug-ins/common/file-ps.c:3872 ../plug-ins/common/file-raw-data.c:1934
-#: ../plug-ins/common/film.c:1059 ../plug-ins/common/smooth-palette.c:536
-#: ../plug-ins/common/tile.c:523 ../plug-ins/imagemap/imap_cmd_guides.c:173
+#: ../plug-ins/common/file-ps.c:3872 ../plug-ins/common/film.c:1059
+#: ../plug-ins/common/smooth-palette.c:536 ../plug-ins/common/tile.c:523
+#: ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:405
 #: ../plug-ins/print/print-page-layout.c:288
 msgid "_Height:"
@@ -2933,7 +2930,7 @@ msgstr "mucka"
 msgid "tortoise (slower)"
 msgstr "želva (počasneje)"
 
-#: ../plug-ins/common/file-jpegxl.c:1124
+#: ../plug-ins/common/file-jpegxl.c:1123
 msgid "16 bit/channel"
 msgstr "16 bitov/kanal"
 
@@ -3972,22 +3969,21 @@ msgstr "Manjkajoči blok splošnih atributov slike."
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
 
-#: ../plug-ins/common/file-raw-data.c:257
-#: ../plug-ins/common/file-raw-data.c:318
+#: ../plug-ins/common/file-raw-data.c:296
+#: ../plug-ins/common/file-raw-data.c:399
 msgid "Raw image data"
 msgstr "Surovi podatki slike (RAW)"
 
-#: ../plug-ins/common/file-raw-data.c:280
-#: ../plug-ins/common/file-raw-data.c:1818
+#: ../plug-ins/common/file-raw-data.c:361
+#: ../plug-ins/common/file-raw-data.c:2187
 msgid "Digital Elevation Model data"
 msgstr "Podatki modela digitalnega dviganja"
 
-#: ../plug-ins/common/file-raw-data.c:385
-#, c-format
-msgid "Could not open '%s' for size verification: %s"
-msgstr "»%s« ni mogoče odpreti za preverjanje velikosti: %s"
+#: ../plug-ins/common/file-raw-data.c:428
+msgid "Raw Data"
+msgstr "Neobdelani podatki"
 
-#: ../plug-ins/common/file-raw-data.c:465
+#: ../plug-ins/common/file-raw-data.c:497
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -3995,7 +3991,7 @@ msgstr ""
 "%d ni veljaven razmik vzorcev. Veljavne vrednosti so: 0 (samodejno "
 "zaznavanje), 1 in 3."
 
-#: ../plug-ins/common/file-raw-data.c:484
+#: ../plug-ins/common/file-raw-data.c:510
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -4006,30 +4002,19 @@ msgstr ""
 "datoteka HGT ali pa njena različica še ni podprta. Podprte datoteke HGT so: "
 "SRTM-1 in SRTM-3. Če poznate različico, zaženite z argumentom 1 oz. 3."
 
-#: ../plug-ins/common/file-raw-data.c:595
+#: ../plug-ins/common/file-raw-data.c:601
 #, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "Izvoz RAW ne podpira več plasti."
 
-#: ../plug-ins/common/file-raw-data.c:1765
+#: ../plug-ins/common/file-raw-data.c:1285
+#, c-format
+msgid "Could not open '%s' for size verification: %s"
+msgstr "»%s« ni mogoče odpreti za preverjanje velikosti: %s"
+
+#: ../plug-ins/common/file-raw-data.c:2047
 msgid "Load Image from Raw Data"
 msgstr "Naloži sliko iz surovih podatkov"
-
-#. Translators: Digital Elevation Model (DEM) is a technical term
-#. * used for 3D surface modeling or relief maps; so it must be
-#. * translated by the proper technical term in your language.
-#.
-#: ../plug-ins/common/file-raw-data.c:1814
-msgid "Digital Elevation Model data (1 arc-second)"
-msgstr "Podatki digitalnega modela nadmorske višine (1 kotna sekunda)"
-
-#: ../plug-ins/common/file-raw-data.c:1816
-msgid "Digital Elevation Model data (3 arc-seconds)"
-msgstr "Podatki digitalnega modela nadmorske višine (3 kotne sekunde)"
-
-#: ../plug-ins/common/file-raw-data.c:1822
-msgid "Image"
-msgstr "Slika"
 
 #. 2 types of HGT files are possible: SRTM-1 and SRTM-3.
 #. * From the documentation: https://dds.cr.usgs.gov/srtm/version1/Documentation/SRTM_Topo.txt
@@ -4039,143 +4024,138 @@ msgstr "Slika"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1852
+#: ../plug-ins/common/file-raw-data.c:2106
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 kotna sekunda)"
 
-#: ../plug-ins/common/file-raw-data.c:1853
+#: ../plug-ins/common/file-raw-data.c:2107
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 kotne sekunde)"
 
-#: ../plug-ins/common/file-raw-data.c:1856
-msgid "_Sample Spacing:"
-msgstr "Razmik vzor_cev:"
-
-#: ../plug-ins/common/file-raw-data.c:1874
+#: ../plug-ins/common/file-raw-data.c:2119
 msgid "RGB Alpha"
 msgstr "RGB z alfo"
 
-#: ../plug-ins/common/file-raw-data.c:1875
+#: ../plug-ins/common/file-raw-data.c:2120
 msgid "RGB565 Big Endian"
 msgstr "RGB565, največje na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1876
+#: ../plug-ins/common/file-raw-data.c:2121
 msgid "RGB565 Little Endian"
 msgstr "RGB565, najmanjše na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1877
+#: ../plug-ins/common/file-raw-data.c:2122
 msgid "BGR565 Big Endian"
 msgstr "BGR565, največje na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1878
+#: ../plug-ins/common/file-raw-data.c:2123
 msgid "BGR565 Little Endian"
 msgstr "BGR565, najmanjše na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1879
+#: ../plug-ins/common/file-raw-data.c:2124
 msgid "Planar RGB"
 msgstr "Ravninska RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1880
+#: ../plug-ins/common/file-raw-data.c:2125
 msgid "B&W 1 bit"
 msgstr "Č/B, 1-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1881
+#: ../plug-ins/common/file-raw-data.c:2126
 msgid "Gray 2 bit"
 msgstr "Sivinska, 2-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1882
+#: ../plug-ins/common/file-raw-data.c:2127
 msgid "Gray 4 bit"
 msgstr "Sivinska, 4-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1883
+#: ../plug-ins/common/file-raw-data.c:2128
 msgid "Gray 8 bit"
 msgstr "Sivinska, 8-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:1884
+#: ../plug-ins/common/file-raw-data.c:2129
 msgid "Indexed"
 msgstr "Indeksirana"
 
-#: ../plug-ins/common/file-raw-data.c:1885
+#: ../plug-ins/common/file-raw-data.c:2130
 msgid "Indexed Alpha"
 msgstr "Indeksirana z alfo"
 
-#: ../plug-ins/common/file-raw-data.c:1886
+#: ../plug-ins/common/file-raw-data.c:2131
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Sivinska, nepreznačena, 16-bitna, največje na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1887
+#: ../plug-ins/common/file-raw-data.c:2132
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Sivinska, nepredznačena, 16-bitna, najmanjše na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1888
+#: ../plug-ins/common/file-raw-data.c:2133
 msgid "Gray 16 bit Big Endian"
 msgstr "Sivinska, 16-bitna, največje na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1889
+#: ../plug-ins/common/file-raw-data.c:2134
 msgid "Gray 16 bit Little Endian"
 msgstr "Sivinska, 16-bitna, najmanjše na koncu"
 
-#: ../plug-ins/common/file-raw-data.c:1894
-msgid "Image _Type:"
-msgstr "Vrs_ta slike:"
+#. Translators: Digital Elevation Model (DEM) is a technical term
+#. * used for 3D surface modeling or relief maps; so it must be
+#. * translated by the proper technical term in your language.
+#.
+#: ../plug-ins/common/file-raw-data.c:2181
+msgid "Digital Elevation Model data (1 arc-second)"
+msgstr "Podatki digitalnega modela nadmorske višine (1 kotna sekunda)"
 
-#: ../plug-ins/common/file-raw-data.c:1950
-msgid "Palette"
-msgstr "Paleta"
+#: ../plug-ins/common/file-raw-data.c:2184
+msgid "Digital Elevation Model data (3 arc-seconds)"
+msgstr "Podatki digitalnega modela nadmorske višine (3 kotne sekunde)"
 
-#: ../plug-ins/common/file-raw-data.c:1960
+#: ../plug-ins/common/file-raw-data.c:2191
+msgid "Image"
+msgstr "Slika"
+
+#: ../plug-ins/common/file-raw-data.c:2194
 msgid "R, G, B (normal)"
 msgstr "R, G, B (navadno)"
 
-#: ../plug-ins/common/file-raw-data.c:1961
+#: ../plug-ins/common/file-raw-data.c:2195
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (slog BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:1966
-msgid "_Palette Type:"
-msgstr "Vrsta _palete:"
+#: ../plug-ins/common/file-raw-data.c:2210
+msgid "Palette"
+msgstr "Paleta"
 
-#: ../plug-ins/common/file-raw-data.c:1976
-msgid "Off_set:"
-msgstr "_Zamik:"
+#. TRANSLATORS: %s is a sample to describe the planar configuration
+#. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
+#.
+#: ../plug-ins/common/file-raw-data.c:2281
+#, c-format
+msgid "_Contiguous (%s)"
+msgstr "_Neprekinjeno (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:1988
-msgid "Select Palette File"
-msgstr "Izberite datoteko palete"
+#: ../plug-ins/common/file-raw-data.c:2283
+msgid "_Contiguous"
+msgstr "_Neprekinjeno"
 
-#: ../plug-ins/common/file-raw-data.c:1994
-msgid "Pal_ette File:"
-msgstr "Datoteka pal_ete:"
+#. TRANSLATORS: %s is a sample to describe the planar configuration
+#. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
+#.
+#: ../plug-ins/common/file-raw-data.c:2289
+#, c-format
+msgid "_Planar (%s)"
+msgstr "_Planarno (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2025
-msgid "Export Image as Raw Data"
-msgstr "Izvozi sliko kot surove podatke"
-
-#. Image type combo
-#: ../plug-ins/common/file-raw-data.c:2034
-msgid "_Standard (R,G,B)"
-msgstr "_Navadno (R,G,B)"
-
-#: ../plug-ins/common/file-raw-data.c:2035
-msgid "_Planar (RRR,GGG,BBB)"
-msgstr "_Planarno (RRR, GGG, BBB)"
-
-#: ../plug-ins/common/file-raw-data.c:2038
-msgid "Image Type"
-msgstr "Vrste slike"
+#: ../plug-ins/common/file-raw-data.c:2291
+msgid "_Planar"
+msgstr "_Planarno"
 
 #. Palette type combo
-#: ../plug-ins/common/file-raw-data.c:2044
+#: ../plug-ins/common/file-raw-data.c:2313
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (navadno)"
 
-#: ../plug-ins/common/file-raw-data.c:2045
+#: ../plug-ins/common/file-raw-data.c:2314
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (slog BMP)"
-
-#: ../plug-ins/common/file-raw-data.c:2048
-msgid "Palette Type"
-msgstr "Vrsta palete"
 
 #: ../plug-ins/common/file-sunras.c:273 ../plug-ins/common/file-sunras.c:299
 msgid "SUN Rasterfile image"
@@ -6180,8 +6160,8 @@ msgstr "Barva ospredja"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
-#: ../plug-ins/common/warp.c:652 ../plug-ins/file-jpeg/jpeg-save.c:971
-#: ../plug-ins/file-webp/file-webp-dialog.c:108
+#: ../plug-ins/common/warp.c:652 ../plug-ins/file-jpeg/jpeg-save.c:969
+#: ../plug-ins/file-webp/file-webp-dialog.c:107
 msgid "Advanced Options"
 msgstr "Napredne možnosti"
 
@@ -7087,15 +7067,15 @@ msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (četrtinska kroma)"
 
 #. DCT method
-#: ../plug-ins/file-jpeg/jpeg-save.c:962
+#: ../plug-ins/file-jpeg/jpeg-save.c:961
 msgid "Fast Integer"
 msgstr "hitri integer"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:963
+#: ../plug-ins/file-jpeg/jpeg-save.c:962
 msgid "Integer"
 msgstr "integer"
 
-#: ../plug-ins/file-jpeg/jpeg-save.c:964
+#: ../plug-ins/file-jpeg/jpeg-save.c:963
 msgid "Floating-Point"
 msgstr "plavajoča vejica"
 
