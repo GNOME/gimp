@@ -1941,15 +1941,14 @@ load_config_notify (GimpProcedureConfig  *config,
       (height_update = (g_strcmp0 (pspec->name, "height") == 0)) ||
       (offset_update = (g_strcmp0 (pspec->name, "offset") == 0)))
     {
-      GimpProcedure *procedure;
-      GFile         *file;
-      goffset        file_size;
-      gint           width;
-      gint           height;
-      gint           offset;
-      gint           bpp;
-      gint           bitspp;
-      goffset        max_pixels;
+      GFile   *file;
+      goffset  file_size;
+      gint     width;
+      gint     height;
+      gint     offset;
+      gint     bpp    = 1;
+      gint     bitspp = 8;
+      goffset  max_pixels;
 
       get_bpp (config, &bpp, &bitspp);
       g_object_get (config,
@@ -1958,7 +1957,6 @@ load_config_notify (GimpProcedureConfig  *config,
                     "offset", &offset,
                     NULL);
 
-      procedure = gimp_procedure_config_get_procedure (config);
       file = g_object_get_data (G_OBJECT (preview), "procedure-file");
       file_size = get_file_info (file);
 
