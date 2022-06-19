@@ -10,22 +10,22 @@
 # Christian Kirbach <Christian.Kirbach@googlemail.com>, 2011, 2013.
 # Mario Blättermann <mario.blaettermann@gmail.com>, 2011, 2016-2018.
 # Daniel Winzen <d@winzen4.de>, 2013.
-# Tim Sabsch <tim@sabsch.com>, 2018-2020.
+# Tim Sabsch <tim@sabsch.com>, 2018-2020, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: libgimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-08-05 13:45+0000\n"
-"PO-Revision-Date: 2020-09-05 12:22+0200\n"
-"Last-Translator: Stephan Woidowski <swoidowski@t-online.de>\n"
+"POT-Creation-Date: 2021-11-02 16:08+0000\n"
+"PO-Revision-Date: 2022-01-02 13:15+0100\n"
+"Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.4.1\n"
+"X-Generator: Poedit 3.0\n"
 "X-Project-Style: gnome\n"
 
 #. procedure executed successfully
@@ -271,44 +271,44 @@ msgstr "Schriftenauswahl"
 msgid "Gradient Selection"
 msgstr "Farbverlaufsauswahl"
 
-#: ../libgimp/gimpimagemetadata.c:514
+#: ../libgimp/gimpimagemetadata.c:687
 msgid "GIMP 2.10"
 msgstr "GIMP 2.10"
 
-#: ../libgimp/gimpimagemetadata.c:703
+#: ../libgimp/gimpimagemetadata.c:878
 msgid "Background"
 msgstr "Hintergrund"
 
-#: ../libgimp/gimpimagemetadata.c:892
+#: ../libgimp/gimpimagemetadata.c:1067
 #, c-format
 msgid "Rotate %s?"
 msgstr "%s drehen?"
 
-#: ../libgimp/gimpimagemetadata.c:898
+#: ../libgimp/gimpimagemetadata.c:1073
 msgid "_Keep Original"
 msgstr "Original _beibehalten"
 
-#: ../libgimp/gimpimagemetadata.c:899 ../libgimpwidgets/gimpicons.c:271
+#: ../libgimp/gimpimagemetadata.c:1074 ../libgimpwidgets/gimpicons.c:271
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: ../libgimp/gimpimagemetadata.c:940
+#: ../libgimp/gimpimagemetadata.c:1115
 msgid "Original"
 msgstr "Original"
 
-#: ../libgimp/gimpimagemetadata.c:956
+#: ../libgimp/gimpimagemetadata.c:1131
 msgid "Rotated"
 msgstr "Gedreht"
 
-#: ../libgimp/gimpimagemetadata.c:974
+#: ../libgimp/gimpimagemetadata.c:1149
 msgid "This image contains Exif orientation metadata."
 msgstr "Dieses Bild enthält Exif-Metadaten zur Ausrichtung."
 
-#: ../libgimp/gimpimagemetadata.c:992
+#: ../libgimp/gimpimagemetadata.c:1167
 msgid "Would you like to rotate the image?"
 msgstr "Wollen Sie dieses Bild drehen?"
 
-#: ../libgimp/gimpimagemetadata.c:1004
+#: ../libgimp/gimpimagemetadata.c:1179
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
@@ -1134,12 +1134,12 @@ msgstr "Nach Bedarf erweitert"
 #: ../libgimpbase/gimpbaseenums.c:1128
 msgctxt "merge-type"
 msgid "Clipped to image"
-msgstr "Auf Bild beschnitten"
+msgstr "Auf Bild zugeschnitten"
 
 #: ../libgimpbase/gimpbaseenums.c:1129
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
-msgstr "Auf unterste Ebene beschnitten"
+msgstr "Auf unterste Ebene zugeschnitten"
 
 #: ../libgimpbase/gimpbaseenums.c:1130
 msgctxt "merge-type"
@@ -1464,50 +1464,44 @@ msgstr "Anpassen"
 #: ../libgimpbase/gimpbaseenums.c:1954
 msgctxt "transform-resize"
 msgid "Clip"
-msgstr "Beschneiden"
+msgstr "Zuschneiden"
 
 #: ../libgimpbase/gimpbaseenums.c:1955
 msgctxt "transform-resize"
 msgid "Crop to result"
-msgstr "Auf Ergebnis beschneiden"
+msgstr "Auf Ergebnis zuschneiden"
 
 #: ../libgimpbase/gimpbaseenums.c:1956
 msgctxt "transform-resize"
 msgid "Crop with aspect"
-msgstr "Auf Seitenverhältnis beschneiden"
+msgstr "Auf Seitenverhältnis zuschneiden"
 
-#: ../libgimpbase/gimpmetadata.c:878
+#: ../libgimpbase/gimpmetadata.c:932
 #, c-format
 msgid "Can load metadata only from local files"
 msgstr "Metadaten können nur aus lokalen Dateien geladen werden"
 
-#: ../libgimpbase/gimpmetadata.c:892 ../libgimpbase/gimpmetadata.c:962
-#, c-format
-msgid "Conversion of the filename to system codepage failed."
-msgstr ""
-"Umwandlung des Dateinamens in eine System-Codeseite ist fehlgeschlagen."
-
-#: ../libgimpbase/gimpmetadata.c:949
+#: ../libgimpbase/gimpmetadata.c:988
 #, c-format
 msgid "Can save metadata only to local files"
 msgstr "Metadaten können nur in lokalen Dateien gespeichert werden"
 
-#: ../libgimpbase/gimpmetadata.c:1011
+#: ../libgimpbase/gimpmetadata.c:1036
 #, c-format
 msgid "Invalid Exif data size."
 msgstr "Ungültige Größe der Exif-Daten."
 
-#: ../libgimpbase/gimpmetadata.c:1040
+#: ../libgimpbase/gimpmetadata.c:1065
 #, c-format
 msgid "Parsing Exif data failed."
 msgstr "Auswerten der Exif-Daten ist fehlgeschlagen."
 
-#: ../libgimpbase/gimpmetadata.c:1090
+#: ../libgimpbase/gimpmetadata.c:1115
 #, c-format
 msgid "Parsing IPTC data failed."
 msgstr "Auswerten der IPTC-Daten ist fehlgeschlagen."
 
-#: ../libgimpbase/gimpmetadata.c:1138
+#: ../libgimpbase/gimpmetadata.c:1163
 #, c-format
 msgid "Parsing XMP data failed."
 msgstr "Auswerten der XMP-Daten ist fehlgeschlagen."
@@ -2867,7 +2861,7 @@ msgstr "GIMP-MIDI-Eingangssteuerung"
 # CHECK
 #: ../modules/display-filter-clip-warning.c:120
 msgid "Clip warning color display filter"
-msgstr "Warnfarbe des Ansichtfilters beschneiden"
+msgstr "Warnfarbe des Ansichtfilters zuschneiden"
 
 #: ../modules/display-filter-clip-warning.c:157
 msgid "Show shadows"
@@ -2987,6 +2981,10 @@ msgstr "Kontrastwiederholungen"
 #: ../modules/display-filter-high-contrast.c:128
 msgid "Contrast"
 msgstr "Kontrast"
+
+#~ msgid "Conversion of the filename to system codepage failed."
+#~ msgstr ""
+#~ "Umwandlung des Dateinamens in eine System-Codeseite ist fehlgeschlagen."
 
 #~ msgctxt "select-criterion"
 #~ msgid "Hue (HSV)"
