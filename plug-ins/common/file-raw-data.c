@@ -327,8 +327,8 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                          0, GIMP_MAX_IMAGE_SIZE, 0,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_INT (procedure, "color-representation",
-                         "Pixel r_epresentation",
+      GIMP_PROC_ARG_INT (procedure, "pixel-format",
+                         "Pixel _format",
                          "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
                          RAW_RGB, RAW_GRAY_16BPP_SLE, RAW_RGB,
                          G_PARAM_READWRITE);
@@ -1215,7 +1215,7 @@ get_bpp (GimpProcedureConfig *config,
       RawType image_type;
 
       g_object_get (config,
-                    "color-representation", &image_type,
+                    "pixel-format", &image_type,
                     NULL);
       switch (image_type)
         {
@@ -1345,13 +1345,13 @@ get_load_config_values (GimpProcedureConfig     *config,
   else
     {
       g_object_get (config,
-                    "offset",               file_offset,
-                    "width",                image_width,
-                    "height",               image_height,
-                    "color-representation", image_type,
-                    "palette-offset",       palette_offset,
-                    "palette-type",         palette_type,
-                    "palette-file",         palette_file,
+                    "offset",         file_offset,
+                    "width",          image_width,
+                    "height",         image_height,
+                    "pixel-format",   image_type,
+                    "palette-offset", palette_offset,
+                    "palette-type",   palette_type,
+                    "palette-file",   palette_file,
                     NULL);
     }
 }
@@ -1365,7 +1365,7 @@ load_image (GFile                *file,
   GimpLayer         *layer = NULL;
   GimpImageType      ltype = GIMP_RGB_IMAGE;
   GimpImageBaseType  itype = GIMP_RGB;
-  RawType            color_rep;
+  RawType            pixel_format;
   goffset            size;
   gint               width;
   gint               height;
@@ -1392,12 +1392,12 @@ load_image (GFile                *file,
       return NULL;
     }
 
-  get_load_config_values (config, &offset, &width, &height, &color_rep,
+  get_load_config_values (config, &offset, &width, &height, &pixel_format,
                           &palette_offset, &palette_type, &palette_file);
 
   size = get_file_info (file);
 
-  switch (color_rep)
+  switch (pixel_format)
     {
     case RAW_RGB:             /* standard RGB */
     case RAW_PLANAR:          /* planar RGB */
@@ -1471,7 +1471,7 @@ load_image (GFile                *file,
   if (height > (size / width / bpp * 8 / bitspp))
     height = size / width / bpp * 8 / bitspp;
 
-  if (color_rep >= RAW_GRAY_16BPP_BE)
+  if (pixel_format >= RAW_GRAY_16BPP_BE)
     data->image = gimp_image_new_with_precision (width, height, itype,
                                                  GIMP_PRECISION_U16_NON_LINEAR);
   else
@@ -1484,7 +1484,7 @@ load_image (GFile                *file,
 
   data->buffer = gimp_drawable_get_buffer (GIMP_DRAWABLE (layer));
 
-  switch (color_rep)
+  switch (pixel_format)
     {
     case RAW_RGB:
     case RAW_RGBA:
@@ -1495,7 +1495,7 @@ load_image (GFile                *file,
     case RAW_RGB565_LE:
     case RAW_BGR565_BE:
     case RAW_BGR565_LE:
-      raw_load_rgb565 (data, width, height, offset, color_rep);
+      raw_load_rgb565 (data, width, height, offset, pixel_format);
       break;
 
     case RAW_PLANAR:
@@ -1525,7 +1525,7 @@ load_image (GFile                *file,
     case RAW_GRAY_16BPP_LE:
     case RAW_GRAY_16BPP_SBE:
     case RAW_GRAY_16BPP_SLE:
-      raw_load_gray16 (data, width, height, offset, color_rep);
+      raw_load_gray16 (data, width, height, offset, pixel_format);
       break;
     }
 
@@ -1551,7 +1551,7 @@ preview_update (GimpPreviewArea *preview,
   gint                 bitspp = 0;
 
   GimpProcedureConfig *config;
-  RawType              color_rep;
+  RawType              pixel_format;
   gint                 width;
   gint                 height;
   gint                 offset;
@@ -1560,12 +1560,12 @@ preview_update (GimpPreviewArea *preview,
   gint                 palette_offset;
   RawPaletteType       palette_type;
 
-
+  printf("START %s\n", G_STRFUNC);
   gimp_preview_area_get_size (preview, &preview_width, &preview_height);
 
   config = g_object_get_data (G_OBJECT (preview), "procedure-config");
 
-  get_load_config_values (config, &offset, &width, &height, &color_rep,
+  get_load_config_values (config, &offset, &width, &height, &pixel_format,
                           &palette_offset, &palette_type, &palette_file);
   width  = MIN (width,  preview_width);
   height = MIN (height, preview_height);
@@ -1574,7 +1574,7 @@ preview_update (GimpPreviewArea *preview,
                           0, 0, preview_width, preview_height,
                           255, 255, 255);
 
-  switch (color_rep)
+  switch (pixel_format)
     {
     case RAW_RGB:
       /* standard RGB image */
@@ -1625,7 +1625,7 @@ preview_update (GimpPreviewArea *preview,
           {
             pos = offset + width * y * 2;
             mmap_read (preview_fd, in, width * 2, pos, width * 2);
-            rgb_565_to_888 (in, row, width, color_rep);
+            rgb_565_to_888 (in, row, width, pixel_format);
 
             gimp_preview_area_draw (preview, 0, y, width, 1,
                                     GIMP_RGB_IMAGE, row, width * 3);
@@ -1746,7 +1746,7 @@ preview_update (GimpPreviewArea *preview,
     case RAW_INDEXEDA:
       /* indexed image */
       {
-        gboolean  alpha = (color_rep == RAW_INDEXEDA);
+        gboolean  alpha = (pixel_format == RAW_INDEXEDA);
         guchar   *index = g_malloc0 (width * (alpha ? 2 : 1));
         guchar   *row   = g_malloc0 (width * (alpha ? 4 : 3));
 
@@ -1866,13 +1866,13 @@ preview_update (GimpPreviewArea *preview,
               {
                 gint pixel_val;
 
-                if (color_rep == RAW_GRAY_16BPP_BE)
+                if (pixel_format == RAW_GRAY_16BPP_BE)
                   pixel_val = GUINT16_FROM_BE (r_row[j]);
-                else if (color_rep == RAW_GRAY_16BPP_LE)
+                else if (pixel_format == RAW_GRAY_16BPP_LE)
                   pixel_val = GUINT16_FROM_LE (r_row[j]);
-                else if (color_rep == RAW_GRAY_16BPP_SBE)
+                else if (pixel_format == RAW_GRAY_16BPP_SBE)
                   pixel_val = GINT16_FROM_BE (r_row[j]) - G_MININT16;
-                else /* if (color_rep == RAW_GRAY_16BPP_SLE)*/
+                else /* if (pixel_format == RAW_GRAY_16BPP_SLE)*/
                   pixel_val = GINT16_FROM_LE (r_row[j]) - G_MININT16;
 
                 row[j] = pixel_val / 257;
@@ -2132,7 +2132,7 @@ load_dialog (GFile         *file,
                                   _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
                                   NULL);
       gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
-                                           "color-representation",
+                                           "pixel-format",
                                            GIMP_INT_STORE (store));
     }
 
@@ -2160,7 +2160,7 @@ load_dialog (GFile         *file,
 
       gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                       "image-box",
-                                      "color-representation",
+                                      "pixel-format",
                                       "offset", "width", "height",
                                       NULL);
     }
