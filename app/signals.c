@@ -107,10 +107,17 @@ gimp_init_signal_handlers (gchar **backtrace_file)
   gimp_signal_private (SIGTERM, gimp_sigfatal_handler, 0);
 
   /* these are handled by gimp_fatal_error() */
+  /*
+   * MacOS has it's own crash handlers which end up fighting the
+   * these Gimp supplied handlers and leading to very hard to
+   * deal with hangs (just get a spin dump)
+   */
+#ifndef PLATFORM_OSX
   gimp_signal_private (SIGABRT, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGBUS,  gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGSEGV, gimp_sigfatal_handler, 0);
   gimp_signal_private (SIGFPE,  gimp_sigfatal_handler, 0);
+#endif
 
   /* Ignore SIGPIPE because plug_in.c handles broken pipes */
   gimp_signal_private (SIGPIPE, SIG_IGN, 0);
