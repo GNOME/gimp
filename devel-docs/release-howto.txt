@@ -40,6 +40,12 @@
      @harrymichal and @hfiguiere) of the upcoming release so they have
      some time to sort out issues with their builds.
 
+ ( ) Freeze the repository a few days before release, except for
+     absolute obvious bug fixes. Ask packagers to make a test package
+     based on current HEAD of the release branch. Post links to these
+     test packages on a bug report titled "GIMP X.Y.Z release testing".
+     Propose all willing testers to try these packages.
+
  ( ) Wait until the date specified in the announcements, use this time
      to get bug fixes applied which don't modify strings.
 
