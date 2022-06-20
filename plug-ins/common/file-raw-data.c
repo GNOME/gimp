@@ -868,18 +868,29 @@ raw_load_rgb565 (RawGimpData *data,
                  gint         offset,
                  RawType      type)
 {
-  gint32   num_pixels = width * height;
-  guint16 *in         = g_malloc (num_pixels * 2);
-  guchar  *row        = g_malloc (num_pixels * 3);
+  GeglBufferIterator *iter;
+  guint16            *in = NULL;
 
-  raw_read_row (data->fp, (guchar *)in, offset, num_pixels * 2);
-  rgb_565_to_888 (in, row, num_pixels, type);
+  iter = gegl_buffer_iterator_new (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
+                                   0, NULL, GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
 
-  gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
-                   0, NULL, row, GEGL_AUTO_ROWSTRIDE);
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const GeglRectangle *roi = &iter->items[0].roi;
+      guchar              *out = iter->items[0].data;
+      gint                 line;
+
+      in = g_realloc (in, iter->length * 2);
+      for (line = 0; line < roi->height; line++)
+        {
+          raw_read_row (data->fp, (guchar *) in,
+                        offset + ((roi->y + line) * width * 2) + roi->x * 2,
+                        iter->length * 2);
+          rgb_565_to_888 (in, out + line * roi->width * 3, roi->width, type);
+        }
+    }
 
   g_free (in);
-  g_free (row);
 
   return TRUE;
 }
