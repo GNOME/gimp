@@ -92,6 +92,10 @@ typedef enum
 
   /* RGB Image with an Alpha channel */
   RAW_RGBA_8BPP,
+  RAW_RGBA_16BPP_BE,
+  RAW_RGBA_16BPP_LE,
+  RAW_RGBA_32BPP_BE,
+  RAW_RGBA_32BPP_LE,
 
   RAW_RGB565_BE,    /* RGB Image 16bit, 5,6,5 bits per channel, big-endian */
   RAW_RGB565_LE,    /* RGB Image 16bit, 5,6,5 bits per channel, little-endian */
@@ -739,7 +743,9 @@ raw_load_standard (RawGimpData *data,
                    type == RAW_GRAY_32BPP_BE  ||
                    type == RAW_GRAY_32BPP_SBE ||
                    type == RAW_RGB_16BPP_BE   ||
-                   type == RAW_RGB_32BPP_BE);
+                   type == RAW_RGB_32BPP_BE   ||
+                   type == RAW_RGBA_16BPP_BE  ||
+                   type == RAW_RGBA_32BPP_BE);
   is_signed     = (type == RAW_GRAY_16BPP_SBE ||
                    type == RAW_GRAY_32BPP_SBE);
 
@@ -1304,6 +1310,16 @@ get_bpp (GimpProcedureConfig *config,
           *bpp = 4;
           break;
 
+        case RAW_RGBA_16BPP_BE:
+        case RAW_RGBA_16BPP_LE:
+          *bpp = 8;
+          break;
+
+        case RAW_RGBA_32BPP_BE:
+        case RAW_RGBA_32BPP_LE:
+          *bpp = 16;
+          break;
+
         case RAW_GRAY_1BPP:
           *bpp    = 1;
           *bitspp = 1;
@@ -1515,6 +1531,22 @@ load_image (GFile                *file,
       itype = GIMP_RGB;
       break;
 
+    case RAW_RGBA_16BPP_BE:
+    case RAW_RGBA_16BPP_LE:
+      bpp   = 8;
+      ltype = GIMP_RGBA_IMAGE;
+      itype = GIMP_RGB;
+      precision = GIMP_PRECISION_U16_NON_LINEAR;
+      break;
+
+    case RAW_RGBA_32BPP_BE:
+    case RAW_RGBA_32BPP_LE:
+      bpp   = 16;
+      ltype = GIMP_RGBA_IMAGE;
+      itype = GIMP_RGB;
+      precision = GIMP_PRECISION_U32_NON_LINEAR;
+      break;
+
     case RAW_GRAY_1BPP:
       bpp    = 1;
       bitspp = 1;
@@ -1593,7 +1625,12 @@ load_image (GFile                *file,
     case RAW_RGB_16BPP_LE:
     case RAW_RGB_32BPP_BE:
     case RAW_RGB_32BPP_LE:
+
     case RAW_RGBA_8BPP:
+    case RAW_RGBA_16BPP_BE:
+    case RAW_RGBA_16BPP_LE:
+    case RAW_RGBA_32BPP_BE:
+    case RAW_RGBA_32BPP_LE:
       raw_load_standard (data, width, height, bpp, offset, pixel_format);
       break;
 
@@ -1692,7 +1729,9 @@ preview_update (GimpPreviewArea *preview,
                    pixel_format == RAW_GRAY_32BPP_BE  ||
                    pixel_format == RAW_GRAY_32BPP_SBE ||
                    pixel_format == RAW_RGB_16BPP_BE   ||
-                   pixel_format == RAW_RGB_32BPP_BE);
+                   pixel_format == RAW_RGB_32BPP_BE   ||
+                   pixel_format == RAW_RGBA_16BPP_BE  ||
+                   pixel_format == RAW_RGBA_32BPP_BE);
   is_signed     = (pixel_format == RAW_GRAY_16BPP_SBE ||
                    pixel_format == RAW_GRAY_32BPP_SBE);
 
@@ -1701,6 +1740,20 @@ preview_update (GimpPreviewArea *preview,
     case RAW_RGBA_8BPP:
       bpc = 1;
       bpp = 4;
+    case RAW_RGBA_16BPP_BE:
+    case RAW_RGBA_16BPP_LE:
+      if (bpc == 0)
+        {
+          bpc = 2;
+          bpp = 8;
+        }
+    case RAW_RGBA_32BPP_BE:
+    case RAW_RGBA_32BPP_LE:
+      if (bpc == 0)
+        {
+          bpc = 4;
+          bpp = 16;
+        }
       n_components = 4;
       preview_type = GIMP_RGBA_IMAGE;
     case RAW_RGB_8BPP:
@@ -2331,6 +2384,10 @@ load_dialog (GFile         *file,
                                   _("RGB 32-bit Little Endian"),           RAW_RGB_32BPP_LE,
 
                                   _("RGBA 8-bit"),                         RAW_RGBA_8BPP,
+                                  _("RGBA 16-bit Big Endian"),             RAW_RGBA_16BPP_BE,
+                                  _("RGBA 16-bit Little Endian"),          RAW_RGBA_16BPP_LE,
+                                  _("RGBA 32-bit Big Endian"),             RAW_RGBA_32BPP_BE,
+                                  _("RGBA 32-bit Little Endian"),          RAW_RGBA_32BPP_LE,
 
                                   _("RGB565 Big Endian"),                  RAW_RGB565_BE,
                                   _("RGB565 Little Endian"),               RAW_RGB565_LE,
