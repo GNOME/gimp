@@ -268,7 +268,14 @@ gimp_update_get_highest (JsonParser  *parser,
 
                   /* These are optional data. */
                   if (json_object_has_member (build, "revision"))
-                    *build_revision = json_object_get_int_member (build, "revision");
+                    {
+                      if (g_strcmp0 (json_node_type_name (json_object_get_member (build, "revision")),
+                                     "String") == 0)
+                        *build_revision = g_ascii_strtoull (json_object_get_string_member (build, "revision"),
+                                                            NULL, 10);
+                      else
+                        *build_revision = json_object_get_int_member (build, "revision");
+                    }
                   if (json_object_has_member (build, "comment"))
                     *build_comment = g_strdup (json_object_get_string_member (build, "comment"));
                   break;
