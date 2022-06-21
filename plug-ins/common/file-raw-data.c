@@ -87,8 +87,10 @@ typedef enum
   RAW_RGB_8BPP,
   RAW_RGB_16BPP_BE,
   RAW_RGB_16BPP_LE,
+  RAW_RGB_16BPP_FLOAT,
   RAW_RGB_32BPP_BE,
   RAW_RGB_32BPP_LE,
+  RAW_RGB_32BPP_FLOAT,
 
   /* RGB Image with an Alpha channel */
   RAW_RGBA_8BPP,
@@ -240,6 +242,10 @@ static void           get_load_config_values (GimpProcedureConfig     *config,
                                               GFile                  **palette_file);
 
 /* gui functions */
+static void             halfp2singles        (uint32_t                *xp,
+                                              const uint16_t          *hp,
+                                              int                      numel);
+
 static void             preview_update       (GimpPreviewArea         *preview,
                                               gboolean                 preview_cmap_update);
 static void             preview_update_size  (GimpPreviewArea         *preview);
@@ -727,6 +733,7 @@ raw_load_standard (RawGimpData *data,
 
   gboolean            is_big_endian;
   gboolean            is_signed;
+  gboolean            is_float;
 
   gint                input_stride;
   gint                n_components;
@@ -748,6 +755,8 @@ raw_load_standard (RawGimpData *data,
                    type == RAW_RGBA_32BPP_BE);
   is_signed     = (type == RAW_GRAY_16BPP_SBE ||
                    type == RAW_GRAY_32BPP_SBE);
+  is_float      = (type == RAW_RGB_16BPP_FLOAT ||
+                   type == RAW_RGB_32BPP_FLOAT);
 
   iter = gegl_buffer_iterator_new (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
                                    0, NULL, GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
@@ -779,7 +788,11 @@ raw_load_standard (RawGimpData *data,
                     }
                   else if (bpc == 2)
                     {
-                      if (is_big_endian)
+                      if (is_float)
+                        {
+                          pixel_val = ((guint16 *) in)[pos];
+                        }
+                      else if (is_big_endian)
                         {
                           if (is_signed)
                             pixel_val = GINT16_FROM_BE (((guint16 *) in)[pos]) - G_MININT16;
@@ -798,7 +811,11 @@ raw_load_standard (RawGimpData *data,
                     {
                       g_return_val_if_fail (bpc == 4, FALSE);
 
-                      if (is_big_endian)
+                      if (is_float)
+                        {
+                          pixel_val = ((guint32 *) in)[pos];
+                        }
+                      else if (is_big_endian)
                         {
                           if (is_signed)
                             pixel_val = GINT32_FROM_BE (((guint32 *) in)[pos]) - G_MININT32;
@@ -814,12 +831,46 @@ raw_load_standard (RawGimpData *data,
                         }
                     }
 
-                  if (bpc == 4)
-                    ((guint32*) out)[pos] = (guint32) pixel_val;
+                  if (is_float)
+                    {
+                      gchar  *out2;
+                      gchar  *in2;
+                      gint32  int_val_32 = pixel_val;
+                      gint16  int_val_16 = pixel_val;
+
+                      if (bpc == 4)
+                        {
+                          out2 = (gchar *) ((guint32 *) out + pos);
+                          in2  = (gchar *) (&int_val_32);
+                        }
+                      else /* if (bpc == 2) */
+                        {
+                          out2 = (gchar *) ((guint16 *) out + pos);
+                          in2  = (gchar *) (&int_val_16);
+                        }
+
+                      /* Avoiding any type conversion by tricking the
+                       * type system to just copy data as-is at every
+                       * step. While we could have done differently for
+                       * float (4-bytes), this is even more necessary
+                       * for half float (2-bytes) as we don't even have
+                       * a type to use in glib for this.
+                       */
+                      for (gint b = 0; b < bpc; b++)
+                        out2[b] = in2[b];
+                    }
+                  else if (bpc == 4)
+                    {
+                      ((guint32*) out)[pos] = (guint32) pixel_val;
+                    }
                   else if (bpc == 2)
-                    ((guint16*) out)[pos] = (guint16) pixel_val;
+                    {
+                      ((guint16*) out)[pos] = (guint16) pixel_val;
+                    }
                   else
-                    out[pos] = (gchar) pixel_val;
+                    {
+                      out[pos] = (gchar) pixel_val;
+                    }
                 }
             }
           out += in_size;
@@ -1291,11 +1342,13 @@ get_bpp (GimpProcedureConfig *config,
 
         case RAW_RGB_16BPP_BE:
         case RAW_RGB_16BPP_LE:
+        case RAW_RGB_16BPP_FLOAT:
           *bpp = 6;
           break;
 
         case RAW_RGB_32BPP_BE:
         case RAW_RGB_32BPP_LE:
+        case RAW_RGB_32BPP_FLOAT:
           *bpp = 12;
           break;
 
@@ -1503,6 +1556,12 @@ load_image (GFile                *file,
           bpp = 6;
           precision = GIMP_PRECISION_U16_NON_LINEAR;
         }
+    case RAW_RGB_16BPP_FLOAT:
+      if (bpp == 0)
+        {
+          bpp = 6;
+          precision = GIMP_PRECISION_HALF_NON_LINEAR;
+        }
 
     case RAW_RGB_32BPP_BE:
     case RAW_RGB_32BPP_LE:
@@ -1510,6 +1569,12 @@ load_image (GFile                *file,
         {
           bpp = 12;
           precision = GIMP_PRECISION_U32_NON_LINEAR;
+        }
+    case RAW_RGB_32BPP_FLOAT:
+      if (bpp == 0)
+        {
+          bpp = 12;
+          precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
         }
 
       ltype = GIMP_RGB_IMAGE;
@@ -1623,8 +1688,10 @@ load_image (GFile                *file,
     case RAW_RGB_8BPP:
     case RAW_RGB_16BPP_BE:
     case RAW_RGB_16BPP_LE:
+    case RAW_RGB_16BPP_FLOAT:
     case RAW_RGB_32BPP_BE:
     case RAW_RGB_32BPP_LE:
+    case RAW_RGB_32BPP_FLOAT:
 
     case RAW_RGBA_8BPP:
     case RAW_RGBA_16BPP_BE:
@@ -1685,6 +1752,61 @@ load_image (GFile                *file,
 
 /* misc GUI stuff */
 
+/* Taken straight from babl repository in file `babl/base/type-half.c`.
+ */
+static void
+halfp2singles (uint32_t       *xp,
+               const uint16_t *hp,
+               int             numel)
+{
+
+  uint16_t h, hs, he, hm;
+  uint32_t xs, xe, xm;
+  int32_t xes;
+  int e;
+
+
+
+  if( xp == NULL || hp == NULL ) // Nothing to convert (e.g., imag part of pure real)
+    return;
+
+  while( numel-- ) {
+      h = *hp++;
+      if( (h & 0x7FFFu) == 0 ) {  // Signed zero
+          *xp++ = ((uint32_t) h) << 16;  // Return the signed zero
+      } else { // Not zero
+          hs = h & 0x8000u;  // Pick off sign bit
+          he = h & 0x7C00u;  // Pick off exponent bits
+          hm = h & 0x03FFu;  // Pick off mantissa bits
+          if( he == 0 ) {  // Denormal will convert to normalized
+              e = -1; // The following loop figures out how much extra to adjust the exponent
+              do {
+                  e++;
+                  hm <<= 1;
+              } while( (hm & 0x0400u) == 0 ); // Shift until leading bit overflows into exponent bit
+              xs = ((uint32_t) hs) << 16; // Sign bit
+              xes = ((int32_t) (he >> 10)) - 15 + 127 - e; // Exponent unbias the halfp, then bias the single
+              xe = (uint32_t) (xes << 23); // Exponent
+              xm = ((uint32_t) (hm & 0x03FFu)) << 13; // Mantissa
+              *xp++ = (xs | xe | xm); // Combine sign bit, exponent bits, and mantissa bits
+          } else if( he == 0x7C00u ) {  // Inf or NaN (all the exponent bits are set)
+              if( hm == 0 ) { // If mantissa is zero ...
+                  *xp++ = (((uint32_t) hs) << 16) | ((uint32_t) 0x7F800000u); // Signed Inf
+              } else {
+                  *xp++ = (uint32_t) 0xFFC00000u; // NaN, only 1st mantissa bit set
+              }
+          } else { // Normalized number
+              xs = ((uint32_t) hs) << 16; // Sign bit
+              xes = ((int32_t) (he >> 10)) - 15 + 127; // Exponent unbias the halfp, then bias the single
+              xe = (uint32_t) (xes << 23); // Exponent
+              xm = ((uint32_t) hm) << 13; // Mantissa
+              *xp++ = (xs | xe | xm); // Combine sign bit, exponent bits, and mantissa bits
+          }
+      }
+  }
+  return;
+}
+
 static void
 preview_update (GimpPreviewArea *preview,
                 gboolean         preview_cmap_update)
@@ -1700,6 +1822,7 @@ preview_update (GimpPreviewArea *preview,
   gint                 n_components = 0;
   gboolean             is_big_endian;
   gboolean             is_signed;
+  gboolean             is_float;
 
   GimpProcedureConfig *config;
   RawType              pixel_format;
@@ -1734,6 +1857,8 @@ preview_update (GimpPreviewArea *preview,
                    pixel_format == RAW_RGBA_32BPP_BE);
   is_signed     = (pixel_format == RAW_GRAY_16BPP_SBE ||
                    pixel_format == RAW_GRAY_32BPP_SBE);
+  is_float      = (pixel_format == RAW_RGB_16BPP_FLOAT ||
+                   pixel_format == RAW_RGB_32BPP_FLOAT);
 
   switch (pixel_format)
     {
@@ -1764,6 +1889,7 @@ preview_update (GimpPreviewArea *preview,
         }
     case RAW_RGB_16BPP_BE:
     case RAW_RGB_16BPP_LE:
+    case RAW_RGB_16BPP_FLOAT:
       if (bpc == 0)
         {
           bpc = 2;
@@ -1771,6 +1897,7 @@ preview_update (GimpPreviewArea *preview,
         }
     case RAW_RGB_32BPP_BE:
     case RAW_RGB_32BPP_LE:
+    case RAW_RGB_32BPP_FLOAT:
         {
           guchar *in;
           guchar *row;
@@ -1800,8 +1927,9 @@ preview_update (GimpPreviewArea *preview,
                 {
                   for (gint c = 0; c < n_components; c++)
                     {
-                      guint pixel_val;
-                      gint pos = x * n_components + c;
+                      guint  pixel_val = 0;
+                      gfloat float_val = 0.0;
+                      gint   pos       = x * n_components + c;
 
                       if (bpc == 1)
                         {
@@ -1809,7 +1937,14 @@ preview_update (GimpPreviewArea *preview,
                         }
                       else if (bpc == 2)
                         {
-                          if (is_big_endian)
+                          if (is_float)
+                            {
+                              guint16 int16_val;
+
+                              int16_val = ((guint16 *) in)[pos];
+                              halfp2singles ((uint32_t *) &float_val, &int16_val, 1);
+                            }
+                          else if (is_big_endian)
                             {
                               if (is_signed)
                                 pixel_val = GINT16_FROM_BE (((guint16 *) in)[pos]) - G_MININT16;
@@ -1828,7 +1963,11 @@ preview_update (GimpPreviewArea *preview,
                         {
                           g_return_if_fail (bpc == 4);
 
-                          if (is_big_endian)
+                          if (is_float)
+                            {
+                              float_val = ((gfloat *) in)[pos];
+                            }
+                          else if (is_big_endian)
                             {
                               if (is_signed)
                                 pixel_val = GINT32_FROM_BE (((guint32 *) in)[pos]) - G_MININT32;
@@ -1844,7 +1983,10 @@ preview_update (GimpPreviewArea *preview,
                             }
                         }
 
-                      row[pos] = pixel_val / pow (2, (bpc - 1) * 8);
+                      if (is_float)
+                        row[pos] = float_val * 255;
+                      else
+                        row[pos] = pixel_val / pow (2, (bpc - 1) * 8);
                     }
                 }
 
@@ -2378,10 +2520,12 @@ load_dialog (GFile         *file,
        * right type of raw data.
        */
       store = gimp_int_store_new (_("RGB 8-bit"),                          RAW_RGB_8BPP,
-                                  _("RGB 16-bit Big Endian"),              RAW_RGB_16BPP_BE,
-                                  _("RGB 16-bit Little Endian"),           RAW_RGB_16BPP_LE,
+                                  _("RGB 16-bit Integer Big Endian"),      RAW_RGB_16BPP_BE,
+                                  _("RGB 16-bit Integer Little Endian"),   RAW_RGB_16BPP_LE,
+                                  _("RGB 16-bit Floating Point"),          RAW_RGB_16BPP_FLOAT,
                                   _("RGB 32-bit Big Endian"),              RAW_RGB_32BPP_BE,
                                   _("RGB 32-bit Little Endian"),           RAW_RGB_32BPP_LE,
+                                  _("RGB 32-bit Floating Point"),          RAW_RGB_32BPP_FLOAT,
 
                                   _("RGBA 8-bit"),                         RAW_RGBA_8BPP,
                                   _("RGBA 16-bit Big Endian"),             RAW_RGBA_16BPP_BE,
