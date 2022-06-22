@@ -108,7 +108,6 @@ typedef enum
 
   RAW_RGB565,       /* RGB Image 16bit, 5,6,5 bits per channel */
   RAW_BGR565,       /* RGB Image 16bit, 5,6,5 bits per channel, red and blue swapped */
-  RAW_PLANAR,       /* Planar RGB */
 
   /* Grayscale Images */
   RAW_GRAY_1BPP,
@@ -189,6 +188,15 @@ static gboolean         raw_load_standard    (RawGimpData          *data,
                                               gboolean              is_big_endian,
                                               gboolean              is_signed,
                                               gboolean              is_float);
+static gboolean         raw_load_planar      (RawGimpData          *data,
+                                              gint                  width,
+                                              gint                  height,
+                                              gint                  bpp,
+                                              gint                  offset,
+                                              RawType               type,
+                                              gboolean              is_big_endian,
+                                              gboolean              is_signed,
+                                              gboolean              is_float);
 static gboolean         raw_load_gray        (RawGimpData          *data,
                                               gint                  width,
                                               gint                  height,
@@ -201,10 +209,6 @@ static gboolean         raw_load_rgb565      (RawGimpData          *data,
                                               gint                  offset,
                                               RawType               type,
                                               RawEndianness         endianness);
-static gboolean         raw_load_planar      (RawGimpData          *data,
-                                              gint                  width,
-                                              gint                  height,
-                                              gint                  offset);
 static gboolean         raw_load_palette     (RawGimpData          *data,
                                               gint                  palette_offset,
                                               RawPaletteType        palette_type,
@@ -249,6 +253,7 @@ static void           get_load_config_values (GimpProcedureConfig     *config,
                                               RawType                 *image_type,
                                               RawEncoding             *encoding,
                                               RawEndianness           *endianness,
+                                              RawPlanarConfiguration  *planar_configuration,
                                               gint32                  *palette_offset,
                                               RawPaletteType          *palette_type,
                                               GFile                  **palette_file);
@@ -361,7 +366,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       GIMP_PROC_ARG_INT (procedure, "pixel-format",
                          "Pixel _format",
-                         "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
+                         "The layout of pixel data, such as components and their order",
                          RAW_RGB_8BPP, RAW_INDEXEDA, RAW_RGB_8BPP,
                          G_PARAM_READWRITE);
       GIMP_PROC_ARG_INT (procedure, "data-type",
@@ -374,6 +379,12 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                          "Order of sequences of bytes { RAW_LITTLE_ENDIAN (0), RAW_BIG_ENDIAN (1) }",
                          RAW_LITTLE_ENDIAN, RAW_BIG_ENDIAN, RAW_LITTLE_ENDIAN,
                          G_PARAM_READWRITE);
+      GIMP_PROC_ARG_INT (procedure, "planar-configuration",
+                         "Planar configuration",
+                         "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
+                         RAW_PLANAR_CONTIGUOUS, RAW_PLANAR_SEPARATE, RAW_PLANAR_CONTIGUOUS,
+                         G_PARAM_READWRITE);
+
 
       /* Properties for palette data. */
 
@@ -890,6 +901,157 @@ raw_load_standard (RawGimpData *data,
   return TRUE;
 }
 
+static gboolean
+raw_load_planar (RawGimpData *data,
+                 gint         width,
+                 gint         height,
+                 gint         bpp,
+                 gint         offset,
+                 RawType      type,
+                 gboolean     is_big_endian,
+                 gboolean     is_signed,
+                 gboolean     is_float)
+{
+  GeglBufferIterator *iter;
+  guchar             *in = NULL;
+
+  gint                input_stride;
+  gint                n_components;
+  gint                bpc;
+
+  n_components = babl_format_get_n_components (gegl_buffer_get_format (data->buffer));
+  bpc          = bpp / n_components;
+  input_stride = width * bpc;
+
+  g_return_val_if_fail (bpc * n_components == bpp, FALSE);
+
+  iter = gegl_buffer_iterator_new (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
+                                   0, NULL, GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
+
+  while (gegl_buffer_iterator_next (iter))
+    {
+      const GeglRectangle *roi = &iter->items[0].roi;
+      guchar              *out = iter->items[0].data;
+      gint                 line;
+      gint                 in_size;
+
+      in_size  = roi->width * bpc;
+      in       = g_realloc (in, in_size);
+
+      for (gint c = 0; c < n_components; c++)
+        {
+          for (line = 0; line < roi->height; line++)
+            {
+              raw_read_row (data->fp, in,
+                            offset +
+                            width * height  * bpc * c +
+                            ((roi->y + line) * input_stride) + roi->x * bpc,
+                            in_size);
+
+              for (gint x = 0; x < roi->width; x++)
+                {
+                  gint pixel_val;
+                  gint pos = line * roi->width * n_components + x * n_components + c;
+
+                  if (bpc == 1)
+                    {
+                      pixel_val = (gint) in[x];
+                    }
+                  else if (bpc == 2)
+                    {
+                      if (is_float)
+                        {
+                          pixel_val = ((guint16 *) in)[x];
+                        }
+                      else if (is_big_endian)
+                        {
+                          if (is_signed)
+                            pixel_val = GINT16_FROM_BE (((guint16 *) in)[x]) - G_MININT16;
+                          else
+                            pixel_val = GUINT16_FROM_BE (((guint16 *) in)[x]);
+                        }
+                      else
+                        {
+                          if (is_signed)
+                            pixel_val = GINT16_FROM_LE (((guint16 *) in)[x]) - G_MININT16;
+                          else
+                            pixel_val = GUINT16_FROM_LE (((guint16 *) in)[x]);
+                        }
+                    }
+                  else /* if (bpc == 4) */
+                    {
+                      g_return_val_if_fail (bpc == 4, FALSE);
+
+                      if (is_float)
+                        {
+                          pixel_val = ((guint32 *) in)[x];
+                        }
+                      else if (is_big_endian)
+                        {
+                          if (is_signed)
+                            pixel_val = GINT32_FROM_BE (((guint32 *) in)[x]) - G_MININT32;
+                          else
+                            pixel_val = GUINT32_FROM_BE (((guint32 *) in)[x]);
+                        }
+                      else
+                        {
+                          if (is_signed)
+                            pixel_val = GINT32_FROM_LE (((guint32 *) in)[x]) - G_MININT32;
+                          else
+                            pixel_val = GUINT32_FROM_LE (((guint32 *) in)[x]);
+                        }
+                    }
+
+                  if (is_float)
+                    {
+                      gchar  *out2;
+                      gchar  *in2;
+                      gint32  int_val_32 = pixel_val;
+                      gint16  int_val_16 = pixel_val;
+
+                      if (bpc == 4)
+                        {
+                          out2 = (gchar *) ((guint32 *) out + pos);
+                          in2  = (gchar *) (&int_val_32);
+                        }
+                      else /* if (bpc == 2) */
+                        {
+                          out2 = (gchar *) ((guint16 *) out + pos);
+                          in2  = (gchar *) (&int_val_16);
+                        }
+
+                      /* Avoiding any type conversion by tricking the
+                       * type system to just copy data as-is at every
+                       * step. While we could have done differently for
+                       * float (4-bytes), this is even more necessary
+                       * for half float (2-bytes) as we don't even have
+                       * a type to use in glib for this.
+                       */
+                      for (gint b = 0; b < bpc; b++)
+                        out2[b] = in2[b];
+                    }
+                  else if (bpc == 4)
+                    {
+                      ((guint32*) out)[pos] = (guint32) pixel_val;
+                    }
+                  else if (bpc == 2)
+                    {
+                      ((guint16*) out)[pos] = (guint16) pixel_val;
+                    }
+                  else
+                    {
+                      out[pos] = (guchar) pixel_val;
+                    }
+                }
+            }
+        }
+    }
+
+  g_free (in);
+
+  return TRUE;
+}
+
 /* this handles black and white, gray with 1, 2, 4, and 8 _bits_ per
  * pixel images - hopefully lots of binaries too
  */
@@ -1069,60 +1231,6 @@ rgb_565_to_888 (guint16       *in,
     }
 }
 
-/* this handles 3 bpp "planar" images */
-static gboolean
-raw_load_planar (RawGimpData *data,
-                 gint         width,
-                 gint         height,
-                 gint         offset)
-{
-  gint32  r_offset, g_offset, b_offset, i, j, k;
-  guchar *r_row, *b_row, *g_row, *row;
-  gint    bpp = 3; /* adding support for alpha channel should be easy */
-
-  /* red, green, blue rows temporary data */
-  r_row = g_malloc (width);
-  g_row = g_malloc (width);
-  b_row = g_malloc (width);
-
-  /* row for the pixel region, after combining RGB together */
-  row = g_malloc (width * bpp);
-
-  r_offset = offset;
-  g_offset = r_offset + width * height;
-  b_offset = g_offset + width * height;
-
-  for (i = 0; i < height; i++)
-    {
-      /* Read R, G, B rows */
-      raw_read_row (data->fp, r_row, r_offset + (width * i), width);
-      raw_read_row (data->fp, g_row, g_offset + (width * i), width);
-      raw_read_row (data->fp, b_row, b_offset + (width * i), width);
-
-      /* Combine separate R, G and B rows into RGB triples */
-      for (j = 0, k = 0; j < width; j++)
-        {
-          row[k++] = r_row[j];
-          row[k++] = g_row[j];
-          row[k++] = b_row[j];
-        }
-
-      gegl_buffer_set (data->buffer, GEGL_RECTANGLE (0, i, width, 1),
-                       0, NULL, row, GEGL_AUTO_ROWSTRIDE);
-
-      gimp_progress_update ((gfloat) i / (gfloat) height);
-    }
-
-  gimp_progress_update (1.0);
-
-  g_free (row);
-  g_free (r_row);
-  g_free (g_row);
-  g_free (b_row);
-
-  return TRUE;
-}
-
 static gboolean
 raw_load_palette (RawGimpData    *data,
                   gint            palette_offset,
@@ -1192,6 +1300,7 @@ save_image (GFile                *file,
   guchar                 *components[4] = { 0, };
   gint                    n_components;
   gint32                  width, height, bpp;
+  gint                    bpc;
   FILE                   *fp;
   gint                    i, j, c;
   gint                    palsize = 0;
@@ -1210,6 +1319,9 @@ save_image (GFile                *file,
 
   n_components = babl_format_get_n_components (format);
   bpp          = babl_format_get_bytes_per_pixel (format);
+  bpc          = bpp / n_components;
+
+  g_return_val_if_fail (bpc * n_components == bpp, FALSE);
 
   if (gimp_drawable_is_indexed (drawable))
     cmap = gimp_image_get_colormap (image, &palsize);
@@ -1292,18 +1404,25 @@ save_image (GFile                *file,
 
     case RAW_PLANAR_SEPARATE:
       for (c = 0; c < n_components; c++)
-        components[c] = g_new (guchar, width * height);
+        components[c] = g_new (guchar, width * height * bpc);
 
-      for (i = 0, j = 0; i < width * height * bpp; i += bpp, j++)
+      for (i = 0; i < width * height; i++)
         {
           for (c = 0; c < n_components; c++)
-            components[c][j] = buf[i + c];
+            {
+              if (bpc == 1)
+                components[c][i] = buf[i * n_components + c];
+              else if (bpc == 2)
+                ((guint16 **) components)[c][i] = ((guint16 *) buf)[i * n_components + c];
+              else /* if (bpc == 4) */
+                ((guint32 **) components)[c][i] = ((guint32 *) buf)[i * n_components + c];
+            }
         }
 
       ret = TRUE;
       for (c = 0; c < n_components; c++)
         {
-          if (! fwrite (components[c], width * height, 1, fp))
+          if (! fwrite (components[c], width * height * bpc, 1, fp))
             ret = FALSE;
 
           g_free (components[c]);
@@ -1345,7 +1464,6 @@ get_bpp (GimpProcedureConfig *config,
       switch (image_type)
         {
         case RAW_RGB_8BPP:
-        case RAW_PLANAR:
           *bpp = 3;
           break;
 
@@ -1469,6 +1587,7 @@ get_load_config_values (GimpProcedureConfig     *config,
                         RawType                 *image_type,
                         RawEncoding             *encoding,
                         RawEndianness           *endianness,
+                        RawPlanarConfiguration  *planar_configuration,
                         gint32                  *palette_offset,
                         RawPaletteType          *palette_type,
                         GFile                  **palette_file)
@@ -1490,26 +1609,28 @@ get_load_config_values (GimpProcedureConfig     *config,
       else
         *image_width = *image_height = 3601;
 
-      *file_offset    = 0;
-      *image_type     = RAW_GRAY_16BPP;
-      *encoding       = RAW_ENCODING_SIGNED;
-      *endianness     = RAW_BIG_ENDIAN;
-      *palette_offset = 0;
-      *palette_type   = RAW_PALETTE_RGB;
-      *palette_file   = NULL;
+      *file_offset          = 0;
+      *image_type           = RAW_GRAY_16BPP;
+      *encoding             = RAW_ENCODING_SIGNED;
+      *endianness           = RAW_BIG_ENDIAN;
+      *planar_configuration = RAW_PLANAR_CONTIGUOUS;
+      *palette_offset       = 0;
+      *palette_type         = RAW_PALETTE_RGB;
+      *palette_file         = NULL;
     }
   else
     {
       g_object_get (config,
-                    "offset",         file_offset,
-                    "width",          image_width,
-                    "height",         image_height,
-                    "pixel-format",   image_type,
-                    "data-type",      encoding,
-                    "endianness",     endianness,
-                    "palette-offset", palette_offset,
-                    "palette-type",   palette_type,
-                    "palette-file",   palette_file,
+                    "offset",               file_offset,
+                    "width",                image_width,
+                    "height",               image_height,
+                    "pixel-format",         image_type,
+                    "data-type",            encoding,
+                    "endianness",           endianness,
+                    "planar-configuration", planar_configuration,
+                    "palette-offset",       palette_offset,
+                    "palette-type",         palette_type,
+                    "palette-file",         palette_file,
                     NULL);
     }
 }
@@ -1527,6 +1648,7 @@ load_image (GFile                *file,
   RawType            pixel_format;
   RawEncoding        encoding;
   RawEndianness      endianness;
+  RawPlanarConfiguration planar_configuration;
   goffset            size;
   gint               width;
   gint               height;
@@ -1554,7 +1676,7 @@ load_image (GFile                *file,
     }
 
   get_load_config_values (config, &offset, &width, &height,
-                          &pixel_format, &encoding, &endianness,
+                          &pixel_format, &encoding, &endianness, &planar_configuration,
                           &palette_offset, &palette_type, &palette_file);
 
   size = get_file_info (file);
@@ -1562,7 +1684,6 @@ load_image (GFile                *file,
   switch (pixel_format)
     {
     case RAW_RGB_8BPP:        /* standard RGB */
-    case RAW_PLANAR:          /* planar RGB */
       bpp = 3;
 
     case RAW_RGB_16BPP:
@@ -1737,7 +1858,13 @@ load_image (GFile                *file,
     case RAW_GRAYA_8BPP:
     case RAW_GRAYA_16BPP:
     case RAW_GRAYA_32BPP:
-      raw_load_standard (data, width, height, bpp, offset, pixel_format,
+      if (planar_configuration == RAW_PLANAR_CONTIGUOUS)
+        raw_load_standard (data, width, height, bpp, offset, pixel_format,
+                           endianness == RAW_BIG_ENDIAN,
+                           encoding == RAW_ENCODING_SIGNED,
+                           encoding == RAW_ENCODING_FLOAT);
+      else
+        raw_load_planar (data, width, height, bpp, offset, pixel_format,
                          endianness == RAW_BIG_ENDIAN,
                          encoding == RAW_ENCODING_SIGNED,
                          encoding == RAW_ENCODING_FLOAT);
@@ -1746,10 +1873,6 @@ load_image (GFile                *file,
     case RAW_RGB565:
     case RAW_BGR565:
       raw_load_rgb565 (data, width, height, offset, pixel_format, endianness);
-      break;
-
-    case RAW_PLANAR:
-      raw_load_planar (data, width, height, offset);
       break;
 
     case RAW_GRAY_1BPP:
@@ -1859,6 +1982,7 @@ preview_update (GimpPreviewArea *preview,
   RawType              pixel_format;
   RawEncoding          encoding;
   RawEndianness        endianness;
+  RawPlanarConfiguration planar_configuration;
   gint                 width;
   gint                 height;
   gint                 offset;
@@ -1872,7 +1996,7 @@ preview_update (GimpPreviewArea *preview,
   config = g_object_get_data (G_OBJECT (preview), "procedure-config");
 
   get_load_config_values (config, &offset, &width, &height,
-                          &pixel_format, &encoding, &endianness,
+                          &pixel_format, &encoding, &endianness, &planar_configuration,
                           &palette_offset, &palette_type, &palette_file);
   width  = MIN (width,  preview_width);
   height = MIN (height, preview_height);
@@ -1972,6 +2096,7 @@ preview_update (GimpPreviewArea *preview,
           preview_type = GIMP_GRAY_IMAGE;
         }
 
+      if (planar_configuration == RAW_PLANAR_CONTIGUOUS)
         {
           guchar *in;
           guchar *row;
@@ -2062,6 +2187,97 @@ preview_update (GimpPreviewArea *preview,
           g_free (in);
           g_free (row);
         }
+      else
+        {
+          guchar *in;
+          guchar *row;
+          gint    input_stride;
+          gint    input_offset;
+
+          input_stride = width * bpc;
+
+          in  = g_new (guchar, input_stride);
+          row = g_malloc (width * n_components);
+
+          for (y = 0; y < height; y++)
+            {
+              for (gint c = 0; c < n_components; c++)
+                {
+                  input_offset = offset + c * width * height * bpc + (y * input_stride);
+                  mmap_read (preview_fd, (guchar*) in, input_stride, input_offset, input_stride);
+
+                  for (gint x = 0; x < width; x++)
+                    {
+                      guint  pixel_val = 0;
+                      gfloat float_val = 0.0;
+                      gint   pos       = x * n_components + c;
+
+                      if (bpc == 1)
+                        {
+                          pixel_val = (guint) in[x];
+                        }
+                      else if (bpc == 2)
+                        {
+                          if (is_float)
+                            {
+                              guint16 int16_val;
+
+                              int16_val = ((guint16 *) in)[x];
+                              halfp2singles ((uint32_t *) &float_val, &int16_val, 1);
+                            }
+                          else if (is_big_endian)
+                            {
+                              if (is_signed)
+                                pixel_val = GINT16_FROM_BE (((guint16 *) in)[x]) - G_MININT16;
+                              else
+                                pixel_val = GUINT16_FROM_BE (((guint16 *) in)[x]);
+                            }
+                          else
+                            {
+                              if (is_signed)
+                                pixel_val = GINT16_FROM_LE (((guint16 *) in)[x]) - G_MININT16;
+                              else
+                                pixel_val = GUINT16_FROM_LE (((guint16 *) in)[x]);
+                            }
+                        }
+                      else /* if (bpc == 4) */
+                        {
+                          g_return_if_fail (bpc == 4);
+
+                          if (is_float)
+                            {
+                              float_val = ((gfloat *) in)[x];
+                            }
+                          else if (is_big_endian)
+                            {
+                              if (is_signed)
+                                pixel_val = GINT32_FROM_BE (((guint32 *) in)[x]) - G_MININT32;
+                              else
+                                pixel_val = GUINT32_FROM_BE (((guint32 *) in)[x]);
+                            }
+                          else
+                            {
+                              if (is_signed)
+                                pixel_val = GINT32_FROM_LE (((guint32 *) in)[x]) - G_MININT32;
+                              else
+                                pixel_val = GUINT32_FROM_LE (((guint32 *) in)[x]);
+                            }
+                        }
+
+                      if (is_float)
+                        row[pos] = float_val * 255;
+                      else
+                        row[pos] = pixel_val / pow (2, (bpc - 1) * 8);
+                    }
+                }
+
+              gimp_preview_area_draw (preview, 0, y, width, 1,
+                                      preview_type, row, width * n_components);
+            }
+
+          g_free (in);
+          g_free (row);
+        }
       break;
 
     case RAW_RGB565:
@@ -2083,44 +2299,6 @@ preview_update (GimpPreviewArea *preview,
 
         g_free (row);
         g_free (in);
-      }
-      break;
-
-     case RAW_PLANAR:
-      {
-        guchar *r_row = g_malloc0 (width);
-        guchar *g_row = g_malloc0 (width);
-        guchar *b_row = g_malloc0 (width);
-        guchar *row   = g_malloc0 (width * 3);
-
-        for (y = 0; y < height; y++)
-          {
-            gint j, k;
-
-            pos = (offset + (y * width));
-            mmap_read (preview_fd, r_row, width, pos, width);
-
-            pos = (offset + (width * (height + y)));
-            mmap_read (preview_fd, g_row, width, pos, width);
-
-            pos = (offset + (width * (height * 2 + y)));
-            mmap_read (preview_fd, b_row, width, pos, width);
-
-            for (j = 0, k = 0; j < width; j++)
-              {
-                row[k++] = r_row[j];
-                row[k++] = g_row[j];
-                row[k++] = b_row[j];
-              }
-
-            gimp_preview_area_draw (preview, 0, y, width, 1,
-                                    GIMP_RGB_IMAGE, row, width * 3);
-          }
-
-        g_free (b_row);
-        g_free (g_row);
-        g_free (r_row);
-        g_free (row);
       }
       break;
 
@@ -2532,7 +2710,6 @@ load_dialog (GFile         *file,
 
                                   _("RGB565"),                 RAW_RGB565,
                                   _("BGR565"),                 RAW_BGR565,
-                                  _("Planar RGB"),             RAW_PLANAR,
 
                                   _("B&W 1 bit"),              RAW_GRAY_1BPP,
                                   _("Grayscale 2-bit"),        RAW_GRAY_2BPP,
@@ -2566,6 +2743,13 @@ load_dialog (GFile         *file,
       gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
                                            "endianness",
                                            GIMP_INT_STORE (store));
+
+      store = gimp_int_store_new (_("Contiguous"), RAW_PLANAR_CONTIGUOUS,
+                                  _("Planar"),     RAW_PLANAR_SEPARATE,
+                                  NULL);
+      gimp_procedure_dialog_get_int_combo (GIMP_PROCEDURE_DIALOG (dialog),
+                                           "planar-configuration",
+                                           GIMP_INT_STORE (store));
     }
 
   if (is_hgt)
@@ -2592,7 +2776,9 @@ load_dialog (GFile         *file,
 
       gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (dialog),
                                       "image-box",
-                                      "pixel-format", "data-type", "endianness",
+                                      "pixel-format",
+                                      "data-type", "endianness",
+                                      "planar-configuration",
                                       "offset", "width", "height",
                                       NULL);
     }
