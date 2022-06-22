@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-20 23:49+0000\n"
-"PO-Revision-Date: 2022-06-21 09:32+0300\n"
+"POT-Creation-Date: 2022-06-21 17:07+0000\n"
+"PO-Revision-Date: 2022-06-22 08:58+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -430,7 +430,7 @@ msgstr "_Вертикально"
 #: ../plug-ins/common/file-jp2-load.c:1313 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
 #: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
-#: ../plug-ins/common/file-raw-data.c:1614
+#: ../plug-ins/common/file-raw-data.c:1679
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:804
 #: ../plug-ins/common/smooth-palette.c:332 ../plug-ins/common/tile.c:405
@@ -988,8 +988,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:874
 #: ../plug-ins/common/file-mng.c:1221 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
-#: ../plug-ins/common/file-raw-data.c:1174
-#: ../plug-ins/common/file-raw-data.c:1203 ../plug-ins/common/file-sunras.c:635
+#: ../plug-ins/common/file-raw-data.c:1225
+#: ../plug-ins/common/file-raw-data.c:1254 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1385
 #: ../plug-ins/common/sphere-designer.c:2201
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
@@ -1020,8 +1020,8 @@ msgstr "Завантажити параметри CML Explorer"
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
 #: ../plug-ins/common/file-ps.c:1150 ../plug-ins/common/file-ps.c:3536
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
-#: ../plug-ins/common/file-raw-data.c:475
-#: ../plug-ins/common/file-raw-data.c:1483 ../plug-ins/common/file-sunras.c:455
+#: ../plug-ins/common/file-raw-data.c:481
+#: ../plug-ins/common/file-raw-data.c:1536 ../plug-ins/common/file-sunras.c:455
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:445 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:658 ../plug-ins/common/file-xmc.c:899
@@ -1949,7 +1949,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1140
-#: ../plug-ins/common/file-raw-data.c:1475 ../plug-ins/common/file-sunras.c:447
+#: ../plug-ins/common/file-raw-data.c:1528 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:648
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
@@ -3987,21 +3987,21 @@ msgstr "Відсутній блок загальних атрибутів зоб
 msgid "Exporting not implemented yet."
 msgstr "Експорт ще не реалізовано."
 
-#: ../plug-ins/common/file-raw-data.c:310
-#: ../plug-ins/common/file-raw-data.c:413
+#: ../plug-ins/common/file-raw-data.c:316
+#: ../plug-ins/common/file-raw-data.c:419
 msgid "Raw image data"
 msgstr "Raw Image Data"
 
-#: ../plug-ins/common/file-raw-data.c:375
-#: ../plug-ins/common/file-raw-data.c:2465
+#: ../plug-ins/common/file-raw-data.c:381
+#: ../plug-ins/common/file-raw-data.c:2609
 msgid "Digital Elevation Model data"
 msgstr "Дані цифрової моделі рельєфу"
 
-#: ../plug-ins/common/file-raw-data.c:442
+#: ../plug-ins/common/file-raw-data.c:448
 msgid "Raw Data"
 msgstr "Необроблені дані"
 
-#: ../plug-ins/common/file-raw-data.c:511
+#: ../plug-ins/common/file-raw-data.c:517
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -4009,7 +4009,7 @@ msgstr ""
 "%d не є правильним простором вибірки. Допустимі значення: 0 "
 "(автовизначення), 1 і 3."
 
-#: ../plug-ins/common/file-raw-data.c:524
+#: ../plug-ins/common/file-raw-data.c:530
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -4021,17 +4021,17 @@ msgstr ""
 "файли HGT: SRTM-1 і SRTM-3. Якщо вам відомий варіант, запустіть з аргументом "
 "1 або 3."
 
-#: ../plug-ins/common/file-raw-data.c:615
+#: ../plug-ins/common/file-raw-data.c:621
 #, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "Для експортування RAW не передбачено підтримку декількох шарів."
 
-#: ../plug-ins/common/file-raw-data.c:1377
+#: ../plug-ins/common/file-raw-data.c:1430
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Не вдається відкрити файл «%s» для перевірки розміру: %s"
 
-#: ../plug-ins/common/file-raw-data.c:2309
+#: ../plug-ins/common/file-raw-data.c:2451
 msgid "Load Image from Raw Data"
 msgstr "Завантаження зображення з Raw-даних"
 
@@ -4043,142 +4043,142 @@ msgstr "Завантаження зображення з Raw-даних"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:2368
+#: ../plug-ins/common/file-raw-data.c:2510
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1  (1 кутова сек)"
 
-#: ../plug-ins/common/file-raw-data.c:2369
+#: ../plug-ins/common/file-raw-data.c:2511
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3  (3 кутові сек)"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: ../plug-ins/common/file-raw-data.c:2380
+#: ../plug-ins/common/file-raw-data.c:2522
 msgid "RGB 8-bit"
-msgstr "RGB 8 біт"
+msgstr "RGB, 8 біт"
 
-#: ../plug-ins/common/file-raw-data.c:2381
-#| msgid "Gray 16 bit Big Endian"
-msgid "RGB 16-bit Big Endian"
-msgstr "RGB 16 біт Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2523
+#| msgid "RGB 16-bit Big Endian"
+msgid "RGB 16-bit Integer Big Endian"
+msgstr "RGB, 16 біт, ціле, Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:2382
-#| msgid "Gray 16 bit Little Endian"
-msgid "RGB 16-bit Little Endian"
-msgstr "RGB 16 біт Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2524
+#| msgid "RGB 16-bit Little Endian"
+msgid "RGB 16-bit Integer Little Endian"
+msgstr "RGB, 16 біт, ціле, Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:2383
-#| msgid "Gray 16 bit Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2525
+#| msgid "RGB 16-bit Big Endian"
+msgid "RGB 16-bit Floating Point"
+msgstr "RGB, 16 біт, з рухомою крапкою"
+
+#: ../plug-ins/common/file-raw-data.c:2526
 msgid "RGB 32-bit Big Endian"
-msgstr "RGB 32 біт Big Endian"
+msgstr "RGB, 32 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2384
-#| msgid "Gray 16 bit Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2527
 msgid "RGB 32-bit Little Endian"
-msgstr "RGB 32 біт Little Endian"
+msgstr "RGB, 32 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2386
+#: ../plug-ins/common/file-raw-data.c:2528
+#| msgid "RGB 32-bit Big Endian"
+msgid "RGB 32-bit Floating Point"
+msgstr "RGB, 32 біт, з рухомою крапкою"
+
+#: ../plug-ins/common/file-raw-data.c:2530
 msgid "RGBA 8-bit"
-msgstr "RGBA 8 біт"
+msgstr "RGBA, 8 біт"
 
-#: ../plug-ins/common/file-raw-data.c:2387
-#| msgid "Gray 16 bit Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2531
 msgid "RGBA 16-bit Big Endian"
-msgstr "RGBA 16 біт Big Endian"
+msgstr "RGBA, 16 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2388
-#| msgid "Gray 16 bit Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2532
 msgid "RGBA 16-bit Little Endian"
-msgstr "RGBA 16 біт Little Endian"
+msgstr "RGBA, 16 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2389
-#| msgid "Gray 16 bit Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2533
 msgid "RGBA 32-bit Big Endian"
-msgstr "RGBA 32 біт Big Endian"
+msgstr "RGBA, 32 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2390
-#| msgid "Gray 16 bit Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2534
 msgid "RGBA 32-bit Little Endian"
-msgstr "RGBA 32 біт Little Endian"
+msgstr "RGBA, 32 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2392
+#: ../plug-ins/common/file-raw-data.c:2536
 msgid "RGB565 Big Endian"
-msgstr "RGB565 Big Endian"
+msgstr "RGB565, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2393
+#: ../plug-ins/common/file-raw-data.c:2537
 msgid "RGB565 Little Endian"
-msgstr "RGB565 Little Endian"
+msgstr "RGB565, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2394
+#: ../plug-ins/common/file-raw-data.c:2538
 msgid "BGR565 Big Endian"
-msgstr "BGR565 Big Endian"
+msgstr "BGR565, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2395
+#: ../plug-ins/common/file-raw-data.c:2539
 msgid "BGR565 Little Endian"
-msgstr "BGR565 Little Endian"
+msgstr "BGR565, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2396
+#: ../plug-ins/common/file-raw-data.c:2540
 msgid "Planar RGB"
 msgstr "Планарний RGB"
 
-#: ../plug-ins/common/file-raw-data.c:2398
+#: ../plug-ins/common/file-raw-data.c:2542
 msgid "B&W 1 bit"
 msgstr "Чорно-біле, 1 біт"
 
-#: ../plug-ins/common/file-raw-data.c:2399
+#: ../plug-ins/common/file-raw-data.c:2543
 msgid "Gray 2 bit"
-msgstr "Сірий 2 біт"
+msgstr "Сірий, 2 біт"
 
-#: ../plug-ins/common/file-raw-data.c:2400
+#: ../plug-ins/common/file-raw-data.c:2544
 msgid "Gray 4 bit"
-msgstr "Сірий 4 біт"
+msgstr "Сірий, 4 біт"
 
-#: ../plug-ins/common/file-raw-data.c:2401
+#: ../plug-ins/common/file-raw-data.c:2545
 msgid "Gray 8 bit"
-msgstr "Сірий 8 біт"
+msgstr "Сірий, 8 біт"
 
-#: ../plug-ins/common/file-raw-data.c:2402
+#: ../plug-ins/common/file-raw-data.c:2546
 msgid "Gray unsigned 16 bit Big Endian"
-msgstr "Сірий беззнаковий 16 біт Big Endian"
+msgstr "Сірий беззнаковий, 16 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2403
+#: ../plug-ins/common/file-raw-data.c:2547
 msgid "Gray unsigned 16 bit Little Endian"
-msgstr "Сірий беззнаковий 16 біт Little Endian"
+msgstr "Сірий беззнаковий, 16 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2404
+#: ../plug-ins/common/file-raw-data.c:2548
 msgid "Gray 16 bit Big Endian"
-msgstr "Сірий 16 біт Big Endian"
+msgstr "Сірий, 16 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2405
+#: ../plug-ins/common/file-raw-data.c:2549
 msgid "Gray 16 bit Little Endian"
-msgstr "Сірий 16 біт Little Endian"
+msgstr "Сірий, 16 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2406
-#| msgid "Gray unsigned 16 bit Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2550
 msgid "Gray unsigned 32 bit Big Endian"
-msgstr "Сірий беззнаковий 32 біт Big Endian"
+msgstr "Сірий беззнаковий, 32 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2407
-#| msgid "Gray unsigned 16 bit Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2551
 msgid "Gray unsigned 32 bit Little Endian"
-msgstr "Сірий беззнаковий 32 біт Little Endian"
+msgstr "Сірий беззнаковий, 32 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2408
-#| msgid "Gray 16 bit Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2552
 msgid "Gray 32 bit Big Endian"
-msgstr "Сірий 32 біт Big Endian"
+msgstr "Сірий, 32 біт, зворотний порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2409
-#| msgid "Gray 16 bit Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2553
 msgid "Gray 32 bit Little Endian"
-msgstr "Сірий 32 біт Little Endian"
+msgstr "Сірий, 32 біт, прямий порядок"
 
-#: ../plug-ins/common/file-raw-data.c:2411
+#: ../plug-ins/common/file-raw-data.c:2555
 msgid "Indexed"
 msgstr "Індексований"
 
-#: ../plug-ins/common/file-raw-data.c:2412
+#: ../plug-ins/common/file-raw-data.c:2556
 msgid "Indexed Alpha"
 msgstr "Індексоване з альфа-каналом"
 
@@ -4186,60 +4186,60 @@ msgstr "Індексоване з альфа-каналом"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:2459
+#: ../plug-ins/common/file-raw-data.c:2603
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Дані цифрової моделі рельєфу (1 кутова сек)"
 
-#: ../plug-ins/common/file-raw-data.c:2462
+#: ../plug-ins/common/file-raw-data.c:2606
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Дані цифрової моделі рельєфу (3 кутові сек)"
 
-#: ../plug-ins/common/file-raw-data.c:2469
+#: ../plug-ins/common/file-raw-data.c:2613
 msgid "Image"
 msgstr "Зображення"
 
-#: ../plug-ins/common/file-raw-data.c:2472
+#: ../plug-ins/common/file-raw-data.c:2616
 msgid "R, G, B (normal)"
 msgstr "R, G, B (звичайний)"
 
-#: ../plug-ins/common/file-raw-data.c:2473
+#: ../plug-ins/common/file-raw-data.c:2617
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (у стилі BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2488
+#: ../plug-ins/common/file-raw-data.c:2632
 msgid "Palette"
 msgstr "Палітра"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: ../plug-ins/common/file-raw-data.c:2559
+#: ../plug-ins/common/file-raw-data.c:2703
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Неперервний (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2561
+#: ../plug-ins/common/file-raw-data.c:2705
 msgid "_Contiguous"
 msgstr "_Неперервний"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: ../plug-ins/common/file-raw-data.c:2567
+#: ../plug-ins/common/file-raw-data.c:2711
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Планарний (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2569
+#: ../plug-ins/common/file-raw-data.c:2713
 msgid "_Planar"
 msgstr "_Планарний"
 
 #. Palette type combo
-#: ../plug-ins/common/file-raw-data.c:2591
+#: ../plug-ins/common/file-raw-data.c:2735
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (звичайний)"
 
-#: ../plug-ins/common/file-raw-data.c:2592
+#: ../plug-ins/common/file-raw-data.c:2736
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (у стилі BMP)"
 
