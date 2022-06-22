@@ -96,30 +96,52 @@ typedef enum
   RAW_RGBA_8BPP,
   RAW_RGBA_16BPP_BE,
   RAW_RGBA_16BPP_LE,
+  RAW_RGBA_16BPP_FLOAT,
   RAW_RGBA_32BPP_BE,
   RAW_RGBA_32BPP_LE,
+  RAW_RGBA_32BPP_FLOAT,
 
   RAW_RGB565_BE,    /* RGB Image 16bit, 5,6,5 bits per channel, big-endian */
   RAW_RGB565_LE,    /* RGB Image 16bit, 5,6,5 bits per channel, little-endian */
   RAW_BGR565_BE,    /* RGB Image 16bit, 5,6,5 bits per channel, big-endian, red and blue swapped */
   RAW_BGR565_LE,    /* RGB Image 16bit, 5,6,5 bits per channel, little-endian, red and blue swapped */
   RAW_PLANAR,       /* Planar RGB */
+
+  /* Grayscale Images */
   RAW_GRAY_1BPP,
   RAW_GRAY_2BPP,
   RAW_GRAY_4BPP,
+
   RAW_GRAY_8BPP,
-  RAW_INDEXED,      /* Indexed image */
-  RAW_INDEXEDA,     /* Indexed image with an Alpha channel */
 
   RAW_GRAY_16BPP_BE,
   RAW_GRAY_16BPP_LE,
   RAW_GRAY_16BPP_SBE,
   RAW_GRAY_16BPP_SLE,
+  RAW_GRAY_16BPP_FLOAT,
 
   RAW_GRAY_32BPP_BE,
   RAW_GRAY_32BPP_LE,
   RAW_GRAY_32BPP_SBE,
   RAW_GRAY_32BPP_SLE,
+  RAW_GRAY_32BPP_FLOAT,
+
+  RAW_GRAYA_8BPP,
+
+  RAW_GRAYA_16BPP_BE,
+  RAW_GRAYA_16BPP_LE,
+  RAW_GRAYA_16BPP_SBE,
+  RAW_GRAYA_16BPP_SLE,
+  RAW_GRAYA_16BPP_FLOAT,
+
+  RAW_GRAYA_32BPP_BE,
+  RAW_GRAYA_32BPP_LE,
+  RAW_GRAYA_32BPP_SBE,
+  RAW_GRAYA_32BPP_SLE,
+  RAW_GRAYA_32BPP_FLOAT,
+
+  RAW_INDEXED,      /* Indexed image */
+  RAW_INDEXEDA,     /* Indexed image with an Alpha channel */
 } RawType;
 
 typedef enum
@@ -350,7 +372,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
       GIMP_PROC_ARG_INT (procedure, "pixel-format",
                          "Pixel _format",
                          "How color pixel data are stored { RAW_PLANAR_CONTIGUOUS (0), RAW_PLANAR_SEPARATE (1) }",
-                         RAW_RGB_8BPP, RAW_GRAY_32BPP_SLE, RAW_RGB_8BPP,
+                         RAW_RGB_8BPP, RAW_INDEXEDA, RAW_RGB_8BPP,
                          G_PARAM_READWRITE);
 
       /* Properties for palette data. */
@@ -745,18 +767,30 @@ raw_load_standard (RawGimpData *data,
 
   g_return_val_if_fail (bpc * n_components == bpp, FALSE);
 
-  is_big_endian = (type == RAW_GRAY_16BPP_BE  ||
-                   type == RAW_GRAY_16BPP_SBE ||
-                   type == RAW_GRAY_32BPP_BE  ||
-                   type == RAW_GRAY_32BPP_SBE ||
-                   type == RAW_RGB_16BPP_BE   ||
-                   type == RAW_RGB_32BPP_BE   ||
-                   type == RAW_RGBA_16BPP_BE  ||
+  is_big_endian = (type == RAW_GRAY_16BPP_BE   ||
+                   type == RAW_GRAY_16BPP_SBE  ||
+                   type == RAW_GRAYA_16BPP_BE  ||
+                   type == RAW_GRAYA_16BPP_SBE ||
+                   type == RAW_GRAY_32BPP_BE   ||
+                   type == RAW_GRAY_32BPP_SBE  ||
+                   type == RAW_GRAYA_32BPP_BE  ||
+                   type == RAW_GRAYA_32BPP_SBE ||
+                   type == RAW_RGB_16BPP_BE    ||
+                   type == RAW_RGB_32BPP_BE    ||
+                   type == RAW_RGBA_16BPP_BE   ||
                    type == RAW_RGBA_32BPP_BE);
-  is_signed     = (type == RAW_GRAY_16BPP_SBE ||
-                   type == RAW_GRAY_32BPP_SBE);
-  is_float      = (type == RAW_RGB_16BPP_FLOAT ||
-                   type == RAW_RGB_32BPP_FLOAT);
+  is_signed     = (type == RAW_GRAY_16BPP_SBE  ||
+                   type == RAW_GRAYA_16BPP_SBE ||
+                   type == RAW_GRAY_32BPP_SBE  ||
+                   type == RAW_GRAYA_32BPP_SBE);
+  is_float      = (type == RAW_RGB_16BPP_FLOAT   ||
+                   type == RAW_RGB_32BPP_FLOAT   ||
+                   type == RAW_RGBA_16BPP_FLOAT  ||
+                   type == RAW_RGBA_32BPP_FLOAT  ||
+                   type == RAW_GRAY_16BPP_FLOAT  ||
+                   type == RAW_GRAYA_16BPP_FLOAT ||
+                   type == RAW_GRAY_32BPP_FLOAT  ||
+                   type == RAW_GRAYA_32BPP_FLOAT);
 
   iter = gegl_buffer_iterator_new (data->buffer, GEGL_RECTANGLE (0, 0, width, height),
                                    0, NULL, GEGL_ACCESS_WRITE, GEGL_ABYSS_NONE, 1);
@@ -1365,11 +1399,13 @@ get_bpp (GimpProcedureConfig *config,
 
         case RAW_RGBA_16BPP_BE:
         case RAW_RGBA_16BPP_LE:
+        case RAW_RGBA_16BPP_FLOAT:
           *bpp = 8;
           break;
 
         case RAW_RGBA_32BPP_BE:
         case RAW_RGBA_32BPP_LE:
+        case RAW_RGBA_32BPP_FLOAT:
           *bpp = 16;
           break;
 
@@ -1401,6 +1437,7 @@ get_bpp (GimpProcedureConfig *config,
         case RAW_GRAY_16BPP_LE:
         case RAW_GRAY_16BPP_SBE:
         case RAW_GRAY_16BPP_SLE:
+        case RAW_GRAY_16BPP_FLOAT:
           *bpp   = 2;
           break;
 
@@ -1408,7 +1445,28 @@ get_bpp (GimpProcedureConfig *config,
         case RAW_GRAY_32BPP_LE:
         case RAW_GRAY_32BPP_SBE:
         case RAW_GRAY_32BPP_SLE:
+        case RAW_GRAY_32BPP_FLOAT:
           *bpp   = 4;
+          break;
+
+        case RAW_GRAYA_8BPP:
+          *bpp   = 2;
+          break;
+
+        case RAW_GRAYA_16BPP_BE:
+        case RAW_GRAYA_16BPP_LE:
+        case RAW_GRAYA_16BPP_SBE:
+        case RAW_GRAYA_16BPP_SLE:
+        case RAW_GRAYA_16BPP_FLOAT:
+          *bpp   = 4;
+          break;
+
+        case RAW_GRAYA_32BPP_BE:
+        case RAW_GRAYA_32BPP_LE:
+        case RAW_GRAYA_32BPP_SBE:
+        case RAW_GRAYA_32BPP_SLE:
+        case RAW_GRAYA_32BPP_FLOAT:
+          *bpp   = 8;
           break;
         }
     }
@@ -1604,12 +1662,26 @@ load_image (GFile                *file,
       precision = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
+    case RAW_RGBA_16BPP_FLOAT:
+      bpp   = 8;
+      ltype = GIMP_RGBA_IMAGE;
+      itype = GIMP_RGB;
+      precision = GIMP_PRECISION_HALF_NON_LINEAR;
+      break;
+
     case RAW_RGBA_32BPP_BE:
     case RAW_RGBA_32BPP_LE:
       bpp   = 16;
       ltype = GIMP_RGBA_IMAGE;
       itype = GIMP_RGB;
       precision = GIMP_PRECISION_U32_NON_LINEAR;
+      break;
+
+    case RAW_RGBA_32BPP_FLOAT:
+      bpp   = 16;
+      ltype = GIMP_RGBA_IMAGE;
+      itype = GIMP_RGB;
+      precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
       break;
 
     case RAW_GRAY_1BPP:
@@ -1658,6 +1730,13 @@ load_image (GFile                *file,
       precision = GIMP_PRECISION_U16_NON_LINEAR;
       break;
 
+    case RAW_GRAY_16BPP_FLOAT:
+      bpp       = 2;
+      ltype     = GIMP_GRAY_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_HALF_NON_LINEAR;
+      break;
+
     case RAW_GRAY_32BPP_BE:
     case RAW_GRAY_32BPP_LE:
     case RAW_GRAY_32BPP_SBE:
@@ -1666,6 +1745,54 @@ load_image (GFile                *file,
       ltype     = GIMP_GRAY_IMAGE;
       itype     = GIMP_GRAY;
       precision = GIMP_PRECISION_U32_NON_LINEAR;
+      break;
+
+    case RAW_GRAY_32BPP_FLOAT:
+      bpp       = 4;
+      ltype     = GIMP_GRAY_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
+      break;
+
+    case RAW_GRAYA_8BPP:
+      bpp       = 2;
+      ltype     = GIMP_GRAYA_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_U8_NON_LINEAR;
+      break;
+
+    case RAW_GRAYA_16BPP_BE:
+    case RAW_GRAYA_16BPP_LE:
+    case RAW_GRAYA_16BPP_SBE:
+    case RAW_GRAYA_16BPP_SLE:
+      bpp       = 4;
+      ltype     = GIMP_GRAYA_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_U16_NON_LINEAR;
+      break;
+
+    case RAW_GRAYA_16BPP_FLOAT:
+      bpp       = 4;
+      ltype     = GIMP_GRAYA_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_HALF_NON_LINEAR;
+      break;
+
+    case RAW_GRAYA_32BPP_BE:
+    case RAW_GRAYA_32BPP_LE:
+    case RAW_GRAYA_32BPP_SBE:
+    case RAW_GRAYA_32BPP_SLE:
+      bpp       = 8;
+      ltype     = GIMP_GRAYA_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_U32_NON_LINEAR;
+      break;
+
+    case RAW_GRAYA_32BPP_FLOAT:
+      bpp       = 8;
+      ltype     = GIMP_GRAYA_IMAGE;
+      itype     = GIMP_GRAY;
+      precision = GIMP_PRECISION_FLOAT_NON_LINEAR;
       break;
     }
 
@@ -1696,8 +1823,10 @@ load_image (GFile                *file,
     case RAW_RGBA_8BPP:
     case RAW_RGBA_16BPP_BE:
     case RAW_RGBA_16BPP_LE:
+    case RAW_RGBA_16BPP_FLOAT:
     case RAW_RGBA_32BPP_BE:
     case RAW_RGBA_32BPP_LE:
+    case RAW_RGBA_32BPP_FLOAT:
       raw_load_standard (data, width, height, bpp, offset, pixel_format);
       break;
 
@@ -1733,10 +1862,24 @@ load_image (GFile                *file,
     case RAW_GRAY_16BPP_LE:
     case RAW_GRAY_16BPP_SBE:
     case RAW_GRAY_16BPP_SLE:
+    case RAW_GRAY_16BPP_FLOAT:
     case RAW_GRAY_32BPP_BE:
     case RAW_GRAY_32BPP_LE:
     case RAW_GRAY_32BPP_SBE:
     case RAW_GRAY_32BPP_SLE:
+    case RAW_GRAY_32BPP_FLOAT:
+
+    case RAW_GRAYA_8BPP:
+    case RAW_GRAYA_16BPP_BE:
+    case RAW_GRAYA_16BPP_LE:
+    case RAW_GRAYA_16BPP_SBE:
+    case RAW_GRAYA_16BPP_SLE:
+    case RAW_GRAYA_16BPP_FLOAT:
+    case RAW_GRAYA_32BPP_BE:
+    case RAW_GRAYA_32BPP_LE:
+    case RAW_GRAYA_32BPP_SBE:
+    case RAW_GRAYA_32BPP_SLE:
+    case RAW_GRAYA_32BPP_FLOAT:
       raw_load_standard (data, width, height, bpp, offset, pixel_format);
       break;
     }
@@ -1847,18 +1990,28 @@ preview_update (GimpPreviewArea *preview,
                           0, 0, preview_width, preview_height,
                           255, 255, 255);
 
-  is_big_endian = (pixel_format == RAW_GRAY_16BPP_BE  ||
-                   pixel_format == RAW_GRAY_16BPP_SBE ||
-                   pixel_format == RAW_GRAY_32BPP_BE  ||
-                   pixel_format == RAW_GRAY_32BPP_SBE ||
-                   pixel_format == RAW_RGB_16BPP_BE   ||
-                   pixel_format == RAW_RGB_32BPP_BE   ||
-                   pixel_format == RAW_RGBA_16BPP_BE  ||
+  is_big_endian = (pixel_format == RAW_GRAY_16BPP_BE   ||
+                   pixel_format == RAW_GRAY_16BPP_SBE  ||
+                   pixel_format == RAW_GRAYA_16BPP_BE  ||
+                   pixel_format == RAW_GRAYA_16BPP_SBE ||
+                   pixel_format == RAW_GRAY_32BPP_BE   ||
+                   pixel_format == RAW_GRAY_32BPP_SBE  ||
+                   pixel_format == RAW_GRAYA_32BPP_BE  ||
+                   pixel_format == RAW_GRAYA_32BPP_SBE ||
+                   pixel_format == RAW_RGB_16BPP_BE    ||
+                   pixel_format == RAW_RGB_32BPP_BE    ||
+                   pixel_format == RAW_RGBA_16BPP_BE   ||
                    pixel_format == RAW_RGBA_32BPP_BE);
   is_signed     = (pixel_format == RAW_GRAY_16BPP_SBE ||
                    pixel_format == RAW_GRAY_32BPP_SBE);
-  is_float      = (pixel_format == RAW_RGB_16BPP_FLOAT ||
-                   pixel_format == RAW_RGB_32BPP_FLOAT);
+  is_float      = (pixel_format == RAW_RGB_16BPP_FLOAT   ||
+                   pixel_format == RAW_RGB_32BPP_FLOAT   ||
+                   pixel_format == RAW_RGBA_16BPP_FLOAT  ||
+                   pixel_format == RAW_RGBA_32BPP_FLOAT  ||
+                   pixel_format == RAW_GRAY_16BPP_FLOAT  ||
+                   pixel_format == RAW_GRAYA_16BPP_FLOAT ||
+                   pixel_format == RAW_GRAY_32BPP_FLOAT  ||
+                   pixel_format == RAW_GRAYA_32BPP_FLOAT);
 
   switch (pixel_format)
     {
@@ -1867,6 +2020,7 @@ preview_update (GimpPreviewArea *preview,
       bpp = 4;
     case RAW_RGBA_16BPP_BE:
     case RAW_RGBA_16BPP_LE:
+    case RAW_RGBA_16BPP_FLOAT:
       if (bpc == 0)
         {
           bpc = 2;
@@ -1874,6 +2028,7 @@ preview_update (GimpPreviewArea *preview,
         }
     case RAW_RGBA_32BPP_BE:
     case RAW_RGBA_32BPP_LE:
+    case RAW_RGBA_32BPP_FLOAT:
       if (bpc == 0)
         {
           bpc = 4;
@@ -1881,6 +2036,7 @@ preview_update (GimpPreviewArea *preview,
         }
       n_components = 4;
       preview_type = GIMP_RGBA_IMAGE;
+
     case RAW_RGB_8BPP:
       if (bpc == 0)
         {
@@ -1898,20 +2054,81 @@ preview_update (GimpPreviewArea *preview,
     case RAW_RGB_32BPP_BE:
     case RAW_RGB_32BPP_LE:
     case RAW_RGB_32BPP_FLOAT:
+      if (bpc == 0)
+        {
+          bpc = 4;
+          bpp = 12;
+        }
+      if (n_components == 0)
+        {
+          n_components = 3;
+          preview_type = GIMP_RGB_IMAGE;
+        }
+
+    case RAW_GRAYA_8BPP:
+      if (bpc == 0)
+        {
+          bpc = 1;
+          bpp = 2;
+        }
+    case RAW_GRAYA_16BPP_BE:
+    case RAW_GRAYA_16BPP_LE:
+    case RAW_GRAYA_16BPP_SBE:
+    case RAW_GRAYA_16BPP_SLE:
+    case RAW_GRAYA_16BPP_FLOAT:
+      if (bpc == 0)
+        {
+          bpc = 2;
+          bpp = 4;
+        }
+    case RAW_GRAYA_32BPP_BE:
+    case RAW_GRAYA_32BPP_LE:
+    case RAW_GRAYA_32BPP_SBE:
+    case RAW_GRAYA_32BPP_SLE:
+    case RAW_GRAYA_32BPP_FLOAT:
+      if (bpc == 0)
+        {
+          bpc = 4;
+          bpp = 8;
+        }
+      if (n_components == 0)
+        {
+          n_components = 2;
+          preview_type = GIMP_GRAYA_IMAGE;
+        }
+
+    case RAW_GRAY_16BPP_BE:
+    case RAW_GRAY_16BPP_LE:
+    case RAW_GRAY_16BPP_SBE:
+    case RAW_GRAY_16BPP_SLE:
+    case RAW_GRAY_16BPP_FLOAT:
+      if (bpc == 0)
+        {
+          bpc = 2;
+          bpp = 2;
+        }
+
+    case RAW_GRAY_32BPP_BE:
+    case RAW_GRAY_32BPP_LE:
+    case RAW_GRAY_32BPP_SBE:
+    case RAW_GRAY_32BPP_SLE:
+    case RAW_GRAY_32BPP_FLOAT:
+      if (bpc == 0)
+        {
+          bpc = 4;
+          bpp = 4;
+        }
+      if (n_components == 0)
+        {
+          n_components = 1;
+          preview_type = GIMP_GRAY_IMAGE;
+        }
+
         {
           guchar *in;
           guchar *row;
           gint    input_stride;
           gint    input_offset;
-
-          if (bpc == 0)
-            {
-              bpc = 4;
-              bpp = 12;
-            }
-
-          if (n_components == 0)
-            n_components = 3;
 
           input_stride = width * bpp;
 
@@ -2069,7 +2286,6 @@ preview_update (GimpPreviewArea *preview,
       if (! bitspp) bitspp = 4;
     case RAW_GRAY_8BPP:
       if (! bitspp) bitspp = 8;
-
       {
         guint   in_size  = height * width / (8 / bitspp);
         guint   out_size = height * width * 3;
@@ -2232,65 +2448,6 @@ preview_update (GimpPreviewArea *preview,
         g_free (row);
         g_free (index);
       }
-      break;
-
-    case RAW_GRAY_16BPP_BE:
-    case RAW_GRAY_16BPP_LE:
-    case RAW_GRAY_16BPP_SBE:
-    case RAW_GRAY_16BPP_SLE:
-      bitspp = 16;
-    case RAW_GRAY_32BPP_BE:
-    case RAW_GRAY_32BPP_LE:
-    case RAW_GRAY_32BPP_SBE:
-    case RAW_GRAY_32BPP_SLE:
-        {
-        guchar *r_row;
-        guchar *row;
-
-        if (bitspp == 0)
-          bitspp = 32;
-
-        r_row = g_new (guchar, width * bitspp / 8);
-        row   = g_malloc (width);
-
-        for (y = 0; y < height; y++)
-          {
-            gint j;
-
-            pos = (offset + (y * width * 2));
-            mmap_read (preview_fd, (guchar*) r_row, (bitspp / 8) * width, pos, width);
-
-            for (j = 0; j < width; j++)
-              {
-                gint pixel_val;
-
-                if (pixel_format == RAW_GRAY_16BPP_BE)
-                  pixel_val = GUINT16_FROM_BE (((guint16 *) r_row)[j]);
-                else if (pixel_format == RAW_GRAY_16BPP_LE)
-                  pixel_val = GUINT16_FROM_LE (((guint16 *) r_row)[j]);
-                else if (pixel_format == RAW_GRAY_16BPP_SBE)
-                  pixel_val = GINT16_FROM_BE (((guint16 *) r_row)[j]) - G_MININT16;
-                else if (pixel_format == RAW_GRAY_16BPP_SLE)
-                  pixel_val = GINT16_FROM_LE (((guint16 *) r_row)[j]) - G_MININT16;
-                else if (pixel_format == RAW_GRAY_32BPP_BE)
-                  pixel_val = GUINT32_FROM_BE (((guint32 *) r_row)[j]);
-                else if (pixel_format == RAW_GRAY_32BPP_LE)
-                  pixel_val = GUINT32_FROM_LE (((guint32 *) r_row)[j]);
-                else if (pixel_format == RAW_GRAY_32BPP_SBE)
-                  pixel_val = GINT32_FROM_BE (((guint32 *) r_row)[j]) - G_MININT32;
-                else /* if (pixel_format == RAW_GRAY_32BPP_SLE)*/
-                  pixel_val = GINT32_FROM_LE (((guint32 *) r_row)[j]) - G_MININT32;
-
-                row[j] = pixel_val / pow (2, bitspp - 8);
-              }
-
-            gimp_preview_area_draw (preview, 0, y, width, 1,
-                                    GIMP_GRAY_IMAGE, row, width * 3);
-          }
-
-        g_free (r_row);
-        g_free (row);
-        }
       break;
     }
 
@@ -2530,8 +2687,10 @@ load_dialog (GFile         *file,
                                   _("RGBA 8-bit"),                         RAW_RGBA_8BPP,
                                   _("RGBA 16-bit Big Endian"),             RAW_RGBA_16BPP_BE,
                                   _("RGBA 16-bit Little Endian"),          RAW_RGBA_16BPP_LE,
+                                  _("RGBA 16-bit Floating Point"),         RAW_RGBA_16BPP_FLOAT,
                                   _("RGBA 32-bit Big Endian"),             RAW_RGBA_32BPP_BE,
                                   _("RGBA 32-bit Little Endian"),          RAW_RGBA_32BPP_LE,
+                                  _("RGBA 32-bit Floating Point"),         RAW_RGBA_32BPP_FLOAT,
 
                                   _("RGB565 Big Endian"),                  RAW_RGB565_BE,
                                   _("RGB565 Little Endian"),               RAW_RGB565_LE,
@@ -2547,10 +2706,25 @@ load_dialog (GFile         *file,
                                   _("Gray unsigned 16 bit Little Endian"), RAW_GRAY_16BPP_LE,
                                   _("Gray 16 bit Big Endian"),             RAW_GRAY_16BPP_SBE,
                                   _("Gray 16 bit Little Endian"),          RAW_GRAY_16BPP_SLE,
+                                  _("Gray 16-bit Floating Point"),         RAW_GRAY_16BPP_FLOAT,
                                   _("Gray unsigned 32 bit Big Endian"),    RAW_GRAY_32BPP_BE,
                                   _("Gray unsigned 32 bit Little Endian"), RAW_GRAY_32BPP_LE,
                                   _("Gray 32 bit Big Endian"),             RAW_GRAY_32BPP_SBE,
                                   _("Gray 32 bit Little Endian"),          RAW_GRAY_32BPP_SLE,
+                                  _("Gray 32-bit Floating Point"),         RAW_GRAY_32BPP_FLOAT,
+
+
+                                  _("Gray-Alpha 8 bit"),                         RAW_GRAYA_8BPP,
+                                  _("Gray-Alpha unsigned 16 bit Big Endian"),    RAW_GRAYA_16BPP_BE,
+                                  _("Gray-Alpha unsigned 16 bit Little Endian"), RAW_GRAYA_16BPP_LE,
+                                  _("Gray-Alpha 16 bit Big Endian"),             RAW_GRAYA_16BPP_SBE,
+                                  _("Gray-Alpha 16 bit Little Endian"),          RAW_GRAYA_16BPP_SLE,
+                                  _("Gray-Alpha 16-bit Floating Point"),         RAW_GRAYA_16BPP_FLOAT,
+                                  _("Gray-Alpha unsigned 32 bit Big Endian"),    RAW_GRAYA_32BPP_BE,
+                                  _("Gray-Alpha unsigned 32 bit Little Endian"), RAW_GRAYA_32BPP_LE,
+                                  _("Gray-Alpha 32 bit Big Endian"),             RAW_GRAYA_32BPP_SBE,
+                                  _("Gray-Alpha 32 bit Little Endian"),          RAW_GRAYA_32BPP_SLE,
+                                  _("Gray-Alpha 32-bit Floating Point"),         RAW_GRAYA_32BPP_FLOAT,
 
                                   _("Indexed"),                            RAW_INDEXED,
                                   _("Indexed Alpha"),                      RAW_INDEXEDA,
