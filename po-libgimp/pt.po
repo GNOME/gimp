@@ -6,15 +6,15 @@
 # Pedro Barreira <almufadado@gmail.com>, 2010.
 # Tiago Santos <tiagofsantos81@sapo.pt>, 2014 - 2017.
 # Pedro Albuquerque <palbuquerque73o@gmail.com>, 2015.
-# Sara Campos <lalocas@protonmail.com>, 2021.
-# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021.
+# Sara Campos <lalocas@protonmail.com>, 2021, 2022.
+# Hugo Carvalho <hugokarvalho@hotmail.com>, 2021, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-14 14:38+0000\n"
-"PO-Revision-Date: 2022-05-14 18:26+0100\n"
+"POT-Creation-Date: 2022-06-21 17:07+0000\n"
+"PO-Revision-Date: 2022-06-22 13:01+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
 
@@ -255,11 +255,11 @@ msgstr "Seleção de tipo de letra"
 msgid "Gradient Selection"
 msgstr "Seleção de gradiente"
 
-#: ../libgimp/gimpimagemetadata.c:311
+#: ../libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Fundo"
 
-#: ../libgimp/gimpimagemetadata-save.c:643 ../modules/controller-midi.c:426
+#: ../libgimp/gimpimagemetadata-save.c:654 ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -420,14 +420,14 @@ msgstr ""
 "O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s"
 "\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
 
-#: ../libgimp/gimpprocedure.c:2103
+#: ../libgimp/gimpprocedure.c:2102
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
 "O procedimento \"%s\" devolveu uma expressão UTF-8 inválida para o argumento "
 "“%s”."
 
-#: ../libgimp/gimpprocedure.c:2113
+#: ../libgimp/gimpprocedure.c:2112
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -468,11 +468,11 @@ msgstr "_Guardar definições"
 msgid "Store current settings for later reuse"
 msgstr "Armazenar as definições atuais para usar mais tarde"
 
-#: ../libgimp/gimpproceduredialog.c:1787
+#: ../libgimp/gimpproceduredialog.c:1948
 msgid "Reset to _Initial Values"
 msgstr "Repor definições _iniciais"
 
-#: ../libgimp/gimpproceduredialog.c:1796
+#: ../libgimp/gimpproceduredialog.c:1957
 msgid "Reset to _Factory Defaults"
 msgstr "Repor definições de _fábrica"
 
@@ -661,17 +661,17 @@ msgstr "Grande"
 #: ../libgimpbase/gimpbaseenums.c:236
 msgctxt "check-type"
 msgid "Light checks"
-msgstr "Padrão claro"
+msgstr "Padrão de xadrez claro"
 
 #: ../libgimpbase/gimpbaseenums.c:237
 msgctxt "check-type"
 msgid "Mid-tone checks"
-msgstr "Padrão meios-tons"
+msgstr "Padrão de xadrez cinzento"
 
 #: ../libgimpbase/gimpbaseenums.c:238
 msgctxt "check-type"
 msgid "Dark checks"
-msgstr "Padrão escuro"
+msgstr "Padrão de xadrez escuro"
 
 #: ../libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
@@ -691,7 +691,7 @@ msgstr "Só preto"
 #: ../libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "Custom checks"
-msgstr "Verificações personalizadas"
+msgstr "Padrão de xadrez personalizado"
 
 #: ../libgimpbase/gimpbaseenums.c:271
 msgctxt "clone-type"
@@ -2144,7 +2144,7 @@ msgstr "Selecionar ficheiro"
 
 #: ../libgimpwidgets/gimphelpui.c:384
 msgid "Press F1 for more help"
-msgstr "Pressione F1 para mais ajuda"
+msgstr "Carregue na tecla [F1] para obter mais ajuda"
 
 #. This string appears in an empty menu as in
 #. * "nothing selected and nothing to select"
@@ -2226,8 +2226,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Clique na pipeta e depois numa cor em qualquer ponto do ecrã para selecionar "
-"essa cor."
+"Clique na pipeta e depois em qualquer local do ecrã dentro da janela do GIMP "
+"para obter a cor nesse local."
 
 #. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:288
@@ -2250,7 +2250,7 @@ msgstr "Verificações personalizadas Cor 1"
 msgid "Custom Checks Color 2"
 msgstr "Verificações personalizadas Cor 2"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2533
+#: ../libgimpwidgets/gimppropwidgets.c:2444
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
