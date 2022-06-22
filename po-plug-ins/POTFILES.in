@@ -4,6 +4,8 @@
 [encoding: UTF-8]
 
 extensions/goat-exercises/goat-exercise-c.c
+extensions/goat-exercises/goat-exercise-gjs.js
+extensions/goat-exercises/goat-exercise-lua.lua
 extensions/goat-exercises/goat-exercise-py3.py
 extensions/goat-exercises/goat-exercise-vala.vala
 extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in
