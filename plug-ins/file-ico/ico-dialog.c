@@ -38,10 +38,16 @@ static void   ico_dialog_toggle_compress (GtkWidget   *checkbox,
                                           GObject     *hbox);
 static void   ico_dialog_check_compat    (GtkWidget   *dialog,
                                           IcoSaveInfo *info);
+static void   ico_dialog_ani_update_inam (GtkEntry    *entry,
+                                          gpointer     data);
+static void   ico_dialog_ani_update_iart (GtkEntry    *entry,
+                                          gpointer     data);
 
 
 GtkWidget *
-ico_dialog_new (IcoSaveInfo *info)
+ico_dialog_new (IcoSaveInfo   *info,
+                AniFileHeader *ani_header,
+                AniSaveInfo   *ani_info)
 {
   GtkWidget     *dialog;
   GtkWidget     *main_vbox;
@@ -51,7 +57,8 @@ ico_dialog_new (IcoSaveInfo *info)
   GtkWidget     *viewport;
   GtkWidget     *warning;
 
-  dialog = gimp_export_dialog_new (info->is_cursor ?
+  dialog = gimp_export_dialog_new (ani_header ?
+                                   _("Windows Animated Cursor") : info->is_cursor ?
                                    _("Windows Cursor") : _("Windows Icon"),
                                    PLUG_IN_BINARY,
                                    "plug-in-winicon");
@@ -65,12 +72,93 @@ ico_dialog_new (IcoSaveInfo *info)
   */
 
   g_object_set_data (G_OBJECT (dialog), "save_info", info);
+  if (ani_header)
+    {
+      g_object_set_data (G_OBJECT (dialog), "save_ani_header", ani_header);
+      g_object_set_data (G_OBJECT (dialog), "save_ani_info", ani_info);
+    }
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 6);
   gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (dialog)),
                       main_vbox, TRUE, TRUE, 0);
   gtk_widget_show (main_vbox);
+
+  /*Animated Cursor */
+  if (ani_header)
+    {
+      GtkWidget     *grid;
+      GtkAdjustment *adjustment;
+      GtkWidget     *spin;
+      GtkWidget     *label;
+      GtkWidget     *hbox;
+      GtkWidget     *entry;
+
+      frame = gimp_frame_new (_("Animated Cursor Settings"));
+      gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
+      gtk_widget_show (frame);
+
+      grid = gtk_grid_new ();
+      gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
+      gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
+      gtk_container_add (GTK_CONTAINER (frame), grid);
+      gtk_widget_show (grid);
+
+      /* Cursor Name */
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
+                                _("_Cursor Name (Optional)"),
+                                0.0, 0.5,
+                                hbox, 1);
+
+      entry = gtk_entry_new ();
+      gtk_entry_set_text (GTK_ENTRY (entry),
+                          ani_info->inam ? ani_info->inam : "");
+      gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+      gtk_widget_show (entry);
+
+      g_signal_connect (GTK_ENTRY (entry), "focus-out-event",
+                        G_CALLBACK (ico_dialog_ani_update_inam),
+                        NULL);
+
+      /* Author Name */
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 3,
+                                _("_Author Name (Optional)"),
+                                0.0, 0.5,
+                                hbox, 1);
+
+      entry = gtk_entry_new ();
+      gtk_entry_set_text (GTK_ENTRY (entry),
+                          ani_info->iart ? ani_info->iart : "");
+      gtk_box_pack_start (GTK_BOX (hbox), entry, FALSE, FALSE, 0);
+      gtk_widget_show (entry);
+
+      g_signal_connect (GTK_ENTRY (entry), "focus-out-event",
+                        G_CALLBACK (ico_dialog_ani_update_iart),
+                        NULL);
+
+      /* Default delay spin */
+      hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+      gimp_grid_attach_aligned (GTK_GRID (grid), 0, 5,
+                                _("_Delay between frames:"),
+                                0.0, 0.5,
+                                hbox, 1);
+
+      adjustment = gtk_adjustment_new (ani_header->jif_rate, 1, G_MAXINT,
+                                       1, 10, 0);
+      spin = gimp_spin_button_new (adjustment, 1, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), spin, FALSE, FALSE, 0);
+      gtk_widget_show (spin);
+
+      label = gtk_label_new (_(" jiffies (16.66 ms)"));
+      gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+      gtk_widget_show (label);
+
+      g_signal_connect (adjustment, "value-changed",
+                        G_CALLBACK (gimp_int_adjustment_update),
+                        &ani_header->jif_rate);
+    }
 
   /* Cursor */
   frame = gimp_frame_new (_("Icon Details"));
@@ -571,4 +659,30 @@ ico_dialog_check_compat (GtkWidget   *dialog,
   warning = g_object_get_data (G_OBJECT (dialog), "warning");
 
   gtk_widget_set_visible (warning, warn);
+}
+
+static void
+ico_dialog_ani_update_inam (GtkEntry *entry,
+                            gpointer  data)
+{
+  AniSaveInfo *ani_info;
+  GtkWidget   *dialog;
+
+  dialog = gtk_widget_get_toplevel (GTK_WIDGET (entry));
+
+  ani_info = g_object_get_data (G_OBJECT (dialog), "save_ani_info");
+  ani_info->inam = g_strdup_printf ("%s", gtk_entry_get_text (entry));
+}
+
+static void
+ico_dialog_ani_update_iart (GtkEntry *entry,
+                            gpointer  data)
+{
+  AniSaveInfo *ani_info;
+  GtkWidget   *dialog;
+
+  dialog = gtk_widget_get_toplevel (GTK_WIDGET (entry));
+
+  ani_info = g_object_get_data (G_OBJECT (dialog), "save_ani_info");
+  ani_info->iart = g_strdup_printf ("%s", gtk_entry_get_text (entry));
 }

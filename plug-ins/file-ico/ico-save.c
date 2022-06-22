@@ -82,12 +82,15 @@ static gboolean ico_save_init             (GimpImage    *image,
                                            GError      **error);
 static GimpPDBStatusType
                 shared_save_image         (GFile         *file,
+                                           FILE          *fp_ani,
                                            GimpImage     *image,
                                            gint32         run_mode,
                                            gint          *n_hot_spot_x,
                                            gint32       **hot_spot_x,
                                            gint          *n_hot_spot_y,
                                            gint32       **hot_spot_y,
+                                           gint32         file_offset,
+                                           gint           icon_index,
                                            GError       **error,
                                            IcoSaveInfo   *info);
 
@@ -302,8 +305,10 @@ ico_save_init (GimpImage   *image,
 
 
 static gboolean
-ico_save_dialog (GimpImage      *image,
-                 IcoSaveInfo    *info)
+ico_save_dialog (GimpImage     *image,
+                 IcoSaveInfo   *info,
+                 AniFileHeader *ani_header,
+                 AniSaveInfo   *ani_info)
 {
   GtkWidget     *dialog;
   GList         *iter;
@@ -312,7 +317,7 @@ ico_save_dialog (GimpImage      *image,
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  dialog = ico_dialog_new (info);
+  dialog = ico_dialog_new (info, ani_header, ani_info);
   for (iter = info->layers, i = 0;
        iter;
        iter = g_list_next (iter), i++)
@@ -1174,9 +1179,9 @@ ico_save_image (GFile      *file,
 
   info.is_cursor = FALSE;
 
-  return shared_save_image (file, image, run_mode,
+  return shared_save_image (file, NULL, image, run_mode,
                             0, NULL, 0, NULL,
-                            error, &info);
+                            0, 0, error, &info);
 }
 
 GimpPDBStatusType
@@ -1196,49 +1201,122 @@ cur_save_image (GFile      *file,
 
   info.is_cursor = TRUE;
 
-  return shared_save_image (file, image, run_mode,
+  return shared_save_image (file, NULL, image, run_mode,
                             n_hot_spot_x, hot_spot_x,
                             n_hot_spot_y, hot_spot_y,
-                            error, &info);
+                            0, 0, error, &info);
 }
 
+/* Ported from James Huang's ani.c code, under the GPL v3 license */
 GimpPDBStatusType
-shared_save_image (GFile        *file,
-                   GimpImage    *image,
-                   gint32        run_mode,
-                   gint         *n_hot_spot_x,
-                   gint32      **hot_spot_x,
-                   gint         *n_hot_spot_y,
-                   gint32      **hot_spot_y,
-                   GError      **error,
-                   IcoSaveInfo  *info)
+ani_save_image (GFile         *file,
+                GimpImage     *image,
+                gint32         run_mode,
+                gint          *n_hot_spot_x,
+                gint32       **hot_spot_x,
+                gint          *n_hot_spot_y,
+                gint32       **hot_spot_y,
+                AniFileHeader *header,
+                AniSaveInfo   *ani_info,
+                GError       **error)
 {
-  FILE          *fp;
-  GList         *iter;
-  gint           width;
-  gint           height;
-  IcoFileHeader  header;
-  IcoFileEntry  *entries;
-  gboolean       saved;
-  gint           i;
-  GimpParasite  *parasite = NULL;
-  gchar         *str;
+  FILE         *fp;
+  gint32        i;
+  gchar        *str;
+  GimpParasite *parasite = NULL;
+  gchar         id[5];
+  guint32       size;
+  gint32        offset, ofs_size_riff, ofs_size_list, ofs_size_icon;
+  gint32        ofs_size_info = 0;
+  IcoSaveInfo   info;
 
-  if (! ico_save_init (image, run_mode, info,
-                       n_hot_spot_x ? *n_hot_spot_x : 0,
-                       hot_spot_x   ? *hot_spot_x   : NULL,
-                       n_hot_spot_y ? *n_hot_spot_y : 0,
-                       hot_spot_y   ? *hot_spot_y   : NULL,
-                       error))
+  if (! ico_save_init (image, run_mode, &info,
+                        *n_hot_spot_x, *hot_spot_x,
+                        *n_hot_spot_y, *hot_spot_y,
+                        error))
     {
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
+  /* Save individual frames as .cur so we can retain
+   * the hotspot information
+   */
+  info.is_cursor = TRUE;
+
+  /* Default header values */
+  header->bSizeOf = sizeof (*header);
+  header->frames = info.num_icons;
+  header->steps = info.num_icons;
+  header->x = 0;
+  header->y = 0;
+  if (info.depths[0] == 24)
+    {
+      header->bpp = 4;
+      header->planes = 1;
+    }
+  else
+    {
+      header->bpp = 0;
+      header->planes = 0;
+    }
+  header->flags = 1;
+
+  /* Load metadata from parasite */
+  parasite = gimp_image_get_parasite (image, "ani-header");
+  if (parasite)
+    {
+      gchar   *parasite_data;
+      guint32  parasite_size;
+      gint     jif_rate;
+
+      parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      parasite_data = g_strndup (parasite_data, parasite_size);
+
+      if (sscanf (parasite_data, "%i", &jif_rate) == 1)
+        {
+          header->jif_rate = jif_rate;
+        }
+
+      gimp_parasite_free (parasite);
+      g_free (parasite_data);
+    }
+
+  parasite = gimp_image_get_parasite (image, "ani-info-inam");
+  if (parasite)
+    {
+      guint32  parasite_size;
+      gchar   *inam = NULL;
+
+      inam = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      ani_info->inam = g_strndup (inam, parasite_size);
+
+      gimp_parasite_free (parasite);
+    }
+
+  parasite = gimp_image_get_parasite (image, "ani-info-iart");
+  if (parasite)
+    {
+      guint32  parasite_size;
+      gchar   *iart = NULL;
+
+      iart = (gchar *) gimp_parasite_get_data (parasite, &parasite_size);
+      ani_info->iart = g_strndup (iart, parasite_size);
+
+      gimp_parasite_free (parasite);
+    }
+
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      /* Allow user to override default values */
-      if ( !ico_save_dialog (image, info))
+      if (! ico_save_dialog (image, &info,
+                             header, ani_info))
         return GIMP_PDB_CANCEL;
+
+      for (i = 1; i < info.num_icons; i++)
+        {
+          info.depths[i] = info.depths[0];
+          info.default_depths[i] = info.default_depths[0];
+          info.compress[i] = info.compress[0];
+        }
     }
 
   gimp_progress_init_printf (_("Exporting '%s'"),
@@ -1254,11 +1332,217 @@ shared_save_image (GFile        *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
+  /* Writing the .ani header data */
+  strcpy (id, "RIFF");
+  size = 0;
+  fwrite (id, 4, 1, fp);
+  ofs_size_riff = ftell (fp);
+  fwrite (&size, sizeof (size), 1, fp);
+
+  strcpy (id, "ACON");
+  fwrite (id, 4, 1, fp);
+
+  if ((ani_info->inam && strlen (ani_info->inam) > 0) ||
+      (ani_info->iart && strlen (ani_info->iart) > 0))
+    {
+      gint32 string_size;
+
+      strcpy (id, "LIST");
+      fwrite (id, 4, 1, fp);
+      ofs_size_info = ftell (fp);
+      fwrite (&size, sizeof (size), 1, fp);
+
+      strcpy (id, "INFO");
+      fwrite (id, 4, 1, fp);
+      if (ani_info->inam && strlen (ani_info->inam) > 0) /* Cursor name */
+        {
+          strcpy (id, "INAM");
+          fwrite (id, 4, 1, fp);
+          string_size = strlen (ani_info->inam) + 1;
+          fwrite (&string_size, 4, 1, fp);
+          fwrite (ani_info->inam, string_size, 1, fp);
+        }
+      if (ani_info->iart && strlen (ani_info->iart) > 0) /* Author name */
+        {
+          strcpy (id, "IART");
+          fwrite (id, 4, 1, fp);
+          string_size = strlen (ani_info->iart) + 1;
+          fwrite (&string_size, 4, 1, fp);
+          fwrite (ani_info->iart, string_size, 1, fp);
+        }
+
+      /* Go back and update info list size */
+      fseek (fp, 0L, SEEK_END);
+      size = ftell (fp) - ofs_size_info - 4;
+      fseek (fp, ofs_size_info, SEEK_SET);
+      fwrite (&size, sizeof (size), 1, fp);
+      fseek (fp, 0L, SEEK_END);
+    }
+
+  strcpy (id, "anih");
+  size = sizeof (*header);
+  fwrite (id, 4, 1, fp);
+  fwrite (&size, sizeof (size), 1, fp);
+  fwrite (header, sizeof (*header), 1, fp);
+
+  strcpy (id, "LIST");
+  fwrite (id, 4, 1, fp);
+  ofs_size_list = ftell (fp);
+  fwrite (&size, sizeof (size), 1, fp);
+
+  strcpy (id, "fram");
+  fwrite (id, 4, 1, fp);
+
+  strcpy (id, "icon");
+  for (i = 0; i < info.num_icons; i++ )
+    {
+      GimpPDBStatusType status;
+      fwrite (id, 4, 1, fp);
+      ofs_size_icon = ftell (fp);
+      fwrite (&size, sizeof (size), 1, fp);
+      offset = ftell (fp);
+      status = shared_save_image (file, fp, image, run_mode,
+                                  n_hot_spot_x, hot_spot_x,
+                                  n_hot_spot_y, hot_spot_y,
+                                  offset, i, error, &info);
+
+      if (status != GIMP_PDB_SUCCESS)
+        {
+          ico_save_info_free (&info);
+          g_free (ani_info->inam);
+          g_free (ani_info->iart);
+          fclose (fp);
+          return GIMP_PDB_EXECUTION_ERROR;
+        }
+      fseek (fp, 0L, SEEK_END);
+      size = ftell (fp) - offset;
+      fseek (fp, ofs_size_icon, SEEK_SET);
+      fwrite (&size, sizeof (size), 1, fp);
+      fseek (fp, 0L, SEEK_END);
+
+      gimp_progress_update ((gdouble) i / (gdouble) info.num_icons);
+    }
+  ico_save_info_free (&info);
+
+  fseek (fp, 0L, SEEK_END);
+  size = ftell (fp);
+  fseek (fp, ofs_size_riff, SEEK_SET);
+  fwrite (&size, sizeof (size), 1, fp);
+
+  size -= ofs_size_list;
+  fseek (fp, ofs_size_list, SEEK_SET);
+  fwrite (&size, sizeof (size), 1, fp);
+  fclose (fp);
+
+  /* Update metadata if needed */
+  str = g_strdup_printf ("%d", header->jif_rate);
+  parasite = gimp_parasite_new ("ani-header",
+                                GIMP_PARASITE_PERSISTENT,
+                                strlen (str) + 1, (gpointer) str);
+  g_free (str);
+  gimp_image_attach_parasite (image, parasite);
+  gimp_parasite_free (parasite);
+
+  if (ani_info->inam && strlen (ani_info->inam) > 0)
+    {
+      str = g_strdup_printf ("%s", ani_info->inam);
+      parasite = gimp_parasite_new ("ani-info-inam",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (ani_info->inam) + 1, (gpointer) str);
+      g_free (str);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+  if (ani_info->iart && strlen (ani_info->iart) > 0)
+    {
+      str = g_strdup_printf ("%s", ani_info->iart);
+      parasite = gimp_parasite_new ("ani-info-iart",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    strlen (ani_info->iart) + 1, (gpointer) str);
+      g_free (str);
+      gimp_image_attach_parasite (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+
+  gimp_progress_update (1.0);
+
+  return GIMP_PDB_SUCCESS;
+}
+
+GimpPDBStatusType
+shared_save_image (GFile        *file,
+                   FILE         *fp_ani,
+                   GimpImage    *image,
+                   gint32        run_mode,
+                   gint         *n_hot_spot_x,
+                   gint32      **hot_spot_x,
+                   gint         *n_hot_spot_y,
+                   gint32      **hot_spot_y,
+                   gint32        file_offset,
+                   gint          icon_index,
+                   GError      **error,
+                   IcoSaveInfo  *info)
+{
+  FILE          *fp;
+  GList         *iter;
+  gint           width;
+  gint           height;
+  IcoFileHeader  header;
+  IcoFileEntry  *entries;
+  gboolean       saved;
+  gint           i;
+  gint           num_icons;
+  GimpParasite  *parasite = NULL;
+  gchar         *str;
+
+  if (! fp_ani &&
+      ! ico_save_init (image, run_mode, info,
+                       n_hot_spot_x ? *n_hot_spot_x : 0,
+                       hot_spot_x   ? *hot_spot_x   : NULL,
+                       n_hot_spot_y ? *n_hot_spot_y : 0,
+                       hot_spot_y   ? *hot_spot_y   : NULL,
+                       error))
+    {
+      return GIMP_PDB_EXECUTION_ERROR;
+    }
+
+  if (run_mode == GIMP_RUN_INTERACTIVE && ! fp_ani)
+    {
+      /* Allow user to override default values */
+      if ( !ico_save_dialog (image, info,
+                             NULL, NULL))
+        return GIMP_PDB_CANCEL;
+    }
+
+  num_icons = (fp_ani) ? 1 : info->num_icons;
+
+  if (! fp_ani)
+    gimp_progress_init_printf (_("Exporting '%s'"),
+                               gimp_file_get_utf8_name (file));
+
+  /* If saving an .ani file, we append the next icon frame. */
+  if (! fp_ani)
+    {
+      fp = g_fopen (g_file_peek_path (file), "wb");
+    }
+  else
+    {
+      fp = fp_ani;
+    }
+
+  if (! fp)
+    {
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for writing: %s"),
+                   gimp_file_get_utf8_name (file), g_strerror (errno));
+      return GIMP_PDB_EXECUTION_ERROR;
+    }
+
   header.reserved = 0;
   header.resource_type = 1;
   if (info->is_cursor)
     header.resource_type = 2;
-  header.icon_count = info->num_icons;
+  header.icon_count = num_icons;
   if (! ico_write_int16 (fp, &header.reserved, 1)      ||
       ! ico_write_int16 (fp, &header.resource_type, 1) ||
       ! ico_write_int16 (fp, &header.icon_count, 1))
@@ -1268,8 +1552,8 @@ shared_save_image (GFile        *file,
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  entries = g_new0 (IcoFileEntry, info->num_icons);
-  if (fwrite (entries, sizeof (IcoFileEntry), info->num_icons, fp) <= 0)
+  entries = g_new0 (IcoFileEntry, num_icons);
+  if (fwrite (entries, sizeof (IcoFileEntry), num_icons, fp) <= 0)
     {
       ico_save_info_free (info);
       g_free (entries);
@@ -1281,7 +1565,12 @@ shared_save_image (GFile        *file,
        iter;
        iter = g_list_next (iter), i++)
     {
-      gimp_progress_update ((gdouble)i / (gdouble)info->num_icons);
+      if (! fp_ani)
+        gimp_progress_update ((gdouble)i / (gdouble)info->num_icons);
+
+      /* If saving .ani file, jump to the correct frame */
+      if (fp_ani)
+        iter = g_list_nth (info->layers, icon_index);
 
       width = gimp_drawable_get_width (iter->data);
       height = gimp_drawable_get_height (iter->data);
@@ -1305,10 +1594,12 @@ shared_save_image (GFile        *file,
       /* .cur file reuses these fields for cursor offsets */
       if (info->is_cursor)
         {
-          entries[i].planes = info->hot_spot_x[i];
-          entries[i].bpp = info->hot_spot_y[i];
+          gint hot_spot_index = icon_index ? icon_index : i;
+
+          entries[i].planes = info->hot_spot_x[hot_spot_index];
+          entries[i].bpp = info->hot_spot_y[hot_spot_index];
         }
-      entries[i].offset = ftell (fp);
+      entries[i].offset = ftell (fp) - file_offset;
 
       if (info->compress[i])
         saved = ico_write_png (fp, iter->data, info->depths[i]);
@@ -1322,10 +1613,13 @@ shared_save_image (GFile        *file,
           return GIMP_PDB_EXECUTION_ERROR;
         }
 
-      entries[i].size = ftell (fp) - entries[i].offset;
+      entries[i].size = ftell (fp) - file_offset - entries[i].offset;
+
+      if (fp_ani)
+        break;
     }
 
-  for (i = 0; i < info->num_icons; i++)
+  for (i = 0; i < num_icons; i++)
     {
       entries[i].planes = GUINT16_TO_LE (entries[i].planes);
       entries[i].bpp    = GUINT16_TO_LE (entries[i].bpp);
@@ -1333,15 +1627,16 @@ shared_save_image (GFile        *file,
       entries[i].offset = GUINT32_TO_LE (entries[i].offset);
     }
 
-  if (fseek (fp, sizeof(IcoFileHeader), SEEK_SET) < 0
-      || fwrite (entries, sizeof (IcoFileEntry), info->num_icons, fp) <= 0)
+  if (fseek (fp, sizeof (IcoFileHeader) + file_offset, SEEK_SET) < 0 ||
+      fwrite (entries, sizeof (IcoFileEntry), num_icons, fp) <= 0)
     {
       ico_save_info_free (info);
       fclose (fp);
       return GIMP_PDB_EXECUTION_ERROR;
     }
 
-  gimp_progress_update (1.0);
+  if (! fp_ani)
+    gimp_progress_update (1.0);
 
   /* Updating parasite hot spots if needed */
   if (info->is_cursor)
@@ -1360,23 +1655,32 @@ shared_save_image (GFile        *file,
         }
     }
 
-  if (hot_spot_x)
+  if (! fp_ani)
     {
-      *hot_spot_x = info->hot_spot_x;
-      info->hot_spot_x = NULL;
+      if (hot_spot_x)
+        {
+          *hot_spot_x = info->hot_spot_x;
+          info->hot_spot_x = NULL;
+        }
+      if (hot_spot_y)
+        {
+          *hot_spot_y = info->hot_spot_y;
+          info->hot_spot_y = NULL;
+        }
+      if (n_hot_spot_x)
+        *n_hot_spot_x = num_icons;
+      if (n_hot_spot_y)
+        *n_hot_spot_y = num_icons;
     }
-  if (hot_spot_y)
-    {
-      *hot_spot_y = info->hot_spot_y;
-      info->hot_spot_y = NULL;
-    }
-  if (n_hot_spot_x)
-    *n_hot_spot_x = info->num_icons;
-  if (n_hot_spot_y)
-    *n_hot_spot_y = info->num_icons;
 
-  ico_save_info_free (info);
-  fclose (fp);
+  /* If saving .ani file, don't clear until
+   * all icons are saved in ani_save_image ()
+   */
+  if (! file_offset)
+    {
+      ico_save_info_free (info);
+      fclose (fp);
+    }
   g_free (entries);
 
   return GIMP_PDB_SUCCESS;

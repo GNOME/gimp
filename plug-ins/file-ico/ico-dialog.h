@@ -22,9 +22,11 @@
 #define __ICO_DIALOG_H__
 
 
-GtkWidget * ico_dialog_new                 (IcoSaveInfo  *info);
-void        ico_dialog_add_icon            (GtkWidget    *dialog,
-                                            GimpDrawable *layer,
-                                            gint          layer_num);
+GtkWidget * ico_dialog_new                 (IcoSaveInfo   *info,
+                                            AniFileHeader *ani_header,
+                                            AniSaveInfo   *ani_info);
+void        ico_dialog_add_icon            (GtkWidget     *dialog,
+                                            GimpDrawable  *layer,
+                                            gint           layer_num);
 
 #endif /* __ICO_DIALOG_H__ */

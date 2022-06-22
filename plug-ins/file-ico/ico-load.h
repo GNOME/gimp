@@ -23,10 +23,17 @@
 
 
 GimpImage * ico_load_image           (GFile         *file,
+                                      gint32        *file_offset,
+                                      GError       **error);
+GimpImage * ani_load_image           (GFile         *file,
+                                      gboolean       load_thumb,
+                                      gint          *width,
+                                      gint          *height,
                                       GError       **error);
 GimpImage * ico_load_thumbnail_image (GFile         *file,
                                       gint          *width,
                                       gint          *height,
+                                      gint32         file_offset,
                                       GError       **error);
 
 gint        ico_get_bit_from_data    (const guint8  *data,
