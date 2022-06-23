@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-21 17:07+0000\n"
-"PO-Revision-Date: 2022-06-22 13:57+0100\n"
+"POT-Creation-Date: 2022-06-22 20:57+0000\n"
+"PO-Revision-Date: 2022-06-23 22:59+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -69,6 +69,8 @@ msgid "Exercise a goat (C)"
 msgstr "Exercitar uma cabra (C)"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:184
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:94
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:71
 #: ../extensions/goat-exercises/goat-exercise-py3.py:77
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:73
 #: ../plug-ins/common/align-layers.c:671 ../plug-ins/common/blinds.c:301
@@ -133,6 +135,8 @@ msgid "_Cancel"
 msgstr "_Cancelar"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:185
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:95
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:72
 #: ../extensions/goat-exercises/goat-exercise-py3.py:78
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:74
 msgid "_Source"
@@ -159,26 +163,24 @@ msgstr ""
 "demonstração.\n"
 "Veja a última versão do código-fonte na Internet clicando no botão “Fonte”."
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
-msgstr "Exercitar uma cabra e uma python"
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:63
+msgid "Exercise a JavaScript goat"
+msgstr "Exercitar uma cabra JavaScript"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr "Exercitar uma cabra na língua Python 3"
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:67
+msgid "Exercise a goat in the JavaScript language (GJS)"
+msgstr "Exercitar uma cabra na linguagem JavaScript (GJS)"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
-msgstr "Leva uma cabra a passear em Python 3"
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:68
+msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
+msgstr "Leva uma cabra a passear em JavaScript com o interpretador GJS"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:59
-msgid "Procedure '{}' only works with one drawable."
-msgstr "O procedimento ‘{}’ apenas funciona com um desenho."
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:90
+msgid "Exercise a goat (JavaScript)"
+msgstr "Exercitar uma cabra (JavaScript)"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
-msgstr "Exercitar uma cabra (Python 3)"
-
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:96
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:73
 #: ../extensions/goat-exercises/goat-exercise-py3.py:79
 #: ../plug-ins/common/align-layers.c:672 ../plug-ins/common/blinds.c:302
 #: ../plug-ins/common/border-average.c:433
@@ -213,6 +215,52 @@ msgstr "Exercitar uma cabra (Python 3)"
 #: ../plug-ins/selection-to-path/selection-to-path.c:414
 msgid "_OK"
 msgstr "_OK"
+
+#. GIMP - The GNU Image Manipulation Program
+#. Copyright (C) 1995 Spencer Kimball and Peter Mattis
+#.
+#. goat-exercise-lua.lua
+#. Copyright (C) Jehan
+#.
+#. This program is free software: you can redistribute it and/or modify
+#. it under the terms of the GNU General Public License as published by
+#. the Free Software Foundation; either version 3 of the License, or
+#. (at your option) any later version.
+#.
+#. This program is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#. GNU General Public License for more details.
+#.
+#. You should have received a copy of the GNU General Public License
+#. along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#. procedure:new_return_values() crashes LGI so we construct the
+#. GimpValueArray manually.
+#. Not sure why run_mode has become a string instead of testing
+#. against Gimp.RunMode.INTERACTIVE.
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:67
+msgid "Exercise a goat (Lua)"
+msgstr "Exercitar uma cabra (Lua)"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:46
+msgid "Exercise a goat and a python"
+msgstr "Exercitar uma cabra e uma pitão"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:50
+msgid "Exercise a goat in the Python 3 language"
+msgstr "Exercitar uma cabra na linguagem Python 3"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:51
+msgid "Takes a goat for a walk in Python 3"
+msgstr "Leva uma cabra a passear em Python 3"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:59
+msgid "Procedure '{}' only works with one drawable."
+msgstr "O procedimento ‘{}’ apenas funciona com um desenho."
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:74
+msgid "Exercise a goat (Python 3)"
+msgstr "Exercitar uma cabra (Python 3)"
 
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:45
 msgid "Exercise a Vala goat"
@@ -435,7 +483,7 @@ msgstr "_Vertical"
 #: ../plug-ins/common/file-jp2-load.c:1313 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
 #: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
-#: ../plug-ins/common/file-raw-data.c:1679
+#: ../plug-ins/common/file-raw-data.c:1837
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:804
 #: ../plug-ins/common/smooth-palette.c:332 ../plug-ins/common/tile.c:405
@@ -991,8 +1039,8 @@ msgstr "Guardar parâmetros do explorador CML"
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:874
 #: ../plug-ins/common/file-mng.c:1221 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
-#: ../plug-ins/common/file-raw-data.c:1225
-#: ../plug-ins/common/file-raw-data.c:1254 ../plug-ins/common/file-sunras.c:635
+#: ../plug-ins/common/file-raw-data.c:1345
+#: ../plug-ins/common/file-raw-data.c:1374 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1385
 #: ../plug-ins/common/sphere-designer.c:2201
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
@@ -1023,8 +1071,8 @@ msgstr "Carregar parâmetros do explorador CML"
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
 #: ../plug-ins/common/file-ps.c:1150 ../plug-ins/common/file-ps.c:3536
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
-#: ../plug-ins/common/file-raw-data.c:481
-#: ../plug-ins/common/file-raw-data.c:1536 ../plug-ins/common/file-sunras.c:455
+#: ../plug-ins/common/file-raw-data.c:514
+#: ../plug-ins/common/file-raw-data.c:1673 ../plug-ins/common/file-sunras.c:455
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:445 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:658 ../plug-ins/common/file-xmc.c:899
@@ -1956,7 +2004,7 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1140
-#: ../plug-ins/common/file-raw-data.c:1528 ../plug-ins/common/file-sunras.c:447
+#: ../plug-ins/common/file-raw-data.c:1665 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:648
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
@@ -3991,21 +4039,21 @@ msgstr "Faltam os bloco de atributos gerais de imagem."
 msgid "Exporting not implemented yet."
 msgstr "Exportação ainda não implementada."
 
-#: ../plug-ins/common/file-raw-data.c:316
-#: ../plug-ins/common/file-raw-data.c:419
+#: ../plug-ins/common/file-raw-data.c:333
+#: ../plug-ins/common/file-raw-data.c:452
 msgid "Raw image data"
 msgstr "Dados de imagem Raw"
 
-#: ../plug-ins/common/file-raw-data.c:381
-#: ../plug-ins/common/file-raw-data.c:2609
+#: ../plug-ins/common/file-raw-data.c:414
+#: ../plug-ins/common/file-raw-data.c:2803
 msgid "Digital Elevation Model data"
 msgstr "Dados do modelo de elevação digital (DEM)"
 
-#: ../plug-ins/common/file-raw-data.c:448
+#: ../plug-ins/common/file-raw-data.c:481
 msgid "Raw Data"
 msgstr "Dados Raw"
 
-#: ../plug-ins/common/file-raw-data.c:517
+#: ../plug-ins/common/file-raw-data.c:550
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -4013,7 +4061,7 @@ msgstr ""
 "%d não é um espaçamento de amostra válido. Os valores válidos são: 0 "
 "(deteção automática), 1 e 3."
 
-#: ../plug-ins/common/file-raw-data.c:530
+#: ../plug-ins/common/file-raw-data.c:563
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -4025,17 +4073,17 @@ msgstr ""
 "HGT com suporte são: SRTM-1 e SRTM-3. Se conhece a variante, execute com o "
 "argumento 1 ou 3."
 
-#: ../plug-ins/common/file-raw-data.c:621
+#: ../plug-ins/common/file-raw-data.c:654
 #, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "A exportação RAW não suporta várias camadas."
 
-#: ../plug-ins/common/file-raw-data.c:1430
+#: ../plug-ins/common/file-raw-data.c:1555
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "Não foi possível abrir '%s' para verificação do tamanho: %s"
 
-#: ../plug-ins/common/file-raw-data.c:2451
+#: ../plug-ins/common/file-raw-data.c:2632
 msgid "Load Image from Raw Data"
 msgstr "Carregar imagem a partir de dados Raw"
 
@@ -4047,208 +4095,182 @@ msgstr "Carregar imagem a partir de dados Raw"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:2510
+#: ../plug-ins/common/file-raw-data.c:2691
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arco-segundo)"
 
-#: ../plug-ins/common/file-raw-data.c:2511
+#: ../plug-ins/common/file-raw-data.c:2692
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 arcos-segundos)"
 
 #. Generic case for any data. Let's leave choice to select the
 #. * right type of raw data.
 #.
-#: ../plug-ins/common/file-raw-data.c:2522
+#: ../plug-ins/common/file-raw-data.c:2703
 msgid "RGB 8-bit"
 msgstr "RGB 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2523
-#| msgid "Gray 16 bit Big Endian"
-msgid "RGB 16-bit Integer Big Endian"
-msgstr "RGB 16 bits Big Endian Inteiro"
+#: ../plug-ins/common/file-raw-data.c:2704
+msgid "RGB 16-bit"
+msgstr "RGB 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2524
-#| msgid "Gray 16 bit Little Endian"
-msgid "RGB 16-bit Integer Little Endian"
-msgstr "RGB 16 bits Little Endian Inteiro"
+#: ../plug-ins/common/file-raw-data.c:2705
+msgid "RGB 32-bit"
+msgstr "RGB 32 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2525
-#| msgid "Floating-Point"
-msgid "RGB 16-bit Floating Point"
-msgstr "RGB 16-bit Ponto flutuante"
-
-#: ../plug-ins/common/file-raw-data.c:2526
-#| msgid "Gray 16 bit Big Endian"
-msgid "RGB 32-bit Big Endian"
-msgstr "RGB 32 bits Big Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2527
-#| msgid "Gray 16 bit Little Endian"
-msgid "RGB 32-bit Little Endian"
-msgstr "RGB 32 bits Little Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2528
-msgid "RGB 32-bit Floating Point"
-msgstr "Ponto flutuante RGB 32 bits"
-
-#: ../plug-ins/common/file-raw-data.c:2530
+#: ../plug-ins/common/file-raw-data.c:2707
 msgid "RGBA 8-bit"
 msgstr "RGBA 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2531
-#| msgid "Gray 16 bit Big Endian"
-msgid "RGBA 16-bit Big Endian"
-msgstr "RGBA 16 bits Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2708
+msgid "RGBA 16-bit"
+msgstr "RGBA 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2532
-#| msgid "Gray 16 bit Little Endian"
-msgid "RGBA 16-bit Little Endian"
-msgstr "RGBA 16 bits Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2709
+#| msgid "RGBA 8-bit"
+msgid "RGBA 32-bit"
+msgstr "RGBA 32 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2533
-#| msgid "Gray 16 bit Big Endian"
-msgid "RGBA 32-bit Big Endian"
-msgstr "RGBA 32 bits Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2711
+msgid "RGB565"
+msgstr "RGB565"
 
-#: ../plug-ins/common/file-raw-data.c:2534
-#| msgid "Gray 16 bit Little Endian"
-msgid "RGBA 32-bit Little Endian"
-msgstr "RGBA 32 bits Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2712
+msgid "BGR565"
+msgstr "BGR565"
 
-#: ../plug-ins/common/file-raw-data.c:2536
-msgid "RGB565 Big Endian"
-msgstr "RGB565 Big Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2537
-msgid "RGB565 Little Endian"
-msgstr "RGB565 Little Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2538
-msgid "BGR565 Big Endian"
-msgstr "BGR565 Big Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2539
-msgid "BGR565 Little Endian"
-msgstr "BGR565 Little Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2540
-msgid "Planar RGB"
-msgstr "RGB plano"
-
-#: ../plug-ins/common/file-raw-data.c:2542
+#: ../plug-ins/common/file-raw-data.c:2714
 msgid "B&W 1 bit"
 msgstr "Preto e branco 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:2543
-msgid "Gray 2 bit"
-msgstr "Cinzento 2 bits"
+#: ../plug-ins/common/file-raw-data.c:2715
+msgid "Grayscale 2-bit"
+msgstr "Escala de cinza 2 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2544
-msgid "Gray 4 bit"
-msgstr "Cinzento 4 bits"
+#: ../plug-ins/common/file-raw-data.c:2716
+msgid "Grayscale 4-bit"
+msgstr "Escala de cinza 4 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2545
-msgid "Gray 8 bit"
-msgstr "Cinzento 8 bits"
+#: ../plug-ins/common/file-raw-data.c:2717
+msgid "Grayscale 8-bit"
+msgstr "Escala de cinza 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2546
-msgid "Gray unsigned 16 bit Big Endian"
-msgstr "Cinzento unsigned 16 bits Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2718
+msgid "Grayscale 16-bit"
+msgstr "Escala de cinza 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2547
-msgid "Gray unsigned 16 bit Little Endian"
-msgstr "Cinzento unsigned 16 bits Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2719
+msgid "Grayscale 32-bit"
+msgstr "Escala de cinza 32 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2548
-msgid "Gray 16 bit Big Endian"
-msgstr "Cinzento 16 bits Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2721
+msgid "Grayscale-Alpha 8-bit"
+msgstr "Escala de cinza-Alpha 8 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2549
-msgid "Gray 16 bit Little Endian"
-msgstr "Cinzento 16 bits Little Endian"
+#: ../plug-ins/common/file-raw-data.c:2722
+msgid "Grayscale-Alpha 16-bit"
+msgstr "Escala de cinza-Alpha 16 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2550
-msgid "Gray unsigned 32 bit Big Endian"
-msgstr "Cinzento unsigned 32 bits Big Endian"
+#: ../plug-ins/common/file-raw-data.c:2723
+msgid "Grayscale-Alpha 32-bit"
+msgstr "Escala de cinza-Alpha 32 bits"
 
-#: ../plug-ins/common/file-raw-data.c:2551
-msgid "Gray unsigned 32 bit Little Endian"
-msgstr "Cinzento unsigned 32 bits Little Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2552
-msgid "Gray 32 bit Big Endian"
-msgstr "Cinzento 32 bits Big Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2553
-msgid "Gray 32 bit Little Endian"
-msgstr "Cinzento 32 bits Little Endian"
-
-#: ../plug-ins/common/file-raw-data.c:2555
+#: ../plug-ins/common/file-raw-data.c:2725
 msgid "Indexed"
 msgstr "Indexada"
 
-#: ../plug-ins/common/file-raw-data.c:2556
+#: ../plug-ins/common/file-raw-data.c:2726
 msgid "Indexed Alpha"
 msgstr "Alfa indexada"
+
+#: ../plug-ins/common/file-raw-data.c:2732
+msgid "Unsigned Integer"
+msgstr "Inteiro sem assinatura"
+
+#: ../plug-ins/common/file-raw-data.c:2733
+msgid "Signed Integer"
+msgstr "Inteiro assinado"
+
+#: ../plug-ins/common/file-raw-data.c:2734
+msgid "Floating Point"
+msgstr "Ponto flutuante"
+
+#: ../plug-ins/common/file-raw-data.c:2740
+#| msgid "RGB565 Little Endian"
+msgid "Little Endian"
+msgstr "Little Endian"
+
+#: ../plug-ins/common/file-raw-data.c:2741
+#| msgid "RGB565 Big Endian"
+msgid "Big Endian"
+msgstr "Big Endian"
+
+#: ../plug-ins/common/file-raw-data.c:2747
+msgid "Contiguous"
+msgstr "Contígua"
+
+#: ../plug-ins/common/file-raw-data.c:2748
+msgid "Planar"
+msgstr "Plano"
 
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:2603
+#: ../plug-ins/common/file-raw-data.c:2797
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dados do modelo digital de elevação DEM (1 arco-segundo)"
 
-#: ../plug-ins/common/file-raw-data.c:2606
+#: ../plug-ins/common/file-raw-data.c:2800
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Dados do modelo digital de elevação DEM (3 arco-segundos)"
 
-#: ../plug-ins/common/file-raw-data.c:2613
+#: ../plug-ins/common/file-raw-data.c:2807
 msgid "Image"
 msgstr "Imagem"
 
-#: ../plug-ins/common/file-raw-data.c:2616
+#: ../plug-ins/common/file-raw-data.c:2810
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:2617
+#: ../plug-ins/common/file-raw-data.c:2811
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (estilo BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2632
+#: ../plug-ins/common/file-raw-data.c:2826
 msgid "Palette"
 msgstr "Paleta"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: ../plug-ins/common/file-raw-data.c:2703
+#: ../plug-ins/common/file-raw-data.c:2897
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Contígua (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2705
+#: ../plug-ins/common/file-raw-data.c:2899
 msgid "_Contiguous"
 msgstr "_Contígua"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: ../plug-ins/common/file-raw-data.c:2711
+#: ../plug-ins/common/file-raw-data.c:2905
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Plana (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2713
+#: ../plug-ins/common/file-raw-data.c:2907
 msgid "_Planar"
 msgstr "_Plano"
 
 #. Palette type combo
-#: ../plug-ins/common/file-raw-data.c:2735
+#: ../plug-ins/common/file-raw-data.c:2929
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:2736
+#: ../plug-ins/common/file-raw-data.c:2930
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (estilo BMP)"
 
@@ -12926,6 +12948,78 @@ msgstr "_Digitalizador/câmara..."
 #: ../plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador/câmara"
+
+#~| msgid "Gray 16 bit Big Endian"
+#~ msgid "RGB 16-bit Integer Big Endian"
+#~ msgstr "RGB 16 bits Big Endian Inteiro"
+
+#~| msgid "Gray 16 bit Little Endian"
+#~ msgid "RGB 16-bit Integer Little Endian"
+#~ msgstr "RGB 16 bits Little Endian Inteiro"
+
+#~| msgid "Floating-Point"
+#~ msgid "RGB 16-bit Floating Point"
+#~ msgstr "RGB 16-bit Ponto flutuante"
+
+#~| msgid "Gray 16 bit Big Endian"
+#~ msgid "RGB 32-bit Big Endian"
+#~ msgstr "RGB 32 bits Big Endian"
+
+#~| msgid "Gray 16 bit Little Endian"
+#~ msgid "RGB 32-bit Little Endian"
+#~ msgstr "RGB 32 bits Little Endian"
+
+#~ msgid "RGB 32-bit Floating Point"
+#~ msgstr "Ponto flutuante RGB 32 bits"
+
+#~| msgid "Gray 16 bit Big Endian"
+#~ msgid "RGBA 16-bit Big Endian"
+#~ msgstr "RGBA 16 bits Big Endian"
+
+#~| msgid "Gray 16 bit Little Endian"
+#~ msgid "RGBA 16-bit Little Endian"
+#~ msgstr "RGBA 16 bits Little Endian"
+
+#~| msgid "Gray 16 bit Big Endian"
+#~ msgid "RGBA 32-bit Big Endian"
+#~ msgstr "RGBA 32 bits Big Endian"
+
+#~| msgid "Gray 16 bit Little Endian"
+#~ msgid "RGBA 32-bit Little Endian"
+#~ msgstr "RGBA 32 bits Little Endian"
+
+#~ msgid "BGR565 Big Endian"
+#~ msgstr "BGR565 Big Endian"
+
+#~ msgid "BGR565 Little Endian"
+#~ msgstr "BGR565 Little Endian"
+
+#~ msgid "Planar RGB"
+#~ msgstr "RGB plano"
+
+#~ msgid "Gray unsigned 16 bit Big Endian"
+#~ msgstr "Cinzento unsigned 16 bits Big Endian"
+
+#~ msgid "Gray unsigned 16 bit Little Endian"
+#~ msgstr "Cinzento unsigned 16 bits Little Endian"
+
+#~ msgid "Gray 16 bit Big Endian"
+#~ msgstr "Cinzento 16 bits Big Endian"
+
+#~ msgid "Gray 16 bit Little Endian"
+#~ msgstr "Cinzento 16 bits Little Endian"
+
+#~ msgid "Gray unsigned 32 bit Big Endian"
+#~ msgstr "Cinzento unsigned 32 bits Big Endian"
+
+#~ msgid "Gray unsigned 32 bit Little Endian"
+#~ msgstr "Cinzento unsigned 32 bits Little Endian"
+
+#~ msgid "Gray 32 bit Big Endian"
+#~ msgstr "Cinzento 32 bits Big Endian"
+
+#~ msgid "Gray 32 bit Little Endian"
+#~ msgstr "Cinzento 32 bits Little Endian"
 
 #~ msgid "_Sample Spacing:"
 #~ msgstr "_Espaçamento da amostra:"
