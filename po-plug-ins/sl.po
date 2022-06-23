@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-18 23:26+0000\n"
-"PO-Revision-Date: 2022-06-19 09:06+0200\n"
+"POT-Creation-Date: 2022-06-22 20:57+0000\n"
+"PO-Revision-Date: 2022-06-23 07:10+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -65,6 +65,8 @@ msgid "Exercise a goat (C)"
 msgstr "Povadi kozo (C)"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:184
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:94
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:71
 #: ../extensions/goat-exercises/goat-exercise-py3.py:77
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:73
 #: ../plug-ins/common/align-layers.c:671 ../plug-ins/common/blinds.c:301
@@ -129,6 +131,8 @@ msgid "_Cancel"
 msgstr "Pre_kliči"
 
 #: ../extensions/goat-exercises/goat-exercise-c.c:185
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:95
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:72
 #: ../extensions/goat-exercises/goat-exercise-py3.py:78
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:74
 msgid "_Source"
@@ -155,26 +159,24 @@ msgstr ""
 "Prevzemite zadnjo različico izvorne kode s spleta s klikom gumba »Izvorna "
 "koda«."
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:46
-msgid "Exercise a goat and a python"
-msgstr "Povadi kozo in pitona"
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:63
+msgid "Exercise a JavaScript goat"
+msgstr "Povadi kozo (JavaScript)"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:50
-msgid "Exercise a goat in the Python 3 language"
-msgstr "Povadi kozo v jeziku Python 3"
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:67
+msgid "Exercise a goat in the JavaScript language (GJS)"
+msgstr "Povadi kozo v jeziku JavaScript (GJS)"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:51
-msgid "Takes a goat for a walk in Python 3"
-msgstr "Pelje kozo na sprehod v jeziku Python 3"
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:68
+msgid "Takes a goat for a walk in Javascript with the GJS interpreter"
+msgstr "Pelje kozo na sprehod v jeziku JavaScript s tolmačem GJS"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:59
-msgid "Procedure '{}' only works with one drawable."
-msgstr "Procedura »{}« deluje le z enim risanim predmetom."
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:90
+msgid "Exercise a goat (JavaScript)"
+msgstr "Povadi kozo (JavaScript)"
 
-#: ../extensions/goat-exercises/goat-exercise-py3.py:74
-msgid "Exercise a goat (Python 3)"
-msgstr "Povadi kozo (Python 3)"
-
+#: ../extensions/goat-exercises/goat-exercise-gjs.js:96
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:73
 #: ../extensions/goat-exercises/goat-exercise-py3.py:79
 #: ../plug-ins/common/align-layers.c:672 ../plug-ins/common/blinds.c:302
 #: ../plug-ins/common/border-average.c:433
@@ -209,6 +211,52 @@ msgstr "Povadi kozo (Python 3)"
 #: ../plug-ins/selection-to-path/selection-to-path.c:414
 msgid "_OK"
 msgstr "V _redu"
+
+#. GIMP - The GNU Image Manipulation Program
+#. Copyright (C) 1995 Spencer Kimball and Peter Mattis
+#.
+#. goat-exercise-lua.lua
+#. Copyright (C) Jehan
+#.
+#. This program is free software: you can redistribute it and/or modify
+#. it under the terms of the GNU General Public License as published by
+#. the Free Software Foundation; either version 3 of the License, or
+#. (at your option) any later version.
+#.
+#. This program is distributed in the hope that it will be useful,
+#. but WITHOUT ANY WARRANTY; without even the implied warranty of
+#. MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#. GNU General Public License for more details.
+#.
+#. You should have received a copy of the GNU General Public License
+#. along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#. procedure:new_return_values() crashes LGI so we construct the
+#. GimpValueArray manually.
+#. Not sure why run_mode has become a string instead of testing
+#. against Gimp.RunMode.INTERACTIVE.
+#: ../extensions/goat-exercises/goat-exercise-lua.lua:67
+msgid "Exercise a goat (Lua)"
+msgstr "Povadi kozo (Lua)"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:46
+msgid "Exercise a goat and a python"
+msgstr "Povadi kozo in pitona"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:50
+msgid "Exercise a goat in the Python 3 language"
+msgstr "Povadi kozo v jeziku Python 3"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:51
+msgid "Takes a goat for a walk in Python 3"
+msgstr "Pelje kozo na sprehod v jeziku Python 3"
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:59
+msgid "Procedure '{}' only works with one drawable."
+msgstr "Procedura »{}« deluje le z enim risanim predmetom."
+
+#: ../extensions/goat-exercises/goat-exercise-py3.py:74
+msgid "Exercise a goat (Python 3)"
+msgstr "Povadi kozo (Python 3)"
 
 #: ../extensions/goat-exercises/goat-exercise-vala.vala:45
 msgid "Exercise a Vala goat"
@@ -431,7 +479,7 @@ msgstr "_Navpične"
 #: ../plug-ins/common/file-jp2-load.c:1313 ../plug-ins/common/file-pcx.c:480
 #: ../plug-ins/common/file-pcx.c:488 ../plug-ins/common/file-pix.c:424
 #: ../plug-ins/common/file-png.c:942 ../plug-ins/common/file-pnm.c:764
-#: ../plug-ins/common/file-raw-data.c:1480
+#: ../plug-ins/common/file-raw-data.c:1837
 #: ../plug-ins/common/file-sunras.c:1081 ../plug-ins/common/file-tga.c:1110
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:804
 #: ../plug-ins/common/smooth-palette.c:332 ../plug-ins/common/tile.c:405
@@ -987,8 +1035,8 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: ../plug-ins/common/file-dicom.c:1559 ../plug-ins/common/file-mng.c:874
 #: ../plug-ins/common/file-mng.c:1221 ../plug-ins/common/file-pcx.c:908
 #: ../plug-ins/common/file-pdf-save.c:737 ../plug-ins/common/file-png.c:1494
-#: ../plug-ins/common/file-raw-data.c:1109
-#: ../plug-ins/common/file-raw-data.c:1138 ../plug-ins/common/file-sunras.c:635
+#: ../plug-ins/common/file-raw-data.c:1345
+#: ../plug-ins/common/file-raw-data.c:1374 ../plug-ins/common/file-sunras.c:635
 #: ../plug-ins/common/file-tga.c:1231 ../plug-ins/common/file-xmc.c:1385
 #: ../plug-ins/common/sphere-designer.c:2201
 #: ../plug-ins/file-bmp/bmp-save.c:340 ../plug-ins/file-fits/fits.c:513
@@ -1019,8 +1067,8 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: ../plug-ins/common/file-pcx.c:410 ../plug-ins/common/file-png.c:665
 #: ../plug-ins/common/file-ps.c:1150 ../plug-ins/common/file-ps.c:3536
 #: ../plug-ins/common/file-psp.c:2382 ../plug-ins/common/file-psp.c:2432
-#: ../plug-ins/common/file-raw-data.c:461
-#: ../plug-ins/common/file-raw-data.c:1390 ../plug-ins/common/file-sunras.c:455
+#: ../plug-ins/common/file-raw-data.c:514
+#: ../plug-ins/common/file-raw-data.c:1673 ../plug-ins/common/file-sunras.c:455
 #: ../plug-ins/common/file-svg.c:358 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-tga.c:445 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:658 ../plug-ins/common/file-xmc.c:899
@@ -1234,11 +1282,8 @@ msgstr "_Modrikavost cb709:"
 msgid "_Redness cr709:"
 msgstr "_Pordelost cr709:"
 
-#. Generic case for any data. Let's leave choice to select the
-#. * right type of raw data.
-#.
 #: ../plug-ins/common/compose.c:242 ../plug-ins/common/decompose.c:193
-#: ../plug-ins/common/file-heif.c:2495 ../plug-ins/common/file-raw-data.c:2118
+#: ../plug-ins/common/file-heif.c:2495
 msgid "RGB"
 msgstr "RGB"
 
@@ -1948,7 +1993,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: ../plug-ins/common/file-pcx.c:402 ../plug-ins/common/file-pdf-load.c:820
 #: ../plug-ins/common/file-pix.c:381 ../plug-ins/common/file-png.c:657
 #: ../plug-ins/common/file-pnm.c:645 ../plug-ins/common/file-ps.c:1140
-#: ../plug-ins/common/file-raw-data.c:1382 ../plug-ins/common/file-sunras.c:447
+#: ../plug-ins/common/file-raw-data.c:1665 ../plug-ins/common/file-sunras.c:447
 #: ../plug-ins/common/file-tga.c:437 ../plug-ins/common/file-wmf.c:1026
 #: ../plug-ins/common/file-xbm.c:739 ../plug-ins/common/file-xmc.c:648
 #: ../plug-ins/common/file-xpm.c:382 ../plug-ins/common/file-xwd.c:473
@@ -3969,21 +4014,21 @@ msgstr "Manjkajoči blok splošnih atributov slike."
 msgid "Exporting not implemented yet."
 msgstr "Izvoz še ni implementiran."
 
-#: ../plug-ins/common/file-raw-data.c:296
-#: ../plug-ins/common/file-raw-data.c:399
+#: ../plug-ins/common/file-raw-data.c:333
+#: ../plug-ins/common/file-raw-data.c:452
 msgid "Raw image data"
 msgstr "Surovi podatki slike (RAW)"
 
-#: ../plug-ins/common/file-raw-data.c:361
-#: ../plug-ins/common/file-raw-data.c:2187
+#: ../plug-ins/common/file-raw-data.c:414
+#: ../plug-ins/common/file-raw-data.c:2803
 msgid "Digital Elevation Model data"
 msgstr "Podatki modela digitalnega dviganja"
 
-#: ../plug-ins/common/file-raw-data.c:428
+#: ../plug-ins/common/file-raw-data.c:481
 msgid "Raw Data"
 msgstr "Neobdelani podatki"
 
-#: ../plug-ins/common/file-raw-data.c:497
+#: ../plug-ins/common/file-raw-data.c:550
 #, c-format
 msgid ""
 "%d is not a valid sample spacing. Valid values are: 0 (auto-detect), 1 and 3."
@@ -3991,7 +4036,7 @@ msgstr ""
 "%d ni veljaven razmik vzorcev. Veljavne vrednosti so: 0 (samodejno "
 "zaznavanje), 1 in 3."
 
-#: ../plug-ins/common/file-raw-data.c:510
+#: ../plug-ins/common/file-raw-data.c:563
 #, c-format
 msgid ""
 "Auto-detection of sample spacing failed. \"%s\" does not appear to be a "
@@ -4002,17 +4047,17 @@ msgstr ""
 "datoteka HGT ali pa njena različica še ni podprta. Podprte datoteke HGT so: "
 "SRTM-1 in SRTM-3. Če poznate različico, zaženite z argumentom 1 oz. 3."
 
-#: ../plug-ins/common/file-raw-data.c:601
+#: ../plug-ins/common/file-raw-data.c:654
 #, c-format
 msgid "RAW export does not support multiple layers."
 msgstr "Izvoz RAW ne podpira več plasti."
 
-#: ../plug-ins/common/file-raw-data.c:1285
+#: ../plug-ins/common/file-raw-data.c:1555
 #, c-format
 msgid "Could not open '%s' for size verification: %s"
 msgstr "»%s« ni mogoče odpreti za preverjanje velikosti: %s"
 
-#: ../plug-ins/common/file-raw-data.c:2047
+#: ../plug-ins/common/file-raw-data.c:2632
 msgid "Load Image from Raw Data"
 msgstr "Naloži sliko iz surovih podatkov"
 
@@ -4024,136 +4069,179 @@ msgstr "Naloži sliko iz surovih podatkov"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:2106
+#: ../plug-ins/common/file-raw-data.c:2691
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 kotna sekunda)"
 
-#: ../plug-ins/common/file-raw-data.c:2107
+#: ../plug-ins/common/file-raw-data.c:2692
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 kotne sekunde)"
 
-#: ../plug-ins/common/file-raw-data.c:2119
-msgid "RGB Alpha"
-msgstr "RGB z alfo"
+#. Generic case for any data. Let's leave choice to select the
+#. * right type of raw data.
+#.
+#: ../plug-ins/common/file-raw-data.c:2703
+msgid "RGB 8-bit"
+msgstr "RGB, 8-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2120
-msgid "RGB565 Big Endian"
-msgstr "RGB565, največje na koncu"
+#: ../plug-ins/common/file-raw-data.c:2704
+msgid "RGB 16-bit"
+msgstr "RGB, 16-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2121
-msgid "RGB565 Little Endian"
-msgstr "RGB565, najmanjše na koncu"
+#: ../plug-ins/common/file-raw-data.c:2705
+msgid "RGB 32-bit"
+msgstr "RGB, 32-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2122
-msgid "BGR565 Big Endian"
-msgstr "BGR565, največje na koncu"
+#: ../plug-ins/common/file-raw-data.c:2707
+msgid "RGBA 8-bit"
+msgstr "RGBA, 8-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2123
-msgid "BGR565 Little Endian"
-msgstr "BGR565, najmanjše na koncu"
+#: ../plug-ins/common/file-raw-data.c:2708
+msgid "RGBA 16-bit"
+msgstr "RGBA, 16-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2124
-msgid "Planar RGB"
-msgstr "Ravninska RGB"
+#: ../plug-ins/common/file-raw-data.c:2709
+msgid "RGBA 32-bit"
+msgstr "RGBA, 32-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2125
+#: ../plug-ins/common/file-raw-data.c:2711
+msgid "RGB565"
+msgstr "RGB565"
+
+#: ../plug-ins/common/file-raw-data.c:2712
+msgid "BGR565"
+msgstr "BGR565"
+
+#: ../plug-ins/common/file-raw-data.c:2714
 msgid "B&W 1 bit"
 msgstr "Č/B, 1-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2126
-msgid "Gray 2 bit"
+#: ../plug-ins/common/file-raw-data.c:2715
+msgid "Grayscale 2-bit"
 msgstr "Sivinska, 2-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2127
-msgid "Gray 4 bit"
+#: ../plug-ins/common/file-raw-data.c:2716
+msgid "Grayscale 4-bit"
 msgstr "Sivinska, 4-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2128
-msgid "Gray 8 bit"
+#: ../plug-ins/common/file-raw-data.c:2717
+msgid "Grayscale 8-bit"
 msgstr "Sivinska, 8-bitna"
 
-#: ../plug-ins/common/file-raw-data.c:2129
+#: ../plug-ins/common/file-raw-data.c:2718
+msgid "Grayscale 16-bit"
+msgstr "Sivinska, 16-bitna"
+
+#: ../plug-ins/common/file-raw-data.c:2719
+msgid "Grayscale 32-bit"
+msgstr "Sivinska, 32-bitna"
+
+#: ../plug-ins/common/file-raw-data.c:2721
+msgid "Grayscale-Alpha 8-bit"
+msgstr "Sivinska z alfo, 8-bitna"
+
+#: ../plug-ins/common/file-raw-data.c:2722
+msgid "Grayscale-Alpha 16-bit"
+msgstr "Sivinska z alfo, 16-bitna"
+
+#: ../plug-ins/common/file-raw-data.c:2723
+msgid "Grayscale-Alpha 32-bit"
+msgstr "Sivinska z alfo, 32-bitna"
+
+#: ../plug-ins/common/file-raw-data.c:2725
 msgid "Indexed"
 msgstr "Indeksirana"
 
-#: ../plug-ins/common/file-raw-data.c:2130
+#: ../plug-ins/common/file-raw-data.c:2726
 msgid "Indexed Alpha"
 msgstr "Indeksirana z alfo"
 
-#: ../plug-ins/common/file-raw-data.c:2131
-msgid "Gray unsigned 16 bit Big Endian"
-msgstr "Sivinska, nepreznačena, 16-bitna, največje na koncu"
+#: ../plug-ins/common/file-raw-data.c:2732
+msgid "Unsigned Integer"
+msgstr "Celo število brez predznaka"
 
-#: ../plug-ins/common/file-raw-data.c:2132
-msgid "Gray unsigned 16 bit Little Endian"
-msgstr "Sivinska, nepredznačena, 16-bitna, najmanjše na koncu"
+#: ../plug-ins/common/file-raw-data.c:2733
+msgid "Signed Integer"
+msgstr "Celo število s predznakom"
 
-#: ../plug-ins/common/file-raw-data.c:2133
-msgid "Gray 16 bit Big Endian"
-msgstr "Sivinska, 16-bitna, največje na koncu"
+#: ../plug-ins/common/file-raw-data.c:2734
+msgid "Floating Point"
+msgstr "Št. s plavajočo vejico"
 
-#: ../plug-ins/common/file-raw-data.c:2134
-msgid "Gray 16 bit Little Endian"
-msgstr "Sivinska, 16-bitna, najmanjše na koncu"
+#: ../plug-ins/common/file-raw-data.c:2740
+msgid "Little Endian"
+msgstr "Najmanjše na koncu"
+
+#: ../plug-ins/common/file-raw-data.c:2741
+msgid "Big Endian"
+msgstr "Največje na koncu"
+
+#: ../plug-ins/common/file-raw-data.c:2747
+msgid "Contiguous"
+msgstr "Neprekinjeno"
+
+#: ../plug-ins/common/file-raw-data.c:2748
+msgid "Planar"
+msgstr "Planarno"
 
 #. Translators: Digital Elevation Model (DEM) is a technical term
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:2181
+#: ../plug-ins/common/file-raw-data.c:2797
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Podatki digitalnega modela nadmorske višine (1 kotna sekunda)"
 
-#: ../plug-ins/common/file-raw-data.c:2184
+#: ../plug-ins/common/file-raw-data.c:2800
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Podatki digitalnega modela nadmorske višine (3 kotne sekunde)"
 
-#: ../plug-ins/common/file-raw-data.c:2191
+#: ../plug-ins/common/file-raw-data.c:2807
 msgid "Image"
 msgstr "Slika"
 
-#: ../plug-ins/common/file-raw-data.c:2194
+#: ../plug-ins/common/file-raw-data.c:2810
 msgid "R, G, B (normal)"
 msgstr "R, G, B (navadno)"
 
-#: ../plug-ins/common/file-raw-data.c:2195
+#: ../plug-ins/common/file-raw-data.c:2811
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (slog BMP)"
 
-#: ../plug-ins/common/file-raw-data.c:2210
+#: ../plug-ins/common/file-raw-data.c:2826
 msgid "Palette"
 msgstr "Paleta"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: ../plug-ins/common/file-raw-data.c:2281
+#: ../plug-ins/common/file-raw-data.c:2897
 #, c-format
 msgid "_Contiguous (%s)"
 msgstr "_Neprekinjeno (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2283
+#: ../plug-ins/common/file-raw-data.c:2899
 msgid "_Contiguous"
 msgstr "_Neprekinjeno"
 
 #. TRANSLATORS: %s is a sample to describe the planar configuration
 #. * (e.g. RGB,RGB,RGB vs RRR,GGG,BBB).
 #.
-#: ../plug-ins/common/file-raw-data.c:2289
+#: ../plug-ins/common/file-raw-data.c:2905
 #, c-format
 msgid "_Planar (%s)"
 msgstr "_Planarno (%s)"
 
-#: ../plug-ins/common/file-raw-data.c:2291
+#: ../plug-ins/common/file-raw-data.c:2907
 msgid "_Planar"
 msgstr "_Planarno"
 
 #. Palette type combo
-#: ../plug-ins/common/file-raw-data.c:2313
+#: ../plug-ins/common/file-raw-data.c:2929
 msgid "_R, G, B (normal)"
 msgstr "_R, G, B (navadno)"
 
-#: ../plug-ins/common/file-raw-data.c:2314
+#: ../plug-ins/common/file-raw-data.c:2930
 msgid "_B, G, R, X (BMP style)"
 msgstr "_B, G, R, X (slog BMP)"
 
