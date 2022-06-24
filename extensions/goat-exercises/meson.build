@@ -107,7 +107,7 @@ appdatafilein = configure_file(
 
 appdatafile = i18n.merge_file(
   input : [ appdatafilein, ],
-  output: [ appdatafilename, ],
+  output: appdatafilename,
   po_dir: po_plug_ins_dir,
   install: true,
   install_dir: gimpplugindir /  'extensions' / extension_name,

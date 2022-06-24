@@ -1,10 +1,3 @@
-install_data([
-    'its/gimp-tips.its',
-    'its/gimp-tips.loc',
-  ],
-  install_dir: get_option('datadir') / 'gettext' / 'its',
-)
-
 gimp_tips = i18n.merge_file(
   input : 'gimp-tips.xml.in',
   output: '@BASENAME@',

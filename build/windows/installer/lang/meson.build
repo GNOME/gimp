@@ -4,8 +4,7 @@ ms_installer_config_xml = i18n.merge_file(
   output: '@BASENAME@',
   data_dirs: meson.current_source_dir(),
   po_dir: po_windows_installer_dir,
-  install: true,
-  install_dir: gimpdatadir / 'tags',
+  install: false,
 )
 
 languages = [

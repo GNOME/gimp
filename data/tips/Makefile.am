@@ -23,7 +23,7 @@ EXTRA_DIST += $(its_DATA)
 
 
 gimp-tips.xml: gimp-tips.xml.in $(wildcard $(top_srcdir)/po-tips/*.po)
-	$(AM_V_GEN) GETTEXT_DATA_DIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tips -o $@
+	$(AM_V_GEN) GETTEXTDATADIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tips -o $@
 
 
 validate: gimp-tips.xml

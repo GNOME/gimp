@@ -22,7 +22,7 @@ EXTRA_DIST += $(its_DATA)
 
 
 gimp-tags-default.xml: gimp-tags-default.xml.in $(wildcard $(top_srcdir)/po-tags/*.po)
-	$(AM_V_GEN) GETTEXT_DATA_DIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tags -o $@
+	$(AM_V_GEN) GETTEXTDATADIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-tags -o $@
 
 
 validate: gimp-tags-default.xml

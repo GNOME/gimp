@@ -1,10 +1,3 @@
-install_data([
-    'its/gimp-tags.its',
-    'its/gimp-tags.loc',
-  ],
-  install_dir: get_option('datadir') / 'gettext' / 'its',
-)
-
 gimp_tags_default = i18n.merge_file(
   input : 'gimp-tags-default.xml.in',
   output: '@BASENAME@',

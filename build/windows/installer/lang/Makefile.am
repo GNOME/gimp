@@ -5,10 +5,11 @@ stamp_files = \
 	stamp-isl
 
 CLEANFILES = $(isl_xml_files) $(stamp_files)
+EXTRA_DIST = $(isl_xml_files)
 
 # First we use the XML file to be able to do gettext translation
-$(isl_xml_files): $(is_xml_in_files) $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
-	$(AM_V_GEN) GETTEXT_DATA_DIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-windows-installer -o $@
+$(isl_xml_files): $(isl_xml_in_files) $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
+	$(AM_V_GEN) GETTEXTDATADIRS=$(abs_srcdir) $(MSGFMT) --xml --template $< -d $(top_srcdir)/po-windows-installer -o $@
 
 # Then, we generate the .isl file for each language using some xsltproc magic
 languages = \
@@ -53,17 +54,18 @@ languages = \
 	zh_CN:zh_CN	\
 	zh_TW:zh_TW
 
-stamp-isl: setup.isl gimp-ms-installer-config.xsl.in Makefile.am
+stamp-isl: setup.isl.xml gimp-ms-installer-config.xsl.in Makefile.am
 	@										\
 	for lang in $(languages); do							\
 		code=`echo $$lang | cut -d: -f1`;					\
 		prefix=`echo $$lang | cut -d: -f2`;		\
-		lang_check=`[ "$$prefix" ] && echo "value[lang('$$code')]" || echo "value"`;		\
+		lang_check=`[ "$$prefix" ] && echo "value[lang('$$code')]" || echo "value"`;	\
+		xslin="$(srcdir)/gimp-ms-installer-config.xsl.in";				\
 		xsl="$(builddir)/gimp-ms-installer-config.xsl";					\
 		isl="$(builddir)/$$code.setup.isl";					\
 		echo "  GEN      $$isl";						\
-		sed 's/@LANG_CHECK@/$$lang_check/' "$$xsl"  > "$$xsl.in";	\
-		$(XSLTPROC) --xinclude "$$xsl" $< --output "$$isl" || rm -f "$$isl"; \
+		sed "s/@LANG_CHECK@/$$lang_check/" "$$xslin"  > "$$xsl";	\
+		$(XSLTPROC) --xinclude --output "$$isl" "$$xsl" $< || rm -f "$$isl"; \
 	done &&										\
 	echo timestamp > stamp-isl
 

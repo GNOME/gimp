@@ -24,7 +24,7 @@ if [ "$PO_LANGS" != "$INSTALLER_LANGS" ]; then
   exit 1
 fi
 
-AUTOTOOLS_LANGS=`grep '[a-zA-Z_]*:\[[a-zA-Z_]*\]' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/lang/Makefile.am | \
+AUTOTOOLS_LANGS=`grep '^\s*[a-zA-Z_]*:[a-zA-Z_]*\s*\\\\\?' ${GIMP_TESTING_ABS_TOP_SRCDIR}/build/windows/installer/lang/Makefile.am | \
                  sed 's/^\t*\([a-zA-Z_]*\):.*$/\1/' |sort`
 AUTOTOOLS_LANGS=`echo "$AUTOTOOLS_LANGS" | tr '\n\r' ' ' | sed 's/\<en\> //'`
 
