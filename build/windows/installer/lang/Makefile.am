@@ -5,7 +5,7 @@ stamp_files = \
 	stamp-isl
 
 CLEANFILES = $(isl_xml_files) $(stamp_files)
-EXTRA_DIST = $(isl_xml_files)
+EXTRA_DIST = $(isl_xml_in_files)
 
 # First we use the XML file to be able to do gettext translation
 $(isl_xml_files): $(isl_xml_in_files) $(wildcard $(top_srcdir)/po-windows-installer/*.po) Makefile.am
