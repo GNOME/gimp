@@ -302,6 +302,8 @@ quit_close_all_dialog_response (GtkWidget  *dialog,
   gboolean  do_quit = private->do_quit;
 
   gtk_widget_destroy (dialog);
+  private->box = NULL;
+  private->dialog = NULL;
 
   if (response_id == GTK_RESPONSE_OK)
     {
@@ -375,7 +377,7 @@ quit_close_all_dialog_container_changed (GimpContainer *images,
        * actions provoking warnings. Let's just close as soon as
        * possible with an idle source.
        * Also the idle source has another benefit: allowing to change
-       * one's mind and not exist after the last save, for instance by
+       * one's mind and not exit after the last save, for instance by
        * hitting Esc quickly while the last save is in progress.
        */
       g_idle_add ((GSourceFunc) quit_close_all_idle, private);
