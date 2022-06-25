@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-06-22 01:08+0000\n"
-"PO-Revision-Date: 2022-06-22 03:46+0200\n"
+"PO-Revision-Date: 2022-06-25 09:05+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -1031,7 +1031,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:207
 msgid "Various GUI polishing"
-msgstr ""
+msgstr "დაიხვეწა GUI"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:208
 msgid ""
@@ -12038,7 +12038,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default rendering intent for the 'Convert to Color Profile' dialog."
-msgstr ""
+msgstr "\"ფერად პროფილად გარდაქმნის\" ფანჯრის ნაგულისხმები რენდერის რეჟიმი."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid ""
@@ -16752,7 +16752,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:680
 msgid "Remove all Keyboard Shortcuts"
-msgstr ""
+msgstr "კლავიატურის ყველა მალსახმობის წაშლა"
 
 #: ../app/dialogs/preferences-dialog.c:702
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
@@ -16784,7 +16784,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:908
 #: ../app/dialogs/preferences-dialog.c:2659
 msgid "The user manual is not installed locally."
-msgstr ""
+msgstr "მომხმარებლის სახელმძღვანელო ლოკალურად დაყენებული არაა."
 
 #: ../app/dialogs/preferences-dialog.c:1012
 msgid "Show s_election"
@@ -17919,15 +17919,15 @@ msgstr ""
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2981
 msgid "Zoom & Resize Behavior"
-msgstr ""
+msgstr "გადიდებისა და ზომის შეცვლის ქცევა"
 
 #: ../app/dialogs/preferences-dialog.c:2985
 msgid "Resize window on _zoom"
-msgstr ""
+msgstr "გადიდებისას ფანჯრის _გადიდება"
 
 #: ../app/dialogs/preferences-dialog.c:2988
 msgid "Resize window on image _size change"
-msgstr ""
+msgstr "გამოსახულების ზომის შეცვლისას ფანჯრის ზომის შეცვლა"
 
 #: ../app/dialogs/preferences-dialog.c:2994
 msgid "Show entire image"
@@ -17939,16 +17939,16 @@ msgstr "გადიდების საწყის_ი კოეფიცი
 
 #: ../app/dialogs/preferences-dialog.c:3002
 msgid "Dra_g-to-zoom behavior:"
-msgstr ""
+msgstr "გადათრევისას-გადიდების ქცევა:"
 
 #: ../app/dialogs/preferences-dialog.c:3008
 msgid "Drag-to-zoom spe_ed:"
-msgstr ""
+msgstr "გადათრევისას-გადიდების სიჩქარე:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:3012
 msgid "Space Bar"
-msgstr ""
+msgstr "გამოტოვების ღილაკი"
 
 #: ../app/dialogs/preferences-dialog.c:3018
 msgid "_While space bar is pressed:"
@@ -18094,7 +18094,7 @@ msgstr "დამატებითი შემომტანი კონტ�
 
 #: ../app/dialogs/preferences-dialog.c:3325
 msgid "Input Controllers"
-msgstr ""
+msgstr "შეყვანის კონტროლერები"
 
 #: ../app/dialogs/preferences-dialog.c:3340
 #: ../app/dialogs/preferences-dialog.c:3341
@@ -18683,7 +18683,7 @@ msgstr "GIMP-ის ვებგვერდი"
 
 #: ../app/dialogs/welcome-dialog.c:189
 msgid "Tutorials"
-msgstr ""
+msgstr "სახელმძღვანელოები"
 
 #: ../app/dialogs/welcome-dialog.c:194
 msgid "Documentation"
@@ -20518,7 +20518,7 @@ msgstr "კლიპინგი"
 #: ../app/operations/gimpoperationsettings.c:78
 #: ../app/tools/gimptransformoptions.c:110
 msgid "How to clip"
-msgstr ""
+msgstr "როგორ ამოვჭრა"
 
 #: ../app/operations/gimpoperationthreshold.c:85
 #: ../app/tools/gimpthresholdtool.c:94
@@ -20873,7 +20873,7 @@ msgstr "რევერსი"
 
 #: ../app/paint/gimppaintoptions.c:335
 msgid "Reverse direction of fading"
-msgstr ""
+msgstr "დაჩრდილვის მიმართულების სებრუნება"
 
 #: ../app/paint/gimppaintoptions.c:340 ../app/paint/gimppaintoptions.c:360
 #: ../app/tools/gimpgradientoptions.c:307
@@ -20925,7 +20925,7 @@ msgstr "პერსპექტივის ასლი"
 
 #: ../app/paint/gimpsmudge.c:87 ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge"
-msgstr ""
+msgstr "გადღაბნა"
 
 #: ../app/paint/gimpsmudgeoptions.c:72
 msgctxt "smudge-tool"
@@ -20934,7 +20934,7 @@ msgstr "სიხშირე"
 
 #: ../app/paint/gimpsmudgeoptions.c:73
 msgid "The strength of smudging"
-msgstr ""
+msgstr "გადღაბნის სიძლიერე"
 
 #: ../app/paint/gimpsmudgeoptions.c:79
 msgctxt "smudge-tool"
@@ -20943,7 +20943,7 @@ msgstr "დინება"
 
 #: ../app/paint/gimpsmudgeoptions.c:80
 msgid "The amount of brush color to blend"
-msgstr ""
+msgstr "ფუჯის შესარევი ფერის რაოდენობა"
 
 #: ../app/paint/gimpsmudgeoptions.c:86
 msgctxt "smudge-tool"
@@ -20959,7 +20959,7 @@ msgstr "სამპლე_ბი შერწყმულია"
 
 #: ../app/paint/gimpsourcecore.c:151
 msgid "Set a source image first."
-msgstr ""
+msgstr "ჯერ გამოსახულების წყარო დააყენეთ."
 
 #: ../app/paint/gimpsourcecore.c:158
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
@@ -21221,7 +21221,7 @@ msgstr "ხატვის მეთოდის სახელი არ შ�
 #: ../app/pdb/gimppdb-utils.c:423
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr ""
+msgstr "ხატვის მეთოდი არ არსებობს: %s"
 
 #: ../app/pdb/gimppdb-utils.c:442
 #, c-format
@@ -22058,7 +22058,7 @@ msgstr "ინდექსირებული-ალფა"
 
 #: ../app/plug-in/gimppluginprocedure.c:1105
 msgid "This plug-in only works on the following layer types:"
-msgstr ""
+msgstr "ეს დამატება ფენების მხოლოდ შემდეგ ტიპებზე მუშაობს:"
 
 #: ../app/plug-in/gimppluginprocedure.c:1338
 #, c-format
@@ -22081,7 +22081,7 @@ msgstr ""
 #: ../app/plug-in/plug-in-rc.c:240
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr ""
+msgstr "%s გამოტოვებულია: GIMP-ის პროტოკოლის არასწორი ვერსია."
 
 #: ../app/plug-in/plug-in-rc.c:247
 #, c-format
@@ -22197,11 +22197,11 @@ msgstr ""
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:198
 msgid "Rotate matrix 90° counter-clockwise"
-msgstr ""
+msgstr "მატრიცის 90°-ით ისრის საწ. მიმართულებით შებრუნება"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:204
 msgid "Rotate matrix 90° clockwise"
-msgstr ""
+msgstr "მატრიცის 90°-ით ისრის მიმართულებით შებრუნება"
 
 #: ../app/propgui/gimppropgui-convolution-matrix.c:210
 msgid "Flip matrix horizontally"
@@ -22486,6 +22486,8 @@ msgid ""
 "Some fonts failed to load:\n"
 "%s"
 msgstr ""
+"ზოგიერთი ფონტის ჩატვირთვის შეცდომა:\n"
+"%s"
 
 #: ../app/text/gimptext-compat.c:110 ../app/tools/gimptexttool.c:1631
 msgid "Add Text Layer"
@@ -24682,7 +24684,7 @@ msgstr "მითითებული სიმაღლე"
 
 #: ../app/tools/gimprectangleoptions.c:288
 msgid "Unit of fixed width, height or size"
-msgstr ""
+msgstr "მითითებული სიგრძის, სიმაღლის და ზომის ერთეული"
 
 #: ../app/tools/gimprectangleoptions.c:296
 msgid "Expand from center"
@@ -24748,7 +24750,7 @@ msgstr "სრულიად გამჭვირვალე არეალ�
 
 #: ../app/tools/gimpregionselectoptions.c:99
 msgid "Base selection on all visible layers"
-msgstr ""
+msgstr "საბაზისო მონიშვნა ყველა ხილულ ფენაზე"
 
 #: ../app/tools/gimpregionselectoptions.c:120
 #: ../app/tools/gimpregionselectoptions.c:277
@@ -24972,15 +24974,15 @@ msgstr ""
 
 #: ../app/tools/gimpsmudgetool.c:57
 msgid "_Smudge"
-msgstr ""
+msgstr "_გადღაბნა"
 
 #: ../app/tools/gimpsmudgetool.c:79
 msgid "Click to smudge"
-msgstr ""
+msgstr "გასადღაბნად დააწკაპუნეთ"
 
 #: ../app/tools/gimpsmudgetool.c:80
 msgid "Click to smudge the line"
-msgstr ""
+msgstr "ხაზის გასადღაბნად დააწკაპუნეთ"
 
 #: ../app/tools/gimptextoptions.c:124
 msgid "Font size unit"
@@ -24992,7 +24994,7 @@ msgstr "ფონტის ზომა"
 
 #: ../app/tools/gimptextoptions.c:143
 msgid "Hinting"
-msgstr ""
+msgstr "მომრგვალება"
 
 #: ../app/tools/gimptextoptions.c:144
 msgid ""
@@ -25184,7 +25186,7 @@ msgstr ""
 
 #: ../app/tools/gimptransformgridoptions.c:125
 msgid "Synchronous preview"
-msgstr ""
+msgstr "სინქრონული გადახედვა"
 
 #: ../app/tools/gimptransformgridoptions.c:126
 msgid "Render the preview synchronously"
