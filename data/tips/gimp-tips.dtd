@@ -9,8 +9,11 @@
 <!ENTITY % markup "(#PCDATA|b|big|tt)*">
 
 <!ELEMENT b %markup;>
+<!ATTLIST b xml:lang CDATA #IMPLIED>
 <!ELEMENT big %markup;>
+<!ATTLIST big xml:lang CDATA #IMPLIED>
 <!ELEMENT tt %markup;>
+<!ATTLIST tt xml:lang CDATA #IMPLIED>
 
 <!ELEMENT thetip %markup;>
 <!ATTLIST thetip xml:lang CDATA #IMPLIED>
