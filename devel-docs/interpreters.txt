@@ -1,0 +1,209 @@
+# Interpreters for GIMP plugins
+
+
+
+## About this document
+
+This describes how GIMP invokes interpreters for GIMP plugin files.
+
+This doesn't discuss the architecture of GIMP's interpreters,
+or how to write an interpreted plugin.
+
+The audience is mainly GIMP developers.
+This may also interest users who want to use different interpreters.
+
+
+## Brief summary
+
+On Linux and MacOS, a shebang in a GIMP plugin text file
+is enough to indicate what interpreter to start.
+On Windows, you also need an .interp file installed with GIMP.
+
+It can get complicated;
+there are many combinations of envirnoment variables, shebangs, file suffixes, and .interp files that can work.
+
+*To insure a GIMP interpreted plugin works across platforms,
+it should have a shebang.*
+
+*Except that ScriptFu plugin files installed to /scripts do not need a shebang
+since the ScriptFu extension reads them.*
+
+## Partial history of interpreters in GIMP
+
+Rarely are interpreters addded to GIMP.
+GIMP 2 offers Perl, Scheme, and Python2 interpreters.
+GIMP 3 offers Python3, lua, javascript, and the gimp-script-fu-interpreter interpreters.
+
+
+## Background
+
+An interpreter usually reads a text file.
+A user often launches an interpreter and passes a text file.
+But users can also double-click on a text file to launch the corresponding interpreter.
+
+Similarly, GIMP launches an interpreter on GIMP plugin text files.
+GIMP must figure out the "corresponding" interpreter.
+
+The general mechanism for launching interpreters from their text files is built into the operating system.
+On Linux and MacOS, the mechanism is called a shebang or sh-bang.
+On Windows, the mechanism "associates" file extensions with programs.
+
+GIMP uses similar mechanisms to launch interpreters.
+See the code in /app/plug-ins/gimpinterpreterdb.c .
+*The exception is the ScriptFu extension.
+GIMP starts it when GIMP starts and it reads its ".scm" plugin files from the /scripts directory without benefit
+of the shebang mechanism.*
+
+GIMP uses the mechanism when it queries plugin files at startup.
+Subsequently, GIMP knows the interpreter to launch,
+for example when a user clicks on a menu item implemented by an interpreter.
+A user should not click on a GIMP plugin file in a file browser;
+only one of the GIMP apps should launch interpreted GIMP plugin files.
+
+
+## Platform differences
+
+On Linux and MacOS, you simply need a shebang in a plugin text file.
+
+On Windows, you must also define an .interp file.
+The .interp files are part of GIMP's installation on Windows.
+The .interp files are built when the Windows installer is built.
+See the source file: /build/windows/installer/gimp3264.iss .
+
+A user can optionally create .interp files on Linux and MacOS.
+But they are not usually part of a Linux installation.
+Sophisticated users can edit .interp files to change which interpreters GIMP launches.
+
+
+## shebangs
+
+A shebang is text in the first line of a text file to be interpreted.
+A shebang starts with "#!",
+followed by the name or path of an interpreter,
+or followed by "/usr/bin/env", a space, and the name or path of an interpreter.
+
+!!! Shebangs for GIMP plugins always use UNIX notation, i.e. forward slashes in path strings.
+Even on Windows, the shebangs are in UNIX notation.
+
+Recommended examples for GIMP 3 (see repo directory /extensions/goat-exercises):
+
+    #!/usr/bin/env   python3
+    #!/usr/bin/env   luajit
+    #!/usr/bin/env   gjs
+    #!/usr/bin/env   gimp-script-fu-interpreter-3.0
+
+Other examples:
+
+    #!python
+    #!/usr/bin/python
+    #!/usr/bin/env   python
+
+Whether the other examples actually work depends on:
+
+- the platform
+- the user's environment, namely search PATH's
+- any .interp files
+
+
+## .interp files
+
+Again, .interp files are necessary on Windows.
+They tell GIMP which executable interpreter to launch for a GIMP plugin text file.
+
+You usually have one .interp file for each interpreter.
+For example:
+- python.interp
+- lua.interp
+- gimp-script-fu-interpreter.interp
+
+The repo file /data/interpreters/default.interp is a non-functioning template
+for a <foo>.interp file.
+
+.interp files are installed on Windows to, for example:
+
+    C:\Users\foo\AppData\Programs\GIMP 3.0\lib\gimp\3.0\interpreters
+
+
+interp files have three kinds of lines:
+- "program" in the form lhs=rhs
+- "extension" in the "binfmt" format
+- "magic" in the "binfmt" format
+
+### "program" lines in an .interp file
+
+These lines associate a shebang with a path to an executable.
+
+These are in the form: "lhs=rhs"
+where lhs/rhs denotes "left hand side" and "right hand side."
+
+The lhs matches the full text of a shebang after the "#!"
+For example, the lhs can be "/usr/bin/env python", having a space.
+Since a shebang is always in UNIX notation, any slashes are forward.
+
+The rhs specifies a path to an interpreter.
+The rhs on the Windows platform is in Windows notation, using back slashes.
+For example, the rhs can be "C:\Users\foo\AppData\Programs\GIMP 3.0\bin\python"
+
+
+### "extension" lines in an .interp file
+
+These lines associate a three-letter (sic) file extension (suffix) with a path to an executable.
+
+These lines are in binfmt format.
+See https://en.wikipedia.org/wiki/Binfmt_misc.
+
+Informally the format is:  ":name:type:offset:magic: mask:interpreter:flags"
+!!! Note the field delimiter is usually ":" but can be another character.
+GIMP parses the binfmt using the first character as the delimiter.
+ The first field is a name or identifier and has little significance.
+The second field is an "E".
+The third, fifth, and seventh fields are usually empty.
+The fourth field is an up-to-three letter suffix.
+The sixth field "interpreter" is a name or path to an executable interpreter.
+
+If the sixth field is a Windows path that has a ":"
+then the fields must be delimited with another character, say a ",".
+
+Examples:
+
+    :python:E::py::python3:
+    :luajit:E::lua::luajit:
+    ,python,E,,py,,C:\Users\foo\AppData\GIMP 3.0\bin\python3,
+
+Note the examples are not necessarily working examples.
+They might not work if the name or path is not found,
+for example if luajit was not installed to the Windows system directory of executables.
+
+Note one example shows a path in Windows notation,
+having a ":", back slashes, and a space in the path.
+
+
+### "magic" lines in an .interp file
+
+These lines associate "magic" bytes (inside a binary file) with a path to an executable.
+
+These lines are in binfmt format.
+The second field is an "M".
+
+We won't discuss these further, since they are little used.
+Binary files on Windows might not have "magic" bytes.
+Usually interpreters read text files, and rarely binary files.
+
+
+## Building .interp files for windows
+
+If a GIMP developer adds an interpreter to the GIMP package,
+they must modify GIMP's build for Windows
+to ensure proper .interp files are installed.
+
+See the repo file: /build/windows/installer/gimp3264.iss .
+
+For the convenience of users, we usually install an .interp file having many lines.
+Only one "program" line is needed if users only install canonical plugin text files
+having a recommended shebang
+using the actual filename of the target interpreter.
+But since users may install non-canonical plugin text files by copying files,
+for convenience we have more lines in the .interp file.
+An extra "extension" line allows plugin text files without any shebang but a proper extension.
+An extra "program" line allows plugin text files
+having shebangs with alternate names for an interpreter.
