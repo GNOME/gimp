@@ -1815,27 +1815,6 @@ gimp_statusbar_queue_pos_redraw (gpointer data)
   shell = statusbar->shell;
   image = gimp_display_get_image (shell->display);
 
-#ifdef GDK_WINDOWING_QUARTZ
-/*
- * This optimization dramatically improves drawing refresh speed on Macs with retina
- * displays, which is all macbook pros since 2016 and macbook airs since 2018 and
- * running Big Sur (released Nov 2020) or higher.
- * https://gitlab.gnome.org/GNOME/gimp/-/issues/7690
- *
- * only redraw max every 333ms and only redraw when the other two decorations aren't
- * redrawing (cursor_label, horizontal and vertical rulers). This will keep the draw
- * rects of limited size.
- */
-  gint64 curr_time     = g_get_monotonic_time ();
-  gint64 mod_time      = curr_time % G_TIME_SPAN_SECOND;
-  gint   timeslice_num = mod_time / (G_TIME_SPAN_SECOND / 9) % 3;
-
-  if (curr_time - statusbar->last_frame_time < G_TIME_SPAN_SECOND / 3 || timeslice_num != 0)
-    return G_SOURCE_CONTINUE;
-
-  statusbar->last_frame_time = curr_time;
-#endif
-
   if (image)
     {
       image_width  = gimp_image_get_width  (image);
