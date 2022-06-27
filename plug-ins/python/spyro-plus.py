@@ -379,13 +379,13 @@ class SelectionToPath:
             GObject.Value(Gimp.RunMode, Gimp.RunMode.NONINTERACTIVE),
             GObject.Value(Gimp.Image, self.image),
             GObject.Value(GObject.TYPE_INT, 0),
-            # XXX: I could use self.image.get_selected_layers() but for
+            # XXX: I could use self.image.list_selected_layers() but for
             # this call, it doesn't matter anyway.
             GObject.Value(Gimp.ObjectArray,
                           Gimp.ObjectArray.new(Gimp.Drawable, [], False)),
         ])
 
-        self.path = self.image.get_vectors()[0]
+        self.path = self.image.list_vectors()[0]
         self.stroke_ids = self.path.get_strokes()
 
         # A path may contain several strokes. If so lets throw away a stroke that
