@@ -2,10 +2,14 @@
 Version=1.0
 Type=Application
 Name=GNU Image Manipulation Program
+Name[pt_BR]=Programa de Manipulação de Imagens do GNU
 GenericName=Image Editor
+GenericName[pt_BR]=Editor de Imagens
 Comment=Create images and edit photographs
+Comment[pt_BR]=Crie e edite imagens ou fotografias
 # Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 Keywords=GIMP;graphic;design;illustration;painting;
+Keywords[pt_BR]=GIMP;gráficos;desenho;imagem;ilustração;pintura;editor de imagens;edição de imagens;
 Exec=@GIMP_COMMAND@ %U
 TryExec=gimp-@GIMP_APP_VERSION@
 Icon=gimp
