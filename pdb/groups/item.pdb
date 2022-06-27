@@ -400,6 +400,8 @@ HELP
 
     &mitch_pdb_misc('2010', '2.8');
 
+    $skip_gi = 1;
+
     @inargs = (
 	{ name => 'item', type => 'item',
 	  desc => 'The item' }

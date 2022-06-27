@@ -69,11 +69,11 @@ $evalcode = <<'CODE';
     # Variables to evaluate and insert into the PDB structure
     my @procvars = qw($name $group $blurb $help $author $copyright $date $since
 		      $deprecated @inargs @outargs %invoke $canonical_name
-		      $lib_private);
+		      $lib_private $skip_gi);
 
     # These are attached to the group structure
     my @groupvars = qw($desc $doc_title $doc_short_desc $doc_long_desc
-                       $lib_private
+                       $lib_private $skip_gi
                        @headers %extra);
 
     # Hook some variables into the top-level namespace

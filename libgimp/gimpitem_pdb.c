@@ -476,7 +476,7 @@ gimp_item_get_parent (GimpItem *item)
 }
 
 /**
- * gimp_item_get_children:
+ * gimp_item_get_children: (skip)
  * @item: The item.
  * @num_children: (out): The item's number of children.
  *
