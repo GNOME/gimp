@@ -271,6 +271,14 @@ png_create_procedure (GimpPlugIn  *plug_in,
                              FALSE,
                              G_PARAM_READWRITE);
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "optimize-palette",
+                             _("Optimize for smallest possible palette size"),
+                             _("When checked, save as 1, 2, 4, or 8-bit depending"
+                               " on number of colors used. When unchecked, always"
+                               " save as 8-bit"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_AUX_ARG_INT (procedure, "format",
                              _("_Pixel format"),
                              _("PNG export format"),
@@ -1328,6 +1336,7 @@ save_image (GFile        *file,
   gboolean        save_comment;
   gchar          *comment;
   gboolean        save_transp_pixels;
+  gboolean        optimize_palette;
   gint            compression_level;
   PngExportFormat export_format;
   gboolean        save_profile;
@@ -1347,6 +1356,7 @@ save_image (GFile        *file,
                 "save-comment",       &save_comment,
                 "gimp-comment",       &comment,
                 "save-transparent",   &save_transp_pixels,
+                "optimize-palette",   &optimize_palette,
                 "compression",        &compression_level,
                 "format",             &export_format,
                 "save-color-profile", &save_profile,
@@ -1599,14 +1609,18 @@ save_image (GFile        *file,
         pngg.has_plte = TRUE;
         pngg.palette = (png_colorp) gimp_image_get_colormap (image,
                                                              &pngg.num_palette);
-        bit_depth = get_bit_depth_for_palette (pngg.num_palette);
+        if (optimize_palette)
+          bit_depth = get_bit_depth_for_palette (pngg.num_palette);
         break;
 
       case GIMP_INDEXEDA_IMAGE:
         color_type = PNG_COLOR_TYPE_PALETTE;
         file_format = gimp_drawable_get_format (drawable);
         /* fix up transparency */
-        bit_depth = respin_cmap (pp, info, remap, image, drawable);
+        if (optimize_palette)
+          bit_depth = respin_cmap (pp, info, remap, image, drawable);
+        else
+          respin_cmap (pp, info, remap, image, drawable);
         break;
 
       default:
@@ -2168,7 +2182,7 @@ respin_cmap (png_structp   pp,
              GimpDrawable *drawable)
 {
   static guchar trans[] = { 0 };
-  GeglBuffer *buffer;
+  GeglBuffer   *buffer;
 
   gint          colors;
   guchar       *before;
@@ -2269,6 +2283,9 @@ save_dialog (GimpImage     *image,
   GtkWidget    *dialog;
   GtkListStore *store;
   gboolean      run;
+  gboolean      indexed;
+
+  indexed = (gimp_image_get_base_type (image) == GIMP_INDEXED);
 
   dialog = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
                                            GIMP_PROCEDURE_CONFIG (config),
@@ -2294,6 +2311,10 @@ save_dialog (GimpImage     *image,
                                        "save-transparent",
                                        alpha, NULL, NULL, FALSE);
 
+  gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                       "optimize-palette",
+                                       indexed, NULL, NULL, FALSE);
+
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "bkgd");
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "offs");
   gimp_save_procedure_dialog_add_metadata (GIMP_SAVE_PROCEDURE_DIALOG (dialog), "phys");
@@ -2301,6 +2322,7 @@ save_dialog (GimpImage     *image,
   gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
                               "format", "compression",
                               "interlaced", "save-transparent",
+                              "optimize-palette",
                               NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
