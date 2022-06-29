@@ -277,7 +277,7 @@
 <!-- GTK+ -->
 <g id="node48" class="node"><title>GTK+</title>
 <ellipse fill="lightblue" stroke="black" cx="577" cy="-463" rx="36.977" ry="19.0919"/>
-<text text-anchor="middle" x="577" y="-459.9" font-family="Times Roman,serif" font-size="14.00">GTK+</text>
+<text text-anchor="middle" x="577" y="-459.9" font-family="Times Roman,serif" font-size="14.00">GTK</text>
 </g>
 <!-- libgimpwidgets&#45;&gt;GTK+ -->
 <g id="edge48" class="edge"><title>libgimpwidgets&#45;&gt;GTK+</title>

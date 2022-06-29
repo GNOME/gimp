@@ -571,7 +571,7 @@ if test "x$os_win32" = xyes; then
     esac
     if test "x$msnative_struct" = x ; then
       AC_MSG_RESULT([no way])
-      AC_MSG_WARN([build will be incompatible with GTK+ DLLs])
+      AC_MSG_WARN([build will be incompatible with GTK DLLs])
     else
       CFLAGS="$CFLAGS $msnative_struct"
       AC_MSG_RESULT([${msnative_struct}])
@@ -2815,7 +2815,7 @@ AC_ARG_ENABLE(default-binary, [  --enable-default-binary install this as the def
 AM_CONDITIONAL(DEFAULT_BINARY, test "x$enable_default_binary" = xyes)
 
 
-AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only binary which does not link GTK+], , enable_gimp_console=yes)
+AC_ARG_ENABLE(gimp-console, [  --enable-gimp-console   build a console-only binary which does not link GTK], , enable_gimp_console=yes)
 
 AM_CONDITIONAL(ENABLE_GIMP_CONSOLE, test "x$enable_gimp_console" != xno)
 

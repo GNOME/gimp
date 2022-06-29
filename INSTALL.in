@@ -67,7 +67,7 @@ header files installed.
        "gegl:introspect" which is always built but deactivated unless
        the `dot` tool from graphviz is available (runtime dependency).
 
-  4. You need to have installed GTK+ version @GTK_REQUIRED_VERSION@ or newer.
+  4. You need to have installed GTK version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
      (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGOCAIRO_REQUIRED_VERSION@). Sources for these can be grabbed
      from ftp://ftp.gtk.org/.
@@ -191,7 +191,7 @@ header files installed.
 
  15. GObject Introspection requires the following dependencies to be
      built and installed with introspection as well: babl, cairo,
-     GdkPixbuf, GEGL, GIO, GLib, GObject and GTK+.
+     GdkPixbuf, GEGL, GIO, GLib, GObject and GTK.
 
  16. Windows builds can now generate backtrace logs upon a crash.
      The logs will be available in: %APPDATA%\GIMP\@GIMP_APP_VERSION@\CrashLog\
@@ -233,7 +233,7 @@ header files installed.
      GIO
      GLib                 @GLIB_REQUIRED_VERSION@
      glib-networking
-     GTK+                 @GTK_REQUIRED_VERSION@
+     GTK                  @GTK_REQUIRED_VERSION@
      gvfs (on Linux)
      HarfBuzz             @HARFBUZZ_REQUIRED_VERSION@
      libbzip2
@@ -398,7 +398,7 @@ These are:
 
   --with-html-dir=PATH.  This option allows to specify where the
      libgimp API reference should be installed. You might want to modify
-     the path so it points to the place where glib and gtk+ installed
+     the path so it points to the place where glib and gtk installed
      their API references so that the libgimp reference can link to
      them.
 
@@ -474,7 +474,7 @@ When ./configure fails
 scripts. The most recent version is available from
 	https://www.freedesktop.org/software/pkgconfig/
 
-'configure' tries to compile and run a short GTK+ program. There are
+'configure' tries to compile and run a short GTK program. There are
 several reasons why this might fail:
 
 * pkg-config could not find the file 'gtk+-2.0.pc' that gets installed
@@ -501,14 +501,14 @@ several reasons why this might fail:
   or
     LDFLAGS="-Wl,-rpath -Wl,/home/joe/lib" ./configure
 
-* An old version of the GTK+ libraries was found instead of
+* An old version of the GTK libraries was found instead of
   your newly installed version. This commonly happens if a
-  binary package of GTK+ was previously installed on your system,
-  and you later compiled GTK+ from source.
+  binary package of GTK was previously installed on your system,
+  and you later compiled GTK from source.
 
   Fix: Remove the old libraries and include files.  If you are afraid
   that removing the old libraries may break other packages supplied by
-  your distributor, you can try installing GLib, GTK+ and other
+  your distributor, you can try installing GLib, GTK and other
   libraries in a different prefix after setting the environment
   variable PKG_CONFIG_LIBDIR to point to lib/pkgconfig/ in that new
   prefix so that it does not try to read the *.pc files from the

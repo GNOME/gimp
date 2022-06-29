@@ -175,14 +175,14 @@ Print the linker flags that are necessary to link a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-libs-noui
 Print the linker flags that are necessary to link a \fIGIMP\fP plug-in, for
-plug-ins that do not require the GTK+ libraries.
+plug-ins that do not require the GTK libraries.
 .TP 8
 .B  \-\-cflags
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-clags-noui
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in
-for plug-ins that do not require the GTK+ libraries.
+for plug-ins that do not require the GTK libraries.
 .TP 8
 .B  \-\-prefix=PREFIX
 If specified, use PREFIX instead of the installation prefix that \fIGIMP\fP
@@ -216,7 +216,7 @@ LIBS=-lintl .
 .TP 8
 .B PKG_CONFIG
 to get the location of the \fIpkg-config\fP program that is used to determine
-details about your glib, pango, gtk+ and gimp installation.
+details about your glib, pango, gtk and gimp installation.
 
 
 .SH SEE ALSO

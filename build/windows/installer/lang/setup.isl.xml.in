@@ -98,7 +98,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsDepsDescription">
-      <value>Run-time libraries used by GIMP, including GTK+ Run-time Environment</value>
+      <value>Run-time libraries used by GIMP, including GTK Run-time Environment</value>
     </config>
     <!-- Components -->
     <config name="ComponentsDebug">
@@ -110,7 +110,7 @@
     </config>
     <!-- Components -->
     <config name="ComponentsGtkWimp">
-      <value>MS-Windows engine for GTK+</value>
+      <value>MS-Windows engine for GTK</value>
     </config>
     <!-- Components -->
     <config name="ComponentsGtkWimpDescription">

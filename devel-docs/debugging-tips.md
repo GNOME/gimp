@@ -49,7 +49,7 @@ But this happens only for crashes, so it still requires to use
 Note: on Windows, even the debugging GUI happens only for crashes and
 requires that you built with Dr. Mingw dependency.
 
-## Debugging GTK+ ##
+## Debugging GTK ##
 
 You can use GtkInspector by running GIMP with:
 

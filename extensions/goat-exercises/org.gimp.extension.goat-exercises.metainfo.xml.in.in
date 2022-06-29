@@ -10,7 +10,7 @@
     how to create your own plug-ins.
     Each plug-in does the same thing, except it is developed in a
     different programming language.
-    They all create a GTK+ dialog with a text view displaying their own code
+    They all create a GTK dialog with a text view displaying their own code
     (hence also demonstrating how to package data) and a button which calls
     a GEGL operation on the active layer.
     </p>
