@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gimp Tips\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-25 11:34+0000\n"
-"PO-Revision-Date: 2022-06-26 10:22+0200\n"
+"POT-Creation-Date: 2022-06-27 16:23+0000\n"
+"PO-Revision-Date: 2022-06-30 01:47+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -49,9 +49,17 @@ msgstr ""
 "Številne operacije s plastmi lahko opravite z desnim klikom miške na ime "
 "plasti v pogovornem oknu Plasti."
 
-#: data/tips/gimp-tips.xml.in:39
-msgid ".xcf"
-msgstr ".xcf"
+#: data/tips/gimp-tips.xml.in:37
+msgid ""
+"Saving an image uses XCF, GIMP's native file format (file extension <tt>."
+"xcf</tt>). This preserves the layers and many aspects of your work-in-"
+"progress, allowing to work on it again later. Once a project is completed, "
+"you can export it as JPEG, PNG, GIF, etc."
+msgstr ""
+"Slike shranjujete v zapisu XCF, ki je za GIMP domoroden (s končnico <tt>."
+"xcf</tt>). Ta namreč omogoča shranjevanje vseh plasti in večine drugih "
+"nastavitev in sprememb. Ko je projekt zaključen, ga lahko izvozite v zapisih "
+"JPEG, PNG, GIF itn."
 
 #: data/tips/gimp-tips.xml.in:45
 msgid ""
@@ -63,9 +71,15 @@ msgstr ""
 "nekaterih primerih je potrebno vse plasti združiti v eno plast "
 "(Slika→Splošči sliko), preden lahko uporabimo vstavek na celi sliki."
 
-#: data/tips/gimp-tips.xml.in:53
-msgid "bold"
-msgstr "krepko"
+#: data/tips/gimp-tips.xml.in:52
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"Če je ime plasti v pogovornem oknu Plasti prikazano <b>krepko</b>, ta plast "
+"nima alfa-kanala. Alfa-kanal lahko dodate s pomočjo Plast→Prosojnost→Dodaj "
+"kanal alfa."
 
 #: data/tips/gimp-tips.xml.in:59
 msgid ""
@@ -79,14 +93,18 @@ msgstr ""
 "(Slika→Način→RGB), dodati kanal alfa (Plast→Prosojnost→Dodaj kanal alfa) ali "
 "sploščiti sliko (Slika→Splošči sliko)."
 
-#: data/tips/gimp-tips.xml.in:69 data/tips/gimp-tips.xml.in:71
-#: data/tips/gimp-tips.xml.in:72 data/tips/gimp-tips.xml.in:201
-msgid "Alt"
-msgstr "Izmenjalka"
-
-#: data/tips/gimp-tips.xml.in:73
-msgid "Super"
-msgstr "Super"
+#: data/tips/gimp-tips.xml.in:68
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr ""
+"Izbor lahko premikate ali prilagodite s pomočjo <tt>izmenjalke</tt>+povleci. "
+"Če se s to kombinacijo premakne okno, vaš okenski upravitelj že uporablja "
+"<tt>izmenjalko</tt>. Večina okenskih upraviteljev je mogoče nastaviti tako, "
+"da prezrejo pritisnjeno <tt>izmenjalko</tt> ali da namesto nje uporabijo "
+"tipko <tt>Super</tt> (ali »tipko Windows«)."
 
 #: data/tips/gimp-tips.xml.in:82
 msgid ""
@@ -98,9 +116,13 @@ msgstr ""
 "spusti, npr. z vlečenjem barve iz orodjarne ali barvne palete v sliko; "
 "trenutna slika ali izbrano področje se bo prebarvalo z izbrano barvo."
 
-#: data/tips/gimp-tips.xml.in:91
-msgid "Spacebar"
-msgstr "Preslednica"
+#: data/tips/gimp-tips.xml.in:89
+msgid ""
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"S srednjim gumbom miške lahko sukate po sliki (ali pa med premikanjem miške "
+"držite pritisnjeno <tt>preslednico</tt>)."
 
 #: data/tips/gimp-tips.xml.in:95
 msgid ""
@@ -131,24 +153,26 @@ msgstr ""
 "preden izvedete druge operacije na sliki. Kliknite ikono »Nova Plast« oz. "
 "»Zasidraj plast« v pogovornem oknu Plasti ali pa za to uporabite menije."
 
-#: data/tips/gimp-tips.xml.in:117
-msgid ".gz"
-msgstr ".gz"
+#: data/tips/gimp-tips.xml.in:116
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP podpira sprotno stiskanje GZIP. Samo dodajte <tt>.gz</tt> (ali <tt>."
+"bz2</tt>, če imate nameščen bzip2) k imenu datoteke in vaša slika bo "
+"shranjena stisnjena. Seveda deluje tudi nalaganje stisnjenih slik."
 
-#: data/tips/gimp-tips.xml.in:118
-msgid ".bz2"
-msgstr ".bz2"
-
-#: data/tips/gimp-tips.xml.in:125 data/tips/gimp-tips.xml.in:194
-#: data/tips/gimp-tips.xml.in:195
-msgid "Shift"
-msgstr "Dvigalka"
-
-#: data/tips/gimp-tips.xml.in:127 data/tips/gimp-tips.xml.in:200
-#: data/tips/gimp-tips.xml.in:207 data/tips/gimp-tips.xml.in:213
-#: data/tips/gimp-tips.xml.in:215 data/tips/gimp-tips.xml.in:221
-msgid "Ctrl"
-msgstr "Krmilka"
+#: data/tips/gimp-tips.xml.in:124
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"Pritisnite in držite pritisnjeno <tt>dvigalko</tt>, da lahko pred izbiranjem "
+"s klikanjem leve tipke miške dodate novo področja k že obstoječemu izboru, "
+"namesto da ga nadomestite. Z uporabo <tt>krmilke</tt> pred začetkom "
+"izbiranja z miško od obstoječega izbora odštejete novi izbor."
 
 #: data/tips/gimp-tips.xml.in:132
 msgid ""
@@ -218,9 +242,59 @@ msgstr ""
 "ob izhodu iz aplikacije GIMP. Kasneje raje izključite »Dinamične tipke za "
 "bližnjice«, da preprečite nenamerno dodeljevanje novih bližnjic."
 
-#: data/tips/gimp-tips.xml.in:187 data/tips/gimp-tips.xml.in:207
-msgid "Tab"
-msgstr "Tabulatorka"
+#: data/tips/gimp-tips.xml.in:186
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"Če je zaslon preveč zapolnjen, lahko v slikovnem oknu pritisnete "
+"<tt>tabulatorko</tt>, da preklopite vidnost orodjarne in drugih pogovornih "
+"oken."
+
+#: data/tips/gimp-tips.xml.in:193
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"<tt>Dvigalka</tt>-klik ikone očesa v pogovornem oknu Plasti skrije vse druge "
+"plasti. S ponovnim <tt>dvigalka</tt>+klikom jih zopet vse pokaže."
+
+#: data/tips/gimp-tips.xml.in:199
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+"S <tt>krmilko</tt>+klikom predogleda maske plasti v pogovornem oknu Plasti "
+"preklopite učinek maske plasti. Z <tt>izmenjalko</tt>+klikom predogleda "
+"maske plasti v pogovornem oknu Plasti preklopite na neposreden pogled maske."
+
+#: data/tips/gimp-tips.xml.in:206
+msgid ""
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"S kombinacijo tipk <tt>krmilka</tt>+<tt>tabulatorka</tt> lahko krožite po "
+"vseh plasteh slike (če upravitelj oken ne prestreže teh tipk ...)."
+
+#: data/tips/gimp-tips.xml.in:212
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr ""
+"<tt>Krmilka+klik</tt> z orodjem za polnjenje vedra, da uporabite barvo "
+"ozadja namesto barve ospredja. Podobno <tt>krmilka+klik</tt> z orodjem "
+"kapalke namesto barve ospredja določi barvo ozadja."
+
+#: data/tips/gimp-tips.xml.in:220
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"<tt>Krmilka</tt>+povlek z orodjem Zasukaj bo omejilo vrtenje na kote do 15 "
+"stopinj."
 
 #: data/tips/gimp-tips.xml.in:226
 msgid ""
