@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-09 16:57+0200\n"
-"PO-Revision-Date: 2022-06-09 16:58+0200\n"
+"POT-Creation-Date: 2022-06-30 11:02+0200\n"
+"PO-Revision-Date: 2022-06-30 10:45+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -46,12 +46,12 @@ msgstr "Allinea livelli visibili"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1898
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1902
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
 #: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
-#: ../plug-ins/common/file-raw-data.c:1838 ../plug-ins/common/file-svg.c:663
+#: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:677 ../plug-ins/common/hot.c:614
@@ -111,7 +111,7 @@ msgstr "_Annulla"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1899
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1903
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -293,7 +293,7 @@ msgstr "Pa_sso indietro"
 
 #: ../plug-ins/common/animation-play.c:592
 msgid "Step back to previous frame"
-msgstr "Passo indietro di un frame"
+msgstr "Passo indietro di un fotogramma"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "_Step"
@@ -301,7 +301,7 @@ msgstr "Pa_sso"
 
 #: ../plug-ins/common/animation-play.c:596
 msgid "Step to next frame"
-msgstr "Passo al frame successivo"
+msgstr "Passo al fotogramma successivo"
 
 #: ../plug-ins/common/animation-play.c:600
 msgid "Rewind the animation"
@@ -338,7 +338,7 @@ msgstr "Reimposta la velocità dell'animazione"
 #: ../plug-ins/common/animation-play.c:640
 #: ../plug-ins/common/animation-play.c:1364
 msgid "Start playback"
-msgstr "Inizia l'esecuzione"
+msgstr "Avvia l'esecuzione"
 
 #: ../plug-ins/common/animation-play.c:644
 msgid "Detach"
@@ -399,7 +399,7 @@ msgstr "Fotogramma %d di %d"
 
 #: ../plug-ins/common/animation-play.c:1364
 msgid "Stop playback"
-msgstr "Blocca l'esecuzione"
+msgstr "Ferma l'esecuzione"
 
 #: ../plug-ins/common/blinds.c:117
 msgid "Simulate an image painted on window blinds"
@@ -441,7 +441,7 @@ msgstr "_Verticale"
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1397
+#: ../plug-ins/common/file-raw-data.c:1375
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
@@ -824,7 +824,7 @@ msgstr "Seme Casuale"
 #: ../plug-ins/common/cml-explorer.c:2160 ../plug-ins/common/curve-bend.c:1555
 #: ../plug-ins/common/curve-bend.c:2138 ../plug-ins/common/file-cel.c:952
 #: ../plug-ins/common/file-jp2-load.c:962
-#: ../plug-ins/common/file-raw-data.c:1839 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/file-raw-data.c:1817 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/flame/flame.c:483
@@ -1042,8 +1042,8 @@ msgstr "Salva parametri Esploratore CML"
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
-#: ../plug-ins/common/file-raw-data.c:1195
-#: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-raw-data.c:1173
+#: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
@@ -1075,7 +1075,7 @@ msgstr "Carica parametri Esploratore CML"
 #: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
 #: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
 #: ../plug-ins/common/file-raw-data.c:477
-#: ../plug-ins/common/file-raw-data.c:1306 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
@@ -1359,7 +1359,7 @@ msgstr "Liv. _rosso cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw-data.c:1942
+#: ../plug-ins/common/file-raw-data.c:1920
 msgid "RGB"
 msgstr "RGB"
 
@@ -1929,7 +1929,7 @@ msgstr "Sorgente 2:"
 msgid "O_verlap:"
 msgstr "So_vrapposizione:"
 
-#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1976
+#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1954
 msgid "O_ffset:"
 msgstr "_Compensazione:"
 
@@ -1997,7 +1997,7 @@ msgstr "Destriscia"
 
 #: ../plug-ins/common/destripe.c:500 ../plug-ins/common/file-html-table.c:647
 #: ../plug-ins/common/file-ps.c:3522 ../plug-ins/common/file-ps.c:3727
-#: ../plug-ins/common/file-raw-data.c:1991
+#: ../plug-ins/common/file-raw-data.c:1969
 #: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2149,7 +2149,7 @@ msgstr ""
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
-#: ../plug-ins/common/file-raw-data.c:1299 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
@@ -2634,59 +2634,59 @@ msgstr ""
 msgid "image content"
 msgstr "contenuto immagine"
 
-#: ../plug-ins/common/file-heif.c:1318
+#: ../plug-ins/common/file-heif.c:1322
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Esportazione di '%s' con codificatore %s"
 
-#: ../plug-ins/common/file-heif.c:1369 ../plug-ins/common/file-heif.c:1623
+#: ../plug-ins/common/file-heif.c:1373 ../plug-ins/common/file-heif.c:1627
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Codifica immagine HEIF fallita: %s"
 
-#: ../plug-ins/common/file-heif.c:1660
+#: ../plug-ins/common/file-heif.c:1664
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Scrittura immagine HEIF fallita: %s"
 
-#: ../plug-ins/common/file-heif.c:1749
+#: ../plug-ins/common/file-heif.c:1753
 msgid "primary"
 msgstr "primario"
 
-#: ../plug-ins/common/file-heif.c:1894
+#: ../plug-ins/common/file-heif.c:1898
 msgid "Load HEIF Image"
 msgstr "Carica immagine HEIF"
 
-#: ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-heif.c:1912
 msgid "Select Image"
 msgstr "Seleziona immagine"
 
-#: ../plug-ins/common/file-heif.c:2074
+#: ../plug-ins/common/file-heif.c:2078
 msgid "Nearly _lossless"
 msgstr "_Quasi senza perdite"
 
-#: ../plug-ins/common/file-heif.c:2078 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2082 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Qualità:"
 
-#: ../plug-ins/common/file-heif.c:2121
+#: ../plug-ins/common/file-heif.c:2125
 msgid "Bit depth:"
 msgstr "Profondità di colore:"
 
-#: ../plug-ins/common/file-heif.c:2127
+#: ../plug-ins/common/file-heif.c:2131
 msgid "8 bit/channel"
 msgstr "8 bit/canale"
 
-#: ../plug-ins/common/file-heif.c:2128
+#: ../plug-ins/common/file-heif.c:2132
 msgid "10 bit/channel"
 msgstr "10 bit/canale"
 
-#: ../plug-ins/common/file-heif.c:2129
+#: ../plug-ins/common/file-heif.c:2133
 msgid "12 bit/channel"
 msgstr "12 bit/canale"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/common/file-heif.c:2142 ../plug-ins/file-jpeg/jpeg-save.c:974
 #: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
@@ -2797,7 +2797,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "La larghezza di ogni cella. Può essere un numero o una percentuale."
 
 #: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3535
-#: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:2007
+#: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:1985
 #: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -3406,13 +3406,13 @@ msgid "Error while exporting '%s'. Could not export image."
 msgstr ""
 "Errore durante l'esportazione di \"%s\". Impossibile esportare l'immagine."
 
-#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2134
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2112
 #: ../plug-ins/file-tiff/file-tiff-save.c:1167
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "Errore di caricamento file IU \"%s\": %s"
 
-#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2135
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2113
 #: ../plug-ins/file-tiff/file-tiff-save.c:1168
 msgid "Unknown error"
 msgstr "Errore sconosciuto"
@@ -3866,7 +3866,7 @@ msgid "Raw image data"
 msgstr "Dati immagine raw"
 
 #: ../plug-ins/common/file-raw-data.c:304
-#: ../plug-ins/common/file-raw-data.c:1887
+#: ../plug-ins/common/file-raw-data.c:1865
 msgid "Digital Elevation Model data"
 msgstr "Dati modello digitale di elevazione"
 
@@ -3895,7 +3895,7 @@ msgstr ""
 "supportati sono: SRTM-1 e SRTM-3. Se si conosce la variante, eseguire con "
 "argomento 1 o 3."
 
-#: ../plug-ins/common/file-raw-data.c:1834
+#: ../plug-ins/common/file-raw-data.c:1812
 msgid "Load Image from Raw Data"
 msgstr "Carica immagine da dati raw"
 
@@ -3903,15 +3903,15 @@ msgstr "Carica immagine da dati raw"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:1883
+#: ../plug-ins/common/file-raw-data.c:1861
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Dati modello di elevazione digitale (1 arco-secondo)"
 
-#: ../plug-ins/common/file-raw-data.c:1885
+#: ../plug-ins/common/file-raw-data.c:1863
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Dati modello di elevazione digitale (3 arco-secondi)"
 
-#: ../plug-ins/common/file-raw-data.c:1891
+#: ../plug-ins/common/file-raw-data.c:1869
 msgid "Image"
 msgstr "Immagine"
 
@@ -3923,116 +3923,116 @@ msgstr "Immagine"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1921
+#: ../plug-ins/common/file-raw-data.c:1899
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arco-secondo)"
 
-#: ../plug-ins/common/file-raw-data.c:1922
+#: ../plug-ins/common/file-raw-data.c:1900
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 arco-secondi)"
 
-#: ../plug-ins/common/file-raw-data.c:1925
+#: ../plug-ins/common/file-raw-data.c:1903
 msgid "_Sample Spacing:"
 msgstr "_Spaziatura campione:"
 
-#: ../plug-ins/common/file-raw-data.c:1943
+#: ../plug-ins/common/file-raw-data.c:1921
 msgid "RGB Alpha"
 msgstr "Alfa RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1944
+#: ../plug-ins/common/file-raw-data.c:1922
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1945
+#: ../plug-ins/common/file-raw-data.c:1923
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1946
+#: ../plug-ins/common/file-raw-data.c:1924
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1925
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1948
+#: ../plug-ins/common/file-raw-data.c:1926
 msgid "Planar RGB"
 msgstr "RGB planare"
 
-#: ../plug-ins/common/file-raw-data.c:1949
+#: ../plug-ins/common/file-raw-data.c:1927
 msgid "B&W 1 bit"
 msgstr "B&N 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1950
+#: ../plug-ins/common/file-raw-data.c:1928
 msgid "Gray 2 bit"
 msgstr "Grigio 2 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1951
+#: ../plug-ins/common/file-raw-data.c:1929
 msgid "Gray 4 bit"
 msgstr "Grigio 4 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1952
+#: ../plug-ins/common/file-raw-data.c:1930
 msgid "Gray 8 bit"
 msgstr "Grigio 8 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1953
+#: ../plug-ins/common/file-raw-data.c:1931
 msgid "Indexed"
 msgstr "Indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1954
+#: ../plug-ins/common/file-raw-data.c:1932
 msgid "Indexed Alpha"
 msgstr "Alfa indicizzata"
 
-#: ../plug-ins/common/file-raw-data.c:1955
+#: ../plug-ins/common/file-raw-data.c:1933
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Toni di grigio a 16 bit senza segno Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1956
+#: ../plug-ins/common/file-raw-data.c:1934
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Toni di grigio a 16 bit senza segno Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1957
+#: ../plug-ins/common/file-raw-data.c:1935
 msgid "Gray 16 bit Big Endian"
 msgstr "Toni di grigio a 16 bit Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1958
+#: ../plug-ins/common/file-raw-data.c:1936
 msgid "Gray 16 bit Little Endian"
 msgstr "Toni di grigio a 16 bit Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1963
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "Image _Type:"
 msgstr "_Tipo immagine:"
 
-#: ../plug-ins/common/file-raw-data.c:2024
+#: ../plug-ins/common/file-raw-data.c:2002
 msgid "Palette"
 msgstr "Tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:2034
+#: ../plug-ins/common/file-raw-data.c:2012
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normale)"
 
-#: ../plug-ins/common/file-raw-data.c:2035
+#: ../plug-ins/common/file-raw-data.c:2013
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (stile bmp)"
 
-#: ../plug-ins/common/file-raw-data.c:2040
+#: ../plug-ins/common/file-raw-data.c:2018
 msgid "_Palette Type:"
 msgstr "_Tipo tavolozza:"
 
-#: ../plug-ins/common/file-raw-data.c:2051
+#: ../plug-ins/common/file-raw-data.c:2029
 msgid "Off_set:"
 msgstr "_Spostamento:"
 
-#: ../plug-ins/common/file-raw-data.c:2063
+#: ../plug-ins/common/file-raw-data.c:2041
 msgid "Select Palette File"
 msgstr "Seleziona il file tavolozza"
 
-#: ../plug-ins/common/file-raw-data.c:2069
+#: ../plug-ins/common/file-raw-data.c:2047
 msgid "Pal_ette File:"
 msgstr "Fil_e tavolozza:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:2118
+#: ../plug-ins/common/file-raw-data.c:2096
 msgid "Raw Image"
 msgstr "Immagine raw"
 
