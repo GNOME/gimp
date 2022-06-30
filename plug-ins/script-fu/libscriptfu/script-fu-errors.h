@@ -18,17 +18,6 @@
 #ifndef __SCRIPT_FU_ERRORS_H__
 #define __SCRIPT_FU_ERRORS_H__
 
-
-/* G_LOG_DOMAIN affects calls to g_debug convenience func/macro in this compilation unit. */
-#ifdef G_LOG_DOMAIN
-#define STR_HELPER(x) #x
-#define STR(x) STR_HELPER(x)
-#pragma message "G_LOG_DOMAIN previously defined as: " STR(G_LOG_DOMAIN)
-#undef G_LOG_DOMAIN
-#define G_LOG_DOMAIN ((gchar*)"scriptfu")
-#endif
-
-
 pointer script_error (scheme        *sc,
                       const gchar   *error_message,
                       const pointer  a);

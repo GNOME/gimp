@@ -24,11 +24,7 @@
 #include "script-fu-errors.h"
 
 
-/* Enable logging by "export G_MESSAGES_DEBUG=scriptfu" in the env
- * See G_LOG_DOMAIN in script-fu-errors.h
- */
-
-
+/* Enable logging by "export G_MESSAGES_DEBUG=scriptfu" in the env */
 
 /* Used by debug_in_arg().
  * FUTURE: conditional compile out when debug not enabled.
