@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-06-22 01:08+0000\n"
-"PO-Revision-Date: 2022-06-25 09:05+0200\n"
+"PO-Revision-Date: 2022-06-26 20:53+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -333,7 +333,7 @@ msgstr ""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:65
 msgid "Improved input device support"
-msgstr ""
+msgstr "შეყვანის მოწყობილობების გაუმჯობესებული მხარდაჭერა"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:66
 msgid "Major plug-in API rewrite"
@@ -342,6 +342,7 @@ msgstr "დამატებების API-ის ძირითადი �
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:67
 msgid "Plug-in API now available in C/C++, Python 3, Javascript, Lua and Vala"
 msgstr ""
+"დამატებების API ახლა ხელმისაწვდომია C/C++, Python3, JS, Lua და Vala-სთვის"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:68
 msgid "New manageable extension format"
@@ -1090,7 +1091,7 @@ msgstr "გამოსახულებების რედაქტორ�
 #. Translators: Search terms to find this application. Do NOT translate or localize the semicolons! The list MUST also end with a semicolon!
 #: ../desktop/gimp.desktop.in.in.h:5
 msgid "GIMP;graphic;design;illustration;painting;"
-msgstr ""
+msgstr "GIMP;graphic;design;illustration;painting;"
 
 #: ../app/about.h:23
 msgid "GIMP"
@@ -4021,7 +4022,7 @@ msgstr "პირველი ფანჯარა"
 #: ../app/actions/dialogs-actions.c:281
 msgctxt "dialogs-action"
 msgid "Show information on running GIMP release"
-msgstr ""
+msgstr "GIMP-ის გაშვებული რელიზის შესახებ ინფორმაციის ჩვენება"
 
 #: ../app/actions/dialogs-actions.c:287 ../app/actions/dialogs-actions.c:294
 msgctxt "dialogs-action"
@@ -6921,7 +6922,7 @@ msgstr "გამოსახულების ფერის პროფი�
 #: ../app/actions/image-actions.c:262
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
-msgstr ""
+msgstr "აღქმა (sRGB)"
 
 #: ../app/actions/image-actions.c:264
 msgctxt "image-convert-action"
@@ -7134,7 +7135,7 @@ msgstr "სივრცის შერევა"
 #: ../app/actions/layers-actions.c:60
 msgctxt "layers-action"
 msgid "Composite Space"
-msgstr ""
+msgstr "კომპოზიტური სივრცე"
 
 #: ../app/actions/layers-actions.c:64
 msgctxt "layers-action"
@@ -7561,7 +7562,7 @@ msgstr "ავტო"
 #: ../app/actions/layers-actions.c:351
 msgctxt "layers-action"
 msgid "Layer Blend Space: Auto"
-msgstr ""
+msgstr "ფენის შერევის სივრცე: ავტომატური"
 
 #: ../app/actions/layers-actions.c:356 ../app/actions/layers-actions.c:377
 msgctxt "layers-action"
@@ -7571,37 +7572,37 @@ msgstr "ხაზოვანი RGB"
 #: ../app/actions/layers-actions.c:357
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (linear)"
-msgstr ""
+msgstr "ფენის შერევის სივრცე: RGB (წრფივი)"
 
 #: ../app/actions/layers-actions.c:362 ../app/actions/layers-actions.c:383
 msgctxt "layers-action"
 msgid "RGB (perceptual)"
-msgstr ""
+msgstr "RGB (აღქმული)"
 
 #: ../app/actions/layers-actions.c:363
 msgctxt "layers-action"
 msgid "Layer Blend Space: RGB (perceptual)"
-msgstr ""
+msgstr "ფენის შერევის სივრცე: RGB (აღქმული)"
 
 #: ../app/actions/layers-actions.c:372
 msgctxt "layers-action"
 msgid "Layer Composite Space: Auto"
-msgstr ""
+msgstr "ფენის კომპოზიტური სივრცე: ავტომატური"
 
 #: ../app/actions/layers-actions.c:378
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (linear)"
-msgstr ""
+msgstr "ფენის კომპოზიტური სივრცე: RGB (წრფივი)"
 
 #: ../app/actions/layers-actions.c:384
 msgctxt "layers-action"
 msgid "Layer Composite Space: RGB (perceptual)"
-msgstr ""
+msgstr "ფენის კომპოზიტური სივრცე: RGB (აღქმული)"
 
 #: ../app/actions/layers-actions.c:393
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Auto"
-msgstr ""
+msgstr "ფენის კომპოზიტური რეჟიმი: ავტომატური"
 
 #: ../app/actions/layers-actions.c:398
 msgctxt "layers-action"
@@ -7611,7 +7612,7 @@ msgstr "გაერთიანება"
 #: ../app/actions/layers-actions.c:399
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Union"
-msgstr ""
+msgstr "ფენის კომპოზიტური რეჟიმი: გაერთიანება"
 
 #: ../app/actions/layers-actions.c:404
 msgctxt "layers-action"
@@ -7641,7 +7642,7 @@ msgstr "კვეთა"
 #: ../app/actions/layers-actions.c:417
 msgctxt "layers-action"
 msgid "Layer Composite Mode: Intersection"
-msgstr ""
+msgstr "ფენის კომპოზიტური რეჟიმი: თანაკვეთა"
 
 #: ../app/actions/layers-actions.c:425
 msgctxt "layers-action"
@@ -8130,7 +8131,7 @@ msgstr "ფენების გაუმჭვირვალობის დ�
 
 #: ../app/actions/layers-commands.c:1898
 msgid "Set layers' blend space"
-msgstr ""
+msgstr "ფენის შერევის სივრცის დაყენება"
 
 #: ../app/actions/layers-commands.c:1951
 msgid "Set layers' composite space"
@@ -8761,7 +8762,7 @@ msgstr "მონიშნულის კუთხეების მომრ�
 #: ../app/actions/select-commands.c:179 ../app/actions/select-commands.c:256
 #: ../app/actions/select-commands.c:386
 msgid "_Selected areas continue outside the image"
-msgstr ""
+msgstr "მონიშნული სეგმენტები გამოსახულების მიღმაც გრძელდება"
 
 #: ../app/actions/select-commands.c:182
 msgid "When feathering, act as if selected areas continued outside the image."
@@ -10598,12 +10599,12 @@ msgstr "ფანჯრების სახაზავების ჩვე�
 #: ../app/actions/view-actions.c:325
 msgctxt "view-action"
 msgid "Show Scroll_bars"
-msgstr ""
+msgstr "ჩოჩიების ჩვენება"
 
 #: ../app/actions/view-actions.c:326
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
-msgstr ""
+msgstr "ამ ფანჯრის ჩოჩიების ჩვენება"
 
 #: ../app/actions/view-actions.c:332
 msgctxt "view-action"
@@ -10988,12 +10989,12 @@ msgstr "დააყენეთ ჰორიზონტალური ცო�
 #: ../app/actions/view-actions.c:663
 msgctxt "view-action"
 msgid "Scroll to left border"
-msgstr ""
+msgstr "მარცხენა საზღვრამდე გაწევა"
 
 #: ../app/actions/view-actions.c:668
 msgctxt "view-action"
 msgid "Scroll to right border"
-msgstr ""
+msgstr "მარჯვენა საზღვრამდე გაწევა"
 
 #: ../app/actions/view-actions.c:673
 msgctxt "view-action"
@@ -11008,12 +11009,12 @@ msgstr "მარჯვნივ გაწევა"
 #: ../app/actions/view-actions.c:683
 msgctxt "view-action"
 msgid "Scroll page left"
-msgstr ""
+msgstr "გვერდის მარცხნივ გაწევა"
 
 #: ../app/actions/view-actions.c:688
 msgctxt "view-action"
 msgid "Scroll page right"
-msgstr ""
+msgstr "გვერდის მარჯვნივ გაწევა"
 
 #: ../app/actions/view-actions.c:696
 msgctxt "view-action"
@@ -11023,12 +11024,12 @@ msgstr "დააყენეთ ვერტიკალური ცოცი�
 #: ../app/actions/view-actions.c:701
 msgctxt "view-action"
 msgid "Scroll to top border"
-msgstr ""
+msgstr "ზედა საზღვრამდე აქაჩვა"
 
 #: ../app/actions/view-actions.c:706
 msgctxt "view-action"
 msgid "Scroll to bottom border"
-msgstr ""
+msgstr "ქვედა საზღვრამდე ჩამოქაჩვა"
 
 #: ../app/actions/view-actions.c:711
 msgctxt "view-action"
@@ -11043,12 +11044,12 @@ msgstr "დაბლა ჩამოქაჩვა"
 #: ../app/actions/view-actions.c:721
 msgctxt "view-action"
 msgid "Scroll page up"
-msgstr ""
+msgstr "გვერდით მაღლა აწევა"
 
 #: ../app/actions/view-actions.c:726
 msgctxt "view-action"
 msgid "Scroll page down"
-msgstr ""
+msgstr "გვერდით დაბლა ჩამოწევა"
 
 #: ../app/actions/view-actions.c:963
 #, c-format
@@ -11604,7 +11605,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:184
 msgid "Sets the browser used by the help system."
-msgstr ""
+msgstr "დახმარების სისტემის მიერ გამოყენებული ბრაუზერის დაყენება."
 
 #: ../app/config/gimprc-blurbs.h:192
 msgid "How many recent settings to keep around in filter tools."
@@ -11618,7 +11619,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Show advanced color options in filter tools."
-msgstr ""
+msgstr "ფილტრის ხელსაწყოებში ფერის დამატებითი პარამეტრების ჩვენება."
 
 #: ../app/config/gimprc-blurbs.h:201
 msgid "Sets the text to appear in image window status bars."
@@ -11727,7 +11728,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:282
 msgid "The version of GIMP config files."
-msgstr ""
+msgstr "GIMP=ოს კონფიგურაციის ფაილების ვერსია."
 
 #: ../app/config/gimprc-blurbs.h:285
 msgid "How many recently opened image filenames to keep on the File menu."
@@ -11735,11 +11736,11 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:288
 msgid "The timestamp for the last known release date."
-msgstr ""
+msgstr "ბოლო ცნობილი რელიზის ნომრის დროის შტამპი."
 
 #: ../app/config/gimprc-blurbs.h:291
 msgid "The last revision number for the release."
-msgstr ""
+msgstr "რელიზის ბოლო რევიზიის ნომერი."
 
 #: ../app/config/gimprc-blurbs.h:294
 msgid ""
@@ -22878,7 +22879,7 @@ msgstr "საზღვრების შევსება"
 
 #: ../app/tools/gimpbucketfilltool.c:168
 msgid "Bucket Fill"
-msgstr ""
+msgstr "ჩასხმა"
 
 #: ../app/tools/gimpbucketfilltool.c:169
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
@@ -27851,7 +27852,7 @@ msgstr ""
 
 #: ../app/widgets/gimplayertreeview.c:1131
 msgid "regexp"
-msgstr ""
+msgstr "რეგგამოს"
 
 #: ../app/widgets/gimplayertreeview.c:1235
 #: ../app/widgets/gimplayertreeview.c:1248
