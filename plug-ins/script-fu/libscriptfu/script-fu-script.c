@@ -25,11 +25,8 @@
 #include "tinyscheme/scheme-private.h"
 
 #include "script-fu-types.h"
-
+#include "script-fu-arg.h"
 #include "script-fu-script.h"
-#include "script-fu-scripts.h"
-#include "script-fu-utils.h"
-
 #include "script-fu-intl.h"
 
 
@@ -94,72 +91,7 @@ script_fu_script_free (SFScript *script)
 
   for (i = 0; i < script->n_args; i++)
     {
-      SFArg *arg = &script->args[i];
-
-      g_free (arg->label);
-
-      switch (arg->type)
-        {
-        case SF_IMAGE:
-        case SF_DRAWABLE:
-        case SF_LAYER:
-        case SF_CHANNEL:
-        case SF_VECTORS:
-        case SF_DISPLAY:
-        case SF_COLOR:
-        case SF_TOGGLE:
-          break;
-
-        case SF_VALUE:
-        case SF_STRING:
-        case SF_TEXT:
-          g_free (arg->default_value.sfa_value);
-          g_free (arg->value.sfa_value);
-          break;
-
-        case SF_ADJUSTMENT:
-          break;
-
-        case SF_FILENAME:
-        case SF_DIRNAME:
-          g_free (arg->default_value.sfa_file.filename);
-          g_free (arg->value.sfa_file.filename);
-          break;
-
-        case SF_FONT:
-          g_free (arg->default_value.sfa_font);
-          g_free (arg->value.sfa_font);
-          break;
-
-        case SF_PALETTE:
-          g_free (arg->default_value.sfa_palette);
-          g_free (arg->value.sfa_palette);
-          break;
-
-        case SF_PATTERN:
-          g_free (arg->default_value.sfa_pattern);
-          g_free (arg->value.sfa_pattern);
-          break;
-
-        case SF_GRADIENT:
-          g_free (arg->default_value.sfa_gradient);
-          g_free (arg->value.sfa_gradient);
-          break;
-
-        case SF_BRUSH:
-          g_free (arg->default_value.sfa_brush.name);
-          g_free (arg->value.sfa_brush.name);
-          break;
-
-        case SF_OPTION:
-          g_slist_free_full (arg->default_value.sfa_option.list,
-                             (GDestroyNotify) g_free);
-          break;
-
-        case SF_ENUM:
-          g_free (arg->default_value.sfa_enum.type_name);
-          break;
-        }
+      script_fu_arg_free (&script->args[i]);
     }
 
   g_free (script->args);
@@ -209,8 +141,6 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
 {
   GimpProcedure *procedure;
   const gchar   *menu_label            = NULL;
-  gint           arg_count[SF_DISPLAY] = { 0, };
-  gint           i;
 
   g_debug ("script_fu_script_create_PDB_procedure: %s of type %i", script->name, plug_in_type);
 
@@ -244,306 +174,19 @@ script_fu_script_create_PDB_procedure (GimpPlugIn     *plug_in,
                                                   GIMP_RUN_INTERACTIVE,
                                                   G_PARAM_READWRITE));
 
-  for (i = 0; i < script->n_args; i++)
+  script_fu_arg_reset_name_generator ();
+  for (gint i = 0; i < script->n_args; i++)
     {
       GParamSpec  *pspec = NULL;
       const gchar *name  = NULL;
       const gchar *nick  = NULL;
-      gchar        numbered_name[64];
-      gchar        numbered_nick[64];
 
-      switch (script->args[i].type)
-        {
-        case SF_IMAGE:
-          name = "image";
-          nick = "Image";
-          break;
-
-        case SF_DRAWABLE:
-          name = "drawable";
-          nick = "Drawable";
-          break;
-
-        case SF_LAYER:
-          name = "layer";
-          nick = "Layer";
-          break;
-
-        case SF_CHANNEL:
-          name = "channel";
-          nick = "Channel";
-          break;
-
-        case SF_VECTORS:
-          name = "vectors";
-          nick = "Vectors";
-          break;
-
-        case SF_DISPLAY:
-          name = "display";
-          nick = "Display";
-          break;
-
-        case SF_COLOR:
-          name = "color";
-          nick = "Color";
-          break;
-
-        case SF_TOGGLE:
-          name = "toggle";
-          nick = "Toggle";
-          break;
-
-        case SF_VALUE:
-          name = "value";
-          nick = "Value";
-          break;
-
-        case SF_STRING:
-          name = "string";
-          nick = "String";
-          break;
-
-        case SF_TEXT:
-          name = "text";
-          nick = "Text";
-          break;
-
-        case SF_ADJUSTMENT:
-          name = "adjustment";
-          nick = "Adjustment";
-          break;
-
-        case SF_FILENAME:
-          name = "filename";
-          nick = "Filename";
-          break;
-
-        case SF_DIRNAME:
-          name = "dirname";
-          nick = "Dirname";
-          break;
-
-        case SF_FONT:
-          name = "font";
-          nick = "Font";
-          break;
-
-        case SF_PALETTE:
-          name = "palette";
-          nick = "Palette";
-          break;
-
-        case SF_PATTERN:
-          name = "pattern";
-          nick = "Pattern";
-          break;
-
-        case SF_BRUSH:
-          name = "brush";
-          nick = "Brush";
-          break;
-
-        case SF_GRADIENT:
-          name = "gradient";
-          nick = "Gradient";
-          break;
-
-        case SF_OPTION:
-          name = "option";
-          nick = "Option";
-          break;
-
-        case SF_ENUM:
-          name = "enum";
-          nick = "Enum";
-          break;
-        }
-
-      if (arg_count[script->args[i].type] == 0)
-        {
-          g_strlcpy (numbered_name, name, sizeof (numbered_name));
-          g_strlcpy (numbered_nick, nick, sizeof (numbered_nick));
-        }
-      else
-        {
-          g_snprintf (numbered_name, sizeof (numbered_name),
-                      "%s-%d", name, arg_count[script->args[i].type] + 1);
-          g_snprintf (numbered_nick, sizeof (numbered_nick),
-                      "%s %d", nick, arg_count[script->args[i].type] + 1);
-        }
-
-      arg_count[script->args[i].type]++;
-
-      switch (script->args[i].type)
-        {
-        case SF_IMAGE:
-          pspec = gimp_param_spec_image (numbered_name,
-                                         numbered_nick,
-                                         script->args[i].label,
-                                         TRUE,
-                                         G_PARAM_READWRITE);
-          break;
-
-        case SF_DRAWABLE:
-          pspec = gimp_param_spec_drawable (numbered_name,
-                                            numbered_nick,
-                                            script->args[i].label,
-                                            TRUE,
-                                            G_PARAM_READWRITE);
-          break;
-
-        case SF_LAYER:
-          pspec = gimp_param_spec_layer (numbered_name,
-                                         numbered_nick,
-                                         script->args[i].label,
-                                         TRUE,
-                                         G_PARAM_READWRITE);
-          break;
-
-        case SF_CHANNEL:
-          pspec = gimp_param_spec_channel (numbered_name,
-                                           numbered_nick,
-                                           script->args[i].label,
-                                           TRUE,
-                                           G_PARAM_READWRITE);
-          break;
-
-        case SF_VECTORS:
-          pspec = gimp_param_spec_vectors (numbered_name,
-                                           numbered_nick,
-                                           script->args[i].label,
-                                           TRUE,
-                                           G_PARAM_READWRITE);
-          break;
-
-        case SF_DISPLAY:
-          pspec = gimp_param_spec_display (numbered_name,
-                                           numbered_nick,
-                                           script->args[i].label,
-                                           TRUE,
-                                           G_PARAM_READWRITE);
-          break;
-
-        case SF_COLOR:
-          pspec = gimp_param_spec_rgb (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       TRUE, NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_TOGGLE:
-          pspec = g_param_spec_boolean (numbered_name,
-                                        numbered_nick,
-                                        script->args[i].label,
-                                        FALSE,
-                                        G_PARAM_READWRITE);
-          break;
-
-        case SF_VALUE:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_STRING:
-        case SF_TEXT:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_ADJUSTMENT:
-          pspec = g_param_spec_double (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       -G_MAXDOUBLE, G_MAXDOUBLE, 0,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_FILENAME:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE |
-                                       GIMP_PARAM_NO_VALIDATE);
-          break;
-
-        case SF_DIRNAME:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE |
-                                       GIMP_PARAM_NO_VALIDATE);
-          break;
-
-        case SF_FONT:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_PALETTE:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_PATTERN:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_BRUSH:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_GRADIENT:
-          pspec = g_param_spec_string (numbered_name,
-                                       numbered_nick,
-                                       script->args[i].label,
-                                       NULL,
-                                       G_PARAM_READWRITE);
-          break;
-
-        case SF_OPTION:
-          pspec = g_param_spec_int (numbered_name,
-                                    numbered_nick,
-                                    script->args[i].label,
-                                    G_MININT, G_MAXINT, 0,
-                                    G_PARAM_READWRITE);
-          break;
-
-        case SF_ENUM:
-          pspec = g_param_spec_int (numbered_name,
-                                    numbered_nick,
-                                    script->args[i].label,
-                                    G_MININT, G_MAXINT, 0,
-                                    G_PARAM_READWRITE);
-          break;
-        }
-
+      script_fu_arg_generate_name_and_nick (&script->args[i], &name, &nick);
+      pspec = script_fu_arg_get_param_spec (&script->args[i],
+                                            name,
+                                            nick);
       gimp_procedure_add_argument (procedure, pspec);
     }
-
   return procedure;
 }
 
@@ -599,82 +242,7 @@ script_fu_script_reset (SFScript *script,
 
   for (i = 0; i < script->n_args; i++)
     {
-      SFArgValue *value         = &script->args[i].value;
-      SFArgValue *default_value = &script->args[i].default_value;
-
-      switch (script->args[i].type)
-        {
-        case SF_IMAGE:
-        case SF_DRAWABLE:
-        case SF_LAYER:
-        case SF_CHANNEL:
-        case SF_VECTORS:
-        case SF_DISPLAY:
-          if (reset_ids)
-            value->sfa_image = default_value->sfa_image;
-          break;
-
-        case SF_COLOR:
-          value->sfa_color = default_value->sfa_color;
-          break;
-
-        case SF_TOGGLE:
-          value->sfa_toggle = default_value->sfa_toggle;
-          break;
-
-        case SF_VALUE:
-        case SF_STRING:
-        case SF_TEXT:
-          g_free (value->sfa_value);
-          value->sfa_value = g_strdup (default_value->sfa_value);
-          break;
-
-        case SF_ADJUSTMENT:
-          value->sfa_adjustment.value = default_value->sfa_adjustment.value;
-          break;
-
-        case SF_FILENAME:
-        case SF_DIRNAME:
-          g_free (value->sfa_file.filename);
-          value->sfa_file.filename = g_strdup (default_value->sfa_file.filename);
-          break;
-
-        case SF_FONT:
-          g_free (value->sfa_font);
-          value->sfa_font = g_strdup (default_value->sfa_font);
-          break;
-
-        case SF_PALETTE:
-          g_free (value->sfa_palette);
-          value->sfa_palette = g_strdup (default_value->sfa_palette);
-          break;
-
-        case SF_PATTERN:
-          g_free (value->sfa_pattern);
-          value->sfa_pattern = g_strdup (default_value->sfa_pattern);
-          break;
-
-        case SF_GRADIENT:
-          g_free (value->sfa_gradient);
-          value->sfa_gradient = g_strdup (default_value->sfa_gradient);
-          break;
-
-        case SF_BRUSH:
-          g_free (value->sfa_brush.name);
-          value->sfa_brush.name = g_strdup (default_value->sfa_brush.name);
-          value->sfa_brush.opacity    = default_value->sfa_brush.opacity;
-          value->sfa_brush.spacing    = default_value->sfa_brush.spacing;
-          value->sfa_brush.paint_mode = default_value->sfa_brush.paint_mode;
-          break;
-
-        case SF_OPTION:
-          value->sfa_option.history = default_value->sfa_option.history;
-          break;
-
-        case SF_ENUM:
-          value->sfa_enum.history = default_value->sfa_enum.history;
-          break;
-        }
+      script_fu_arg_reset (&script->args[i], reset_ids);
     }
 }
 
@@ -737,109 +305,9 @@ script_fu_script_get_command (SFScript *script)
 
   for (i = 0; i < script->n_args; i++)
     {
-      SFArgValue *arg_value = &script->args[i].value;
-
       g_string_append_c (s, ' ');
 
-      switch (script->args[i].type)
-        {
-        case SF_IMAGE:
-        case SF_DRAWABLE:
-        case SF_LAYER:
-        case SF_CHANNEL:
-        case SF_VECTORS:
-        case SF_DISPLAY:
-          g_string_append_printf (s, "%d", arg_value->sfa_image);
-          break;
-
-        case SF_COLOR:
-          {
-            guchar r, g, b;
-
-            gimp_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
-            g_string_append_printf (s, "'(%d %d %d)",
-                                    (gint) r, (gint) g, (gint) b);
-          }
-          break;
-
-        case SF_TOGGLE:
-          g_string_append (s, arg_value->sfa_toggle ? "TRUE" : "FALSE");
-          break;
-
-        case SF_VALUE:
-          g_string_append (s, arg_value->sfa_value);
-          break;
-
-        case SF_STRING:
-        case SF_TEXT:
-          {
-            gchar *tmp;
-
-            tmp = script_fu_strescape (arg_value->sfa_value);
-            g_string_append_printf (s, "\"%s\"", tmp);
-            g_free (tmp);
-          }
-          break;
-
-        case SF_ADJUSTMENT:
-          {
-            gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
-
-            g_ascii_dtostr (buffer, sizeof (buffer),
-                            arg_value->sfa_adjustment.value);
-            g_string_append (s, buffer);
-          }
-          break;
-
-        case SF_FILENAME:
-        case SF_DIRNAME:
-          {
-            gchar *tmp;
-
-            tmp = script_fu_strescape (arg_value->sfa_file.filename);
-            g_string_append_printf (s, "\"%s\"", tmp);
-            g_free (tmp);
-          }
-          break;
-
-        case SF_FONT:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_font);
-          break;
-
-        case SF_PALETTE:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_palette);
-          break;
-
-        case SF_PATTERN:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_pattern);
-          break;
-
-        case SF_GRADIENT:
-          g_string_append_printf (s, "\"%s\"", arg_value->sfa_gradient);
-          break;
-
-        case SF_BRUSH:
-          {
-            gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
-
-            g_ascii_dtostr (buffer, sizeof (buffer),
-                            arg_value->sfa_brush.opacity);
-            g_string_append_printf (s, "'(\"%s\" %s %d %d)",
-                                    arg_value->sfa_brush.name,
-                                    buffer,
-                                    arg_value->sfa_brush.spacing,
-                                    arg_value->sfa_brush.paint_mode);
-          }
-          break;
-
-        case SF_OPTION:
-          g_string_append_printf (s, "%d", arg_value->sfa_option.history);
-          break;
-
-        case SF_ENUM:
-          g_string_append_printf (s, "%d", arg_value->sfa_enum.history);
-          break;
-        }
+      script_fu_arg_append_repr_from_self (&script->args[i], s);
     }
 
   g_string_append_c (s, ')');
@@ -865,81 +333,9 @@ script_fu_script_get_command_from_params (SFScript             *script,
 
       g_string_append_c (s, ' ');
 
-      switch (script->args[i].type)
-        {
-        case SF_IMAGE:
-        case SF_DRAWABLE:
-        case SF_LAYER:
-        case SF_CHANNEL:
-        case SF_VECTORS:
-        case SF_DISPLAY:
-          {
-            GObject *object = g_value_get_object (value);
-            gint     id     = -1;
-
-            if (object)
-              g_object_get (object, "id", &id, NULL);
-
-            g_string_append_printf (s, "%d", id);
-          }
-          break;
-
-        case SF_COLOR:
-          {
-            GimpRGB color;
-            guchar  r, g, b;
-
-            gimp_value_get_rgb (value, &color);
-            gimp_rgb_get_uchar (&color, &r, &g, &b);
-            g_string_append_printf (s, "'(%d %d %d)",
-                                    (gint) r, (gint) g, (gint) b);
-          }
-          break;
-
-        case SF_TOGGLE:
-          g_string_append_printf (s, (g_value_get_boolean (value) ?
-                                      "TRUE" : "FALSE"));
-          break;
-
-        case SF_VALUE:
-          g_string_append (s, g_value_get_string (value));
-          break;
-
-        case SF_STRING:
-        case SF_TEXT:
-        case SF_FILENAME:
-        case SF_DIRNAME:
-          {
-            gchar *tmp;
-
-            tmp = script_fu_strescape (g_value_get_string (value));
-            g_string_append_printf (s, "\"%s\"", tmp);
-            g_free (tmp);
-          }
-          break;
-
-        case SF_ADJUSTMENT:
-          {
-            gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
-
-            g_ascii_dtostr (buffer, sizeof (buffer), g_value_get_double (value));
-            g_string_append (s, buffer);
-          }
-          break;
-
-        case SF_FONT:
-        case SF_PALETTE:
-        case SF_PATTERN:
-        case SF_GRADIENT:
-        case SF_BRUSH:
-          g_string_append_printf (s, "\"%s\"", g_value_get_string (value));
-          break;
-
-        case SF_OPTION:
-        case SF_ENUM:
-          g_string_append_printf (s, "%d", g_value_get_int (value));
-          break;
-        }
+      script_fu_arg_append_repr_from_gvalue (&script->args[i],
+                                             s,
+                                             value);
     }
 
   g_string_append_c (s, ')');
