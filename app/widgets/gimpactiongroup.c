@@ -32,6 +32,8 @@
 #include "core/gimpcontext.h"
 #include "core/gimpviewable.h"
 
+#include "plug-in/gimppluginprocedure.h"
+
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
 #include "gimpactionimpl.h"
@@ -253,9 +255,8 @@ gimp_action_group_check_unique_action (GimpActionGroup *group,
 {
   if (G_UNLIKELY (gimp_action_group_get_action (group, action_name)))
     {
-      g_warning ("Refusing to add non-unique action '%s' to action group '%s'",
-                 action_name,
-                 gimp_action_group_get_name (group));
+      g_printerr ("Refusing to add non-unique action '%s' to action group '%s'\n",
+                  action_name, gimp_action_group_get_name (group));
       return FALSE;
     }
 
@@ -667,7 +668,19 @@ gimp_action_group_add_procedure_actions (GimpActionGroup                *group,
       GimpProcedureAction *action;
 
       if (! gimp_action_group_check_unique_action (group, entries[i].name))
-        continue;
+        {
+          if (entries[i].procedure != NULL &&
+              GIMP_IS_PLUG_IN_PROCEDURE (entries[i].procedure))
+            {
+              GFile *file;
+
+              file = gimp_plug_in_procedure_get_file (GIMP_PLUG_IN_PROCEDURE (entries[i].procedure));
+
+              g_printerr ("Discarded action '%s' was registered in plug-in: '%s'\n",
+                          entries[i].name, g_file_peek_path (file));
+            }
+          continue;
+        }
 
       action = gimp_procedure_action_new (entries[i].name,
                                           entries[i].label,
