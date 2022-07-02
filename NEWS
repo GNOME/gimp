@@ -34,6 +34,11 @@ Core:
     annoying grab permission warnings on Wayland.
   - Preferences > Display > Transparency > Check style has now a new
     option "Custom checks" allowing to select any RGB colors.
+  - Full migration from intltool to gettext only.
+  - The soft-proof profile, soft-proofing rendering intent and whether
+    black point compensation is used when soft-proofing are now image
+    data. These have also been moved to the Image menu (out of View).
+    They are not stored to the XCF file yet.
 
 Tools:
 
@@ -133,6 +138,21 @@ Plug-ins:
   - script-fu:
     * Various updates to get the API back in shape.
     * Porting doc updated.
+    * "script-fu-server" was now extracted into its own separate
+      plug-in so that it doesn't need to run permanently with the
+      script-fu extension (could be seen as security hazard too) and it
+      also makes each of these plug-ins more robust by being on their
+      own process each.
+    * A new `gimp-script-fu-interpreter-3.0` binary is installed
+      globally to be used to create Scheme plug-ins, similarly to other
+      plug-ins, in particular in the plug-ins/ directory, not the
+      scripts/ directory anymore. Moreover it makes the whole script-fu
+      infrastructure much more robust as script-fu individual scripts
+      won't crash the whole script-fu extension any longer (they only
+      crash themselves).
+      Note: this is not a GObject Introspected Scheme binding, just our
+      own binding based on script-fu interpreter. Script-fu plug-ins
+      still don't have access to the whole of libgimp.
   - FLI:
     * Internal type usage improvements, mnemonics added, etc.
     * 1-frame animation now loaded correctly (it's not really an
@@ -143,23 +163,53 @@ Plug-ins:
       assuming that the file writer properly followed the specs.
   - Several plug-ins now follow the user-set checkboard color
     preferences, when relevant.
-  - RAW:
+  - RAW data:
     * Improved export dialog with better labels and ported to new dialog
       generation API.
+    * Improved import dialog, ported to new dialog generation API, with
+      factorized code to more easily handle more cases.
+    * All the exportable formats can now be loaded back.
+    * "file-raw-load" and "file-raw-save" procedures API are now much
+      better with all relevant arguments.
+    * "file-hgt-load" doesn't show a dialog anymore when sample spacing
+      detection worked correctly since we already have all the necessary
+      information.
 
 API:
 
   - Changes in libgimpbase:
     * gimp_checks_get_colors() added.
     * gimp_checks_get_shades() removed (replaced by gimp_checks_get_colors())
+  - Changes in libgimpcolor:
+    * New functions:
+      + gimp_color_managed_get_simulation_profile()
+      + gimp_color_managed_simulation_profile_changed()
   - Changes in libgimp:
     * New functions:
       + gimp_image_metadata_save_filter()
       + gimp_check_custom_color1()
       + gimp_check_custom_color2()
       + gimp_procedure_dialog_get_int_radio()
+      + gimp_procedure_dialog_get_file_chooser()
+      + gimp_image_get_simulation_profile()
+      + gimp_image_set_simulation_profile()
+      + gimp_image_set_simulation_profile_from_file()
     * Removed functions:
       + gimp_plug_in_set_translation_domain()
+    * Updated functions:
+      + gimp_procedure_dialog_get_widget() now supports
+        %G_TYPE_PARAM_FILE properties.
+      + gimp_prop_file_chooser_button_new() now works with
+        G_PARAM_SPEC_OBJECT having a value_type == G_TYPE_FILE
+        (additionally to GIMP_PARAM_SPEC_CONFIG_PATH properties).
+    * Functions skipped by bindings:
+      + gimp_get_images() (in favor of gimp_list_*() variant)
+      + gimp_image_get_layers() (in favor of gimp_image_list_*() variant)
+      + gimp_image_get_channels() (in favor of gimp_image_list_*() variant)
+      + gimp_image_get_vectors() (in favor of gimp_image_list_*() variant)
+      + gimp_image_get_selected_layers() (in favor of gimp_image_list_*()
+        variant)
+      + gimp_item_get_children() (in favor of gimp_item_list_*() variant)
     * New class:
       + GimpBatchProcedure: procedure usable as a batch interpreter on
         command line.
