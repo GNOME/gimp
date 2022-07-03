@@ -21,8 +21,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-01 11:42+0000\n"
-"PO-Revision-Date: 2022-07-01 14:12+0200\n"
+"POT-Creation-Date: 2022-07-02 14:00+0000\n"
+"PO-Revision-Date: 2022-07-03 14:44+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Spanish - Spain <gnome-es-list@gnome.org>\n"
 "Language: es_ES\n"
@@ -2635,7 +2635,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2337
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2364
 #: app/core/gimppalette.c:430 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -5582,207 +5582,223 @@ msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Mostrar la ayuda para un elemento específico del interfaz de usuario"
 
-#: app/actions/image-actions.c:51 app/actions/image-actions.c:55
+#: app/actions/image-actions.c:55 app/actions/image-actions.c:59
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Menú de imagen"
 
-#: app/actions/image-actions.c:58
+#: app/actions/image-actions.c:62
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Imagen"
 
-#: app/actions/image-actions.c:59
+#: app/actions/image-actions.c:63
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Modo"
 
-#: app/actions/image-actions.c:60
+#: app/actions/image-actions.c:64
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Codificación"
 
-#: app/actions/image-actions.c:62
+#: app/actions/image-actions.c:66
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "_Gestión del color"
 
-#: app/actions/image-actions.c:63
+#: app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "_Transformar"
 
-#: app/actions/image-actions.c:64
+#: app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "Líneas g_uía"
 
-#: app/actions/image-actions.c:65
+#: app/actions/image-actions.c:69
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Meta_datos"
 
-#: app/actions/image-actions.c:67
+#: app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Colores"
 
-#: app/actions/image-actions.c:68
+#: app/actions/image-actions.c:72
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "In_fo"
 
-#: app/actions/image-actions.c:69
+#: app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Auto"
 
-#: app/actions/image-actions.c:70
+#: app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Mapa"
 
-#: app/actions/image-actions.c:71
+#: app/actions/image-actions.c:75
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Mapeo de tonos"
 
-#: app/actions/image-actions.c:72
+#: app/actions/image-actions.c:76
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "_Componentes"
 
-#: app/actions/image-actions.c:73
+#: app/actions/image-actions.c:77
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "D_esaturar"
 
-#: app/actions/image-actions.c:76
+#: app/actions/image-actions.c:80
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Nuevo…"
 
-#: app/actions/image-actions.c:77
+#: app/actions/image-actions.c:81
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Crea una imagen nueva"
 
-#: app/actions/image-actions.c:82
+#: app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Duplicar"
 
-#: app/actions/image-actions.c:83
+#: app/actions/image-actions.c:87
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Crea un duplicado de esta imagen"
 
-#: app/actions/image-actions.c:88
+#: app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Asignar perfil de color…"
 
-#: app/actions/image-actions.c:89
+#: app/actions/image-actions.c:93
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Establecer un perfil de color en la imagen"
 
-#: app/actions/image-actions.c:94
+#: app/actions/image-actions.c:98
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "_Convertir a perfil de color…"
 
-#: app/actions/image-actions.c:95
+#: app/actions/image-actions.c:99
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Aplicar un perfil de color a la imagen"
 
-#: app/actions/image-actions.c:100
+#: app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "_Descartar perfil de color"
 
-#: app/actions/image-actions.c:101
+#: app/actions/image-actions.c:105
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Eliminar el perfil de color de la imagen"
 
-#: app/actions/image-actions.c:106
+# Soft-proofing: Prueba de software
+#: app/actions/image-actions.c:110
+msgctxt "image-action"
+msgid "_Softproof Profile..."
+msgstr "Perfil de la _prueba…"
+
+#: app/actions/image-actions.c:111
+msgctxt "image-action"
+msgid "Set the softproofing profile"
+msgstr "Establecer el perfil de la prueba"
+
+#: app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
 msgstr "_Guardar el perfil de color en un archivo…"
 
-#: app/actions/image-actions.c:107
+#: app/actions/image-actions.c:117
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
 msgstr "Guardar el perfil de color de la imagen a un archivo ICC"
 
-#: app/actions/image-actions.c:112
+#: app/actions/image-actions.c:122
+msgctxt "image-action"
+msgid "Soft-Proofing Re_ndering Intent"
+msgstr "Intención del renderizado de la prueba"
+
+#: app/actions/image-actions.c:125
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "Tamaño del _lienzo…"
 
-#: app/actions/image-actions.c:113
+#: app/actions/image-actions.c:126
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Ajustar las dimensiones de la imagen"
 
-#: app/actions/image-actions.c:118
+#: app/actions/image-actions.c:131
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "_Ajustar lienzo a las capas"
 
-#: app/actions/image-actions.c:119
+#: app/actions/image-actions.c:132
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Redimensionar la imagen para cubrir todas las capas"
 
-#: app/actions/image-actions.c:124
+#: app/actions/image-actions.c:137
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "L_ienzo al tamaño de la selección"
 
-#: app/actions/image-actions.c:125
+#: app/actions/image-actions.c:138
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Cambia el tamaño de la imagen a las dimensiones de la selección"
 
-#: app/actions/image-actions.c:130
+#: app/actions/image-actions.c:143
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "Tamaño de la im_presión…"
 
-#: app/actions/image-actions.c:131
+#: app/actions/image-actions.c:144
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Ajustar la resolución de impresión"
 
-#: app/actions/image-actions.c:136
+#: app/actions/image-actions.c:149
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "E_scalar la imagen…"
 
-#: app/actions/image-actions.c:137
+#: app/actions/image-actions.c:150
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Cambia el tamaño del contenido de la imagen"
 
-#: app/actions/image-actions.c:142
+#: app/actions/image-actions.c:155
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "Re_cortar a la selección"
 
-#: app/actions/image-actions.c:143
+#: app/actions/image-actions.c:156
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Recorta la imagen a las dimensiones de la selección"
 
-#: app/actions/image-actions.c:148
+#: app/actions/image-actions.c:161
 msgctxt "image-action"
 msgid "Crop to C_ontent"
 msgstr "Recortar al _contenido"
 
-#: app/actions/image-actions.c:149
+#: app/actions/image-actions.c:162
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
@@ -5791,52 +5807,52 @@ msgstr ""
 "Recortar la imagen a las dimensiones de la selección (quitar los bordes "
 "vacíos de la imagen)"
 
-#: app/actions/image-actions.c:154
+#: app/actions/image-actions.c:167
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Combinar las capas _visibles…"
 
-#: app/actions/image-actions.c:155
+#: app/actions/image-actions.c:168
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Combina todas las capas visibles en una sola capa"
 
-#: app/actions/image-actions.c:160
+#: app/actions/image-actions.c:173
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "A_planar la imagen"
 
-#: app/actions/image-actions.c:161
+#: app/actions/image-actions.c:174
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Combina todas las capas en una y quita la transparencia"
 
-#: app/actions/image-actions.c:166
+#: app/actions/image-actions.c:179
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Configurar la _rejilla…"
 
-#: app/actions/image-actions.c:167
+#: app/actions/image-actions.c:180
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Configura la rejilla para esta imagen"
 
-#: app/actions/image-actions.c:172
+#: app/actions/image-actions.c:185
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "_Propiedades de la imagen"
 
-#: app/actions/image-actions.c:173
+#: app/actions/image-actions.c:186
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Muestra información sobre esta imagen"
 
-#: app/actions/image-actions.c:181
+#: app/actions/image-actions.c:194
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
 msgstr "Usar perfil _sRGB"
 
-#: app/actions/image-actions.c:182
+#: app/actions/image-actions.c:195
 msgctxt "image-action"
 msgid ""
 "Temporarily use an sRGB profile for the image. This is the same as discarding "
@@ -5846,268 +5862,318 @@ msgstr ""
 "descartar el perfil de color de la imagen, pero permite restaurar fácilmente "
 "el perfil."
 
-#: app/actions/image-actions.c:193 app/actions/image-actions.c:466
+#: app/actions/image-actions.c:203
+msgctxt "image-action"
+msgid "_Black Point Compensation"
+msgstr "_Compensación de punto negro"
+
+#: app/actions/image-actions.c:204
+msgctxt "image-action"
+msgid "Use black point compensation for soft-proofing"
+msgstr "Utilizar compensación de punto negro para la prueba de impresión"
+
+#: app/actions/image-actions.c:213 app/actions/image-actions.c:553
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: app/actions/image-actions.c:194
+#: app/actions/image-actions.c:214
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Convertir la imagen al espacio de colores RGB"
 
-#: app/actions/image-actions.c:198 app/actions/image-actions.c:468
+#: app/actions/image-actions.c:218 app/actions/image-actions.c:555
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "Escala de gr_ises"
 
-#: app/actions/image-actions.c:199
+#: app/actions/image-actions.c:219
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Convertir la imagen a escala de grises"
 
-#: app/actions/image-actions.c:203
+#: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "_Indexado…"
 
-#: app/actions/image-actions.c:204
+#: app/actions/image-actions.c:224
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Convertir la imagen a colores indexados"
 
-#: app/actions/image-actions.c:211
+#: app/actions/image-actions.c:231
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "Entero de 8 bits"
 
-#: app/actions/image-actions.c:213
+#: app/actions/image-actions.c:233
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Convertir la imagen a entero de 8 bits"
 
-#: app/actions/image-actions.c:217
+#: app/actions/image-actions.c:237
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "Entero de 16 bits"
 
-#: app/actions/image-actions.c:219
+#: app/actions/image-actions.c:239
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Convertir la imagen a entero de 16 bits"
 
-#: app/actions/image-actions.c:223
+#: app/actions/image-actions.c:243
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "Entero de 32 bits"
 
-#: app/actions/image-actions.c:225
+#: app/actions/image-actions.c:245
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Convertir la imagen a entero de 32 bits"
 
-#: app/actions/image-actions.c:229
+#: app/actions/image-actions.c:249
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "Coma flotante de 16 bits"
 
-#: app/actions/image-actions.c:231
+#: app/actions/image-actions.c:251
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Convertir la imagen a coma flotante de 16 bits"
 
-#: app/actions/image-actions.c:235
+#: app/actions/image-actions.c:255
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "Coma flotante de 32 bits"
 
-#: app/actions/image-actions.c:237
+#: app/actions/image-actions.c:257
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Convertir la imagen a coma flotante de 32 bits"
 
-#: app/actions/image-actions.c:241
+#: app/actions/image-actions.c:261
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "Coma flotante de 64 bits"
 
-#: app/actions/image-actions.c:243
+#: app/actions/image-actions.c:263
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Convertir la imagen a coma flotante de 64 bits"
 
-#: app/actions/image-actions.c:250
+#: app/actions/image-actions.c:270
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Luz lineal"
 
-#: app/actions/image-actions.c:252
+#: app/actions/image-actions.c:272
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Convertir la imagen a luz lineal"
 
-#: app/actions/image-actions.c:256
+#: app/actions/image-actions.c:276
 msgctxt "image-convert-action"
 msgid "Non-Linear"
 msgstr "No lineal"
 
-#: app/actions/image-actions.c:258
+#: app/actions/image-actions.c:278
 msgctxt "image-convert-action"
 msgid "Convert the image to non-linear gamma from the color profile"
 msgstr "Convertir la imagen a gama no lineal desde el perfil de color"
 
-#: app/actions/image-actions.c:262
+#: app/actions/image-actions.c:282
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
 msgstr "Perceptivo (sRGB)"
 
-#: app/actions/image-actions.c:264
+#: app/actions/image-actions.c:284
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "Convertir la imagen a gamma de percepción (sRGB)"
 
-#: app/actions/image-actions.c:271
+#: app/actions/image-actions.c:291
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Voltear _horizontalmente"
 
-#: app/actions/image-actions.c:272
+#: app/actions/image-actions.c:292
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Voltea la imagen horizontalmente"
 
-#: app/actions/image-actions.c:277
+#: app/actions/image-actions.c:297
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Voltear _verticalmente"
 
-#: app/actions/image-actions.c:278
+#: app/actions/image-actions.c:298
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Voltea la imagen verticalmente"
 
-#: app/actions/image-actions.c:286
+#: app/actions/image-actions.c:306
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Rotar 90° en sentido _horario"
 
-#: app/actions/image-actions.c:287
+#: app/actions/image-actions.c:307
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Rota la imagen 90 grados a la derecha"
 
-#: app/actions/image-actions.c:292
+#: app/actions/image-actions.c:312
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Rotar _180°"
 
-#: app/actions/image-actions.c:293
+#: app/actions/image-actions.c:313
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Pone la imagen cabeza abajo"
 
-#: app/actions/image-actions.c:298
+#: app/actions/image-actions.c:318
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotar 90° en sentido _antihorario"
 
-#: app/actions/image-actions.c:299
+#: app/actions/image-actions.c:319
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Rota la imagen 90 grados a la izquierda"
 
-#: app/actions/image-actions.c:459
+#: app/actions/image-actions.c:327
+msgctxt "image-action"
+msgid "_Perceptual"
+msgstr "_Perceptivo"
+
+#: app/actions/image-actions.c:328
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is perceptual"
+msgstr "La intención del renderizado de la prueba es perceptivo"
+
+#: app/actions/image-actions.c:333
+msgctxt "image-action"
+msgid "_Relative Colorimetric"
+msgstr "Colorimétrico _relativo"
+
+#: app/actions/image-actions.c:334
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is relative colorimetric"
+msgstr "La intención del renderizado de la prueba es colorimétrico relativo"
+
+#: app/actions/image-actions.c:339
+msgctxt "image-action"
+msgid "_Saturation"
+msgstr "_Saturación"
+
+#: app/actions/image-actions.c:340
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is saturation"
+msgstr "La intención del renderizado de la prueba es saturación"
+
+#: app/actions/image-actions.c:345
+msgctxt "image-action"
+msgid "_Absolute Colorimetric"
+msgstr "Colorimétrico _absoluto"
+
+#: app/actions/image-actions.c:346
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is absolute colorimetric"
+msgstr "La intención del renderizado de la prueba es colorimétrico absoluto"
+
+#: app/actions/image-actions.c:546
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB…"
 
-#: app/actions/image-actions.c:461
+#: app/actions/image-actions.c:548
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "Escala de gr_ises…"
 
-#: app/actions/image-commands.c:566
+#: app/actions/image-commands.c:576
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Falló al guardar el perfil de color: %s"
 
-#: app/actions/image-commands.c:606
+#: app/actions/image-commands.c:616
 msgid "Save Color Profile"
 msgstr "Guardar perfil de color"
 
-#: app/actions/image-commands.c:655
+#: app/actions/image-commands.c:665
 msgid "Set Image Canvas Size"
 msgstr "Establece el tamaño del lienzo de la imagen"
 
-#: app/actions/image-commands.c:686 app/actions/image-commands.c:711
-#: app/actions/image-commands.c:1403
+#: app/actions/image-commands.c:696 app/actions/image-commands.c:721
+#: app/actions/image-commands.c:1413
 msgid "Resizing"
 msgstr "Redimensionando"
 
-#: app/actions/image-commands.c:745
+#: app/actions/image-commands.c:755
 msgid "Set Image Print Resolution"
 msgstr "Establecer la resolución de impresión de la imagen"
 
-#: app/actions/image-commands.c:815 app/pdb/item-transform-cmds.c:214
+#: app/actions/image-commands.c:825 app/pdb/item-transform-cmds.c:214
 #: app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "Volteando"
 
-#: app/actions/image-commands.c:842 app/pdb/image-transform-cmds.c:218
+#: app/actions/image-commands.c:852 app/pdb/image-transform-cmds.c:218
 #: app/pdb/item-transform-cmds.c:499 app/tools/gimprotatetool.c:131
 msgid "Rotating"
 msgstr "Rotando"
 
-#: app/actions/image-commands.c:870 app/actions/layers-commands.c:1207
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1207
 msgid "Cannot crop because the current selection is empty."
 msgstr "No se puede recortar porque la selección actual está vacía."
 
-#: app/actions/image-commands.c:909
+#: app/actions/image-commands.c:919
 msgid "Cannot crop because the image has no content."
 msgstr "No se puede recortar porque la imagen no tiene contenido."
 
-#: app/actions/image-commands.c:915
+#: app/actions/image-commands.c:925
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr "No se puede recortar porque la imagen ya está recortada a su contenido."
 
-#: app/actions/image-commands.c:1081
+#: app/actions/image-commands.c:1091
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Convertir a RGB (%s)"
 
-#: app/actions/image-commands.c:1119
+#: app/actions/image-commands.c:1129
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Convertir a escala de grises (%s)"
 
-#: app/actions/image-commands.c:1181
+#: app/actions/image-commands.c:1191
 msgid "Converting to indexed colors"
 msgstr "Convirtiendo a colores indexados"
 
-#: app/actions/image-commands.c:1269
+#: app/actions/image-commands.c:1279
 #, c-format
 msgid "Converting image to %s"
 msgstr "Convirtiendo imagen a «%s»"
 
-#: app/actions/image-commands.c:1332
+#: app/actions/image-commands.c:1342
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Convertir a «%s»"
 
-#: app/actions/image-commands.c:1416
+#: app/actions/image-commands.c:1426
 msgid "Change Canvas Size"
 msgstr "Cambiar tamaño del lienzo"
 
-#: app/actions/image-commands.c:1465
+#: app/actions/image-commands.c:1475
 msgid "Change Print Size"
 msgstr "Cambiar el tamaño de la impresión"
 
-#: app/actions/image-commands.c:1509
+#: app/actions/image-commands.c:1519
 msgid "Scale Image"
 msgstr "Escalar la imagen"
 
 #. Scaling
-#: app/actions/image-commands.c:1518 app/actions/layers-commands.c:2506
+#: app/actions/image-commands.c:1528 app/actions/layers-commands.c:2506
 #: app/dialogs/preferences-dialog.c:1769 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:411
 #: app/tools/gimpscaletool.c:122
@@ -9298,239 +9364,218 @@ msgstr "Prueba de _renderizado en pantalla"
 
 #: app/actions/view-actions.c:81
 msgctxt "view-action"
-msgid "Soft-Proofing Re_ndering Intent"
-msgstr "Pseudoprueba de renderizado"
-
-#: app/actions/view-actions.c:84
-msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Mover a la pantalla"
 
-#: app/actions/view-actions.c:88
+#: app/actions/view-actions.c:85
 msgctxt "view-action"
 msgid "_New View"
 msgstr "Vista _nueva"
 
-#: app/actions/view-actions.c:89
+#: app/actions/view-actions.c:86
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Crea otra vista en esta imagen"
 
-#: app/actions/view-actions.c:94
+#: app/actions/view-actions.c:91
 msgctxt "view-action"
 msgid "_Close View"
 msgstr "_Cerrar vista"
 
-#: app/actions/view-actions.c:95
+#: app/actions/view-actions.c:92
 msgctxt "view-action"
 msgid "Close the active image view"
 msgstr "Cerrar la vista de la imagen activa"
 
-#: app/actions/view-actions.c:100
+#: app/actions/view-actions.c:97
 msgctxt "view-action"
 msgid "C_enter Image in Window"
 msgstr "C_entrar la imagen en la ventana"
 
-#: app/actions/view-actions.c:101
+#: app/actions/view-actions.c:98
 msgctxt "view-action"
 msgid "Scroll the image so that it is centered in the window"
 msgstr "Desplazar la imagen para que este centrada en la ventana"
 
-#: app/actions/view-actions.c:106
+#: app/actions/view-actions.c:103
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "_Ajustar imagen a la ventana"
 
-#: app/actions/view-actions.c:107
+#: app/actions/view-actions.c:104
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Ajusta la ampliación para que la imagen se vea completamente"
 
 # fuzzy
-#: app/actions/view-actions.c:112
+#: app/actions/view-actions.c:109
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "Ocupar toda _la ventana"
 
-#: app/actions/view-actions.c:113
+#: app/actions/view-actions.c:110
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Ajusta la ampliación para que la ventana se use por completo"
 
-#: app/actions/view-actions.c:118
+#: app/actions/view-actions.c:115
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Ampliar a la _selección"
 
-#: app/actions/view-actions.c:119
+#: app/actions/view-actions.c:116
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr ""
 "Ajustar la relación de ampliación para que la selección rellene la ventana"
 
-#: app/actions/view-actions.c:124
+#: app/actions/view-actions.c:121
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Re_vertir la ampliación"
 
-#: app/actions/view-actions.c:125
+#: app/actions/view-actions.c:122
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Recuperar el nivel de ampliación previo"
 
-#: app/actions/view-actions.c:130
+#: app/actions/view-actions.c:127
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
 msgstr "_Otro ángulo de rotación…"
 
-#: app/actions/view-actions.c:131
+#: app/actions/view-actions.c:128
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Establece un ángulo de rotación personalizado"
 
-#: app/actions/view-actions.c:136
+#: app/actions/view-actions.c:133
 msgctxt "view-action"
 msgid "_Reset Flipping"
 msgstr "_Restablecer voltear"
 
-#: app/actions/view-actions.c:138
+#: app/actions/view-actions.c:135
 msgctxt "view-action"
 msgid "Reset flipping to unflipped"
 msgstr "Restablecer voltear a sin voltear"
 
-#: app/actions/view-actions.c:143
+#: app/actions/view-actions.c:140
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "_Restablecer voltear y rotar"
 
-#: app/actions/view-actions.c:145
+#: app/actions/view-actions.c:142
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Restablecer voltear a no voltear y el ángulo de rotación a 0°"
 
-#: app/actions/view-actions.c:150
+#: app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "Ventana de na_vegación"
 
-#: app/actions/view-actions.c:151
+#: app/actions/view-actions.c:148
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Muestra una venta de vista general para esta imagen"
 
-#: app/actions/view-actions.c:156
+#: app/actions/view-actions.c:153
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Mostrar _filtros…"
 
-#: app/actions/view-actions.c:157
+#: app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Configurar filtros aplicados a esta vista"
 
-#: app/actions/view-actions.c:162
+#: app/actions/view-actions.c:159
 msgctxt "view-action"
 msgid "As in _Preferences"
 msgstr "Como en las _preferencias"
 
-#: app/actions/view-actions.c:164
+#: app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr "Reiniciar gestión del color a lo establecido en las preferencias"
 
-# Soft-proofing: Prueba de software
-#: app/actions/view-actions.c:169
-msgctxt "view-action"
-msgid "Soft-_Proofing Profile..."
-msgstr "Perfil de _prueba…"
-
-#: app/actions/view-actions.c:170
-msgctxt "view-action"
-msgid "Set the soft-proofing profile"
-msgstr "Establecer el perfil de prueba"
-
 # //R Creo que hace esto
-#: app/actions/view-actions.c:175
+#: app/actions/view-actions.c:166
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "_Ajustar encogiendo"
 
-#: app/actions/view-actions.c:176
+#: app/actions/view-actions.c:167
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Ajustar la ventana al tamaño con que se muestra la imagen"
 
-#: app/actions/view-actions.c:181
+#: app/actions/view-actions.c:172
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Abrir pantalla…"
 
-#: app/actions/view-actions.c:182
+#: app/actions/view-actions.c:173
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Conectar a otra pantalla"
 
-#: app/actions/view-actions.c:191
+#: app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Show _All"
 msgstr "Mostrar _todo"
 
-#: app/actions/view-actions.c:192
+#: app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Show full image content"
 msgstr "Mostrar todo el contenido de la imagen"
 
-#: app/actions/view-actions.c:198
+#: app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "P_unto por punto"
 
-#: app/actions/view-actions.c:199
+#: app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Un píxel en la pantalla representa un píxel de la imagen"
 
-#: app/actions/view-actions.c:205
+#: app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "_Gestionar el color de esta vista"
 
-#: app/actions/view-actions.c:206
+#: app/actions/view-actions.c:197
 msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Utilizar gestión de color para esta vista"
 
-#: app/actions/view-actions.c:212
+#: app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "_Proof Colors"
 msgstr "Colores de p_rueba"
 
-#: app/actions/view-actions.c:213
+#: app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr "Utilizar esta vista para la pseudoprueba"
 
-#: app/actions/view-actions.c:219 app/actions/view-actions.c:226
+#: app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "_Compensación de punto negro"
 
-#: app/actions/view-actions.c:220
+#: app/actions/view-actions.c:211
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
 msgstr "Utilizar la compensación de punto negro para visualizar la imagen"
 
-#: app/actions/view-actions.c:227
-msgctxt "view-action"
-msgid "Use black point compensation for soft-proofing"
-msgstr "Utilizar la compensación de punto negro para la pseudoprueba"
-
-#: app/actions/view-actions.c:233
+#: app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
 msgstr "_Marcar a partir de los colores del gamut"
 
-#: app/actions/view-actions.c:234
+#: app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -9539,629 +9584,609 @@ msgstr ""
 "Cuando realiza una pseudoprueba, marque los colores que no se pueden "
 "representar en el espacio de color destino"
 
-#: app/actions/view-actions.c:241
+#: app/actions/view-actions.c:225
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Mostrar la s_elección"
 
-#: app/actions/view-actions.c:242
+#: app/actions/view-actions.c:226
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Muestra el contorno de la selección"
 
-#: app/actions/view-actions.c:248
+#: app/actions/view-actions.c:232
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Mostrar el _límite de la capa"
 
-#: app/actions/view-actions.c:249
+#: app/actions/view-actions.c:233
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Dibuja un borde alrededor de la capa activa"
 
-#: app/actions/view-actions.c:255
+#: app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Show Canvas Bounda_ry"
 msgstr "Mostrar el _límite del lienzo"
 
-#: app/actions/view-actions.c:256
+#: app/actions/view-actions.c:240
 msgctxt "view-action"
 msgid "Draw a border around the canvas"
 msgstr "Dibujar un borde alrededor del lienzo"
 
-#: app/actions/view-actions.c:262
+#: app/actions/view-actions.c:246
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Mostrar g_uías"
 
-#: app/actions/view-actions.c:263
+#: app/actions/view-actions.c:247
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Muestra las líneas guía de la imagen"
 
-#: app/actions/view-actions.c:269
+#: app/actions/view-actions.c:253
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Mostrar _rejilla"
 
-#: app/actions/view-actions.c:270
+#: app/actions/view-actions.c:254
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Muestra la rejilla de la imagen"
 
-#: app/actions/view-actions.c:276
+#: app/actions/view-actions.c:260
 msgctxt "view-action"
 msgid "Sh_ow Sample Points"
 msgstr "_Mostrar puntos de muestra"
 
-#: app/actions/view-actions.c:277
+#: app/actions/view-actions.c:261
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Muestra los puntos de muestreo de color de la imagen"
 
-#: app/actions/view-actions.c:283
+#: app/actions/view-actions.c:267
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
 msgstr "Ajustar a las _guías"
 
-#: app/actions/view-actions.c:284
+#: app/actions/view-actions.c:268
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Las operaciones de las herramientas se ajustan a las líneas guía"
 
-#: app/actions/view-actions.c:290
+#: app/actions/view-actions.c:274
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Ajustar a la rej_illa"
 
-#: app/actions/view-actions.c:291
+#: app/actions/view-actions.c:275
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Las operaciones de las herramientas se ajustan a la rejilla"
 
-#: app/actions/view-actions.c:297
+#: app/actions/view-actions.c:281
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Ajustar a los bordes del _lienzo"
 
-#: app/actions/view-actions.c:298
+#: app/actions/view-actions.c:282
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Las operaciones de las herramientas se ajustan a los bordes del lienzo"
 
-#: app/actions/view-actions.c:304
+#: app/actions/view-actions.c:288
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Ajustar a la _ruta activa"
 
-#: app/actions/view-actions.c:305
+#: app/actions/view-actions.c:289
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Las operaciones de las herramientas se ajustan a la ruta activa"
 
-#: app/actions/view-actions.c:311
+#: app/actions/view-actions.c:295
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "_Mostrar la barra de menú"
 
-#: app/actions/view-actions.c:312
+#: app/actions/view-actions.c:296
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Muestra la barra de menús de esta ventana"
 
-#: app/actions/view-actions.c:318
+#: app/actions/view-actions.c:302
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Mostrar las _reglas"
 
-#: app/actions/view-actions.c:319
+#: app/actions/view-actions.c:303
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Muestra las reglas de medición de esta ventana"
 
-#: app/actions/view-actions.c:325
+#: app/actions/view-actions.c:309
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Mostrar las _barras de desplazamiento"
 
-#: app/actions/view-actions.c:326
+#: app/actions/view-actions.c:310
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Muestra las barras de desplazamiento de esta ventana"
 
-#: app/actions/view-actions.c:332
+#: app/actions/view-actions.c:316
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Mostrar la barra de es_tado"
 
-#: app/actions/view-actions.c:333
+#: app/actions/view-actions.c:317
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Muestra la barra de estado de esta ventana"
 
-#: app/actions/view-actions.c:339
+#: app/actions/view-actions.c:323
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "Pantalla compl_eta"
 
-#: app/actions/view-actions.c:340
+#: app/actions/view-actions.c:324
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Activa o desactiva la vista de pantalla completa"
 
-#: app/actions/view-actions.c:349
+#: app/actions/view-actions.c:333
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Establece factor de ampliación"
 
-#: app/actions/view-actions.c:354
+#: app/actions/view-actions.c:338
 msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Reducir lo máximo posible"
 
-#: app/actions/view-actions.c:359
+#: app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Ampliar lo máximo posible"
 
-#: app/actions/view-actions.c:364
+#: app/actions/view-actions.c:348
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "Re_ducir"
 
-#: app/actions/view-actions.c:365 app/actions/view-actions.c:377
+#: app/actions/view-actions.c:349 app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Reducir"
 
-#: app/actions/view-actions.c:370
+#: app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Ampliar"
 
-#: app/actions/view-actions.c:371 app/actions/view-actions.c:383
+#: app/actions/view-actions.c:355 app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Ampliar"
 
-#: app/actions/view-actions.c:376
+#: app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Reducir"
 
-#: app/actions/view-actions.c:382
+#: app/actions/view-actions.c:366
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Ampliar"
 
-#: app/actions/view-actions.c:388
+#: app/actions/view-actions.c:372
 msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Reducir mucho"
 
-#: app/actions/view-actions.c:393
+#: app/actions/view-actions.c:377
 msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Ampliar mucho"
 
-#: app/actions/view-actions.c:401 app/actions/view-actions.c:407
+#: app/actions/view-actions.c:385 app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: app/actions/view-actions.c:402 app/actions/view-actions.c:408
+#: app/actions/view-actions.c:386 app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "Ampliación 16:1"
 
-#: app/actions/view-actions.c:413 app/actions/view-actions.c:419
+#: app/actions/view-actions.c:397 app/actions/view-actions.c:403
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: app/actions/view-actions.c:414 app/actions/view-actions.c:420
+#: app/actions/view-actions.c:398 app/actions/view-actions.c:404
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "Ampliación 8:1"
 
-#: app/actions/view-actions.c:425 app/actions/view-actions.c:431
+#: app/actions/view-actions.c:409 app/actions/view-actions.c:415
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1 (400%)"
 
-#: app/actions/view-actions.c:426 app/actions/view-actions.c:432
+#: app/actions/view-actions.c:410 app/actions/view-actions.c:416
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "Ampliación 4:1"
 
-#: app/actions/view-actions.c:437 app/actions/view-actions.c:443
+#: app/actions/view-actions.c:421 app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1 (200%)"
 
-#: app/actions/view-actions.c:438 app/actions/view-actions.c:444
+#: app/actions/view-actions.c:422 app/actions/view-actions.c:428
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "Ampliación 2:1"
 
-#: app/actions/view-actions.c:449 app/actions/view-actions.c:455
+#: app/actions/view-actions.c:433 app/actions/view-actions.c:439
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1 (100%)"
 
-#: app/actions/view-actions.c:450 app/actions/view-actions.c:456
+#: app/actions/view-actions.c:434 app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "Ampliación 1:1"
 
-#: app/actions/view-actions.c:461
+#: app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2 (50%)"
 
-#: app/actions/view-actions.c:462
+#: app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "Ampliación 1:2"
 
-#: app/actions/view-actions.c:467
+#: app/actions/view-actions.c:451
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4 (25%)"
 
-#: app/actions/view-actions.c:468
+#: app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "Ampliación 1:4"
 
-#: app/actions/view-actions.c:473
+#: app/actions/view-actions.c:457
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: app/actions/view-actions.c:474
+#: app/actions/view-actions.c:458
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "Ampliación 1:8"
 
-#: app/actions/view-actions.c:479
+#: app/actions/view-actions.c:463
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: app/actions/view-actions.c:480
+#: app/actions/view-actions.c:464
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "Ampliación 1:16"
 
-#: app/actions/view-actions.c:485
+#: app/actions/view-actions.c:469
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
 msgstr "_Otro factor de ampliación…"
 
-#: app/actions/view-actions.c:486
+#: app/actions/view-actions.c:470
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Establece un factor de ampliación personalizado"
 
-#: app/actions/view-actions.c:494
+#: app/actions/view-actions.c:478
 msgctxt "view-action"
 msgid "Flip _Horizontally"
 msgstr "Voltear _horizontalmente"
 
-#: app/actions/view-actions.c:495
+#: app/actions/view-actions.c:479
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "Voltea la imagen horizontalmente"
 
-#: app/actions/view-actions.c:501
+#: app/actions/view-actions.c:485
 msgctxt "view-action"
 msgid "Flip _Vertically"
 msgstr "Voltear _verticalmente"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:486
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Voltea la imagen verticalmente"
 
-#: app/actions/view-actions.c:516
+#: app/actions/view-actions.c:500
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "_Restablecer rotar"
 
-#: app/actions/view-actions.c:518
+#: app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Restablecer el ángulo de rotación a 0°"
 
-#: app/actions/view-actions.c:526
+#: app/actions/view-actions.c:510
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Rotar 15° en sentido _horario"
 
-#: app/actions/view-actions.c:527
+#: app/actions/view-actions.c:511
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Rota la vista 15 grados a la derecha"
 
-#: app/actions/view-actions.c:532
+#: app/actions/view-actions.c:516
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Rotar 90° en sentido _horario"
 
-#: app/actions/view-actions.c:533
+#: app/actions/view-actions.c:517
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Rota la vista 90 grados a la derecha"
 
-#: app/actions/view-actions.c:538
+#: app/actions/view-actions.c:522
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Rotar _180°"
 
-#: app/actions/view-actions.c:539
+#: app/actions/view-actions.c:523
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Rota la vista boca abajo"
 
-#: app/actions/view-actions.c:544
+#: app/actions/view-actions.c:528
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotar 90° en sentido _antihorario"
 
-#: app/actions/view-actions.c:545
+#: app/actions/view-actions.c:529
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Rota la vista 90 grados a la izquierda"
 
-#: app/actions/view-actions.c:550
+#: app/actions/view-actions.c:534
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Rotar 15° en sentido _antihorario"
 
-#: app/actions/view-actions.c:551
+#: app/actions/view-actions.c:535
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Rota la vista 15 grados a la izquierda"
 
-#: app/actions/view-actions.c:559 app/actions/view-actions.c:586
+#: app/actions/view-actions.c:543
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Perceptual"
 
-#: app/actions/view-actions.c:560
+#: app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Prueba de renderizado en pantalla es perceptual"
 
-#: app/actions/view-actions.c:565 app/actions/view-actions.c:592
+#: app/actions/view-actions.c:549
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "Colorimétrico _relativo"
 
-#: app/actions/view-actions.c:566
+#: app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "Prueba de renderizado en pantalla es colorimétrico relativo"
 
-#: app/actions/view-actions.c:571 app/actions/view-actions.c:598
+#: app/actions/view-actions.c:555
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Saturación"
 
-#: app/actions/view-actions.c:572
+#: app/actions/view-actions.c:556
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Prueba de renderizado en pantalla es la saturación"
 
-#: app/actions/view-actions.c:577 app/actions/view-actions.c:604
+#: app/actions/view-actions.c:561
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "Colorimétrico _absoluto"
 
-#: app/actions/view-actions.c:578
+#: app/actions/view-actions.c:562
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "Prueba de renderizado en pantalla es colorimétrico absoluto"
 
-#: app/actions/view-actions.c:587
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is perceptual"
-msgstr "Prueba de renderizado de pseudoprueba es perceptual"
-
-#: app/actions/view-actions.c:593
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "Prueba de renderizado de pseudoprueba es colorimétrico relativo"
-
-#: app/actions/view-actions.c:599
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is saturation"
-msgstr "Prueba de renderizado de pseudoprueba es la saturación"
-
-#: app/actions/view-actions.c:605
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "Prueba de renderizado de pseudoprueba es colorimétrico absoluto"
-
-#: app/actions/view-actions.c:613
+#: app/actions/view-actions.c:570
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Del _tema"
 
-#: app/actions/view-actions.c:614
+#: app/actions/view-actions.c:571
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Usar el color de fondo del tema actual"
 
-#: app/actions/view-actions.c:619
+#: app/actions/view-actions.c:576
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Color de los cuadros c_laros"
 
-#: app/actions/view-actions.c:620
+#: app/actions/view-actions.c:577
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Usar el color de los cuadrados claros"
 
-#: app/actions/view-actions.c:625
+#: app/actions/view-actions.c:582
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Color de los cuadros o_scuros"
 
-#: app/actions/view-actions.c:626
+#: app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Usar el color de los cuadrados oscuros"
 
-#: app/actions/view-actions.c:631
+#: app/actions/view-actions.c:588
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Color p_ersonalizado…"
 
-#: app/actions/view-actions.c:632
+#: app/actions/view-actions.c:589
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Usar un color arbitrario"
 
-#: app/actions/view-actions.c:637
+#: app/actions/view-actions.c:594
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Como en las _preferencias"
 
-#: app/actions/view-actions.c:639
+#: app/actions/view-actions.c:596
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Reiniciar el color de relleno a lo establecido en las preferencias"
 
-#: app/actions/view-actions.c:647
+#: app/actions/view-actions.c:604
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "Mantener el relleno en el modo «Mostrar _todo»"
 
-#: app/actions/view-actions.c:649
+#: app/actions/view-actions.c:606
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
 "Mantener el relleno del lienzo cuando «Vista -> Mostrar todo» está activado"
 
-#: app/actions/view-actions.c:658
+#: app/actions/view-actions.c:615
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Establecer la compensación del desplazamiento horizontal"
 
-#: app/actions/view-actions.c:663
+#: app/actions/view-actions.c:620
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Desplazar al borde izquierdo"
 
-#: app/actions/view-actions.c:668
+#: app/actions/view-actions.c:625
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Desplazar al borde derecho"
 
-#: app/actions/view-actions.c:673
+#: app/actions/view-actions.c:630
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Desplazar a la izquierda"
 
-#: app/actions/view-actions.c:678
+#: app/actions/view-actions.c:635
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Desplazar a la derecha"
 
-#: app/actions/view-actions.c:683
+#: app/actions/view-actions.c:640
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Desplazar página a la izquierda"
 
-#: app/actions/view-actions.c:688
+#: app/actions/view-actions.c:645
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Desplazar página a la derecha"
 
-#: app/actions/view-actions.c:696
+#: app/actions/view-actions.c:653
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Establecer la compensación del desplazamiento vertical"
 
-#: app/actions/view-actions.c:701
+#: app/actions/view-actions.c:658
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Desplazar al borde superior"
 
-#: app/actions/view-actions.c:706
+#: app/actions/view-actions.c:663
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Desplazar al borde inferior"
 
-#: app/actions/view-actions.c:711
+#: app/actions/view-actions.c:668
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Desplazar arriba"
 
-#: app/actions/view-actions.c:716
+#: app/actions/view-actions.c:673
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Desplazar abajo"
 
-#: app/actions/view-actions.c:721
+#: app/actions/view-actions.c:678
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Desplazar página hacia arriba"
 
-#: app/actions/view-actions.c:726
+#: app/actions/view-actions.c:683
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Desplazar página hacia abajo"
 
-#: app/actions/view-actions.c:963
+#: app/actions/view-actions.c:884
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Re_vertir la ampliación (%d%%)"
 
-#: app/actions/view-actions.c:971
+#: app/actions/view-actions.c:892
 msgid "Re_vert Zoom"
 msgstr "Re_vertir la ampliación"
 
-#: app/actions/view-actions.c:1154
+#: app/actions/view-actions.c:1067
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Ot_ro (%s)…"
 
-#: app/actions/view-actions.c:1163
+#: app/actions/view-actions.c:1076
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "A_mpliación (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1185
+#: app/actions/view-actions.c:1098
 msgid "(H+V) "
 msgstr "(H+V) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1191
+#: app/actions/view-actions.c:1104
 msgid "(H) "
 msgstr "(H) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1197
+#: app/actions/view-actions.c:1110
 msgid "(V) "
 msgstr "(V) "
 
-#: app/actions/view-actions.c:1204
+#: app/actions/view-actions.c:1117
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Voltear %s y rotar (%d°)"
 
-#: app/actions/view-commands.c:1149
+#: app/actions/view-commands.c:1054
 msgid "Set Canvas Padding Color"
 msgstr "Establecer el color de relleno del lienzo"
 
-#: app/actions/view-commands.c:1151
+#: app/actions/view-commands.c:1056
 msgid "Set Custom Canvas Padding Color"
 msgstr "Establecer el color personalizado de relleno del lienzo"
 
@@ -13802,153 +13827,153 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Transformar el grupo de capas"
 
-#: app/core/gimpimage.c:691 app/widgets/gimpsymmetryeditor.c:176
+#: app/core/gimpimage.c:696 app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Simetría"
 
-#: app/core/gimpimage.c:2582
+#: app/core/gimpimage.c:2609
 msgid " (exported)"
 msgstr " (exportada)"
 
-#: app/core/gimpimage.c:2586
+#: app/core/gimpimage.c:2613
 msgid " (overwritten)"
 msgstr " (sobreescrita)"
 
-#: app/core/gimpimage.c:2595
+#: app/core/gimpimage.c:2622
 msgid " (imported)"
 msgstr " (importada)"
 
-#: app/core/gimpimage.c:2768 app/core/gimpimage.c:2782 app/core/gimpimage.c:2825
+#: app/core/gimpimage.c:2795 app/core/gimpimage.c:2809 app/core/gimpimage.c:2852
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "El modo de capa «%s» se añadió en %s"
 
-#: app/core/gimpimage.c:2840
+#: app/core/gimpimage.c:2867
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Se añadieron grupos de capas en %s"
 
-#: app/core/gimpimage.c:2847
+#: app/core/gimpimage.c:2874
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Se añadieron máscaras en grupos de capas en %s"
 
-#: app/core/gimpimage.c:2854
+#: app/core/gimpimage.c:2881
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Se añadieron bloqueos de posición en grupos de capas en %s"
 
-#: app/core/gimpimage.c:2861
+#: app/core/gimpimage.c:2888
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Se añadieron bloqueos del canal alfa en grupos de capas en %s"
 
-#: app/core/gimpimage.c:2869 app/core/gimpimage.c:2883
+#: app/core/gimpimage.c:2896 app/core/gimpimage.c:2910
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Se añadieron bloqueos de visibilidad en %s"
 
-#: app/core/gimpimage.c:2897
+#: app/core/gimpimage.c:2924
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Se añadieron imágenes con profundidad de bit alta en %s"
 
-#: app/core/gimpimage.c:2905
+#: app/core/gimpimage.c:2932
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 "La codificación de imágenes con profundidad de bit alta se corrigió en %s"
 
-#: app/core/gimpimage.c:2913
+#: app/core/gimpimage.c:2940
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Se añadió compresión zlib interna en %s"
 
-#: app/core/gimpimage.c:2930
+#: app/core/gimpimage.c:2957
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Se añadió soporte para archivos de imagen mayores que 4GB en %s"
 
-#: app/core/gimpimage.c:2937
+#: app/core/gimpimage.c:2964
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "La selección múltiple de capas se añadió en %s"
 
-#: app/core/gimpimage.c:2954
+#: app/core/gimpimage.c:2981
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Guías fuera del lienzo añadidas en %s"
 
-#: app/core/gimpimage.c:2965
+#: app/core/gimpimage.c:2992
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Búsqueda de conjuntos de elementos y patrones en el nombre del elemento se "
 "agregaron en %s"
 
-#: app/core/gimpimage.c:2971
+#: app/core/gimpimage.c:2998
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "La selección múltiple de canales se añadió en %s"
 
-#: app/core/gimpimage.c:3075
+#: app/core/gimpimage.c:3102
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Cambiar la resolución de la imagen"
 
-#: app/core/gimpimage.c:3127
+#: app/core/gimpimage.c:3154
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Cambiar la unidad de medida"
 
-#: app/core/gimpimage.c:4178
+#: app/core/gimpimage.c:4205
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "La validación del parásito «gimp-comment» falló: el comentario contiene UTF-8 "
 "no válido"
 
-#: app/core/gimpimage.c:4239
+#: app/core/gimpimage.c:4266
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Adjuntar parásito a la imagen"
 
-#: app/core/gimpimage.c:4281
+#: app/core/gimpimage.c:4308
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Eliminar el parásito de la imagen"
 
-#: app/core/gimpimage.c:5266
+#: app/core/gimpimage.c:5293
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Añadir una capa"
 
-#: app/core/gimpimage.c:5310 app/core/gimpimage.c:5341
+#: app/core/gimpimage.c:5337 app/core/gimpimage.c:5368
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Eliminar una capa"
 
-#: app/core/gimpimage.c:5335
+#: app/core/gimpimage.c:5362
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Eliminar la selección flotante"
 
-#: app/core/gimpimage.c:5859
+#: app/core/gimpimage.c:5886
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Añadir un canal"
 
-#: app/core/gimpimage.c:5889 app/core/gimpimage.c:5914
+#: app/core/gimpimage.c:5916 app/core/gimpimage.c:5941
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Eliminar un canal"
 
-#: app/core/gimpimage.c:5973
+#: app/core/gimpimage.c:6000
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Añadir una ruta"
 
-#: app/core/gimpimage.c:6003 app/core/gimpimage.c:6011
+#: app/core/gimpimage.c:6030 app/core/gimpimage.c:6038
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Eliminar una ruta"
@@ -13984,41 +14009,41 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "La validación del perfil ICC falló: "
 
-#: app/core/gimpimage-color-profile.c:409
+#: app/core/gimpimage-color-profile.c:435
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el espacio "
 "de color de escala de grises"
 
-#: app/core/gimpimage-color-profile.c:419
+#: app/core/gimpimage-color-profile.c:445
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "La validación de perfiles ICC falló: el perfil de color no es para el espacio "
 "de color RGB"
 
-#: app/core/gimpimage-color-profile.c:478
+#: app/core/gimpimage-color-profile.c:504
 msgid "Assigning color profile"
 msgstr "Asignando perfil de color"
 
-#: app/core/gimpimage-color-profile.c:479
+#: app/core/gimpimage-color-profile.c:505
 msgid "Discarding color profile"
 msgstr "Descartando perfil de color"
 
-#: app/core/gimpimage-color-profile.c:483
+#: app/core/gimpimage-color-profile.c:509
 msgid "Assign color profile"
 msgstr "Asignar perfil de color"
 
-#: app/core/gimpimage-color-profile.c:484
+#: app/core/gimpimage-color-profile.c:510
 msgid "Discard color profile"
 msgstr "Descartar perfil de color"
 
-#: app/core/gimpimage-color-profile.c:527
+#: app/core/gimpimage-color-profile.c:553
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Convirtiendo de «%s» a «%s»"
 
-#: app/core/gimpimage-color-profile.c:532
+#: app/core/gimpimage-color-profile.c:558
 msgid "Color profile conversion"
 msgstr "Conversión del perfil de color"
 
@@ -18284,23 +18309,23 @@ msgstr "Al"
 msgid "_Sample Merged"
 msgstr "_Muestra combinada"
 
-#: app/display/gimpdisplayshell.c:500
+#: app/display/gimpdisplayshell.c:503
 msgid "Access the image menu"
 msgstr "Ir al menú de imagen"
 
-#: app/display/gimpdisplayshell.c:648
+#: app/display/gimpdisplayshell.c:651
 msgid "Zoom image when window size changes"
 msgstr "Ampliar imagen cuando cambia el tamaño de ventana"
 
-#: app/display/gimpdisplayshell.c:677
+#: app/display/gimpdisplayshell.c:680
 msgid "Toggle Quick Mask"
 msgstr "Activar máscara rápida"
 
-#: app/display/gimpdisplayshell.c:692
+#: app/display/gimpdisplayshell.c:695
 msgid "Navigate the image display"
 msgstr "Navegar por la imagen"
 
-#: app/display/gimpdisplayshell.c:745 app/display/gimpdisplayshell.c:1420
+#: app/display/gimpdisplayshell.c:748 app/display/gimpdisplayshell.c:1433
 #: app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Arrastre hasta aquí los archivos de imagen para abrirlos"
@@ -18431,12 +18456,12 @@ msgstr "Filtros de pantalla de color"
 msgid "Configure Color Display Filters"
 msgstr "Configuración de los filtros de colores de la pantalla"
 
-#: app/display/gimpdisplayshell-handlers.c:935
+#: app/display/gimpdisplayshell-handlers.c:952
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Imagen guardada en «%s»"
 
-#: app/display/gimpdisplayshell-handlers.c:948
+#: app/display/gimpdisplayshell-handlers.c:965
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Imagen exportada en «%s»"
