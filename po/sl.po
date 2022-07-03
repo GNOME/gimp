@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-25 11:31+0000\n"
-"PO-Revision-Date: 2022-06-26 10:18+0200\n"
+"POT-Creation-Date: 2022-07-02 14:00+0000\n"
+"PO-Revision-Date: 2022-07-03 12:21+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -2636,7 +2636,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2337
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2364
 #: app/core/gimppalette.c:430 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -5568,259 +5568,274 @@ msgctxt "help-action"
 msgid "Show the help for a specific user interface item"
 msgstr "Pokaži pomoč za določen element uporabniškega vmesnika"
 
-#: app/actions/image-actions.c:51 app/actions/image-actions.c:55
+#: app/actions/image-actions.c:55 app/actions/image-actions.c:59
 msgctxt "image-action"
 msgid "Image Menu"
 msgstr "Meni slike"
 
-#: app/actions/image-actions.c:58
+#: app/actions/image-actions.c:62
 msgctxt "image-action"
 msgid "_Image"
 msgstr "_Slika"
 
-#: app/actions/image-actions.c:59
+#: app/actions/image-actions.c:63
 msgctxt "image-action"
 msgid "_Mode"
 msgstr "_Način"
 
-#: app/actions/image-actions.c:60
+#: app/actions/image-actions.c:64
 msgctxt "image-action"
 msgid "_Encoding"
 msgstr "_Kodiranje"
 
-#: app/actions/image-actions.c:62
+#: app/actions/image-actions.c:66
 msgctxt "image-action"
 msgid "Color Ma_nagement"
 msgstr "_Upravljanje z barvami"
 
-#: app/actions/image-actions.c:63
+#: app/actions/image-actions.c:67
 msgctxt "image-action"
 msgid "_Transform"
 msgstr "Preo_blikuj"
 
-#: app/actions/image-actions.c:64
+#: app/actions/image-actions.c:68
 msgctxt "image-action"
 msgid "_Guides"
 msgstr "_Vodila"
 
-#: app/actions/image-actions.c:65
+#: app/actions/image-actions.c:69
 msgctxt "image-action"
 msgid "Meta_data"
 msgstr "Metapo_datki"
 
-#: app/actions/image-actions.c:67
+#: app/actions/image-actions.c:71
 msgctxt "image-action"
 msgid "_Colors"
 msgstr "_Barve"
 
-#: app/actions/image-actions.c:68
+#: app/actions/image-actions.c:72
 msgctxt "image-action"
 msgid "I_nfo"
 msgstr "I_nformacije"
 
-#: app/actions/image-actions.c:69
+#: app/actions/image-actions.c:73
 msgctxt "image-action"
 msgid "_Auto"
 msgstr "_Samodejno"
 
-#: app/actions/image-actions.c:70
+#: app/actions/image-actions.c:74
 msgctxt "image-action"
 msgid "_Map"
 msgstr "_Poslikaj"
 
-#: app/actions/image-actions.c:71
+#: app/actions/image-actions.c:75
 msgctxt "image-action"
 msgid "_Tone Mapping"
 msgstr "_Preslikovanje tonov"
 
-#: app/actions/image-actions.c:72
+#: app/actions/image-actions.c:76
 msgctxt "image-action"
 msgid "C_omponents"
 msgstr "K_omponente"
 
-#: app/actions/image-actions.c:73
+#: app/actions/image-actions.c:77
 msgctxt "image-action"
 msgid "D_esaturate"
 msgstr "Zmanj_šaj nasičenost"
 
-#: app/actions/image-actions.c:76
+#: app/actions/image-actions.c:80
 msgctxt "image-action"
 msgid "_New..."
 msgstr "_Nova ..."
 
-#: app/actions/image-actions.c:77
+#: app/actions/image-actions.c:81
 msgctxt "image-action"
 msgid "Create a new image"
 msgstr "Ustvari novo sliko"
 
-#: app/actions/image-actions.c:82
+#: app/actions/image-actions.c:86
 msgctxt "image-action"
 msgid "_Duplicate"
 msgstr "_Podvoji"
 
-#: app/actions/image-actions.c:83
+#: app/actions/image-actions.c:87
 msgctxt "image-action"
 msgid "Create a duplicate of this image"
 msgstr "Ustvari dvojnika slike"
 
-#: app/actions/image-actions.c:88
+#: app/actions/image-actions.c:92
 msgctxt "image-action"
 msgid "_Assign Color Profile..."
 msgstr "_Dodeli barvni profil …"
 
-#: app/actions/image-actions.c:89
+#: app/actions/image-actions.c:93
 msgctxt "image-action"
 msgid "Set a color profile on the image"
 msgstr "Nastavite barvni profil slike"
 
-#: app/actions/image-actions.c:94
+#: app/actions/image-actions.c:98
 msgctxt "image-action"
 msgid "_Convert to Color Profile..."
 msgstr "_Pretvori v barvni profil …"
 
-#: app/actions/image-actions.c:95
+#: app/actions/image-actions.c:99
 msgctxt "image-action"
 msgid "Apply a color profile to the image"
 msgstr "Uporabi barvni profil za sliko"
 
-#: app/actions/image-actions.c:100
+#: app/actions/image-actions.c:104
 msgctxt "image-action"
 msgid "_Discard Color Profile"
 msgstr "_Zavrži barvni profil"
 
-#: app/actions/image-actions.c:101
+#: app/actions/image-actions.c:105
 msgctxt "image-action"
 msgid "Remove the image's color profile"
 msgstr "Odstrani barvni profil slike"
 
-#: app/actions/image-actions.c:106
+#: app/actions/image-actions.c:110
+msgctxt "image-action"
+msgid "_Softproof Profile..."
+msgstr "_Profil preverjanja videza ..."
+
+#: app/actions/image-actions.c:111
+msgctxt "image-action"
+msgid "Set the softproofing profile"
+msgstr "Določite profil preverjanja videza"
+
+#: app/actions/image-actions.c:116
 msgctxt "image-action"
 msgid "_Save Color Profile to File..."
 msgstr "_Shrani barvni profil v datoteko ..."
 
-#: app/actions/image-actions.c:107
+#: app/actions/image-actions.c:117
 msgctxt "image-action"
 msgid "Save the image's color profile to an ICC file"
 msgstr "Shrani barvni profil slike v datoteko ICC"
 
-#: app/actions/image-actions.c:112
+#: app/actions/image-actions.c:122
+msgctxt "image-action"
+msgid "Soft-Proofing Re_ndering Intent"
+msgstr "Namena upo_dabljanja za preverjanje"
+
+#: app/actions/image-actions.c:125
 msgctxt "image-action"
 msgid "Can_vas Size..."
 msgstr "_Velikost platna ..."
 
-#: app/actions/image-actions.c:113
+#: app/actions/image-actions.c:126
 msgctxt "image-action"
 msgid "Adjust the image dimensions"
 msgstr "Prilagodi mere slike"
 
-#: app/actions/image-actions.c:118
+#: app/actions/image-actions.c:131
 msgctxt "image-action"
 msgid "Fit Canvas to L_ayers"
 msgstr "_Prilagodi platno plastem"
 
-#: app/actions/image-actions.c:119
+#: app/actions/image-actions.c:132
 msgctxt "image-action"
 msgid "Resize the image to enclose all layers"
 msgstr "Spremeni velikost slike, da zaobjame vse plasti"
 
-#: app/actions/image-actions.c:124
+#: app/actions/image-actions.c:137
 msgctxt "image-action"
 msgid "F_it Canvas to Selection"
 msgstr "_Prilagodi platno izboru"
 
-#: app/actions/image-actions.c:125
+#: app/actions/image-actions.c:138
 msgctxt "image-action"
 msgid "Resize the image to the extents of the selection"
 msgstr "Spremeni velikost slike na mere izbora"
 
-#: app/actions/image-actions.c:130
+#: app/actions/image-actions.c:143
 msgctxt "image-action"
 msgid "_Print Size..."
 msgstr "Velikost _tiskanja ..."
 
-#: app/actions/image-actions.c:131
+#: app/actions/image-actions.c:144
 msgctxt "image-action"
 msgid "Adjust the print resolution"
 msgstr "Prilagodi ločljivost tiskanja"
 
-#: app/actions/image-actions.c:136
+#: app/actions/image-actions.c:149
 msgctxt "image-action"
 msgid "_Scale Image..."
 msgstr "_Spremeni merilo slike ..."
 
-#: app/actions/image-actions.c:137
+#: app/actions/image-actions.c:150
 msgctxt "image-action"
 msgid "Change the size of the image content"
 msgstr "Spremeni velikost vsebine slike"
 
-#: app/actions/image-actions.c:142
+#: app/actions/image-actions.c:155
 msgctxt "image-action"
 msgid "_Crop to Selection"
 msgstr "_Obreži v izbor"
 
-#: app/actions/image-actions.c:143
+#: app/actions/image-actions.c:156
 msgctxt "image-action"
 msgid "Crop the image to the extents of the selection"
 msgstr "Obreži sliko na mero izbora"
 
-#: app/actions/image-actions.c:148
+#: app/actions/image-actions.c:161
 msgctxt "image-action"
 msgid "Crop to C_ontent"
 msgstr "Obreži na vse_bino"
 
-#: app/actions/image-actions.c:149
+#: app/actions/image-actions.c:162
 msgctxt "image-action"
 msgid ""
 "Crop the image to the extents of its content (remove empty borders from the "
 "image)"
 msgstr "Obreže sliko na mero vsebine (odstrani prazne robove iz slike)"
 
-#: app/actions/image-actions.c:154
+#: app/actions/image-actions.c:167
 msgctxt "image-action"
 msgid "Merge Visible _Layers..."
 msgstr "Spoji vidne p_lasti ..."
 
-#: app/actions/image-actions.c:155
+#: app/actions/image-actions.c:168
 msgctxt "image-action"
 msgid "Merge all visible layers into one layer"
 msgstr "Spoji vse vidne plasti na eno plast"
 
-#: app/actions/image-actions.c:160
+#: app/actions/image-actions.c:173
 msgctxt "image-action"
 msgid "_Flatten Image"
 msgstr "_Splošči sliko"
 
-#: app/actions/image-actions.c:161
+#: app/actions/image-actions.c:174
 msgctxt "image-action"
 msgid "Merge all layers into one and remove transparency"
 msgstr "Spoji vse plasti na eno in odstrani prosojnost"
 
-#: app/actions/image-actions.c:166
+#: app/actions/image-actions.c:179
 msgctxt "image-action"
 msgid "Configure G_rid..."
 msgstr "Prilagodi _mrežo ..."
 
-#: app/actions/image-actions.c:167
+#: app/actions/image-actions.c:180
 msgctxt "image-action"
 msgid "Configure the grid for this image"
 msgstr "Prilagodi mrežo tej sliki"
 
-#: app/actions/image-actions.c:172
+#: app/actions/image-actions.c:185
 msgctxt "image-action"
 msgid "Image Pr_operties"
 msgstr "Lastn_osti slike"
 
-#: app/actions/image-actions.c:173
+#: app/actions/image-actions.c:186
 msgctxt "image-action"
 msgid "Display information about this image"
 msgstr "Pokaži informacije o tej sliki"
 
-#: app/actions/image-actions.c:181
+#: app/actions/image-actions.c:194
 msgctxt "image-action"
 msgid "Use _sRGB Profile"
 msgstr "Uporabi profil _sRGB"
 
-#: app/actions/image-actions.c:182
+#: app/actions/image-actions.c:195
 msgctxt "image-action"
 msgid ""
 "Temporarily use an sRGB profile for the image. This is the same as "
@@ -5830,268 +5845,318 @@ msgstr ""
 "Za sliko začasno uporabi profil sRGB. To je enako kot opustitev barvnega "
 "profila slike, a omogoča enostavno obnovitev profila."
 
-#: app/actions/image-actions.c:193 app/actions/image-actions.c:466
+#: app/actions/image-actions.c:203
+msgctxt "image-action"
+msgid "_Black Point Compensation"
+msgstr "_Kompenzacija črne točke"
+
+#: app/actions/image-actions.c:204
+msgctxt "image-action"
+msgid "Use black point compensation for soft-proofing"
+msgstr "Uporabi kompenzacijo črne točke za odobritev izdaje"
+
+#: app/actions/image-actions.c:213 app/actions/image-actions.c:553
 msgctxt "image-convert-action"
 msgid "_RGB"
 msgstr "_RGB"
 
-#: app/actions/image-actions.c:194
+#: app/actions/image-actions.c:214
 msgctxt "image-convert-action"
 msgid "Convert the image to the RGB colorspace"
 msgstr "Pretvori sliko v barvni prostor RGB"
 
-#: app/actions/image-actions.c:198 app/actions/image-actions.c:468
+#: app/actions/image-actions.c:218 app/actions/image-actions.c:555
 msgctxt "image-convert-action"
 msgid "_Grayscale"
 msgstr "_Sivinsko"
 
-#: app/actions/image-actions.c:199
+#: app/actions/image-actions.c:219
 msgctxt "image-convert-action"
 msgid "Convert the image to grayscale"
 msgstr "Pretvori sliko v sivinsko"
 
-#: app/actions/image-actions.c:203
+#: app/actions/image-actions.c:223
 msgctxt "image-convert-action"
 msgid "_Indexed..."
 msgstr "_Indeksirano ..."
 
-#: app/actions/image-actions.c:204
+#: app/actions/image-actions.c:224
 msgctxt "image-convert-action"
 msgid "Convert the image to indexed colors"
 msgstr "Pretvori sliko v barvno indeksirano"
 
-#: app/actions/image-actions.c:211
+#: app/actions/image-actions.c:231
 msgctxt "image-convert-action"
 msgid "8 bit integer"
 msgstr "8-bitna celoštevilska"
 
-#: app/actions/image-actions.c:213
+#: app/actions/image-actions.c:233
 msgctxt "image-convert-action"
 msgid "Convert the image to 8 bit integer"
 msgstr "Pretvori sliko v 8-bitno celoštevilsko"
 
-#: app/actions/image-actions.c:217
+#: app/actions/image-actions.c:237
 msgctxt "image-convert-action"
 msgid "16 bit integer"
 msgstr "16-bitna celoštevilska"
 
-#: app/actions/image-actions.c:219
+#: app/actions/image-actions.c:239
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit integer"
 msgstr "Pretvori sliko v 16-bitno celoštevilsko"
 
-#: app/actions/image-actions.c:223
+#: app/actions/image-actions.c:243
 msgctxt "image-convert-action"
 msgid "32 bit integer"
 msgstr "32-bitna celoštevilska"
 
-#: app/actions/image-actions.c:225
+#: app/actions/image-actions.c:245
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit integer"
 msgstr "Pretvori sliko v 32-bitno celoštevilsko"
 
-#: app/actions/image-actions.c:229
+#: app/actions/image-actions.c:249
 msgctxt "image-convert-action"
 msgid "16 bit floating point"
 msgstr "16-bitna s plavajočo vejico"
 
-#: app/actions/image-actions.c:231
+#: app/actions/image-actions.c:251
 msgctxt "image-convert-action"
 msgid "Convert the image to 16 bit floating point"
 msgstr "Pretvori sliko v 16-bitno s plavajočo vejico"
 
-#: app/actions/image-actions.c:235
+#: app/actions/image-actions.c:255
 msgctxt "image-convert-action"
 msgid "32 bit floating point"
 msgstr "32-bitna s plavajočo vejico"
 
-#: app/actions/image-actions.c:237
+#: app/actions/image-actions.c:257
 msgctxt "image-convert-action"
 msgid "Convert the image to 32 bit floating point"
 msgstr "Pretvori sliko v 32-bitno s plavajočo vejico"
 
-#: app/actions/image-actions.c:241
+#: app/actions/image-actions.c:261
 msgctxt "image-convert-action"
 msgid "64 bit floating point"
 msgstr "64-bitna s plavajočo vejico"
 
-#: app/actions/image-actions.c:243
+#: app/actions/image-actions.c:263
 msgctxt "image-convert-action"
 msgid "Convert the image to 64 bit floating point"
 msgstr "Pretvori sliko v 64-bitno s plavajočo vejico"
 
-#: app/actions/image-actions.c:250
+#: app/actions/image-actions.c:270
 msgctxt "image-convert-action"
 msgid "Linear light"
 msgstr "Linearna svetloba"
 
-#: app/actions/image-actions.c:252
+#: app/actions/image-actions.c:272
 msgctxt "image-convert-action"
 msgid "Convert the image to linear light"
 msgstr "Pretvori sliko v linearno svetlobno"
 
-#: app/actions/image-actions.c:256
+#: app/actions/image-actions.c:276
 msgctxt "image-convert-action"
 msgid "Non-Linear"
 msgstr "Nelinearno"
 
-#: app/actions/image-actions.c:258
+#: app/actions/image-actions.c:278
 msgctxt "image-convert-action"
 msgid "Convert the image to non-linear gamma from the color profile"
 msgstr "Pretvori sliko v nelinearno gamo iz barvnega profila"
 
-#: app/actions/image-actions.c:262
+#: app/actions/image-actions.c:282
 msgctxt "image-convert-action"
 msgid "Perceptual (sRGB)"
 msgstr "Zaznavno (sRGB)"
 
-#: app/actions/image-actions.c:264
+#: app/actions/image-actions.c:284
 msgctxt "image-convert-action"
 msgid "Convert the image to perceptual (sRGB) gamma"
 msgstr "Pretvori sliko v zaznavno gamo (sRGB)"
 
-#: app/actions/image-actions.c:271
+#: app/actions/image-actions.c:291
 msgctxt "image-action"
 msgid "Flip _Horizontally"
 msgstr "Prezrcali _vodoravno"
 
-#: app/actions/image-actions.c:272
+#: app/actions/image-actions.c:292
 msgctxt "image-action"
 msgid "Flip image horizontally"
 msgstr "Prezrcali sliko vodoravno"
 
-#: app/actions/image-actions.c:277
+#: app/actions/image-actions.c:297
 msgctxt "image-action"
 msgid "Flip _Vertically"
 msgstr "Prezrcali _navpično"
 
-#: app/actions/image-actions.c:278
+#: app/actions/image-actions.c:298
 msgctxt "image-action"
 msgid "Flip image vertically"
 msgstr "Prezrcali sliko navpično"
 
-#: app/actions/image-actions.c:286
+#: app/actions/image-actions.c:306
 msgctxt "image-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Zasukaj za 90° v _SUK"
 
-#: app/actions/image-actions.c:287
+#: app/actions/image-actions.c:307
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Zasukaj sliko za 90 stopinj v smeri urinega kazalca"
 
-#: app/actions/image-actions.c:292
+#: app/actions/image-actions.c:312
 msgctxt "image-action"
 msgid "Rotate _180°"
 msgstr "Zasukaj za _180°"
 
-#: app/actions/image-actions.c:293
+#: app/actions/image-actions.c:313
 msgctxt "image-action"
 msgid "Turn the image upside-down"
 msgstr "Postavi sliko na glavo"
 
-#: app/actions/image-actions.c:298
+#: app/actions/image-actions.c:318
 msgctxt "image-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Zasukaj za 90° v _NSUK"
 
-#: app/actions/image-actions.c:299
+#: app/actions/image-actions.c:319
 msgctxt "image-action"
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Zasukaj sliko za 90 stopinj v nasprotni smeri urinega kazalca"
 
-#: app/actions/image-actions.c:459
+#: app/actions/image-actions.c:327
+msgctxt "image-action"
+msgid "_Perceptual"
+msgstr "_Zaznavno"
+
+#: app/actions/image-actions.c:328
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is perceptual"
+msgstr "Namen upodabljanja preverjanja je zaznaven"
+
+#: app/actions/image-actions.c:333
+msgctxt "image-action"
+msgid "_Relative Colorimetric"
+msgstr "_Relativno kolorimetrično"
+
+#: app/actions/image-actions.c:334
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is relative colorimetric"
+msgstr "Namen upodabljanja preverjanja je relativno kolorimetričen"
+
+#: app/actions/image-actions.c:339
+msgctxt "image-action"
+msgid "_Saturation"
+msgstr "_Nasičenost"
+
+#: app/actions/image-actions.c:340
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is saturation"
+msgstr "Namen upodabljanja preverjanja je nasičenost"
+
+#: app/actions/image-actions.c:345
+msgctxt "image-action"
+msgid "_Absolute Colorimetric"
+msgstr "_Absolutno kolorimetrično"
+
+#: app/actions/image-actions.c:346
+msgctxt "image-action"
+msgid "Soft-proofing rendering intent is absolute colorimetric"
+msgstr "Namen upodabljanja preverjanja je absolutno kolorimetričen"
+
+#: app/actions/image-actions.c:546
 msgctxt "image-convert-action"
 msgid "_RGB..."
 msgstr "_RGB ..."
 
-#: app/actions/image-actions.c:461
+#: app/actions/image-actions.c:548
 msgctxt "image-convert-action"
 msgid "_Grayscale..."
 msgstr "_Sivinsko ..."
 
-#: app/actions/image-commands.c:566
+#: app/actions/image-commands.c:576
 #, c-format
 msgid "Saving color profile failed: %s"
 msgstr "Shranjevanje barvnega profila je spodletelo: %s"
 
-#: app/actions/image-commands.c:606
+#: app/actions/image-commands.c:616
 msgid "Save Color Profile"
 msgstr "Shrani barvni profil"
 
-#: app/actions/image-commands.c:655
+#: app/actions/image-commands.c:665
 msgid "Set Image Canvas Size"
 msgstr "Nastavite velikost platna slike"
 
-#: app/actions/image-commands.c:686 app/actions/image-commands.c:711
-#: app/actions/image-commands.c:1403
+#: app/actions/image-commands.c:696 app/actions/image-commands.c:721
+#: app/actions/image-commands.c:1413
 msgid "Resizing"
 msgstr "Spreminjanje velikosti"
 
-#: app/actions/image-commands.c:745
+#: app/actions/image-commands.c:755
 msgid "Set Image Print Resolution"
 msgstr "Nastavi ločljivost tiskanja slike"
 
-#: app/actions/image-commands.c:815 app/pdb/item-transform-cmds.c:214
+#: app/actions/image-commands.c:825 app/pdb/item-transform-cmds.c:214
 #: app/tools/gimpfliptool.c:136
 msgid "Flipping"
 msgstr "Prevračanje"
 
-#: app/actions/image-commands.c:842 app/pdb/image-transform-cmds.c:218
+#: app/actions/image-commands.c:852 app/pdb/image-transform-cmds.c:218
 #: app/pdb/item-transform-cmds.c:499 app/tools/gimprotatetool.c:131
 msgid "Rotating"
 msgstr "Sukanje"
 
-#: app/actions/image-commands.c:870 app/actions/layers-commands.c:1207
+#: app/actions/image-commands.c:880 app/actions/layers-commands.c:1207
 msgid "Cannot crop because the current selection is empty."
 msgstr "Obrezava ni možna, ker je trenutni izbor prazen."
 
-#: app/actions/image-commands.c:909
+#: app/actions/image-commands.c:919
 msgid "Cannot crop because the image has no content."
 msgstr "Obrezava ni možna, ker slika nima vsebine."
 
-#: app/actions/image-commands.c:915
+#: app/actions/image-commands.c:925
 msgid "Cannot crop because the image is already cropped to its content."
 msgstr "Obrezava ni možna, ker je slika že obrezana do svoje vsebine."
 
-#: app/actions/image-commands.c:1081
+#: app/actions/image-commands.c:1091
 #, c-format
 msgid "Converting to RGB (%s)"
 msgstr "Pretvarjanje v RGB (%s)"
 
-#: app/actions/image-commands.c:1119
+#: app/actions/image-commands.c:1129
 #, c-format
 msgid "Converting to grayscale (%s)"
 msgstr "Pretvarjanje v sivinsko (%s)"
 
-#: app/actions/image-commands.c:1181
+#: app/actions/image-commands.c:1191
 msgid "Converting to indexed colors"
 msgstr "Pretvarjanje slike v indeksirano"
 
-#: app/actions/image-commands.c:1269
+#: app/actions/image-commands.c:1279
 #, c-format
 msgid "Converting image to %s"
 msgstr "Pretvarjanje slike v %s"
 
-#: app/actions/image-commands.c:1332
+#: app/actions/image-commands.c:1342
 #, c-format
 msgid "Converting to '%s'"
 msgstr "Pretvarjanje v ‘%s’"
 
-#: app/actions/image-commands.c:1416
+#: app/actions/image-commands.c:1426
 msgid "Change Canvas Size"
 msgstr "Spremeni velikost platna slike"
 
-#: app/actions/image-commands.c:1465
+#: app/actions/image-commands.c:1475
 msgid "Change Print Size"
 msgstr "Spremeni velikost tiskanja"
 
-#: app/actions/image-commands.c:1509
+#: app/actions/image-commands.c:1519
 msgid "Scale Image"
 msgstr "Spremeni merilo slike"
 
 #. Scaling
-#: app/actions/image-commands.c:1518 app/actions/layers-commands.c:2506
+#: app/actions/image-commands.c:1528 app/actions/layers-commands.c:2506
 #: app/dialogs/preferences-dialog.c:1769 app/pdb/image-transform-cmds.c:124
 #: app/pdb/item-transform-cmds.c:595 app/pdb/layer-cmds.c:411
 #: app/tools/gimpscaletool.c:122
@@ -9280,235 +9345,215 @@ msgstr "_Pokaži namen upodabljanja"
 
 #: app/actions/view-actions.c:81
 msgctxt "view-action"
-msgid "Soft-Proofing Re_ndering Intent"
-msgstr "Namena upo_dabljanja za preverjanje"
-
-#: app/actions/view-actions.c:84
-msgctxt "view-action"
 msgid "Move to Screen"
 msgstr "Premakni na zaslon"
 
-#: app/actions/view-actions.c:88
+#: app/actions/view-actions.c:85
 msgctxt "view-action"
 msgid "_New View"
 msgstr "_Nov pogled"
 
-#: app/actions/view-actions.c:89
+#: app/actions/view-actions.c:86
 msgctxt "view-action"
 msgid "Create another view on this image"
 msgstr "Ustvari nov pogled slike"
 
-#: app/actions/view-actions.c:94
+#: app/actions/view-actions.c:91
 msgctxt "view-action"
 msgid "_Close View"
 msgstr "_Zapri pogled"
 
-#: app/actions/view-actions.c:95
+#: app/actions/view-actions.c:92
 msgctxt "view-action"
 msgid "Close the active image view"
 msgstr "Zapri pogled aktivne slike"
 
-#: app/actions/view-actions.c:100
+#: app/actions/view-actions.c:97
 msgctxt "view-action"
 msgid "C_enter Image in Window"
 msgstr "Sr_edini sliko v oknu"
 
-#: app/actions/view-actions.c:101
+#: app/actions/view-actions.c:98
 msgctxt "view-action"
 msgid "Scroll the image so that it is centered in the window"
 msgstr "Podrsaj sliko, da je na sredi okna"
 
-#: app/actions/view-actions.c:106
+#: app/actions/view-actions.c:103
 msgctxt "view-action"
 msgid "_Fit Image in Window"
 msgstr "_Prilagodi sliko oknu"
 
-#: app/actions/view-actions.c:107
+#: app/actions/view-actions.c:104
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Prilagodi povečavo, da je slika vidna v celoti"
 
-#: app/actions/view-actions.c:112
+#: app/actions/view-actions.c:109
 msgctxt "view-action"
 msgid "Fi_ll Window"
 msgstr "Zapo_lni okno"
 
-#: app/actions/view-actions.c:113
+#: app/actions/view-actions.c:110
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the entire window is used"
 msgstr "Prilagodi povečavo, da je uporabljeno celotno okno"
 
-#: app/actions/view-actions.c:118
+#: app/actions/view-actions.c:115
 msgctxt "view-action"
 msgid "Zoom to _Selection"
 msgstr "Povečaj na iz_bor"
 
-#: app/actions/view-actions.c:119
+#: app/actions/view-actions.c:116
 msgctxt "view-action"
 msgid "Adjust the zoom ratio so that the selection fills the window"
 msgstr "Prilagodi faktor povečave, da izbor zapolni celotno okno."
 
-#: app/actions/view-actions.c:124
+#: app/actions/view-actions.c:121
 msgctxt "view-action"
 msgid "Re_vert Zoom"
 msgstr "Po_vrni povečavo"
 
-#: app/actions/view-actions.c:125
+#: app/actions/view-actions.c:122
 msgctxt "view-action"
 msgid "Restore the previous zoom level"
 msgstr "Obnovi prejšnjo raven povečave"
 
-#: app/actions/view-actions.c:130
+#: app/actions/view-actions.c:127
 msgctxt "view-action"
 msgid "Othe_r rotation angle..."
 msgstr "Dru_gi kot sukanja ..."
 
-#: app/actions/view-actions.c:131
+#: app/actions/view-actions.c:128
 msgctxt "view-action"
 msgid "Set a custom rotation angle"
 msgstr "Nastavite kot sukanja po meri"
 
-#: app/actions/view-actions.c:136
+#: app/actions/view-actions.c:133
 msgctxt "view-action"
 msgid "_Reset Flipping"
 msgstr "_Ponastavi obračanje"
 
-#: app/actions/view-actions.c:138
+#: app/actions/view-actions.c:135
 msgctxt "view-action"
 msgid "Reset flipping to unflipped"
 msgstr "Ponastavi obračanje na nepreobrnjeno."
 
-#: app/actions/view-actions.c:143
+#: app/actions/view-actions.c:140
 msgctxt "view-action"
 msgid "_Reset Flip & Rotate"
 msgstr "_Ponastavi sukanje in prezrcaljenje"
 
-#: app/actions/view-actions.c:145
+#: app/actions/view-actions.c:142
 msgctxt "view-action"
 msgid "Reset flipping to unflipped and the angle of rotation to 0°"
 msgstr "Ponastavi zrcaljenje na nezrcaljeno in kot sukanja na 0°."
 
-#: app/actions/view-actions.c:150
+#: app/actions/view-actions.c:147
 msgctxt "view-action"
 msgid "Na_vigation Window"
 msgstr "O_kno krmarja"
 
-#: app/actions/view-actions.c:151
+#: app/actions/view-actions.c:148
 msgctxt "view-action"
 msgid "Show an overview window for this image"
 msgstr "Pokaži predogledno okno za to sliko"
 
-#: app/actions/view-actions.c:156
+#: app/actions/view-actions.c:153
 msgctxt "view-action"
 msgid "Display _Filters..."
 msgstr "Pokaži _filtre ..."
 
-#: app/actions/view-actions.c:157
+#: app/actions/view-actions.c:154
 msgctxt "view-action"
 msgid "Configure filters applied to this view"
 msgstr "Prilagodi filtre, uporabljene v tem pogledu"
 
-#: app/actions/view-actions.c:162
+#: app/actions/view-actions.c:159
 msgctxt "view-action"
 msgid "As in _Preferences"
 msgstr "Kot v _nastavitvah"
 
-#: app/actions/view-actions.c:164
+#: app/actions/view-actions.c:161
 msgctxt "view-action"
 msgid "Reset color management to what's configured in preferences"
 msgstr "Ponastavi upravljanje barv na tisto iz nastavitev"
 
-#: app/actions/view-actions.c:169
-msgctxt "view-action"
-msgid "Soft-_Proofing Profile..."
-msgstr "_Profil preverjanja ..."
-
-#: app/actions/view-actions.c:170
-msgctxt "view-action"
-msgid "Set the soft-proofing profile"
-msgstr "Določi profil preverjanja"
-
-#: app/actions/view-actions.c:175
+#: app/actions/view-actions.c:166
 msgctxt "view-action"
 msgid "Shrink _Wrap"
 msgstr "Skrči z _ovijanjem"
 
-#: app/actions/view-actions.c:176
+#: app/actions/view-actions.c:167
 msgctxt "view-action"
 msgid "Reduce the image window to the size of the image display"
 msgstr "Pomanjša okno slike na velikost prikaza slike"
 
-#: app/actions/view-actions.c:181
+#: app/actions/view-actions.c:172
 msgctxt "view-action"
 msgid "_Open Display..."
 msgstr "_Odpri zaslon ..."
 
-#: app/actions/view-actions.c:182
+#: app/actions/view-actions.c:173
 msgctxt "view-action"
 msgid "Connect to another display"
 msgstr "Piveži z drugim zaslonom"
 
-#: app/actions/view-actions.c:191
+#: app/actions/view-actions.c:182
 msgctxt "view-action"
 msgid "Show _All"
 msgstr "Pokaži _vse"
 
-#: app/actions/view-actions.c:192
+#: app/actions/view-actions.c:183
 msgctxt "view-action"
 msgid "Show full image content"
 msgstr "Pokaži celotno vsebino slike"
 
-#: app/actions/view-actions.c:198
+#: app/actions/view-actions.c:189
 msgctxt "view-action"
 msgid "_Dot for Dot"
 msgstr "_Točka za točko"
 
-#: app/actions/view-actions.c:199
+#: app/actions/view-actions.c:190
 msgctxt "view-action"
 msgid "A pixel on the screen represents an image pixel"
 msgstr "Slikovna točka na zaslonu predstavlja slikovno točko slike"
 
-#: app/actions/view-actions.c:205
+#: app/actions/view-actions.c:196
 msgctxt "view-action"
 msgid "_Color-Manage this View"
 msgstr "_Upravljaj z barvami tega pogleda"
 
-#: app/actions/view-actions.c:206
+#: app/actions/view-actions.c:197
 msgctxt "view-action"
 msgid "Use color management for this view"
 msgstr "Uporabi upravljanje barv za ta pogled"
 
-#: app/actions/view-actions.c:212
+#: app/actions/view-actions.c:203
 msgctxt "view-action"
 msgid "_Proof Colors"
 msgstr "_Preveri barve"
 
-#: app/actions/view-actions.c:213
+#: app/actions/view-actions.c:204
 msgctxt "view-action"
 msgid "Use this view for soft-proofing"
 msgstr "Uporabi ta pogled za odobritev izdaje"
 
-#: app/actions/view-actions.c:219 app/actions/view-actions.c:226
+#: app/actions/view-actions.c:210
 msgctxt "view-action"
 msgid "_Black Point Compensation"
 msgstr "_Kompenzacija črne točke"
 
-#: app/actions/view-actions.c:220
+#: app/actions/view-actions.c:211
 msgctxt "view-action"
 msgid "Use black point compensation for image display"
 msgstr "Uporabi kompenzacijo črne točke za prikaz slik"
 
-#: app/actions/view-actions.c:227
-msgctxt "view-action"
-msgid "Use black point compensation for soft-proofing"
-msgstr "Uporabi kompenzacijo črne točke za odobritev izdaje"
-
-#: app/actions/view-actions.c:233
+#: app/actions/view-actions.c:217
 msgctxt "view-action"
 msgid "_Mark Out Of Gamut Colors"
 msgstr "_Označi barve zunaj barvnega obsega"
 
-#: app/actions/view-actions.c:234
+#: app/actions/view-actions.c:218
 msgctxt "view-action"
 msgid ""
 "When soft-proofing, mark colors which cannot be represented in the target "
@@ -9517,629 +9562,609 @@ msgstr ""
 "Pri simulaciji upodabljanja označi tiste barve, ki jih ni mogoče predstaviti "
 "v ciljnem barvnem prostoru"
 
-#: app/actions/view-actions.c:241
+#: app/actions/view-actions.c:225
 msgctxt "view-action"
 msgid "Show _Selection"
 msgstr "Pokaži _izbor"
 
-#: app/actions/view-actions.c:242
+#: app/actions/view-actions.c:226
 msgctxt "view-action"
 msgid "Display the selection outline"
 msgstr "Pokaži oris izbora"
 
-#: app/actions/view-actions.c:248
+#: app/actions/view-actions.c:232
 msgctxt "view-action"
 msgid "Show _Layer Boundary"
 msgstr "Pokaži robove pla_sti"
 
-#: app/actions/view-actions.c:249
+#: app/actions/view-actions.c:233
 msgctxt "view-action"
 msgid "Draw a border around the active layer"
 msgstr "Nariši okvir okoli aktivne plasti"
 
-#: app/actions/view-actions.c:255
+#: app/actions/view-actions.c:239
 msgctxt "view-action"
 msgid "Show Canvas Bounda_ry"
 msgstr "Pokaži robove pla_tna"
 
-#: app/actions/view-actions.c:256
+#: app/actions/view-actions.c:240
 msgctxt "view-action"
 msgid "Draw a border around the canvas"
 msgstr "Nariši okvir okoli platna"
 
-#: app/actions/view-actions.c:262
+#: app/actions/view-actions.c:246
 msgctxt "view-action"
 msgid "Show _Guides"
 msgstr "Pokaži _vodila"
 
-#: app/actions/view-actions.c:263
+#: app/actions/view-actions.c:247
 msgctxt "view-action"
 msgid "Display the image's guides"
 msgstr "Pokaži vodila slike"
 
-#: app/actions/view-actions.c:269
+#: app/actions/view-actions.c:253
 msgctxt "view-action"
 msgid "S_how Grid"
 msgstr "Pokaži _mrežo"
 
-#: app/actions/view-actions.c:270
+#: app/actions/view-actions.c:254
 msgctxt "view-action"
 msgid "Display the image's grid"
 msgstr "Pokaži mrežo slike"
 
-#: app/actions/view-actions.c:276
+#: app/actions/view-actions.c:260
 msgctxt "view-action"
 msgid "Sh_ow Sample Points"
 msgstr "Poka_ži vzorčne točke"
 
-#: app/actions/view-actions.c:277
+#: app/actions/view-actions.c:261
 msgctxt "view-action"
 msgid "Display the image's color sample points"
 msgstr "Pokaži vzorčne točke barv slike"
 
-#: app/actions/view-actions.c:283
+#: app/actions/view-actions.c:267
 msgctxt "view-action"
 msgid "Snap to Gu_ides"
 msgstr "Pripni na vod_ila"
 
-#: app/actions/view-actions.c:284
+#: app/actions/view-actions.c:268
 msgctxt "view-action"
 msgid "Tool operations snap to guides"
 msgstr "Dejanja orodja se pripnejo na vodila"
 
-#: app/actions/view-actions.c:290
+#: app/actions/view-actions.c:274
 msgctxt "view-action"
 msgid "Sna_p to Grid"
 msgstr "Pripni na _mrežo"
 
-#: app/actions/view-actions.c:291
+#: app/actions/view-actions.c:275
 msgctxt "view-action"
 msgid "Tool operations snap to the grid"
 msgstr "Dejanja orodja se pripnejo na mrežo"
 
-#: app/actions/view-actions.c:297
+#: app/actions/view-actions.c:281
 msgctxt "view-action"
 msgid "Snap to _Canvas Edges"
 msgstr "Pripni na _rob platna"
 
-#: app/actions/view-actions.c:298
+#: app/actions/view-actions.c:282
 msgctxt "view-action"
 msgid "Tool operations snap to the canvas edges"
 msgstr "Dejanja orodja se pripnejo na rob platna"
 
-#: app/actions/view-actions.c:304
+#: app/actions/view-actions.c:288
 msgctxt "view-action"
 msgid "Snap t_o Active Path"
 msgstr "Pripni na _aktivno pot"
 
-#: app/actions/view-actions.c:305
+#: app/actions/view-actions.c:289
 msgctxt "view-action"
 msgid "Tool operations snap to the active path"
 msgstr "Dejanja orodja se pripnejo na aktivno pot"
 
-#: app/actions/view-actions.c:311
+#: app/actions/view-actions.c:295
 msgctxt "view-action"
 msgid "Show _Menubar"
 msgstr "Pokaži _menijsko vrstico"
 
-#: app/actions/view-actions.c:312
+#: app/actions/view-actions.c:296
 msgctxt "view-action"
 msgid "Show this window's menubar"
 msgstr "Pokaži menijsko vrstico okna"
 
-#: app/actions/view-actions.c:318
+#: app/actions/view-actions.c:302
 msgctxt "view-action"
 msgid "Show R_ulers"
 msgstr "Pokaži me_rili"
 
-#: app/actions/view-actions.c:319
+#: app/actions/view-actions.c:303
 msgctxt "view-action"
 msgid "Show this window's rulers"
 msgstr "Pokaži merili tega okna"
 
-#: app/actions/view-actions.c:325
+#: app/actions/view-actions.c:309
 msgctxt "view-action"
 msgid "Show Scroll_bars"
 msgstr "Pokaži _drsnika"
 
-#: app/actions/view-actions.c:326
+#: app/actions/view-actions.c:310
 msgctxt "view-action"
 msgid "Show this window's scrollbars"
 msgstr "Pokaži drsnika okna"
 
-#: app/actions/view-actions.c:332
+#: app/actions/view-actions.c:316
 msgctxt "view-action"
 msgid "Show S_tatusbar"
 msgstr "Pokaži _vrstico stanja"
 
-#: app/actions/view-actions.c:333
+#: app/actions/view-actions.c:317
 msgctxt "view-action"
 msgid "Show this window's statusbar"
 msgstr "Pokaži vrstico stanja okna"
 
-#: app/actions/view-actions.c:339
+#: app/actions/view-actions.c:323
 msgctxt "view-action"
 msgid "Fullscr_een"
 msgstr "Celo_zaslonsko"
 
-#: app/actions/view-actions.c:340
+#: app/actions/view-actions.c:324
 msgctxt "view-action"
 msgid "Toggle fullscreen view"
 msgstr "Vključi/izključi celozaslonski pogled"
 
-#: app/actions/view-actions.c:349
+#: app/actions/view-actions.c:333
 msgctxt "view-zoom-action"
 msgid "Set zoom factor"
 msgstr "Nastavi faktor povečave"
 
-#: app/actions/view-actions.c:354
+#: app/actions/view-actions.c:338
 msgctxt "view-zoom-action"
 msgid "Zoom out as far as possible"
 msgstr "Oddalji, kolikor je mogoče"
 
-#: app/actions/view-actions.c:359
+#: app/actions/view-actions.c:343
 msgctxt "view-zoom-action"
 msgid "Zoom in as far as possible"
 msgstr "Približaj, kolikor je mogoče"
 
-#: app/actions/view-actions.c:364
+#: app/actions/view-actions.c:348
 msgctxt "view-zoom-action"
 msgid "Zoom _Out"
 msgstr "_Oddalji"
 
-#: app/actions/view-actions.c:365 app/actions/view-actions.c:377
+#: app/actions/view-actions.c:349 app/actions/view-actions.c:361
 msgctxt "view-zoom-action"
 msgid "Zoom out"
 msgstr "Pomanjšaj"
 
-#: app/actions/view-actions.c:370
+#: app/actions/view-actions.c:354
 msgctxt "view-zoom-action"
 msgid "Zoom _In"
 msgstr "_Približaj"
 
-#: app/actions/view-actions.c:371 app/actions/view-actions.c:383
+#: app/actions/view-actions.c:355 app/actions/view-actions.c:367
 msgctxt "view-zoom-action"
 msgid "Zoom in"
 msgstr "Povečaj"
 
-#: app/actions/view-actions.c:376
+#: app/actions/view-actions.c:360
 msgctxt "view-zoom-action"
 msgid "Zoom Out"
 msgstr "Pomanjšaj"
 
-#: app/actions/view-actions.c:382
+#: app/actions/view-actions.c:366
 msgctxt "view-zoom-action"
 msgid "Zoom In"
 msgstr "Povečaj"
 
-#: app/actions/view-actions.c:388
+#: app/actions/view-actions.c:372
 msgctxt "view-zoom-action"
 msgid "Zoom out a lot"
 msgstr "Občutno pomanjšaj"
 
-#: app/actions/view-actions.c:393
+#: app/actions/view-actions.c:377
 msgctxt "view-zoom-action"
 msgid "Zoom in a lot"
 msgstr "Občutno povečaj"
 
-#: app/actions/view-actions.c:401 app/actions/view-actions.c:407
+#: app/actions/view-actions.c:385 app/actions/view-actions.c:391
 msgctxt "view-zoom-action"
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: app/actions/view-actions.c:402 app/actions/view-actions.c:408
+#: app/actions/view-actions.c:386 app/actions/view-actions.c:392
 msgctxt "view-zoom-action"
 msgid "Zoom 16:1"
 msgstr "16:1"
 
-#: app/actions/view-actions.c:413 app/actions/view-actions.c:419
+#: app/actions/view-actions.c:397 app/actions/view-actions.c:403
 msgctxt "view-zoom-action"
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: app/actions/view-actions.c:414 app/actions/view-actions.c:420
+#: app/actions/view-actions.c:398 app/actions/view-actions.c:404
 msgctxt "view-zoom-action"
 msgid "Zoom 8:1"
 msgstr "8:1"
 
-#: app/actions/view-actions.c:425 app/actions/view-actions.c:431
+#: app/actions/view-actions.c:409 app/actions/view-actions.c:415
 msgctxt "view-zoom-action"
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: app/actions/view-actions.c:426 app/actions/view-actions.c:432
+#: app/actions/view-actions.c:410 app/actions/view-actions.c:416
 msgctxt "view-zoom-action"
 msgid "Zoom 4:1"
 msgstr "4:1"
 
-#: app/actions/view-actions.c:437 app/actions/view-actions.c:443
+#: app/actions/view-actions.c:421 app/actions/view-actions.c:427
 msgctxt "view-zoom-action"
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: app/actions/view-actions.c:438 app/actions/view-actions.c:444
+#: app/actions/view-actions.c:422 app/actions/view-actions.c:428
 msgctxt "view-zoom-action"
 msgid "Zoom 2:1"
 msgstr "2:1"
 
-#: app/actions/view-actions.c:449 app/actions/view-actions.c:455
+#: app/actions/view-actions.c:433 app/actions/view-actions.c:439
 msgctxt "view-zoom-action"
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: app/actions/view-actions.c:450 app/actions/view-actions.c:456
+#: app/actions/view-actions.c:434 app/actions/view-actions.c:440
 msgctxt "view-zoom-action"
 msgid "Zoom 1:1"
 msgstr "1:1"
 
-#: app/actions/view-actions.c:461
+#: app/actions/view-actions.c:445
 msgctxt "view-zoom-action"
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: app/actions/view-actions.c:462
+#: app/actions/view-actions.c:446
 msgctxt "view-zoom-action"
 msgid "Zoom 1:2"
 msgstr "1:2"
 
-#: app/actions/view-actions.c:467
+#: app/actions/view-actions.c:451
 msgctxt "view-zoom-action"
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: app/actions/view-actions.c:468
+#: app/actions/view-actions.c:452
 msgctxt "view-zoom-action"
 msgid "Zoom 1:4"
 msgstr "1:4"
 
-#: app/actions/view-actions.c:473
+#: app/actions/view-actions.c:457
 msgctxt "view-zoom-action"
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12,5%)"
 
-#: app/actions/view-actions.c:474
+#: app/actions/view-actions.c:458
 msgctxt "view-zoom-action"
 msgid "Zoom 1:8"
 msgstr "1:8"
 
-#: app/actions/view-actions.c:479
+#: app/actions/view-actions.c:463
 msgctxt "view-zoom-action"
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6,25%)"
 
-#: app/actions/view-actions.c:480
+#: app/actions/view-actions.c:464
 msgctxt "view-zoom-action"
 msgid "Zoom 1:16"
 msgstr "1:16"
 
-#: app/actions/view-actions.c:485
+#: app/actions/view-actions.c:469
 msgctxt "view-zoom-action"
 msgid "Othe_r zoom factor..."
 msgstr "D_rug faktor povečave ..."
 
-#: app/actions/view-actions.c:486
+#: app/actions/view-actions.c:470
 msgctxt "view-zoom-action"
 msgid "Set a custom zoom factor"
 msgstr "Nastavite faktor povečave po meri"
 
-#: app/actions/view-actions.c:494
+#: app/actions/view-actions.c:478
 msgctxt "view-action"
 msgid "Flip _Horizontally"
 msgstr "Prezrcali _vodoravno"
 
-#: app/actions/view-actions.c:495
+#: app/actions/view-actions.c:479
 msgctxt "view-action"
 msgid "Flip the view horizontally"
 msgstr "Prevrni pogled vodoravno"
 
-#: app/actions/view-actions.c:501
+#: app/actions/view-actions.c:485
 msgctxt "view-action"
 msgid "Flip _Vertically"
 msgstr "Prezrcali _navpično"
 
-#: app/actions/view-actions.c:502
+#: app/actions/view-actions.c:486
 msgctxt "view-action"
 msgid "Flip the view vertically"
 msgstr "Prevrni pogled navpično"
 
-#: app/actions/view-actions.c:516
+#: app/actions/view-actions.c:500
 msgctxt "view-action"
 msgid "_Reset Rotate"
 msgstr "_Ponastavi sukanje"
 
-#: app/actions/view-actions.c:518
+#: app/actions/view-actions.c:502
 msgctxt "view-action"
 msgid "Reset the angle of rotation to 0°"
 msgstr "Ponastavi kot sukanja na 0°."
 
-#: app/actions/view-actions.c:526
+#: app/actions/view-actions.c:510
 msgctxt "view-action"
 msgid "Rotate 15° _clockwise"
 msgstr "Zasukaj za 15° v _SUK"
 
-#: app/actions/view-actions.c:527
+#: app/actions/view-actions.c:511
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the right"
 msgstr "Zasukaj pogled za 15 stopinj v desno"
 
-#: app/actions/view-actions.c:532
+#: app/actions/view-actions.c:516
 msgctxt "view-action"
 msgid "Rotate 90° _clockwise"
 msgstr "Zasukaj za 90° v _SUK"
 
-#: app/actions/view-actions.c:533
+#: app/actions/view-actions.c:517
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the right"
 msgstr "Zasukaj pogled za 90 stopinj v desno"
 
-#: app/actions/view-actions.c:538
+#: app/actions/view-actions.c:522
 msgctxt "view-action"
 msgid "Rotate _180°"
 msgstr "Zasukaj za _180°"
 
-#: app/actions/view-actions.c:539
+#: app/actions/view-actions.c:523
 msgctxt "view-action"
 msgid "Turn the view upside-down"
 msgstr "Postavi pogled na glavo"
 
-#: app/actions/view-actions.c:544
+#: app/actions/view-actions.c:528
 msgctxt "view-action"
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Zasukaj za 90° v _NSUK"
 
-#: app/actions/view-actions.c:545
+#: app/actions/view-actions.c:529
 msgctxt "view-action"
 msgid "Rotate the view 90 degrees to the left"
 msgstr "Zasukaj pogled za 90 stopinj v levo"
 
-#: app/actions/view-actions.c:550
+#: app/actions/view-actions.c:534
 msgctxt "view-action"
 msgid "Rotate 15° counter-clock_wise"
 msgstr "Zasukaj za 15° v _NSUK"
 
-#: app/actions/view-actions.c:551
+#: app/actions/view-actions.c:535
 msgctxt "view-action"
 msgid "Rotate the view 15 degrees to the left"
 msgstr "Zasukaj pogled za 15 stopinj v levo"
 
-#: app/actions/view-actions.c:559 app/actions/view-actions.c:586
+#: app/actions/view-actions.c:543
 msgctxt "view-action"
 msgid "_Perceptual"
 msgstr "_Zaznavno"
 
-#: app/actions/view-actions.c:560
+#: app/actions/view-actions.c:544
 msgctxt "view-action"
 msgid "Display rendering intent is perceptual"
 msgstr "Namen upodabljanja prikaza je zaznaven"
 
-#: app/actions/view-actions.c:565 app/actions/view-actions.c:592
+#: app/actions/view-actions.c:549
 msgctxt "view-action"
 msgid "_Relative Colorimetric"
 msgstr "_Relativno kolorimetrično"
 
-#: app/actions/view-actions.c:566
+#: app/actions/view-actions.c:550
 msgctxt "view-action"
 msgid "Display rendering intent is relative colorimetric"
 msgstr "Namen upodabljanja prikaza je relativno kolorimetrični"
 
-#: app/actions/view-actions.c:571 app/actions/view-actions.c:598
+#: app/actions/view-actions.c:555
 msgctxt "view-action"
 msgid "_Saturation"
 msgstr "_Nasičenost"
 
-#: app/actions/view-actions.c:572
+#: app/actions/view-actions.c:556
 msgctxt "view-action"
 msgid "Display rendering intent is saturation"
 msgstr "Namen upodabljanja prikaza je nasičenost"
 
-#: app/actions/view-actions.c:577 app/actions/view-actions.c:604
+#: app/actions/view-actions.c:561
 msgctxt "view-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Absolutno kolorimetrično"
 
-#: app/actions/view-actions.c:578
+#: app/actions/view-actions.c:562
 msgctxt "view-action"
 msgid "Display rendering intent is absolute colorimetric"
 msgstr "Namen upodabljanja prikaza je absolutno kolorimetričen"
 
-#: app/actions/view-actions.c:587
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is perceptual"
-msgstr "Namen upodabljanja preverjanja je zaznaven"
-
-#: app/actions/view-actions.c:593
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is relative colorimetric"
-msgstr "Namen upodabljanja preverjanja je relativno kolorimetričen"
-
-#: app/actions/view-actions.c:599
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is saturation"
-msgstr "Namen upodabljanja preverjanja je nasičenost"
-
-#: app/actions/view-actions.c:605
-msgctxt "view-action"
-msgid "Soft-proofing rendering intent is absolute colorimetric"
-msgstr "Namen upodabljanja preverjanja je absolutno kolorimetričen"
-
-#: app/actions/view-actions.c:613
+#: app/actions/view-actions.c:570
 msgctxt "view-padding-color"
 msgid "From _Theme"
 msgstr "Iz _teme"
 
-#: app/actions/view-actions.c:614
+#: app/actions/view-actions.c:571
 msgctxt "view-padding-color"
 msgid "Use the current theme's background color"
 msgstr "Uporabi barvo ozadja trenutne teme"
 
-#: app/actions/view-actions.c:619
+#: app/actions/view-actions.c:576
 msgctxt "view-padding-color"
 msgid "_Light Check Color"
 msgstr "Barva _svetlih polj vzorca"
 
-#: app/actions/view-actions.c:620
+#: app/actions/view-actions.c:577
 msgctxt "view-padding-color"
 msgid "Use the light check color"
 msgstr "Uporabi svetlo sivo barvo"
 
-#: app/actions/view-actions.c:625
+#: app/actions/view-actions.c:582
 msgctxt "view-padding-color"
 msgid "_Dark Check Color"
 msgstr "Barva _temnih polj vzorca"
 
-#: app/actions/view-actions.c:626
+#: app/actions/view-actions.c:583
 msgctxt "view-padding-color"
 msgid "Use the dark check color"
 msgstr "Uporabi temno sivo barvo"
 
-#: app/actions/view-actions.c:631
+#: app/actions/view-actions.c:588
 msgctxt "view-padding-color"
 msgid "_Custom Color..."
 msgstr "Barva po _meri ..."
 
-#: app/actions/view-actions.c:632
+#: app/actions/view-actions.c:589
 msgctxt "view-padding-color"
 msgid "Use an arbitrary color"
 msgstr "Uporabi naključno barvo"
 
-#: app/actions/view-actions.c:637
+#: app/actions/view-actions.c:594
 msgctxt "view-padding-color"
 msgid "As in _Preferences"
 msgstr "Kot v _nastavitvah"
 
-#: app/actions/view-actions.c:639
+#: app/actions/view-actions.c:596
 msgctxt "view-padding-color"
 msgid "Reset padding color to what's configured in preferences"
 msgstr "Ponastavi barvo zapolnjevanja platna na barvo iz nastavitev"
 
-#: app/actions/view-actions.c:647
+#: app/actions/view-actions.c:604
 msgctxt "view-padding-color"
 msgid "Keep Padding in \"Show _All\" Mode"
 msgstr "Ohrani način zapolnjevanja platna v načinu »Pokaži vse«"
 
-#: app/actions/view-actions.c:649
+#: app/actions/view-actions.c:606
 msgctxt "view-padding-color"
 msgid "Keep canvas padding when \"View -> Show All\" is enabled"
 msgstr ""
 "Ohrani oblazinjenje platna, ko je omogočena možnost »Pogled-> Pokaži vse«"
 
-#: app/actions/view-actions.c:658
+#: app/actions/view-actions.c:615
 msgctxt "view-action"
 msgid "Set horizontal scroll offset"
 msgstr "Določi vodoravni odmik drsenja"
 
-#: app/actions/view-actions.c:663
+#: app/actions/view-actions.c:620
 msgctxt "view-action"
 msgid "Scroll to left border"
 msgstr "Drsenje na levi rob"
 
-#: app/actions/view-actions.c:668
+#: app/actions/view-actions.c:625
 msgctxt "view-action"
 msgid "Scroll to right border"
 msgstr "Drsenje na desni rob"
 
-#: app/actions/view-actions.c:673
+#: app/actions/view-actions.c:630
 msgctxt "view-action"
 msgid "Scroll left"
 msgstr "Drsenje v levo"
 
-#: app/actions/view-actions.c:678
+#: app/actions/view-actions.c:635
 msgctxt "view-action"
 msgid "Scroll right"
 msgstr "Drsenje v desno"
 
-#: app/actions/view-actions.c:683
+#: app/actions/view-actions.c:640
 msgctxt "view-action"
 msgid "Scroll page left"
 msgstr "Drsenje strani v levo"
 
-#: app/actions/view-actions.c:688
+#: app/actions/view-actions.c:645
 msgctxt "view-action"
 msgid "Scroll page right"
 msgstr "Drsenje strani v desno"
 
-#: app/actions/view-actions.c:696
+#: app/actions/view-actions.c:653
 msgctxt "view-action"
 msgid "Set vertical scroll offset"
 msgstr "Določi navpični odmik drsenja"
 
-#: app/actions/view-actions.c:701
+#: app/actions/view-actions.c:658
 msgctxt "view-action"
 msgid "Scroll to top border"
 msgstr "Drsenje na vrhnji rob"
 
-#: app/actions/view-actions.c:706
+#: app/actions/view-actions.c:663
 msgctxt "view-action"
 msgid "Scroll to bottom border"
 msgstr "Drsenje na spodnji rob"
 
-#: app/actions/view-actions.c:711
+#: app/actions/view-actions.c:668
 msgctxt "view-action"
 msgid "Scroll up"
 msgstr "Premakni se višje"
 
-#: app/actions/view-actions.c:716
+#: app/actions/view-actions.c:673
 msgctxt "view-action"
 msgid "Scroll down"
 msgstr "Premakni se nižje"
 
-#: app/actions/view-actions.c:721
+#: app/actions/view-actions.c:678
 msgctxt "view-action"
 msgid "Scroll page up"
 msgstr "Eno stran višje"
 
-#: app/actions/view-actions.c:726
+#: app/actions/view-actions.c:683
 msgctxt "view-action"
 msgid "Scroll page down"
 msgstr "Eno stran nižje"
 
-#: app/actions/view-actions.c:963
+#: app/actions/view-actions.c:884
 #, c-format
 msgid "Re_vert Zoom (%d%%)"
 msgstr "Po_vrni povečavo (%d%%)"
 
-#: app/actions/view-actions.c:971
+#: app/actions/view-actions.c:892
 msgid "Re_vert Zoom"
 msgstr "Po_vrni povečavo"
 
-#: app/actions/view-actions.c:1154
+#: app/actions/view-actions.c:1067
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "D_rugo (%s) ..."
 
-#: app/actions/view-actions.c:1163
+#: app/actions/view-actions.c:1076
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Povečava (%s)"
 
 #. please preserve the trailing space
 #. H: Horizontal, V: Vertical
-#: app/actions/view-actions.c:1185
+#: app/actions/view-actions.c:1098
 msgid "(H+V) "
 msgstr "(V+N) "
 
 #. please preserve the trailing space
 #. H: Horizontal
-#: app/actions/view-actions.c:1191
+#: app/actions/view-actions.c:1104
 msgid "(H) "
 msgstr "(V) "
 
 #. please preserve the trailing space
 #. V: Vertical
-#: app/actions/view-actions.c:1197
+#: app/actions/view-actions.c:1110
 msgid "(V) "
 msgstr "(N) "
 
-#: app/actions/view-actions.c:1204
+#: app/actions/view-actions.c:1117
 #, c-format
 msgid "_Flip %s& Rotate (%d°)"
 msgstr "_Prezrcali %s in zasukaj (%d°)"
 
-#: app/actions/view-commands.c:1149
+#: app/actions/view-commands.c:1054
 msgid "Set Canvas Padding Color"
 msgstr "Nastavite barvo polnila platna"
 
-#: app/actions/view-commands.c:1151
+#: app/actions/view-commands.c:1056
 msgid "Set Custom Canvas Padding Color"
 msgstr "Izberi lastne barve polnila platna oz. podlage"
 
@@ -13672,152 +13697,152 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "Preoblikuj skupino plasti"
 
-#: app/core/gimpimage.c:691 app/widgets/gimpsymmetryeditor.c:176
+#: app/core/gimpimage.c:696 app/widgets/gimpsymmetryeditor.c:176
 msgid "Symmetry"
 msgstr "Simetrija"
 
-#: app/core/gimpimage.c:2582
+#: app/core/gimpimage.c:2609
 msgid " (exported)"
 msgstr " (izvožena)"
 
-#: app/core/gimpimage.c:2586
+#: app/core/gimpimage.c:2613
 msgid " (overwritten)"
 msgstr " (prepisana)"
 
-#: app/core/gimpimage.c:2595
+#: app/core/gimpimage.c:2622
 msgid " (imported)"
 msgstr " (uvožena)"
 
-#: app/core/gimpimage.c:2768 app/core/gimpimage.c:2782
-#: app/core/gimpimage.c:2825
+#: app/core/gimpimage.c:2795 app/core/gimpimage.c:2809
+#: app/core/gimpimage.c:2852
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "Način plasti »%s« je bil dodan v %s"
 
-#: app/core/gimpimage.c:2840
+#: app/core/gimpimage.c:2867
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "Skupine plasti so bile dodane v %s"
 
-#: app/core/gimpimage.c:2847
+#: app/core/gimpimage.c:2874
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "Maske na skupinah plasti so bile dodane v %s"
 
-#: app/core/gimpimage.c:2854
+#: app/core/gimpimage.c:2881
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "Zaklepi položaja na skupinah plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2861
+#: app/core/gimpimage.c:2888
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "Zaklepi kanala alfa na skupinah plasti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2869 app/core/gimpimage.c:2883
+#: app/core/gimpimage.c:2896 app/core/gimpimage.c:2910
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "Zaklepi vidnosti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2897
+#: app/core/gimpimage.c:2924
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: app/core/gimpimage.c:2905
+#: app/core/gimpimage.c:2932
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodiranje slik z visoko bitno globino je bilo popravljeno v %s"
 
-#: app/core/gimpimage.c:2913
+#: app/core/gimpimage.c:2940
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "V %s je bilo dodano notranje stiskanje zlib"
 
-#: app/core/gimpimage.c:2930
+#: app/core/gimpimage.c:2957
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: app/core/gimpimage.c:2937
+#: app/core/gimpimage.c:2964
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: app/core/gimpimage.c:2954
+#: app/core/gimpimage.c:2981
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Vodila izven platna dodana v %s"
 
-#: app/core/gimpimage.c:2965
+#: app/core/gimpimage.c:2992
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Element določen in iskanje vzorca v imenu elementa so bili dodani v %s."
 
-#: app/core/gimpimage.c:2971
+#: app/core/gimpimage.c:2998
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Izbor več kanalov je bil dodan v %s"
 
-#: app/core/gimpimage.c:3075
+#: app/core/gimpimage.c:3102
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: app/core/gimpimage.c:3127
+#: app/core/gimpimage.c:3154
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: app/core/gimpimage.c:4178
+#: app/core/gimpimage.c:4205
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: app/core/gimpimage.c:4239
+#: app/core/gimpimage.c:4266
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: app/core/gimpimage.c:4281
+#: app/core/gimpimage.c:4308
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: app/core/gimpimage.c:5266
+#: app/core/gimpimage.c:5293
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: app/core/gimpimage.c:5310 app/core/gimpimage.c:5341
+#: app/core/gimpimage.c:5337 app/core/gimpimage.c:5368
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: app/core/gimpimage.c:5335
+#: app/core/gimpimage.c:5362
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: app/core/gimpimage.c:5859
+#: app/core/gimpimage.c:5886
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:5889 app/core/gimpimage.c:5914
+#: app/core/gimpimage.c:5916 app/core/gimpimage.c:5941
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: app/core/gimpimage.c:5973
+#: app/core/gimpimage.c:6000
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: app/core/gimpimage.c:6003 app/core/gimpimage.c:6011
+#: app/core/gimpimage.c:6030 app/core/gimpimage.c:6038
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -13851,40 +13876,40 @@ msgstr ""
 msgid "ICC profile validation failed: "
 msgstr "Potrditev profila ICC je spodletela: "
 
-#: app/core/gimpimage-color-profile.c:409
+#: app/core/gimpimage-color-profile.c:435
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "Potrditev profila ICC je spodletela: barvni profil ni za sivinski barvni "
 "prostor"
 
-#: app/core/gimpimage-color-profile.c:419
+#: app/core/gimpimage-color-profile.c:445
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Potrditev profila ICC je spodletela: barvni profil ni za barvni prostor RGB"
 
-#: app/core/gimpimage-color-profile.c:478
+#: app/core/gimpimage-color-profile.c:504
 msgid "Assigning color profile"
 msgstr "Dodeljevanje barvnega profila"
 
-#: app/core/gimpimage-color-profile.c:479
+#: app/core/gimpimage-color-profile.c:505
 msgid "Discarding color profile"
 msgstr "Zavračanje barvnega profila"
 
-#: app/core/gimpimage-color-profile.c:483
+#: app/core/gimpimage-color-profile.c:509
 msgid "Assign color profile"
 msgstr "Dodeli barvni profil"
 
-#: app/core/gimpimage-color-profile.c:484
+#: app/core/gimpimage-color-profile.c:510
 msgid "Discard color profile"
 msgstr "Zavrzi barvni profil"
 
-#: app/core/gimpimage-color-profile.c:527
+#: app/core/gimpimage-color-profile.c:553
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Pretvarjanje iz ‘%s’ v ‘%s’"
 
-#: app/core/gimpimage-color-profile.c:532
+#: app/core/gimpimage-color-profile.c:558
 msgid "Color profile conversion"
 msgstr "Pretvorba barvnega profila"
 
@@ -18125,23 +18150,23 @@ msgstr "V"
 msgid "_Sample Merged"
 msgstr "_Vzorči spojeno"
 
-#: app/display/gimpdisplayshell.c:500
+#: app/display/gimpdisplayshell.c:503
 msgid "Access the image menu"
 msgstr "Dostopi do menija slike"
 
-#: app/display/gimpdisplayshell.c:648
+#: app/display/gimpdisplayshell.c:651
 msgid "Zoom image when window size changes"
 msgstr "Prilagodi povečavo slike ob spremenjeni velikosti okna"
 
-#: app/display/gimpdisplayshell.c:677
+#: app/display/gimpdisplayshell.c:680
 msgid "Toggle Quick Mask"
 msgstr "Vključi/izključi hitro masko"
 
-#: app/display/gimpdisplayshell.c:692
+#: app/display/gimpdisplayshell.c:695
 msgid "Navigate the image display"
 msgstr "Krmari po prikazu slike"
 
-#: app/display/gimpdisplayshell.c:745 app/display/gimpdisplayshell.c:1420
+#: app/display/gimpdisplayshell.c:748 app/display/gimpdisplayshell.c:1433
 #: app/widgets/gimptoolbox.c:244
 msgid "Drop image files here to open them"
 msgstr "Semkaj spustite datoteke slik, ki jih želite odpreti."
@@ -18278,12 +18303,12 @@ msgstr "Filtri barvnega prikaza"
 msgid "Configure Color Display Filters"
 msgstr "Nastavite filtre barvnega prikaza"
 
-#: app/display/gimpdisplayshell-handlers.c:935
+#: app/display/gimpdisplayshell-handlers.c:952
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Slika shranjena v »%s«"
 
-#: app/display/gimpdisplayshell-handlers.c:948
+#: app/display/gimpdisplayshell-handlers.c:965
 #, c-format
 msgid "Image exported to '%s'"
 msgstr "Slika izvožena v »%s«"
