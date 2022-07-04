@@ -44,6 +44,7 @@
  * and result values of widgets are written back to SFArg.
  *
  * In GIMP 3, SFArg might be somewhat replaced with GimpConfig.
+ * Then many of these methods are not needed.
  *
  * Roughly, the methods hide how to convert/represent SFArgs back/forth
  * to [GParamSpec, GValue, Scheme string representation.]
@@ -51,7 +52,35 @@
  * Since SFArg is a union, similar to a GValue, the code is mostly switch on type.
  */
 
+/*
+ * An SFArg has a type SFArgType that denotes not only a type, but a kind of widget.
+ * For example, SF_STRING denotes string type and a string entry widget,
+ * while SF_TEXT denotes a string type and a multiline text editing widget.
+ *
+ * But the SFArgType:SF_ADJUSTMENT further specifies a kind of widget,
+ * either spinner or slider.
+ * I.E. SFArgType is not one-to-one with widget kind.
+ *
+ * Unlike PythonFu, there is no SFArgType.SF_INT.
+ * Thus a ScriptFu author cannot specify an int-valued widget.
+ * While Scheme speakers understand Scheme uses "numeric" for both float and int,
+ * this might be confusing to script authors using other programming languages.
+ *
+ * SF_VALUE probably should be obsoleted.
+ * Search ChangeLog for mention of "SF_VALUE"
+ * See below, the only difference is that one get string escaped.
+ * Otherwise, SF_VALUE is identical to SF_STRING.
+ * Probably SF_VALUE still exists just for backward compatibility.
+ *
+ * SFArgType denotes not only a C type, but also a Scheme type.
+ * For example, SF_ADJUSTMENT denotes the C type "float"
+ * and the Scheme type "numeric" (which encompasses float and int.)
+ * Another example, SF_PATTERN denotes the C type GimpPattern
+ * and the Scheme type string (names of brushes are used in scripts.)
+ */
 
+
+static void pspec_set_default_file (GParamSpec *pspec, const gchar *filepath);
 
 
 /* Free any allocated members.
@@ -92,6 +121,11 @@ script_fu_arg_free (SFArg *arg)
       g_free (arg->value.sfa_file.filename);
       break;
 
+    /* FUTURE: font..gradient could all use the same code.
+     * Since the type in the union are all the same: gchar*.
+     * That is, group these cases with SF_VALUE.
+     * But this method should go away altogether.
+     */
     case SF_FONT:
       g_free (arg->default_value.sfa_font);
       g_free (arg->value.sfa_font);
@@ -179,6 +213,10 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
       value->sfa_file.filename = g_strdup (default_value->sfa_file.filename);
       break;
 
+    /* FUTURE: font..gradient could all use the same code.
+     * Since the type in the union are all the same: gchar*.
+     * That is, group these cases with SF_VALUE.
+     */
     case SF_FONT:
       g_free (value->sfa_font);
       value->sfa_font = g_strdup (default_value->sfa_font);
@@ -221,9 +259,17 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
  * Convert instance of SFArg to instance of GParamSpec.
  *
  * Used to specify an arg to the PDB proc which this script implements.
+ * The GParamSpec is "floating" meaning ownership will transfer
+ * to the GimpPDBProcedure.
+ *
+ * Ensure GParamSpec has a default except as noted below.
+ * Default value from self.
+ *
+ * FUTURE: use GimpProcedureDialog
+ * Because GimpProcedureDialog creates widgets from properties/paramspecs,
+ * this should convey what SFArg denotes about desired widget kind,
+ * but it doesn't fully do that yet.
  */
-// FIXME set defaults correctly from arg->default_value.foo.value
-// FIXME set limits correctly
 GParamSpec *
 script_fu_arg_get_param_spec (SFArg       *arg,
                               const gchar *name,
@@ -233,11 +279,12 @@ script_fu_arg_get_param_spec (SFArg       *arg,
 
   switch (arg->type)
     {
+      /* No defaults for GIMP objects: Image, Item subclasses, Display */
     case SF_IMAGE:
       pspec = gimp_param_spec_image (name,
                                      nick,
                                      arg->label,
-                                     TRUE,
+                                     TRUE,  /* None is valid. */
                                      G_PARAM_READWRITE);
       break;
 
@@ -282,65 +329,104 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_COLOR:
+      /* Pass address of default color i.e. instance of GimpRGB.
+       * Color is owned by ScriptFu and exists for lifetime of SF process.
+       */
       pspec = gimp_param_spec_rgb (name,
                                    nick,
                                    arg->label,
-                                   TRUE, NULL,
+                                   TRUE,  /* is alpha relevant */
+                                   &arg->default_value.sfa_color,
                                    G_PARAM_READWRITE);
+      /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
       break;
 
     case SF_TOGGLE:
+      /* Implicit conversion from gint32 to gboolean. */
       pspec = g_param_spec_boolean (name,
                                     nick,
                                     arg->label,
-                                    FALSE,
+                                    arg->default_value.sfa_toggle,
                                     G_PARAM_READWRITE);
       break;
 
+    /* FUTURE special widgets for multiline text.
+     * script-fu-interface does, but GimpProcedureDialog does not.
+     */
     case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
 
+    /* FUTURE special widgets.
+     * script-fu-interface does, but GimpProcedureDialog does not?
+     */
     case SF_FONT:
     case SF_PALETTE:
     case SF_PATTERN:
-    case SF_BRUSH:
     case SF_GRADIENT:
+      /* These cases the same type: gchar *.
+       * Use arbitrary SFArg field of that type.
+       */
       pspec = g_param_spec_string (name,
                                    nick,
                                    arg->label,
-                                   NULL,
+                                   arg->default_value.sfa_value,
                                    G_PARAM_READWRITE);
       break;
 
+    case SF_BRUSH:
+      /* FUTURE: brush object has more fields.
+       * ?? Implement gimp_param_spec_brush
+       */
+      pspec = g_param_spec_string (name,
+                                   nick,
+                                   arg->label,
+                                   arg->default_value.sfa_brush.name,
+                                   G_PARAM_READWRITE);
+      break;
 
     case SF_ADJUSTMENT:
       pspec = g_param_spec_double (name,
                                    nick,
                                    arg->label,
-                                   -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                   arg->default_value.sfa_adjustment.lower,
+                                   arg->default_value.sfa_adjustment.upper,
+                                   arg->default_value.sfa_adjustment.value,
                                    G_PARAM_READWRITE);
       break;
 
-    // FIXME GFile
     case SF_FILENAME:
     case SF_DIRNAME:
-      pspec = g_param_spec_string (name,
+      pspec = g_param_spec_object (name,
                                    nick,
                                    arg->label,
-                                   NULL,
+                                   G_TYPE_FILE,
                                    G_PARAM_READWRITE |
                                    GIMP_PARAM_NO_VALIDATE);
+      pspec_set_default_file (pspec, arg->default_value.sfa_file.filename);
+      /* FUTURE: Default not now appear in PDB browser, but appears in widgets? */
       break;
 
-    // FIXME SF_ENUM should be g_param_spec_enum( g_type_from_name (arg->default_value.sfa_enum.type_name))
     case SF_ENUM:
+      /* history is the last used value AND the default. */
+      pspec = g_param_spec_enum (name,
+                                 nick,
+                                 arg->label,
+                                 g_type_from_name (arg->default_value.sfa_enum.type_name),
+                                 arg->default_value.sfa_enum.history,
+                                 G_PARAM_READWRITE);
+      break;
+
     case SF_OPTION:
       pspec = g_param_spec_int (name,
                                 nick,
                                 arg->label,
-                                G_MININT, G_MAXINT, 0,
+                                0,        /* Always zero based. */
+                                g_slist_length (arg->default_value.sfa_option.list),
+                                arg->default_value.sfa_option.history,
                                 G_PARAM_READWRITE);
+      /* FUTURE: Model values not now appear in PDB browser NOR in widgets? */
+      /* FUTURE: Does not show a combo box widget ??? */
       break;
     }
 
@@ -406,14 +492,31 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
 
     case SF_STRING:
     case SF_TEXT:
-    case SF_FILENAME:
-    case SF_DIRNAME:
       {
         gchar *tmp;
 
         tmp = script_fu_strescape (g_value_get_string (gvalue));
         g_string_append_printf (result_string, "\"%s\"", tmp);
         g_free (tmp);
+      }
+      break;
+
+    case SF_FILENAME:
+    case SF_DIRNAME:
+      {
+        gchar * filepath = NULL;
+
+        if (g_value_get_gtype (gvalue) == G_TYPE_FILE)
+          {
+            filepath = g_file_get_path (g_value_get_object (gvalue));
+            /* Not escape special chars for whitespace or double quote. */
+          }
+        else
+          {
+            g_warning ("Expecting GFile in gvalue.");
+          }
+
+        g_string_append_printf (result_string, "\"%s\"", filepath);
       }
       break;
 
@@ -570,6 +673,11 @@ script_fu_arg_reset_name_generator (void)
 /*
  * Return a unique name, and non-unique nick, for self.
  *
+ * Self's label came from a call to script-fu-register ()
+ * and was not lexically checked so is unsuitable for a property name.
+ * ScriptFu does not require script author to provide a unique name
+ * for args in a call to script-fu-register.
+ *
  * This is a generator.
  * Returned name is a canonical name for a GParamSpec, i.e. a property name.
  * It meets the lexical requirements for a property name.
@@ -694,4 +802,21 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
 
   /* nick is what the script author said describes the arg */
   *returned_nick = arg->label;
+}
+
+
+/* Set the default of a GParamSpec to a GFile for a path string.
+ * The GFile is allocated and ownership is transferred to the GParamSpec.
+ * The GFile is only a name and a so-named file might not exist.
+ */
+static void
+pspec_set_default_file (GParamSpec *pspec, const gchar *filepath)
+{
+  GValue  gvalue = G_VALUE_INIT;
+  GFile  *gfile  = NULL;
+
+  g_value_init (&gvalue, G_TYPE_FILE);
+  gfile = g_file_new_for_path (filepath);
+  g_value_set_object (&gvalue, gfile);
+  g_param_value_set_default (pspec, &gvalue);
 }
