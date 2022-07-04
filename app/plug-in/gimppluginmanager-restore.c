@@ -44,7 +44,6 @@
 #include "gimppluginmanager-call.h"
 #include "gimppluginmanager-file.h"
 #include "gimppluginmanager-help-domain.h"
-#include "gimppluginmanager-locale-domain.h"
 #include "gimppluginmanager-restore.h"
 #include "gimppluginprocedure.h"
 #include "plug-in-rc.h"
@@ -69,7 +68,6 @@ static void    gimp_plug_in_manager_init_plug_ins     (GimpPlugInManager    *man
 static void    gimp_plug_in_manager_run_extensions    (GimpPlugInManager    *manager,
                                                        GimpContext          *context,
                                                        GimpInitStatusFunc    status_callback);
-static void    gimp_plug_in_manager_bind_text_domains (GimpPlugInManager    *manager);
 static void    gimp_plug_in_manager_add_from_file     (GimpPlugInManager    *manager,
                                                        GFile                *file,
                                                        guint64               mtime);
@@ -148,19 +146,10 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
   g_object_unref (pluginrc);
 
-  /* create locale and help domain lists */
+  /* create help domain lists */
   for (list = manager->plug_in_defs; list; list = list->next)
     {
-      GimpPlugInDef *plug_in_def   = list->data;
-      const gchar   *locale_domain = NULL;
-
-      if (plug_in_def->locale_domain_name)
-        {
-          gimp_plug_in_manager_add_locale_domain (manager,
-                                                  plug_in_def->file,
-                                                  plug_in_def->locale_domain_name,
-                                                  plug_in_def->locale_domain_path);
-        }
+      GimpPlugInDef *plug_in_def = list->data;
 
       if (plug_in_def->help_domain_name)
         gimp_plug_in_manager_add_help_domain (manager,
@@ -172,9 +161,6 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   /* we're done with the plug-in-defs */
   g_slist_free_full (manager->plug_in_defs, (GDestroyNotify) g_object_unref);
   manager->plug_in_defs = NULL;
-
-  /* bind plug-in text domains  */
-  gimp_plug_in_manager_bind_text_domains (manager);
 
   /* add the plug-in procs to the procedure database */
   for (list = manager->plug_in_procedures; list; list = list->next)
@@ -640,30 +626,6 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
 
       status_callback (NULL, "", 1.0);
     }
-}
-
-static void
-gimp_plug_in_manager_bind_text_domains (GimpPlugInManager *manager)
-{
-  gchar **locale_domains;
-  gchar **locale_paths;
-  gint    n_domains;
-  gint    i;
-
-  n_domains = gimp_plug_in_manager_get_locale_domains (manager,
-                                                       &locale_domains,
-                                                       &locale_paths);
-
-  for (i = 0; i < n_domains; i++)
-    {
-      bindtextdomain (locale_domains[i], locale_paths[i]);
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-      bind_textdomain_codeset (locale_domains[i], "UTF-8");
-#endif
-    }
-
-  g_strfreev (locale_domains);
-  g_strfreev (locale_paths);
 }
 
 /**

@@ -32,8 +32,6 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-G_GNUC_INTERNAL gboolean            _gimp_plug_in_domain_register       (const gchar         *domain_name,
-                                                                         GFile               *domain_file);
 G_GNUC_INTERNAL gboolean            _gimp_plug_in_help_register         (const gchar         *domain_name,
                                                                          GFile               *domain_file);
 G_GNUC_INTERNAL gboolean            _gimp_plug_in_menu_branch_register  (const gchar         *menu_path,

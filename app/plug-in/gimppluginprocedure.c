@@ -255,14 +255,7 @@ gimp_plug_in_procedure_get_menu_label (GimpProcedure *procedure)
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
 
   if (proc->menu_label)
-    {
-      const gchar *locale_domain = NULL;
-
-      if (gimp_plug_in_procedure_get_i18n (proc, &locale_domain))
-        return dgettext (locale_domain, proc->menu_label);
-      else
-        return proc->menu_label;
-    }
+    return proc->menu_label;
 
   return GIMP_PROCEDURE_CLASS (parent_class)->get_menu_label (procedure);
 }
@@ -270,18 +263,8 @@ gimp_plug_in_procedure_get_menu_label (GimpProcedure *procedure)
 static const gchar *
 gimp_plug_in_procedure_get_blurb (GimpProcedure *procedure)
 {
-  GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (procedure);
-
-  /*  do not to pass the empty string to gettext()  */
-  if (procedure->blurb && strlen (procedure->blurb))
-    {
-      const gchar *locale_domain = NULL;
-
-      if (gimp_plug_in_procedure_get_i18n (proc, &locale_domain))
-        return dgettext (locale_domain, procedure->blurb);
-      else
-        return procedure->blurb;
-    }
+  if (procedure->blurb)
+    return procedure->blurb;
 
   return NULL;
 }
@@ -569,30 +552,6 @@ gimp_plug_in_procedure_get_file (GimpPlugInProcedure *proc)
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_file (proc);
-}
-
-void
-gimp_plug_in_procedure_set_i18n (GimpPlugInProcedure *proc,
-                                 gboolean             localize,
-                                 const gchar         *locale_domain)
-{
-  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
-
-  proc->localize      = localize;
-  proc->locale_domain = localize && locale_domain ? g_quark_from_string (locale_domain) : 0;
-}
-
-gboolean
-gimp_plug_in_procedure_get_i18n (GimpPlugInProcedure  *proc,
-                                 const gchar         **domain)
-{
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
-  g_return_val_if_fail (domain && *domain == NULL, FALSE);
-
-  if (proc->localize)
-    *domain = g_quark_to_string (proc->locale_domain);
-
-  return proc->localize;
 }
 
 void

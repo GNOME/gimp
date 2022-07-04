@@ -28,48 +28,6 @@
 #include "gimpplugin_pdb.h"
 
 /**
- * _gimp_plug_in_domain_register:
- * @domain_name: The name of the textdomain (must be unique).
- * @domain_file: The path to the locally installed compiled message catalog (may be NULL).
- *
- * Registers a textdomain for localisation.
- *
- * This procedure adds a textdomain to the list of domains GIMP
- * searches for strings when translating its menu entries.
- * Only core plug-ins should call this function directly. Third-party
- * plug-ins are expected instead to define a custom `set_i18n()` method
- * returning their domain and a path relative to their folder. In other
- * words, this should be considered an internal PDB function which
- * should not be used except by core developers.
- *
- * Returns: TRUE on success.
- **/
-gboolean
-_gimp_plug_in_domain_register (const gchar *domain_name,
-                               GFile       *domain_file)
-{
-  GimpValueArray *args;
-  GimpValueArray *return_vals;
-  gboolean success = TRUE;
-
-  args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, domain_name,
-                                          G_TYPE_FILE, domain_file,
-                                          G_TYPE_NONE);
-
-  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-plug-in-domain-register",
-                                              args);
-  gimp_value_array_unref (args);
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  gimp_value_array_unref (return_vals);
-
-  return success;
-}
-
-/**
  * _gimp_plug_in_help_register:
  * @domain_name: The XML namespace of the plug-in's help pages.
  * @domain_file: The root URI of the plug-in's help pages.

@@ -1046,26 +1046,11 @@ gimp_plug_in_register (GimpPlugIn *plug_in,
     {
       const gchar   *name = list->data;
       GimpProcedure *procedure;
-      gchar *gettext_domain = NULL;
-      gchar *catalog_dir    = NULL;
 
       procedure = _gimp_plug_in_create_procedure (plug_in, name);
       if (procedure)
         {
           GIMP_PROCEDURE_GET_CLASS (procedure)->install (procedure);
-
-          if (_gimp_plug_in_set_i18n (plug_in, gimp_procedure_get_name (procedure),
-                                      &gettext_domain, &catalog_dir))
-            {
-              GFile *file = g_file_new_for_path (catalog_dir);
-
-              _gimp_plug_in_domain_register (gettext_domain, file);
-
-              g_free (gettext_domain);
-              g_free (catalog_dir);
-              g_object_unref (file);
-            }
-
           g_object_unref (procedure);
         }
       else

@@ -66,8 +66,6 @@ static GTokenType plug_in_proc_arg_deserialize   (GScanner             *scanner,
                                                   Gimp                 *gimp,
                                                   GimpProcedure        *procedure,
                                                   gboolean              return_value);
-static GTokenType plug_in_locale_def_deserialize (GScanner             *scanner,
-                                                  GimpPlugInDef        *plug_in_def);
 static GTokenType plug_in_help_def_deserialize   (GScanner             *scanner,
                                                   GimpPlugInDef        *plug_in_def);
 static GTokenType plug_in_has_init_deserialize   (GScanner             *scanner,
@@ -80,7 +78,6 @@ enum
   FILE_VERSION,
   PLUG_IN_DEF,
   PROC_DEF,
-  LOCALE_DEF,
   HELP_DEF,
   HAS_INIT,
   PROC_ARG,
@@ -134,8 +131,6 @@ plug_in_rc_parse (Gimp    *gimp,
 
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "proc-def", GINT_TO_POINTER (PROC_DEF));
-  g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
-                              "locale-def", GINT_TO_POINTER (LOCALE_DEF));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
                               "help-def", GINT_TO_POINTER (HELP_DEF));
   g_scanner_scope_add_symbol (scanner, PLUG_IN_DEF,
@@ -335,10 +330,6 @@ plug_in_def_deserialize (Gimp      *gimp,
 
               if (proc)
                 g_object_unref (proc);
-              break;
-
-            case LOCALE_DEF:
-              token = plug_in_locale_def_deserialize (scanner, plug_in_def);
               break;
 
             case HELP_DEF:
@@ -958,32 +949,6 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 }
 
 static GTokenType
-plug_in_locale_def_deserialize (GScanner      *scanner,
-                                GimpPlugInDef *plug_in_def)
-{
-  gchar *domain_name;
-  gchar *domain_path   = NULL;
-  gchar *expanded_path = NULL;
-
-  if (! gimp_scanner_parse_string (scanner, &domain_name))
-    return G_TOKEN_STRING;
-
-  if (gimp_scanner_parse_string (scanner, &domain_path))
-    expanded_path = gimp_config_path_expand (domain_path, TRUE, NULL);
-
-  gimp_plug_in_def_set_locale_domain (plug_in_def, domain_name, expanded_path);
-
-  g_free (domain_name);
-  g_free (domain_path);
-  g_free (expanded_path);
-
-  if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
-    return G_TOKEN_RIGHT_PAREN;
-
-  return G_TOKEN_LEFT_PAREN;
-}
-
-static GTokenType
 plug_in_help_def_deserialize (GScanner      *scanner,
                               GimpPlugInDef *plug_in_def)
 {
@@ -1330,26 +1295,6 @@ plug_in_rc_write (GSList  *plug_in_defs,
                   GParamSpec *pspec = procedure->values[i];
 
                   plug_in_rc_write_proc_arg (writer, pspec);
-                }
-
-              gimp_config_writer_close (writer);
-            }
-
-          if (plug_in_def->locale_domain_name)
-            {
-              gimp_config_writer_open (writer, "locale-def");
-              gimp_config_writer_string (writer,
-                                         plug_in_def->locale_domain_name);
-
-              if (plug_in_def->locale_domain_path)
-                {
-                  path = gimp_config_path_unexpand (plug_in_def->locale_domain_path,
-                                                    TRUE, NULL);
-                  if (path)
-                    {
-                      gimp_config_writer_string (writer, path);
-                      g_free (path);
-                    }
                 }
 
               gimp_config_writer_close (writer);

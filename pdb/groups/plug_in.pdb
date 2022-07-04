@@ -57,52 +57,6 @@ CODE
     );
 }
 
-sub plug_in_domain_register {
-    $blurb = 'Registers a textdomain for localisation.';
-
-    $help = <<'HELP';
-This procedure adds a textdomain to the list of domains GIMP searches
-for strings when translating its menu entries.
-
-Only core plug-ins should call this function directly. Third-party
-plug-ins are expected instead to define a custom `set_i18n()` method
-returning their domain and a path relative to their folder. In other
-words, this should be considered an internal PDB function which should
-not be used except by core developers.
-HELP
-
-    &neo_pdb_misc('2000');
-
-    $lib_private = 1;
-
-    @inargs = (
-	{ name => 'domain_name', type => 'string',
-	  desc => 'The name of the textdomain (must be unique)' },
-	{ name => 'domain_file', type => 'file',
-	  desc => 'The path to the locally installed compiled message catalog (may be NULL)' }
-    );
-
-    %invoke = (
-	code => <<'CODE'
-{
-  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
-
-  if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
-    {
-      gchar *domain_path = domain_file ? g_file_get_path (domain_file) : NULL;
-
-      gimp_plug_in_def_set_locale_domain (plug_in->plug_in_def,
-                                          domain_name, domain_path);
-
-      g_free (domain_path);
-    }
-  else
-    success = FALSE;
-}
-CODE
-    );
-}
-
 sub plug_in_help_register {
     $blurb = "Register a help path for a plug-in.";
 
@@ -270,13 +224,12 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(plug_ins_query
-	    plug_in_domain_register
             plug_in_help_register
             plug_in_menu_branch_register
             plug_in_set_pdb_error_handler
             plug_in_get_pdb_error_handler);
 
-%exports = (app => [@procs], lib => [@procs[1,2,3,4,5]]);
+%exports = (app => [@procs], lib => [@procs[1,2,3,4]]);
 
 $desc = 'Plug-in';
 

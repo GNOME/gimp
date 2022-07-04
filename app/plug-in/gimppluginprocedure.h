@@ -40,8 +40,6 @@ struct _GimpPlugInProcedure
 
   /*  common members  */
   GFile               *file;
-  gboolean             localize;
-  GQuark               locale_domain;
   GQuark               help_domain;
   gchar               *menu_label;
   GList               *menu_paths;
@@ -97,12 +95,6 @@ GimpPlugInProcedure * gimp_plug_in_procedure_find      (GSList              *lis
                                                         const gchar         *proc_name);
 
 GFile       * gimp_plug_in_procedure_get_file          (GimpPlugInProcedure *proc);
-
-void          gimp_plug_in_procedure_set_i18n          (GimpPlugInProcedure *proc,
-                                                        gboolean             localize,
-                                                        const gchar         *locale_domain);
-gboolean      gimp_plug_in_procedure_get_i18n          (GimpPlugInProcedure *proc,
-                                                        const gchar        **domain);
 
 void          gimp_plug_in_procedure_set_help_domain   (GimpPlugInProcedure *proc,
                                                         const gchar         *help_domain);

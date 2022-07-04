@@ -86,42 +86,6 @@ plug_ins_query_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
-plug_in_domain_register_invoker (GimpProcedure         *procedure,
-                                 Gimp                  *gimp,
-                                 GimpContext           *context,
-                                 GimpProgress          *progress,
-                                 const GimpValueArray  *args,
-                                 GError               **error)
-{
-  gboolean success = TRUE;
-  const gchar *domain_name;
-  GFile *domain_file;
-
-  domain_name = g_value_get_string (gimp_value_array_index (args, 0));
-  domain_file = g_value_get_object (gimp_value_array_index (args, 1));
-
-  if (success)
-    {
-      GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
-
-      if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
-        {
-          gchar *domain_path = domain_file ? g_file_get_path (domain_file) : NULL;
-
-          gimp_plug_in_def_set_locale_domain (plug_in->plug_in_def,
-                                              domain_name, domain_path);
-
-          g_free (domain_path);
-        }
-      else
-        success = FALSE;
-    }
-
-  return gimp_procedure_get_return_values (procedure, success,
-                                           error ? *error : NULL);
-}
-
-static GimpValueArray *
 plug_in_help_register_invoker (GimpProcedure         *procedure,
                                Gimp                  *gimp,
                                GimpContext           *context,
@@ -303,37 +267,6 @@ register_plug_in_procs (GimpPDB *pdb)
                                                                 "install times",
                                                                 "Time that the plug-in was installed",
                                                                 GIMP_PARAM_READWRITE));
-  gimp_pdb_register_procedure (pdb, procedure);
-  g_object_unref (procedure);
-
-  /*
-   * gimp-plug-in-domain-register
-   */
-  procedure = gimp_procedure_new (plug_in_domain_register_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure),
-                               "gimp-plug-in-domain-register");
-  gimp_procedure_set_static_help (procedure,
-                                  "Registers a textdomain for localisation.",
-                                  "This procedure adds a textdomain to the list of domains GIMP searches for strings when translating its menu entries.\n"
-                                  "Only core plug-ins should call this function directly. Third-party plug-ins are expected instead to define a custom `set_i18n()` method returning their domain and a path relative to their folder. In other words, this should be considered an internal PDB function which should not be used except by core developers.",
-                                  NULL);
-  gimp_procedure_set_static_attribution (procedure,
-                                         "Sven Neumann <sven@gimp.org>",
-                                         "Sven Neumann",
-                                         "2000");
-  gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("domain-name",
-                                                       "domain name",
-                                                       "The name of the textdomain (must be unique)",
-                                                       FALSE, FALSE, FALSE,
-                                                       NULL,
-                                                       GIMP_PARAM_READWRITE));
-  gimp_procedure_add_argument (procedure,
-                               g_param_spec_object ("domain-file",
-                                                    "domain file",
-                                                    "The path to the locally installed compiled message catalog (may be NULL)",
-                                                    G_TYPE_FILE,
-                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

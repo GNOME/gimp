@@ -39,8 +39,6 @@ struct _GimpPlugInDef
 
   GFile      *file;
   GSList     *procedures;
-  gchar      *locale_domain_name;
-  gchar      *locale_domain_path;
   gchar      *help_domain_name;
   gchar      *help_domain_uri;
   gint64      mtime;
@@ -62,10 +60,6 @@ void   gimp_plug_in_def_add_procedure     (GimpPlugInDef       *plug_in_def,
                                            GimpPlugInProcedure *proc);
 void   gimp_plug_in_def_remove_procedure  (GimpPlugInDef       *plug_in_def,
                                            GimpPlugInProcedure *proc);
-
-void   gimp_plug_in_def_set_locale_domain (GimpPlugInDef       *plug_in_def,
-                                           const gchar         *domain_name,
-                                           const gchar         *domain_path);
 
 void   gimp_plug_in_def_set_help_domain   (GimpPlugInDef       *plug_in_def,
                                            const gchar         *domain_name,

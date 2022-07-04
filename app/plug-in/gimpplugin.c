@@ -89,7 +89,6 @@
 #include "gimpplugindef.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-help-domain.h"
-#include "gimppluginmanager-locale-domain.h"
 #include "gimptemporaryprocedure.h"
 
 #include "gimp-intl.h"
@@ -927,8 +926,6 @@ gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
 {
   GimpPlugInProcedure *overridden;
   const gchar         *help_domain;
-  const gchar         *locale_domain = NULL;
-  gboolean             localize;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
@@ -940,16 +937,10 @@ gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
     gimp_plug_in_remove_temp_proc (plug_in,
                                    GIMP_TEMPORARY_PROCEDURE (overridden));
 
-  localize = gimp_plug_in_manager_get_i18n (plug_in->manager,
-                                            plug_in->file,
-                                            &locale_domain,
-                                            NULL);
   help_domain = gimp_plug_in_manager_get_help_domain (plug_in->manager,
                                                       plug_in->file,
                                                       NULL);
 
-  gimp_plug_in_procedure_set_i18n (GIMP_PLUG_IN_PROCEDURE (proc), localize,
-                                   locale_domain);
   gimp_plug_in_procedure_set_help_domain (GIMP_PLUG_IN_PROCEDURE (proc),
                                           help_domain);
 

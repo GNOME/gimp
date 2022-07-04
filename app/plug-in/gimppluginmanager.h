@@ -56,7 +56,6 @@ struct _GimpPlugInManager
   GSList            *display_raw_load_procs;
 
   GSList            *menu_branches;
-  GSList            *locale_domains;
   GSList            *help_domains;
 
   GimpPlugIn        *current_plug_in;

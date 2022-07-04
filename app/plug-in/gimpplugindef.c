@@ -63,8 +63,6 @@ gimp_plug_in_def_finalize (GObject *object)
   GimpPlugInDef *plug_in_def = GIMP_PLUG_IN_DEF (object);
 
   g_object_unref (plug_in_def->file);
-  g_free (plug_in_def->locale_domain_name);
-  g_free (plug_in_def->locale_domain_path);
   g_free (plug_in_def->help_domain_name);
   g_free (plug_in_def->help_domain_uri);
 
@@ -81,8 +79,6 @@ gimp_plug_in_def_get_memsize (GimpObject *object,
   gint64         memsize     = 0;
 
   memsize += gimp_g_object_get_memsize (G_OBJECT (plug_in_def->file));
-  memsize += gimp_string_get_memsize (plug_in_def->locale_domain_name);
-  memsize += gimp_string_get_memsize (plug_in_def->locale_domain_path);
   memsize += gimp_string_get_memsize (plug_in_def->help_domain_name);
   memsize += gimp_string_get_memsize (plug_in_def->help_domain_uri);
 
@@ -126,9 +122,6 @@ gimp_plug_in_def_add_procedure (GimpPlugInDef       *plug_in_def,
 
   proc->mtime = plug_in_def->mtime;
 
-  if (plug_in_def->locale_domain_name)
-    gimp_plug_in_procedure_set_i18n (proc, TRUE,
-                                     plug_in_def->locale_domain_name);
   gimp_plug_in_procedure_set_help_domain (proc,
                                           plug_in_def->help_domain_name);
 
@@ -145,32 +138,6 @@ gimp_plug_in_def_remove_procedure (GimpPlugInDef       *plug_in_def,
 
   plug_in_def->procedures = g_slist_remove (plug_in_def->procedures, proc);
   g_object_unref (proc);
-}
-
-void
-gimp_plug_in_def_set_locale_domain (GimpPlugInDef *plug_in_def,
-                                    const gchar   *domain_name,
-                                    const gchar   *domain_path)
-{
-  GSList *list;
-
-  g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
-
-  if (plug_in_def->locale_domain_name)
-    g_free (plug_in_def->locale_domain_name);
-  plug_in_def->locale_domain_name = g_strdup (domain_name);
-
-  if (plug_in_def->locale_domain_path)
-    g_free (plug_in_def->locale_domain_path);
-  plug_in_def->locale_domain_path = g_strdup (domain_path);
-
-  for (list = plug_in_def->procedures; list; list = g_slist_next (list))
-    {
-      GimpPlugInProcedure *procedure = list->data;
-
-      gimp_plug_in_procedure_set_i18n (procedure, TRUE,
-                                       plug_in_def->locale_domain_name);
-    }
 }
 
 void
