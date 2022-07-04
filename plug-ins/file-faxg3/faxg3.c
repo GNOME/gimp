@@ -131,7 +131,7 @@ faxg3_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            faxg3_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("G3 fax image"));
+      gimp_procedure_set_menu_label (procedure, _("G3 fax image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads g3 fax files",

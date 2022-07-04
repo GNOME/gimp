@@ -123,11 +123,11 @@ browser_create_procedure (GimpPlugIn  *plug_in,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
                                       browser_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Procedure _Browser"));
+      gimp_procedure_set_menu_label (procedure, _("Procedure _Browser"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Help/Programming");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("List available procedures in the PDB"),
+                                        _("List available procedures in the PDB"),
                                         NULL,
                                         PLUG_IN_PROC);
       gimp_procedure_set_attribution (procedure,

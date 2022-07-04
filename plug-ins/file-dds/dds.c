@@ -143,7 +143,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            dds_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("DDS image"));
+      gimp_procedure_set_menu_label (procedure, _("DDS image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files in DDS image format",
@@ -181,7 +181,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB");
 
-      gimp_procedure_set_menu_label (procedure, N_("DDS image"));
+      gimp_procedure_set_menu_label (procedure, _("DDS image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Saves files in DDS image format",
@@ -320,7 +320,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Decode YCoCg"));
+      gimp_procedure_set_menu_label (procedure, _("Decode YCoCg"));
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
 
       gimp_procedure_set_documentation (procedure,
@@ -342,7 +342,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Decode YCoCg (scaled)"));
+      gimp_procedure_set_menu_label (procedure, _("Decode YCoCg (scaled)"));
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
 
       gimp_procedure_set_documentation (procedure,
@@ -366,7 +366,7 @@ dds_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Decode Alpha exponent"));
+      gimp_procedure_set_menu_label (procedure, _("Decode Alpha exponent"));
       /* gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Colors"); */
 
       gimp_procedure_set_documentation (procedure,

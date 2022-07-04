@@ -165,11 +165,11 @@ imap_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Image Map..."));
+      gimp_procedure_set_menu_label (procedure, _("_Image Map..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Web");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create a clickable imagemap"),
+                                        _("Create a clickable imagemap"),
                                         NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,

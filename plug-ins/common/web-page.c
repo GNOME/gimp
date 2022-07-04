@@ -127,11 +127,11 @@ webpage_create_procedure (GimpPlugIn  *plug_in,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
                                       webpage_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("From _Webpage..."));
+      gimp_procedure_set_menu_label (procedure, _("From _Webpage..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create an image of a webpage"),
+                                        _("Create an image of a webpage"),
                                         "The plug-in allows you to take a "
                                         "screenshot of a webpage.",
                                         name);

@@ -166,7 +166,7 @@ pix_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Alias Pix image"));
+      gimp_procedure_set_menu_label (procedure, _("Alias Pix image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of the Alias|Wavefront "
@@ -193,7 +193,7 @@ pix_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_handles_remote (GIMP_FILE_PROCEDURE (procedure),
                                               TRUE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Alias Pix image"));
+      gimp_procedure_set_menu_label (procedure, _("Alias Pix image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Export file in the Alias|Wavefront "

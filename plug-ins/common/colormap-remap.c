@@ -132,13 +132,13 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("R_earrange Colormap..."));
+      gimp_procedure_set_menu_label (procedure, _("R_earrange Colormap..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map/Colormap");
       gimp_procedure_add_menu_path (procedure, "<Colormap>");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Rearrange the colormap"),
+                                        _("Rearrange the colormap"),
                                         "This procedure takes an indexed "
                                         "image and lets you alter the "
                                         "positions of colors in the colormap "
@@ -172,11 +172,11 @@ remap_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Swap Colors"));
+      gimp_procedure_set_menu_label (procedure, _("_Swap Colors"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_COLORMAP);
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Swap two colors in the colormap"),
+                                        _("Swap two colors in the colormap"),
                                         "This procedure takes an indexed "
                                         "image and lets you swap the "
                                         "positions of two colors in the "

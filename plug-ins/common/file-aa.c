@@ -127,7 +127,7 @@ ascii_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("ASCII art"));
+      gimp_procedure_set_menu_label (procedure, _("ASCII art"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Saves grayscale image in various "

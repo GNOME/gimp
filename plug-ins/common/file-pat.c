@@ -108,7 +108,7 @@ pat_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("GIMP pattern"));
+      gimp_procedure_set_menu_label (procedure, _("GIMP pattern"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_PATTERN);
 
       gimp_procedure_set_documentation (procedure,

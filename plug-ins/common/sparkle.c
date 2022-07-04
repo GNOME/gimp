@@ -205,13 +205,13 @@ sparkle_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Sparkle..."));
+      gimp_procedure_set_menu_label (procedure, _("_Sparkle..."));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Light and Shadow/Light");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Turn bright spots into "
-                                           "starry sparkles"),
+                                        _("Turn bright spots into "
+                                          "starry sparkles"),
                                         "Uses a percentage based luminoisty "
                                         "threhsold to find candidate pixels "
                                         "for adding some sparkles (spikes).",

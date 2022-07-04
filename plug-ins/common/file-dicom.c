@@ -170,7 +170,7 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            dicom_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("DICOM image"));
+      gimp_procedure_set_menu_label (procedure, _("DICOM image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of the dicom file format",
@@ -202,8 +202,8 @@ dicom_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_image_types (procedure, "RGB, GRAY");
 
       gimp_procedure_set_menu_label (procedure,
-                                     N_("Digital Imaging and Communications in "
-                                        "Medicine image"));
+                                     _("Digital Imaging and Communications in "
+                                       "Medicine image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Save file in the DICOM file format",

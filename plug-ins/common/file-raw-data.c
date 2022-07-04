@@ -330,7 +330,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            raw_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Raw image data"));
+      gimp_procedure_set_menu_label (procedure, _("Raw image data"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load raw images, specifying image "
@@ -411,7 +411,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
                                            raw_load, NULL, NULL);
 
       gimp_procedure_set_menu_label (procedure,
-                                     N_("Digital Elevation Model data"));
+                                     _("Digital Elevation Model data"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load HGT data as images",
@@ -449,7 +449,7 @@ raw_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB, RGBA");
 
-      gimp_procedure_set_menu_label (procedure, N_("Raw image data"));
+      gimp_procedure_set_menu_label (procedure, _("Raw image data"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Dump images to disk in raw format",

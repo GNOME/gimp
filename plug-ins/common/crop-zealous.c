@@ -111,12 +111,12 @@ crop_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Zealous Crop"));
+      gimp_procedure_set_menu_label (procedure, _("_Zealous Crop"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Image/Crop");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Autocrop unused space from "
-                                           "edges and middle"),
+                                        _("Autocrop unused space from "
+                                          "edges and middle"),
                                         NULL,
                                         name);
       gimp_procedure_set_attribution (procedure,

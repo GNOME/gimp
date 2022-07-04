@@ -247,12 +247,12 @@ warp_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Warp..."));
+      gimp_procedure_set_menu_label (procedure, _("_Warp..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Twist or smear image in many "
-                                           "different ways"),
+                                        _("Twist or smear image in many "
+                                          "different ways"),
                                         "Smears an image along vector paths "
                                         "calculated as the gradient of a "
                                         "separate control matrix. The effect "

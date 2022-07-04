@@ -155,7 +155,7 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            xbm_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("X BitMap image"));
+      gimp_procedure_set_menu_label (procedure, _("X BitMap image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load a file in X10 or X11 bitmap "
@@ -183,7 +183,7 @@ xbm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("X BitMap image"));
+      gimp_procedure_set_menu_label (procedure, _("X BitMap image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Export a file in X10 or X11 bitmap "

@@ -83,7 +83,7 @@
  * Plug-in Definitions
  */
 #define PLUG_IN_NAME        "twain-acquire"
-#define PLUG_IN_DESCRIPTION N_("Capture an image from a TWAIN datasource")
+#define PLUG_IN_DESCRIPTION _("Capture an image from a TWAIN datasource")
 #define PLUG_IN_HELP        N_("This plug-in will capture an image from a TWAIN datasource")
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Copyright 2004 by Craig Setera"
@@ -204,7 +204,7 @@ twain_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_IMAGE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Scanner/Camera..."));
+      gimp_procedure_set_menu_label (procedure, _("_Scanner/Camera..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
 
       gimp_procedure_set_documentation (procedure,

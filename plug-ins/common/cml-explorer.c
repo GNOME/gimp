@@ -505,13 +505,13 @@ explorer_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("CML _Explorer..."));
+      gimp_procedure_set_menu_label (procedure, _("CML _Explorer..."));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create abstract Coupled-Map "
-                                           "Lattice patterns"),
+                                        _("Create abstract Coupled-Map "
+                                          "Lattice patterns"),
                                         "Make an image of Coupled-Map Lattice "
                                         "(CML). CML is a kind of Cellula "
                                         "Automata on continuous (value) "

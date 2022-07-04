@@ -88,13 +88,13 @@ script_fu_server_create_procedure (GimpPlugIn  *plug_in,
                                   GIMP_PDB_PROC_TYPE_PLUGIN,
                                   script_fu_server_outer_run, NULL, NULL);
 
-  gimp_procedure_set_menu_label (procedure, N_("_Start Server..."));
+  gimp_procedure_set_menu_label (procedure, _("_Start Server..."));
   gimp_procedure_add_menu_path (procedure,
                                 "<Image>/Filters/Development/Script-Fu");
 
   gimp_procedure_set_documentation (procedure,
-                                    N_("Server for remote Script-Fu "
-                                       "operation"),
+                                    _("Server for remote Script-Fu "
+                                      "operation"),
                                     "Provides a server for remote "
                                     "script-fu operation. NOTE that for "
                                     "security reasons this procedure's "

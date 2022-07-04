@@ -279,12 +279,12 @@ decompose_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Decompose..."));
+      gimp_procedure_set_menu_label (procedure, _("_Decompose..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Decompose an image into separate "
-                                           "colorspace components"),
+                                        _("Decompose an image into separate "
+                                          "colorspace components"),
                                         "This function creates new gray images "
                                         "with different channel information "
                                         "in each of them",

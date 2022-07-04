@@ -141,12 +141,12 @@ tile_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Tile..."));
+      gimp_procedure_set_menu_label (procedure, _("_Tile..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create an array of copies "
-                                           "of the image"),
+                                        _("Create an array of copies "
+                                          "of the image"),
                                         "This function creates a new image "
                                         "with a single layer sized to the "
                                         "specified 'new_width' and "

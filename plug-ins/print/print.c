@@ -164,12 +164,12 @@ print_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Print..."));
+      gimp_procedure_set_menu_label (procedure, _("_Print..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PRINT);
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Print the image"),
+                                        _("Print the image"),
                                         "Print the image using the "
                                         "GTK+ Print API.",
                                         name);
@@ -188,13 +188,13 @@ print_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("Page Set_up..."));
+      gimp_procedure_set_menu_label (procedure, _("Page Set_up..."));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_DOCUMENT_PAGE_SETUP);
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Send");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Adjust page size and orientation "
-                                           "for printing"),
+                                        _("Adjust page size and orientation "
+                                          "for printing"),
                                         "Adjust page size and orientation "
                                         "for printing the image using the "
                                         "GTK+ Print API.",

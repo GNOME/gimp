@@ -129,12 +129,12 @@ map_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Gradient Map"));
+      gimp_procedure_set_menu_label (procedure, _("_Gradient Map"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Recolor the image using colors "
-                                           "from the active gradient"),
+                                        _("Recolor the image using colors "
+                                          "from the active gradient"),
                                         "This plug-in maps the contents of "
                                         "the specified drawable with active "
                                         "gradient. It calculates luminosity "
@@ -165,12 +165,12 @@ map_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Palette Map"));
+      gimp_procedure_set_menu_label (procedure, _("_Palette Map"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Map");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Recolor the image using colors "
-                                           "from the active palette"),
+                                        _("Recolor the image using colors "
+                                          "from the active palette"),
                                         "This plug-in maps the contents of "
                                         "the specified drawable with the "
                                         "active palette. It calculates "

@@ -398,12 +398,12 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("C_ompose..."));
+      gimp_procedure_set_menu_label (procedure, _("C_ompose..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create an image using multiple "
-                                           "gray images as color channels"),
+                                        _("Create an image using multiple "
+                                          "gray images as color channels"),
                                         "This function creates a new image from "
                                         "multiple gray images",
                                         name);
@@ -505,12 +505,12 @@ compose_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("R_ecompose"));
+      gimp_procedure_set_menu_label (procedure, _("R_ecompose"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Components");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Recompose an image that was "
-                                           "previously decomposed"),
+                                        _("Recompose an image that was "
+                                          "previously decomposed"),
                                         "This function recombines the grayscale "
                                         "layers produced by Decompose "
                                         "into a single RGB or RGBA layer, and "

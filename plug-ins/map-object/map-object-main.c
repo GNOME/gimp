@@ -118,12 +118,12 @@ map_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Map _Object..."));
+      gimp_procedure_set_menu_label (procedure, _("Map _Object..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Map the image to an object "
-                                           "(plane, sphere, box or cylinder)"),
+                                        _("Map the image to an object "
+                                          "(plane, sphere, box or cylinder)"),
                                         "No help yet",
                                         name);
       gimp_procedure_set_attribution (procedure,

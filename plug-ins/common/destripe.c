@@ -138,12 +138,12 @@ destripe_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Des_tripe..."));
+      gimp_procedure_set_menu_label (procedure, _("Des_tripe..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Tone Mapping");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Remove vertical stripe artifacts "
-                                           "from the image"),
+                                        _("Remove vertical stripe artifacts "
+                                          "from the image"),
                                         "This plug-in tries to remove vertical "
                                         "stripes from an image.",
                                         name);

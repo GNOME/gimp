@@ -170,12 +170,12 @@ grid_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Grid (legacy)..."));
+      gimp_procedure_set_menu_label (procedure, _("_Grid (legacy)..."));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Pattern");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Draw a grid on the image"),
+                                        _("Draw a grid on the image"),
                                         "Draws a grid using the specified "
                                         "colors. The grid origin is the "
                                         "upper left corner.",

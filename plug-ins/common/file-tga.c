@@ -256,7 +256,7 @@ tga_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            tga_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("TarGA image"));
+      gimp_procedure_set_menu_label (procedure, _("TarGA image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Targa file format",
@@ -282,7 +282,7 @@ tga_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("TarGA image"));
+      gimp_procedure_set_menu_label (procedure, _("TarGA image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the Targa file format",

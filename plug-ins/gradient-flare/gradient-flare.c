@@ -816,13 +816,13 @@ gflare_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Gradient Flare..."));
+      gimp_procedure_set_menu_label (procedure, _("_Gradient Flare..."));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Light and Shadow/Light");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Produce a lense flare effect "
-                                           "using gradients"),
+                                        _("Produce a lense flare effect "
+                                          "using gradients"),
                                         "This plug-in produces a lense flare "
                                         "effect using custom gradients. In "
                                         "interactive call, the user can edit "

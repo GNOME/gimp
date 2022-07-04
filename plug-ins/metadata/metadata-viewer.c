@@ -174,11 +174,11 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("_View Metadata"));
+      gimp_procedure_set_menu_label (procedure, _("_View Metadata"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("View metadata (Exif, IPTC, XMP)"),
+                                        _("View metadata (Exif, IPTC, XMP)"),
                                         "View metadata information attached "
                                         "to the current image. This can "
                                         "include Exif, IPTC and/or XMP "

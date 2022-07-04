@@ -146,7 +146,7 @@ gif_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "INDEXED*, GRAY*");
 
-      gimp_procedure_set_menu_label (procedure, N_("GIF image"));
+      gimp_procedure_set_menu_label (procedure, _("GIF image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "exports files in Compuserve GIF "

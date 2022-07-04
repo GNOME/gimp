@@ -192,7 +192,7 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            xpm_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("X PixMap image"));
+      gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load files in XPM (X11 Pixmap) format.",
@@ -227,7 +227,7 @@ xpm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("X PixMap image"));
+      gimp_procedure_set_menu_label (procedure, _("X PixMap image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Export files in XPM (X11 Pixmap) format.",

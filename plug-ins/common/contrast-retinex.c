@@ -192,12 +192,12 @@ retinex_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Retine_x..."));
+      gimp_procedure_set_menu_label (procedure, _("Retine_x..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Tone Mapping");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Enhance contrast using the "
-                                           "Retinex method"),
+                                        _("Enhance contrast using the "
+                                          "Retinex method"),
                                         "The Retinex Image Enhancement "
                                         "Algorithm is an automatic image "
                                         "enhancement method that enhances "

@@ -407,12 +407,12 @@ designer_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Sphere _Designer..."));
+      gimp_procedure_set_menu_label (procedure, _("Sphere _Designer..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Render");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create an image of a textured "
-                                           "sphere"),
+                                        _("Create an image of a textured "
+                                          "sphere"),
                                         "This plug-in can be used to create "
                                         "textured and/or bumpmapped spheres, "
                                         "and uses a small lightweight "

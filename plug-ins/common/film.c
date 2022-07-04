@@ -232,12 +232,12 @@ film_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Filmstrip..."));
+      gimp_procedure_set_menu_label (procedure, _("_Filmstrip..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Combine");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Combine several images on a "
-                                           "film strip"),
+                                        _("Combine several images on a "
+                                          "film strip"),
                                         "Compose several images to a roll film",
                                         name);
       gimp_procedure_set_attribution (procedure,

@@ -149,7 +149,7 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            bmp_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Windows BMP image"));
+      gimp_procedure_set_menu_label (procedure, _("Windows BMP image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of Windows BMP file format",
@@ -175,7 +175,7 @@ bmp_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY, RGB*");
 
-      gimp_procedure_set_menu_label (procedure, N_("Windows BMP image"));
+      gimp_procedure_set_menu_label (procedure, _("Windows BMP image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Saves files in Windows BMP file format",

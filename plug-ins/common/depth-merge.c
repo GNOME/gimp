@@ -215,12 +215,12 @@ merge_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Depth Merge..."));
+      gimp_procedure_set_menu_label (procedure, _("_Depth Merge..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Combine");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Combine two images using depth "
-                                           "maps (z-buffers)"),
+                                        _("Combine two images using depth "
+                                          "maps (z-buffers)"),
                                         "Taking as input two full-color, "
                                         "full-alpha images and two "
                                         "corresponding grayscale depth maps, "

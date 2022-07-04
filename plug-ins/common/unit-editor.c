@@ -181,12 +181,12 @@ editor_create_procedure (GimpPlugIn  *plug_in,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
                                       editor_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("U_nits"));
+      gimp_procedure_set_menu_label (procedure, _("U_nits"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_TOOL_MEASURE);
       gimp_procedure_add_menu_path (procedure, "<Image>/Edit/Preferences");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Create or alter units used in GIMP"),
+                                        _("Create or alter units used in GIMP"),
                                         "The GIMP unit editor",
                                         name);
       gimp_procedure_set_attribution (procedure,

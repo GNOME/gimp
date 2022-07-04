@@ -150,7 +150,7 @@ wmf_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            wmf_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Microsoft WMF file"));
+      gimp_procedure_set_menu_label (procedure, _("Microsoft WMF file"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files in the WMF file format",

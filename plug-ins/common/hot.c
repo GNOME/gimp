@@ -252,12 +252,12 @@ hot_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Hot..."));
+      gimp_procedure_set_menu_label (procedure, _("_Hot..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Modify");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Find and fix pixels that may "
-                                           "be unsafely bright"),
+                                        _("Find and fix pixels that may "
+                                          "be unsafely bright"),
                                         "hot scans an image for pixels that "
                                         "will give unsave values of "
                                         "chrominance or composite signale "

@@ -251,7 +251,7 @@ mng_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("MNG animation"));
+      gimp_procedure_set_menu_label (procedure, _("MNG animation"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Saves images in the MNG file format",

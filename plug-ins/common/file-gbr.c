@@ -121,7 +121,7 @@ gbr_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("GIMP brush"));
+      gimp_procedure_set_menu_label (procedure, _("GIMP brush"));
       gimp_procedure_set_icon_name (procedure, GIMP_ICON_BRUSH);
 
       gimp_procedure_set_documentation (procedure,

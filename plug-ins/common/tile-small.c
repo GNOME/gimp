@@ -262,12 +262,12 @@ tile_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Small Tiles..."));
+      gimp_procedure_set_menu_label (procedure, _("_Small Tiles..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Map");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Tile image into smaller "
-                                           "versions of the original"),
+                                        _("Tile image into smaller "
+                                          "versions of the original"),
                                         "More here later",
                                         name);
       gimp_procedure_set_attribution (procedure,

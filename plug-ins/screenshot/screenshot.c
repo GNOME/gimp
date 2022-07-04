@@ -137,12 +137,12 @@ screenshot_create_procedure (GimpPlugIn  *plug_in,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
                                       screenshot_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Screenshot..."));
+      gimp_procedure_set_menu_label (procedure, _("_Screenshot..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/Acquire");
 
       gimp_procedure_set_documentation
         (procedure,
-         N_("Create an image from an area of the screen"),
+         _("Create an image from an area of the screen"),
          "The plug-in takes screenshots of an "
          "interactively selected window or of the desktop, "
          "either the whole desktop or an interactively "

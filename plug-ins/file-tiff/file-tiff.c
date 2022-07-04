@@ -156,7 +156,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            tiff_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("TIFF or BigTIFF image"));
+      gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files of the TIFF and BigTIFF file formats",
@@ -185,7 +185,7 @@ tiff_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("TIFF or BigTIFF image"));
+      gimp_procedure_set_menu_label (procedure, _("TIFF or BigTIFF image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the TIFF or BigTIFF file formats",

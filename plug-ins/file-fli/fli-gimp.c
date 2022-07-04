@@ -178,7 +178,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            fli_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("AutoDesk FLIC animation"));
+      gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load FLI-movies",
@@ -215,7 +215,7 @@ fli_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "INDEXED, GRAY");
 
-      gimp_procedure_set_menu_label (procedure, N_("AutoDesk FLIC animation"));
+      gimp_procedure_set_menu_label (procedure, _("AutoDesk FLIC animation"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Export FLI-movies",

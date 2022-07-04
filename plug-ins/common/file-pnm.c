@@ -289,7 +289,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pnm_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("PNM Image"));
+      gimp_procedure_set_menu_label (procedure, _("PNM Image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads files in the PNM file format",
@@ -322,7 +322,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("PNM image"));
+      gimp_procedure_set_menu_label (procedure, _("PNM image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the PNM file format",
@@ -357,7 +357,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("PBM image"));
+      gimp_procedure_set_menu_label (procedure, _("PBM image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the PBM file format",
@@ -392,7 +392,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("PGM image"));
+      gimp_procedure_set_menu_label (procedure, _("PGM image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the PGM file format",
@@ -427,7 +427,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("PPM image"));
+      gimp_procedure_set_menu_label (procedure, _("PPM image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the PPM file format",
@@ -462,7 +462,7 @@ pnm_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("PFM image"));
+      gimp_procedure_set_menu_label (procedure, _("PFM image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Exports files in the PFM file format",

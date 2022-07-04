@@ -177,12 +177,12 @@ despeckle_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("Des_peckle..."));
+      gimp_procedure_set_menu_label (procedure, _("Des_peckle..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Enhance");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Remove speckle noise from the "
-                                           "image"),
+                                        _("Remove speckle noise from the "
+                                          "image"),
                                         "This plug-in selectively performs "
                                         "a median or adaptive box filter on "
                                         "an image.",

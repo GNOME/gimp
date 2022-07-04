@@ -328,7 +328,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            pdf_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Portable Document Format"));
+      gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load file in PDF format",

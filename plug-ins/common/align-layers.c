@@ -196,11 +196,11 @@ align_layers_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("Align Visi_ble Layers..."));
+      gimp_procedure_set_menu_label (procedure, _("Align Visi_ble Layers..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Image/Arrange");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Align all visible layers of the image"),
+                                        _("Align all visible layers of the image"),
                                         "Align visible layers",
                                         name);
       gimp_procedure_set_attribution (procedure,

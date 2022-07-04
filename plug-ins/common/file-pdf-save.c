@@ -356,7 +356,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("Portable Document Format"));
+      gimp_procedure_set_menu_label (procedure, _("Portable Document Format"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Save files in PDF format",
@@ -421,7 +421,7 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("_Create multipage PDF..."));
+      gimp_procedure_set_menu_label (procedure, _("_Create multipage PDF..."));
 #if 0
       gimp_procedure_add_menu_path (procedure, "<Image>/File/Create/PDF");
 #endif

@@ -228,11 +228,11 @@ pagecurl_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Pagecurl..."));
+      gimp_procedure_set_menu_label (procedure, _("_Pagecurl..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Curl up one of the image corners"),
+                                        _("Curl up one of the image corners"),
                                         "This plug-in creates a pagecurl-effect.",
                                         name);
       gimp_procedure_set_attribution (procedure,

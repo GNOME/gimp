@@ -369,13 +369,13 @@ ifs_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_IFS Fractal..."));
+      gimp_procedure_set_menu_label (procedure, _("_IFS Fractal..."));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Render/Fractals");
 
       gimp_procedure_set_documentation
         (procedure,
-         N_("Create an Iterated Function System (IFS) fractal"),
+         _("Create an Iterated Function System (IFS) fractal"),
          "Interactively create an Iterated Function System "
          "fractal. Use the window on the upper left to adjust"
          "the component transformations of the fractal. The "

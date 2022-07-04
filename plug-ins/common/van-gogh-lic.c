@@ -875,12 +875,12 @@ lic_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Van Gogh (LIC)..."));
+      gimp_procedure_set_menu_label (procedure, _("_Van Gogh (LIC)..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Artistic");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Special effects that nobody "
-                                           "understands"),
+                                        _("Special effects that nobody "
+                                          "understands"),
                                         "No help yet",
                                         name);
       gimp_procedure_set_attribution (procedure,

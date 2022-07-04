@@ -122,7 +122,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            psd_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Photoshop image"));
+      gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads images from the Photoshop "
@@ -151,7 +151,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            psd_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Photoshop image (merged)"));
+      gimp_procedure_set_menu_label (procedure, _("Photoshop image (merged)"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads images from the Photoshop "
@@ -202,7 +202,7 @@ psd_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("Photoshop image"));
+      gimp_procedure_set_menu_label (procedure, _("Photoshop image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Saves files in the Photoshop(tm) "

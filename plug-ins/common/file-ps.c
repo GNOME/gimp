@@ -378,7 +378,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
       if (! strcmp (name, LOAD_PS_PROC))
         {
-          gimp_procedure_set_menu_label (procedure, N_("PostScript document"));
+          gimp_procedure_set_menu_label (procedure, _("PostScript document"));
 
           gimp_procedure_set_documentation (procedure,
                                             "Load PostScript documents",
@@ -395,7 +395,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
       else
         {
           gimp_procedure_set_menu_label (procedure,
-                                         N_("Encapsulated PostScript image"));
+                                         _("Encapsulated PostScript image"));
 
           gimp_procedure_set_documentation (procedure,
                                             "load Encapsulated PostScript images",
@@ -491,7 +491,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
 
       if (! strcmp (name, SAVE_PS_PROC))
         {
-          gimp_procedure_set_menu_label (procedure, N_("PostScript document"));
+          gimp_procedure_set_menu_label (procedure, _("PostScript document"));
 
           gimp_procedure_set_documentation (procedure,
                                             "Export image as PostScript document",
@@ -508,7 +508,7 @@ ps_create_procedure (GimpPlugIn  *plug_in,
       else
         {
           gimp_procedure_set_menu_label (procedure,
-                                         N_("Encapsulated PostScript image"));
+                                         _("Encapsulated PostScript image"));
 
           gimp_procedure_set_documentation (procedure,
                                             "Export image as Encapsulated "

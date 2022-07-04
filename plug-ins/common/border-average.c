@@ -136,11 +136,11 @@ border_average_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Border Average..."));
+      gimp_procedure_set_menu_label (procedure, _("_Border Average..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Colors/Info");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Set foreground to the average color of the image border"),
+                                        _("Set foreground to the average color of the image border"),
                                         "",
                                         name);
       gimp_procedure_set_attribution (procedure,

@@ -180,7 +180,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            jp2_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("JPEG 2000 image"));
+      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads JPEG 2000 images.",
@@ -212,7 +212,7 @@ jp2_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            jp2_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("JPEG 2000 codestream"));
+      gimp_procedure_set_menu_label (procedure, _("JPEG 2000 codestream"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Loads JPEG 2000 codestream.",

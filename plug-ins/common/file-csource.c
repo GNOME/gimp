@@ -118,7 +118,7 @@ csource_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("C source code"));
+      gimp_procedure_set_menu_label (procedure, _("C source code"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Dump image data in RGB(A) format "

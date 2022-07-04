@@ -103,10 +103,10 @@ exr_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            exr_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("OpenEXR image"));
+      gimp_procedure_set_menu_label (procedure, _("OpenEXR image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files in the OpenEXR file format",
+                                        _("Loads files in the OpenEXR file format"),
                                         "This plug-in loads OpenEXR files. ",
                                         name);
       gimp_procedure_set_attribution (procedure,

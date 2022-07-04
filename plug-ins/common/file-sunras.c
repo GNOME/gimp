@@ -270,7 +270,7 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            sunras_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("SUN Rasterfile image"));
+      gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Load file of the SunRaster file format",
@@ -296,7 +296,7 @@ sunras_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "RGB, GRAY, INDEXED");
 
-      gimp_procedure_set_menu_label (procedure, N_("SUN Rasterfile image"));
+      gimp_procedure_set_menu_label (procedure, _("SUN Rasterfile image"));
 
       gimp_procedure_set_documentation (procedure,
                                         "Export file in the SunRaster file "

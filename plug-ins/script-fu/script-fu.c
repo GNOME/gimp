@@ -119,13 +119,13 @@ script_fu_create_procedure (GimpPlugIn  *plug_in,
                                       GIMP_PDB_PROC_TYPE_PLUGIN,
                                       script_fu_run, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Script-Fu _Console"));
+      gimp_procedure_set_menu_label (procedure, _("Script-Fu _Console"));
       gimp_procedure_add_menu_path (procedure,
                                     "<Image>/Filters/Development/Script-Fu");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Interactive console for Script-Fu "
-                                           "development"),
+                                        _("Interactive console for Script-Fu "
+                                          "development"),
                                         "Provides an interface which allows "
                                         "interactive scheme development.",
                                         name);
@@ -338,12 +338,12 @@ script_fu_extension_init (GimpPlugIn *plug_in)
                                   GIMP_PDB_PROC_TYPE_TEMPORARY,
                                   script_fu_refresh_proc, NULL, NULL);
 
-  gimp_procedure_set_menu_label (procedure, N_("_Refresh Scripts"));
+  gimp_procedure_set_menu_label (procedure, _("_Refresh Scripts"));
   gimp_procedure_add_menu_path (procedure,
                                 "<Image>/Filters/Development/Script-Fu");
 
   gimp_procedure_set_documentation (procedure,
-                                    N_("Re-read all available Script-Fu scripts"),
+                                    _("Re-read all available Script-Fu scripts"),
                                     "Re-read all available Script-Fu scripts",
                                     "script-fu-refresh");
   gimp_procedure_set_attribution (procedure,

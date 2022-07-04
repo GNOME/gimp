@@ -176,11 +176,11 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("Optimize (for _GIF)"));
+      gimp_procedure_set_menu_label (procedure, _("Optimize (for _GIF)"));
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Modify image to reduce size when "
-                                           "saved as GIF animation"),
+                                        _("Modify image to reduce size when "
+                                          "saved as GIF animation"),
                                         "This procedure applies various "
                                         "optimizations to a GIMP layer-based "
                                         "animation in an attempt to reduce the "
@@ -204,11 +204,11 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Optimize (Difference)"));
+      gimp_procedure_set_menu_label (procedure, _("_Optimize (Difference)"));
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Reduce file size where "
-                                           "combining layers is possible"),
+                                        _("Reduce file size where "
+                                          "combining layers is possible"),
                                         "This procedure applies various "
                                         "optimizations to a GIMP layer-based "
                                         "animation in an attempt to reduce "
@@ -229,11 +229,11 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Unoptimize"));
+      gimp_procedure_set_menu_label (procedure, _("_Unoptimize"));
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Remove optimization to make "
-                                           "editing easier"),
+                                        _("Remove optimization to make "
+                                          "editing easier"),
                                         "This procedure 'simplifies' a GIMP "
                                         "layer-based animation that has been "
                                         "optimized for animation. This makes "
@@ -251,7 +251,7 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Remove Backdrop"));
+      gimp_procedure_set_menu_label (procedure, _("_Remove Backdrop"));
 
       gimp_procedure_set_documentation (procedure,
                                         "This procedure attempts to remove "
@@ -272,7 +272,7 @@ optimize_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLES |
                                            GIMP_PROCEDURE_SENSITIVE_NO_DRAWABLES);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Find Backdrop"));
+      gimp_procedure_set_menu_label (procedure, _("_Find Backdrop"));
 
       gimp_procedure_set_documentation (procedure,
                                         "This procedure attempts to remove "

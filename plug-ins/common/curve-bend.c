@@ -428,12 +428,12 @@ bender_create_procedure (GimpPlugIn  *plug_in,
       gimp_procedure_set_sensitivity_mask (procedure,
                                            GIMP_PROCEDURE_SENSITIVE_DRAWABLE);
 
-      gimp_procedure_set_menu_label (procedure, N_("_Curve Bend..."));
+      gimp_procedure_set_menu_label (procedure, _("_Curve Bend..."));
       gimp_procedure_add_menu_path (procedure, "<Image>/Filters/Distorts");
 
       gimp_procedure_set_documentation
         (procedure,
-         N_("Bend the image using two control curves"),
+         _("Bend the image using two control curves"),
          "This plug-in does bend the active layer "
          "If there is a current selection it is copied to "
          "floating selection and the curve_bend distortion "

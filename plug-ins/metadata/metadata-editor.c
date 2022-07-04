@@ -462,11 +462,11 @@ metadata_create_procedure (GimpPlugIn  *plug_in,
 
       gimp_procedure_set_image_types (procedure, "*");
 
-      gimp_procedure_set_menu_label (procedure, N_("_Edit Metadata"));
+      gimp_procedure_set_menu_label (procedure, _("_Edit Metadata"));
       gimp_procedure_add_menu_path (procedure, "<Image>/Image/Metadata");
 
       gimp_procedure_set_documentation (procedure,
-                                        N_("Edit metadata (IPTC, EXIF, XMP)"),
+                                        _("Edit metadata (IPTC, EXIF, XMP)"),
                                         "Edit metadata information attached "
                                         "to the current image. Some or all "
                                         "of this metadata will be saved in "
