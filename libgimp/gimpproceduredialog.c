@@ -611,11 +611,11 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
       if (widget_type == G_TYPE_NONE || widget_type == GTK_TYPE_CHECK_BUTTON)
         widget = gimp_prop_check_button_new (G_OBJECT (dialog->priv->config),
                                              property,
-                                             _(g_param_spec_get_nick (pspec)));
+                                             g_param_spec_get_nick (pspec));
       else if (widget_type == GTK_TYPE_SWITCH)
         widget = gimp_prop_switch_new (G_OBJECT (dialog->priv->config),
                                        property,
-                                       _(g_param_spec_get_nick (pspec)),
+                                       g_param_spec_get_nick (pspec),
                                        &label, NULL);
     }
   else if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_INT ||
@@ -652,7 +652,7 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
         {
           widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                               property,
-                                              _(g_param_spec_get_nick (pspec)),
+                                              g_param_spec_get_nick (pspec),
                                               1.0, FALSE, 0.0, 0.0);
         }
       else if (widget_type == GIMP_TYPE_SPIN_SCALE)
@@ -917,7 +917,7 @@ gimp_procedure_dialog_get_int_combo (GimpProcedureDialog *dialog,
                                             property, store);
       gtk_widget_set_vexpand (widget, FALSE);
       gtk_widget_set_hexpand (widget, TRUE);
-      widget = gimp_label_int_widget_new (_(g_param_spec_get_nick (pspec)),
+      widget = gimp_label_int_widget_new (g_param_spec_get_nick (pspec),
                                           widget);
     }
   g_object_unref (store);
@@ -1162,7 +1162,7 @@ gimp_procedure_dialog_get_scale_entry (GimpProcedureDialog *dialog,
 
   widget = gimp_prop_scale_entry_new (G_OBJECT (dialog->priv->config),
                                       property,
-                                      _(g_param_spec_get_nick (pspec)),
+                                      g_param_spec_get_nick (pspec),
                                       factor, FALSE, 0.0, 0.0);
 
   gtk_size_group_add_widget (dialog->priv->label_group,
