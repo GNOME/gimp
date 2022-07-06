@@ -92,7 +92,6 @@ compat_procs[] =
    { "gimp-image-get-filename"                , "gimp-image-get-file"                    },
    { "gimp-image-set-filename"                , "gimp-image-set-file"                    },
    { "gimp-plugin-menu-register"              , "gimp-pdb-add-proc-menu-path"            },
-   { "gimp-plugin-domain-register"            , "gimp-plug-in-domain-register"           },
    { "gimp-plugin-get-pdb-error-handler"      , "gimp-plug-in-get-pdb-error-handler"     },
    { "gimp-plugin-help-register"              , "gimp-plug-in-help-register"             },
    { "gimp-plugin-menu-branch-register"       , "gimp-plug-in-menu-branch-register"      },
