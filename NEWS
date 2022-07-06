@@ -39,6 +39,9 @@ Core:
     black point compensation is used when soft-proofing are now image
     data. These have also been moved to the Image menu (out of View).
     They are not stored to the XCF file yet.
+  - Hacks on canvas rulers and statusbar added in GIMP 2.99.10 for macOS
+    triggering too big redraws were removed. This depends on patches
+    added to upcoming GTK+ 3.24.35.
 
 Tools:
 
@@ -224,10 +227,12 @@ API:
       disabled (or it may be implemented in a different way, for
       instance with another system than Gettext); if it returns TRUE,
       you can set a different subfolder and catalog name.
-    * The core does not localize menu items using a default catalog
-      "gimp30-std-plugins" anymore. It is done explicitly for our core
-      plug-ins, but third-party plug-ins have to handle localization
-      explicitly (cf. previous point) to avoid weird translations.
+    * The core does not localize menu items from plug-ins anymore. All
+      plug-ins are now expected to handle their localization within
+      their code. In particular gimp_procedure_set_menu_label() and
+      gimp_procedure_set_documentation() should now pass the localized
+      text. With gettext, it usually means passing arguments through
+      gettext() and not just marking them with N_().
   - Changes in libgimpwidgets:
     * Freedesktop portal implementation of GimpPickButton now checks the
       version of the XDG portal since `PickColor()` API only got added
