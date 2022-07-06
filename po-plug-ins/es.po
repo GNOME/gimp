@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-01 11:43+0000\n"
-"PO-Revision-Date: 2022-07-01 14:10+0200\n"
+"POT-Creation-Date: 2022-07-05 10:27+0000\n"
+"PO-Revision-Date: 2022-07-07 00:54+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -6716,6 +6716,10 @@ msgstr "Preservar la cober_tura de la prueba alfa"
 #: plug-ins/file-dds/ddswrite.c:2164
 msgid "_Alpha test threshold:"
 msgstr "Umbral de prueba _alfa:"
+
+#: plug-ins/file-exr/file-exr.c:109
+msgid "Loads files in the OpenEXR file format"
+msgstr "Carga archivos en el formato de archivo OpenEXR"
 
 #: plug-ins/file-exr/file-exr.c:196
 #, c-format
