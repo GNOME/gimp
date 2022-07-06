@@ -21,12 +21,9 @@
 #define __GIMP_PLUG_IN_MANAGER_RESTORE_H__
 
 
-void    gimp_plug_in_manager_restore         (GimpPlugInManager  *manager,
-                                              GimpContext        *context,
-                                              GimpInitStatusFunc  status_callback);
-
-void    gimp_plug_in_manager_force_query_all (GimpPlugInManager *manager);
-
+void    gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
+                                      GimpContext        *context,
+                                      GimpInitStatusFunc  status_callback);
 
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_RESTORE_H__ */

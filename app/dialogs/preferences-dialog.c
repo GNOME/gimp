@@ -39,7 +39,6 @@
 #include "core/gimp-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
-#include "plug-in/gimppluginmanager-restore.h"
 
 #include "widgets/gimpaction-history.h"
 #include "widgets/gimpcolorpanel.h"
@@ -397,15 +396,6 @@ prefs_response (GtkWidget *widget,
                  * for doing a list (U+2022).
                  */
                 g_string_append_printf (string, "\xe2\x80\xa2 %s\n", g_param_spec_get_nick (param_spec));
-
-                if (g_strcmp0 (param_spec->name, "language") == 0)
-                  {
-                    /* A language change will trigger a query() force of
-                     * all plug-ins because some of the localized
-                     * strings might be in the query() step too.
-                     */
-                    gimp_plug_in_manager_force_query_all (gimp->plug_in_manager);
-                  }
               }
 
             prefs_message (GTK_MESSAGE_INFO, FALSE, string->str);
