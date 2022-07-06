@@ -56,6 +56,7 @@ enum
 {
   PROP_0,
   PROP_LANGUAGE,
+  PROP_PREV_LANGUAGE,
   PROP_CONFIG_VERSION,
   PROP_INTERPOLATION_TYPE,
   PROP_DEFAULT_THRESHOLD,
@@ -182,6 +183,19 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                            NULL,  /* take from environment */
                            GIMP_PARAM_STATIC_STRINGS |
                            GIMP_CONFIG_PARAM_RESTART);
+
+  /* The language which was being used previously. If the "language"
+   * property was at default (i.e. System language), this
+   * must map to the actually used language for UI display, because if
+   * this changed (for whatever reasons, e.g. changed environment
+   * variables, or actually changing system language), we want to reload
+   * plug-ins.
+   */
+  GIMP_CONFIG_PROP_STRING (object_class, PROP_PREV_LANGUAGE,
+                           "prev-language",
+                           "Language used in previous run",
+                           NULL, NULL,
+                           GIMP_PARAM_STATIC_STRINGS);
 
   /* This is the version of the config files, which must map to the
    * version of GIMP. It is used right now only to detect the last run
@@ -902,6 +916,10 @@ gimp_core_config_set_property (GObject      *object,
       g_free (core_config->language);
       core_config->language = g_value_dup_string (value);
       break;
+    case PROP_PREV_LANGUAGE:
+      g_free (core_config->prev_language);
+      core_config->prev_language = g_value_dup_string (value);
+      break;
     case PROP_INTERPOLATION_TYPE:
       core_config->interpolation_type = g_value_get_enum (value);
       break;
@@ -1202,6 +1220,9 @@ gimp_core_config_get_property (GObject    *object,
     {
     case PROP_LANGUAGE:
       g_value_set_string (value, core_config->language);
+      break;
+    case PROP_PREV_LANGUAGE:
+      g_value_set_string (value, core_config->prev_language);
       break;
     case PROP_INTERPOLATION_TYPE:
       g_value_set_enum (value, core_config->interpolation_type);

@@ -67,6 +67,7 @@
 
 #include "app.h"
 #include "errors.h"
+#include "language.h"
 #include "sanity.h"
 #include "gimp-debug.h"
 
@@ -193,8 +194,10 @@ app_run (const gchar         *full_prog_name,
   GFile              *default_folder = NULL;
   GFile              *gimpdir;
   const gchar        *abort_message;
-  GError             *font_error = NULL;
-  gint                retval     = EXIT_SUCCESS;
+  const gchar        *current_language;
+  gchar              *prev_language = NULL;
+  GError             *font_error    = NULL;
+  gint                retval        = EXIT_SUCCESS;
 
   if (filenames && filenames[0] && ! filenames[1] &&
       g_file_test (filenames[0], G_FILE_TEST_IS_DIR))
@@ -309,6 +312,17 @@ app_run (const gchar         *full_prog_name,
    */
   gimp_initialize (gimp, update_status_func);
 
+  g_object_get (gimp->edit_config,
+                "prev-language", &prev_language,
+                NULL);
+  /* Language was already initialized. I call this again only to get the
+   * actual language information.
+   */
+  current_language = language_init (NULL);
+  gimp->query_all = (prev_language == NULL ||
+                     g_strcmp0 (prev_language, current_language) != 0);
+  g_free (prev_language);
+
   /*  Load all data files
    */
   gimp_restore (gimp, update_status_func, &font_error);
@@ -323,11 +337,12 @@ app_run (const gchar         *full_prog_name,
    */
   gimp_update_auto_check (gimp->edit_config, gimp);
 
-  /* Set this after gimp_update_auto_check(). This will be used for the
-   * next run.
-   */
+  /* Setting properties to be used for the next run.  */
   g_object_set (gimp->edit_config,
+                /* Set this after gimp_update_auto_check(). */
                 "config-version", GIMP_VERSION,
+                /* Set this after gimp_restore(). */
+                "prev-language",  current_language,
                 NULL);
 
   loop = run_loop = g_main_loop_new (NULL, FALSE);

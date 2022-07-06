@@ -21,6 +21,7 @@
 
 #include "config.h"
 
+#include <langinfo.h>
 #include <locale.h>
 
 #include <glib.h>
@@ -33,9 +34,15 @@
 #include "language.h"
 
 
-void
+const gchar *
 language_init (const gchar *language)
 {
+  static gchar *actual_language = NULL;
+
+  if (actual_language != NULL)
+    /* Already initialized. */
+    return actual_language;
+
 #ifdef G_OS_WIN32
   if (! language                       &&
       g_getenv ("LANG")        == NULL &&
@@ -731,9 +738,23 @@ language_init (const gchar *language)
   /*  We already set the locale according to the environment, so just
    *  return early if no language is set in gimprc.
    */
-  if (! language)
-    return;
+  if (! language || strlen (language) == 0)
+    {
+      /* Using system language. It doesn't matter too much that the string
+       * format is different when using system or preference-set language,
+       * because this string is only used for comparison. As long as 2
+       * similar run have the same settings, the strings will be
+       * identical.
+       */
+      actual_language = g_strdup (nl_langinfo (_NL_IDENTIFICATION_LANGUAGE));
+    }
+  else
+    {
+      g_setenv ("LANGUAGE", language, TRUE);
+      setlocale (LC_ALL, "");
 
-  g_setenv ("LANGUAGE", language, TRUE);
-  setlocale (LC_ALL, "");
+      actual_language = g_strdup (language);
+    }
+
+  return actual_language;
 }

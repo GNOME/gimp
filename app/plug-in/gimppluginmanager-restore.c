@@ -474,6 +474,9 @@ gimp_plug_in_manager_query_new (GimpPlugInManager  *manager,
     {
       GimpPlugInDef *plug_in_def = list->data;
 
+      if (manager->gimp->query_all)
+        gimp_plug_in_def_set_needs_query (plug_in_def, TRUE);
+
       if (plug_in_def->needs_query)
         n_plugins++;
     }

@@ -61,6 +61,7 @@ struct _Gimp
 
   gboolean                restored;    /* becomes TRUE in gimp_restore() */
   gboolean                initialized; /* Fully initialized (only set once at start). */
+  gboolean                query_all;   /* Force query all plug-ins. */
 
   gint                    busy;
   guint                   busy_idle_id;
