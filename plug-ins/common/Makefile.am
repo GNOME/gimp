@@ -94,6 +94,7 @@ file_raw_data_libexecdir = $(gimpplugindir)/plug-ins/file-raw-data
 file_sunras_libexecdir = $(gimpplugindir)/plug-ins/file-sunras
 file_svg_libexecdir = $(gimpplugindir)/plug-ins/file-svg
 file_tga_libexecdir = $(gimpplugindir)/plug-ins/file-tga
+file_wbmp_libexecdir = $(gimpplugindir)/plug-ins/file-wbmp
 file_wmf_libexecdir = $(gimpplugindir)/plug-ins/file-wmf
 file_xbm_libexecdir = $(gimpplugindir)/plug-ins/file-xbm
 file_xmc_libexecdir = $(gimpplugindir)/plug-ins/file-xmc
@@ -172,6 +173,7 @@ file_raw_data_libexec_PROGRAMS = file-raw-data
 file_sunras_libexec_PROGRAMS = file-sunras
 file_svg_libexec_PROGRAMS = file-svg
 file_tga_libexec_PROGRAMS = file-tga
+file_wbmp_libexec_PROGRAMS = file-wbmp
 file_wmf_libexec_PROGRAMS = $(FILE_WMF)
 file_xbm_libexec_PROGRAMS = file-xbm
 file_xmc_libexec_PROGRAMS = $(FILE_XMC)
@@ -1115,6 +1117,24 @@ file_tga_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_tga_RC)
+
+file_wbmp_SOURCES = \
+	file-wbmp.c
+
+file_wbmp_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(GEGL_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)		\
+	$(file_wbmp_RC)
 
 file_wmf_CFLAGS = $(WMF_CFLAGS)
 
