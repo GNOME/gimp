@@ -639,6 +639,20 @@ if test "$nl_ok" = "yes"; then
 	    [Define to 1 if _NL_MEASUREMENT_MEASUREMENT is available])
 fi
 
+# _NL_IDENTIFICATION_LANGUAGE is an enum and not a define
+AC_MSG_CHECKING([for _NL_IDENTIFICATION_LANGUAGE])
+AC_LINK_IFELSE(
+  [AC_LANG_PROGRAM(
+    [[#include <langinfo.h>]],
+    [[char c = *((unsigned char *) nl_langinfo(_NL_IDENTIFICATION_LANGUAGE));]])],
+  [nl_ok=yes],
+  [nl_ok=no])
+AC_MSG_RESULT($nl_ok)
+if test "$nl_ok" = "yes"; then
+  AC_DEFINE(HAVE__NL_IDENTIFICATION_LANGUAGE, 1,
+	    [Define to 1 if _NL_IDENTIFICATION_LANGUAGE is available])
+fi
+
 # Macro to keep track of failed dependencies.
 
 required_deps=''

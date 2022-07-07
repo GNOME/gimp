@@ -286,6 +286,15 @@ conf.set('HAVE__NL_MEASUREMENT_MEASUREMENT',
   ''')
 )
 
+conf.set('HAVE__NL_IDENTIFICATION_LANGUAGE',
+  cc.compiles('''
+    #include<langinfo.h>
+    int main() {
+      char c = *((unsigned char *) nl_langinfo(_NL_IDENTIFICATION_LANGUAGE));
+    }
+  ''')
+)
+
 
 ################################################################################
 # Dependencies

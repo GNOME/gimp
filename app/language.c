@@ -21,7 +21,9 @@
 
 #include "config.h"
 
+#ifdef HAVE__NL_IDENTIFICATION_LANGUAGE
 #include <langinfo.h>
+#endif
 #include <locale.h>
 
 #include <glib.h>
@@ -30,8 +32,14 @@
 #include <windows.h>
 #include <winnls.h>
 #endif
+#ifdef PLATFORM_OSX
+#include <Foundation/NSLocale.h>
+#endif
 
 #include "language.h"
+
+
+static gchar * language_get_system_lang_id (void);
 
 
 const gchar *
@@ -740,13 +748,7 @@ language_init (const gchar *language)
    */
   if (! language || strlen (language) == 0)
     {
-      /* Using system language. It doesn't matter too much that the string
-       * format is different when using system or preference-set language,
-       * because this string is only used for comparison. As long as 2
-       * similar run have the same settings, the strings will be
-       * identical.
-       */
-      actual_language = g_strdup (nl_langinfo (_NL_IDENTIFICATION_LANGUAGE));
+      actual_language = language_get_system_lang_id ();
     }
   else
     {
@@ -757,4 +759,59 @@ language_init (const gchar *language)
     }
 
   return actual_language;
+}
+
+static gchar *
+language_get_system_lang_id (void)
+{
+  const gchar *syslang = NULL;
+
+  /* Using system language. It doesn't matter too much that the string
+   * format is different when using system or preference-set language,
+   * because this string is only used for comparison. As long as 2
+   * similar run have the same settings, the strings will be
+   * identical.
+   */
+#if defined G_OS_WIN32
+  return g_strdup_printf ("LANGID-%d", GetUserDefaultUILanguage());
+#elif defined PLATFORM_OSX
+  NSString *langs;
+
+  /* In macOS, the user sets a list of prefered languages and the
+   * software respects this preference order. I.e. that just storing the
+   * top-prefered lang would not be enough. What if GIMP didn't have
+   * translations for it, then it would fallback to the second lang. If
+   * this second lang changed, GIMP localization would change but we
+   * would not be aware of it. Instead, let's use the whole list as our
+   * language identifier. If this list changes in any way, we consider
+   * the lang may have potentially changed.
+   */
+  langs = [[NSLocale preferredLanguages] componentsJoinedByString:@","];
+
+  return g_strdup_printf ("%s", [langs UTF8String]);
+#elif defined HAVE__NL_IDENTIFICATION_LANGUAGE
+  syslang = nl_langinfo (_NL_IDENTIFICATION_LANGUAGE);
+#endif
+
+  if (syslang == NULL || strlen (syslang) == 0)
+    /* This should return an opaque string which represents the whole
+     * locale configuration on this system.
+     */
+    syslang = setlocale (LC_ALL, NULL);
+
+  /* I don't think we'd ever get here but just in case, as a last
+   * resort, if none of the previous methods returned a valid result,
+   * let's just check environment variables ourselves.
+   * This is the proper order of priority.
+   */
+  if (syslang == NULL || strlen (syslang) == 0)
+    syslang = g_getenv ("LANGUAGE");
+  if (syslang == NULL || strlen (syslang) == 0)
+    syslang = g_getenv ("LC_ALL");
+  if (syslang == NULL || strlen (syslang) == 0)
+    syslang = g_getenv ("LC_MESSAGES");
+  if (syslang == NULL || strlen (syslang) == 0)
+    syslang = g_getenv ("LANG");
+
+  return syslang && strlen (syslang) > 0 ? g_strdup (syslang) : NULL;
 }
