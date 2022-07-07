@@ -52,10 +52,10 @@ language_init (const gchar *language)
     return actual_language;
 
 #ifdef G_OS_WIN32
-  if (! language                       &&
-      g_getenv ("LANG")        == NULL &&
-      g_getenv ("LC_MESSAGES") == NULL &&
-      g_getenv ("LC_ALL")      == NULL &&
+  if ((! language || strlen (language) == 0) &&
+      g_getenv ("LANG")        == NULL       &&
+      g_getenv ("LC_MESSAGES") == NULL       &&
+      g_getenv ("LC_ALL")      == NULL       &&
       g_getenv ("LANGUAGE")    == NULL)
     {
       /* FIXME: This is a hack. gettext doesn't pick the right language
