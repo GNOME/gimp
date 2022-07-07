@@ -113,11 +113,11 @@ wbmp_create_procedure (GimpPlugIn  *plug_in,
                                            GIMP_PDB_PROC_TYPE_PLUGIN,
                                            wbmp_load, NULL, NULL);
 
-      gimp_procedure_set_menu_label (procedure, N_("Wireless BMP image"));
+      gimp_procedure_set_menu_label (procedure, _("Wireless BMP image"));
 
       gimp_procedure_set_documentation (procedure,
-                                        "Loads files of Wireless BMP file format",
-                                        "Loads files of Wireless BMP file format",
+                                        _("Loads files of Wireless BMP file format"),
+                                        _("Loads files of Wireless BMP file format"),
                                         name);
       gimp_procedure_set_attribution (procedure,
                                       "Kevin Toyle",

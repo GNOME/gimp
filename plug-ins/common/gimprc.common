@@ -46,6 +46,7 @@ file_raw_data_RC = file-raw-data.rc.o
 file_sunras_RC = file-sunras.rc.o
 file_svg_RC = file-svg.rc.o
 file_tga_RC = file-tga.rc.o
+file_wbmp_RC = file-wbmp.rc.o
 file_wmf_RC = file-wmf.rc.o
 file_xbm_RC = file-xbm.rc.o
 file_xmc_RC = file-xmc.rc.o
