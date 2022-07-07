@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-25 11:34+0000\n"
-"PO-Revision-Date: 2022-06-25 22:52+0300\n"
+"POT-Creation-Date: 2022-07-07 14:44+0000\n"
+"PO-Revision-Date: 2022-07-07 19:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
 "Language: uk\n"
@@ -58,7 +58,6 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-#| msgid "&Continue"
 msgid "&amp;Continue"
 msgstr "&amp;Продовжити"
 
@@ -101,12 +100,10 @@ msgstr ""
 "щоб керувати тим, що буде встановлено."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-#| msgid "&Install"
 msgid "&amp;Install"
 msgstr "&amp;Встановити"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-#| msgid "&Customize"
 msgid "&amp;Customize"
 msgstr "&amp;Налаштувати"
 
@@ -139,10 +136,11 @@ msgid "Run-time libraries"
 msgstr "Бібліотеки часу виконання"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+#| msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Бібліотеки часу виконання, що використовуються GIMP, включно з середовищем "
-"виконання GTK+"
+"виконання GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -153,8 +151,9 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Включити інформацію, яка допоможе виправляти помилки в GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK+"
-msgstr "Рушій MS-Windows для GTK+"
+#| msgid "MS-Windows engine for GTK+"
+msgid "MS-Windows engine for GTK"
+msgstr "Рушій MS-Windows для GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
@@ -224,12 +223,10 @@ msgid "Additional icons:"
 msgstr "Додаткові піктограми:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-#| msgid "Create a &desktop icon"
 msgid "Create a &amp;desktop icon"
 msgstr "Створити &amp;значок на стільниці"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-#| msgid "Create a &Quick Launch icon"
 msgid "Create a &amp;Quick Launch icon"
 msgstr "Створити &amp;значок на панелі швидкого запуску"
 
@@ -290,17 +287,14 @@ msgstr ""
 "Провіднику."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-#| msgid "Select &All"
 msgid "Select &amp;All"
 msgstr "&amp;Вибрати всі"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-#| msgid "Unselect &All"
 msgid "Unselect &amp;All"
 msgstr "&amp;Зняти вибір з усіх"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-#| msgid "Select &Unused"
 msgid "Select &amp;Unused"
 msgstr "Вибрати &amp;невикористані"
 
