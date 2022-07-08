@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-08 11:52+0200\n"
-"PO-Revision-Date: 2022-06-08 13:50+0200\n"
+"POT-Creation-Date: 2022-07-08 23:56+0200\n"
+"PO-Revision-Date: 2022-07-08 23:56+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -106,7 +106,10 @@ msgstr "Fotoritocco in GIMP"
 msgid ""
 "GIMP continues strengthening its bases with this new version 2.10.32 fixing "
 "many bugs and improving format support. Notable changes:"
-msgstr "GIMP continua a rafforzare la sua base con questa nuova versione 2.10.32 che corregge molti difetti e migliora il supporto dei formati. Cambiamenti notevoli:"
+msgstr ""
+"GIMP continua a rafforzare la sua base con questa nuova versione 2.10.32 che "
+"corregge molti difetti e migliora il supporto dei formati. Cambiamenti "
+"notevoli:"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:9
 msgid "8 and 16-bit CMYK(A) TIFF files import is now supported"
@@ -124,16 +127,21 @@ msgstr "L'importazione di file JPEG XL è ora supportata"
 msgid ""
 "DDS export has new \"Flip\" (useful for some game engine) and \"Visible "
 "layers\" options"
-msgstr "L'esportazione DDS ha ora le nuove opzioni \"Ribalta\" (utile per alcuni motori di giochi) e \"Livelli visibili\""
+msgstr ""
+"L'esportazione DDS ha ora le nuove opzioni \"Ribalta\" (utile per alcuni "
+"motori di giochi) e \"Livelli visibili\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:13
 msgid "Other improved format supports: BMP, DICOM, EPS, RAW, TGA, WebP"
-msgstr "Altri miglioramenti nel supporto dei formati: BMP, DICOM, EPS, RAW, TGA, WebP"
+msgstr ""
+"Altri miglioramenti nel supporto dei formati: BMP, DICOM, EPS, RAW, TGA, WebP"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:14
 msgid ""
 "The screenshot plug-in on Windows has now an option to capture the cursor"
-msgstr "Il plug-in per le schermate su Windows ora ha l'opzione per catturare il puntatore"
+msgstr ""
+"Il plug-in per le schermate su Windows ora ha l'opzione per catturare il "
+"puntatore"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:15
 msgid "Several usability improvements in official themes and icons"
@@ -143,7 +151,9 @@ msgstr "Diversi miglioramenti di usabilità nelle icone e temi ufficiali"
 msgid ""
 "New support for localized glyphs ('locl') in Text tool depending on the "
 "value of the \"Language\" tool option"
-msgstr "Nuovo supporto per glifi localizzati ('locl') nello strumento testo a seconda del valore dell'opzione \"Lingua\" dello strumento"
+msgstr ""
+"Nuovo supporto per glifi localizzati ('locl') nello strumento testo a "
+"seconda del valore dell'opzione \"Lingua\" dello strumento"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:17
 msgid "More robust XCF import"
@@ -12394,7 +12404,7 @@ msgstr "Mantieni il profilo incorporato"
 #: ../app/core/core-enums.c:190
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
-msgstr "Converte in profilo sRGB incorporato o in scala di grigi"
+msgstr "Converti in profilo sRGB incorporato o in scala di grigi"
 
 #: ../app/core/core-enums.c:284
 msgctxt "convert-dither-type"
