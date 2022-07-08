@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-04 09:11+0000\n"
-"PO-Revision-Date: 2022-07-07 12:20+0100\n"
+"POT-Creation-Date: 2022-07-07 18:06+0000\n"
+"PO-Revision-Date: 2022-07-08 14:32+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Portuguese <pt@li.org>\n"
 "Language: pt\n"
@@ -57,7 +57,6 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-#| msgid "&Continue"
 msgid "&amp;Continue"
 msgstr "&amp;Continuar"
 
@@ -101,12 +100,10 @@ msgstr ""
 "“Personalizar” se quiser ter mais controlo sobre o que é instalado."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-#| msgid "&Install"
 msgid "&amp;Install"
 msgstr "&amp;Instalar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-#| msgid "&Customize"
 msgid "&amp;Customize"
 msgstr "&amp;Personalizar"
 
@@ -139,9 +136,9 @@ msgid "Run-time libraries"
 msgstr "Bibliotecas de tempo de execução"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
-"Bibliotecas de tempo de execução usadas pelo GIMP, incluindo GTK+ Run-time "
+"Bibliotecas de tempo de execução usadas pelo GIMP, incluindo GTK Run-time "
 "Environment"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
@@ -153,8 +150,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Incluir informações para ajudar na depuração do GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK+"
-msgstr "Motor MS-Windows para GTK+"
+msgid "MS-Windows engine for GTK"
+msgstr "Mecanismo MS-Windows para GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
