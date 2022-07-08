@@ -13,7 +13,7 @@ languages = [
   { 'code': 'da',    },
   { 'code': 'de',    },
   { 'code': 'el',    },
-  { 'code': 'en',    'prefix': '', },
+  { 'code': 'en',    'default': true, },
   { 'code': 'en_GB', },
   { 'code': 'eo',    },
   { 'code': 'es',    },
@@ -55,15 +55,15 @@ all_isl = []
 foreach language : languages
   lang_code = language.get('code')
 
-  if 'prefix' in language
-    lang_check = 'value[lang(\'@0@\')]'.format(lang_code)
+  if 'default' in language
+    lang_check = 'value[not(@xml:lang)]'
   else
-    lang_check = 'value'.format(lang_code)
+    lang_check = 'value[lang(\'@0@\')]'.format(lang_code)
   endif
 
   gimp_ms_installer_lang_xsl = configure_file(
     input: 'gimp-ms-installer-config.xsl.in',
-    output: '@BASENAME@',
+    output: 'gimp-ms-installer-config-@0@.xsl'.format(lang_code),
     configuration: { 'LANG_CHECK': lang_check },
   )
 
