@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-25 11:34+0000\n"
+"POT-Creation-Date: 2022-07-07 18:06+0000\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: \n"
@@ -138,8 +138,8 @@ msgid "Run-time libraries"
 msgstr "Podporne knjižnice"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
-msgstr "Podporne knjižnice za GIMP, vključno z okoljem GTK+"
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
+msgstr "Podporne knjižnice za GIMP, vključno z izvajalnim okoljem GTK+"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -150,8 +150,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Vključi podatke, ki pomagajo razhroščevati GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK+"
-msgstr "Tema MS-Windows za GTK+"
+msgid "MS-Windows engine for GTK"
+msgstr "Pogon MS-Windows za GTK+"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
