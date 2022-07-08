@@ -1526,11 +1526,11 @@ calcphong (common * obj, ray * r2, GimpVector4 * col)
 static int
 traceray (ray * r, GimpVector4 * col, gint level, gdouble imp)
 {
-  gint     i, b = -1;
-  gdouble  t = -1.0, min = 0.0;
-  common  *obj, *bobj = NULL;
-  gint     hits = 0;
-  GimpVector4   p;
+  gint         i, b = -1;
+  gdouble      t = -1.0, min = 0.0;
+  common      *obj, *bobj = NULL;
+  gint         hits = 0;
+  GimpVector4  p = { 0, 0, 0, 0 };
 
   if ((level == 0) || (imp < 0.005))
     {
