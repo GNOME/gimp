@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-06-30 11:02+0200\n"
-"PO-Revision-Date: 2022-06-30 10:45+0200\n"
+"PO-Revision-Date: 2022-07-09 00:15+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "Language: it\n"
@@ -817,7 +817,7 @@ msgstr "Seme fisso"
 
 #: ../plug-ins/common/cml-explorer.c:1294
 msgid "Random Seed"
-msgstr "Seme Casuale"
+msgstr "Seme casualità"
 
 #. The Load button
 #: ../plug-ins/common/cml-explorer.c:1309
@@ -10503,7 +10503,7 @@ msgstr "Poligono"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:4016
 msgid "Random seed:"
-msgstr "Seme casuale:"
+msgstr "Seme casualità:"
 
 #: ../plug-ins/gradient-flare/gradient-flare.c:4030
 msgid "_Second Flares"
