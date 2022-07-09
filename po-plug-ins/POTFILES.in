@@ -56,6 +56,7 @@ plug-ins/common/file-raw-data.c
 plug-ins/common/file-sunras.c
 plug-ins/common/file-svg.c
 plug-ins/common/file-tga.c
+plug-ins/common/file-wbmp.c
 plug-ins/common/file-wmf.c
 plug-ins/common/file-xbm.c
 plug-ins/common/file-xmc.c
