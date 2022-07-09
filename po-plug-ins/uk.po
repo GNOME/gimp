@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 14:43+0000\n"
-"PO-Revision-Date: 2022-07-07 19:44+0300\n"
+"POT-Creation-Date: 2022-07-09 11:24+0000\n"
+"PO-Revision-Date: 2022-07-09 17:47+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -267,13 +267,6 @@ msgid "Official Demo Plug-ins"
 msgstr "Офіційна демонстрація додатків"
 
 #: extensions/goat-exercises/org.gimp.extension.goat-exercises.metainfo.xml.in.in:8
-#| msgid ""
-#| "This extension provides a set of basic examples to demonstrate how to "
-#| "create your own plug-ins. Each plug-in does the same thing, except it is "
-#| "developed in a different programming language. They all create a GTK+ "
-#| "dialog with a text view displaying their own code (hence also "
-#| "demonstrating how to package data) and a button which calls a GEGL "
-#| "operation on the active layer."
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed "
@@ -284,9 +277,8 @@ msgstr ""
 "До цього розширення включено набір базових прикладів. Воно є демонстрацією "
 "створення ваших власних додатків. Усі додатки виконують ті самі дії, але їх "
 "написано різними мовами програмування. Усі додатки створюють діалогове вікно "
-"GTK із панеллю для показу власного коду (отже, демонструють спосіб "
-"пакування даних) та кнопкою, натискання якої викликає дію GEGL над активним "
-"шаром."
+"GTK із панеллю для показу власного коду (отже, демонструють спосіб пакування "
+"даних) та кнопкою, натискання якої викликає дію GEGL над активним шаром."
 
 #: plug-ins/common/align-layers.c:199
 msgid "Align Visi_ble Layers..."
@@ -473,11 +465,12 @@ msgstr "_Вертикально"
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:424
 #: plug-ins/common/file-png.c:942 plug-ins/common/file-pnm.c:764
 #: plug-ins/common/file-raw-data.c:1837 plug-ins/common/file-sunras.c:1081
-#: plug-ins/common/file-tga.c:1110 plug-ins/common/file-xbm.c:910
-#: plug-ins/common/film.c:804 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:273 plug-ins/file-faxg3/faxg3.c:575
-#: plug-ins/file-fits/fits.c:556 plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-tga.c:1110 plug-ins/common/file-wbmp.c:270
+#: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:804
+#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:273
+#: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
+#: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
 #: plug-ins/file-psd/psd-load.c:2509 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1522
@@ -1052,17 +1045,17 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:358
 #: plug-ins/common/file-svg.c:663 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:899 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:458
-#: plug-ins/file-fli/fli-gimp.c:509 plug-ins/file-ico/ico-load.c:677
-#: plug-ins/file-ico/ico-load.c:774 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:550 plug-ins/file-psd/psd-load.c:158
-#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
-#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
-#: plug-ins/flame/flame.c:478
+#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
+#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:899
+#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
+#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
+#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:550
+#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
+#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1968,13 +1961,14 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:657
 #: plug-ins/common/file-pnm.c:645 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
-#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wmf.c:1026
-#: plug-ins/common/file-xbm.c:739 plug-ins/common/file-xmc.c:648
-#: plug-ins/common/file-xpm.c:382 plug-ins/common/file-xwd.c:473
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
-#: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:501
-#: plug-ins/file-ico/ico-load.c:669 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
+#: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
+#: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
+#: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
+#: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
+#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
+#: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -3087,14 +3081,14 @@ msgstr "Не вдається зчитати заголовок з «%s»"
 msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
-#: plug-ins/common/file-pcx.c:445 plug-ins/file-bmp/bmp-load.c:726
-#: plug-ins/file-psd/psd-load.c:362
+#: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:362
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
-#: plug-ins/common/file-pcx.c:451 plug-ins/file-bmp/bmp-load.c:732
-#: plug-ins/file-psd/psd-load.c:354
+#: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:354
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
@@ -4403,6 +4397,33 @@ msgstr "Знизу ліворуч"
 #: plug-ins/common/file-tga.c:1470
 msgid "Top left"
 msgstr "Згори ліворуч"
+
+#: plug-ins/common/file-wbmp.c:116
+#| msgid "Windows BMP image"
+msgid "Wireless BMP image"
+msgstr "Бездротове зображення BMP"
+
+#: plug-ins/common/file-wbmp.c:119 plug-ins/common/file-wbmp.c:120
+#| msgid "Loads files in the JPEG XL file format"
+msgid "Loads files of Wireless BMP file format"
+msgstr "Завантажує файли у форматі бездротового BMP"
+
+#: plug-ins/common/file-wbmp.c:193
+#, c-format
+#| msgid "'%s' is not a valid BMP file"
+msgid "'%s': Invalid WBMP type value"
+msgstr "«%s»: некоректне значення типу WBMP"
+
+#: plug-ins/common/file-wbmp.c:202
+#, c-format
+msgid "'%s': Unsupported WBMP fixed header value"
+msgstr "«%s»: непідтримуване значення виправленого заголовка WBMP"
+
+#: plug-ins/common/file-wbmp.c:224
+#, c-format
+#| msgid "'%s' is not a valid BMP file"
+msgid "'%s' is not a valid WBMP file"
+msgstr "«%s» не є коректним файлом WBMP"
 
 #: plug-ins/common/file-wmf.c:153
 msgid "Microsoft WMF file"
