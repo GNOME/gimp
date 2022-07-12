@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-05 10:27+0000\n"
-"PO-Revision-Date: 2022-07-07 00:54+0200\n"
+"POT-Creation-Date: 2022-07-09 11:24+0000\n"
+"PO-Revision-Date: 2022-07-12 19:35+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -31,7 +31,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
 msgid "Exercise in _C minor"
@@ -283,14 +283,14 @@ msgstr "Complementos de demostración oficiales"
 msgid ""
 "This extension provides a set of basic examples to demonstrate how to create "
 "your own plug-ins. Each plug-in does the same thing, except it is developed "
-"in a different programming language. They all create a GTK+ dialog with a "
+"in a different programming language. They all create a GTK dialog with a "
 "text view displaying their own code (hence also demonstrating how to package "
 "data) and a button which calls a GEGL operation on the active layer."
 msgstr ""
 "Esta extensión proporciona un conjunto de ejemplos básicos para demostrar "
 "cómo crear sus propios complementos. Cada complemento hace lo mismo, solo "
 "que está desarrollado en un lenguaje de programación diferente. Todos ellos "
-"crean un diálogo GTK+ con una vista de texto que muestra su propio código "
+"crean un diálogo GTK con una vista de texto que muestra su propio código "
 "(por tanto, también demuestra cómo empaquetar datos) y un botón que llama a "
 "una operación GEGL en la capa activa."
 
@@ -478,11 +478,12 @@ msgstr "_Vertical"
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:424
 #: plug-ins/common/file-png.c:942 plug-ins/common/file-pnm.c:764
 #: plug-ins/common/file-raw-data.c:1837 plug-ins/common/file-sunras.c:1081
-#: plug-ins/common/file-tga.c:1110 plug-ins/common/file-xbm.c:910
-#: plug-ins/common/film.c:804 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:273 plug-ins/file-faxg3/faxg3.c:575
-#: plug-ins/file-fits/fits.c:556 plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-tga.c:1110 plug-ins/common/file-wbmp.c:270
+#: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:804
+#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:273
+#: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
+#: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
 #: plug-ins/file-psd/psd-load.c:2509 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1522
@@ -1063,17 +1064,17 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:358
 #: plug-ins/common/file-svg.c:663 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:899 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:458
-#: plug-ins/file-fli/fli-gimp.c:509 plug-ins/file-ico/ico-load.c:677
-#: plug-ins/file-ico/ico-load.c:774 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:550 plug-ins/file-psd/psd-load.c:158
-#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
-#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
-#: plug-ins/flame/flame.c:478
+#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
+#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:899
+#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
+#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
+#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:550
+#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
+#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1981,13 +1982,14 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:657
 #: plug-ins/common/file-pnm.c:645 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
-#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wmf.c:1026
-#: plug-ins/common/file-xbm.c:739 plug-ins/common/file-xmc.c:648
-#: plug-ins/common/file-xpm.c:382 plug-ins/common/file-xwd.c:473
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
-#: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:501
-#: plug-ins/file-ico/ico-load.c:669 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
+#: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
+#: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
+#: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
+#: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
+#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
+#: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -3099,14 +3101,14 @@ msgstr "No se pudo leer la cabecera de «%s»"
 msgid "'%s' is not a PCX file"
 msgstr "«%s» no es un archivo PCX"
 
-#: plug-ins/common/file-pcx.c:445 plug-ins/file-bmp/bmp-load.c:726
-#: plug-ins/file-psd/psd-load.c:362
+#: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:362
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Anchura de imagen no soportada o no válida: %d"
 
-#: plug-ins/common/file-pcx.c:451 plug-ins/file-bmp/bmp-load.c:732
-#: plug-ins/file-psd/psd-load.c:354
+#: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:354
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Altura de imagen no soportada o no válida: %d"
@@ -4420,6 +4422,29 @@ msgstr "Inferior izquierdo"
 #: plug-ins/common/file-tga.c:1470
 msgid "Top left"
 msgstr "Arriba a la izquierda"
+
+#: plug-ins/common/file-wbmp.c:116
+msgid "Wireless BMP image"
+msgstr "Imagen BMP inalámbrica"
+
+#: plug-ins/common/file-wbmp.c:119 plug-ins/common/file-wbmp.c:120
+msgid "Loads files of Wireless BMP file format"
+msgstr "Carga archivos en el formato de archivo BMP inalámbrico"
+
+#: plug-ins/common/file-wbmp.c:193
+#, c-format
+msgid "'%s': Invalid WBMP type value"
+msgstr "«%s» no es un archivo de tipo WBMP válido"
+
+#: plug-ins/common/file-wbmp.c:202
+#, c-format
+msgid "'%s': Unsupported WBMP fixed header value"
+msgstr "«%s»: valor de cabecera fijo WBMP no admitido"
+
+#: plug-ins/common/file-wbmp.c:224
+#, c-format
+msgid "'%s' is not a valid WBMP file"
+msgstr "«%s» no es un archivo WBMP válido"
 
 #: plug-ins/common/file-wmf.c:153
 msgid "Microsoft WMF file"
