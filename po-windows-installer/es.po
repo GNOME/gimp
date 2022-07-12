@@ -8,16 +8,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-01 12:24+0000\n"
-"PO-Revision-Date: 2022-07-01 14:27+0200\n"
-"Last-Translator: Daniel Mustieles <daniel.mustieles@gmail.com>\n"
+"POT-Creation-Date: 2022-07-09 11:25+0000\n"
+"PO-Revision-Date: 2022-07-12 19:38+0200\n"
+"Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -139,10 +139,10 @@ msgid "Run-time libraries"
 msgstr "Bibliotecas en tiempo de ejecución"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Bibliotecas en tiempo de ejecución usadas por GIMP, incluyendo el entorno en "
-"tiempo de ejecución de GTK+"
+"tiempo de ejecución de GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -153,8 +153,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Incluir información para ayudar a depurar GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK+"
-msgstr "Motor de MS-Windows para GTK+"
+msgid "MS-Windows engine for GTK"
+msgstr "Motor de MS-Windows para GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
