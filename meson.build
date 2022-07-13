@@ -341,7 +341,7 @@ freetype2_minver  = '2.1.7'
 freetype2         = dependency('freetype2',          version: '>='+freetype2_minver)
 gdk_pixbuf_minver = '2.30.8'
 gdk_pixbuf        = dependency('gdk-pixbuf-2.0',     version: '>='+gdk_pixbuf_minver)
-gegl_minver       = '0.4.36'
+gegl_minver       = '0.4.38'
 gegl              = dependency('gegl-0.4',           version: '>='+gegl_minver)
 gexiv2_minver     = '0.14.0'
 gexiv2            = dependency('gexiv2',             version: '>='+gexiv2_minver)
