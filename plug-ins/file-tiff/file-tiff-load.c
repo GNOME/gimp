@@ -1014,7 +1014,6 @@ load_image (GFile        *file,
               space = gimp_color_profile_get_space (profile,
                                                     GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                                     error);
-              g_clear_object (&profile);
             }
           else
             {
@@ -1179,6 +1178,13 @@ load_image (GFile        *file,
             {
               gimp_image_set_file (*image, file);
             }
+        }
+
+      /* attach CMYK profile to GimpImage if applicable */
+      if (profile && gimp_color_profile_is_cmyk (profile))
+        {
+          gimp_image_set_simulation_profile (*image, profile);
+          g_clear_object (&profile);
         }
 
       /* attach non-CMYK color profile */
