@@ -95,20 +95,22 @@ output_format_enum = StringEnum(
 )
 
 
-def histogram_export(procedure, img, drw, gio_file,
+def histogram_export(procedure, img, layers, gio_file,
                      bucket_size, sample_average, output_format,
                      progress_bar):
+    layers = img.get_selected_layers()
+    layer = layers[0]
     if sample_average:
         new_img = img.duplicate()
-        drw = new_img.merge_visible_layers(Gimp.MergeType.CLIP_TO_IMAGE)
+        layer = new_img.merge_visible_layers(Gimp.MergeType.CLIP_TO_IMAGE)
 
     channels_txt = ["Value"]
     channels_gimp = [Gimp.HistogramChannel.VALUE]
-    if drw.is_rgb():
+    if layer.is_rgb():
         channels_txt += ["Red", "Green", "Blue", "Luminance"]
         channels_gimp += [Gimp.HistogramChannel.RED, Gimp.HistogramChannel.GREEN, Gimp.HistogramChannel.BLUE,
                           Gimp.HistogramChannel.LUMINANCE]
-    if drw.has_alpha():
+    if layer.has_alpha():
         channels_txt += ["Alpha"]
         channels_gimp += [Gimp.HistogramChannel.ALPHA]
 
@@ -131,7 +133,7 @@ def histogram_export(procedure, img, drw, gio_file,
                 row = [start_range]
                 for channel in channels_gimp:
                     result = Gimp.get_pdb().run_procedure('gimp-drawable-histogram',
-                                                          [ GObject.Value(Gimp.Drawable, drw),
+                                                          [ GObject.Value(Gimp.Drawable, layer),
                                                             GObject.Value(Gimp.HistogramChannel, channel),
                                                             GObject.Value(GObject.TYPE_DOUBLE,
                                                                           float(start_range)),
@@ -175,7 +177,7 @@ def histogram_export(procedure, img, drw, gio_file,
     return procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
 
 
-def run(procedure, run_mode, image, layer, args, data):
+def run(procedure, run_mode, image, n_layers, layers, args, data):
     gio_file = args.index(0)
     bucket_size = args.index(1)
     sample_average = args.index(2)
@@ -287,7 +289,7 @@ def run(procedure, run_mode, image, layer, args, data):
         return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
                                            GLib.Error(error))
 
-    result = histogram_export(procedure, image, layer, gio_file,
+    result = histogram_export(procedure, image, layers, gio_file,
                               bucket_size, sample_average, output_format, progress_bar)
 
     # If the execution was successful, save parameters so they will be restored next time we show dialog.
