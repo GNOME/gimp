@@ -123,7 +123,15 @@ libgimp_scriptfu_@GIMP_API_VERSION@_la_SOURCES = \
 	script-fu-proc-factory.h \
 	script-fu-proc-factory.c \
 	script-fu-arg.c     \
-	script-fu-arg.h
+	script-fu-arg.h     \
+	script-fu-command.h  \
+	script-fu-command.c  \
+	script-fu-dialog.h   \
+	script-fu-dialog.c   \
+	script-fu-register.h \
+	script-fu-register.c \
+	script-fu-run-func.h \
+	script-fu-run-func.c
 
 EXTRA_libgimp_scriptfu_@GIMP_API_VERSION@_la_DEPENDENCIES = $(scriptfu_def)
 

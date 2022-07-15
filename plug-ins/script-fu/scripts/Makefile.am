@@ -57,18 +57,26 @@ scripts = \
 	weave.scm			\
 	xach-effect.scm
 
+# FIXME: when 3.0 ships, ship only the v3 versions
+# of clothify.scm and test-sphere.scm
+# During dev of 2.99, install old and new so devs can compare their GUIs.
 test_scripts = \
-	contactsheet.scm		\
-	test-sphere.scm
+	contactsheet.scm   \
+	test-sphere.scm    \
+	clothify-v3.scm
+
 
 # scripts interpreted by gimp-script-fu-interpreter
 # Each installs to a subdir of /plug-ins
 # Each should have a shebang and execute permission
 independent_scripts = \
-	ts-helloworld.scm
+	ts-helloworld.scm   \
+	test-sphere-v3.scm
 
 ts_helloworlddir = $(gimpplugindir)/plug-ins/ts-helloworld
 ts_helloworld_SCRIPTS = ts-helloworld.scm
+test_sphere_v3dir = $(gimpplugindir)/plug-ins/test-sphere-v3
+test_sphere_v3_SCRIPTS = test-sphere-v3.scm
 
 
 scriptdata_DATA = $(scripts)

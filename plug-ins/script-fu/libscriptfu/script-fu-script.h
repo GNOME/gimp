@@ -30,8 +30,7 @@ SFScript * script_fu_script_new                     (const gchar          *name,
 void       script_fu_script_free                    (SFScript             *script);
 
 void       script_fu_script_install_proc            (GimpPlugIn           *plug_in,
-                                                     SFScript             *script,
-                                                     GimpRunFunc           run_func);
+                                                     SFScript             *script);
 void       script_fu_script_uninstall_proc          (GimpPlugIn           *plug_in,
                                                      SFScript             *script);
 
@@ -45,12 +44,17 @@ gint       script_fu_script_collect_standard_args   (SFScript             *scrip
 gchar    * script_fu_script_get_command             (SFScript             *script);
 gchar    * script_fu_script_get_command_from_params (SFScript             *script,
                                                      const GimpValueArray *args);
+gchar    * script_fu_script_get_command_for_image_proc (
+                                                     SFScript             *script,
+                                                     GimpImage            *image,
+                                                     guint                 n_drawables,
+                                                     GimpDrawable        **drawables,
+                                                     const GimpValueArray *args);
 
 GimpProcedure * script_fu_script_create_PDB_procedure (GimpPlugIn         *plug_in,
                                                        SFScript           *script,
-                                                       GimpRunFunc         run_func,
                                                        GimpPDBProcType     plug_in_type);
 
-
+void            script_fu_script_infer_drawable_arity (SFScript           *script);
 
 #endif /*  __SCRIPT_FU_SCRIPT__  */

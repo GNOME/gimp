@@ -54,6 +54,7 @@ plug-ins/script-fu/scripts/test/test1/test3.scm
 plug-ins/script-fu/scripts/test/test4/test4.scm
 plug-ins/script-fu/scripts/test/test7/test7.scm
 plug-ins/script-fu/scripts/test/test8/test8.scm
+plug-ins/script-fu/scripts/clothify-v3.scm
 plug-ins/selection-to-path
 plug-ins/twain
 plug-ins/ui

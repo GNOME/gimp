@@ -22,3 +22,16 @@
 	       (- 255 (caddr dest-color-1)) (- 255 (caddr dest-color-2)))
   (gimp-levels layer HISTOGRAM-VALUE 0 255 1.0 255 0)
 )
+
+; since 3.0 a layer selection can be many,
+; so PDB methods to get selections return an int and a GObjectArray,
+; which in Scheme is a list containing a numeric and a vector.
+; and the word "active" changed to "selected".
+; Formerly, such PDB methods returned a list of one element, the ID of a layer.
+
+; A compatible replacement for gimp-image-get-active-layer.
+; This should be used only when you know the image has only one layer.
+; In other situations, you may break a contract to process all selected layers.
+(define (gimp-image-get-active-layer img)
+  (list (aref (cadr (gimp-image-get-selected-layers img)) 0))
+)

@@ -21,6 +21,7 @@
 #include "tinyscheme/scheme.h"
 
 typedef void (*TsCallbackFunc) (void);
+typedef pointer (*TsWrapperFunc) (scheme*, pointer);
 
 
 void          tinyscheme_init         (GList        *path,

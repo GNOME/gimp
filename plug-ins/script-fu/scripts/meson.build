@@ -53,6 +53,7 @@ scripts = [
   'waves-anim.scm',
   'weave.scm',
   'xach-effect.scm',
+  'clothify-v3.scm'
 ]
 
 if not stable
@@ -75,6 +76,7 @@ install_data(
 
 scripts_independent = [
   { 'name': 'ts-helloworld' },
+  { 'name': 'test-sphere-v3' },
 ]
 
 foreach plugin : scripts_independent

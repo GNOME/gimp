@@ -450,6 +450,7 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
                                        GString     *result_string,
                                        GValue      *gvalue)
 {
+  g_debug("script_fu_arg_append_repr_from_gvalue %s", arg->label);
   switch (arg->type)
     {
     case SF_IMAGE:
@@ -504,16 +505,24 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
     case SF_FILENAME:
     case SF_DIRNAME:
       {
-        gchar * filepath = NULL;
+        gchar * filepath = "error in file arg";
 
-        if (g_value_get_gtype (gvalue) == G_TYPE_FILE)
+        /* sanity: GValue initialized. */
+        if (G_VALUE_HOLDS_GTYPE(gvalue))
           {
-            filepath = g_file_get_path (g_value_get_object (gvalue));
-            /* Not escape special chars for whitespace or double quote. */
+            if (g_value_get_gtype (gvalue) == G_TYPE_FILE)
+              {
+                filepath = g_file_get_path (g_value_get_object (gvalue));
+                /* Not escape special chars for whitespace or double quote. */
+              }
+            else
+              {
+                g_warning ("Expecting GFile in gvalue.");
+              }
           }
         else
           {
-            g_warning ("Expecting GFile in gvalue.");
+            g_warning ("Expecting GValue holding a GType");
           }
 
         g_string_append_printf (result_string, "\"%s\"", filepath);
@@ -539,7 +548,19 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
 
     case SF_OPTION:
     case SF_ENUM:
-      g_string_append_printf (result_string, "%d", g_value_get_int (gvalue));
+      /* When sanity test fails, return an arbitrary int.
+       * Fails when GimpConfig or GimpProcedureDialog does not support GParamEnum.
+       */
+      if (G_VALUE_HOLDS_INT (gvalue))
+        {
+          g_string_append_printf (result_string, "%d", g_value_get_int (gvalue));
+        }
+      else
+        {
+          g_warning ("Expecting GValue holding an int.");
+          g_string_append (result_string, "1");   /* Arbitrarily a common int. */
+        }
+
       break;
     }
 }
@@ -684,12 +705,16 @@ script_fu_arg_reset_name_generator (void)
  * It is unique among all names returned between resets of the generator.
  * Thus name meets uniquity for names of properties of one object.
  *
- * The name means nothing to human readers of the spec.
- * The nick is descriptive.
+ * !!! GimpImageProcedures already have properties for convenience arguments,
+ * e.g. a property named "image" "n_drawables" and "drawables"
+ * So we avoid that name clash by starting with "otherImage"
  *
- * The returned string is owned by the generator
- * and is only stable until the next call to the generator.
- * That is, the caller should copy it (usually by creating a GParamSpec.)
+ * The name means nothing to human readers of the spec.
+ * Instead, the nick is descriptive for human readers.
+ *
+ * The returned string is owned by the generator, a constant.
+ * The caller need not copy it,
+ * but usually does by creating a GParamSpec.
  */
 void
 script_fu_arg_generate_name_and_nick (SFArg        *arg,
@@ -702,7 +727,7 @@ script_fu_arg_generate_name_and_nick (SFArg        *arg,
   switch (arg->type)
     {
     case SF_IMAGE:
-      name = "image";
+      name = "otherImage";  /* !!! Avoid name clash. */
       break;
 
     case SF_DRAWABLE:

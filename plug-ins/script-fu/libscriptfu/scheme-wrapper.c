@@ -51,6 +51,10 @@
 static void     ts_init_constants                           (scheme    *sc);
 static void     ts_init_enum                                (scheme    *sc,
                                                              GType      enum_type);
+
+static void     ts_define_procedure                         (scheme       *sc,
+                                                             const gchar  *symbol_name,
+                                                             TsWrapperFunc func);
 static void     ts_init_procedures                          (scheme    *sc,
                                                              gboolean   register_scipts);
 static void     convert_string                              (gchar     *str);
@@ -66,6 +70,8 @@ static pointer  script_fu_marshal_procedure_call_deprecated (scheme    *sc,
                                                              pointer    a);
 
 static pointer  script_fu_register_call                     (scheme    *sc,
+                                                             pointer    a);
+static pointer  script_fu_register_call_filter              (scheme    *sc,
                                                              pointer    a);
 static pointer  script_fu_menu_register_call                (scheme    *sc,
                                                              pointer    a);
@@ -83,6 +89,7 @@ typedef struct
   gint         value;
 } NamedConstant;
 
+/* LHS is text in a script, RHS is constant defined in C. */
 static const NamedConstant script_constants[] =
 {
   /* Useful values from libgimpbase/gimplimits.h */
@@ -103,6 +110,8 @@ static const NamedConstant script_constants[] =
   { "UNIT-PICA",      GIMP_UNIT_PICA  },
 
   /* Script-Fu types */
+
+  /* Arg types. */
   { "SF-IMAGE",       SF_IMAGE      },
   { "SF-DRAWABLE",    SF_DRAWABLE   },
   { "SF-LAYER",       SF_LAYER      },
@@ -124,6 +133,36 @@ static const NamedConstant script_constants[] =
   { "SF-TEXT",        SF_TEXT       },
   { "SF-ENUM",        SF_ENUM       },
   { "SF-DISPLAY",     SF_DISPLAY    },
+
+  /* PDB procedure drawable_arity, i.e. sensitivity.
+   * Used with script-fu-register-filter.
+   *
+   * This declares the arity of the algorithm,
+   * and not the signature of the PDB procedure.
+   * Since v3, PDB procedures that are image procedures,
+   * take a container of drawables.
+   * This only describes how many drawables the container *should* hold.
+   *
+   * For calls invoked by a user, this describes
+   * how many drawables the user is expected to select,
+   * which disables/enables the menu item for the procedure.
+   *
+   * Procedures are also called from other procedures.
+   * A call from another procedure may in fact
+   * pass more drawables than declared for drawable_arity.
+   * That is a programming error on behalf of the caller.
+   * A well-written callee that is passed more drawables than declared
+   * should return an error instead of processing any of the drawables.
+   *
+   * Similarly for fewer than declared.
+   */
+
+  /* Requires two drawables. Often an operation between them, yielding a new drawable */
+  { "SF-TWO-OR-MORE-DRAWABLE",   SF_TWO_OR_MORE_DRAWABLE  },
+  /* Often processed independently, sequentially, with side effects on the drawables. */
+  { "SF-ONE-OR-MORE-DRAWABLE",   SF_ONE_OR_MORE_DRAWABLE  },
+  /* Requires exactly one drawable. */
+  { "SF-ONE-DRAWABLE",     SF_ONE_DRAWABLE    },
 
   /* For SF-ADJUSTMENT */
   { "SF-SLIDER",      SF_SLIDER     },
@@ -242,6 +281,8 @@ ts_interpret_stdin (void)
 gint
 ts_interpret_string (const gchar *expr)
 {
+  gint result;
+
 #if DEBUG_SCRIPTS
   sc.print_output = 1;
   sc.tracing = 1;
@@ -249,7 +290,10 @@ ts_interpret_string (const gchar *expr)
 
   sc.vptr->load_string (&sc, (char *) expr);
 
-  return sc.retcode;
+  result = sc.retcode;
+
+  g_debug ("ts_interpret_string returns: %i", result);
+  return result;
 }
 
 const gchar *
@@ -421,6 +465,27 @@ ts_init_enum (scheme *sc,
   g_type_class_unref (enum_class);
 }
 
+/* Define a symbol into interpreter state,
+ * bound to a foreign function, language C, defined here in ScriptFu source.
+ */
+static void
+ts_define_procedure (scheme       *sc,
+                     const gchar  *symbol_name,
+                     TsWrapperFunc func)
+{
+  pointer   symbol;
+
+  symbol = sc->vptr->mk_symbol (sc, symbol_name);
+  sc->vptr->scheme_define (sc, sc->global_env, symbol,
+                           sc->vptr->mk_foreign_func (sc, func));
+  sc->vptr->setimmutable (symbol);
+}
+
+
+/* Define, into interpreter state,
+ * 1) Scheme functions that call wrapper functions in C here in ScriptFu.
+ * 2) Scheme functions wrapping every procedure in the PDB.
+ */
 static void
 ts_init_procedures (scheme   *sc,
                     gboolean  register_scripts)
@@ -428,55 +493,30 @@ ts_init_procedures (scheme   *sc,
   gchar   **proc_list;
   gint      num_procs;
   gint      i;
-  pointer   symbol;
 
 #if USE_DL
-  symbol = sc->vptr->mk_symbol (sc,"load-extension");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc, scm_load_ext));
-  sc->vptr->setimmutable (symbol);
+/* scm_load_ext not same as other wrappers, defined in tinyscheme/dynload */
+ts_define_procedure (sc, "load-extension", scm_load_ext);
 #endif
 
-  symbol = sc->vptr->mk_symbol (sc, "script-fu-register");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc,
-                                                      register_scripts ?
-                                                      script_fu_register_call :
-                                                      script_fu_nil_call));
-  sc->vptr->setimmutable (symbol);
+  if (register_scripts)
+    {
+      ts_define_procedure (sc, "script-fu-register",        script_fu_register_call);
+      ts_define_procedure (sc, "script-fu-register-filter", script_fu_register_call_filter);
+      ts_define_procedure (sc, "script-fu-menu-register",   script_fu_menu_register_call);
+    }
+  else
+    {
+      ts_define_procedure (sc, "script-fu-register",        script_fu_nil_call);
+      ts_define_procedure (sc, "script-fu-register-filter", script_fu_nil_call);
+      ts_define_procedure (sc, "script-fu-menu-register",   script_fu_nil_call);
+    }
 
-  symbol = sc->vptr->mk_symbol (sc, "script-fu-menu-register");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc,
-                                                      register_scripts ?
-                                                      script_fu_menu_register_call :
-                                                      script_fu_nil_call));
-  sc->vptr->setimmutable (symbol);
+  ts_define_procedure (sc, "script-fu-quit",      script_fu_quit_call);
 
-  symbol = sc->vptr->mk_symbol (sc, "script-fu-quit");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc, script_fu_quit_call));
-  sc->vptr->setimmutable (symbol);
-
-  /*  register normal database execution procedure  */
-  symbol = sc->vptr->mk_symbol (sc, "gimp-proc-db-call");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc,
-                                                      script_fu_marshal_procedure_call_strict));
-  sc->vptr->setimmutable (symbol);
-
-  /*  register permissive and deprecated db execution procedure; see comment below  */
-  symbol = sc->vptr->mk_symbol (sc, "-gimp-proc-db-call");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc,
-                                                      script_fu_marshal_procedure_call_permissive));
-  sc->vptr->setimmutable (symbol);
-
-  symbol = sc->vptr->mk_symbol (sc, "--gimp-proc-db-call");
-  sc->vptr->scheme_define (sc, sc->global_env, symbol,
-                           sc->vptr->mk_foreign_func (sc,
-                                                      script_fu_marshal_procedure_call_deprecated));
-  sc->vptr->setimmutable (symbol);
+  ts_define_procedure (sc, "gimp-proc-db-call",   script_fu_marshal_procedure_call_strict);
+  ts_define_procedure (sc, "-gimp-proc-db-call",  script_fu_marshal_procedure_call_permissive);
+  ts_define_procedure (sc, "--gimp-proc-db-call", script_fu_marshal_procedure_call_deprecated);
 
   proc_list = gimp_pdb_query_procedures (gimp_get_pdb (),
                                          ".*", ".*", ".*", ".*",
@@ -1596,6 +1636,13 @@ script_fu_register_call (scheme  *sc,
                          pointer  a)
 {
   return script_fu_add_script (sc, a);
+}
+
+static pointer
+script_fu_register_call_filter (scheme  *sc,
+                                pointer  a)
+{
+  return script_fu_add_script_filter (sc, a);
 }
 
 static pointer

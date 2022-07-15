@@ -28,7 +28,6 @@
 #include <windows.h>
 #endif
 
-#include "tinyscheme/scheme-private.h"
 #include "scheme-wrapper.h"
 
 #include "script-fu-types.h"

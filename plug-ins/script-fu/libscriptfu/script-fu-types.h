@@ -101,6 +101,8 @@ typedef struct
 
   gint          n_args;
   SFArg        *args;
+  SFDrawableArity drawable_arity;
+  GType           proc_class; /* GimpProcedure or GimpImageProcedure. */
 } SFScript;
 
 typedef struct

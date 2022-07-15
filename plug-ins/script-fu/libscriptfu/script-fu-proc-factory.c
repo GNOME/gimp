@@ -88,7 +88,6 @@ script_fu_proc_factory_make_PLUGIN (GimpPlugIn  *plug_in,
       procedure = script_fu_script_create_PDB_procedure (
         plug_in,
         script,
-        script_fu_script_proc,     /* run_func */
         GIMP_PDB_PROC_TYPE_PLUGIN);
       script_fu_add_menu_to_procedure (procedure, script);
     }

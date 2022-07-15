@@ -15,7 +15,11 @@ libscriptfu_sources = [
   'script-fu-compat.c',
   'script-fu-lib.c',
   'script-fu-proc-factory.c',
-  'script-fu-arg.c'
+  'script-fu-arg.c',
+  'script-fu-register.c',
+  'script-fu-dialog.c',
+  'script-fu-run-func.c',
+  'script-fu-command.c'
 ]
 
 # !! just "library(...)" which means shared versus static depends on configuration of project.
