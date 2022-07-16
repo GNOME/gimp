@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 18:05+0000\n"
-"PO-Revision-Date: 2022-07-08 19:47+0200\n"
+"POT-Creation-Date: 2022-07-09 11:24+0000\n"
+"PO-Revision-Date: 2022-07-16 21:57+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -467,11 +467,12 @@ msgstr "_Navpične"
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:424
 #: plug-ins/common/file-png.c:942 plug-ins/common/file-pnm.c:764
 #: plug-ins/common/file-raw-data.c:1837 plug-ins/common/file-sunras.c:1081
-#: plug-ins/common/file-tga.c:1110 plug-ins/common/file-xbm.c:910
-#: plug-ins/common/film.c:804 plug-ins/common/smooth-palette.c:332
-#: plug-ins/common/tile.c:405 plug-ins/file-bmp/bmp-load.c:737
-#: plug-ins/file-exr/file-exr.c:273 plug-ins/file-faxg3/faxg3.c:575
-#: plug-ins/file-fits/fits.c:556 plug-ins/file-jpeg/jpeg-load.c:225
+#: plug-ins/common/file-tga.c:1110 plug-ins/common/file-wbmp.c:270
+#: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:804
+#: plug-ins/common/smooth-palette.c:332 plug-ins/common/tile.c:405
+#: plug-ins/file-bmp/bmp-load.c:737 plug-ins/file-exr/file-exr.c:273
+#: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
+#: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
 #: plug-ins/file-psd/psd-load.c:2509 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1522
@@ -1044,17 +1045,17 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:358
 #: plug-ins/common/file-svg.c:663 plug-ins/common/file-tga.c:445
-#: plug-ins/common/file-xbm.c:747 plug-ins/common/file-xmc.c:658
-#: plug-ins/common/file-xmc.c:899 plug-ins/common/file-xwd.c:481
-#: plug-ins/common/sphere-designer.c:2090 plug-ins/file-bmp/bmp-load.c:226
-#: plug-ins/file-dds/ddsread.c:155 plug-ins/file-faxg3/faxg3.c:256
-#: plug-ins/file-fits/fits.c:381 plug-ins/file-fli/fli-gimp.c:458
-#: plug-ins/file-fli/fli-gimp.c:509 plug-ins/file-ico/ico-load.c:677
-#: plug-ins/file-ico/ico-load.c:774 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:550 plug-ins/file-psd/psd-load.c:158
-#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
-#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
-#: plug-ins/flame/flame.c:478
+#: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
+#: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:899
+#: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
+#: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
+#: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
+#: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
+#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
+#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:550
+#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
+#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1956,13 +1957,14 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:657
 #: plug-ins/common/file-pnm.c:645 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
-#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wmf.c:1026
-#: plug-ins/common/file-xbm.c:739 plug-ins/common/file-xmc.c:648
-#: plug-ins/common/file-xpm.c:382 plug-ins/common/file-xwd.c:473
-#: plug-ins/file-bmp/bmp-load.c:218 plug-ins/file-exr/file-exr.c:188
-#: plug-ins/file-faxg3/faxg3.c:240 plug-ins/file-fli/fli-gimp.c:501
-#: plug-ins/file-ico/ico-load.c:669 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
+#: plug-ins/common/file-wmf.c:1026 plug-ins/common/file-xbm.c:739
+#: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
+#: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
+#: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
+#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
+#: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -3063,14 +3065,14 @@ msgstr "Glave datoteke »%s« ni mogoče prebrati"
 msgid "'%s' is not a PCX file"
 msgstr "»%s« ni datoteka PCX"
 
-#: plug-ins/common/file-pcx.c:445 plug-ins/file-bmp/bmp-load.c:726
-#: plug-ins/file-psd/psd-load.c:362
+#: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:362
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodprta ali neveljavna širina slike: %d"
 
-#: plug-ins/common/file-pcx.c:451 plug-ins/file-bmp/bmp-load.c:732
-#: plug-ins/file-psd/psd-load.c:354
+#: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:354
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodprta ali neveljavna višina slike: %d"
@@ -4371,6 +4373,29 @@ msgstr "Levo spodaj"
 #: plug-ins/common/file-tga.c:1470
 msgid "Top left"
 msgstr "Levo zgoraj"
+
+#: plug-ins/common/file-wbmp.c:116
+msgid "Wireless BMP image"
+msgstr "Slika Wireless BMP"
+
+#: plug-ins/common/file-wbmp.c:119 plug-ins/common/file-wbmp.c:120
+msgid "Loads files of Wireless BMP file format"
+msgstr "Naloži datoteke v zapisu Wireless BMP"
+
+#: plug-ins/common/file-wbmp.c:193
+#, c-format
+msgid "'%s': Invalid WBMP type value"
+msgstr "»%s«: neveljavna vrednost vrste WBMP."
+
+#: plug-ins/common/file-wbmp.c:202
+#, c-format
+msgid "'%s': Unsupported WBMP fixed header value"
+msgstr "»%s«: nepodprta vrednost fiksne glave WBMP"
+
+#: plug-ins/common/file-wbmp.c:224
+#, c-format
+msgid "'%s' is not a valid WBMP file"
+msgstr "»%s« ni veljavna datoteka WBMP."
 
 #: plug-ins/common/file-wmf.c:153
 msgid "Microsoft WMF file"
