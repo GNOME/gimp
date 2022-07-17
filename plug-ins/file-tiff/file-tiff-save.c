@@ -681,7 +681,7 @@ save_layer (TIFF        *tif,
        * set it back to NULL and save the RGB profile instead
        */
       if (cmyk_profile && ! gimp_color_profile_is_cmyk (cmyk_profile))
-        cmyk_profile = NULL;
+        g_clear_object (&cmyk_profile);
 
       /* Write the RGB or CMYK color profile to the TIFF file */
       if (profile && ! config_cmyk)
