@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-09 11:24+0000\n"
-"PO-Revision-Date: 2022-07-09 17:47+0300\n"
+"POT-Creation-Date: 2022-07-17 17:05+0000\n"
+"PO-Revision-Date: 2022-07-17 21:25+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -1017,8 +1017,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1252
 #: plug-ins/file-jpeg/jpeg-save.c:318 plug-ins/file-psd/psd-save.c:1815
-#: plug-ins/file-tiff/file-tiff-save.c:1025
-#: plug-ins/file-tiff/file-tiff-save.c:1101 plug-ins/flame/flame.c:509
+#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
 #: plug-ins/lighting/lighting-ui.c:1233
@@ -2047,7 +2047,7 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1244
 #: plug-ins/file-jpeg/jpeg-save.c:273 plug-ins/file-psd/psd-save.c:1777
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1015
+#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Експортування «%s»"
@@ -4399,18 +4399,15 @@ msgid "Top left"
 msgstr "Згори ліворуч"
 
 #: plug-ins/common/file-wbmp.c:116
-#| msgid "Windows BMP image"
 msgid "Wireless BMP image"
 msgstr "Бездротове зображення BMP"
 
 #: plug-ins/common/file-wbmp.c:119 plug-ins/common/file-wbmp.c:120
-#| msgid "Loads files in the JPEG XL file format"
 msgid "Loads files of Wireless BMP file format"
 msgstr "Завантажує файли у форматі бездротового BMP"
 
 #: plug-ins/common/file-wbmp.c:193
 #, c-format
-#| msgid "'%s' is not a valid BMP file"
 msgid "'%s': Invalid WBMP type value"
 msgstr "«%s»: некоректне значення типу WBMP"
 
@@ -4421,7 +4418,6 @@ msgstr "«%s»: непідтримуване значення виправлен
 
 #: plug-ins/common/file-wbmp.c:224
 #, c-format
-#| msgid "'%s' is not a valid BMP file"
 msgid "'%s' is not a valid WBMP file"
 msgstr "«%s» не є коректним файлом WBMP"
 
@@ -7060,15 +7056,15 @@ msgstr "Розмір файлу: невідомо"
 msgid "Enable preview to obtain the file size."
 msgstr "Увімкніть перегляд, щоб бачити розмір файлу."
 
-#: plug-ins/file-jpeg/jpeg-save.c:892
+#: plug-ins/file-jpeg/jpeg-save.c:892 plug-ins/file-tiff/file-tiff-save.c:1360
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
 
-#: plug-ins/file-jpeg/jpeg-save.c:899
+#: plug-ins/file-jpeg/jpeg-save.c:899 plug-ins/file-tiff/file-tiff-save.c:1367
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
-#: plug-ins/file-jpeg/jpeg-save.c:910
+#: plug-ins/file-jpeg/jpeg-save.c:910 plug-ins/file-tiff/file-tiff-save.c:1379
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
@@ -7107,7 +7103,7 @@ msgstr "З рухомою комою"
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:193 plug-ins/file-tiff/file-tiff-save.c:1251
+#: plug-ins/file-jpeg/jpeg.c:193 plug-ins/file-tiff/file-tiff-save.c:1324
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7457,7 +7453,7 @@ msgstr "Зображення TIFF або BigTIFF"
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:451
+#: plug-ins/file-tiff/file-tiff.c:457
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "Під час спроби експортування декількох шарів не було позначено пункт "
@@ -7698,7 +7694,7 @@ msgstr "_Попередньо помножена альфа"
 msgid "Channe_l"
 msgstr "_Канал"
 
-#: plug-ins/file-tiff/file-tiff-save.c:619
+#: plug-ins/file-tiff/file-tiff-save.c:648
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7706,11 +7702,11 @@ msgstr ""
 "За допомогою \"CCITT Group 4\" або \"CCITT Group 3\" можна стискати тільки "
 "монохромні зображення."
 
-#: plug-ins/file-tiff/file-tiff-save.c:633
+#: plug-ins/file-tiff/file-tiff-save.c:662
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "Індексовані зображення не можна стиснути за допомогою \"JPEG\"."
 
-#: plug-ins/file-tiff/file-tiff-save.c:667
+#: plug-ins/file-tiff/file-tiff-save.c:721
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7718,16 +7714,16 @@ msgstr ""
 "Формат TIFF підтримує лише 7-бітні ASCII\n"
 "коментарі. Коментар не збережено."
 
-#: plug-ins/file-tiff/file-tiff-save.c:809
+#: plug-ins/file-tiff/file-tiff-save.c:863
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Не вдалося записати рядок сканування %d"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1126
+#: plug-ins/file-tiff/file-tiff-save.c:1196
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: plug-ins/file-tiff/file-tiff-save.c:1235
+#: plug-ins/file-tiff/file-tiff-save.c:1308
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -7735,31 +7731,39 @@ msgstr ""
 "Попередження: перевищено максимальний розмір файлів TIFF. Повторіть спробу у "
 "форматі BigTIFF, виберіть інший алгоритм стискання або скасуйте дію."
 
-#: plug-ins/file-tiff/file-tiff-save.c:1247
+#: plug-ins/file-tiff/file-tiff-save.c:1320
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Немає"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1248
+#: plug-ins/file-tiff/file-tiff-save.c:1321
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1249
+#: plug-ins/file-tiff/file-tiff-save.c:1322
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1250
+#: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "Deflate"
 msgstr "Deflate"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1252
+#: plug-ins/file-tiff/file-tiff-save.c:1325
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1253
+#: plug-ins/file-tiff/file-tiff-save.c:1326
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
+
+#: plug-ins/file-tiff/file-tiff-save.c:1384
+msgid ""
+"The assigned soft-proofing profile is not a CMYK profile.\n"
+"This profile will not be included in the exported image."
+msgstr ""
+"Призначений профіль проби кольорів не є профілем CMYK.\n"
+"Цей профіль не буде включено до експортованого зображення."
 
 #: plug-ins/file-webp/file-webp.c:121 plug-ins/file-webp/file-webp.c:148
 msgid "WebP image"
