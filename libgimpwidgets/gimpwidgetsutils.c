@@ -901,7 +901,7 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
         proof_profile = gimp_color_config_get_simulation_color_profile (config,
                                                                         NULL);
       else
-        proof_profile = softproof_profile;
+        proof_profile = g_object_ref (softproof_profile);
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
@@ -947,7 +947,7 @@ gimp_widget_get_color_transform (GtkWidget        *widget,
   cache->src_format    = src_format;
   cache->dest_profile  = dest_profile;
   cache->dest_format   = dest_format;
-  cache->proof_profile = g_object_ref (proof_profile);
+  cache->proof_profile = proof_profile;
 
   cache->notify_id =
     g_signal_connect (cache->config, "notify",
