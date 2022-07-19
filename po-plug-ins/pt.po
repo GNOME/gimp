@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-09 11:24+0000\n"
-"PO-Revision-Date: 2022-07-11 16:27+0100\n"
+"POT-Creation-Date: 2022-07-17 17:05+0000\n"
+"PO-Revision-Date: 2022-07-19 13:55+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -1021,8 +1021,8 @@ msgstr "Guardar parâmetros do explorador CML"
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1252
 #: plug-ins/file-jpeg/jpeg-save.c:318 plug-ins/file-psd/psd-save.c:1815
-#: plug-ins/file-tiff/file-tiff-save.c:1025
-#: plug-ins/file-tiff/file-tiff-save.c:1101 plug-ins/flame/flame.c:509
+#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
 #: plug-ins/lighting/lighting-ui.c:1233
@@ -2054,7 +2054,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1244
 #: plug-ins/file-jpeg/jpeg-save.c:273 plug-ins/file-psd/psd-save.c:1777
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1015
+#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "A exportar '%s'"
@@ -7066,15 +7066,15 @@ msgstr "Tamanho do ficheiro: desconhecido"
 msgid "Enable preview to obtain the file size."
 msgstr "Ativar a pré-visualização para obter o tamanho do ficheiro."
 
-#: plug-ins/file-jpeg/jpeg-save.c:892
+#: plug-ins/file-jpeg/jpeg-save.c:892 plug-ins/file-tiff/file-tiff-save.c:1360
 msgid "No soft-proofing profile"
 msgstr "Sem perfil da prova de cor do ecrã"
 
-#: plug-ins/file-jpeg/jpeg-save.c:899
+#: plug-ins/file-jpeg/jpeg-save.c:899 plug-ins/file-tiff/file-tiff-save.c:1367
 msgid "Name of the color profile used for CMYK export."
 msgstr "Nome do perfil de cor usado para exportação CMYK."
 
-#: plug-ins/file-jpeg/jpeg-save.c:910
+#: plug-ins/file-jpeg/jpeg-save.c:910 plug-ins/file-tiff/file-tiff-save.c:1379
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
@@ -7113,7 +7113,7 @@ msgstr "Vírgula flutuante"
 msgid "JPEG image"
 msgstr "Imagem JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:193 plug-ins/file-tiff/file-tiff-save.c:1251
+#: plug-ins/file-jpeg/jpeg.c:193 plug-ins/file-tiff/file-tiff-save.c:1324
 msgid "JPEG"
 msgstr "JPEG (velocidade: ++, compressão: ++++, perda de dados)"
 
@@ -7463,7 +7463,7 @@ msgstr "Imagem TIFF ou BigTIFF"
 msgid "TIFF"
 msgstr "TIFF"
 
-#: plug-ins/file-tiff/file-tiff.c:451
+#: plug-ins/file-tiff/file-tiff.c:457
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 "A opção “Guardar camadas” não foi definida ao tentar exportar várias camadas."
@@ -7694,7 +7694,7 @@ msgstr "Alfa pré-_multiplicado"
 msgid "Channe_l"
 msgstr "Cana_l"
 
-#: plug-ins/file-tiff/file-tiff-save.c:619
+#: plug-ins/file-tiff/file-tiff-save.c:648
 msgid ""
 "Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT "
 "Group 3\"."
@@ -7702,11 +7702,11 @@ msgstr ""
 "Só as imagens monocromáticas podem ser comprimidas com \"CCITT Group 4\" ou "
 "\"CCITT Group 3\"."
 
-#: plug-ins/file-tiff/file-tiff-save.c:633
+#: plug-ins/file-tiff/file-tiff-save.c:662
 msgid "Indexed pictures cannot be compressed with \"JPEG\"."
 msgstr "As imagens indexadas não podem ser comprimidas com \"JPEG\"."
 
-#: plug-ins/file-tiff/file-tiff-save.c:667
+#: plug-ins/file-tiff/file-tiff-save.c:721
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -7714,16 +7714,16 @@ msgstr ""
 "O formato TIFF só suporta comentários com\n"
 "codificação ASCII 7bits. Nenhum comentário foi guardado."
 
-#: plug-ins/file-tiff/file-tiff-save.c:809
+#: plug-ins/file-tiff/file-tiff-save.c:863
 #, c-format
 msgid "Failed a scanline write on row %d"
 msgstr "Falhou a gravação de uma scanline na linha %d"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1126
+#: plug-ins/file-tiff/file-tiff-save.c:1196
 msgid "Writing pages with different bit depth is strange."
 msgstr "Escrever páginas com profundidades de bits diferentes é estranho."
 
-#: plug-ins/file-tiff/file-tiff-save.c:1235
+#: plug-ins/file-tiff/file-tiff-save.c:1308
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -7731,32 +7731,40 @@ msgstr ""
 "Aviso: o tamanho máximo do ficheiro TIFF foi excedido. Tente novamente como "
 "BigTIFF ou com um algoritmo de compressão diferente ou cancele."
 
-#: plug-ins/file-tiff/file-tiff-save.c:1247
+#: plug-ins/file-tiff/file-tiff-save.c:1320
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Nenhuma"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1248
+#: plug-ins/file-tiff/file-tiff-save.c:1321
 msgid "LZW"
 msgstr "LZW (velocidade: ++, compressão: ++)"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1249
+#: plug-ins/file-tiff/file-tiff-save.c:1322
 msgid "Pack Bits"
 msgstr "Pack Bits (velocidade: +++, compressão: +)"
 
 # Não traduzir, “Deflate” é o nome da compressão
-#: plug-ins/file-tiff/file-tiff-save.c:1250
+#: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "Deflate"
 msgstr "Deflate (velocidade: +, compressão: +++)"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1252
+#: plug-ins/file-tiff/file-tiff-save.c:1325
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax (só para imagens a P/B)"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1253
+#: plug-ins/file-tiff/file-tiff-save.c:1326
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax (só para imagens a P/B)"
+
+#: plug-ins/file-tiff/file-tiff-save.c:1384
+msgid ""
+"The assigned soft-proofing profile is not a CMYK profile.\n"
+"This profile will not be included in the exported image."
+msgstr ""
+"O perfil da prova de cor do ecrã atribuído não é um perfil CMYK.\n"
+"Este perfil não será incluído na imagem exportada."
 
 #: plug-ins/file-webp/file-webp.c:121 plug-ins/file-webp/file-webp.c:148
 msgid "WebP image"
