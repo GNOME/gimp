@@ -32,6 +32,7 @@ gboolean    save_image         (GFile                *file,
                                 GError              **error);
 gboolean    save_dialog        (GimpProcedure        *procedure,
                                 GimpProcedureConfig  *config,
-                                GimpDrawable         *drawable);
+                                GimpDrawable         *drawable,
+                                GimpImage            *image);
 
 #endif /* __JPEG_SAVE_H__ */

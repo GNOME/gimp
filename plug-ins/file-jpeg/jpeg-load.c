@@ -346,11 +346,16 @@ load_image (GFile        *file,
     {
       encoding = "cmyk u8";
       if (cmyk_profile)
-        space = gimp_color_profile_get_space (cmyk_profile,
-                                              GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
-                                              error);
+        {
+          space = gimp_color_profile_get_space (cmyk_profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                error);
+          gimp_image_set_simulation_profile (image, cmyk_profile);
+        }
       else
-        space = NULL;
+        {
+          space = NULL;
+        }
     }
   else
     {

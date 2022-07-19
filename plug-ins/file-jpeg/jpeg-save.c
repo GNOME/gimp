@@ -213,7 +213,6 @@ save_image (GFile                *file,
   FILE             * volatile outfile;
   guchar           *data;
   guchar           *src;
-  GimpColorConfig  *color_config = gimp_get_color_configuration ();
   GimpColorProfile *profile      = NULL;
   GimpColorProfile *cmyk_profile = NULL;
 
@@ -436,7 +435,7 @@ save_image (GFile                *file,
         {
           GError *err = NULL;
 
-          cmyk_profile = gimp_color_config_get_simulation_color_profile (color_config, &err);
+          cmyk_profile = gimp_image_get_simulation_profile (image);
           if (! cmyk_profile && err)
             g_printerr ("%s: no soft-proof profile: %s\n", G_STRFUNC, err->message);
 
@@ -838,13 +837,13 @@ destroy_preview (void)
 gboolean
 save_dialog (GimpProcedure       *procedure,
              GimpProcedureConfig *config,
-             GimpDrawable        *drawable)
+             GimpDrawable        *drawable,
+             GimpImage           *image)
 {
   GtkWidget        *dialog;
   GtkWidget        *widget;
   GtkWidget        *profile_label;
   GtkListStore     *store;
-  GimpColorConfig  *color_config = gimp_get_color_configuration ();
   GimpColorProfile *cmyk_profile = NULL;
   gint              orig_quality;
   gint              restart;
@@ -900,7 +899,7 @@ save_dialog (GimpProcedure       *procedure,
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
                                     "cmyk-frame", "cmyk", FALSE,
                                     "profile-label");
-  cmyk_profile = gimp_color_config_get_simulation_color_profile (color_config, NULL);
+  cmyk_profile = gimp_image_get_simulation_profile (image);
   if (cmyk_profile)
     {
       if (gimp_color_profile_is_cmyk (cmyk_profile))

@@ -590,7 +590,7 @@ jpeg_save (GimpProcedure        *procedure,
       drawable_global   = drawables[0];
 
       /*  First acquire information with a dialog  */
-      if (! save_dialog (procedure, config, drawables[0]))
+      if (! save_dialog (procedure, config, drawables[0], orig_image))
         {
           status = GIMP_PDB_CANCEL;
         }
