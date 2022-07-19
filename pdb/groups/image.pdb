@@ -2086,6 +2086,54 @@ CODE
     );
 }
 
+sub image_get_selected_drawables {
+    $blurb = "Get the image's selected drawables";
+
+    $help = <<'HELP';
+This procedure returns the list of selected drawable in the specified image.
+This can be either layers, channels, or a layer mask.
+
+The active drawables are the active image channels. If there are none,
+these are the active image layers. If the active image layer has a layer
+mask and the layer mask is in edit mode, then the layer mask is the
+active drawable.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'drawables', type => 'itemarray',
+          desc => 'The list of selected drawables in the image.',
+          array => { name => 'num_drawables',
+                     desc => 'The number of selected drawables in the image' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *list = gimp_image_get_selected_drawables (image);
+
+  num_drawables = g_list_length (list);
+
+  if (num_drawables)
+    {
+      gint i;
+
+      drawables = g_new (GimpItem *, num_drawables);
+
+      for (i = 0; i < num_drawables; i++, list = g_list_next (list))
+        drawables[i] = g_object_ref (list->data);
+    }
+}
+CODE
+    );
+}
+
 sub image_get_selection {
     $blurb = "Returns the specified image's selection.";
 
@@ -3173,6 +3221,7 @@ CODE
             image_get_active_channel image_set_active_channel
             image_get_active_vectors image_set_active_vectors
             image_get_selected_layers image_set_selected_layers
+            image_get_selected_drawables
             image_get_selection
             image_get_component_active image_set_component_active
             image_get_component_visible image_set_component_visible

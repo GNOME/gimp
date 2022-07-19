@@ -148,6 +148,8 @@ GimpLayer**              gimp_image_get_selected_layers        (GimpImage       
 gboolean                 gimp_image_set_selected_layers        (GimpImage           *image,
                                                                 gint                 num_layers,
                                                                 const GimpLayer    **layers);
+GimpItem**               gimp_image_get_selected_drawables     (GimpImage           *image,
+                                                                gint                *num_drawables);
 GimpSelection*           gimp_image_get_selection              (GimpImage           *image);
 gboolean                 gimp_image_get_component_active       (GimpImage           *image,
                                                                 GimpChannelType      component);

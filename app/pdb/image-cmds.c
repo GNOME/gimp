@@ -2028,6 +2028,51 @@ image_set_selected_layers_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+image_get_selected_drawables_invoker (GimpProcedure         *procedure,
+                                      Gimp                  *gimp,
+                                      GimpContext           *context,
+                                      GimpProgress          *progress,
+                                      const GimpValueArray  *args,
+                                      GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gint num_drawables = 0;
+  GimpItem **drawables = NULL;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *list = gimp_image_get_selected_drawables (image);
+
+      num_drawables = g_list_length (list);
+
+      if (num_drawables)
+        {
+          gint i;
+
+          drawables = g_new (GimpItem *, num_drawables);
+
+          for (i = 0; i < num_drawables; i++, list = g_list_next (list))
+            drawables[i] = g_object_ref (list->data);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_drawables);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_ITEM, (GObject **) drawables, num_drawables);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
 image_get_selection_invoker (GimpProcedure         *procedure,
                              Gimp                  *gimp,
                              GimpContext           *context,
@@ -4771,6 +4816,42 @@ register_image_procs (GimpPDB *pdb)
                                                              "The list of layers to select",
                                                              GIMP_TYPE_LAYER,
                                                              GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-selected-drawables
+   */
+  procedure = gimp_procedure_new (image_get_selected_drawables_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-selected-drawables");
+  gimp_procedure_set_static_help (procedure,
+                                  "Get the image's selected drawables",
+                                  "This procedure returns the list of selected drawable in the specified image. This can be either layers, channels, or a layer mask.\n"
+                                  "The active drawables are the active image channels. If there are none, these are the active image layers. If the active image layer has a layer mask and the layer mask is in edit mode, then the layer mask is the active drawable.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-drawables",
+                                                     "num drawables",
+                                                     "The number of selected drawables in the image",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_object_array ("drawables",
+                                                                 "drawables",
+                                                                 "The list of selected drawables in the image.",
+                                                                 GIMP_TYPE_ITEM,
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

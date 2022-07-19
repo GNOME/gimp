@@ -2397,6 +2397,57 @@ gimp_image_set_selected_layers (GimpImage        *image,
 }
 
 /**
+ * gimp_image_get_selected_drawables:
+ * @image: The image.
+ * @num_drawables: (out): The number of selected drawables in the image.
+ *
+ * Get the image's selected drawables
+ *
+ * This procedure returns the list of selected drawable in the
+ * specified image. This can be either layers, channels, or a layer
+ * mask.
+ * The active drawables are the active image channels. If there are
+ * none, these are the active image layers. If the active image layer
+ * has a layer mask and the layer mask is in edit mode, then the layer
+ * mask is the active drawable.
+ *
+ * Returns: (array length=num_drawables) (element-type GimpItem) (transfer container):
+ *          The list of selected drawables in the image.
+ *          The returned value must be freed with g_free().
+ *
+ * Since: 3.0.0
+ **/
+GimpItem **
+gimp_image_get_selected_drawables (GimpImage *image,
+                                   gint      *num_drawables)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpItem **drawables = NULL;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-get-selected-drawables",
+                                              args);
+  gimp_value_array_unref (args);
+
+  *num_drawables = 0;
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    {
+      *num_drawables = GIMP_VALUES_GET_INT (return_vals, 1);
+      { GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index (return_vals, 2)); if (a) drawables = g_memdup2 (a->data, a->length * sizeof (gpointer)); };
+    }
+
+  gimp_value_array_unref (return_vals);
+
+  return drawables;
+}
+
+/**
  * gimp_image_get_selection:
  * @image: The image.
  *

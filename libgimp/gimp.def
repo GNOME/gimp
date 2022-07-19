@@ -418,6 +418,7 @@ EXPORTS
 	gimp_image_get_precision
 	gimp_image_get_resolution
 	gimp_image_get_sample_point_position
+	gimp_image_get_selected_drawables
 	gimp_image_get_selected_layers
 	gimp_image_get_selection
 	gimp_image_get_simulation_profile
