@@ -29,7 +29,9 @@ Core:
     palette handling.
   - Language changes will trigger plug-in query() call at next GIMP
     restart. This allows to have strings in query() and stored in GIMP
-    config being re-localized.
+    config being re-localized. This implies both explicit language
+    changes in Preferences or system language changes when GIMP is set
+    to follow system language.
   - Keyboard grab removed from the canvas display, hence getting rid of
     annoying grab permission warnings on Wayland.
   - Preferences > Display > Transparency > Check style has now a new
@@ -177,6 +179,17 @@ Plug-ins:
     * "file-hgt-load" doesn't show a dialog anymore when sample spacing
       detection worked correctly since we already have all the necessary
       information.
+  - WBMP: new plug-in to load WBPM image files. It is still limited
+    support and doesn't support all types of WBMP images.
+  - TIFF:
+    * 8 and 16-bit CMYK(A) TIFF files can be exported, using the
+      image soft-proof profile.
+    * Imported CMYK TIFF profiles are now set as soft-proof profile
+      on the image.
+  - SVG: on import, when parsing fails, GIMP will propose to disable
+    size parsing limitations, while explaining this has security
+    implications and should only be done on SVG files from trusted
+    sources.
 
 API:
 
@@ -241,6 +254,8 @@ API:
       + GimpIntRadioFrame
     * Removed functions:
       + gimp_prop_int_radio_box_new()
+  - Changes in PDB:
+    * gimp-plug-in-domain-register removed.
 
 Translations:
 
@@ -279,6 +294,7 @@ Build:
     namespaces thanks to a new urlmap file.
   - Separate libgimp-scriptfu-3.0 library for a future where it will be
     shared by several binaries.
+  - GEGL dependency's minimum required version bumped to 0.4.38.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
