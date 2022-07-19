@@ -779,14 +779,21 @@ pdf_save_image (GimpProcedure *procedure,
       gdouble        x_scale, y_scale;
       GimpDrawable **temp;
       GimpDrawable **temp_out;
+      GimpItem     **drawables;
+      gint           n_drawables;
       gint           temp_size = 1;
       gint           j;
 
-      if (! gimp_image_get_active_drawable (image))
-        continue;
+      drawables = gimp_image_get_selected_drawables (image, &n_drawables);
+      if (n_drawables == 0)
+        {
+          g_free (drawables);
+          continue;
+        }
 
       temp = g_new (GimpDrawable *, 1);
-      temp[0] = gimp_image_get_active_drawable (image);
+      temp[0] = GIMP_DRAWABLE (drawables[0]);
+      g_free (drawables);
       temp_out = temp;
 
       /* Save the state of the surface before any changes, so that

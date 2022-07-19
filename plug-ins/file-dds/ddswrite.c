@@ -585,9 +585,14 @@ write_dds (GFile         *file,
    */
   if (! is_duplicate_image)
     {
-      GimpImage *duplicate_image = gimp_image_duplicate (image);
-      rc = write_image (fp, duplicate_image, drawable, config);
+      GimpImage  *duplicate_image = gimp_image_duplicate (image);
+      GimpItem  **drawables;
+      gint        n_drawables;
+
+      drawables = gimp_image_get_selected_drawables (duplicate_image, &n_drawables);
+      rc = write_image (fp, duplicate_image, GIMP_DRAWABLE (drawables[0]), config);
       gimp_image_delete (duplicate_image);
+      g_free (drawables);
     }
   else
     {
@@ -1355,10 +1360,7 @@ write_image (FILE         *fp,
                 NULL);
 
   if (flip_export)
-    {
-      gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
-      drawable = gimp_image_get_active_drawable (image);
-    }
+    gimp_image_flip (image, GIMP_ORIENTATION_VERTICAL);
 
   layers = gimp_image_list_layers (image);
   num_layers = g_list_length (layers);

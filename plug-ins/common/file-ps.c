@@ -1284,19 +1284,21 @@ load_image (GFile   *file,
             }
           else
             {
-              GimpLayer    *current_layer;
-              GimpDrawable *tmp_drawable;
-              gchar        *name;
+              GimpLayer     *current_layer;
+              gchar         *name;
+              GimpDrawable **tmp_drawables;
+              gint           n_drawables;
 
-              tmp_drawable = gimp_image_get_active_drawable (image_list[k]);
+              tmp_drawables = gimp_image_get_selected_drawables (image_list[k], &n_drawables);
 
-              name = gimp_item_get_name (GIMP_ITEM (tmp_drawable));
+              name = gimp_item_get_name (GIMP_ITEM (tmp_drawables[0]));
 
-              current_layer = gimp_layer_new_from_drawable (tmp_drawable, image);
+              current_layer = gimp_layer_new_from_drawable (tmp_drawables[0], image);
               gimp_item_set_name (GIMP_ITEM (current_layer), name);
               gimp_image_insert_layer (image, current_layer, NULL, -1);
               gimp_image_delete (image_list[k]);
 
+              g_free (tmp_drawables);
               g_free (name);
             }
         }
