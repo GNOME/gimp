@@ -384,10 +384,6 @@ EXPORTS
 	gimp_image_freeze_channels
 	gimp_image_freeze_layers
 	gimp_image_freeze_vectors
-	gimp_image_get_active_channel
-	gimp_image_get_active_drawable
-	gimp_image_get_active_layer
-	gimp_image_get_active_vectors
 	gimp_image_get_base_type
 	gimp_image_get_by_id
 	gimp_image_get_channel_by_name
@@ -488,9 +484,6 @@ EXPORTS
 	gimp_image_select_polygon
 	gimp_image_select_rectangle
 	gimp_image_select_round_rectangle
-	gimp_image_set_active_channel
-	gimp_image_set_active_layer
-	gimp_image_set_active_vectors
 	gimp_image_set_color_profile
 	gimp_image_set_color_profile_from_file
 	gimp_image_set_colormap

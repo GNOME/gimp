@@ -1408,38 +1408,6 @@ CODE
     );
 }
 
-sub image_get_active_drawable {
-    $blurb = "Get the image's active drawable";
-
-    $help = <<'HELP';
-This procedure returns the ID of the image's active drawable. This can be
-either a layer, a channel, or a layer mask. The active drawable is specified by
-the active image channel. If that is -1, then by the active image layer. If the
-active image layer has a layer mask and the layer mask is in edit mode, then
-the layer mask is the active drawable.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'drawable', type => 'drawable',
-          desc => 'The active drawable' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  drawable = gimp_image_get_active_drawable (image);
-}
-CODE
-    );
-}
-
 sub image_get_base_type {
     $blurb = 'Get the base type of the image.';
 
@@ -1876,36 +1844,6 @@ CODE
     );
 }
 
-sub image_get_active_layer {
-    $blurb = "Returns the specified image's active layer.";
-
-    $help = <<'HELP';
-If there is an active layer, its ID will be returned, otherwise, -1.  If a
-channel is currently active, then no layer will be. If a layer mask is active,
-then this will return the associated layer.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'active_layer', type => 'layer',
-          desc => 'The active layer' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  active_layer = gimp_image_get_active_layer (image);
-}
-CODE
-    );
-}
-
 sub image_set_selected_layers {
     $blurb = "Sets the specified image's selected layers.";
 
@@ -1941,146 +1879,6 @@ HELP
 
   gimp_image_set_selected_layers (image, selected_layers);
   g_list_free (selected_layers);
-}
-CODE
-    );
-}
-
-sub image_set_active_layer {
-    $blurb = "Sets the specified image's active layer.";
-
-    $help = <<'HELP';
-If the layer exists, it is set as the active layer in the image. Any
-previous active layer or channel is set to inactive. An exception is a
-previously existing floating selection, in which case this procedure
-will return an execution error.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'active_layer', type => 'layer',
-          desc => 'The new image active layer' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_image_set_active_layer (image, active_layer) != active_layer)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_get_active_channel {
-    $blurb = "Returns the specified image's active channel.";
-
-    $help = <<'HELP';
-If there is an active channel, this will return the channel ID, otherwise, -1.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'active_channel', type => 'channel',
-          desc => 'The active channel' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  active_channel = gimp_image_get_active_channel (image);
-}
-CODE
-    );
-}
-
-sub image_set_active_channel {
-    $blurb = "Sets the specified image's active channel.";
-
-    $help = <<'HELP';
-If the channel exists, it is set as the active channel in the
-image. Any previous active channel or layer is set to inactive. An
-exception is a previously existing floating selection, in which case
-this procedure will return an execution error.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'active_channel', type => 'channel',
-          desc => 'The new image active channel' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_image_set_active_channel (image, active_channel) != active_channel)
-    success = FALSE;
-}
-CODE
-    );
-}
-
-sub image_get_active_vectors {
-    $blurb = "Returns the specified image's active vectors.";
-
-    $help = <<'HELP';
-If there is an active path, its ID will be returned, otherwise, -1.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' }
-    );
-
-    @outargs = (
-        { name => 'active_vectors', type => 'vectors',
-          desc => 'The active vectors' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  active_vectors = gimp_image_get_active_vectors (image);
-}
-CODE
-    );
-}
-
-sub image_set_active_vectors {
-    $blurb = "Sets the specified image's active vectors.";
-
-    $help = <<'HELP';
-If the path exists, it is set as the active path in the image.
-HELP
-
-    &std_pdb_misc;
-
-    @inargs = (
-        { name => 'image', type => 'image',
-          desc => 'The image' },
-        { name => 'active_vectors', type => 'vectors',
-          desc => 'The new image active vectors' }
-    );
-
-    %invoke = (
-        code => <<'CODE'
-{
-  if (gimp_image_set_active_vectors (image, active_vectors) != active_vectors)
-    success = FALSE;
 }
 CODE
     );
@@ -3195,7 +2993,6 @@ CODE
             image_get_layers
             image_get_channels
             image_get_vectors
-            image_get_active_drawable
             image_unset_active_channel
             image_get_floating_sel
             image_floating_sel_attached_to
@@ -3217,9 +3014,6 @@ CODE
             image_get_metadata image_set_metadata
             image_clean_all image_is_dirty
             image_thumbnail
-            image_get_active_layer image_set_active_layer
-            image_get_active_channel image_set_active_channel
-            image_get_active_vectors image_set_active_vectors
             image_get_selected_layers image_set_selected_layers
             image_get_selected_drawables
             image_get_selection

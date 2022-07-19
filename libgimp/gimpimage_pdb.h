@@ -54,7 +54,6 @@ GimpChannel**            gimp_image_get_channels               (GimpImage       
                                                                 gint                *num_channels);
 GimpVectors**            gimp_image_get_vectors                (GimpImage           *image,
                                                                 gint                *num_vectors);
-GimpDrawable*            gimp_image_get_active_drawable        (GimpImage           *image);
 gboolean                 gimp_image_unset_active_channel       (GimpImage           *image);
 GimpLayer*               gimp_image_get_floating_sel           (GimpImage           *image);
 GimpDrawable*            gimp_image_floating_sel_attached_to   (GimpImage           *image);
@@ -134,15 +133,6 @@ G_GNUC_INTERNAL gboolean _gimp_image_thumbnail                 (GimpImage       
                                                                 gint                *bpp,
                                                                 gint                *thumbnail_data_count,
                                                                 guint8             **thumbnail_data);
-GimpLayer*               gimp_image_get_active_layer           (GimpImage           *image);
-gboolean                 gimp_image_set_active_layer           (GimpImage           *image,
-                                                                GimpLayer           *active_layer);
-GimpChannel*             gimp_image_get_active_channel         (GimpImage           *image);
-gboolean                 gimp_image_set_active_channel         (GimpImage           *image,
-                                                                GimpChannel         *active_channel);
-GimpVectors*             gimp_image_get_active_vectors         (GimpImage           *image);
-gboolean                 gimp_image_set_active_vectors         (GimpImage           *image,
-                                                                GimpVectors         *active_vectors);
 GimpLayer**              gimp_image_get_selected_layers        (GimpImage           *image,
                                                                 gint                *num_layers);
 gboolean                 gimp_image_set_selected_layers        (GimpImage           *image,
