@@ -136,20 +136,20 @@ filters_repeat_cmd_callback (GimpAction *action,
                              GVariant   *value,
                              gpointer    data)
 {
-  GimpImage     *image;
-  GimpDrawable  *drawable;
+  Gimp          *gimp;
   GimpDisplay   *display;
   GimpProcedure *procedure;
   GimpRunMode    run_mode;
-  return_if_no_drawable (image, drawable, data);
+
+  return_if_no_gimp (gimp, data);
   return_if_no_display (display, data);
 
   run_mode = (GimpRunMode) g_variant_get_int32 (value);
 
-  procedure = gimp_filter_history_nth (image->gimp, 0);
+  procedure = gimp_filter_history_nth (gimp, 0);
 
   if (procedure)
-    filters_run_procedure (image->gimp, display, procedure, run_mode);
+    filters_run_procedure (gimp, display, procedure, run_mode);
 }
 
 void
