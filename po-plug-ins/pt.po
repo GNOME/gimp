@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-17 17:05+0000\n"
-"PO-Revision-Date: 2022-07-19 13:55+0100\n"
+"POT-Creation-Date: 2022-07-19 16:30+0000\n"
+"PO-Revision-Date: 2022-07-20 10:33+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -82,7 +82,7 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/common/file-heif.c:2306 plug-ins/common/file-jp2-load.c:976
 #: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
 #: plug-ins/common/file-pdf-save.c:1167 plug-ins/common/file-ps.c:3586
-#: plug-ins/common/file-svg.c:679 plug-ins/common/file-wmf.c:546
+#: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1315 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
 #: plug-ins/common/mail.c:568 plug-ins/common/nl-filter.c:1126
@@ -93,7 +93,7 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:241
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
 #: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
-#: plug-ins/file-tiff/file-tiff-load.c:2656 plug-ins/flame/flame.c:540
+#: plug-ins/file-tiff/file-tiff-load.c:2662 plug-ins/flame/flame.c:540
 #: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -178,7 +178,7 @@ msgstr "Exercitar uma cabra (JavaScript)"
 #: plug-ins/common/compose.c:1184 plug-ins/common/contrast-retinex.c:352
 #: plug-ins/common/curve-bend.c:1222 plug-ins/common/depth-merge.c:734
 #: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2307
-#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:680
+#: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:775
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1316
 #: plug-ins/common/grid.c:762 plug-ins/common/hot.c:680
 #: plug-ins/common/jigsaw.c:2499 plug-ins/common/nl-filter.c:1127
@@ -479,7 +479,7 @@ msgstr "_Vertical"
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
 #: plug-ins/file-psd/psd-load.c:2509 plug-ins/file-sgi/sgi.c:474
-#: plug-ins/file-tiff/file-tiff-load.c:1522
+#: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
@@ -1047,8 +1047,8 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3536
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
-#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:358
-#: plug-ins/common/file-svg.c:663 plug-ins/common/file-tga.c:445
+#: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
+#: plug-ins/common/file-svg.c:760 plug-ins/common/file-tga.c:445
 #: plug-ins/common/file-wbmp.c:184 plug-ins/common/file-xbm.c:747
 #: plug-ins/common/file-xmc.c:658 plug-ins/common/file-xmc.c:899
 #: plug-ins/common/file-xwd.c:481 plug-ins/common/sphere-designer.c:2090
@@ -3195,7 +3195,7 @@ msgid "Import from PDF"
 msgstr "Importar a partir de PDF"
 
 #: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3587
-#: plug-ins/file-tiff/file-tiff-load.c:2657
+#: plug-ins/file-tiff/file-tiff-load.c:2663
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_Importar"
@@ -3227,7 +3227,7 @@ msgid "Use _Anti-aliasing"
 msgstr "Usar _suavização"
 
 #: plug-ins/common/file-pdf-load.c:1439 plug-ins/common/file-pdf-load.c:1440
-#: plug-ins/common/file-svg.c:857 plug-ins/common/file-wmf.c:722
+#: plug-ins/common/file-svg.c:952 plug-ins/common/file-wmf.c:722
 #: plug-ins/print/print-page-layout.c:307
 #, c-format
 msgid "pixels/%a"
@@ -3326,7 +3326,7 @@ msgstr "Camadas como páginas (%s)"
 
 #: plug-ins/common/file-pdf-save.c:1330 plug-ins/common/file-pdf-save.c:1403
 #: plug-ins/common/file-pdf-save.c:1501 plug-ins/common/file-ps.c:2078
-#: plug-ins/file-tiff/file-tiff-load.c:1524
+#: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -3650,7 +3650,7 @@ msgid "Rendering"
 msgstr "A renderizar"
 
 #. Resolution
-#: plug-ins/common/file-ps.c:3645 plug-ins/common/file-svg.c:851
+#: plug-ins/common/file-ps.c:3645 plug-ins/common/file-svg.c:946
 #: plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Resolução:"
@@ -4285,28 +4285,28 @@ msgstr "_Run-Length Encoded (RLE)"
 msgid "_Standard"
 msgstr "_Padrão"
 
-#: plug-ins/common/file-svg.c:158
+#: plug-ins/common/file-svg.c:163
 msgid "SVG image"
 msgstr "Imagem SVG"
 
-#: plug-ins/common/file-svg.c:360 plug-ins/common/file-svg.c:665
+#: plug-ins/common/file-svg.c:367 plug-ins/common/file-svg.c:762
 msgid "Unknown reason"
 msgstr "Causa desconhecida"
 
-#: plug-ins/common/file-svg.c:366
+#: plug-ins/common/file-svg.c:373
 msgid "Rendering SVG"
 msgstr "A renderizar o SVG"
 
-#: plug-ins/common/file-svg.c:378
+#: plug-ins/common/file-svg.c:385
 msgid "Rendered SVG"
 msgstr "SVG renderizados"
 
-#: plug-ins/common/file-svg.c:501 plug-ins/common/file-wmf.c:401
+#: plug-ins/common/file-svg.c:516 plug-ins/common/file-wmf.c:401
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: plug-ins/common/file-svg.c:509
+#: plug-ins/common/file-svg.c:524
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -4314,46 +4314,93 @@ msgstr ""
 "O ficheiro SVG não\n"
 "especifica um tamanho!"
 
+#. We need to ask explicitly before using the "unlimited" size
+#. * option (XML_PARSE_HUGE in libxml) because it is considered
+#. * unsafe, possibly consumming too much memory with malicious XML
+#. * files.
+#.
+#: plug-ins/common/file-svg.c:688
+msgid "Disable safety size limits?"
+msgstr "Desativar limites de tamanho de segurança?"
+
+#: plug-ins/common/file-svg.c:693
+msgid "_No"
+msgstr "_Não"
+
+#: plug-ins/common/file-svg.c:694
+msgid "_Yes"
+msgstr "_Sim"
+
+#. Unfortunately the error returned by librsvg is unclear. While
+#. * libxml explicitly returns a "parser error : internal error:
+#. * Huge input lookup", librsvg does not seem to relay this error.
+#. * It sends a further parsing error, false positive provoked by
+#. * the huge input error.
+#. * If we were able to single out the huge data error, we could
+#. * just directly return from the plug-in as a failure run in other
+#. * cases. Instead of this, we need to ask each and every time, in
+#. * case it might be the huge data error.
+#.
+#: plug-ins/common/file-svg.c:718
+msgid ""
+"A parsing error occurred.\n"
+"Disabling safety limits may help. Malicious SVG files may use this to "
+"consume too much memory."
+msgstr ""
+"Ocorreu um erro de análise.\n"
+"A desativação dos limites de segurança pode ajudar. Os ficheiros SVG "
+"maliciosos podem usar isto para consumir demasiada memória."
+
+#: plug-ins/common/file-svg.c:730
+msgid "For security reasons, this should only be used for trusted input!"
+msgstr ""
+"Por razões de segurança, isto só deve ser utilizado para uma entrada de "
+"confiança!"
+
+#: plug-ins/common/file-svg.c:737
+msgid "Retry without limits preventing to parse huge data?"
+msgstr "Tentar novamente sem limites impedindo a análise de dados enormes?"
+
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: plug-ins/common/file-svg.c:674
+#: plug-ins/common/file-svg.c:769
 msgid "Render Scalable Vector Graphics"
 msgstr "Renderizar Scalable Vector Graphics (SVG)"
 
 #. Width and Height
-#: plug-ins/common/file-svg.c:733 plug-ins/common/file-wmf.c:606
+#: plug-ins/common/file-svg.c:828 plug-ins/common/file-wmf.c:606
 #: plug-ins/common/grid.c:844
 msgid "Width:"
 msgstr "Largura:"
 
-#: plug-ins/common/file-svg.c:739 plug-ins/common/file-wmf.c:611
+#: plug-ins/common/file-svg.c:834 plug-ins/common/file-wmf.c:611
 msgid "Height:"
 msgstr "Altura:"
 
-#: plug-ins/common/file-svg.c:811 plug-ins/common/file-wmf.c:679
+#: plug-ins/common/file-svg.c:906 plug-ins/common/file-wmf.c:679
 msgid "_X ratio:"
 msgstr "Proporção _X:"
 
-#: plug-ins/common/file-svg.c:832 plug-ins/common/file-wmf.c:699
+#: plug-ins/common/file-svg.c:927 plug-ins/common/file-wmf.c:699
 msgid "_Y ratio:"
 msgstr "Proporção _Y:"
 
-#: plug-ins/common/file-svg.c:846 plug-ins/common/file-wmf.c:712
+#: plug-ins/common/file-svg.c:941 plug-ins/common/file-wmf.c:712
 msgid "Constrain aspect ratio"
 msgstr "Restringir as proporções da imagem"
 
 #. Path Import
-#: plug-ins/common/file-svg.c:876
+#: plug-ins/common/file-svg.c:972
 msgid "Import _paths"
 msgstr "Importar _caminhos"
 
-#: plug-ins/common/file-svg.c:883
+#: plug-ins/common/file-svg.c:979
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importar elementos de caminhos do SVG para que possam ser utilizados no GIMP "
 "com a ferramenta “Caminhos”"
 
-#: plug-ins/common/file-svg.c:891
+#: plug-ins/common/file-svg.c:987
 msgid "Merge imported paths"
 msgstr "Unir caminhos importados"
 
@@ -7598,75 +7645,75 @@ msgstr ""
 "“ExtraSamples” não está definido e no entanto existem canais extras. A supor "
 "que o primeiro canal extra seja alfa não pré-multiplicado."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1077
+#: plug-ins/file-tiff/file-tiff-load.c:1076
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Compressão “%u” inválida ou desconhecida. A definir a compressão para "
 "“nenhuma compressão”."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1135
+#: plug-ins/file-tiff/file-tiff-load.c:1134
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Não foi possível criar uma nova imagem: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1167
+#: plug-ins/file-tiff/file-tiff-load.c:1166
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d de %d páginas"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1336
+#: plug-ins/file-tiff/file-tiff-load.c:1342
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo de unidade de resolução desconhecido %d, a assumir ppp (dpi)"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1346
+#: plug-ins/file-tiff/file-tiff-load.c:1352
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Aviso: resolução especificada sem tipo de unidade, a assumir ppp (dpi)"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1354
+#: plug-ins/file-tiff/file-tiff-load.c:1360
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Aviso: nenhuma informação de resolução de y, a assumir o mesmo que x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1416
+#: plug-ins/file-tiff/file-tiff-load.c:1422
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Não foi possível obter os mapas de cores de “%s”"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1561
+#: plug-ins/file-tiff/file-tiff-load.c:1567
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1714
+#: plug-ins/file-tiff/file-tiff-load.c:1720
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Não puderam ser lidos nenhuns dados do TIFF “%s”. Provavelmente o ficheiro "
 "está corrompido."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1785
+#: plug-ins/file-tiff/file-tiff-load.c:1791
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: formato de imagem não suportado, nenhum carregador RGBA disponível"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2097
-#: plug-ins/file-tiff/file-tiff-load.c:2294
+#: plug-ins/file-tiff/file-tiff-load.c:2103
+#: plug-ins/file-tiff/file-tiff-load.c:2300
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "A leitura do bloco falhou. A imagem pode estar corrompida na linha %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2106
-#: plug-ins/file-tiff/file-tiff-load.c:2303
+#: plug-ins/file-tiff/file-tiff-load.c:2112
+#: plug-ins/file-tiff/file-tiff-load.c:2309
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "A leitura do “scanline” falhou. A imagem pode estar corrompida na linha %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2652
+#: plug-ins/file-tiff/file-tiff-load.c:2658
 msgid "Import from TIFF"
 msgstr "Importar de imagem TIFF"
 
@@ -7674,23 +7721,23 @@ msgstr "Importar de imagem TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff-load.c:2709
+#: plug-ins/file-tiff/file-tiff-load.c:2715
 msgid "_Keep empty space around imported layers"
 msgstr "_Manter espaço vazio em torno das camadas importadas"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2726
+#: plug-ins/file-tiff/file-tiff-load.c:2732
 msgid "Process extra channel as:"
 msgstr "Processar canal extra como:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2729
+#: plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa não pré-_multiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2730
+#: plug-ins/file-tiff/file-tiff-load.c:2736
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pré-_multiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2731
+#: plug-ins/file-tiff/file-tiff-load.c:2737
 msgid "Channe_l"
 msgstr "Cana_l"
 
