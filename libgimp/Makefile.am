@@ -382,6 +382,7 @@ GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_CFLAGS = \
 
 GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
 	../libgimp/libgimpui-@GIMP_API_VERSION@.la	       	\
+	../libgimp/libgimp-@GIMP_API_VERSION@.la	       	\
 	../libgimpwidgets/libgimpwidgets-@GIMP_API_VERSION@.la
 
 GimpUi_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
