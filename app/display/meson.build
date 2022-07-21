@@ -114,6 +114,6 @@ libappdisplay = static_library('appdisplay',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Display"',
   dependencies: [
-    gegl, gtk3,
+    gegl, gtk3, cairo,
   ],
 )

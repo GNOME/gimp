@@ -1018,7 +1018,11 @@ endif
 
 # Check for GTK Mac Integration
 if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('quartz'))
-  gtk3_macos = dependency('gtk-mac-integration', version: '>=2.0.0')
+  # Support for homebrew version of gtk-mac-integration
+  gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=3.0.1', required: false)
+  if not gtk3_macos.found()
+    gtk3_macos = dependency('gtk-mac-integration', version: '>=3.0.1')
+  endif
 else
   gtk3_macos = no_dep
 endif

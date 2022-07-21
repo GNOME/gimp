@@ -68,7 +68,7 @@ libapp = static_library('app',
   include_directories: [ rootInclude, rootAppInclude, configInclude, ],
   c_args: [ '-DG_LOG_DOMAIN="Gimp"', '-DGIMP_APP_GLUE_COMPILATION', ],
   dependencies: [
-    gegl, gdk_pixbuf, gtk3,
+    gdk_pixbuf, gegl, gexiv2, gtk3,
   ],
 )
 
@@ -89,6 +89,7 @@ endif
 
 libapp_dep = declare_dependency(
   dependencies: [
+    cairo,
     dbghelp,
     drmingw,
     gegl,
