@@ -20,7 +20,7 @@ Core:
     using a dynamic changing the size.
   - When both "Show brush outline" and "Show pointer for paint tools"
     are unchecked, show a minimal visual feedback of a few pixels only,
-    as conspicuous as possible, instead of a crosshair.
+    as inconspicuous as possible, instead of a crosshair.
   - Move and reorganize pointer-related settings in Preferences from
     "Image Windows" to "Input Devices" tabs.
   - On macOS, delay opening new images dropped on the application icon
@@ -44,6 +44,8 @@ Core:
   - Hacks on canvas rulers and statusbar added in GIMP 2.99.10 for macOS
     triggering too big redraws were removed. This depends on patches
     added to upcoming GTK+ 3.24.35.
+  - CMYK color picking and sample point now use babl and the space
+    specified by the soft-proof profile set on the image, if any.
 
 Tools:
 
@@ -126,9 +128,10 @@ Plug-ins:
   - python-fu-eval and plug-in-script-fu-eval ported to new
     GimpBatchProcedure class.
   - JPEG:
-    * CMYK export is now possible. It currently uses the "Soft-proofing"
-      profile as set in Preferences.
-    * CMYK imported ported to GEGL/babl conversion.
+    * CMYK export is now possible. It uses the "Soft-proofing"
+      profile set on the image.
+    * CMYK import ported to GEGL/babl conversion. The CMYK profile in
+      the JPEG image will be stored as soft-proof profile on the image.
   - WebP: new option "Use Sharp YUV" available in non-lossless export.
     It renders sharper edges at the cost of a slower export.
   - DDS:
@@ -190,6 +193,12 @@ Plug-ins:
     size parsing limitations, while explaining this has security
     implications and should only be done on SVG files from trusted
     sources.
+  - PSD:
+    * Import now uses babl conversion inconditionally, even for CMYK
+      images, using the soft-proof profile set on the image.
+    * Improved error logging during load.
+    * CMYK profile on a CMYK PSD file is now stored as soft-proof
+      profile in the image.
 
 API:
 
@@ -210,8 +219,16 @@ API:
       + gimp_image_get_simulation_profile()
       + gimp_image_set_simulation_profile()
       + gimp_image_set_simulation_profile_from_file()
+      + gimp_image_get_selected_drawables()
     * Removed functions:
       + gimp_plug_in_set_translation_domain()
+      + image_get_active_drawable()
+      + image_get_active_layer()
+      + image_set_active_layer()
+      + image_get_active_channel()
+      + image_set_active_channel()
+      + image_get_active_vectors()
+      + image_set_active_vectors()
     * Updated functions:
       + gimp_procedure_dialog_get_widget() now supports
         %G_TYPE_PARAM_FILE properties.
