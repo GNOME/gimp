@@ -2472,11 +2472,6 @@ add_merged_image (GimpImage     *image,
                                     error);
           g_free (pixels);
           pixels = dst0;
-
-          /* Store CMYK profile in GimpImage if attached */
-          if (img_a->cmyk_profile &&
-              gimp_color_profile_is_cmyk (img_a->cmyk_profile))
-            gimp_image_set_simulation_profile (image, img_a->cmyk_profile);
        }
       else if (img_a->color_mode == PSD_LAB)
         {
