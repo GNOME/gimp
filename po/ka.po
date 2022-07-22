@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-06-29 23:48+0000\n"
-"PO-Revision-Date: 2022-06-30 15:01+0200\n"
+"PO-Revision-Date: 2022-07-22 16:33+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -215,7 +215,7 @@ msgstr "ყველა გაფრთხილების ფატალუ�
 
 #: app/main.c:278
 msgid "Output a gimprc file with default settings"
-msgstr ""
+msgstr "გამოტანილი იქნება gimprc ფაილი ნაგულისხმები პარამეტრებით"
 
 #: app/main.c:294
 msgid "Output a sorted list of deprecated procedures in the PDB"
@@ -223,7 +223,7 @@ msgstr ""
 
 #: app/main.c:299
 msgid "Show a preferences page with experimental features"
-msgstr ""
+msgstr "მორგების ფანჯარაში ექსპერიმენტალური თვისებების ჩვენება"
 
 #: app/main.c:304
 msgid "Show an image submenu with debug actions"
@@ -3897,7 +3897,7 @@ msgstr "შეცდომების ჟურნალის ფაილშ�
 #: app/actions/error-console-actions.c:64
 msgctxt "error-console-action"
 msgid "Write all error messages to a file"
-msgstr ""
+msgstr "ყველა შეცდომის ფაილში ჩაწერა"
 
 #: app/actions/error-console-actions.c:69
 msgctxt "error-console-action"
@@ -10659,12 +10659,12 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:276
 msgid "Specifies the language to use for the user interface."
-msgstr ""
+msgstr "მომხმარებლის ინტერფეისის ენის მითითება."
 
 #: app/config/gimprc-blurbs.h:279
 msgid ""
 "The last known release version of GIMP as queried from official website."
-msgstr ""
+msgstr "GIMP-ის უახლესი ვერსია ოფიციალურ ვებგვერდზე დაყრდნობით."
 
 #: app/config/gimprc-blurbs.h:282
 msgid "The version of GIMP config files."
@@ -10934,7 +10934,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:507
 msgid "The compression method used for tile data stored in the swap file."
-msgstr ""
+msgstr "სვაპ ფაილში შენახული ფილის მონაცემების შეკუმშვის მეთოდი"
 
 #: app/config/gimprc-blurbs.h:510
 msgid ""
@@ -10954,11 +10954,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:523
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr ""
+msgstr "GIMP-იდან გამოსვლისას კლავიატურის შეცვლილი მალსახმობების შენახვა."
 
 #: app/config/gimprc-blurbs.h:526
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr ""
+msgstr "GIMP-ში შესვლისას კლავიატურის შეცვლილი მალსახმობების აღდგენა."
 
 #: app/config/gimprc-blurbs.h:529
 msgid ""
@@ -10970,7 +10970,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:535
 msgid "The name of the theme to use."
-msgstr ""
+msgstr "გამოსაყენებელი თემის სახელი."
 
 #: app/config/gimprc-blurbs.h:544
 msgid "When enabled, symbolic icons will be preferred if available."
@@ -24216,7 +24216,7 @@ msgstr "Z"
 
 #: app/tools/gimptransform3dtool.c:438
 msgid "Rotation axis order"
-msgstr ""
+msgstr "მბრუნავი ღერძის მიმდევრობა"
 
 #: app/tools/gimptransformoptions.c:94
 msgid "Direction of transformation"
@@ -24292,7 +24292,7 @@ msgstr "მონიშნულ ბილიკს გადატანებ�
 
 #: app/tools/gimptransformtool.c:808
 msgid "The current transform is invalid"
-msgstr ""
+msgstr "მიმდინარე გარდაქმნა არასწორია"
 
 #: app/tools/gimpunifiedtransformtool.c:89
 msgid "Unified Transform"
@@ -24407,7 +24407,7 @@ msgstr "სიხშირე"
 
 #: app/tools/gimpwarpoptions.c:165
 msgid "Periodic stroke rate"
-msgstr ""
+msgstr "პერიოდული გამოძრავების სიხშირე"
 
 #: app/tools/gimpwarpoptions.c:171
 msgid "Frames"
@@ -24420,7 +24420,7 @@ msgstr "ანიმაციის კადრების რაოდენ�
 #. the stroke frame
 #: app/tools/gimpwarpoptions.c:350
 msgid "Stroke"
-msgstr ""
+msgstr "გამოძრავება"
 
 #. the animation frame
 #: app/tools/gimpwarpoptions.c:372
@@ -24854,7 +24854,7 @@ msgstr "წვერები"
 
 #: app/widgets/gimpbrusheditor.c:209 app/widgets/gimpbrushfactoryview.c:106
 msgid "Percentage of width of brush"
-msgstr ""
+msgstr "ფუნჯის სიგანის პროცენტულობა"
 
 #: app/widgets/gimpbufferview.c:189 app/widgets/gimpbufferview.c:290
 #: app/widgets/gimpeditor.c:754
@@ -25784,7 +25784,7 @@ msgstr "გაშვებული ასინქრონული ოპე�
 #: app/widgets/gimpdashboard.c:740
 msgctxt "dashboard-variable"
 msgid "Tile"
-msgstr ""
+msgstr "ფილა"
 
 #: app/widgets/gimpdashboard.c:741
 msgid "Total size of tile memory"
@@ -26296,7 +26296,7 @@ msgstr "დაწკაპუნება: არჩევა    გათრე
 #: app/widgets/gimpgradienteditor.c:1809 app/widgets/gimpgradienteditor.c:1817
 #, c-format
 msgid "Handle position: %0.4f"
-msgstr ""
+msgstr "დამმუშავებლის პოზიცია: %0.4f"
 
 #: app/widgets/gimpgradienteditor.c:1834
 #, c-format
@@ -26329,7 +26329,7 @@ msgstr "დახმარების ბრაუზერი ნაპოვ�
 
 #: app/widgets/gimphelp.c:371
 msgid "The GIMP help browser is not available."
-msgstr ""
+msgstr "GIMP-ის დახმარების ბრაუზერი მიუწვდომელია."
 
 #: app/widgets/gimphelp.c:372
 msgid ""
@@ -26542,7 +26542,7 @@ msgstr "სისტემის ენა"
 
 #: app/widgets/gimplayermodebox.c:152
 msgid "Switch to another group of modes"
-msgstr ""
+msgstr "რეჟიმების სხვა ჯგუფზე გადართვა"
 
 #: app/widgets/gimplayertreeview.c:435
 msgid "Select layers by patterns and store layer sets"
@@ -26602,12 +26602,12 @@ msgstr ""
 
 #: app/widgets/gimplayertreeview.c:1262
 msgid "Regular Expression search"
-msgstr ""
+msgstr "რეგულარული გამოსახულებით ძებნა"
 
 #: app/widgets/gimplayertreeview.c:1326
 #, c-format
 msgid "Invalid regular expression: %s\n"
-msgstr ""
+msgstr "არასწორი რეგულარული გამოსახულება: %s\n"
 
 #: app/widgets/gimplayertreeview.c:1479
 msgid "Set layers mode"
