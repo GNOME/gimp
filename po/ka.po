@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-06-29 23:48+0000\n"
-"PO-Revision-Date: 2022-07-22 16:33+0200\n"
+"PO-Revision-Date: 2022-07-23 15:54+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -203,7 +203,7 @@ msgstr "PDB-სთან თავსებადობის რეჟიმი
 #. don't translate the mode names (never|query|always)
 #: app/main.c:263
 msgid "Debug in case of a crash (never|query|always)"
-msgstr ""
+msgstr "გამართვა ავარიის შემთხვევაში (არასდროს|მკითხე|ყოველთვის)"
 
 #: app/main.c:268
 msgid "Enable non-fatal debugging signal handlers"
@@ -227,7 +227,7 @@ msgstr "მორგების ფანჯარაში ექსპერ�
 
 #: app/main.c:304
 msgid "Show an image submenu with debug actions"
-msgstr ""
+msgstr "გამოსახულების ქვემენიუს გამართვის ქმედებებით ჩვენება"
 
 #: app/main.c:723
 msgid "[FILE|URI...]"
@@ -10457,7 +10457,7 @@ msgstr "GIMP-ის განახლების ფონურ რეჟი�
 
 #: app/config/gimprc-blurbs.h:47
 msgid "Timestamp of the last update check."
-msgstr ""
+msgstr "განახლების უკანასკნელი შემოწმების დროის შტამპი."
 
 #: app/config/gimprc-blurbs.h:53
 msgid "How to handle embedded color profiles when opening a file."
@@ -10469,11 +10469,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:59
 msgid "Sets the type of mouse pointers to use."
-msgstr ""
+msgstr "თაგუნას კურსორის ტიპების დაყენება."
 
 #: app/config/gimprc-blurbs.h:62
 msgid "Sets the handedness for cursor positioning."
-msgstr ""
+msgstr "კურსორის განლაგების სიმაგრის დაყენება."
 
 #: app/config/gimprc-blurbs.h:65
 msgid ""
@@ -10483,7 +10483,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:81
 msgid "Show full image content by default."
-msgstr ""
+msgstr "გამოსახულების მთლიანი შემცველობის ნაგულისხმებად ჩვენება."
 
 #: app/config/gimprc-blurbs.h:84
 msgid ""
@@ -10696,7 +10696,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:302
 msgid "How to handle \"Orientation\" metadata when opening a file."
-msgstr ""
+msgstr "როგორ დამუშავდება ფაილის მეტამონაცემი \"ორიენტაცია\"."
 
 #: app/config/gimprc-blurbs.h:311
 msgid ""
@@ -10714,7 +10714,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:321
 msgid "When enabled, non-visible layers can be edited as normal."
-msgstr ""
+msgstr "თუ ჩართულია, არა-ხილული ფენების ჩასწორება ჩვეულებრივ შეიძლება."
 
 #: app/config/gimprc-blurbs.h:324
 msgid ""
@@ -10731,6 +10731,8 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:337
 msgid "Sets how many threads GIMP should use for operations that support it."
 msgstr ""
+"დააყენეთ, რამდენი ნაკადი უნდა გამოიყენოს GIMP-მა იმ ოპერაციებისთვის, "
+"რომლებსაც ამის მხარდაჭერა გააჩნიათ."
 
 #: app/config/gimprc-blurbs.h:359
 msgid ""
@@ -10782,6 +10784,8 @@ msgstr ""
 msgid ""
 "Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
+"GIMP-დან გასვლისას მიდინარე ხელსაწყოს, შაბლონის, ფერის და ფუნჯების "
+"დამახსოვრება."
 
 #: app/config/gimprc-blurbs.h:397
 msgid ""
@@ -10797,11 +10801,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:406
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
-msgstr ""
+msgstr "GIMP-დან გასვლისას ფანჯრების მდებარეობისა და ზომების შენახვა."
 
 #: app/config/gimprc-blurbs.h:409
 msgid "Save the tool options when GIMP exits."
-msgstr ""
+msgstr "GIMP-დან გასვლისას ხელსაწყოს პარამეტრების შენახვა."
 
 #: app/config/gimprc-blurbs.h:415
 msgid ""
@@ -10902,7 +10906,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:483
 msgid "Show the image tabs bar in single window mode."
-msgstr ""
+msgstr "ერთფანჯრიან რეჟიმში გამოსახულებების ჩანართების ზოლის ჩვენება."
 
 #: app/config/gimprc-blurbs.h:486
 msgid "Enable the N-Point Deformation tool."
@@ -10910,7 +10914,7 @@ msgstr "N-წერტილის დეფორმაციის ხელ�
 
 #: app/config/gimprc-blurbs.h:489
 msgid "Enable the Handle Transform tool."
-msgstr ""
+msgstr "დამმუშავებლის გარდაქმნის ხელსაწყოს ჩართვა."
 
 #: app/config/gimprc-blurbs.h:492
 msgid "Enable symmetry on painting."
@@ -10934,7 +10938,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:507
 msgid "The compression method used for tile data stored in the swap file."
-msgstr "სვაპ ფაილში შენახული ფილის მონაცემების შეკუმშვის მეთოდი"
+msgstr "სვაპ ფაილში შენახული ფილის მონაცემების შეკუმშვის მეთოდი."
 
 #: app/config/gimprc-blurbs.h:510
 msgid ""
@@ -11131,6 +11135,7 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:650
 msgid "Sets the default folder path for the 'Import Path' dialog."
 msgstr ""
+"\"შემოტანის ბილიკის\" ფანჯრის ნაგულისხმები საქაღალდის ბილიკის დაყენება."
 
 #: app/config/gimprc-blurbs.h:653
 msgid ""
@@ -11217,7 +11222,7 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:717
 msgid "Show the GIMP mascot at the top of the toolbox."
-msgstr ""
+msgstr "ხელსაწყოების პანელის თავზე GIMP-ის ლოგოს ჩვენება."
 
 #: app/config/gimprc-blurbs.h:720
 msgid ""
@@ -11527,7 +11532,7 @@ msgstr "მხოლოდ ავარიების გამართვა"
 #: app/core/core-enums.c:489
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
-msgstr ""
+msgstr "არ სცადოთ GIMP-ის გამართვა"
 
 #: app/core/core-enums.c:575
 msgctxt "dynamics-output-type"
@@ -11597,7 +11602,7 @@ msgstr "შაბლონი"
 #: app/core/core-enums.c:642
 msgctxt "filter-region"
 msgid "Use the selection as input"
-msgstr ""
+msgstr "მონიშნულის შეყვანად გამოყენება"
 
 #: app/core/core-enums.c:643
 msgctxt "filter-region"
@@ -12356,7 +12361,7 @@ msgstr ""
 
 #: app/core/gimp-batch.c:131
 msgid "Batch mode disabled."
-msgstr ""
+msgstr "მრავლობითი რეჟიმი გაითიშა."
 
 #. EX_UNAVAILABLE - service unavailable (sysexits.h)
 #: app/core/gimp-batch.c:184
@@ -12460,7 +12465,7 @@ msgstr ""
 #: app/core/gimpextensionmanager.c:1022
 #, c-format
 msgid "Skipping extension '%s': %s\n"
-msgstr ""
+msgstr "გაფართოების (\"%s\") გამოტოვება: %s\n"
 
 #: app/core/gimpextensionmanager.c:1030
 #, c-format
@@ -12611,7 +12616,7 @@ msgstr "ფუნჯის ფაილის დამუშავების 
 
 #: app/core/gimpbrush-load.c:242
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "ფუნჯის მხარდაუჭერელი ფორმატი"
 
 #: app/core/gimpbrush-load.c:254
 #, c-format
@@ -13859,7 +13864,7 @@ msgstr "ობიექტიდან პარაზიტის მოცი�
 
 #: app/core/gimpitem-exclusive.c:65
 msgid "Set Item Exclusive Visibility"
-msgstr ""
+msgstr "ობიექტის ექსკლუზიური ხილვადობის დაყენება"
 
 #: app/core/gimplayer-floating-selection.c:126
 msgctxt "undo-type"
@@ -17510,7 +17515,7 @@ msgstr "_შემოტანილი კონტურების შერ
 
 #: app/dialogs/vectors-import-dialog.c:150
 msgid "_Scale imported paths to fit image"
-msgstr ""
+msgstr "შემოტანილი კონტურების გამოსახულებაში ჩატევამდე გადიდება"
 
 #: app/dialogs/vectors-options-dialog.c:104
 msgid "Path _name:"
@@ -17528,14 +17533,14 @@ msgstr "კონტურის მდებარეობის ჩაკე�
 #: app/dialogs/welcome-dialog.c:86
 #, c-format
 msgid "Welcome to GIMP %s"
-msgstr ""
+msgstr "მოგესალმებათ GIMP %s"
 
 #. Welcome title.
 #. Translators: the %s string will be the version, e.g. "3.0".
 #: app/dialogs/welcome-dialog.c:135
 #, c-format
 msgid "You installed GIMP %s!"
-msgstr ""
+msgstr "თქვენ დააყენეთ GIMP %s!"
 
 #. Welcome message: left
 #: app/dialogs/welcome-dialog.c:156
@@ -17543,6 +17548,8 @@ msgid ""
 "GIMP is a Free Software for image authoring and manipulation.\n"
 "Want to know more?"
 msgstr ""
+"GIMP-ი უფასო პროგრამაა გამოსახულებების შესაქმნელად და შესაცვლელად.\n"
+"გნებავთ მეტის გაგება?"
 
 #: app/dialogs/welcome-dialog.c:185
 msgid "GIMP website"
@@ -20228,7 +20235,7 @@ msgstr "მანძილი მეტრებში"
 #: app/pdb/gimpprocedure.c:561 app/plug-in/gimppluginprocframe.c:191
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr ""
+msgstr "პროცედურამ %s გასაბრუნებელი მნიშვნელობები არ დააბრუნა"
 
 #: app/pdb/gimpprocedure.c:848
 #, c-format
