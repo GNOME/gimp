@@ -19,9 +19,13 @@
 #define __PSD_SAVE_H__
 
 
-gboolean   save_image (GFile      *file,
-                       GimpImage  *image,
-                       GError    **error);
+gboolean   save_image  (GFile      *file,
+                        GimpImage  *image,
+                        GObject    *config,
+                        GError    **error);
 
+gboolean   save_dialog (GimpImage     *image,
+                        GimpProcedure *procedure,
+                        GObject       *config);
 
 #endif /* __PSD_SAVE_H__ */

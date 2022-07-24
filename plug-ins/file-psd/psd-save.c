@@ -132,13 +132,16 @@ static const gchar * psd_lmode_layer      (GimpLayer      *layer,
 static void          reshuffle_cmap_write (guchar         *mapGimp);
 
 static void          save_header          (GOutputStream  *output,
-                                           GimpImage      *image);
+                                           GimpImage      *image,
+                                           gboolean        export_duotone);
 
 static void          save_color_mode_data (GOutputStream  *output,
-                                           GimpImage      *image);
+                                           GimpImage      *image,
+                                           gboolean        export_duotone);
 
 static void          save_resources       (GOutputStream  *output,
-                                           GimpImage      *image);
+                                           GimpImage      *image,
+                                           gboolean        export_duotone);
 
 static void          save_layer_and_mask  (GOutputStream  *output,
                                            GimpImage      *image);
@@ -524,7 +527,8 @@ reshuffle_cmap_write (guchar *mapGimp)
 
 static void
 save_header (GOutputStream  *output,
-             GimpImage      *image)
+             GimpImage      *image,
+             gboolean        export_duotone)
 {
   IFDBG(1) g_debug ("Function: save_header\n"
                     "\tRows: %d\n"
@@ -545,19 +549,41 @@ save_header (GOutputStream  *output,
   write_gint32 (output, PSDImageData.image_height, "rows");
   write_gint32 (output, PSDImageData.image_width, "columns");
   write_gint16 (output, 8 * get_bpc (image), "depth");
-  write_gint16 (output, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
+  if (export_duotone)
+    write_gint16 (output, PSD_DUOTONE, "mode");
+  else
+    write_gint16 (output, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
 }
 
 static void
 save_color_mode_data (GOutputStream  *output,
-                      GimpImage      *image)
+                      GimpImage      *image,
+                      gboolean        export_duotone)
 {
-  guchar *cmap;
-  guchar *cmap_modified;
-  gint    i;
-  gint32  nColors;
+  guchar       *cmap;
+  guchar       *cmap_modified;
+  gint          i;
+  gint32        nColors;
+  GimpParasite *parasite = NULL;
 
   IFDBG(1) g_debug ("Function: save_color_mode_data");
+
+  parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+  if (export_duotone && parasite)
+    {
+      const guchar *parasite_data;
+      guint32       parasite_size;
+
+      IFDBG(1) g_debug ("\tImage type: DUOTONE");
+
+      parasite_data = (const guchar *) gimp_parasite_get_data (parasite, &parasite_size);
+
+      write_gint32 (output, parasite_size, "color data length");
+      xfwrite (output, parasite_data, parasite_size, "colormap");
+
+      gimp_parasite_free (parasite);
+      return;
+    }
 
   switch (PSDImageData.baseType)
     {
@@ -607,7 +633,8 @@ save_color_mode_data (GOutputStream  *output,
 
 static void
 save_resources (GOutputStream  *output,
-                GimpImage      *image)
+                GimpImage      *image,
+                gboolean        export_duotone)
 {
   GList        *iter;
   gint          i;
@@ -885,9 +912,10 @@ save_resources (GOutputStream  *output,
 
   /* --------------- Write ICC profile data ------------------- */
   {
-    GimpColorProfile *profile;
+    GimpColorProfile *profile = NULL;
 
-    profile = gimp_image_get_effective_color_profile (image);
+    if (! export_duotone)
+      profile = gimp_image_get_effective_color_profile (image);
 
     if (profile)
       {
@@ -1754,12 +1782,19 @@ clear_image_data (void)
 gboolean
 save_image (GFile      *file,
             GimpImage  *image,
+            GObject    *config,
             GError    **error)
 {
   GOutputStream  *output;
   GeglBuffer     *buffer;
   GList          *iter;
   GError         *local_error = NULL;
+  GimpParasite   *parasite = NULL;
+  gboolean        config_duotone;
+
+  g_object_get (config,
+                "duotone", &config_duotone,
+                NULL);
 
   IFDBG(1) g_debug ("Function: save_image");
 
@@ -1776,6 +1811,22 @@ save_image (GFile      *file,
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
+
+  /* If image is not grayscale or lacks Duotone color space parasite,
+   * turn off "Export as Duotone".
+   */
+  parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+  if (parasite)
+    {
+      if (gimp_image_get_base_type (image) != GIMP_GRAY)
+        config_duotone = FALSE;
+
+      gimp_parasite_free (parasite);
+    }
+  else
+    {
+      config_duotone = FALSE;
+    }
 
   get_image_data (image);
 
@@ -1828,9 +1879,9 @@ save_image (GFile      *file,
   IFDBG(1) g_debug ("\tFile '%s' has been opened",
                     gimp_file_get_utf8_name (file));
 
-  save_header (output, image);
-  save_color_mode_data (output, image);
-  save_resources (output, image);
+  save_header (output, image, config_duotone);
+  save_color_mode_data (output, image, config_duotone);
+  save_resources (output, image, config_duotone);
 
   /* PSD format does not support layers in indexed images */
 
@@ -2024,4 +2075,46 @@ image_get_all_layers (GimpImage *image,
   *n_layers = g_list_length (psd_layers);
 
   return psd_layers;
+}
+
+gboolean
+save_dialog (GimpImage     *image,
+             GimpProcedure *procedure,
+             GObject       *config)
+{
+  GtkWidget *dialog;
+  GtkWidget *duotone_notice;
+  gboolean   run;
+
+  dialog = gimp_procedure_dialog_new (procedure,
+                                      GIMP_PROCEDURE_CONFIG (config),
+                                      _("Export Image as PSD"));
+
+  /* Profile label */
+  duotone_notice = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                    "duotone-notice",
+                                                    _("Duotone color space information "
+                                                    "from the original\nimported image "
+                                                    "will be used."));
+  gtk_label_set_xalign (GTK_LABEL (duotone_notice), 0.0);
+  gtk_label_set_ellipsize (GTK_LABEL (duotone_notice), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (duotone_notice),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+
+  gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                    "duotone-frame", "duotone", FALSE,
+                                    "duotone-notice");
+
+  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                              "duotone-frame",
+                              NULL);
+
+  gtk_widget_show (dialog);
+
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
+
+  gtk_widget_destroy (dialog);
+
+  return run;
 }

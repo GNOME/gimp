@@ -223,6 +223,13 @@ psd_create_procedure (GimpPlugIn  *plug_in,
                                           "image/x-psd");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psd");
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "duotone",
+                             "Export as _Duotone",
+                             "Export as a Duotone PSD file if Duotone color space information "
+                             "was attached to the image when originally imported.",
+                             FALSE,
+                             G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -240,6 +247,7 @@ psd_load (GimpProcedure        *procedure,
   gboolean        profile_loaded    = FALSE;
   GimpImage      *image;
   GimpMetadata   *metadata;
+  GimpParasite   *parasite = NULL;
   GError         *error = NULL;
 
   gegl_init (NULL, NULL);
@@ -265,6 +273,17 @@ psd_load (GimpProcedure        *procedure,
     return gimp_procedure_new_return_values (procedure,
                                              GIMP_PDB_EXECUTION_ERROR,
                                              error);
+
+  /* If image was Duotone, notify user of compatibility */
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+      if (parasite)
+        {
+          load_dialog ();
+          gimp_parasite_free (parasite);
+        }
+    }
 
   metadata = gimp_image_metadata_load_prepare (image, "image/x-psd",
                                                file, NULL);
@@ -338,13 +357,20 @@ psd_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
+  GimpProcedureConfig   *config;
   GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
   GimpMetadata          *metadata;
   GimpMetadataSaveFlags  metadata_flags;
   GimpExportReturn       export = GIMP_EXPORT_IGNORE;
+  GimpParasite          *parasite = NULL;
   GError                *error = NULL;
 
   gegl_init (NULL, NULL);
+
+  config = gimp_procedure_create_config (procedure);
+  metadata = gimp_image_metadata_save_prepare (image,
+                                               "image/x-psd",
+                                               &metadata_flags);
 
   switch (run_mode)
     {
@@ -369,11 +395,25 @@ psd_save (GimpProcedure        *procedure,
       break;
     }
 
-  metadata = gimp_image_metadata_save_prepare (image,
-                                               "image/x-psd",
-                                               &metadata_flags);
+  if (run_mode == GIMP_RUN_INTERACTIVE)
+    {
+      /* Only show dialog if image is grayscale and duotone color space
+       * information was attached from the original image imported
+       */
+      parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+      if (parasite)
+        {
+          if (gimp_image_get_base_type (image) == GIMP_GRAY)
+            {
+              if (! save_dialog (image, procedure, G_OBJECT (config)))
+                return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                         NULL);
+            }
+          gimp_parasite_free (parasite);
+        }
+    }
 
-  if (save_image (file, image, &error))
+  if (save_image (file, image, G_OBJECT (config), &error))
     {
       if (metadata)
         {
