@@ -899,6 +899,9 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
       free_paths = TRUE;
     }
 
+  g_signal_handlers_block_by_func (tree_view->priv->selection,
+                                   gimp_container_tree_view_selection_changed,
+                                   tree_view);
   gtk_tree_selection_unselect_all (tree_view->priv->selection);
   for (item = items, path = paths; item && path; item = item->next, path = path->next)
     {
@@ -911,14 +914,11 @@ gimp_container_tree_view_select_items (GimpContainerView *view,
       gtk_tree_path_free (parent_path);
 
       /* Add to the selection. */
-      g_signal_handlers_block_by_func (tree_view->priv->selection,
-                                       gimp_container_tree_view_selection_changed,
-                                       tree_view);
       gtk_tree_selection_select_path (tree_view->priv->selection, path->data);
-      g_signal_handlers_unblock_by_func (tree_view->priv->selection,
-                                         gimp_container_tree_view_selection_changed,
-                                         tree_view);
     }
+  g_signal_handlers_unblock_by_func (tree_view->priv->selection,
+                                     gimp_container_tree_view_selection_changed,
+                                     tree_view);
 
   if (paths)
     {
