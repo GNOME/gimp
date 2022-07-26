@@ -79,6 +79,7 @@
 #include "gui-unique.h"
 #include "gui-vtable.h"
 #include "icon-themes.h"
+#include "modifiers.h"
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
@@ -530,6 +531,7 @@ gui_restore_callback (Gimp               *gimp,
 
   gimp_devices_init (gimp);
   gimp_controllers_init (gimp);
+  modifiers_init (gimp);
   session_init (gimp);
 
   g_type_class_unref (g_type_class_ref (GIMP_TYPE_COLOR_SELECTOR_PALETTE));
@@ -622,6 +624,7 @@ gui_restore_after_callback (Gimp               *gimp,
 
   gimp_devices_restore (gimp);
   gimp_controllers_restore (gimp, image_ui_manager);
+  modifiers_restore (gimp);
 
   if (status_callback == splash_update)
     splash_destroy ();
@@ -766,6 +769,8 @@ gui_exit_callback (Gimp     *gimp,
   if (TRUE /* gui_config->save_controllers */)
     gimp_controllers_save (gimp);
 
+  modifiers_save (gimp, FALSE);
+
   g_signal_handlers_disconnect_by_func (gimp_get_user_context (gimp),
                                         gui_display_changed,
                                         gimp);
@@ -819,6 +824,7 @@ gui_exit_after_callback (Gimp     *gimp,
   gimp_render_exit (gimp);
 
   gimp_controllers_exit (gimp);
+  modifiers_exit (gimp);
   gimp_devices_exit (gimp);
   dialogs_exit (gimp);
   themes_exit (gimp);

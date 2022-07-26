@@ -592,6 +592,49 @@ gimp_zoom_focus_get_type (void)
   return type;
 }
 
+GType
+gimp_modifier_action_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_MODIFIER_ACTION_NONE, "GIMP_MODIFIER_ACTION_NONE", "none" },
+    { GIMP_MODIFIER_ACTION_PANNING, "GIMP_MODIFIER_ACTION_PANNING", "panning" },
+    { GIMP_MODIFIER_ACTION_ZOOMING, "GIMP_MODIFIER_ACTION_ZOOMING", "zooming" },
+    { GIMP_MODIFIER_ACTION_ROTATING, "GIMP_MODIFIER_ACTION_ROTATING", "rotating" },
+    { GIMP_MODIFIER_ACTION_STEP_ROTATING, "GIMP_MODIFIER_ACTION_STEP_ROTATING", "step-rotating" },
+    { GIMP_MODIFIER_ACTION_LAYER_PICKING, "GIMP_MODIFIER_ACTION_LAYER_PICKING", "layer-picking" },
+    { GIMP_MODIFIER_ACTION_MENU, "GIMP_MODIFIER_ACTION_MENU", "menu" },
+    { GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE", "brush-pixel-size" },
+    { GIMP_MODIFIER_ACTION_BRUSH_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_SIZE", "brush-size" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_MODIFIER_ACTION_NONE, NC_("modifier-action", "No action"), NULL },
+    { GIMP_MODIFIER_ACTION_PANNING, NC_("modifier-action", "Pan"), NULL },
+    { GIMP_MODIFIER_ACTION_ZOOMING, NC_("modifier-action", "Zoom"), NULL },
+    { GIMP_MODIFIER_ACTION_ROTATING, NC_("modifier-action", "Rotate"), NULL },
+    { GIMP_MODIFIER_ACTION_STEP_ROTATING, NC_("modifier-action", "Rotate by 15 degree steps"), NULL },
+    { GIMP_MODIFIER_ACTION_LAYER_PICKING, NC_("modifier-action", "Pick a layer"), NULL },
+    { GIMP_MODIFIER_ACTION_MENU, NC_("modifier-action", "Display the menu"), NULL },
+    { GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, NC_("modifier-action", "Change brush size in canvas pixels"), NULL },
+    { GIMP_MODIFIER_ACTION_BRUSH_SIZE, NC_("modifier-action", "Change brush size relatively"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpModifierAction", values);
+      gimp_type_set_translation_context (type, "modifier-action");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

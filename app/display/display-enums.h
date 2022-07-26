@@ -261,6 +261,25 @@ typedef enum
 } GimpZoomFocus;
 
 
+#define GIMP_TYPE_MODIFIER_ACTION (gimp_modifier_action_get_type ())
+
+GType gimp_modifier_action_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_MODIFIER_ACTION_NONE,             /*< desc="No action"                          >*/
+  GIMP_MODIFIER_ACTION_PANNING,          /*< desc="Pan"                                >*/
+  GIMP_MODIFIER_ACTION_ZOOMING,          /*< desc="Zoom"                               >*/
+  GIMP_MODIFIER_ACTION_ROTATING,         /*< desc="Rotate"                             >*/
+  GIMP_MODIFIER_ACTION_STEP_ROTATING,    /*< desc="Rotate by 15 degree steps"          >*/
+  GIMP_MODIFIER_ACTION_LAYER_PICKING,    /*< desc="Pick a layer"                       >*/
+
+  GIMP_MODIFIER_ACTION_MENU,             /*< desc="Display the menu"                   >*/
+  GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, /*< desc="Change brush size in canvas pixels" >*/
+  GIMP_MODIFIER_ACTION_BRUSH_SIZE        /*< desc="Change brush size relatively"       >*/
+} GimpModifierAction;
+
+
 /*
  * non-registered enums; register them if needed
  */

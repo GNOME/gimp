@@ -48,5 +48,7 @@ typedef struct _GimpToolWidgetGroup      GimpToolWidgetGroup;
 typedef struct _GimpDisplayXfer          GimpDisplayXfer;
 typedef struct _Selection                Selection;
 
+typedef struct _GimpModifiersManager     GimpModifiersManager;
+
 
 #endif /* __DISPLAY_TYPES_H__ */

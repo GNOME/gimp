@@ -14,6 +14,7 @@ libappgui_sources = [
   'gui-vtable.c',
   'gui.c',
   'icon-themes.c',
+  'modifiers.c',
   'session.c',
   'splash.c',
   'themes.c',

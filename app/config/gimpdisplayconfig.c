@@ -65,6 +65,7 @@ enum
   PROP_SHOW_PAINT_TOOL_CURSOR,
   PROP_IMAGE_TITLE_FORMAT,
   PROP_IMAGE_STATUS_FORMAT,
+  PROP_MODIFIERS_MANAGER,
   PROP_MONITOR_XRESOLUTION,
   PROP_MONITOR_YRESOLUTION,
   PROP_MONITOR_RES_FROM_GDK,
@@ -388,6 +389,17 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS |
                             GIMP_CONFIG_PARAM_IGNORE);
+
+  /* Stored as a property because we want to copy the object when we
+   * copy the config (for Preferences, etc.). But we don't want it to be
+   * stored as a config property into the rc files.
+   * Modifiers have their own rc file.
+   */
+  g_object_class_install_property (object_class, PROP_MODIFIERS_MANAGER,
+                                   g_param_spec_object ("modifiers-manager",
+                                                        NULL, NULL,
+                                                        G_TYPE_OBJECT,
+                                                        GIMP_PARAM_READWRITE));
 }
 
 static void
@@ -418,6 +430,7 @@ gimp_display_config_finalize (GObject *object)
 
   g_clear_object (&display_config->default_view);
   g_clear_object (&display_config->default_fullscreen_view);
+  g_clear_object (&display_config->modifiers_manager);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -522,6 +535,9 @@ gimp_display_config_set_property (GObject      *object,
       break;
     case PROP_SPACE_BAR_ACTION:
       display_config->space_bar_action = g_value_get_enum (value);
+      break;
+    case PROP_MODIFIERS_MANAGER:
+      display_config->modifiers_manager = g_value_dup_object (value);
       break;
     case PROP_ZOOM_QUALITY:
       display_config->zoom_quality = g_value_get_enum (value);
@@ -639,6 +655,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_SPACE_BAR_ACTION:
       g_value_set_enum (value, display_config->space_bar_action);
+      break;
+    case PROP_MODIFIERS_MANAGER:
+      g_value_set_object (value, display_config->modifiers_manager);
       break;
     case PROP_ZOOM_QUALITY:
       g_value_set_enum (value, display_config->zoom_quality);

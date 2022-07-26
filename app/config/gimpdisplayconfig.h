@@ -71,6 +71,8 @@ struct _GimpDisplayConfig
   GimpSpaceBarAction  space_bar_action;
   GimpZoomQuality     zoom_quality;
   gboolean            use_event_history;
+
+  GObject            *modifiers_manager;
 };
 
 struct _GimpDisplayConfigClass
