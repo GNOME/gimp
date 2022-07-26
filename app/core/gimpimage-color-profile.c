@@ -181,6 +181,7 @@ _gimp_image_set_hidden_profile (GimpImage        *image,
 gboolean
 gimp_image_validate_icc_parasite (GimpImage           *image,
                                   const GimpParasite  *icc_parasite,
+                                  const gchar         *profile_type,
                                   gboolean            *is_builtin,
                                   GError             **error)
 {
@@ -192,11 +193,19 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   if (strcmp (gimp_parasite_get_name (icc_parasite),
-              GIMP_ICC_PROFILE_PARASITE_NAME) != 0)
+              profile_type) != 0)
     {
+      gchar *invalid_parasite_name;
+
+      invalid_parasite_name =
+        g_strdup_printf (_("ICC profile validation failed: "
+                           "Parasite's name is not '%s'"),
+                           profile_type);
+
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED,
-                           _("ICC profile validation failed: "
-                             "Parasite's name is not 'icc-profile'"));
+                           invalid_parasite_name);
+
+      g_free (invalid_parasite_name);
       return FALSE;
     }
 
@@ -210,7 +219,9 @@ gimp_image_validate_icc_parasite (GimpImage           *image,
     }
 
   data = gimp_parasite_get_data (icc_parasite, &data_size);
-  return gimp_image_validate_icc_profile (image, data, data_size, is_builtin, error);
+
+  return gimp_image_validate_icc_profile (image, data, data_size,
+                                          profile_type, is_builtin, error);
 }
 
 const GimpParasite *
@@ -223,20 +234,22 @@ gimp_image_get_icc_parasite (GimpImage *image)
 
 void
 gimp_image_set_icc_parasite (GimpImage          *image,
-                             const GimpParasite *icc_parasite)
+                             const GimpParasite *icc_parasite,
+                             const gchar        *profile_type)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
   if (icc_parasite)
     {
       g_return_if_fail (gimp_image_validate_icc_parasite (image, icc_parasite,
+                                                          profile_type,
                                                           NULL, NULL) == TRUE);
 
       gimp_image_parasite_attach (image, icc_parasite, TRUE);
     }
   else
     {
-      gimp_image_parasite_detach (image, GIMP_ICC_PROFILE_PARASITE_NAME, TRUE);
+      gimp_image_parasite_detach (image, profile_type, TRUE);
     }
 }
 
@@ -244,6 +257,7 @@ gboolean
 gimp_image_validate_icc_profile (GimpImage     *image,
                                  const guint8  *data,
                                  gsize          length,
+                                 const gchar   *profile_type,
                                  gboolean      *is_builtin,
                                  GError       **error)
 {
@@ -257,14 +271,26 @@ gimp_image_validate_icc_profile (GimpImage     *image,
 
   if (! profile)
     {
-      g_prefix_error (error, _("ICC profile validation failed: "));
+      if (g_strcmp0 (profile_type, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+        g_prefix_error (error, _("ICC profile validation failed: "));
+      else if (g_strcmp0 (profile_type, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+        g_prefix_error (error, _("Simulation ICC profile validation failed: "));
+
       return FALSE;
     }
 
-  if (! gimp_image_validate_color_profile (image, profile, is_builtin, error))
+  if (g_strcmp0 (profile_type, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      g_object_unref (profile);
-      return FALSE;
+      if (! gimp_image_validate_color_profile (image, profile, is_builtin, error))
+        {
+          g_object_unref (profile);
+          return FALSE;
+        }
+    }
+  else
+    {
+      if (is_builtin)
+        *is_builtin = FALSE;
     }
 
   g_object_unref (profile);
@@ -305,6 +331,7 @@ gboolean
 gimp_image_set_icc_profile (GimpImage     *image,
                             const guint8  *data,
                             gsize          length,
+                            const gchar   *profile_type,
                             GError       **error)
 {
   GimpParasite *parasite = NULL;
@@ -317,13 +344,13 @@ gimp_image_set_icc_profile (GimpImage     *image,
     {
       gboolean is_builtin;
 
-      parasite = gimp_parasite_new (GIMP_ICC_PROFILE_PARASITE_NAME,
+      parasite = gimp_parasite_new (profile_type,
                                     GIMP_PARASITE_PERSISTENT |
                                     GIMP_PARASITE_UNDOABLE,
                                     length, data);
 
-      if (! gimp_image_validate_icc_parasite (image, parasite, &is_builtin,
-                                              error))
+      if (! gimp_image_validate_icc_parasite (image, parasite, profile_type,
+                                              &is_builtin, error))
         {
           gimp_parasite_free (parasite);
           return FALSE;
@@ -337,7 +364,7 @@ gimp_image_set_icc_profile (GimpImage     *image,
         }
     }
 
-  gimp_image_set_icc_parasite (image, parasite);
+  gimp_image_set_icc_parasite (image, parasite, profile_type);
 
   if (parasite)
     gimp_parasite_free (parasite);
@@ -388,7 +415,9 @@ gimp_image_set_color_profile (GimpImage         *image,
   if (profile)
     data = gimp_color_profile_get_icc_profile (profile, &length);
 
-  return gimp_image_set_icc_profile (image, data, length, error);
+  return gimp_image_set_icc_profile (image, data, length,
+                                     GIMP_ICC_PROFILE_PARASITE_NAME,
+                                     error);
 }
 
 GimpColorProfile *
@@ -399,14 +428,17 @@ gimp_image_get_simulation_profile (GimpImage *image)
   return GIMP_IMAGE_GET_PRIVATE (image)->simulation_profile;
 }
 
-void
+gboolean
 gimp_image_set_simulation_profile (GimpImage         *image,
                                    GimpColorProfile  *profile)
 {
   GimpImagePrivate *private;
+  const guint8     *data   = NULL;
+  gsize             length = 0;
 
-  g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile),
+                        FALSE);
 
   private = GIMP_IMAGE_GET_PRIVATE (image);
 
@@ -415,6 +447,13 @@ gimp_image_set_simulation_profile (GimpImage         *image,
       g_set_object (&private->simulation_profile, profile);
       gimp_color_managed_simulation_profile_changed (GIMP_COLOR_MANAGED (image));
     }
+
+  if (profile)
+    data = gimp_color_profile_get_icc_profile (profile, &length);
+
+  return gimp_image_set_icc_profile (image, data, length,
+                                     GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME,
+                                     NULL);
 }
 
 gboolean
@@ -859,6 +898,27 @@ _gimp_image_update_color_profile (GimpImage          *image,
     }
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
+}
+
+void
+_gimp_image_update_simulation_profile (GimpImage          *image,
+                                       const GimpParasite *icc_parasite)
+{
+  GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  g_clear_object (&private->simulation_profile);
+
+  if (icc_parasite)
+    {
+      const guint8 *data;
+      guint32       data_size;
+
+      data = gimp_parasite_get_data (icc_parasite, &data_size);
+      private->simulation_profile =
+        gimp_color_profile_new_from_icc_profile (data, data_size, NULL);
+    }
+
+  gimp_color_managed_simulation_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 
 

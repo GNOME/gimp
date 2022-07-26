@@ -22,7 +22,8 @@
 #define __GIMP_IMAGE_COLOR_PROFILE_H__
 
 
-#define GIMP_ICC_PROFILE_PARASITE_NAME "icc-profile"
+#define GIMP_ICC_PROFILE_PARASITE_NAME            "icc-profile"
+#define GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME "simulation-icc-profile"
 
 
 gboolean             gimp_image_get_use_srgb_profile   (GimpImage           *image,
@@ -37,15 +38,18 @@ void                 _gimp_image_set_hidden_profile    (GimpImage           *ima
 
 gboolean             gimp_image_validate_icc_parasite  (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite,
+                                                        const gchar         *profile_type,
                                                         gboolean            *is_builtin,
                                                         GError             **error);
 const GimpParasite * gimp_image_get_icc_parasite       (GimpImage           *image);
 void                 gimp_image_set_icc_parasite       (GimpImage           *image,
-                                                        const GimpParasite  *icc_parasite);
+                                                        const GimpParasite  *icc_parasite,
+                                                        const gchar         *profile_type);
 
 gboolean             gimp_image_validate_icc_profile   (GimpImage           *image,
                                                         const guint8        *data,
                                                         gsize                length,
+                                                        const gchar         *profile_type,
                                                         gboolean            *is_builtin,
                                                         GError             **error);
 const guint8       * gimp_image_get_icc_profile        (GimpImage           *image,
@@ -53,6 +57,7 @@ const guint8       * gimp_image_get_icc_profile        (GimpImage           *ima
 gboolean             gimp_image_set_icc_profile        (GimpImage           *image,
                                                         const guint8        *data,
                                                         gsize                length,
+                                                        const gchar         *profile_type,
                                                         GError             **error);
 
 gboolean             gimp_image_validate_color_profile (GimpImage           *image,
@@ -65,7 +70,7 @@ gboolean             gimp_image_set_color_profile      (GimpImage           *ima
                                                         GError             **error);
 
 GimpColorProfile   * gimp_image_get_simulation_profile (GimpImage           *image);
-void                 gimp_image_set_simulation_profile (GimpImage           *image,
+gboolean             gimp_image_set_simulation_profile (GimpImage           *image,
                                                         GimpColorProfile    *profile);
 
 gboolean             gimp_image_validate_color_profile_by_format
@@ -121,6 +126,9 @@ void                 gimp_image_color_profile_srgb_to_pixel
 void                 _gimp_image_free_color_profile    (GimpImage           *image);
 void                 _gimp_image_free_color_transforms (GimpImage           *image);
 void                 _gimp_image_update_color_profile  (GimpImage           *image,
+                                                        const GimpParasite  *icc_parasite);
+void                 _gimp_image_update_simulation_profile
+                                                       (GimpImage           *image,
                                                         const GimpParasite  *icc_parasite);
 
 

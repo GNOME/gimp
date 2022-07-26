@@ -556,7 +556,9 @@ gimp_image_new_from_pixbuf (Gimp        *gimp,
   icc_data = gimp_pixbuf_get_icc_profile (pixbuf, &icc_len);
   if (icc_data)
     {
-      gimp_image_set_icc_profile (new_image, icc_data, icc_len, NULL);
+      gimp_image_set_icc_profile (new_image, icc_data, icc_len,
+                                  GIMP_ICC_PROFILE_PARASITE_NAME,
+                                  NULL);
       g_free (icc_data);
     }
 

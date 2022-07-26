@@ -4180,9 +4180,11 @@ gimp_image_parasite_validate (GimpImage           *image,
 
   name = gimp_parasite_get_name (parasite);
 
-  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0 ||
+      strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
     {
-      return gimp_image_validate_icc_parasite (image, parasite, NULL, error);
+      return gimp_image_validate_icc_parasite (image, parasite,
+                                               name, NULL, error);
     }
   else if (strcmp (name, "gimp-comment") == 0)
     {
@@ -4228,7 +4230,8 @@ gimp_image_parasite_attach (GimpImage          *image,
   name = gimp_parasite_get_name (parasite);
 
   /*  this is so ugly and is only for the PDB  */
-  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
+  if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0 ||
+      strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
     {
       GimpColorProfile *profile;
       GimpColorProfile *builtin;
@@ -4283,6 +4286,9 @@ gimp_image_parasite_attach (GimpImage          *image,
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     _gimp_image_update_color_profile (image, parasite);
 
+  if (strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+    _gimp_image_update_simulation_profile (image, parasite);
+
   g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
                  name);
 }
@@ -4312,6 +4318,9 @@ gimp_image_parasite_detach (GimpImage   *image,
 
   if (strcmp (name, GIMP_ICC_PROFILE_PARASITE_NAME) == 0)
     _gimp_image_update_color_profile (image, NULL);
+
+  if (strcmp (name, GIMP_SIMULATION_ICC_PROFILE_PARASITE_NAME) == 0)
+    _gimp_image_update_simulation_profile (image, NULL);
 
   g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
                  name);
