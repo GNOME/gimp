@@ -40,7 +40,7 @@ libappconfig = static_library('appconfig',
   include_directories: [ rootInclude, rootAppInclude, ],
   c_args: '-DG_LOG_DOMAIN="Gimp-Config"',
   dependencies: [
-    cairo, gegl, gdk_pixbuf, gio, gio_specific, gtk3, libmypaint,
+    cairo, gegl, gdk_pixbuf, gio, gio_specific, libmypaint,
   ],
 )
 
