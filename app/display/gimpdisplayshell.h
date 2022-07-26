@@ -215,19 +215,16 @@ struct _GimpDisplayShell
   gboolean           button1_release_pending;
   const gchar       *space_shaded_tool;
 
-  gboolean           scrolling;
+  /* Modifier action currently ON. */
+  GimpModifierAction mod_action;
+
   gint               scroll_start_x;
   gint               scroll_start_y;
   gint               scroll_last_x;
   gint               scroll_last_y;
-  gboolean           rotating;
   gdouble            rotate_drag_angle;
-  gboolean           scaling;
   gpointer           scroll_info;
-  gboolean           layer_picking;
   GimpLayer         *picked_layer;
-
-  gboolean           mod1_settings;
 
   GeglBuffer        *mask;
   gint               mask_offset_x;

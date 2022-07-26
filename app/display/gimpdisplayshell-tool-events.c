@@ -72,6 +72,7 @@
 #include "gimpdisplayshell-scroll.h"
 #include "gimpdisplayshell-tool-events.h"
 #include "gimpdisplayshell-transform.h"
+#include "gimpmodifiersmanager.h"
 #include "gimpimagewindow.h"
 #include "gimpmotionbuffer.h"
 #include "gimpstatusbar.h"
@@ -148,6 +149,12 @@ static void       gimp_display_shell_activate_action          (GimpUIManager    
                                                                const gchar       *action_desc,
                                                                GVariant          *value);
 
+static gboolean   gimp_display_triggers_context_menu          (const GdkEvent    *event,
+                                                               GimpDisplayShell  *shell,
+                                                               Gimp              *gimp,
+                                                               const GimpCoords  *image_coords,
+                                                               gboolean           force);
+
 
 /*  public functions  */
 
@@ -221,7 +228,7 @@ gimp_display_shell_events (GtkWidget        *widget,
           default:
             if (shell->space_release_pending   ||
                 shell->button1_release_pending ||
-                shell->scrolling)
+                shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
               return TRUE;
             break;
           }
@@ -312,16 +319,17 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
                                        GimpDisplayShell *shell)
 {
-  GimpDisplay     *display;
-  GimpImage       *image;
-  Gimp            *gimp;
-  GimpCoords       display_coords;
-  GimpCoords       image_coords;
-  GdkModifierType  state;
-  guint32          time;
-  gboolean         device_changed   = FALSE;
-  gboolean         return_val       = FALSE;
-  gboolean         update_sw_cursor = FALSE;
+  GimpDisplay          *display;
+  GimpImage            *image;
+  Gimp                 *gimp;
+  GimpModifiersManager *mod_manager;
+  GimpCoords            display_coords;
+  GimpCoords            image_coords;
+  GdkModifierType       state;
+  guint32               time;
+  gboolean              device_changed   = FALSE;
+  gboolean              return_val       = FALSE;
+  gboolean              update_sw_cursor = FALSE;
 
   g_return_val_if_fail (gtk_widget_get_realized (canvas), FALSE);
 
@@ -378,6 +386,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       gimp_display_shell_update_focus (shell, TRUE,
                                        &image_coords, state);
     }
+
+  mod_manager = GIMP_MODIFIERS_MANAGER (shell->display->config->modifiers_manager);
 
   switch (event->type)
     {
@@ -479,7 +489,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkModifierType  button_state;
 
         /*  ignore new mouse events  */
-        if (gimp->busy || shell->scrolling || shell->grab_pointer ||
+        if (gimp->busy                                     ||
+            shell->mod_action != GIMP_MODIFIER_ACTION_NONE ||
+            shell->grab_pointer                            ||
             shell->button1_release_pending)
           return TRUE;
 
@@ -516,38 +528,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                           &image_coords, state & ~button_state,
                                           FALSE);
 
-        if (gdk_event_triggers_context_menu (event))
-          {
-            GimpUIManager   *ui_manager;
-            const gchar     *ui_path;
-            GdkModifierType  mod_state;
-
-            mod_state = state & gimp_get_all_modifiers_mask ();
-
-            /* Menu only with a right-click and no modifiers. */
-            if (mod_state == 0)
-              {
-                ui_manager = tool_manager_get_popup_active (gimp,
-                                                            &image_coords, state,
-                                                            display,
-                                                            &ui_path);
-
-                if (! ui_manager)
-                  {
-                    ui_manager = shell->popup_manager;
-                    ui_path    = "/dummy-menubar/image-popup";
-                  }
-
-                gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path, event,
-                                                     NULL, NULL);
-              }
-            else if (mod_state == GDK_MOD1_MASK)
-              {
-                gimp_display_shell_start_scrolling (shell, event, state,
-                                                    bevent->x, bevent->y);
-              }
-          }
-        else if (bevent->button == 1)
+        if (bevent->button == 1)
           {
             if (! gimp_display_shell_pointer_grab (shell, event,
                                                    GDK_POINTER_MOTION_MASK |
@@ -562,16 +543,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 GimpCoords      last_motion;
 
                 active_tool = tool_manager_get_active (gimp);
-                motion_mode = gimp_tool_control_get_motion_mode (
-                                active_tool->control);
+                motion_mode = gimp_tool_control_get_motion_mode (active_tool->control);
 
                 if (motion_mode == GIMP_MOTION_MODE_EXACT)
                   {
                     /* enable motion compression for the canvas window for the
                      * duration of the stroke
                      */
-                    gdk_window_set_event_compression (
-                      gtk_widget_get_window (canvas), FALSE);
+                    gdk_window_set_event_compression (gtk_widget_get_window (canvas), FALSE);
                   }
 
                 /* Use the last evaluated velocity&direction instead of the
@@ -592,10 +571,33 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                   display);
               }
           }
-        else if (bevent->button == 2)
+        else
           {
-            gimp_display_shell_start_scrolling (shell, event, state,
-                                                bevent->x, bevent->y);
+            GdkDevice            *device;
+            GimpModifierAction    action;
+
+            device = gdk_event_get_source_device (event);
+            action = gimp_modifiers_manager_get_action (mod_manager, device,
+                                                        bevent->button, bevent->state);
+            shell->mod_action = action;
+            switch (action)
+              {
+              case GIMP_MODIFIER_ACTION_MENU:
+                gimp_display_triggers_context_menu (event, shell, gimp, &image_coords, TRUE);
+                break;
+              case GIMP_MODIFIER_ACTION_PANNING:
+              case GIMP_MODIFIER_ACTION_ZOOMING:
+              case GIMP_MODIFIER_ACTION_ROTATING:
+              case GIMP_MODIFIER_ACTION_STEP_ROTATING:
+              case GIMP_MODIFIER_ACTION_LAYER_PICKING:
+              case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
+              case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+                gimp_display_shell_start_scrolling (shell, event, state,
+                                                    bevent->x, bevent->y);
+              case GIMP_MODIFIER_ACTION_NONE:
+                gimp_display_triggers_context_menu (event, shell, gimp, &image_coords, FALSE);
+                break;
+              }
           }
 
         return_val = TRUE;
@@ -682,7 +684,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
              *  a button press we intentionally ignored because we had
              *  a grab on another device at the time of the press
              */
-            if (! shell->grab_pointer || shell->scrolling)
+            if (! shell->grab_pointer || shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
               return TRUE;
 
             if (active_tool &&
@@ -715,29 +717,35 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
             gimp_display_shell_pointer_ungrab (shell, event);
           }
-        else if (bevent->button == 2)
-          {
-            if (shell->scrolling                 &&
-                ! shell->button1_release_pending &&
-                (! shell->space_release_pending ||
-                 shell->display->config->space_bar_action != GIMP_SPACE_BAR_ACTION_PAN))
-              gimp_display_shell_stop_scrolling (shell, event);
-          }
-        else if (bevent->button == 3)
-          {
-            if (shell->mod1_settings)
-              gimp_display_shell_stop_scrolling (shell, event);
-          }
         else
           {
-            GdkEventButton *bevent = (GdkEventButton *) event;
-            GimpController *mouse  = gimp_controllers_get_mouse (gimp);
+            GdkDevice            *device;
+            GimpModifierAction    action;
 
-            if (!(shell->scrolling || shell->grab_pointer) &&
-                mouse && gimp_controller_mouse_button (GIMP_CONTROLLER_MOUSE (mouse),
-                                                       bevent))
+            device = gdk_event_get_source_device (event);
+            action = gimp_modifiers_manager_get_action (mod_manager, device,
+                                                        bevent->button, bevent->state);
+
+            switch (action)
               {
-                return TRUE;
+              case GIMP_MODIFIER_ACTION_MENU:
+                break;
+              case GIMP_MODIFIER_ACTION_PANNING:
+              case GIMP_MODIFIER_ACTION_ZOOMING:
+              case GIMP_MODIFIER_ACTION_ROTATING:
+              case GIMP_MODIFIER_ACTION_STEP_ROTATING:
+              case GIMP_MODIFIER_ACTION_LAYER_PICKING:
+                if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE &&
+                    ! shell->button1_release_pending &&
+                    (! shell->space_release_pending ||
+                     shell->display->config->space_bar_action != GIMP_SPACE_BAR_ACTION_PAN))
+                  gimp_display_shell_stop_scrolling (shell, event);
+                break;
+              case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
+              case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+                gimp_display_shell_stop_scrolling (shell, event);
+              case GIMP_MODIFIER_ACTION_NONE:
+                break;
               }
           }
 
@@ -830,7 +838,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         gimp_display_shell_proximity_in (shell);
         update_sw_cursor = TRUE;
 
-        if (shell->scrolling)
+        if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
           {
             gimp_display_shell_handle_scrolling (shell,
                                                  state, mevent->x, mevent->y);
@@ -1100,21 +1108,24 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         active_tool = tool_manager_get_active (gimp);
 
-        if (gimp_display_shell_key_to_state (kevent->keyval) == GDK_MOD1_MASK)
+        if (shell->mod_action == GIMP_MODIFIER_ACTION_LAYER_PICKING)
           {
-            if (shell->picked_layer)
-              {
-                GimpStatusbar *statusbar;
+            /* As a special exception, we finalize the layer picking
+             * action in the key release event. This allows one to
+             * click multiple times and keep a state of the last picked
+             * layer.
+             * */
+            GimpStatusbar *statusbar;
 
-                statusbar = gimp_display_shell_get_statusbar (shell);
-                gimp_statusbar_pop_temp (statusbar);
+            statusbar = gimp_display_shell_get_statusbar (shell);
+            gimp_statusbar_pop_temp (statusbar);
 
-                shell->picked_layer = NULL;
-              }
-            else if (shell->mod1_settings)
-              {
-                gimp_display_shell_stop_scrolling (shell, event);
-              }
+            shell->picked_layer = NULL;
+            shell->mod_action = GIMP_MODIFIER_ACTION_NONE;
+          }
+        else if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
+          {
+            gimp_display_shell_stop_scrolling (shell, event);
           }
 
         if ((state & GDK_BUTTON1_MASK)      &&
@@ -1639,88 +1650,86 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
                                     gint              x,
                                     gint              y)
 {
-  g_return_if_fail (! shell->scrolling);
-
   gimp_display_shell_pointer_grab (shell, event,
                                    GDK_POINTER_MOTION_MASK |
                                    GDK_BUTTON_RELEASE_MASK);
 
-  shell->scrolling         = TRUE;
   shell->scroll_start_x    = x;
   shell->scroll_start_y    = y;
   shell->scroll_last_x     = x;
   shell->scroll_last_y     = y;
-  shell->rotating          = (state & gimp_get_extend_selection_mask ()) ? TRUE : FALSE;
   shell->rotate_drag_angle = shell->rotate_angle;
-  shell->scaling           = (state & gimp_get_toggle_behavior_mask ()) ? TRUE : FALSE;
-  shell->layer_picking     = ! gdk_event_triggers_context_menu (event) && (state & GDK_MOD1_MASK) ? TRUE : FALSE;
-  shell->mod1_settings     = gdk_event_triggers_context_menu (event) && (state & GDK_MOD1_MASK) ? TRUE : FALSE;
 
-  if (shell->rotating)
+  switch (shell->mod_action)
     {
+    case GIMP_MODIFIER_ACTION_ROTATING:
+    case GIMP_MODIFIER_ACTION_STEP_ROTATING:
       gimp_display_shell_set_override_cursor (shell,
                                               (GimpCursorType) GDK_EXCHANGE);
-    }
-  else if (shell->scaling)
-    {
+      break;
+    case GIMP_MODIFIER_ACTION_ZOOMING:
       gimp_display_shell_set_override_cursor (shell,
                                               (GimpCursorType) GIMP_CURSOR_ZOOM);
-    }
-  else if (shell->layer_picking)
-    {
-      GimpImage  *image   = gimp_display_get_image (shell->display);
-      GimpLayer  *layer;
-      GimpCoords  image_coords;
-      GimpCoords  display_coords;
-      guint32     time;
-
-      gimp_display_shell_set_override_cursor (shell,
-                                              (GimpCursorType) GIMP_CURSOR_CROSSHAIR);
-
-      gimp_display_shell_get_event_coords (shell, event,
-                                           &display_coords,
-                                           &state, &time);
-      gimp_display_shell_untransform_event_coords (shell,
-                                                   &display_coords, &image_coords,
-                                                   NULL);
-      layer = gimp_image_pick_layer (image,
-                                     (gint) image_coords.x,
-                                     (gint) image_coords.y,
-                                     shell->picked_layer);
-
-      if (layer && ! gimp_image_get_floating_selection (image))
+      break;
+    case GIMP_MODIFIER_ACTION_LAYER_PICKING:
         {
-          GList *layers = gimp_image_get_selected_layers (image);
+          GimpImage  *image   = gimp_display_get_image (shell->display);
+          GimpLayer  *layer;
+          GimpCoords  image_coords;
+          GimpCoords  display_coords;
+          guint32     time;
 
-          if (g_list_length (layers) != 1 || layer != layers->data)
+          gimp_display_shell_set_override_cursor (shell,
+                                                  (GimpCursorType) GIMP_CURSOR_CROSSHAIR);
+
+          gimp_display_shell_get_event_coords (shell, event,
+                                               &display_coords,
+                                               &state, &time);
+          gimp_display_shell_untransform_event_coords (shell,
+                                                       &display_coords, &image_coords,
+                                                       NULL);
+          layer = gimp_image_pick_layer (image,
+                                         (gint) image_coords.x,
+                                         (gint) image_coords.y,
+                                         shell->picked_layer);
+
+          if (layer && ! gimp_image_get_floating_selection (image))
             {
-              GimpStatusbar *statusbar;
+              GList *layers = gimp_image_get_selected_layers (image);
 
-              layers = g_list_prepend (NULL, layer);
-              gimp_image_set_selected_layers (image, layers);
-              g_list_free (layers);
+              if (g_list_length (layers) != 1 || layer != layers->data)
+                {
+                  GimpStatusbar *statusbar;
 
-              statusbar = gimp_display_shell_get_statusbar (shell);
-              gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
-                                        GIMP_ICON_LAYER,
-                                        _("Layer picked: '%s'"),
-                                        gimp_object_get_name (layer));
+                  layers = g_list_prepend (NULL, layer);
+                  gimp_image_set_selected_layers (image, layers);
+                  g_list_free (layers);
+
+                  statusbar = gimp_display_shell_get_statusbar (shell);
+                  gimp_statusbar_push_temp (statusbar, GIMP_MESSAGE_INFO,
+                                            GIMP_ICON_LAYER,
+                                            _("Layer picked: '%s'"),
+                                            gimp_object_get_name (layer));
+                }
+              shell->picked_layer = layer;
             }
-          shell->picked_layer = layer;
         }
-    }
-  else if (shell->mod1_settings == TRUE)
-    {
-      Gimp     *gimp       = gimp_display_get_gimp (shell->display);
-      GimpTool *active_tool = tool_manager_get_active (gimp);
+      break;
+    case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+    case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
+        {
+          Gimp     *gimp        = gimp_display_get_gimp (shell->display);
+          GimpTool *active_tool = tool_manager_get_active (gimp);
 
-      if (GIMP_IS_PAINT_TOOL (active_tool))
-        gimp_paint_tool_force_draw (GIMP_PAINT_TOOL (active_tool), TRUE);
-    }
-  else
-    {
+          if (GIMP_IS_PAINT_TOOL (active_tool))
+            gimp_paint_tool_force_draw (GIMP_PAINT_TOOL (active_tool), TRUE);
+        }
+    case GIMP_MODIFIER_ACTION_MENU:
+    case GIMP_MODIFIER_ACTION_PANNING:
+    case GIMP_MODIFIER_ACTION_NONE:
       gimp_display_shell_set_override_cursor (shell,
                                               (GimpCursorType) GDK_FLEUR);
+      break;
     }
 }
 
@@ -1728,29 +1737,31 @@ static void
 gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
                                    const GdkEvent   *event)
 {
-  g_return_if_fail (shell->scrolling);
-
   gimp_display_shell_unset_override_cursor (shell);
 
-  if (shell->mod1_settings == TRUE)
+  switch (shell->mod_action)
     {
-      Gimp     *gimp       = gimp_display_get_gimp (shell->display);
-      GimpTool *active_tool = tool_manager_get_active (gimp);
+    case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+    case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
+        {
+          Gimp     *gimp       = gimp_display_get_gimp (shell->display);
+          GimpTool *active_tool = tool_manager_get_active (gimp);
 
-      if (GIMP_IS_PAINT_TOOL (active_tool))
-        gimp_paint_tool_force_draw (GIMP_PAINT_TOOL (active_tool), FALSE);
+          if (GIMP_IS_PAINT_TOOL (active_tool))
+            gimp_paint_tool_force_draw (GIMP_PAINT_TOOL (active_tool), FALSE);
+        }
+      break;
+    default:
+      break;
     }
 
-  shell->scrolling         = FALSE;
+  shell->mod_action = GIMP_MODIFIER_ACTION_NONE;
+
   shell->scroll_start_x    = 0;
   shell->scroll_start_y    = 0;
   shell->scroll_last_x     = 0;
   shell->scroll_last_y     = 0;
-  shell->rotating          = FALSE;
   shell->rotate_drag_angle = 0.0;
-  shell->scaling           = FALSE;
-  shell->layer_picking     = FALSE;
-  shell->mod1_settings     = FALSE;
 
   /* We may have ungrabbed the pointer when space was released while
    * mouse was down, to be able to catch a GDK_BUTTON_RELEASE event.
@@ -1765,11 +1776,13 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                      gint              x,
                                      gint              y)
 {
-  g_return_if_fail (shell->scrolling);
+  gboolean constrain = FALSE;
 
-  if (shell->rotating)
+  switch (shell->mod_action)
     {
-      gboolean constrain = (state & GDK_CONTROL_MASK) ? TRUE : FALSE;
+    case GIMP_MODIFIER_ACTION_STEP_ROTATING:
+      constrain = TRUE;
+    case GIMP_MODIFIER_ACTION_ROTATING:
 
       gimp_display_shell_rotate_drag (shell,
                                       shell->scroll_last_x,
@@ -1777,67 +1790,69 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                       x,
                                       y,
                                       constrain);
-    }
-  else if (shell->scaling)
-    {
+      break;
+    case GIMP_MODIFIER_ACTION_ZOOMING:
       gimp_display_shell_scale_drag (shell,
                                      shell->scroll_start_x,
                                      shell->scroll_start_y,
                                      shell->scroll_last_x - x,
                                      shell->scroll_last_y - y);
-    }
-  else if (shell->layer_picking)
-    {
-      /* Do nothing. We only pick the layer on click. */
-    }
-  else if (shell->mod1_settings == TRUE)
-    {
-      GimpDisplay *display     = shell->display;
-      Gimp        *gimp        = gimp_display_get_gimp (display);
-      GimpTool    *active_tool = tool_manager_get_active (gimp);
-      const gchar *action;
-      gint         size;
-
-      /* Size in image pixels: distance between start and current
-       * position.
-       */
-      size = (gint) (sqrt (pow ((x - shell->scroll_start_x) / shell->scale_x, 2) +
-                           pow ((y - shell->scroll_start_y) / shell->scale_y, 2)) * 2.0);
-
-      /* TODO: different logics with "lock brush to view". */
-      /* TODO 2: scale aware? */
-      action = gimp_tool_control_get_action_pixel_size (active_tool->control);
-      if (action)
+      break;
+    case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+    case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
-          GimpImageWindow *window  = gimp_display_shell_get_window (shell);
-          GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+          GimpDisplay *display     = shell->display;
+          Gimp        *gimp        = gimp_display_get_gimp (display);
+          GimpTool    *active_tool = tool_manager_get_active (gimp);
+          const gchar *action;
+          gint         size;
 
-          gimp_display_shell_activate_action (manager, action,
-                                              g_variant_new_double ((gdouble) size));
-        }
-      else
-        {
-          action = gimp_tool_control_get_action_size (active_tool->control);
+          /* Size in image pixels: distance between start and current
+           * position.
+           */
+          size = (gint) (sqrt (pow ((x - shell->scroll_start_x) / shell->scale_x, 2) +
+                               pow ((y - shell->scroll_start_y) / shell->scale_y, 2)) * 2.0);
 
+          /* TODO: different logics with "lock brush to view". */
+          /* TODO 2: scale aware? */
+          action = gimp_tool_control_get_action_pixel_size (active_tool->control);
           if (action)
             {
               GimpImageWindow *window  = gimp_display_shell_get_window (shell);
               GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
 
-              /* Special trick with these enum actions. If using any
-               * positive value, we get the GIMP_ACTION_SELECT_SET behavior
-               * which sets to the given value.
-               */
               gimp_display_shell_activate_action (manager, action,
-                                                  g_variant_new_int32 (size));
+                                                  g_variant_new_double ((gdouble) size));
+            }
+          else
+            {
+              action = gimp_tool_control_get_action_size (active_tool->control);
+
+              if (action)
+                {
+                  GimpImageWindow *window  = gimp_display_shell_get_window (shell);
+                  GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+                  /* Special trick with these enum actions. If using any
+                   * positive value, we get the GIMP_ACTION_SELECT_SET behavior
+                   * which sets to the given value.
+                   */
+                  gimp_display_shell_activate_action (manager, action,
+                                                      g_variant_new_int32 (size));
+                }
             }
         }
-    }
-  else
-    {
+      break;
+    case GIMP_MODIFIER_ACTION_PANNING:
       gimp_display_shell_scroll (shell,
                                  shell->scroll_last_x - x,
                                  shell->scroll_last_y - y);
+      break;
+    case GIMP_MODIFIER_ACTION_LAYER_PICKING:
+      /* Do nothing. We only pick the layer on click. */
+    case GIMP_MODIFIER_ACTION_MENU:
+    case GIMP_MODIFIER_ACTION_NONE:
+      break;
     }
 
   shell->scroll_last_x = x;
@@ -1877,7 +1892,7 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
 {
   Gimp *gimp = gimp_display_get_gimp (shell->display);
 
-  if (shell->space_release_pending || shell->scrolling)
+  if (shell->space_release_pending || shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
     return;
 
   switch (shell->display->config->space_bar_action)
@@ -2301,4 +2316,63 @@ gimp_display_shell_activate_action (GimpUIManager *manager,
     }
 
   g_free (group_name);
+}
+
+/* Replace gdk_event_triggers_context_menu() as we don't want to trigger
+ * anymore on right click, as we have our own system.
+ * But we trigger with %GDK_MODIFIER_INTENT_CONTEXT_MENU mask.
+ */
+static gboolean
+gimp_display_triggers_context_menu (const GdkEvent   *event,
+                                    GimpDisplayShell *shell,
+                                    Gimp             *gimp,
+                                    const GimpCoords *image_coords,
+                                    gboolean          force)
+{
+  if (event->type == GDK_BUTTON_PRESS)
+    {
+      const GdkEventButton *bevent   = (const GdkEventButton *) event;
+      gboolean              triggers = force;
+
+      g_return_val_if_fail (GDK_IS_WINDOW (bevent->window), FALSE);
+
+      if (! force)
+        {
+          GdkDisplay      *display;
+          GdkModifierType  modifier;
+
+          display  = gdk_window_get_display (bevent->window);
+          modifier = gdk_keymap_get_modifier_mask (gdk_keymap_get_for_display (display),
+                                                   GDK_MODIFIER_INTENT_CONTEXT_MENU);
+
+          triggers = (modifier != 0 &&
+                      bevent->button == GDK_BUTTON_PRIMARY &&
+                      ! (bevent->state & (GDK_BUTTON2_MASK | GDK_BUTTON3_MASK)) &&
+                      (bevent->state & modifier));
+        }
+
+      if (triggers)
+        {
+          GimpUIManager   *ui_manager;
+          const gchar     *ui_path;
+
+          ui_manager = tool_manager_get_popup_active (gimp,
+                                                      image_coords,
+                                                      bevent->state,
+                                                      shell->display,
+                                                      &ui_path);
+
+          if (! ui_manager)
+            {
+              ui_manager = shell->popup_manager;
+              ui_path    = "/dummy-menubar/image-popup";
+            }
+
+          gimp_ui_manager_ui_popup_at_pointer (ui_manager, ui_path, event,
+                                               NULL, NULL);
+          return TRUE;
+        }
+    }
+
+  return FALSE;
 }

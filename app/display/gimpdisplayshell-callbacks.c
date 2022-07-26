@@ -411,7 +411,7 @@ gimp_display_shell_vadjustment_changed (GtkAdjustment    *adjustment,
   /*  If we are panning with mouse, scrollbars are to be ignored or
    *  they will cause jitter in motion
    */
-  if (! shell->scrolling)
+  if (shell->mod_action == GIMP_MODIFIER_ACTION_NONE)
     gimp_display_shell_scroll (shell,
                                0,
                                gtk_adjustment_get_value (adjustment) -
@@ -425,7 +425,7 @@ gimp_display_shell_hadjustment_changed (GtkAdjustment    *adjustment,
   /* If we are panning with mouse, scrollbars are to be ignored or
    * they will cause jitter in motion
    */
-  if (! shell->scrolling)
+  if (shell->mod_action == GIMP_MODIFIER_ACTION_NONE)
     gimp_display_shell_scroll (shell,
                                gtk_adjustment_get_value (adjustment) -
                                shell->offset_x,
