@@ -78,3 +78,18 @@ gimp_tools_blink_lock_box (Gimp     *gimp,
   view = GIMP_ITEM_TREE_VIEW (gtk_bin_get_child (GTK_BIN (dockable)));
   gimp_item_tree_view_blink_lock (view, item);
 }
+
+void
+gimp_tools_show_tool_options (Gimp *gimp)
+{
+  GdkMonitor *monitor;
+
+  g_return_if_fail (GIMP_IS_GIMP (gimp));
+
+  monitor = gimp_get_monitor_at_pointer ();
+
+  gimp_window_strategy_show_dockable_dialog (GIMP_WINDOW_STRATEGY (gimp_get_window_strategy (gimp)),
+                                             gimp,
+                                             gimp_dialog_factory_get_singleton (),
+                                             monitor, "gimp-tool-options");
+}

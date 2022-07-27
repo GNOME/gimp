@@ -19,8 +19,10 @@
 #define __GIMP_TOOLS_UTILS_H__
 
 
-void   gimp_tools_blink_lock_box (Gimp     *gimp,
-                                  GimpItem *item);
+void   gimp_tools_blink_lock_box    (Gimp     *gimp,
+                                     GimpItem *item);
+
+void   gimp_tools_show_tool_options (Gimp *gimp);
 
 
 #endif  /* __GIMP_TOOLS_UTILS_H__ */

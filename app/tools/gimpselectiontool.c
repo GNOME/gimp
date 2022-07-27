@@ -649,6 +649,7 @@ gimp_selection_tool_start_edit (GimpSelectionTool *sel_tool,
     {
       gimp_tool_message_literal (tool, display, error->message);
 
+      gimp_tools_show_tool_options (display->gimp);
       gimp_widget_blink (options->mode_box);
 
       g_clear_error (&error);
