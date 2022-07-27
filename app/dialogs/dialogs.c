@@ -469,7 +469,7 @@ dialogs_restore_dialog (GimpDialogFactory *factory,
   GtkWidget        *dialog;
   Gimp             *gimp    = gimp_dialog_factory_get_context (factory)->gimp;
   GimpCoreConfig   *config  = gimp->config;
-  GimpDisplay      *display = GIMP_DISPLAY (gimp_get_empty_display (gimp));
+  GimpDisplay      *display = gimp_context_get_display (gimp_get_user_context (gimp));
   GimpDisplayShell *shell   = gimp_display_get_shell (display);
 
   GIMP_LOG (DIALOG_FACTORY, "restoring toplevel \"%s\" (info %p)",
