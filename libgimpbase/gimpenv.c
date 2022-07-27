@@ -441,6 +441,31 @@ gimp_installation_directory (void)
         g_free (tmp2);
         g_free (tmp3);
       }
+    else if (strstr (basepath, "/Cellar/"))
+      {
+        /*  we are running from a Python.framework bundle built in homebrew
+         *  during the build phase
+         */
+
+        gchar *fulldir = g_strdup (basepath);
+        gchar *lastdir = g_path_get_basename (fulldir);
+        gchar *tmp_fulldir;
+
+        while (strcmp (lastdir, "Cellar"))
+          {
+            tmp_fulldir = g_path_get_dirname (fulldir);
+
+            g_free (lastdir);
+            g_free (fulldir);
+
+            fulldir = tmp_fulldir;
+            lastdir = g_path_get_basename (fulldir);
+          }
+        toplevel = g_path_get_dirname (fulldir);
+
+        g_free (fulldir);
+        g_free (lastdir);
+      }
     else
       {
         /*  if none of the above match, we assume that we are really in a bundle  */
