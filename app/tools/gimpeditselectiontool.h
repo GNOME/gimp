@@ -44,7 +44,7 @@ gboolean   gimp_edit_selection_tool_translate (GimpTool          *tool,
                                                GdkEventKey       *kevent,
                                                GimpTransformType  translate_type,
                                                GimpDisplay       *display,
-                                               GtkWidget         *type_box);
+                                               GtkWidget        **type_box);
 
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */

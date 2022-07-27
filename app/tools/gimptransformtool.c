@@ -742,7 +742,10 @@ gimp_transform_tool_check_selected_objects (GimpTransformTool  *tr_tool,
     {
       g_set_error_literal (error, GIMP_ERROR, GIMP_FAILED, null_message);
       if (error)
-        gimp_widget_blink (options->type_box);
+        {
+          gimp_tools_show_tool_options (display->gimp);
+          gimp_widget_blink (options->type_box);
+        }
       return NULL;
     }
 

@@ -375,6 +375,7 @@ gimp_move_tool_button_press (GimpTool            *tool,
   if (! active_item && ! selected_items)
     {
       gimp_tool_message_literal (tool, display, null_message);
+      gimp_tools_show_tool_options (display->gimp);
       gimp_widget_blink (options->type_box);
       gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
       return;
@@ -459,7 +460,7 @@ gimp_move_tool_key_press (GimpTool    *tool,
   return gimp_edit_selection_tool_translate (tool, kevent,
                                              options->move_type,
                                              display,
-                                             options->type_box);
+                                             &options->type_box);
 }
 
 static void

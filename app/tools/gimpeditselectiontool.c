@@ -972,7 +972,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
                                     GdkEventKey       *kevent,
                                     GimpTransformType  translate_type,
                                     GimpDisplay       *display,
-                                    GtkWidget         *type_box)
+                                    GtkWidget        **type_box)
 {
   gint               inc_x          = 0;
   gint               inc_y          = 0;
@@ -1159,7 +1159,11 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
     {
       gimp_tool_message_literal (tool, display, null_message);
       if (type_box)
-        gimp_widget_blink (type_box);
+        {
+          gimp_tools_show_tool_options (display->gimp);
+          if (*type_box)
+            gimp_widget_blink (*type_box);
+        }
       return TRUE;
     }
   else if (locked_message)

@@ -344,7 +344,10 @@ gimp_paint_tool_button_press (GimpTool            *tool,
           mode_box    = gimp_paint_options_gui_get_paint_mode_box (options_gui);
 
           if (gtk_widget_is_sensitive (mode_box))
-            gimp_widget_blink (mode_box);
+            {
+              gimp_tools_show_tool_options (display->gimp);
+              gimp_widget_blink (mode_box);
+            }
 
           g_clear_error (&error);
           g_list_free (drawables);
