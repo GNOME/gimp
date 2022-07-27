@@ -614,7 +614,7 @@ gimp-win32:
 ## To learn more about the CI, go to https://gitlab.gnome.org/GNOME/Initiatives/-/wikis/DevOps-with-Flatpak
 
 flatpak:
-  image: 'registry.gitlab.gnome.org/gnome/gnome-runtime-images/gnome:master'
+  image: 'quay.io/gnome_infrastructure/gnome-runtime-images:gnome-master'
   stage: gimp
   tags:
     - flatpak
