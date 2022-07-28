@@ -284,6 +284,8 @@ libappwidgets_a_sources = \
 	gimpmessagedialog.h		\
 	gimpmeter.c			\
 	gimpmeter.h			\
+	gimpmodifierseditor.c		\
+	gimpmodifierseditor.h		\
 	gimpnavigationview.c		\
 	gimpnavigationview.h		\
 	gimpopendialog.c		\

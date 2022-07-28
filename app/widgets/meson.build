@@ -143,6 +143,7 @@ libappwidgets_sources = [
   'gimpmessagebox.c',
   'gimpmessagedialog.c',
   'gimpmeter.c',
+  'gimpmodifierseditor.c',
   'gimpnavigationview.c',
   'gimpopendialog.c',
   'gimpoverlaybox.c',
