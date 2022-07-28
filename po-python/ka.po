@@ -1,0 +1,882 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
+"POT-Creation-Date: 2022-07-28 07:43+0000\n"
+"PO-Revision-Date: 2022-07-28 09:47+0200\n"
+"Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
+"Language-Team: \n"
+"Language: ka\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.1.1\n"
+
+#: plug-ins/python/colorxhtml.py:89
+msgid "Save as colored HTML text..."
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:94
+msgid "Read characters from file..."
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:113
+msgid "Characters"
+msgstr "სიმბოლოები"
+
+#: plug-ins/python/colorxhtml.py:114
+msgid "Characters that will be used as colored pixels. "
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:123
+msgid "Characters or file location"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:129
+msgid "Read characters from file"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:132
+msgid ""
+"If set, the Characters text entry will be used as a file name, from which "
+"the characters will be read. Otherwise, the characters in the text entry "
+"will be used to render the image."
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:138
+msgid "Choose file"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:145
+msgid "Font Size(px)"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:157
+msgid "Write separate CSS file"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:210
+msgid "Saving as colored XHTML"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:279 plug-ins/python/colorxhtml.py:280
+msgid "_Read characters from file, if true, or use text entry"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
+msgid "_File to read or characters to use"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
+msgid "Fo_nt size in pixels"
+msgstr "_ფონტის ზომა პიქსელებში"
+
+#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
+msgid "_Write a separate CSS file"
+msgstr "_ცალკე CSS ფაილის ჩაწერა"
+
+#: plug-ins/python/colorxhtml.py:315
+msgid "Save as colored HTML text"
+msgstr ""
+
+#: plug-ins/python/colorxhtml.py:318
+msgid "Colored HTML text"
+msgstr ""
+
+#: plug-ins/python/foggify.py:104
+msgid "Layer _name"
+msgstr "ფე_ნის სახელი"
+
+#: plug-ins/python/foggify.py:105
+msgid "Layer name"
+msgstr "ფენის სახელი"
+
+#: plug-ins/python/foggify.py:106
+msgid "Clouds"
+msgstr "ღრუბლები"
+
+#: plug-ins/python/foggify.py:109
+msgid "_Turbulence"
+msgstr "_ტურბულენტობა"
+
+#: plug-ins/python/foggify.py:110
+msgid "Turbulence"
+msgstr "ტურბულენტობა"
+
+#: plug-ins/python/foggify.py:114
+msgid "O_pacity"
+msgstr "სიმღვრიე"
+
+#: plug-ins/python/foggify.py:115
+msgid "Opacity"
+msgstr "_გაუმჭვირვალობა"
+
+#: plug-ins/python/foggify.py:124
+msgid "_Fog color"
+msgstr "_ნისლის ფერი"
+
+#: plug-ins/python/foggify.py:125
+msgid "Fog color"
+msgstr "ნისლის ფერი"
+
+#: plug-ins/python/foggify.py:141
+msgid "Add a layer of fog"
+msgstr "ნისლის ფენის დამატება"
+
+#: plug-ins/python/foggify.py:142
+msgid "Adds a layer of fog to the image."
+msgstr ""
+
+#: plug-ins/python/foggify.py:144
+msgid "_Fog..."
+msgstr "_ნისლი..."
+
+#: plug-ins/python/gradients-save-as-css.py:81
+msgid "CSS file..."
+msgstr "CSS ფაილი..."
+
+#: plug-ins/python/gradients-save-as-css.py:139
+#: plug-ins/python/palette-sort.py:332
+#: plug-ins/python/python-console/python-console.py:336
+msgid "Run mode"
+msgstr "გაშვების რეჟიმი"
+
+#: plug-ins/python/gradients-save-as-css.py:140
+#: plug-ins/python/palette-sort.py:333
+#: plug-ins/python/python-console/python-console.py:336
+msgid "The run mode"
+msgstr "გაშვების რეჟიმი"
+
+#: plug-ins/python/gradients-save-as-css.py:144
+msgid "Gradient to use"
+msgstr "გამოსაყენებელი გრადიენტი"
+
+#: plug-ins/python/gradients-save-as-css.py:147
+msgid "File"
+msgstr "ფაილი"
+
+#: plug-ins/python/gradients-save-as-css.py:165
+msgid "Creates a new palette from a given gradient"
+msgstr ""
+
+#: plug-ins/python/gradients-save-as-css.py:166
+msgid "palette_from_gradient (gradient, number, segment_colors) -> None"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:92
+msgid "Pixel count"
+msgstr "პიქსელების რაოდენობა"
+
+#: plug-ins/python/histogram-export.py:93
+msgid "Normalized"
+msgstr "ნორმალიზებულია"
+
+#: plug-ins/python/histogram-export.py:94
+msgid "Percent"
+msgstr "პროცენტი"
+
+#: plug-ins/python/histogram-export.py:166
+msgid "File is either a directory or file name is empty."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:169
+msgid "Directory not found."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:203
+msgid "Histogram Export..."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:230
+msgid "_File..."
+msgstr "_ფაილი..."
+
+#: plug-ins/python/histogram-export.py:238
+msgid "Choose export file..."
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:244
+msgid "Histogram Export file..."
+msgstr ""
+
+#. Bucket size parameter
+#: plug-ins/python/histogram-export.py:250
+#: plug-ins/python/histogram-export.py:320
+msgid "_Bucket Size"
+msgstr ""
+
+#. Sample average parameter
+#: plug-ins/python/histogram-export.py:258
+#: plug-ins/python/histogram-export.py:325
+msgid "Sample _Average"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:259
+msgid ""
+"If checked, the histogram is generated from merging all visible layers. "
+"Otherwise, the histogram is only for the current layer."
+msgstr ""
+
+#. Output format parameter
+#: plug-ins/python/histogram-export.py:265
+msgid "_Output Format"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:316
+msgid "Histogram _File"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:330
+msgid "Output format"
+msgstr "გამოტანის ფორმატი"
+
+#: plug-ins/python/histogram-export.py:352
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr ""
+
+#: plug-ins/python/histogram-export.py:355
+msgid "_Export histogram..."
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:46 plug-ins/python/palette-offset.py:47
+#: plug-ins/python/palette-sort.py:339 plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:398 plug-ins/python/palette-sort.py:399
+#: plug-ins/python/palette-to-gradient.py:103
+msgid "Palette"
+msgstr "პალიტრა"
+
+#: plug-ins/python/palette-offset.py:58
+msgid "Off_set"
+msgstr "_წანაცვლება"
+
+#: plug-ins/python/palette-offset.py:59
+msgid "Offset"
+msgstr "გადაწევა"
+
+#: plug-ins/python/palette-offset.py:70
+msgid "Name of the edited palette"
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:71
+msgid ""
+"Name of the newly created palette if read-only or the input palette otherwise"
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:91
+msgid "_Offset Palette..."
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:92
+msgid "Offset the colors in a palette"
+msgstr ""
+
+#: plug-ins/python/palette-offset.py:140
+msgid "Offset Palette..."
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:40
+msgid "Red"
+msgstr "წითელი"
+
+#: plug-ins/python/palette-sort.py:40
+msgid "Green"
+msgstr "მწვანე"
+
+#: plug-ins/python/palette-sort.py:40
+msgid "Blue"
+msgstr "ლურჯი"
+
+#: plug-ins/python/palette-sort.py:41
+msgid "Luma (Y)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:42
+msgid "Hue"
+msgstr "ტონი"
+
+#: plug-ins/python/palette-sort.py:42
+msgid "Saturation"
+msgstr "გაჯერებულობა"
+
+#: plug-ins/python/palette-sort.py:42
+msgid "Value"
+msgstr "მნიშვნელობა"
+
+#: plug-ins/python/palette-sort.py:43
+msgid "Saturation (HSL)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:43
+msgid "Lightness (HSL)"
+msgstr "განათება (HSL)"
+
+#: plug-ins/python/palette-sort.py:44
+msgid "Index"
+msgstr "ინდექსი"
+
+#: plug-ins/python/palette-sort.py:45
+msgid "Random"
+msgstr "შემთხვევით"
+
+#: plug-ins/python/palette-sort.py:90
+msgid "Lightness (LAB)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:91
+msgid "A-color"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:91
+msgid "B-color"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:92
+msgid "Chroma (LCHab)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:93
+msgid "Hue (LCHab)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:327
+msgid "All"
+msgstr "ყველა"
+
+#: plug-ins/python/palette-sort.py:327
+msgid "Slice / Array"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:327
+msgid "Autoslice (fg->bg)"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:327
+msgid "Partitioned"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:344
+msgid "Se_lections"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:351
+msgid "Slice _expression"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:358
+msgid "Channel to _sort"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:363 plug-ins/python/palette-sort.py:375
+msgid "_Ascending"
+msgstr "აღმავალი"
+
+#: plug-ins/python/palette-sort.py:364 plug-ins/python/palette-sort.py:376
+msgid "Ascending"
+msgstr "ზრდის მიხედვით"
+
+#: plug-ins/python/palette-sort.py:370
+msgid "Secondary Channel to s_ort"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:380
+msgid "_Quantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:381
+msgid "Quantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:386
+msgid "_Partitioning channel"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:391
+msgid "Partition q_uantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:392
+msgid "Partition quantization"
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:417
+msgid "_Sort Palette..."
+msgstr ""
+
+#: plug-ins/python/palette-sort.py:422
+msgid "Sort the colors in a palette"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:115
+#: plug-ins/python/palette-to-gradient.py:116
+msgid "Name of the newly created gradient"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:138
+msgid "Palette to _Gradient"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:139
+msgid "Create a gradient using colors from the palette"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:140
+msgid "Create a new gradient using colors from the palette."
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:143
+msgid "Palette to _Repeating Gradient"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:144
+msgid "Create a repeating gradient using colors from the palette"
+msgstr ""
+
+#: plug-ins/python/palette-to-gradient.py:145
+msgid "Create a new repeating gradient using colors from the palette."
+msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:77
+msgid "Python Console"
+msgstr "Python-ის კონსოლი"
+
+#: plug-ins/python/python-console/python-console.py:81
+msgid "_Browse..."
+msgstr "დათვალიერება..."
+
+#: plug-ins/python/python-console/python-console.py:257
+msgid "Python Procedure Browser"
+msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:285
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "შეცდომა '%s'-ში ჩაწერისას: %s"
+
+#: plug-ins/python/python-console/python-console.py:300
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:309
+msgid "Save Python-Fu Console Output"
+msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:357
+msgid "Python _Console"
+msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:358
+msgid "Interactive GIMP Python interpreter"
+msgstr ""
+
+#: plug-ins/python/python-console/python-console.py:359
+msgid "Type in commands and see results"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:49
+msgid "Spyro Layer"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:50
+msgid "Spyro Path"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:60
+msgid "As New Layer"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:61
+msgid "Redraw on last active layer"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:62
+msgid "As Path"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:110
+msgid "Circle"
+msgstr "წრე"
+
+#: plug-ins/python/spyro-plus.py:146
+msgid "Polygon-Star"
+msgstr ""
+
+#. Sine wave on a circle ring.
+#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:989
+msgid "Sine"
+msgstr "სინუსიოდი"
+
+#. Semi-circles, based on a polygon
+#: plug-ins/python/spyro-plus.py:172
+msgid "Bumps"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:277
+msgid "Rack"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:321
+msgid "Frame"
+msgstr "კადრი"
+
+#: plug-ins/python/spyro-plus.py:438
+msgid "Selection"
+msgstr "მონიშნული"
+
+#: plug-ins/python/spyro-plus.py:525
+msgid "Pencil"
+msgstr "ფანქარი"
+
+#: plug-ins/python/spyro-plus.py:541
+msgid "AirBrush"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:601
+msgid "Preview"
+msgstr "ესკიზი"
+
+#: plug-ins/python/spyro-plus.py:606
+msgid "Stroke"
+msgstr "გამოძრავება"
+
+#: plug-ins/python/spyro-plus.py:653
+msgid "PaintBrush"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:655
+msgid "Ink"
+msgstr "მელანი"
+
+#: plug-ins/python/spyro-plus.py:656
+msgid "MyPaintBrush"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:975
+msgid "Spyrograph"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:982
+msgid "Epitrochoid"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1009
+msgid "Lissajous"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1456
+msgid "Curve Type"
+msgstr "მრუდის ტიპი"
+
+#: plug-ins/python/spyro-plus.py:1457
+msgid ""
+"An Epitrochoid pattern is when the moving gear is on the outside of the "
+"fixed gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1462
+msgid "Tool"
+msgstr "ხელსაწყო"
+
+#: plug-ins/python/spyro-plus.py:1463
+msgid ""
+"The tool with which to draw the pattern. The Preview tool just draws quickly."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1468
+msgid "Long Gradient"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1470
+msgid ""
+"When unchecked, the current tool settings will be used. When checked, will "
+"use a long gradient to match the length of the pattern, based on current "
+"gradient and repeat mode from the gradient tool settings."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1490
+msgid "Specify pattern using one of the following tabs:"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1492
+msgid ""
+"The pattern is specified only by the active tab. Toy Kit is similar to "
+"Gears, but it uses gears and hole numbers which are found in toy kits. If "
+"you follow the instructions from the toy kit manuals, results should be "
+"similar."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1516
+msgid ""
+"Number of teeth of fixed gear. The size of the fixed gear is proportional to "
+"the number of teeth."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
+msgid "Fixed Gear Teeth"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1527
+msgid ""
+"Number of teeth of moving gear. The size of the moving gear is proportional "
+"to the number of teeth."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
+msgid "Moving Gear Teeth"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1535
+msgid "Hole percent"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1536
+msgid ""
+"How far is the hole from the center of the moving gear. 100% means that the "
+"hole is at the gear's edge."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1557
+msgid "Hole Number"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1558
+msgid ""
+"Hole #1 is at the edge of the gear. The maximum hole number is near the "
+"center. The maximum hole number is different for each gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1569
+msgid "Flower Petals"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1570
+msgid "The number of petals in the pattern."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1575
+msgid "Petal Skip"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1576
+msgid "The number of petals to advance for drawing the next petal."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1581
+msgid "Hole Radius(%)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1582
+msgid ""
+"The radius of the hole in the center of the pattern where nothing will be "
+"drawn. Given as a percentage of the size of the pattern. A value of 0 will "
+"produce no hole. A Value of 99 will produce a thin line on the edge."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1603
+msgid "Width(%)"
+msgstr "სიგანე(%)"
+
+#: plug-ins/python/spyro-plus.py:1604
+msgid ""
+"The width of the pattern as a percentage of the size of the pattern. A Value "
+"of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
+"fixed gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1615
+msgid "Visual"
+msgstr "ვიზუალი"
+
+#: plug-ins/python/spyro-plus.py:1621
+msgid "Toy Kit"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1627
+msgid "Gears"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
+msgid "Rotation"
+msgstr "შემობრუნება"
+
+#: plug-ins/python/spyro-plus.py:1641
+msgid ""
+"Rotation of the pattern, in degrees. The starting position of the moving "
+"gear in the fixed gear."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1664
+msgid "Shape"
+msgstr "ფორმა"
+
+#: plug-ins/python/spyro-plus.py:1665
+msgid ""
+"The shape of the fixed gear to be used inside current selection. Rack is a "
+"long round-edged shape provided in the toy kits. Frame hugs the boundaries "
+"of the rectangular selection, use hole=100 in Gear notation to touch "
+"boundary. Selection will hug boundaries of current selection - try something "
+"non-rectangular."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1674
+msgid "Sides"
+msgstr "მხარეები"
+
+#: plug-ins/python/spyro-plus.py:1674
+msgid "Number of sides of the shape."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1679
+msgid "Morph"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1679
+msgid "Morph fixed gear shape. Only affects some of the shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1684
+msgid "Rotation of the fixed gear, in degrees"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1699
+msgid "Margin (px)"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1699
+msgid "Margin from edge of selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1704
+msgid "Make width and height equal"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1706
+msgid ""
+"When unchecked, the pattern will fill the current image or selection. When "
+"checked, the pattern will have same width and height, and will be centered."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1721
+msgid "Re_draw"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1723
+msgid ""
+"If you change the settings of a tool, change color, or change the selection, "
+"press this to preview how the pattern looks."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1726
+msgid "_Reset"
+msgstr "_გადატვირთვა"
+
+#: plug-ins/python/spyro-plus.py:1734
+msgid "Save"
+msgstr "შენახვა"
+
+#: plug-ins/python/spyro-plus.py:1735
+msgid ""
+"Choose whether to save as new layer, redraw on last active layer, or save to "
+"path"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1749
+msgid "Spyrogimp"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
+msgid "Draw spyrographs using current tool settings and selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1771
+msgid "Curve Pattern"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1774
+msgid "Fixed Gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:1777
+msgid "Size"
+msgstr "ზომა"
+
+#: plug-ins/python/spyro-plus.py:2133
+msgid "Rendering Pattern"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2145
+msgid "Please wait : Rendering Pattern"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2211 plug-ins/python/spyro-plus.py:2212
+msgid ""
+"The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
+msgid "Shape of fixed gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
+msgid "Number of teeth for fixed gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
+msgid "Number of teeth for moving gear"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2248 plug-ins/python/spyro-plus.py:2249
+msgid "Margin from selection, in pixels"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
+msgid "Make height and width equal"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
+msgid "Pattern rotation, in degrees"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
+msgid "Tool to use for drawing the pattern."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2296
+msgid ""
+"Uses current tool settings to draw Spyrograph patterns. The size and "
+"location of the pattern is based on the current selection."
+msgstr ""
+
+#: plug-ins/python/spyro-plus.py:2299
+msgid "Spyrogimp..."
+msgstr ""
