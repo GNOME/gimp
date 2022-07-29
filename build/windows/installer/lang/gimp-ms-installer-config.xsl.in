@@ -28,7 +28,7 @@
     <xsl:value-of select="@name"/>=<xsl:apply-templates select="@LANG_CHECK@" />
   </xsl:when>
   <xsl:otherwise>
-    <xsl:value-of select="@name"/>=<xsl:apply-templates select="value[not(xml:lang)]" />
+    <xsl:value-of select="@name"/>=<xsl:apply-templates select="value[not(@xml:lang)]" />
   </xsl:otherwise>
 </xsl:choose>
 <xsl:text>&#xA;</xsl:text>
