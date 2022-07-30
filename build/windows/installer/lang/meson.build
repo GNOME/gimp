@@ -84,24 +84,24 @@ foreach language : languages
   # Inno-Setup absolutely requires a BOM to recognize UTF-8 files.
   # Here I am working around 3 issues in meson:
   # 1. We can't easily combine commands in meson. So either we combine
-  # them in an external script, or we run several custom_target(), which
-  # is what I chose here, even though it's really not a clean build rule.
+  # them in an external script, or we run several custom_target(). I do
+  # a mix of both because custom_target() has too many bugs.
   # 2. To concat a BOM to the file, I'd like to simply call this Python
   # code:
   # 'open("@OUTPUT@", "wb").write(b"\\xEF\\xBB\\xBF" + open("@INPUT@", "rb").read())'
   # Unfortunately we can't pass several @INPUT@/@OUTPUT@ in a same arg.
   # See: https://github.com/mesonbuild/meson/issues/7696
-  # 3. Antislashes are replaced with slashes in custom_target(). This is
-  # why I do this weird trick of using a string, which I encode to UTF-8
-  # instead of using the well known BOM bytes directly.
+  # 3. Antislashes are replaced with slashes in custom_target(). I tried
+  # some weird trick encoding a string to UTF-8 instead of using the
+  # well known BOM bytes directly. Unfortunately result was not
+  # consistent on all platforms (at least Linux and Windows).
   # See https://github.com/mesonbuild/meson/issues/1564
   custom_target(setup_isl,
-    input : [ nobom_setup_isl_tmp ],
+    input : [ nobom_setup_isl_tmp, 'addbom.sh' ],
     output: [ setup_isl ],
     command: [
-      python, '-c',
-      'import sys; open(sys.argv[1], "wb").write("\ufeff".encode("utf-8") + open("@INPUT@", "rb").read())',
-      '@OUTPUT@'
+      find_program(meson.current_source_dir() / 'addbom.sh'),
+      '@INPUT0@', '@OUTPUT@'
     ],
     build_by_default: true,
   )
