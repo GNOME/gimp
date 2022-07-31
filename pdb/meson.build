@@ -138,7 +138,7 @@ if meson.version().version_compare('>=0.57.0')
     output: [ 'stamp-pdbgen.h', ],
     env: perl_env,
     command: [
-      pdbgen_run, perl, meson.source_root(), meson.build_root()
+      pdbgen_run, perl, meson.project_source_root(), meson.project_build_root()
     ],
   )
 
