@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-20 23:07+0000\n"
-"PO-Revision-Date: 2022-07-21 09:34+0300\n"
+"POT-Creation-Date: 2022-07-31 17:12+0000\n"
+"PO-Revision-Date: 2022-07-31 21:24+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -260,11 +260,11 @@ msgstr "Показувати сторінку налаштувань із екс
 msgid "Show an image submenu with debug actions"
 msgstr "Показати підменю зображення із пунктами діагностики"
 
-#: app/main.c:723
+#: app/main.c:736
 msgid "[FILE|URI...]"
 msgstr "[ФАЙЛ|URI...]"
 
-#: app/main.c:751
+#: app/main.c:764
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -272,20 +272,20 @@ msgstr ""
 "GIMP не може ініціалізувати графічний інтерфейс.\n"
 "Перевірте правильність параметрів вашого графічного середовища."
 
-#: app/main.c:770
+#: app/main.c:783
 msgid "Another GIMP instance is already running."
 msgstr "Вже запущена інша копія GIMP"
 
-#: app/main.c:858
+#: app/main.c:871
 msgid "GIMP output. Type any character to close this window."
 msgstr "Вивід GIMP. Введіть будь-який символ для закриття цього вікна."
 
-#: app/main.c:859
+#: app/main.c:872
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Введіть будь-який символ для закриття цього вікна.)\n"
 
-#: app/main.c:876
+#: app/main.c:889
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Вивід GIMP. Ви можете згорнути це вікно, але не закривати його."
 
@@ -13832,54 +13832,54 @@ msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: app/core/gimpimage.c:4205
+#: app/core/gimpimage.c:4207
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: app/core/gimpimage.c:4266
+#: app/core/gimpimage.c:4269
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: app/core/gimpimage.c:4308
+#: app/core/gimpimage.c:4314
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: app/core/gimpimage.c:5293
+#: app/core/gimpimage.c:5302
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: app/core/gimpimage.c:5337 app/core/gimpimage.c:5368
+#: app/core/gimpimage.c:5346 app/core/gimpimage.c:5377
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: app/core/gimpimage.c:5362
+#: app/core/gimpimage.c:5371
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: app/core/gimpimage.c:5886
+#: app/core/gimpimage.c:5895
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: app/core/gimpimage.c:5916 app/core/gimpimage.c:5941
+#: app/core/gimpimage.c:5925 app/core/gimpimage.c:5950
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: app/core/gimpimage.c:6000
+#: app/core/gimpimage.c:6009
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: app/core/gimpimage.c:6030 app/core/gimpimage.c:6038
+#: app/core/gimpimage.c:6039 app/core/gimpimage.c:6047
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -13897,11 +13897,13 @@ msgstr "Увімкнути «Використовувати профіль sRGB�
 msgid "Disable 'Use sRGB Profile'"
 msgstr "Вимкнути «Використовувати профіль sRGB»"
 
-#: app/core/gimpimage-color-profile.c:198
-msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
-msgstr "Перевірка профілю ICC не вдалася: назва паразиту не є 'icc-profile'"
+#: app/core/gimpimage-color-profile.c:201
+#, c-format
+#| msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
+msgid "ICC profile validation failed: Parasite's name is not '%s'"
+msgstr "Перевірка профілю ICC не вдалася: назва паразиту не є «%s»"
 
-#: app/core/gimpimage-color-profile.c:207
+#: app/core/gimpimage-color-profile.c:216
 msgid ""
 "ICC profile validation failed: Parasite's flags are not (PERSISTENT | "
 "UNDOABLE)"
@@ -13909,46 +13911,51 @@ msgstr ""
 "Перевірка профілю ICC не вдалася: прапорці паразиту не є (PERSISTENT | "
 "UNDOABLE)"
 
-#: app/core/gimpimage-color-profile.c:260
+#: app/core/gimpimage-color-profile.c:275
 msgid "ICC profile validation failed: "
 msgstr "Перевірка профілю ICC не вдалася: "
 
-#: app/core/gimpimage-color-profile.c:435
+#: app/core/gimpimage-color-profile.c:277
+#| msgid "ICC profile validation failed: "
+msgid "Simulation ICC profile validation failed: "
+msgstr "Перевірку імітації профілю ICC не пройдено: "
+
+#: app/core/gimpimage-color-profile.c:474
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "Перевірка профілю ICC не вдалася: колірний профіль не годиться для простору "
 "кольорів з відтінків сірого"
 
-#: app/core/gimpimage-color-profile.c:445
+#: app/core/gimpimage-color-profile.c:484
 msgid ""
 "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "Перевірка профілю ICC не вдалася: колірний профіль не годиться для колірного "
 "простору RGB"
 
-#: app/core/gimpimage-color-profile.c:504
+#: app/core/gimpimage-color-profile.c:543
 msgid "Assigning color profile"
 msgstr "Присвоєння колірного профілю"
 
-#: app/core/gimpimage-color-profile.c:505
+#: app/core/gimpimage-color-profile.c:544
 msgid "Discarding color profile"
 msgstr "Відкидання колірного профілю"
 
-#: app/core/gimpimage-color-profile.c:509
+#: app/core/gimpimage-color-profile.c:548
 msgid "Assign color profile"
 msgstr "Присвоїти колірний профіль"
 
-#: app/core/gimpimage-color-profile.c:510
+#: app/core/gimpimage-color-profile.c:549
 msgid "Discard color profile"
 msgstr "Відкинути колірний профіль"
 
-#: app/core/gimpimage-color-profile.c:553
+#: app/core/gimpimage-color-profile.c:592
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Перетворюємо з «%s» до «%s»"
 
-#: app/core/gimpimage-color-profile.c:558
+#: app/core/gimpimage-color-profile.c:597
 msgid "Color profile conversion"
 msgstr "Перетворення профілю кольорів"
 
@@ -18504,7 +18511,7 @@ msgid "Click-Drag to rotate the focus"
 msgstr "Натисніть і перетягніть для обертання фокуса"
 
 #: app/display/gimptoolfocus.c:1149 app/display/gimptoolgyroscope.c:729
-#: app/display/gimptoolline.c:1557 app/tools/gimppainttool.c:675
+#: app/display/gimptoolline.c:1557 app/tools/gimppainttool.c:678
 #, c-format
 msgid "%s for constrained angles"
 msgstr "%s для обмеження кроку кута"
@@ -22290,12 +22297,12 @@ msgid "No valid line art source selected."
 msgstr "Не вибрано придатного джерела контурів."
 
 #: app/tools/gimpbucketfilltool.c:818 app/tools/gimpbucketfilltool.c:958
-#: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:502
+#: app/tools/gimpcolorpickertool.c:270 app/tools/gimppainttool.c:505
 msgid "Click in any image to pick the background color"
 msgstr "Натисніть на будь-якому зображенні для отримання кольору його тла"
 
 #: app/tools/gimpbucketfilltool.c:825 app/tools/gimpbucketfilltool.c:967
-#: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:496
+#: app/tools/gimpcolorpickertool.c:262 app/tools/gimppainttool.c:499
 msgid "Click in any image to pick the foreground color"
 msgstr ""
 "Натисніть на будь-якому зображенні для отримання його кольору переднього "
@@ -22761,7 +22768,7 @@ msgstr "Тип (%s)"
 msgid "Move: "
 msgstr "Переміщення: "
 
-#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1191
+#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1195
 msgid "Move Floating Selection"
 msgstr "Перенесення рухомого вибору"
 
@@ -22849,7 +22856,7 @@ msgstr "Показувати засоби керування фільтром н
 msgid "A selected item's pixels are locked."
 msgstr "Точки растру позначеного запису заблоковані від змін."
 
-#: app/tools/gimpfiltertool.c:328 app/tools/gimppainttool.c:359
+#: app/tools/gimpfiltertool.c:328 app/tools/gimppainttool.c:362
 #: app/tools/gimptransformtool.c:691
 msgid "A selected layer is not visible."
 msgstr "Вибраний шар є невидимим."
@@ -23965,16 +23972,16 @@ msgstr ""
 msgid "Cannot paint on layer groups."
 msgstr "Не вдалось малювати на групі шарів"
 
-#: app/tools/gimppainttool.c:706
+#: app/tools/gimppainttool.c:709
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s для малювання прямої лінії"
 
-#: app/tools/gimppainttool.c:940
+#: app/tools/gimppainttool.c:943
 msgid "The selected drawable does not have an alpha channel."
 msgstr "У позначеному намальованому об'єкті немає каналу прозорості."
 
-#: app/tools/gimppainttool.c:951
+#: app/tools/gimppainttool.c:954
 msgid "The selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
@@ -24908,7 +24915,7 @@ msgstr "Елементи позначеного контуру заблоков�
 msgid "The selected path has no strokes."
 msgstr "Позначений контур не містить штрихів."
 
-#: app/tools/gimptransformtool.c:808
+#: app/tools/gimptransformtool.c:811
 msgid "The current transform is invalid"
 msgstr "Поточне перетворення є некоректним"
 
@@ -25081,33 +25088,33 @@ msgstr "Не можна обводити групи шарів."
 msgid "No stroke events selected."
 msgstr "Не позначено подій штрихів."
 
-#: app/tools/gimpwarptool.c:852
+#: app/tools/gimpwarptool.c:853
 msgid "No warp to erase."
 msgstr "Немає обведення для витирання."
 
-#: app/tools/gimpwarptool.c:856
+#: app/tools/gimpwarptool.c:857
 msgid "No warp to smooth."
 msgstr "Немає обведення для згладжування."
 
-#: app/tools/gimpwarptool.c:1086
+#: app/tools/gimpwarptool.c:1088
 msgid "Warp transform"
 msgstr "Викривлення"
 
-#: app/tools/gimpwarptool.c:1425
+#: app/tools/gimpwarptool.c:1427
 msgid "Please add some warp strokes first."
 msgstr "Будь ласка, спочатку додайте якісь обвідні штрихи."
 
-#: app/tools/gimpwarptool.c:1439 app/tools/gimpwarptool.c:1476
+#: app/tools/gimpwarptool.c:1441 app/tools/gimpwarptool.c:1478
 #, c-format
 msgid "Rendering Frame %d"
 msgstr "Обробляємо кадр %d"
 
-#: app/tools/gimpwarptool.c:1454 app/tools/gimpwarptool.c:1484
+#: app/tools/gimpwarptool.c:1456 app/tools/gimpwarptool.c:1486
 #, c-format
 msgid "Frame %d"
 msgstr "Кадр %d"
 
-#: app/tools/gimpwarptool.c:1493
+#: app/tools/gimpwarptool.c:1495
 msgid "Frame"
 msgstr "Кадр"
 
@@ -25704,20 +25711,17 @@ msgid "K:"
 msgstr "К:"
 
 #: app/widgets/gimpcolorframe.c:1116
-#| msgid "Profile folder:"
 msgctxt "Color"
 msgid "Profile:"
 msgstr "Профіль:"
 
 #: app/widgets/gimpcolorframe.c:1118
-#| msgid "C_olor Profile"
 msgctxt "Color"
 msgid "No Profile"
 msgstr "Немає профілю"
 
 #: app/widgets/gimpcolorframe.c:1143 app/widgets/gimpcolorframe.c:1144
 #, c-format
-#| msgid "%g/s"
 msgid "%s"
 msgstr "%s"
 
