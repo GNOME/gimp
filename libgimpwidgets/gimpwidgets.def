@@ -83,7 +83,6 @@ EXPORTS
 	gimp_color_hex_entry_set_color
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
-	gimp_color_picker_cursors_get_resource
 	gimp_color_profile_chooser_dialog_get_type
 	gimp_color_profile_chooser_dialog_new
 	gimp_color_profile_combo_box_add
@@ -203,7 +202,6 @@ EXPORTS
 	gimp_help_set_help_data_with_markup
 	gimp_hint_box_get_type
 	gimp_hint_box_new
-	gimp_icon_pixbufs_get_resource
 	gimp_icons_init
 	gimp_icons_set_icon_theme
 	gimp_int_adjustment_update
