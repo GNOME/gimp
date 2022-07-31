@@ -84,8 +84,14 @@ for df in def_files:
    status, nm = subprocess.getstatusoutput ("nm --defined-only --extern-only " +
                                             libname)
    if status != 0:
-      print("trouble reading %s - has it been compiled?" % libname)
-      continue
+      libname_meson = path.join(directory, "lib" + basename + "-*.so")
+      print("trouble reading {} - trying {}".format(libname, libname_meson))
+      status, nm = subprocess.getstatusoutput ("nm --defined-only --extern-only " +
+                                               libname_meson)
+      if status != 0:
+        print("trouble reading {} - has it been compiled?".format(libname_meson))
+        have_errors = -1
+        continue
 
    nmsymbols = nm.split()[2::3]
    nmsymbols = [s for s in nmsymbols if s[0] != '_']

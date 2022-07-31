@@ -491,3 +491,36 @@ else
     )
   endif
 endif
+
+if have_python
+  # Check .def files for Windows.
+  custom_target('check-def-files',
+    input: [
+      '../libgimpbase/gimpbase.def',
+      '../libgimpcolor/gimpcolor.def',
+      '../libgimpconfig/gimpconfig.def',
+      '../libgimp/gimp.def',
+      '../libgimp/gimpui.def',
+      '../libgimpmath/gimpmath.def',
+      '../libgimpmodule/gimpmodule.def',
+      '../libgimpthumb/gimpthumb.def',
+      '../libgimpwidgets/gimpwidgets.def',
+    ],
+    depends: [
+      libgimpbase,
+      libgimpcolor,
+      libgimpconfig,
+      libgimp,
+      libgimpui,
+      libgimpmath,
+      libgimpmodule,
+      libgimpthumb,
+      libgimpwidgets
+    ],
+    output: [ 'check-def-files', ],
+    command: [
+      python, meson.source_root() / 'tools' / 'defcheck.py', meson.source_root(),
+    ],
+    build_by_default: true,
+  )
+endif
