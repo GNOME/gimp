@@ -50,6 +50,8 @@ languages = [
   { 'code': 'zh_TW', },
 ]
 
+addbom = find_program(meson.current_source_dir() / 'addbom.sh')
+
 # Then, we generate the .isl file for each language using some xsltproc magic
 foreach language : languages
   lang_code = language.get('code')
@@ -100,8 +102,7 @@ foreach language : languages
     input : [ nobom_setup_isl_tmp, 'addbom.sh' ],
     output: [ setup_isl ],
     command: [
-      find_program(meson.current_source_dir() / 'addbom.sh'),
-      '@INPUT0@', '@OUTPUT@'
+      addbom, '@INPUT0@', '@OUTPUT@'
     ],
     build_by_default: true,
   )
