@@ -44,7 +44,7 @@ app_tests = [
   'xcf',
 ]
 
-cmd = run_command('create_test_env.sh')
+cmd = run_command('create_test_env.sh', check: false)
 if cmd.returncode() != 0
  error(cmd.stderr().strip())
 endif

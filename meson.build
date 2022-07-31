@@ -962,6 +962,7 @@ if have_python
         '''version = '@0@' '''.format('3.0'),
         '''sys.exit(gi.check_version(version))''',
       ]),
+      check: false
     ).returncode() == 0
     message('Found Pygobject: @0@'.format(pygobject_found))
     python_found = python_found and pygobject_found
@@ -1396,7 +1397,7 @@ conf.set_quoted('CC',             cc.get_id())
 
 cc_version=''
 if cc.get_id() == 'gcc' or cc.get_id() == 'clang'
-  cc_cmd = run_command(cc, '-v')
+  cc_cmd = run_command(cc, '-v', check: false)
   # Note: the call might actually fail when using ccache.
   # See: https://github.com/mesonbuild/meson/issues/6174
   if cc_cmd.returncode() == 0
@@ -1406,7 +1407,7 @@ else
   # Various compilers have various options. Try most common ones. This
   # list of options comes from autotools checks.
   foreach arg : [ '--version', '-v', '-V', '-qversion' ]
-    cc_cmd = run_command(cc, arg)
+    cc_cmd = run_command(cc, arg, check: false)
     if cc_cmd.returncode() == 0
       cc_version = cc_cmd.stdout()
     endif
@@ -1495,11 +1496,13 @@ endif
 
 # git-version.h is already present and not generated if dist tarball
 is_git_repository = run_command('python3', '-c',
-  'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)'
+  'import sys,os; sys.exit(0 if os.path.exists(".git") else 1)',
+  check: false
 ).returncode() == 0
 
 has_version_h = run_command('python3', '-c',
-  'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)'
+  'import sys,os; sys.exit(0 if os.path.exists("git-version.h") else 1)',
+  check: false
 ).returncode() == 0
 
 generate_version_h = is_git_repository or not has_version_h
