@@ -28,7 +28,7 @@ languages = [
   { 'code': 'it',    },
   { 'code': 'ja',    },
   { 'code': 'ka',    },
-  { 'code': 'kab',   },
+  { 'code': 'kab',   'langname': 'Taqbaylit' },
   { 'code': 'ko',    },
   { 'code': 'lt',    },
   { 'code': 'lv',    },
@@ -105,6 +105,21 @@ foreach language : languages
     ],
     build_by_default: true,
   )
+
+  if 'langname' in language
+    # Some languages may have no default language file provided by
+    # InnoSetup. When this happens, we must at least complete a very
+    # basic file showing the language name, otherwise it shows as
+    # "English".
+    newlang_isl = '@0@.isl'.format(language.get('code'))
+    newlang_conf = configuration_data()
+    newlang_conf.set('LANGNAME', language.get('langname'))
+    configure_file(
+      input : 'newlang.isl.in',
+      output : newlang_isl,
+      configuration : newlang_conf
+    )
+  endif
 endforeach
 
 test('windows-installer-langs',

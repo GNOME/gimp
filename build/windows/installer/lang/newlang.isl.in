@@ -1,0 +1,15 @@
+﻿; A template to create the basic lang file for languages which are not
+; made available by InnoSetup, not even in the Unofficial/ folder.
+; See full list of languages:
+; https://github.com/jrsoftware/issrc/tree/main/Files/Languages
+;
+; Without this, they show as English in the
+; start list so we must add a language name (localized preferably) at
+; the very least.
+; See also the docs for the meanings of different fields:
+; https://jrsoftware.org/ishelp/index.php?topic=langoptionssection
+
+[LangOptions]
+LanguageName=@LANGNAME@
+LanguageID=$0
+LanguageCodePage=0
