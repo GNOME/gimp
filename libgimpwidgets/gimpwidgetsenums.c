@@ -1,6 +1,7 @@
 
 /* Generated data (by gimp-mkenums) */
 
+#include "stamp-gimpwidgetsenums.h"
 #include "config.h"
 #include <gio/gio.h>
 #include "libgimpbase/gimpbase.h"

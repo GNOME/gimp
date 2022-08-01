@@ -1,11 +1,14 @@
 
 /* Generated data (by gimp-mkenums) */
 
+#include "stamp-gimpbaseenums.h"
 #include "config.h"
 #include <glib-object.h>
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimpbasetypes.h"
 #include "libgimp/libgimp-intl.h"
+#include "gimpbaseenums.h"
+
 
 /* enumerations from "gimpbaseenums.h" */
 GType
