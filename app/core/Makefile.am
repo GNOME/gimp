@@ -527,6 +527,7 @@ EXTRA_DIST = \
 gen_sources = \
 	gimp-core-pixbufs.c	\
 	gimp-core-pixbufs.h	\
+	stamp-core-enums.h	\
 	xgen-gmh		\
 	xgen-gmc		\
 	xgen-cec

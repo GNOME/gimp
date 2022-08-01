@@ -52,7 +52,7 @@ libapptext_a_SOURCES = $(libapptext_a_built_sources) $(libapptext_a_sources)
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-tec
+gen_sources = stamp-text-enums.h xgen-tec
 CLEANFILES = $(gen_sources)
 
 xgen-tec: $(srcdir)/text-enums.h $(GIMP_MKENUMS) Makefile.am

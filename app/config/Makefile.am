@@ -139,7 +139,7 @@ CLEANFILES = $(EXTRA_PROGRAMS) foorc
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-cec
+gen_sources = stamp-config-enums.h xgen-cec
 CLEANFILES += $(gen_sources)
 
 xgen-cec: $(srcdir)/config-enums.h $(GIMP_MKENUMS) Makefile.am

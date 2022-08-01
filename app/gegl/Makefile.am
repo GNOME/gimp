@@ -71,7 +71,7 @@ libappgegl.a: libappgegl-generic.a \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-ggec
+gen_sources = stamp-gimp-gegl-enums.h xgen-ggec
 CLEANFILES = $(gen_sources)
 
 xgen-ggec: $(srcdir)/gimp-gegl-enums.h $(GIMP_MKENUMS) Makefile.am

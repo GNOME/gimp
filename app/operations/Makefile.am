@@ -112,7 +112,7 @@ libappoperations_a_SOURCES = \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-oec
+gen_sources = stamp-operations-enums.h xgen-oec
 CLEANFILES = $(gen_sources)
 
 xgen-oec: $(srcdir)/operations-enums.h $(GIMP_MKENUMS) Makefile.am

@@ -181,7 +181,7 @@ EXTRA_PROGRAMS = test-cpu-accel
 # rules to generate built sources
 #
 
-gen_sources = xgen-bec xgen-cec
+gen_sources = stamp-gimpbaseenums.h stamp-gimpcompatenums.h xgen-bec xgen-cec
 CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 xgen-bec: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS) Makefile.am

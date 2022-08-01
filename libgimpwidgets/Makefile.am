@@ -172,6 +172,7 @@ gen_sources = \
 	gimp-color-picker-cursors.h	\
 	gimp-icon-pixbufs.c		\
 	gimp-icon-pixbufs.h		\
+	stamp-gimpwidgetsenums.h	\
 	xgen-wec 			\
 	xgen-wmh			\
 	xgen-wmc

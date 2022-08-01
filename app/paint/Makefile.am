@@ -97,7 +97,7 @@ libapppaint_a_SOURCES = $(libapppaint_a_built_sources) $(libapppaint_a_sources)
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-pec
+gen_sources = stamp-paint-enums.h xgen-pec
 CLEANFILES = $(gen_sources)
 
 xgen-pec: $(srcdir)/paint-enums.h $(GIMP_MKENUMS) Makefile.am

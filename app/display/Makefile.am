@@ -200,7 +200,7 @@ libappdisplay_a_SOURCES = \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-dec
+gen_sources = stamp-display-enums.h xgen-dec
 CLEANFILES = $(gen_sources)
 
 xgen-dec: $(srcdir)/display-enums.h $(GIMP_MKENUMS) Makefile.am

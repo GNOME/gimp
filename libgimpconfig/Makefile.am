@@ -104,7 +104,7 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 # rules to generate built sources
 #
 
-gen_sources = xgen-cec
+gen_sources = stamp-gimpconfigenums.h xgen-cec
 CLEANFILES = $(gen_sources)
 
 xgen-cec: $(srcdir)/gimpconfigenums.h $(GIMP_MKENUMS) Makefile.am

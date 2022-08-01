@@ -485,6 +485,7 @@ libappwidgets_a_SOURCES = \
 gen_sources = \
 	gimp-tool-cursors.c	\
 	gimp-tool-cursors.h	\
+	stamp-widgets-enums.h	\
 	xgen-wec
 CLEANFILES = $(gen_sources)
 

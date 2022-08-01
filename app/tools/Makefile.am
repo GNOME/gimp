@@ -251,7 +251,7 @@ libapptools_a_SOURCES = $(libapptools_a_built_sources) $(libapptools_a_sources)
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-tec
+gen_sources = stamp-tools-enums.h xgen-tec
 CLEANFILES = $(gen_sources)
 
 xgen-tec: $(srcdir)/tools-enums.h $(GIMP_MKENUMS) Makefile.am

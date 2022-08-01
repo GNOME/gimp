@@ -75,7 +75,7 @@ libappplug_in_a_SOURCES = \
 # rules to generate built sources
 #
 # setup autogeneration dependencies
-gen_sources = xgen-pec
+gen_sources = stamp-plug-in-enums.h xgen-pec
 CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
 xgen-pec: $(srcdir)/plug-in-enums.h $(GIMP_MKENUMS) Makefile.am
