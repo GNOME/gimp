@@ -238,6 +238,13 @@ gimp-meson-debian:
       --prefix="${INSTALL_PREFIX}"
     - ninja -C _build
     - ninja -C _build test
+    # The src should not be changed by the build. If it is, something is
+    # wrong. Let's print out the diff for debugging in such case, and
+    # exit to fail the CI.
+    - if [ $(git diff |wc -l) -ne 0 ]; then
+        git diff;
+        exit 1;
+      fi
     - ninja -C _build dist
 
 gimp-clang-debian:
