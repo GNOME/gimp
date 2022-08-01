@@ -775,6 +775,34 @@ sources:
       sha512sum gimp-*.tar.bz2 > ${FILENAME}.SHA512SUMS
   needs: ["gimp-distcheck-debian"]
 
+sources-meson:
+  rules:
+    # On commits.
+    - if: '$CI_PIPELINE_SOURCE == "push"'
+    # On releases.
+    - if: '$CI_COMMIT_TAG != null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_SOURCES != null'
+  stage: distribution
+  dependencies:
+    - gimp-meson-debian
+  artifacts:
+    name: "GIMP-sources-meson-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    expire_in: 2 days
+    paths:
+    - gimp-*.tar.xz
+    - gimp-*.tar.xz.SHA256SUMS
+    - gimp-*.tar.xz.SHA512SUMS
+  script:
+    - mv _build/meson-dist/gimp-*.tar.xz .
+    - BASENAME=`ls gimp-*.tar.xz | sed 's/.tar.xz//'`  &&
+      FILENAME="$BASENAME-meson.tar.xz"                &&
+      mv $BASENAME.tar.xz  $FILENAME                   &&
+      sha256sum gimp-*.tar.xz > ${FILENAME}.SHA256SUMS &&
+      sha512sum gimp-*.tar.xz > ${FILENAME}.SHA512SUMS
+  needs: ["gimp-meson-debian"]
+
 dev-docs:
   rules:
     # On commits.
