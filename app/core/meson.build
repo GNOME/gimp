@@ -1,17 +1,20 @@
-appcoreenums = custom_target('core-enums',
-  input : [ 'core-enums.h', ],
-  output: [ 'core-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_core_enums = custom_target('stamp-core-enums.h',
+  input : [
+    files(
+      'core-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-core-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'core-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
 
 appcoremarshal = gnome.genmarshal('gimpmarshal',
@@ -19,8 +22,6 @@ appcoremarshal = gnome.genmarshal('gimpmarshal',
   sources: 'gimpmarshal.list',
   install_header: false,
 )
-
-
 
 libappcore_sources = [
   'gimp-atomic.c',
@@ -250,7 +251,10 @@ libappcore_sources = [
   'gimpunit.c',
   'gimpviewable.c',
   'gimpwaitable.c',
-  appcoreenums,
+
+  'core-enums.c',
+  stamp_core_enums,
+
   appcoremarshal,
   cursors_sources,
   pickers_sources,

@@ -8,37 +8,44 @@ gimpversion = configure_file(
   configuration: versionconfig,
 )
 
-
-gimpbaseenums = custom_target('gimpbaseenums.c',
-  input : [ 'gimpbaseenums.h', ],
-  output: [ 'gimpbaseenums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <glib-object.h>\n'
-            + '#undef GIMP_DISABLE_DEPRECATED\n'
-            + '#include "gimpbasetypes.h"\n'
-            + '#include "libgimp/libgimp-intl.h"\n',
-    libgimp_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_base_enums = custom_target('stamp-gimpbaseenums.h',
+  input : [
+    files(
+      'gimpbaseenums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-gimpbaseenums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'gimpbase',
+    '#include <glib-object.h>\n'       +
+    '#undef GIMP_DISABLE_DEPRECATED\n' +
+    '#include "gimpbasetypes.h"\n'     +
+    '#include "libgimp/libgimp-intl.h"\n',
+    '',
+    libgimp_mkenums_dtails
+  ],
+  build_by_default: true
 )
 
-gimpcompatenums = custom_target('gimpcompatenums.c',
-  input : [ 'gimpcompatenums.h', ],
-  output: [ 'gimpcompatenums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <glib-object.h>\n'
-            + '#include "gimpbasetypes.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "libgimp/libgimp-intl.h"\n',
-    libgimp_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_compat_enums = custom_target('stamp-gimpcompatenums.h',
+  input : [
+    files(
+      'gimpcompatenums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-gimpcompatenums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(), meson.current_build_dir(),
+    'gimpcompat',
+    '#include <glib-object.h>\n'       +
+    '#include "gimpbasetypes.h"\n',
+    '#include "libgimp/libgimp-intl.h"',
+  ],
+  build_by_default: true
 )
 
 libgimpbase_sources_introspectable = files(
@@ -64,8 +71,12 @@ libgimpbase_sources = [
   'gimpprotocol.c',
   'gimpreloc.c',
   'gimpwire.c',
-  gimpbaseenums,
-  gimpcompatenums,
+
+  'gimpbaseenums.c',
+  stamp_base_enums,
+
+  'gimpcompatenums.c',
+  stamp_compat_enums
 ]
 
 libgimpbase_headers_introspectable = files(

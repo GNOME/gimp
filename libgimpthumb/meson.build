@@ -1,4 +1,7 @@
-
+# Unlike other enums file, we don't use the mkenums_wrap because this
+# one is not versionned in the repository (not sure why). Moreover the
+# options are quite different from the other generated enums, so it
+# didn't make sense to overdo it.
 gimpthumbenums = custom_target('gimpthumb-enums.c',
   input : [ 'gimpthumb-enums.h', ],
   output: [ 'gimpthumb-enums.c', ],
@@ -7,7 +10,7 @@ gimpthumbenums = custom_target('gimpthumb-enums.c',
     '--fhead','#include "config.h"\n'+
               '#include <glib-object.h>\n'+
               '#include "gimpthumb-enums.h"\n',
-    '--fprod','/* enumerations from "@filename@" */\n',
+    '--fprod','/* enumerations from "@filename@" */',
     '--vhead','GType\n'+
               '@enum_name@_get_type (void)\n'+
               '{\n'+

@@ -1,19 +1,21 @@
-
-appgeglenums = custom_target('gimp-gegl-enums.c',
-  input : [ 'gimp-gegl-enums.h', ],
-  output: [ 'gimp-gegl-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "core/core-enums.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_gegl_enums = custom_target('stamp-gimp-gegl-enums.h',
+  input : [
+    files(
+      'gimp-gegl-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-gimp-gegl-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'gimp-gegl-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n' +
+    '#include "core/core-enums.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
 
 libappgegl_loops = simd.check('gimp-gegl-loops-simd',
@@ -40,7 +42,9 @@ libappgegl_sources = [
   'gimp-gegl.c',
   'gimpapplicator.c',
   'gimptilehandlervalidate.c',
-  appgeglenums,
+
+  'gimp-gegl-enums.c',
+  stamp_gegl_enums
 ]
 
 libappgegl = static_library('appgegl',

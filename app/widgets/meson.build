@@ -1,20 +1,21 @@
-
-appwidgetsenums = custom_target('widgets-enums.c',
-  input : [ 'widgets-enums.h', ],
-  output: [ 'widgets-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gtk/gtk.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_widgets_enums = custom_target('stamp-widgets-enums.h',
+  input : [
+    files(
+      'widgets-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-widgets-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'widgets-',
+    '#include <gtk/gtk.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
-
 
 libappwidgets_sources = [
   'gimpaccellabel.c',
@@ -233,7 +234,9 @@ libappwidgets_sources = [
   'gimpwidgets-utils.c',
   'gimpwindow.c',
   'gimpwindowstrategy.c',
-  appwidgetsenums,
+
+  'widgets-enums.c',
+  stamp_widgets_enums,
 
   appcoremarshal[1],
 ]

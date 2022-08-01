@@ -1,18 +1,20 @@
-
-appdisplayenums = custom_target('display-enums.c',
-  input : [ 'display-enums.h', ],
-  output: [ 'display-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_display_enums = custom_target('stamp-display-enums.h',
+  input : [
+    files(
+      'display-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-display-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'display-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
 
 libappdisplay_sources = [
@@ -103,7 +105,10 @@ libappdisplay_sources = [
   'gimptooltransformgrid.c',
   'gimptoolwidget.c',
   'gimptoolwidgetgroup.c',
-  appdisplayenums,
+
+  'display-enums.c',
+  stamp_display_enums,
+
   gitversion_h,
 
   appcoremarshal[1],

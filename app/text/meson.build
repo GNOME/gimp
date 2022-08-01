@@ -1,18 +1,20 @@
-
-apptextenums = custom_target('text-enums.c',
-  input : [ 'text-enums.h', ],
-  output: [ 'text-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_text_enums = custom_target('stamp-text-enums.h',
+  input : [
+    files(
+      'text-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-text-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'text-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
 
 libapptext_sources = [
@@ -29,7 +31,9 @@ libapptext_sources = [
   'gimptextlayout-render.c',
   'gimptextlayout.c',
   'gimptextundo.c',
-  apptextenums,
+
+  'text-enums.c',
+  stamp_text_enums
 ]
 
 

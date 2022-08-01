@@ -1,20 +1,21 @@
-
-apppluginenums = custom_target('plug-in-enums.c',
-  input : [ 'plug-in-enums.h', ],
-  output: [ 'plug-in-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_plug_in_enums = custom_target('stamp-plug-in-enums.h',
+  input : [
+    files(
+      'plug-in-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-plug-in-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'plug-in-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
-
 
 libappplugin_sources = [
   'gimpenvirontable.c',
@@ -43,7 +44,9 @@ libappplugin_sources = [
   'gimptemporaryprocedure.c',
   'plug-in-menu-path.c',
   'plug-in-rc.c',
-  apppluginenums,
+
+  'plug-in-enums.c',
+  stamp_plug_in_enums,
 
   appcoremarshal[1],
 ]

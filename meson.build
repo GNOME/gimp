@@ -1186,52 +1186,25 @@ gimppath2svg        = find_program('tools'/'gimppath2svg.py')
 module_dependencies = find_program('tools'/'module-dependencies.py')
 meson_install_subdir= find_program('tools'/'meson_install_subdir.py')
 
-gimp_mkenums        = find_program('tools'/'gimp-mkenums')
-gimp_mkenums_custom_target_commonargs = [
-  '--fprod',
-    '/* enumerations from "@basename@" */',
-  '--vhead',
-    'GType\n'+
-    '@enum_name@_get_type (void)\n'+
-    '{\n'+
-    '  static const G@Type@Value values[] =\n'+
-    '  {',
-  '--vprod',
-    '    { @VALUENAME@, "@VALUENAME@", "@valuenick@" },',
-  '--vtail',
-    '    { 0, NULL, NULL }\n'+
-    '  };\n',
-  '--dhead',
-    '  static const Gimp@Type@Desc descs[] =\n'+
-    '  {',
-  '--dprod',
-    '    { @VALUENAME@, @valuedesc@, @valuehelp@ },'+
-    '@if (\'@valueabbrev@\' ne \'NULL\')@\n'+
-    '    /* Translators: this is an abbreviated version of @valueudesc@.\n'+
-    '       Keep it short. */\n'+
-    '    { @VALUENAME@, @valueabbrev@, NULL },'+
-    '@endif@',
-]
+gimp_mkenums = find_program('tools' / 'gimp-mkenums')
+mkenums_wrap = find_program(meson.current_source_dir() / 'tools' / 'meson-mkenums.sh')
 
-libgimp_mkenums_custom_target_commonargs = [
-    gimp_mkenums_custom_target_commonargs,
-    '--dtail',
-      '    { 0, NULL, NULL }\n'+
-      '  };\n'+
-      '\n'+
-      '  static GType type = 0;\n'+
-      '\n'+
-      '  if (G_UNLIKELY (! type))\n'+
-      '    {\n'+
-      '      type = g_@type@_register_static ("@EnumName@", values);\n'+
-      '      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");\n'+
-      '      gimp_type_set_translation_context (type, "@enumnick@");\n'+
-      '      gimp_@type@_set_value_descriptions (type, descs);\n'+
-      '    }\n'+
-      '\n'+
-      '  return type;\n'+
-      '}\n',
-]
+libgimp_mkenums_dtails = \
+    '    { 0, NULL, NULL }\n'                                                      + \
+    '  };\n'                                                                       + \
+    '\n'                                                                           + \
+    '  static GType type = 0;\n'                                                   + \
+    '\n'                                                                           + \
+    '  if (G_UNLIKELY (! type))\n'                                                 + \
+    '    {\n'                                                                      + \
+    '      type = g_@type@_register_static ("@EnumName@", values);\n'              + \
+    '      gimp_type_set_translation_domain (type, GETTEXT_PACKAGE "-libgimp");\n' + \
+    '      gimp_type_set_translation_context (type, "@enumnick@");\n'              + \
+    '      gimp_@type@_set_value_descriptions (type, descs);\n'                    + \
+    '    }\n'                                                                      + \
+    '\n'                                                                           + \
+    '  return type;\n'                                                             + \
+    '}\n'
 
 conf.set('ENABLE_NLS',   true)
 conf.set('HAVE_GETTEXT', true)

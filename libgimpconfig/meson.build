@@ -1,18 +1,22 @@
 
-gimpconfigenums = custom_target('gimpconfigenums.c',
-  input : [ 'gimpconfigenums.h', ],
-  output: [ 'gimpconfigenums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "libgimp/libgimp-intl.h"\n',
-    libgimp_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_config_enums = custom_target('stamp-gimpconfigenums.h',
+  input : [
+    files(
+      'gimpconfigenums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-gimpconfigenums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'gimpconfig',
+    '#include <gio/gio.h>\n' +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "libgimp/libgimp-intl.h"',
+    libgimp_mkenums_dtails
+  ],
+  build_by_default: true
 )
 
 libgimpconfig_sources_introspectable = files(
@@ -31,7 +35,9 @@ libgimpconfig_sources_introspectable = files(
 
 libgimpconfig_sources = [
   libgimpconfig_sources_introspectable,
-  gimpconfigenums,
+
+  'gimpconfigenums.c',
+  stamp_config_enums
 ]
 
 libgimpconfig_headers_introspectable = files(

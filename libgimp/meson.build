@@ -1,4 +1,7 @@
-
+# Similarly to libgimpthumb/gimpthumb-enums.c, libgimp/gimpenums.c is
+# not versionned so we don't use the mkenums_wrap.
+# Moreover it is generated in 2 steps, first with common mkenums
+# arguments, then concatenating with a "tail" file.
 gimpenums_notail = custom_target('gimpenums.c.notail',
   input : [ 'gimpenums.h', ],
   output: [ 'gimpenums.c.notail', ],
@@ -12,7 +15,31 @@ gimpenums_notail = custom_target('gimpenums.c.notail',
             + '#include "libgimpbase/gimpbase-private.h"\n'
             + '#include "libgimpconfig/gimpconfigenums.h"\n'
             + '#include "gimpenums.h"\n',
-    libgimp_mkenums_custom_target_commonargs,
+    '--fprod',
+      '/* enumerations from "@basename@" */',
+    '--vhead',
+      'GType\n'+
+      '@enum_name@_get_type (void)\n'+
+      '{\n'+
+      '  static const G@Type@Value values[] =\n'+
+      '  {',
+    '--vprod',
+      '    { @VALUENAME@, "@VALUENAME@", "@valuenick@" },',
+    '--vtail',
+      '    { 0, NULL, NULL }\n'+
+      '  };\n',
+    '--dhead',
+      '  static const Gimp@Type@Desc descs[] =\n'+
+      '  {',
+    '--dprod',
+      '    { @VALUENAME@, @valuedesc@, @valuehelp@ },'+
+      '@if (\'@valueabbrev@\' ne \'NULL\')@\n'+
+      '    /* Translators: this is an abbreviated version of @valueudesc@.\n'+
+      '       Keep it short. */\n'+
+      '    { @VALUENAME@, @valueabbrev@, NULL },'+
+      '@endif@',
+    '--dtail',
+      libgimp_mkenums_dtails,
     '@INPUT@',
   ],
   capture: true,

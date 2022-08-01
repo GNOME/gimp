@@ -1,20 +1,21 @@
-
-apppaintenums = custom_target('paint-enums.c',
-  input : [ 'paint-enums.h', ],
-  output: [ 'paint-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_paint_enums = custom_target('stamp-paint-enums.h',
+  input : [
+    files(
+      'paint-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-paint-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'paint-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
-
 
 libapppaint_sources = [
   'gimp-paint.c',
@@ -52,7 +53,9 @@ libapppaint_sources = [
   'gimpsmudgeoptions.c',
   'gimpsourcecore.c',
   'gimpsourceoptions.c',
-  apppaintenums,
+
+  'paint-enums.c',
+  stamp_paint_enums,
 ]
 
 libapppaint = static_library('apppaint',

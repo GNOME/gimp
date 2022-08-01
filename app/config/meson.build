@@ -1,18 +1,20 @@
-
-appconfigenums = custom_target('config-enums.c',
-  input : [ 'config-enums.h', ],
-  output: [ 'config-enums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "gimp-intl.h"\n',
-    app_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_config_enums = custom_target('stamp-config-enums.h',
+  input : [
+    files(
+      'config-enums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-config-enums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'config-',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "gimp-intl.h"'
+  ],
+  build_by_default: true
 )
 
 libappconfig_sources = [
@@ -32,7 +34,9 @@ libappconfig_sources = [
   'gimprc-unknown.c',
   'gimprc.c',
   'gimpxmlparser.c',
-  appconfigenums,
+
+  'config-enums.c',
+  stamp_config_enums,
 ]
 
 libappconfig = static_library('appconfig',

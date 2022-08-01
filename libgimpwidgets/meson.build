@@ -1,18 +1,21 @@
-
-gimpwidgetsenums = custom_target('gimpwidgetsenums.c',
-  input : [ 'gimpwidgetsenums.h', ],
-  output: [ 'gimpwidgetsenums.c', ],
-  command: [
-    gimp_mkenums,
-    '--fhead','#include "config.h"\n'
-            + '#include <gio/gio.h>\n'
-            + '#include "libgimpbase/gimpbase.h"\n'
-            + '#include "@basename@"\n'
-            + '#include "libgimp/libgimp-intl.h"\n',
-    libgimp_mkenums_custom_target_commonargs,
-    '@INPUT@',
+stamp_widgets_enums = custom_target('stamp-gimpwidgetsenums.h',
+  input : [
+    files(
+      'gimpwidgetsenums.h'
+    ),
   ],
-  capture: true,
+  output: [ 'stamp-gimpwidgetsenums.h', ],
+  command: [
+    mkenums_wrap, perl,
+    meson.source_root(), meson.current_source_dir(),
+    meson.current_build_dir(),
+    'gimpwidgets',
+    '#include <gio/gio.h>\n'              +
+    '#include "libgimpbase/gimpbase.h"\n',
+    '#include "libgimp/libgimp-intl.h"',
+    libgimp_mkenums_dtails
+  ],
+  build_by_default: true
 )
 
 gimpwidgetsmarshal = gnome.genmarshal('gimpwidgetsmarshal',
@@ -94,7 +97,9 @@ libgimpwidgets_sources = [
   'gimpeevl.c',
   'gimpwidgets-private.c',
 
-  gimpwidgetsenums,
+  'gimpwidgetsenums.c',
+  stamp_widgets_enums,
+
   gimpwidgetsmarshal,
   icons_imgs_sources,
   cursors_sources,
