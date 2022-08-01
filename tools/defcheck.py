@@ -85,11 +85,10 @@ for df in def_files:
                                             libname)
    if status != 0:
       libname_meson = path.join(directory, "lib" + basename + "-*.so")
-      print("trouble reading {} - trying {}".format(libname, libname_meson))
       status, nm = subprocess.getstatusoutput ("nm --defined-only --extern-only " +
                                                libname_meson)
       if status != 0:
-        print("trouble reading {} - has it been compiled?".format(libname_meson))
+        print("trouble reading {} or {} - has it been compiled?".format(libname, libname_meson))
         have_errors = -1
         continue
 
