@@ -80,6 +80,8 @@ struct _GimpStatusbar
   gdouble              progress_value;
   guint64              progress_last_update_time;
 
+  GtkWidget           *soft_proof_button;
+
   GSList              *size_widgets;
 };
 

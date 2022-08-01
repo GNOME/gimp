@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -31,6 +32,7 @@
 #include "config/gimpdisplayconfig.h"
 
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpprogress.h"
 
 #include "widgets/gimpuimanager.h"
@@ -100,6 +102,9 @@ static gboolean gimp_statusbar_progress_message   (GimpProgress      *progress,
                                                    const gchar       *message);
 static void     gimp_statusbar_progress_canceled  (GtkWidget         *button,
                                                    GimpStatusbar     *statusbar);
+static void     gimp_statusbar_soft_proof_button_toggled
+                                                  (GtkWidget         *button,
+                                                   GimpStatusbar     *statusbar);
 
 static gboolean gimp_statusbar_label_draw         (GtkWidget         *widget,
                                                    cairo_t           *cr,
@@ -112,6 +117,11 @@ static void     gimp_statusbar_scale_changed      (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
 static void     gimp_statusbar_scale_activated    (GimpScaleComboBox *combo,
                                                    GimpStatusbar     *statusbar);
+static void     gimp_statusbar_shell_image_changed(GimpStatusbar     *statusbar);
+static void     gimp_statusbar_shell_image_simulation_profile_changed
+                                                  (GimpImage        *image,
+                                                   GimpStatusbar     *statusbar);
+
 static gboolean gimp_statusbar_rotate_pressed     (GtkWidget         *event_box,
                                                    GdkEvent          *event,
                                                    GimpStatusbar     *statusbar);
@@ -128,6 +138,11 @@ static void     gimp_statusbar_shell_rotated      (GimpDisplayShell  *shell,
 static void     gimp_statusbar_shell_status_notify(GimpDisplayShell  *shell,
                                                    const GParamSpec  *pspec,
                                                    GimpStatusbar     *statusbar);
+static void     gimp_statusbar_shell_color_config_notify
+                                                  (GObject           *config,
+                                                   const GParamSpec  *pspec,
+                                                   GimpStatusbar     *statusbar);
+
 static guint    gimp_statusbar_get_context_id     (GimpStatusbar     *statusbar,
                                                    const gchar       *context);
 static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar);
@@ -382,6 +397,30 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   g_signal_connect (statusbar->cancel_button, "clicked",
                     G_CALLBACK (gimp_statusbar_progress_canceled),
                     statusbar);
+
+  /* soft proofing button */
+  statusbar->soft_proof_button = gtk_toggle_button_new();
+  gtk_widget_set_can_focus (statusbar->soft_proof_button, FALSE);
+  gtk_button_set_relief (GTK_BUTTON (statusbar->soft_proof_button),
+                         GTK_RELIEF_NONE);
+  image = gtk_image_new_from_icon_name (GIMP_ICON_DISPLAY_FILTER_PROOF,
+                                        GTK_ICON_SIZE_MENU);
+  gtk_container_add (GTK_CONTAINER (statusbar->soft_proof_button), image);
+  gtk_widget_show (image);
+  gimp_help_set_help_data (statusbar->soft_proof_button,
+                           _("Toggle soft-proofing view when\n"
+                             "a soft-proofing profile is set"),
+                           NULL);
+  gimp_statusbar_add_size_widget (statusbar, statusbar->soft_proof_button);
+  gtk_box_pack_end (GTK_BOX (hbox), statusbar->soft_proof_button,
+                    FALSE, FALSE, 0);
+  gtk_widget_show (statusbar->soft_proof_button);
+
+  g_signal_connect (statusbar->soft_proof_button, "clicked",
+                    G_CALLBACK (gimp_statusbar_soft_proof_button_toggled),
+                    statusbar);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button),
+                                FALSE);
 
   gimp_statusbar_update_size (statusbar);
 }
@@ -708,6 +747,41 @@ gimp_statusbar_progress_canceled (GtkWidget     *button,
 }
 
 static void
+gimp_statusbar_soft_proof_button_toggled (GtkWidget     *button,
+                                          GimpStatusbar *statusbar)
+{
+  GimpColorConfig        *color_config;
+  GimpColorManagementMode mode;
+  gboolean                active;
+
+  color_config = gimp_display_shell_get_color_config (statusbar->shell);
+  mode = gimp_color_config_get_mode (color_config);
+  active =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button));
+
+  if (active)
+    {
+      mode = GIMP_COLOR_MANAGEMENT_SOFTPROOF;
+    }
+  else
+    {
+      if (mode != GIMP_COLOR_MANAGEMENT_OFF)
+        mode = GIMP_COLOR_MANAGEMENT_DISPLAY;
+    }
+
+  if (mode != gimp_color_config_get_mode (color_config))
+    {
+      g_object_set (color_config,
+                    "mode", mode,
+                    NULL);
+      statusbar->shell->color_config_set = TRUE;
+    }
+
+  gimp_statusbar_shell_color_config_notify (G_OBJECT (color_config), NULL,
+                                            statusbar);
+}
+
+static void
 gimp_statusbar_set_text (GimpStatusbar *statusbar,
                          const gchar   *icon_name,
                          const gchar   *text)
@@ -804,6 +878,10 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
       g_signal_handlers_disconnect_by_func (statusbar->shell,
                                             gimp_statusbar_shell_status_notify,
                                             statusbar);
+      if (statusbar->shell->color_config)
+        g_signal_handlers_disconnect_by_func (statusbar->shell->color_config,
+                                              gimp_statusbar_shell_color_config_notify,
+                                              statusbar);
     }
 
   statusbar->shell = shell;
@@ -817,6 +895,12 @@ gimp_statusbar_set_shell (GimpStatusbar    *statusbar,
   g_signal_connect_object (statusbar->shell, "notify::status",
                            G_CALLBACK (gimp_statusbar_shell_status_notify),
                            statusbar, 0);
+
+  if (statusbar->shell->color_config)
+    g_signal_connect (statusbar->shell->color_config, "notify",
+                      G_CALLBACK (gimp_statusbar_shell_color_config_notify),
+                      statusbar);
+
   gimp_statusbar_shell_rotated (shell, statusbar);
 }
 
@@ -860,6 +944,7 @@ gimp_statusbar_empty (GimpStatusbar *statusbar)
   gtk_widget_hide (statusbar->rotate_widget);
   gtk_widget_hide (statusbar->horizontal_flip_icon);
   gtk_widget_hide (statusbar->vertical_flip_icon);
+  gtk_widget_hide (statusbar->soft_proof_button);
 }
 
 void
@@ -871,6 +956,8 @@ gimp_statusbar_fill (GimpStatusbar *statusbar)
   gtk_widget_show (statusbar->unit_combo);
   gtk_widget_show (statusbar->scale_combo);
   gtk_widget_show (statusbar->rotate_widget);
+  gtk_widget_show (statusbar->soft_proof_button);
+  gimp_statusbar_shell_image_changed (statusbar);
   gimp_statusbar_shell_rotated (statusbar->shell, statusbar);
 }
 
@@ -1510,6 +1597,32 @@ gimp_statusbar_shell_status_notify (GimpDisplayShell *shell,
 {
   gimp_statusbar_replace (statusbar, "title",
                           NULL, "%s", shell->status);
+
+  gimp_statusbar_shell_image_changed (statusbar);
+}
+
+static void
+gimp_statusbar_shell_color_config_notify (GObject          *config,
+                                          const GParamSpec *pspec,
+                                          GimpStatusbar    *statusbar)
+{
+  GimpColorConfig *color_config = GIMP_COLOR_CONFIG (config);
+  GimpColorManagementMode mode  = gimp_color_config_get_mode (color_config);
+
+  if (mode == GIMP_COLOR_MANAGEMENT_SOFTPROOF)
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button),
+                                    TRUE);
+      gtk_button_set_relief (GTK_BUTTON (statusbar->soft_proof_button),
+                             GTK_RELIEF_NORMAL);
+    }
+  else
+    {
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (statusbar->soft_proof_button),
+                                    FALSE);
+      gtk_button_set_relief (GTK_BUTTON (statusbar->soft_proof_button),
+                             GTK_RELIEF_NONE);
+    }
 }
 
 static void
@@ -1535,6 +1648,43 @@ gimp_statusbar_scale_activated (GimpScaleComboBox *combo,
                                 GimpStatusbar     *statusbar)
 {
   gtk_widget_grab_focus (statusbar->shell->canvas);
+}
+
+static void
+gimp_statusbar_shell_image_changed (GimpStatusbar *statusbar)
+{
+  GimpImage *image = NULL;
+
+  if (statusbar->shell && statusbar->shell->display)
+    image = gimp_display_get_image (statusbar->shell->display);
+
+  if (image)
+    {
+      g_signal_handlers_disconnect_by_func (image,
+                                            gimp_statusbar_shell_image_simulation_profile_changed,
+                                            statusbar);
+
+      g_signal_connect (image, "simulation-profile-changed",
+                        G_CALLBACK (gimp_statusbar_shell_image_simulation_profile_changed),
+                        statusbar);
+
+      gimp_statusbar_shell_image_simulation_profile_changed (image, statusbar);
+    }
+}
+
+static void
+gimp_statusbar_shell_image_simulation_profile_changed (GimpImage     *image,
+                                                       GimpStatusbar *statusbar)
+{
+  GimpColorProfile *view_profile = NULL;
+
+  if (image)
+    view_profile = gimp_image_get_simulation_profile (image);
+
+  if (view_profile)
+    gtk_widget_set_sensitive (statusbar->soft_proof_button, TRUE);
+  else
+    gtk_widget_set_sensitive (statusbar->soft_proof_button, FALSE);
 }
 
 static gboolean
