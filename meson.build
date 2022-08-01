@@ -1178,7 +1178,6 @@ localedir      = get_option('datadir') / 'locale'
 
 
 # Check for internal tools
-defcheck            = find_program('tools'/'defcheck.py')
 extract_vector_icon = find_program('tools'/'extract-vector-icon.sh')
 generate_changelog  = find_program('tools'/'generate_changelog.sh')
 generate_news       = find_program('tools'/'generate-news')
@@ -1622,19 +1621,6 @@ if xmllint.found()
     output: [ 'validate-authors-output.xml' ],
     build_by_default: true,
     install: false
-  )
-endif
-
-if have_python
-  # TODO this python script is waiting for autotools directory/files structure
-  custom_target('check-defs',
-    input : [ ],
-    output: [ 'check-defs', ],
-    command: [
-      find_program(meson.source_root() / 'tools' / 'defcheck.py'),
-      meson.source_root(),
-    ],
-    build_by_default: false,
   )
 endif
 

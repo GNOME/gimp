@@ -519,8 +519,14 @@ else
   endif
 endif
 
-if have_python
-  # Check .def files for Windows.
+if have_python and not platform_windows
+  # Verify .def files for Windows.
+  # Ironically we only check this on non-Windows platform, since the
+  # script expects .so libraries, and I'm not sure that the `nm` tool is
+  # available on Windows.
+  # On the other hand, it is how it always has been, since we used to
+  # only run this on dist step (which we historically run on a GNU/Linux
+  # machine). And it worked fine until now.
   custom_target('check-def-files',
     input: [
       '../libgimpbase/gimpbase.def',
