@@ -83,8 +83,6 @@ EXTRA_DIST = \
 	authors.dtd		\
 	authors.xml		\
 	authors.xsl		\
-	config.h.win32		\
-	gimp-zip.in		\
 	git-version.h
 
 

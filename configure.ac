@@ -3193,7 +3193,6 @@ po-python/Makefile.in
 po-script-fu/Makefile.in
 po-tips/Makefile.in
 po-windows-installer/Makefile.in
-gimp-zip
 Makefile
 ])
 
