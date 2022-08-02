@@ -33,3 +33,9 @@ cp -f 'INSTALL' "${MESON_DIST_ROOT}"
 rm -f "${MESON_DIST_ROOT}/INSTALL.in"
 
 cp "$GIT_VERSION_H" "${MESON_DIST_ROOT}"
+
+# Removing autotools data. Let's make so that people who build from this
+# tarball only see the meson build system and don't get confused.
+rm -f "${MESON_DIST_ROOT}/autogen.sh"
+rm -f "${MESON_DIST_ROOT}/configure.ac"
+rm -f $(find ${MESON_DIST_ROOT} -name 'Makefile*')
