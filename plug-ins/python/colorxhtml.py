@@ -24,6 +24,8 @@ import sys
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -66,7 +68,7 @@ fmt_from_bpp = {
         12: 'III'
 }
 
-def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
+def save_colorxhtml(procedure, run_mode, image, n_layers, layers, file, args, data):
     source_file = args.index(0)
     characters = args.index(1)
     size =  args.index(2)
@@ -82,7 +84,7 @@ def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        Gimp.init ("colorxhtml.py")
+        GimpUi.init ("file-colorxhtml-save")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.Dialog(use_header_bar=use_header_bar,
@@ -172,9 +174,12 @@ def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
             return procedure.new_return_values(Gimp.PDBStatusType.CANCEL,
                                                GLib.Error())
 
-    width = drawable.width()
-    height = drawable.height()
-    bpp = drawable.bpp()
+    #For now, work with a single layer
+    layer = layers[0]
+
+    width = layer.get_width()
+    height = layer.get_height()
+    bpp = layer.get_bpp()
 
     html = open(file.peek_path(), 'w')
 
@@ -235,7 +240,7 @@ def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
             chars[0:0] = data
 
         for x in range(0, width):
-            pixel_bytes = drawable.get_pixel(x, y)
+            pixel_bytes = layer.get_pixel(x, y)
             pixel_tuple = struct.unpack(fmt, pixel_bytes)
             if bpp > 3:
                  pixel_tuple=(
@@ -267,7 +272,7 @@ def save_colorxhtml(procedure, run_mode, image, drawable, file, args, data):
     if separate:
         css.close()
 
-    return Gimp.ValueArray.new([
+    return Gimp.ValueArray.new_from_values([
         GObject.Value(Gimp.PDBStatusType, Gimp.PDBStatusType.SUCCESS)
     ])
 
