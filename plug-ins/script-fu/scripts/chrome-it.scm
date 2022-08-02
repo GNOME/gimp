@@ -76,7 +76,7 @@
 
   (let* (
         (banding-img (car (gimp-file-load RUN-NONINTERACTIVE env-map)))
-        (banding-layer (car (gimp-image-get-active-drawable banding-img)))
+        (banding-layer (aref (cadr (gimp-image-get-selected-drawables banding-img)) 0))
         (banding-height (car (gimp-drawable-get-height banding-layer)))
         (banding-width (car (gimp-drawable-get-width banding-layer)))
         (banding-type (car (gimp-drawable-type banding-layer)))
@@ -248,7 +248,7 @@
   SF-DRAWABLE    "Chrome mask"       0
   SF-ADJUSTMENT _"Chrome saturation" '(-80 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome lightness"  '(-47 -100 100 1 10 0 0)
-  SF-ADJUSTMENT _"Chrome factor"     '(0.75 0 1 0.1 0.01 2 0)
+  SF-ADJUSTMENT _"Chrome factor"     '(0.75 0 1 0.1 0.2 2 0)
   SF-FILENAME   _"Environment map"
                 (string-append gimp-data-directory
                               "/scripts/images/beavis.jpg")

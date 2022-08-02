@@ -185,7 +185,7 @@
           (= from-selection FALSE))
       (gimp-image-raise-item image drawable))
 
-    (gimp-image-set-active-layer image drawable)
+    (gimp-image-set-selected-layers image 1 (vector drawable))
     (gimp-image-undo-group-end image)
     (gimp-displays-flush)
 

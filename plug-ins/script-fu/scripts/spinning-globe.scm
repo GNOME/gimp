@@ -31,7 +31,7 @@
         (theImage (if (= inCopy TRUE)
                       (car (gimp-image-duplicate inImage))
                       inImage))
-        (theLayer (car (gimp-image-get-active-layer theImage)))
+        (theLayer (aref (cadr (gimp-image-get-selected-layers theImage)) 0))
         (n 0)
         (ang (* (/ 360 inFrames)
                 (if (= inFromLeft TRUE) 1 -1) ))

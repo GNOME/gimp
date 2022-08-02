@@ -79,7 +79,7 @@
            (let* ((filename (car ,filenames))
                   (image (catch #f (car (gimp-file-load RUN-NONINTERACTIVE
                                                         filename))))
-                  (layer (if image (car (gimp-image-get-active-layer image)) #f))
+                  (layer (if image (aref (cadr (gimp-image-get-selected-layers image)) 0) #f))
                   (basename (unbreakupstr (butlast (strbreakup filename ".")) ".")))
              (when image
                ,@body

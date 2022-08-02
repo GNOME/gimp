@@ -148,7 +148,7 @@
       (set! count (+ count 1))
     )
 
-    (gimp-image-set-active-layer img drawable)
+    (gimp-image-set-selected-layers img 1 (vector drawable))
 
     (gimp-image-undo-enable img)
     (gimp-display-new img)

@@ -89,7 +89,7 @@
                 )
            (gimp-floating-sel-anchor floating-sel)
           )
-          (gimp-image-set-active-layer image effect-layer ))
+          (gimp-image-set-selected-layers image 1 (vector effect-layer)))
           (set! effect-layer drawable)
     )
     (set! active-layer effect-layer)
@@ -117,7 +117,7 @@
         (gimp-selection-none image))
 
     (gimp-image-remove-channel image active-selection)
-    (gimp-image-set-active-layer image drawable)
+    (gimp-image-set-selected-layers image 1 (vector drawable))
 
     (gimp-image-undo-group-end image)
 

@@ -73,7 +73,7 @@
     )
 
     (gimp-image-undo-enable image)
-    (gimp-image-set-active-layer image drawable)
+    (gimp-image-set-selected-layers image 1 (vector drawable))
     (gimp-display-new new-image)
     (gimp-displays-flush)
 

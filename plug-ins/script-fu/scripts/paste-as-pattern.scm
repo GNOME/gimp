@@ -25,7 +25,7 @@
 
     (if (= TRUE (car (gimp-image-is-valid pattern-image)))
       (begin
-        (set! pattern-draw (car (gimp-image-get-active-drawable pattern-image)))
+        (set! pattern-draw (aref (cadr (gimp-image-get-selected-drawables pattern-image)) 0))
         (set! path (string-append gimp-directory
                              "/patterns/"
                              filename

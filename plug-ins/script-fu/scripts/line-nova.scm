@@ -92,8 +92,6 @@
     (if old-selection
       (begin
         (gimp-image-select-item img CHANNEL-OP-REPLACE old-selection)
-        ;; (gimp-image-set-active-layer img drw)
-        ;; delete extra channel by Sven Neumann <neumanns@uni-duesseldorf.de>
         (gimp-image-remove-channel img old-selection)
       )
     )

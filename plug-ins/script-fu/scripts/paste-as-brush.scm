@@ -27,7 +27,7 @@
 
     (if (= TRUE (car (gimp-image-is-valid brush-image)))
       (begin
-        (set! brush-draw (car (gimp-image-get-active-drawable brush-image)))
+        (set! brush-draw (aref (cadr (gimp-image-get-selected-drawables brush-image)) 0))
         (set! type (car (gimp-drawable-type brush-draw)))
         (set! path (string-append gimp-directory
                                   "/brushes/"
@@ -69,7 +69,7 @@
   ""
   SF-STRING     _"_Brush name" "My Brush"
   SF-STRING     _"_File name"  "mybrush"
-  SF-ADJUSTMENT _"_Spacing"    '(25 0 1000 1 1 1 0)
+  SF-ADJUSTMENT _"_Spacing"    '(25 0 1000 1 2 1 0)
 )
 
 (script-fu-menu-register "script-fu-paste-as-brush"

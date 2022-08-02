@@ -112,7 +112,7 @@
           (text-height 0)
           )
       (gimp-selection-all img)
-      (gimp-drawable-fill (car (gimp-image-get-active-layer img))
+      (gimp-drawable-fill (aref (cadr (gimp-image-get-selected-layers img)) 0)
                           FILL-BACKGROUND)
       (gimp-selection-none img)
       (set! text-layer (car (gimp-text-fontname img -1 0 0
@@ -227,9 +227,10 @@
               (if (> (car (gimp-image-get-layers new-img)) 1)
                 (gimp-image-flatten new-img)
               )
-              (set! tmp-layer (car (gimp-layer-new-from-drawable
-                            (car (gimp-image-get-active-drawable new-img))
-                                  sheet-img)))
+              (set! tmp-layer
+                (car (gimp-layer-new-from-drawable
+                        (aref (cadr (gimp-image-get-selected-drawables new-img)) 0)
+                        sheet-img)))
 
               (gimp-image-insert-layer sheet-img tmp-layer 0 0)
 
