@@ -1557,11 +1557,14 @@ install_conf.set('WEBP_REQUIRED_VERSION',         webp_minver)
 install_conf.set('WMF_REQUIRED_VERSION',          wmf_minver)
 install_conf.set('XGETTEXT_REQUIRED_VERSION',     '0.19')
 
-INSTALL = configure_file(
-  input : 'INSTALL.in',
-  output: 'INSTALL',
-  configuration: install_conf
-)
+if is_git_repository
+  # Tarballs won't have INSTALL.in, only the generated INSTALL.
+  INSTALL = configure_file(
+    input : 'INSTALL.in',
+    output: 'INSTALL',
+    configuration: install_conf
+  )
+endif
 
 
 configure_file(
@@ -1635,7 +1638,9 @@ custom_target('Changelog',
   build_by_default: false,
 )
 
-meson.add_dist_script('meson_dist_script.sh', generate_version_h ? gitversion_h.full_path() : gitversion_h)
+meson.add_dist_script('meson_dist_script.sh',
+                      generate_version_h ?  gitversion_h.full_path() : gitversion_h,
+                      meson.source_root(), meson.build_root())
 
 
 ################################################################################
