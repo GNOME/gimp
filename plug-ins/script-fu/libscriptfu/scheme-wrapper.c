@@ -902,10 +902,19 @@ script_fu_marshal_procedure_call (scheme   *sc,
             return script_type_error (sc, "numeric", i, proc_name);
           else
             {
-              GimpItem *item =
-                gimp_item_get_by_id (sc->vptr->ivalue (sc->vptr->pair_car (a)));
+              gint item_ID;
+              item_ID = sc->vptr->ivalue (sc->vptr->pair_car (a));
 
-              g_value_set_object (&value, item);
+              /* Avoid failed assertion in libgimp.*/
+              if (gimp_item_id_is_valid (item_ID))
+                {
+                  GimpItem *item = gimp_item_get_by_id (item_ID);
+                  g_value_set_object (&value, item);
+                }
+              else
+                {
+                  return script_error (sc, "runtime: invalid item ID", a);
+                }
             }
         }
       else if (GIMP_VALUE_HOLDS_INT32_ARRAY (&value))

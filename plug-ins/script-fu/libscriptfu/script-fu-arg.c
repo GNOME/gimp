@@ -505,27 +505,39 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
     case SF_FILENAME:
     case SF_DIRNAME:
       {
-        gchar * filepath = "error in file arg";
-
-        /* sanity: GValue initialized. */
-        if (G_VALUE_HOLDS_GTYPE(gvalue))
+        if (G_VALUE_HOLDS_OBJECT (gvalue) && G_VALUE_TYPE (gvalue) == G_TYPE_FILE)
           {
-            if (g_value_get_gtype (gvalue) == G_TYPE_FILE)
+            GFile *file = g_value_get_object (gvalue);
+
+            /* Catch: GValue initialized to hold a GFile, but not hold one.
+             * Specificially, GimpProcedureDialog can yield that condition;
+             * the dialog shows "(None)" meaning user has not chosen a file yet.
+             */
+            if (G_IS_FILE (file))
               {
-                filepath = g_file_get_path (g_value_get_object (gvalue));
+                /* Not checking file exists, only creating a descriptive string.
+                 * I.E. not g_file_get_path, which can return NULL.
+                 */
+                gchar *filepath = g_file_get_parse_name (file);
+                /* assert filepath not null. */
                 /* Not escape special chars for whitespace or double quote. */
+                g_string_append_printf (result_string, "\"%s\"", filepath);
+                g_free (filepath);
               }
             else
               {
-                g_warning ("Expecting GFile in gvalue.");
+                gchar *msg = "Invalid GFile in gvalue.";
+                g_warning ("%s", msg);
+                g_string_append_printf (result_string, "\"%s\"", msg);
               }
           }
         else
           {
-            g_warning ("Expecting GValue holding a GType");
+            gchar *msg = "Expecting GFile in gvalue.";
+            g_warning ("%s", msg);
+            g_string_append_printf (result_string, "\"%s\"", msg);
           }
-
-        g_string_append_printf (result_string, "\"%s\"", filepath);
+        /* Ensure appended a filepath string OR an error string.*/
       }
       break;
 
@@ -547,10 +559,6 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
       break;
 
     case SF_OPTION:
-    case SF_ENUM:
-      /* When sanity test fails, return an arbitrary int.
-       * Fails when GimpConfig or GimpProcedureDialog does not support GParamEnum.
-       */
       if (G_VALUE_HOLDS_INT (gvalue))
         {
           g_string_append_printf (result_string, "%d", g_value_get_int (gvalue));
@@ -558,9 +566,28 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
       else
         {
           g_warning ("Expecting GValue holding an int.");
-          g_string_append (result_string, "1");   /* Arbitrarily a common int. */
+          /* Append arbitrary int, so no errors in signature of Scheme call.
+           * The call might not yield result the user intended.
+           */
+          g_string_append (result_string, "1");
         }
+      break;
 
+    case SF_ENUM:
+      if (G_VALUE_HOLDS_ENUM (gvalue))
+        {
+          /* Effectively upcasting to a less restrictive Scheme class Integer. */
+          g_string_append_printf (result_string, "%d", g_value_get_enum (gvalue));
+        }
+      else
+        {
+          /* For now, occurs when GimpConfig or GimpProcedureDialog does not support GParamEnum. */
+          g_warning ("Expecting GValue holding a GEnum.");
+          /* Append arbitrary int, so no errors in signature of Scheme call.
+           * The call might not yield result the user intended.
+           */
+          g_string_append (result_string, "1");
+        }
       break;
     }
 }
