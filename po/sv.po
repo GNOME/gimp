@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-07 22:35+0000\n"
-"PO-Revision-Date: 2022-06-09 00:14+0200\n"
+"POT-Creation-Date: 2022-06-16 14:11+0000\n"
+"PO-Revision-Date: 2022-06-23 22:43+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -3916,7 +3916,7 @@ msgstr "Anslut till en annan display"
 #: ../app/actions/dock-actions.c:64
 msgctxt "dock-action"
 msgid "_Show Image Selection"
-msgstr "Visa bildm_arkering"
+msgstr "Visa bildv_al"
 
 #: ../app/actions/dock-actions.c:70
 msgctxt "dock-action"
@@ -16028,7 +16028,7 @@ msgstr "_Lägg till"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:137
 msgid "Initialize Layer Mask to:"
-msgstr "Initialisera lagermask till:"
+msgstr "Initiera lagermask till:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:168
 msgid "In_vert mask"
