@@ -1573,7 +1573,7 @@ add_layers (GimpImage     *image,
   GimpLayer            *clipping_group = NULL;
   guint16               alpha_chn;
   guint16               user_mask_chn;
-  guint16               layer_channels;
+  guint16               layer_channels, base_channels;
   guint16               channel_idx[MAX_CHANNELS];
   guint16               bps;
   gint32                l_x;                   /* Layer x */
@@ -1856,6 +1856,13 @@ add_layers (GimpImage     *image,
           else
             parent_group = NULL; /* root */
 
+          if (img_a->color_mode == PSD_CMYK)
+            base_channels = 4;
+          else if (img_a->color_mode == PSD_RGB || img_a->color_mode == PSD_LAB)
+            base_channels = 3;
+          else
+            base_channels = 1;
+
           IFDBG(3) g_debug ("Re-hash channel indices");
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
@@ -1872,15 +1879,40 @@ add_layers (GimpImage     *image,
                 }
               else if (lyr_chn[cidx]->data)
                 {
-                  channel_idx[layer_channels] = cidx;   /* Assumes in sane order */
-                  layer_channels++;                     /* RGB, Lab, CMYK etc.   */
+                  if (layer_channels < base_channels)
+                    {
+                      channel_idx[layer_channels] = cidx;   /* Assumes in sane order */
+                      layer_channels++;                     /* RGB, Lab, CMYK etc.   */
+                    }
+                  else
+                    {
+                      /* channel_idx[base_channels] is reserved for alpha channel,
+                       * but this layer apparently has extra channels.
+                       * From the one example I have (see #8411) it looks like
+                       * that channel is the same as the alpha channel. */
+                      IFDBG(2) g_debug ("This layer has an extra channel (id: %d)", lyr_chn[cidx]->id);
+                      channel_idx[layer_channels+1] = cidx;   /* Assumes in sane order */
+                      layer_channels += 2;                    /* RGB, Lab, CMYK etc.   */
+                    }
+                }
+              else
+                {
+                  IFDBG(4) g_debug ("Channel %d (id: %d) has no data", cidx, lyr_chn[cidx]->id);
                 }
             }
 
           if (alpha)
             {
-              channel_idx[layer_channels] = alpha_chn;
-              layer_channels++;
+              if (layer_channels <= base_channels)
+                {
+                  channel_idx[layer_channels] = alpha_chn;
+                  layer_channels++;
+                }
+              else
+                {
+                  channel_idx[base_channels] = alpha_chn;
+                }
+              base_channels++;
             }
 
           IFDBG(4) g_debug ("Create the layer (group type: %d, clipping group type: %d)",
@@ -2066,15 +2098,15 @@ add_layers (GimpImage     *image,
                           const GeglRectangle *roi      = &iter->items[0].roi;
                           guint8              *dst0     = iter->items[0].data;
                           gint                 src_step = bps;
-                          gint                 dst_step = bps * layer_channels;
+                          gint                 dst_step = bps * base_channels;
 
                           if (img_a->color_mode == PSD_CMYK || img_a->color_mode == PSD_LAB)
                             {
-                              dst0 = gegl_scratch_alloc (layer_channels * bps *
+                              dst0 = gegl_scratch_alloc (base_channels * bps *
                                                          iter->length);
                             }
 
-                          for (cidx = 0; cidx < layer_channels; ++cidx)
+                          for (cidx = 0; cidx < base_channels; ++cidx)
                             {
                               gint b;
 
