@@ -519,7 +519,7 @@ else
   endif
 endif
 
-if have_python and not platform_windows
+if have_python and not platform_windows and not platform_osx
   # Verify .def files for Windows.
   # Ironically we only check this on non-Windows platform, since the
   # script expects .so libraries, and I'm not sure that the `nm` tool is
