@@ -1867,10 +1867,25 @@ add_layers (GimpImage     *image,
           for (cidx = 0; cidx < lyr_a[lidx]->num_channels; ++cidx)
             {
               IFDBG(3) g_debug ("Channel: %d - id: %d", cidx, lyr_chn[cidx]->id);
-              if (lyr_chn[cidx]->id == PSD_CHANNEL_MASK)
+              if (lyr_chn[cidx]->id == PSD_CHANNEL_MASK ||
+                  lyr_chn[cidx]->id == PSD_CHANNEL_EXTRA_MASK)
                 {
-                  user_mask = TRUE;
-                  user_mask_chn = cidx;
+                  /* According to the specs the extra mask (which they call
+                   * real user supplied layer mask) is used "when both a user
+                   * mask and a vector mask are present".
+                   * I haven't seen an example that has the extra mask, so not
+                   * sure which of the masks would appear first.
+                   * For now assuming that the extra mask will be first. */
+                  if (! user_mask)
+                    {
+                      user_mask = TRUE;
+                      user_mask_chn = cidx;
+                    }
+                  else
+                    {
+                      /* Not using this mask, make sure it gets freed. */
+                      g_free (lyr_chn[cidx]->data);
+                    }
                 }
               else if (lyr_chn[cidx]->id == PSD_CHANNEL_ALPHA)
                 {
