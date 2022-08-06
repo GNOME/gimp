@@ -81,7 +81,7 @@
 
 
 static void pspec_set_default_file (GParamSpec *pspec, const gchar *filepath);
-
+static void append_int_repr_from_gvalue (GString *result_string, GValue *gvalue);
 
 /* Free any allocated members.
  * Somewhat hides what members of the SFArg struct are allocated.
@@ -386,13 +386,22 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_ADJUSTMENT:
-      pspec = g_param_spec_double (name,
-                                   nick,
-                                   arg->label,
-                                   arg->default_value.sfa_adjustment.lower,
-                                   arg->default_value.sfa_adjustment.upper,
-                                   arg->default_value.sfa_adjustment.value,
-                                   G_PARAM_READWRITE);
+      /* switch on number of decimal places aka "digits
+       * !!! on the default value, not the current value.
+       * Decimal places == 0 means type integer, else float
+       */
+      if (arg->default_value.sfa_adjustment.digits == 0)
+        pspec = g_param_spec_int (name, nick, arg->label,
+                                  arg->default_value.sfa_adjustment.lower,
+                                  arg->default_value.sfa_adjustment.upper,
+                                  arg->default_value.sfa_adjustment.value,
+                                  G_PARAM_READWRITE);
+      else
+        pspec = g_param_spec_double (name, nick, arg->label,
+                                     arg->default_value.sfa_adjustment.lower,
+                                     arg->default_value.sfa_adjustment.upper,
+                                     arg->default_value.sfa_adjustment.value,
+                                     G_PARAM_READWRITE);
       break;
 
     case SF_FILENAME:
@@ -450,7 +459,7 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
                                        GString     *result_string,
                                        GValue      *gvalue)
 {
-  g_debug("script_fu_arg_append_repr_from_gvalue %s", arg->label);
+  g_debug ("script_fu_arg_append_repr_from_gvalue %s", arg->label);
   switch (arg->type)
     {
     case SF_IMAGE:
@@ -543,10 +552,17 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
 
     case SF_ADJUSTMENT:
       {
-        gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
+        if (arg->default_value.sfa_adjustment.digits != 0)
+          {
+            gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
 
-        g_ascii_dtostr (buffer, sizeof (buffer), g_value_get_double (gvalue));
-        g_string_append (result_string, buffer);
+            g_ascii_dtostr (buffer, sizeof (buffer), g_value_get_double (gvalue));
+            g_string_append (result_string, buffer);
+          }
+        else
+          {
+            append_int_repr_from_gvalue (result_string, gvalue);
+          }
       }
       break;
 
@@ -559,18 +575,7 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
       break;
 
     case SF_OPTION:
-      if (G_VALUE_HOLDS_INT (gvalue))
-        {
-          g_string_append_printf (result_string, "%d", g_value_get_int (gvalue));
-        }
-      else
-        {
-          g_warning ("Expecting GValue holding an int.");
-          /* Append arbitrary int, so no errors in signature of Scheme call.
-           * The call might not yield result the user intended.
-           */
-          g_string_append (result_string, "1");
-        }
+      append_int_repr_from_gvalue (result_string, gvalue);
       break;
 
     case SF_ENUM:
@@ -597,6 +602,8 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
  *
  * Used when the PDB procedure implemented by the script is being calling interactively,
  * after a GUI dialog has written user's choices into self's value.
+ *
+ * This method is slated for deletion when script-fu-interface.c is deleted.
  */
 void
 script_fu_arg_append_repr_from_self (SFArg       *arg,
@@ -871,4 +878,24 @@ pspec_set_default_file (GParamSpec *pspec, const gchar *filepath)
   gfile = g_file_new_for_path (filepath);
   g_value_set_object (&gvalue, gfile);
   g_param_value_set_default (pspec, &gvalue);
+}
+
+/* Append a string repr of an integer valued gvalue to given GString.
+ * When the gvalue doesn't hold an integer, warn and append arbitrary int literal.
+ */
+static void
+append_int_repr_from_gvalue (GString *result_string, GValue *gvalue)
+{
+  if (G_VALUE_HOLDS_INT (gvalue))
+    {
+      g_string_append_printf (result_string, "%d", g_value_get_int (gvalue));
+    }
+  else
+    {
+      g_warning ("Expecting GValue holding an int.");
+      /* Append arbitrary int, so no errors in signature of Scheme call.
+       * The call might not yield result the user intended.
+       */
+      g_string_append (result_string, "1");
+    }
 }
