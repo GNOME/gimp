@@ -1423,25 +1423,6 @@ prefs_dialog_new (Gimp       *gimp,
     grid = prefs_grid_new (GTK_CONTAINER (vbox2));
     row = 0;
 
-    prefs_profile_combo_box_add (color_config,
-                                 "simulation-profile",
-                                 store,
-                                 _("Select Soft-Proofing Color Profile"),
-                                 _("_Soft-proofing profile:"),
-                                 GTK_GRID (grid), row++, size_group,
-                                 object, "color-profile-path");
-
-    prefs_enum_combo_box_add (color_config,
-                              "simulation-rendering-intent", 0, 0,
-                              _("Re_ndering intent:"),
-                              GTK_GRID (grid), row++, size_group);
-
-    button = gimp_prop_check_button_new (color_config,
-                                         "simulation-use-black-point-compensation",
-                                         _("Use black _point compensation"));
-    gtk_grid_attach (GTK_GRID (grid), button, 1, row, 1, 1);
-    row++;
-
     prefs_boolean_combo_box_add (color_config,
                                  "simulation-optimize",
                                  _("Speed"),

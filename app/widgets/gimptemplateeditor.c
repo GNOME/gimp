@@ -24,6 +24,7 @@
 
 #include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -76,6 +77,9 @@ struct _GimpTemplateEditorPrivate
   GtkWidget     *chain_button;
   GtkWidget     *precision_combo;
   GtkWidget     *profile_combo;
+  GtkWidget     *simulation_profile_combo;
+  GtkWidget     *simulation_intent_combo;
+  GtkWidget     *simulation_bpc_toggle;
 };
 
 #define GET_PRIVATE(editor) \
@@ -95,6 +99,13 @@ static void    gimp_template_editor_get_property   (GObject            *object,
 
 static void gimp_template_editor_precision_changed (GtkWidget          *widget,
                                                     GimpTemplateEditor *editor);
+static void gimp_template_editor_simulation_intent_changed
+                                                   (GtkWidget          *widget,
+                                                    GimpTemplateEditor *editor);
+static void gimp_template_editor_simulation_bpc_toggled
+                                                   (GtkWidget          *widget,
+                                                    GimpTemplateEditor *editor);
+
 static void gimp_template_editor_aspect_callback   (GtkWidget          *widget,
                                                     GimpTemplateEditor *editor);
 static void gimp_template_editor_template_notify   (GimpTemplate       *template,
@@ -301,10 +312,21 @@ gimp_template_editor_constructed (GObject *object)
   gtk_container_add (GTK_CONTAINER (private->expander), frame);
   gtk_widget_show (frame);
 
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (scrolled_window, -1, 300);
+  gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window),
+                                       GTK_SHADOW_OUT);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_NEVER,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
+
   grid = gtk_grid_new ();
   gtk_grid_set_column_spacing (GTK_GRID (grid), 6);
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
-  gtk_container_add (GTK_CONTAINER (frame), grid);
+  gtk_container_set_border_width (GTK_CONTAINER (grid), 16);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), grid);
   gtk_widget_show (grid);
 
   adjustment = gtk_adjustment_new (1, 1, 1, 1, 10, 0);
@@ -434,6 +456,42 @@ gimp_template_editor_constructed (GObject *object)
   gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
                             _("Co_lor profile:"), 0.0, 0.5,
                             private->profile_combo, 1);
+
+  private->simulation_profile_combo =
+    gimp_prop_profile_combo_box_new (G_OBJECT (template),
+                                     "simulation-profile",
+                                     NULL,
+                                     _("Choose A Soft-Proofing Color Profile"),
+                                     G_OBJECT (private->gimp->config),
+                                     "color-profile-path");
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Soft-proofing color profile:"), 0.0, 0.5,
+                            private->simulation_profile_combo, 1);
+
+  private->simulation_intent_combo =
+    gimp_enum_combo_box_new (GIMP_TYPE_COLOR_RENDERING_INTENT);
+
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            _("_Soft-proofing rendering intent:"), 0.0, 0.5,
+                            private->simulation_intent_combo, 1);
+
+  gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->simulation_intent_combo),
+                                 GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+
+  g_signal_connect (private->simulation_intent_combo, "changed",
+                    G_CALLBACK (gimp_template_editor_simulation_intent_changed),
+                    editor);
+
+  private->simulation_bpc_toggle =
+    gtk_check_button_new_with_mnemonic (_("_Use Black Point Compensation"));
+
+  gimp_grid_attach_aligned (GTK_GRID (grid), 0, row++,
+                            NULL, 0.0, 0.5,
+                            private->simulation_bpc_toggle, 1);
+
+  g_signal_connect (private->simulation_bpc_toggle, "toggled",
+                    G_CALLBACK (gimp_template_editor_simulation_bpc_toggled),
+                    editor);
 
   combo = gimp_prop_enum_combo_box_new (G_OBJECT (template),
                                         "fill-type",
@@ -649,6 +707,35 @@ gimp_template_editor_precision_changed (GtkWidget          *widget,
 }
 
 static void
+gimp_template_editor_simulation_intent_changed (GtkWidget          *widget,
+                                                GimpTemplateEditor *editor)
+{
+  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  GimpColorRenderingIntent   intent;
+
+  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
+                                 (gint *) &intent);
+
+  g_object_set (private->template,
+                "simulation-intent", intent,
+                NULL);
+}
+
+static void
+gimp_template_editor_simulation_bpc_toggled (GtkWidget          *widget,
+                                             GimpTemplateEditor *editor)
+{
+  GimpTemplateEditorPrivate *private = GET_PRIVATE (editor);
+  gboolean                   bpc     = FALSE;
+
+  bpc = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget));
+
+  g_object_set (private->template,
+                "simulation-bpc", bpc,
+                NULL);
+}
+
+static void
 gimp_template_editor_set_pixels (GimpTemplateEditor *editor,
                                  GimpTemplate       *template)
 {
@@ -798,8 +885,10 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
       ! strcmp (param_spec->name, "image-type") ||
       ! strcmp (param_spec->name, "precision"))
     {
-      GtkListStore *profile_store;
-      GFile        *file;
+      GimpColorProfile        *profile;
+      GtkListStore            *profile_store;
+      GFile                   *file;
+      gchar                   *path;
 
       file = gimp_directory_file ("profilerc", NULL);
       profile_store = gimp_color_profile_store_new (file);
@@ -813,6 +902,36 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
 
       gtk_combo_box_set_model (GTK_COMBO_BOX (private->profile_combo),
                                GTK_TREE_MODEL (profile_store));
+
+      /* Simulation Profile should not be set by default */
+      file = gimp_directory_file ("profilerc", NULL);
+      profile_store = gimp_color_profile_store_new (file);
+      g_object_unref (file);
+
+      gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (profile_store),
+                                         NULL, NULL);
+      /* Add Preferred CMYK profile if it exists */
+      profile =
+        gimp_color_config_get_cmyk_color_profile (GIMP_COLOR_CONFIG (private->gimp->config->color_management),
+                                                  NULL);
+      if (profile)
+        {
+          g_object_get (G_OBJECT (private->gimp->config->color_management),
+                        "cmyk-profile", &path, NULL);
+          file = gimp_file_new_for_config_path (path, NULL);
+          g_free (path);
+          text = g_strdup_printf (_("Preferred CMYK (%s)"),
+                                  gimp_color_profile_get_label (profile));
+          g_object_unref (profile);
+          gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (profile_store),
+                                             file, text);
+          g_object_unref (file);
+          g_free (text);
+        }
+
+      gtk_combo_box_set_model (GTK_COMBO_BOX (private->simulation_profile_combo),
+                               GTK_TREE_MODEL (profile_store));
+
       g_object_unref (profile_store);
 
       g_object_get (template,
@@ -820,6 +939,16 @@ gimp_template_editor_template_notify (GimpTemplate       *template,
                     NULL);
 
       gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->profile_combo),
+                                                    file, NULL);
+
+      if (file)
+        g_object_unref (file);
+
+      g_object_get (template,
+                    "simulation-profile", &file,
+                    NULL);
+
+      gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (private->simulation_profile_combo),
                                                     file, NULL);
 
       if (file)

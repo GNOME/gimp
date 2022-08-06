@@ -85,6 +85,11 @@ GimpImageBaseType   gimp_template_get_base_type       (GimpTemplate *template);
 GimpPrecision       gimp_template_get_precision       (GimpTemplate *template);
 
 GimpColorProfile  * gimp_template_get_color_profile   (GimpTemplate *template);
+GimpColorProfile  * gimp_template_get_simulation_profile
+                                                      (GimpTemplate *template);
+GimpColorRenderingIntent gimp_template_get_simulation_intent
+                                                      (GimpTemplate *template);
+gboolean            gimp_template_get_simulation_bpc  (GimpTemplate *template);
 
 GimpFillType        gimp_template_get_fill_type       (GimpTemplate *template);
 

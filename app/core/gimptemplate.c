@@ -59,6 +59,9 @@ enum
   PROP_LINEAR,
   PROP_TRC,
   PROP_COLOR_PROFILE,
+  PROP_SIMULATION_PROFILE,
+  PROP_SIMULATION_BPC,
+  PROP_SIMULATION_INTENT,
   PROP_FILL_TYPE,
   PROP_COMMENT,
   PROP_FILENAME,
@@ -72,23 +75,26 @@ typedef struct _GimpTemplatePrivate GimpTemplatePrivate;
 
 struct _GimpTemplatePrivate
 {
-  gint               width;
-  gint               height;
-  GimpUnit           unit;
+  gint                     width;
+  gint                     height;
+  GimpUnit                 unit;
 
-  gdouble            xresolution;
-  gdouble            yresolution;
-  GimpUnit           resolution_unit;
+  gdouble                  xresolution;
+  gdouble                  yresolution;
+  GimpUnit                 resolution_unit;
 
-  GimpImageBaseType  base_type;
-  GimpPrecision      precision;
+  GimpImageBaseType        base_type;
+  GimpPrecision            precision;
 
-  GFile             *color_profile;
+  GFile                   *color_profile;
+  GFile                   *simulation_profile;
+  GimpColorRenderingIntent simulation_intent;
+  gboolean                 simulation_bpc;
 
-  GimpFillType       fill_type;
+  GimpFillType             fill_type;
 
-  gchar             *comment;
-  gchar             *filename;
+  gchar                   *comment;
+  gchar                   *filename;
 
   guint64            initial_size;
 };
@@ -217,6 +223,28 @@ gimp_template_class_init (GimpTemplateClass *klass)
                            G_TYPE_FILE,
                            GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_PROP_OBJECT (object_class, PROP_SIMULATION_PROFILE,
+                           "simulation-profile",
+                           _("Simulation profile"),
+                           NULL,
+                           G_TYPE_FILE,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_ENUM (object_class, PROP_SIMULATION_INTENT,
+                         "simulation-intent",
+                         _("Simulation Rendering Intent"),
+                         NULL,
+                         GIMP_TYPE_COLOR_RENDERING_INTENT,
+                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SIMULATION_BPC,
+                            "simulation-bpc",
+                            _("Use Black Point Compensation for Simulation"),
+                            NULL,
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_FILL_TYPE,
                          "fill-type",
                          _("Fill type"),
@@ -258,6 +286,7 @@ gimp_template_finalize (GObject *object)
   GimpTemplatePrivate *private = GET_PRIVATE (object);
 
   g_clear_object (&private->color_profile);
+  g_clear_object (&private->simulation_profile);
   g_clear_pointer (&private->comment,  g_free);
   g_clear_pointer (&private->filename, g_free);
 
@@ -316,6 +345,17 @@ gimp_template_set_property (GObject      *object,
       if (private->color_profile)
         g_object_unref (private->color_profile);
       private->color_profile = g_value_dup_object (value);
+      break;
+    case PROP_SIMULATION_PROFILE:
+      if (private->simulation_profile)
+        g_object_unref (private->simulation_profile);
+      private->simulation_profile = g_value_dup_object (value);
+      break;
+    case PROP_SIMULATION_INTENT:
+      private->simulation_intent = g_value_get_enum (value);
+      break;
+    case PROP_SIMULATION_BPC:
+      private->simulation_bpc = g_value_get_boolean (value);
       break;
     case PROP_FILL_TYPE:
       private->fill_type = g_value_get_enum (value);
@@ -383,6 +423,15 @@ gimp_template_get_property (GObject    *object,
       break;
     case PROP_COLOR_PROFILE:
       g_value_set_object (value, private->color_profile);
+      break;
+    case PROP_SIMULATION_PROFILE:
+      g_value_set_object (value, private->simulation_profile);
+      break;
+    case PROP_SIMULATION_INTENT:
+      g_value_set_enum (value, private->simulation_intent);
+      break;
+    case PROP_SIMULATION_BPC:
+      g_value_set_boolean (value, private->simulation_bpc);
       break;
     case PROP_FILL_TYPE:
       g_value_set_enum (value, private->fill_type);
@@ -571,6 +620,46 @@ gimp_template_get_color_profile (GimpTemplate *template)
     return gimp_color_profile_new_from_file (private->color_profile, NULL);
 
   return NULL;
+}
+
+GimpColorProfile *
+gimp_template_get_simulation_profile (GimpTemplate *template)
+{
+  GimpTemplatePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+
+  private = GET_PRIVATE (template);
+
+  if (private->simulation_profile)
+    return gimp_color_profile_new_from_file (private->simulation_profile,
+                                             NULL);
+
+  return NULL;
+}
+
+GimpColorRenderingIntent
+gimp_template_get_simulation_intent (GimpTemplate *template)
+{
+  GimpTemplatePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+
+  private = GET_PRIVATE (template);
+
+  return private->simulation_intent;
+}
+
+gboolean
+gimp_template_get_simulation_bpc (GimpTemplate *template)
+{
+  GimpTemplatePrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_TEMPLATE (template), FALSE);
+
+  private = GET_PRIVATE (template);
+
+  return private->simulation_bpc;
 }
 
 GimpFillType

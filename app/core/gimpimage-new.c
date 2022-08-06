@@ -92,12 +92,14 @@ gimp_image_new_from_template (Gimp         *gimp,
                               GimpTemplate *template,
                               GimpContext  *context)
 {
-  GimpImage         *image;
-  GimpLayer         *layer;
-  GimpColorProfile  *profile;
-  gint               width, height;
-  gboolean           has_alpha;
-  const gchar       *comment;
+  GimpImage               *image;
+  GimpLayer               *layer;
+  GimpColorProfile        *profile;
+  GimpColorRenderingIntent intent;
+  gboolean                 bpc;
+  gint                     width, height;
+  gboolean                 has_alpha;
+  const gchar             *comment;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (GIMP_IS_TEMPLATE (template), NULL);
@@ -135,6 +137,16 @@ gimp_image_new_from_template (Gimp         *gimp,
   gimp_image_set_color_profile (image, profile, NULL);
   if (profile)
     g_object_unref (profile);
+
+  profile = gimp_template_get_simulation_profile (template);
+  gimp_image_set_simulation_profile (image, profile);
+  if (profile)
+    g_object_unref (profile);
+
+  intent = gimp_template_get_simulation_intent (template);
+  gimp_image_set_simulation_intent (image, intent);
+  bpc = gimp_template_get_simulation_bpc (template);
+  gimp_image_set_simulation_bpc (image, bpc);
 
   width  = gimp_image_get_width (image);
   height = gimp_image_get_height (image);
