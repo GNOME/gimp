@@ -40,7 +40,7 @@ Core:
   - The soft-proof profile, soft-proofing rendering intent and whether
     black point compensation is used when soft-proofing are now image
     data. These have also been moved to the Image menu (out of View).
-    They are not stored to the XCF file yet.
+    The soft-proof profile is also stored in the XCF file now.
   - Hacks on canvas rulers and statusbar added in GIMP 2.99.10 for macOS
     triggering too big redraws were removed. This depends on patches
     added to upcoming GTK+ 3.24.35.
@@ -61,6 +61,11 @@ Tools:
       understandable.
   - Full text layer's text size will now be changed when changing font
     size in the text editor window, when no text is selected.
+  - Raise tool options before blinking specific settings widgets when
+    some tools fail to work because of various tool options settings
+    (e.g. selection tool cannot remove from an empty selection; warp
+    tool cannot stroke; move tool cannot move because of the types of
+    object to move isn't selected; and so on).
 
 Graphical User Interface:
 
@@ -79,6 +84,18 @@ Graphical User Interface:
   - Slight tweak of the "You will have to restart GIMP" popup: the list
     now uses nicer "bullet point" characters and the nick (short
     description) is shown rather than the internal property name.
+  - New soft-proof toggle in status bar to see the soft-proofing status
+    and enable/disable it. It is only active when a soft-proof profile
+    was set.
+  - GimpContainerTreeView (e.g. Layers/Channels/Vectors dockables) now
+    have zooming through ctrl+mouse wheel (for preview size).
+  - GimpContainerTreeView (e.g. Layers/Channels/Vectors dockables) now
+    have zooming with touchpad pinch (touchscreen pinch now kinda exists
+    but is not so usable in our tests, at least on Linux through
+    libinput) for preview size.
+  - Gradient editor now has zooming with touchpad pinch (touchscreen
+    pinch not so fancy either, at least on Linux through libinput,
+    similar to GimpContainerTreeView case).
 
 Command Line Interface:
 
@@ -161,6 +178,9 @@ Plug-ins:
       Note: this is not a GObject Introspected Scheme binding, just our
       own binding based on script-fu interpreter. Script-fu plug-ins
       still don't have access to the whole of libgimp.
+    * New function 'script-fu-register-filter' to declare a multi-layer
+      capable script.
+    * Many script-fu scripts were ported to newer API.
   - FLI:
     * Internal type usage improvements, mnemonics added, etc.
     * 1-frame animation now loaded correctly (it's not really an
@@ -312,6 +332,19 @@ Build:
   - Separate libgimp-scriptfu-3.0 library for a future where it will be
     shared by several binaries.
   - GEGL dependency's minimum required version bumped to 0.4.38.
+  - "flatpak" job now uses a gnome-runtime-images migrated to Quay.
+  - "win*-nightly" jobs removed.
+  - Improved meson infrastructure to support Windows installer languages
+    which don't have base language files provided by upstream InnoSetup.
+    We started using it for Kabyle (which was showing up as "English"
+    otherwise!).
+  - After various fixes and implementations of missing build features to
+    the meson scripts, we are going to start advising packagers (for all
+    platforms) to build GIMP 2.99.12 with meson as a trial by fire to
+    make it the new default build system.
+  - New "sources-meson" CI job to distribute a tarball built with the
+    meson scripts.
+  - Improved support for homebrew build on macOS.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
