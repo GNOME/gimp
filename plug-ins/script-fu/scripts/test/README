@@ -2,4 +2,6 @@ Scripts to test script-fu-interpreter.
 
 Not usually installed.
 
+Should not be localized i18n : for developers only.
+
 To use, copy the test<x> dirs into /plugins and ensure the .scm files have execute permission.

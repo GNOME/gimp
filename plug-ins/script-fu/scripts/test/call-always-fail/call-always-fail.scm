@@ -18,7 +18,7 @@
 
 (script-fu-register "script-fu-call-always-fail"
   "Call always fail"
-  _"Expect error dialog in Gimp, having concatenated error messages"
+  "Expect error dialog in Gimp, having concatenated error messages"
   "lkk"
   "lkk"
   "2022"

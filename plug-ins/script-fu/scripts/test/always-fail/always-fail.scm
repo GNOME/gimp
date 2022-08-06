@@ -19,7 +19,7 @@
 
 (script-fu-register "script-fu-always-fail"
   "Always fail"
-  _"Expect error dialog in Gimp, or PDB execution error when called by another"
+  "Expect error dialog in Gimp, or PDB execution error when called by another"
   "lkk"
   "lkk"
   "2022"

@@ -18,7 +18,7 @@
 
 (script-fu-register "test7"
   "Test SF interpreter 7"
-  _"Just gives a message from Gimp"
+  "Just gives a message from Gimp"
   "lkk"
   "lkk"
   "2022"
