@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-01 23:22+0000\n"
-"PO-Revision-Date: 2022-08-03 10:32+0100\n"
+"POT-Creation-Date: 2022-08-06 17:13+0000\n"
+"PO-Revision-Date: 2022-08-06 23:30+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -420,7 +420,7 @@ msgid "Fonts"
 msgstr "Tipos de letra"
 
 #: app/actions/actions.c:175 app/dialogs/dialogs.c:433
-#: app/widgets/gimpgradienteditor.c:282
+#: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "Editor de gradientes"
 
@@ -13106,15 +13106,15 @@ msgstr "Não é possível criar a pasta \"%s\": %s"
 msgid "No patterns available for this operation."
 msgstr "Não há texturas disponíveis para esta operação."
 
-#: app/core/gimp-utils.c:1396
+#: app/core/gimp-utils.c:1439
 msgid "This parser does not support imbricated lists."
 msgstr "Este analisador não oferece suporte a listas imbricadas."
 
-#: app/core/gimp-utils.c:1419
+#: app/core/gimp-utils.c:1462
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> tem de estar dentro das etiquetas <ol> ou <ul>."
 
-#: app/core/gimp-utils.c:1424
+#: app/core/gimp-utils.c:1467
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Etiqueta desconhecida <%s>."
@@ -27232,94 +27232,94 @@ msgstr "Cor de preenchimento"
 msgid "_Antialiasing"
 msgstr "_Antisserilhado"
 
-#: app/widgets/gimpgradienteditor.c:582
+#: app/widgets/gimpgradienteditor.c:609
 msgid "Left Endpoint Color"
 msgstr "Cor do extremo esquerdo"
 
-#: app/widgets/gimpgradienteditor.c:584
+#: app/widgets/gimpgradienteditor.c:611
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Cor do extremo esquerdo do segmento do gradiente"
 
-#: app/widgets/gimpgradienteditor.c:627
+#: app/widgets/gimpgradienteditor.c:654
 msgid "Right Endpoint Color"
 msgstr "Cor do extremo direito"
 
-#: app/widgets/gimpgradienteditor.c:629
+#: app/widgets/gimpgradienteditor.c:656
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Cor do extremo direito do segmento do gradiente"
 
-#: app/widgets/gimpgradienteditor.c:882
+#: app/widgets/gimpgradienteditor.c:930
 #, c-format
-msgid "Zoom factor: %d:1"
-msgstr "Fator de ampliação: %d:1"
+msgid "Zoom factor: %f:1"
+msgstr "Fator de ampliação: %f:1"
 
-#: app/widgets/gimpgradienteditor.c:885
+#: app/widgets/gimpgradienteditor.c:933
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "A mostrar [%0.4f, %0.4f]"
 
-#: app/widgets/gimpgradienteditor.c:1246
+#: app/widgets/gimpgradienteditor.c:1298
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Posição: %0.4f"
 
-#: app/widgets/gimpgradienteditor.c:1247
+#: app/widgets/gimpgradienteditor.c:1299
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:1249
+#: app/widgets/gimpgradienteditor.c:1301
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: app/widgets/gimpgradienteditor.c:1251
+#: app/widgets/gimpgradienteditor.c:1303
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Luminância: %0.1f    Opacidade: %0.1f"
 
-#: app/widgets/gimpgradienteditor.c:1283
+#: app/widgets/gimpgradienteditor.c:1335
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:1294
+#: app/widgets/gimpgradienteditor.c:1346
 msgid "Foreground color set to:"
 msgstr "Cor de 1º plano definida como:"
 
-#: app/widgets/gimpgradienteditor.c:1301
+#: app/widgets/gimpgradienteditor.c:1353
 msgid "Background color set to:"
 msgstr "Cor de fundo definida como:"
 
-#: app/widgets/gimpgradienteditor.c:1532 app/widgets/gimpgradienteditor.c:1593
+#: app/widgets/gimpgradienteditor.c:1627 app/widgets/gimpgradienteditor.c:1688
 #, c-format
 msgid "%s-Drag: move & compress"
 msgstr "[%s] + [arrastar]: mover e comprimir"
 
-#: app/widgets/gimpgradienteditor.c:1537
+#: app/widgets/gimpgradienteditor.c:1632
 msgid "Drag: move"
 msgstr "[Arrastar]: mover"
 
-#: app/widgets/gimpgradienteditor.c:1544 app/widgets/gimpgradienteditor.c:1557
-#: app/widgets/gimpgradienteditor.c:1570 app/widgets/gimpgradienteditor.c:1591
+#: app/widgets/gimpgradienteditor.c:1639 app/widgets/gimpgradienteditor.c:1652
+#: app/widgets/gimpgradienteditor.c:1665 app/widgets/gimpgradienteditor.c:1686
 #, c-format
 msgid "%s-Click: extend selection"
 msgstr "[%s] + [clique]: alargar seleção"
 
-#: app/widgets/gimpgradienteditor.c:1549 app/widgets/gimpgradienteditor.c:1562
+#: app/widgets/gimpgradienteditor.c:1644 app/widgets/gimpgradienteditor.c:1657
 msgid "Click: select"
 msgstr "[Clique]: selecionar"
 
-#: app/widgets/gimpgradienteditor.c:1575 app/widgets/gimpgradienteditor.c:1597
+#: app/widgets/gimpgradienteditor.c:1670 app/widgets/gimpgradienteditor.c:1692
 msgid "Click: select    Drag: move"
 msgstr "[Clique]: selecionar    [Arrastar]: mover"
 
-#: app/widgets/gimpgradienteditor.c:1809 app/widgets/gimpgradienteditor.c:1817
+#: app/widgets/gimpgradienteditor.c:1904 app/widgets/gimpgradienteditor.c:1912
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Posição da alça: %0.4f"
 
-#: app/widgets/gimpgradienteditor.c:1834
+#: app/widgets/gimpgradienteditor.c:1929
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Distância: %0.4f"
