@@ -412,15 +412,15 @@ gimp_drawable_get_line_art_fill_buffer (GimpDrawable      *drawable,
       GimpPickable *pickable = gimp_line_art_get_input (line_art);
 
       /* This cannot be a pattern fill. */
-      g_return_val_if_fail (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID,
+      g_return_val_if_fail (gimp_fill_options_get_style (options) != GIMP_FILL_STYLE_PATTERN,
                             NULL);
       /* Meaningful only in above/below layer cases. */
       g_return_val_if_fail (GIMP_IS_DRAWABLE (pickable), NULL);
 
-      /* Fill options foreground color is the expected color (can be
-       * actual fg or bg in the user context).
-       */
-      gimp_context_get_foreground (GIMP_CONTEXT (options), &fill_color);
+      if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
+        gimp_context_get_foreground (GIMP_CONTEXT (options), &fill_color);
+      else if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR)
+        gimp_context_get_background (GIMP_CONTEXT (options), &fill_color);
 
       fill_buffer   = gimp_drawable_get_buffer (drawable);
       fill_offset_x = gimp_item_get_offset_x (GIMP_ITEM (drawable)) -

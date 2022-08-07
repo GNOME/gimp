@@ -290,7 +290,7 @@ gimp_drawable_tree_view_drop_color (GimpContainerTreeView   *view,
       GimpImage       *image   = gimp_item_get_image (GIMP_ITEM (dest_viewable));
       GimpFillOptions *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
-      gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+      gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
       gimp_context_set_foreground (GIMP_CONTEXT (options), color);
 
       gimp_drawable_edit_fill (GIMP_DRAWABLE (dest_viewable),
@@ -394,7 +394,7 @@ gimp_drawable_tree_view_new_color_dropped (GtkWidget     *widget,
   GimpImage        *image   = gimp_item_tree_view_get_image (view);
   GimpFillOptions  *options = gimp_fill_options_new (image->gimp, NULL, FALSE);
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);
 
   gimp_drawable_tree_view_new_dropped (view, options,

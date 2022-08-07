@@ -335,7 +335,7 @@ gimp_text_class_init (GimpTextClass *klass)
    GIMP_CONFIG_PROP_ENUM (object_class, PROP_OUTLINE_STYLE,
                           "outline-style", NULL, NULL,
                           GIMP_TYPE_FILL_STYLE,
-                          GIMP_FILL_STYLE_SOLID,
+                          GIMP_FILL_STYLE_FG_COLOR,
                           GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_OBJECT (object_class, PROP_OUTLINE_PATTERN,
                             "outline-pattern", NULL, NULL,

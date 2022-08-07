@@ -282,7 +282,7 @@ gimp_text_options_class_init (GimpTextOptionsClass *klass)
                           "outline-style",
                           NULL, NULL,
                           GIMP_TYPE_FILL_STYLE,
-                          GIMP_FILL_STYLE_SOLID,
+                          GIMP_FILL_STYLE_FG_COLOR,
                           GIMP_PARAM_STATIC_STRINGS);
    GIMP_CONFIG_PROP_RGB (object_class, PROP_OUTLINE_FOREGROUND,
                          "outline-foreground",

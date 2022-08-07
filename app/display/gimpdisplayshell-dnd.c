@@ -384,12 +384,16 @@ gimp_display_shell_dnd_fill (GimpDisplayShell *shell,
       /* FIXME: there should be a virtual method for this that the
        *        GimpTextLayer can override.
        */
-      if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_SOLID &&
-          gimp_item_is_text_layer (iter->data))
+      if (gimp_item_is_text_layer (iter->data) &&
+          (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR ||
+           gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_BG_COLOR))
         {
           GimpRGB color;
 
-          gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+          if (gimp_fill_options_get_style (options) == GIMP_FILL_STYLE_FG_COLOR)
+            gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+          else
+            gimp_context_get_background (GIMP_CONTEXT (options), &color);
 
           gimp_text_layer_set (iter->data, NULL,
                                "color", &color,
@@ -441,7 +445,7 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
 
   GIMP_LOG (DND, NULL);
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
   gimp_context_set_foreground (GIMP_CONTEXT (options), color);
 
   gimp_display_shell_dnd_fill (shell, options,

@@ -110,7 +110,7 @@ gimp_fill_options_class_init (GimpFillOptionsClass *klass)
                          _("Style"),
                          NULL,
                          GIMP_TYPE_FILL_STYLE,
-                         GIMP_FILL_STYLE_SOLID,
+                         GIMP_FILL_STYLE_FG_COLOR,
                          GIMP_PARAM_STATIC_STRINGS);
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ANTIALIAS,
@@ -266,6 +266,7 @@ gimp_fill_options_new (Gimp        *gimp,
     {
       gimp_context_define_properties (GIMP_CONTEXT (options),
                                       GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                                      GIMP_CONTEXT_PROP_MASK_BACKGROUND |
                                       GIMP_CONTEXT_PROP_MASK_PATTERN,
                                       FALSE);
 
@@ -278,7 +279,7 @@ gimp_fill_options_new (Gimp        *gimp,
 GimpFillStyle
 gimp_fill_options_get_style (GimpFillOptions *options)
 {
-  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), GIMP_FILL_STYLE_SOLID);
+  g_return_val_if_fail (GIMP_IS_FILL_OPTIONS (options), GIMP_FILL_STYLE_FG_COLOR);
 
   return GET_PRIVATE (options)->style;
 }
@@ -422,7 +423,7 @@ gimp_fill_options_set_by_fill_type (GimpFillOptions  *options,
       return FALSE;
     }
 
-  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_SOLID);
+  gimp_fill_options_set_style (options, GIMP_FILL_STYLE_FG_COLOR);
   gimp_context_set_foreground (GIMP_CONTEXT (options), &color);
   private->undo_desc = undo_desc;
 
@@ -475,8 +476,11 @@ gimp_fill_options_get_undo_desc (GimpFillOptions *options)
 
   switch (private->style)
     {
-    case GIMP_FILL_STYLE_SOLID:
-      return C_("undo-type", "Fill with Solid Color");
+    case GIMP_FILL_STYLE_FG_COLOR:
+      return C_("undo-type", "Fill with Foreground Color");
+
+    case GIMP_FILL_STYLE_BG_COLOR:
+      return C_("undo-type", "Fill with Background Color");
 
     case GIMP_FILL_STYLE_PATTERN:
       return C_("undo-type", "Fill with Pattern");
@@ -546,11 +550,23 @@ gimp_fill_options_fill_buffer (GimpFillOptions *options,
 
   switch (gimp_fill_options_get_style (options))
     {
-    case GIMP_FILL_STYLE_SOLID:
+    case GIMP_FILL_STYLE_FG_COLOR:
       {
         GimpRGB color;
 
         gimp_context_get_foreground (GIMP_CONTEXT (options), &color);
+        gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
+
+        gimp_drawable_fill_buffer (drawable, buffer,
+                                   &color, NULL, 0, 0);
+      }
+      break;
+
+    case GIMP_FILL_STYLE_BG_COLOR:
+      {
+        GimpRGB color;
+
+        gimp_context_get_background (GIMP_CONTEXT (options), &color);
         gimp_palettes_add_color_history (GIMP_CONTEXT (options)->gimp, &color);
 
         gimp_drawable_fill_buffer (drawable, buffer,

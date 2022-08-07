@@ -79,7 +79,8 @@ gimp_drawable_edit_can_fill_direct (GimpDrawable    *drawable,
     {
       switch (gimp_fill_options_get_style (options))
         {
-        case GIMP_FILL_STYLE_SOLID:
+        case GIMP_FILL_STYLE_FG_COLOR:
+        case GIMP_FILL_STYLE_BG_COLOR:
           return TRUE;
 
         case GIMP_FILL_STYLE_PATTERN:

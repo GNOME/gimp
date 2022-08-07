@@ -423,6 +423,7 @@ gimp_stroke_options_new (Gimp        *gimp,
     {
       gimp_context_define_properties (GIMP_CONTEXT (options),
                                       GIMP_CONTEXT_PROP_MASK_FOREGROUND |
+                                      GIMP_CONTEXT_PROP_MASK_BACKGROUND |
                                       GIMP_CONTEXT_PROP_MASK_PATTERN,
                                       FALSE);
 

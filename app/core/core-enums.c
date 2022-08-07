@@ -592,14 +592,16 @@ gimp_fill_style_get_type (void)
 {
   static const GEnumValue values[] =
   {
-    { GIMP_FILL_STYLE_SOLID, "GIMP_FILL_STYLE_SOLID", "solid" },
+    { GIMP_FILL_STYLE_FG_COLOR, "GIMP_FILL_STYLE_FG_COLOR", "fg-color" },
+    { GIMP_FILL_STYLE_BG_COLOR, "GIMP_FILL_STYLE_BG_COLOR", "bg-color" },
     { GIMP_FILL_STYLE_PATTERN, "GIMP_FILL_STYLE_PATTERN", "pattern" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_FILL_STYLE_SOLID, NC_("fill-style", "Solid color"), NULL },
+    { GIMP_FILL_STYLE_FG_COLOR, NC_("fill-style", "Foreground color"), NULL },
+    { GIMP_FILL_STYLE_BG_COLOR, NC_("fill-style", "Background color"), NULL },
     { GIMP_FILL_STYLE_PATTERN, NC_("fill-style", "Pattern"), NULL },
     { 0, NULL, NULL }
   };

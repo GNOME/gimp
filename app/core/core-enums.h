@@ -296,8 +296,9 @@ GType gimp_fill_style_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_FILL_STYLE_SOLID,  /*< desc="Solid color" >*/
-  GIMP_FILL_STYLE_PATTERN /*< desc="Pattern"     >*/
+  GIMP_FILL_STYLE_FG_COLOR,  /*< desc="Foreground color" >*/
+  GIMP_FILL_STYLE_BG_COLOR,  /*< desc="Background color" >*/
+  GIMP_FILL_STYLE_PATTERN    /*< desc="Pattern"          >*/
 } GimpFillStyle;
 
 

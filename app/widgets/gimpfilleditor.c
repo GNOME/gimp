@@ -126,7 +126,17 @@ gimp_fill_editor_constructed (GObject *object)
       gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
                                     GIMP_CONTEXT (editor->options));
       gimp_enum_radio_box_add (GTK_BOX (box), color_button,
-                               GIMP_FILL_STYLE_SOLID, FALSE);
+                               GIMP_FILL_STYLE_FG_COLOR, FALSE);
+
+      color_button = gimp_prop_color_button_new (G_OBJECT (editor->options),
+                                                 "background",
+                                                 _("Fill BG Color"),
+                                                 1, 24,
+                                                 GIMP_COLOR_AREA_SMALL_CHECKS);
+      gimp_color_panel_set_context (GIMP_COLOR_PANEL (color_button),
+                                    GIMP_CONTEXT (editor->options));
+      gimp_enum_radio_box_add (GTK_BOX (box), color_button,
+                               GIMP_FILL_STYLE_BG_COLOR, FALSE);
 
       pattern_box = gimp_prop_pattern_box_new (NULL,
                                                GIMP_CONTEXT (editor->options),
