@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-01 23:22+0000\n"
-"PO-Revision-Date: 2022-08-02 14:13+0300\n"
+"POT-Creation-Date: 2022-08-06 17:13+0000\n"
+"PO-Revision-Date: 2022-08-07 18:54+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -412,7 +412,7 @@ msgid "Fonts"
 msgstr "Шрифти"
 
 #: app/actions/actions.c:175 app/dialogs/dialogs.c:433
-#: app/widgets/gimpgradienteditor.c:282
+#: app/widgets/gimpgradienteditor.c:295
 msgid "Gradient Editor"
 msgstr "Редактор градієнтів"
 
@@ -12920,16 +12920,16 @@ msgstr "Не вдалось створити теку \"%s\": %s"
 msgid "No patterns available for this operation."
 msgstr "Немає доступних текстур для цієї операції."
 
-#: app/core/gimp-utils.c:1396
+#: app/core/gimp-utils.c:1439
 msgid "This parser does not support imbricated lists."
 msgstr ""
 "У цьому засобі обробки не передбачено підтримки упорядкованих списків."
 
-#: app/core/gimp-utils.c:1419
+#: app/core/gimp-utils.c:1462
 msgid "<li> must be inside <ol> or <ul> tags."
 msgstr "<li> має бути вкладено до теґів <ol> або <ul>."
 
-#: app/core/gimp-utils.c:1424
+#: app/core/gimp-utils.c:1467
 #, c-format
 msgid "Unknown tag <%s>."
 msgstr "Невідомий програмі теґ <%s>."
@@ -26894,94 +26894,95 @@ msgstr "Колір заповнення"
 msgid "_Antialiasing"
 msgstr "_Згладжування"
 
-#: app/widgets/gimpgradienteditor.c:582
+#: app/widgets/gimpgradienteditor.c:609
 msgid "Left Endpoint Color"
 msgstr "Колір крайньої лівої точки"
 
-#: app/widgets/gimpgradienteditor.c:584
+#: app/widgets/gimpgradienteditor.c:611
 msgid "Gradient Segment's Left Endpoint Color"
 msgstr "Колір крайньої лівої точки сегменту градієнта"
 
-#: app/widgets/gimpgradienteditor.c:627
+#: app/widgets/gimpgradienteditor.c:654
 msgid "Right Endpoint Color"
 msgstr "Колір крайньої правої точки"
 
-#: app/widgets/gimpgradienteditor.c:629
+#: app/widgets/gimpgradienteditor.c:656
 msgid "Gradient Segment's Right Endpoint Color"
 msgstr "Колір крайньої правої точки сегменту градієнта"
 
-#: app/widgets/gimpgradienteditor.c:882
+#: app/widgets/gimpgradienteditor.c:930
 #, c-format
-msgid "Zoom factor: %d:1"
-msgstr "Масштаб: %d:1"
+#| msgid "Zoom factor: %d:1"
+msgid "Zoom factor: %f:1"
+msgstr "Масштаб: %f:1"
 
-#: app/widgets/gimpgradienteditor.c:885
+#: app/widgets/gimpgradienteditor.c:933
 #, c-format
 msgid "Displaying [%0.4f, %0.4f]"
 msgstr "Показування [%0.4f, %0.4f]"
 
-#: app/widgets/gimpgradienteditor.c:1246
+#: app/widgets/gimpgradienteditor.c:1298
 #, c-format
 msgid "Position: %0.4f"
 msgstr "Позиція: %0.4f"
 
-#: app/widgets/gimpgradienteditor.c:1247
+#: app/widgets/gimpgradienteditor.c:1299
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: app/widgets/gimpgradienteditor.c:1249
+#: app/widgets/gimpgradienteditor.c:1301
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
 msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: app/widgets/gimpgradienteditor.c:1251
+#: app/widgets/gimpgradienteditor.c:1303
 #, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
 msgstr "Яскравість: %0.1f   Непрозорість: %0.1f"
 
-#: app/widgets/gimpgradienteditor.c:1283
+#: app/widgets/gimpgradienteditor.c:1335
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: app/widgets/gimpgradienteditor.c:1294
+#: app/widgets/gimpgradienteditor.c:1346
 msgid "Foreground color set to:"
 msgstr "Встановити колір переднього плану:"
 
-#: app/widgets/gimpgradienteditor.c:1301
+#: app/widgets/gimpgradienteditor.c:1353
 msgid "Background color set to:"
 msgstr "Встановити колір тла:"
 
-#: app/widgets/gimpgradienteditor.c:1532 app/widgets/gimpgradienteditor.c:1593
+#: app/widgets/gimpgradienteditor.c:1627 app/widgets/gimpgradienteditor.c:1688
 #, c-format
 msgid "%s-Drag: move & compress"
 msgstr "%s-Перетягнути: перенести та стиснути"
 
-#: app/widgets/gimpgradienteditor.c:1537
+#: app/widgets/gimpgradienteditor.c:1632
 msgid "Drag: move"
 msgstr "Перетягнути: перенести"
 
-#: app/widgets/gimpgradienteditor.c:1544 app/widgets/gimpgradienteditor.c:1557
-#: app/widgets/gimpgradienteditor.c:1570 app/widgets/gimpgradienteditor.c:1591
+#: app/widgets/gimpgradienteditor.c:1639 app/widgets/gimpgradienteditor.c:1652
+#: app/widgets/gimpgradienteditor.c:1665 app/widgets/gimpgradienteditor.c:1686
 #, c-format
 msgid "%s-Click: extend selection"
 msgstr "%s-Натиснути: розширений вибір"
 
-#: app/widgets/gimpgradienteditor.c:1549 app/widgets/gimpgradienteditor.c:1562
+#: app/widgets/gimpgradienteditor.c:1644 app/widgets/gimpgradienteditor.c:1657
 msgid "Click: select"
 msgstr "Клацання: вибирання"
 
-#: app/widgets/gimpgradienteditor.c:1575 app/widgets/gimpgradienteditor.c:1597
+#: app/widgets/gimpgradienteditor.c:1670 app/widgets/gimpgradienteditor.c:1692
 msgid "Click: select    Drag: move"
 msgstr "Клацання: вибирання   Перетягування: переміщення"
 
-#: app/widgets/gimpgradienteditor.c:1809 app/widgets/gimpgradienteditor.c:1817
+#: app/widgets/gimpgradienteditor.c:1904 app/widgets/gimpgradienteditor.c:1912
 #, c-format
 msgid "Handle position: %0.4f"
 msgstr "Позиція позначки: %0.4f"
 
-#: app/widgets/gimpgradienteditor.c:1834
+#: app/widgets/gimpgradienteditor.c:1929
 #, c-format
 msgid "Distance: %0.4f"
 msgstr "Відстань: %0.4f"
