@@ -1,0 +1,300 @@
+/* A light theme for GIMP 3.0 */
+
+/* Known problems:
+ * - The dark padding around the "Reload Current Theme" button
+ * - The black GimpColorHistory + button in the gimpcolordialog
+ * - The tooltip over main menu items, or over the GimpColorHistory+ button
+ */
+
+/* Hint for debugging themes:
+ * first enable the GTK inspector with
+   gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
+ * then (after restarting GIMP) call it up with ctrl+shift+i
+ */
+
+#image-menubar, GtkImageMenuItem {
+   background-color: rgb(230,230,230);
+   color: black;
+}
+
+/* TreeViews, e.g. in a file picker or the Prefs dialog */
+.view {
+   background-color: rgb(245,245,245);
+   color: black;
+}
+
+.view:selected {
+   background-color: rgb(210,210,210);
+   color: black;
+}
+
+#gimp-canvas {
+  color: rgb(230,230,23);
+}
+
+/* The main image window before it has an image in it,
+ * and the buttonbar along the bottoms of dialogs.
+ */
+GimpDisplayShell, GimpDock, .widget, .dialog-action-box, .dialog-vbox {
+  background-color: rgb(210,210,210);
+  color: rgb(100,100,100);;
+}
+
+/* For GtkTextView */
+textview text, textview {
+   background-color: rgba (184, 184, 184, 0.5);
+   color: black;
+}
+
+/* This doesn't do anything anywhere I can find: */
+textview.view {
+  padding: 0em;
+}
+/* End GtkTextView */
+
+combobox window.popup, combobox window {
+  background-image: none;
+  background-color: rgb(220,220,220);
+  color: black;
+}
+
+combobox box, combobox box.linked, combobox button {
+  background-color: rgb(230,230,230);
+  color: black;
+  background-image: none;
+  border-color: rgb(185,185,185);
+}
+
+Get rid of the outline around all tabs in the gimpcolordialog
+GimpColorNotebook .frame {
+  border-color: rgb(230,230,230);
+}
+
+/* Color history buttons in the color chooser.
+ * The selector GimpColorHistory button gets the color buttons
+ * but not the + button; GimpColorSelection gets both.
+ */
+GimpColorSelection button {
+  background: rgb(210,210,210);
+  border: 1px solid rgb(185,185,185);
+  color: black;
+}
+
+GimpColorSelection button:hover {
+  background: rgb(250,250,250);
+}
+
+/* The tabs above the color selector */
+notebook stack {
+  background-color: rgb(230,230,230);
+}
+
+/* Use this to make a border or padding around each tab */
+notebook header tabs tab {
+  padding: 1px;
+  border: 1px solid rgb(200,200,200);
+}
+
+/* The underline for selected tabs */
+notebook header tabs tab:checked {
+  background-color: rgb(190,190,190);
+  margin: 0;
+  box-shadow: 0 -4px rgb(180, 180, 180) inset;
+}
+
+notebook header tabs tab:hover {
+  background-color: rgb(245,245,245);
+}
+
+/* The background of many dialogs, e.g. Preferences and gimpcolordialog */
+.vertical {
+  color: black;
+  background-color: rgb(230,230,230);
+  background-image: none;
+}
+
+/* Background for many button bars and dialog titles.
+ * Also unexpectedly controls the prefs "Reload Current Theme" button,
+ * though that has a dark border around it that isn't so easily controlled.
+ */
+.horizontal {
+  color: black;
+  background-color: rgb(230,230,230);
+}
+
+/* Text buttons, e.g. the main buttons at the bottoms of dialogs,
+ * 0..100 and 0..255 at the top of gimpcolordialog,
+ * where they're inside a GimpColorSelection
+ */
+.text-button {
+  color: black;
+  background-color: rgb(230,230,230);
+  background-image: none;
+  font-weight: normal;
+}
+
+.text-button:hover {
+  background-color: rgb(250,250,250);
+}
+
+.text-button:checked {
+  background-color: rgb(250,250,250);
+  font-weight: bold;
+}
+
+/* .flat covers the tool buttons and the buttons at the bottom
+ * of the Toolbox window.
+*/
+
+.flat {
+  background-color: rgb(230,230,230);
+  color: black;
+}
+
+.flat:checked {
+  background: rgb(240,240,240);
+}
+
+.flat:hover {
+  background: rgb(250,250,250);
+}
+
+scrollbar {
+  background-color: rgb(230,230,230);
+}
+
+scrollbar slider {
+  background-color: rgba (210,210,210,0.5);
+}
+
+notebook header {
+  background-color: rgb(230,230,230);
+}
+
+GimpRuler {
+  background-color: rgba(210,210,210, 0.3);
+}
+
+entry {
+  background-color: rgb(245,245,245);
+  color: black;
+}
+
+paned separator {
+   background-image: none;
+   color: rgb(220,220,220);
+   background-color: rgb(220,220,220);
+}
+
+.view button {
+  background-color: rgb(245,245,245);
+  color: black;
+}
+
+
+/* These next 5 appear when you create a new image (e.g. "width" field */
+spinbutton, spinbutton button {
+  color: black;
+  border-color: rgb(185,185,185);
+}
+
+spinbutton button.down {
+  background-color: rgb(200,200,200);
+}
+
+spinbutton button.up {
+  background-color: rgb(230,230,230);
+}
+
+spinbutton entry {
+  background-color: rgb(230,230,230);
+  border-radius: 3px 1px 1px 0px;
+}
+
+/* E.g. Opacity in the Layers dialog */
+GimpSpinScale {
+  color: black;
+}
+
+GimpSpinScale button.up {
+  background: rgb(250,250,250);
+  color: black;
+  border-color: rgb(185,185,185);
+}
+
+GimpSpinScale button.down {
+  background: rgb(230,230,230);
+  color: black;
+  border-color: rgb(185,185,185);
+}
+
+GimpSpinScale entry {
+  background: rgb(250,250,250);
+  border-radius: 3px 0px 0px 3px;
+  border-color: rgb(185,185,185);
+}
+
+GimpSpinScale entry progress {
+  background-color: rgb(245,245,245);
+}
+
+/* Checkboxes */
+checkbutton check {
+  background-image: none;
+  background-color: rgb(240,240,240);
+  border: 1px solid rgb(185,185,185);
+}
+
+checkbutton check:checked {
+  color: black;
+}
+
+/* Some plugins have radio buttons, e.g. Fractal Explorer */
+radio {
+  background-image: none;
+  background-color: rgb(240, 240, 240);
+  border: 1px solid rgb(185,185,185);
+  color: black;
+}
+
+/* Used for tooltips (hover over a tool to see) */
+.background {
+   background-color: rgb(100,100,100);
+}
+
+/* For dropdown menus (e.g. "px" when creating a new image */
+#gtk-combobox-popup-menu {
+   background-color: rgb(230,230,230);
+   color: black;
+}
+
+/* Top menu items when selected */
+menubar > menuitem:hover {
+  color: black;
+}
+
+/* the menu item itself */
+menuitem menuitem {
+  color: black;
+  background: rgb(240,240,240);
+}
+
+menuitem menuitem:hover {
+  color: black;
+  background: rgb(200,200,200);
+}
+
+/* Sidebar when opening a new image */
+list {
+   color: black;
+   background-color: rgb(220,220,220);
+}
+
+.sidebar-row {
+  color: black;
+}
+
+.sidebar-row:selected {
+  color: black;
+  background-color: rgb(210,210,210);
+}
