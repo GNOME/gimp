@@ -97,6 +97,22 @@ typedef struct _IcoSaveInfo
     gint        *hot_spot_y;
 } IcoSaveInfo;
 
+typedef struct _AniFileHeader
+{
+    guint32 bSizeOf;     /* Number of bytes in AniFileHeader (36 bytes) */
+    guint32 frames;      /* Number of unique icons in this cursor */
+    guint32 steps;       /* Number of Blits before the animation cycles */
+    guint32 x, y;        /* Reserved, must be zero. */
+    guint32 bpp, planes; /* Reserved, must be zero. */
+    guint32 jif_rate;    /* Default Jiffies (1/60th of a second) if rate chunk's not present. */
+    guint32 flags;       /* Animation Flag */
+} AniFileHeader;
+
+typedef struct _AniSaveInfo
+{
+    gchar *inam;   /* Cursor name metadata */
+    gchar *iart;   /* Author name metadata */
+} AniSaveInfo;
 
 /* Miscellaneous helper functions below: */
 

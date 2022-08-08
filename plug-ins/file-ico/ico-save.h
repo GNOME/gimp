@@ -36,6 +36,17 @@ GimpPDBStatusType cur_save_image          (GFile         *file,
                                            gint32       **hot_spot_y,
                                            GError       **error);
 
+GimpPDBStatusType ani_save_image          (GFile         *file,
+                                           GimpImage     *image,
+                                           gint32         run_mode,
+                                           gint          *n_hot_spot_x,
+                                           gint32       **hot_spot_x,
+                                           gint          *n_hot_spot_y,
+                                           gint32       **hot_spot_y,
+                                           AniFileHeader *header,
+                                           AniSaveInfo   *ani_info,
+                                           GError       **error);
+
 gboolean          ico_cmap_contains_black (const guchar  *cmap,
                                            gint           num_colors);
 
