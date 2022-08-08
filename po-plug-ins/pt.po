@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-19 16:30+0000\n"
-"PO-Revision-Date: 2022-07-20 10:33+0100\n"
+"POT-Creation-Date: 2022-08-08 18:32+0000\n"
+"PO-Revision-Date: 2022-08-08 23:42+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -81,7 +81,7 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/common/file-cel.c:1003 plug-ins/common/file-gif-save.c:1160
 #: plug-ins/common/file-heif.c:2306 plug-ins/common/file-jp2-load.c:976
 #: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
-#: plug-ins/common/file-pdf-save.c:1167 plug-ins/common/file-ps.c:3586
+#: plug-ins/common/file-pdf-save.c:1174 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1315 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
@@ -478,7 +478,7 @@ msgstr "_Vertical"
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
-#: plug-ins/file-psd/psd-load.c:2509 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2486 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
@@ -824,7 +824,7 @@ msgstr "_Abrir"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
 #: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1166 plug-ins/common/qbist.c:891
+#: plug-ins/common/file-pdf-save.c:1173 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
@@ -1019,9 +1019,9 @@ msgstr "Guardar parâmetros do explorador CML"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1252
-#: plug-ins/file-jpeg/jpeg-save.c:318 plug-ins/file-psd/psd-save.c:1815
-#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
+#: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-psd/psd-save.c:1815 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1044,7 +1044,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/common/file-cel.c:643 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:403 plug-ins/common/file-mng.c:1405
 #: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:665
-#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3536
+#: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3538
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
 #: plug-ins/common/file-sunras.c:455 plug-ins/common/file-svg.c:365
@@ -1055,11 +1055,12 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
-#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:550
-#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
-#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
+#: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
+#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:158
+#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1896,7 +1897,7 @@ msgid "Destripe"
 msgstr "Remover riscas"
 
 #: plug-ins/common/destripe.c:510 plug-ins/common/file-html-table.c:712
-#: plug-ins/common/file-ps.c:3661 plug-ins/common/file-ps.c:3861
+#: plug-ins/common/file-ps.c:3663 plug-ins/common/file-ps.c:3863
 #: plug-ins/common/smooth-palette.c:531 plug-ins/common/tile.c:519
 #: plug-ins/imagemap/imap_cmd_guides.c:163
 #: plug-ins/imagemap/imap_rectangle.c:398
@@ -1920,7 +1921,7 @@ msgstr "A arte ASCII não suporta várias camadas."
 msgid "Export Image as Text"
 msgstr "Exportar imagem como Texto"
 
-#: plug-ins/common/file-aa.c:393 plug-ins/file-dds/ddswrite.c:2040
+#: plug-ins/common/file-aa.c:393 plug-ins/file-dds/ddswrite.c:2042
 msgid "_Format:"
 msgstr "_Formato:"
 
@@ -1973,9 +1974,9 @@ msgstr "EOF ou erro ao ler o cabeçalho da imagem"
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
-#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
-#: plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
+#: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
+#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2048,13 +2049,14 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:719
 #: plug-ins/common/file-pcx.c:793 plug-ins/common/file-pix.c:562
 #: plug-ins/common/file-png.c:1486 plug-ins/common/file-pnm.c:1336
-#: plug-ins/common/file-ps.c:1363 plug-ins/common/file-sunras.c:626
+#: plug-ins/common/file-ps.c:1365 plug-ins/common/file-sunras.c:626
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1244
-#: plug-ins/file-jpeg/jpeg-save.c:273 plug-ins/file-psd/psd-save.c:1777
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
+#: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:1777 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "A exportar '%s'"
@@ -2175,7 +2177,7 @@ msgstr "%s não é suportada pelo GIMP em combinação com amostras por pixel: %
 msgid "Cannot save images with alpha channel."
 msgstr "Não é possível guardar imagens com canal alfa."
 
-#: plug-ins/common/file-dicom.c:1543 plug-ins/common/file-ps.c:1358
+#: plug-ins/common/file-dicom.c:1543 plug-ins/common/file-ps.c:1360
 #: plug-ins/common/file-xwd.c:670 plug-ins/file-fits/fits.c:499
 msgid "Cannot operate on unknown image types."
 msgstr "Não é possível processar tipos de imagens desconhecidos."
@@ -2739,8 +2741,8 @@ msgstr "Opções da tabela"
 msgid "_Border:"
 msgstr "_Contorno:"
 
-#: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3674
-#: plug-ins/common/file-ps.c:3872 plug-ins/common/film.c:1059
+#: plug-ins/common/file-html-table.c:718 plug-ins/common/file-ps.c:3676
+#: plug-ins/common/file-ps.c:3874 plug-ins/common/film.c:1059
 #: plug-ins/common/smooth-palette.c:536 plug-ins/common/tile.c:523
 #: plug-ins/imagemap/imap_cmd_guides.c:173
 #: plug-ins/imagemap/imap_rectangle.c:405
@@ -3194,7 +3196,7 @@ msgstr "%s-páginas"
 msgid "Import from PDF"
 msgstr "Importar a partir de PDF"
 
-#: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3587
+#: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3589
 #: plug-ins/file-tiff/file-tiff-load.c:2663
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
@@ -3250,11 +3252,11 @@ msgstr ""
 "Certifique-se que inseriu um nome de ficheiro válido e que a localização "
 "selecionada não é só de leitura!"
 
-#: plug-ins/common/file-pdf-save.c:991
+#: plug-ins/common/file-pdf-save.c:998
 msgid "_Convert text layers to image"
 msgstr "_Converter camadas de texto em imagem"
 
-#: plug-ins/common/file-pdf-save.c:1035
+#: plug-ins/common/file-pdf-save.c:1042
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3266,77 +3268,77 @@ msgstr ""
 "de letra que faltam antes de exportar, caso contrário a imagem pode não ser "
 "mostrada corretamente."
 
-#: plug-ins/common/file-pdf-save.c:1052 plug-ins/common/file-pdf-save.c:1214
+#: plug-ins/common/file-pdf-save.c:1059 plug-ins/common/file-pdf-save.c:1221
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "_Omitir camadas ocultas e camadas com opacidade 0"
 
-#: plug-ins/common/file-pdf-save.c:1057 plug-ins/common/file-pdf-save.c:1219
+#: plug-ins/common/file-pdf-save.c:1064 plug-ins/common/file-pdf-save.c:1226
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Converter mapas de _bits para gráficos vetoriais sempre que possível"
 
-#: plug-ins/common/file-pdf-save.c:1062 plug-ins/common/file-pdf-save.c:1224
+#: plug-ins/common/file-pdf-save.c:1069 plug-ins/common/file-pdf-save.c:1231
 msgid "_Apply layer masks before saving"
 msgstr "_Aplicar máscaras de camada antes de guardar"
 
-#: plug-ins/common/file-pdf-save.c:1066 plug-ins/common/file-pdf-save.c:1228
+#: plug-ins/common/file-pdf-save.c:1073 plug-ins/common/file-pdf-save.c:1235
 msgid "Keeping the masks will not change the output"
 msgstr "Manter as máscaras não altera o resultado"
 
-#: plug-ins/common/file-pdf-save.c:1072
+#: plug-ins/common/file-pdf-save.c:1079
 #, c-format
 msgid "_Layers as pages (%s)"
 msgstr "_Camadas como páginas (%s)"
 
-#: plug-ins/common/file-pdf-save.c:1074 plug-ins/common/file-pdf-save.c:1275
+#: plug-ins/common/file-pdf-save.c:1081 plug-ins/common/file-pdf-save.c:1282
 msgid "top layers first"
 msgstr "primeiro as camadas de cima"
 
-#: plug-ins/common/file-pdf-save.c:1074 plug-ins/common/file-pdf-save.c:1275
+#: plug-ins/common/file-pdf-save.c:1081 plug-ins/common/file-pdf-save.c:1282
 msgid "bottom layers first"
 msgstr "primeiro as camadas de baixo"
 
-#: plug-ins/common/file-pdf-save.c:1082
+#: plug-ins/common/file-pdf-save.c:1089
 msgid "_Reverse the pages order"
 msgstr "_Inverter ordem das páginas"
 
-#: plug-ins/common/file-pdf-save.c:1158
+#: plug-ins/common/file-pdf-save.c:1165
 msgid "Save to:"
 msgstr "Guardar em:"
 
-#: plug-ins/common/file-pdf-save.c:1162
+#: plug-ins/common/file-pdf-save.c:1169
 msgid "Browse..."
 msgstr "Navegar..."
 
-#: plug-ins/common/file-pdf-save.c:1163
+#: plug-ins/common/file-pdf-save.c:1170
 msgid "Multipage PDF export"
 msgstr "Exportação PDF multipáginas"
 
-#: plug-ins/common/file-pdf-save.c:1199
+#: plug-ins/common/file-pdf-save.c:1206
 msgid "Remove the selected pages"
 msgstr "Remover as páginas selecionadas"
 
-#: plug-ins/common/file-pdf-save.c:1209
+#: plug-ins/common/file-pdf-save.c:1216
 msgid "Add this image"
 msgstr "Adicionar esta imagem"
 
-#: plug-ins/common/file-pdf-save.c:1273
+#: plug-ins/common/file-pdf-save.c:1280
 #, c-format
 msgid "Layers as pages (%s)"
 msgstr "Camadas como páginas (%s)"
 
-#: plug-ins/common/file-pdf-save.c:1330 plug-ins/common/file-pdf-save.c:1403
-#: plug-ins/common/file-pdf-save.c:1501 plug-ins/common/file-ps.c:2078
+#: plug-ins/common/file-pdf-save.c:1337 plug-ins/common/file-pdf-save.c:1410
+#: plug-ins/common/file-pdf-save.c:1508 plug-ins/common/file-ps.c:2080
 #: plug-ins/file-tiff/file-tiff-load.c:1530
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: plug-ins/common/file-pdf-save.c:1370
+#: plug-ins/common/file-pdf-save.c:1377
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Erro! Para guardar este ficheiro, tem de adicionar pelo menos uma imagem!"
 
-#: plug-ins/common/file-pdf-save.c:1548 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1555 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Não é possível gerir o tamanho (largura ou altura) da imagem."
 
@@ -3490,7 +3492,7 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Erro ao exportar '%s'. Não foi possível exportar a imagem."
 
-#: plug-ins/common/file-png.c:2280 plug-ins/common/file-ps.c:3729
+#: plug-ins/common/file-png.c:2280 plug-ins/common/file-ps.c:3731
 msgid "Automatic"
 msgstr "Automático"
 
@@ -3636,111 +3638,111 @@ msgstr "Não foi possível interpretar o ficheiro PostScript '%s'"
 msgid "Rendered EPS"
 msgstr "EPS renderizados"
 
-#: plug-ins/common/file-ps.c:1345
+#: plug-ins/common/file-ps.c:1347
 msgid "PostScript export cannot handle images with alpha channels"
 msgstr "Exportar em PostScript não suporta imagens com canais alfa"
 
-#: plug-ins/common/file-ps.c:3582
+#: plug-ins/common/file-ps.c:3584
 msgid "Import from PostScript"
 msgstr "Importar de ficheiro PostScript"
 
 #. Rendering
-#: plug-ins/common/file-ps.c:3626
+#: plug-ins/common/file-ps.c:3628
 msgid "Rendering"
 msgstr "A renderizar"
 
 #. Resolution
-#: plug-ins/common/file-ps.c:3645 plug-ins/common/file-svg.c:946
+#: plug-ins/common/file-ps.c:3647 plug-ins/common/file-svg.c:946
 #: plug-ins/common/file-wmf.c:717
 msgid "Resolution:"
 msgstr "Resolução:"
 
-#: plug-ins/common/file-ps.c:3687
+#: plug-ins/common/file-ps.c:3689
 msgid "Pages:"
 msgstr "Páginas:"
 
-#: plug-ins/common/file-ps.c:3694
+#: plug-ins/common/file-ps.c:3696
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Abrir as páginas indicadas usando, por exemplo, 1-4 ou 1, 3, 5-7"
 
-#: plug-ins/common/file-ps.c:3699 plug-ins/common/sphere-designer.c:2728
+#: plug-ins/common/file-ps.c:3701 plug-ins/common/sphere-designer.c:2728
 msgid "Layers"
 msgstr "Camadas"
 
-#: plug-ins/common/file-ps.c:3702
+#: plug-ins/common/file-ps.c:3704
 msgid "Images"
 msgstr "Imagens"
 
-#: plug-ins/common/file-ps.c:3705
+#: plug-ins/common/file-ps.c:3707
 msgid "Open as"
 msgstr "Abrir como"
 
-#: plug-ins/common/file-ps.c:3709
+#: plug-ins/common/file-ps.c:3711
 msgid "Try Bounding Box"
 msgstr "Tentar caixa delimitadora"
 
 #. Coloring
-#: plug-ins/common/file-ps.c:3722
+#: plug-ins/common/file-ps.c:3724
 msgid "Coloring"
 msgstr "A colorir"
 
-#: plug-ins/common/file-ps.c:3726
+#: plug-ins/common/file-ps.c:3728
 msgid "B/W"
 msgstr "P/B"
 
-#: plug-ins/common/file-ps.c:3727 plug-ins/imagemap/imap_menu.c:228
+#: plug-ins/common/file-ps.c:3729 plug-ins/imagemap/imap_menu.c:228
 msgid "Gray"
 msgstr "Cinzento"
 
-#: plug-ins/common/file-ps.c:3728 plug-ins/common/file-xpm.c:507
+#: plug-ins/common/file-ps.c:3730 plug-ins/common/file-xpm.c:507
 #: plug-ins/gimpressionist/color.c:65 plug-ins/gimpressionist/general.c:169
 #: plug-ins/imagemap/imap_menu.c:227
 msgid "Color"
 msgstr "Cor"
 
-#: plug-ins/common/file-ps.c:3740
+#: plug-ins/common/file-ps.c:3742
 msgid "Text antialiasing"
 msgstr "Suavização de texto"
 
-#: plug-ins/common/file-ps.c:3744 plug-ins/common/file-ps.c:3756
+#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3758
 msgctxt "antialiasing"
 msgid "None"
 msgstr "Nenhuma"
 
-#: plug-ins/common/file-ps.c:3745 plug-ins/common/file-ps.c:3757
+#: plug-ins/common/file-ps.c:3747 plug-ins/common/file-ps.c:3759
 msgid "Weak"
 msgstr "Fraca"
 
-#: plug-ins/common/file-ps.c:3746 plug-ins/common/file-ps.c:3758
+#: plug-ins/common/file-ps.c:3748 plug-ins/common/file-ps.c:3760
 msgid "Strong"
 msgstr "Forte"
 
-#: plug-ins/common/file-ps.c:3752
+#: plug-ins/common/file-ps.c:3754
 msgid "Graphic antialiasing"
 msgstr "Suavização de gráficos"
 
-#: plug-ins/common/file-ps.c:3826
+#: plug-ins/common/file-ps.c:3828
 msgid "PostScript"
 msgstr "Documento PostScript"
 
 #. Image Size
-#: plug-ins/common/file-ps.c:3843
+#: plug-ins/common/file-ps.c:3845
 msgid "Image Size"
 msgstr "Tamanho da imagem"
 
-#: plug-ins/common/file-ps.c:3883
+#: plug-ins/common/file-ps.c:3885
 msgid "_X offset:"
 msgstr "Desvio _X:"
 
-#: plug-ins/common/file-ps.c:3894
+#: plug-ins/common/file-ps.c:3896
 msgid "_Y offset:"
 msgstr "Desvio _Y:"
 
-#: plug-ins/common/file-ps.c:3900
+#: plug-ins/common/file-ps.c:3902
 msgid "_Keep aspect ratio"
 msgstr "_Manter proporções"
 
-#: plug-ins/common/file-ps.c:3906
+#: plug-ins/common/file-ps.c:3908
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -3749,41 +3751,41 @@ msgstr ""
 "ao tamanho da janela sem alterar as proporções."
 
 #. Unit
-#: plug-ins/common/file-ps.c:3916
+#: plug-ins/common/file-ps.c:3918
 msgid "Unit"
 msgstr "Unidade"
 
-#: plug-ins/common/file-ps.c:3920
+#: plug-ins/common/file-ps.c:3922
 msgid "_Inch"
 msgstr "_Polegada"
 
-#: plug-ins/common/file-ps.c:3921
+#: plug-ins/common/file-ps.c:3923
 msgid "_Millimeter"
 msgstr "_Milímetro"
 
 #. Rotation
-#: plug-ins/common/file-ps.c:3932 plug-ins/map-object/map-object-ui.c:1013
+#: plug-ins/common/file-ps.c:3934 plug-ins/map-object/map-object-ui.c:1013
 msgid "Rotation"
 msgstr "Rotação"
 
 #. Format
-#: plug-ins/common/file-ps.c:3947
+#: plug-ins/common/file-ps.c:3949
 msgid "Output"
 msgstr "Saída"
 
-#: plug-ins/common/file-ps.c:3953
+#: plug-ins/common/file-ps.c:3955
 msgid "_PostScript level 2"
 msgstr "_PostScript nível 2"
 
-#: plug-ins/common/file-ps.c:3962
+#: plug-ins/common/file-ps.c:3964
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _Encapsulado"
 
-#: plug-ins/common/file-ps.c:3971
+#: plug-ins/common/file-ps.c:3973
 msgid "P_review"
 msgstr "P_ré-visualização"
 
-#: plug-ins/common/file-ps.c:3995
+#: plug-ins/common/file-ps.c:3997
 msgid "Preview _size:"
 msgstr "_Tamanho da pré-visualização:"
 
@@ -4574,12 +4576,12 @@ msgid "_Write hot spot values"
 msgstr "_Guardar valores de ponto quente"
 
 #: plug-ins/common/file-xbm.c:1337 plug-ins/common/file-xmc.c:1132
-#: plug-ins/file-ico/ico-dialog.c:483
+#: plug-ins/file-ico/ico-dialog.c:571
 msgid "Hot spot _X:"
 msgstr "Ponto quente _X:"
 
 #: plug-ins/common/file-xbm.c:1345 plug-ins/common/file-xmc.c:1146
-#: plug-ins/file-ico/ico-dialog.c:496
+#: plug-ins/file-ico/ico-dialog.c:584
 msgid "Hot spot _Y:"
 msgstr "Ponto quente _Y:"
 
@@ -6248,7 +6250,7 @@ msgstr "Cor de 1º plano"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary grid          --------------------------
-#: plug-ins/common/warp.c:652 plug-ins/file-jpeg/jpeg-save.c:969
+#: plug-ins/common/warp.c:652 plug-ins/file-jpeg/jpeg-save.c:968
 #: plug-ins/file-webp/file-webp-dialog.c:107
 msgid "Advanced Options"
 msgstr "Opções avançadas"
@@ -6668,95 +6670,95 @@ msgstr "_Carregar mapas MIP"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Decodificar automaticamente imagens YCoCg/AExp quando detetadas"
 
-#: plug-ins/file-dds/ddswrite.c:1982
+#: plug-ins/file-dds/ddswrite.c:1984
 msgid "Export Image as DDS"
 msgstr "Exportar imagem como DDS"
 
-#: plug-ins/file-dds/ddswrite.c:2013
+#: plug-ins/file-dds/ddswrite.c:2015
 msgid "_Compression:"
 msgstr "_Compressão:"
 
-#: plug-ins/file-dds/ddswrite.c:2018
+#: plug-ins/file-dds/ddswrite.c:2020
 msgid "Use _perceptual error metric"
 msgstr "Use a métrica de erro _percetual"
 
-#: plug-ins/file-dds/ddswrite.c:2044
+#: plug-ins/file-dds/ddswrite.c:2046
 msgid "Selected layer"
 msgstr "Camada selecionada"
 
-#: plug-ins/file-dds/ddswrite.c:2045
+#: plug-ins/file-dds/ddswrite.c:2047
 msgid "All visible layers"
 msgstr "Todas as camadas visíveis"
 
-#: plug-ins/file-dds/ddswrite.c:2046
+#: plug-ins/file-dds/ddswrite.c:2048
 msgid "As cube map"
 msgstr "Como mapa em cubo"
 
-#: plug-ins/file-dds/ddswrite.c:2047
+#: plug-ins/file-dds/ddswrite.c:2049
 msgid "As volume map"
 msgstr "Como mapa de volume"
 
-#: plug-ins/file-dds/ddswrite.c:2048
+#: plug-ins/file-dds/ddswrite.c:2050
 msgid "As texture array"
 msgstr "Como matriz de textura"
 
-#: plug-ins/file-dds/ddswrite.c:2053
+#: plug-ins/file-dds/ddswrite.c:2055
 msgid "_Save:"
 msgstr "_Guardar:"
 
-#: plug-ins/file-dds/ddswrite.c:2066
+#: plug-ins/file-dds/ddswrite.c:2068
 msgid "Flip image _vertically on export"
 msgstr "Virar imagem _verticalmente ao exportar"
 
-#: plug-ins/file-dds/ddswrite.c:2069
+#: plug-ins/file-dds/ddswrite.c:2071
 msgid "No mipmaps"
 msgstr "Nenhum mipmaps"
 
-#: plug-ins/file-dds/ddswrite.c:2070
+#: plug-ins/file-dds/ddswrite.c:2072
 msgid "Generate mipmaps"
 msgstr "Gerar mipmaps"
 
-#: plug-ins/file-dds/ddswrite.c:2071
+#: plug-ins/file-dds/ddswrite.c:2073
 msgid "Use existing mipmaps"
 msgstr "Usar mipmaps existentes"
 
-#: plug-ins/file-dds/ddswrite.c:2076
+#: plug-ins/file-dds/ddswrite.c:2078
 msgid "_Mipmaps:"
 msgstr "_Mapas MIP:"
 
-#: plug-ins/file-dds/ddswrite.c:2094
+#: plug-ins/file-dds/ddswrite.c:2096
 msgid "Transparent index:"
 msgstr "Índice transparente:"
 
-#: plug-ins/file-dds/ddswrite.c:2102
+#: plug-ins/file-dds/ddswrite.c:2104
 msgid "Mipmap Options"
 msgstr "Opções mapa MIP"
 
-#: plug-ins/file-dds/ddswrite.c:2125
+#: plug-ins/file-dds/ddswrite.c:2127
 msgid "F_ilter:"
 msgstr "F_iltro:"
 
-#: plug-ins/file-dds/ddswrite.c:2137
+#: plug-ins/file-dds/ddswrite.c:2139
 msgid "_Wrap mode:"
 msgstr "_Modo de envolver:"
 
-#: plug-ins/file-dds/ddswrite.c:2142
+#: plug-ins/file-dds/ddswrite.c:2144
 msgid "Appl_y gamma correction"
 msgstr "Aplicar c_orreção de gama"
 
-#: plug-ins/file-dds/ddswrite.c:2146
+#: plug-ins/file-dds/ddswrite.c:2148
 msgid "Use s_RGB colorspace"
 msgstr "Usar espaço de cores s_RGB"
 
-#: plug-ins/file-dds/ddswrite.c:2152 plug-ins/flame/flame.c:1161
+#: plug-ins/file-dds/ddswrite.c:2154 plug-ins/flame/flame.c:1161
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: plug-ins/file-dds/ddswrite.c:2157
+#: plug-ins/file-dds/ddswrite.c:2159
 msgid "Preserve alpha _test coverage"
 msgstr "Preservar a cobertura do _teste alfa"
 
-#: plug-ins/file-dds/ddswrite.c:2164
+#: plug-ins/file-dds/ddswrite.c:2166
 msgid "_Alpha test threshold:"
 msgstr "_Limiar do teste alfa:"
 
@@ -7006,20 +7008,44 @@ msgstr "_Para:"
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagem como animação FLIC"
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:61
+msgid "Windows Animated Cursor"
+msgstr "Cursor animado do Windows"
+
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Cursor"
 msgstr "Cursor do Windows"
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Icon"
 msgstr "Ícone do Windows"
 
+#: plug-ins/file-ico/ico-dialog.c:97
+msgid "Animated Cursor Settings"
+msgstr "Definições de cursor animado"
+
+#: plug-ins/file-ico/ico-dialog.c:110
+msgid "_Cursor Name (Optional)"
+msgstr "Nome do _cursor (opcional)"
+
+#: plug-ins/file-ico/ico-dialog.c:127
+msgid "_Author Name (Optional)"
+msgstr "Nome do _autor (opcional)"
+
+#: plug-ins/file-ico/ico-dialog.c:144
+msgid "_Delay between frames:"
+msgstr "Atraso entre fotogramas:"
+
+#: plug-ins/file-ico/ico-dialog.c:154
+msgid " jiffies (16.66 ms)"
+msgstr " jiffies (16.66 ms)"
+
 #. Cursor
-#: plug-ins/file-ico/ico-dialog.c:76
+#: plug-ins/file-ico/ico-dialog.c:164
 msgid "Icon Details"
 msgstr "Detalhes do ícone"
 
-#: plug-ins/file-ico/ico-dialog.c:99
+#: plug-ins/file-ico/ico-dialog.c:187
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -7027,55 +7053,55 @@ msgstr ""
 "Os ícones grandes e compressão não são suportados por todos os programas. As "
 "aplicações mais antigas poderão não abrir este ficheiro corretamente."
 
-#: plug-ins/file-ico/ico-dialog.c:168
+#: plug-ins/file-ico/ico-dialog.c:256
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, 1-bit alfa, paleta com 2 cores"
 
-#: plug-ins/file-ico/ico-dialog.c:169
+#: plug-ins/file-ico/ico-dialog.c:257
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, 1-bit alfa, paleta com 16 cores"
 
-#: plug-ins/file-ico/ico-dialog.c:170
+#: plug-ins/file-ico/ico-dialog.c:258
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, paleta com 256 cores"
 
-#: plug-ins/file-ico/ico-dialog.c:171
+#: plug-ins/file-ico/ico-dialog.c:259
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, 1-bit alfa, sem paleta"
 
-#: plug-ins/file-ico/ico-dialog.c:172
+#: plug-ins/file-ico/ico-dialog.c:260
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bits alfa, sem paleta"
 
-#: plug-ins/file-ico/ico-dialog.c:186
+#: plug-ins/file-ico/ico-dialog.c:274
 msgid "Compressed (PNG)"
 msgstr "Comprimido (PNG)"
 
-#: plug-ins/file-ico/ico-load.c:222
+#: plug-ins/file-ico/ico-load.c:224
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "Não foi possível ler “%lu” bytes"
 
-#: plug-ins/file-ico/ico-load.c:250
+#: plug-ins/file-ico/ico-load.c:252
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "O ícone nº %d tem zero de largura ou altura"
 
 #. read successfully. add to image
-#: plug-ins/file-ico/ico-load.c:636
+#: plug-ins/file-ico/ico-load.c:639
 #, c-format
 msgid "Icon #%i"
 msgstr "Ícone nº %i"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-ico/ico-load.c:766 plug-ins/file-jpeg/jpeg-load.c:536
+#: plug-ins/file-ico/ico-load.c:938 plug-ins/file-jpeg/jpeg-load.c:541
 #: plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-darktable.c:515
 #: plug-ins/file-raw/file-rawtherapee.c:457
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "A abrir miniatura de '%s'"
 
-#: plug-ins/file-ico/ico-save.c:210
+#: plug-ins/file-ico/ico-save.c:213
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
@@ -7084,13 +7110,37 @@ msgstr ""
 "Chamado não-interativamente com coordenadas %d e %d hotspot com uma imagem "
 "de %d ícones."
 
-#: plug-ins/file-ico/ico.c:141 plug-ins/file-ico/ico.c:216
+#: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
 msgid "Microsoft Windows icon"
 msgstr "Ícone do Microsoft Windows"
 
-#: plug-ins/file-ico/ico.c:169 plug-ins/file-ico/ico.c:241
+#: plug-ins/file-ico/ico.c:196 plug-ins/file-ico/ico.c:316
 msgid "Microsoft Windows cursor"
 msgstr "Cursor do Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:226 plug-ins/file-ico/ico.c:363
+msgid "Microsoft Windows animated cursor"
+msgstr "Cursor animado do Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:230
+msgid "Loads files of Windows ANI file format"
+msgstr "Carrega ficheiros no formato de ficheiro ANI do Windows"
+
+#: plug-ins/file-ico/ico.c:272
+msgid "Loads a preview from a Windows ANI files"
+msgstr "Carrega uma pré-visualização de um ficheiro ANI do Windows"
+
+#: plug-ins/file-ico/ico.c:367 plug-ins/file-ico/ico.c:368
+msgid "Saves files in Windows ANI file format"
+msgstr "Guarda ficheiros no formato de ficheiro ANI do Windows"
+
+#: plug-ins/file-ico/ico.c:384
+msgid "Cursor Name (Optional)"
+msgstr "Nome do cursor (opcional)"
+
+#: plug-ins/file-ico/ico.c:390
+msgid "Cursor Author (Optional)"
+msgstr "Nome do autor (opcional)"
 
 #: plug-ins/file-jpeg/jpeg-load.c:215
 msgid "JPEG preview"
@@ -7101,58 +7151,58 @@ msgstr "Pré-visualização JPEG"
 msgid "File size: %s"
 msgstr "Tamanho do ficheiro: %s"
 
-#: plug-ins/file-jpeg/jpeg-save.c:718
+#: plug-ins/file-jpeg/jpeg-save.c:717
 msgid "Calculating file size..."
 msgstr "A calcular o tamanho do ficheiro..."
 
-#: plug-ins/file-jpeg/jpeg-save.c:808 plug-ins/file-jpeg/jpeg-save.c:880
+#: plug-ins/file-jpeg/jpeg-save.c:807 plug-ins/file-jpeg/jpeg-save.c:879
 msgid "File size: unknown"
 msgstr "Tamanho do ficheiro: desconhecido"
 
-#: plug-ins/file-jpeg/jpeg-save.c:887
+#: plug-ins/file-jpeg/jpeg-save.c:886
 msgid "Enable preview to obtain the file size."
 msgstr "Ativar a pré-visualização para obter o tamanho do ficheiro."
 
-#: plug-ins/file-jpeg/jpeg-save.c:892 plug-ins/file-tiff/file-tiff-save.c:1360
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-tiff/file-tiff-save.c:1360
 msgid "No soft-proofing profile"
 msgstr "Sem perfil da prova de cor do ecrã"
 
-#: plug-ins/file-jpeg/jpeg-save.c:899 plug-ins/file-tiff/file-tiff-save.c:1367
+#: plug-ins/file-jpeg/jpeg-save.c:898 plug-ins/file-tiff/file-tiff-save.c:1367
 msgid "Name of the color profile used for CMYK export."
 msgstr "Nome do perfil de cor usado para exportação CMYK."
 
-#: plug-ins/file-jpeg/jpeg-save.c:910 plug-ins/file-tiff/file-tiff-save.c:1379
+#: plug-ins/file-jpeg/jpeg-save.c:909 plug-ins/file-tiff/file-tiff-save.c:1379
 #, c-format
 msgid "Profile: %s"
 msgstr "Perfil: %s"
 
 #. Subsampling
-#: plug-ins/file-jpeg/jpeg-save.c:941
+#: plug-ins/file-jpeg/jpeg-save.c:940
 msgid "4:4:4 (best quality)"
 msgstr "4:4:4 (melhor qualidade)"
 
-#: plug-ins/file-jpeg/jpeg-save.c:943
+#: plug-ins/file-jpeg/jpeg-save.c:942
 msgid "4:2:2 horizontal (chroma halved)"
 msgstr "4:2:2 horizontal (meio croma)"
 
-#: plug-ins/file-jpeg/jpeg-save.c:945
+#: plug-ins/file-jpeg/jpeg-save.c:944
 msgid "4:2:2 vertical (chroma halved)"
 msgstr "4:2:2 vertical (meio croma)"
 
-#: plug-ins/file-jpeg/jpeg-save.c:947
+#: plug-ins/file-jpeg/jpeg-save.c:946
 msgid "4:2:0 (chroma quartered)"
 msgstr "4:2:0 (1/4 croma)"
 
 #. DCT method
-#: plug-ins/file-jpeg/jpeg-save.c:961
+#: plug-ins/file-jpeg/jpeg-save.c:960
 msgid "Fast Integer"
 msgstr "Inteiro rápido"
 
-#: plug-ins/file-jpeg/jpeg-save.c:962
+#: plug-ins/file-jpeg/jpeg-save.c:961
 msgid "Integer"
 msgstr "Inteiro"
 
-#: plug-ins/file-jpeg/jpeg-save.c:963
+#: plug-ins/file-jpeg/jpeg-save.c:962
 msgid "Floating-Point"
 msgstr "Vírgula flutuante"
 
@@ -7272,20 +7322,20 @@ msgstr "Largura da máscara da camada não suportada ou inválida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamanho da máscara da camada não suportado ou inválido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1889 plug-ins/file-psd/psd-load.c:2482
+#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2459
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Método de compressão não suportado: %d"
 
-#: plug-ins/file-psd/psd-load.c:2674
+#: plug-ins/file-psd/psd-load.c:2652
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:2874
+#: plug-ins/file-psd/psd-load.c:2852
 msgid "Unsupported or invalid channel size"
 msgstr "Tamanho do canal não suportado ou inválido"
 
-#: plug-ins/file-psd/psd-load.c:2943
+#: plug-ins/file-psd/psd-load.c:2921
 msgid "Failed to decompress data"
 msgstr "Falha ao descomprimir os dados"
 
