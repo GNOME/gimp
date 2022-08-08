@@ -5,18 +5,16 @@ Installation instructions for GIMP @GIMP_APP_VERSION@
 There are some basic steps to building and installing GIMP.
 
 GIMP @GIMP_APP_VERSION@ replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP @GIMP_APP_VERSION@. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP @GIMP_APP_VERSION@, you have to
-choose a separate prefix which is not in your default library search
-path.
+uninstall them before installing GIMP @GIMP_APP_VERSION@. Since libgimp* libraries
+and data are all versionned anyway, it is possible to keep your older GIMP 2.x
+installation in parallel to GIMP @GIMP_APP_VERSION@ on a same prefix.
 
-GIMP @GIMP_APP_VERSION@ is fully backward compatible to all earlier GIMP 2.x version.
+GIMP @GIMP_APP_VERSION@ is not backward compatible with GIMP 2.x version.
 Plug-ins and scripts written for GIMP 2.8, 2.6 or earlier GIMP 2.x
-versions will continue to work and don't need to be changed nor
-recompiled to be used with GIMP @GIMP_APP_VERSION@.
+versions will not work because the API changed.
 
 The most important part is to make sure the requirements for a build
-are fulfilled.  We depend on a number of tools and libraries which are
+are fulfilled. We depend on a number of tools and libraries which are
 listed below. For libraries this means you need to also have the
 header files installed.
 
@@ -31,6 +29,7 @@ header files installed.
 
   1. You need to have installed a recent version of pkg-config (>= @GIMP_PKGCONFIG_VERSION@) available
      from https://www.freedesktop.org/software/pkgconfig/.
+     The compatible pkgconf utility would also work.
 
   2. You need gettext version 0.19.8 or newer. Older versions did not have support yet
      for certain file formats.
@@ -45,13 +44,12 @@ header files installed.
      GEGL must be built with Cairo support, i.e. -Dcairo=enabled option (required
      for some mandatory operations such as "gegl:npd").
 
-     Introspection must be enabled for both babl and GEGL with
-     -Denable-gir=true and -Dintrospection=true respectively. The only
-     case where we don't build GIR data is when cross-compiling on meson
-     because of the difficulty to make cross-tools for GObject
-     Introspection. Nevertheless if you have working GIR cross-tools,
-     you can force the expected behaviour with GIMP's meson option
-     -Dcan-crosscompile-gir=true
+     Introspection must be enabled for both babl and GEGL with -Denable-gir=true
+     and -Dintrospection=true respectively. The only case where we don't build
+     GIR data is when cross-compiling because of the difficulty to make cross-tools
+     for GObject Introspection.
+     Nevertheless if you have working GIR cross-tools, you can force the expected
+     behaviour with GIMP's meson option -Dcan-crosscompile-gir=true
 
      Optional:
 
@@ -70,7 +68,7 @@ header files installed.
   4. You need to have installed GTK version @GTK_REQUIRED_VERSION@ or newer.
      GIMP also needs a recent version of GLib (>= @GLIB_REQUIRED_VERSION@), GDK-Pixbuf
      (>= @GDK_PIXBUF_REQUIRED_VERSION@), and Pango (>= @PANGOCAIRO_REQUIRED_VERSION@). Sources for these can be grabbed
-     from ftp://ftp.gtk.org/.
+     from https://download.gnome.org/sources/.
 
   5. We use cairo >= @CAIRO_REQUIRED_VERSION@, which is hosted at
      https://www.cairographics.org/.
@@ -84,10 +82,10 @@ header files installed.
      On Windows, we recommend fontconfig 2.13.95 (or over) where support
      of fonts in user directory (Windows 1809 feature) appeared.
 
-     We also require HarfBuzz @HARFBUZZ_REQUIRED_VERSION@ or newer, an
-     OpenType text shaping tool. As this is a dependency for Pango, you
-     will likely have it installed, but you may have to install a
-     development package for the headers.
+     We also require HarfBuzz @HARFBUZZ_REQUIRED_VERSION@ or newer, an OpenType text shaping
+     tool. As this is a dependency for Pango, you will likely have it
+     installed, but you may have to install a development package for
+     the headers.
 
   7. The file-compressor plug-in requires zlib, libbzip2, and liblzma to
      be installed. All these libraries are required dependencies.
@@ -106,7 +104,7 @@ header files installed.
      could still:
 
      1) easily patch out the file-svg plug-in from build system;
-     2) build GIMP with --disable-vector-icons. Ironically librsvg is
+     2) build GIMP with -Dvector-icons=false. Ironically librsvg is
      needed at build time for this option, in order to create PNG
      variants of icons (making librsvg unneeded at runtime). So all it
      takes is to have a build machine with librsvg to create the PNG
@@ -138,8 +136,9 @@ header files installed.
      If installing from repository, install from branch "v1.3.x" or the
      last tag "v1.y.z" (e.g. "v1.3.1" at time of writing).
      In particular do NOT install from `master` branch which installs
-     brushes incompatible with GIMP (the `master` branch brushes are
-     targeted to libmypaint upcoming v2, not v1).
+     brushes incompatible with GIMP (the `master` branch and v2 brushes
+     are targeted to software using recent libmypaint which GIMP wasn't
+     ported to yet).
 
      Also this is a data packages and therefore it will install the
      pkg-config file inside `$PREFIX/share/pkgconfig/`. If you install
@@ -177,7 +176,7 @@ header files installed.
  13. You may want to install other third party libraries or programs
      that are needed for some of the available plug-ins. We recommend
      to check that the following libraries are installed: openjpeg,
-     webkit, libmng, libwmf, libaa and libgs (Ghostscript).
+     libmng, libwmf, libaa and libgs (Ghostscript).
 
  14. HEIF support depends on the libheif library. If you don't have
      access to pre-built packages, the code is available at:
@@ -199,23 +198,23 @@ header files installed.
 
         https://github.com/jrfonseca/drmingw
 
- 17. Configure GIMP by running the `configure' script. You may want
-     to pass some options to it, see below.
+ 17. Configure GIMP by running `meson _build`. You may want to pass some
+     options to it, see below.
 
-     Note that for Windows and macOS, we now recommend officially to
-     build GIMP with `meson` instead of `autotools` (`configure` script,
-     make, etc.). Therefore further build instructions below must be
-     converted as their meson command equivalents. On all other
-     platforms, the autotools are still recommended and more complete.
+     Note that we now recommend officially to build GIMP with `meson`
+     instead of `autotools` (`configure` script, make, etc.).
+     The autotools build scripts are left alive a bit longer in the git
+     repository , so that we can revert the recommendation in case big
+     regressions were discovered.
+     So if you encounter issues with the meson build, now is the time to
+     report them!
 
- 18. Build GIMP by running `make'. The use of GNU make is recommended.
-     If you need to tweak the build to make it work with other flavours
-     of make, we'd appreciate if you'd send us a patch with the changes.
+ 18. Build GIMP by running `ninja -C _build'.
 
- 19. Install GIMP by running `make install'. In order to avoid clashes
-     with other versions of GIMP, we install a binary called gimp-@GIMP_APP_VERSION@.
-     By default there's also a link created so that you can type 'gimp'
-     to start gimp-@GIMP_APP_VERSION@.
+ 19. Install GIMP by running `ninja -C _build install'. In order to
+     avoid clashes with other versions of GIMP, we install a binary
+     called gimp-@GIMP_APP_VERSION@. By default there's also a link created so that
+     you can type 'gimp' to start gimp-@GIMP_APP_VERSION@.
 
  20. Summary of required packages and what version you need:
 
@@ -290,200 +289,142 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-@GIMP_VERSION@.tar.gz   # unpack the sources
-  % cd gimp-@GIMP_VERSION@                # change to the toplevel directory
-  % ./configure                   # run the `configure' script
-  % make                          # build GIMP
-  % make install                  # install GIMP
+  % tar xvf gimp-@GIMP_VERSION@.tar.xz   # unpack the sources
+  % cd gimp-@GIMP_VERSION@               # change to the toplevel directory
+  % meson _build                  # `configure' step
+  % ninja -C _build               # build GIMP
+  % ninja -C _build install       # install GIMP
 
 
-Note: if building from repository (not tarballs), you may notice a meson
-build system is also available in the repository. It is not the main
-build system and is not recommended for stable packages other than on
-macOS and Windows, as it still has several known issues, including
-missing or broken features.
-Yet we invite contributors to use the meson build if they wish to help
-with debugging.
-
-The `configure' script examines your system, and adapts GIMP to run on
+The `configure' step examines your system, and adapts GIMP to run on
 it. The script has many options, some of which are described in the
 generic instructions included at the end of this file. All of the
-options can be listed using the command `./configure --help'. There
-are several special options the GIMP `configure' script recognizes.
+options can be listed using the command `meson configure' if you
+successfully configured already, or by reading the file `meson_options.txt`.
+There are several special options the GIMP configure script recognizes.
 These are:
 
-  --disable-vector-icons.  This option installs raster icons instead of
+  -Dvector-icons=false  This option installs raster icons instead of
      vector icons.
 
-  --enable-relocatable-bundle.  This option forces GIMP to search some
+  -Drelocatable-bundle=yes  This option forces GIMP to search some
      resources (e.g. MyPaint brushes or libwmf fonts) relatively to the
      running prefix, rather than using build-time paths.
 
-  --enable-shared and --disable-shared.  This option affects whether
-     shared libraries will be built or not. Shared libraries provide
-     for much smaller executables. The default is to enable shared
-     libraries. Disabling shared libraries is almost never a good idea.
+  -Dansi=true  This option causes stricter ANSI C checking to be
+     performed when compiling with GCC. The default is for strict
+     checking to be disabled. NOTE: This option is intended primarily as
+     a convenience for developers.
 
-  --enable-debug and --disable-debug.  This option causes the build
-     process to compile with debugging enabled. If debugging is
-     disabled, GIMP will instead be compiled with optimizations turned
-     on. The default is for debugging to be disabled. NOTE: This
-     option is intended primarily as a convenience for developers.
-
-  --enable-profile and --disable-profile. This option causes the build
-     process to compile with execution profiling enabled. The default is
-     for profiling to be disabled. NOTE: This option is intended primarily
-     as a convenience for developers.
-
-  --enable-ansi and --disable-ansi.  This option causes stricter
-     ANSI C checking to be performed when compiling with GCC. The
-     default is for strict checking to be disabled. NOTE: This option
-     is intended primarily as a convenience for developers.
-
-  --with-gimpdir=DIR.  This option changes the default directory
-     GIMP uses to search for its configuration files from
-     ~/.config/GIMP/@GIMP_APP_VERSION@ (the directory .config/GIMP/@GIMP_APP_VERSION@
-     in the user's home directory) to ~/.config/DIR/@GIMP_APP_VERSION@.
+  -Dgimpdir=DIR.  This option changes the default directory GIMP uses to
+     search for its configuration files from ~/.config/GIMP/@GIMP_APP_VERSION@ (the
+     directory .config/GIMP/@GIMP_APP_VERSION@ in the user's home directory) to
+     ~/.config/DIR/@GIMP_APP_VERSION@.
      If DIR is an absolute path, the directory will be changed to DIR.
 
-  --with-shm=[none|sysv|posix|auto].  This option allows you to specify
-     how image data is transported between the core and plug-ins. Usually
-     the best way to do this is detected automatically.
+  -Dshmem-type=[none|sysv|posix|win32|auto].  This option allows you to
+     specify how image data is transported between the core and plug-ins.
+     Usually the best way to do this is detected automatically.
 
-  --without-aa.  The AA plug-in needs libaa and configure checks for
-     its presence. Use --without-aa if you run into problems.
+  -Daa=disabled  The AA plug-in needs libaa and configure checks for
+     its presence. Use -Daa=disabled if you run into problems.
 
-  --without-libxpm.  The XPM plug-in needs libxpm and configure checks
+  -Dxpm=disabled  The XPM plug-in needs libxpm and configure checks
      for its presence. If for some reason you don't want to build the
      XPM plug-in even though the library is installed, use
-     --without-libxpm to disable it explicitly.
+     -Dxpm=disabled to disable it explicitly.
 
-  --without-libmng.  The MNG plug-in needs libmng and configure checks
+  -Dmng=disabled  The MNG plug-in needs libmng and configure checks
      for its presence. If for some reason you don't want to build the
      MNG plug-in even though the library is installed, use
-     --without-libmng to disable it explicitly.
+     -Dmng=disabled to disable it explicitly.
 
-  --without-wmf.  The WMF plug-in needs libwmf2 and configure checks for
-     its presence. Use --without-wmf if you run into problems.
+  -Dwmf=disabled  The WMF plug-in needs libwmf2 and configure checks for
+     its presence. Use -Dwmf=disabled if you run into problems.
 
-  --without-webkit.  If for some reason you don't want to build the
-     Help Browser plug-in, you can use --without-webkit to disable
-     it explicitly.
+  -Dwebkit-unmaintained=true  We do not recommend to install the Help
+     browser and Webpage plug-ins anymore. If for some reason you want
+     these anyway, you can force the build with this explicit option.
 
-  --without-print.  If for some reason you don't want to build the Print
-     plug-in based on the GtkPrint API, you can build with --without-print.
+  -Dprint=false  If for some reason you don't want to build the Print
+     plug-in based on the GtkPrint API, you can build with -Dprint=false.
 
-  --without-alsa.  If you don't want to compile ALSA support into the
-     MIDI input controller module, you can use the --without-alsa option.
+  -Dalsa=disabled  If you don't want to compile ALSA support into the
+     MIDI input controller module, you can use the -Dalsa=disabled option.
 
-  --without-linux-input.  If you don't want to compile the Linux Input
-     controller module, you can use the --without-linux-input option.
+  -Dlinux-input=disabled  If you don't want to compile the Linux Input
+     controller module, you can use the -Dlinux-input=disabled option.
 
-  --without-hal.  If you want to build the Linux Input controller module
-     without HAL support, you can use the --without-hal option.
+  -Dgi-docgen=enabled|disabled  This option controls whether the libgimp
+     C API references will be created using gi-docgen.
 
-  --without-mac-twain.  If you don't want to compile the Mac OS X
-    TWAIN plug-in, you can use the --without-mac-twain option.
+  -Dg-ir-doc=true  This option controls whether the libgimp API
+     references for some binding languages will be created using
+     g-ir-doc-tool and yelp-build.
 
-  --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
-     algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW
-     patent (which should have expired in most countries by now), you
-     can go for simple run-length encoding or even configure the plug-in
-     to create uncompressed GIFs.
+  -Denable-multiproc=false This option allows you to disable support for
+     multiple processors. It is enabled by default.
 
-  --enable-gtk-doc.  This option controls whether the libgimp API
-     references will be created using gtk-doc. The HTML pages are
-     included in a standard tarball, so you will only need this if you
-     are building from SVN.
-
-  --with-html-dir=PATH.  This option allows to specify where the
-     libgimp API reference should be installed. You might want to modify
-     the path so it points to the place where glib and gtk installed
-     their API references so that the libgimp reference can link to
-     them.
-
-  --disable-mp. This option allows you to disable support for multiple
-     processors. It is enabled by default.
-
-  --with-sendmail[=PATH]. This option is used to tell GIMP to send email
+  -Dwith-sendmail[=PATH] This option is used to tell GIMP to send email
      through sendmail instead of xdg-email. You can optionally indicate
      where to find the sendmail command. Otherwise sendmail will simply
      be searched in your $PATH at runtime.
 
-  --with-desktop-dir=[PATH]. This option specifies where to install
-     desktop files. These files are used by desktop environments that
-     comply to the specs published at freedesktop.org. The default
-     value ${prefix}/share should be fine if your desktop environment
-     is installed in the same prefix as gimp. No files are installed
-     if you call configure with --without-desktop-dir.
-
-  --disable-default-binary. Use this option if you don't want to make
+  -Denable-default-bin=false  Use this option if you don't want to make
      gimp-@GIMP_APP_VERSION@ the default GIMP installation. Otherwise a link called
      gimp pointing to the gimp-@GIMP_APP_VERSION@ executable will be installed.
 
-  --disable-gimp-console.  Use this option if you don't want the
+  -Denable-console-bin=false  Use this option if you don't want the
      gimp-console binary to be built in addition to the standard binary.
      gimp-console is useful for command-line batch mode or as a server.
 
-  --without-python.  If for some reason you don't want to install the
-     Python plug-ins, you can use --with-python=no. Oppositely you can
-     force the installations even without Python or PyGObject installed
-     by setting --with-python=force (these are runtime dependencies
-     which you can install later).
+  -Dpython=false  If for some reason you don't want to install the
+     Python plug-ins, you can use -Dpython=false.
 
-  --without-javascript.  If for some reason you don't want to install the
-     JavaScript plug-ins, you can use --with-javascript=no. Oppositely
-     you can force the installations even without GJS installed by
-     setting --with-javascript=force (GJS is a runtime dependency which
-     you can install later).
+  -Djavascript=false  If for some reason you don't want to install the
+     Python plug-ins, you can use -Djavascript=false.
 
-  --without-lua.  If for some reason you don't want to install the
-     Lua plug-ins, you can use --with-lua=no. Oppositely you can force
-     the installations even without LuaJIT or LGI installed by setting
-     --with-lua=force (these are runtime dependencies which you can
-     install later).
+  -Dlua=false  If for some reason you don't want to install the
+     Python plug-ins, you can use -Dlua=false.
 
-  --without-vala.  If for some reason you don't want to build the Vala
-     plug-ins, you can use --without-vala.
-
-  --without-script-fu.  If for some reason you don't want to build the
-     Script-Fu plug-in, you can use --without-script-fu.
-
-  --without-xmc.  The X11 Mouse Cursor(XMC) plug-in needs libXcursor
-     and configure checks for its presence. If for some reason you
-     don't want to build the XMC plug-in even though the library is
-     installed, use --without-xmc to disable it explicitly.
+  -Dvala-plugins=disabled  If for some reason you don't want to install the
+     Python plug-ins, you can use -Dvala-plugins=disabled.
 
 
-The `make' command builds several things:
+This list is manually maintained. To get an exhaustive listing of options,
+read `meson_options.txt'.
+Additionally meson supports a wide range of common built-in options. See
+documentation: https://mesonbuild.com/Builtin-options.html
+
+The `ninja' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
  - The main GIMP program 'gimp-@GIMP_APP_VERSION@' in `app'.
 
-The `make install' commands installs the GIMP header files associated
+The `ninja install' command installs the GIMP header files associated
 with the libgimp libraries, the plug-ins, some data files and the GIMP
-executable. After running `make install' and assuming the build process
+executable. After running `ninja install' and assuming the build process
 was successful you should be able to run `gimp'.
 
 
-When ./configure fails
+When configure fails
 ======================
 
-'configure' uses pkg-config, a tool that replaces the old foo-config
+The configuration step uses pkg-config, a tool that replaces the old foo-config
 scripts. The most recent version is available from
 	https://www.freedesktop.org/software/pkgconfig/
 
 'configure' tries to compile and run a short GTK program. There are
 several reasons why this might fail:
 
-* pkg-config could not find the file 'gtk+-2.0.pc' that gets installed
+* pkg-config could not find the file 'gtk+-3.0.pc' that gets installed
   with GTK. (This file is used to get information about where GTK+ is
   installed.)
 
   Fix: Either make sure that this file is in the path where pkg-config
   looks for it (try 'pkg-config --debug' or add the location of
-  gtk+-2.0.pc to the environment variable PKG_CONFIG_PATH before running
+  gtk+-3.0.pc to the environment variable PKG_CONFIG_PATH before running
   configure.
 
 * Libraries you installed are not found when you attempt to start GIMP.
@@ -515,12 +456,12 @@ several reasons why this might fail:
   default directory (/usr/lib/pkgconfig).  However, removing the old
   packages is often the easier solution.
 
-A detailed log of the ./configure output is written to the file
-config.log. This may help diagnose problems.
+A detailed log of the meson output is written to the file meson-logs/meson-log.txt.
+This may help diagnose problems.
 
 
-When ./configure fails on plug-ins
-==================================
+When meson configure fails on plug-ins
+======================================
 
 There are some GIMP plug-ins that need additional third-party libraries
 installed on your system. For example to compile the plug-ins that load
@@ -539,102 +480,4 @@ before you run configure.
 Set your CPPFLAGS environment variable to look for the header file in a
 certain place, e.g. if you are working in a bash shell you would say:
       export CPPFLAGS="-I<path_to_header_file> -I<path_to_another_one>"
-before you run configure.
-
-
-      Generic Instructions for Building Auto-Configured Packages
-      ==========================================================
-
-
-To compile this package:
-
-1.  Configure the package for your system.  In the directory that this
-file is in, type `./configure'.  If you're using `csh' on an old
-version of System V, you might need to type `sh configure' instead to
-prevent `csh' from trying to execute `configure' itself.
-
-The `configure' shell script attempts to guess correct values for
-various system-dependent variables used during compilation, and
-creates the Makefile(s) (one in each subdirectory of the source
-directory).  In some packages it creates a C header file containing
-system-dependent definitions.  It also creates a file `config.status'
-that you can run in the future to recreate the current configuration.
-Running `configure' takes a minute or two.
-
-To compile the package in a different directory from the one
-containing the source code, you must use GNU make.  `cd' to the
-directory where you want the object files and executables to go and
-run `configure' with the option `--srcdir=DIR', where DIR is the
-directory that contains the source code.  Using this option is
-actually unnecessary if the source code is in the parent directory of
-the one in which you are compiling; `configure' automatically checks
-for the source code in `..' if it does not find it in the current
-directory.
-
-By default, `make install' will install the package's files in
-/usr/local/bin, /usr/local/lib, /usr/local/man, etc.  You can specify
-an installation prefix other than /usr/local by giving `configure' the
-option `--prefix=PATH'.
-
-You can specify separate installation prefixes for machine-specific
-files and machine-independent files.  If you give `configure' the
-option `--exec-prefix=PATH', the package will use PATH as the prefix
-for installing programs and libraries.  Normally, all files are
-installed using the same prefix.
-
-`configure' ignores any other arguments that you give it.
-
-If your system requires unusual options for compilation or linking
-that `configure' doesn't know about, you can give `configure' initial
-values for some variables by setting them in the environment.  In
-Bourne-compatible shells, you can do that on the command line like
-this:
-        CC='gcc -traditional' DEFS=-D_POSIX_SOURCE ./configure
-
-The `make' variables that you might want to override with environment
-variables when running `configure' are:
-
-(For these variables, any value given in the environment overrides the
-value that `configure' would choose:)
-CC              C compiler program.
-                Default is `cc', or `gcc' if `gcc' is in your PATH.
-INSTALL         Program to use to install files.
-                Default is `install' if you have it, `cp' otherwise.
-INCLUDEDIR      Directory for `configure' to search for include files.
-                Default is /usr/include.
-
-(For these variables, any value given in the environment is added to
-the value that `configure' chooses:)
-DEFS            Configuration options, in the form '-Dfoo -Dbar ...'
-LIBS            Libraries to link with, in the form '-lfoo -lbar ...'
-
-If you need to do unusual things to compile the package, we encourage
-you to teach `configure' how to do them and mail the diffs to the
-address given in the README so we can include them in the next
-release.
-
-2.  Type `make' to compile the package.
-
-3.  Type `make install' to install programs, data files, and
-documentation.
-
-4.  You can remove the program binaries and object files from the
-source directory by typing `make clean'.  To also remove the
-Makefile(s), the header file containing system-dependent definitions
-(if the package uses one), and `config.status' (all the files that
-`configure' created), type `make distclean'.
-
-The file `configure.ac' is used as a template to create `configure' by
-a program called `autoconf'.  You will only need it if you want to
-regenerate `configure' using a newer version of `autoconf'.
-
-More autotools commands
-=======================
-
-GIMP uses the autotools build system which follows the GNU coding
-standards. In particular all usual standard targets are obviously
-supported (e.g. `make uninstall` for uninstalling) as well as common
-variables and options, cross-compilation host and target, etc.
-
-If you wish to know more, please refer to GNU documentation:
-https://www.gnu.org/prep/standards/html_node/Managing-Releases.html
+before you run meson.
