@@ -24,8 +24,10 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+#include <gegl.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "gimpwidgetstypes.h"
@@ -386,6 +388,83 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
                                                             ++max);
       g_free (basename);
     }
+
+  return iter_valid;
+}
+
+/**
+ * _gimp_color_profile_store_history_find_profile:
+ * @store:   a #GimpColorProfileStore
+ * @profile: a #GimpColorProfile to find (or %NULL)
+ * @iter:    a #GtkTreeIter
+ *
+ * Returns: %TRUE if the iter is valid and pointing to the item
+ *
+ * Since: 3.0
+ **/
+gboolean
+_gimp_color_profile_store_history_find_profile (GimpColorProfileStore *store,
+                                                GimpColorProfile      *profile,
+                                                GtkTreeIter           *iter)
+{
+  GtkTreeModel *model;
+  gboolean      iter_valid;
+  gint          max = -1;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store), FALSE);
+  g_return_val_if_fail (iter != NULL, FALSE);
+
+  model = GTK_TREE_MODEL (store);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, iter))
+    {
+      gint              type;
+      gint              index;
+      GFile            *file;
+      GimpColorProfile *combo_profile = NULL;
+
+      gtk_tree_model_get (model, iter,
+                          GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
+                          GIMP_COLOR_PROFILE_STORE_INDEX,     &index,
+                          -1);
+
+      if (type != GIMP_COLOR_PROFILE_STORE_ITEM_FILE)
+        continue;
+
+      if (index > max)
+        max = index;
+
+      /*  check if we found a filename match  */
+      gtk_tree_model_get (model, iter,
+                          GIMP_COLOR_PROFILE_STORE_FILE, &file,
+                          -1);
+
+      /* Convert file to GimpColorProfile */
+      if (file)
+        combo_profile = gimp_color_profile_new_from_file (file, NULL);
+
+      if ((combo_profile && profile &&
+           gimp_color_profile_is_equal  (profile, combo_profile)) ||
+          (! file && ! profile))
+        {
+          if (file)
+            g_object_unref (file);
+          if (combo_profile)
+            g_object_unref (combo_profile);
+
+          return TRUE;
+        }
+
+      if (file)
+        g_object_unref (file);
+      if (combo_profile)
+        g_object_unref (combo_profile);
+    }
+
+  if (! profile)
+    return FALSE;
 
   return iter_valid;
 }

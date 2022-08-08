@@ -62,22 +62,24 @@ struct _GimpColorProfileComboBoxClass
 };
 
 
-GType       gimp_color_profile_combo_box_get_type         (void) G_GNUC_CONST;
+GType       gimp_color_profile_combo_box_get_type           (void) G_GNUC_CONST;
 
-GtkWidget * gimp_color_profile_combo_box_new              (GtkWidget    *dialog,
-                                                           GFile        *history);
-GtkWidget * gimp_color_profile_combo_box_new_with_model   (GtkWidget    *dialog,
-                                                           GtkTreeModel *model);
+GtkWidget * gimp_color_profile_combo_box_new                (GtkWidget    *dialog,
+                                                             GFile        *history);
+GtkWidget * gimp_color_profile_combo_box_new_with_model     (GtkWidget    *dialog,
+                                                             GtkTreeModel *model);
 
-void        gimp_color_profile_combo_box_add_file         (GimpColorProfileComboBox *combo,
-                                                           GFile                    *file,
-                                                           const gchar              *label);
+void        gimp_color_profile_combo_box_add_file           (GimpColorProfileComboBox *combo,
+                                                             GFile                    *file,
+                                                             const gchar              *label);
 
-void        gimp_color_profile_combo_box_set_active_file  (GimpColorProfileComboBox *combo,
-                                                           GFile                    *file,
-                                                           const gchar              *label);
+void        gimp_color_profile_combo_box_set_active_file    (GimpColorProfileComboBox *combo,
+                                                             GFile                    *file,
+                                                             const gchar              *label);
+void        gimp_color_profile_combo_box_set_active_profile (GimpColorProfileComboBox *combo,
+                                                             GimpColorProfile         *profile);
 
-GFile *     gimp_color_profile_combo_box_get_active_file  (GimpColorProfileComboBox *combo);
+GFile *     gimp_color_profile_combo_box_get_active_file    (GimpColorProfileComboBox *combo);
 
 
 G_END_DECLS

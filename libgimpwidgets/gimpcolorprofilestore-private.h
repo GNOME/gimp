@@ -45,6 +45,11 @@ G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_add     (GimpColorPr
                                                                      const gchar           *label,
                                                                      GtkTreeIter           *iter);
 
+G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_find_profile
+                                                                    (GimpColorProfileStore *store,
+                                                                     GimpColorProfile      *profile,
+                                                                     GtkTreeIter           *iter);
+
 G_GNUC_INTERNAL void      _gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,
                                                                      GtkTreeIter           *iter);
 

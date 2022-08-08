@@ -444,6 +444,35 @@ gimp_color_profile_combo_box_set_active_file (GimpColorProfileComboBox *combo,
 }
 
 /**
+ * gimp_color_profile_combo_box_set_active_profile:
+ * @combo:   a #GimpColorProfileComboBox
+ * @profile: a #GimpColorProfile to set
+ *
+ * Selects a color profile from the @combo and makes it the active
+ * item.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_profile_combo_box_set_active_profile (GimpColorProfileComboBox *combo,
+                                                 GimpColorProfile         *profile)
+{
+  GtkTreeModel     *model;
+  GtkTreeIter       iter;
+
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
+
+  if (_gimp_color_profile_store_history_find_profile (GIMP_COLOR_PROFILE_STORE (model),
+                                                      profile, &iter))
+    {
+      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
+    }
+}
+
+/**
  * gimp_color_profile_combo_box_get_active_file:
  * @combo: a #GimpColorProfileComboBox
  *

@@ -38,7 +38,9 @@ struct _GimpStatusbar
 {
   GtkFrame             parent_instance;
 
+  Gimp                *gimp;
   GimpDisplayShell    *shell;
+  GimpImage           *image;
 
   GSList              *messages;
   GHashTable          *context_ids;
@@ -81,6 +83,15 @@ struct _GimpStatusbar
   guint64              progress_last_update_time;
 
   GtkWidget           *soft_proof_button;
+  GtkWidget           *soft_proof_container;
+  GtkWidget           *soft_proof_popover;
+  GtkWidget           *proof_colors_toggle;
+  GtkWidget           *profile_label;
+  GtkWidget           *profile_combo;
+  GtkWidget           *rendering_intent_combo;
+  GtkWidget           *bpc_toggle;
+  GtkWidget           *optimize_combo;
+  GtkWidget           *out_of_gamut_toggle;
 
   GSList              *size_widgets;
 };
