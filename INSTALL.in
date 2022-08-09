@@ -382,13 +382,13 @@ These are:
      Python plug-ins, you can use -Dpython=false.
 
   -Djavascript=false  If for some reason you don't want to install the
-     Python plug-ins, you can use -Djavascript=false.
+     JavaScript plug-ins, you can use -Djavascript=false.
 
   -Dlua=false  If for some reason you don't want to install the
-     Python plug-ins, you can use -Dlua=false.
+     Lua plug-ins, you can use -Dlua=false.
 
   -Dvala-plugins=disabled  If for some reason you don't want to install the
-     Python plug-ins, you can use -Dvala-plugins=disabled.
+     Vala plug-ins, you can use -Dvala-plugins=disabled.
 
 
 This list is manually maintained. To get an exhaustive listing of options,
