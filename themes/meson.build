@@ -1,6 +1,6 @@
 
 themes = [
-  'System',
+  'System', 'Light',
 ]
 
 foreach theme : themes
