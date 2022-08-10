@@ -8,6 +8,21 @@
      Styling the interior of the Reload button to match the mysterious
      background color has an unfortunate result of styling lots of
      other areas in unfortunate ways.
+  - Thick black frame around the scrolled part of the Procedure Browser.
+    According to GtkInspector this is scrolledwindow viewport.frame
+    but it doesn't respond to color, background, background-color,
+    outline-color or text-decoration-color.
+    scrolledwindow viewport.frame * can get what's inside the frame
+    (also affects tool options), but doesn't affect the frame.
+
+scrolledwindow viewport.frame {
+    color: yellow;
+    background: yellow;
+    background-color: yellow;
+    outline-color: yellow;
+    text-decoration-color: green;
+    border-color: pink;
+}
  */
 
 /* Hint for debugging themes:
@@ -25,7 +40,7 @@
    */
   color: black;
 }
-
+\
 #image-menubar, GtkImageMenuItem {
    background-color: rgb(235,235,235);
    color: black;
