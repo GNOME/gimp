@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-21 12:36+0000\n"
-"PO-Revision-Date: 2022-07-29 20:25+0800\n"
+"POT-Creation-Date: 2022-08-08 18:32+0000\n"
+"PO-Revision-Date: 2022-08-10 20:26+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -469,7 +469,7 @@ msgstr "竖直(_V)"
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
-#: plug-ins/file-psd/psd-load.c:2454 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2486 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
@@ -1009,9 +1009,9 @@ msgstr "保存 CML 探索器参数"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1252
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:1815
-#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
+#: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-psd/psd-save.c:1815 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1045,11 +1045,12 @@ msgstr "加载 CML 探索器参数"
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
-#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
-#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
-#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
+#: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
+#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:158
+#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1946,9 +1947,9 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
-#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
-#: plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
+#: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
+#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2023,9 +2024,10 @@ msgstr "“%s”：读取色板数据时遇到文件尾或错误"
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1244
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:1777
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
+#: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:1777 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "正在导出“%s”"
@@ -4489,12 +4491,12 @@ msgid "_Write hot spot values"
 msgstr "写入热点坐标(_W)"
 
 #: plug-ins/common/file-xbm.c:1337 plug-ins/common/file-xmc.c:1132
-#: plug-ins/file-ico/ico-dialog.c:483
+#: plug-ins/file-ico/ico-dialog.c:571
 msgid "Hot spot _X:"
 msgstr "热点 _X："
 
 #: plug-ins/common/file-xbm.c:1345 plug-ins/common/file-xmc.c:1146
-#: plug-ins/file-ico/ico-dialog.c:496
+#: plug-ins/file-ico/ico-dialog.c:584
 msgid "Hot spot _Y:"
 msgstr "热点 _Y："
 
@@ -6876,87 +6878,135 @@ msgstr "到(_T)："
 msgid "Export Image as FLI Animation"
 msgstr "导出图像为 FLI 动画"
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:61
+msgid "Windows Animated Cursor"
+msgstr "Windows 动画指针"
+
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Cursor"
 msgstr "Windows 指针"
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Icon"
 msgstr "Windows 图标"
 
+#: plug-ins/file-ico/ico-dialog.c:97
+msgid "Animated Cursor Settings"
+msgstr "动画指针设置"
+
+#: plug-ins/file-ico/ico-dialog.c:110
+msgid "_Cursor Name (Optional)"
+msgstr "指针名称（可选）(_C)"
+
+#: plug-ins/file-ico/ico-dialog.c:127
+msgid "_Author Name (Optional)"
+msgstr "作者名字（可选）(_A)"
+
+#: plug-ins/file-ico/ico-dialog.c:144
+msgid "_Delay between frames:"
+msgstr "帧间延时(_D)："
+
+#: plug-ins/file-ico/ico-dialog.c:154
+msgid " jiffies (16.66 ms)"
+msgstr " 瞬间（16.66 ms）"
+
 #. Cursor
-#: plug-ins/file-ico/ico-dialog.c:76
+#: plug-ins/file-ico/ico-dialog.c:164
 msgid "Icon Details"
 msgstr "图标细节"
 
-#: plug-ins/file-ico/ico-dialog.c:99
+#: plug-ins/file-ico/ico-dialog.c:187
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr "并非所有程序都支持大图标和压缩。旧的应用程序可能无法正确打开此文件。"
 
-#: plug-ins/file-ico/ico-dialog.c:168
+#: plug-ins/file-ico/ico-dialog.c:256
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp，1 位透明，2 个调色板项"
 
-#: plug-ins/file-ico/ico-dialog.c:169
+#: plug-ins/file-ico/ico-dialog.c:257
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp，1 位透明，16 个调色板项"
 
-#: plug-ins/file-ico/ico-dialog.c:170
+#: plug-ins/file-ico/ico-dialog.c:258
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp，1 位透明，256 个调色板项"
 
-#: plug-ins/file-ico/ico-dialog.c:171
+#: plug-ins/file-ico/ico-dialog.c:259
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp，1 位透明，无调色板"
 
-#: plug-ins/file-ico/ico-dialog.c:172
+#: plug-ins/file-ico/ico-dialog.c:260
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp，8 位透明，无调色板"
 
-#: plug-ins/file-ico/ico-dialog.c:186
+#: plug-ins/file-ico/ico-dialog.c:274
 msgid "Compressed (PNG)"
 msgstr "压缩（PNG）"
 
-#: plug-ins/file-ico/ico-load.c:222
+#: plug-ins/file-ico/ico-load.c:224
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "无法读取“%lu”字节"
 
-#: plug-ins/file-ico/ico-load.c:250
+#: plug-ins/file-ico/ico-load.c:252
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "图标 #%d 具有零宽度或高度"
 
 #. read successfully. add to image
-#: plug-ins/file-ico/ico-load.c:636
+#: plug-ins/file-ico/ico-load.c:639
 #, c-format
 msgid "Icon #%i"
 msgstr "图标 #%i"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-ico/ico-load.c:766 plug-ins/file-jpeg/jpeg-load.c:541
+#: plug-ins/file-ico/ico-load.c:938 plug-ins/file-jpeg/jpeg-load.c:541
 #: plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-darktable.c:515
 #: plug-ins/file-raw/file-rawtherapee.c:457
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "打开“%s”的缩略图"
 
-#: plug-ins/file-ico/ico-save.c:210
+#: plug-ins/file-ico/ico-save.c:213
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
 "%d icons."
 msgstr "对 %3$d 图标带有 %1$d 和 %2$d 热点坐标的图像的非交互式读取。"
 
-#: plug-ins/file-ico/ico.c:141 plug-ins/file-ico/ico.c:216
+#: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
 msgid "Microsoft Windows icon"
 msgstr "微软 Windows 图标"
 
-#: plug-ins/file-ico/ico.c:169 plug-ins/file-ico/ico.c:241
+#: plug-ins/file-ico/ico.c:196 plug-ins/file-ico/ico.c:316
 msgid "Microsoft Windows cursor"
 msgstr "微软 Windows 指针"
+
+#: plug-ins/file-ico/ico.c:226 plug-ins/file-ico/ico.c:363
+msgid "Microsoft Windows animated cursor"
+msgstr "微软 Windows 动画指针"
+
+#: plug-ins/file-ico/ico.c:230
+msgid "Loads files of Windows ANI file format"
+msgstr "加载 Windows ANI 格式的文件"
+
+#: plug-ins/file-ico/ico.c:272
+msgid "Loads a preview from a Windows ANI files"
+msgstr "从 Windows ANI 文件中加载预览"
+
+#: plug-ins/file-ico/ico.c:367 plug-ins/file-ico/ico.c:368
+msgid "Saves files in Windows ANI file format"
+msgstr "以 Windows ANI 格式保存文件"
+
+#: plug-ins/file-ico/ico.c:384
+msgid "Cursor Name (Optional)"
+msgstr "指针名称（可选）"
+
+#: plug-ins/file-ico/ico.c:390
+msgid "Cursor Author (Optional)"
+msgstr "指针作者（可选）"
 
 #: plug-ins/file-jpeg/jpeg-load.c:215
 msgid "JPEG preview"
@@ -7040,7 +7090,7 @@ msgstr "间隔（MCU 行）(_V)："
 
 #: plug-ins/file-jpeg/jpeg.c:258
 msgid "_DCT method"
-msgstr "_DCT 方法"
+msgstr "DCT 方法(_D)"
 
 #: plug-ins/file-jpeg/jpeg.c:296
 msgid "Older software may have trouble opening arithmetic-coded images"
@@ -7136,20 +7186,20 @@ msgstr "不支持的或无效的图层蒙板宽度：%d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "不支持的或无效的图层蒙板尺寸：%dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2427
+#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2459
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "不支持的压缩模式：%d"
 
-#: plug-ins/file-psd/psd-load.c:2620
+#: plug-ins/file-psd/psd-load.c:2652
 msgid "Extra"
 msgstr "附加的"
 
-#: plug-ins/file-psd/psd-load.c:2820
+#: plug-ins/file-psd/psd-load.c:2852
 msgid "Unsupported or invalid channel size"
 msgstr "不支持或无效的通道尺寸"
 
-#: plug-ins/file-psd/psd-load.c:2889
+#: plug-ins/file-psd/psd-load.c:2921
 msgid "Failed to decompress data"
 msgstr "解压缩数据失败"
 
