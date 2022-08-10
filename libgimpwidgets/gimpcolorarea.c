@@ -1025,7 +1025,9 @@ gimp_color_area_create_transform (GimpColorArea *area)
                                                          profile,
                                                          format,
                                                          format,
-                                                         NULL);
+                                                         NULL,
+                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         FALSE);
     }
 }
 

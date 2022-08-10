@@ -73,6 +73,15 @@ GimpColorProfile   * gimp_image_get_simulation_profile (GimpImage           *ima
 gboolean             gimp_image_set_simulation_profile (GimpImage           *image,
                                                         GimpColorProfile    *profile);
 
+GimpColorRenderingIntent
+                     gimp_image_get_simulation_intent  (GimpImage           *image);
+void                 gimp_image_set_simulation_intent  (GimpImage                *image,
+                                                        GimpColorRenderingIntent intent);
+
+gboolean             gimp_image_get_simulation_bpc     (GimpImage           *image);
+void                 gimp_image_set_simulation_bpc     (GimpImage           *image,
+                                                        gboolean             bpc);
+
 gboolean             gimp_image_validate_color_profile_by_format
                                                        (const Babl          *format,
                                                         GimpColorProfile    *profile,

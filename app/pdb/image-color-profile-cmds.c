@@ -363,6 +363,112 @@ image_set_simulation_profile_from_file_invoker (GimpProcedure         *procedure
 }
 
 static GimpValueArray *
+image_get_simulation_intent_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gint intent = 0;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      intent = gimp_image_get_simulation_intent (image);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_enum (gimp_value_array_index (return_vals, 1), intent);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_set_simulation_intent_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint intent;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  intent = g_value_get_enum (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_image_set_simulation_intent (image, intent);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_get_simulation_bpc_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gboolean bpc = FALSE;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      bpc = gimp_image_get_simulation_bpc (image);
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    g_value_set_boolean (gimp_value_array_index (return_vals, 1), bpc);
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_set_simulation_bpc_invoker (GimpProcedure         *procedure,
+                                  Gimp                  *gimp,
+                                  GimpContext           *context,
+                                  GimpProgress          *progress,
+                                  const GimpValueArray  *args,
+                                  GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gboolean bpc;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  bpc = g_value_get_boolean (gimp_value_array_index (args, 1));
+
+  if (success)
+    {
+      gimp_image_set_simulation_bpc (image, bpc);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 image_convert_color_profile_invoker (GimpProcedure         *procedure,
                                      Gimp                  *gimp,
                                      GimpContext           *context,
@@ -686,6 +792,124 @@ register_image_color_profile_procs (GimpPDB *pdb)
                                                     "The file containing the new simulation color profile",
                                                     G_TYPE_FILE,
                                                     GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-simulation-intent
+   */
+  procedure = gimp_procedure_new (image_get_simulation_intent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-simulation-intent");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the image's simulation rendering intent",
+                                  "This procedure returns the image's simulation rendering intent.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_enum ("intent",
+                                                      "intent",
+                                                      "The image's simulation rendering intent.",
+                                                      GIMP_TYPE_COLOR_RENDERING_INTENT,
+                                                      GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-simulation-intent
+   */
+  procedure = gimp_procedure_new (image_set_simulation_intent_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-simulation-intent");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the image's simulation rendering intent",
+                                  "This procedure sets the image's simulation rendering intent.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_enum ("intent",
+                                                  "intent",
+                                                  "A GimpColorRenderingIntent",
+                                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
+                                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
+                                                  GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-simulation-bpc
+   */
+  procedure = gimp_procedure_new (image_get_simulation_bpc_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-simulation-bpc");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns whether the image has Black Point Compensation enabled for its simulation",
+                                  "This procedure returns whether the image has Black Point Compensation enabled for its simulation",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("bpc",
+                                                         "bpc",
+                                                         "The Black Point Compensation status.",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-simulation-bpc
+   */
+  procedure = gimp_procedure_new (image_set_simulation_bpc_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-simulation-bpc");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets whether the image has Black Point Compensation enabled for its simulation",
+                                  "This procedure whether the image has Black Point Compensation enabled for its simulation",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Alex S.",
+                                         "Alex S.",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_boolean ("bpc",
+                                                     "bpc",
+                                                     "The Black Point Compensation status.",
+                                                     FALSE,
+                                                     GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

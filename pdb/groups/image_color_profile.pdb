@@ -356,6 +356,112 @@ CODE
     );
 }
 
+sub image_get_simulation_intent {
+    $blurb = "Returns the image's simulation rendering intent";
+
+    $help = <<'HELP';
+This procedure returns the image's simulation rendering intent.
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => "The image's simulation rendering intent." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  intent = gimp_image_get_simulation_intent (image);
+}
+CODE
+    );
+}
+
+sub image_set_simulation_intent {
+    $blurb = "Sets the image's simulation rendering intent";
+
+    $help = <<'HELP';
+This procedure sets the image's simulation rendering intent.
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'intent', type => 'enum GimpColorRenderingIntent',
+          desc => 'A GimpColorRenderingIntent' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_image_set_simulation_intent (image, intent);
+}
+CODE
+    );
+}
+
+sub image_get_simulation_bpc {
+    $blurb = "Returns whether the image has Black Point Compensation enabled for its simulation";
+
+    $help = <<'HELP';
+This procedure returns whether the image has Black Point Compensation enabled for its simulation
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'bpc', type => 'boolean',
+          desc => "The Black Point Compensation status." }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  bpc = gimp_image_get_simulation_bpc (image);
+}
+CODE
+    );
+}
+
+sub image_set_simulation_bpc {
+    $blurb = "Sets whether the image has Black Point Compensation enabled for its simulation";
+
+    $help = <<'HELP';
+This procedure whether the image has Black Point Compensation enabled for its simulation
+HELP
+
+    &alxsa_pdb_misc('2022', '3.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'bpc', type => 'boolean',
+          desc => 'The Black Point Compensation status.' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  gimp_image_set_simulation_bpc (image, bpc);
+}
+CODE
+    );
+}
+
 sub image_convert_color_profile {
     $blurb = "Convert the image's layers to a color profile";
 
@@ -472,6 +578,10 @@ CODE
             image_get_simulation_profile
             image_set_simulation_profile
             image_set_simulation_profile_from_file
+            image_get_simulation_intent
+            image_set_simulation_intent
+            image_get_simulation_bpc
+            image_set_simulation_bpc
             image_convert_color_profile
             image_convert_color_profile_from_file);
 

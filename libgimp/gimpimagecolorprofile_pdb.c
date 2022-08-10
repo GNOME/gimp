@@ -351,6 +351,158 @@ gimp_image_set_simulation_profile_from_file (GimpImage *image,
 }
 
 /**
+ * gimp_image_get_simulation_intent:
+ * @image: The image.
+ *
+ * Returns the image's simulation rendering intent
+ *
+ * This procedure returns the image's simulation rendering intent.
+ *
+ * Returns: The image's simulation rendering intent.
+ *
+ * Since: 3.0
+ **/
+GimpColorRenderingIntent
+gimp_image_get_simulation_intent (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  GimpColorRenderingIntent intent = 0;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-get-simulation-intent",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    intent = GIMP_VALUES_GET_ENUM (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return intent;
+}
+
+/**
+ * gimp_image_set_simulation_intent:
+ * @image: The image.
+ * @intent: A GimpColorRenderingIntent.
+ *
+ * Sets the image's simulation rendering intent
+ *
+ * This procedure sets the image's simulation rendering intent.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_set_simulation_intent (GimpImage                *image,
+                                  GimpColorRenderingIntent  intent)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          GIMP_TYPE_COLOR_RENDERING_INTENT, intent,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-set-simulation-intent",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
+ * gimp_image_get_simulation_bpc:
+ * @image: The image.
+ *
+ * Returns whether the image has Black Point Compensation enabled for
+ * its simulation
+ *
+ * This procedure returns whether the image has Black Point
+ * Compensation enabled for its simulation
+ *
+ * Returns: The Black Point Compensation status.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_get_simulation_bpc (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean bpc = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-get-simulation-bpc",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    bpc = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return bpc;
+}
+
+/**
+ * gimp_image_set_simulation_bpc:
+ * @image: The image.
+ * @bpc: The Black Point Compensation status.
+ *
+ * Sets whether the image has Black Point Compensation enabled for its
+ * simulation
+ *
+ * This procedure whether the image has Black Point Compensation
+ * enabled for its simulation
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_set_simulation_bpc (GimpImage *image,
+                               gboolean   bpc)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_BOOLEAN, bpc,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-set-simulation-bpc",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * _gimp_image_convert_color_profile:
  * @image: The image.
  * @num_bytes: Number of bytes in the color_profile array.

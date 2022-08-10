@@ -410,9 +410,6 @@ image_actions_update (GimpActionGroup *group,
                       gpointer         data)
 {
   GimpImage        *image          = action_data_get_image (data);
-  GimpDisplay      *display        = action_data_get_display (data);
-  GimpDisplayShell *shell          = NULL;
-  GimpColorConfig  *color_config   = NULL;
   gboolean          is_indexed     = FALSE;
   gboolean          is_u8_gamma    = FALSE;
   gboolean          is_double      = FALSE;
@@ -504,34 +501,28 @@ image_actions_update (GimpActionGroup *group,
       profile_srgb = gimp_image_get_use_srgb_profile (image, &profile_hidden);
       profile      = (gimp_image_get_color_profile (image) != NULL);
 
-      if (display)
+      switch (gimp_image_get_simulation_intent (image))
         {
-          shell        = gimp_display_get_shell (display);
-          color_config = gimp_display_shell_get_color_config (shell);
+        case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
+          action = "image-softproof-intent-perceptual";
+          break;
 
-          switch (gimp_color_config_get_simulation_intent (color_config))
-            {
-            case GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL:
-              action = "image-softproof-intent-perceptual";
-              break;
+        case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
+          action = "image-softproof-intent-relative-colorimetric";
+          break;
 
-            case GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC:
-              action = "image-softproof-intent-relative-colorimetric";
-              break;
+        case GIMP_COLOR_RENDERING_INTENT_SATURATION:
+          action = "image-softproof-intent-saturation";
+          break;
 
-            case GIMP_COLOR_RENDERING_INTENT_SATURATION:
-              action = "image-softproof-intent-saturation";
-              break;
-
-            case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
-              action = "image-softproof-intent-absolute-colorimetric";
-              break;
-            }
-
-          gimp_action_group_set_action_active (group, action, TRUE);
-
-          s_bpc  = gimp_color_config_get_simulation_bpc (color_config);
+        case GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC:
+          action = "image-softproof-intent-absolute-colorimetric";
+          break;
         }
+
+      gimp_action_group_set_action_active (group, action, TRUE);
+
+      s_bpc  = gimp_image_get_simulation_bpc (image);
     }
   else
     {

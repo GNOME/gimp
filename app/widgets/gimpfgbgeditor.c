@@ -795,7 +795,9 @@ gimp_fg_bg_editor_create_transform (GimpFgBgEditor *editor)
                                          profile,
                                          babl_format ("R'G'B'A double"),
                                          babl_format ("R'G'B'A double"),
-                                         NULL);
+                                         NULL,
+                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                         FALSE);
     }
 }
 

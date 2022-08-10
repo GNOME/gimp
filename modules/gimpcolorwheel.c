@@ -1552,7 +1552,9 @@ gimp_color_wheel_create_transform (GimpColorWheel *wheel)
                                                          profile,
                                                          format,
                                                          format,
-                                                         NULL);
+                                                         NULL,
+                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         FALSE);
     }
 }
 

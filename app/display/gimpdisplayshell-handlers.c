@@ -129,9 +129,6 @@ static void   gimp_display_shell_precision_changed_handler  (GimpImage        *i
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_profile_changed_handler    (GimpColorManaged *image,
                                                              GimpDisplayShell *shell);
-static void   gimp_display_shell_simulation_profile_changed_handler
-                                                            (GimpColorManaged *image,
-                                                             GimpDisplayShell *shell);
 static void   gimp_display_shell_saved_handler              (GimpImage        *image,
                                                              GFile            *file,
                                                              GimpDisplayShell *shell);
@@ -285,9 +282,16 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
   g_signal_connect (image, "profile-changed",
                     G_CALLBACK (gimp_display_shell_profile_changed_handler),
                     shell);
-  g_signal_connect (image, "simulation-profile-changed",
-                    G_CALLBACK (gimp_display_shell_simulation_profile_changed_handler),
-                    shell);
+  g_signal_connect_swapped (image, "simulation-profile-changed",
+                            G_CALLBACK (gimp_display_shell_profile_update),
+                            shell);
+  g_signal_connect_swapped (image, "simulation-intent-changed",
+                            G_CALLBACK (gimp_display_shell_profile_update),
+                            shell);
+  g_signal_connect_swapped (image, "simulation-bpc-changed",
+                            G_CALLBACK (gimp_display_shell_profile_update),
+                            shell);
+
   g_signal_connect (image, "saved",
                     G_CALLBACK (gimp_display_shell_saved_handler),
                     shell);
@@ -526,7 +530,7 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
                                         gimp_display_shell_profile_changed_handler,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
-                                        gimp_display_shell_simulation_profile_changed_handler,
+                                        gimp_display_shell_profile_update,
                                         shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_precision_changed_handler,
@@ -933,14 +937,6 @@ gimp_display_shell_profile_changed_handler (GimpColorManaged *image,
 }
 
 static void
-gimp_display_shell_simulation_profile_changed_handler (GimpColorManaged *image,
-                                                       GimpDisplayShell *shell)
-{
-  gimp_display_shell_profile_update (shell);
-  gimp_color_managed_simulation_profile_changed (GIMP_COLOR_MANAGED (shell));
-}
-
-static void
 gimp_display_shell_saved_handler (GimpImage        *image,
                                   GFile            *file,
                                   GimpDisplayShell *shell)
@@ -1207,8 +1203,6 @@ gimp_display_shell_color_config_notify_handler (GObject          *config,
       if (! strcmp (param_spec->name, "mode")                                 ||
           ! strcmp (param_spec->name, "display-rendering-intent")             ||
           ! strcmp (param_spec->name, "display-use-black-point-compensation") ||
-          ! strcmp (param_spec->name, "simulation-rendering-intent")          ||
-          ! strcmp (param_spec->name, "simulation-use-black-point-compensation") ||
           ! strcmp (param_spec->name, "simulation-gamut-check"))
         {
           if (shell->color_config_set)

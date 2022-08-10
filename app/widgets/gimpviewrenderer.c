@@ -1028,9 +1028,12 @@ gimp_view_renderer_get_color_transform (GimpViewRenderer *renderer,
                                         const Babl       *src_format,
                                         const Babl       *dest_format)
 {
-  GimpColorProfile *profile;
-  GimpColorProfile *proof_profile = NULL;
-  GimpImage        *image;
+  GimpColorProfile         *profile;
+  GimpColorProfile         *proof_profile     = NULL;
+  GimpColorRenderingIntent  simulation_intent =
+    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  gboolean                  simulation_bpc    = FALSE;
+  GimpImage                *image;
 
   g_return_val_if_fail (GIMP_IS_VIEW_RENDERER (renderer), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (widget), NULL);
@@ -1066,8 +1069,14 @@ gimp_view_renderer_get_color_transform (GimpViewRenderer *renderer,
     {
       image = gimp_context_get_image (GIMP_CONTEXT (renderer->context));
       if (image)
-        proof_profile =
-          gimp_color_managed_get_simulation_profile (GIMP_COLOR_MANAGED (image));
+        {
+          proof_profile =
+            gimp_color_managed_get_simulation_profile (GIMP_COLOR_MANAGED (image));
+          simulation_intent =
+            gimp_color_managed_get_simulation_intent (GIMP_COLOR_MANAGED (image));
+          simulation_bpc =
+            gimp_color_managed_get_simulation_bpc (GIMP_COLOR_MANAGED (image));
+        }
     }
 
   renderer->priv->profile_transform =
@@ -1076,7 +1085,9 @@ gimp_view_renderer_get_color_transform (GimpViewRenderer *renderer,
                                      profile,
                                      src_format,
                                      dest_format,
-                                     proof_profile);
+                                     proof_profile,
+                                     simulation_intent,
+                                     simulation_bpc);
 
   return renderer->priv->profile_transform;
 }

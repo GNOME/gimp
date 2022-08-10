@@ -203,6 +203,16 @@ static GimpColorProfile *
 static void
       gimp_image_color_managed_simulation_profile_changed (GimpColorManaged  *managed);
 
+static GimpColorRenderingIntent
+      gimp_image_color_managed_get_simulation_intent      (GimpColorManaged  *managed);
+static void
+      gimp_image_color_managed_simulation_intent_changed  (GimpColorManaged  *managed);
+
+static gboolean
+      gimp_image_color_managed_get_simulation_bpc         (GimpColorManaged  *managed);
+static void
+      gimp_image_color_managed_simulation_bpc_changed     (GimpColorManaged  *managed);
+
 static void        gimp_image_projectable_flush  (GimpProjectable   *projectable,
                                                   gboolean           invalidate_preview);
 static GeglRectangle gimp_image_get_bounding_box (GimpProjectable   *projectable);
@@ -707,6 +717,10 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
   iface->profile_changed            = gimp_image_color_managed_profile_changed;
   iface->get_simulation_profile     = gimp_image_color_managed_get_simulation_profile;
   iface->simulation_profile_changed = gimp_image_color_managed_simulation_profile_changed;
+  iface->get_simulation_intent      = gimp_image_color_managed_get_simulation_intent;
+  iface->simulation_intent_changed  = gimp_image_color_managed_simulation_intent_changed;
+  iface->get_simulation_bpc         = gimp_image_color_managed_get_simulation_bpc;
+  iface->simulation_bpc_changed     = gimp_image_color_managed_simulation_bpc_changed;
 }
 
 static void
@@ -1458,6 +1472,40 @@ gimp_image_color_managed_get_simulation_profile (GimpColorManaged *managed)
 
 static void
 gimp_image_color_managed_simulation_profile_changed (GimpColorManaged *managed)
+{
+  GimpImage *image = GIMP_IMAGE (managed);
+
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+}
+
+static GimpColorRenderingIntent
+gimp_image_color_managed_get_simulation_intent (GimpColorManaged *managed)
+{
+  GimpImage *image = GIMP_IMAGE (managed);
+
+  return gimp_image_get_simulation_intent (image);
+}
+
+static void
+gimp_image_color_managed_simulation_intent_changed (GimpColorManaged *managed)
+{
+  GimpImage *image = GIMP_IMAGE (managed);
+
+  gimp_projectable_structure_changed (GIMP_PROJECTABLE (image));
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+}
+
+static gboolean
+gimp_image_color_managed_get_simulation_bpc (GimpColorManaged *managed)
+{
+  GimpImage *image = GIMP_IMAGE (managed);
+
+  return gimp_image_get_simulation_bpc (image);
+}
+
+static void
+gimp_image_color_managed_simulation_bpc_changed (GimpColorManaged *managed)
 {
   GimpImage *image = GIMP_IMAGE (managed);
 

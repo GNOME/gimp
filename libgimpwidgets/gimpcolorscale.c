@@ -943,7 +943,9 @@ gimp_color_scale_create_transform (GimpColorScale *scale)
                                                          profile,
                                                          format,
                                                          format,
-                                                         NULL);
+                                                         NULL,
+                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         FALSE);
     }
 }
 

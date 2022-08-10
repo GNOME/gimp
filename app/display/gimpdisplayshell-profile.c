@@ -83,13 +83,16 @@ gimp_display_shell_profile_finalize (GimpDisplayShell *shell)
 void
 gimp_display_shell_profile_update (GimpDisplayShell *shell)
 {
-  GimpImage        *image;
-  GimpColorProfile *src_profile;
-  const Babl       *src_format;
-  GimpColorProfile *filter_profile;
-  const Babl       *filter_format;
-  const Babl       *dest_format;
-  GimpColorProfile *proof_profile;
+  GimpImage               *image;
+  GimpColorProfile        *src_profile;
+  const Babl              *src_format;
+  GimpColorProfile        *filter_profile;
+  const Babl              *filter_format;
+  const Babl              *dest_format;
+  GimpColorProfile        *proof_profile;
+  GimpColorRenderingIntent simulation_intent =
+    GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  gboolean                 simulation_bpc    = FALSE;
 
   gimp_display_shell_profile_free (shell);
 
@@ -104,6 +107,8 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
     return;
 
   proof_profile = gimp_color_managed_get_simulation_profile (GIMP_COLOR_MANAGED (image));
+  simulation_intent = gimp_color_managed_get_simulation_intent (GIMP_COLOR_MANAGED (image));
+  simulation_bpc = gimp_color_managed_get_simulation_bpc (GIMP_COLOR_MANAGED (image));
 
   src_format = gimp_projectable_get_format (GIMP_PROJECTABLE (image));
 
@@ -158,7 +163,9 @@ gimp_display_shell_profile_update (GimpDisplayShell *shell)
                                      filter_profile,
                                      filter_format,
                                      dest_format,
-                                     proof_profile);
+                                     proof_profile,
+                                     simulation_intent,
+                                     simulation_bpc);
 
   if (shell->filter_transform || shell->profile_transform)
     {
@@ -236,8 +243,6 @@ gimp_display_shell_color_config_notify (GimpColorConfig  *config,
   if (! strcmp (pspec->name, "mode")                                    ||
       ! strcmp (pspec->name, "display-rendering-intent")                ||
       ! strcmp (pspec->name, "display-use-black-point-compensation")    ||
-      ! strcmp (pspec->name, "simulation-rendering-intent")             ||
-      ! strcmp (pspec->name, "simulation-use-black-point-compensation") ||
       ! strcmp (pspec->name, "simulation-gamut-check"))
     {
       gboolean     managed   = FALSE;

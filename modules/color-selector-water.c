@@ -269,7 +269,9 @@ colorsel_water_create_transform (ColorselWater *water)
                                                           profile,
                                                           format,
                                                           format,
-                                                          NULL);
+                                                          NULL,
+                                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                          FALSE);
     }
 }
 

@@ -438,7 +438,9 @@ gimp_preview_area_create_transform (GimpPreviewArea *area)
                                                          profile,
                                                          format,
                                                          format,
-                                                         NULL);
+                                                         NULL,
+                                                         GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                         FALSE);
     }
 }
 

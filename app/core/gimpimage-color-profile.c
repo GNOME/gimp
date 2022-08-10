@@ -456,6 +456,57 @@ gimp_image_set_simulation_profile (GimpImage         *image,
                                      NULL);
 }
 
+GimpColorRenderingIntent
+gimp_image_get_simulation_intent (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image),
+                        GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->simulation_intent;
+}
+
+void
+gimp_image_set_simulation_intent (GimpImage               *image,
+                                  GimpColorRenderingIntent intent)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (intent != private->simulation_intent)
+    {
+      private->simulation_intent = intent;
+      gimp_color_managed_simulation_intent_changed (GIMP_COLOR_MANAGED (image));
+    }
+}
+
+gboolean
+gimp_image_get_simulation_bpc (GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+
+  return GIMP_IMAGE_GET_PRIVATE (image)->simulation_bpc;
+}
+
+void
+gimp_image_set_simulation_bpc (GimpImage *image,
+                               gboolean   bpc)
+{
+  GimpImagePrivate *private;
+
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  private = GIMP_IMAGE_GET_PRIVATE (image);
+
+  if (bpc != private->simulation_bpc)
+    {
+      private->simulation_bpc = bpc;
+      gimp_color_managed_simulation_bpc_changed (GIMP_COLOR_MANAGED (image));
+    }
+}
+
 gboolean
 gimp_image_validate_color_profile_by_format (const Babl         *format,
                                              GimpColorProfile   *profile,

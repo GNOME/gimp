@@ -48,6 +48,12 @@ G_GNUC_INTERNAL gboolean _gimp_image_set_simulation_profile          (GimpImage 
                                                                       const guint8             *color_profile);
 gboolean                 gimp_image_set_simulation_profile_from_file (GimpImage                *image,
                                                                       GFile                    *file);
+GimpColorRenderingIntent gimp_image_get_simulation_intent            (GimpImage                *image);
+gboolean                 gimp_image_set_simulation_intent            (GimpImage                *image,
+                                                                      GimpColorRenderingIntent  intent);
+gboolean                 gimp_image_get_simulation_bpc               (GimpImage                *image);
+gboolean                 gimp_image_set_simulation_bpc               (GimpImage                *image,
+                                                                      gboolean                  bpc);
 G_GNUC_INTERNAL gboolean _gimp_image_convert_color_profile           (GimpImage                *image,
                                                                       gint                      num_bytes,
                                                                       const guint8             *color_profile,

@@ -43,6 +43,8 @@ enum
 {
   PROFILE_CHANGED,
   SIMULATION_PROFILE_CHANGED,
+  SIMULATION_INTENT_CHANGED,
+  SIMULATION_BPC_CHANGED,
   LAST_SIGNAL
 };
 
@@ -74,6 +76,24 @@ gimp_color_managed_default_init (GimpColorManagedInterface *iface)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpColorManagedInterface,
                                    simulation_profile_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_color_managed_signals[SIMULATION_INTENT_CHANGED] =
+    g_signal_new ("simulation-intent-changed",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                                   simulation_intent_changed),
+                  NULL, NULL, NULL,
+                  G_TYPE_NONE, 0);
+
+  gimp_color_managed_signals[SIMULATION_BPC_CHANGED] =
+    g_signal_new ("simulation-bpc-changed",
+                  G_TYPE_FROM_INTERFACE (iface),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpColorManagedInterface,
+                                   simulation_bpc_changed),
                   NULL, NULL, NULL,
                   G_TYPE_NONE, 0);
 }
@@ -163,6 +183,59 @@ gimp_color_managed_get_simulation_profile (GimpColorManaged *managed)
 }
 
 /**
+ * gimp_color_managed_get_simulation_intent:
+ * @managed: an object the implements the #GimpColorManaged interface
+ *
+ * This function always returns a #GimpColorRenderingIntent
+ *
+ * Returns: The @managed's simulation #GimpColorRenderingIntent.
+ *
+ * Since: 3.0
+ **/
+GimpColorRenderingIntent
+gimp_color_managed_get_simulation_intent (GimpColorManaged *managed)
+{
+  GimpColorManagedInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed),
+                        GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
+
+  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+
+  if (iface->get_simulation_intent)
+    return iface->get_simulation_intent (managed);
+
+  return GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+}
+
+/**
+ * gimp_color_managed_get_simulation_bpc:
+ * @managed: an object the implements the #GimpColorManaged interface
+ *
+ * This function always returns a gboolean representing whether
+ * Black Point Compensation is enabled
+ *
+ * Returns: The @managed's simulation Black Point Compensation value.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_color_managed_get_simulation_bpc (GimpColorManaged *managed)
+{
+  GimpColorManagedInterface *iface;
+
+  g_return_val_if_fail (GIMP_IS_COLOR_MANAGED (managed), FALSE);
+
+  iface = GIMP_COLOR_MANAGED_GET_IFACE (managed);
+
+  if (iface->get_simulation_bpc)
+    return iface->get_simulation_bpc (managed);
+
+  return FALSE;
+}
+
+
+/**
  * gimp_color_managed_profile_changed:
  * @managed: an object that implements the #GimpColorManaged interface
  *
@@ -192,4 +265,36 @@ gimp_color_managed_simulation_profile_changed (GimpColorManaged *managed)
   g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
 
   g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_PROFILE_CHANGED], 0);
+}
+
+/**
+ * gimp_color_managed_simulation_intent_changed:
+ * @managed: an object that implements the #GimpColorManaged interface
+ *
+ * Emits the "simulation-intent-changed" signal.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_managed_simulation_intent_changed (GimpColorManaged *managed)
+{
+  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+
+  g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_INTENT_CHANGED], 0);
+}
+
+/**
+ * gimp_color_managed_simulation_bpc_changed:
+ * @managed: an object that implements the #GimpColorManaged interface
+ *
+ * Emits the "simulation-bpc-changed" signal.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_managed_simulation_bpc_changed (GimpColorManaged *managed)
+{
+  g_return_if_fail (GIMP_IS_COLOR_MANAGED (managed));
+
+  g_signal_emit (managed, gimp_color_managed_signals[SIMULATION_BPC_CHANGED], 0);
 }

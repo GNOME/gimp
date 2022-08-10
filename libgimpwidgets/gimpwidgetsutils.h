@@ -61,7 +61,9 @@ GimpColorTransform * gimp_widget_get_color_transform (GtkWidget         *widget,
                                                       GimpColorProfile  *src_profile,
                                                       const Babl        *src_format,
                                                       const Babl        *dest_format,
-                                                      GimpColorProfile  *softproof_profile);
+                                                      GimpColorProfile  *softproof_profile,
+                                                      GimpColorRenderingIntent proof_intent,
+                                                      gboolean           proof_bpc);
 
 
 G_END_DECLS

@@ -1635,21 +1635,19 @@ image_softproof_intent_cmd_callback (GimpAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
+  GimpImage                 *image;
   GimpDisplayShell          *shell;
-  GimpColorConfig           *color_config;
   GimpColorRenderingIntent   intent;
+  return_if_no_image (image, data);
   return_if_no_shell (shell, data);
 
   intent = (GimpColorRenderingIntent) g_variant_get_int32 (value);
 
-  color_config = gimp_display_shell_get_color_config (shell);
-
-  if (intent != gimp_color_config_get_simulation_intent (color_config))
+  if (intent != gimp_image_get_simulation_intent (image))
     {
-      g_object_set (color_config,
-                    "simulation-rendering-intent", intent,
-                    NULL);
+      gimp_image_set_simulation_intent (image, intent);
       shell->color_config_set = TRUE;
+      gimp_color_managed_simulation_intent_changed (GIMP_COLOR_MANAGED (shell));
     }
 }
 
@@ -1658,20 +1656,18 @@ image_softproof_bpc_cmd_callback (GimpAction *action,
                                   GVariant   *value,
                                   gpointer    data)
 {
-  GimpDisplayShell *shell;
-  GimpColorConfig  *color_config;
-  gboolean          active;
+  GimpImage                 *image;
+  GimpDisplayShell          *shell;
+  gboolean                   bpc;
+  return_if_no_image (image, data);
   return_if_no_shell (shell, data);
 
-  color_config = gimp_display_shell_get_color_config (shell);
+  bpc = g_variant_get_boolean (value);
 
-  active = g_variant_get_boolean (value);
-
-  if (active != gimp_color_config_get_simulation_bpc (color_config))
+  if (bpc != gimp_image_get_simulation_bpc (image))
     {
-      g_object_set (color_config,
-                    "simulation-use-black-point-compensation", active,
-                    NULL);
+      gimp_image_set_simulation_bpc (image, bpc);
       shell->color_config_set = TRUE;
+      gimp_color_managed_simulation_bpc_changed (GIMP_COLOR_MANAGED (shell));
     }
 }

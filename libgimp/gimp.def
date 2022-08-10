@@ -417,6 +417,8 @@ EXPORTS
 	gimp_image_get_selected_drawables
 	gimp_image_get_selected_layers
 	gimp_image_get_selection
+	gimp_image_get_simulation_bpc
+	gimp_image_get_simulation_intent
 	gimp_image_get_simulation_profile
 	gimp_image_get_tattoo_state
 	gimp_image_get_thumbnail
@@ -493,6 +495,8 @@ EXPORTS
 	gimp_image_set_metadata
 	gimp_image_set_resolution
 	gimp_image_set_selected_layers
+	gimp_image_set_simulation_bpc
+	gimp_image_set_simulation_intent
 	gimp_image_set_simulation_profile
 	gimp_image_set_simulation_profile_from_file
 	gimp_image_set_tattoo_state

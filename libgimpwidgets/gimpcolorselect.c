@@ -1957,7 +1957,9 @@ gimp_color_select_create_transform (GimpColorSelect *select)
                                                            profile,
                                                            format,
                                                            format,
-                                                           NULL);
+                                                           NULL,
+                                                           GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                           FALSE);
     }
 }
 

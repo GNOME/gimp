@@ -164,7 +164,10 @@ static GimpColorProfile *
 static void      gimp_display_shell_profile_changed(GimpColorManaged *managed);
 static void    gimp_display_shell_simulation_profile_changed
                                                    (GimpColorManaged *managed);
-
+static void    gimp_display_shell_simulation_intent_changed
+                                                   (GimpColorManaged *managed);
+static void    gimp_display_shell_simulation_bpc_changed
+                                                   (GimpColorManaged *managed);
 static void      gimp_display_shell_zoom_button_callback
                                                    (GimpDisplayShell *shell,
                                                     GtkWidget        *zoom_button);
@@ -309,6 +312,8 @@ gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
   iface->get_color_profile          = gimp_display_shell_get_color_profile;
   iface->profile_changed            = gimp_display_shell_profile_changed;
   iface->simulation_profile_changed = gimp_display_shell_simulation_profile_changed;
+  iface->simulation_intent_changed  = gimp_display_shell_simulation_intent_changed;
+  iface->simulation_bpc_changed     = gimp_display_shell_simulation_bpc_changed;
 }
 
 static void
@@ -1097,6 +1102,24 @@ gimp_display_shell_simulation_profile_changed (GimpColorManaged *managed)
 }
 
 static void
+gimp_display_shell_simulation_intent_changed (GimpColorManaged *managed)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
+
+  gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
+}
+
+static void
+gimp_display_shell_simulation_bpc_changed (GimpColorManaged *managed)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
+
+  gimp_display_shell_expose_full (shell);
+  gimp_display_shell_render_invalidate_full (shell);
+}
+
+static void
 gimp_display_shell_zoom_button_callback (GimpDisplayShell *shell,
                                          GtkWidget        *zoom_button)
 {
@@ -1369,6 +1392,8 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 
   gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
   gimp_display_shell_simulation_profile_changed (GIMP_COLOR_MANAGED (shell));
+  gimp_display_shell_simulation_intent_changed (GIMP_COLOR_MANAGED (shell));
+  gimp_display_shell_simulation_bpc_changed (GIMP_COLOR_MANAGED (shell));
 
   gimp_display_shell_scroll_clamp_and_update (shell);
 
