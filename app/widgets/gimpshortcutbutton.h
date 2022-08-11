@@ -43,6 +43,9 @@ struct _GimpShortcutButton
 struct _GimpShortcutButtonClass
 {
   GtkToggleButtonClass       parent_class;
+
+  void                    (* accelerator_changed)    (GimpShortcutButton *button,
+                                                      const gchar        *previous_accelerator);
 };
 
 
@@ -50,9 +53,14 @@ GType          gimp_shortcut_button_get_type         (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_shortcut_button_new              (const gchar        *accelerator);
 
-const gchar  * gimp_shortcut_button_get_accelerator  (GimpShortcutButton  *button);
+gchar        * gimp_shortcut_button_get_accelerator  (GimpShortcutButton  *button);
+void           gimp_shortcut_button_get_keys         (GimpShortcutButton  *button,
+                                                      guint               *keyval,
+                                                      GdkModifierType     *modifiers);
 void           gimp_shortcut_button_set_accelerator  (GimpShortcutButton  *button,
-                                                      const gchar         *accelerator);
+                                                      const gchar         *accelerator,
+                                                      guint                keyval,
+                                                      GdkModifierType      modifiers);
 
 void           gimp_shortcut_button_accepts_modifier (GimpShortcutButton *button,
                                                       gboolean            only,
