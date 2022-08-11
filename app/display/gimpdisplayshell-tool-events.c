@@ -838,7 +838,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         gimp_display_shell_proximity_in (shell);
         update_sw_cursor = TRUE;
 
-        if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
+        if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE ||
+            shell->space_release_pending)
           {
             gimp_display_shell_handle_scrolling (shell,
                                                  state, mevent->x, mevent->y);
@@ -1650,6 +1651,29 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
                                     gint              x,
                                     gint              y)
 {
+  GimpModifierAction mod_action = shell->mod_action;
+
+  if (mod_action == GIMP_MODIFIER_ACTION_NONE && shell->space_release_pending)
+    {
+      /* XXX The space actions are still hard-coded (instead of
+       * customizable throguh GimpModifiersManager). It might be
+       * interesting to make them customizable later.
+       */
+      GdkModifierType state = 0;
+
+      gdk_event_get_state (event, &state);
+      state &= gimp_get_all_modifiers_mask ();
+
+      if (state == 0)
+        mod_action = GIMP_MODIFIER_ACTION_PANNING;
+      else if (state == gimp_get_extend_selection_mask ())
+        mod_action = GIMP_MODIFIER_ACTION_ROTATING;
+      else if (state == (gimp_get_extend_selection_mask () | GDK_CONTROL_MASK))
+        mod_action = GIMP_MODIFIER_ACTION_STEP_ROTATING;
+      else if (state == gimp_get_toggle_behavior_mask ())
+        mod_action = GIMP_MODIFIER_ACTION_ZOOMING;
+    }
+
   gimp_display_shell_pointer_grab (shell, event,
                                    GDK_POINTER_MOTION_MASK |
                                    GDK_BUTTON_RELEASE_MASK);
@@ -1660,7 +1684,7 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
   shell->scroll_last_y     = y;
   shell->rotate_drag_angle = shell->rotate_angle;
 
-  switch (shell->mod_action)
+  switch (mod_action)
     {
     case GIMP_MODIFIER_ACTION_ROTATING:
     case GIMP_MODIFIER_ACTION_STEP_ROTATING:
@@ -1776,9 +1800,24 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                      gint              x,
                                      gint              y)
 {
-  gboolean constrain = FALSE;
+  GimpModifierAction mod_action = shell->mod_action;
+  gboolean           constrain  = FALSE;
 
-  switch (shell->mod_action)
+  if (mod_action == GIMP_MODIFIER_ACTION_NONE && shell->space_release_pending)
+    {
+      state &= gimp_get_all_modifiers_mask ();
+
+      if (state == 0)
+        mod_action = GIMP_MODIFIER_ACTION_PANNING;
+      else if (state == gimp_get_extend_selection_mask ())
+        mod_action = GIMP_MODIFIER_ACTION_ROTATING;
+      else if (state == (gimp_get_extend_selection_mask () | GDK_CONTROL_MASK))
+        mod_action = GIMP_MODIFIER_ACTION_STEP_ROTATING;
+      else if (state == gimp_get_toggle_behavior_mask ())
+        mod_action = GIMP_MODIFIER_ACTION_ZOOMING;
+    }
+
+  switch (mod_action)
     {
     case GIMP_MODIFIER_ACTION_STEP_ROTATING:
       constrain = TRUE;
@@ -1895,6 +1934,8 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
   if (shell->space_release_pending || shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
     return;
 
+  shell->space_release_pending = TRUE;
+
   switch (shell->display->config->space_bar_action)
     {
     case GIMP_SPACE_BAR_ACTION_NONE:
@@ -1942,8 +1983,6 @@ gimp_display_shell_space_pressed (GimpDisplayShell *shell,
       }
       break;
     }
-
-  shell->space_release_pending = TRUE;
 }
 
 static void
