@@ -1126,7 +1126,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             shell->picked_layer = NULL;
             shell->mod_action = GIMP_MODIFIER_ACTION_NONE;
           }
-        else if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE)
+        else if (shell->mod_action != GIMP_MODIFIER_ACTION_NONE &&
+                 (state & gimp_get_all_modifiers_mask ()) == 0)
           {
             gimp_display_shell_stop_scrolling (shell, event);
           }
@@ -1821,6 +1822,19 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
         mod_action = GIMP_MODIFIER_ACTION_STEP_ROTATING;
       else if (state == gimp_get_toggle_behavior_mask ())
         mod_action = GIMP_MODIFIER_ACTION_ZOOMING;
+    }
+  else if (mod_action == GIMP_MODIFIER_ACTION_ROTATING ||
+           mod_action == GIMP_MODIFIER_ACTION_STEP_ROTATING)
+    {
+      state &= gimp_get_all_modifiers_mask ();
+
+      /* Allow switching from the constrained to non-constrained
+       * variant, back and forth, during a single scroll.
+       */
+      if (state == gimp_get_extend_selection_mask ())
+        mod_action = GIMP_MODIFIER_ACTION_ROTATING;
+      else if (state == (gimp_get_extend_selection_mask () | GDK_CONTROL_MASK))
+        mod_action = GIMP_MODIFIER_ACTION_STEP_ROTATING;
     }
 
   switch (mod_action)
