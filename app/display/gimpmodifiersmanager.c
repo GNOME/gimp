@@ -365,7 +365,7 @@ gimp_modifiers_manager_get_action (GimpModifiersManager *manager,
   else if (button == 3)
     {
       if (mod_state == GDK_MOD1_MASK)
-        retval = GIMP_MODIFIER_ACTION_BRUSH_SIZE;
+        retval = GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
       else if (mod_state == 0)
         retval = GIMP_MODIFIER_ACTION_MENU;
     }
@@ -577,7 +577,7 @@ gimp_modifiers_manager_initialize (GimpModifiersManager *manager,
 
           mapping = g_slice_new (GimpModifierMapping);
           mapping->modifiers  = GDK_MOD1_MASK;
-          mapping->mod_action = GIMP_MODIFIER_ACTION_BRUSH_SIZE;
+          mapping->mod_action = GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE;
           gimp_modifiers_manager_get_keys (device, 3, mapping->modifiers,
                                            &actions_key, NULL);
           g_hash_table_insert (manager->p->actions, actions_key, mapping);

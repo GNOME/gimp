@@ -590,7 +590,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GIMP_MODIFIER_ACTION_ROTATING:
               case GIMP_MODIFIER_ACTION_STEP_ROTATING:
               case GIMP_MODIFIER_ACTION_LAYER_PICKING:
-              case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
                 gimp_display_shell_start_scrolling (shell, event, state,
@@ -742,7 +741,6 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                      shell->display->config->space_bar_action != GIMP_SPACE_BAR_ACTION_PAN))
                   gimp_display_shell_stop_scrolling (shell, event);
                 break;
-              case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
                 gimp_display_shell_stop_scrolling (shell, event);
@@ -1744,7 +1742,6 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
       break;
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
     case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
-    case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
           Gimp     *gimp        = gimp_display_get_gimp (shell->display);
           GimpTool *active_tool = tool_manager_get_active (gimp);
@@ -1771,9 +1768,8 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
     {
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
     case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
-    case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
-          Gimp     *gimp       = gimp_display_get_gimp (shell->display);
+          Gimp     *gimp        = gimp_display_get_gimp (shell->display);
           GimpTool *active_tool = tool_manager_get_active (gimp);
 
           if (GIMP_IS_PAINT_TOOL (active_tool))
@@ -1861,7 +1857,6 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
       size_multiplier = 2.0;
       size_update_pos = FALSE;
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
-    case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
           GimpDisplay *display     = shell->display;
           Gimp        *gimp        = gimp_display_get_gimp (display);
