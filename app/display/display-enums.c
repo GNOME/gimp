@@ -605,6 +605,7 @@ gimp_modifier_action_get_type (void)
     { GIMP_MODIFIER_ACTION_LAYER_PICKING, "GIMP_MODIFIER_ACTION_LAYER_PICKING", "layer-picking" },
     { GIMP_MODIFIER_ACTION_MENU, "GIMP_MODIFIER_ACTION_MENU", "menu" },
     { GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE", "brush-pixel-size" },
+    { GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE", "brush-radius-pixel-size" },
     { GIMP_MODIFIER_ACTION_BRUSH_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_SIZE", "brush-size" },
     { 0, NULL, NULL }
   };
@@ -619,6 +620,7 @@ gimp_modifier_action_get_type (void)
     { GIMP_MODIFIER_ACTION_LAYER_PICKING, NC_("modifier-action", "Pick a layer"), NULL },
     { GIMP_MODIFIER_ACTION_MENU, NC_("modifier-action", "Display the menu"), NULL },
     { GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, NC_("modifier-action", "Change brush size in canvas pixels"), NULL },
+    { GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, NC_("modifier-action", "Change brush radius' size in canvas pixels"), NULL },
     { GIMP_MODIFIER_ACTION_BRUSH_SIZE, NC_("modifier-action", "Change brush size relatively"), NULL },
     { 0, NULL, NULL }
   };

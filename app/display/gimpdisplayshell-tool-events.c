@@ -592,6 +592,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GIMP_MODIFIER_ACTION_LAYER_PICKING:
               case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+              case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
                 gimp_display_shell_start_scrolling (shell, event, state,
                                                     bevent->x, bevent->y);
               case GIMP_MODIFIER_ACTION_NONE:
@@ -743,6 +744,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 break;
               case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+              case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
                 gimp_display_shell_stop_scrolling (shell, event);
               case GIMP_MODIFIER_ACTION_NONE:
                 break;
@@ -1740,6 +1742,7 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
         }
       break;
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+    case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
     case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
           Gimp     *gimp        = gimp_display_get_gimp (shell->display);
@@ -1766,6 +1769,7 @@ gimp_display_shell_stop_scrolling (GimpDisplayShell *shell,
   switch (shell->mod_action)
     {
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
+    case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
     case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
           Gimp     *gimp       = gimp_display_get_gimp (shell->display);
@@ -1800,8 +1804,10 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                      gint              x,
                                      gint              y)
 {
-  GimpModifierAction mod_action = shell->mod_action;
-  gboolean           constrain  = FALSE;
+  GimpModifierAction mod_action      = shell->mod_action;
+  gboolean           constrain       = FALSE;
+  gboolean           size_update_pos = TRUE;
+  gdouble            size_multiplier = 1.0;
 
   if (mod_action == GIMP_MODIFIER_ACTION_NONE && shell->space_release_pending)
     {
@@ -1837,6 +1843,9 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                                      shell->scroll_last_x - x,
                                      shell->scroll_last_y - y);
       break;
+    case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
+      size_multiplier = 2.0;
+      size_update_pos = FALSE;
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
     case GIMP_MODIFIER_ACTION_BRUSH_SIZE:
         {
@@ -1850,7 +1859,7 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
            * position.
            */
           size = (gint) (sqrt (pow ((x - shell->scroll_start_x) / shell->scale_x, 2) +
-                               pow ((y - shell->scroll_start_y) / shell->scale_y, 2)) * 2.0);
+                               pow ((y - shell->scroll_start_y) / shell->scale_y, 2)));
 
           /* TODO: different logics with "lock brush to view". */
           /* TODO 2: scale aware? */
@@ -1861,7 +1870,20 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
               GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
 
               gimp_display_shell_activate_action (manager, action,
-                                                  g_variant_new_double ((gdouble) size));
+                                                  g_variant_new_double ((gdouble) size * size_multiplier));
+
+              if (size_update_pos)
+                {
+                  GimpCoords display_coords;
+                  GimpCoords coords;
+
+                  display_coords.x = shell->scroll_start_x + (x - shell->scroll_start_x) / 2;
+                  display_coords.y = shell->scroll_start_y + (y - shell->scroll_start_y) / 2;
+                  gimp_display_shell_untransform_event_coords (shell,
+                                                               &display_coords, &coords,
+                                                               NULL);
+                  gimp_tool_oper_update (active_tool, &coords, 0, TRUE, display);
+                }
             }
           else
             {
