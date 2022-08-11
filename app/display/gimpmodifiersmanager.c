@@ -461,6 +461,14 @@ gimp_modifiers_manager_remove (GimpModifiersManager *manager,
                               GIMP_MODIFIER_ACTION_NONE);
 }
 
+void
+gimp_modifiers_manager_clear (GimpModifiersManager *manager)
+{
+  g_hash_table_remove_all (manager->p->actions);
+  g_list_free_full (manager->p->buttons, g_free);
+  manager->p->buttons = NULL;
+}
+
 /* Private functions */
 
 static void

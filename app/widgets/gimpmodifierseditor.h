@@ -50,5 +50,7 @@ GType          gimp_modifiers_editor_get_type (void) G_GNUC_CONST;
 
 GtkWidget    * gimp_modifiers_editor_new      (GimpModifiersManager *manager);
 
+void           gimp_modifiers_editor_clear    (GimpModifiersEditor  *editor);
+
 
 #endif /* __GIMP_MODIFIERS_EDITOR_H__ */

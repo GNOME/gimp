@@ -87,6 +87,9 @@ static void     gimp_modifiers_editor_notify_accelerator   (GtkWidget           
                                                             const GParamSpec    *pspec,
                                                             GimpModifiersEditor *editor);
 
+static void     gimp_modifiers_editor_show_settings         (GimpModifiersEditor *editor,
+                                                             GdkDevice           *device,
+                                                             guint                button);
 static void     gimp_modifiers_editor_add_mapping           (GimpModifiersEditor *editor,
                                                              GdkModifierType      modifiers,
                                                              GimpModifierAction   mod_action);
@@ -251,6 +254,102 @@ gimp_modifiers_editor_new (GimpModifiersManager *manager)
   return GTK_WIDGET (editor);
 }
 
+void
+gimp_modifiers_editor_clear (GimpModifiersEditor *editor)
+{
+  gimp_modifiers_manager_clear (editor->priv->manager);
+  gtk_container_foreach (GTK_CONTAINER (editor->priv->stack),
+                         (GtkCallback) gtk_widget_destroy,
+                         NULL);
+  gimp_modifiers_editor_show_settings (editor, editor->priv->device, editor->priv->button);
+}
+
+/*  private functions  */
+
+static void
+gimp_modifiers_editor_show_settings (GimpModifiersEditor *editor,
+                                     GdkDevice           *device,
+                                     guint                button)
+{
+  const gchar *vendor_id;
+  const gchar *product_id;
+  gchar       *title;
+  gchar       *text;
+
+  vendor_id  = gdk_device_get_vendor_id (device);
+  product_id = gdk_device_get_product_id (device);
+
+  if (device != editor->priv->device)
+    {
+      g_clear_object (&editor->priv->device);
+      editor->priv->device = g_object_ref (device);
+    }
+  editor->priv->button = button;
+
+  /* Update header. */
+  if (gdk_device_get_name (device) != NULL)
+    text = g_strdup_printf (_("Editing modifiers for button %d of %s"),
+                            editor->priv->button,
+                            gdk_device_get_name (device));
+  else
+    text = g_strdup_printf (_("Editing modifiers for button %d"),
+                            editor->priv->button);
+
+  title = g_strdup_printf ("<b><big>%s</big></b>", text);
+  gtk_label_set_markup (GTK_LABEL (editor->priv->header), title);
+
+  g_free (title);
+  g_free (text);
+
+  /* Update modifier settings. */
+  text = g_strdup_printf ("%s:%s-%d",
+                          vendor_id ? vendor_id : "*",
+                          product_id ? product_id : "*",
+                          button);
+  editor->priv->current_settings = gtk_stack_get_child_by_name (GTK_STACK (editor->priv->stack), text);
+
+  if (! editor->priv->current_settings)
+    {
+      GtkWidget *plus_button;
+      GList     *modifiers;
+      GList     *iter;
+
+      editor->priv->current_settings = gtk_list_box_new ();
+      gtk_stack_add_named (GTK_STACK (editor->priv->stack), editor->priv->current_settings, text);
+
+      modifiers = gimp_modifiers_manager_get_modifiers (editor->priv->manager,
+                                                        device, editor->priv->button);
+      for (iter = modifiers; iter; iter = iter->next)
+        {
+          GdkModifierType    mods = GPOINTER_TO_INT (iter->data);
+          GimpModifierAction action;
+
+          action = gimp_modifiers_manager_get_action (editor->priv->manager, device,
+                                                      editor->priv->button, mods);
+          gimp_modifiers_editor_add_mapping (editor, mods, action);
+        }
+
+      plus_button = gtk_button_new_from_icon_name ("list-add", GTK_ICON_SIZE_LARGE_TOOLBAR);
+      gtk_list_box_insert (GTK_LIST_BOX (editor->priv->current_settings), plus_button, -1);
+      gtk_widget_show (plus_button);
+
+      g_signal_connect (plus_button, "clicked",
+                        G_CALLBACK (gimp_modifiers_editor_plus_button_clicked),
+                        editor);
+      g_object_set_data (G_OBJECT (editor->priv->current_settings), "plus-button", plus_button);
+
+      if (g_list_length (modifiers) == 0)
+        gimp_modifiers_editor_plus_button_clicked (GTK_BUTTON (plus_button), editor);
+
+      gtk_widget_show (editor->priv->current_settings);
+      g_list_free (modifiers);
+    }
+
+  gtk_stack_set_visible_child (GTK_STACK (editor->priv->stack), editor->priv->current_settings);
+
+  g_free (text);
+}
+
 static gboolean
 gimp_modifiers_editor_button_press_event (GtkWidget      *widget,
                                           GdkEventButton *event,
@@ -258,11 +357,6 @@ gimp_modifiers_editor_button_press_event (GtkWidget      *widget,
 {
   GimpModifiersEditor *editor = GIMP_MODIFIERS_EDITOR (user_data);
   GdkDevice           *device = gdk_event_get_source_device ((GdkEvent *) event);
-  const gchar         *vendor_id;
-  const gchar         *product_id;
-
-  vendor_id  = gdk_device_get_vendor_id (device);
-  product_id = gdk_device_get_product_id (device);
 
   /* Update warning. */
   if (event->button == GDK_BUTTON_PRIMARY)
@@ -283,75 +377,7 @@ gimp_modifiers_editor_button_press_event (GtkWidget      *widget,
        g_strcmp0 (gdk_device_get_product_id (editor->priv->device),
                   gdk_device_get_product_id (device)) != 0))
     {
-      gchar *title;
-      gchar *text;
-
-      g_clear_object (&editor->priv->device);
-      editor->priv->device = g_object_ref (device);
-      editor->priv->button = event->button;
-
-      /* Update header. */
-      if (gdk_device_get_name (device) != NULL)
-        text = g_strdup_printf (_("Editing modifiers for button %d of %s"),
-                                editor->priv->button,
-                                gdk_device_get_name (device));
-      else
-        text = g_strdup_printf (_("Editing modifiers for button %d"),
-                                editor->priv->button);
-
-      title = g_strdup_printf ("<b><big>%s</big></b>", text);
-      gtk_label_set_markup (GTK_LABEL (editor->priv->header), title);
-
-      g_free (title);
-      g_free (text);
-
-      /* Update modifier settings. */
-      text = g_strdup_printf ("%s:%s-%d",
-                              vendor_id ? vendor_id : "*",
-                              product_id ? product_id : "*",
-                              event->button);
-      editor->priv->current_settings = gtk_stack_get_child_by_name (GTK_STACK (editor->priv->stack), text);
-
-      if (! editor->priv->current_settings)
-        {
-          GtkWidget *plus_button;
-          GList     *modifiers;
-          GList     *iter;
-
-          editor->priv->current_settings = gtk_list_box_new ();
-          gtk_stack_add_named (GTK_STACK (editor->priv->stack), editor->priv->current_settings, text);
-
-          modifiers = gimp_modifiers_manager_get_modifiers (editor->priv->manager,
-                                                            device, editor->priv->button);
-          for (iter = modifiers; iter; iter = iter->next)
-            {
-              GdkModifierType    mods = GPOINTER_TO_INT (iter->data);
-              GimpModifierAction action;
-
-              action = gimp_modifiers_manager_get_action (editor->priv->manager, device,
-                                                          editor->priv->button, mods);
-              gimp_modifiers_editor_add_mapping (editor, mods, action);
-            }
-
-          plus_button = gtk_button_new_from_icon_name ("list-add", GTK_ICON_SIZE_LARGE_TOOLBAR);
-          gtk_list_box_insert (GTK_LIST_BOX (editor->priv->current_settings), plus_button, -1);
-          gtk_widget_show (plus_button);
-
-          g_signal_connect (plus_button, "clicked",
-                            G_CALLBACK (gimp_modifiers_editor_plus_button_clicked),
-                            editor);
-          g_object_set_data (G_OBJECT (editor->priv->current_settings), "plus-button", plus_button);
-
-          if (g_list_length (modifiers) == 0)
-            gimp_modifiers_editor_plus_button_clicked (GTK_BUTTON (plus_button), editor);
-
-          gtk_widget_show (editor->priv->current_settings);
-          g_list_free (modifiers);
-        }
-
-      gtk_stack_set_visible_child (GTK_STACK (editor->priv->stack), editor->priv->current_settings);
-
-      g_free (text);
+      gimp_modifiers_editor_show_settings (editor, device, event->button);
     }
 
   return FALSE;

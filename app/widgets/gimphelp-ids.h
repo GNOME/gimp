@@ -646,6 +646,7 @@
 #define GIMP_HELP_PREFS_DISPLAY                   "gimp-prefs-display"
 #define GIMP_HELP_PREFS_WINDOW_MANAGEMENT         "gimp-prefs-window-management"
 #define GIMP_HELP_PREFS_CANVAS_INTERACTION        "gimp-prefs-canvas-interaction"
+#define GIMP_HELP_PREFS_CANVAS_MODIFIERS          "gimp-prefs-canvas-modifiers"
 #define GIMP_HELP_PREFS_IMAGE_WINDOW              "gimp-prefs-image-window"
 #define GIMP_HELP_PREFS_IMAGE_WINDOW_APPEARANCE   "gimp-prefs-image-window-appearance"
 #define GIMP_HELP_PREFS_IMAGE_WINDOW_TITLE        "gimp-prefs-image-window-title"

@@ -38,6 +38,8 @@
 #include "core/gimptemplate.h"
 #include "core/gimp-utils.h"
 
+#include "display/gimpmodifiersmanager.h"
+
 #include "plug-in/gimppluginmanager.h"
 
 #include "widgets/gimpaction-history.h"
@@ -56,6 +58,7 @@
 #include "widgets/gimppluginview.h"
 #include "widgets/gimpprefsbox.h"
 #include "widgets/gimppropwidgets.h"
+#include "widgets/gimpmodifierseditor.h"
 #include "widgets/gimpstrokeeditor.h"
 #include "widgets/gimptemplateeditor.h"
 #include "widgets/gimptooleditor.h"
@@ -65,8 +68,9 @@
 
 #include "tools/gimp-tools.h"
 
-#include "gui/session.h"
 #include "gui/icon-themes.h"
+#include "gui/session.h"
+#include "gui/modifiers.h"
 #include "gui/themes.h"
 
 #include "preferences-dialog.h"
@@ -130,6 +134,8 @@ static void   prefs_devices_save_callback          (GtkWidget    *widget,
                                                     Gimp         *gimp);
 static void   prefs_devices_clear_callback         (GtkWidget    *widget,
                                                     Gimp         *gimp);
+static void   prefs_modifiers_clear_callback       (GtkWidget    *widget,
+                                                    GimpModifiersEditor *editor);
 static void   prefs_search_clear_callback          (GtkWidget    *widget,
                                                     Gimp         *gimp);
 static void   prefs_tool_options_save_callback     (GtkWidget    *widget,
@@ -768,6 +774,13 @@ prefs_devices_clear_callback (GtkWidget *widget,
                      _("Your input device settings will be reset to "
                        "default values the next time you start GIMP."));
     }
+}
+
+static void
+prefs_modifiers_clear_callback (GtkWidget           *widget,
+                                GimpModifiersEditor *editor)
+{
+  gimp_modifiers_editor_clear (editor);
 }
 
 #ifdef G_OS_WIN32
@@ -2956,6 +2969,33 @@ prefs_dialog_new (Gimp       *gimp,
   prefs_spin_button_add (object, "drag-zoom-speed", 5.0, 25.0, 0,
                          _("Drag-to-zoom spe_ed:"),
                          GTK_GRID (grid), 0, size_group);
+
+
+  /************************************/
+  /*  Canvas Interaction / Modifiers  */
+  /************************************/
+  vbox = gimp_prefs_box_add_page (GIMP_PREFS_BOX (prefs_box),
+                                  /* TODO: custom icon. */
+                                  "gimp-prefs-image-windows",
+                                  _("Modifiers"),
+                                  _("Modifiers"),
+                                  GIMP_HELP_PREFS_CANVAS_MODIFIERS,
+                                  &top_iter,
+                                  &child_iter);
+
+  vbox2 = gimp_modifiers_editor_new (GIMP_MODIFIERS_MANAGER (display_config->modifiers_manager));
+  gtk_widget_show (vbox2);
+  gtk_box_pack_start (GTK_BOX (vbox), vbox2, FALSE, FALSE, 0);
+
+  button2 = prefs_button_add (GIMP_ICON_RESET,
+                              _("_Reset Saved Modifiers Settings to "
+                                "Default Values"),
+                              GTK_BOX (vbox));
+  g_signal_connect (button2, "clicked",
+                    G_CALLBACK (prefs_modifiers_clear_callback),
+                    vbox2);
+
+  g_object_set_data (G_OBJECT (button), "clear-button", button2);
 
   /***********************************/
   /*  Canvas Interaction / Snapping  */

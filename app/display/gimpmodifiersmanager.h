@@ -75,6 +75,7 @@ void                   gimp_modifiers_manager_remove        (GimpModifiersManage
                                                              GdkDevice            *device,
                                                              guint                 button,
                                                              GdkModifierType       modifiers);
+void                   gimp_modifiers_manager_clear         (GimpModifiersManager *manager);
 
 
 #endif  /* __GIMP_MODIFIERS_MANAGER_H__ */
