@@ -40,7 +40,7 @@ scrolledwindow viewport.frame {
    */
   color: black;
 }
-\
+
 #image-menubar, GtkImageMenuItem {
    background-color: rgb(235,235,235);
    color: black;
@@ -203,8 +203,18 @@ scrollbar {
   background-color: rgb(235,235,235);
 }
 
+/*
+Worth trying for always-visible scrollbar:
+https://stackoverflow.com/questions/52414202/gtkscrolledwindow-how-to-always-show-the-overlay-scrollbar
+Doesn't seem to work here, though.
+ */
+scrollbar trough {
+  background: rgb(250,250,250);
+}
+
 scrollbar slider {
-  background-color: rgba (220,220,220,0.5);
+  background: rgb(110,110,110);
+  border: 2px solid rgb(220,220,220);
 }
 
 notebook header {
@@ -317,3 +327,4 @@ menuitem *:hover {
 .sidebar-row:hover, .sidebar-row:hover * {
   background-color: rgb(235,235,235);
 }
+
