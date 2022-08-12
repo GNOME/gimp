@@ -226,8 +226,12 @@ GimpRuler {
 }
 
 entry {
-  background-color: rgb(245,245,245);
+  background-color: rgb(250,250,250);
   color: black;
+}
+
+entry selection {
+  background: rgb(220,220,220);
 }
 
 paned separator {
