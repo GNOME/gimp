@@ -258,6 +258,12 @@ button:disabled {
  * so they're not overridden.
  */
 
+GimpSpinScale entry progress {
+    background-color: rgb(220,220,220);
+    border-width:     0px;
+    border-radius:    3px;
+}
+
 /* Checkboxes */
 checkbutton check {
   background-image: none;
