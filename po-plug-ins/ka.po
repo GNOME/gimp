@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-27 17:35+0000\n"
-"PO-Revision-Date: 2022-07-28 09:41+0200\n"
+"POT-Creation-Date: 2022-08-10 15:16+0000\n"
+"PO-Revision-Date: 2022-08-12 06:35+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -459,7 +459,7 @@ msgstr "_ვერტიკალური"
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
-#: plug-ins/file-psd/psd-load.c:2454 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2486 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
@@ -996,9 +996,9 @@ msgstr ""
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1252
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:1815
-#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
+#: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-psd/psd-save.c:1815 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1032,11 +1032,12 @@ msgstr ""
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
-#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
-#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
-#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
+#: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
+#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:158
+#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1514,7 +1515,7 @@ msgstr "_დაწევა"
 
 #: plug-ins/common/curve-bend.c:1407
 msgid "Curve Type"
-msgstr ""
+msgstr "მრუდის ტიპი"
 
 #: plug-ins/common/curve-bend.c:1411
 msgid "Smoot_h"
@@ -1734,7 +1735,7 @@ msgstr ""
 
 #: plug-ins/common/decompose.c:874
 msgid "Decompose"
-msgstr ""
+msgstr "დაშლა"
 
 #: plug-ins/common/decompose.c:884
 msgid "Extract Channels"
@@ -1880,7 +1881,7 @@ msgstr ""
 
 #: plug-ins/common/file-aa.c:393 plug-ins/file-dds/ddswrite.c:2042
 msgid "_Format:"
-msgstr ""
+msgstr "_ფორმატი:"
 
 #: plug-ins/common/file-cel.c:140 plug-ins/common/file-cel.c:172
 msgid "KISS CEL"
@@ -1930,9 +1931,9 @@ msgstr ""
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
-#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
-#: plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
+#: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
+#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2007,9 +2008,10 @@ msgstr ""
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1244
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:1777
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
+#: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:1777 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr ""
@@ -4012,7 +4014,7 @@ msgstr ""
 
 #: plug-ins/common/file-raw-data.c:2807
 msgid "Image"
-msgstr ""
+msgstr "გამოსახულება"
 
 #: plug-ins/common/file-raw-data.c:2810
 msgid "R, G, B (normal)"
@@ -4425,12 +4427,12 @@ msgid "_Write hot spot values"
 msgstr ""
 
 #: plug-ins/common/file-xbm.c:1337 plug-ins/common/file-xmc.c:1132
-#: plug-ins/file-ico/ico-dialog.c:483
+#: plug-ins/file-ico/ico-dialog.c:571
 msgid "Hot spot _X:"
 msgstr ""
 
 #: plug-ins/common/file-xbm.c:1345 plug-ins/common/file-xmc.c:1146
-#: plug-ins/file-ico/ico-dialog.c:496
+#: plug-ins/file-ico/ico-dialog.c:584
 msgid "Hot spot _Y:"
 msgstr ""
 
@@ -4953,7 +4955,7 @@ msgstr ""
 
 #: plug-ins/common/hot.c:722
 msgid "Action"
-msgstr ""
+msgstr "ქმედება"
 
 #: plug-ins/common/hot.c:726
 msgid "Reduce _Luminance"
@@ -5792,7 +5794,7 @@ msgstr ""
 
 #: plug-ins/common/unit-editor.c:117
 msgid "Digits"
-msgstr ""
+msgstr "ციფრები"
 
 #: plug-ins/common/unit-editor.c:117
 msgid ""
@@ -6775,86 +6777,134 @@ msgstr ""
 msgid "Export Image as FLI Animation"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:61
+msgid "Windows Animated Cursor"
+msgstr ""
+
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Cursor"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Icon"
 msgstr ""
 
+#: plug-ins/file-ico/ico-dialog.c:97
+msgid "Animated Cursor Settings"
+msgstr "ანიმირებული კურსორის მორგება"
+
+#: plug-ins/file-ico/ico-dialog.c:110
+msgid "_Cursor Name (Optional)"
+msgstr ""
+
+#: plug-ins/file-ico/ico-dialog.c:127
+msgid "_Author Name (Optional)"
+msgstr ""
+
+#: plug-ins/file-ico/ico-dialog.c:144
+msgid "_Delay between frames:"
+msgstr ""
+
+#: plug-ins/file-ico/ico-dialog.c:154
+msgid " jiffies (16.66 ms)"
+msgstr ""
+
 #. Cursor
-#: plug-ins/file-ico/ico-dialog.c:76
+#: plug-ins/file-ico/ico-dialog.c:164
 msgid "Icon Details"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:99
+#: plug-ins/file-ico/ico-dialog.c:187
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:168
+#: plug-ins/file-ico/ico-dialog.c:256
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:169
+#: plug-ins/file-ico/ico-dialog.c:257
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:170
+#: plug-ins/file-ico/ico-dialog.c:258
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:171
+#: plug-ins/file-ico/ico-dialog.c:259
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:172
+#: plug-ins/file-ico/ico-dialog.c:260
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr ""
 
-#: plug-ins/file-ico/ico-dialog.c:186
+#: plug-ins/file-ico/ico-dialog.c:274
 msgid "Compressed (PNG)"
 msgstr ""
 
-#: plug-ins/file-ico/ico-load.c:222
+#: plug-ins/file-ico/ico-load.c:224
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr ""
 
-#: plug-ins/file-ico/ico-load.c:250
+#: plug-ins/file-ico/ico-load.c:252
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr ""
 
 #. read successfully. add to image
-#: plug-ins/file-ico/ico-load.c:636
+#: plug-ins/file-ico/ico-load.c:639
 #, c-format
 msgid "Icon #%i"
 msgstr ""
 
 #. ----- Open PSD file -----
-#: plug-ins/file-ico/ico-load.c:766 plug-ins/file-jpeg/jpeg-load.c:541
+#: plug-ins/file-ico/ico-load.c:938 plug-ins/file-jpeg/jpeg-load.c:541
 #: plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-darktable.c:515
 #: plug-ins/file-raw/file-rawtherapee.c:457
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr ""
 
-#: plug-ins/file-ico/ico-save.c:210
+#: plug-ins/file-ico/ico-save.c:213
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
 "%d icons."
 msgstr ""
 
-#: plug-ins/file-ico/ico.c:141 plug-ins/file-ico/ico.c:216
+#: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
 msgid "Microsoft Windows icon"
 msgstr ""
 
-#: plug-ins/file-ico/ico.c:169 plug-ins/file-ico/ico.c:241
+#: plug-ins/file-ico/ico.c:196 plug-ins/file-ico/ico.c:316
 msgid "Microsoft Windows cursor"
+msgstr ""
+
+#: plug-ins/file-ico/ico.c:226 plug-ins/file-ico/ico.c:363
+msgid "Microsoft Windows animated cursor"
+msgstr "Microsoft Windows -ის ანიმირებული კურსორი"
+
+#: plug-ins/file-ico/ico.c:230
+msgid "Loads files of Windows ANI file format"
+msgstr ""
+
+#: plug-ins/file-ico/ico.c:272
+msgid "Loads a preview from a Windows ANI files"
+msgstr ""
+
+#: plug-ins/file-ico/ico.c:367 plug-ins/file-ico/ico.c:368
+msgid "Saves files in Windows ANI file format"
+msgstr ""
+
+#: plug-ins/file-ico/ico.c:384
+msgid "Cursor Name (Optional)"
+msgstr ""
+
+#: plug-ins/file-ico/ico.c:390
+msgid "Cursor Author (Optional)"
 msgstr ""
 
 #: plug-ins/file-jpeg/jpeg-load.c:215
@@ -7035,20 +7085,20 @@ msgstr ""
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2427
+#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2459
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2620
+#: plug-ins/file-psd/psd-load.c:2652
 msgid "Extra"
 msgstr "დამატებით"
 
-#: plug-ins/file-psd/psd-load.c:2820
+#: plug-ins/file-psd/psd-load.c:2852
 msgid "Unsupported or invalid channel size"
 msgstr ""
 
-#: plug-ins/file-psd/psd-load.c:2889
+#: plug-ins/file-psd/psd-load.c:2921
 msgid "Failed to decompress data"
 msgstr ""
 
@@ -8018,12 +8068,12 @@ msgstr ""
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:731
 #: plug-ins/map-object/map-object-ui.c:1078
 msgid "Left:"
-msgstr ""
+msgstr "მარცხენა:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:740
 #: plug-ins/map-object/map-object-ui.c:1078
 msgid "Right:"
-msgstr ""
+msgstr "მარჯვენა:"
 
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:749
 #: plug-ins/map-object/map-object-ui.c:1077
@@ -9342,7 +9392,7 @@ msgstr ""
 #: plug-ins/ui/plug-in-metadata-editor.ui:200
 #: plug-ins/ui/plug-in-metadata-editor.ui:505
 msgid "Description"
-msgstr ""
+msgstr "აღწერა"
 
 #: plug-ins/ui/plug-in-metadata-editor.ui:217
 msgid "Description Writer\t"
@@ -11059,7 +11109,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_selection.c:359
 msgid "URL"
-msgstr ""
+msgstr "ვებ-მისამართი"
 
 #: plug-ins/imagemap/imap_selection.c:377
 msgid "ALT Text"
