@@ -725,10 +725,26 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                                   property, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
     }
+  else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
+    {
+      GimpIntStore *store;
+
+      store = (GimpIntStore *) gimp_enum_store_new (G_PARAM_SPEC_VALUE_TYPE (pspec));
+
+      widget = gimp_prop_int_combo_box_new (G_OBJECT (dialog->priv->config),
+                                            property,
+                                            store);
+      gtk_widget_set_vexpand (widget, FALSE);
+      gtk_widget_set_hexpand (widget, TRUE);
+      widget = gimp_label_int_widget_new (g_param_spec_get_nick (pspec),
+                                          widget);
+    }
   else
     {
-      g_warning ("%s: parameter %s has non supported type %s",
-                 G_STRFUNC, property, G_PARAM_SPEC_TYPE_NAME (pspec));
+      g_warning ("%s: parameter %s has non supported type %s for value type %s",
+                 G_STRFUNC, property,
+                 G_PARAM_SPEC_TYPE_NAME (pspec),
+                 g_type_name (G_PARAM_SPEC_VALUE_TYPE (pspec)));
       return NULL;
     }
 

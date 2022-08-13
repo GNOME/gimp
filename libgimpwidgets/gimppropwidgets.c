@@ -55,6 +55,11 @@ static GParamSpec * get_param_spec     (GObject     *object);
 static GParamSpec * find_param_spec    (GObject     *object,
                                         const gchar *property_name,
                                         const gchar *strloc);
+static GParamSpec * check_param_spec_quiet (
+                                        GObject     *object,
+                                        const gchar *property_name,
+                                        GType        type,
+                                        const gchar *strloc);
 static GParamSpec * check_param_spec   (GObject     *object,
                                         const gchar *property_name,
                                         GType        type,
@@ -414,10 +419,36 @@ gimp_prop_int_combo_box_new (GObject      *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec_w (config, property_name,
-                                   G_TYPE_PARAM_INT, G_STRFUNC);
-  if (! param_spec)
-    return NULL;
+  /* Require property is integer valued type: INT or ENUM, and is writeable. */
+  param_spec = check_param_spec_quiet (config, property_name,
+                                       G_TYPE_PARAM_INT, G_STRFUNC);
+  if (param_spec)
+    {
+      param_spec = check_param_spec_w (config, property_name,
+                                     G_TYPE_PARAM_INT, G_STRFUNC);
+      if (! param_spec)
+        return NULL;
+    }
+  else
+    {
+      param_spec = check_param_spec_quiet (config, property_name,
+                                          G_TYPE_PARAM_ENUM, G_STRFUNC);
+      if (param_spec)
+        {
+          param_spec = check_param_spec_w (config, property_name,
+                                           G_TYPE_PARAM_ENUM, G_STRFUNC);
+          if (! param_spec)
+            return NULL;
+        }
+      else
+        {
+          g_warning ("%s: property '%s' of %s is not integer valued.",
+                     G_STRFUNC,
+                     param_spec->name,
+                     g_type_name (param_spec->owner_type));
+          return NULL;
+        }
+    }
 
   combo_box = g_object_new (GIMP_TYPE_INT_COMBO_BOX,
                             "model", store,
@@ -4534,6 +4565,25 @@ find_param_spec (GObject     *object,
                property_name);
 
   return param_spec;
+}
+
+/* Compare GType of GParamSpec of object's property to GType.
+ * Return GParamSpec when equal, else NULL.
+ */
+static GParamSpec *
+check_param_spec_quiet (GObject     *object,
+                        const gchar *property_name,
+                        GType        type,
+                        const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = find_param_spec (object, property_name, strloc);
+
+  if (param_spec && ! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), type))
+    return NULL;
+  else
+    return param_spec;
 }
 
 static GParamSpec *
