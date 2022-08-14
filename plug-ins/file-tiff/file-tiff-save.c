@@ -1111,6 +1111,8 @@ save_image (GFile         *file,
 
       if (profile)
         space = gimp_color_profile_get_space (profile,
+                                              config_cmyk ?
+                                              gimp_image_get_simulation_intent (image) :
                                               GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
                                               &error);
 

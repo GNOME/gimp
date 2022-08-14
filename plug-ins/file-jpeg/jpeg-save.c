@@ -358,7 +358,7 @@ save_image (GFile                *file,
             }
         }
       space = gimp_color_profile_get_space (profile,
-                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            gimp_image_get_simulation_intent (image),
                                             error);
       if (error && *error)
         {
