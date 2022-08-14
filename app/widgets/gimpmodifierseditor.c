@@ -121,7 +121,9 @@ static void
 gimp_modifiers_editor_init (GimpModifiersEditor *editor)
 {
   GtkWidget *grid;
+  GtkWidget *hbox;
   GtkWidget *hint;
+  GtkWidget *image;
   gchar     *text;
 
   editor->priv = gimp_modifiers_editor_get_instance_private (editor);
@@ -143,12 +145,19 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
   gtk_grid_attach (GTK_GRID (grid), editor->priv->header, 0, 0, 2, 1);
   gtk_widget_show (editor->priv->header);
 
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
+  gtk_widget_show (hbox);
+
   hint = gtk_label_new (NULL);
-  text = g_strdup_printf ("<i>%s</i>", _("Click to select a button"));
+  text = g_strdup_printf ("<i>%s</i>", _("Click here to set a button's modifiers"));
   gtk_label_set_markup (GTK_LABEL (hint), text);
   g_free (text);
-  gtk_grid_attach (GTK_GRID (grid), hint, 0, 1, 1, 1);
+  gtk_box_pack_start (GTK_BOX (hbox), hint, TRUE, TRUE, 2);
   gtk_widget_show (hint);
+
+  image = gtk_image_new_from_icon_name ("gimp-cursor", GTK_ICON_SIZE_LARGE_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 2);
+  gtk_widget_show (image);
 
   editor->priv->warning = gtk_label_new (NULL);
   text = g_strdup_printf ("<b>%s</b>",
@@ -158,9 +167,9 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
   gtk_grid_attach (GTK_GRID (grid), editor->priv->warning, 0, 2, 2, 1);
   gtk_widget_hide (editor->priv->warning);
 
-  editor->priv->select_button = gtk_button_new_from_icon_name ("gimp-cursor",
-                                                               GTK_ICON_SIZE_LARGE_TOOLBAR);
-  gtk_grid_attach (GTK_GRID (grid), editor->priv->select_button, 1, 1, 1, 1);
+  editor->priv->select_button = gtk_button_new ();
+  gtk_container_add (GTK_CONTAINER (editor->priv->select_button), hbox);
+  gtk_grid_attach (GTK_GRID (grid), editor->priv->select_button, 0, 1, 1, 1);
   gtk_widget_show (editor->priv->select_button);
 
   gtk_frame_set_label_widget (GTK_FRAME (editor), grid);
