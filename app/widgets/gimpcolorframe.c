@@ -80,8 +80,7 @@ static void       gimp_color_frame_image_changed       (GimpColorFrame *frame,
                                                         GimpImage      *image,
                                                         GimpContext    *context);
 
-static void       gimp_color_frame_update_simulation_profile
-                                                       (GimpImage        *image,
+static void       gimp_color_frame_update_simulation   (GimpImage        *image,
                                                         GimpColorFrame   *frame);
 
 G_DEFINE_TYPE (GimpColorFrame, gimp_color_frame, GIMP_TYPE_FRAME)
@@ -699,7 +698,7 @@ gimp_color_frame_set_image (GimpColorFrame *frame,
       if (frame->image)
         {
           g_signal_handlers_disconnect_by_func (frame->image,
-                                                gimp_color_frame_update_simulation_profile,
+                                                gimp_color_frame_update_simulation,
                                                 frame);
           g_object_unref (frame->image);
         }
@@ -712,11 +711,13 @@ gimp_color_frame_set_image (GimpColorFrame *frame,
       g_object_ref (frame->image);
 
       g_signal_connect (frame->image, "simulation-profile-changed",
-                        G_CALLBACK (gimp_color_frame_update_simulation_profile),
+                        G_CALLBACK (gimp_color_frame_update_simulation),
+                        frame);
+      g_signal_connect (frame->image, "simulation-intent-changed",
+                        G_CALLBACK (gimp_color_frame_update_simulation),
                         frame);
 
-      gimp_color_frame_update_simulation_profile (frame->image,
-                                                  frame);
+      gimp_color_frame_update_simulation (frame->image, frame);
     }
 }
 
@@ -1098,7 +1099,7 @@ gimp_color_frame_update (GimpColorFrame *frame)
                                                                     NULL);
         if (color_profile)
           space = gimp_color_profile_get_space (color_profile,
-                                                gimp_color_config_get_simulation_intent (frame->config),
+                                                frame->simulation_intent,
                                                 NULL);
 
         /* TRANSLATORS: C for Cyan (CMYK) */
@@ -1187,14 +1188,15 @@ gimp_color_frame_image_changed (GimpColorFrame *frame,
 }
 
 static void
-gimp_color_frame_update_simulation_profile (GimpImage      *image,
-                                            GimpColorFrame *frame)
+gimp_color_frame_update_simulation (GimpImage      *image,
+                                    GimpColorFrame *frame)
 {
   g_return_if_fail (GIMP_IS_COLOR_FRAME (frame));
 
   if (image && GIMP_IS_COLOR_FRAME (frame))
     {
       frame->view_profile = gimp_image_get_simulation_profile (image);
+      frame->simulation_intent = gimp_image_get_simulation_intent (image);
 
       gimp_color_frame_update (frame);
     }

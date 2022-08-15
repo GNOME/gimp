@@ -71,6 +71,8 @@ struct _GimpColorFrame
 
   GimpColorConfig    *config;
   GimpColorProfile   *view_profile;
+  GimpColorRenderingIntent
+                      simulation_intent;
 };
 
 struct _GimpColorFrameClass
