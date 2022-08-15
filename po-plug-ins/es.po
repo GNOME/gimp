@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-24 08:48+0000\n"
-"PO-Revision-Date: 2022-07-26 16:51+0200\n"
+"POT-Creation-Date: 2022-08-08 18:32+0000\n"
+"PO-Revision-Date: 2022-08-15 19:40+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: Español <gnome-es-list@gnome.org>\n"
 "Language: es\n"
@@ -485,7 +485,7 @@ msgstr "_Vertical"
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
-#: plug-ins/file-psd/psd-load.c:2454 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2486 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
@@ -1034,9 +1034,9 @@ msgstr "Guardar los parámetros del Examinador CML"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1252
-#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:1815
-#: plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
+#: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-psd/psd-save.c:1815 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1070,11 +1070,12 @@ msgstr "Cargar los parámetros del Examinador CML"
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-ico/ico-load.c:677 plug-ins/file-ico/ico-load.c:774
-#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
-#: plug-ins/file-psd/psd-load.c:158 plug-ins/file-psd/psd-load.c:163
-#: plug-ins/file-psd/psd-save.c:1820 plug-ins/file-psd/psd-thumb-load.c:82
-#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
+#: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
+#: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
+#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:158
+#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
+#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
+#: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1987,9 +1988,9 @@ msgstr "EOF o error al leer la cabecera de la imagen"
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:669
-#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:171
-#: plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
+#: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
+#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2066,9 +2067,10 @@ msgstr "«%s»: EOF o error al leer los datos de la paleta"
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1244
-#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:1777
-#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
+#: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-psd/psd-save.c:1777 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Exportando «%s»"
@@ -4602,12 +4604,12 @@ msgid "_Write hot spot values"
 msgstr "E_scribir valores del punto activo"
 
 #: plug-ins/common/file-xbm.c:1337 plug-ins/common/file-xmc.c:1132
-#: plug-ins/file-ico/ico-dialog.c:483
+#: plug-ins/file-ico/ico-dialog.c:571
 msgid "Hot spot _X:"
 msgstr "_X del punto activo:"
 
 #: plug-ins/common/file-xbm.c:1345 plug-ins/common/file-xmc.c:1146
-#: plug-ins/file-ico/ico-dialog.c:496
+#: plug-ins/file-ico/ico-dialog.c:584
 msgid "Hot spot _Y:"
 msgstr "_Y del punto activo:"
 
@@ -7041,20 +7043,44 @@ msgstr "_Para:"
 msgid "Export Image as FLI Animation"
 msgstr "Exportar imagen como animación FLI"
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:61
+msgid "Windows Animated Cursor"
+msgstr "Cursor animado de Windows"
+
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Cursor"
 msgstr "Cursor de Windows"
 
-#: plug-ins/file-ico/ico-dialog.c:55
+#: plug-ins/file-ico/ico-dialog.c:62
 msgid "Windows Icon"
 msgstr "Icono de Windows"
 
+#: plug-ins/file-ico/ico-dialog.c:97
+msgid "Animated Cursor Settings"
+msgstr "Configuración del cursor animado"
+
+#: plug-ins/file-ico/ico-dialog.c:110
+msgid "_Cursor Name (Optional)"
+msgstr "Nombre del _cursor (opcional)"
+
+#: plug-ins/file-ico/ico-dialog.c:127
+msgid "_Author Name (Optional)"
+msgstr "Nombre del _autor (opcional)"
+
+#: plug-ins/file-ico/ico-dialog.c:144
+msgid "_Delay between frames:"
+msgstr "_Retraso entre fotogramas:"
+
+#: plug-ins/file-ico/ico-dialog.c:154
+msgid " jiffies (16.66 ms)"
+msgstr " jiffies (16.66 ms)"
+
 #. Cursor
-#: plug-ins/file-ico/ico-dialog.c:76
+#: plug-ins/file-ico/ico-dialog.c:164
 msgid "Icon Details"
 msgstr "Detalles del icono"
 
-#: plug-ins/file-ico/ico-dialog.c:99
+#: plug-ins/file-ico/ico-dialog.c:187
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
@@ -7063,55 +7089,55 @@ msgstr ""
 "programas. Algunas aplicaciones antiguas podrían no abrir este archivo "
 "correctamente."
 
-#: plug-ins/file-ico/ico-dialog.c:168
+#: plug-ins/file-ico/ico-dialog.c:256
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
 msgstr "1 bpp, alfa de 1 bit, paleta de 2 elementos"
 
-#: plug-ins/file-ico/ico-dialog.c:169
+#: plug-ins/file-ico/ico-dialog.c:257
 msgid "4 bpp, 1-bit alpha, 16-slot palette"
 msgstr "4 bpp, alfa de 1 bit, paleta de 16 elementos"
 
-#: plug-ins/file-ico/ico-dialog.c:170
+#: plug-ins/file-ico/ico-dialog.c:258
 msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, alfa de 1 bit, paleta de 256 elementos"
 
-#: plug-ins/file-ico/ico-dialog.c:171
+#: plug-ins/file-ico/ico-dialog.c:259
 msgid "24 bpp, 1-bit alpha, no palette"
 msgstr "24 bpp, alfa de 1 bit, sin paleta"
 
-#: plug-ins/file-ico/ico-dialog.c:172
+#: plug-ins/file-ico/ico-dialog.c:260
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, alfa de 8 bits, sin paleta"
 
-#: plug-ins/file-ico/ico-dialog.c:186
+#: plug-ins/file-ico/ico-dialog.c:274
 msgid "Compressed (PNG)"
 msgstr "Comprimido (PNG)"
 
-#: plug-ins/file-ico/ico-load.c:222
+#: plug-ins/file-ico/ico-load.c:224
 #, c-format
 msgid "Could not read '%lu' bytes"
 msgstr "No se pudieron leer «%lu» bytes"
 
-#: plug-ins/file-ico/ico-load.c:250
+#: plug-ins/file-ico/ico-load.c:252
 #, c-format
 msgid "Icon #%d has zero width or height"
 msgstr "El icono #%d tiene altura o anchura cero"
 
 #. read successfully. add to image
-#: plug-ins/file-ico/ico-load.c:636
+#: plug-ins/file-ico/ico-load.c:639
 #, c-format
 msgid "Icon #%i"
 msgstr "Icono #%i"
 
 #. ----- Open PSD file -----
-#: plug-ins/file-ico/ico-load.c:766 plug-ins/file-jpeg/jpeg-load.c:541
+#: plug-ins/file-ico/ico-load.c:938 plug-ins/file-jpeg/jpeg-load.c:541
 #: plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-darktable.c:515
 #: plug-ins/file-raw/file-rawtherapee.c:457
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Abriendo miniatura de «%s»"
 
-#: plug-ins/file-ico/ico-save.c:210
+#: plug-ins/file-ico/ico-save.c:213
 #, c-format
 msgid ""
 "Called non-interactively with %d and %d hotspot coordinates with an image of "
@@ -7120,13 +7146,37 @@ msgstr ""
 "Llamada no interactiva con coordenadas del punto de acceso %d y %d con una "
 "imagen de %d iconos."
 
-#: plug-ins/file-ico/ico.c:141 plug-ins/file-ico/ico.c:216
+#: plug-ins/file-ico/ico.c:168 plug-ins/file-ico/ico.c:291
 msgid "Microsoft Windows icon"
 msgstr "Icono de Microsoft Windows"
 
-#: plug-ins/file-ico/ico.c:169 plug-ins/file-ico/ico.c:241
+#: plug-ins/file-ico/ico.c:196 plug-ins/file-ico/ico.c:316
 msgid "Microsoft Windows cursor"
 msgstr "Cursor de Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:226 plug-ins/file-ico/ico.c:363
+msgid "Microsoft Windows animated cursor"
+msgstr "Cursor animado de Microsoft Windows"
+
+#: plug-ins/file-ico/ico.c:230
+msgid "Loads files of Windows ANI file format"
+msgstr "Carga archivos con formato ANI de Windows"
+
+#: plug-ins/file-ico/ico.c:272
+msgid "Loads a preview from a Windows ANI files"
+msgstr "Carga una vista previa de un archivo ANI de Windows"
+
+#: plug-ins/file-ico/ico.c:367 plug-ins/file-ico/ico.c:368
+msgid "Saves files in Windows ANI file format"
+msgstr "Guarda archivos en el formato ANI de Windows"
+
+#: plug-ins/file-ico/ico.c:384
+msgid "Cursor Name (Optional)"
+msgstr "Nombre del cursor (opcional)"
+
+#: plug-ins/file-ico/ico.c:390
+msgid "Cursor Author (Optional)"
+msgstr "Autor del cursor (opcional)"
 
 #: plug-ins/file-jpeg/jpeg-load.c:215
 msgid "JPEG preview"
@@ -7308,20 +7358,20 @@ msgstr "Anchura de la máscara de capa no soportada o no válida: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Tamaño de la máscara de capa no soportado o no válido: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2427
+#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2459
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Modo de compresión no soportado: %d"
 
-#: plug-ins/file-psd/psd-load.c:2620
+#: plug-ins/file-psd/psd-load.c:2652
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:2820
+#: plug-ins/file-psd/psd-load.c:2852
 msgid "Unsupported or invalid channel size"
 msgstr "Tamaño del canal no soportado o no válido"
 
-#: plug-ins/file-psd/psd-load.c:2889
+#: plug-ins/file-psd/psd-load.c:2921
 msgid "Failed to decompress data"
 msgstr "Error al descomprimir los datos"
 
