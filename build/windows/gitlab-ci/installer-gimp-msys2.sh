@@ -22,6 +22,18 @@ download_lang ()
   fi
 }
 
+download_lang_official ()
+{
+  langfile="$1"
+  rm -f "$langfile"
+  wget "https://raw.githubusercontent.com/jrsoftware/issrc/main/Files/Languages/$langfile"
+  downloaded="$?"
+  if [ $downloaded -ne 0 ]; then
+    echo "Download of '$langfile' failed."
+    exit 1
+  fi
+}
+
 add_bom ()
 {
   langfile="$1"
@@ -43,7 +55,6 @@ download_lang Esperanto.isl
 download_lang Galician.isl
 download_lang Georgian.isl
 download_lang Greek.isl
-download_lang Hungarian.isl
 download_lang Indonesian.isl
 download_lang Korean.isl
 download_lang Latvian.isl
@@ -53,6 +64,11 @@ download_lang Marathi.islu
 download_lang Romanian.isl
 download_lang Swedish.isl
 download_lang Vietnamese.isl
+cd -
+
+# Hungarian is not in a release yet, but was moved from Unofficial
+cd "${ISCCDIR}/Languages/"
+download_lang_official Hungarian.isl
 cd -
 
 # Copy generated language files into the source directory.
