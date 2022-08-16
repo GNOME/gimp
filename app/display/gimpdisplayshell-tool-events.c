@@ -41,7 +41,6 @@
 #include "widgets/gimpaction.h"
 #include "widgets/gimpcontrollers.h"
 #include "widgets/gimpcontrollerkeyboard.h"
-#include "widgets/gimpcontrollermouse.h"
 #include "widgets/gimpcontrollerwheel.h"
 #include "widgets/gimpdeviceinfo.h"
 #include "widgets/gimpdeviceinfo-coords.h"

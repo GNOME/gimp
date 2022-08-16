@@ -133,8 +133,6 @@ libappwidgets_a_sources = \
 	gimpcontrollers.h		\
 	gimpcontrollerkeyboard.c	\
 	gimpcontrollerkeyboard.h	\
-	gimpcontrollermouse.c		\
-	gimpcontrollermouse.h		\
 	gimpcontrollerwheel.c		\
 	gimpcontrollerwheel.h		\
 	gimpcriticaldialog.c		\

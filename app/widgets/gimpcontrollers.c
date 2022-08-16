@@ -37,7 +37,6 @@
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollers.h"
 #include "gimpcontrollerkeyboard.h"
-#include "gimpcontrollermouse.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpenumaction.h"
 #include "gimpuimanager.h"
@@ -54,7 +53,6 @@ struct _GimpControllerManager
 {
   GimpContainer  *controllers;
   GQuark          event_mapped_id;
-  GimpController *mouse;
   GimpController *wheel;
   GimpController *keyboard;
   GimpUIManager  *ui_manager;
@@ -110,7 +108,6 @@ gimp_controllers_init (Gimp *gimp)
                                 G_CALLBACK (gimp_controllers_event_mapped),
                                 manager);
 
-  g_type_class_ref (GIMP_TYPE_CONTROLLER_MOUSE);
   g_type_class_ref (GIMP_TYPE_CONTROLLER_WHEEL);
   g_type_class_ref (GIMP_TYPE_CONTROLLER_KEYBOARD);
 }
@@ -257,20 +254,6 @@ gimp_controllers_get_ui_manager (Gimp *gimp)
 }
 
 GimpController *
-gimp_controllers_get_mouse (Gimp *gimp)
-{
-  GimpControllerManager *manager;
-
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-
-  manager = gimp_controller_manager_get (gimp);
-
-  g_return_val_if_fail (manager != NULL, NULL);
-
-  return manager->mouse;
-}
-
-GimpController *
 gimp_controllers_get_wheel (Gimp *gimp)
 {
   GimpControllerManager *manager;
@@ -328,8 +311,6 @@ gimp_controllers_add (GimpContainer         *container,
     manager->wheel = info->controller;
   else if (GIMP_IS_CONTROLLER_KEYBOARD (info->controller))
     manager->keyboard = info->controller;
-  else if (GIMP_IS_CONTROLLER_MOUSE (info->controller))
-    manager->mouse = info->controller;
 }
 
 static void

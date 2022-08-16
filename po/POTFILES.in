@@ -550,7 +550,6 @@ app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerinfo.c
 app/widgets/gimpcontrollerkeyboard.c
 app/widgets/gimpcontrollerlist.c
-app/widgets/gimpcontrollermouse.c
 app/widgets/gimpcontrollerwheel.c
 app/widgets/gimpcriticaldialog.c
 app/widgets/gimpdashboard.c

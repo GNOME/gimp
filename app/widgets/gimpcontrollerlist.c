@@ -42,7 +42,6 @@
 #include "gimpcontrollerlist.h"
 #include "gimpcontrollerinfo.h"
 #include "gimpcontrollerkeyboard.h"
-#include "gimpcontrollermouse.h"
 #include "gimpcontrollerwheel.h"
 #include "gimpcontrollers.h"
 #include "gimpdialogfactory.h"
@@ -524,17 +523,6 @@ gimp_controller_list_add_clicked (GtkWidget          *button,
                             _("There can only be one active wheel "
                               "controller.\n\n"
                               "You already have a wheel controller in "
-                              "your list of active controllers."));
-      return;
-    }
-  else if (list->src_gtype == GIMP_TYPE_CONTROLLER_MOUSE &&
-           gimp_controllers_get_mouse (list->gimp) != NULL)
-    {
-      gimp_message_literal (list->gimp,
-                            G_OBJECT (button), GIMP_MESSAGE_WARNING,
-                            _("There can only be one active mouse "
-                              "controller.\n\n"
-                              "You already have a mouse controller in "
                               "your list of active controllers."));
       return;
     }

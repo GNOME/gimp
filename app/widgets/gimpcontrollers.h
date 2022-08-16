@@ -31,7 +31,6 @@ void             gimp_controllers_save           (Gimp          *gimp);
 
 GimpContainer  * gimp_controllers_get_list       (Gimp          *gimp);
 GimpUIManager  * gimp_controllers_get_ui_manager (Gimp          *gimp);
-GimpController * gimp_controllers_get_mouse      (Gimp          *gimp);
 GimpController * gimp_controllers_get_wheel      (Gimp          *gimp);
 GimpController * gimp_controllers_get_keyboard   (Gimp          *gimp);
 
