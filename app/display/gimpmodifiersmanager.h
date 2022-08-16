@@ -58,7 +58,8 @@ GimpModifiersManager * gimp_modifiers_manager_new           (void);
 GimpModifierAction     gimp_modifiers_manager_get_action    (GimpModifiersManager *manager,
                                                              GdkDevice            *device,
                                                              guint                 button,
-                                                             GdkModifierType       modifiers);
+                                                             GdkModifierType       modifiers,
+                                                             const gchar         **action_desc);
 
 /* Protected functions: only use them from GimpModifiersEditor */
 
@@ -70,7 +71,8 @@ void                   gimp_modifiers_manager_set           (GimpModifiersManage
                                                              GdkDevice            *device,
                                                              guint                 button,
                                                              GdkModifierType       modifiers,
-                                                             GimpModifierAction    action);
+                                                             GimpModifierAction    action,
+                                                             const gchar          *action_desc);
 void                   gimp_modifiers_manager_remove        (GimpModifiersManager *manager,
                                                              GdkDevice            *device,
                                                              guint                 button,

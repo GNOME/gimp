@@ -42,8 +42,9 @@ enum
 
 typedef struct
 {
-  GdkModifierType    modifiers;
-  GimpModifierAction mod_action;
+  GdkModifierType     modifiers;
+  GimpModifierAction  mod_action;
+  gchar              *action_desc;
 } GimpModifierMapping;
 
 struct _GimpModifiersManagerPrivate
@@ -148,6 +149,8 @@ gimp_modifiers_manager_serialize (GimpConfig       *config,
       enum_value = g_enum_get_value (enum_class, GPOINTER_TO_INT (mapping->mod_action));
       gimp_config_writer_open (writer, "mod-action");
       gimp_config_writer_identifier (writer, enum_value->value_nick);
+      if (mapping->mod_action == GIMP_MODIFIER_ACTION_ACTION)
+        gimp_config_writer_string (writer, mapping->action_desc);
       gimp_config_writer_close (writer);
 
       gimp_config_writer_close (writer);
@@ -245,6 +248,18 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
                   else
                     {
                       gchar *suffix;
+                      gchar *action_desc = NULL;
+
+                      if (enum_value->value == GIMP_MODIFIER_ACTION_ACTION)
+                        {
+                          if (! gimp_scanner_parse_string (scanner, &action_desc))
+                            {
+                              g_printerr ("%s: missing action description for mapping %s\n",
+                                          G_STRFUNC, actions_key);
+                              goto error;
+                            }
+                        }
+
                       suffix = g_strdup_printf ("-%d", modifiers);
 
                       if (g_str_has_suffix (actions_key, suffix))
@@ -253,8 +268,9 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
                                                           strlen (actions_key) - strlen (suffix));
 
                           mapping = g_slice_new (GimpModifierMapping);
-                          mapping->modifiers  = modifiers;
-                          mapping->mod_action = enum_value->value;
+                          mapping->modifiers   = modifiers;
+                          mapping->mod_action  = enum_value->value;
+                          mapping->action_desc = action_desc;
                           g_hash_table_insert (manager->p->actions, actions_key, mapping);
 
                           if (g_list_find_custom (manager->p->buttons, buttons_key, (GCompareFunc) g_strcmp0))
@@ -326,12 +342,17 @@ GimpModifierAction
 gimp_modifiers_manager_get_action (GimpModifiersManager *manager,
                                    GdkDevice            *device,
                                    guint                 button,
-                                   GdkModifierType       state)
+                                   GdkModifierType       state,
+                                   const gchar         **action_desc)
 {
   gchar              *actions_key = NULL;
   gchar              *buttons_key = NULL;
   GdkModifierType     mod_state;
   GimpModifierAction  retval      = GIMP_MODIFIER_ACTION_NONE;
+
+  g_return_val_if_fail (GIMP_IS_MODIFIERS_MANAGER (manager), GIMP_MODIFIER_ACTION_NONE);
+  g_return_val_if_fail (GDK_IS_DEVICE (device), GIMP_MODIFIER_ACTION_NONE);
+  g_return_val_if_fail (action_desc != NULL && *action_desc == NULL, GIMP_MODIFIER_ACTION_NONE);
 
   mod_state = state & gimp_get_all_modifiers_mask ();
 
@@ -348,6 +369,9 @@ gimp_modifiers_manager_get_action (GimpModifiersManager *manager,
         retval = GIMP_MODIFIER_ACTION_NONE;
       else
         retval = mapping->mod_action;
+
+      if (retval == GIMP_MODIFIER_ACTION_ACTION)
+        *action_desc = mapping->action_desc;
     }
   else if (button == 2)
     {
@@ -421,7 +445,8 @@ gimp_modifiers_manager_set (GimpModifiersManager *manager,
                             GdkDevice            *device,
                             guint                 button,
                             GdkModifierType       modifiers,
-                            GimpModifierAction    action)
+                            GimpModifierAction    action,
+                            const gchar          *action_desc)
 {
   gchar *actions_key = NULL;
   gchar *buttons_key = NULL;
@@ -434,7 +459,8 @@ gimp_modifiers_manager_set (GimpModifiersManager *manager,
 
   gimp_modifiers_manager_initialize (manager, device, button);
 
-  if (action == GIMP_MODIFIER_ACTION_NONE)
+  if (action == GIMP_MODIFIER_ACTION_NONE ||
+      (action == GIMP_MODIFIER_ACTION_ACTION && action_desc == NULL))
     {
       g_hash_table_remove (manager->p->actions, actions_key);
       g_free (actions_key);
@@ -444,8 +470,9 @@ gimp_modifiers_manager_set (GimpModifiersManager *manager,
       GimpModifierMapping *mapping;
 
       mapping = g_slice_new (GimpModifierMapping);
-      mapping->modifiers  = modifiers;
-      mapping->mod_action = action;
+      mapping->modifiers   = modifiers;
+      mapping->mod_action  = action;
+      mapping->action_desc = action_desc ? g_strdup (action_desc) : NULL;
       g_hash_table_insert (manager->p->actions, actions_key,
                            mapping);
     }
@@ -458,7 +485,7 @@ gimp_modifiers_manager_remove (GimpModifiersManager *manager,
                                GdkModifierType       modifiers)
 {
   gimp_modifiers_manager_set (manager, device, button, modifiers,
-                              GIMP_MODIFIER_ACTION_NONE);
+                              GIMP_MODIFIER_ACTION_NONE, NULL);
 }
 
 void
@@ -474,6 +501,7 @@ gimp_modifiers_manager_clear (GimpModifiersManager *manager)
 static void
 gimp_modifiers_manager_free_mapping (GimpModifierMapping *mapping)
 {
+  g_free (mapping->action_desc);
   g_slice_free (GimpModifierMapping, mapping);
 }
 

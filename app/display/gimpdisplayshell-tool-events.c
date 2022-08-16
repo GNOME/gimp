@@ -575,10 +575,12 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           {
             GdkDevice            *device;
             GimpModifierAction    action;
+            const gchar          *action_desc = NULL;
 
             device = gdk_event_get_source_device (event);
             action = gimp_modifiers_manager_get_action (mod_manager, device,
-                                                        bevent->button, bevent->state);
+                                                        bevent->button, bevent->state,
+                                                        &action_desc);
             shell->mod_action = action;
             switch (action)
               {
@@ -594,6 +596,9 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
                 gimp_display_shell_start_scrolling (shell, event, state,
                                                     bevent->x, bevent->y);
+                break;
+              case GIMP_MODIFIER_ACTION_ACTION:
+                break;
               case GIMP_MODIFIER_ACTION_NONE:
                 gimp_display_triggers_context_menu (event, shell, gimp, &image_coords, FALSE);
                 break;
@@ -719,12 +724,18 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else
           {
-            GdkDevice            *device;
-            GimpModifierAction    action;
+            const gchar        *action_desc = NULL;
+            GimpImageWindow    *window;
+            GimpUIManager      *manager;
+            GdkDevice          *device;
+            GimpModifierAction  action;
 
-            device = gdk_event_get_source_device (event);
-            action = gimp_modifiers_manager_get_action (mod_manager, device,
-                                                        bevent->button, bevent->state);
+            window  = gimp_display_shell_get_window (shell);
+            manager = gimp_image_window_get_ui_manager (window);
+            device  = gdk_event_get_source_device (event);
+            action  = gimp_modifiers_manager_get_action (mod_manager, device,
+                                                         bevent->button, bevent->state,
+                                                         &action_desc);
 
             switch (action)
               {
@@ -744,6 +755,10 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
                 gimp_display_shell_stop_scrolling (shell, event);
+                break;
+              case GIMP_MODIFIER_ACTION_ACTION:
+                gimp_display_shell_activate_action (manager, action_desc, NULL);
+                break;
               case GIMP_MODIFIER_ACTION_NONE:
                 break;
               }
@@ -1751,6 +1766,7 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
         }
     case GIMP_MODIFIER_ACTION_MENU:
     case GIMP_MODIFIER_ACTION_PANNING:
+    case GIMP_MODIFIER_ACTION_ACTION:
     case GIMP_MODIFIER_ACTION_NONE:
       gimp_display_shell_set_override_cursor (shell,
                                               (GimpCursorType) GDK_FLEUR);
@@ -1922,6 +1938,7 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
       /* Do nothing. We only pick the layer on click. */
     case GIMP_MODIFIER_ACTION_MENU:
     case GIMP_MODIFIER_ACTION_NONE:
+    case GIMP_MODIFIER_ACTION_ACTION:
       break;
     }
 
@@ -2157,7 +2174,7 @@ gimp_display_shell_update_cursor (GimpDisplayShell *shell,
 
   active_tool = tool_manager_get_active (gimp);
 
-  if (active_tool)
+  if (active_tool && image)
     {
       if ((! gimp_image_is_empty (image) ||
            gimp_tool_control_get_handle_empty_image (active_tool->control)) &&
@@ -2363,6 +2380,8 @@ gimp_display_shell_activate_action (GimpUIManager *manager,
   gchar *group_name;
   gchar *action_name;
 
+  g_return_if_fail (action_desc != NULL);
+
   group_name  = g_strdup (action_desc);
   action_name = strchr (group_name, '/');
 
@@ -2382,6 +2401,10 @@ gimp_display_shell_activate_action (GimpUIManager *manager,
       else if (GIMP_IS_DOUBLE_ACTION (action))
         {
           gimp_action_emit_activate (action, value);
+        }
+      else
+        {
+          gimp_action_activate (action);
         }
     }
 

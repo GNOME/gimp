@@ -31,8 +31,13 @@
 #include "display/display-types.h"
 #include "display/gimpmodifiersmanager.h"
 
+#include "gimpaction.h"
+#include "gimpactionview.h"
+#include "gimpactioneditor.h"
+#include "gimphelp-ids.h"
 #include "gimpmodifierseditor.h"
 #include "gimpshortcutbutton.h"
+#include "gimpuimanager.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -59,9 +64,12 @@ struct _GimpModifiersEditorPrivate
 
   GtkSizeGroup         *mod_size_group;
   GtkSizeGroup         *action_size_group;
+  GtkSizeGroup         *action_action_size_group;
   GtkSizeGroup         *minus_size_group;
 
   GimpModifiersManager *manager;
+
+  GtkTreeSelection     *action_selection;
 };
 
 
@@ -86,13 +94,24 @@ static void     gimp_modifiers_editor_minus_button_clicked (GtkButton           
 static void     gimp_modifiers_editor_notify_accelerator   (GtkWidget           *widget,
                                                             const GParamSpec    *pspec,
                                                             GimpModifiersEditor *editor);
+static void     gimp_modifiers_editor_search_clicked       (GtkWidget           *button,
+                                                            GimpModifiersEditor *editor);
 
 static void     gimp_modifiers_editor_show_settings         (GimpModifiersEditor *editor,
                                                              GdkDevice           *device,
                                                              guint                button);
 static void     gimp_modifiers_editor_add_mapping           (GimpModifiersEditor *editor,
                                                              GdkModifierType      modifiers,
-                                                             GimpModifierAction   mod_action);
+                                                             GimpModifierAction   mod_action,
+                                                             const gchar         *action_desc);
+
+static void     gimp_controller_modifiers_action_activated  (GtkTreeView         *tv,
+                                                             GtkTreePath         *path,
+                                                             GtkTreeViewColumn   *column,
+                                                             GtkWidget           *edit_dialog);
+static void     gimp_modifiers_editor_search_response       (GtkWidget           *dialog,
+                                                             gint                 response_id,
+                                                             GimpModifiersEditor *editor);
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpModifiersEditor, gimp_modifiers_editor,
                             GIMP_TYPE_FRAME)
@@ -127,12 +146,13 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
   gchar     *text;
 
   editor->priv = gimp_modifiers_editor_get_instance_private (editor);
-  editor->priv->device            = NULL;
-  editor->priv->plus_button       = NULL;
-  editor->priv->current_settings  = NULL;
-  editor->priv->mod_size_group    = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  editor->priv->action_size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  editor->priv->minus_size_group  = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  editor->priv->device                   = NULL;
+  editor->priv->plus_button              = NULL;
+  editor->priv->current_settings         = NULL;
+  editor->priv->mod_size_group           = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  editor->priv->action_size_group        = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  editor->priv->action_action_size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  editor->priv->minus_size_group         = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* Setup the title. */
   gtk_frame_set_label_align (GTK_FRAME (editor), 0.5, 0.5);
@@ -203,14 +223,15 @@ gimp_modifiers_editor_finalize (GObject *object)
   g_clear_object (&editor->priv->device);
   g_object_unref (editor->priv->mod_size_group);
   g_object_unref (editor->priv->action_size_group);
+  g_object_unref (editor->priv->action_action_size_group);
   g_object_unref (editor->priv->minus_size_group);
 }
 
 static void
 gimp_modifiers_editor_set_property (GObject      *object,
-                                   guint         property_id,
-                                   const GValue *value,
-                                   GParamSpec   *pspec)
+                                    guint         property_id,
+                                    const GValue *value,
+                                    GParamSpec   *pspec)
 {
   GimpModifiersEditor *editor = GIMP_MODIFIERS_EDITOR (object);
 
@@ -229,9 +250,9 @@ gimp_modifiers_editor_set_property (GObject      *object,
 
 static void
 gimp_modifiers_editor_get_property (GObject    *object,
-                                   guint       property_id,
-                                   GValue     *value,
-                                   GParamSpec *pspec)
+                                    guint       property_id,
+                                    GValue     *value,
+                                    GParamSpec *pspec)
 {
   GimpModifiersEditor *editor = GIMP_MODIFIERS_EDITOR (object);
 
@@ -330,12 +351,14 @@ gimp_modifiers_editor_show_settings (GimpModifiersEditor *editor,
                                                         device, editor->priv->button);
       for (iter = modifiers; iter; iter = iter->next)
         {
-          GdkModifierType    mods = GPOINTER_TO_INT (iter->data);
-          GimpModifierAction action;
+          GdkModifierType     mods = GPOINTER_TO_INT (iter->data);
+          GimpModifierAction  action;
+          const gchar        *action_desc = NULL;
 
           action = gimp_modifiers_manager_get_action (editor->priv->manager, device,
-                                                      editor->priv->button, mods);
-          gimp_modifiers_editor_add_mapping (editor, mods, action);
+                                                      editor->priv->button, mods,
+                                                      &action_desc);
+          gimp_modifiers_editor_add_mapping (editor, mods, action, action_desc);
         }
 
       plus_button = gtk_button_new_from_icon_name ("list-add", GTK_ICON_SIZE_LARGE_TOOLBAR);
@@ -395,13 +418,16 @@ gimp_modifiers_editor_button_press_event (GtkWidget      *widget,
 static void
 gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
                                    GdkModifierType      modifiers,
-                                   GimpModifierAction   mod_action)
+                                   GimpModifierAction   mod_action,
+                                   const gchar         *action_desc)
 {
   GtkWidget   *box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 2);
   GtkWidget   *box_row;
+  GtkWidget   *combo_action_box;
   GtkWidget   *combo;
   GtkWidget   *shortcut;
   GtkWidget   *minus_button;
+  GtkWidget   *action_button = NULL;
   GtkWidget   *plus_button;
 
   plus_button = g_object_get_data (G_OBJECT (editor->priv->current_settings), "plus-button");
@@ -414,11 +440,32 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
   gtk_size_group_add_widget (editor->priv->mod_size_group, shortcut);
   gtk_widget_show (shortcut);
 
+  combo_action_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 1);
+  gtk_box_pack_start (GTK_BOX (box), combo_action_box, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (editor->priv->action_action_size_group, combo_action_box);
+  gtk_widget_show (combo_action_box);
+
   combo = gimp_enum_combo_box_new (GIMP_TYPE_MODIFIER_ACTION);
-  gtk_box_pack_start (GTK_BOX (box), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (combo_action_box), combo, FALSE, FALSE, 0);
   gtk_combo_box_set_active (GTK_COMBO_BOX (combo), mod_action);
   gtk_size_group_add_widget (editor->priv->action_size_group, combo);
   gtk_widget_show (combo);
+
+  if (action_desc)
+    {
+      gchar *action_name = strchr (action_desc, '/');
+
+      if (action_name)
+        action_name++;
+
+      if (strlen (action_name) > 0)
+        action_button = gtk_button_new_with_label (action_name);
+    }
+
+  if (action_button == NULL)
+    action_button = gtk_button_new_from_icon_name ("system-search", GTK_ICON_SIZE_SMALL_TOOLBAR);
+  gtk_box_pack_start (GTK_BOX (combo_action_box), action_button, FALSE, FALSE, 0);
+  gtk_widget_set_visible (action_button, mod_action == GIMP_MODIFIER_ACTION_ACTION);
 
   minus_button = gtk_button_new_from_icon_name ("list-remove", GTK_ICON_SIZE_SMALL_TOOLBAR);
   gtk_size_group_add_widget (editor->priv->minus_size_group, minus_button);
@@ -432,13 +479,20 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
 
   g_object_set_data (G_OBJECT (shortcut), "shortcut-button", shortcut);
   g_object_set_data (G_OBJECT (shortcut), "shortcut-action", combo);
+  g_object_set_data (G_OBJECT (shortcut), "shortcut-action-action", action_button);
   g_object_set_data (G_OBJECT (combo),    "shortcut-button", shortcut);
   g_object_set_data (G_OBJECT (combo),    "shortcut-action", combo);
+  g_object_set_data (G_OBJECT (combo),    "shortcut-action-action", action_button);
   g_signal_connect (shortcut, "notify::accelerator",
                     G_CALLBACK (gimp_modifiers_editor_notify_accelerator),
                     editor);
   g_signal_connect (combo, "notify::active",
                     G_CALLBACK (gimp_modifiers_editor_notify_accelerator),
+                    editor);
+
+  g_object_set_data (G_OBJECT (action_button), "shortcut-button", shortcut);
+  g_signal_connect (action_button, "clicked",
+                    G_CALLBACK (gimp_modifiers_editor_search_clicked),
                     editor);
 
   gtk_list_box_insert (GTK_LIST_BOX (editor->priv->current_settings), box, -1);
@@ -459,7 +513,7 @@ static void
 gimp_modifiers_editor_plus_button_clicked (GtkButton           *plus_button,
                                            GimpModifiersEditor *editor)
 {
-  gimp_modifiers_editor_add_mapping (editor, 0, GIMP_MODIFIER_ACTION_NONE);
+  gimp_modifiers_editor_add_mapping (editor, 0, GIMP_MODIFIER_ACTION_NONE, NULL);
 }
 
 static void
@@ -501,17 +555,201 @@ gimp_modifiers_editor_notify_accelerator (GtkWidget           *widget,
 {
   GtkWidget          *shortcut;
   GtkWidget          *combo;
+  GtkWidget          *action_button;
   GimpModifierAction  action = GIMP_MODIFIER_ACTION_NONE;
 
   GdkModifierType  modifiers;
 
-  shortcut = g_object_get_data (G_OBJECT (widget), "shortcut-button");
-  combo    = g_object_get_data (G_OBJECT (widget), "shortcut-action");
+  shortcut      = g_object_get_data (G_OBJECT (widget), "shortcut-button");
+  combo         = g_object_get_data (G_OBJECT (widget), "shortcut-action");
+  action_button = g_object_get_data (G_OBJECT (widget), "shortcut-action-action");
 
   gimp_shortcut_button_get_keys (GIMP_SHORTCUT_BUTTON (shortcut), NULL, &modifiers);
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), (gint *) &action))
-    gimp_modifiers_manager_set (editor->priv->manager, editor->priv->device,
-                                editor->priv->button, modifiers,
-                                action);
+    {
+      const gchar *action_desc;
+
+      action_desc = g_object_get_data (G_OBJECT (action_button), "shortcut-action-desc");
+      gimp_modifiers_manager_set (editor->priv->manager, editor->priv->device,
+                                  editor->priv->button, modifiers,
+                                  action, action_desc);
+      gtk_widget_set_visible (action_button, action == GIMP_MODIFIER_ACTION_ACTION);
+    }
+}
+
+static void
+gimp_modifiers_editor_search_clicked (GtkWidget           *button,
+                                      GimpModifiersEditor *editor)
+{
+  gchar           *accel_name  = NULL;
+  gchar           *action_name = "action name";
+
+  GtkWidget       *shortcut;
+  GdkModifierType  modifiers;
+
+  shortcut = g_object_get_data (G_OBJECT (button), "shortcut-button");
+  gimp_shortcut_button_get_keys (GIMP_SHORTCUT_BUTTON (shortcut), NULL, &modifiers);
+  accel_name = gtk_accelerator_name (0, modifiers);
+
+  if (accel_name)
+    {
+      GtkWidget *view;
+      GtkWidget *edit_dialog;
+      gchar     *title;
+
+      if (strlen (accel_name) > 0)
+        {
+          if (gdk_device_get_name (editor->priv->device) != NULL)
+            /* TRANSLATORS: first %s is modifier keys, %d is button
+             * number, last %s is an input device (e.g. a mouse) name.
+             */
+            title = g_strdup_printf (_("Select Action for %s button %d of %s"),
+                                     accel_name, editor->priv->button,
+                                     gdk_device_get_name (editor->priv->device));
+          else
+            /* TRANSLATORS: %s is modifiers key, %d is a button number. */
+            title = g_strdup_printf (_("Editing modifiers for %s button %d"),
+                                     accel_name, editor->priv->button);
+        }
+      else
+        {
+            /* TRANSLATORS: %d is a button number, %s is the device (e.g. a mouse) name. */
+          if (gdk_device_get_name (editor->priv->device) != NULL)
+            title = g_strdup_printf (_("Select Action for button %d of %s"),
+                                     editor->priv->button,
+                                     gdk_device_get_name (editor->priv->device));
+          else
+            /* TRANSLATORS: %d is an input device button number. */
+            title = g_strdup_printf (_("Editing modifiers for button %d"),
+                                     editor->priv->button);
+        }
+
+      edit_dialog =
+        gimp_dialog_new (title,
+                         "gimp-modifiers-action-dialog",
+                         gtk_widget_get_toplevel (GTK_WIDGET (editor)),
+                         GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_MODAL,
+                         gimp_standard_help_func,
+                         GIMP_HELP_PREFS_CANVAS_MODIFIERS,
+
+                         _("_Cancel"), GTK_RESPONSE_CANCEL,
+                         _("_OK"),     GTK_RESPONSE_OK,
+
+                         NULL);
+      g_free (title);
+
+      /* Default height is very crappy because of the scrollbar so we
+       * end up to resize manually each time. Let's have a minimum
+       * height.
+       */
+      gtk_window_set_default_size (GTK_WINDOW (edit_dialog), -1, 400);
+      gimp_dialog_set_alternative_button_order (GTK_DIALOG (edit_dialog),
+                                                GTK_RESPONSE_OK,
+                                                GTK_RESPONSE_CANCEL,
+                                                -1);
+
+      g_object_set_data (G_OBJECT (edit_dialog), "shortcut-button", shortcut);
+      g_object_set_data (G_OBJECT (edit_dialog), "shortcut-action-action", button);
+      g_signal_connect (edit_dialog, "response",
+                        G_CALLBACK (gimp_modifiers_editor_search_response),
+                        editor);
+
+      view = gimp_action_editor_new (gimp_ui_managers_from_name ("<Image>")->data,
+                                     action_name, FALSE);
+      gtk_container_set_border_width (GTK_CONTAINER (view), 12);
+      gtk_box_pack_start (GTK_BOX (gtk_dialog_get_content_area (GTK_DIALOG (edit_dialog))),
+                          view, TRUE, TRUE, 0);
+      gtk_widget_show (view);
+
+      g_signal_connect_object (GIMP_ACTION_EDITOR (view)->view, "row-activated",
+                               G_CALLBACK (gimp_controller_modifiers_action_activated),
+                               edit_dialog, 0);
+
+      editor->priv->action_selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (GIMP_ACTION_EDITOR (view)->view));
+
+      g_object_add_weak_pointer (G_OBJECT (editor->priv->action_selection),
+                                 (gpointer) &editor->priv->action_selection);
+
+      gtk_widget_show (edit_dialog);
+
+      g_free (accel_name);
+    }
+}
+
+static void
+gimp_controller_modifiers_action_activated (GtkTreeView       *view,
+                                            GtkTreePath       *path,
+                                            GtkTreeViewColumn *column,
+                                            GtkWidget         *edit_dialog)
+{
+  gtk_dialog_response (GTK_DIALOG (edit_dialog), GTK_RESPONSE_OK);
+}
+
+static void
+gimp_modifiers_editor_search_response (GtkWidget           *dialog,
+                                       gint                 response_id,
+                                       GimpModifiersEditor *editor)
+{
+  if (response_id == GTK_RESPONSE_OK)
+    {
+      GtkTreeModel *model;
+      GtkTreeIter   iter;
+      gchar        *icon_name   = NULL;
+      GimpAction   *action      = NULL;
+
+      if (gtk_tree_selection_get_selected (editor->priv->action_selection, &model, &iter))
+        gtk_tree_model_get (model, &iter,
+                            GIMP_ACTION_VIEW_COLUMN_ACTION,    &action,
+                            GIMP_ACTION_VIEW_COLUMN_ICON_NAME, &icon_name,
+                            -1);
+
+      if (action)
+        {
+          GtkActionGroup *group;
+
+          g_object_get (action,
+                        "action-group", &group,
+                        NULL);
+
+          if (group)
+            {
+              GtkWidget       *action_button;
+              GtkWidget       *shortcut;
+              GtkWidget       *label;
+              gchar           *action_desc;
+              GdkModifierType  modifiers;
+
+              shortcut      = g_object_get_data (G_OBJECT (dialog), "shortcut-button");
+              gimp_shortcut_button_get_keys (GIMP_SHORTCUT_BUTTON (shortcut), NULL, &modifiers);
+
+              action_button = g_object_get_data (G_OBJECT (dialog), "shortcut-action-action");
+              action_desc = g_strdup_printf ("%s/%s",
+                                             gtk_action_group_get_name (group),
+                                             gimp_action_get_name (action));
+
+              g_object_set_data_full (G_OBJECT (action_button), "shortcut-action-desc",
+                                      action_desc, g_free);
+
+              gimp_modifiers_manager_set (editor->priv->manager, editor->priv->device,
+                                          editor->priv->button, modifiers,
+                                          GIMP_MODIFIER_ACTION_ACTION, action_desc);
+
+              /* Change the button label. */
+              gtk_container_foreach (GTK_CONTAINER (action_button),
+                                     (GtkCallback) gtk_widget_destroy,
+                                     NULL);
+              label = gtk_label_new (gimp_action_get_name (action));
+              gtk_container_add (GTK_CONTAINER (action_button), label);
+              gtk_widget_show (label);
+
+              g_object_unref (group);
+            }
+        }
+
+      g_free (icon_name);
+      g_clear_object (&action);
+    }
+
+  gtk_widget_destroy (dialog);
 }
