@@ -84,6 +84,7 @@ EXPORTS
 	gimp_color_notebook_get_selectors
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
+	gimp_color_notebook_set_profile
 	gimp_color_notebook_set_simulation
 	gimp_color_profile_chooser_dialog_get_type
 	gimp_color_profile_chooser_dialog_new
@@ -108,6 +109,7 @@ EXPORTS
 	gimp_color_scale_set_channel
 	gimp_color_scale_set_color
 	gimp_color_scale_set_color_config
+	gimp_color_scale_set_profile
 	gimp_color_scales_get_show_rgb_u8
 	gimp_color_scales_get_type
 	gimp_color_scales_set_show_rgb_u8
@@ -124,6 +126,7 @@ EXPORTS
 	gimp_color_selection_set_color
 	gimp_color_selection_set_config
 	gimp_color_selection_set_old_color
+	gimp_color_selection_set_profile
 	gimp_color_selection_set_show_alpha
 	gimp_color_selection_set_simulation
 	gimp_color_selector_channel_get_type
@@ -143,6 +146,7 @@ EXPORTS
 	gimp_color_selector_set_color
 	gimp_color_selector_set_config
 	gimp_color_selector_set_model_visible
+	gimp_color_selector_set_profile
 	gimp_color_selector_set_show_alpha
 	gimp_color_selector_set_simulation
 	gimp_color_selector_set_toggles_sensitive

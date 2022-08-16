@@ -77,6 +77,8 @@ GtkWidget         * gimp_color_notebook_set_has_page         (GimpColorNotebook 
 GtkWidget         * gimp_color_notebook_get_notebook         (GimpColorNotebook *notebook);
 GList             * gimp_color_notebook_get_selectors        (GimpColorNotebook *notebook);
 GimpColorSelector * gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook);
+void                gimp_color_notebook_set_profile          (GimpColorNotebook *notebook,
+                                                              GimpColorProfile  *profile);
 void                gimp_color_notebook_set_simulation       (GimpColorNotebook *notebook,
                                                               GimpColorProfile  *profile,
                                                               GimpColorRenderingIntent intent,

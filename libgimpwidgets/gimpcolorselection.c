@@ -561,6 +561,27 @@ gimp_color_selection_color_changed (GimpColorSelection *selection)
 }
 
 /**
+ * gimp_color_selection_set_profile:
+ * @selection: A #GimpColorSelection widget.
+ * @profile:   A #GimpColorProfile object.
+ *
+ * Sets the color profile to use with this color selection.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_selection_set_profile (GimpColorSelection *selection,
+                                  GimpColorProfile   *profile)
+{
+  g_return_if_fail (GIMP_IS_COLOR_SELECTION (selection));
+
+  gimp_color_notebook_set_profile (GIMP_COLOR_NOTEBOOK (selection->priv->notebook),
+                                   profile);
+
+  g_signal_emit (selection, selection_signals[COLOR_CHANGED], 0);
+}
+
+/**
  * gimp_color_selection_set_simulation:
  * @selection: A #GimpColorSelection widget.
  * @profile:   A #GimpColorProfile object.

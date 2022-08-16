@@ -597,6 +597,33 @@ gimp_color_notebook_get_current_selector (GimpColorNotebook *notebook)
 }
 
 /**
+ * gimp_color_notebook_set_profile:
+ * @notebook:  A #GimpColorNotebook widget.
+ * @profile:   A #GimpColorProfile object.
+ *
+ * Updates all selectors with the current color profile.
+ *
+ * Since: 3.0
+ **/
+void
+gimp_color_notebook_set_profile (GimpColorNotebook *notebook,
+                                 GimpColorProfile  *profile)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_COLOR_NOTEBOOK (notebook));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  for (list = notebook->priv->selectors; list; list = g_list_next (list))
+    {
+      GimpColorSelector *selector = list->data;
+
+      if (selector)
+        gimp_color_selector_set_profile (selector, profile);
+    }
+}
+
+/**
  * gimp_color_notebook_set_simulation:
  * @notebook:  A #GimpColorNotebook widget.
  * @profile:   A #GimpColorProfile object.

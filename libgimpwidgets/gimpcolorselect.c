@@ -129,6 +129,7 @@ struct _GimpColorSelect
   GimpColorSelector    parent_instance;
 
   GtkWidget           *toggle_box[3];
+  GtkWidget           *profile_label;
 
   GtkWidget           *xy_color;
   ColorSelectFillType  xy_color_fill;
@@ -151,6 +152,7 @@ struct _GimpColorSelect
   ColorSelectDragMode  drag_mode;
 
   GimpColorConfig     *config;
+  GimpColorProfile    *profile;
   GimpColorTransform  *transform;
   guchar               oog_color[3];
 };
@@ -197,6 +199,8 @@ static void   gimp_color_select_set_model_visible
                                                  gboolean            visible);
 static void   gimp_color_select_set_config      (GimpColorSelector  *selector,
                                                  GimpColorConfig    *config);
+static void   gimp_color_select_set_profile     (GimpColorSelector *selector,
+                                                 GimpColorProfile  *profile);
 
 static void   gimp_color_select_channel_toggled (GtkWidget          *widget,
                                                  GimpColorSelect    *select);
@@ -328,6 +332,7 @@ gimp_color_select_class_init (GimpColorSelectClass *klass)
   selector_class->set_channel           = gimp_color_select_set_channel;
   selector_class->set_model_visible     = gimp_color_select_set_model_visible;
   selector_class->set_config            = gimp_color_select_set_config;
+  selector_class->set_profile           = gimp_color_select_set_profile;
 
   gtk_widget_class_set_css_name (GTK_WIDGET_CLASS (klass), "GimpColorSelect");
 
@@ -361,10 +366,14 @@ gimp_color_select_init (GimpColorSelect *select)
   gtk_box_pack_start (GTK_BOX (select), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
+  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
+  gtk_widget_show (vbox);
+
   /*  The x/y component preview  */
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
-  gtk_box_pack_start (GTK_BOX (hbox), frame, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   select->xy_color = gtk_event_box_new ();
@@ -387,6 +396,15 @@ gimp_color_select_init (GimpColorSelect *select)
   g_signal_connect (select->xy_color, "event",
                     G_CALLBACK (gimp_color_select_xy_events),
                     select);
+
+  select->profile_label = gtk_label_new (NULL);
+  gtk_label_set_xalign (GTK_LABEL (select->profile_label), 0.0);
+  gtk_label_set_ellipsize (GTK_LABEL (select->profile_label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (select->profile_label),
+                             PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
+                             -1);
+  gtk_box_pack_start (GTK_BOX (vbox), select->profile_label, FALSE, FALSE, 0);
+  gtk_widget_show (select->profile_label);
 
 #if 0
   gimp_dnd_color_dest_add (select->xy_color, gimp_color_select_drop_color,
@@ -511,6 +529,8 @@ gimp_color_select_finalize (GObject *object)
   select->z_width     = 0;
   select->z_height    = 0;
   select->z_rowstride = 0;
+
+  g_clear_object (&select->profile);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -651,6 +671,49 @@ gimp_color_select_set_config (GimpColorSelector *selector,
           gimp_color_select_notify_config (select->config, NULL, select);
         }
     }
+}
+
+static void
+gimp_color_select_set_profile (GimpColorSelector *selector,
+                               GimpColorProfile  *profile)
+{
+  GimpColorSelect  *select        = GIMP_COLOR_SELECT (selector);
+  GimpColorProfile *color_profile = NULL;
+  const Babl       *space         = NULL;
+  gchar            *text;
+
+  gtk_label_set_text (GTK_LABEL (select->profile_label), _("Image Profile: (none)"));
+  gimp_help_set_help_data (select->profile_label, NULL, NULL);
+
+  g_set_object (&select->profile, profile);
+
+  if (select->profile)
+    color_profile = select->profile;
+
+  if (color_profile)
+    {
+      text = g_strdup_printf (_("Image Profile: %s"),
+                              gimp_color_profile_get_label (color_profile));
+      gtk_label_set_text (GTK_LABEL (select->profile_label), text);
+      g_free (text);
+
+      gimp_help_set_help_data (select->profile_label,
+                              gimp_color_profile_get_summary (color_profile),
+                              NULL);
+
+      space = gimp_color_profile_get_space (color_profile,
+                                            GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                            NULL);
+    }
+
+  fish_rgb_to_lch    = babl_fish (babl_format_with_space ("R'G'B'A double", space),
+                                  babl_format ("CIE LCH(ab) double"));
+  fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
+                                  babl_format_with_space ("R'G'B'A double", space));
+  fish_lch_to_rgb_u8 = babl_fish (babl_format_with_space ("R'G'B'A double", space),
+                                  babl_format ("R'G'B' u8"));
+
+  gimp_color_select_set_color (selector, &selector->rgb, &selector->hsv);
 }
 
 static void
@@ -892,9 +955,15 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
                            cairo_t         *cr,
                            GimpColorSelect *select)
 {
+  const Babl    *space      = NULL;
   GtkAllocation  allocation;
   GdkPixbuf     *pixbuf;
   gint           x, y;
+
+  if (select->profile)
+    space = gimp_color_profile_get_space (select->profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
 
   if (! select->xy_buf)
     return FALSE;
@@ -920,7 +989,7 @@ gimp_color_select_xy_draw (GtkWidget       *widget,
 
   if (select->transform)
     {
-      const Babl *format = babl_format ("R'G'B' u8");
+      const Babl *format = babl_format_with_space ("R'G'B' u8", space);
       guchar     *buf    = g_new (guchar,
                                   select->xy_rowstride * select->xy_height);
       guchar     *src    = select->xy_buf;
@@ -1089,12 +1158,18 @@ gimp_color_select_z_draw (GtkWidget       *widget,
                           cairo_t         *cr,
                           GimpColorSelect *select)
 {
+  const Babl    *space      = NULL;
   GtkAllocation  allocation;
   GdkPixbuf     *pixbuf;
   gint           y;
 
   if (! select->z_buf)
     return FALSE;
+
+  if (select->profile)
+    space = gimp_color_profile_get_space (select->profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
 
   if (select->z_needs_render)
     {
@@ -1119,7 +1194,7 @@ gimp_color_select_z_draw (GtkWidget       *widget,
 
   if (select->transform)
     {
-      const Babl *format = babl_format ("R'G'B' u8");
+      const Babl *format = babl_format_with_space ("R'G'B' u8", space);
       guchar     *buf    = g_new (guchar,
                                   select->z_rowstride * select->z_height);
       guchar     *src    = select->z_buf;
@@ -1946,8 +2021,17 @@ gimp_color_select_create_transform (GimpColorSelect *select)
   if (select->config)
     {
       static GimpColorProfile *profile = NULL;
+      const Babl *space                = NULL;
+      const Babl *format               = babl_format ("cairo-RGB24");
 
-      const Babl *format = babl_format ("cairo-RGB24");
+      if (select->profile)
+        {
+          profile = select->profile;
+          space = gimp_color_profile_get_space (profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                NULL);
+          format = babl_format_with_space ("cairo-RGB24", space);
+        }
 
       if (G_UNLIKELY (! profile))
         profile = gimp_color_profile_new_rgb_srgb ();

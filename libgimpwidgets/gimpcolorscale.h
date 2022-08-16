@@ -76,6 +76,8 @@ void        gimp_color_scale_set_color        (GimpColorScale           *scale,
 
 void        gimp_color_scale_set_color_config (GimpColorScale           *scale,
                                                GimpColorConfig          *config);
+void        gimp_color_scale_set_profile      (GimpColorScale           *scale,
+                                               GimpColorProfile         *profile);
 
 
 G_END_DECLS

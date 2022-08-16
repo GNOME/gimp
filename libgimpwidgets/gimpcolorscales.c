@@ -117,6 +117,8 @@ struct _GimpColorScales
   GtkWidget         *dummy_u8_toggle;
   GtkWidget         *toggles[14];
   GtkWidget         *scales[14];
+
+  GimpColorProfile  *profile;
 };
 
 struct _GimpColorScalesClass
@@ -153,6 +155,8 @@ static void   gimp_color_scales_set_model_visible
                                                 gboolean           visible);
 static void   gimp_color_scales_set_config     (GimpColorSelector *selector,
                                                 GimpColorConfig   *config);
+static void   gimp_color_scales_set_profile    (GimpColorSelector *selector,
+                                                GimpColorProfile  *profile);
 
 static void   gimp_color_scales_update_visible (GimpColorScales   *scales);
 static void   gimp_color_scales_update_scales  (GimpColorScales   *scales,
@@ -219,6 +223,7 @@ gimp_color_scales_class_init (GimpColorScalesClass *klass)
   selector_class->set_channel           = gimp_color_scales_set_channel;
   selector_class->set_model_visible     = gimp_color_scales_set_model_visible;
   selector_class->set_config            = gimp_color_scales_set_config;
+  selector_class->set_profile           = gimp_color_scales_set_profile;
 
   g_object_class_install_property (object_class, PROP_SHOW_RGB_U8,
                                    g_param_spec_boolean ("show-rgb-u8",
@@ -503,6 +508,7 @@ gimp_color_scales_dispose (GObject *object)
   GimpColorScales *scales = GIMP_COLOR_SCALES (object);
 
   g_clear_object (&scales->dummy_u8_toggle);
+  g_clear_object (&scales->profile);
 
   g_clear_pointer (&scales->show_rgb_u8_binding, g_binding_unbind);
   g_clear_pointer (&scales->show_hsv_binding, g_binding_unbind);
@@ -664,6 +670,40 @@ gimp_color_scales_set_config (GimpColorSelector *selector,
         gimp_color_scale_set_color_config (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
                                            config);
     }
+}
+
+static void
+gimp_color_scales_set_profile (GimpColorSelector *selector,
+                               GimpColorProfile  *profile)
+{
+  GimpColorScales  *scales        = GIMP_COLOR_SCALES (selector);
+  GimpColorProfile *color_profile = NULL;
+  const Babl       *space         = NULL;
+  gint              i;
+
+  g_set_object (&scales->profile, profile);
+
+  if (scales->profile)
+    color_profile = scales->profile;
+
+  if (color_profile)
+    space = gimp_color_profile_get_space (color_profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
+
+  fish_rgb_to_lch    = babl_fish (babl_format_with_space ("R'G'B'A double", space),
+                                  babl_format ("CIE LCH(ab) double"));
+  fish_lch_to_rgb    = babl_fish (babl_format ("CIE LCH(ab) double"),
+                                  babl_format_with_space ("R'G'B'A double", space));
+
+  for (i = 0; i < G_N_ELEMENTS (scale_defs); i++)
+    {
+      if (scales->scales[i])
+        gimp_color_scale_set_profile (GIMP_COLOR_SCALE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (scales->scales[i]))),
+                                      color_profile);
+    }
+
+  gimp_color_scales_set_color (selector, &selector->rgb, &selector->hsv);
 }
 
 

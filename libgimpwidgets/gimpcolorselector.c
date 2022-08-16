@@ -640,6 +640,30 @@ gimp_color_selector_set_config (GimpColorSelector *selector,
 }
 
 /**
+ * gimp_color_selector_set_profile:
+ * @selector: a #GimpColorSelector widget.
+ * @profile:  a #GimpColorProfile object.
+ *
+ * Sets the color profile to use with this color selector.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_selector_set_profile (GimpColorSelector *selector,
+                                 GimpColorProfile  *profile)
+{
+  GimpColorSelectorClass *selector_class;
+
+  g_return_if_fail (GIMP_IS_COLOR_SELECTOR (selector));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  selector_class = GIMP_COLOR_SELECTOR_GET_CLASS (selector);
+
+  if (selector_class->set_profile)
+    selector_class->set_profile (selector, profile);
+}
+
+/**
  * gimp_color_selector_set_simulation
  * @selector: a #GimpColorSelector widget.
  * @profile:  a #GimpColorProfile object.

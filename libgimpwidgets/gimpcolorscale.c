@@ -66,6 +66,7 @@ struct _GimpColorScalePrivate
 {
   GimpColorConfig          *config;
   GimpColorTransform       *transform;
+  GimpColorProfile         *profile;
   guchar                    oog_color[3];
 
   GimpColorSelectorChannel  channel;
@@ -334,12 +335,21 @@ gimp_color_scale_draw (GtkWidget *widget,
     gimp_color_scale_create_transform (scale);
 
   if (priv->transform)
-    {
-      const Babl *format = babl_format ("cairo-RGB24");
-      guchar     *buf    = g_new (guchar, priv->rowstride * priv->height);
-      guchar     *src    = priv->buf;
-      guchar     *dest   = buf;
-      guint       i;
+    {      
+      const Babl       *space   = NULL;
+      const Babl       *format  = babl_format ("cairo-RGB24");
+      guchar           *buf     = g_new (guchar, priv->rowstride * priv->height);
+      guchar           *src     = priv->buf;
+      guchar           *dest    = buf;
+      guint             i;
+
+      if (scale->priv->profile)
+        {
+          space = gimp_color_profile_get_space (scale->priv->profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                NULL);
+          format = babl_format_with_space ("cairo-RGB24", space);
+        }
 
       for (i = 0; i < priv->height; i++)
         {
@@ -617,6 +627,42 @@ gimp_color_scale_set_color_config (GimpColorScale  *scale,
     }
 }
 
+/**
+ * gimp_color_scale_set_profile:
+ * @scale:   a #GimpColorScale widget.
+ * @profile: a #GimpColorProfile object.
+ *
+ * Sets the color profile to use with this color scale.
+ *
+ * Since: 3.0
+ */
+void
+gimp_color_scale_set_profile (GimpColorScale   *scale,
+                              GimpColorProfile *profile)
+{
+  GimpColorScalePrivate *priv;
+  const Babl            *space         = NULL;
+
+  g_return_if_fail (GIMP_IS_COLOR_SCALE (scale));
+  g_return_if_fail (profile == NULL || GIMP_IS_COLOR_PROFILE (profile));
+
+  priv = GET_PRIVATE (scale);
+  
+  g_set_object (&priv->profile, profile);
+  
+  if (profile)
+    space = gimp_color_profile_get_space (profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
+
+  fish_rgb_to_lch = babl_fish (babl_format_with_space ("R'G'B'A double", space),
+                               babl_format ("CIE LCH(ab) double"));
+  fish_lch_to_rgb = babl_fish (babl_format ("CIE LCH(ab) double"),
+                               babl_format_with_space ("R'G'B' double", space));
+
+  if (priv->config)
+    gimp_color_scale_notify_config (priv->config, NULL, scale);
+}
 
 /* as in gtkrange.c */
 static gboolean
@@ -932,8 +978,17 @@ gimp_color_scale_create_transform (GimpColorScale *scale)
   if (priv->config)
     {
       static GimpColorProfile *profile = NULL;
+      const Babl *space                = NULL;
+      const Babl *format               = babl_format ("cairo-RGB24");
 
-      const Babl *format = babl_format ("cairo-RGB24");
+      if (scale->priv->profile)
+        {
+          profile = scale->priv->profile;
+          space = gimp_color_profile_get_space (profile,
+                                                GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                                NULL);
+          format = babl_format_with_space ("cairo-RGB24", space);
+        }
 
       if (G_UNLIKELY (! profile))
         profile = gimp_color_profile_new_rgb_srgb ();
