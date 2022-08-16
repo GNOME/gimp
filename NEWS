@@ -46,6 +46,15 @@ Core:
     added to upcoming GTK+ 3.24.35.
   - CMYK color picking and sample point now use babl and the space
     specified by the soft-proof profile set on the image, if any.
+  - The "Create New Image" dialog now has settings for the simulation
+    profile, intent and black point compensation. This is also shown in
+    templates and the "Default Image" tab in Preferences, and has been
+    removed from the "Color Management" tab, because these are now first
+    and foremost image data.
+  - GimpColorFrame is now current image's simulation profile/intent/bpc
+    aware. In other words, CMYK shown by the color picker or in sample
+    point shows values in the correct simulation space (not in some
+    default CMYK space).
 
 Tools:
 
@@ -219,6 +228,15 @@ Plug-ins:
     * Improved error logging during load.
     * CMYK profile on a CMYK PSD file is now stored as soft-proof
       profile in the image.
+    * Added support for extra layer mask: According to the specs the
+      extra mask (which they call real user supplied layer mask) is used
+      "when both a user mask and a vector mask are present".
+      We haven't seen an example that has the extra mask, so not sure
+      which of the masks would appear first.
+      For now assuming that the extra mask will be first. The advantage
+      of adding this here now, is that we won't try to add a mask
+      channel as a normal channel.
+  - ANI: new import/export support.
 
 API:
 
@@ -229,6 +247,10 @@ API:
     * New functions:
       + gimp_color_managed_get_simulation_profile()
       + gimp_color_managed_simulation_profile_changed()
+      + gimp_color_managed_get_simulation_bpc()
+      + gimp_color_managed_get_simulation_intent()
+      + gimp_color_managed_simulation_bpc_changed()
+      + gimp_color_managed_simulation_intent_changed()
   - Changes in libgimp:
     * New functions:
       + gimp_image_metadata_save_filter()
@@ -240,6 +262,10 @@ API:
       + gimp_image_set_simulation_profile()
       + gimp_image_set_simulation_profile_from_file()
       + gimp_image_get_selected_drawables()
+      + gimp_image_get_simulation_bpc()
+      + gimp_image_get_simulation_intent()
+      + gimp_image_set_simulation_bpc()
+      + gimp_image_set_simulation_intent()
     * Removed functions:
       + gimp_plug_in_set_translation_domain()
       + image_get_active_drawable()
@@ -251,7 +277,7 @@ API:
       + image_set_active_vectors()
     * Updated functions:
       + gimp_procedure_dialog_get_widget() now supports
-        %G_TYPE_PARAM_FILE properties.
+        %G_TYPE_PARAM_FILE and %G_TYPE_PARAM_ENUM properties.
       + gimp_prop_file_chooser_button_new() now works with
         G_PARAM_SPEC_OBJECT having a value_type == G_TYPE_FILE
         (additionally to GIMP_PARAM_SPEC_CONFIG_PATH properties).
@@ -289,10 +315,23 @@ API:
       in version 2.
     * New classes:
       + GimpIntRadioFrame
+    * New functions:
+      + gimp_color_notebook_set_simulation()
+      + gimp_color_selection_set_simulation()
+      + gimp_color_selector_set_simulation()
     * Removed functions:
       + gimp_prop_int_radio_box_new()
+    * Updated functions:
+      + GimpColorNotebook, GimpColorSelection and GimpColorSelector are
+      now ported to babl code and are simulation space aware.
   - Changes in PDB:
     * gimp-plug-in-domain-register removed.
+
+Modules:
+
+  - The CMYK color selector is now simulation space aware, i.e. that it
+    shows CMYK values in the soft-proof profile space if a soft-proof
+    profile has been set.
 
 Translations:
 
@@ -344,7 +383,13 @@ Build:
     make it the new default build system.
   - New "sources-meson" CI job to distribute a tarball built with the
     meson scripts.
+  - INSTALL now targets meson build as a test recommendation. We'll see
+    if any issue arises from packagers!
   - Improved support for homebrew build on macOS.
+
+Documentation:
+
+  - Draft devel doc for scriptfu v3 script authors.
 
 
 Overview of Changes from GIMP 2.99.8 to GIMP 2.99.10
