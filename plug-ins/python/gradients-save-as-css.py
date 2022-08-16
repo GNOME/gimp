@@ -25,6 +25,8 @@
 import gi
 gi.require_version('Gimp', '3.0')
 from gi.repository import Gimp
+gi.require_version('GimpUi', '3.0')
+from gi.repository import GimpUi
 from gi.repository import GObject
 from gi.repository import GLib
 from gi.repository import Gio
@@ -74,7 +76,7 @@ def gradient_css_save(procedure, args, data):
         gi.require_version('Gtk', '3.0')
         from gi.repository import Gtk
 
-        Gimp.init ("gradients-save-as-css.py")
+        GimpUi.init ("gradients-save-as-css.py")
 
         use_header_bar = Gtk.Settings.get_default().get_property("gtk-dialogs-use-header")
         dialog = Gtk.FileChooserDialog(use_header_bar=use_header_bar,
@@ -163,7 +165,7 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                                            gradient_css_save, None)
             procedure.set_image_types("*")
             procedure.set_documentation (_("Creates a new palette from a given gradient"),
-                                         _("palette_from_gradient (gradient, number, segment_colors) -> None"),
+                                         _("Creates a new palette from a given gradient"),
                                          name)
             procedure.set_menu_label("Save as CSS...")
             procedure.set_attribution("Joao S. O. Bueno",
