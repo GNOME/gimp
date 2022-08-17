@@ -263,6 +263,7 @@ app/display/gimpdisplayshell-scale-dialog.c
 app/display/gimpdisplayshell-title.c
 app/display/gimpdisplayshell-tool-events.c
 app/display/gimpdisplayshell-utils.c
+app/display/gimpmodifiersmanager.c
 app/display/gimpnavigationeditor.c
 app/display/gimpstatusbar.c
 app/display/gimptoolcompass.c
@@ -314,6 +315,7 @@ app/operations/gimpoperationthresholdalpha.c
 
 app/gui/gui.c
 app/gui/gui-message.c
+app/gui/modifiers.c
 app/gui/session.c
 app/gui/splash.c
 app/gui/themes.c
@@ -592,6 +594,7 @@ app/widgets/gimplayermodebox.c
 app/widgets/gimplayertreeview.c
 app/widgets/gimpmenudock.c
 app/widgets/gimpmessagebox.c
+app/widgets/gimpmodifierseditor.c
 app/widgets/gimpopendialog.c
 app/widgets/gimpoverlaydialog.c
 app/widgets/gimppaletteeditor.c
