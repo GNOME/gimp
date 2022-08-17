@@ -55,6 +55,17 @@ Core:
     aware. In other words, CMYK shown by the color picker or in sample
     point shows values in the correct simulation space (not in some
     default CMYK space).
+  - A new default action to change the current brush size was mapped to
+    Alt + right button click.
+  - Some Preferences settings have been moved to a new Preferences >
+    Canvas Interaction tab.
+  - All on-canvas interactions (panning, canvas rotation, etc.) are now
+    customizable in Preferences > Canvas Interaction > Modifiers tab. It
+    allows to switch/change the modifiers used for an action, or even
+    just remove some modifiers mapping (when you never use an action,
+    e.g. some people say the canvas rotation is not useful to them).
+  - GtkAction-s can also be mapped to modifiers now through the same
+    settings.
 
 Tools:
 
@@ -105,6 +116,11 @@ Graphical User Interface:
   - Gradient editor now has zooming with touchpad pinch (touchscreen
     pinch not so fancy either, at least on Linux through libinput,
     similar to GimpContainerTreeView case).
+  - A new soft-proofing pop-over dialog appears when right-clicking the
+    new soft-proof toggle in the status bar. It allows to view or change
+    all soft-proofing related settings (whether they are associated to
+    the image, such as the profile, intent or black-point compensation;
+    or to the view, such as the out-of-gamut check) very easily.
 
 Command Line Interface:
 
