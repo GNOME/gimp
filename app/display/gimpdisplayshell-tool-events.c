@@ -593,6 +593,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
               case GIMP_MODIFIER_ACTION_LAYER_PICKING:
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
+              case GIMP_MODIFIER_ACTION_TOOL_OPACITY:
                 gimp_display_shell_start_scrolling (shell, event, state,
                                                     bevent->x, bevent->y);
                 break;
@@ -753,6 +754,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 break;
               case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
               case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
+              case GIMP_MODIFIER_ACTION_TOOL_OPACITY:
                 gimp_display_shell_stop_scrolling (shell, event);
                 break;
               case GIMP_MODIFIER_ACTION_ACTION:
@@ -1756,6 +1758,7 @@ gimp_display_shell_start_scrolling (GimpDisplayShell *shell,
       break;
     case GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE:
     case GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE:
+    case GIMP_MODIFIER_ACTION_TOOL_OPACITY:
         {
           Gimp     *gimp        = gimp_display_get_gimp (shell->display);
           GimpTool *active_tool = tool_manager_get_active (gimp);
@@ -1925,6 +1928,36 @@ gimp_display_shell_handle_scrolling (GimpDisplayShell *shell,
                   gimp_display_shell_activate_action (manager, action,
                                                       g_variant_new_int32 (size));
                 }
+            }
+        }
+      break;
+    case GIMP_MODIFIER_ACTION_TOOL_OPACITY:
+        {
+          GimpDisplay *display     = shell->display;
+          Gimp        *gimp        = gimp_display_get_gimp (display);
+          GimpTool    *active_tool = tool_manager_get_active (gimp);
+          const gchar *action;
+          gint         size;
+
+          /* Size in image pixels: distance between start and current
+           * position.
+           */
+          size = (gint) (sqrt (pow ((x - shell->scroll_start_x) / shell->scale_x, 2) +
+                               pow ((y - shell->scroll_start_y) / shell->scale_y, 2)));
+
+          action = gimp_tool_control_get_action_opacity (active_tool->control);
+
+          if (action)
+            {
+              GimpImageWindow *window  = gimp_display_shell_get_window (shell);
+              GimpUIManager   *manager = gimp_image_window_get_ui_manager (window);
+
+              /* Special trick with these enum actions. If using any
+               * positive value, we get the GIMP_ACTION_SELECT_SET behavior
+               * which sets to the given value.
+               */
+              gimp_display_shell_activate_action (manager, action,
+                                                  g_variant_new_int32 (size));
             }
         }
       break;

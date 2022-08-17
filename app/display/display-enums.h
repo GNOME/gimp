@@ -280,6 +280,7 @@ typedef enum
 
   GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE,        /*< desc="Change brush size in canvas pixels"         >*/
   GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, /*< desc="Change brush radius' size in canvas pixels" >*/
+  GIMP_MODIFIER_ACTION_TOOL_OPACITY,            /*< desc="Change tool opacity"                        >*/
 } GimpModifierAction;
 
 

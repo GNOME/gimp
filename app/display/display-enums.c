@@ -607,6 +607,7 @@ gimp_modifier_action_get_type (void)
     { GIMP_MODIFIER_ACTION_ACTION, "GIMP_MODIFIER_ACTION_ACTION", "action" },
     { GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE", "brush-pixel-size" },
     { GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, "GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE", "brush-radius-pixel-size" },
+    { GIMP_MODIFIER_ACTION_TOOL_OPACITY, "GIMP_MODIFIER_ACTION_TOOL_OPACITY", "tool-opacity" },
     { 0, NULL, NULL }
   };
 
@@ -622,6 +623,7 @@ gimp_modifier_action_get_type (void)
     { GIMP_MODIFIER_ACTION_ACTION, NC_("modifier-action", "Custom action"), NULL },
     { GIMP_MODIFIER_ACTION_BRUSH_PIXEL_SIZE, NC_("modifier-action", "Change brush size in canvas pixels"), NULL },
     { GIMP_MODIFIER_ACTION_BRUSH_RADIUS_PIXEL_SIZE, NC_("modifier-action", "Change brush radius' size in canvas pixels"), NULL },
+    { GIMP_MODIFIER_ACTION_TOOL_OPACITY, NC_("modifier-action", "Change tool opacity"), NULL },
     { 0, NULL, NULL }
   };
 
