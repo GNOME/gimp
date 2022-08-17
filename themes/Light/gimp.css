@@ -32,6 +32,8 @@ scrolledwindow viewport.frame {
  * or from GIMP's UI: File > Debug > Start GtkInspector
  */
 
+@import url("../System/gimp.css");
+
 * {
   -GimpToolPalette-tool-icon-size:   large-toolbar;
 
@@ -210,6 +212,7 @@ Doesn't seem to work here, though.
  */
 scrollbar trough {
   background: rgb(250,250,250);
+  
 }
 
 scrollbar slider {
@@ -337,4 +340,5 @@ menuitem *:hover {
 .sidebar-row:hover, .sidebar-row:hover * {
   background-color: rgb(235,235,235);
 }
+
 
