@@ -40,6 +40,7 @@
 #include "core/gimpgrid.h"
 #include "core/gimpgrouplayer.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimpimage-colormap.h"
 #include "core/gimpimage-grid.h"
 #include "core/gimpimage-guides.h"
@@ -268,6 +269,77 @@ xcf_load_image (Gimp     *gimp,
   /* Order matters for item sets. */
   info->layer_sets = g_list_reverse (info->layer_sets);
   info->channel_sets = g_list_reverse (info->channel_sets);
+
+  /* check for simulation intent parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "image-simulation-intent");
+  if (parasite)
+    {
+      guint32           parasite_size;
+      const guint8     *intent;
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      intent = (const guint8 *) gimp_parasite_get_data (parasite, &parasite_size);
+
+      if (parasite_size == 1)
+        {
+          if (*intent != GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL            &&
+              *intent != GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC &&
+              *intent != GIMP_COLOR_RENDERING_INTENT_SATURATION            &&
+              *intent != GIMP_COLOR_RENDERING_INTENT_ABSOLUTE_COLORIMETRIC)
+            {
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_ERROR,
+                            "Unknown simulation rendering intent: %d",
+                            *intent);
+            }
+          else
+            {
+              gimp_image_set_simulation_intent (image,
+                                                (GimpColorRenderingIntent) *intent);
+            }
+        }
+      else
+        {
+          gimp_message (info->gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_ERROR,
+                        "Invalid simulation intent data");
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_get_name (parasite));
+    }
+
+
+/* check for simulation bpc parasite */
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (image),
+                                       "image-simulation-bpc");
+  if (parasite)
+    {
+      guint32           parasite_size;
+      const guint8     *bpc;
+      gboolean          status  = FALSE;
+      GimpImagePrivate *private = GIMP_IMAGE_GET_PRIVATE (image);
+
+      bpc = (const guint8 *) gimp_parasite_get_data (parasite, &parasite_size);
+
+      if (parasite_size == 1)
+        {
+          if (*bpc)
+            status = TRUE;
+
+          gimp_image_set_simulation_bpc (image, status);
+        }
+      else
+        {
+          gimp_message (info->gimp, G_OBJECT (info->progress),
+                        GIMP_MESSAGE_ERROR,
+                        "Invalid simulation bpc data");
+        }
+
+      gimp_parasite_list_remove (private->parasites,
+                                 gimp_parasite_get_name (parasite));
+    }
 
   /* check for a GimpGrid parasite */
   parasite = gimp_image_parasite_find (GIMP_IMAGE (image),

@@ -477,8 +477,19 @@ gimp_image_set_simulation_intent (GimpImage               *image,
 
   if (intent != private->simulation_intent)
     {
+      GimpParasite *parasite;
+      gchar         i;
+
       private->simulation_intent = intent;
       gimp_color_managed_simulation_intent_changed (GIMP_COLOR_MANAGED (image));
+
+      i = (gchar) intent;
+      parasite = gimp_parasite_new ("image-simulation-intent",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    1, (gpointer) &i);
+
+      gimp_image_parasite_attach (image, parasite, FALSE);
+      gimp_parasite_free (parasite);
     }
 }
 
@@ -502,8 +513,19 @@ gimp_image_set_simulation_bpc (GimpImage *image,
 
   if (bpc != private->simulation_bpc)
     {
+      GimpParasite *parasite;
+      gchar         i;
+
       private->simulation_bpc = bpc;
       gimp_color_managed_simulation_bpc_changed (GIMP_COLOR_MANAGED (image));
+
+      i = (gchar) bpc;
+      parasite = gimp_parasite_new ("image-simulation-bpc",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    1, (gpointer) &i);
+
+      gimp_image_parasite_attach (image, parasite, FALSE);
+      gimp_parasite_free (parasite);
     }
 }
 
