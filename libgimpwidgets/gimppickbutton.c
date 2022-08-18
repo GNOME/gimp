@@ -22,6 +22,10 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#ifdef GDK_WINDOWING_X11
+#include <gdk/gdkx.h>
+#endif
+
 #include "libgimpcolor/gimpcolor.h"
 
 #include "gimpwidgetstypes.h"
@@ -144,6 +148,21 @@ gimp_pick_button_clicked (GtkButton *button)
 #ifdef GDK_WINDOWING_QUARTZ
   _gimp_pick_button_quartz_pick (GIMP_PICK_BUTTON (button));
 #else
+#ifdef GDK_WINDOWING_X11
+  /* It's a bit weird as we use the default pick code both in first and
+   * last cases. It's because when running GIMP on X11 in particular,
+   * the portals don't return color space information. So the returned
+   * color is in the display space, not in the current image space and
+   * we have no way to convert the data back (well if running on X11, we
+   * could still get a profile from the display, but if there are
+   * several displays, we can't know for sure where the color was picked
+   * from.).
+   * See: https://github.com/flatpak/xdg-desktop-portal/issues/862
+   */
+  if (GDK_IS_X11_DISPLAY (gdk_display_get_default ()))
+    _gimp_pick_button_default_pick (GIMP_PICK_BUTTON (button));
+  else
+#endif
   if (_gimp_pick_button_xdg_available ())
     _gimp_pick_button_xdg_pick (GIMP_PICK_BUTTON (button));
   else if (_gimp_pick_button_kwin_available ())
