@@ -1,30 +1,5 @@
 /* A light theme for GIMP 3.0 */
 
-/* Known problems:
-   - The padding around the "Reload Current Theme" button doesn't match
-     the button. The border around that button is controlled only by the
-     "Use dark theme variant if available" checkbox and it's not clear
-     where the actual color comes from.
-     Styling the interior of the Reload button to match the mysterious
-     background color has an unfortunate result of styling lots of
-     other areas in unfortunate ways.
-  - Thick black frame around the scrolled part of the Procedure Browser.
-    According to GtkInspector this is scrolledwindow viewport.frame
-    but it doesn't respond to color, background, background-color,
-    outline-color or text-decoration-color.
-    scrolledwindow viewport.frame * can get what's inside the frame
-    (also affects tool options), but doesn't affect the frame.
-
-scrolledwindow viewport.frame {
-    color: yellow;
-    background: yellow;
-    background-color: yellow;
-    outline-color: yellow;
-    text-decoration-color: green;
-    border-color: pink;
-}
- */
-
 /* Hint for debugging themes:
  * first enable the GTK inspector with
    gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
@@ -35,8 +10,6 @@ scrolledwindow viewport.frame {
 @import url("../System/gimp.css");
 
 * {
-  -GimpToolPalette-tool-icon-size:   large-toolbar;
-
   /* Default text color; needed for e.g. the Prefs dialog title area,
    * which doesn't have any more specific way to style it.
    */
