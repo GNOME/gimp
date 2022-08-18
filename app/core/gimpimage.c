@@ -783,6 +783,10 @@ gimp_image_init (GimpImage *image)
 
   private->metadata            = NULL;
 
+  private->simulation_profile  = NULL;
+  private->simulation_intent   = GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC;
+  private->simulation_bpc      = FALSE;
+
   private->dirty               = 1;
   private->dirty_time          = 0;
   private->undo_freeze_count   = 0;
