@@ -240,6 +240,7 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   GtkWidget     *label;
   GtkWidget     *grid;
   GtkWidget     *separator;
+  GtkWidget     *profile_chooser;
   GimpUnitStore *store;
   gchar         *text;
   GFile         *file;
@@ -515,9 +516,10 @@ gimp_statusbar_init (GimpStatusbar *statusbar)
   g_object_unref (file);
   gimp_color_profile_store_add_file (GIMP_COLOR_PROFILE_STORE (combo_store),
                                      NULL, NULL);
-  statusbar->profile_combo = g_object_new (GIMP_TYPE_COLOR_PROFILE_COMBO_BOX,
-                            "model", combo_store,
-                            NULL);
+  profile_chooser = gimp_color_profile_chooser_dialog_new (_("Soft-Proofing Profile"), NULL,
+                                                           GTK_FILE_CHOOSER_ACTION_OPEN);
+  statusbar->profile_combo = gimp_color_profile_combo_box_new_with_model (profile_chooser,
+                                                                          GTK_TREE_MODEL (combo_store));
 
   gimp_color_profile_combo_box_set_active_file (GIMP_COLOR_PROFILE_COMBO_BOX (statusbar->profile_combo),
                                                 NULL, NULL);
