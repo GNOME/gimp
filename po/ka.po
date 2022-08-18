@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-08-17 20:19+0000\n"
-"PO-Revision-Date: 2022-08-18 07:45+0200\n"
+"PO-Revision-Date: 2022-08-18 10:16+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -10594,11 +10594,11 @@ msgstr "ფილტრის ხელსაწყოებში ფერი�
 
 #: app/config/gimprc-blurbs.h:201
 msgid "Sets the text to appear in image window status bars."
-msgstr ""
+msgstr "აყენებს ტექსტს, რომელიც სურათის ფანჯრის სტატუსის ზოლებში გამოჩნდება."
 
 #: app/config/gimprc-blurbs.h:204
 msgid "Sets the text to appear in image window titles."
-msgstr ""
+msgstr "აყენებს ტექსტს, რომელიც გამოსახულების ფანჯრის სათაურებში გამოჩნდება."
 
 #: app/config/gimprc-blurbs.h:207
 msgid ""
@@ -22918,42 +22918,42 @@ msgstr "გიდის დამატება: "
 #: app/tools/gimphandletransformoptions.c:73
 #: app/tools/gimphandletransformoptions.c:74
 msgid "Handle mode"
-msgstr "სახელურის რეჟიმი"
+msgstr "დამმუშავებლის რეჟიმი"
 
 #: app/tools/gimphandletransformoptions.c:166
 msgid "Add handles and transform the image"
-msgstr "დაამატეთ სახელურები და გარდაქმენით გამოსახულება"
+msgstr "დაამატეთ დამმუშავებლები და გარდაქმენით გამოსახულება"
 
 #: app/tools/gimphandletransformoptions.c:171
 msgid "Move transform handles"
-msgstr "გარდაქმნის სახელურების წაღება"
+msgstr "გარდაქმნის დამმუშავებლების წაღება"
 
 #: app/tools/gimphandletransformoptions.c:176
 msgid "Remove transform handles"
-msgstr "გარდაქმნის სახელურების მოცილება"
+msgstr "გარდაქმნის დამმუშავებლების მოცილება"
 
 #: app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
-msgstr "სახელურით გარდაქმნა"
+msgstr "დამმუშავებლის გარდაქმნა"
 
 #: app/tools/gimphandletransformtool.c:112
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
 msgstr ""
-"სახელურით გარდაქმნის ხელსაწყო: სახელურით შეგიძლია მონიშნულის, ფენის ან "
-"კონტურის დეფორმაცია"
+"დამმუშავებლით გარდაქმნის ხელსაწყო: დამმუშავებლით შეგიძლია მონიშნულის, ფენის "
+"ან კონტურის დეფორმაცია"
 
 #: app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
-msgstr "_სახელურით გარდაქმნა"
+msgstr "_დამმუშავებლით გარდაქმნა"
 
 #: app/tools/gimphandletransformtool.c:138
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "გარდაქმნის სახელური"
+msgstr "გარდაქმნის დამმუშავებელი"
 
 #: app/tools/gimphandletransformtool.c:139
 msgid "Handle transformation"
-msgstr "გარდაქმნის სახელური"
+msgstr "გარდაქმნის დამმუშავებელი"
 
 #: app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
@@ -25350,7 +25350,7 @@ msgstr "მოვ_ლენის გასუფთავება"
 #: app/widgets/gimpcontrollereditor.c:522
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr ""
+msgstr "\"%s\"-ზე დაკისრებული ქმედების წაშლა"
 
 #: app/widgets/gimpcontrollereditor.c:527
 #, c-format
