@@ -216,6 +216,10 @@ paned separator {
   color: black;
 }
 
+button {
+  background-image: none;
+}
+
 button:disabled {
   color: rgb(200,200,200);
 }
@@ -309,4 +313,33 @@ menuitem *:hover {
   background-color: rgb(235,235,235);
 }
 
+/* Header bar */
 
+headerbar {
+  background-color: rgb(235,235,235);
+  background-image: none;
+}
+
+headerbar:backdrop {
+  background-image: linear-gradient(to top, rgb(225,225,225), rgb(245,245,245));
+}
+
+/* GtkListBox widgets */
+
+list {
+   background-color: rgb(235,235,235);
+}
+
+/* GtkSwitch buttons */
+
+switch {
+   background-color: rgb(235,235,235);
+}
+
+/* The switch button is quite hard to understand without color IMO. So
+ * accept a bit of color here as an exception to indicate the checked
+ * state, even though this is globally a neutral gray theme.
+ */
+switch:checked {
+    background-color: rgb(200,200,255);
+}
