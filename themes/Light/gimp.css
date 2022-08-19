@@ -81,7 +81,7 @@ combobox box, combobox box.linked, combobox button {
   border-color: rgb(185,185,185);
 }
 
-Get rid of the outline around all tabs in the gimpcolordialog
+/* Get rid of the outline around all tabs in the gimpcolordialog */
 GimpColorNotebook .frame {
   border-color: rgb(235,235,235);
 }
