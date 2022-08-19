@@ -61,11 +61,6 @@ textview text, textview {
    background-color: rgba (184, 184, 184, 0.5);
    color: black;
 }
-
-/* This doesn't do anything anywhere I can find: */
-textview.view {
-  padding: 0em;
-}
 /* End GtkTextView */
 
 combobox window.popup, combobox window {
