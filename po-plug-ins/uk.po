@@ -9,16 +9,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-08 18:32+0000\n"
-"PO-Revision-Date: 2022-08-09 19:38+0300\n"
+"POT-Creation-Date: 2022-08-19 19:48+0000\n"
+"PO-Revision-Date: 2022-08-19 23:14+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<"
-"=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 "X-Generator: Lokalize 20.12.0\n"
 
 #: extensions/goat-exercises/goat-exercise-c.c:114
@@ -179,8 +179,8 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3284
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -463,7 +463,7 @@ msgstr "_Вертикально"
 #: plug-ins/common/file-gegl.c:468 plug-ins/common/file-gif-load.c:1036
 #: plug-ins/common/file-jp2-load.c:1313 plug-ins/common/file-pcx.c:480
 #: plug-ins/common/file-pcx.c:488 plug-ins/common/file-pix.c:424
-#: plug-ins/common/file-png.c:942 plug-ins/common/file-pnm.c:764
+#: plug-ins/common/file-png.c:950 plug-ins/common/file-pnm.c:764
 #: plug-ins/common/file-raw-data.c:1837 plug-ins/common/file-sunras.c:1081
 #: plug-ins/common/file-tga.c:1110 plug-ins/common/file-wbmp.c:270
 #: plug-ins/common/file-xbm.c:910 plug-ins/common/film.c:804
@@ -472,7 +472,7 @@ msgstr "_Вертикально"
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
-#: plug-ins/file-psd/psd-load.c:2486 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
@@ -1010,15 +1010,15 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1559 plug-ins/common/file-mng.c:874
 #: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:908
-#: plug-ins/common/file-pdf-save.c:737 plug-ins/common/file-png.c:1494
+#: plug-ins/common/file-pdf-save.c:737 plug-ins/common/file-png.c:1504
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
 #: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:1815 plug-ins/file-tiff/file-tiff-save.c:1084
-#: plug-ins/file-tiff/file-tiff-save.c:1171 plug-ins/flame/flame.c:509
+#: plug-ins/file-psd/psd-save.c:1866 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
 #: plug-ins/lighting/lighting-ui.c:1233
@@ -1039,7 +1039,7 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/common/file-cel.c:352 plug-ins/common/file-cel.c:403
 #: plug-ins/common/file-cel.c:643 plug-ins/common/file-dicom.c:377
 #: plug-ins/common/file-gif-load.c:403 plug-ins/common/file-mng.c:1405
-#: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:665
+#: plug-ins/common/file-pcx.c:410 plug-ins/common/file-png.c:673
 #: plug-ins/common/file-ps.c:1150 plug-ins/common/file-ps.c:3538
 #: plug-ins/common/file-psp.c:2382 plug-ins/common/file-psp.c:2432
 #: plug-ins/common/file-raw-data.c:514 plug-ins/common/file-raw-data.c:1673
@@ -1053,8 +1053,8 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
 #: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
 #: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:158
-#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
+#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:159
+#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:1871
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
@@ -1462,7 +1462,8 @@ msgstr "Вигнути зображення, використовуючи дві
 
 #: plug-ins/common/curve-bend.c:697
 msgid "Can operate on layers only (but was called on channel or mask)."
-msgstr "Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
+msgstr ""
+"Ця операція діє лише на шарах (а була застосована для каналу чи маски)"
 
 #: plug-ins/common/curve-bend.c:711
 msgid "Cannot operate on layers with masks."
@@ -1958,7 +1959,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
 #: plug-ins/common/file-heif.c:846 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:820
-#: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:657
+#: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:645 plug-ins/common/file-ps.c:1140
 #: plug-ins/common/file-raw-data.c:1665 plug-ins/common/file-sunras.c:447
 #: plug-ins/common/file-tga.c:437 plug-ins/common/file-wbmp.c:176
@@ -1968,7 +1969,7 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
 #: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
 #: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-psd/psd-load.c:172 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2040,14 +2041,14 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-cel.c:842 plug-ins/common/file-gif-save.c:913
 #: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:719
 #: plug-ins/common/file-pcx.c:793 plug-ins/common/file-pix.c:562
-#: plug-ins/common/file-png.c:1486 plug-ins/common/file-pnm.c:1336
+#: plug-ins/common/file-png.c:1496 plug-ins/common/file-pnm.c:1336
 #: plug-ins/common/file-ps.c:1365 plug-ins/common/file-sunras.c:626
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
 #: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:1777 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-psd/psd-save.c:1812 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -2955,7 +2956,7 @@ msgstr ""
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #.
-#: plug-ins/common/file-mng.c:727 plug-ins/common/file-png.c:2241
+#: plug-ins/common/file-mng.c:727 plug-ins/common/file-png.c:2255
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Не вдається зберегти прозорість, натомість зберігатиметься непрозорість."
@@ -3083,13 +3084,13 @@ msgid "'%s' is not a PCX file"
 msgstr "«%s»: не є файлом PCX"
 
 #: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
-#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:362
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:363
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Непідтримувана ширина зображення: %d"
 
 #: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
-#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:354
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:355
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Непідтримувана висота зображення: %d"
@@ -3398,50 +3399,62 @@ msgid "Preserve color of completely transparent pixels"
 msgstr "Зберігати колір повністю прозорих пікселів"
 
 #: plug-ins/common/file-png.c:275
+msgid "Optimize for smallest possible palette size"
+msgstr "Оптимізувати для найменшого можливого розміру палітри"
+
+#: plug-ins/common/file-png.c:276
+msgid ""
+"When checked, save as 1, 2, 4, or 8-bit depending on number of colors used. "
+"When unchecked, always save as 8-bit"
+msgstr ""
+"Якщо позначено, зберегти як 1-, 2-, 4- або 8-бітове, залежно від кількості"
+" використаних кольорів. Якщо не позначено, зберегти як 8-бітове"
+
+#: plug-ins/common/file-png.c:283
 msgid "_Pixel format"
 msgstr "_Формат пікселів"
 
-#: plug-ins/common/file-png.c:276
+#: plug-ins/common/file-png.c:284
 msgid "PNG export format"
 msgstr "Формат експортування PNG"
 
-#: plug-ins/common/file-png.c:415
+#: plug-ins/common/file-png.c:423
 msgid "PNG format does not support multiple layers."
 msgstr "Для формату PNG не передбачено підтримку декількох шарів."
 
-#: plug-ins/common/file-png.c:491
+#: plug-ins/common/file-png.c:499
 #, c-format
 msgid "Error loading PNG file: %s\n"
 msgstr "Помилка при завантаженні файла PNG: «%s»\n"
 
-#: plug-ins/common/file-png.c:622
+#: plug-ins/common/file-png.c:630
 #, c-format
 msgid "Error creating PNG read struct while loading '%s'."
 msgstr "Помилка створення PNG (читання struct) протягом завантаження «%s»."
 
-#: plug-ins/common/file-png.c:631
+#: plug-ins/common/file-png.c:639
 #, c-format
 msgid "Error while reading '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при читанні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: plug-ins/common/file-png.c:639
+#: plug-ins/common/file-png.c:647
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Помилка при читанні «%s». Файл пошкоджений?"
 
-#: plug-ins/common/file-png.c:894
+#: plug-ins/common/file-png.c:902
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Невідома модель кольорів у PNG файлі «%s»."
 
-#: plug-ins/common/file-png.c:907 plug-ins/file-exr/file-exr.c:254
+#: plug-ins/common/file-png.c:915 plug-ins/file-exr/file-exr.c:254
 #, c-format
 msgid "Could not create new image for '%s': %s"
 msgstr "Неможливо створити нове зображення для «%s»: %s"
 
-#: plug-ins/common/file-png.c:975
+#: plug-ins/common/file-png.c:983
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -3449,19 +3462,19 @@ msgstr ""
 "У файлі формату PNG вказано зсув, який призводить до розташування шару за "
 "межами зображення."
 
-#: plug-ins/common/file-png.c:1211
+#: plug-ins/common/file-png.c:1219
 msgid "Apply PNG Offset"
 msgstr "Застосувати зміщення PNG"
 
-#: plug-ins/common/file-png.c:1215
+#: plug-ins/common/file-png.c:1223
 msgid "Ignore PNG offset"
 msgstr "Знехтувати зміщення PNG"
 
-#: plug-ins/common/file-png.c:1216
+#: plug-ins/common/file-png.c:1224
 msgid "Apply PNG offset to layer"
 msgstr "Застосувати до шару зміщення PNG"
 
-#: plug-ins/common/file-png.c:1241
+#: plug-ins/common/file-png.c:1249
 #, c-format
 msgid ""
 "The PNG image you are importing specifies an offset of %d, %d. Do you want "
@@ -3470,56 +3483,58 @@ msgstr ""
 "Зображення формату PNG, яке ви імпортуєте, має зміщення %d, %d. Застосувати "
 "це зміщення до шару?"
 
-#: plug-ins/common/file-png.c:1451
+#: plug-ins/common/file-png.c:1461
 #, c-format
 msgid "Error creating PNG write struct while exporting '%s'."
-msgstr "Помилка створення PNG (записування struct) під час експортування «%s»."
+msgstr ""
+"Помилка створення PNG (записування struct) під час експортування «%s»."
 
-#: plug-ins/common/file-png.c:1460
+#: plug-ins/common/file-png.c:1470
 #, c-format
-msgid "Error while exporting '%s'. Could not create PNG header info structure."
+msgid ""
+"Error while exporting '%s'. Could not create PNG header info structure."
 msgstr ""
 "Помилка при експортуванні «%s». Не вдається створити інформаційну структуру "
 "заголовка PNG."
 
-#: plug-ins/common/file-png.c:1468
+#: plug-ins/common/file-png.c:1478
 #, c-format
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "Помилка при експортуванні «%s». Не вдається експортувати зображення."
 
-#: plug-ins/common/file-png.c:2280 plug-ins/common/file-ps.c:3731
+#: plug-ins/common/file-png.c:2297 plug-ins/common/file-ps.c:3731
 msgid "Automatic"
 msgstr "Автоматично"
 
-#: plug-ins/common/file-png.c:2281
+#: plug-ins/common/file-png.c:2298
 msgid "8 bpc RGB"
 msgstr "8 біт/кан RGB"
 
-#: plug-ins/common/file-png.c:2282
+#: plug-ins/common/file-png.c:2299
 msgid "8 bpc GRAY"
 msgstr "8 біт/кан GRAY"
 
-#: plug-ins/common/file-png.c:2283
+#: plug-ins/common/file-png.c:2300
 msgid "8 bpc RGBA"
 msgstr "8 біт/кан RGBA"
 
-#: plug-ins/common/file-png.c:2284
+#: plug-ins/common/file-png.c:2301
 msgid "8 bpc GRAYA"
 msgstr "8 біт/кан GRAYA"
 
-#: plug-ins/common/file-png.c:2285
+#: plug-ins/common/file-png.c:2302
 msgid "16 bpc RGB"
 msgstr "16 біт/кан RGB"
 
-#: plug-ins/common/file-png.c:2286
+#: plug-ins/common/file-png.c:2303
 msgid "16 bpc GRAY"
 msgstr "16 біт/кан GRAY"
 
-#: plug-ins/common/file-png.c:2287
+#: plug-ins/common/file-png.c:2304
 msgid "16 bpc RGBA"
 msgstr "16 біт/кан RGBA"
 
-#: plug-ins/common/file-png.c:2288
+#: plug-ins/common/file-png.c:2305
 msgid "16 bpc GRAYA"
 msgstr "16 біт/кан GRAYA"
 
@@ -4351,7 +4366,8 @@ msgstr ""
 
 #: plug-ins/common/file-svg.c:730
 msgid "For security reasons, this should only be used for trusted input!"
-msgstr "З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
+msgstr ""
+"З міркувань безпеки, цим джерелом вхідних даних не слід користуватися!"
 
 #: plug-ins/common/file-svg.c:737
 msgid "Retry without limits preventing to parse huge data?"
@@ -4741,8 +4757,8 @@ msgid "Enter other comment if you want."
 msgstr "Введіть бажаний коментар"
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1372 plug-ins/file-webp/file-webp-save.c:196
-#: plug-ins/file-webp/file-webp-save.c:594
+#: plug-ins/common/file-xmc.c:1372 plug-ins/file-webp/file-webp-save.c:198
+#: plug-ins/file-webp/file-webp-save.c:598
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження «%s»"
@@ -6996,7 +7012,6 @@ msgid "Export Image as FLI Animation"
 msgstr "Експортувати зображення як анімацію FLI"
 
 #: plug-ins/file-ico/ico-dialog.c:61
-#| msgid "Windows Cursor"
 msgid "Windows Animated Cursor"
 msgstr "Анімований вказівник Windows"
 
@@ -7009,7 +7024,6 @@ msgid "Windows Icon"
 msgstr "Значок Windows"
 
 #: plug-ins/file-ico/ico-dialog.c:97
-#| msgid "Graph of the Current Settings"
 msgid "Animated Cursor Settings"
 msgstr "Параметри анімованого вказівника"
 
@@ -7022,7 +7036,6 @@ msgid "_Author Name (Optional)"
 msgstr "Ім'я _автора (необов'язкове)"
 
 #: plug-ins/file-ico/ico-dialog.c:144
-#| msgid "_Default delay between frames"
 msgid "_Delay between frames:"
 msgstr "З_атримка між кадрами:"
 
@@ -7109,22 +7122,18 @@ msgid "Microsoft Windows cursor"
 msgstr "Курсор Microsoft Windows"
 
 #: plug-ins/file-ico/ico.c:226 plug-ins/file-ico/ico.c:363
-#| msgid "Microsoft Windows cursor"
 msgid "Microsoft Windows animated cursor"
 msgstr "Анімований вказівник Microsoft Windows"
 
 #: plug-ins/file-ico/ico.c:230
-#| msgid "Loads files of Wireless BMP file format"
 msgid "Loads files of Windows ANI file format"
 msgstr "Завантажує файли у форматі ANI Windows"
 
 #: plug-ins/file-ico/ico.c:272
-#| msgid "Load the curves from a file"
 msgid "Loads a preview from a Windows ANI files"
 msgstr "Завантажує попередній перегляд з файлів ANI Windows"
 
 #: plug-ins/file-ico/ico.c:367 plug-ins/file-ico/ico.c:368
-#| msgid "Saves files in the JPEG XL file format"
 msgid "Saves files in Windows ANI file format"
 msgstr "Зберігає файли у форматі ANI Windows"
 
@@ -7157,15 +7166,15 @@ msgstr "Розмір файлу: невідомо"
 msgid "Enable preview to obtain the file size."
 msgstr "Увімкніть перегляд, щоб бачити розмір файлу."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-tiff/file-tiff-save.c:1360
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Немає профілю для проби кольорів"
 
-#: plug-ins/file-jpeg/jpeg-save.c:898 plug-ins/file-tiff/file-tiff-save.c:1367
+#: plug-ins/file-jpeg/jpeg-save.c:898 plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Назва профілю кольорів, який використано для експортування CMYK."
 
-#: plug-ins/file-jpeg/jpeg-save.c:909 plug-ins/file-tiff/file-tiff-save.c:1379
+#: plug-ins/file-jpeg/jpeg-save.c:909 plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
 msgstr "Профіль: %s"
@@ -7204,7 +7213,7 @@ msgstr "З рухомою комою"
 msgid "JPEG image"
 msgstr "Перегляд JPEG"
 
-#: plug-ins/file-jpeg/jpeg.c:193 plug-ins/file-tiff/file-tiff-save.c:1324
+#: plug-ins/file-jpeg/jpeg.c:193 plug-ins/file-tiff/file-tiff-save.c:1326
 msgid "JPEG"
 msgstr "JPEG"
 
@@ -7238,107 +7247,127 @@ msgstr "Перегляд файлу для експорту"
 msgid "JPEG format does not support multiple layers."
 msgstr "Для формату JPEG не передбачено підтримку декількох шарів."
 
-#: plug-ins/file-psd/psd-load.c:280 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:281 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Помилка при відкритті файлу PSD: «%s»"
 
-#: plug-ins/file-psd/psd-load.c:333
+#: plug-ins/file-psd/psd-load.c:334
 msgid "Not a valid Photoshop document file"
 msgstr "Цей файл — некоректний документ Photoshop"
 
-#: plug-ins/file-psd/psd-load.c:340
+#: plug-ins/file-psd/psd-load.c:341
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Непідтримувана версія формату файлу: %d"
 
-#: plug-ins/file-psd/psd-load.c:347
+#: plug-ins/file-psd/psd-load.c:348
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "Надто багато каналів у файлі: %d"
 
-#: plug-ins/file-psd/psd-load.c:371
+#: plug-ins/file-psd/psd-load.c:372
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Непідтримуваний або хибний розмір зображення: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:386 plug-ins/file-psd/psd-load.c:397
+#: plug-ins/file-psd/psd-load.c:387 plug-ins/file-psd/psd-load.c:398
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Непідтримувана модель кольорів: %s"
 
-#: plug-ins/file-psd/psd-load.c:424
+#: plug-ins/file-psd/psd-load.c:425
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Непідтримувана розрядність на канал: %d"
 
-#: plug-ins/file-psd/psd-load.c:458 plug-ins/file-psd/psd-load.c:468
-#: plug-ins/file-psd/psd-load.c:681 plug-ins/file-psd/psd-load.c:1027
+#: plug-ins/file-psd/psd-load.c:459 plug-ins/file-psd/psd-load.c:469
+#: plug-ins/file-psd/psd-load.c:682 plug-ins/file-psd/psd-load.c:1028
 msgid "The file is corrupt!"
 msgstr "Цей файл пошкоджений!"
 
-#: plug-ins/file-psd/psd-load.c:632
+#: plug-ins/file-psd/psd-load.c:633
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "Надто багато каналів у шарі: %d"
 
-#: plug-ins/file-psd/psd-load.c:716
+#: plug-ins/file-psd/psd-load.c:717
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Непідтримувана чи некоректна висота шару: %d"
 
-#: plug-ins/file-psd/psd-load.c:725
+#: plug-ins/file-psd/psd-load.c:726
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Непідтримувана чи некоректні ширина шару: %d"
 
-#: plug-ins/file-psd/psd-load.c:735
+#: plug-ins/file-psd/psd-load.c:736
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір шару: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:755
+#: plug-ins/file-psd/psd-load.c:756
 msgid "Unsupported or invalid mask info size."
 msgstr "Непідтримуваний або некоректний розмір відомостей щодо маски."
 
-#: plug-ins/file-psd/psd-load.c:932
+#: plug-ins/file-psd/psd-load.c:933
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Непідтримувана чи некоректна висота маски: %d"
 
-#: plug-ins/file-psd/psd-load.c:941
+#: plug-ins/file-psd/psd-load.c:942
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Непідтримувана чи хибна ширина маски: %d"
 
-#: plug-ins/file-psd/psd-load.c:951
+#: plug-ins/file-psd/psd-load.c:952
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Непідтримуваний чи некоректний розмір маски: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2459
+#: plug-ins/file-psd/psd-load.c:1835 plug-ins/file-psd/psd-load.c:2475
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Непідтримуваний метод стиснення: %d"
 
-#: plug-ins/file-psd/psd-load.c:2652
+#: plug-ins/file-psd/psd-load.c:2668
 msgid "Extra"
 msgstr "Додатково"
 
-#: plug-ins/file-psd/psd-load.c:2852
+#: plug-ins/file-psd/psd-load.c:2868
 msgid "Unsupported or invalid channel size"
 msgstr "Непідтримуваний чи некоректний розмір каналу"
 
-#: plug-ins/file-psd/psd-load.c:2921
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "Failed to decompress data"
 msgstr "Не вдається розпакувати дані"
 
-#: plug-ins/file-psd/psd-save.c:470
+#: plug-ins/file-psd/psd-load.c:3281
+#| msgid "Compatibility"
+msgid "PSD Compatibility Notice"
+msgstr "Зауваження щодо сумісності із PSD"
+
+#. Duotone import notification
+#: plug-ins/file-psd/psd-load.c:3296
+msgid "Duotone Import"
+msgstr "Двотонове імпортування"
+
+#: plug-ins/file-psd/psd-load.c:3297
+msgid ""
+"Image will be imported as Grayscale.\n"
+"Duotone color space data has been saved\n"
+"and can be reapplied on export."
+msgstr ""
+"Зображення буде імпортовано у відтінках сірого.\n"
+"Дані двотонового простору кольорів було збережено,\n"
+"їх можна повторно застосувати при експортуванні."
+
+#: plug-ins/file-psd/psd-save.c:473
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Помилка: Неможливо перетворити основний тип зображення GIMP на режим PSD"
 
-#: plug-ins/file-psd/psd-save.c:1770
+#: plug-ins/file-psd/psd-save.c:1805
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7347,7 +7376,7 @@ msgstr ""
 "Не вдається експортувати «%s».  Файл формату PSD не підтримує зображення "
 "шириною чи висотою більше ніж 30000 точок."
 
-#: plug-ins/file-psd/psd-save.c:1795
+#: plug-ins/file-psd/psd-save.c:1846
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7355,6 +7384,19 @@ msgid ""
 msgstr ""
 "Не вдається експортувати «%s». Файл формату PSD не підтримує зображення з "
 "шарами, ширина чи висота яких більша ніж 30000 точок."
+
+#: plug-ins/file-psd/psd-save.c:2091
+#| msgid "Export Image as PSP"
+msgid "Export Image as PSD"
+msgstr "Експортувати зображення як PSD"
+
+#: plug-ins/file-psd/psd-save.c:2096
+msgid ""
+"Duotone color space information from the original\n"
+"imported image will be used."
+msgstr ""
+"Буде використано дані двотонового простору кольорів з\n"
+"початкового імпортованого зображення."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -7820,11 +7862,11 @@ msgstr ""
 msgid "Failed a scanline write on row %d"
 msgstr "Не вдалося записати рядок сканування %d"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1196
+#: plug-ins/file-tiff/file-tiff-save.c:1198
 msgid "Writing pages with different bit depth is strange."
 msgstr "Записування сторінок із різною бітовою глибиною є доволі дивною дією."
 
-#: plug-ins/file-tiff/file-tiff-save.c:1308
+#: plug-ins/file-tiff/file-tiff-save.c:1310
 msgid ""
 "Warning: maximum TIFF file size exceeded. Retry as BigTIFF or with a "
 "different compression algorithm, or cancel."
@@ -7832,33 +7874,33 @@ msgstr ""
 "Попередження: перевищено максимальний розмір файлів TIFF. Повторіть спробу у "
 "форматі BigTIFF, виберіть інший алгоритм стискання або скасуйте дію."
 
-#: plug-ins/file-tiff/file-tiff-save.c:1320
+#: plug-ins/file-tiff/file-tiff-save.c:1322
 #: plug-ins/metadata/metadata-tags.c:195 plug-ins/metadata/metadata-tags.c:207
 #: plug-ins/metadata/metadata-tags.c:238
 msgid "None"
 msgstr "Немає"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1321
+#: plug-ins/file-tiff/file-tiff-save.c:1323
 msgid "LZW"
 msgstr "LZW"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1322
+#: plug-ins/file-tiff/file-tiff-save.c:1324
 msgid "Pack Bits"
 msgstr "Упаковані біти"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1323
+#: plug-ins/file-tiff/file-tiff-save.c:1325
 msgid "Deflate"
 msgstr "Deflate"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1325
+#: plug-ins/file-tiff/file-tiff-save.c:1327
 msgid "CCITT Group 3 fax"
 msgstr "CCITT Group 3 fax"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1326
+#: plug-ins/file-tiff/file-tiff-save.c:1328
 msgid "CCITT Group 4 fax"
 msgstr "CCITT Group 4 fax"
 
-#: plug-ins/file-tiff/file-tiff-save.c:1384
+#: plug-ins/file-tiff/file-tiff-save.c:1386
 msgid ""
 "The assigned soft-proofing profile is not a CMYK profile.\n"
 "This profile will not be included in the exported image."
@@ -8025,45 +8067,48 @@ msgstr "Параметр NULL"
 msgid "invalid configuration"
 msgstr "хибна конфігурація"
 
-#: plug-ins/file-webp/file-webp-save.c:109
-msgid "bad image dimensions"
-msgstr "хибні розміри зображення"
+#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
+#: plug-ins/file-webp/file-webp-save.c:110
+#, c-format
+#| msgid "Image dimensions: %d × %d"
+msgid "bad image dimensions (maximum: %d×%d)"
+msgstr "помилкові розмірності зображення (максимальні: %d×%d)"
 
-#: plug-ins/file-webp/file-webp-save.c:111
+#: plug-ins/file-webp/file-webp-save.c:113
 msgid "partition is bigger than 512K"
 msgstr "розділ більший ніж 512K"
 
-#: plug-ins/file-webp/file-webp-save.c:113
+#: plug-ins/file-webp/file-webp-save.c:115
 msgid "partition is bigger than 16M"
 msgstr "розділ більший ніж 16M"
 
-#: plug-ins/file-webp/file-webp-save.c:115
+#: plug-ins/file-webp/file-webp-save.c:117
 msgid "unable to flush bytes"
 msgstr "не вдалося скинути байти на диск"
 
-#: plug-ins/file-webp/file-webp-save.c:117
+#: plug-ins/file-webp/file-webp-save.c:119
 msgid "file is larger than 4GiB"
 msgstr "файл більший, ніж 4 ГіБ"
 
-#: plug-ins/file-webp/file-webp-save.c:119
+#: plug-ins/file-webp/file-webp-save.c:121
 msgid "user aborted encoding"
 msgstr "користувач перервав кодування"
 
-#: plug-ins/file-webp/file-webp-save.c:121
+#: plug-ins/file-webp/file-webp-save.c:123
 msgid "list terminator"
 msgstr "ознака кінця списку"
 
-#: plug-ins/file-webp/file-webp-save.c:123
+#: plug-ins/file-webp/file-webp-save.c:125
 msgid "unknown error"
 msgstr "невідома помилка"
 
-#: plug-ins/file-webp/file-webp-save.c:206
-#: plug-ins/file-webp/file-webp-save.c:604
+#: plug-ins/file-webp/file-webp-save.c:208
+#: plug-ins/file-webp/file-webp-save.c:608
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Не вдається відкрити «%s» для запису: %s"
 
-#: plug-ins/file-webp/file-webp-save.c:291
+#: plug-ins/file-webp/file-webp-save.c:294
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "Помилка WebP: «%s»"
@@ -9309,7 +9354,8 @@ msgid "Radial"
 msgstr "Радіальне"
 
 #: plug-ins/gimpressionist/orientation.c:161
-msgid "Let the direction from the center determine the direction of the stroke"
+msgid ""
+"Let the direction from the center determine the direction of the stroke"
 msgstr "Напрямок від центру визначає напрямок мазка"
 
 #: plug-ins/gimpressionist/orientation.c:168 plug-ins/gimpressionist/size.c:175
@@ -9420,7 +9466,8 @@ msgstr "_Вороний"
 msgid ""
 "Voronoi-mode makes only the vector closest to the given point have any "
 "influence"
-msgstr "В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
+msgstr ""
+"В режимі \"Вороний\" лише найближчий до заданої точки вектор має вплив"
 
 #: plug-ins/gimpressionist/orientmap.c:668
 msgid "A_ngle:"
@@ -10331,7 +10378,8 @@ msgstr "Введіть назву для копії градієнтного с�
 
 #: plug-ins/gradient-flare/gradient-flare.c:3352
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr "Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
+msgstr ""
+"Не вдається видалити! Повинен лишитись хоча б один градієнтний спалах."
 
 #: plug-ins/gradient-flare/gradient-flare.c:3362
 msgid "Delete Gradient Flare"
@@ -12705,7 +12753,8 @@ msgstr "Альтернативне оточення фільтра:"
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:181
 msgid "A second number of adjacent points to consider when filtering."
-msgstr "Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
+msgstr ""
+"Друга кількість сусідніх точок, які слід враховувати при фільтруванні."
 
 #: plug-ins/selection-to-path/selection-to-path-dialog.c:191
 msgid "Filter Epsilon:"
@@ -12896,6 +12945,9 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "bad image dimensions"
+#~ msgstr "хибні розміри зображення"
 
 #~ msgid "Planar RGB"
 #~ msgstr "Планарний RGB"
