@@ -50,7 +50,7 @@ int           webp_file_writer      (const uint8_t     *data,
                                      const WebPPicture *picture);
 int           webp_file_progress    (int                percent,
                                      const WebPPicture *picture);
-const gchar * webp_error_string     (WebPEncodingError  error_code);
+gchar *       webp_error_string     (WebPEncodingError  error_code);
 
 static void   webp_decide_output    (GimpImage         *image,
                                      GObject           *config,
@@ -92,35 +92,37 @@ webp_file_progress (int                percent,
   return gimp_progress_update (percent / 100.0);
 }
 
-const gchar *
+gchar *
 webp_error_string (WebPEncodingError error_code)
 {
   switch (error_code)
     {
     case VP8_ENC_ERROR_OUT_OF_MEMORY:
-      return _("out of memory");
+      return g_strdup (_("out of memory"));
     case VP8_ENC_ERROR_BITSTREAM_OUT_OF_MEMORY:
-      return _("not enough memory to flush bits");
+      return g_strdup (_("not enough memory to flush bits"));
     case VP8_ENC_ERROR_NULL_PARAMETER:
-      return _("NULL parameter");
+      return g_strdup (_("NULL parameter"));
     case VP8_ENC_ERROR_INVALID_CONFIGURATION:
-      return _("invalid configuration");
+      return g_strdup (_("invalid configuration"));
     case VP8_ENC_ERROR_BAD_DIMENSION:
-      return _("bad image dimensions");
+      /* TRANSLATORS: widthxheight with UTF-8 encoded multiply sign. */
+      return g_strdup_printf (_("bad image dimensions (maximum: %d\xc3\x97%d)"),
+                              WEBP_MAX_DIMENSION, WEBP_MAX_DIMENSION);
     case VP8_ENC_ERROR_PARTITION0_OVERFLOW:
-      return _("partition is bigger than 512K");
+      return g_strdup (_("partition is bigger than 512K"));
     case VP8_ENC_ERROR_PARTITION_OVERFLOW:
-      return _("partition is bigger than 16M");
+      return g_strdup (_("partition is bigger than 16M"));
     case VP8_ENC_ERROR_BAD_WRITE:
-      return _("unable to flush bytes");
+      return g_strdup (_("unable to flush bytes"));
     case VP8_ENC_ERROR_FILE_TOO_BIG:
-      return _("file is larger than 4GiB");
+      return g_strdup (_("file is larger than 4GiB"));
     case VP8_ENC_ERROR_USER_ABORT:
-      return _("user aborted encoding");
+      return g_strdup (_("user aborted encoding"));
     case VP8_ENC_ERROR_LAST:
-      return _("list terminator");
+      return g_strdup (_("list terminator"));
     default:
-      return _("unknown error");
+      return g_strdup (_("unknown error"));
     }
 }
 
@@ -284,12 +286,14 @@ save_layer (GFile         *file,
       /* Perform the actual encode */
       if (! WebPEncode (&webp_config, &picture))
         {
-          g_printerr ("WebP error: '%s'",
-                      webp_error_string (picture.error_code));
+          gchar *error_str = webp_error_string (picture.error_code);
+
+          g_printerr ("WebP error: '%s'", error_str);
           g_set_error (error, G_FILE_ERROR,
                        picture.error_code,
                        _("WebP error: '%s'"),
-                       webp_error_string (picture.error_code));
+                       error_str);
+          g_free (error_str);
           status = FALSE;
           break;
         }
@@ -760,9 +764,11 @@ save_animation (GFile         *file,
           else if (! WebPAnimEncoderAdd (enc, &picture, frame_timestamp,
                                          &webp_config))
             {
+              gchar *error_str = webp_error_string (picture.error_code);
               g_printerr ("ERROR[%d]: line %d: %s\n",
                           picture.error_code, __LINE__,
-                          webp_error_string (picture.error_code));
+                          error_str);
+              g_free (error_str);
               status = FALSE;
             }
 
