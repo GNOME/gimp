@@ -236,7 +236,7 @@ it's far from being perfect unfortunately.
 Another good idea would be to look at existing well maintained GTK3
 themes to get inspiration and see how things work.
 
-Finally you can look at our only current theme, the [System
+Finally you can look at our existing themes, like the [System
 theme](https://gitlab.gnome.org/GNOME/gimp/-/blob/master/themes/System/gimp.css).
 Note though that this `System` theme is pretty bare, and that's its goal
 (try to theme as few as possible over whatever is the current real

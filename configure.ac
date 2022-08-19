@@ -3142,6 +3142,7 @@ icons/Legacy/Makefile
 icons/Symbolic/Makefile
 icons/hicolor/Makefile
 themes/Makefile
+themes/Light/Makefile
 themes/System/Makefile
 data/Makefile
 data/brushes/Makefile
