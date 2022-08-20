@@ -1,4 +1,5 @@
 subdir('Default')
+subdir('Compact')
 
 themes = [
   'System',
