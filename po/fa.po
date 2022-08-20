@@ -9,25 +9,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP UI VERSION\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-06 17:13+0000\n"
-"PO-Revision-Date: 2022-08-10 02:35+0430\n"
-"Last-Translator: Danial Behzadi <dani.behzi@ubuntu.com>\n"
+"POT-Creation-Date: 2022-08-09 22:07+0000\n"
+"PO-Revision-Date: 2022-08-13 11:55+0430\n"
+"Last-Translator: MohammadSaleh Kamyab <mskf1383@envs.net>\n"
 "Language-Team: Persian <fa@gnome.org>\n"
 "Language: fa\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-Bookmarks: -1,-1,-1,-1,-1,4788,-1,-1,-1,-1\n"
 
 # "گیمپ نتوانست واسط گرافیکی کاربر را آغاز کند.\n"
 # "اطمینان حاصل کنید که تنظیمات مناسبی برای محیط نمایشی شما وجود دارد."
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
-#, fuzzy
-#| msgid "The GIMP"
 msgid "The GIMP team"
-msgstr "گیمپ"
+msgstr "گروه گیمپ"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:16 desktop/gimp.desktop.in.in:5
 #: app/about.h:26
@@ -125,6 +123,8 @@ msgid ""
 "A new version of GIMP (%s) was released.\n"
 "It is recommended to update."
 msgstr ""
+"نگارش جدیدی از گیمپ (%s) منتشر شده است.\n"
+"توصیه می‌شود به‌روز رسانی کنید."
 
 #: app/gimp-version.c:70
 #, c-format
@@ -134,7 +134,7 @@ msgstr "%s نگارش %s"
 #: app/gimp-version.c:162 app/gimp-version.c:281
 #, c-format
 msgid "using %s version %s (compiled against version %s)"
-msgstr ""
+msgstr "استفاده از %s نگارش %s (کامپایل شده در کنار نگارش %s)"
 
 #: app/main.c:166
 msgid "Show version information and exit"
@@ -225,7 +225,7 @@ msgstr ""
 #. don't translate the mode names (off|on|warn)
 #: app/main.c:257
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "حالت سازگاری با PDB (off|on|warn)"
+msgstr "حالت سازگاری با PDB ‏(off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: app/main.c:263
@@ -240,7 +240,7 @@ msgstr "  --debug-handlers         Enable non-fatal debugging signal handlers.\n
 
 #: app/main.c:273
 msgid "Make all warnings fatal"
-msgstr "تمام اخطارها، مهلک شوند"
+msgstr "تمام هشدارها، مهلک شوند"
 
 # "  --system-gimprc <gimprc> از یک پروندهٔ gimprc سیستم متفاوت استفاده شود."
 #: app/main.c:278
@@ -262,15 +262,15 @@ msgstr ""
 
 #: app/main.c:736
 msgid "[FILE|URI...]"
-msgstr "[پرونده|URI…]"
+msgstr "[پرونده|نشانی…]"
 
 #: app/main.c:764
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
-"GIMP could not initialize the graphical user interface.\n"
-"Make sure a proper setup for your display environment exists."
+"گیمپ نتوانست رابط کاربری گرافیکی را راه‌اندازی کند.\n"
+"مطمئن شوید پیکربندی صحیحی برای محیط گرافیکی‌تان وجود دارد."
 
 #: app/main.c:783
 msgid "Another GIMP instance is already running."
@@ -2989,17 +2989,14 @@ msgid "Open the paint dynamics editor"
 msgstr "گشودن محاورهٔ گزینش تخته‌رنگ"
 
 #: app/actions/dialogs-actions.c:161
-#, fuzzy
-#| msgid "_Paintbrush"
 msgctxt "dialogs-action"
 msgid "_MyPaint Brushes"
-msgstr "_قلم‌مو"
+msgstr "_قلم‌موهای مای‌پینت"
 
 #: app/actions/dialogs-actions.c:162
-#, fuzzy
 msgctxt "dialogs-action"
 msgid "Open the mypaint brushes dialog"
-msgstr "گشودن محاورهٔ گزینش قلم"
+msgstr "گشودن محاورهٔ قلم‌موهای مای‌پینت"
 
 #: app/actions/dialogs-actions.c:167
 #, fuzzy
@@ -4296,7 +4293,7 @@ msgstr ""
 #, fuzzy
 msgctxt "error-console-action"
 msgid "_Warnings"
-msgstr "اخطار"
+msgstr "هشدار"
 
 #: app/actions/error-console-actions.c:86
 msgctxt "error-console-action"
@@ -8024,16 +8021,14 @@ msgid "Unlock alpha channels"
 msgstr "_قفل کردن کانال آلفا"
 
 #: app/actions/mypaint-brushes-actions.c:43
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "MyPaint Brushes Menu"
-msgstr "فهرست قلم‌موها"
+msgstr "فهرست قلم‌موهای مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:47
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "_New MyPaint Brush"
-msgstr "قلم‌موی _جدید"
+msgstr "قلم‌موی مای‌پینت _جدید"
 
 #: app/actions/mypaint-brushes-actions.c:48
 msgctxt "mypaint-brushes-action"
@@ -8041,16 +8036,14 @@ msgid "Create a new MyPaint brush"
 msgstr "ایجاد یک قلم‌موی مای‌پینت جدید"
 
 #: app/actions/mypaint-brushes-actions.c:53
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "D_uplicate MyPaint Brush"
-msgstr "تک_ثیر قلم‌مو"
+msgstr "تک_ثیر قلم‌موی مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:54
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Duplicate this MyPaint brush"
-msgstr "تکثیر قلم‌مو"
+msgstr "تکثیر قلم‌موی مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:59
 msgctxt "mypaint-brushes-action"
@@ -8058,10 +8051,9 @@ msgid "Copy MyPaint Brush _Location"
 msgstr "رونوشت از _موقعیت قلم‌موی مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:60
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Copy MyPaint brush file location to clipboard"
-msgstr "رونوشت از مکان پروندهٔ‌ قلم‌مو در تخته‌گیره"
+msgstr "رونوشت مکان پروندهٔ‌ قلم‌موی مای‌پینت به تخته‌گیره"
 
 #: app/actions/mypaint-brushes-actions.c:65
 msgctxt "mypaint-brushes-action"
@@ -8075,10 +8067,9 @@ msgid "Show MyPaint brush file location in the file manager"
 msgstr "رونوشت از مکان پروندهٔ‌ قلم‌مو در تخته‌گیره"
 
 #: app/actions/mypaint-brushes-actions.c:71
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "_Delete MyPaint Brush"
-msgstr "_حذف قلم‌مو"
+msgstr "_حذف قلم‌موی مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:72
 #, fuzzy
@@ -8087,16 +8078,14 @@ msgid "Delete this MyPaint brush"
 msgstr "حذف قلم‌مو"
 
 #: app/actions/mypaint-brushes-actions.c:77
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "_Refresh MyPaint Brushes"
-msgstr "_نوسازی قلم‌موها"
+msgstr "_نوسازی قلم‌موهای مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:78
-#, fuzzy
 msgctxt "mypaint-brushes-action"
 msgid "Refresh MyPaint brushes"
-msgstr "نوسازی قلم‌موها"
+msgstr "نوسازی قلم‌موهای مای‌پینت"
 
 #: app/actions/mypaint-brushes-actions.c:86
 msgctxt "mypaint-brushes-action"
@@ -9065,16 +9054,14 @@ msgid "Tool Options Menu"
 msgstr "فهرست گزینه‌های ابزار"
 
 #: app/actions/tool-options-actions.c:62
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Save Tool Preset"
-msgstr "_حذف رنگ"
+msgstr "_ذخیرهٔ پیش‌تنظیم ابزار"
 
 #: app/actions/tool-options-actions.c:66
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Restore Tool Preset"
-msgstr "_نوسازی قلم‌موها"
+msgstr "_بازیابی پیش‌تنظیم ابزار"
 
 #: app/actions/tool-options-actions.c:70
 #, fuzzy
@@ -9083,10 +9070,9 @@ msgid "E_dit Tool Preset"
 msgstr "_ویرایش رنگ…"
 
 #: app/actions/tool-options-actions.c:74
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "_Delete Tool Preset"
-msgstr "_حذف رنگ"
+msgstr "_حذف پیش‌تنظیم ابزار"
 
 #: app/actions/tool-options-actions.c:78
 #, fuzzy
@@ -9101,27 +9087,23 @@ msgid "R_eset Tool Options"
 msgstr "بر_گرداندن گزینه‌های ابزار به حالت اولیه"
 
 #: app/actions/tool-options-actions.c:84
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset to default values"
-msgstr "برگرداندن به مقادیر اولیه"
+msgstr "بازنشانی به مقادیر پیش‌گزیده"
 
 #: app/actions/tool-options-actions.c:89
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset _all Tool Options"
-msgstr "برگرداندن _همهٔ گزینه‌های ابزار به حالت اولیه…"
+msgstr "بازنشانی _همهٔ گزینه‌های ابزار"
 
 #: app/actions/tool-options-actions.c:90
-#, fuzzy
 msgctxt "tool-options-action"
 msgid "Reset all tool options"
-msgstr "برگرداندن همهٔ گزینه‌های ابزار به حالت اولیه"
+msgstr "بازنشانی همهٔ گزینه‌های ابزار"
 
 #: app/actions/tool-options-commands.c:203
-#, fuzzy
 msgid "Reset All Tool Options"
-msgstr "برگرداندن _همهٔ گزینه‌های ابزار به حالت اولیه…"
+msgstr "بازنشانی همهٔ گزینه‌های ابزار"
 
 #: app/actions/tool-options-commands.c:227
 msgid "Do you really want to reset all tool options to default values?"
@@ -9148,10 +9130,9 @@ msgid "Save the active tool options to this tool preset"
 msgstr "هنگام خروج از گیمپ گزینه‌های ابزار ذخیره شود."
 
 #: app/actions/tool-preset-editor-actions.c:55
-#, fuzzy
 msgctxt "tool-preset-editor-action"
 msgid "_Restore Tool Preset"
-msgstr "_نوسازی قلم‌موها"
+msgstr "_بازیابی پیش‌تنظیم ابزار"
 
 #: app/actions/tool-preset-editor-actions.c:56
 #, fuzzy
@@ -9239,10 +9220,9 @@ msgid "Save the active tool options to this tool preset"
 msgstr "هنگام خروج از گیمپ گزینه‌های ابزار ذخیره شود."
 
 #: app/actions/tool-presets-actions.c:81
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Restore Tool Preset"
-msgstr "_نوسازی قلم‌موها"
+msgstr "_بازیابی پیش‌تنظیم ابزار"
 
 #: app/actions/tool-presets-actions.c:82
 #, fuzzy
@@ -9251,10 +9231,9 @@ msgid "Restore this tool preset"
 msgstr "حذف این لایه"
 
 #: app/actions/tool-presets-actions.c:87
-#, fuzzy
 msgctxt "tool-presets-action"
 msgid "_Delete Tool Preset"
-msgstr "_حذف رنگ"
+msgstr "_حذف پیش‌تنظیم ابزار"
 
 #: app/actions/tool-presets-actions.c:88
 #, fuzzy
@@ -12017,7 +11996,7 @@ msgid ""
 "more memory than the size specified here."
 msgstr ""
 "در صورتی که کاربر سعی کند تصویری ایجاد کند که از مقداری که اینجا مشخص شده حافظهٔ "
-"بیشتری اشغال کند، گیمپ به او اخطار می‌دهد."
+"بیشتری اشغال کند، گیمپ به او هشدار می‌دهد."
 
 #: app/config/gimprc-blurbs.h:302
 #, fuzzy
@@ -12289,7 +12268,7 @@ msgstr "گشودن محاورهٔ گزینش قلم"
 
 #: app/config/gimprc-blurbs.h:489
 msgid "Enable the Handle Transform tool."
-msgstr "به کار انداختن ابزار تبدیل دستگیره‌ای."
+msgstr "به کار انداختن ابزار تبدیل با دستگیره."
 
 #: app/config/gimprc-blurbs.h:492
 msgid "Enable symmetry on painting."
@@ -22033,14 +22012,12 @@ msgid "Anti erase"
 msgstr "ضد پاک کردن"
 
 #: app/paint/gimpheal.c:118 app/tools/gimphealtool.c:53
-#, fuzzy
-#| msgid "Heal"
 msgid "Healing"
-msgstr "التیام"
+msgstr "بهبود"
 
 #: app/paint/gimpheal.c:158
 msgid "Healing does not operate on indexed layers."
-msgstr "التیام روی لایه‌های نمایه‌گذاری شده نمی‌تواند عمل کند."
+msgstr "بهبود روی لایه‌های نمایه‌گذاری شده نمی‌تواند عمل کند."
 
 #: app/paint/gimpink.c:108 app/tools/gimpinktool.c:65
 msgid "Ink"
@@ -22097,10 +22074,8 @@ msgid "Mybrush"
 msgstr "رنگ‌پاش"
 
 #: app/paint/gimpmybrushcore.c:157
-#, fuzzy
-#| msgid "No brushes available for use with this tool."
 msgid "No MyPaint brushes available for use with this tool."
-msgstr "قلمی برای استفاده با این ابزار وجود ندارد"
+msgstr "قلم‌موی مای‌پینتی برای استفاده با این ابزار وجود ندارد."
 
 #: app/paint/gimpmybrushoptions.c:94
 #, fuzzy
@@ -24548,18 +24523,16 @@ msgid ""
 msgstr ""
 
 #: app/tools/gimpcagetool.c:162 app/tools/gimpcagetool.c:1259
-#, fuzzy
 msgid "Cage Transform"
-msgstr "تبدیل"
+msgstr "تبدیل قفسی"
 
 #: app/tools/gimpcagetool.c:163
 msgid "Cage Transform: Deform a selection with a cage"
 msgstr "تبدیل قفسی: تغییر شکل یک گزینش با یک قفس"
 
 #: app/tools/gimpcagetool.c:164
-#, fuzzy
 msgid "_Cage Transform"
-msgstr "_تبدیل"
+msgstr "_تبدیل قفسی"
 
 #: app/tools/gimpcagetool.c:227
 msgid "Cannot modify multiple layers. Select only one layer."
@@ -24585,9 +24558,8 @@ msgid "Computing Cage Coefficients"
 msgstr ""
 
 #: app/tools/gimpcagetool.c:1302
-#, fuzzy
 msgid "Cage transform"
-msgstr "تبدیل"
+msgstr "تبدیل قفسی"
 
 #: app/tools/gimpcloneoptions-gui.c:159 app/tools/gimpcloneoptions-gui.c:267
 #, fuzzy
@@ -25639,11 +25611,11 @@ msgstr "حذف پارازیت از تصویر"
 
 #: app/tools/gimphandletransformtool.c:111
 msgid "Handle Transform"
-msgstr "تبدیل دستگیره‌ای"
+msgstr "تبدیل با دستگیره"
 
 #: app/tools/gimphandletransformtool.c:112
 msgid "Handle Transform Tool: Deform the layer, selection or path with handles"
-msgstr "ابزار تبدیل دستگیره‌ای: تغییر شکل لایه، گزینش یا مسیر با دستگیره‌ها"
+msgstr "ابزار تبدیل با دستگیره: تغییر شکل لایه، گزینش یا مسیر با دستگیره‌ها"
 
 #: app/tools/gimphandletransformtool.c:114
 msgid "_Handle Transform"
@@ -25652,7 +25624,7 @@ msgstr "تبدیل _دستگیره‌ای"
 #: app/tools/gimphandletransformtool.c:138
 msgctxt "undo-type"
 msgid "Handle transform"
-msgstr "تبدیل دستگیره‌ای"
+msgstr "تبدیل با دستگیره"
 
 #: app/tools/gimphandletransformtool.c:139
 #, fuzzy
@@ -25719,11 +25691,11 @@ msgstr "نمایش پیرامون گزینش"
 
 #: app/tools/gimpiscissorstool.c:292
 msgid "Scissors Select"
-msgstr "گزینش قیچی"
+msgstr "گزینش با قیچی"
 
 #: app/tools/gimpiscissorstool.c:293
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr "ابزار گزینش قیچی: گزینش شکل‌ها با استفاده از تشخیص هوشمندانهٔ لبه‌ها"
+msgstr "ابزار گزینش با قیچی: گزینش شکل‌ها با استفاده از تشخیص هوشمندانهٔ لبه‌ها"
 
 #: app/tools/gimpiscissorstool.c:294
 msgid "Intelligent _Scissors"
@@ -27498,18 +27470,16 @@ msgid "Create Animation"
 msgstr "ایجاد پویانمایی"
 
 #: app/tools/gimpwarptool.c:175
-#, fuzzy
 msgid "Warp Transform"
-msgstr "تبدیل"
+msgstr "تبدیل پیچشی"
 
 #: app/tools/gimpwarptool.c:176
 msgid "Warp Transform: Deform with different tools"
 msgstr "تبدیل پیچشی: تغییر شکل با ابزارهای متنوّع"
 
 #: app/tools/gimpwarptool.c:177
-#, fuzzy
 msgid "_Warp Transform"
-msgstr "_تبدیل"
+msgstr "_تبدیل پیچشی"
 
 #: app/tools/gimpwarptool.c:600 app/tools/gimpwarptool.c:612
 msgid "Warp Tool Stroke"
@@ -27539,9 +27509,8 @@ msgid "No warp to smooth."
 msgstr ""
 
 #: app/tools/gimpwarptool.c:1088
-#, fuzzy
 msgid "Warp transform"
-msgstr "تبدیل"
+msgstr "تبدیل پیچشی"
 
 #: app/tools/gimpwarptool.c:1427
 msgid "Please add some warp strokes first."
@@ -30402,19 +30371,16 @@ msgid "Reset tool order and visibility"
 msgstr "برگرداندن ترتیب و نمایانت ابزارها به حالت اولیه"
 
 #: app/widgets/gimptooloptionseditor.c:195
-#, fuzzy
 msgid "Save Tool Preset..."
-msgstr "_ویرایش رنگ…"
+msgstr "ذخیرهٔ پیش‌تنظیم ابزار…"
 
 #: app/widgets/gimptooloptionseditor.c:204
-#, fuzzy
 msgid "Restore Tool Preset..."
-msgstr "_ویرایش رنگ…"
+msgstr "بازیابی پیش‌تنظیم ابزار…"
 
 #: app/widgets/gimptooloptionseditor.c:213
-#, fuzzy
 msgid "Delete Tool Preset..."
-msgstr "_حذف رنگ"
+msgstr "حذف پیش‌تنظیم ابزار…"
 
 #: app/widgets/gimptoolpreseteditor.c:291
 #, fuzzy, c-format
@@ -30739,7 +30705,7 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"اخطار XFC: نگارش 0 از قالب پروندهٔ XCF\n"
+"هشدار XFC: نگارش 0 از قالب پروندهٔ XCF\n"
 "نقشه‌رنگ‌های نمونه‌رنگی را درست ذخیره نمی‌کرد.\n"
 "نقشهٔ بی‌رنگ جایگزین می‌شود."
 
