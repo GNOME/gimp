@@ -48,14 +48,6 @@ GimpDisplayShell, GimpDock, .dialog-action-box, .dialog-vbox {
   color: rgb(100,100,100);
 }
 
-/* The drop target at the top with the mini wWlber.
- * Setting background-color here works, but setting color doesn't affect
- * the color of the drawn Wilber.
- */
-#gimp-internal-dock-2 frame .flat {
-  background-color: rgb(220,220,220);
-}
-
 /* GtkTextView */
 textview text, textview {
    background-color: rgba (184, 184, 184, 0.5);
@@ -103,13 +95,14 @@ notebook stack {
 /* Use this to make a border or padding around each tab */
 notebook header tabs tab {
   padding: 1px;
+  margin-left: 2px;
+  margin-right: 2px;
   border: 1px solid rgb(200,200,200);
 }
 
 /* The underline for selected tabs */
 notebook header tabs tab:checked {
   background-color: rgb(190,190,190);
-  margin: 0;
   box-shadow: 0 -4px rgb(180, 180, 180) inset;
 }
 
@@ -156,7 +149,7 @@ notebook header tabs tab:hover {
  * of the Toolbox window.
 */
 
-.flat {
+button .flat {
   background-color: rgb(235,235,235);
   color: black;
 }
@@ -167,6 +160,17 @@ notebook header tabs tab:hover {
 
 .flat:hover {
   background: rgb(250,250,250);
+}
+
+/* Color the toolbox Wilber icon */
+GimpDock frame:first-child:not(label) {
+  color: rgb(100,100,100);
+}
+/* Fix an issue with a few labels in the toolbox
+ * having their colors overwritten with Wilber's
+ */
+GimpDock frame:first-child label {
+  color: black;
 }
 
 scrollbar {
@@ -180,12 +184,17 @@ Doesn't seem to work here, though.
  */
 scrollbar trough {
   background: rgb(250,250,250);
-  
 }
 
 scrollbar slider {
   background: rgb(110,110,110);
   border: 2px solid rgb(220,220,220);
+}
+
+/* Removes black border around scrolled windows */
+scrolledwindow viewport grid {
+   border-radius: 1px;
+   border: 0px solid rgb(235,235,235);
 }
 
 notebook header {
@@ -218,6 +227,7 @@ paned separator {
 
 button {
   background-image: none;
+  text-shadow: 0 0;
 }
 
 button:disabled {
@@ -262,9 +272,19 @@ radio {
   color: black;
 }
 
+/* Removes "blurred" effect from tooltip label */
+tooltip {
+  text-shadow: 0 0;
+}
+
 /* The border around a tooltip */
 .background {
    background-color: rgb(220,220,220);
+}
+
+/* The border around a frame */
+border {
+  border: 0px;
 }
 
 /* For dropdown menus (e.g. "px" when creating a new image */
@@ -294,6 +314,18 @@ menubar *:disabled {
 menuitem *:hover {
   color: black;
   background: rgb(250,250,250);
+}
+
+/* "Add Tab" menu in dockable dialog */
+menu {
+  background-color: rgb (235, 235, 235);
+}
+
+/* Fixes issue with top menu label not changing
+ * colors when highlighted
+ */
+menu box {
+   background-color: transparent;
 }
 
 /* Sidebar in File > Open */
