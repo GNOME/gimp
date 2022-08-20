@@ -248,8 +248,11 @@ themes_apply_theme (Gimp          *gimp,
 
       if (theme_dir)
         {
-          css_files = g_slist_prepend (
-            css_files, g_file_get_child (theme_dir, "gimp.css"));
+          css_files = g_slist_prepend (css_files, g_file_get_child (theme_dir,
+                                                                    "gimp.css"));
+          if (config->prefer_dark_theme)
+            css_files = g_slist_prepend (css_files, g_file_get_child (theme_dir,
+                                                                      "gimp-dark.css"));
         }
       else
         {
