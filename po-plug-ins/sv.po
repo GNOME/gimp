@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-17 18:05+0000\n"
-"PO-Revision-Date: 2022-08-18 15:09+0200\n"
+"POT-Creation-Date: 2022-08-19 19:48+0000\n"
+"PO-Revision-Date: 2022-08-19 23:21+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "Language: sv\n"
@@ -183,8 +183,8 @@ msgstr "Rasta en get (Javascript)"
 #: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
 #: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/flame/flame.c:717
-#: plug-ins/flame/flame.c:1034
+#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3284
+#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -476,7 +476,7 @@ msgstr "_Vertikal"
 #: plug-ins/file-faxg3/faxg3.c:575 plug-ins/file-fits/fits.c:556
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
-#: plug-ins/file-psd/psd-load.c:2501 plug-ins/file-sgi/sgi.c:474
+#: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
 #: plug-ins/file-tiff/file-tiff-load.c:1528
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
@@ -1023,7 +1023,7 @@ msgstr "Spara parametrar för CML-utforskare"
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
 #: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:1815 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-psd/psd-save.c:1866 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1059,8 +1059,8 @@ msgstr "Läs in parametrar för CML-utforskare"
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
 #: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
 #: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:158
-#: plug-ins/file-psd/psd-load.c:163 plug-ins/file-psd/psd-save.c:1820
+#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:159
+#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:1871
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
@@ -1967,7 +1967,7 @@ msgstr "EOF eller fel vid inläsning av bildhuvud"
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
 #: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
 #: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:171 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-psd/psd-load.c:172 plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2046,7 +2046,7 @@ msgstr "”%s”: EOF eller fel vid inläsning av palettdata"
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
 #: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:1777 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-psd/psd-save.c:1812 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -3073,13 +3073,13 @@ msgid "'%s' is not a PCX file"
 msgstr "”%s” är inte en PCX-fil"
 
 #: plug-ins/common/file-pcx.c:445 plug-ins/common/file-wbmp.c:259
-#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:362
+#: plug-ins/file-bmp/bmp-load.c:726 plug-ins/file-psd/psd-load.c:363
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Bildens bredd är ogiltig eller stöds inte: %d"
 
 #: plug-ins/common/file-pcx.c:451 plug-ins/common/file-wbmp.c:265
-#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:354
+#: plug-ins/file-bmp/bmp-load.c:732 plug-ins/file-psd/psd-load.c:355
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
@@ -4733,8 +4733,8 @@ msgid "Enter other comment if you want."
 msgstr "Ange en kommentar om du vill."
 
 #. Begin displaying export progress
-#: plug-ins/common/file-xmc.c:1372 plug-ins/file-webp/file-webp-save.c:196
-#: plug-ins/file-webp/file-webp-save.c:594
+#: plug-ins/common/file-xmc.c:1372 plug-ins/file-webp/file-webp-save.c:198
+#: plug-ins/file-webp/file-webp-save.c:598
 #, c-format
 msgid "Saving '%s'"
 msgstr "Sparar ”%s”"
@@ -7218,106 +7218,125 @@ msgstr "Förhandsvisa export"
 msgid "JPEG format does not support multiple layers."
 msgstr "JPEG-formatet stöder inte flera lager."
 
-#: plug-ins/file-psd/psd-load.c:280 plug-ins/file-psd/psd-thumb-load.c:138
+#: plug-ins/file-psd/psd-load.c:281 plug-ins/file-psd/psd-thumb-load.c:138
 #, c-format
 msgid "Error loading PSD file: %s"
 msgstr "Fel vid inläsning av PSD-fil: %s"
 
-#: plug-ins/file-psd/psd-load.c:333
+#: plug-ins/file-psd/psd-load.c:334
 msgid "Not a valid Photoshop document file"
 msgstr "Inte en giltig Photoshop-dokumentfil"
 
-#: plug-ins/file-psd/psd-load.c:340
+#: plug-ins/file-psd/psd-load.c:341
 #, c-format
 msgid "Unsupported file format version: %d"
 msgstr "Filformatets version stöds inte: %d"
 
-#: plug-ins/file-psd/psd-load.c:347
+#: plug-ins/file-psd/psd-load.c:348
 #, c-format
 msgid "Too many channels in file: %d"
 msgstr "För många kanaler i fil: %d"
 
-#: plug-ins/file-psd/psd-load.c:371
+#: plug-ins/file-psd/psd-load.c:372
 #, c-format
 msgid "Unsupported or invalid image size: %dx%d"
 msgstr "Bildens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:386 plug-ins/file-psd/psd-load.c:397
+#: plug-ins/file-psd/psd-load.c:387 plug-ins/file-psd/psd-load.c:398
 #, c-format
 msgid "Unsupported color mode: %s"
 msgstr "Färgläget stöds inte: %s"
 
-#: plug-ins/file-psd/psd-load.c:424
+#: plug-ins/file-psd/psd-load.c:425
 #, c-format
 msgid "Unsupported bit depth: %d"
 msgstr "Bitdjupet stöds inte: %d"
 
-#: plug-ins/file-psd/psd-load.c:458 plug-ins/file-psd/psd-load.c:468
-#: plug-ins/file-psd/psd-load.c:681 plug-ins/file-psd/psd-load.c:1027
+#: plug-ins/file-psd/psd-load.c:459 plug-ins/file-psd/psd-load.c:469
+#: plug-ins/file-psd/psd-load.c:682 plug-ins/file-psd/psd-load.c:1028
 msgid "The file is corrupt!"
 msgstr "Filen är skadad!"
 
-#: plug-ins/file-psd/psd-load.c:632
+#: plug-ins/file-psd/psd-load.c:633
 #, c-format
 msgid "Too many channels in layer: %d"
 msgstr "För många kanaler i lager: %d"
 
-#: plug-ins/file-psd/psd-load.c:716
+#: plug-ins/file-psd/psd-load.c:717
 #, c-format
 msgid "Unsupported or invalid layer height: %d"
 msgstr "Bildens höjd stöds inte eller är ogiltig: %d"
 
-#: plug-ins/file-psd/psd-load.c:725
+#: plug-ins/file-psd/psd-load.c:726
 #, c-format
 msgid "Unsupported or invalid layer width: %d"
 msgstr "Bildens bredd stöds inte eller är ogiltig: %d"
 
-#: plug-ins/file-psd/psd-load.c:735
+#: plug-ins/file-psd/psd-load.c:736
 #, c-format
 msgid "Unsupported or invalid layer size: %dx%d"
 msgstr "Lagrets storlek är ogiltig eller stöds inte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:755
+#: plug-ins/file-psd/psd-load.c:756
 msgid "Unsupported or invalid mask info size."
 msgstr "Maskinfons storlek är ogiltig eller stöds inte."
 
-#: plug-ins/file-psd/psd-load.c:932
+#: plug-ins/file-psd/psd-load.c:933
 #, c-format
 msgid "Unsupported or invalid layer mask height: %d"
 msgstr "Lagermaskens höjd är ogiltig eller stöds inte: %d"
 
-#: plug-ins/file-psd/psd-load.c:941
+#: plug-ins/file-psd/psd-load.c:942
 #, c-format
 msgid "Unsupported or invalid layer mask width: %d"
 msgstr "Lagermaskens bredd är ogiltig eller stöds inte: %d"
 
-#: plug-ins/file-psd/psd-load.c:951
+#: plug-ins/file-psd/psd-load.c:952
 #, c-format
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Lagermaskens storlek är ogiltig eller stöds inte: %dx%d"
 
-#: plug-ins/file-psd/psd-load.c:1834 plug-ins/file-psd/psd-load.c:2474
+#: plug-ins/file-psd/psd-load.c:1835 plug-ins/file-psd/psd-load.c:2475
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Komprimeringsläget stöds inte: %d"
 
-#: plug-ins/file-psd/psd-load.c:2667
+#: plug-ins/file-psd/psd-load.c:2668
 msgid "Extra"
 msgstr "Extra"
 
-#: plug-ins/file-psd/psd-load.c:2867
+#: plug-ins/file-psd/psd-load.c:2868
 msgid "Unsupported or invalid channel size"
 msgstr "Kanalstorleken är ogiltig eller stöds inte"
 
-#: plug-ins/file-psd/psd-load.c:2936
+#: plug-ins/file-psd/psd-load.c:2937
 msgid "Failed to decompress data"
 msgstr "Misslyckades med att dekomprimera data"
 
-#: plug-ins/file-psd/psd-save.c:470
+#: plug-ins/file-psd/psd-load.c:3281
+msgid "PSD Compatibility Notice"
+msgstr "PSD-kompatibilitetsanteckning"
+
+#. Duotone import notification
+#: plug-ins/file-psd/psd-load.c:3296
+msgid "Duotone Import"
+msgstr "Import av duplexfärg"
+
+#: plug-ins/file-psd/psd-load.c:3297
+msgid ""
+"Image will be imported as Grayscale.\n"
+"Duotone color space data has been saved\n"
+"and can be reapplied on export."
+msgstr ""
+"Bilden kommer importeras som gråskala.\n"
+"Data för duplexfärgrymd har sparats\n"
+"och kan åter tillämpas vid export."
+
+#: plug-ins/file-psd/psd-save.c:473
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Fel: Kan inte konvertera GIMP-basbildtyp till PSD-läge"
 
-#: plug-ins/file-psd/psd-save.c:1770
+#: plug-ins/file-psd/psd-save.c:1805
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7326,7 +7345,7 @@ msgstr ""
 "Kunde inte exportera ”%s”. Filformatet PSD har inte stöd för bilder som är "
 "högre eller bredare än 30000 bildpunkter."
 
-#: plug-ins/file-psd/psd-save.c:1795
+#: plug-ins/file-psd/psd-save.c:1846
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7334,6 +7353,18 @@ msgid ""
 msgstr ""
 "Kunde inte exportera ”%s”. Filformatet PSD har inte stöd för bilder med "
 "lager som är högre eller bredare än 30000 bildpunkter."
+
+#: plug-ins/file-psd/psd-save.c:2091
+msgid "Export Image as PSD"
+msgstr "Exportera bild som PSD"
+
+#: plug-ins/file-psd/psd-save.c:2096
+msgid ""
+"Duotone color space information from the original\n"
+"imported image will be used."
+msgstr ""
+"Färgrymdsinformation för duplexfärg från den\n"
+"ursprungliga importerade bilden kommer användas."
 
 #: plug-ins/file-psd/psd-util.c:176
 msgid "Error reading data. Most likely unexpected end of file."
@@ -7981,45 +8012,47 @@ msgstr "NULL-parameter"
 msgid "invalid configuration"
 msgstr "ogiltig konfiguration"
 
-#: plug-ins/file-webp/file-webp-save.c:109
-msgid "bad image dimensions"
-msgstr "felaktiga bilddimensioner"
+#. TRANSLATORS: widthxheight with UTF-8 encoded multiply sign.
+#: plug-ins/file-webp/file-webp-save.c:110
+#, c-format
+msgid "bad image dimensions (maximum: %d×%d)"
+msgstr "felaktiga bilddimensioner (maximum: %d×%d)"
 
-#: plug-ins/file-webp/file-webp-save.c:111
+#: plug-ins/file-webp/file-webp-save.c:113
 msgid "partition is bigger than 512K"
 msgstr "partition är större än 512K"
 
-#: plug-ins/file-webp/file-webp-save.c:113
+#: plug-ins/file-webp/file-webp-save.c:115
 msgid "partition is bigger than 16M"
 msgstr "partition är större än 16M"
 
-#: plug-ins/file-webp/file-webp-save.c:115
+#: plug-ins/file-webp/file-webp-save.c:117
 msgid "unable to flush bytes"
 msgstr "kan inte tömma ut byte"
 
-#: plug-ins/file-webp/file-webp-save.c:117
+#: plug-ins/file-webp/file-webp-save.c:119
 msgid "file is larger than 4GiB"
 msgstr "filen är större än 4GiB"
 
-#: plug-ins/file-webp/file-webp-save.c:119
+#: plug-ins/file-webp/file-webp-save.c:121
 msgid "user aborted encoding"
 msgstr "användaren avbröt kodning"
 
-#: plug-ins/file-webp/file-webp-save.c:121
+#: plug-ins/file-webp/file-webp-save.c:123
 msgid "list terminator"
 msgstr "list-avslutare"
 
-#: plug-ins/file-webp/file-webp-save.c:123
+#: plug-ins/file-webp/file-webp-save.c:125
 msgid "unknown error"
 msgstr "okänt fel"
 
-#: plug-ins/file-webp/file-webp-save.c:206
-#: plug-ins/file-webp/file-webp-save.c:604
+#: plug-ins/file-webp/file-webp-save.c:208
+#: plug-ins/file-webp/file-webp-save.c:608
 #, c-format
 msgid "Unable to open '%s' for writing: %s"
 msgstr "Kan inte öppna ”%s” för skrivning: %s"
 
-#: plug-ins/file-webp/file-webp-save.c:291
+#: plug-ins/file-webp/file-webp-save.c:294
 #, c-format
 msgid "WebP error: '%s'"
 msgstr "WebP-fel: ”%s”"
@@ -12876,6 +12909,9 @@ msgstr "_Bildläsare/Kamera…"
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Överför data från bildläsare/kamera"
+
+#~ msgid "bad image dimensions"
+#~ msgstr "felaktiga bilddimensioner"
 
 #~ msgid "_Sample Spacing:"
 #~ msgstr "_Samplingsmellanrum:"
