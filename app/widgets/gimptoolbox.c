@@ -593,9 +593,18 @@ static GtkWidget *
 toolbox_create_color_area (GimpToolbox *toolbox,
                            GimpContext *context)
 {
-  GtkWidget *col_area;
+  GtkWidget   *col_area;
+  GtkIconSize  tool_icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+  gint         icon_width     = 40;
+  gint         icon_height    = 38;
 
-  col_area = gimp_toolbox_color_area_create (toolbox, 40, 38);
+  gtk_widget_style_get (GTK_WIDGET (toolbox->p->tool_palette),
+                        "tool-icon-size", &tool_icon_size,
+                        NULL);
+  gtk_icon_size_lookup (tool_icon_size, &icon_width, &icon_height);
+  col_area = gimp_toolbox_color_area_create (toolbox,
+                                             (gint) (icon_width * 1.75),
+                                             (gint) (icon_height * 1.75));
   g_object_set (col_area,
                 "halign",        GTK_ALIGN_CENTER,
                 "valign",        GTK_ALIGN_CENTER,

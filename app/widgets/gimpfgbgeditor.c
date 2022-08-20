@@ -234,7 +234,7 @@ gimp_fg_bg_editor_init (GimpFgBgEditor *editor)
                              G_CALLBACK (gimp_fg_bg_editor_destroy_transform),
                              NULL, NULL);
 
-  gtk_widget_set_size_request (GTK_WIDGET (editor), 32, 24);
+  gtk_widget_set_size_request (GTK_WIDGET (editor), 24, 24);
 }
 
 static void
@@ -357,7 +357,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   /*  draw the default colors pixbuf  */
   if (! editor->default_icon)
     editor->default_icon = gimp_widget_load_icon (widget,
-                                                  GIMP_ICON_COLORS_DEFAULT, 12);
+                                                  GIMP_ICON_COLORS_DEFAULT,
+                                                  MAX (MIN (width * 0.3, 12), 6));
 
   default_w = gdk_pixbuf_get_width  (editor->default_icon) / scale_factor;
   default_h = gdk_pixbuf_get_height (editor->default_icon) / scale_factor;
@@ -383,7 +384,8 @@ gimp_fg_bg_editor_draw (GtkWidget *widget,
   /*  draw the swap colors pixbuf  */
   if (! editor->swap_icon)
     editor->swap_icon = gimp_widget_load_icon (widget,
-                                               GIMP_ICON_COLORS_SWAP, 12);
+                                               GIMP_ICON_COLORS_SWAP,
+                                               MAX (MIN (width * 0.3, 12), 6));
 
   swap_w = gdk_pixbuf_get_width  (editor->swap_icon) / scale_factor;
   swap_h = gdk_pixbuf_get_height (editor->swap_icon) / scale_factor;
