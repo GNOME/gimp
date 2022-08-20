@@ -9,27 +9,82 @@
 
 @import url("../System/gimp.css");
 
+/* Basic foreground, background and border colors. */
+@define-color fg-color               black;
+@define-color bg-color               rgb(235,235,235);
+@define-color border-color           rgb(220,220,220);
+
+/********* Variants for foreground colors *********/
+
+/* In places where we want not as strongly contrasted text. */
+@define-color dimmed-fg-color        rgb(100,100,100);
+/* Disabled items, such as disabled actions in menus. */
+@define-color disabled-fg-color      rgb(110,110,110);
+/* Disabled buttons are dimmed even more (text needs to still be
+ * readable, but buttons design are usually enough. */
+@define-color disabled-button-color  rgb(200,200,200);
+
+/********* Variants for background colors *********/
+
+/* Background color for hovered items to "stick out". */
+@define-color hover-color            rgb(250,250,250);
+/* Background color when we want widgets-in-widgets to differenciate. It
+ * will usually be "less extreme", i.e. darker on a light theme, or
+ * lighter on a dark theme.
+ */
+@define-color widget-bg-color        rgb(220,220,220);
+/* Color for selected items, in particular when their usual background
+ * color is @widget-bg-color or @bg-color. It will usually be ligher on
+ * a light theme, or darker on a dark theme.
+ */
+@define-color selected-color         rgb(250,250,250);
+
+/* Background color more extreme in the theme tendency, i.e. darker on a
+ * dark theme, ligther on a light theme. */
+@define-color extreme-bg-color       rgb(250,250,250);
+/* Color for a selected item to "stick out" when @extreme-bg-color is
+ * used. It will usually be darker than @bg-color on a light theme,
+ * ligher on a dark theme.
+ */
+@define-color extreme-selected-color rgb(220,220,220);
+
+/********* Variants for border colors *********/
+
+@define-color strong-border-color    rgb(200,200,200);
+@define-color stronger-border-color  rgb(185,185,185);
+
+/********* Colors for special cases *********/
+
+@define-color scrollbar-slider-color rgb(110,110,110);
+@define-color scrollbar-trough-color rgb(250,250,250);
+
+@define-color ruler-color            rgba(220,220,220,0.3);
+
 * {
   /* Default text color; needed for e.g. the Prefs dialog title area,
    * which doesn't have any more specific way to style it.
    */
-  color: black;
+  color: @fg-color;
 }
 
 #image-menubar, GtkImageMenuItem {
-  background-color: rgb(235,235,235);
-  color: black;
+  background-color: @bg-color;
+  color: @fg-color;
 }
 
 /* TreeViews, e.g. in a file picker or the Prefs dialog */
 .view {
-  background-color: rgb(250,250,250);
-  color: black;
+  background-color: @extreme-bg-color;
+  color: @fg-color;
 }
 
 .view:selected {
-  background-color: rgb(220,220,220);
-  color: black;
+  background-color: @extreme-selected-color;
+  color: @fg-color;
+}
+
+.view:disabled {
+  color: @disabled-fg-color;
 }
 
 /* The main image window before it has an image in it,
@@ -38,39 +93,39 @@
  * background-color and background here are ignored.
  */
 GimpDisplayShell, GimpDock, .dialog-action-box, .dialog-vbox {
-  color: rgb(100,100,100);
+  color: @dimmed-fg-color;
 }
 
 /* Foreground color for the big Wilber in the empty image window.
  * Again, background-color and background here are ignored.
  */
 #gimp-canvas {
-  color: rgb(100,100,100);
+  color: @dimmed-fg-color;
 }
 
 /* GtkTextView */
 textview text, textview {
   background-color: rgba (184, 184, 184, 0.5);
-  color: black;
+  color: @fg-color;
 }
 /* End GtkTextView */
 
 combobox window.popup, combobox window {
   background-image: none;
-  background-color: rgb(220,220,220);
-  color: black;
+  background-color: @widget-bg-color;
+  color: @fg-color;
 }
 
 combobox box, combobox box.linked, combobox button {
-  background-color: rgb(235,235,235);
-  color: black;
+  background-color: @bg-color;
+  color: @fg-color;
   background-image: none;
-  border-color: rgb(185,185,185);
+  border-color: @stronger-border-color;
 }
 
 /* Get rid of the outline around all tabs in the gimpcolordialog */
 GimpColorNotebook .frame {
-  border-color: rgb(235,235,235);
+  border-color: @bg-color;
 }
 
 /* Color history buttons in the color chooser.
@@ -78,18 +133,18 @@ GimpColorNotebook .frame {
  * but not the + button; GimpColorSelection gets both.
  */
 GimpColorSelection button {
-  background: rgb(220,220,220);
-  border: 1px solid rgb(185,185,185);
-  color: black;
+  background: @widget-bg-color;
+  border: 1px solid @stronger-border-color;
+  color: @fg-color;
 }
 
 GimpColorSelection button:hover {
-  background: rgb(250,250,250);
+  background: @hover-color;
 }
 
 /* The tabs above the color selector */
 notebook stack {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
 }
 
 /* Use this to make a border or padding around each tab */
@@ -97,23 +152,23 @@ notebook header tabs tab {
   padding: 1px;
   margin-left: 2px;
   margin-right: 2px;
-  border: 1px solid rgb(200,200,200);
+  border: 1px solid @strong-border-color;
 }
 
 /* The underline for selected tabs */
 notebook header tabs tab:checked {
-  background-color: rgb(190,190,190);
-  box-shadow: 0 -4px rgb(180, 180, 180) inset;
+  background-color: @selected-color;
+  box-shadow: 0 -4px @stronger-border-color inset;
 }
 
 notebook header tabs tab:hover {
-  background-color: rgb(250,250,250);
+  background-color: @hover-color;
 }
 
 /* The background of many dialogs, e.g. Preferences and gimpcolordialog */
 .vertical {
-  color: black;
-  background-color: rgb(235,235,235);
+  color: @fg-color;
+  background-color: @bg-color;
   background-image: none;
 }
 
@@ -121,8 +176,8 @@ notebook header tabs tab:hover {
  * Also, unexpectedly, controls the prefs "Reload Current Theme" button content.
  */
 .horizontal {
-  color: black;
-  background-color: rgb(235,235,235);
+  color: @fg-color;
+  background-color: @bg-color;
 }
 
 /* Text buttons, e.g. the main buttons at the bottoms of dialogs,
@@ -130,18 +185,18 @@ notebook header tabs tab:hover {
  * where they're inside a GimpColorSelection
  */
 .text-button {
-  color: black;
-  background-color: rgb(235,235,235);
+  color: @fg-color;
+  background-color: @bg-color;
   background-image: none;
   font-weight: normal;
 }
 
 .text-button:hover {
-  background-color: rgb(250,250,250);
+  background-color: @hover-color;
 }
 
 .text-button:checked {
-  background-color: rgb(250,250,250);
+  background-color: @selected-color;
   font-weight: bold;
 }
 
@@ -150,31 +205,31 @@ notebook header tabs tab:hover {
 */
 
 button .flat {
-  background-color: rgb(235,235,235);
-  color: black;
+  background-color: @bg-color;
+  color: @fg-color;
 }
 
 .flat:checked {
-  background: rgb(240,240,240);
+  background: @selected-color;
 }
 
 .flat:hover {
-  background: rgb(250,250,250);
+  background: @selected-color;
 }
 
 /* Color the toolbox Wilber icon */
 GimpDock frame:first-child:not(label) {
-  color: rgb(100,100,100);
+  color: @dimmed-fg-color;
 }
 /* Fix an issue with a few labels in the toolbox
  * having their colors overwritten with Wilber's
  */
 GimpDock frame:first-child label {
-  color: black;
+  color: @fg-color;
 }
 
 scrollbar {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
 }
 
 /*
@@ -183,46 +238,47 @@ https://stackoverflow.com/questions/52414202/gtkscrolledwindow-how-to-always-sho
 Doesn't seem to work here, though.
  */
 scrollbar trough {
-  background: rgb(250,250,250);
+  background: @scrollbar-trough-color;
 }
 
 scrollbar slider {
-  background: rgb(110,110,110);
-  border: 2px solid rgb(220,220,220);
+  background: @scrollbar-slider-color;
+  border: 2px solid @border-color;
 }
 
 /* Removes black border around scrolled windows */
 scrolledwindow viewport grid {
    border-radius: 1px;
-   border: 0px solid rgb(235,235,235);
+   border: 0px solid @bg-color;
 }
 
 notebook header {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
 }
 
 GimpRuler {
-  background-color: rgba(220,220,220, 0.3);
+  background-color: @ruler-color;
 }
 
 entry {
-  background-color: rgb(250,250,250);
-  color: black;
+  background-color: @extreme-bg-color;
+  color: @fg-color;
 }
 
 entry selection {
-  background: rgb(220,220,220);
+  background: @extreme-selected-color;
 }
 
 paned separator {
    background-image: none;
-   color: rgb(220,220,220);
-   background-color: rgb(220,220,220);
+   color: @border-color;
+   background-color: @border-color;
 }
 
 .view button {
-  background-color: rgb(245,245,245);
-  color: black;
+  background-color: @bg-color;
+  border-color: @border-color;
+  color: @fg-color;
 }
 
 button {
@@ -230,8 +286,9 @@ button {
   text-shadow: 0 0;
 }
 
-button:disabled {
-  color: rgb(200,200,200);
+/* Handle both buttons drawn directly and drawn with an icon. */
+button:disabled, button:disabled image {
+  color: @disabled-button-color;
 }
 
 /* Spinbuttons: there are two kinds:
@@ -249,11 +306,11 @@ button:disabled {
 
 spinbutton, entry {
   /* Borders are a bit darker, but not too dark. */
-  border-color: rgb(200,200,200);
+  border-color: @strong-border-color;
 }
 
 GimpSpinScale entry progress {
-  background-color: rgb(220,220,220);
+  background-color: @extreme-selected-color;
   border-width:     0px;
   border-radius:    3px;
 }
@@ -261,20 +318,20 @@ GimpSpinScale entry progress {
 /* Checkboxes */
 checkbutton check {
   background-image: none;
-  background-color: rgb(240,240,240);
-  border: 1px solid rgb(185,185,185);
+  background-color: @extreme-bg-color;
+  border: 1px solid @stronger-border-color;
 }
 
 checkbutton check:checked {
-  color: black;
+  color: @fg-color;
 }
 
 /* Some plugins have radio buttons, e.g. Fractal Explorer */
 radio {
   background-image: none;
-  background-color: rgb(240, 240, 240);
-  border: 1px solid rgb(185,185,185);
-  color: black;
+  background-color: @extreme-bg-color;
+  border: 1px solid @stronger-border-color;
+  color: @fg-color;
 }
 
 /* Removes "blurred" effect from tooltip label */
@@ -284,7 +341,8 @@ tooltip {
 
 /* The border around a tooltip */
 .background {
-  background-color: rgb(220,220,220);
+  background-color: @border-color;
+  border: 1px;
 }
 
 /* The border around a frame */
@@ -294,36 +352,36 @@ border {
 
 /* For dropdown menus (e.g. "px" when creating a new image */
 #gtk-combobox-popup-menu {
-  background-color: rgb(235,235,235);
-  color: black;
+  background-color: @bg-color;
+  color: @fg-color;
 }
 
 /* Top menu items  */
 
 /* The top menu item itself: File, Edit ... */
 menuitem menuitem {
-  color: black;
-  background: rgb(240,240,240);
+  color: @fg-color;
+  background: @extreme-bg-color;
 }
 
 /* A top (File, Edit) menubar item when its menu is expanded. */
 menubar > menuitem:hover {
-  color: black;
-  background: rgb(250,250,250);
+  color: @fg-color;
+  background: @extreme-selected-color;
 }
 
 menubar *:disabled {
-    color: rgb(110,110,110);
+  color: @disabled-fg-color;
 }
 
 menuitem *:hover {
-  color: black;
-  background: rgb(250,250,250);
+  color: @fg-color;
+  background: @extreme-selected-color;
 }
 
 /* "Add Tab" menu in dockable dialog */
 menu {
-  background-color: rgb (235, 235, 235);
+  background-color: @bg-color;
 }
 
 /* Fixes issue with top menu label not changing
@@ -339,38 +397,38 @@ menu box {
  * The color of the buttons themselves comes from somewhere else.
  */
 .sidebar-row, .sidebar-row * {
-  background-color: rgb(220,220,220);
+  background-color: @widget-bg-color;
 }
 
 .sidebar-row:selected, .sidebar-row:selected * {
-  background-color: rgb(250,250,250);
+  background-color: @selected-color;
 }
 
 .sidebar-row:hover, .sidebar-row:hover * {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
 }
 
 /* Header bar */
 
 headerbar {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
   background-image: none;
 }
 
 headerbar:backdrop {
-  background-image: linear-gradient(to top, rgb(225,225,225), rgb(245,245,245));
+  background-image: linear-gradient(to top, @widget-bg-color, @extreme-bg-color);
 }
 
 /* GtkListBox widgets */
 
 list {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
 }
 
 /* GtkSwitch buttons */
 
 switch {
-  background-color: rgb(235,235,235);
+  background-color: @bg-color;
 }
 
 /* The switch button is quite hard to understand without color IMO. So
