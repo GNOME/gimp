@@ -1,6 +1,7 @@
+subdir('Default')
 
 themes = [
-  'System', 'Light',
+  'System',
 ]
 
 foreach theme : themes

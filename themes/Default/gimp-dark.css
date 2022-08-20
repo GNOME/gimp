@@ -1,0 +1,61 @@
+/* Dark variant for the Default theme for GIMP 3.0 */
+
+/* Hint for debugging themes:
+ * first enable the GTK inspector with
+   gsettings set org.gtk.Settings.Debug enable-inspector-keybinding true
+ * then (after restarting GIMP) call it up with ctrl+shift+i
+ * or from GIMP's UI: File > Debug > Start GtkInspector
+ */
+
+/* Basic foreground, background and border colors. */
+@define-color fg-color               white;
+@define-color bg-color               rgb(30,30,30);
+@define-color border-color           rgb(35,35,35);
+
+/********* Variants for foreground colors *********/
+
+/* In places where we want not as strongly contrasted text. */
+@define-color dimmed-fg-color        rgb(155,155,155);
+/* Disabled items, such as disabled actions in menus. */
+@define-color disabled-fg-color      rgb(145,145,145);
+/* Disabled buttons are dimmed even more (text needs to still be
+ * readable, but buttons design are usually enough. */
+@define-color disabled-button-color  rgb(50,50,50);
+
+/********* Variants for background colors *********/
+
+/* Background color for hovered items to "stick out". */
+@define-color hover-color            rgb(5,5,5);
+/* Background color when we want widgets-in-widgets to differenciate. It
+ * will usually be "less extreme", i.e. darker on a light theme, or
+ * lighter on a dark theme.
+ */
+@define-color widget-bg-color        rgb(35,35,35);
+/* Color for selected items, in particular when their usual background
+ * color is @widget-bg-color or @bg-color. It will usually be ligher on
+ * a light theme, or darker on a dark theme.
+ */
+@define-color selected-color         rgb(5,5,5);
+
+/* Background color more extreme in the theme tendency, i.e. darker on a
+ * dark theme, ligther on a light theme. */
+@define-color extreme-bg-color       rgb(5,5,5);
+/* Color for a selected item to "stick out" when @extreme-bg-color is
+ * used. It will usually be darker than @bg-color on a light theme,
+ * ligher on a dark theme.
+ */
+@define-color extreme-selected-color rgb(35,35,35);
+
+/********* Variants for border colors *********/
+
+@define-color strong-border-color    rgb(50,50,50);
+@define-color stronger-border-color  rgb(75,75,75);
+
+/********* Colors for special cases *********/
+
+@define-color scrollbar-slider-color rgb(140,140,140);
+@define-color scrollbar-trough-color rgb(5,5,5);
+
+@define-color ruler-color            rgba(35,35,35,0.3);
+
+@import url("common.css");
