@@ -992,7 +992,7 @@ Sets the theme search path.  This is a colon-separated list of folders to
 search.
 
 .TP
-(theme "Dark")
+(theme "Default")
 
 The name of the theme to use.  This is a string value.
 

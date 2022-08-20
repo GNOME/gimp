@@ -786,7 +786,7 @@
 
 # The name of the theme to use.  This is a string value.
 # 
-# (theme "Dark")
+# (theme "Default")
 
 # The name of the theme to use.  Possible values are yes and no.
 # 

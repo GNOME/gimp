@@ -259,11 +259,20 @@ themes_apply_theme (Gimp          *gimp,
           gchar *tmp;
 
           tmp = g_build_filename (gimp_data_directory (),
-                                  "themes", "System", "gimp.css",
+                                  "themes", "Default", "gimp.css",
                                   NULL);
           css_files = g_slist_prepend (
             css_files, g_file_new_for_path (tmp));
           g_free (tmp);
+
+          if (config->prefer_dark_theme)
+            {
+              tmp = g_build_filename (gimp_data_directory (),
+                                      "themes", "Default", "gimp-dark.css",
+                                      NULL);
+              css_files = g_slist_prepend (css_files, g_file_new_for_path (tmp));
+              g_free (tmp);
+            }
         }
 
       css_files = g_slist_prepend (
