@@ -117,6 +117,10 @@ GimpRuler {
     font-size: smaller;
 }
 
+spinbutton entry {
+    border-radius: 3px;
+}
+
 GimpSpinScale entry {
     /* Important: prevent overhigh spin scale */
     min-height: 16px;

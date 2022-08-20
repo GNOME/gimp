@@ -17,19 +17,19 @@
 }
 
 #image-menubar, GtkImageMenuItem {
-   background-color: rgb(235,235,235);
-   color: black;
+  background-color: rgb(235,235,235);
+  color: black;
 }
 
 /* TreeViews, e.g. in a file picker or the Prefs dialog */
 .view {
-   background-color: rgb(250,250,250);
-   color: black;
+  background-color: rgb(250,250,250);
+  color: black;
 }
 
 .view:selected {
-   background-color: rgb(220,220,220);
-   color: black;
+  background-color: rgb(220,220,220);
+  color: black;
 }
 
 /* The main image window before it has an image in it,
@@ -50,8 +50,8 @@ GimpDisplayShell, GimpDock, .dialog-action-box, .dialog-vbox {
 
 /* GtkTextView */
 textview text, textview {
-   background-color: rgba (184, 184, 184, 0.5);
-   color: black;
+  background-color: rgba (184, 184, 184, 0.5);
+  color: black;
 }
 /* End GtkTextView */
 
@@ -247,10 +247,15 @@ button:disabled {
  * so they're not overridden.
  */
 
+spinbutton, entry {
+  /* Borders are a bit darker, but not too dark. */
+  border-color: rgb(200,200,200);
+}
+
 GimpSpinScale entry progress {
-    background-color: rgb(220,220,220);
-    border-width:     0px;
-    border-radius:    3px;
+  background-color: rgb(220,220,220);
+  border-width:     0px;
+  border-radius:    3px;
 }
 
 /* Checkboxes */
@@ -279,7 +284,7 @@ tooltip {
 
 /* The border around a tooltip */
 .background {
-   background-color: rgb(220,220,220);
+  background-color: rgb(220,220,220);
 }
 
 /* The border around a frame */
@@ -289,8 +294,8 @@ border {
 
 /* For dropdown menus (e.g. "px" when creating a new image */
 #gtk-combobox-popup-menu {
-   background-color: rgb(235,235,235);
-   color: black;
+  background-color: rgb(235,235,235);
+  color: black;
 }
 
 /* Top menu items  */
@@ -325,7 +330,7 @@ menu {
  * colors when highlighted
  */
 menu box {
-   background-color: transparent;
+  background-color: transparent;
 }
 
 /* Sidebar in File > Open */
@@ -359,13 +364,13 @@ headerbar:backdrop {
 /* GtkListBox widgets */
 
 list {
-   background-color: rgb(235,235,235);
+  background-color: rgb(235,235,235);
 }
 
 /* GtkSwitch buttons */
 
 switch {
-   background-color: rgb(235,235,235);
+  background-color: rgb(235,235,235);
 }
 
 /* The switch button is quite hard to understand without color IMO. So
@@ -373,5 +378,5 @@ switch {
  * state, even though this is globally a neutral gray theme.
  */
 switch:checked {
-    background-color: rgb(200,200,255);
+  background-color: rgb(200,200,255);
 }
