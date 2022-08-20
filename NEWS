@@ -40,7 +40,7 @@ Core:
   - The soft-proof profile, soft-proofing rendering intent and whether
     black point compensation is used when soft-proofing are now image
     data. These have also been moved to the Image menu (out of View).
-    The soft-proof profile is also stored in the XCF file now.
+    These 3 simulation data are also stored in the XCF file now.
   - Hacks on canvas rulers and statusbar added in GIMP 2.99.10 for macOS
     triggering too big redraws were removed. This depends on patches
     added to upcoming GTK+ 3.24.35.
@@ -66,6 +66,13 @@ Core:
     e.g. some people say the canvas rotation is not useful to them).
   - GtkAction-s can also be mapped to modifiers now through the same
     settings.
+  - GIMP themes can now have a "gimp-dark.css" file which will be used
+    if the "Use dark theme variant if available" option was checked.
+  - The FG/BG editor area in the toolbox is now sized relatively to
+    toolbox icon size, allowing for it to be much bigger when using big
+    icons, or smaller when using small icons (which can e.g. be aligned
+    on a very narrow single column for people who appreciate this
+    organization).
 
 Tools:
 
@@ -121,6 +128,10 @@ Graphical User Interface:
     all soft-proofing related settings (whether they are associated to
     the image, such as the profile, intent or black-point compensation;
     or to the view, such as the out-of-gamut check) very easily.
+  - New "Default" theme containing a dark and light variant. As the name
+    implies, this theme is now made the default theme on new
+    installations.
+  - New "Compact" theme containing a dark and light variant.
 
 Command Line Interface:
 
@@ -162,11 +173,13 @@ Plug-ins:
   - help-browser: rewritten to use GtkAction and GtkApplication, even
     though it's now a deprecated plug-in (though it's a good example for
     porting other plug-ins the same way).
-  - PNG: the format does not have any flag for linear RGB, but it can
-    simply include a linear profile (or a 1.0 gAMA chunk). Therefore
-    since we always attach the profile when importing (or transform the
-    gAMA chunk into a profile), we now always load PNG images as
-    non-linear backend.
+  - PNG:
+    * the format does not have any flag for linear RGB, but it can
+      simply include a linear profile (or a 1.0 gAMA chunk). Therefore
+      since we always attach the profile when importing (or transform
+      the gAMA chunk into a profile), we now always load PNG images as
+      non-linear backend.
+    * Add toggle to choose PNG bit depth behavior.
   - python-fu-eval and plug-in-script-fu-eval ported to new
     GimpBatchProcedure class.
   - JPEG:
@@ -174,8 +187,12 @@ Plug-ins:
       profile set on the image.
     * CMYK import ported to GEGL/babl conversion. The CMYK profile in
       the JPEG image will be stored as soft-proof profile on the image.
-  - WebP: new option "Use Sharp YUV" available in non-lossless export.
-    It renders sharper edges at the cost of a slower export.
+  - WebP:
+    * new option "Use Sharp YUV" available in non-lossless export.
+      It renders sharper edges at the cost of a slower export.
+    * On export, the "bad image dimensions" error message is now more
+      accurate and tells the max dimension possible for WebP images
+      (16383 as it's stored on 14 bits).
   - DDS:
     * 16-bit masks now supported.
     * DDS images with single 16-bit channel support added.
@@ -252,6 +269,12 @@ Plug-ins:
       For now assuming that the extra mask will be first. The advantage
       of adding this here now, is that we won't try to add a mask
       channel as a normal channel.
+    * Minimal support of duotone data: on import, a duotone image will
+      be imported as grayscale image with an alert and the color
+      information will be stored in a parasite; on export, a dialog will
+      propose you to re-include the duotone data if the image is still
+      grayscale. This allows for a roundtrip in GIMP without losing the
+      duotone information.
   - ANI: new import/export support.
 
 API:
@@ -339,7 +362,16 @@ API:
       + gimp_prop_int_radio_box_new()
     * Updated functions:
       + GimpColorNotebook, GimpColorSelection and GimpColorSelector are
-      now ported to babl code and are simulation space aware.
+        now ported to babl code and are simulation space aware.
+      + GimpPickButton will now use the X11 color picking API as a
+        default when GIMP is running on X11 (instead of trying the
+        portals first), because it has color space information of the
+        display (so we can convert back the color from display space to
+        image space); and also on some desktop, the portal looks
+        available while it's actually not implemented (hence picking
+        fails).
+        This fixes or improves the color picking in the Colors dockable,
+        in Change Foreground/Background Color dialogs, etc.
   - Changes in PDB:
     * gimp-plug-in-domain-register removed.
 
