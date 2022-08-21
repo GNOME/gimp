@@ -1,18 +1,19 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2010-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2010-2022 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Ubuntu Launchpad Translators, 2010.
 # Muhammet Kara <muhammet.k@gmail.com>, 2011.
-# Sabri Ünal <libreajans@gmail.com>, 2019
+# Emin Tufan Çetin <etcetin@gmail.com>, 2022.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp tips master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-02-24 16:53+0000\n"
-"PO-Revision-Date: 2019-03-06 19:23+0200\n"
+"POT-Creation-Date: 2022-08-04 22:56+0000\n"
+"PO-Revision-Date: 2022-08-16 19:12+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -20,9 +21,9 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.1.1\n"
 
-#: ../data/tips/gimp-tips.xml.in.h:1
+#: data/tips/gimp-tips.xml.in:18
 msgid ""
 "You can get context-sensitive help for most of GIMP's features by pressing "
 "the F1 key at any time. This also works inside the menus."
@@ -30,7 +31,7 @@ msgstr ""
 "Çoğu GIMP özelliği için herhangi bir anda F1 tuşuna basarak içeriğe duyarlı "
 "yardımı alabilirsin. Bu da menülerin içinde çalışır."
 
-#: ../data/tips/gimp-tips.xml.in.h:2
+#: data/tips/gimp-tips.xml.in:24
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
@@ -40,7 +41,7 @@ msgstr ""
 "baktığınızda içeriklerinin birleşimi olarak gördüğünüz süzgeçler yığını "
 "olarak düşünün."
 
-#: ../data/tips/gimp-tips.xml.in.h:3
+#: data/tips/gimp-tips.xml.in:31
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -48,7 +49,7 @@ msgstr ""
 "Katmanlar iletişim kutusunda, katmanın yazı etiketine sağ tıklayarak birçok "
 "katman işlemini uygulayabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:4
+#: data/tips/gimp-tips.xml.in:37
 msgid ""
 "Saving an image uses XCF, GIMP's native file format (file extension <tt>."
 "xcf</tt>). This preserves the layers and many aspects of your work-in-"
@@ -57,11 +58,11 @@ msgid ""
 msgstr ""
 "Görüntüyü kaydetme işlemi GIMP'in kendi dosya biçimi olan XCF'yi kullanır "
 "(dosya uzantısı <tt>.xcf</tt>). Bu, devam eden çalışmanızın katmanlarını ve "
-"birçok yönünü korumayı sağlarken daha sonra tekrar üstünde çalışmaya da "
-"izin verir. Proje tamamlandığında dosyanızı JPEG, PNG, GIF vb. dosya "
-"biçimlerinde dışa aktarabilirsin."
+"birçok yönünü korumayı sağlarken daha sonra tekrar üstünde çalışmaya da izin "
+"verir. Proje tamamlandığında dosyanızı JPEG, PNG, GIF vb. dosya biçimlerinde "
+"dışa aktarabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:5
+#: data/tips/gimp-tips.xml.in:45
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
@@ -71,7 +72,7 @@ msgstr ""
 "tamamında eklentilerin çalışmasını istiyorsan bazı durumlarda bütün "
 "katmanları (Görüntü→Görüntüyü Düzleştir) birleştirmek zorunda kalabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: data/tips/gimp-tips.xml.in:52
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
@@ -81,7 +82,7 @@ msgstr ""
 "görünüyorsa bu katmanın bir görünür kanalı yoktur. Alfa kanalını "
 "Katman→Saydamlık→Alfa Kanalı Ekle yolunu kullanarak ekleyebilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: data/tips/gimp-tips.xml.in:59
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
@@ -93,7 +94,7 @@ msgstr ""
 "dönüştürmen, bir alfa kanalı eklemen (Katman→Saydamlık→Alfa Kanalı Ekle) "
 "veya onu düzleştirmen (Görüntü→Görüntüyü Düzleştir) gerekebilir."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: data/tips/gimp-tips.xml.in:68
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Most "
@@ -106,7 +107,7 @@ msgstr ""
 "tuşunu göz ardı etmeye veya <tt>Süper</tt> tuşunu (ya da \"Windows logosu\") "
 "kullanmaya yapılandırılabilir."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: data/tips/gimp-tips.xml.in:82
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -116,7 +117,7 @@ msgstr ""
 "veya renk paletinden bir rengi sürüklemek ve onu bir görüntünün içine "
 "bırakmak var olan görüntüyü veya seçimi bu renkle doldurur."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: data/tips/gimp-tips.xml.in:89
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
@@ -124,38 +125,38 @@ msgstr ""
 "Görüntünün etrafında dolaşmak için farenin orta düğmesini (ya da tercihen "
 "fareyi hareket ettirirken <tt>Boşluk</tt> tuşunu) kullanabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: data/tips/gimp-tips.xml.in:95
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"Bir kılavuz eklemek için bir cetvele tıklayıp bir görüntünü üstüne "
-"sürükle. Tüm sürüklenmiş seçimler kılavuzlara kancalanır. Kılavuzları "
-"kaldırmak için onları Taşıma aracı ile görüntüden dışarıya sürükle."
+"Bir kılavuz eklemek için bir cetvele tıklayıp bir görüntünü üstüne sürükle. "
+"Tüm sürüklenmiş seçimler kılavuzlara kancalanır. Kılavuzları kaldırmak için "
+"onları Taşıma aracı ile görüntüden dışarıya sürükle."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: data/tips/gimp-tips.xml.in:102
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
 "Katmanlar iletişim kutusundan bir katman sürükleyebilir ve onu araç "
-"çubuğunun üzerine bırakabilirsin. Bu işlem yalnızca bu katmanı içeren yeni bir "
-"görüntü oluşturur."
+"çubuğunun üzerine bırakabilirsin. Bu işlem yalnızca bu katmanı içeren yeni "
+"bir görüntü oluşturur."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: data/tips/gimp-tips.xml.in:108
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the &quot;New "
-"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
-"use the menus to do the same."
+"layer before doing other operations on the image. Click on the \"New Layer\" "
+"or the \"Anchor Layer\" button in the Layers dialog, or use the menus to do "
+"the same."
 msgstr ""
 "Bir yüzen seçim, görüntü üzerinde başka işlem yapmadan önce yeni bir katmana "
 "veya son etkin katmana kancalanmalıdır. Katmanlar iletişim kutusundaki "
-"&quot;Yeni Katman&quot; düğmesine veya &quot;Katmanı Çıpala&quot; düğmesine "
-"tıkla veya aynısını yapmak için menüleri kullan."
+"\"Yeni Katman\" düğmesine veya \"Katmanı Çıpala\" düğmesine tıkla veya "
+"aynısını yapmak için menüleri kullan."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: data/tips/gimp-tips.xml.in:116
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
@@ -165,17 +166,17 @@ msgstr ""
 "dosya adına veya sıkıştırıp kaydedilecek görüntüye <tt>.gz</tt> (veya <tt>."
 "bz2</tt>) ekle. Tabii ki yüklenen sıkıştırılmış görüntüler de çalışır."
 
-#: ../data/tips/gimp-tips.xml.in.h:15
+#: data/tips/gimp-tips.xml.in:124
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
 "Seçim yapmadan önce <tt>Shift</tt> tuşuna basılı tutmak, mevcut seçimin "
-"üzerine yazmak yerine eklemeye izin verir. Seçim yapmadan önce <tt>Ctrl</"
-"tt> kullanmak ise mevcut seçimden çıkarır."
+"üzerine yazmak yerine eklemeye izin verir. Seçim yapmadan önce <tt>Ctrl</tt> "
+"kullanmak ise mevcut seçimden çıkarır."
 
-#: ../data/tips/gimp-tips.xml.in.h:16
+#: data/tips/gimp-tips.xml.in:132
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -186,7 +187,7 @@ msgstr ""
 "için Yol aracını veya Süzgeçler→Tarama→Gfig süzgecini kullanarak çizim "
 "yapabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:17
+#: data/tips/gimp-tips.xml.in:139
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
@@ -196,7 +197,7 @@ msgstr ""
 "ayarları ile kullanılabilir. Renk geçişi kipinde Boya Fırçasını, Silgiyi ve "
 "Lekeleme aracını kullanabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:18
+#: data/tips/gimp-tips.xml.in:146
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -206,49 +207,48 @@ msgstr ""
 "Yol iletişim kutusu, çoklu yollarla çalışmana ve onları seçimlere "
 "dönüştürmene izin verir."
 
-#: ../data/tips/gimp-tips.xml.in.h:19
+#: data/tips/gimp-tips.xml.in:153
 msgid ""
-"You can use the paint tools to change the selection. Click on the &quot;"
-"Quick Mask&quot; button at the bottom left of an image window. Change your "
-"selection by painting in the image and click on the button again to convert "
-"it back to a normal selection."
+"You can use the paint tools to change the selection. Click on the \"Quick "
+"Mask\" button at the bottom left of an image window. Change your selection "
+"by painting in the image and click on the button again to convert it back to "
+"a normal selection."
 msgstr ""
 "Seçimi değiştirmek için boyama araçlarını kullanabilirsin. Bir görüntü "
-"penceresinin sol üstündeki &quot;Hızlı Maske&quot; düğmesine tıkla. Görüntüyü "
-"boyayarak seçimini değiştir ve onu normal bir seçime geri döndürmek için "
+"penceresinin sol üstündeki \"Hızlı Maske\" düğmesine tıkla. Görüntüyü "
+"boyayarak seçimini değiştir ve onu normal bir seçime geri dönüştürmek için "
 "düğmeye tekrar tıkla."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: data/tips/gimp-tips.xml.in:161
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"Seçimi bir kanala (Seçim→Kanala Kaydet) kaydedebilirsin ve bu kanalı herhangi "
-"bir boyama aracı ile düzenleyebilirsin. Kanallar iletişim kutusundaki "
-"düğmeleri kullanarak bu yeni kanalın görünürlüğünü değiştirebilir veya onu "
-"bir seçime dönüştürebilirsin."
+"Seçimi bir kanala (Seçim→Kanala Kaydet) kaydedebilirsin ve bu kanalı "
+"herhangi bir boyama aracı ile düzenleyebilirsin. Kanallar iletişim "
+"kutusundaki düğmeleri kullanarak bu yeni kanalın görünürlüğünü "
+"değiştirebilir veya onu bir seçime dönüştürebilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
+#: data/tips/gimp-tips.xml.in:175
 msgid ""
-"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
-"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item, and pressing the desired key combination. If &quot;"
-"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
-"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
-"shortcuts."
+"After you enabled \"Dynamic Keyboard Shortcuts\" in the Preferences dialog, "
+"you can reassign shortcut keys. Do so by bringing up the menu, selecting a "
+"menu item, and pressing the desired key combination. If \"Save Keyboard "
+"Shortcuts\" is enabled, the key bindings are saved when you exit GIMP. You "
+"should probably disable \"Dynamic Keyboard Shortcuts\" afterwards, to "
+"prevent accidentally assigning/reassigning shortcuts."
 msgstr ""
-"&quot;Devingen Klavye Kısayolları&quot;'nı Tercihler iletişim kutusundan "
+"\"Devingen Klavye Kısayolları\"'nı Tercihler iletişim kutusundan "
 "etkinleştirdikten sonra kısayol tuşları yeniden atayabilirsin. Bunu yapmak "
 "için menü açılır, bir menü ögesi seçilir ve istenilen tuş kombinasyonuna "
-"basılır. Eğer &quot;Klavye Kısayollarını Kaydet&quot; etkinleştirilmişse tuş "
-"ilişkilendirmeleri GIMP'den çıktığın zaman saklanır. Muhtemelen "
-"yanlışlıkla kısayol atamayı önlemek için daha sonra &quot;Devingen Klavye "
-"Kısayolları&quot;'nı devre dışı bırakman gerekir."
+"basılır. Eğer \"Klavye Kısayollarını Kaydet\" etkinleştirilmişse tuş "
+"ilişkilendirmeleri GIMP'den çıktığın zaman saklanır. Muhtemelen yanlışlıkla "
+"kısayol atamayı önlemek için daha sonra \"Devingen Klavye Kısayolları\"'nı "
+"devre dışı bırakman gerekir."
 
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: data/tips/gimp-tips.xml.in:186
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
@@ -257,7 +257,7 @@ msgstr ""
 "gizlemek veya göstermek için görüntü penceresinin içinde <tt>Tab</tt> tuşuna "
 "basabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: data/tips/gimp-tips.xml.in:193
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -266,7 +266,7 @@ msgstr ""
 "tıklamak, o katman dışındaki tüm katmanları gizler. Tekrar <tt>Shift</tt> "
 "tuşuna basarak tıklamak tüm katmanları gösterir."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
+#: data/tips/gimp-tips.xml.in:199
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
@@ -277,7 +277,7 @@ msgstr ""
 "kutusundaki katman maskesinin önizlemesine <tt>Alt</tt>-tıklama maskeyi "
 "doğrudan görüntülemeyi açar."
 
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: data/tips/gimp-tips.xml.in:206
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -286,7 +286,7 @@ msgstr ""
 "katmanlarında döngü oluşturmak için <tt>Alt</tt>-<tt>Tab</tt> tuşlarını "
 "kullanabilirsin."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: data/tips/gimp-tips.xml.in:212
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -297,7 +297,7 @@ msgstr ""
 "artalan renginin kullanılmasını sağlar. Benzer şekilde, Damlalık aracını "
 "<tt>Ctrl</tt>-tıklama ile kullanmak önalan yerine artalan rengini ayarlar."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: data/tips/gimp-tips.xml.in:220
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -305,80 +305,14 @@ msgstr ""
 "Döndürme aracını <tt>Ctrl</tt> tuşuna basarak kullanmak döndürmeyi 15 "
 "dercelik açı ile kıstılar."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: data/tips/gimp-tips.xml.in:226
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Colors→Levels). If there are any color casts, you can correct them "
-"with the Curves tool (Colors→Curves)."
+"improve their tonal range with the \"Auto\" button in the Levels tool "
+"(Colors→Levels). If there are any color casts, you can correct them with the "
+"Curves tool (Colors→Curves)."
 msgstr ""
 "Eğer taranmış fotoğraflarının bazıları yeterince renkli görünmüyorsa, "
-"onların ton erimini Düzeyler aracındaki (Renkler→Düzeyler) &quot;"
-"Kendiliğinden&quot; düğmesi ile iyileştirebilirsin. Eğer bir renk dökümü "
-"varsa bunu Eğri aracı (Renkler→Eğriler) ile düzeltebilirsin."
-
-#~ msgid "<big>Welcome to the GIMP!</big>"
-#~ msgstr "<big>GIMP'e Hoşgeldiniz!</big>"
-
-#~ msgid ""
-#~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
-#~ "toggles viewing the mask directly."
-#~ msgstr ""
-#~ "Katmanlar penceresindeki katman maskesinin önizlemesine <tt>Alt</tt> tuşu "
-#~ "ile birlikte tıklamak doğrudan maskenin görünümünü açar."
-
-#~ msgid ""
-#~ "The GIMP can undo most changes to the image, so feel free to experiment."
-#~ msgstr ""
-#~ "GIMP imgedieki çoğu değişiklikleri geri alabilir, yani farklı şeyler "
-#~ "denemek için kendinizi özgür hissedin."
-
-#~ msgid ""
-#~ "The layer named &quot;Background&quot; is special because it lacks "
-#~ "transparency. This prevents you from moving the layer up in the stack. "
-#~ "You may add transparency to it by right-clicking in the Layers dialog and "
-#~ "selecting &quot;Add Alpha Channel&quot;."
-#~ msgstr ""
-#~ "&quot;Artalan&quot; ismindeki katman özeldir. Çünkü eksiklikleri "
-#~ "şeffaftır. Bu, yığında katmandan yukarı çıkarmana engel olur. Katmanlar "
-#~ "diyaloğunda sağa tıklayıp &quot;Alfa Kanal Ekle&quot; yi seçerek ona "
-#~ "şeffaflık ekleyebilirsin."
-
-#~ msgid ""
-#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
-#~ "guides tangent to the circle you want to select, place your cursor at the "
-#~ "intersection of the guides, and the resulting selection will just touch "
-#~ "the guides."
-#~ msgstr ""
-#~ "Çember şekli seçimi oluşturmak için bir elips seçimi yaparak <tt>Shift</"
-#~ "tt>e tut. Çemberi doğru yere yerleştirmek için düşey ve yatay kılavuz "
-#~ "teğetlerini seçmek istediğin çembere sürükle, imlecini kılavuzların "
-#~ "kesiştiği yere bırak ve seçim sonucu sadece kılavuzlara dokunacak."
-
-#~ msgid ""
-#~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
-#~ "tt>-click will draw a straight line from your last drawing point to your "
-#~ "current cursor position. If you also press <tt>Ctrl</tt>, the line will "
-#~ "be constrained to 15 degree angles."
-#~ msgstr ""
-#~ "Bir çizim aleti kullanırken (Paintbrush,Airbrush veya Pencil), <tt>Shift</"
-#~ "tt> tuşuna tıklamak son çizim yaptığınız yerden imlecinizin bulunduğu "
-#~ "yere kadar düz bir çizgi çizer. Eğer <tt>Ctrl</tt> tuşuna da basarsanız "
-#~ "çizgi 15 derece açıyla kısıtlanır."
-
-#~ msgid ""
-#~ "You can adjust the selection range for fuzzy select by clicking and "
-#~ "dragging left and right."
-#~ msgstr ""
-#~ "Donuk seçim için seçim alanını tıklayarak uydurabilirsiniz ve sola sağa "
-#~ "sürükleyebilirsiniz."
-
-#~ msgid ""
-#~ "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while "
-#~ "you are making a selection in order to constrain it to a square or a "
-#~ "circle, or to have it centered on its starting point."
-#~ msgstr ""
-#~ "Komutta onu bir kareye veya bir çembere sınırlamak veya onu başlangıç "
-#~ "noktasında merkeze almak için bir seçim yaparken <tt>Shift</tt> ve "
-#~ "<tt>Ctrl</tt> tuşlarına basabilir veya bırakabilirsin."
+"onların ton erimini Düzeyler aracındaki (Renkler→Düzeyler) \"Kendiliğinden\" "
+"düğmesi ile iyileştirebilirsin. Eğer bir renk dökümü varsa bunu Eğri aracı "
+"(Renkler→Eğriler) ile düzeltebilirsin."
