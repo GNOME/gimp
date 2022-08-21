@@ -74,7 +74,7 @@
   </provides>
 
   <releases>
-    <release version="2.99.12" date="2022-05-29" type="development">
+    <release version="2.99.12" date="2022-08-21" type="development">
       <description>
         <p>
         One step further towards GIMP 3.0, GIMP 2.99.12 comes along with the following noteworthy improvements:
@@ -90,10 +90,38 @@
                     tool-options:line-art-settings">
           Redesigned and reorganized "Fill by line art detection" settings
           </li>
-          <li>Added support for the BigTIFF file format</li>
-          <li>New option "Number of repeats" in GIF export</li>
+
+          <li>New "Default" and "Compact" themes with dark and light variants</li>
+          <li>New "Drag-to-zoom" behavior and speed settings in Preferences</li>
+          <li>On-canvas modifiers are now customizable</li>
           <li>Tool pointer settings reorganized and moved from "Image Windows" to "Input Devices" tabs in Preferences</li>
           <li>Improved handling of unchecked "Show pointer for paint tools" option</li>
+
+          <li>Touchpad gesture rotation (2-finger pinch) on canvas</li>
+          <li>Preview size in item dockables now settable with Ctrl+wheel and pinch gesture</li>
+          <li>Gradient editor can be zoomed with pinch gesture</li>
+
+          <li>New soft-proofing toggle in the status bar, with pop-over settings on right click</li>
+          <li>CMYK export implemented and import improved for JPEG, using the soft-proofing profile</li>
+          <li>CMYK(A) import and export support for 8 and 16-bit TIFF files, using the soft-proofing profile</li>
+          <li>Improved CMYK import support for PSD files, using the soft-proofing profile</li>
+          <li>The CMYK color selector is now simulation-space (soft-proofing) aware</li>
+
+          <li>Added support for the BigTIFF file format</li>
+          <li>Minimal support of Duotone PSD files</li>
+          <li>SVG import can now disable size parsing (with security implications)</li>
+          <li>New option "Number of repeats" in GIF export</li>
+          <li>PNG export has a new settings to optimize the palette size of indexed images</li>
+          <li>New "Flip image" option in DDS export, as needed by some game engines</li>
+          <li>Various improvements to DDS support, in particular for 16-bit channels</li>
+          <li>Various improvements to FLI support</li>
+          <li>Various improvements to RAW data support</li>
+          <li>New WBMP format initial support</li>
+          <li>New ANI format initial support</li>
+          <li>Huge internal work on script-fu</li>
+          <li>New command line option --quit to quit GIMP immediately after running batch commands, propagating script failure in exit code</li>
+          <li>The command line option --batch-interpreter is now mandatory for --batch as there is no default interpreter anymore</li>
+          <li>Many plug-in API improvements</li>
         </ul>
       </description>
     </release>
