@@ -4,8 +4,8 @@
                    ------------------------------
 
 This is an unstable development release, an intermediate state on the
-way to the next stable release: GIMP 3. GIMP 2.99 may or may not do what
-you expect. Save your work early and often. If you want a stable
+way to the next stable release: GIMP 3.0. GIMP 2.99 may or may not do
+what you expect. Save your work early and often. If you want a stable
 version, please use GIMP 2.10 instead.
 
 If you think you found a bug in this version, please make sure that it
@@ -26,21 +26,18 @@ GIMP's home page is at:
 Please be sure to visit this site for information, documentation,
 tutorials, news, etc.  All things GIMP-ish are available from there.
 
-There you can get the latest versions of plug-ins, using a convenient
-forms-based interface.
-
 The latest version of GIMP can be found at:
 
 	https://www.gimp.org/downloads/
 
 
-2. Mailing Lists
-================
+2. Discussion Channels
+======================
 
-We have several mailing lists dedicated to GIMP user and development
-discussion.  There is more info at
+We have several discussion channels dedicated to GIMP user and
+development discussion. There is more info at:
 
-	https://www.gimp.org/mail_lists.html
+        https://www.gimp.org/discuss.html
 
 Links to several archives of the mailing lists are included in that page.
 
@@ -53,21 +50,19 @@ GIMP, the gimp-developer mailing list is a good starting point; if you
 want to help with GUI design, the gimp-gui list is where you want to
 subscribe.
 
+Other discussion channels can be listed on this page when they are
+moderated by a team member, such as forums.
 
-3. IRC
-======
-
-And finally, for the real junkies, there is an IRC channel devoted to
-GIMP. On GIMPNet (a private free software oriented network) there is
-#gimp.  Many of the developers hang out there.  Some of the GIMPNet
-servers are:
+Finally, for the real junkies, there are IRC channels devoted to GIMP.
+On GIMPNet (a private free software oriented network) there is #gimp.
+Many of the developers hang out there. Some of the GIMPNet servers are:
 
 	irc.gimp.org:6667
 	irc.us.gimp.org:6667
 	irc.eu.gimp.org:6667
 
 
-4. Customizing
+3. Customizing
 ==============
 
 The look of GIMP's interface can be customized like any other GTK+ app
