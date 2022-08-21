@@ -46,7 +46,7 @@ def parse_appdata(infile, version):
   releases = releases_node.findall('release')
   for release in releases:
     if 'version' in release.attrib and release.attrib['version'] == version:
-      intro = release.findall('./description/_p')
+      intro = release.findall('./description/p')
       for p in intro:
         # Naive conversion for C strings, but it will probably fit for
         # most cases.
@@ -56,7 +56,7 @@ def parse_appdata(infile, version):
         # All redundant spaces unwanted as XML merges them anyway.
         introduction += [spaces.sub(' ', p)]
 
-      items = release.findall('./description/ul/_li')
+      items = release.findall('./description/ul/li')
       for item in items:
         text = item.text.strip()
         text = text.replace('\\', '\\\\')
