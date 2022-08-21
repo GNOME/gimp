@@ -1,17 +1,17 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2017-2020 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2017-2022 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Muhammet Kara <muhammetk@gmail.com>, 2017.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2018.
-# Sabri Ünal <libreajans@gmail.com>, 2019-2020.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2018, 2022.
+# Sabri Ünal <libreajans@gmail.com>, 2019-2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-11-20 02:56+0000\n"
+"POT-Creation-Date: 2022-08-03 23:14+0000\n"
 "PO-Revision-Date: 2019-03-18 23:27+0200\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
