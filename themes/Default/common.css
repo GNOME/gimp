@@ -16,6 +16,10 @@
   color: @fg-color;
 }
 
+*:disabled {
+  color: @disabled-fg-color;
+}
+
 #image-menubar, GtkImageMenuItem {
   background-color: @bg-color;
   color: @fg-color;
@@ -317,10 +321,6 @@ menuitem menuitem {
 menubar > menuitem:hover {
   color: @fg-color;
   background: @extreme-selected-color;
-}
-
-menubar *:disabled {
-  color: @disabled-fg-color;
 }
 
 menuitem *:hover {
