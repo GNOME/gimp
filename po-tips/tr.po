@@ -1,18 +1,18 @@
 # Turkish translation for GIMP
 #
-# Copyright (C) 2010-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2010-2022 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Ubuntu Launchpad Translators, 2010.
 # Muhammet Kara <muhammet.k@gmail.com>, 2011.
-# Sabri Ünal <libreajans@gmail.com>, 2019
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp tips gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-04-06 14:17+0000\n"
-"PO-Revision-Date: 2019-04-07 19:56+0300\n"
+"POT-Creation-Date: 2022-08-03 23:14+0000\n"
+"PO-Revision-Date: 2022-08-16 18:46+0300\n"
 "Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
@@ -20,7 +20,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.1.1\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid ""
@@ -216,7 +216,7 @@ msgstr ""
 "Seçimi değiştirmek için boyama araçlarını kullanabilirsin. Bir görüntü "
 "penceresinin sol üstündeki &quot;Hızlı Maske&quot; düğmesine tıkla. "
 "Görüntüyü boyayarak seçimini değiştir ve onu normal bir seçime geri "
-"döndürmek için düğmeye tekrar tıkla."
+"dönüştürmek için düğmeye tekrar tıkla."
 
 #: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
@@ -316,69 +316,3 @@ msgstr ""
 "onların ton erimini Düzeyler aracındaki (Renkler→Düzeyler) &quot;"
 "Kendiliğinden&quot; düğmesi ile iyileştirebilirsin. Eğer bir renk dökümü "
 "varsa bunu Eğri aracı (Renkler→Eğriler) ile düzeltebilirsin."
-
-#~ msgid "<big>Welcome to the GIMP!</big>"
-#~ msgstr "<big>GIMP'e Hoşgeldiniz!</big>"
-
-#~ msgid ""
-#~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
-#~ "toggles viewing the mask directly."
-#~ msgstr ""
-#~ "Katmanlar penceresindeki katman maskesinin önizlemesine <tt>Alt</tt> tuşu "
-#~ "ile birlikte tıklamak doğrudan maskenin görünümünü açar."
-
-#~ msgid ""
-#~ "The GIMP can undo most changes to the image, so feel free to experiment."
-#~ msgstr ""
-#~ "GIMP imgedieki çoğu değişiklikleri geri alabilir, yani farklı şeyler "
-#~ "denemek için kendinizi özgür hissedin."
-
-#~ msgid ""
-#~ "The layer named &quot;Background&quot; is special because it lacks "
-#~ "transparency. This prevents you from moving the layer up in the stack. "
-#~ "You may add transparency to it by right-clicking in the Layers dialog and "
-#~ "selecting &quot;Add Alpha Channel&quot;."
-#~ msgstr ""
-#~ "&quot;Artalan&quot; ismindeki katman özeldir. Çünkü eksiklikleri "
-#~ "şeffaftır. Bu, yığında katmandan yukarı çıkarmana engel olur. Katmanlar "
-#~ "diyaloğunda sağa tıklayıp &quot;Alfa Kanal Ekle&quot; yi seçerek ona "
-#~ "şeffaflık ekleyebilirsin."
-
-#~ msgid ""
-#~ "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-#~ "ellipse select. To place a circle precisely, drag horizontal and vertical "
-#~ "guides tangent to the circle you want to select, place your cursor at the "
-#~ "intersection of the guides, and the resulting selection will just touch "
-#~ "the guides."
-#~ msgstr ""
-#~ "Çember şekli seçimi oluşturmak için bir elips seçimi yaparak <tt>Shift</"
-#~ "tt>e tut. Çemberi doğru yere yerleştirmek için düşey ve yatay kılavuz "
-#~ "teğetlerini seçmek istediğin çembere sürükle, imlecini kılavuzların "
-#~ "kesiştiği yere bırak ve seçim sonucu sadece kılavuzlara dokunacak."
-
-#~ msgid ""
-#~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
-#~ "tt>-click will draw a straight line from your last drawing point to your "
-#~ "current cursor position. If you also press <tt>Ctrl</tt>, the line will "
-#~ "be constrained to 15 degree angles."
-#~ msgstr ""
-#~ "Bir çizim aleti kullanırken (Paintbrush,Airbrush veya Pencil), <tt>Shift</"
-#~ "tt> tuşuna tıklamak son çizim yaptığınız yerden imlecinizin bulunduğu "
-#~ "yere kadar düz bir çizgi çizer. Eğer <tt>Ctrl</tt> tuşuna da basarsanız "
-#~ "çizgi 15 derece açıyla kısıtlanır."
-
-#~ msgid ""
-#~ "You can adjust the selection range for fuzzy select by clicking and "
-#~ "dragging left and right."
-#~ msgstr ""
-#~ "Donuk seçim için seçim alanını tıklayarak uydurabilirsiniz ve sola sağa "
-#~ "sürükleyebilirsiniz."
-
-#~ msgid ""
-#~ "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while "
-#~ "you are making a selection in order to constrain it to a square or a "
-#~ "circle, or to have it centered on its starting point."
-#~ msgstr ""
-#~ "Komutta onu bir kareye veya bir çembere sınırlamak veya onu başlangıç "
-#~ "noktasında merkeze almak için bir seçim yaparken <tt>Shift</tt> ve "
-#~ "<tt>Ctrl</tt> tuşlarına basabilir veya bırakabilirsin."
