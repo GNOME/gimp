@@ -598,6 +598,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                     bevent->x, bevent->y);
                 break;
               case GIMP_MODIFIER_ACTION_ACTION:
+                shell->mod_action_desc = g_strdup (action_desc);
                 break;
               case GIMP_MODIFIER_ACTION_NONE:
                 gimp_display_triggers_context_menu (event, shell, gimp, &image_coords, FALSE);
@@ -724,20 +725,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
           }
         else
           {
-            const gchar        *action_desc = NULL;
-            GimpImageWindow    *window;
-            GimpUIManager      *manager;
-            GdkDevice          *device;
-            GimpModifierAction  action;
+            GimpImageWindow *window;
+            GimpUIManager   *manager;
 
             window  = gimp_display_shell_get_window (shell);
             manager = gimp_image_window_get_ui_manager (window);
-            device  = gdk_event_get_source_device (event);
-            action  = gimp_modifiers_manager_get_action (mod_manager, device,
-                                                         bevent->button, bevent->state,
-                                                         &action_desc);
 
-            switch (action)
+            switch (shell->mod_action)
               {
               case GIMP_MODIFIER_ACTION_MENU:
                 break;
@@ -758,11 +752,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                 gimp_display_shell_stop_scrolling (shell, event);
                 break;
               case GIMP_MODIFIER_ACTION_ACTION:
-                gimp_display_shell_activate_action (manager, action_desc, NULL);
+                gimp_display_shell_activate_action (manager, shell->mod_action_desc, NULL);
+                g_clear_pointer (&shell->mod_action_desc, g_free);
                 break;
               case GIMP_MODIFIER_ACTION_NONE:
                 break;
               }
+
+            shell->mod_action = GIMP_MODIFIER_ACTION_NONE;
           }
 
         return_val = TRUE;

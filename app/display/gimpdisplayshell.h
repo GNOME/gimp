@@ -217,6 +217,7 @@ struct _GimpDisplayShell
 
   /* Modifier action currently ON. */
   GimpModifierAction mod_action;
+  gchar             *mod_action_desc;
 
   gint               scroll_start_x;
   gint               scroll_start_y;
