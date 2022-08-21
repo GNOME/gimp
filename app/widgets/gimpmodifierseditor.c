@@ -477,6 +477,7 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
                     editor);
   gtk_widget_show (minus_button);
 
+  g_object_set_data (G_OBJECT (shortcut), "shortcut-modifiers", GINT_TO_POINTER (modifiers));
   g_object_set_data (G_OBJECT (shortcut), "shortcut-button", shortcut);
   g_object_set_data (G_OBJECT (shortcut), "shortcut-action", combo);
   g_object_set_data (G_OBJECT (shortcut), "shortcut-action-action", action_button);
@@ -557,14 +558,22 @@ gimp_modifiers_editor_notify_accelerator (GtkWidget           *widget,
   GtkWidget          *combo;
   GtkWidget          *action_button;
   GimpModifierAction  action = GIMP_MODIFIER_ACTION_NONE;
+  GdkModifierType     old_modifiers;
+  GdkModifierType     modifiers;
 
-  GdkModifierType  modifiers;
+  old_modifiers = (GdkModifierType) g_object_get_data (G_OBJECT (widget), "shortcut-modifiers");
 
   shortcut      = g_object_get_data (G_OBJECT (widget), "shortcut-button");
   combo         = g_object_get_data (G_OBJECT (widget), "shortcut-action");
   action_button = g_object_get_data (G_OBJECT (widget), "shortcut-action-action");
 
   gimp_shortcut_button_get_keys (GIMP_SHORTCUT_BUTTON (shortcut), NULL, &modifiers);
+
+  if (old_modifiers != modifiers)
+    gimp_modifiers_manager_remove (editor->priv->manager, editor->priv->device,
+                                   editor->priv->button, old_modifiers);
+
+  g_object_set_data (G_OBJECT (shortcut), "shortcut-modifiers", GINT_TO_POINTER (modifiers));
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), (gint *) &action))
     {
