@@ -14,16 +14,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP plug-ins gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-17 22:06+0000\n"
-"PO-Revision-Date: 2022-05-24 10:39+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2022-08-03 23:14+0000\n"
+"PO-Revision-Date: 2022-08-16 23:33+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Turkish <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Launchpad-Export-Date: 2010-10-09 17:28+0000\n"
 "X-POOTLE-MTIME: 1436641384.000000\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -57,12 +57,12 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/common/depth-merge.c:621 ../plug-ins/common/despeckle.c:397
 #: ../plug-ins/common/destripe.c:468 ../plug-ins/common/edge-dog.c:306
 #: ../plug-ins/common/emboss.c:453 ../plug-ins/common/file-cel.c:951
-#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1898
+#: ../plug-ins/common/file-gif-save.c:1112 ../plug-ins/common/file-heif.c:1902
 #: ../plug-ins/common/file-jp2-load.c:961
 #: ../plug-ins/common/file-pdf-load.c:702
 #: ../plug-ins/common/file-pdf-load.c:1282
 #: ../plug-ins/common/file-pdf-save.c:936 ../plug-ins/common/file-ps.c:3447
-#: ../plug-ins/common/file-raw-data.c:1838 ../plug-ins/common/file-svg.c:663
+#: ../plug-ins/common/file-raw-data.c:1816 ../plug-ins/common/file-svg.c:663
 #: ../plug-ins/common/file-wmf.c:515 ../plug-ins/common/film.c:1207
 #: ../plug-ins/common/filter-pack.c:1264 ../plug-ins/common/fractal-trace.c:711
 #: ../plug-ins/common/grid.c:677 ../plug-ins/common/hot.c:614
@@ -77,9 +77,9 @@ msgstr "Görünür Katmanları Hizala"
 #: ../plug-ins/common/tile-small.c:364 ../plug-ins/common/unit-editor.c:209
 #: ../plug-ins/common/van-gogh-lic.c:650 ../plug-ins/common/warp.c:368
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
-#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1958
+#: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2499 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2616 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -122,7 +122,7 @@ msgstr "_İptal"
 #: ../plug-ins/common/curve-bend.c:1295 ../plug-ins/common/decompose.c:814
 #: ../plug-ins/common/depth-merge.c:622 ../plug-ins/common/despeckle.c:398
 #: ../plug-ins/common/destripe.c:469 ../plug-ins/common/edge-dog.c:307
-#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1899
+#: ../plug-ins/common/emboss.c:454 ../plug-ins/common/file-heif.c:1903
 #: ../plug-ins/common/file-pdf-load.c:703 ../plug-ins/common/file-svg.c:664
 #: ../plug-ins/common/file-wmf.c:516 ../plug-ins/common/film.c:1208
 #: ../plug-ins/common/filter-pack.c:1265 ../plug-ins/common/fractal-trace.c:712
@@ -452,7 +452,7 @@ msgstr "_Dikey"
 #: ../plug-ins/common/file-jp2-load.c:1290 ../plug-ins/common/file-pcx.c:448
 #: ../plug-ins/common/file-pcx.c:456 ../plug-ins/common/file-pix.c:400
 #: ../plug-ins/common/file-png.c:1097 ../plug-ins/common/file-pnm.c:685
-#: ../plug-ins/common/file-raw-data.c:1397
+#: ../plug-ins/common/file-raw-data.c:1375
 #: ../plug-ins/common/file-sunras.c:1049 ../plug-ins/common/file-tga.c:1111
 #: ../plug-ins/common/file-xbm.c:910 ../plug-ins/common/film.c:690
 #: ../plug-ins/common/smooth-palette.c:259 ../plug-ins/common/tile.c:354
@@ -460,8 +460,8 @@ msgstr "_Dikey"
 #: ../plug-ins/file-faxg3/faxg3.c:555 ../plug-ins/file-fits/fits.c:529
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
-#: ../plug-ins/file-psd/psd-load.c:2035 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1334
+#: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
+#: ../plug-ins/file-tiff/file-tiff-load.c:1497
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -834,7 +834,7 @@ msgstr "Rastgele Parçacık"
 #: ../plug-ins/common/cml-explorer.c:2160 ../plug-ins/common/curve-bend.c:1555
 #: ../plug-ins/common/curve-bend.c:2138 ../plug-ins/common/file-cel.c:952
 #: ../plug-ins/common/file-jp2-load.c:962
-#: ../plug-ins/common/file-raw-data.c:1839 ../plug-ins/common/qbist.c:721
+#: ../plug-ins/common/file-raw-data.c:1817 ../plug-ins/common/qbist.c:721
 #: ../plug-ins/common/qbist.c:885 ../plug-ins/common/sphere-designer.c:2210
 #: ../plug-ins/common/sphere-designer.c:2610 ../plug-ins/file-fits/fits.c:1151
 #: ../plug-ins/file-fli/fli-gimp.c:878 ../plug-ins/flame/flame.c:483
@@ -1051,8 +1051,8 @@ msgstr "CML Gezgini Parametrelerini Kaydet"
 #: ../plug-ins/common/file-dicom.c:1524 ../plug-ins/common/file-mng.c:648
 #: ../plug-ins/common/file-mng.c:985 ../plug-ins/common/file-pcx.c:874
 #: ../plug-ins/common/file-pdf-save.c:480 ../plug-ins/common/file-png.c:1618
-#: ../plug-ins/common/file-raw-data.c:1195
-#: ../plug-ins/common/file-raw-data.c:1224 ../plug-ins/common/file-sunras.c:610
+#: ../plug-ins/common/file-raw-data.c:1173
+#: ../plug-ins/common/file-raw-data.c:1202 ../plug-ins/common/file-sunras.c:610
 #: ../plug-ins/common/file-tga.c:1222 ../plug-ins/common/file-xmc.c:1504
 #: ../plug-ins/common/sphere-designer.c:2121
 #: ../plug-ins/file-bmp/bmp-save.c:327 ../plug-ins/file-fits/fits.c:481
@@ -1084,7 +1084,7 @@ msgstr "CML Gezgini Parametrelerini Yükle"
 #: ../plug-ins/common/file-ps.c:1075 ../plug-ins/common/file-ps.c:3397
 #: ../plug-ins/common/file-psp.c:2228 ../plug-ins/common/file-psp.c:2278
 #: ../plug-ins/common/file-raw-data.c:477
-#: ../plug-ins/common/file-raw-data.c:1306 ../plug-ins/common/file-sunras.c:436
+#: ../plug-ins/common/file-raw-data.c:1284 ../plug-ins/common/file-sunras.c:436
 #: ../plug-ins/common/file-svg.c:329 ../plug-ins/common/file-svg.c:647
 #: ../plug-ins/common/file-tga.c:446 ../plug-ins/common/file-xbm.c:747
 #: ../plug-ins/common/file-xmc.c:665 ../plug-ins/common/file-xmc.c:858
@@ -1368,7 +1368,7 @@ msgstr "_Kırmızılık cr709:"
 #. * right type of raw data.
 #.
 #: ../plug-ins/common/compose.c:191 ../plug-ins/common/decompose.c:170
-#: ../plug-ins/common/file-raw-data.c:1942
+#: ../plug-ins/common/file-raw-data.c:1920
 msgid "RGB"
 msgstr "RGB"
 
@@ -1938,7 +1938,7 @@ msgstr "Kaynak 2:"
 msgid "O_verlap:"
 msgstr "B_indirme:"
 
-#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1976
+#: ../plug-ins/common/depth-merge.c:741 ../plug-ins/common/file-raw-data.c:1954
 msgid "O_ffset:"
 msgstr "G_öreli konum:"
 
@@ -2006,7 +2006,7 @@ msgstr "Çizgisizleştir"
 
 #: ../plug-ins/common/destripe.c:500 ../plug-ins/common/file-html-table.c:647
 #: ../plug-ins/common/file-ps.c:3522 ../plug-ins/common/file-ps.c:3727
-#: ../plug-ins/common/file-raw-data.c:1991
+#: ../plug-ins/common/file-raw-data.c:1969
 #: ../plug-ins/common/smooth-palette.c:458 ../plug-ins/common/tile.c:465
 #: ../plug-ins/imagemap/imap_cmd_guides.c:163
 #: ../plug-ins/imagemap/imap_rectangle.c:399
@@ -2096,7 +2096,7 @@ msgstr "ASCII sanat"
 msgid "Text"
 msgstr "Metin"
 
-#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2011
+#: ../plug-ins/common/file-aa.c:384 ../plug-ins/file-dds/ddswrite.c:2036
 msgid "_Format:"
 msgstr "_Biçim:"
 
@@ -2157,7 +2157,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/common/file-pcx.c:370 ../plug-ins/common/file-pdf-load.c:1048
 #: ../plug-ins/common/file-pix.c:357 ../plug-ins/common/file-png.c:933
 #: ../plug-ins/common/file-pnm.c:566 ../plug-ins/common/file-ps.c:1067
-#: ../plug-ins/common/file-raw-data.c:1299 ../plug-ins/common/file-sunras.c:429
+#: ../plug-ins/common/file-raw-data.c:1277 ../plug-ins/common/file-sunras.c:429
 #: ../plug-ins/common/file-tga.c:438 ../plug-ins/common/file-wmf.c:1014
 #: ../plug-ins/common/file-xbm.c:740 ../plug-ins/common/file-xmc.c:655
 #: ../plug-ins/common/file-xpm.c:356 ../plug-ins/common/file-xwd.c:448
@@ -2167,7 +2167,7 @@ msgstr "EOF (dosya sonu) ya da görüntü başlığı okunurken hata"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:259
+#: ../plug-ins/file-tiff/file-tiff-load.c:296
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s' açılıyor"
@@ -2636,60 +2636,60 @@ msgstr ""
 msgid "image content"
 msgstr "görüntü içeriği"
 
-#: ../plug-ins/common/file-heif.c:1318
+#: ../plug-ins/common/file-heif.c:1322
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "'%s', %s kodlayıcı kullanılarak dışa aktarılıyor"
 
-#: ../plug-ins/common/file-heif.c:1369 ../plug-ins/common/file-heif.c:1623
+#: ../plug-ins/common/file-heif.c:1373 ../plug-ins/common/file-heif.c:1627
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "HEIF görüntüsü kodlama işlemi başarısız oldu: %s"
 
-#: ../plug-ins/common/file-heif.c:1660
+#: ../plug-ins/common/file-heif.c:1664
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "HEIF görüntüsü yazma işlemi başarısız oldu: %s"
 
-#: ../plug-ins/common/file-heif.c:1749
+#: ../plug-ins/common/file-heif.c:1753
 msgid "primary"
 msgstr "birincil"
 
-#: ../plug-ins/common/file-heif.c:1894
+#: ../plug-ins/common/file-heif.c:1898
 msgid "Load HEIF Image"
 msgstr "HEIF Görüntüsü Yükle"
 
-#: ../plug-ins/common/file-heif.c:1908
+#: ../plug-ins/common/file-heif.c:1912
 msgid "Select Image"
 msgstr "Görüntü Seç"
 
-#: ../plug-ins/common/file-heif.c:2074
+#: ../plug-ins/common/file-heif.c:2078
 msgid "Nearly _lossless"
 msgstr "Neredeyse _kayıpsız"
 
-#: ../plug-ins/common/file-heif.c:2078 ../plug-ins/file-jpeg/jpeg-save.c:835
+#: ../plug-ins/common/file-heif.c:2082 ../plug-ins/file-jpeg/jpeg-save.c:835
 msgid "_Quality:"
 msgstr "_Kalite:"
 
-#: ../plug-ins/common/file-heif.c:2121
+#: ../plug-ins/common/file-heif.c:2125
 msgid "Bit depth:"
 msgstr "Bit derinliği:"
 
-#: ../plug-ins/common/file-heif.c:2127
+#: ../plug-ins/common/file-heif.c:2131
 msgid "8 bit/channel"
 msgstr "8 bit/kanal"
 
-#: ../plug-ins/common/file-heif.c:2128
+#: ../plug-ins/common/file-heif.c:2132
 msgid "10 bit/channel"
 msgstr "10 bit/kanal"
 
-#: ../plug-ins/common/file-heif.c:2129
+#: ../plug-ins/common/file-heif.c:2133
 msgid "12 bit/channel"
 msgstr "12 bit/kanal"
 
 #. Color profile
-#: ../plug-ins/common/file-heif.c:2138 ../plug-ins/file-jpeg/jpeg-save.c:974
-#: ../plug-ins/file-webp/file-webp-dialog.c:387
+#: ../plug-ins/common/file-heif.c:2142 ../plug-ins/file-jpeg/jpeg-save.c:974
+#: ../plug-ins/file-webp/file-webp-dialog.c:404
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:12
 msgid "Save color _profile"
 msgstr "Renk _profilini kaydet"
@@ -2800,7 +2800,7 @@ msgid "The width for each table cell.  Can be a number or a percent."
 msgstr "Her tablo hücresi için genişlik. Sayı veya yüzde olabilir."
 
 #: ../plug-ins/common/file-html-table.c:663 ../plug-ins/common/file-ps.c:3535
-#: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:2007
+#: ../plug-ins/common/file-ps.c:3739 ../plug-ins/common/file-raw-data.c:1985
 #: ../plug-ins/common/film.c:945 ../plug-ins/common/smooth-palette.c:463
 #: ../plug-ins/common/tile.c:469 ../plug-ins/imagemap/imap_cmd_guides.c:173
 #: ../plug-ins/imagemap/imap_rectangle.c:406
@@ -2917,6 +2917,10 @@ msgstr "'%s' içindeki xvYCC JP2 görüntüsü RGB'ye dönüştürülemedi."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "'%s' JP2 görüntüsü içinde desteklenmeyen renk uzayı."
 
+#: ../plug-ins/common/file-jpegxl.c:71
+msgid "JPEG XL image"
+msgstr "JPEG XL görüntüsü"
+
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/file-mng.c:533 ../plug-ins/common/file-png.c:2345
@@ -3023,7 +3027,7 @@ msgstr "Öntanımlı çerçeve gecikmesi:"
 
 #. label for 'ms' adjustment
 #: ../plug-ins/common/file-mng.c:1551
-#: ../plug-ins/file-webp/file-webp-dialog.c:350
+#: ../plug-ins/file-webp/file-webp-dialog.c:351
 #: ../plug-ins/ui/plug-in-file-gif.ui.h:8
 msgid "milliseconds"
 msgstr "milisaniye"
@@ -3172,7 +3176,7 @@ msgid "Import from PDF"
 msgstr "PDF dosyasından içe aktar"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
-#: ../plug-ins/file-tiff/file-tiff-load.c:2500
+#: ../plug-ins/file-tiff/file-tiff-load.c:2617
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "İçe _Aktar"
@@ -3298,7 +3302,7 @@ msgstr "Katmanlar sayfa olarak (%s)"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
-#: ../plug-ins/file-tiff/file-tiff-load.c:1336
+#: ../plug-ins/file-tiff/file-tiff-load.c:1499
 #, c-format
 msgid "Page %d"
 msgstr "Sayfa %d"
@@ -3398,13 +3402,13 @@ msgstr ""
 msgid "Error while exporting '%s'. Could not export image."
 msgstr "'%s' dışa aktarılırken hata oluştu. Görüntü dışa aktarılamadı."
 
-#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2134
+#: ../plug-ins/common/file-png.c:2420 ../plug-ins/common/file-raw-data.c:2112
 #: ../plug-ins/file-tiff/file-tiff-save.c:1167
 #, c-format
 msgid "Error loading UI file '%s': %s"
 msgstr "'%s' UI dosyası yüklenirken hata: %s"
 
-#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2135
+#: ../plug-ins/common/file-png.c:2421 ../plug-ins/common/file-raw-data.c:2113
 #: ../plug-ins/file-tiff/file-tiff-save.c:1168
 msgid "Unknown error"
 msgstr "Bilinmeyen hata"
@@ -3500,7 +3504,7 @@ msgstr "PostScript belgesi"
 
 #: ../plug-ins/common/file-ps.c:673 ../plug-ins/common/file-ps.c:738
 msgid "Encapsulated PostScript image"
-msgstr "_Encapsulated PostScript (EPS) görüntüsü"
+msgstr "Encapsulated PostScript (EPS) görüntüsü"
 
 #: ../plug-ins/common/file-ps.c:1085
 #, c-format
@@ -3862,7 +3866,7 @@ msgstr "Ham görüntü verisi"
 
 # aşağıda uyarı var, lakin burada eksik
 #: ../plug-ins/common/file-raw-data.c:304
-#: ../plug-ins/common/file-raw-data.c:1887
+#: ../plug-ins/common/file-raw-data.c:1865
 msgid "Digital Elevation Model data"
 msgstr "Digital Elevation Model verisi"
 
@@ -3891,7 +3895,7 @@ msgstr ""
 "dosyaları: SRTM-1 ve SRTM-3. Değişkeni biliyorsanız, 1 veya 3 bağımsız "
 "değişkeniyle çalıştırın."
 
-#: ../plug-ins/common/file-raw-data.c:1834
+#: ../plug-ins/common/file-raw-data.c:1812
 msgid "Load Image from Raw Data"
 msgstr "Görüntüyü Ham Veriden Yükle"
 
@@ -3899,15 +3903,15 @@ msgstr "Görüntüyü Ham Veriden Yükle"
 #. * used for 3D surface modeling or relief maps; so it must be
 #. * translated by the proper technical term in your language.
 #.
-#: ../plug-ins/common/file-raw-data.c:1883
+#: ../plug-ins/common/file-raw-data.c:1861
 msgid "Digital Elevation Model data (1 arc-second)"
 msgstr "Digital Elevation Model verileri (1 arc-saniye)"
 
-#: ../plug-ins/common/file-raw-data.c:1885
+#: ../plug-ins/common/file-raw-data.c:1863
 msgid "Digital Elevation Model data (3 arc-seconds)"
 msgstr "Digital Elevation Model verileri (3 arc-saniye)"
 
-#: ../plug-ins/common/file-raw-data.c:1891
+#: ../plug-ins/common/file-raw-data.c:1869
 msgid "Image"
 msgstr "Görüntü"
 
@@ -3919,116 +3923,116 @@ msgstr "Görüntü"
 #. * SRTM-3 data are sampled at three arc-seconds and contain 1201 lines and
 #. * 1201 samples with similar overlapping rows and columns."
 #.
-#: ../plug-ins/common/file-raw-data.c:1921
+#: ../plug-ins/common/file-raw-data.c:1899
 msgid "SRTM-1 (1 arc-second)"
 msgstr "SRTM-1 (1 arc-saniye)"
 
-#: ../plug-ins/common/file-raw-data.c:1922
+#: ../plug-ins/common/file-raw-data.c:1900
 msgid "SRTM-3 (3 arc-seconds)"
 msgstr "SRTM-3 (3 arc-saniye)"
 
-#: ../plug-ins/common/file-raw-data.c:1925
+#: ../plug-ins/common/file-raw-data.c:1903
 msgid "_Sample Spacing:"
 msgstr "_Örnek Boşluk:"
 
-#: ../plug-ins/common/file-raw-data.c:1943
+#: ../plug-ins/common/file-raw-data.c:1921
 msgid "RGB Alpha"
 msgstr "RGB Alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1944
+#: ../plug-ins/common/file-raw-data.c:1922
 msgid "RGB565 Big Endian"
 msgstr "RGB565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1945
+#: ../plug-ins/common/file-raw-data.c:1923
 msgid "RGB565 Little Endian"
 msgstr "RGB565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1946
+#: ../plug-ins/common/file-raw-data.c:1924
 msgid "BGR565 Big Endian"
 msgstr "BGR565 Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1947
+#: ../plug-ins/common/file-raw-data.c:1925
 msgid "BGR565 Little Endian"
 msgstr "BGR565 Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1948
+#: ../plug-ins/common/file-raw-data.c:1926
 msgid "Planar RGB"
 msgstr "Düzlemsel RGB"
 
-#: ../plug-ins/common/file-raw-data.c:1949
+#: ../plug-ins/common/file-raw-data.c:1927
 msgid "B&W 1 bit"
 msgstr "B&W 1 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1950
+#: ../plug-ins/common/file-raw-data.c:1928
 msgid "Gray 2 bit"
 msgstr "Gri 2 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1951
+#: ../plug-ins/common/file-raw-data.c:1929
 msgid "Gray 4 bit"
 msgstr "Gri 4 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1952
+#: ../plug-ins/common/file-raw-data.c:1930
 msgid "Gray 8 bit"
 msgstr "Gri 8 bit"
 
-#: ../plug-ins/common/file-raw-data.c:1953
+#: ../plug-ins/common/file-raw-data.c:1931
 msgid "Indexed"
 msgstr "İndeksli"
 
-#: ../plug-ins/common/file-raw-data.c:1954
+#: ../plug-ins/common/file-raw-data.c:1932
 msgid "Indexed Alpha"
 msgstr "İndeksli Alfa"
 
-#: ../plug-ins/common/file-raw-data.c:1955
+#: ../plug-ins/common/file-raw-data.c:1933
 msgid "Gray unsigned 16 bit Big Endian"
 msgstr "Gri imzasız 16 bit Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1956
+#: ../plug-ins/common/file-raw-data.c:1934
 msgid "Gray unsigned 16 bit Little Endian"
 msgstr "Gri imzasız 16 bit Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1957
+#: ../plug-ins/common/file-raw-data.c:1935
 msgid "Gray 16 bit Big Endian"
 msgstr "Gri 16 bit Big Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1958
+#: ../plug-ins/common/file-raw-data.c:1936
 msgid "Gray 16 bit Little Endian"
 msgstr "Grit 14 bit Little Endian"
 
-#: ../plug-ins/common/file-raw-data.c:1963
+#: ../plug-ins/common/file-raw-data.c:1941
 msgid "Image _Type:"
 msgstr "Görüntü _Türü:"
 
-#: ../plug-ins/common/file-raw-data.c:2024
+#: ../plug-ins/common/file-raw-data.c:2002
 msgid "Palette"
 msgstr "Palet"
 
-#: ../plug-ins/common/file-raw-data.c:2034
+#: ../plug-ins/common/file-raw-data.c:2012
 msgid "R, G, B (normal)"
 msgstr "R, G, B (normal)"
 
-#: ../plug-ins/common/file-raw-data.c:2035
+#: ../plug-ins/common/file-raw-data.c:2013
 msgid "B, G, R, X (BMP style)"
 msgstr "B, G, R, X (BMP biçemi)"
 
-#: ../plug-ins/common/file-raw-data.c:2040
+#: ../plug-ins/common/file-raw-data.c:2018
 msgid "_Palette Type:"
 msgstr "_Palet Türü:"
 
-#: ../plug-ins/common/file-raw-data.c:2051
+#: ../plug-ins/common/file-raw-data.c:2029
 msgid "Off_set:"
 msgstr "Göreli _konum:"
 
-#: ../plug-ins/common/file-raw-data.c:2063
+#: ../plug-ins/common/file-raw-data.c:2041
 msgid "Select Palette File"
 msgstr "Palet Dosyasını Seç"
 
-#: ../plug-ins/common/file-raw-data.c:2069
+#: ../plug-ins/common/file-raw-data.c:2047
 msgid "Pal_ette File:"
 msgstr "Pal_et Dosyası:"
 
 #. Dialog init
-#: ../plug-ins/common/file-raw-data.c:2118
+#: ../plug-ins/common/file-raw-data.c:2096
 msgid "Raw Image"
 msgstr "Ham Görüntü"
 
@@ -6668,7 +6672,7 @@ msgstr ""
 #. Advanced Options
 #. Advanced expander
 #: ../plug-ins/file-bmp/bmp-save.c:993 ../plug-ins/file-jpeg/jpeg-save.c:1014
-#: ../plug-ins/file-webp/file-webp-dialog.c:221
+#: ../plug-ins/file-webp/file-webp-dialog.c:222
 msgid "_Advanced Options"
 msgstr "_Gelişmiş Seçenekler"
 
@@ -6689,19 +6693,20 @@ msgstr "32 bit"
 msgid "Windows BMP image"
 msgstr "Windows BMP görüntüsü"
 
-#: ../plug-ins/file-dds/dds.c:139 ../plug-ins/file-dds/dds.c:158
+#: ../plug-ins/file-dds/dds.c:162 ../plug-ins/file-dds/dds.c:181
+#: ../plug-ins/file-dds/dds.c:200
 msgid "DDS image"
 msgstr "DDS görüntüsü"
 
-#: ../plug-ins/file-dds/dds.c:176
+#: ../plug-ins/file-dds/dds.c:217
 msgid "Decode YCoCg"
 msgstr "YCoCg Çözümle"
 
-#: ../plug-ins/file-dds/dds.c:189
+#: ../plug-ins/file-dds/dds.c:230
 msgid "Decode YCoCg (scaled)"
 msgstr "YCoCg Çözümle (ölçeklenmiş)"
 
-#: ../plug-ins/file-dds/dds.c:202
+#: ../plug-ins/file-dds/dds.c:243
 msgid "Decode Alpha exponent"
 msgstr "Alfa katsayılarını çözümle"
 
@@ -6717,64 +6722,68 @@ msgstr "_Mipmapları yükle"
 msgid "_Automatically decode YCoCg/AExp images when detected"
 msgstr "_Algılandığında, YCoCg/AExp görüntülerini kendiliğinden çözümle"
 
-#: ../plug-ins/file-dds/ddswrite.c:1956
+#: ../plug-ins/file-dds/ddswrite.c:1981
 msgid "Export as DDS"
 msgstr "DDS Olarak Dışa Aktar"
 
-#: ../plug-ins/file-dds/ddswrite.c:1959
+#: ../plug-ins/file-dds/ddswrite.c:1984
 #: ../plug-ins/metadata/metadata-editor.c:4662
 msgid "_Export"
 msgstr "_Dışa Aktar"
 
-#: ../plug-ins/file-dds/ddswrite.c:1986
+#: ../plug-ins/file-dds/ddswrite.c:2011
 msgid "_Compression:"
 msgstr "_Sıkıştırma:"
 
-#: ../plug-ins/file-dds/ddswrite.c:1996
+#: ../plug-ins/file-dds/ddswrite.c:2021
 msgid "Use _perceptual error metric"
 msgstr "_Algısal hata ölçüsünü kullan"
 
-#: ../plug-ins/file-dds/ddswrite.c:2025
+#: ../plug-ins/file-dds/ddswrite.c:2050
 msgid "_Save:"
 msgstr "K_aydet:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2039
+#: ../plug-ins/file-dds/ddswrite.c:2062
+msgid "Flip the image _vertically on export"
+msgstr "Resmi _dışa aktarırken dikey çevir"
+
+#: ../plug-ins/file-dds/ddswrite.c:2075
 msgid "_Mipmaps:"
 msgstr "_Mipmaplar:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2062
+#: ../plug-ins/file-dds/ddswrite.c:2098
 msgid "Transparent index:"
 msgstr "Saydam indeks:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2106
+#: ../plug-ins/file-dds/ddswrite.c:2142
 msgid "Mipmap Options"
 msgstr "Mipmap Seçenekleri"
 
-#: ../plug-ins/file-dds/ddswrite.c:2119
+#: ../plug-ins/file-dds/ddswrite.c:2155
 msgid "F_ilter:"
 msgstr "_Süzgeç:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2132
+#: ../plug-ins/file-dds/ddswrite.c:2168
 msgid "_Wrap mode:"
 msgstr "_Sarma kipi:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2142
+#: ../plug-ins/file-dds/ddswrite.c:2178
 msgid "Appl_y gamma correction"
 msgstr "_Gama düzeltmesi uygula"
 
-#: ../plug-ins/file-dds/ddswrite.c:2156
+#: ../plug-ins/file-dds/ddswrite.c:2192
 msgid "Use s_RGB colorspace"
 msgstr "s_RGB renk uzayını kullan"
 
-#: ../plug-ins/file-dds/ddswrite.c:2175 ../plug-ins/flame/flame.c:1116
+#: ../plug-ins/file-dds/ddswrite.c:2211 ../plug-ins/flame/flame.c:1116
 msgid "_Gamma:"
 msgstr "_Gama:"
 
-#: ../plug-ins/file-dds/ddswrite.c:2185
+#: ../plug-ins/file-dds/ddswrite.c:2221
 msgid "Preserve alpha _test coverage"
 msgstr "Alfa _test kapsamını koru"
 
-#: ../plug-ins/file-dds/ddswrite.c:2204
+#: ../plug-ins/file-dds/ddswrite.c:2240
 msgid "_Alpha test threshold:"
 msgstr "_Alfa test eşiği:"
 
@@ -6902,7 +6911,7 @@ msgstr "GFLI 1.3"
 
 #: ../plug-ins/file-ico/ico-dialog.c:54
 msgid "Windows Icon"
-msgstr "Pencere Simgesi"
+msgstr "Windows Simgesi"
 
 #: ../plug-ins/file-ico/ico-dialog.c:74
 msgid "Icon Details"
@@ -7021,7 +7030,7 @@ msgstr "_Exif verisini kaydet"
 
 #. XMP metadata
 #: ../plug-ins/file-jpeg/jpeg-save.c:932
-#: ../plug-ins/file-webp/file-webp-dialog.c:377
+#: ../plug-ins/file-webp/file-webp-dialog.c:390
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:9
 msgid "Save _XMP data"
 msgstr "_XMP verisini kaydet"
@@ -7031,7 +7040,9 @@ msgstr "_XMP verisini kaydet"
 msgid "Save _IPTC data"
 msgstr "_IPTC verisini kaydet"
 
+#. Save Thumbnail
 #: ../plug-ins/file-jpeg/jpeg-save.c:960
+#: ../plug-ins/file-webp/file-webp-dialog.c:414
 #: ../plug-ins/ui/plug-in-file-tiff.ui.h:11
 msgid "Save _thumbnail"
 msgstr "_Küçük resmi kaydet"
@@ -7211,21 +7222,21 @@ msgstr "Desteklenmeyen veya geçersiz katman maskesi genişliği: %d"
 msgid "Unsupported or invalid layer mask size: %dx%d"
 msgstr "Desteklenmeyen ya da geçersiz katman maskesi boyutu: %dx%d"
 
-#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2008
+#: ../plug-ins/file-psd/psd-load.c:1477 ../plug-ins/file-psd/psd-load.c:2040
 #, c-format
 msgid "Unsupported compression mode: %d"
 msgstr "Desteklenmeyen sıkıştırma biçimi. %d"
 
-#: ../plug-ins/file-psd/psd-load.c:2155
+#: ../plug-ins/file-psd/psd-load.c:2187
 msgid "Extra"
 msgstr "Ek"
 
-#: ../plug-ins/file-psd/psd-load.c:2333
+#: ../plug-ins/file-psd/psd-load.c:2365
 #, c-format
 msgid "Unsupported or invalid channel size"
 msgstr "Desteklenmeyen veya geçersiz kanal boyutu"
 
-#: ../plug-ins/file-psd/psd-load.c:2399
+#: ../plug-ins/file-psd/psd-load.c:2431
 #, c-format
 msgid "Failed to decompress data"
 msgstr "Veri açması başarısız"
@@ -7437,17 +7448,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF görüntüsü"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:267
+#: ../plug-ins/file-tiff/file-tiff-load.c:304
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "TIFF görüntüsü değil veya görüntü bozuk."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:298
+#: ../plug-ins/file-tiff/file-tiff-load.c:335
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' her hangi bir dizin içermiyor"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:305
+#: ../plug-ins/file-tiff/file-tiff-load.c:342
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7459,7 +7470,7 @@ msgstr[0] ""
 "TIFF '%s' başlığa göre dizin sayımı başarısız çünkü %d sayfa görünüyor. "
 "Dosya bu varsayımla yüklenmeye çalışılıyor."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:429
+#: ../plug-ins/file-tiff/file-tiff-load.c:466
 msgid "Extra channels with unspecified data."
 msgstr "Belirtilmemiş verili ek kanallar."
 
@@ -7470,17 +7481,17 @@ msgstr "Belirtilmemiş verili ek kanallar."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:441
+#: ../plug-ins/file-tiff/file-tiff-load.c:478
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 "Standarda uygun olmayan TIFF: 'ExtraSamples' alanı olmayan ek kanallar."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:522
+#: ../plug-ins/file-tiff/file-tiff-load.c:560
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "%d / %d sayfası okunamadı. Görüntü bozuk olabilir.\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:551
+#: ../plug-ins/file-tiff/file-tiff-load.c:589
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7489,7 +7500,7 @@ msgstr ""
 "Bu görüntünün doğrusal renk profili var, ancak ilk katmanda ayarlanmamış. # "
 "%d katmanının altındaki katmanlar doğrusal olmayan olarak yorumlanacak."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:559
+#: ../plug-ins/file-tiff/file-tiff-load.c:597
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7499,29 +7510,29 @@ msgstr ""
 "sonuçlara yol açarsa, her katmanı ayrı bir görüntü olarak yüklemeyi "
 "düşünmelisiniz."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:571
+#: ../plug-ins/file-tiff/file-tiff-load.c:609
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Şüpheli bit derinliği: Derinlik: %d, Sayfa: %d. Görüntü bozuk olabilir."
 
 # Burada yer değiştirme yapmak daha doğru olabilirdi, lakin daha önceki Unsupported bit depth çevirilerileriyle uyumlu olsun diye böyle kullandım.
-#: ../plug-ins/file-tiff/file-tiff-load.c:645
+#: ../plug-ins/file-tiff/file-tiff-load.c:683
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Desteklenmeyen bit derinliği: %d, sayfa %d."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:660
+#: ../plug-ins/file-tiff/file-tiff-load.c:698
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "'%s'den görüntü genişliği alınamadı"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:668
+#: ../plug-ins/file-tiff/file-tiff-load.c:706
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "'%s'den görüntü uzunluğu alınamadı"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:676
+#: ../plug-ins/file-tiff/file-tiff-load.c:714
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
@@ -7529,7 +7540,7 @@ msgstr ""
 "olabilir."
 
 # CCITT ve min-is-white sabit veya standart isimleri olduğu içni çevrilmemiştir.
-#: ../plug-ins/file-tiff/file-tiff-load.c:697
+#: ../plug-ins/file-tiff/file-tiff-load.c:735
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7539,7 +7550,7 @@ msgstr ""
 "white varsayılıyor"
 
 # min-is-black çevrilmedi. Sanki bir fotometrik türü gibi duruyor.
-#: ../plug-ins/file-tiff/file-tiff-load.c:704
+#: ../plug-ins/file-tiff/file-tiff-load.c:742
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "'%s' kaynağından fotometrik alınamadı. min-is-black varsayılıyor"
@@ -7547,7 +7558,7 @@ msgstr "'%s' kaynağından fotometrik alınamadı. min-is-black varsayılıyor"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:736
+#: ../plug-ins/file-tiff/file-tiff-load.c:774
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7556,7 +7567,7 @@ msgstr ""
 "varsayılıyor"
 
 # ExtraSamples burada bir TIFF etiketi adı, çevrilmesini uygun bulmadım.
-#: ../plug-ins/file-tiff/file-tiff-load.c:761
+#: ../plug-ins/file-tiff/file-tiff-load.c:799
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7567,72 +7578,72 @@ msgstr ""
 "alanı ayarlanmamış. İlk ek kanalın önceden çoğaltılmış olmayan alfa olduğu "
 "varsayılıyor."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:994
+#: ../plug-ins/file-tiff/file-tiff-load.c:1088
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Geçersiz ya da bilinmeyen sıkıştırma %u. Sıkıştırma yok olarak ayarlanıyor."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1052
+#: ../plug-ins/file-tiff/file-tiff-load.c:1146
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Yeni görüntü oluşturulamadı: %s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1072
+#: ../plug-ins/file-tiff/file-tiff-load.c:1166
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s sayfanın %d %d si"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1217
+#: ../plug-ins/file-tiff/file-tiff-load.c:1311
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Bilinmeyen çözünürlük birim türü %d, dpi varsayılıyor"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1227
+#: ../plug-ins/file-tiff/file-tiff-load.c:1321
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Uyarı: çözünürlük, birim türü olmadan belirtilmiş, dpi varsayılıyor"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1235
+#: ../plug-ins/file-tiff/file-tiff-load.c:1329
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Uyarı: y çözünürlük bilgisi yok, x ile aynı varsayılıyor"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1294
+#: ../plug-ins/file-tiff/file-tiff-load.c:1391
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "'%s'den renk eşlemi alınamadı"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1367
+#: ../plug-ins/file-tiff/file-tiff-load.c:1536
 msgid "TIFF Channel"
 msgstr "TIFF Kanalı"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1505
+#: ../plug-ins/file-tiff/file-tiff-load.c:1674
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "'%s' TIFF dosyasından hiçbir veri okunamadı. Dosya büyük olasılıkla bozuk."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1576
+#: ../plug-ins/file-tiff/file-tiff-load.c:1745
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: Desteklenmeyen görüntü biçimi, RGBA yükleyici yok"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1888
-#: ../plug-ins/file-tiff/file-tiff-load.c:2085
+#: ../plug-ins/file-tiff/file-tiff-load.c:2057
+#: ../plug-ins/file-tiff/file-tiff-load.c:2254
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "Döşeme okunamadı. Görüntü, %d. satırda bozuk olabilir."
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:1897
-#: ../plug-ins/file-tiff/file-tiff-load.c:2094
+#: ../plug-ins/file-tiff/file-tiff-load.c:2066
+#: ../plug-ins/file-tiff/file-tiff-load.c:2263
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "Tarama çizgisi okunamadı. Görüntü, %d. satırda bozuk olabilir."
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2495
+#: ../plug-ins/file-tiff/file-tiff-load.c:2612
 msgid "Import from TIFF"
 msgstr "TIFF dosyasından içe aktar"
 
@@ -7640,23 +7651,23 @@ msgstr "TIFF dosyasından içe aktar"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2552
+#: ../plug-ins/file-tiff/file-tiff-load.c:2669
 msgid "_Keep empty space around imported layers"
 msgstr "İçe a_ktarılan katmanlar etrafındaki boş alanı koru"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2569
+#: ../plug-ins/file-tiff/file-tiff-load.c:2686
 msgid "Process extra channel as:"
 msgstr "Ek kanalı şöyle işle:"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2572
+#: ../plug-ins/file-tiff/file-tiff-load.c:2689
 msgid "_Non-premultiplied alpha"
 msgstr "Önceden çoğaltılmış _olmayan alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2573
+#: ../plug-ins/file-tiff/file-tiff-load.c:2690
 msgid "Pre_multiplied alpha"
 msgstr "Önceden çoğaltılmış _alfa"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2574
+#: ../plug-ins/file-tiff/file-tiff-load.c:2691
 msgid "Channe_l"
 msgstr "Kana_l"
 
@@ -7736,7 +7747,8 @@ msgstr "CCITT Grup _3 faks"
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Grup _4 faks"
 
-#: ../plug-ins/file-webp/file-webp.c:101 ../plug-ins/file-webp/file-webp.c:122
+#: ../plug-ins/file-webp/file-webp.c:124 ../plug-ins/file-webp/file-webp.c:145
+#: ../plug-ins/file-webp/file-webp.c:163
 msgid "WebP image"
 msgstr "WebP görüntüsü"
 
@@ -7749,73 +7761,78 @@ msgid "(all frames are keyframes)"
 msgstr "(tüm kareler anahtar kare)"
 
 #. Create the dialog
-#: ../plug-ins/file-webp/file-webp-dialog.c:108
+#: ../plug-ins/file-webp/file-webp-dialog.c:109
 msgid "WebP"
 msgstr "WebP"
 
 #. Create the lossless checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:125
+#: ../plug-ins/file-webp/file-webp-dialog.c:126
 msgid "_Lossless"
 msgstr "_Kayıpsız"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:141
+#: ../plug-ins/file-webp/file-webp-dialog.c:142
 msgid "Image _quality:"
 msgstr "Görüntü _kalitesi:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:149
+#: ../plug-ins/file-webp/file-webp-dialog.c:150
 msgid "Image quality"
 msgstr "Görüntü kalitesi"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:160
+#: ../plug-ins/file-webp/file-webp-dialog.c:161
 msgid "Alpha q_uality:"
 msgstr "Alfa k_alitesi:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:168
+#: ../plug-ins/file-webp/file-webp-dialog.c:169
 msgid "Alpha channel quality"
 msgstr "Alfa kanal kalitesi"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:193
+#: ../plug-ins/file-webp/file-webp-dialog.c:194
 msgid "Source _type:"
 msgstr "Kaynak _türü:"
 
-#: ../plug-ins/file-webp/file-webp-dialog.c:196
+#: ../plug-ins/file-webp/file-webp-dialog.c:197
 msgid "WebP encoder \"preset\""
 msgstr "WebP kodlayıcı \"önayar\""
 
 #. Create the top-level animation checkbox expander
-#: ../plug-ins/file-webp/file-webp-dialog.c:228
+#: ../plug-ins/file-webp/file-webp-dialog.c:229
 msgid "As A_nimation"
 msgstr "_Animasyon Olarak"
 
 #. loop animation checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:257
+#: ../plug-ins/file-webp/file-webp-dialog.c:258
 msgid "Loop _forever"
 msgstr "Sonsuz _döngü"
 
 #. label for 'max key-frame distance' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:274
+#: ../plug-ins/file-webp/file-webp-dialog.c:275
 msgid "Max distance between key-frames:"
 msgstr "Anahtar kareler arasındaki en büyük mesafe:"
 
 #. minimize-size checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:309
+#: ../plug-ins/file-webp/file-webp-dialog.c:310
 msgid "_Minimize output size (slower)"
 msgstr "Çıktı boyutunu _küçült (yavaş)"
 
 #. label for 'delay' adjustment
-#: ../plug-ins/file-webp/file-webp-dialog.c:332
+#: ../plug-ins/file-webp/file-webp-dialog.c:333
 msgid "Delay between frames where unspecified:"
 msgstr "Belirtilmemiş kareler arasında gecikme uygula:"
 
 #. Create the force-delay checkbox
-#: ../plug-ins/file-webp/file-webp-dialog.c:355
+#: ../plug-ins/file-webp/file-webp-dialog.c:356
 msgid "Use _delay entered above for all frames"
 msgstr "Yukarıda girilen _gecikmeyi tüm karelere uygula"
 
 #. Save EXIF data
-#: ../plug-ins/file-webp/file-webp-dialog.c:367
+#: ../plug-ins/file-webp/file-webp-dialog.c:368
 msgid "_Save Exif data"
 msgstr "Exif verisini _kaydet"
+
+#. IPTC metadata
+#: ../plug-ins/file-webp/file-webp-dialog.c:378
+msgid "Save _IPTC"
+msgstr "_IPTC Kaydet"
 
 #: ../plug-ins/file-webp/file-webp-load.c:107
 #, c-format
@@ -12663,7 +12680,7 @@ msgstr "Görüntüyü _ekran profili ile etiketle"
 
 #: ../plug-ins/screenshot/screenshot.c:810
 msgid "Convert image to sR_GB"
-msgstr "Görüntüyü sR_GB formatına dönüştür"
+msgstr "Görüntüyü sR_GBʼye dönüştür"
 
 #: ../plug-ins/screenshot/screenshot-win32.c:302
 msgid "No data captured"
@@ -12692,7 +12709,7 @@ msgstr "Yoldan Seçime"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:186
 msgid "No selection to convert"
-msgstr "Çevrilecek bir seçim yok"
+msgstr "Dönüştürülecek seçim yok"
 
 #: ../plug-ins/selection-to-path/selection-to-path.c:303
 msgid "Selection to Path Advanced Settings"
@@ -12949,2622 +12966,3 @@ msgstr "_Tarayıcı/Kamera..."
 #: ../plug-ins/twain/twain.c:505
 msgid "Transferring data from scanner/camera"
 msgstr "Tarayıcıdan/kameradan veri aktarılıyor"
-
-#~ msgid "HEIF"
-#~ msgstr "HEIF"
-
-#~ msgid "10 bit/channel (HDR)"
-#~ msgstr "10 bit/kanal (HDR)"
-
-#~ msgid "12 bit/channel (HDR)"
-#~ msgstr "12 bit/kanal (HDR)"
-
-#~ msgid "Creator keyword data not nul-terminated"
-#~ msgstr "Oluşturan anahtar sözcük verisi nul-terminated olamaz"
-
-#~ msgid "Invalid bitmap type %d in channel information chunk"
-#~ msgstr "Kanal bilgisi öbeğinde geçersiz bit eşlem türü %d"
-
-#~ msgid "CMY"
-#~ msgstr "CMY"
-
-#~ msgid "cyan-k"
-#~ msgstr "camgöbeği-k"
-
-#~ msgid "magenta-k"
-#~ msgstr "macenta-k"
-
-#~ msgid "yellow-k"
-#~ msgstr "sarı-k"
-
-#~ msgid "Cyan_K"
-#~ msgstr "Camgöbeği_K"
-
-#~ msgid "Magenta_K"
-#~ msgstr "Macenta_K"
-
-#~ msgid "Yellow_K"
-#~ msgstr "Sarı_K"
-
-#~ msgid "Save background color"
-#~ msgstr "Artalan rengini kaydet"
-
-#~ msgid "Save creation time"
-#~ msgstr "Oluşturma zamanını kaydet"
-
-#~ msgid "Raw"
-#~ msgstr "Ham"
-
-#~ msgid "RunLength Encoded"
-#~ msgstr "Yürütme Uzunluğu Kodlandı"
-
-#~ msgid "Cancel"
-#~ msgstr "İptal"
-
-#~ msgid "OK"
-#~ msgstr "Tamam"
-
-#~ msgctxt "composing"
-#~ msgid "None"
-#~ msgstr "Hiçbiri"
-
-#~ msgctxt "frame-range"
-#~ msgid "From:"
-#~ msgstr "Gönderen:"
-
-#~ msgctxt "frame-range"
-#~ msgid "To:"
-#~ msgstr "Alıcı:"
-
-#~ msgid "RLE compression"
-#~ msgstr "RLE sıkıştırması"
-
-#~ msgid "Lossless"
-#~ msgstr "Kayıpsız"
-
-#~ msgid "Save color values from transparent pixels"
-#~ msgstr "Saydam piksellerden renk değerlerini kaydet"
-
-#~ msgid "Smear colors to simulate an oil painting"
-#~ msgstr "Yağlı boya benzetmesi yapmak için renkleri sıva"
-
-#~ msgid "Oili_fy (legacy)..."
-#~ msgstr "Yağ_lı Boya (eski)..."
-
-#~ msgid "Oil painting"
-#~ msgstr "Yağlı boya"
-
-# yağlama kelimesinin negatif anlamından dolayı Yağlı boya olarak çevrilmiştir
-#~ msgid "Oilify"
-#~ msgstr "Yağlı boya"
-
-#~ msgid "_Mask size:"
-#~ msgstr "_Maske boyutu:"
-
-#~ msgid "Use m_ask-size map:"
-#~ msgstr "M_aske boyutu eşlemi kullan:"
-
-#~ msgid "_Exponent:"
-#~ msgstr "_Katsayı:"
-
-#~ msgid "Use e_xponent map:"
-#~ msgstr "K_atsayı eşlemi kullan:"
-
-#~ msgid "_Use intensity algorithm"
-#~ msgstr "Yoğunluk algoritmasını _kullan"
-
-#~ msgid "Format:"
-#~ msgstr "Biçim:"
-
-#~ msgid "Save:"
-#~ msgstr "Kaydet:"
-
-#~ msgid "<b>Advanced Options</b>"
-#~ msgstr "<b>Gelişmiş Seçenekler</b>"
-
-#~ msgid "Mipmaps"
-#~ msgstr "Mipmaps"
-
-#~ msgid "Adding checkerboard"
-#~ msgstr "Dama tahtası ekleniyor"
-
-#~ msgid "Stretch brightness values to cover the full range"
-#~ msgstr "Parlaklık değerlerini tüm erimi kapsamak için genişlet"
-
-#~ msgid "Normalizing"
-#~ msgstr "Normalleştiriliyor"
-
-#~ msgid "Simulate the glowing boundary of a neon light"
-#~ msgstr "Neon ışığın parıltı sınırına benzet"
-
-#~ msgid "_Neon (legacy)..."
-#~ msgstr "_Neon (eski)..."
-
-#~ msgid "Neon"
-#~ msgstr "Neon"
-
-#~ msgid "Neon Detection"
-#~ msgstr "Neon Saptama"
-
-#~ msgid "_Amount:"
-#~ msgstr "_Miktar:"
-
-#~ msgid "Quality:"
-#~ msgstr "Kalite:"
-
-#~ msgid "Round"
-#~ msgstr "Yuvarlama"
-
-#~ msgid "Line"
-#~ msgstr "Çizgi"
-
-#~ msgid "PS Square (Euclidean Dot)"
-#~ msgstr "PS Kare (Öklid Nokta)"
-
-#~ msgid "PS Diamond"
-#~ msgstr "PS Karo"
-
-#~ msgid "_Grey"
-#~ msgstr "_Gri"
-
-#~ msgid "R_ed"
-#~ msgstr "Kırmı_zı"
-
-#~ msgid "_Green"
-#~ msgstr "Yeşi_l"
-
-#~ msgid "_Blue"
-#~ msgstr "Mav_i"
-
-#~ msgid "C_yan"
-#~ msgstr "Tu_rkuaz"
-
-#~ msgid "Magen_ta"
-#~ msgstr "Kırmızım_sı Mor"
-
-#~ msgid "_Yellow"
-#~ msgstr "_Sarı"
-
-#~ msgid "Luminance"
-#~ msgstr "Renk Parlaklığı"
-
-#~ msgid "Halftone the image to give newspaper-like effect"
-#~ msgstr "Gazete etkisi vermek için görüntüyü klişeleştir"
-
-#~ msgid "Newsprin_t..."
-#~ msgstr "Gazete _Kağıdı..."
-
-#~ msgid "Newsprint"
-#~ msgstr "Gazete kağıdı"
-
-#~ msgid "_Angle:"
-#~ msgstr "_Açı:"
-
-#~ msgid "_Spot function:"
-#~ msgstr "_Nokta işlevi:"
-
-#~ msgid "Resolution"
-#~ msgstr "Çözünürlük"
-
-#~ msgid "_Input SPI:"
-#~ msgstr "_Girdi SPI:"
-
-#~ msgid "O_utput LPI:"
-#~ msgstr "Ç_ıktı LPI:"
-
-#~ msgid "C_ell size:"
-#~ msgstr "H_ücre boyutu:"
-
-#~ msgid "B_lack pullout (%):"
-#~ msgstr "_Siyah çekilme (%):"
-
-#~ msgid "Separate to:"
-#~ msgstr "Boşluk bırak:"
-
-#~ msgid "_RGB"
-#~ msgstr "_RGB"
-
-#~ msgid "C_MYK"
-#~ msgstr "C_MYK"
-
-#~ msgid "I_ntensity"
-#~ msgstr "_Yoğunluk"
-
-#~ msgid "_Lock channels"
-#~ msgstr "Kanalları _kilitle"
-
-#~ msgid "_Factory Defaults"
-#~ msgstr "_Fabrika Ayarları"
-
-#~ msgid "O_versample:"
-#~ msgstr "_Aşırı örnekleme:"
-
-#~ msgid "Flame works only on RGB drawables."
-#~ msgstr "Alev yalnızca RGB çizilebilirliği üzerinde çalışır."
-
-#~ msgid "TIFF export cannot handle indexed images with an alpha channel."
-#~ msgstr ""
-#~ "TIFF dışa aktarma, görünür kanalı ile indeksli görüntüleri işleyemez."
-
-#~ msgid "Brush name is too long: %lu"
-#~ msgstr "Fırça ismi çok uzun: %lu"
-
-#~ msgid "GIMP brush file appears to be corrupted."
-#~ msgstr "GIMP fırça dosyası bozuk."
-
-#~ msgid "Invalid header data in '%s': width=%lu, height=%lu, bytes=%lu"
-#~ msgstr ""
-#~ "'%s' içinde geçersiz başlık verisi: genişlik=%lu, yükseklik=%lu, bayt=%lu"
-
-#~ msgid "Unsupported brush format"
-#~ msgstr "Desteklenmeyen fırça biçimi"
-
-#~ msgid "Invalid header data in '%s': Brush name is too long: %lu"
-#~ msgstr "'%s' içinde geçersiz başlık verisi: Fırça ismi çok uzun: %lu"
-
-#~ msgid "Error in GIMP brush file '%s'"
-#~ msgstr "'%s' GIMP fırça dosyasında sorun"
-
-#~ msgid "Invalid UTF-8 string in brush file '%s'."
-#~ msgstr "'%s' fırça dosyası içinde geçersiz UTF-8 dizgisi."
-
-#~ msgid "Invalid header data in '%s': Pattern name is too long: %lu"
-#~ msgstr "'%s' içinde geçersiz başlık verisi: Desen adı çok uzun: %lu"
-
-#~ msgid "Invalid UTF-8 string in pattern file '%s'."
-#~ msgstr "'%s' desen dosyası içinde geçersiz UTF-8 dizgisi."
-
-#~ msgid "Borderaverage"
-#~ msgstr "Sınır ortalaması"
-
-#~ msgid "_Guillotine"
-#~ msgstr "_Giyotin"
-
-#~ msgid "Blur neighboring pixels, but only in low-contrast areas"
-#~ msgstr ""
-#~ "Komşu benekleri bulanıklaştır ancak sadece düşük karşıtlık bölgelerinde"
-
-#~ msgid "_Selective Gaussian Blur..."
-#~ msgstr "_Seçmeli Gaussian Bulanıklığı..."
-
-#~ msgid "Selective Gaussian Blur"
-#~ msgstr "Seçmeli Gaussian Bulanıklığı"
-
-#~ msgid "_Blur radius:"
-#~ msgstr "_Bulanıklık yarıçapı:"
-
-#~ msgid "_Max. delta:"
-#~ msgstr "_En büyük delta:"
-
-#~ msgid "Create an embossing effect using a bump map"
-#~ msgstr "Derinlik etkisini kullanarak kabartma etkisi oluştur"
-
-#~ msgid "_Bump Map..."
-#~ msgstr "_Derinlik Etkisi..."
-
-#~ msgid "Bump-mapping"
-#~ msgstr "Derinlik eşleme"
-
-#~ msgid "Bump Map"
-#~ msgstr "Derinlik Etkisi"
-
-#~ msgid "_Bump map:"
-#~ msgstr "_Derinlik etkisi:"
-
-#~ msgid "_Map type:"
-#~ msgstr "_Eşlem türü:"
-
-#~ msgid "Co_mpensate for darkening"
-#~ msgstr "Koyulaştırma için de_ngele"
-
-#~ msgid "I_nvert bumpmap"
-#~ msgstr "Derinlik etkisini t_ersine çevir"
-
-#~ msgid "_Tile bumpmap"
-#~ msgstr "Derinlik etkisini d_öşe"
-
-#~ msgid "_Elevation:"
-#~ msgstr "_Rakım:"
-
-#~ msgid ""
-#~ "The offset can be adjusted by dragging the preview using the middle mouse "
-#~ "button."
-#~ msgstr ""
-#~ "Göreli konum, orta fare tuşuyla önizlemeyi sürükleyerek ayarlanabilir."
-
-#~ msgid "_Waterlevel:"
-#~ msgstr "_Denizseviyesi:"
-
-#~ msgid "A_mbient:"
-#~ msgstr "Ç_evresel"
-
-#~ msgid "_X displacement"
-#~ msgstr "_X kovma"
-
-#~ msgid "_Pinch"
-#~ msgstr "_Tutam:"
-
-#~ msgid "_Y displacement"
-#~ msgstr "_Y kovma"
-
-#~ msgid "_Whirl"
-#~ msgstr "_Sarmal"
-
-#~ msgid "Displace pixels as indicated by displacement maps"
-#~ msgstr "Kovma eşleminde gösterildiği gibi benekleri kov"
-
-#~ msgid "_Displace..."
-#~ msgstr "_Yerini değiştir..."
-
-#~ msgid "Displacing"
-#~ msgstr "Kovma"
-
-#~ msgid "Displace"
-#~ msgstr "Yerini değiştir"
-
-#~ msgid "_X displacement:"
-#~ msgstr "_X uzaklığı:"
-
-#~ msgid "_Y displacement:"
-#~ msgstr "_Y uzaklığı:"
-
-#~ msgid "Displacement Mode"
-#~ msgstr "Kovma Kipi"
-
-#~ msgid "_Cartesian"
-#~ msgstr "_Kartezyen"
-
-#~ msgid "_Polar"
-#~ msgstr "_Kutupsal"
-
-#~ msgid "Edge Behavior"
-#~ msgstr "Kenar Davranışı"
-
-#~ msgid "_Smear"
-#~ msgstr "_Sıvama"
-
-#~| msgid "GIF image"
-#~ msgid "NEF image"
-#~ msgstr "NEF görüntüsü"
-
-#~ msgid "Error writing output file."
-#~ msgstr "Çıktı dosyası yazılırken hata."
-
-#~ msgid ""
-#~ "The image '%s' is in grayscale but does not contain any gray component."
-#~ msgstr "'%s' görüntüsü gri ölçekli fakat hiç gri bileşen içermiyor."
-
-#~ msgid "The image '%s' is in RGB, but is missing some of the components."
-#~ msgstr "'%s' görüntüsü RGB fakat bazı bileşenler eksik."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIEXYZ color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "'%s' görüntüsü CIEXYZ renk alanında fakat konumda RGB'ye çevirecek kod "
-#~ "yok."
-
-#~ msgid ""
-#~ "The image '%s' is in the CIELAB color space, but there is no code in "
-#~ "place to convert it to RGB."
-#~ msgstr ""
-#~ "'%s' görüntüsü CIELAB renk alanında fakat konumda RGB'ye çevirecek kod "
-#~ "yok."
-
-#~ msgid ""
-#~ "The image '%s' is in the YCbCr color space, but there is no code in place "
-#~ "to convert it to RGB."
-#~ msgstr ""
-#~ "'%s' görüntüsü YCbCr renk alanında fakat konumda RGB'ye çevirecek kod yok."
-
-#~ msgid "The image '%s' is in an unknown color space."
-#~ msgstr "'%s' görüntüsü bilinmeyen bir renk alanına sahip."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have the same size as the "
-#~ "image. This is currently not supported."
-#~ msgstr ""
-#~ "%d bileşeni '%s' görüntüsünün görüntü olarak aynı boyutunda değil. Bu "
-#~ "şimdilik desteklenmiyor."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' does not have both a hstep and vstep."
-#~ msgstr ""
-#~ "%d bileşeni '%s' görüntüsünün h-adımı ve v-adımının her ikisine de sahip "
-#~ "değil."
-
-#~ msgid ""
-#~ "Image component %d of image '%s' is signed. This is currently not "
-#~ "supported."
-#~ msgstr "%d bileşeni '%s' görüntüsünde işaretli. Bu şimdilik desteklenmiyor."
-
-#~ msgid "Indexed Palette Type"
-#~ msgstr "Sıralanmış Palet Türü"
-
-#~ msgid "Error during writing indexed/gray image"
-#~ msgstr "Sıralanmış/gri görüntü yazma sırasında hata"
-
-#~ msgid "Error during writing rgb image"
-#~ msgstr "rgb görüntü yazılırken hata"
-
-#~ msgid "Set a color profile on the image"
-#~ msgstr "Görüntüde renk profili ayarla"
-
-#~ msgid "_Assign Color Profile..."
-#~ msgstr "Renk Profili _Ata"
-
-#~ msgid "Assign default RGB Profile"
-#~ msgstr "Öntanımlı RGB profili ata"
-
-#~ msgid "Apply a color profile on the image"
-#~ msgstr "Renk profilini görüntüye uygula"
-
-#~ msgid "_Convert to Color Profile..."
-#~ msgstr "Renk Profiline _Çevir..."
-
-#~ msgid "Convert to default RGB Profile"
-#~ msgstr "Öntanımlı RGB Profiline dönüştür"
-
-#~ msgid "Color profile '%s' is not for RGB color space."
-#~ msgstr "Renk profili '%s' RGB renk alanı için değil."
-
-#~ msgid "The image '%s' has an embedded color profile:"
-#~ msgstr "'%s' resmi gömülü bir renk profiline sahip:"
-
-#~ msgid "Convert the image to the RGB working space (%s)?"
-#~ msgstr "Görüntüyü RGB çalışma alanı '%s' dönüşsün mü?"
-
-#~ msgid "Convert to RGB working space?"
-#~ msgstr "RGB çalışma alanına dönüşsün mü?"
-
-#~ msgid "_Keep"
-#~ msgstr "_Tut"
-
-#~ msgid "_Convert"
-#~ msgstr "Dönüş_tür"
-
-#~ msgid "_Don't ask me again"
-#~ msgstr "_Bana yeniden sorma."
-
-#~ msgid "Select destination profile"
-#~ msgstr "Varış profili seçin"
-
-#~ msgid "RGB workspace (%s)"
-#~ msgstr "RGB çalışma alanı (%s)"
-
-#~ msgid "Convert to ICC Color Profile"
-#~ msgstr "ICC Renk Profiline Dönüştür"
-
-#~ msgid "Assign ICC Color Profile"
-#~ msgstr "ICC Renk Profili Ata"
-
-#~ msgid "_Assign"
-#~ msgstr "_Ata"
-
-#~ msgid "Current Color Profile"
-#~ msgstr "Varolan Renk Profili"
-
-#~ msgid "Convert to"
-#~ msgstr "Şuna dönüştür:"
-
-#~ msgid "Assign"
-#~ msgstr "Ata"
-
-#~ msgid "_Rendering Intent:"
-#~ msgstr "Sonuç _Taranıyor:"
-
-#~ msgid "_Black Point Compensation"
-#~ msgstr "_Siyah Nokta Telafisi"
-
-#~ msgid "Destination profile is not for RGB color space."
-#~ msgstr "Varış profili RGB renk alanı için değil"
-
-#~ msgid "This image has no metadata attached to it."
-#~ msgstr "Bu görüntü eklenmiş hiçbir üst veri içermez."
-
-#~ msgid "Displace pixels in a ripple pattern"
-#~ msgstr "Dalga deseninde beneklerin yerini değiştirir"
-
-#~ msgid "_Ripple..."
-#~ msgstr "_Dalgacık..."
-
-#~ msgid "Rippling"
-#~ msgstr "Dalgacıklandırma"
-
-#~ msgid "Ripple"
-#~ msgstr "Dalgacık"
-
-#~ msgid "_Retain tilability"
-#~ msgstr "_Döşenebilirliği tut"
-
-#~ msgid "Edges"
-#~ msgstr "Kenarlar"
-
-#~ msgid "_Blank"
-#~ msgstr "_Sil"
-
-#~ msgid "Wave Type"
-#~ msgstr "Dalga Türü"
-
-#~ msgid "Saw_tooth"
-#~ msgstr "Testere_dişleri"
-
-#~ msgid "S_ine"
-#~ msgstr "S_inüs"
-
-#~ msgid "_Period:"
-#~ msgstr "_Dönem:"
-
-#~ msgid "Phase _shift:"
-#~ msgstr "Faz _kayması:"
-
-#~ msgid "The most widely useful method for sharpening an image"
-#~ msgstr "Bir görüntüyü keskinleştirmek için kullanışlı en yaygın yöntem"
-
-#~ msgid "_Unsharp Mask..."
-#~ msgstr "_Keskin Netleştirme..."
-
-#~ msgid "Merging"
-#~ msgstr "Birleştiriliyor"
-
-#~ msgid "Unsharp Mask"
-#~ msgstr "Keskin Netleştirme"
-
-#~ msgid "_Create"
-#~ msgstr "_Oluştur"
-
-#~ msgid ""
-#~ "Unable to save layer with mode '%s'.  Either the PSD file format or the "
-#~ "save plug-in does not support that, using normal mode instead."
-#~ msgstr ""
-#~ "Katman '%s' biçiminde kaydedilemedi. Ayrıca PSD dosya biçimi ya da "
-#~ "kaydetme eklentisi bunu desteklemiyor, bunun yerine normal biçim "
-#~ "kullanılıyor."
-
-#~| msgid "_Advanced"
-#~ msgid "Advanced"
-#~ msgstr "Gelişmiş"
-
-#~| msgid "Save _EXIF data"
-#~ msgid "save Exif data"
-#~ msgstr "Exif verisini kaydet"
-
-#~| msgid "Save _XMP data"
-#~ msgid "save XMP data"
-#~ msgstr "XMP verisini kaydet"
-
-#~| msgid "Save _XMP data"
-#~ msgid "save IPTC data"
-#~ msgstr "IPTC verisini kaydet"
-
-#~| msgid "Save _thumbnail"
-#~ msgid "save thumbnail"
-#~ msgstr "küçük resim kaydet"
-
-#~| msgid "C_aption"
-#~ msgid "Caption"
-#~ msgstr "Resim Yazısı"
-
-#~| msgid "Description:"
-#~ msgid "Captionwriter"
-#~ msgstr "ResimYazısıYazarı"
-
-#~ msgid "Keywords/Categories"
-#~ msgstr "Anahtar Kelimeler/Kategoriler"
-
-#~ msgid "Write IPTC Data"
-#~ msgstr "IPTC Verilerini Yaz"
-
-#~ msgid "Constructing maze using Prim's Algorithm"
-#~ msgstr "Prim Algoritması kullanarak labirent oluşturmak"
-
-#~ msgid "Constructing tileable maze using Prim's Algorithm"
-#~ msgstr "Prim's Algoritması kullanılarak döşenebilir labirent inşa ediliyor"
-
-#~ msgid "Maze"
-#~ msgstr "Labirent"
-
-#~ msgid "Maze Size"
-#~ msgstr "Labirent Boyutu"
-
-#~ msgid "Pieces:"
-#~ msgstr "Parçalar:"
-
-#~ msgid "Height (pixels):"
-#~ msgstr "Yükseklik (benek):"
-
-#~ msgid "Algorithm"
-#~ msgstr "Algoritma"
-
-#~ msgid "Depth first"
-#~ msgstr "Derinlemesine"
-
-#~ msgid "Prim's algorithm"
-#~ msgstr "Prim Algoritması"
-
-#~ msgid ""
-#~ "Selection size is not even.\n"
-#~ "Tileable maze won't work perfectly."
-#~ msgstr ""
-#~ "Seçim büyüklüğü dengeli değil.\n"
-#~ "Döşenebilir labirent düzgün çalışmayacak."
-
-#~ msgid "Draw a labyrinth"
-#~ msgstr "Bir labirent çiz"
-
-#~ msgid "_Maze..."
-#~ msgstr "_Labirent..."
-
-#~ msgid "Drawing maze"
-#~ msgstr "Labirent çizimi"
-
-#~ msgid "Grab"
-#~ msgstr "Yakala"
-
-#~ msgid "Grab a single window"
-#~ msgstr "Tek bir pencere tut"
-
-#~ msgid "Grab the whole screen"
-#~ msgstr "Tüm ekranı tut"
-
-#~ msgid "after"
-#~ msgstr "sonra"
-
-#~ msgid "Seconds delay"
-#~ msgstr "Saniye gecikmesi"
-
-#~ msgid "Include decorations"
-#~ msgstr "Süslemeleri içer"
-
-#~ msgid "Capture a window or desktop image"
-#~ msgstr "Bir pencere veya masaüstü resmi yakala"
-
-#~ msgid "_Screen Shot..."
-#~ msgstr "_Ekran Görüntüsü..."
-
-#~ msgid "Original"
-#~ msgstr "Özgün"
-
-#~ msgid "Rotated"
-#~ msgstr "Döndürülmüş"
-
-#~ msgid "Continuous update"
-#~ msgstr "Devam eden güncelleme"
-
-#~ msgid "Area:"
-#~ msgstr "Alan:"
-
-#~ msgid "Entire Layer"
-#~ msgstr "Tüm Katman"
-
-#~ msgid "Context"
-#~ msgstr "İçerik"
-
-#~ msgctxt "color-range"
-#~ msgid "From:"
-#~ msgstr "Gönderen:"
-
-#~ msgctxt "color-range"
-#~ msgid "To:"
-#~ msgstr "Alıcı:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "From:"
-#~ msgstr "Gönderen:"
-
-#~ msgctxt "color-rotate"
-#~ msgid "To:"
-#~ msgstr "Alıcı:"
-
-#~ msgid "Hue:"
-#~ msgstr "Renk Tonu:"
-
-#~ msgid "Saturation:"
-#~ msgstr "Doygunluk:"
-
-#~ msgid "Gray Mode"
-#~ msgstr "Gri Kip"
-
-#~ msgid "Treat as this"
-#~ msgstr "Bunun gibi davran"
-
-#~ msgid "Change to this"
-#~ msgstr "Bununla değiştir"
-
-#~ msgid "Units"
-#~ msgstr "Birimler"
-
-#~ msgid "Radians/Pi"
-#~ msgstr "Radyan/Pi"
-
-#~ msgid "Degrees"
-#~ msgstr "Derece"
-
-#~ msgid "Rotate Colors"
-#~ msgstr "Renkleri Çevir"
-
-#~ msgid "Gray Options"
-#~ msgstr "Gri Seçenekleri"
-
-#~ msgid "Switch to Clockwise"
-#~ msgstr "Saat Yönünde Çevir"
-
-#~ msgid "Switch to C/Clockwise"
-#~ msgstr "Saat Yönünün Tersinde Çevir"
-
-#~ msgid "Change Order of Arrows"
-#~ msgstr "Okların Düzenini Değiştir"
-
-#~ msgid "Replace a range of colors with another"
-#~ msgstr "Renk değer kümesini bir başkasıyla değiştir"
-
-#~ msgid "_Rotate Colors..."
-#~ msgstr "_Renkleri Döndür..."
-
-#~ msgid "Rotating the colors"
-#~ msgstr "Renkler döndürülüyor"
-
-#~ msgid "_Modify red channel"
-#~ msgstr "Kırmızı kanalı _değiştir"
-
-#~ msgid "_Modify hue channel"
-#~ msgstr "Renk tonu kanalını _değiştir"
-
-#~ msgid "Mo_dify green channel"
-#~ msgstr "Yeşil kanalı d_eğiştir"
-
-#~ msgid "Mo_dify saturation channel"
-#~ msgstr "Doygunluk kanalını d_eğiştir"
-
-#~ msgid "Mod_ify blue channel"
-#~ msgstr "Mavi kanalı değ_iştir"
-
-#~ msgid "Mod_ify luminosity channel"
-#~ msgstr "Işıklılık kanalını _değiştir"
-
-#~ msgid "Red _frequency:"
-#~ msgstr "Kırmızı _sıklığı:"
-
-#~ msgid "Hue _frequency:"
-#~ msgstr "Renk tonu _sıklığı:"
-
-#~ msgid "Green fr_equency:"
-#~ msgstr "Yeşil sı_klığı:"
-
-#~ msgid "Saturation fr_equency:"
-#~ msgstr "Doygunluk sı_klığı:"
-
-#~ msgid "Blue freq_uency:"
-#~ msgstr "Mavi sık_lığı:"
-
-#~ msgid "Luminosity freq_uency:"
-#~ msgstr "Işıklılık s_ıklığı:"
-
-#~ msgid "Red _phaseshift:"
-#~ msgstr "Kırmızı _evre ötesi:"
-
-#~ msgid "Hue _phaseshift:"
-#~ msgstr "Renk tonu _faz kayması:"
-
-#~ msgid "Green ph_aseshift:"
-#~ msgstr "Yeşil e_vre ötesi:"
-
-#~ msgid "Saturation ph_aseshift:"
-#~ msgstr "Doygunluk _faz kayması:"
-
-#~ msgid "Blue pha_seshift:"
-#~ msgstr "Mavi ev_re ötesi:"
-
-#~ msgid "Luminosity pha_seshift:"
-#~ msgstr "Işıklılık _faz kayması:"
-
-#~ msgid "Alter colors in various psychedelic ways"
-#~ msgstr "Çeşitli rengarenk yollarla renkleri değiştir"
-
-#~ msgid "_Alien Map..."
-#~ msgstr "_Yabancı Harita..."
-
-#~ msgid "Alien Map: Transforming"
-#~ msgstr "Yabancı Harita: Dönüştürülüyor"
-
-#~ msgid "Alien Map"
-#~ msgstr "Yabancı Harita"
-
-#~ msgid "Number of cycles covering full value range"
-#~ msgstr "Tüm değer erimini kapsayan dönüş sayısı"
-
-#~ msgid "Phase angle, range 0-360"
-#~ msgstr "Faz açısı, açı 0-360"
-
-#~ msgid "_RGB color model"
-#~ msgstr "_RGB renk örneği"
-
-#~ msgid "_HSL color model"
-#~ msgstr "_HSL renk örneği"
-
-#~ msgid "Tried to display an invalid layer."
-#~ msgstr "Geçersiz bir katman gösterilmeye çalışıldı."
-
-#~ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-#~ msgstr ""
-#~ "Scale3X edge-extrapolation algoritmasını kullanırken keskinlik yumuşat"
-
-#~ msgid "_Antialias"
-#~ msgstr "_Keskinliği yumuşatma"
-
-#~ msgid "Antialiasing..."
-#~ msgstr "Keskinliği yumuşatma..."
-
-#~ msgid "Add a canvas texture to the image"
-#~ msgstr "Görüntüye bir tuval dokusu ekle"
-
-#~ msgid "_Apply Canvas..."
-#~ msgstr "Tuvali _Uygula..."
-
-#~ msgid "Applying canvas"
-#~ msgstr "Tuval uygulanıyor"
-
-#~ msgid "Apply Canvas"
-#~ msgstr "Tuvali Uygula"
-
-#~ msgid "_Top-right"
-#~ msgstr "_Üst-Sağ"
-
-#~ msgid "Top-_left"
-#~ msgstr "Üst-_Sol"
-
-#~ msgid "_Bottom-left"
-#~ msgstr "_Alt-Sol"
-
-#~ msgid "Bottom-_right"
-#~ msgstr "Alt-_Sağ"
-
-#~ msgid "Simplest, most commonly used way of blurring"
-#~ msgstr "Bulanıklaştırmanın en basit, en yaygın kullanılan yolu"
-
-#~ msgid "_Gaussian Blur..."
-#~ msgstr "_Gaussian Bulanıklığı..."
-
-#~ msgid "Apply a gaussian blur"
-#~ msgstr "Bir gaussian bulanıklığı uygula"
-
-#~ msgid "Gaussian Blur"
-#~ msgstr "Gaussian Bulanıklığı"
-
-#~ msgid "Blur Radius"
-#~ msgstr "Bulanıklık Yarıçapı"
-
-#~ msgid "Blur Method"
-#~ msgstr "Bulanıklık Yöntemi"
-
-#~ msgid "_IIR"
-#~ msgstr "_IIR"
-
-#~ msgid "_RLE"
-#~ msgstr "_RLE"
-
-#~ msgid "Simulate movement using directional blur"
-#~ msgstr "Yönlü bulanıklaştırma kullanarak hareket benzetimi yap"
-
-#~ msgid "_Motion Blur..."
-#~ msgstr "_Hareketli Bulanıklaştır..."
-
-#~ msgid "Motion blurring"
-#~ msgstr "Hareketli bulanıklaştırma"
-
-#~ msgid "Motion Blur"
-#~ msgstr "Hareketli Bulanıklaştır"
-
-#~ msgid "Blur Type"
-#~ msgstr "Bulanıklaştırma Türü"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Linear"
-#~ msgstr "_Doğrusal"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Radial"
-#~ msgstr "_Işınsal"
-
-#~ msgctxt "blur-type"
-#~ msgid "_Zoom"
-#~ msgstr "_Yakınlaştır"
-
-#~ msgid "Blur Center"
-#~ msgstr "Bulanıklaştırma Merkezi"
-
-#~ msgid "Blur _outward"
-#~ msgstr "_Dışa doğru bulanıklaştır"
-
-#~ msgid "Blur Parameters"
-#~ msgstr "Bulanıklaştırma Parametreleri"
-
-#~ msgid "Alter colors by mixing RGB Channels"
-#~ msgstr "RGB Kanallarını karıştırarak renkleri değiştir"
-
-#~ msgid "Channel Mi_xer..."
-#~ msgstr "Kanal Ka_rıştırıcı..."
-
-#~ msgid "Channel Mixer"
-#~ msgstr "Kanal Karıştırıcı"
-
-#~ msgid "O_utput channel:"
-#~ msgstr "Ç_ıktı kanalı:"
-
-#~ msgid "_Monochrome"
-#~ msgstr "_Tekrenkli"
-
-#~ msgid "Preserve _luminosity"
-#~ msgstr "Işıklılığı _koru"
-
-#~ msgid "Load Channel Mixer Settings"
-#~ msgstr "Kanal Karıştırıcı Ayarlarını Yükle"
-
-#~ msgid "Save Channel Mixer Settings"
-#~ msgstr "Kanal Karıştırıcı Ayarlarını Kaydet"
-
-#~ msgid "Swap one color with another"
-#~ msgstr "Bir rengi başkasıyla değiştir"
-
-#~ msgid "_Color Exchange..."
-#~ msgstr "_Renk Takası..."
-
-#~ msgid "Color Exchange"
-#~ msgstr "Renk Takası"
-
-#~ msgid "Middle-Click Inside Preview to Pick \"From Color\""
-#~ msgstr "i"
-
-#~ msgid "To Color"
-#~ msgstr "Renge"
-
-#~ msgid "From Color"
-#~ msgstr "Renkten"
-
-#~ msgid "Color Exchange: To Color"
-#~ msgstr "Renk Takası: Renge"
-
-#~ msgid "Color Exchange: From Color"
-#~ msgstr "Renk Takası: Renkten"
-
-#~ msgid "R_ed threshold:"
-#~ msgstr "K_ırmızı eşik:"
-
-#~ msgid "G_reen threshold:"
-#~ msgstr "Y_eşil eşik:"
-
-#~ msgid "B_lue threshold:"
-#~ msgstr "M_avi eşik:"
-
-#~ msgid "Lock _thresholds"
-#~ msgstr "_Eşikleri kilitle"
-
-#~ msgid "Convert a specified color to transparency"
-#~ msgstr "Belirli bir rengi saydamlığa dönüştür"
-
-#~ msgid "Color to _Alpha..."
-#~ msgstr "Renkten _Görünüre..."
-
-#~ msgid "Removing color"
-#~ msgstr "Renk kaldırılıyor"
-
-#~ msgid "Color to Alpha"
-#~ msgstr "Renkten Görünüre"
-
-#~ msgctxt "color-to-alpha"
-#~ msgid "From:"
-#~ msgstr "Gönderen:"
-
-#~ msgid "Color to Alpha Color Picker"
-#~ msgstr "Renkten Görünür Renk Seçicisine"
-
-#~ msgid "to alpha"
-#~ msgstr "görünüre"
-
-#~ msgid "_Luma y470f:"
-#~ msgstr "_Luma y470f:"
-
-#~ msgid "_Blueness cb470f:"
-#~ msgstr "_Mavilik cb470f:"
-
-#~ msgid "_Redness cr470f:"
-#~ msgstr "_Kırmızılık cr470f:"
-
-#~ msgid "_Luma y709f:"
-#~ msgstr "_Luma y709f:"
-
-#~ msgid "_Blueness cb709f:"
-#~ msgstr "_Mavilik cb709f:"
-
-#~ msgid "_Redness cr709f:"
-#~ msgstr "_Kırmızılık cr709f:"
-
-#~ msgid "Image is not a gray image (bpp=%d)"
-#~ msgstr "Görüntü gri bir görüntü değil (bpp=%d)"
-
-#~ msgid "Stretch image contrast to cover the maximum possible range"
-#~ msgstr "Mümkün olan en yüksek erimi kapsamak için görüntü karşıtlığını yay"
-
-#~ msgid "Stretch _HSV"
-#~ msgstr "_HSV'yi Yay"
-
-#~ msgid "Auto-Stretching HSV"
-#~ msgstr "HSV'yi Otomatik Yayma"
-
-#~ msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-#~ msgstr "autostretch_hsv: cmap NULL! Çıkıyor...\n"
-
-#~ msgid "Stretch contrast to cover the maximum possible range"
-#~ msgstr "Mümkün olan en yüksek erimi kapsamak için karşıtlığı yay"
-
-#~ msgid "_Stretch Contrast"
-#~ msgstr "Karşıtlığı _Yay"
-
-#~ msgid "Auto-stretching contrast"
-#~ msgstr "Karşıtlığı otomatik yayma"
-
-#~ msgid "c_astretch: cmap was NULL!  Quitting...\n"
-#~ msgstr "c_astretch: cmap NULL! Çıkıyor...\n"
-
-#~ msgid "Gr_ey"
-#~ msgstr "G_ri"
-
-#~ msgid "Re_d"
-#~ msgstr "_Kırmızı"
-
-#~ msgid "_Alpha"
-#~ msgstr "_Görünür"
-
-#~ msgid "E_xtend"
-#~ msgstr "G_enişlet"
-
-#~ msgid "Cro_p"
-#~ msgstr "Kı_rp"
-
-#~ msgid "Apply a generic 5x5 convolution matrix"
-#~ msgstr "Soysal bir 5x5 kıvrılma dizeyi uygula"
-
-#~ msgid "_Convolution Matrix..."
-#~ msgstr "_Kıvrılma Dizeyi..."
-
-#~ msgid "Convolution does not work on layers smaller than 3x3 pixels."
-#~ msgstr "Kıvrılma 3x3 benekten küçük katmanlar üzerinde çalışmıyor"
-
-#~ msgid "Convolution Matrix"
-#~ msgstr "Kıvrılma Dizeyi"
-
-#~ msgid "Matrix"
-#~ msgstr "Matris"
-
-#~ msgid "D_ivisor:"
-#~ msgstr "B_ölen:"
-
-#~ msgid "N_ormalise"
-#~ msgstr "N_ormalleştir"
-
-#~ msgid "A_lpha-weighting"
-#~ msgstr "Gö_rünür ağırlıklı"
-
-#~ msgid "Border"
-#~ msgstr "Sınır"
-
-#~ msgid "Channels"
-#~ msgstr "Kanallar"
-
-#~ msgid "Remove empty borders from the image"
-#~ msgstr "Boş sınırları görüntüden kaldır"
-
-#~ msgid "Autocrop Imag_e"
-#~ msgstr "_Görüntüyü kendiliğinden kırp"
-
-#~ msgid "Remove empty borders from the layer"
-#~ msgstr "Katmandan boş sınırları kaldır"
-
-#~ msgid "Autocrop Lay_er"
-#~ msgstr "Kat_manı kendiliğinden kırp"
-
-#~ msgid "Cropping"
-#~ msgstr "Kırpma"
-
-#~ msgid "Convert the image into randomly rotated square blobs"
-#~ msgstr "İmgeyi rasgele döndürülmüş dörtgen biçimsiz yığınlara dönüştür"
-
-#~ msgid "_Cubism..."
-#~ msgstr "_Kübizm..."
-
-#~ msgid "Cubism"
-#~ msgstr "Kübizm"
-
-#~ msgid "_Tile size:"
-#~ msgstr "_Döşeme boyutu:"
-
-#~ msgid "_Use background color"
-#~ msgstr "Artalan rengi k_ullan"
-
-#~ msgid "Cubistic transformation"
-#~ msgstr "Kübistik dönüştürme"
-
-#~ msgid "hue_l"
-#~ msgstr "renk tonu_I"
-
-#~ msgid "saturation_l"
-#~ msgstr "doygunluk_l"
-
-#~ msgid "luma-y470f"
-#~ msgstr "luma-y470f"
-
-#~ msgid "blueness-cb470f"
-#~ msgstr "mavilik-cb470f"
-
-#~ msgid "redness-cr470f"
-#~ msgstr "kırmızılık-cr470f"
-
-#~ msgid "luma-y709f"
-#~ msgstr "luma-y709f"
-
-#~ msgid "blueness-cb709f"
-#~ msgstr "mavilik-cb709f"
-
-#~ msgid "redness-cr709f"
-#~ msgstr "kırmızılık-cr709f"
-
-#~ msgid "Fix images where every other row is missing"
-#~ msgstr "Diğer sıraların kayıp olduğu resimleri düzelt"
-
-#~ msgid "_Deinterlace..."
-#~ msgstr "_Netleştir..."
-
-#~ msgid "Deinterlace"
-#~ msgstr "Netleştir"
-
-#~ msgid "Keep o_dd fields"
-#~ msgstr "T_ek alanları koru"
-
-#~ msgid "Keep _even fields"
-#~ msgstr "_Çift alanları koru"
-
-#~ msgid "Generate diffraction patterns"
-#~ msgstr "Kırınım desenleri üret"
-
-#~ msgid "_Diffraction Patterns..."
-#~ msgstr "_Kırınım Desenleri..."
-
-#~ msgid "Creating diffraction pattern"
-#~ msgstr "Kırınım deseni oluşturuluyor"
-
-#~ msgid "Diffraction Patterns"
-#~ msgstr "Kırınım desenleri"
-
-#~ msgid "Frequencies"
-#~ msgstr "Sıklıklar"
-
-#~ msgid "Contours"
-#~ msgstr "Çevre çizgileri"
-
-#~ msgid "Sharp Edges"
-#~ msgstr "Keskin Kıyılar"
-
-#~ msgid "Sc_attering:"
-#~ msgstr "_Dağılma:"
-
-#~ msgid "Po_larization:"
-#~ msgstr "_Kutuplama"
-
-#~ msgid "Other Options"
-#~ msgstr "Diğer Seçenekler"
-
-#~ msgid "High-resolution edge detection"
-#~ msgstr "Yüksek çözünürlüklü kenar tespit etme"
-
-#~ msgid "_Laplace"
-#~ msgstr "_Laplace"
-
-#~ msgid "Laplace"
-#~ msgstr "Laplace"
-
-#~ msgid "Cleanup"
-#~ msgstr "Temizle"
-
-#~ msgid "Specialized direction-dependent edge detection"
-#~ msgstr "Özelleştirilmiş, yön tabanlı kenar tespit etme"
-
-#~ msgid "_Sobel..."
-#~ msgstr "_Çizimleştir..."
-
-#~ msgid "Sobel Edge Detection"
-#~ msgstr "Sobel Kenar Algılama"
-
-#~ msgid "Sobel _horizontally"
-#~ msgstr "_Yatay çizimleştir"
-
-#~ msgid "Sobel _vertically"
-#~ msgstr "_Dikey çizimleştir"
-
-#~ msgid "_Keep sign of result (one direction only)"
-#~ msgstr "_Sonucun izini koru (sadece tek yön)"
-
-#~ msgid "Sobel edge detecting"
-#~ msgstr "Sobel kenar algılanıyor"
-
-#~ msgid "Several simple methods for detecting edges"
-#~ msgstr "Kenar tespiti için bir kaç basit yöntem"
-
-#~ msgid "_Edge..."
-#~ msgstr "_Kenar..."
-
-#~ msgid "Edge detection"
-#~ msgstr "Kenar tespiti"
-
-#~ msgid "Edge Detection"
-#~ msgstr "Kenar Tespiti"
-
-#~ msgid "Sobel"
-#~ msgstr "Çizimleştir"
-
-#~ msgid "Prewitt compass"
-#~ msgstr "Prewitt pusulası"
-
-#~ msgid "Roberts"
-#~ msgstr "Roberts"
-
-#~ msgid "Differential"
-#~ msgstr "Farklı Özellik"
-
-#~ msgid "_Algorithm:"
-#~ msgstr "_Algoritma:"
-
-#~ msgid "A_mount:"
-#~ msgstr "N_icelik:"
-
-#~ msgid "Simulate an antique engraving"
-#~ msgstr "Sahte antika oyma"
-
-#~ msgid "En_grave..."
-#~ msgstr "Oy_ma..."
-
-#~ msgid "Engraving"
-#~ msgstr "Oyma"
-
-#~ msgid "Engrave"
-#~ msgstr "Oyma"
-
-#~ msgid "_Limit line width"
-#~ msgstr "Hat genişliği _sınırı"
-
-#~ msgid "GIMP brushes are either GRAYSCALE or RGBA"
-#~ msgstr "GIMP fırçaları ya GRİTONLAMALI veya RGBA"
-
-#~ msgid "Error in GIMP brush pipe file."
-#~ msgstr "GIMP fırça boru dosyasında hata."
-
-#~ msgid "Couldn't load one brush in the pipe, giving up."
-#~ msgstr "Borudaki bir fırça yüklenemedi, vazgeçiliyor."
-
-#~ msgid "RGB565"
-#~ msgstr "RGB565"
-
-#~ msgid ""
-#~ "Warning:\n"
-#~ "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
-#~ "bit, so it will be converted for you. Information will be lost because of "
-#~ "this conversion."
-#~ msgstr ""
-#~ "Uyarı:\n"
-#~ "Yüklediğiniz görüntü kanal başına 16 bit'e sahip. GIMP sadece 8 bit "
-#~ "kullanabilir; bu yüzden, dönüştürülmesi gerekiyor. Bilgi, bu dönüşümden "
-#~ "dolayı kaybolacak."
-
-#~ msgid "Superimpose many altered copies of the image"
-#~ msgstr "Görüntünün bir çok değiştirilmiş kopyasının üzerine koy"
-
-#~ msgid "_Illusion..."
-#~ msgstr "_Hayal..."
-
-#~ msgid "Illusion"
-#~ msgstr "Hayal"
-
-#~ msgid "_Divisions:"
-#~ msgstr "_Bölümler:"
-
-#~ msgid "Mode _2"
-#~ msgstr "Kip_2"
-
-#~ msgid "Use mouse control to warp image areas"
-#~ msgstr "Görüntü alanlarını eğmek için fare yönetimini kullan"
-
-#~ msgid "_IWarp..."
-#~ msgstr "_Boz..."
-
-#~ msgid "Warping"
-#~ msgstr "Eğme"
-
-#~ msgid "Warping Frame %d"
-#~ msgstr "Çerçeve Eğiliyor %d"
-
-#~ msgid "Ping pong"
-#~ msgstr "Ping pong"
-
-#~ msgid "Region affected by plug-in is empty"
-#~ msgstr "Eklentiden etkilenen alan boş"
-
-#~ msgid "A_nimate"
-#~ msgstr "_Canlandır"
-
-#~ msgid "Number of _frames:"
-#~ msgstr "_Çerçeve Sayısı:"
-
-#~ msgid "R_everse"
-#~ msgstr "_Tersine Çevir"
-
-#~ msgid "_Ping pong"
-#~ msgstr "_Ping pong"
-
-#~ msgid "_Animate"
-#~ msgstr "_Canlandır"
-
-#~ msgid "Deform Mode"
-#~ msgstr "Bozma Kipi"
-
-#~ msgid "_Move"
-#~ msgstr "_Taşı"
-
-#~ msgid "_Grow"
-#~ msgstr "_Genişle"
-
-#~ msgid "S_wirl CCW"
-#~ msgstr "_Döndür CCW"
-
-#~ msgid "Remo_ve"
-#~ msgstr "K_aldır"
-
-#~ msgid "S_hrink"
-#~ msgstr "_Daralt"
-
-#~ msgid "Sw_irl CW"
-#~ msgstr "Döndü_r CW"
-
-#~ msgid "_Deform radius:"
-#~ msgstr "Yarıçapı _Boz:"
-
-#~ msgid "D_eform amount:"
-#~ msgstr "Miktarı B_oz:"
-
-#~ msgid "_Bilinear"
-#~ msgstr "_Çift Doğrusal"
-
-#~ msgid "Adaptive s_upersample"
-#~ msgstr "Uyumlu ü_stünörnekleme"
-
-#~ msgid "Ma_x depth:"
-#~ msgstr "Ma_ks derinlik:"
-
-#~ msgid "Thresho_ld:"
-#~ msgstr "Eşi_k"
-
-#~ msgid "IWarp"
-#~ msgstr "Boz"
-
-#~ msgid ""
-#~ "Click and drag in the preview to define the distortions to apply to the "
-#~ "image."
-#~ msgstr ""
-#~ "Önizlemede resimde uygulayarak bozulmayı tanımlamak için tıkla ve sürükle."
-
-#~ msgid "Image Color Profile Information"
-#~ msgstr "Görüntü Renk Profil Bilgisi"
-
-#~ msgid "Color Profile Information"
-#~ msgstr "Renk Profil Bilgisi"
-
-#~ msgid "Default RGB working space"
-#~ msgstr "Öntanımlı RGB çalışma alanı"
-
-#~ msgid ""
-#~ "Data attached as 'icc-profile' does not appear to be an ICC color profile"
-#~ msgstr "'icc-profili' olarak eklenmiş veri ICC renk profili değil"
-
-#~ msgid "'%s' does not appear to be an ICC color profile"
-#~ msgstr "'%s' bir ICC renk profili olarak görünmüyor"
-
-#~ msgid "Converting from '%s' to '%s'"
-#~ msgstr "`%s' >`%s' dönüştürülüyor"
-
-#~ msgid "Could not load ICC profile from '%s'"
-#~ msgstr "'%s'den ICC profili yüklenemedi"
-
-#~ msgid "All files (*.*)"
-#~ msgstr "Tüm dosyalar (*.*)"
-
-#~ msgid "ICC color profile (*.icc, *.icm)"
-#~ msgstr "ICC renk profili (*.icc, *.icm)"
-
-#~ msgid "Simulate an elliptical lens over the image"
-#~ msgstr "Resim üzerindeki oval merceklere benzetim yap"
-
-#~ msgid "Apply _Lens..."
-#~ msgstr "_Merceği Uygula..."
-
-#~ msgid "Applying lens"
-#~ msgstr "Mercek uygulanıyor"
-
-#~ msgid "Lens Effect"
-#~ msgstr "Mercek Etkisi"
-
-#~ msgid "_Keep original surroundings"
-#~ msgstr "Özgün ortamı _sakla"
-
-#~ msgid "_Set surroundings to index 0"
-#~ msgstr "Ortam göstergesini 0 _ayarla"
-
-#~ msgid "_Set surroundings to background color"
-#~ msgstr "Ortamı artalan rengine _ayarla"
-
-#~ msgid "_Make surroundings transparent"
-#~ msgstr "Ortamı saydam _Yap"
-
-#~ msgid "_Lens refraction index:"
-#~ msgstr "_Mercek sapma göstergesi:"
-
-#~ msgid "Corrects lens distortion"
-#~ msgstr "Mercek bozulmasını düzelt"
-
-#~ msgid "Lens Distortion..."
-#~ msgstr "Mercek Bozulması..."
-
-#~ msgid "Lens distortion"
-#~ msgstr "Mercek bozulması"
-
-#~ msgid "Lens Distortion"
-#~ msgstr "Mercek Bozulması"
-
-#~ msgid "_Main:"
-#~ msgstr "_Ana:"
-
-#~ msgid "_Edge:"
-#~ msgstr "_Kenar:"
-
-#~ msgid "_Brighten:"
-#~ msgstr "_Parlak:"
-
-#~ msgid "_X shift:"
-#~ msgstr "_X kayması:"
-
-#~ msgid "_Y shift:"
-#~ msgstr "_Y kayması"
-
-#~ msgid "Add a lens flare effect"
-#~ msgstr "Mercek parlaması etkisi ekle"
-
-#~ msgid "Lens _Flare..."
-#~ msgstr "Mercek _Parlaması..."
-
-#~ msgid "Render lens flare"
-#~ msgstr "Mercek parlamayı tara"
-
-#~ msgid "Lens Flare"
-#~ msgstr "Mercek Parlaması"
-
-#~ msgid "Center of Flare Effect"
-#~ msgstr "Parlama Etkisi Merkezi"
-
-#~ msgid "Show _position"
-#~ msgstr "_Konumu göster"
-
-#~ msgid "Convert the image into irregular tiles"
-#~ msgstr "Resmi düzensiz zemine çevir"
-
-#~ msgid "_Mosaic..."
-#~ msgstr "_Mozaik..."
-
-#~ msgid "Finding edges"
-#~ msgstr "Kenarları bulma"
-
-#~ msgid "Rendering tiles"
-#~ msgstr "Zemin taranıyor"
-
-#~ msgid "Mosaic"
-#~ msgstr "Mozaik"
-
-#~ msgid "Squares"
-#~ msgstr "Kareler"
-
-#~ msgid "Hexagons"
-#~ msgstr "Altıgenler"
-
-#~ msgid "Octagons & squares"
-#~ msgstr "Sekizgenler & kareler"
-
-#~ msgid "Triangles"
-#~ msgstr "Üçgenler"
-
-#~ msgid "_Tiling primitives:"
-#~ msgstr "_Döşeme basitliği:"
-
-#~ msgid "Tile _size:"
-#~ msgstr "Döşeme _boyutu::"
-
-#~ msgid "Tile _height:"
-#~ msgstr "Döşeme _yüksekliği:"
-
-#~ msgid "Til_e spacing:"
-#~ msgstr "Döşem_e boşluğu:"
-
-#~ msgid "Tile _neatness:"
-#~ msgstr "Döşeme _düzeni:"
-
-#~ msgid "Light _direction:"
-#~ msgstr "Işık _yönü:"
-
-#~ msgid "Color _variation:"
-#~ msgstr "Renk _Değişimi"
-
-#~ msgid "Co_lor averaging"
-#~ msgstr "Re_nk ortalaması"
-
-#~ msgid "Allo_w tile splitting"
-#~ msgstr "Döşeme bölünmesine İ_zin ver"
-
-#~ msgid "_Pitted surfaces"
-#~ msgstr "_Çukurlaşmış yüzeyler"
-
-#~ msgid "_FG/BG lighting"
-#~ msgstr "_Artalan/Önalan ışıması"
-
-#~ msgid "Randomize hue/saturation/value independently"
-#~ msgstr "Renk tonu/doygunluk/değerler arasında bağımsız ve rasgele seç"
-
-#~ msgid "HSV Noise..."
-#~ msgstr "HSV Gürültüsü..."
-
-#~ msgid "HSV Noise"
-#~ msgstr "HSV Gürültüsü"
-
-#~ msgid "_Holdness:"
-#~ msgstr "_Kavranmama:"
-
-#~ msgid "H_ue:"
-#~ msgstr "_Renk özü"
-
-#~ msgid "Random Hurl"
-#~ msgstr "Rastgele Savurma"
-
-#~ msgid "Random Pick"
-#~ msgstr "Rastgele Karıştırma"
-
-#~ msgid "Random Slur"
-#~ msgstr "Rasgele Leke"
-
-#~ msgid "Completely randomize a fraction of pixels"
-#~ msgstr "Benek kesirini tamamen rasgele dağıt"
-
-#~ msgid "Randomly interchange some pixels with neighbors"
-#~ msgstr "Benekleri yanındakiler ile rasgele değiştir"
-
-#~ msgid "Randomly slide some pixels downward (similar to melting)"
-#~ msgstr "Bazı benekleri rasgele aşağı kaydır (erimeye benzer)"
-
-#~ msgid "_Hurl..."
-#~ msgstr "_Savurma..."
-
-#~ msgid "_Pick..."
-#~ msgstr "_Seç..."
-
-#~ msgid "_Slur..."
-#~ msgstr "_Leke..."
-
-#~ msgid "_Random seed:"
-#~ msgstr "_Rasgele besleme"
-
-#~ msgid "R_andomization (%):"
-#~ msgstr "R_assallık (%):"
-
-#~ msgid "Percentage of pixels to be filtered"
-#~ msgstr "Süzülecek beneklerin yüzdesi"
-
-#~ msgid "R_epeat:"
-#~ msgstr "_Tekrarlama:"
-
-#~ msgid "Number of times to apply filter"
-#~ msgstr "Süzgecin uygulanacağı sayı"
-
-#~ msgid "Distort colors by random amounts"
-#~ msgstr "Rasgele miktarda renkleri boz"
-
-#~ msgid "_RGB Noise..."
-#~ msgstr "_RGB Gürültüsü..."
-
-#~ msgid "Adding noise"
-#~ msgstr "Gürültü ekleme"
-
-#~ msgid "RGB Noise"
-#~ msgstr "RGB Gürültüsü"
-
-#~ msgid "Co_rrelated noise"
-#~ msgstr "İl_işkilendirilmiş gürültü"
-
-#~ msgid "_Independent RGB"
-#~ msgstr "_Bağımsız RGB"
-
-#~ msgid "_Gray:"
-#~ msgstr "_Gri:"
-
-#~ msgid "Channel #%d:"
-#~ msgstr "Kanal #%d:"
-
-#~ msgid "Create a random cloud-like texture"
-#~ msgstr "Rastgel bulut-benzeri bir doku oluştur"
-
-#~ msgid "_Solid Noise..."
-#~ msgstr "_Düz Gürültü..."
-
-#~ msgid "Solid Noise"
-#~ msgstr "Düz Gürültü"
-
-#~ msgid "_Detail:"
-#~ msgstr "_Ayrıntı:"
-
-#~ msgid "T_urbulent"
-#~ msgstr "_Çalkantı"
-
-#~ msgid "T_ilable"
-#~ msgstr "_Döşenebilir"
-
-#~ msgid "_X size:"
-#~ msgstr "_X boyutu:"
-
-#~ msgid "_Y size:"
-#~ msgstr "_Y boyutu:"
-
-#~ msgid "Move pixels around randomly"
-#~ msgstr "Rasgele bir şekilde benekleri etrafında hareket ettir"
-
-#~ msgid "Sp_read..."
-#~ msgstr "Ya_y..."
-
-#~ msgid "Spreading"
-#~ msgstr "Yayılma"
-
-#~ msgid "Spread"
-#~ msgstr "Etrafa Yay"
-
-#~ msgid "Spread Amount"
-#~ msgstr "Yayılma Miktarı"
-
-#~ msgid "Add a starburst to the image"
-#~ msgstr "Resmi yıldız yağmuru ekle"
-
-#~ msgid "Super_nova..."
-#~ msgstr "Süper_nova..."
-
-#~ msgid "Rendering supernova"
-#~ msgstr "Süpernova taranıyor"
-
-#~ msgid "Supernova"
-#~ msgstr "Süpernova"
-
-#~ msgid "Supernova Color Picker"
-#~ msgstr "Süpernova Renk Seçici"
-
-#~ msgid "_Spokes:"
-#~ msgstr "_Tekerlek:"
-
-#~ msgid "R_andom hue:"
-#~ msgstr "Ra_sgele renk tonu:"
-
-#~ msgid "Center of Nova"
-#~ msgstr "Nova Merkezi"
-
-#~ msgid "Simplify image into an array of solid-colored squares"
-#~ msgstr "Resmi düz_renkli kareler dizisine basitleştir"
-
-#~ msgid "_Pixelize..."
-#~ msgstr "_Benekleştir..."
-
-#~ msgid "Pixelizing"
-#~ msgstr "Benekleştiriliyor"
-
-#~ msgid "Pixelize"
-#~ msgstr "Benekleştir"
-
-#~ msgid "Pixel _width:"
-#~ msgstr "Benek _genişliği:"
-
-#~ msgid "Pixel _height:"
-#~ msgstr "Benek _yüksekliği:"
-
-#~ msgid "Create a random plasma texture"
-#~ msgstr "Rastgele plasma dokusu oluştur"
-
-#~ msgid "_Plasma..."
-#~ msgstr "_Plasma..."
-
-#~ msgid "Plasma"
-#~ msgstr "Plazma"
-
-#~ msgid "Random _seed:"
-#~ msgstr "Rasgele _besleme:"
-
-#~ msgid "T_urbulence:"
-#~ msgstr "T_ürbülans:"
-
-#~ msgid "Convert image to or from polar coordinates"
-#~ msgstr "Görüntüyü kutupsal derinliğe ya da kutupsal derinlikten dönüştür"
-
-#~ msgid "P_olar Coordinates..."
-#~ msgstr "K_utupsal Derinlik..."
-
-#~ msgid "Polar coordinates"
-#~ msgstr "Kutupsal derinlik"
-
-#~ msgid "Polar Coordinates"
-#~ msgstr "Kutupsal Derinlik"
-
-#~ msgid "Circle _depth in percent:"
-#~ msgstr "Yüzde olarak daire _derinliği:"
-
-#~ msgid "Offset _angle:"
-#~ msgstr "Konum_açısı:"
-
-#~ msgid "_Map backwards"
-#~ msgstr "_Eşlem geçmişi"
-
-#~ msgid ""
-#~ "If checked the mapping will begin at the right side, as opposed to "
-#~ "beginning at the left."
-#~ msgstr ""
-#~ "Eğer eşleme işaretliyse sağ tarafta başlayacak, değilse sol tarafta."
-
-#~ msgid "Map from _top"
-#~ msgstr "Ü_stten eşlem"
-
-#~ msgid ""
-#~ "If unchecked the mapping will put the bottom row in the middle and the "
-#~ "top row on the outside.  If checked it will be the opposite."
-#~ msgstr ""
-#~ "Eğer işaretli değilse eşleme alt satırı dışarıda orta ve üst satıra "
-#~ "koyacak. İşaretli ise tam tersi."
-
-#~ msgid "To _polar"
-#~ msgstr "_Kutupsala"
-
-#~ msgid ""
-#~ "If unchecked the image will be circularly mapped onto a rectangle.  If "
-#~ "checked the image will be mapped onto a circle."
-#~ msgstr ""
-#~ "Eğer işaretli değilse resim bir dikdörtgen içerisine dairesel olarak "
-#~ "eşlenecek. Eğer işaretli ise resim daire içerisine eşlenecek."
-
-#~ msgid "Remove the red eye effect caused by camera flashes"
-#~ msgstr "Kamera ışığından kaynaklanan gözlerdeki kırmızılığı kaldır"
-
-#~ msgid "_Red Eye Removal..."
-#~ msgstr "_Kırmızı Göz Kaldırma..."
-
-#~ msgid "Red Eye Removal"
-#~ msgstr "Kırmızı Göz Kaldırma"
-
-#~ msgid "Threshold for the red eye color to remove."
-#~ msgstr "Kırmızı göz rengini kaldırma eşiği."
-
-#~ msgid "Manually selecting the eyes may improve the results."
-#~ msgstr ""
-#~ "Gözleri elle belirtmek daha iyi bir netice alınmasına imkan sağlayacaktır."
-
-#~ msgid "Removing red eye"
-#~ msgstr "Kırmızı göz kaldırılıyor"
-
-#~ msgid "You can not rotate the whole image if there's a selection."
-#~ msgstr "Bütün resmi seçili bir alanda çeviremezsiniz."
-
-#~ msgid "You can not rotate the whole image if there's a floating selection."
-#~ msgstr "Eğer serbest seçim var ise tüm resmi döndüremezsiniz."
-
-#~ msgid "Sorry, channels and masks can not be rotated."
-#~ msgstr "Üzgünüz, kanal ve maskeler çevrilemez."
-
-#~ msgid "Replace partial transparency with the current background color"
-#~ msgstr "Mevcut artalan rengini kısmi saydamlık ile değiştir"
-
-#~ msgid "_Semi-Flatten"
-#~ msgstr "_Yarı-Düzleştir"
-
-#~ msgid "Semi-Flattening"
-#~ msgstr "Yarı-Düzleştirme"
-
-#~ msgid "Shift each row of pixels by a random amount"
-#~ msgstr "Her benek satırını rasgele miktarda kaydır"
-
-#~ msgid "_Shift..."
-#~ msgstr "_Ötele..."
-
-#~ msgid "Shifting"
-#~ msgstr "Öteleme"
-
-#~ msgid "Shift"
-#~ msgstr "Ötele"
-
-#~ msgid "Shift _horizontally"
-#~ msgstr "Yatay olarak _kaydır"
-
-#~ msgid "Shift _vertically"
-#~ msgstr "_Dikey olarak kaydır"
-
-#~ msgid "Shift _amount:"
-#~ msgstr "Kaydırma _miktarı:"
-
-#~ msgid "Generate complex sinusoidal textures"
-#~ msgstr "Karmaşık sinüsoid desen oluştur"
-
-#~ msgid "_Sinus..."
-#~ msgstr "_Sinüs..."
-
-#~ msgid "Sinus: rendering"
-#~ msgstr "Sinüs: taranıyor"
-
-#~ msgid "Sinus"
-#~ msgstr "Sinüs"
-
-#~ msgid "Drawing Settings"
-#~ msgstr "Çizim Ayarları"
-
-#~ msgid "_X scale:"
-#~ msgstr "_X ölçeği:"
-
-#~ msgid "_Y scale:"
-#~ msgstr "_Y ölçeği:"
-
-#~ msgid "Co_mplexity:"
-#~ msgstr "Ka_rmaşıklık:"
-
-#~ msgid "Calculation Settings"
-#~ msgstr "Hesaplama Ayarları"
-
-#~ msgid "R_andom seed:"
-#~ msgstr "R_astgele tohum:"
-
-#~ msgid "_Force tiling?"
-#~ msgstr "Döşemeye _zorlansın mı?"
-
-#~ msgid "_Ideal"
-#~ msgstr "_İdeal"
-
-#~ msgid "_Distorted"
-#~ msgstr "_Bozulmuş"
-
-#~ msgid "The colors are white and black."
-#~ msgstr "Renkler beyaz ve siyah."
-
-#~ msgid "Bl_ack & white"
-#~ msgstr "Si_yah & Beyaz"
-
-#~ msgid "_Foreground & background"
-#~ msgstr "_Önalan ve Artalan"
-
-#~ msgid "C_hoose here:"
-#~ msgstr "Burada s_eç:"
-
-#~ msgid "First color"
-#~ msgstr "İlk renk"
-
-#~ msgid "Second color"
-#~ msgstr "İkinci renk"
-
-#~ msgid "F_irst color:"
-#~ msgstr "İ_lk renk:"
-
-#~ msgid "S_econd color:"
-#~ msgstr "İ_kinci renk:"
-
-#~ msgid "Blend Settings"
-#~ msgstr "Harmanlama Ayarları"
-
-#~ msgid "L_inear"
-#~ msgstr "D_oğrusal"
-
-#~ msgid "Bili_near"
-#~ msgstr "Çift_doğrusal:"
-
-#~ msgid "Sin_usoidal"
-#~ msgstr "Sin_üs eğrisi şeklinde"
-
-#~ msgid "_Blend"
-#~ msgstr "_Harmanlama"
-
-#~ msgid "Do _preview"
-#~ msgstr "_Önizleme"
-
-#~ msgid "Make transparency all-or-nothing"
-#~ msgstr "Tümünü/hiçbirini saydamlaştır"
-
-#~ msgid "_Threshold Alpha..."
-#~ msgstr "_Görünür Eşik..."
-
-#~ msgid "The layer has its alpha channel locked."
-#~ msgstr "Görünür kanalı olan katman kilitlendi."
-
-#~ msgid "RGBA/GRAYA drawable is not selected."
-#~ msgstr "Çizilebilir RGBA/GRAYA seçili değil."
-
-#~ msgid "Coloring transparency"
-#~ msgstr "Saydamlığı renklendirme"
-
-#~ msgid "Threshold Alpha"
-#~ msgstr "Görünür Eşik"
-
-#~ msgid "Simulate distortion caused by square glass tiles"
-#~ msgstr "Kare cam döşemeleri sebebiyle oluşan bozulma benzetimi yap"
-
-#~ msgid "_Glass Tile..."
-#~ msgstr "_Cam Döşeme..."
-
-#~ msgid "Glass Tile"
-#~ msgstr "Cam Döşeme"
-
-#~ msgid "Tile _width:"
-#~ msgstr "Döşeme _genişliği:"
-
-#~ msgid "Paper Tile"
-#~ msgstr "Parçalara Ayır"
-
-#~ msgid "Division"
-#~ msgstr "Bölme"
-
-#~ msgid "Fractional Pixels"
-#~ msgstr "Kesirli Benekler"
-
-#~ msgid "_Background"
-#~ msgstr "A_rtalan"
-
-#~ msgid "_Ignore"
-#~ msgstr "_Yoksay"
-
-#~ msgid "_Force"
-#~ msgstr "_Zorla"
-
-#~ msgid "C_entering"
-#~ msgstr "O_rtalama"
-
-#~ msgid "Movement"
-#~ msgstr "Hareket Yönü"
-
-#~ msgid "_Max (%):"
-#~ msgstr "_Azami (%):"
-
-#~ msgid "_Wrap around"
-#~ msgstr "Etrafını _sar"
-
-#~ msgid "Background Type"
-#~ msgstr "Artalan Türü"
-
-#~ msgid "I_nverted image"
-#~ msgstr "Te_rs görüntü"
-
-#~ msgid "Im_age"
-#~ msgstr "Gö_rüntü"
-
-#~ msgid "Fo_reground color"
-#~ msgstr "Ön_alan rengi"
-
-#~ msgid "Bac_kground color"
-#~ msgstr "Ar_talan rengi"
-
-#~ msgid "S_elect here:"
-#~ msgstr "Burayı s_eç:"
-
-#~ msgid "Background Color"
-#~ msgstr "Artalan Rengi"
-
-#~ msgid "Cut image into paper tiles, and slide them"
-#~ msgstr "Resmi dörtgen şeklinde parçalara ayırır ve onları rastgele döşer"
-
-#~ msgid "September 31, 1999"
-#~ msgstr "31 Eylül 1999"
-
-#~ msgid "_Paper Tile..."
-#~ msgstr "_Parçalara Ayır..."
-
-#~ msgid "Alters edges to make the image seamlessly tileable"
-#~ msgstr "Resme, resmin kenarlarını yumuşak olarak döşer"
-
-#~ msgid "_Make Seamless"
-#~ msgstr "_Yumuşak Döşe"
-
-#~ msgid "Tiler"
-#~ msgstr "Döşeyici"
-
-#~ msgid "Invert the brightness of each pixel"
-#~ msgstr "Her bir beneğin parlaklığını tersine çevir"
-
-#~ msgid "_Value Invert"
-#~ msgstr "_Değeri tersine çevir"
-
-#~ msgid "Value Invert"
-#~ msgstr "Değeri tersine çevir"
-
-#~ msgid "More _white (larger value)"
-#~ msgstr "Daha fazla _beyaz (daha büyük değer)"
-
-#~ msgid "More blac_k (smaller value)"
-#~ msgstr "Daha fazla siya_h (daha az değer)"
-
-#~ msgid "_Middle value to peaks"
-#~ msgstr "_Orta değer en yüksek değere"
-
-#~ msgid "_Foreground to peaks"
-#~ msgstr "_Önalan en yüksek değere"
-
-#~ msgid "O_nly foreground"
-#~ msgstr "S_adece önplan"
-
-#~ msgid "Only b_ackground"
-#~ msgstr "Sadece a_rkaplan"
-
-#~ msgid "Mor_e opaque"
-#~ msgstr "Daha faz_la opak"
-
-#~ msgid "More t_ransparent"
-#~ msgstr "Daha fazla ş_effalık"
-
-#~ msgid "Propagate certain colors to neighboring pixels"
-#~ msgstr "Belirli renkleri komşu beneklere çoğalt"
-
-#~ msgid "_Value Propagate..."
-#~ msgstr "Yayılma _Değeri..."
-
-#~ msgid "Shrink lighter areas of the image"
-#~ msgstr "Görüntünün aydınlık alanlarını küçültmek"
-
-#~ msgid "E_rode"
-#~ msgstr "A_şındır"
-
-#~ msgid "Grow lighter areas of the image"
-#~ msgstr "Görüntünün aydınlık alanlarını büyütmek"
-
-#~ msgid "_Dilate"
-#~ msgstr "_Genişletme"
-
-#~ msgid "Value Propagate"
-#~ msgstr "Yayılma Değeri"
-
-#~ msgid "Propagate"
-#~ msgstr "Yayımla"
-
-#~ msgid "_Upper threshold:"
-#~ msgstr "Üs_t eşik"
-
-#~ msgid "_Propagating rate:"
-#~ msgstr "_Yayılma oranı:"
-
-#~ msgid "To l_eft"
-#~ msgstr "S_ola"
-
-#~ msgid "To _right"
-#~ msgstr "S_ağa"
-
-#~ msgid "To _top"
-#~ msgstr "Ü_ste"
-
-#~ msgid "Propagating _alpha channel"
-#~ msgstr "_Görünür kanalı çoğaltılıyor"
-
-#~ msgid "Propagating value channel"
-#~ msgstr "Değer kanalı çoğaltılıyor"
-
-#~ msgid "_Staggered"
-#~ msgstr "_Aşamalı"
-
-#~ msgid "_Large staggered"
-#~ msgstr "_Geniş aşamalı"
-
-#~ msgid "S_triped"
-#~ msgstr "Ç_izgili"
-
-#~ msgid "_Wide-striped"
-#~ msgstr "_Geniş-çizgili"
-
-#~ msgid "Lo_ng-staggered"
-#~ msgstr "U_zun-aşamalı"
-
-#~ msgid "_3x3"
-#~ msgstr "_3x3"
-
-#~ msgid "Larg_e 3x3"
-#~ msgstr "Büyü_k 3x3"
-
-#~ msgid "_Hex"
-#~ msgstr "_Hex"
-
-#~ msgid "_Dots"
-#~ msgstr "_Noktalar"
-
-#~ msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-#~ msgstr ""
-#~ "Bulanıklık ya da düşük çözünürlüklü monitör üretimi bozulma benzetimi yap"
-
-#~ msgid "Vi_deo..."
-#~ msgstr "Vi_deo..."
-
-#~ msgid "Video"
-#~ msgstr "Video"
-
-#~ msgid "Video Pattern"
-#~ msgstr "Video Deseni"
-
-#~ msgid "_Rotated"
-#~ msgstr "_Döndürülmüş"
-
-#~ msgid "Distort the image with waves"
-#~ msgstr "Dalgalarla görüntüyü boz"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Dalgalar..."
-
-#~ msgid "_Reflective"
-#~ msgstr "_Yansıtıcı"
-
-#~ msgid "_Amplitude:"
-#~ msgstr "_Genlik:"
-
-#~ msgid "_Phase:"
-#~ msgstr "_Evre:"
-
-#~ msgid "_Wavelength:"
-#~ msgstr "_Dalgaboyu:"
-
-#~ msgid "Waving"
-#~ msgstr "Dalgalanma"
-
-#~ msgid "Distort an image by whirling and pinching"
-#~ msgstr "Görüntüyü döndürerek ve kıstırarak boz"
-
-#~ msgid "W_hirl and Pinch..."
-#~ msgstr "Dö_nme ve Kıstırma..."
-
-#~ msgid "Whirling and pinching"
-#~ msgstr "Döndürme ve kıstırma"
-
-#~ msgid "Whirl and Pinch"
-#~ msgstr "Dönme ve kıstırma"
-
-#~ msgid "_Whirl angle:"
-#~ msgstr "_Dönme açısı"
-
-#, fuzzy
-#~ msgid "_Pinch amount:"
-#~ msgstr "Kıstırma adedi"
-
-#~ msgid "Smear image to give windblown effect"
-#~ msgstr "Esme etkisi vermek için resmi yay"
-
-#~ msgid "Wi_nd..."
-#~ msgstr "Rüz_gar..."
-
-#~ msgid "Rendering blast"
-#~ msgstr "Rüzgar taranıyor"
-
-#~ msgid "Wind"
-#~ msgstr "Esinti"
-
-#~ msgid "Style"
-#~ msgstr "Biçem"
-
-#~ msgid "_Wind"
-#~ msgstr "_Esinti"
-
-#~ msgid "_Blast"
-#~ msgstr "_Rüzgar"
-
-#~ msgid "_Left"
-#~ msgstr "So_l"
-
-#~ msgid "_Right"
-#~ msgstr "_Sağ"
-
-#~ msgid "Edge Affected"
-#~ msgstr "Kenar Etkilendi"
-
-#~ msgid "L_eading"
-#~ msgstr "Yö_nlendiriliyor"
-
-#~ msgid "Tr_ailing"
-#~ msgstr "Sü_rükleniyor"
-
-#~ msgid "Bot_h"
-#~ msgstr "_Her ikisi"
-
-#~ msgid "Higher values restrict the effect to fewer areas of the image"
-#~ msgstr "Yüksek değerler resmin daha az alanındaki etkiyi kısıtlıyor"
-
-#~ msgid "Higher values increase the magnitude of the effect"
-#~ msgstr "Yüksek değerler etkinin büyüklüğünü arttırıyor"
-
-#~ msgid "_Keep Orientation"
-#~ msgstr "_Yönelimi Sakla"
-
-#~ msgid "According to the EXIF data, this image is rotated."
-#~ msgstr "EXIF verisine göre bu resim döndürüldü."
-
-#~ msgid "Would you like GIMP to rotate it into the standard orientation?"
-#~ msgstr "GIMP'in standart bir yönlenme ile döndürmesini ister misiniz?"
-
-#~ msgid "Downloading image (%s of %s)"
-#~ msgstr "Resim indiriliyor (%s de %s)"
-
-#~ msgid "Downloaded %s of image data"
-#~ msgstr "Görüntü verisinin %s'i indirildi"
-
-#~ msgid "Uploaded %s of image data"
-#~ msgstr "Görüntü verisinin %s'i yüklendi"
-
-#~ msgid "Connecting to server"
-#~ msgstr "Sunucuya bağlanılıyor"
-
-#~ msgid "Could not initialize libcurl"
-#~ msgstr "Libcurl başlatılamadı"
-
-#~ msgid "Downloading %s of image data"
-#~ msgstr "Görüntü verisinin %s'i indiriliyor"
-
-#, fuzzy
-#~| msgid "Opening '%s' for reading resulted in HTTP response code: %ld"
-#~ msgid "Opening '%s' for reading resulted in %s response code: %ld"
-#~ msgstr "Neticelenen HTTP cevap kodunu okumak için '%s' açılıyor: %ld"
-
-#~ msgid "wget exited abnormally on URI '%s'"
-#~ msgstr "wget beklenmedik biçimde kapandı. URI '%s'"
-
-#~ msgid "(timeout is %d second)"
-#~ msgid_plural "(timeout is %d seconds)"
-#~ msgstr[0] "(zaman aşımı %d saniye)"
-
-#~ msgid "Opening URI"
-#~ msgstr "URI açılıyor"
-
-#~ msgid "A network error occurred: %s"
-#~ msgstr "Bir ağ hatası meydana geldi: %s"
-
-#~ msgid "Downloading unknown amount of image data"
-#~ msgstr "Görüntü verisinin bilinmeyen miktarı indiriliyor"
-
-#~ msgid "URI"
-#~ msgstr "Kaynak Tanımlayıcı"
-
-#, fuzzy
-#~| msgid "Failed to save PPM file '%s': %s"
-#~ msgid "Failed to save to temporary file '%s'"
-#~ msgstr "PPM dosyası '%s' kaydedilemedi: %s"
-
-#~ msgid "GIMP compressed XJT image"
-#~ msgstr "GIMP sıkıştırmalı XJT görüntüsü"
-
-#~ msgid "XJT file contains unknown layermode %d"
-#~ msgstr "XJT dosyası bilinmeyen katmankipi %d içeriyor"
-
-#~ msgid "Warning: unsupported layermode %d saved to XJT"
-#~ msgstr "Uyarı: desteklenmeyen katmankipi %d XJT'ye kaydedildi"
-
-#~ msgid "XJT file contains unknown pathtype %d"
-#~ msgstr "XJT dosyası bilinmeyen yol biçimi içeriyor %d"
-
-#~ msgid "Warning: unsupported pathtype %d saved to XJT"
-#~ msgstr "Uyarı: desteklenmeyen yol biçimi %d kaydedildi XJT dosyasına"
-
-#~ msgid "XJT file contains unknown unittype %d"
-#~ msgstr "XJT dosyası bilinmeyen birim biçimi içeriyor %d"
-
-#~ msgid "Warning: unsupported unittype %d saved to XJT"
-#~ msgstr "Uyarı: bilinmeyen birim biçimi %d kaydedildi XJT dosyasına"
-
-#~ msgid "XJT"
-#~ msgstr "XJT"
-
-#~ msgid "Optimize"
-#~ msgstr "Eniyile"
-
-#~ msgid "Clear transparent"
-#~ msgstr "Saydamlığı temizle"
-
-#~ msgid "Smoothing:"
-#~ msgstr "Yumuşatma:"
-
-#~ msgid "Could not create working folder '%s': %s"
-#~ msgstr "'%s' çalışan dizini oluşturulamadı: %s"
-
-#~ msgid "Error: Could not read XJT property file '%s'."
-#~ msgstr "Hata: XJT nitelik dosyası '%s' okunamadı."
-
-#~ msgid "Error: XJT property file '%s' is empty."
-#~ msgstr "Hata: XJT özellik dosyası '%s' boş."
-
-#~ msgid "The name `%s' is used already!"
-#~ msgstr "`%s' adı zaten kullanımda!"
-
-#, fuzzy
-#~| msgid "Properties"
-#~ msgid "Property"
-#~ msgstr "Özellikler"
-
-#, fuzzy
-#~| msgid "C_amera"
-#~ msgid "Camera 1"
-#~ msgstr "K_amera"
-
-#, fuzzy
-#~| msgid "C_amera"
-#~ msgid "Camera 2"
-#~ msgstr "K_amera"
-
-#, fuzzy
-#~| msgid "Save _thumbnail"
-#~ msgid "Thumbnail"
-#~ msgstr "Ö_nizlemeyi kaydet"
-
-#, fuzzy
-#~| msgid "Can't create a new image"
-#~ msgid "Cannot create file"
-#~ msgstr "Yeni görüntü oluşturulamadı"
-
-#, fuzzy
-#~| msgid "An error occurred while trying to print:"
-#~ msgid "Some error occurred while saving"
-#~ msgstr "Yazdırmaya çalışırken bir hata oluştu"
-
-#, fuzzy
-#~| msgid "Properties"
-#~ msgid "Image Properties"
-#~ msgstr "Özellikler"
-
-#, fuzzy
-#~| msgid "_Import"
-#~ msgid "_Import XMP..."
-#~ msgstr "İçe _Aktar"
-
-#, fuzzy
-#~| msgid "CML _Explorer..."
-#~ msgid "_Export XMP..."
-#~ msgstr "CML _Gezgini..."
-
-#~ msgid "Propert_ies"
-#~ msgstr "Özellikl_er"
-
-#~ msgid "Error: No XMP packet found"
-#~ msgstr "Hata: XMP paketi bulunamadı"
-
-#~ msgid "Error on line %d char %d: %s"
-#~ msgstr "%d. satırda %d karakteri hatalı: %s"
-
-#~ msgid "Expected text or optional element <%s>, found <%s> instead"
-#~ msgstr "Beklenen metin ya da seçimli öğe <%s>,  <%s> yerine bulundu"
-
-#~ msgid "Expected element <%s>, found <%s> instead"
-#~ msgstr "Beklenen eleman <%s>, <%s> yerine bulundu"
-
-#~ msgid "Unknown element <%s>"
-#~ msgstr "Bilinmeyen öğe <%s>"
-
-#~ msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-#~ msgstr "<%s> öğesinde \"%s\"=\"%s\" bilinmeyen özelliği"
-
-#~ msgid "Required attribute rdf:about missing in <%s>"
-#~ msgstr "<%s> için rdf özelliği gerekiyor"
-
-#~ msgid "Nested elements (<%s>) are not allowed in this context"
-#~ msgstr "İç içe öğelere (<%s>) bu durumda izin verilmiyor"
-
-#~ msgid "End of element <%s> not expected in this context"
-#~ msgstr "<%s> öğesinin sonu bu içerikte beklenmiyor"
-
-#~ msgid "The current element (<%s>) cannot contain text"
-#~ msgstr "Geçerli öğe (<%s>) metin içeremez"
-
-#~ msgid "XMP packets must start with <?xpacket begin=...?>"
-#~ msgstr "XMP paketleri <?xpacket begin=...?> ile başlamalıdır"
-
-#~ msgid "XMP packets must end with <?xpacket end=...?>"
-#~ msgstr "XMP paketleri <?xpacket end=...?> ile bitmelidir"
-
-#~ msgid "XMP cannot contain XML comments or processing instructions"
-#~ msgstr "XMP, XML yorumları veya işleme yönergeleri içeremez"
-
-#~ msgid ""
-#~ "Error starting Ghostscript. Make sure that Ghostscript is installed and - "
-#~ "if necessary - use the environment variable GS_PROG to tell GIMP about "
-#~ "its location.\n"
-#~ "(%s)"
-#~ msgstr ""
-#~ "Ghostscript başlatılırken hata. Ghostscript'in yüklendiğinden ve -eğer "
-#~ "gerekliyse- GS_PROG ortam değişkeninin GIMP'e konumunu bildirmesi için "
-#~ "kullandığınızdan emin olun.\n"
-#~ "(%s)"
-
-#~ msgid "The width of frame %d of '%s' is too big for X cursor."
-#~ msgstr "%d. karesinin '%s' deki genişliği X imleci için çok büyük."
-
-#~ msgid "The height of frame %d of '%s' is too big for X cursor."
-#~ msgstr "%d. karesinin '%s' deki yüksekliği X imleci için çok büyük."
-
-#~ msgid "The height of '%s' is too big for X cursor."
-#~ msgstr "'%s' yüksekliği X imleci için çok büyük."
-
-#~ msgid "The size of '%s' is zero!"
-#~ msgstr "'%s' boyutu sıfır!"
-
-#~ msgid "Ascii"
-#~ msgstr "Ascii"
-
-#~ msgid "BMP"
-#~ msgstr "BMP"
-
-#~ msgid "Frequency (rows):"
-#~ msgstr "Sıklık (satırlar):"
-
-#~ msgid "2x1,1x1,1x1 (4:2:2)"
-#~ msgstr "2x1,1x1,1x1 (4:2:2)"
-
-#~ msgid "1x2,1x1,1x1"
-#~ msgstr "1x2,1x1,1x1"
-
-#~ msgid "2x2,1x1,1x1 (smallest file)"
-#~ msgstr "2x2,1x1,1x1 (en küçük dosya)"
-
-#~ msgid "Save as Text"
-#~ msgstr "Metin Olarak Kaydet"
-
-#~ msgid "Save as C-Source"
-#~ msgstr "C Kaynak Kodu olarak Kaydet"
-
-#~ msgid "Save as Brush"
-#~ msgstr "Fırça Olarak Kaydet"
-
-#~ msgid "Save as GIF"
-#~ msgstr "GIF olarak kaydet"
-
-#~ msgid "Layer %s doesn't have an alpha channel, skipped"
-#~ msgstr "%s katmanı görünür kanalına sahip değil, atlanıyor"
-
-#~ msgid "Save as HTML table"
-#~ msgstr "HTML tablosu olarak kaydet"
-
-#~ msgid "Save as MNG"
-#~ msgstr "MNG olarak kaydet"
-
-#~ msgid "Save as Pattern"
-#~ msgstr "Desen olarak Kaydet"
-
-#~ msgid "pixels/%s"
-#~ msgstr "benek/%s"
-
-#~ msgid "Save as PNG"
-#~ msgstr "PNG olarak kaydet"
-
-#~ msgid "Save as PNM"
-#~ msgstr "PNM olarak kaydet"
-
-#~ msgid "Save as PSP"
-#~ msgstr "PSP olarak kaydet"
-
-#~ msgid "Save as TGA"
-#~ msgstr "TGA olarak kaydet"
-
-#~ msgid "Save as TIFF"
-#~ msgstr "TIFF olarak kaydet"
-
-#~ msgid "Save as XBM"
-#~ msgstr "XBM olarak kaydet"
-
-#~ msgid "Save as XPM"
-#~ msgstr "XPM olarak kaydet"
-
-#~ msgid "A big hello from the GIMP team!"
-#~ msgstr "GIMP takımından kocaman bir merhaba!"
-
-#~ msgid "Gee Zoom"
-#~ msgstr "Gee Yakınlaştırması"
-
-#~ msgid "Thank You for Choosing GIMP"
-#~ msgstr "GIMP'i Seçtiğiniz için Teşekkürler"
-
-#~ msgid "An obsolete creation by %s"
-#~ msgstr "%s ile eski oluşturma"
-
-#~ msgid "Gee Slime"
-#~ msgstr "Gee Çamurlaması"
-
-#~ msgid "A less obsolete creation by %s"
-#~ msgstr "%s ile daha az eskimiş oluşturma"
-
-#~ msgid "There was an error taking the screenshot."
-#~ msgstr "Ekran görüntüsü almada bir hata oluştu"
-
-#~ msgid ""
-#~ "Web browser not specified.\n"
-#~ "Please specify a web browser using the Preferences dialog."
-#~ msgstr ""
-#~ "Web tarayıcısı belirtilmemiş.\n"
-#~ "Lütfen, Tercihler iletişim kutusunu kullanarak bir web tarayıcısı "
-#~ "belirleyin."
-
-#~ msgid ""
-#~ "Could not parse the web browser command specified in the Preferences "
-#~ "dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Tercihler iletişim kutusunda belirtilen web tarayıcısı komutu "
-#~ "ayrıştırılamadı:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid ""
-#~ "Could not execute the web browser specified in the Preferences dialog:\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Tercihler iletişim kutusunda belirtilen web tarayıcısı komutu "
-#~ "yürütülemedi:\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Save as BMP"
-#~ msgstr "BMP olarak kaydet"
-
-#~ msgid "GFLI 1.3 - Save framestack"
-#~ msgstr "GFLI 1.3 - Çerçeve kümesini kaydet"
-
-#~ msgid "File size: %02.01f kB"
-#~ msgstr "Dosya boyutu: %02.01f kB"
-
-#~ msgid "Save as JPEG"
-#~ msgstr "JPEG olarak kaydet"
-
-#~ msgid "Save as SGI"
-#~ msgstr "SGI olarak kaydet"
-
-#~ msgid "Co_nnect"
-#~ msgstr "_Bağlan"
-
-#~ msgid "Connect _anonymously"
-#~ msgstr "_Kimliğini belirtmeden bağlan"
-
-#~ msgid "Connect as u_ser:"
-#~ msgstr "_Kullanıcı olarak bağlan:"
-
-#~ msgid "_Username:"
-#~ msgstr "_Kullanıcı Adı:"
-
-#~ msgid "_Domain:"
-#~ msgstr "_Etki Alanı:"
-
-#~ msgid "_Forget password immediately"
-#~ msgstr "_Parolayı hemen unut"
-
-#~ msgid "_Remember password until you logout"
-#~ msgstr "Çıkış yapana kadar _parolayı hatırla"
-
-#~ msgid "_Remember forever"
-#~ msgstr "_Her zaman hatırla"
-
-#~ msgid "Uploading %s of image data"
-#~ msgstr "Görüntü verisinin %s'i yükleniyor"
-
-#~ msgid "Failed to write %s to '%s': %s"
-#~ msgstr "'%s': %s üzerine %s yazılamadı."
-
-#~ msgid "Save as XJT"
-#~ msgstr "XJT olarak kaydet"
-
-#~ msgid "Sizes:"
-#~ msgstr "Boyutlar:"
-
-#~ msgid "Size:"
-#~ msgstr "Büyüklük:"
-
-#~ msgid ""
-#~ "Please make sure gimp-help-en is installed, or the appropriate gimp-help "
-#~ "package for your language."
-#~ msgstr ""
-#~ "Lütfen gimp-help-en ya da diliniz için uygun gimp-help paketi kurulu "
-#~ "olduğundan emin olun."
-
-#~ msgid "Send to Back"
-#~ msgstr "Arkaya Gönder"
