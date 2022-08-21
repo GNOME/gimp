@@ -1,7 +1,7 @@
 # Turkish translation for GIMP
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2020 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2002-2022 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Ömer Fadıl USTA <omer_fad@hotmail.com>, 2002.
@@ -9,50 +9,50 @@
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2012, 2014.
 # Necdet Yücel <necdetyucel@gmail.com>, 2015.
-# Sabri Ünal <libreajans@gmail.com>, 2019, 2020.
-# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2020.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2020, 2022.
+# Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2020, 2022.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-05-26 16:46+0000\n"
-"PO-Revision-Date: 2020-05-26 23:08+0300\n"
-"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
+"POT-Creation-Date: 2022-08-16 19:22+0000\n"
+"PO-Revision-Date: 2022-08-21 21:00+0300\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.0.6\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-POOTLE-MTIME: 1420937120.000000\n"
 
-#: ../plug-ins/python/colorxhtml.py:89
+#: plug-ins/python/colorxhtml.py:91
 msgid "Save as colored HTML text..."
 msgstr "Renkli HTML metni olarak kaydet..."
 
-#: ../plug-ins/python/colorxhtml.py:94
+#: plug-ins/python/colorxhtml.py:96
 msgid "Read characters from file..."
 msgstr "Karakterleri dosyadan oku..."
 
-#: ../plug-ins/python/colorxhtml.py:113
+#: plug-ins/python/colorxhtml.py:115
 msgid "Characters"
 msgstr "Karakterler"
 
-#: ../plug-ins/python/colorxhtml.py:114
+#: plug-ins/python/colorxhtml.py:116
 msgid "Characters that will be used as colored pixels. "
 msgstr "Renkli pikseller için kullanılacak karakterler. "
 
-#: ../plug-ins/python/colorxhtml.py:123
+#: plug-ins/python/colorxhtml.py:125
 msgid "Characters or file location"
 msgstr "Karakterler veya dosya konumu"
 
-#: ../plug-ins/python/colorxhtml.py:129
+#: plug-ins/python/colorxhtml.py:131
 msgid "Read characters from file"
 msgstr "Karakterleri dosyadan oku"
 
-#: ../plug-ins/python/colorxhtml.py:132
+#: plug-ins/python/colorxhtml.py:134
 msgid ""
 "If set, the Characters text entry will be used as a file name, from which "
 "the characters will be read. Otherwise, the characters in the text entry "
@@ -62,339 +62,560 @@ msgstr ""
 "adı olarak kullanılır. Aksi takdirde, görüntüyü oluşturmak için metin "
 "girdisindeki karakterler kullanılır."
 
-#: ../plug-ins/python/colorxhtml.py:138
+#: plug-ins/python/colorxhtml.py:140
 msgid "Choose file"
 msgstr "Dosya seç"
 
-#: ../plug-ins/python/colorxhtml.py:145
+#: plug-ins/python/colorxhtml.py:147
 msgid "Font Size(px)"
 msgstr "Yazı Tipi Boyutu (px)"
 
-#: ../plug-ins/python/colorxhtml.py:157
+#: plug-ins/python/colorxhtml.py:159
 msgid "Write separate CSS file"
 msgstr "Ayrı CSS dosyası yaz"
 
-#: ../plug-ins/python/colorxhtml.py:210
+#: plug-ins/python/colorxhtml.py:215
 msgid "Saving as colored XHTML"
 msgstr "Renkli XHTML olarak kaydediliyor"
 
-#: ../plug-ins/python/colorxhtml.py:280 ../plug-ins/python/colorxhtml.py:281
+#: plug-ins/python/colorxhtml.py:284 plug-ins/python/colorxhtml.py:285
 msgid "_Read characters from file, if true, or use text entry"
 msgstr ""
 "_Karakterleri dosyadan oku, eğer doğru ise, veya metin girdisini kullan"
 
-#: ../plug-ins/python/colorxhtml.py:285 ../plug-ins/python/colorxhtml.py:286
+#: plug-ins/python/colorxhtml.py:289 plug-ins/python/colorxhtml.py:290
 msgid "_File to read or characters to use"
 msgstr "Okunacak _dosya ya da kullanılacak karakterler"
 
-#: ../plug-ins/python/colorxhtml.py:290 ../plug-ins/python/colorxhtml.py:291
+#: plug-ins/python/colorxhtml.py:294 plug-ins/python/colorxhtml.py:295
 msgid "Fo_nt size in pixels"
 msgstr "Piksel olarak _yazı tipi boyutu"
 
-#: ../plug-ins/python/colorxhtml.py:295 ../plug-ins/python/colorxhtml.py:296
+#: plug-ins/python/colorxhtml.py:299 plug-ins/python/colorxhtml.py:300
 msgid "_Write a separate CSS file"
 msgstr "Ayrı bir CSS dosyası _yaz"
 
-#: ../plug-ins/python/colorxhtml.py:315
+#: plug-ins/python/colorxhtml.py:320
 msgid "Save as colored HTML text"
 msgstr "Renkli HTML metni olarak kaydet"
 
-#: ../plug-ins/python/colorxhtml.py:318
+#: plug-ins/python/colorxhtml.py:323
 msgid "Colored HTML text"
 msgstr "Renkli HTML metni"
 
-#: ../plug-ins/python/foggify.py:82 ../plug-ins/python/foggify.py:83
+#: plug-ins/python/foggify.py:104
+msgid "Layer _name"
+msgstr "Katman _adı"
+
+#: plug-ins/python/foggify.py:105
 msgid "Layer name"
 msgstr "Katman adı"
 
-#: ../plug-ins/python/foggify.py:84
+#: plug-ins/python/foggify.py:106
 msgid "Clouds"
 msgstr "Bulutlar"
 
-#: ../plug-ins/python/foggify.py:87 ../plug-ins/python/foggify.py:88
-msgid "Fog color"
-msgstr "Sis rengi"
+#: plug-ins/python/foggify.py:109
+msgid "_Turbulence"
+msgstr "_Türbülans"
 
-#: ../plug-ins/python/foggify.py:91 ../plug-ins/python/foggify.py:92
+#: plug-ins/python/foggify.py:110
 msgid "Turbulence"
 msgstr "Türbülans"
 
-#: ../plug-ins/python/foggify.py:96 ../plug-ins/python/foggify.py:97
+#: plug-ins/python/foggify.py:114
+msgid "O_pacity"
+msgstr "_Matlık"
+
+#: plug-ins/python/foggify.py:115
 msgid "Opacity"
 msgstr "Matlık"
 
-#: ../plug-ins/python/foggify.py:114
+#: plug-ins/python/foggify.py:124
+msgid "_Fog color"
+msgstr "_Sis rengi"
+
+#: plug-ins/python/foggify.py:125
+msgid "Fog color"
+msgstr "Sis rengi"
+
+#: plug-ins/python/foggify.py:141
 msgid "Add a layer of fog"
 msgstr "Sisli bir katman ekle"
 
-#: ../plug-ins/python/foggify.py:117
+#: plug-ins/python/foggify.py:142
+msgid "Adds a layer of fog to the image."
+msgstr "Görüntüye sis katmanı ekler."
+
+#: plug-ins/python/foggify.py:144
 msgid "_Fog..."
 msgstr "_Sis..."
 
-#: ../plug-ins/python/gradients-save-as-css.py:81
+#: plug-ins/python/gradients-save-as-css.py:83
 msgid "CSS file..."
 msgstr "CSS dosyası..."
 
-#: ../plug-ins/python/gradients-save-as-css.py:144
+#: plug-ins/python/gradients-save-as-css.py:141
+#: plug-ins/python/palette-sort.py:332
+#: plug-ins/python/python-console/python-console.py:336
+msgid "Run mode"
+msgstr "Çalıştırma kipi"
+
+#: plug-ins/python/gradients-save-as-css.py:142
+#: plug-ins/python/palette-sort.py:333
+#: plug-ins/python/python-console/python-console.py:336
+msgid "The run mode"
+msgstr "Çalıştırma kipi"
+
+#: plug-ins/python/gradients-save-as-css.py:146
 msgid "Gradient to use"
 msgstr "Kullanılacak renk geçişi"
 
-#: ../plug-ins/python/gradients-save-as-css.py:147
+#: plug-ins/python/gradients-save-as-css.py:149
 msgid "File"
 msgstr "Dosya"
 
-#: ../plug-ins/python/palette-offset.py:44
-#: ../plug-ins/python/palette-offset.py:45
-#: ../plug-ins/python/palette-to-gradient.py:103
+#: plug-ins/python/gradients-save-as-css.py:167
+#: plug-ins/python/gradients-save-as-css.py:168
+msgid "Creates a new palette from a given gradient"
+msgstr "Verilen renk geçişini kullanarak yeni palet oluştur"
+
+#: plug-ins/python/histogram-export.py:92
+msgid "Pixel count"
+msgstr "Piksel sayısı"
+
+#: plug-ins/python/histogram-export.py:93
+msgid "Normalized"
+msgstr "Normalleştirilmiş"
+
+#: plug-ins/python/histogram-export.py:94
+msgid "Percent"
+msgstr "Yüzde"
+
+#: plug-ins/python/histogram-export.py:166
+msgid "File is either a directory or file name is empty."
+msgstr "Dosya bir dizin ya da dosya adı boş."
+
+#: plug-ins/python/histogram-export.py:169
+msgid "Directory not found."
+msgstr "Dizin bulunamadı."
+
+#: plug-ins/python/histogram-export.py:203
+msgid "Histogram Export..."
+msgstr "Histogram Dışa Aktar..."
+
+#: plug-ins/python/histogram-export.py:230
+msgid "_File..."
+msgstr "_Dosya..."
+
+#: plug-ins/python/histogram-export.py:238
+msgid "Choose export file..."
+msgstr "Dışa aktarma dosyası seç..."
+
+#: plug-ins/python/histogram-export.py:244
+msgid "Histogram Export file..."
+msgstr "Histogram Dışa Aktarma dosyası..."
+
+#. Bucket size parameter
+#: plug-ins/python/histogram-export.py:250
+#: plug-ins/python/histogram-export.py:320
+msgid "_Bucket Size"
+msgstr "_Kova Boyutu"
+
+#. Sample average parameter
+#: plug-ins/python/histogram-export.py:258
+#: plug-ins/python/histogram-export.py:325
+msgid "Sample _Average"
+msgstr "Örnek _Ortalama"
+
+#: plug-ins/python/histogram-export.py:259
+msgid ""
+"If checked, the histogram is generated from merging all visible layers. "
+"Otherwise, the histogram is only for the current layer."
+msgstr ""
+"İşaretlenirse, histogram tüm görünür katmanların birleştirilmesinden "
+"oluşturulur. Aksi takdirde, yalnızca geçerli katman için oluşturulur."
+
+#. Output format parameter
+#: plug-ins/python/histogram-export.py:265
+msgid "_Output Format"
+msgstr "Çıktı _Biçimi"
+
+#: plug-ins/python/histogram-export.py:316
+msgid "Histogram _File"
+msgstr "Histogram _Dosyası"
+
+#: plug-ins/python/histogram-export.py:330
+msgid "Output format"
+msgstr "Çıktı biçimi"
+
+#: plug-ins/python/histogram-export.py:352
+msgid "Exports the image histogram to a text file (CSV)"
+msgstr "Görüntü histogramını bir metin dosyasına aktar (CSV)"
+
+# komut olduğu için Başlık Düzeni tercih edildi
+#: plug-ins/python/histogram-export.py:355
+msgid "_Export histogram..."
+msgstr "_Histogramı Dışa Aktar..."
+
+#: plug-ins/python/palette-offset.py:46 plug-ins/python/palette-offset.py:47
+#: plug-ins/python/palette-sort.py:339 plug-ins/python/palette-sort.py:340
+#: plug-ins/python/palette-sort.py:398 plug-ins/python/palette-sort.py:399
+#: plug-ins/python/palette-to-gradient.py:103
 msgid "Palette"
 msgstr "Palet"
 
 # Normalden farklı çevrildi
-#: ../plug-ins/python/palette-offset.py:56
+#: plug-ins/python/palette-offset.py:58
 msgid "Off_set"
 msgstr "Den_gele"
 
 # Normalden farklı çevrildi
-#: ../plug-ins/python/palette-offset.py:57
+#: plug-ins/python/palette-offset.py:59
 msgid "Offset"
 msgstr "Dengele"
 
+#: plug-ins/python/palette-offset.py:70
+msgid "Name of the edited palette"
+msgstr "Düzenlenen paletin adı"
+
+#: plug-ins/python/palette-offset.py:71
+msgid ""
+"Name of the newly created palette if read-only or the input palette otherwise"
+msgstr ""
+"Salt okunursa yeni oluşturulan paletin veya değilse giriş paletinin adı"
+
 # Normalden farklı çevrildi
-#: ../plug-ins/python/palette-offset.py:90
+#: plug-ins/python/palette-offset.py:91
 msgid "_Offset Palette..."
 msgstr "_Paleti Dengele..."
 
 # Normalden farklı çevrildi
-#: ../plug-ins/python/palette-offset.py:91
+#: plug-ins/python/palette-offset.py:92
 msgid "Offset the colors in a palette"
 msgstr "Paletteki renkleri dengele"
 
 # Normalden farklı çevrildi
-#: ../plug-ins/python/palette-offset.py:139
+#: plug-ins/python/palette-offset.py:140
 msgid "Offset Palette..."
 msgstr "Paleti Dengele..."
 
-#: ../plug-ins/python/palette-to-gradient.py:139
+#: plug-ins/python/palette-sort.py:40
+msgid "Red"
+msgstr "Kırmızı"
+
+#: plug-ins/python/palette-sort.py:40
+msgid "Green"
+msgstr "Yeşil"
+
+#: plug-ins/python/palette-sort.py:40
+msgid "Blue"
+msgstr "Mavi"
+
+#: plug-ins/python/palette-sort.py:41
+msgid "Luma (Y)"
+msgstr "Luma (Y)"
+
+#: plug-ins/python/palette-sort.py:42
+msgid "Hue"
+msgstr "Renk tonu"
+
+#: plug-ins/python/palette-sort.py:42
+msgid "Saturation"
+msgstr "Doygunluk"
+
+#: plug-ins/python/palette-sort.py:42
+msgid "Value"
+msgstr "Değer"
+
+#: plug-ins/python/palette-sort.py:43
+msgid "Saturation (HSL)"
+msgstr "Doygunluk (HSL)"
+
+#: plug-ins/python/palette-sort.py:43
+msgid "Lightness (HSL)"
+msgstr "Açıklık (HSL)"
+
+#: plug-ins/python/palette-sort.py:44
+msgid "Index"
+msgstr "Dizin"
+
+#: plug-ins/python/palette-sort.py:45
+msgid "Random"
+msgstr "Rastgele"
+
+#: plug-ins/python/palette-sort.py:90
+msgid "Lightness (LAB)"
+msgstr "Açıklık (LAB)"
+
+#: plug-ins/python/palette-sort.py:91
+msgid "A-color"
+msgstr "A-renk"
+
+#: plug-ins/python/palette-sort.py:91
+msgid "B-color"
+msgstr "B-renk"
+
+#: plug-ins/python/palette-sort.py:92
+msgid "Chroma (LCHab)"
+msgstr "Renk saflığı (LCHab)"
+
+#: plug-ins/python/palette-sort.py:93
+msgid "Hue (LCHab)"
+msgstr "Renk tonu (LCHab)"
+
+#: plug-ins/python/palette-sort.py:327
+msgid "All"
+msgstr "Tümü"
+
+#: plug-ins/python/palette-sort.py:327
+msgid "Slice / Array"
+msgstr "Dilim / Dizi"
+
+#: plug-ins/python/palette-sort.py:327
+msgid "Autoslice (fg->bg)"
+msgstr "Kendiliğinden dilimle (ÖA->AA)"
+
+#: plug-ins/python/palette-sort.py:327
+msgid "Partitioned"
+msgstr "Bölümlenmiş"
+
+#: plug-ins/python/palette-sort.py:344
+msgid "Se_lections"
+msgstr "Seçim_ler"
+
+#: plug-ins/python/palette-sort.py:351
+msgid "Slice _expression"
+msgstr "Dilim _ifadesi"
+
+#: plug-ins/python/palette-sort.py:358
+msgid "Channel to _sort"
+msgstr "_Sıralanacak kanal"
+
+#: plug-ins/python/palette-sort.py:363 plug-ins/python/palette-sort.py:375
+msgid "_Ascending"
+msgstr "_Artan"
+
+#: plug-ins/python/palette-sort.py:364 plug-ins/python/palette-sort.py:376
+msgid "Ascending"
+msgstr "Artan"
+
+#: plug-ins/python/palette-sort.py:370
+msgid "Secondary Channel to s_ort"
+msgstr "_Sıralanacak İkincil Kanal"
+
+#: plug-ins/python/palette-sort.py:380
+msgid "_Quantization"
+msgstr "_Niceleme"
+
+#: plug-ins/python/palette-sort.py:381
+msgid "Quantization"
+msgstr "Niceleme"
+
+#: plug-ins/python/palette-sort.py:386
+msgid "_Partitioning channel"
+msgstr "Bölümleme _kanalı"
+
+#: plug-ins/python/palette-sort.py:391
+msgid "Partition q_uantization"
+msgstr "Bölüm n_iceleme"
+
+#: plug-ins/python/palette-sort.py:392
+msgid "Partition quantization"
+msgstr "Bölüm niceleme"
+
+#: plug-ins/python/palette-sort.py:417
+msgid "_Sort Palette..."
+msgstr "_Paleti Sırala..."
+
+#: plug-ins/python/palette-sort.py:422
+msgid "Sort the colors in a palette"
+msgstr "Paletteki renkleri sırala"
+
+#: plug-ins/python/palette-to-gradient.py:115
+#: plug-ins/python/palette-to-gradient.py:116
+msgid "Name of the newly created gradient"
+msgstr "Yeni oluşturulan renk geçişinin adı"
+
+#: plug-ins/python/palette-to-gradient.py:138
 msgid "Palette to _Gradient"
 msgstr "Paletten Renk _Geçişi"
 
-#: ../plug-ins/python/palette-to-gradient.py:140
+#: plug-ins/python/palette-to-gradient.py:139
 msgid "Create a gradient using colors from the palette"
 msgstr "Paletteki renkleri kullanarak bir renk geçişi oluştur"
 
-#: ../plug-ins/python/palette-to-gradient.py:144
+#: plug-ins/python/palette-to-gradient.py:140
+msgid "Create a new gradient using colors from the palette."
+msgstr "Paletteki renkleri kullanarak yeni bir renk geçişi oluştur."
+
+#: plug-ins/python/palette-to-gradient.py:143
 msgid "Palette to _Repeating Gradient"
-msgstr "Paletten Tek_rarlamalı Renk Geçişi"
+msgstr "Paletten _Yinelemeli Renk Geçişi"
 
-#: ../plug-ins/python/palette-to-gradient.py:145
+#: plug-ins/python/palette-to-gradient.py:144
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Paletteki renkleri kullanarak tekrarlamalı bir renk geçişi oluştur"
+msgstr "Paletteki renkleri kullanarak yinelemeli bir renk geçişi oluştur"
 
-#: ../plug-ins/python/py-slice.py:74
-msgid "Slice"
-msgstr "Dilimle"
-
-#: ../plug-ins/python/py-slice.py:439 ../plug-ins/python/py-slice.py:440
-msgid "Path for HTML export"
-msgstr "HTML dışa aktarımı için yol"
-
-#: ../plug-ins/python/py-slice.py:444 ../plug-ins/python/py-slice.py:445
-msgid "Filename for export"
-msgstr "Dışa aktarım için dosya ismi"
-
-#: ../plug-ins/python/py-slice.py:449 ../plug-ins/python/py-slice.py:450
-msgid "Image name prefix"
-msgstr "Görüntü ismi öneki"
-
-#: ../plug-ins/python/py-slice.py:454 ../plug-ins/python/py-slice.py:455
-msgid "Image format (gif, jpg, png)"
-msgstr "Görüntü biçimi (gif, jpg, png)"
-
-# Folder: Komut satırında Dizin, Arayüzde Klasör
-#: ../plug-ins/python/py-slice.py:459 ../plug-ins/python/py-slice.py:460
-msgid "Separate image folder"
-msgstr "Görüntü klasörünü ayır"
-
-# Folder: Komut satırında Dizin, Arayüzde Klasör
-#: ../plug-ins/python/py-slice.py:464 ../plug-ins/python/py-slice.py:465
-msgid "Folder for image export"
-msgstr "Görüntü dışa aktarımı için klasör"
-
-#: ../plug-ins/python/py-slice.py:469 ../plug-ins/python/py-slice.py:470
-msgid "Space between table elements"
-msgstr "Tablo elemanları arasındaki boşluk"
-
-#: ../plug-ins/python/py-slice.py:474 ../plug-ins/python/py-slice.py:475
-msgid "Javascript for onmouseover and clicked"
+#: plug-ins/python/palette-to-gradient.py:145
+msgid "Create a new repeating gradient using colors from the palette."
 msgstr ""
-"onmouseover (fare ile üzerine gelindiğinde) ve clicked (tıklandığında) için "
-"Javascript"
+"Paletteki renkleri kullanarak yeni bir yinelemeli renk geçişi oluştur."
 
-#: ../plug-ins/python/py-slice.py:480 ../plug-ins/python/py-slice.py:481
-msgid "Skip animation for table caps"
-msgstr "Tablo başlıkları için canlandırmayı geç"
-
-#. table snippet means a small piece of HTML code here
-#: ../plug-ins/python/py-slice.py:501
-msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Bir görüntüyü kılavuz boyunca keser, görüntüyü ve bir HTML tablosu parçası "
-"oluşturur"
-
-#: ../plug-ins/python/py-slice.py:510
-msgid "_Slice..."
-msgstr "_Dilimle..."
-
-#: ../plug-ins/python/python-console/python-console.py:75
+#: plug-ins/python/python-console/python-console.py:77
 msgid "Python Console"
 msgstr "Python Uçbirimi"
 
-#: ../plug-ins/python/python-console/python-console.py:79
+#: plug-ins/python/python-console/python-console.py:81
 msgid "_Browse..."
 msgstr "_Gözat..."
 
-#: ../plug-ins/python/python-console/python-console.py:179
+#: plug-ins/python/python-console/python-console.py:257
 msgid "Python Procedure Browser"
 msgstr "Python Yordam Tarayıcı"
 
-#: ../plug-ins/python/python-console/python-console.py:207
+#: plug-ins/python/python-console/python-console.py:285
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s', yazma için açılamadı: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:222
+#: plug-ins/python/python-console/python-console.py:300
 #, python-format
 msgid "Could not write to '%s': %s"
 msgstr "'%s'ye yazılamadı: %s"
 
-#: ../plug-ins/python/python-console/python-console.py:231
+#: plug-ins/python/python-console/python-console.py:309
 msgid "Save Python-Fu Console Output"
 msgstr "Python-Fu Uçbirim Çıktısını Kaydet"
 
-#: ../plug-ins/python/python-console/python-console.py:280
+#: plug-ins/python/python-console/python-console.py:357
 msgid "Python _Console"
 msgstr "Python _Uçbirimi"
 
-#: ../plug-ins/python/python-console/python-console.py:281
+#: plug-ins/python/python-console/python-console.py:358
 msgid "Interactive GIMP Python interpreter"
 msgstr "Etkileşimli GIMP Python yorumlayıcısı"
 
-#: ../plug-ins/python/spyro-plus.py:60
+#: plug-ins/python/python-console/python-console.py:359
+msgid "Type in commands and see results"
+msgstr "Komutları yazın ve sonuçları görün"
+
+#: plug-ins/python/spyro-plus.py:49
 msgid "Spyro Layer"
 msgstr "Spyro Katman"
 
-#: ../plug-ins/python/spyro-plus.py:61
+#: plug-ins/python/spyro-plus.py:50
 msgid "Spyro Path"
 msgstr "Spiro Yol"
 
-#: ../plug-ins/python/spyro-plus.py:71
+#: plug-ins/python/spyro-plus.py:60
 msgid "As New Layer"
 msgstr "Yeni Katman Olarak"
 
-#: ../plug-ins/python/spyro-plus.py:72
+#: plug-ins/python/spyro-plus.py:61
 msgid "Redraw on last active layer"
 msgstr "Son etkin katmana yeniden çiz"
 
-#: ../plug-ins/python/spyro-plus.py:73
+#: plug-ins/python/spyro-plus.py:62
 msgid "As Path"
 msgstr "Yol Olarak"
 
-#: ../plug-ins/python/spyro-plus.py:121
+#: plug-ins/python/spyro-plus.py:110
 msgid "Circle"
 msgstr "Daire"
 
-#: ../plug-ins/python/spyro-plus.py:157
+#: plug-ins/python/spyro-plus.py:146
 msgid "Polygon-Star"
 msgstr "Çokgen-Yıldız"
 
 #. Sine wave on a circle ring.
-#: ../plug-ins/python/spyro-plus.py:173 ../plug-ins/python/spyro-plus.py:996
+#: plug-ins/python/spyro-plus.py:162 plug-ins/python/spyro-plus.py:989
 msgid "Sine"
 msgstr "Sinüs"
 
 #. Semi-circles, based on a polygon
-#: ../plug-ins/python/spyro-plus.py:183
+#: plug-ins/python/spyro-plus.py:172
 msgid "Bumps"
 msgstr "Tümsekler"
 
-#: ../plug-ins/python/spyro-plus.py:288
+#: plug-ins/python/spyro-plus.py:277
 msgid "Rack"
 msgstr "Raf"
 
-#: ../plug-ins/python/spyro-plus.py:332
+#: plug-ins/python/spyro-plus.py:321
 msgid "Frame"
 msgstr "Çerçeve"
 
-#: ../plug-ins/python/spyro-plus.py:445
+#: plug-ins/python/spyro-plus.py:438
 msgid "Selection"
 msgstr "Seçim"
 
-#: ../plug-ins/python/spyro-plus.py:532
+#: plug-ins/python/spyro-plus.py:525
 msgid "Pencil"
 msgstr "Kalem"
 
-#: ../plug-ins/python/spyro-plus.py:548
+#: plug-ins/python/spyro-plus.py:541
 msgid "AirBrush"
 msgstr "Hava Fırçası"
 
-#: ../plug-ins/python/spyro-plus.py:608
+#: plug-ins/python/spyro-plus.py:601
 msgid "Preview"
 msgstr "Önizle"
 
-#: ../plug-ins/python/spyro-plus.py:613
+#: plug-ins/python/spyro-plus.py:606
 msgid "Stroke"
 msgstr "Darbe"
 
-#: ../plug-ins/python/spyro-plus.py:660
+#: plug-ins/python/spyro-plus.py:653
 msgid "PaintBrush"
 msgstr "Boya Fırçası"
 
-#: ../plug-ins/python/spyro-plus.py:662
+#: plug-ins/python/spyro-plus.py:655
 msgid "Ink"
 msgstr "Mürekkep"
 
-#: ../plug-ins/python/spyro-plus.py:663
+#: plug-ins/python/spyro-plus.py:656
 msgid "MyPaintBrush"
 msgstr "MyPaintBrush"
 
-#: ../plug-ins/python/spyro-plus.py:982
+#: plug-ins/python/spyro-plus.py:975
 msgid "Spyrograph"
 msgstr "Spirograf"
 
-#: ../plug-ins/python/spyro-plus.py:989
+#: plug-ins/python/spyro-plus.py:982
 msgid "Epitrochoid"
 msgstr "Epitrokoit"
 
-#: ../plug-ins/python/spyro-plus.py:1016
+#: plug-ins/python/spyro-plus.py:1009
 msgid "Lissajous"
 msgstr "Lissajous"
 
-#: ../plug-ins/python/spyro-plus.py:1447
+#: plug-ins/python/spyro-plus.py:1456
 msgid "Curve Type"
 msgstr "Eğri Tipi"
 
-#: ../plug-ins/python/spyro-plus.py:1448
+#: plug-ins/python/spyro-plus.py:1457
 msgid ""
 "An Epitrochoid pattern is when the moving gear is on the outside of the "
 "fixed gear."
 msgstr ""
 "Epitrokoit deseni, hareketli dişlinin sabit dişlinin dışında olduğu zamandır."
 
-#: ../plug-ins/python/spyro-plus.py:1453
+#: plug-ins/python/spyro-plus.py:1462
 msgid "Tool"
 msgstr "Araç"
 
-#: ../plug-ins/python/spyro-plus.py:1454
+#: plug-ins/python/spyro-plus.py:1463
 msgid ""
 "The tool with which to draw the pattern. The Preview tool just draws quickly."
 msgstr ""
 "Desenin çizileceği araç. Önizleme aracı yalnızca hızlı bir şekilde çizer."
 
-#: ../plug-ins/python/spyro-plus.py:1459
+#: plug-ins/python/spyro-plus.py:1468
 msgid "Long Gradient"
 msgstr "Uzun Renk Geçişi"
 
-#: ../plug-ins/python/spyro-plus.py:1461
+#: plug-ins/python/spyro-plus.py:1470
 msgid ""
 "When unchecked, the current tool settings will be used. When checked, will "
 "use a long gradient to match the length of the pattern, based on current "
@@ -404,11 +625,11 @@ msgstr ""
 "desenin uzunluğunu eşleştirmek için uzun bir renk geçişi, geçerli renk "
 "geçişi ve renk geçişi aracı ayarlarından yineleme kipine göre kullanır."
 
-#: ../plug-ins/python/spyro-plus.py:1481
+#: plug-ins/python/spyro-plus.py:1490
 msgid "Specify pattern using one of the following tabs:"
 msgstr "Aşağıdaki sekmelerden birini kullanarak deseni belirtin:"
 
-#: ../plug-ins/python/spyro-plus.py:1483
+#: plug-ins/python/spyro-plus.py:1492
 msgid ""
 "The pattern is specified only by the active tab. Toy Kit is similar to "
 "Gears, but it uses gears and hole numbers which are found in toy kits. If "
@@ -419,18 +640,18 @@ msgstr ""
 "ancak oyuncak setinde bulunan dişli ve delik numaralarını kullanır. Oyuncak "
 "seti kılavuzlarındaki talimatları izlerseniz, sonuçlar benzer olmalıdır."
 
-#: ../plug-ins/python/spyro-plus.py:1507
+#: plug-ins/python/spyro-plus.py:1516
 msgid ""
 "Number of teeth of fixed gear. The size of the fixed gear is proportional to "
 "the number of teeth."
 msgstr ""
 "Sabit dişli diş sayısı. Sabit dişlinin boyutu diş sayısıyla orantılıdır."
 
-#: ../plug-ins/python/spyro-plus.py:1510 ../plug-ins/python/spyro-plus.py:1538
+#: plug-ins/python/spyro-plus.py:1519 plug-ins/python/spyro-plus.py:1547
 msgid "Fixed Gear Teeth"
 msgstr "Sabit Dişli Dişleri"
 
-#: ../plug-ins/python/spyro-plus.py:1518
+#: plug-ins/python/spyro-plus.py:1527
 msgid ""
 "Number of teeth of moving gear. The size of the moving gear is proportional "
 "to the number of teeth."
@@ -438,15 +659,15 @@ msgstr ""
 "Hareketli dişlilerin diş sayısı. Hareket eden dişlinin boyutu diş sayısıyla "
 "orantılıdır."
 
-#: ../plug-ins/python/spyro-plus.py:1521 ../plug-ins/python/spyro-plus.py:1543
+#: plug-ins/python/spyro-plus.py:1530 plug-ins/python/spyro-plus.py:1552
 msgid "Moving Gear Teeth"
 msgstr "Hareketli Dişli Dişleri"
 
-#: ../plug-ins/python/spyro-plus.py:1526
+#: plug-ins/python/spyro-plus.py:1535
 msgid "Hole percent"
 msgstr "Delik yüzdesi"
 
-#: ../plug-ins/python/spyro-plus.py:1527
+#: plug-ins/python/spyro-plus.py:1536
 msgid ""
 "How far is the hole from the center of the moving gear. 100% means that the "
 "hole is at the gear's edge."
@@ -454,11 +675,11 @@ msgstr ""
 "Delik, hareketli dişlinin merkezinden ne kadar uzakta. %100, deliğin "
 "dişlinin kenarında olduğu anlamına gelir."
 
-#: ../plug-ins/python/spyro-plus.py:1548
+#: plug-ins/python/spyro-plus.py:1557
 msgid "Hole Number"
 msgstr "Delik Sayısı"
 
-#: ../plug-ins/python/spyro-plus.py:1549
+#: plug-ins/python/spyro-plus.py:1558
 msgid ""
 "Hole #1 is at the edge of the gear. The maximum hole number is near the "
 "center. The maximum hole number is different for each gear."
@@ -466,27 +687,27 @@ msgstr ""
 "Delik #1 dişlinin kenarında. Azami delik sayısı merkeze yakındır. Her dişli "
 "için azami delik sayısı farklıdır."
 
-#: ../plug-ins/python/spyro-plus.py:1560
+#: plug-ins/python/spyro-plus.py:1569
 msgid "Flower Petals"
 msgstr "Çiçek Yaprakları"
 
-#: ../plug-ins/python/spyro-plus.py:1561
+#: plug-ins/python/spyro-plus.py:1570
 msgid "The number of petals in the pattern."
 msgstr "Desendeki yaprakların sayısı."
 
-#: ../plug-ins/python/spyro-plus.py:1566
+#: plug-ins/python/spyro-plus.py:1575
 msgid "Petal Skip"
 msgstr "Yaprak Atla"
 
-#: ../plug-ins/python/spyro-plus.py:1567
+#: plug-ins/python/spyro-plus.py:1576
 msgid "The number of petals to advance for drawing the next petal."
 msgstr "Sonraki yaprağı çizmeyi sürdürmek için yaprak sayısı."
 
-#: ../plug-ins/python/spyro-plus.py:1572
+#: plug-ins/python/spyro-plus.py:1581
 msgid "Hole Radius(%)"
 msgstr "Boşluk Yarıçapı(%)"
 
-#: ../plug-ins/python/spyro-plus.py:1573
+#: plug-ins/python/spyro-plus.py:1582
 msgid ""
 "The radius of the hole in the center of the pattern where nothing will be "
 "drawn. Given as a percentage of the size of the pattern. A value of 0 will "
@@ -496,11 +717,11 @@ msgstr ""
 "boyutunun yüzdesi olarak verilir. 0 değeri delik oluşturmayacaktır. 99 "
 "değeri kenarda ince çizgi oluşturacaktır."
 
-#: ../plug-ins/python/spyro-plus.py:1594
+#: plug-ins/python/spyro-plus.py:1603
 msgid "Width(%)"
 msgstr "Genişlik(%)"
 
-#: ../plug-ins/python/spyro-plus.py:1595
+#: plug-ins/python/spyro-plus.py:1604
 msgid ""
 "The width of the pattern as a percentage of the size of the pattern. A Value "
 "of 1 will just draw a thin pattern. A Value of 100 will fill the entire "
@@ -509,23 +730,23 @@ msgstr ""
 "Desenin boyutunun yüzdesi olarak desenin genişliği. 1 değeri yalnızca ince "
 "desen çizecektir. 100 değeri tüm sabit dişliyi dolduracaktır."
 
-#: ../plug-ins/python/spyro-plus.py:1606
+#: plug-ins/python/spyro-plus.py:1615
 msgid "Visual"
 msgstr "Görsel"
 
-#: ../plug-ins/python/spyro-plus.py:1612
+#: plug-ins/python/spyro-plus.py:1621
 msgid "Toy Kit"
 msgstr "Oyuncak Seti"
 
-#: ../plug-ins/python/spyro-plus.py:1618
+#: plug-ins/python/spyro-plus.py:1627
 msgid "Gears"
 msgstr "Dişler"
 
-#: ../plug-ins/python/spyro-plus.py:1631 ../plug-ins/python/spyro-plus.py:1675
+#: plug-ins/python/spyro-plus.py:1640 plug-ins/python/spyro-plus.py:1684
 msgid "Rotation"
 msgstr "Döndürme"
 
-#: ../plug-ins/python/spyro-plus.py:1632
+#: plug-ins/python/spyro-plus.py:1641
 msgid ""
 "Rotation of the pattern, in degrees. The starting position of the moving "
 "gear in the fixed gear."
@@ -533,11 +754,11 @@ msgstr ""
 "Desenin döndürülme açısı, derece cinsinden. Sabit dişlide, hareketli "
 "dişlinin başlangıç konumu."
 
-#: ../plug-ins/python/spyro-plus.py:1655
+#: plug-ins/python/spyro-plus.py:1664
 msgid "Shape"
 msgstr "Şekil"
 
-#: ../plug-ins/python/spyro-plus.py:1656
+#: plug-ins/python/spyro-plus.py:1665
 msgid ""
 "The shape of the fixed gear to be used inside current selection. Rack is a "
 "long round-edged shape provided in the toy kits. Frame hugs the boundaries "
@@ -551,39 +772,39 @@ msgstr ""
 "kullanın. Seçim, geçerli seçimin sınırlarına sarılacak - dikdörtgen olmayan "
 "bir şey deneyin."
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: plug-ins/python/spyro-plus.py:1674
 msgid "Sides"
 msgstr "Yanlar"
 
-#: ../plug-ins/python/spyro-plus.py:1665
+#: plug-ins/python/spyro-plus.py:1674
 msgid "Number of sides of the shape."
 msgstr "Şeklin yan sayısı."
 
-#: ../plug-ins/python/spyro-plus.py:1670
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Morph"
 msgstr "Şekil değiştir"
 
-#: ../plug-ins/python/spyro-plus.py:1670
+#: plug-ins/python/spyro-plus.py:1679
 msgid "Morph fixed gear shape. Only affects some of the shapes."
 msgstr "Sabit dişli şeklini değiştir. Yalnızca bazı şekilleri etkiler."
 
-#: ../plug-ins/python/spyro-plus.py:1675
+#: plug-ins/python/spyro-plus.py:1684
 msgid "Rotation of the fixed gear, in degrees"
 msgstr "Sabit dişlinin döndürülme açısı, derece olarak"
 
-#: ../plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1699
 msgid "Margin (px)"
 msgstr "Boşluk (px)"
 
-#: ../plug-ins/python/spyro-plus.py:1690
+#: plug-ins/python/spyro-plus.py:1699
 msgid "Margin from edge of selection."
 msgstr "Seçim kenarından boşluk."
 
-#: ../plug-ins/python/spyro-plus.py:1695
+#: plug-ins/python/spyro-plus.py:1704
 msgid "Make width and height equal"
 msgstr "Genişliği ve yüksekliği eşitle"
 
-#: ../plug-ins/python/spyro-plus.py:1697
+#: plug-ins/python/spyro-plus.py:1706
 msgid ""
 "When unchecked, the pattern will fill the current image or selection. When "
 "checked, the pattern will have same width and height, and will be centered."
@@ -591,11 +812,11 @@ msgstr ""
 "Seçili olmadığında, desen geçerli görseli veya seçimi doldurur. "
 "İşaretlendiğinde, desen aynı genişliğe ve yükseklikte olur ve ortalanır."
 
-#: ../plug-ins/python/spyro-plus.py:1712
+#: plug-ins/python/spyro-plus.py:1721
 msgid "Re_draw"
 msgstr "Yeni_den Çiz"
 
-#: ../plug-ins/python/spyro-plus.py:1714
+#: plug-ins/python/spyro-plus.py:1723
 msgid ""
 "If you change the settings of a tool, change color, or change the selection, "
 "press this to preview how the pattern looks."
@@ -603,15 +824,15 @@ msgstr ""
 "Eğer ki bir aracın ayarlarını, rengi veya seçimi değiştirirseniz, deseni "
 "önizlemek için bu düğmeye basın."
 
-#: ../plug-ins/python/spyro-plus.py:1717
+#: plug-ins/python/spyro-plus.py:1726
 msgid "_Reset"
 msgstr "_Sıfırla"
 
-#: ../plug-ins/python/spyro-plus.py:1725
+#: plug-ins/python/spyro-plus.py:1734
 msgid "Save"
 msgstr "Kaydet"
 
-#: ../plug-ins/python/spyro-plus.py:1726
+#: plug-ins/python/spyro-plus.py:1735
 msgid ""
 "Choose whether to save as new layer, redraw on last active layer, or save to "
 "path"
@@ -619,274 +840,114 @@ msgstr ""
 "Yeni katman olarak kaydetmeyi, son etkin katmana yeniden çizmeyi veya yola "
 "kaydetmeyi seç"
 
-#: ../plug-ins/python/spyro-plus.py:1740
+#: plug-ins/python/spyro-plus.py:1749
 msgid "Spyrogimp"
 msgstr "Spyrogimp"
 
 # Menü ipucu olduğu için cümle sonunda nokta bulunmaması gerekiyor
-#: ../plug-ins/python/spyro-plus.py:1749 ../plug-ins/python/spyro-plus.py:2282
+#: plug-ins/python/spyro-plus.py:1758 plug-ins/python/spyro-plus.py:2295
 msgid "Draw spyrographs using current tool settings and selection."
 msgstr "Geçerli araç ayarlarını ve seçimini kullanarak spirograf çiz"
 
-#: ../plug-ins/python/spyro-plus.py:1762
+#: plug-ins/python/spyro-plus.py:1771
 msgid "Curve Pattern"
 msgstr "Eğri Deseni"
 
-#: ../plug-ins/python/spyro-plus.py:1765
+#: plug-ins/python/spyro-plus.py:1774
 msgid "Fixed Gear"
 msgstr "Sabit Dişli"
 
-#: ../plug-ins/python/spyro-plus.py:1768
+#: plug-ins/python/spyro-plus.py:1777
 msgid "Size"
 msgstr "Boyut"
 
-#: ../plug-ins/python/spyro-plus.py:2116
+#: plug-ins/python/spyro-plus.py:2133
 msgid "Rendering Pattern"
 msgstr "Desen Görselleştiriliyor"
 
-#: ../plug-ins/python/spyro-plus.py:2128
+#: plug-ins/python/spyro-plus.py:2145
 msgid "Please wait : Rendering Pattern"
 msgstr "Lütfen bekleyin: Desen Görselleştiriliyor"
 
-#: ../plug-ins/python/spyro-plus.py:2286
+#: plug-ins/python/spyro-plus.py:2211 plug-ins/python/spyro-plus.py:2212
+msgid ""
+"The curve type { Spyrograph (0), Epitrochoid (1), Sine (2), Lissajous(3) }"
+msgstr "Eğri türü { Spirograf (0), Epitrokoit (1), Sinüs (2), Lissajous(3) }"
+
+#: plug-ins/python/spyro-plus.py:2216 plug-ins/python/spyro-plus.py:2217
+msgid "Shape of fixed gear"
+msgstr "Sabit dişlinin şekli"
+
+#: plug-ins/python/spyro-plus.py:2221 plug-ins/python/spyro-plus.py:2222
+msgid "Number of sides of fixed gear (3 or greater). Only used by some shapes."
+msgstr ""
+"Sabit dişlinin kenar sayısı (3 veya daha çok). Yalnızca bazı şekillerce "
+"kullanılır."
+
+#: plug-ins/python/spyro-plus.py:2226 plug-ins/python/spyro-plus.py:2227
+msgid "Morph shape of fixed gear, between 0 and 1. Only used by some shapes."
+msgstr ""
+"Sabit dişlinin, 0 ile 1 arasında, dönüşüm şekli. Yalnızca bazı şekillerce "
+"kullanılır."
+
+#: plug-ins/python/spyro-plus.py:2231 plug-ins/python/spyro-plus.py:2232
+msgid "Number of teeth for fixed gear"
+msgstr "Sabit dişlideki diş sayısı"
+
+#: plug-ins/python/spyro-plus.py:2236 plug-ins/python/spyro-plus.py:2237
+msgid "Number of teeth for moving gear"
+msgstr "Hareketli dişlideki diş sayısı"
+
+#: plug-ins/python/spyro-plus.py:2241 plug-ins/python/spyro-plus.py:2243
+msgid ""
+"Location of hole in moving gear in percent, where 100 means that the hole is "
+"at the edge of the gear, and 0 means the hole is at the center"
+msgstr ""
+"Hareketli dişlideki deliğin yüzde olarak konumu, burada 100, deliğin "
+"dişlinin kenarında olduğu, 0 ise deliğin dişlinin merkezinde olduğu anlamına "
+"gelir"
+
+#: plug-ins/python/spyro-plus.py:2248 plug-ins/python/spyro-plus.py:2249
+msgid "Margin from selection, in pixels"
+msgstr "Seçim kenarından boşluk, piksel cinsinden"
+
+#: plug-ins/python/spyro-plus.py:2253 plug-ins/python/spyro-plus.py:2254
+msgid "Make height and width equal"
+msgstr "Yüksekliği ve genişliği eşitle"
+
+#: plug-ins/python/spyro-plus.py:2258 plug-ins/python/spyro-plus.py:2259
+msgid "Pattern rotation, in degrees"
+msgstr "Desen döndürme, derece olarak"
+
+#: plug-ins/python/spyro-plus.py:2263 plug-ins/python/spyro-plus.py:2264
+msgid "Shape rotation of fixed gear, in degrees"
+msgstr "Sabit dişlinin şekil dönüşü, derece olarak"
+
+#: plug-ins/python/spyro-plus.py:2268 plug-ins/python/spyro-plus.py:2269
+msgid "Tool to use for drawing the pattern."
+msgstr "Deseni çizmek için kullanılacak araç."
+
+#: plug-ins/python/spyro-plus.py:2273 plug-ins/python/spyro-plus.py:2275
+msgid ""
+"Whether to apply a long gradient to match the length of the pattern. Only "
+"applicable to some of the tools."
+msgstr ""
+"Desenin uzunluğuna uyması için uzun bir renk geçişi uygulanma durumu. "
+"Yalnızca bazı araçlar için geçerlidir."
+
+#: plug-ins/python/spyro-plus.py:2296
+msgid ""
+"Uses current tool settings to draw Spyrograph patterns. The size and "
+"location of the pattern is based on the current selection."
+msgstr ""
+"Spirograf desenler çizmek için şu anki araç ayarlarını kullanır. Desenin "
+"boyutu ve konumu geçerli seçime bağlıdır."
+
+#: plug-ins/python/spyro-plus.py:2299
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
 
-#~ msgid "Missing exception information"
-#~ msgstr "İstisna bilgisi eksik"
-
-#~ msgid "An error occurred running %s"
-#~ msgstr "%s çalıştırılırken bir hata meydana geldi"
-
-#~ msgid "_More Information"
-#~ msgstr "_Daha Fazla Bilgi"
-
-#~ msgid "No"
-#~ msgstr "Hayır"
-
-#~ msgid "Yes"
-#~ msgstr "Evet"
-
-#~ msgid "Python-Fu File Selection"
-#~ msgstr "Python-Fu Dosya Seçimi"
-
-# Folder: Komut satırında Dizin, Arayüzde Klasör
-#~ msgid "Python-Fu Folder Selection"
-#~ msgstr "Python-Fu Klasör Seçimi"
-
-#~ msgid "Invalid input for '%s'"
-#~ msgstr "'%s' için geçersiz girdi"
-
-#~ msgid "Python-Fu Color Selection"
-#~ msgstr "Python-Fu Renk Seçimi"
-
-#~ msgid "Exports the image histogram to a text file (CSV)"
-#~ msgstr "Görüntü histogramını bir metin dosyasına aktar (CSV)"
-
-# komut olduğu için Başlık Düzeni tercih edildi
-#~ msgid "_Export histogram..."
-#~ msgstr "_Histogramı Dışa Aktar..."
-
-#~ msgid "_Image"
-#~ msgstr "_Görüntü"
-
-#~ msgid "_Drawable"
-#~ msgstr "_Çizilebilir"
-
-#~ msgid "Histogram _File"
-#~ msgstr "Histogram _Dosyası"
-
-#~ msgid "_Bucket Size"
-#~ msgstr "_Kova Boyutu"
-
-#~ msgid "Sample _Average"
-#~ msgstr "Örnek _Ortalama"
-
-#~ msgid "Output format"
-#~ msgstr "Çıktı biçimi"
-
-#~ msgid "Pixel count"
-#~ msgstr "Piksel sayısı"
-
-#~ msgid "Normalized"
-#~ msgstr "Normalleştirilmiş"
-
-#~ msgid "Percent"
-#~ msgstr "Yüzde"
-
-#~ msgid "Red"
-#~ msgstr "Kırmızı"
-
-#~ msgid "Green"
-#~ msgstr "Yeşil"
-
-#~ msgid "Blue"
-#~ msgstr "Mavi"
-
-#~ msgid "Luma (Y)"
-#~ msgstr "Luma (Y)"
-
-#~ msgid "Hue"
-#~ msgstr "Renk tonu"
-
-#~ msgid "Saturation"
-#~ msgstr "Doygunluk"
-
-#~ msgid "Value"
-#~ msgstr "Değer"
-
-#~ msgid "Saturation (HSL)"
-#~ msgstr "Doygunluk (HSL)"
-
-#~ msgid "Lightness (HSL)"
-#~ msgstr "Açıklık (HSL)"
-
-#~ msgid "Index"
-#~ msgstr "Dizin"
-
-#~ msgid "Random"
-#~ msgstr "Rastgele"
-
-#~ msgid "Lightness (LAB)"
-#~ msgstr "Açıklık (LAB)"
-
-#~ msgid "A-color"
-#~ msgstr "A-renk"
-
-#~ msgid "B-color"
-#~ msgstr "B-renk"
-
-#~ msgid "Chroma (LCHab)"
-#~ msgstr "Renk saflığı (LCHab)"
-
-#~ msgid "Hue (LCHab)"
-#~ msgstr "Renk tonu (LCHab)"
-
-#~ msgid "Sort the colors in a palette"
-#~ msgstr "Paletteki renkleri sırala"
-
-#~ msgid "_Sort Palette..."
-#~ msgstr "_Paleti Sırala..."
-
-#~ msgid "Se_lections"
-#~ msgstr "Seçim_ler"
-
-#~ msgid "All"
-#~ msgstr "Tümü"
-
-#~ msgid "Slice / Array"
-#~ msgstr "Dilim / Dizi"
-
-#~ msgid "Autoslice (fg->bg)"
-#~ msgstr "Kendiliğinden dilimle (ÖA->AA)"
-
-#~ msgid "Partitioned"
-#~ msgstr "Bölümlenmiş"
-
-#~ msgid "Slice _expression"
-#~ msgstr "Dilim _ifadesi"
-
-#~ msgid "Channel to _sort"
-#~ msgstr "_Sıralanacak kanal"
-
-#~ msgid "_Ascending"
-#~ msgstr "_Artan"
-
-#~ msgid "Secondary Channel to s_ort"
-#~ msgstr "_Sıralanacak İkincil Kanal"
-
-#~ msgid "_Quantization"
-#~ msgstr "_Niceleme"
-
-#~ msgid "_Partitioning channel"
-#~ msgstr "Bölümleme _kanalı"
-
-#~ msgid "Partition q_uantization"
-#~ msgstr "Bölüm n_iceleme"
-
-#~ msgid "Add a drop shadow to a layer, and optionally bevel it"
-#~ msgstr "Bir katmana gölge ve tercihen eğim ver"
-
-#~ msgid "_Drop Shadow and Bevel..."
-#~ msgstr "_Gölge Düşür ve Eğim Ver..."
-
-#~ msgid "_Shadow blur"
-#~ msgstr "_Gölge bulanıklığı"
-
-#~ msgid "_Bevel"
-#~ msgstr "_Eğim"
-
-#~ msgid "_Drop shadow"
-#~ msgstr "_Gölge düşür"
-
-# displacement kelimesi burada, genelden farklı olarak eksen olarak çevrilmiştir
-#~ msgid "Drop shadow _X displacement"
-#~ msgstr "_X eksenine gölge düşür"
-
-# displacement kelimesi burada, genelden farklı olarak eksen olarak çevrilmiştir
-#~ msgid "Drop shadow _Y displacement"
-#~ msgstr "_Y eksenine gölge düşür"
-
-#~ msgid "_Console"
-#~ msgstr "_Uçbirim"
-
-#~ msgid "_Cancel"
-#~ msgstr "İptal Et"
-
-#~ msgid "_OK"
-#~ msgstr "_Tamam"
-
-#~ msgid ""
-#~ "Keep\n"
-#~ "Layer"
-#~ msgstr "Katmanı Koru"
-
-#~ msgid ""
-#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
-#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
-#~ "pattern is redrawn on the layer that was active when the plugin was "
-#~ "launched."
-#~ msgstr ""
-#~ "İşaretliyse, Tamam düğmesine bir kez basıldığında, spyro katmanı tutulur "
-#~ "ve eklenti hızlıca çıkar. İşaretlenmezse, spyro katmanı silinir ve "
-#~ "eklenti başlatıldığında etkin olan katman üzerinde desen yeniden çizilir."
-
-#~ msgid "Source code"
-#~ msgstr "Kaynak kodu"
-
-#~ msgid "Entry box"
-#~ msgstr "Giriş kutusu"
-
-#~ msgid "Color _model"
-#~ msgstr "Renk _modeli"
-
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "HSV"
-#~ msgstr "HSV"
-
-#~ msgid "Red or Hue"
-#~ msgstr "Kırmızı veya Renk Özü"
-
-#~ msgid "Blue or Value"
-#~ msgstr "Mavi veya Değer"
-
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr "Bir metin dizisindeki karakterlerle yeni bir fırça oluştur"
-
-#~ msgid "New Brush from _Text..."
-#~ msgstr "_Metinden Yeni Fırça..."
-
-#~ msgid "Font"
-#~ msgstr "Yazı Tipi"
-
-#~ msgid "Pixel Size"
-#~ msgstr "Piksel Boyutu"
-
-#~ msgid "Text"
-#~ msgstr "Metin"
-
+# Hata raporlandı: https://gitlab.gnome.org/GNOME/gimp/-/issues/8498
 #, fuzzy
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Python Konsolu"
+#~ msgid "palette_from_gradient (gradient, number, segment_colors) -> None"
+#~ msgstr "Not: Hata raporu çözülene kadar çevirmeyin!"
