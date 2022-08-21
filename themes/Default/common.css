@@ -364,8 +364,8 @@ headerbar {
   background-image: none;
 }
 
-headerbar:backdrop {
-  background-image: linear-gradient(to top, @widget-bg-color, @extreme-bg-color);
+headerbar:backdrop * {
+  color: @disabled-fg-color;
 }
 
 /* GtkListBox widgets */
