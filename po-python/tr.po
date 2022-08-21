@@ -1,7 +1,7 @@
 # Turkish translation for GIMP
 #
 # Copyright (C) 2001 Free Software Foundation, Inc.
-# Copyright (C) 2002-2019 gimp's COPYRIGHT HOLDER
+# Copyright (C) 2002-2022 gimp's COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp package.
 #
 # Ömer Fadıl USTA <omer_fad@hotmail.com>, 2002.
@@ -9,57 +9,57 @@
 # Alper Ersoy <aersoy@tfz.net>, 2001.
 # Muhammet Kara <muhammetk@gmail.com>, 2012, 2014.
 # Necdet Yücel <necdetyucel@gmail.com>, 2015.
-# Sabri Ünal <libreajans@gmail.com>, 2019, 2020.
+# Sabri Ünal <libreajans@gmail.com>, 2019, 2020, 2022.
 # Emin Tufan Çetin <etcetin@gmail.com>, 2019, 2020.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP python gimp-2-10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-09-21 23:46+0000\n"
-"PO-Revision-Date: 2020-05-26 19:15+0300\n"
-"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
+"POT-Creation-Date: 2022-08-03 23:14+0000\n"
+"PO-Revision-Date: 2022-08-16 18:50+0300\n"
+"Last-Translator: Sabri Ünal <libreajans@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
 "Language: tr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 2.3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-POOTLE-MTIME: 1420937120.000000\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:395
+#: ../plug-ins/pygimp/gimpfu.py:396
 msgid "Missing exception information"
 msgstr "İstisna bilgisi eksik"
 
-#: ../plug-ins/pygimp/gimpfu.py:404
+#: ../plug-ins/pygimp/gimpfu.py:405
 #, python-format
 msgid "An error occurred running %s"
 msgstr "%s çalıştırılırken bir hata meydana geldi"
 
-#: ../plug-ins/pygimp/gimpfu.py:415
+#: ../plug-ins/pygimp/gimpfu.py:416
 msgid "_More Information"
 msgstr "_Daha Fazla Bilgi"
 
-#: ../plug-ins/pygimp/gimpfu.py:528 ../plug-ins/pygimp/gimpfu.py:540
-#: ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pygimp/gimpfu.py:529 ../plug-ins/pygimp/gimpfu.py:541
+#: ../plug-ins/pygimp/gimpfu.py:547
 msgid "No"
 msgstr "Hayır"
 
-#: ../plug-ins/pygimp/gimpfu.py:538 ../plug-ins/pygimp/gimpfu.py:546
+#: ../plug-ins/pygimp/gimpfu.py:539 ../plug-ins/pygimp/gimpfu.py:547
 msgid "Yes"
 msgstr "Evet"
 
-#: ../plug-ins/pygimp/gimpfu.py:599 ../plug-ins/pygimp/gimpui.py:223
+#: ../plug-ins/pygimp/gimpfu.py:600 ../plug-ins/pygimp/gimpui.py:223
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu Dosya Seçimi"
 
 # Folder: Komut satırında Dizin, Arayüzde Klasör
-#: ../plug-ins/pygimp/gimpfu.py:648
+#: ../plug-ins/pygimp/gimpfu.py:649
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Klasör Seçimi"
 
-#: ../plug-ins/pygimp/gimpfu.py:737
+#: ../plug-ins/pygimp/gimpfu.py:738
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "'%s' için geçersiz girdi"
@@ -199,7 +199,7 @@ msgid "_Offset Palette..."
 msgstr "_Paleti Dengele..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:52
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:334
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:59
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:81
 msgid "Palette"
@@ -273,60 +273,60 @@ msgstr "Renk saflığı (LCHab)"
 msgid "Hue (LCHab)"
 msgstr "Renk tonu (LCHab)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:312
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:313
 msgid "Sort the colors in a palette"
 msgstr "Paletteki renkleri sırala"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:331
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:332
 msgid "_Sort Palette..."
 msgstr "_Paleti Sırala..."
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:335
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
 msgid "Se_lections"
 msgstr "Seçim_ler"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "All"
 msgstr "Tümü"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Slice / Array"
 msgstr "Dilim / Dizi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:336
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
 msgid "Autoslice (fg->bg)"
 msgstr "Kendiliğinden dilimle (ÖA->AA)"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:337
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
 msgid "Partitioned"
 msgstr "Bölümlenmiş"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:338
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
 msgid "Slice _expression"
 msgstr "Dilim _ifadesi"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:339
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:340
 msgid "Channel to _sort"
 msgstr "_Sıralanacak kanal"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:341
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:344
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
 msgid "_Ascending"
 msgstr "_Artan"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:342
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:343
 msgid "Secondary Channel to s_ort"
 msgstr "_Sıralanacak İkincil Kanal"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:345
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
 msgid "_Quantization"
 msgstr "_Niceleme"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:346
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:347
 msgid "_Partitioning channel"
 msgstr "Bölümleme _kanalı"
 
-#: ../plug-ins/pygimp/plug-ins/palette-sort.py:348
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:349
 msgid "Partition q_uantization"
 msgstr "Bölüm n_iceleme"
 
@@ -859,52 +859,3 @@ msgstr "Lütfen bekleyin: Desen Görselleştiriliyor"
 #: ../plug-ins/pygimp/plug-ins/spyro_plus.py:2164
 msgid "Spyrogimp..."
 msgstr "Spyrogimp..."
-
-#~ msgid ""
-#~ "Keep\n"
-#~ "Layer"
-#~ msgstr "Katmanı Koru"
-
-#~ msgid ""
-#~ "If checked, then once OK is pressed, the spyro layer is kept, and the "
-#~ "plugin exits quickly. If unchecked, the spyro layer is deleted, and the "
-#~ "pattern is redrawn on the layer that was active when the plugin was "
-#~ "launched."
-#~ msgstr ""
-#~ "İşaretliyse, Tamam düğmesine bir kez basıldığında, spyro katmanı tutulur "
-#~ "ve eklenti hızlıca çıkar. İşaretlenmezse, spyro katmanı silinir ve "
-#~ "eklenti başlatıldığında etkin olan katman üzerinde desen yeniden çizilir."
-
-#~ msgid "Color _model"
-#~ msgstr "Renk _modeli"
-
-#~ msgid "RGB"
-#~ msgstr "RGB"
-
-#~ msgid "HSV"
-#~ msgstr "HSV"
-
-#~ msgid "Red or Hue"
-#~ msgstr "Kırmızı veya Renk Özü"
-
-#~ msgid "Blue or Value"
-#~ msgstr "Mavi veya Değer"
-
-#~ msgid "Create a new brush with characters from a text sequence"
-#~ msgstr "Bir metin dizisindeki karakterlerle yeni bir fırça oluştur"
-
-#~ msgid "New Brush from _Text..."
-#~ msgstr "_Metinden Yeni Fırça..."
-
-#~ msgid "Font"
-#~ msgstr "Yazı Tipi"
-
-#~ msgid "Pixel Size"
-#~ msgstr "Piksel Boyutu"
-
-#~ msgid "Text"
-#~ msgstr "Metin"
-
-#, fuzzy
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Python Konsolu"
