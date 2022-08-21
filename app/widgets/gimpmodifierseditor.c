@@ -68,6 +68,7 @@ struct _GimpModifiersEditorPrivate
   GtkSizeGroup         *minus_size_group;
 
   GimpModifiersManager *manager;
+  GHashTable           *rows;
 
   GtkTreeSelection     *action_selection;
 };
@@ -113,6 +114,17 @@ static void     gimp_modifiers_editor_search_response       (GtkWidget          
                                                              gint                 response_id,
                                                              GimpModifiersEditor *editor);
 
+static gchar  * gimp_modifiers_editor_make_hash_key         (GdkDevice           *device,
+                                                             guint                button,
+                                                             GdkModifierType      modifiers);
+static void     gimp_modifiers_editor_update_rows           (GimpModifiersEditor *editor,
+                                                             GdkModifierType      modifiers,
+                                                             GtkWidget           *box_child);
+static gboolean gimp_modifiers_editor_search_row            (gpointer             key,
+                                                             gpointer             value,
+                                                             gpointer             user_data);
+
+
 G_DEFINE_TYPE_WITH_PRIVATE (GimpModifiersEditor, gimp_modifiers_editor,
                             GIMP_TYPE_FRAME)
 
@@ -153,6 +165,8 @@ gimp_modifiers_editor_init (GimpModifiersEditor *editor)
   editor->priv->action_size_group        = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   editor->priv->action_action_size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   editor->priv->minus_size_group         = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
+  editor->priv->rows                     = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 
   /* Setup the title. */
   gtk_frame_set_label_align (GTK_FRAME (editor), 0.5, 0.5);
@@ -225,6 +239,8 @@ gimp_modifiers_editor_finalize (GObject *object)
   g_object_unref (editor->priv->action_size_group);
   g_object_unref (editor->priv->action_action_size_group);
   g_object_unref (editor->priv->minus_size_group);
+
+  g_hash_table_unref (editor->priv->rows);
 }
 
 static void
@@ -288,6 +304,7 @@ void
 gimp_modifiers_editor_clear (GimpModifiersEditor *editor)
 {
   gimp_modifiers_manager_clear (editor->priv->manager);
+  g_hash_table_remove_all (editor->priv->rows);
   gtk_container_foreach (GTK_CONTAINER (editor->priv->stack),
                          (GtkCallback) gtk_widget_destroy,
                          NULL);
@@ -498,6 +515,9 @@ gimp_modifiers_editor_add_mapping (GimpModifiersEditor *editor,
 
   gtk_list_box_insert (GTK_LIST_BOX (editor->priv->current_settings), box, -1);
 
+  if (mod_action != GIMP_MODIFIER_ACTION_NONE)
+    gimp_modifiers_editor_update_rows (editor, modifiers, shortcut);
+
   if (plus_button)
     {
       g_object_ref (plus_button);
@@ -545,7 +565,7 @@ gimp_modifiers_editor_minus_button_clicked (GtkButton           *minus_button,
 
       box_row = gtk_widget_get_parent (GTK_WIDGET (minus_button));
       box_row = gtk_widget_get_parent (box_row);
-      gtk_container_remove (GTK_CONTAINER (editor->priv->current_settings), box_row);
+      gimp_modifiers_editor_update_rows (editor, modifiers, NULL);
     }
 }
 
@@ -569,6 +589,7 @@ gimp_modifiers_editor_notify_accelerator (GtkWidget           *widget,
 
   gimp_shortcut_button_get_keys (GIMP_SHORTCUT_BUTTON (shortcut), NULL, &modifiers);
 
+  /* Delete the previous mapping. */
   if (old_modifiers != modifiers)
     gimp_modifiers_manager_remove (editor->priv->manager, editor->priv->device,
                                    editor->priv->button, old_modifiers);
@@ -579,6 +600,12 @@ gimp_modifiers_editor_notify_accelerator (GtkWidget           *widget,
     {
       const gchar *action_desc;
 
+      /* Check if the new mapping was on another row. */
+      if (GIMP_IS_SHORTCUT_BUTTON (widget) && old_modifiers != modifiers &&
+          action != GIMP_MODIFIER_ACTION_NONE)
+        gimp_modifiers_editor_update_rows (editor, modifiers, shortcut);
+
+      /* Finally set the new mapping. */
       action_desc = g_object_get_data (G_OBJECT (action_button), "shortcut-action-desc");
       gimp_modifiers_manager_set (editor->priv->manager, editor->priv->device,
                                   editor->priv->button, modifiers,
@@ -761,4 +788,69 @@ gimp_modifiers_editor_search_response (GtkWidget           *dialog,
     }
 
   gtk_widget_destroy (dialog);
+}
+
+static gchar *
+gimp_modifiers_editor_make_hash_key (GdkDevice        *device,
+                                     guint             button,
+                                     GdkModifierType   modifiers)
+{
+  const gchar *vendor_id;
+  const gchar *product_id;
+
+  g_return_val_if_fail (GDK_IS_DEVICE (device) || device == NULL, NULL);
+
+  vendor_id  = device ? gdk_device_get_vendor_id (device) : NULL;
+  product_id = device ? gdk_device_get_product_id (device) : NULL;
+  modifiers  = modifiers & gimp_get_all_modifiers_mask ();
+
+  return g_strdup_printf ("%s:%s-%d-%d",
+                          vendor_id ? vendor_id : "(no-vendor-id)",
+                          product_id ? product_id : "(no-product-id)",
+                          button, modifiers);
+}
+
+static void
+gimp_modifiers_editor_update_rows (GimpModifiersEditor *editor,
+                                   GdkModifierType      modifiers,
+                                   GtkWidget           *box_child)
+{
+  GtkWidget *box_row;
+  gchar     *hash_key;
+
+  hash_key = gimp_modifiers_editor_make_hash_key (editor->priv->device,
+                                                  editor->priv->button,
+                                                  modifiers);
+  if ((box_row = g_hash_table_lookup (editor->priv->rows, hash_key)) != NULL)
+    {
+      gimp_modifiers_manager_remove (editor->priv->manager, editor->priv->device,
+                                     editor->priv->button, modifiers);
+      gtk_container_remove (GTK_CONTAINER (editor->priv->current_settings), box_row);
+    }
+
+  if (box_child)
+    {
+      box_row = box_child;
+      while (box_row && ! GTK_IS_LIST_BOX_ROW (box_row))
+        box_row = gtk_widget_get_parent (box_row);
+
+      g_return_if_fail (box_row != NULL && GTK_IS_LIST_BOX_ROW (box_row));
+
+      g_hash_table_foreach_remove (editor->priv->rows,
+                                   gimp_modifiers_editor_search_row,
+                                   box_row);
+      g_hash_table_insert (editor->priv->rows, hash_key, box_row);
+    }
+  else
+    {
+      g_free (hash_key);
+    }
+}
+
+static gboolean
+gimp_modifiers_editor_search_row (gpointer key,
+                                  gpointer value,
+                                  gpointer user_data)
+{
+  return (value == user_data);
 }
