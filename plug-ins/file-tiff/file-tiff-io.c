@@ -192,7 +192,9 @@ tiff_io_warning (const gchar *module,
   /* for older versions of libtiff? */
   else if (! strcmp (fmt, "unknown field with tag %d (0x%x) ignored") ||
            /* Since libtiff 4.0.0alpha. */
-           ! strcmp (fmt, "Unknown field with tag %d (0x%x) encountered"))
+           ! strcmp (fmt, "Unknown field with tag %d (0x%x) encountered") ||
+           /* Since libtiff 4.3.0rc1. */
+           ! strcmp (fmt, "Unknown field with tag %u (0x%x) encountered"))
     {
       va_list ap_test;
 
