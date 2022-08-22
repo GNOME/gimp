@@ -356,9 +356,11 @@ load_image (GFile        *file,
   for (li = 0; li < pages.n_pages; li++)
     pages.filtered_pages[li] = li;
 
-  if (pages.n_pages == 1)
+  if (pages.n_pages == 1 || run_mode != GIMP_RUN_INTERACTIVE)
     {
       pages.pages  = g_new0 (gint, pages.n_pages);
+      for (li = 0; li < pages.n_pages; li++)
+        pages.pages[li] = li;
       pages.target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
     }
 
