@@ -1477,6 +1477,17 @@ load_image (GFile        *file,
       else
         load_paths (tif, *image, cols, rows, 0, 0);
 
+      if (extra > 99)
+        {
+          /* Validate number of channels to the same maximum as we use for
+           * Photoshop. A higher number most likely means a corrupt image
+           * and can cause GIMP to become unresponsive and/or stuck.
+           * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
+           */
+          g_message (_("Suspicious number of extra channels: %d. Possibly corrupt image."), extra);
+          extra = 99;
+        }
+
       /* Allocate ChannelData for all channels, even the background layer */
       channel = g_new0 (ChannelData, extra + 1);
 
