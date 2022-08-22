@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-09 15:33+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-08-02 19:03+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
@@ -53,8 +53,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "继续(&amp;C)"
+msgid "&Continue"
+msgstr "继续(&C)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -80,8 +80,8 @@ msgstr ""
 "在继续前修改显示色彩深度为 32BPP。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "退出(&amp;X)"
+msgid "E&xit"
+msgstr "退出(&X)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -93,12 +93,12 @@ msgstr ""
 "置。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "安装(&amp;I)"
+msgid "&Install"
+msgstr "安装(&I)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "自定义(&amp;C)"
+msgid "&Customize"
+msgstr "自定义(&C)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -208,12 +208,12 @@ msgid "Additional icons:"
 msgstr "附加图标："
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "创建桌面图标(&amp;D)"
+msgid "Create a &desktop icon"
+msgstr "创建桌面图标(&D)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "添加到快速启动(&amp;Q)"
+msgid "Create a &Quick Launch icon"
+msgstr "添加到快速启动(&Q)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -270,16 +270,16 @@ msgid ""
 msgstr "在文件管理器中双击选中类型的文件时将使用 GIMP 打开。"
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "全选(&amp;A)"
+msgid "Select &All"
+msgstr "全选(&A)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "取消全选(&amp;A)"
+msgid "Unselect &All"
+msgstr "取消全选(&A)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "选中未用(&amp;U)"
+msgid "Select &Unused"
+msgstr "选中未用(&U)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
@@ -373,6 +373,3 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr "GIMP 没有安装到选中的文件夹。仍要继续吗？"
-
-#~ msgid "E&xit"
-#~ msgstr "退出(&X)"

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 18:06+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: \n"
@@ -58,8 +58,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Nadaljuj"
+msgid "&Continue"
+msgstr "&Nadaljuj"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -88,8 +88,8 @@ msgstr ""
 "32 bitov."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "Iz&amp;hod"
+msgid "E&xit"
+msgstr "Iz&hod"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -102,12 +102,12 @@ msgstr ""
 "nadzora nad možnostmi namestitve."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "Namest&amp;i"
+msgid "&Install"
+msgstr "Namest&i"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Po meri"
+msgid "&Customize"
+msgstr "&Po meri"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -220,12 +220,12 @@ msgid "Additional icons:"
 msgstr "Dodatne ikone:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "Ustvari ikono na n&amp;amizju"
+msgid "Create a &desktop icon"
+msgstr "Ustvari ikono na n&amizju"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "Ustvari ikono v vrstici &amp;hitri zagon"
+msgid "Create a &Quick Launch icon"
+msgstr "Ustvari ikono v vrstici &hitri zagon"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -285,16 +285,16 @@ msgstr ""
 "dvokliknete v Raziskovalcu."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "Izberi &amp;vse"
+msgid "Select &All"
+msgstr "Izberi &vse"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "Počisti iz&amp;bor"
+msgid "Unselect &All"
+msgstr "Počisti iz&bor"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "Izberi ne&amp;uporabljene"
+msgid "Select &Unused"
+msgstr "Izberi ne&uporabljene"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"

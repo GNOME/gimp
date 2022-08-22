@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP windows installer master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-16 13:42+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-08-21 20:30+0300\n"
 "Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Türkçe <gnome-turk@gnome.org>\n"
@@ -59,8 +59,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Sürdür"
+msgid "&Continue"
+msgstr "&Sürdür"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -87,8 +87,8 @@ msgstr ""
 "sürdürmeden önce görüntü renk derinliğini 32BPP'ye geçirmeniz önerilir."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "Ç&amp;ık"
+msgid "E&xit"
+msgstr "Ç&ık"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -101,12 +101,12 @@ msgstr ""
 "istiyorsanız Özelleştir düğmesine tıklayın."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "&amp;Kur"
+msgid "&Install"
+msgstr "&Kur"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Özelleştir"
+msgid "&Customize"
+msgstr "&Özelleştir"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -220,12 +220,12 @@ msgid "Additional icons:"
 msgstr "Ek simgeler:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "&amp;Masaüstü simgesi oluştur"
+msgid "Create a &desktop icon"
+msgstr "&Masaüstü simgesi oluştur"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "&amp;Hızlı Başlat simgesi oluştur"
+msgid "Create a &Quick Launch icon"
+msgstr "&Hızlı Başlat simgesi oluştur"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -285,16 +285,16 @@ msgstr ""
 "sağlar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "&amp;Tümünü Seç"
+msgid "Select &All"
+msgstr "&Tümünü Seç"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "&amp;Tümünün Seçimini Kaldır"
+msgid "Unselect &All"
+msgstr "&Tümünün Seçimini Kaldır"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "K&amp;ullanılmayanı Seç"
+msgid "Select &Unused"
+msgstr "K&ullanılmayanı Seç"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"

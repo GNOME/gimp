@@ -7,46 +7,46 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2018-04-29 02:54+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2018-04-29 16:49+0800\n"
+"Last-Translator: \n"
+"Language-Team: L10N_tw < https://t.me/l10n_tw >\n"
 "Language: zh_TW\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"Last-Translator: \n"
-"Language-Team: L10N_tw < https://t.me/l10n_tw >\n"
 "X-Generator: Poedit 2.0.4\n"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:1
+#: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
 msgstr "許可協議"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:2
+#: build/windows/installer/lang/setup.isl.xml.in:10
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 msgstr "安裝程式由 Jernej Simoncic, jernej-gimp@ena.si 所建立"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:3
-msgid ""
-"This version of GIMP requires Windows XP with Service Pack 3, or a newer "
-"version of Windows."
+#: build/windows/installer/lang/setup.isl.xml.in:13
+#: build/windows/installer/lang/setup.isl.xml.in:16
+#, fuzzy
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr ""
 "此版本的 GIMP 需要帶有 Service Pack 3 的 Windows XP 或較新版本的 Windows 。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:4
+#: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
 msgstr "開發版本"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:6
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:28
+#, fuzzy
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
 "day-to-day work as it may be unstable, and you could lose your work.%nIf you "
 "encounter any problems, first verify that they haven't already been fixed in "
-"GIT before you contact the developers or report it in GIMP bugzilla:"
-"%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%nDo you wish to "
-"continue with installation anyway?"
+"GIT before you contact the developers or report it in GIMP gitlab:%n_https://"
+"gitlab.gnome.org/GNOME/gimp/issues%n%nDo you wish to continue with "
+"installation anyway?"
 msgstr ""
 "這是 GIMP 的開發版，其中某些功能可能還沒有完成，或者可能不穩定。%n此版本的"
 "GIMP不適用於日常工作，因為它可能不穩定，並且可能會害您白忙一場。%n如果您遇到"
@@ -54,24 +54,25 @@ msgstr ""
 "GIT 中被修正：%n_https://bugzilla.gnome.org/enter_bug.cgi?product=GIMP%n%n您"
 "是否希望繼續安裝呢？"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:7
+#: build/windows/installer/lang/setup.isl.xml.in:31
+#: build/windows/installer/lang/setup.isl.xml.in:54
 msgid "&Continue"
 msgstr "繼續(&C)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:8
+#: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
 msgstr "離開"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:9
+#: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
 "This version of GIMP requires a processor that supports SSE instructions."
 msgstr "此版本的 GIMP 需要支援 SSE 指令的處理器。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:10
+#: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
 msgstr "顯示設定問題"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:11
+#: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
@@ -82,11 +83,11 @@ msgstr ""
 "穩定性的問題，因此建議在繼續之前將顯示顏色深度變更為 32 BPP（bits per pixel："
 "每儲存1像素圖點所需要的位元數）。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:12
+#: build/windows/installer/lang/setup.isl.xml.in:57
 msgid "E&xit"
 msgstr "離開(&X)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:13
+#: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
 "GIMP is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
@@ -95,119 +96,138 @@ msgstr ""
 "GIMP 現在已準備好安裝。現在就點擊「安裝」按鈕可使用預設設定進行安裝，或者如果"
 "您想要更精確地控制安裝內容，請單擊「自訂」按鈕。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:14
+#: build/windows/installer/lang/setup.isl.xml.in:64
 msgid "&Install"
 msgstr "安裝(&I)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:15
+#: build/windows/installer/lang/setup.isl.xml.in:67
 msgid "&Customize"
 msgstr "自訂(&C)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:16
+#: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
 msgstr "精簡安裝"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:17
+#: build/windows/installer/lang/setup.isl.xml.in:76
 msgid "Custom installation"
 msgstr "自訂安裝"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:18
+#: build/windows/installer/lang/setup.isl.xml.in:80
 msgid "Full installation"
 msgstr "完整安裝"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:19
+#: build/windows/installer/lang/setup.isl.xml.in:85
 msgid "Description"
 msgstr "描述"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:20
+#: build/windows/installer/lang/setup.isl.xml.in:89
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:21
+#: build/windows/installer/lang/setup.isl.xml.in:93
 msgid "GIMP and all default plug-ins"
 msgstr "GIMP 和所有預設外掛程式"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:22
+#: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
 msgstr "執行時期函式庫"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:23
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+#: build/windows/installer/lang/setup.isl.xml.in:101
+#, fuzzy
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr "被 GIMP 使用的執行時期函式庫包括有 GTK+ Run-time Environment"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:24
-msgid "MS-Windows engine for GTK+"
+#: build/windows/installer/lang/setup.isl.xml.in:105
+msgid "Debug symbols"
+msgstr ""
+
+#: build/windows/installer/lang/setup.isl.xml.in:109
+msgid "Include information to help with debugging GIMP"
+msgstr ""
+
+#: build/windows/installer/lang/setup.isl.xml.in:113
+#, fuzzy
+msgid "MS-Windows engine for GTK"
 msgstr "GTK+ 的 MS-Window 引擎"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:25
+#: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
 msgstr "GIMP 的原生 Windows 外觀"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:26
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
 msgstr "支援舊的外掛程式"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:27
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr "舊的第三方外掛程式需要安裝函式庫"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:28
+#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "翻譯"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:29
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "Python scripting"
 msgstr "Python 腳本"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:30
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr "允許您使用以 Python 腳本語言編寫的 GIMP 外掛程式。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:31
+#: build/windows/installer/lang/setup.isl.xml.in:145
+#, fuzzy
+msgid "Lua scripting"
+msgstr "Python 腳本"
+
+#: build/windows/installer/lang/setup.isl.xml.in:149
+#, fuzzy
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr "允許您使用以 Python 腳本語言編寫的 GIMP 外掛程式。"
+
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
 msgstr "MyPaint 筆刷"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:32
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Install the default set of MyPaint brushes"
 msgstr "安裝 MyPaint 筆刷的預設集"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:33
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "PostScript support"
 msgstr "PostScript 支援"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Allow GIMP to load PostScript files"
 msgstr "允許 GIMP 載入 PostScript 檔案"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:35
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
 msgstr "支援 32 位元的外掛程式"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:37
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:173
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr "包含使用 32 位元外掛程式所需要的檔案。%n 對於 Python 支援是必需的。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:38
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Additional icons:"
 msgstr "額外的圖示："
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Create a &desktop icon"
 msgstr "建立一個桌面圖示(&D)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:40
+#: build/windows/installer/lang/setup.isl.xml.in:186
 msgid "Create a &Quick Launch icon"
 msgstr "建立一個快速啟動圖示(&Q)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
 msgstr "移除先前的 GIMP 版本"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -215,72 +235,69 @@ msgstr ""
 "在 %1 中更新 GIMP 的環境時出現問題。如果您在載入外掛程式時遇到任何錯誤，請嘗"
 "試卸載並重新安裝 GIMP。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:44
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
 msgstr "提取暫存資料時出錯。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Error updating Python interpreter info."
 msgstr "更新 Python 解釋器資訊時出錯。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:46
+#: build/windows/installer/lang/setup.isl.xml.in:207
 msgid "Error updating MyPaint brushes info."
 msgstr "更新 MyPaint 筆刷資訊時出錯。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "There was an error updating %1."
 msgstr "更新 %1 時發生錯誤。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:215
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "更新 GIMP 的配置檔「%1」時出錯。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:51
+#: build/windows/installer/lang/setup.isl.xml.in:220
 msgid "Edit with GIMP"
 msgstr "用 GIMP 編輯"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
 msgstr "選擇檔案關聯"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:53
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Extensions:"
 msgstr "副檔名："
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "選擇您希望與 GIMP 關聯的檔案類型"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
 msgstr "當您在檔案總管中雙擊它們時，這將使選定的檔案在 GIMP 中開啟。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: build/windows/installer/lang/setup.isl.xml.in:241
 msgid "Select &All"
 msgstr "全選(&A)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: build/windows/installer/lang/setup.isl.xml.in:245
 msgid "Unselect &All"
 msgstr "取消全選(&A)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: build/windows/installer/lang/setup.isl.xml.in:249
 msgid "Select &Unused"
 msgstr "選取未使用的(&U)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
 msgstr "與 GIMP 關聯的檔案類型："
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: build/windows/installer/lang/setup.isl.xml.in:258
 msgid "Removing previous version of GIMP:"
 msgstr "正在移除先前的 GIMP 版本："
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -292,8 +309,7 @@ msgstr ""
 "在 %2 中安裝此版本之前，自行移除先前的 GIMP 版本，或者選擇自訂安裝，然後選擇"
 "一個不同的安裝資料夾。%n%n安裝程式現在將退出。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
@@ -305,8 +321,7 @@ msgstr ""
 "版本。%n%n請在將本版本安裝到 %2 之前自行移除先前版本的 GIMP 和任何附加程式，"
 "或選擇自訂安裝，然後選擇不同的安裝資料夾。%n%n安裝程式現在將退出。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
@@ -315,54 +330,55 @@ msgstr ""
 "先前的 GIMP 版本已成功移除，但必須重新啟動 Windows 才能繼續安裝。%n%n重新啟動"
 "電腦後，安裝程式必須以管理員身分登入 Windows 後才能繼續。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:68
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:275
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "重新啟動安裝程式時出錯。 (%1)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:70
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:279
+msgid "Cleaning up old files..."
+msgstr ""
+
+#: build/windows/installer/lang/setup.isl.xml.in:284
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "記住：GIMP是自由軟體。%n%n請參觀"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:71
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
 msgstr "可自由更新。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:72
+#: build/windows/installer/lang/setup.isl.xml.in:292
 msgid "Setting up file associations..."
 msgstr "正在設定檔案關聯…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: build/windows/installer/lang/setup.isl.xml.in:295
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "正在設定 GIMP Python 的擴展環境…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "正在設定 MyPaint 筆刷…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: build/windows/installer/lang/setup.isl.xml.in:301
 msgid "Setting up GIMP environment..."
 msgstr "正在設定 GIMP 環境…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: build/windows/installer/lang/setup.isl.xml.in:304
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "正在設定 GIMP 對 32 位元外掛程式支援的配置…"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: build/windows/installer/lang/setup.isl.xml.in:309
 msgid "Launch GIMP"
 msgstr "啟動 GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
 msgstr "正在移除附加元件"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:318
 msgid "Internal error (%1)."
 msgstr "內部錯誤 (%1)。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"

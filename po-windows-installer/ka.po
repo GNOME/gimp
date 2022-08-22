@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-27 14:37+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-07-27 17:28+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <ka@li.org>\n"
@@ -54,7 +54,7 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
+msgid "&Continue"
 msgstr "&გაგრძელება"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
@@ -82,7 +82,7 @@ msgstr ""
 "რეკომენდებულია, რომ ფერების სიღრმე 32-ბიტზე გადართოთ."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
+msgid "E&xit"
 msgstr "&გასვლა"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
@@ -96,11 +96,11 @@ msgstr ""
 "თუ პარამეტრების ზუსტი მორგება გნებავთ."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
+msgid "&Install"
 msgstr "&დაყენება"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
+msgid "&Customize"
 msgstr "&მორგება"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
@@ -216,11 +216,11 @@ msgid "Additional icons:"
 msgstr "დამატებითი ხატულები:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
+msgid "Create a &desktop icon"
 msgstr "სამუშაო &დაფაზე ხატულის შექმნა"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
+msgid "Create a &Quick Launch icon"
 msgstr "სწრაფი გაშვების &ზოლის ხატულის შექმნა"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
@@ -280,15 +280,15 @@ msgstr ""
 "გაიხსნება."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
+msgid "Select &All"
 msgstr "ყველაფრის &მონიშვნა"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
+msgid "Unselect &All"
 msgstr "მონიშვნის &ყველაფერზე მოხსნა"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
+msgid "Select &Unused"
 msgstr "&გამოუყენებლების მოხსნა"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
@@ -389,6 +389,3 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr "როგორც ჩანს, მითითებულ საქაღალდეში GIMP-ი არ აყენია. მაინც გავაგრძელო?"
-
-#~ msgid "E&xit"
-#~ msgstr "&გამოსვლა"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2019-01-07 10:50+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date:  2019-01-08 19:15+0900\n"
 "Last-Translator: Kiyotaka Nishibori <ml.nishibori.kiyotaka@gmail.com>\n"
 "Language-Team: Japanese <gnome-translation@gnome.gr.jp>\n"
@@ -20,26 +20,26 @@ msgstr ""
 #  concerns distribution, not use, and as such doesn't have to be accepted
 #  開発者コメントにあるように GPL は頒布に関する同意事項であって、使用に際しては受諾を必須とするわけではない
 #  したがって、同意を求めるかのような表現は、原文がそうであっても不適切
-#: ../build/windows/installer/lang/setup.isl.in.h:1
+#: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
 msgstr "インストールの前に"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:2
+#: build/windows/installer/lang/setup.isl.xml.in:10
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 msgstr "インストーラー作成者: Jernej Simoncic <jernej-gimp@ena.si>"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:3
+#: build/windows/installer/lang/setup.isl.xml.in:13
+#: build/windows/installer/lang/setup.isl.xml.in:16
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr ""
 "今回インストールする GIMP には Windows 7 またはそれより新しい Windows が必要"
 "です。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:4
+#: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
 msgstr "開発版について"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:6
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
@@ -56,26 +56,27 @@ msgstr ""
 "は次のとおりです。%n_https://gitlab.gnome.org/GNOME/gimp/issues%n%nインストー"
 "ルを続行しますか？"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:7
+#: build/windows/installer/lang/setup.isl.xml.in:31
+#: build/windows/installer/lang/setup.isl.xml.in:54
 msgid "&Continue"
 msgstr "続行(&C)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:8
+#: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
 msgstr "中止"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:9
+#: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
 "This version of GIMP requires a processor that supports SSE instructions."
 msgstr ""
 "今回インストールする GIMP には、SSE 命令セットをサポートするプロセッサーが必"
 "要です。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:10
+#: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
 msgstr "ディスプレイ設定の問題"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:11
+#: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
@@ -87,11 +88,11 @@ msgstr ""
 "をきたすことが確認されています。インストールを続行する前に表示色設定の変更を"
 "お薦めします。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:12
+#: build/windows/installer/lang/setup.isl.xml.in:57
 msgid "E&xit"
 msgstr "中止(&X)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:13
+#: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
 "GIMP is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
@@ -101,127 +102,138 @@ msgstr ""
 "構成でインストールを開始します。インストール項目を調整したいときは [カスタマ"
 "イズ] をクリックしてください。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:14
+#: build/windows/installer/lang/setup.isl.xml.in:64
 msgid "&Install"
 msgstr "インストール(&I)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:15
+#: build/windows/installer/lang/setup.isl.xml.in:67
 msgid "&Customize"
 msgstr "カスタマイズ(&C)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:16
+#: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
 msgstr "コンパクトインストール"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:17
+#: build/windows/installer/lang/setup.isl.xml.in:76
 msgid "Custom installation"
 msgstr "カスタムインストール"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:18
+#: build/windows/installer/lang/setup.isl.xml.in:80
 msgid "Full installation"
 msgstr "フルインストール"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:19
+#: build/windows/installer/lang/setup.isl.xml.in:85
 msgid "Description"
 msgstr "説明"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:20
+#: build/windows/installer/lang/setup.isl.xml.in:89
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:21
+#: build/windows/installer/lang/setup.isl.xml.in:93
 msgid "GIMP and all default plug-ins"
 msgstr "GIMP 本体とすべての標準プラグイン"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:22
+#: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
 msgstr "ランタイムライブラリ"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:23
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+#: build/windows/installer/lang/setup.isl.xml.in:101
+#, fuzzy
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr "GTK+ ランタイム環境を含む GIMP で使用されるランタイムライブラリ群"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:24
+#: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr "デバッグシンボル"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:25
+#: build/windows/installer/lang/setup.isl.xml.in:109
 msgid "Include information to help with debugging GIMP"
 msgstr "デバッグやバグ報告に役立つ情報"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:26
-msgid "MS-Windows engine for GTK+"
+#: build/windows/installer/lang/setup.isl.xml.in:113
+#, fuzzy
+msgid "MS-Windows engine for GTK"
 msgstr "GTK+ の MS-Windows エンジン"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:27
+#: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
 msgstr "GIMP の外観を Windows 風に見せるエンジン"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:28
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
 msgstr "旧式プラグインサポート"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:29
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr "サードパーティ製の旧式プラグインを使用するときに必要になるライブラリ群"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:30
+#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "UI 翻訳ファイル"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:31
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "Python scripting"
 msgstr "Python スクリプティング"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:32
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr "Python で記述されたプラグインを使用可能にするコンポーネント"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:33
+#: build/windows/installer/lang/setup.isl.xml.in:145
+#, fuzzy
+msgid "Lua scripting"
+msgstr "Python スクリプティング"
+
+#: build/windows/installer/lang/setup.isl.xml.in:149
+#, fuzzy
+msgid "Allows you to use GIMP plugins written in Lua scripting language."
+msgstr "Python で記述されたプラグインを使用可能にするコンポーネント"
+
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
 msgstr "MyPaint ブラシ"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Install the default set of MyPaint brushes"
 msgstr "Mypaint ブラシの標準セット"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:35
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "PostScript support"
 msgstr "PostScript のサポート"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:36
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Allow GIMP to load PostScript files"
 msgstr "PostScript ファイルを読み込み可能にするコンポーネント"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:37
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
 msgstr "32ビットプラグインサポート"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:173
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
 msgstr "32ビットプラグイン使用のために必要なファイル%nPython のサポートに必須"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:40
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Additional icons:"
 msgstr "アイコンの追加:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Create a &desktop icon"
 msgstr "デスクトップにアイコンを追加(&D)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:42
+#: build/windows/installer/lang/setup.isl.xml.in:186
 msgid "Create a &Quick Launch icon"
 msgstr "クイック起動バーにアイコンを追加(&Q)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
 msgstr "旧バージョンの削除"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -230,47 +242,45 @@ msgstr ""
 "ラーが発生するようなら、一旦 GIMP をアンインストールし、再度インストールして"
 "ください。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:46
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
 msgstr "一時データ展開時にエラーが発生しました。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:47
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Error updating Python interpreter info."
 msgstr "Python インタプリター情報の更新時にエラーが発生しました。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
+#: build/windows/installer/lang/setup.isl.xml.in:207
 msgid "Error updating MyPaint brushes info."
 msgstr "MyPaint ブラシの情報更新時にエラーが発生しました。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "There was an error updating %1."
 msgstr "%1 の更新時にエラーが発生しました。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:215
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "GIMP 設定ファイル %1 の更新時にエラーが発生しました。"
 
 #  displayed in Explorer's right-click menu
-#: ../build/windows/installer/lang/setup.isl.in.h:53
+#: build/windows/installer/lang/setup.isl.xml.in:220
 msgid "Edit with GIMP"
 msgstr "GIMP で編集するファイル"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
 msgstr "ファイル形式の関連付け"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Extensions:"
 msgstr "ファイル拡張子:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "GIMP を既定のプログラムとするファイル形式を指定します。"
 
 #  エクスプローラー上とは限らない（例: デスクトップ上のアイコン)
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -278,28 +288,27 @@ msgstr ""
 "指定された形式のファイルは、そのアイコンをダブルクリックすると GIMP で開かれ"
 "るようになります。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: build/windows/installer/lang/setup.isl.xml.in:241
 msgid "Select &All"
 msgstr "すべて選択(&A)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: build/windows/installer/lang/setup.isl.xml.in:245
 msgid "Unselect &All"
 msgstr "選択をすべて解除(&A)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: build/windows/installer/lang/setup.isl.xml.in:249
 msgid "Select &Unused"
 msgstr "選択を反転(&U)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:61
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
 msgstr "GIMP を既定のプログラムとするファイル形式:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
+#: build/windows/installer/lang/setup.isl.xml.in:258
 msgid "Removing previous version of GIMP:"
 msgstr "旧バージョンの削除について:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -313,8 +322,7 @@ msgstr ""
 "ドの [カスタマイズ] へ進み、そこでインストール先フォルダーを変更してくださ"
 "い。%n%nGIMP のセットアップを中止します。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
@@ -328,8 +336,7 @@ msgstr ""
 "除するか、このウィザードの [カスタマイズ] へ進み、そこでインストール先フォル"
 "ダーを変更してください。%n%nGIMP のセットアップを中止します。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:68
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
@@ -339,12 +346,11 @@ msgstr ""
 "Windows の再起動が必要です。%n%n再起動後は、管理者ログインからセットアップを"
 "再開します。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:70
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:275
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "セットアップ再開時にエラーが発生しました (%1)。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:71
+#: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Cleaning up old files..."
 msgstr "旧ファイルを削除しています..."
 
@@ -354,49 +360,47 @@ msgstr "旧ファイルを削除しています..."
 #      https://www.gimp.org/
 #       for free updates.
 #  
-#: ../build/windows/installer/lang/setup.isl.in.h:73
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:284
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "GIMP は自由ソフトウェアです。%n%nアップデートはこちらから"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:74
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
 msgstr "もちろん何の制限もありません。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
+#: build/windows/installer/lang/setup.isl.xml.in:292
 msgid "Setting up file associations..."
 msgstr "ファイルの関連付けをセットアップしています..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: build/windows/installer/lang/setup.isl.xml.in:295
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "GIMP Python 拡張の環境をセットアップしています..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Mypaint ブラシをセットアップしています..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: build/windows/installer/lang/setup.isl.xml.in:301
 msgid "Setting up GIMP environment..."
 msgstr "GIMP 本体の環境をセットアップしています..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:79
+#: build/windows/installer/lang/setup.isl.xml.in:304
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "32ビットプラグインサポート用の設定をセットアップしています..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: build/windows/installer/lang/setup.isl.xml.in:309
 msgid "Launch GIMP"
 msgstr "GIMP を起動する"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
 msgstr "アドオンを削除しています"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:83
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:318
 msgid "Internal error (%1)."
 msgstr "内部エラーが発生しました (%1)。"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:84
+#: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"

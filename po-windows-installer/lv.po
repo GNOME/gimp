@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2020-10-29 21:51+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2021-11-04 21:02+0200\n"
 "Last-Translator: Rūdolfs Mazurs <rudolfs.mazurs@gmail.com>\n"
 "Language-Team: Latvian <lata-l10n@googlegroups.com>\n"
@@ -14,28 +14,28 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 :"
-" 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : "
+"2);\n"
 "X-Generator: Lokalize 21.08.1\n"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:1
+#: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
 msgstr "Licences nosacījumi"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:2
+#: build/windows/installer/lang/setup.isl.xml.in:10
 msgid "Setup built by Jernej Simonèiè, jernej-gimp@ena.si"
 msgstr "Iestatītāju izveidoja Jernej Simončič, jernej-gimp@ena.si"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:3
+#: build/windows/installer/lang/setup.isl.xml.in:13
+#: build/windows/installer/lang/setup.isl.xml.in:16
 msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr "Šai GIMP versijai ir vajadzīgs Windows 7, vai jaunāka Windows versija."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:4
+#: build/windows/installer/lang/setup.isl.xml.in:23
 msgid "Development version"
 msgstr "Izstrādes versija"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:6
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:28
 msgid ""
 "This is a development version of GIMP where some features may not be "
 "finished, or it may be unstable.%nThis version of GIMP is not intended for "
@@ -53,25 +53,26 @@ msgstr ""
 "GIMP gitlab kļūdu atsekošanas sistēmā:%n_https://gitlab.gnome.org/GNOME/gimp/"
 "issues%n%nVai tomēr vēlaties turpināt instalēšanu?"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:7
+#: build/windows/installer/lang/setup.isl.xml.in:31
+#: build/windows/installer/lang/setup.isl.xml.in:54
 msgid "&Continue"
 msgstr "&Turpināt"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:8
+#: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
 msgstr "Iziet"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:9
+#: build/windows/installer/lang/setup.isl.xml.in:44
 msgid ""
 "This version of GIMP requires a processor that supports SSE instructions."
 msgstr ""
 "Šai GIMP versijai ir vajadzīgs procesors, kas atbalsta SSE instrukcijas."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:10
+#: build/windows/installer/lang/setup.isl.xml.in:48
 msgid "Display settings problem"
 msgstr "Attēlošanas iestatījumu problēma"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:11
+#: build/windows/installer/lang/setup.isl.xml.in:51
 msgid ""
 "Setup has detected that your Windows is not running in 32 bits-per-pixel "
 "display mode. This has been known to cause stability problems with GIMP, so "
@@ -82,11 +83,11 @@ msgstr ""
 "biti uz pikseli”. Tas var radīt stabilitātes problēmas GIMP lietotnē, tāpēc "
 "vēlams mainīt displeja krāsu dziļumu uz 32BPP, pirms turpināt."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:12
+#: build/windows/installer/lang/setup.isl.xml.in:57
 msgid "E&xit"
 msgstr "I&ziet"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:13
+#: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
 "GIMP is now ready to be installed. Click the Install now button to install "
 "using the default settings, or click the Customize button if you'd like to "
@@ -96,119 +97,118 @@ msgstr ""
 "izmantojot noklusējuma iestatījumus, vai arī spiediet pogu “Pielāgot”, ja "
 "vēlaties lielāku kontroli pār to, kas tiks instalēts."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:14
+#: build/windows/installer/lang/setup.isl.xml.in:64
 msgid "&Install"
 msgstr "&Instalēt"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:15
+#: build/windows/installer/lang/setup.isl.xml.in:67
 msgid "&Customize"
 msgstr "&Pielāgot"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:16
+#: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
 msgstr "Kompaktā instalēšana"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:17
+#: build/windows/installer/lang/setup.isl.xml.in:76
 msgid "Custom installation"
 msgstr "Pielāgotā instalēšana"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:18
+#: build/windows/installer/lang/setup.isl.xml.in:80
 msgid "Full installation"
 msgstr "Pilna instalēšana"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:19
+#: build/windows/installer/lang/setup.isl.xml.in:85
 msgid "Description"
 msgstr "Apraksts"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:20
+#: build/windows/installer/lang/setup.isl.xml.in:89
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:21
+#: build/windows/installer/lang/setup.isl.xml.in:93
 msgid "GIMP and all default plug-ins"
 msgstr "GIMP un visi noklusējuma spraudņi"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:22
+#: build/windows/installer/lang/setup.isl.xml.in:97
 msgid "Run-time libraries"
 msgstr "Izpildlaika bibliotēkas"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:23
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+#: build/windows/installer/lang/setup.isl.xml.in:101
+#, fuzzy
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Izpildlaika bibliotēkas, ko izmanto GIMP, ieskaitot GTK+ izpildlaika vide"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:24
+#: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
 msgstr "Atkļūdošanas simboli"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:25
+#: build/windows/installer/lang/setup.isl.xml.in:109
 msgid "Include information to help with debugging GIMP"
 msgstr "Iekļaut informāciju, lai palīdzētu atkļūdot GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:26
-msgid "MS-Windows engine for GTK+"
+#: build/windows/installer/lang/setup.isl.xml.in:113
+#, fuzzy
+msgid "MS-Windows engine for GTK"
 msgstr "MS-Windows dzinis GTK+ bibliotēkai"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:27
+#: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
 msgstr "Windows izskats GIMP lietotnei"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:28
+#: build/windows/installer/lang/setup.isl.xml.in:121
 msgid "Support for old plug-ins"
 msgstr "Atbalsts vecākiem spraudņiem"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:29
+#: build/windows/installer/lang/setup.isl.xml.in:125
 msgid "Install libraries needed by old third-party plug-ins"
 msgstr "Instalēt bibliotēkas, kas ir vajadzīgas trešās puses spraudņiem"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:30
+#: build/windows/installer/lang/setup.isl.xml.in:129
+#: build/windows/installer/lang/setup.isl.xml.in:133
 msgid "Translations"
 msgstr "Tulkojumi"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:31
+#: build/windows/installer/lang/setup.isl.xml.in:137
 msgid "Python scripting"
 msgstr "Python skriptēšana"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:32
+#: build/windows/installer/lang/setup.isl.xml.in:141
 msgid "Allows you to use GIMP plugins written in Python scripting language."
 msgstr ""
 "Ļauj jums izmantot GIMP spraudņus, kas ir rakstīti Python skriptēšanas "
 "valodā."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:33
-#| msgid "Python scripting"
+#: build/windows/installer/lang/setup.isl.xml.in:145
 msgid "Lua scripting"
 msgstr "Lua skriptēšana"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:34
-#| msgid "Allows you to use GIMP plugins written in Python scripting language."
+#: build/windows/installer/lang/setup.isl.xml.in:149
 msgid "Allows you to use GIMP plugins written in Lua scripting language."
 msgstr ""
-"Ļauj jums izmantot GIMP spraudņus, kas ir rakstīti Lua skriptēšanas "
-"valodā."
+"Ļauj jums izmantot GIMP spraudņus, kas ir rakstīti Lua skriptēšanas valodā."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:35
+#: build/windows/installer/lang/setup.isl.xml.in:153
 msgid "MyPaint brushes"
 msgstr "MyPaint otas"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:36
+#: build/windows/installer/lang/setup.isl.xml.in:157
 msgid "Install the default set of MyPaint brushes"
 msgstr "Instalēt noklusējuma MyPaint otu kopu"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:37
+#: build/windows/installer/lang/setup.isl.xml.in:161
 msgid "PostScript support"
 msgstr "PostScript atbalsts"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:38
+#: build/windows/installer/lang/setup.isl.xml.in:165
 msgid "Allow GIMP to load PostScript files"
 msgstr "Ļauj GIMP ielādēt PostScript datnes"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:39
+#: build/windows/installer/lang/setup.isl.xml.in:169
 msgid "Support for 32-bit plug-ins"
 msgstr "Atbalsts 32 bitu spraudņiem"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:41
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:173
 msgid ""
 "Include files necessary for using 32-bit plug-ins.%nRequired for Python "
 "support."
@@ -216,24 +216,23 @@ msgstr ""
 "Iekļaut datnes, kas nepieciešamas 32 bitu spraudņiem.%n Nepieciešams Python "
 "atbalstam."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:42
+#: build/windows/installer/lang/setup.isl.xml.in:178
 msgid "Additional icons:"
 msgstr "Papildu ikonas:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:43
+#: build/windows/installer/lang/setup.isl.xml.in:182
 msgid "Create a &desktop icon"
 msgstr "Izveidot &darbvirsmas ikonu"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:44
+#: build/windows/installer/lang/setup.isl.xml.in:186
 msgid "Create a &Quick Launch icon"
 msgstr "Izveidot ātrās _palaišanas ikonu"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:45
+#: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
 msgstr "Izņemt iepriekšējo GIMP versiju"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:47
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:195
 msgid ""
 "There was a problem updating GIMP's environment in %1. If you get any errors "
 "loading the plug-ins, try uninstalling and re-installing GIMP."
@@ -241,45 +240,43 @@ msgstr ""
 "Gadījās problēma, atjauninot GIMP vidi uz %1. Ja jums gadās problēmas, "
 "ielādējot spraudņus, mēģiniet atinstalēt un no jauna instalēt GIMP."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:48
+#: build/windows/installer/lang/setup.isl.xml.in:199
 msgid "Error extracting temporary data."
 msgstr "Kļūda, izvelkot pagaidu datus."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:49
+#: build/windows/installer/lang/setup.isl.xml.in:203
 msgid "Error updating Python interpreter info."
 msgstr "Kļūda, atjauninot Python interpretatora informāciju."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:50
+#: build/windows/installer/lang/setup.isl.xml.in:207
 msgid "Error updating MyPaint brushes info."
 msgstr "Kļūda, atjauninot MyPaint otu informāciju."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:52
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:211
 msgid "There was an error updating %1."
 msgstr "Gadījās kļūda, atjauninot %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:54
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:215
 msgid "There was an error updating GIMP's configuration file %1."
 msgstr "Gadījās kļūda, atjauninot GIMP konfigurācijas datni %1."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:55
+#: build/windows/installer/lang/setup.isl.xml.in:220
 msgid "Edit with GIMP"
 msgstr "Rediģēt ar GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:56
+#: build/windows/installer/lang/setup.isl.xml.in:225
 msgid "Select file associations"
 msgstr "Izvēlieties datņu asociācijas"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:57
+#: build/windows/installer/lang/setup.isl.xml.in:229
 msgid "Extensions:"
 msgstr "Paplašinājumi:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:58
+#: build/windows/installer/lang/setup.isl.xml.in:233
 msgid "Select the file types you wish to associate with GIMP"
 msgstr "Izvēlieties, kurus datņu tipus vēlaties saistīt ar GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:59
+#: build/windows/installer/lang/setup.isl.xml.in:237
 msgid ""
 "This will make selected files open in GIMP when you double-click them in "
 "Explorer."
@@ -287,28 +284,27 @@ msgstr ""
 "Tas liks atvērt izvēlētās datnes ar GIMP lietotni, kad uz tām veiks "
 "dubultklikšķi datņu pārlūkā Explorer."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:60
+#: build/windows/installer/lang/setup.isl.xml.in:241
 msgid "Select &All"
 msgstr "Izvēlēties &visu"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:61
+#: build/windows/installer/lang/setup.isl.xml.in:245
 msgid "Unselect &All"
 msgstr "Neizvēlēties &neko"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:62
+#: build/windows/installer/lang/setup.isl.xml.in:249
 msgid "Select &Unused"
 msgstr "&Izvēlēties neizmantotos"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:63
+#: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
 msgstr "Datņu tipi, ko asociēt ar GIMP:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:64
+#: build/windows/installer/lang/setup.isl.xml.in:258
 msgid "Removing previous version of GIMP:"
 msgstr "Izņemt iepriekšējo GIMP versiju:"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:66
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:262
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "the automatic uninstall of old version has failed.%n%nPlease remove the "
@@ -322,8 +318,7 @@ msgstr ""
 "pielāgoto instalēšanu un izvēlieties citu instalācijas mapi.%n%nIestatītājs "
 "tagad beigs darbu."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:68
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
 "Setup couldn't determine how to remove the old version automatically.%n"
@@ -337,8 +332,7 @@ msgstr ""
 "instalēt šo versiju uz %2, vai izvēlieties pielāgoto instalēšanu un "
 "izvēlieties citu instalācijas mapi.%n%nIestatītājs tagad beigs darbu."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:70
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
 "Previous GIMP version was removed successfully, but Windows has to be "
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
@@ -348,58 +342,55 @@ msgstr ""
 "pirms iestatīšana var turpināties.%n%nPēc datora pārstartēšanas instalēšana "
 "turpināsies, kad sistēmā ierakstīsies administrators."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:72
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:275
 msgid "There was an error restarting the Setup. (%1)"
 msgstr "Gadījās kļūda, pārstartējot iestatīšanu. (%1)"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:73
+#: build/windows/installer/lang/setup.isl.xml.in:279
 msgid "Cleaning up old files..."
 msgstr "Nokopj vecās datnes..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:75
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:284
 msgid "Remember: GIMP is Free Software.%n%nPlease visit"
 msgstr "Atcerieties: GIMP ir brīvā programmatūra.%n%n Lūdzu, apmeklējiet"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:76
+#: build/windows/installer/lang/setup.isl.xml.in:288
 msgid "for free updates."
 msgstr ", lai saņemtu bezmaksas atjauninājumus."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:77
+#: build/windows/installer/lang/setup.isl.xml.in:292
 msgid "Setting up file associations..."
 msgstr "Iestata datņu asociācijas..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:78
+#: build/windows/installer/lang/setup.isl.xml.in:295
 msgid "Setting up environment for GIMP Python extension..."
 msgstr "Iestata vidi GIMP Python paplašinājumiem..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:79
+#: build/windows/installer/lang/setup.isl.xml.in:298
 msgid "Setting up MyPaint brushes..."
 msgstr "Iestata MyPaint otas..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:80
+#: build/windows/installer/lang/setup.isl.xml.in:301
 msgid "Setting up GIMP environment..."
 msgstr "Iestata GIMP vidi..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:81
+#: build/windows/installer/lang/setup.isl.xml.in:304
 msgid "Setting up GIMP configuration for 32-bit plug-in support..."
 msgstr "Iestata GIMP konfigurāciju 32 bitu spraudņu atbalstam..."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:82
+#: build/windows/installer/lang/setup.isl.xml.in:309
 msgid "Launch GIMP"
 msgstr "Palaist GIMP"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:83
+#: build/windows/installer/lang/setup.isl.xml.in:314
 msgid "Removing add-on"
 msgstr "Izņem spraudņus"
 
-#: ../build/windows/installer/lang/setup.isl.in.h:85
-#, no-c-format
+#: build/windows/installer/lang/setup.isl.xml.in:318
 msgid "Internal error (%1)."
 msgstr "Iekšēja kļūda (%1)."
 
-#: ../build/windows/installer/lang/setup.isl.in.h:86
+#: build/windows/installer/lang/setup.isl.xml.in:323
 msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"

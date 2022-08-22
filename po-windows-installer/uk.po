@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 14:44+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-07-07 19:43+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-uk@kde.org>\n"
@@ -30,8 +30,7 @@ msgstr "Збірку підготував Jernej Simonèiè, jernej-gimp@ena.si"
 
 #: build/windows/installer/lang/setup.isl.xml.in:13
 #: build/windows/installer/lang/setup.isl.xml.in:16
-msgid ""
-"This version of GIMP requires Windows 7, or a newer version of Windows."
+msgid "This version of GIMP requires Windows 7, or a newer version of Windows."
 msgstr "Ця версія GIMP вимагає Windows 7 або новішої версії Windows."
 
 #: build/windows/installer/lang/setup.isl.xml.in:23
@@ -58,8 +57,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Продовжити"
+msgid "&Continue"
+msgstr "&Продовжити"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -86,8 +85,8 @@ msgstr ""
 "продовжити, бажано змінити глибину кольору екрана на 32 БНП."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "Ви&amp;йти"
+msgid "E&xit"
+msgstr "Ви&йти"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -100,12 +99,12 @@ msgstr ""
 "щоб керувати тим, що буде встановлено."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "&amp;Встановити"
+msgid "&Install"
+msgstr "&Встановити"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Налаштувати"
+msgid "&Customize"
+msgstr "&Налаштувати"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -136,7 +135,6 @@ msgid "Run-time libraries"
 msgstr "Бібліотеки часу виконання"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#| msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Бібліотеки часу виконання, що використовуються GIMP, включно з середовищем "
@@ -151,7 +149,6 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Включити інформацію, яка допоможе виправляти помилки в GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#| msgid "MS-Windows engine for GTK+"
 msgid "MS-Windows engine for GTK"
 msgstr "Рушій MS-Windows для GTK"
 
@@ -223,12 +220,12 @@ msgid "Additional icons:"
 msgstr "Додаткові піктограми:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "Створити &amp;значок на стільниці"
+msgid "Create a &desktop icon"
+msgstr "Створити &значок на стільниці"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "Створити &amp;значок на панелі швидкого запуску"
+msgid "Create a &Quick Launch icon"
+msgstr "Створити &значок на панелі швидкого запуску"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -287,16 +284,16 @@ msgstr ""
 "Провіднику."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "&amp;Вибрати всі"
+msgid "Select &All"
+msgstr "&Вибрати всі"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "&amp;Зняти вибір з усіх"
+msgid "Unselect &All"
+msgstr "&Зняти вибір з усіх"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "Вибрати &amp;невикористані"
+msgid "Select &Unused"
+msgstr "Вибрати &невикористані"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
@@ -398,6 +395,3 @@ msgid ""
 "GIMP does not appear to be installed in the selected directory. Continue "
 "anyway?"
 msgstr "Схоже, GIMP не встановлено у вибраній теці. Все одно продовжити?"
-
-#~ msgid "E&xit"
-#~ msgstr "В&ийти"

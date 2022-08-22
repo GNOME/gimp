@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 14:44+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-07-07 17:23+0200\n"
 "Last-Translator: Anders Jonsson <anders.jonsson@norsjovallen.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
@@ -57,8 +57,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Fortsätt"
+msgid "&Continue"
+msgstr "&Fortsätt"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -87,8 +87,8 @@ msgstr ""
 "du fortsätter."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "A&amp;vsluta"
+msgid "E&xit"
+msgstr "A&vsluta"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -101,12 +101,12 @@ msgstr ""
 "vill ha större kontroll över vad som installeras."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "&amp;Installera"
+msgid "&Install"
+msgstr "&Installera"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Anpassa"
+msgid "&Customize"
+msgstr "&Anpassa"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -220,12 +220,12 @@ msgid "Additional icons:"
 msgstr "Ytterligare ikoner:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "Skapa en &amp;skrivbordsikon"
+msgid "Create a &desktop icon"
+msgstr "Skapa en &skrivbordsikon"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "Skapa en sna&amp;bbstartsikon"
+msgid "Create a &Quick Launch icon"
+msgstr "Skapa en sna&bbstartsikon"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -284,16 +284,16 @@ msgstr ""
 "dubbelklickar på dem i Utforskaren."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "Markera &amp;alla"
+msgid "Select &All"
+msgstr "Markera &alla"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "Avmarkera &amp;alla"
+msgid "Unselect &All"
+msgstr "Avmarkera &alla"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "Markera &amp;oanvända"
+msgid "Select &Unused"
+msgstr "Markera &oanvända"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
@@ -314,16 +314,16 @@ msgstr ""
 "GIMP %1 kan inte installeras ovanpå din installerade GIMP-version, och den "
 "automatiska avinstallationen av den gamla versionen misslyckades.%n%nTa bort "
 "den föregående versionen av GIMP innan du installerar denna version i %2, "
-"eller välj Anpassad installation, och välj en annan installationsmapp."
-"%n%nInstallationen kommer nu att avslutas."
+"eller välj Anpassad installation, och välj en annan installationsmapp.%n"
+"%nInstallationen kommer nu att avslutas."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically."
-"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
-"before installing this version in %2, or choose a Custom install, and select "
-"a different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 kan inte installeras ovanpå din installerade GIMP-version, och "
 "installationen kunde inte avgöra hur den gamla versionen skulle kunna tas "

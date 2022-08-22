@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-26 12:27+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-06-27 15:43+0200\n"
 "Last-Translator: Nathan Follens <nfollens@gnome.org>\n"
 "Language-Team: Dutch <gnome-nl-list@gnome.org>\n"
@@ -55,8 +55,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Verdergaan"
+msgid "&Continue"
+msgstr "&Verdergaan"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -85,8 +85,8 @@ msgstr ""
 "van het beeldscherm te veranderen naar 32-bits vooraleer u verdergaat."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "&amp;Afsluiten"
+msgid "E&xit"
+msgstr "&Afsluiten"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -99,12 +99,12 @@ msgstr ""
 "hebben over wat er wordt geïnstalleerd."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "&amp;Installeren"
+msgid "&Install"
+msgstr "&Installeren"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Aanpassen"
+msgid "&Customize"
+msgstr "&Aanpassen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -135,7 +135,8 @@ msgid "Run-time libraries"
 msgstr "Runtimebibliotheken"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-msgid "Run-time libraries used by GIMP, including GTK+ Run-time Environment"
+#, fuzzy
+msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Runtimebibliotheken gebruikt door GIMP, inclusief GTK+ Runtime Environment"
 
@@ -148,7 +149,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Voeg informatie toe om te helpen bij het debuggen van GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-msgid "MS-Windows engine for GTK+"
+#, fuzzy
+msgid "MS-Windows engine for GTK"
 msgstr "Windows-engine voor GTK+"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
@@ -217,12 +219,12 @@ msgid "Additional icons:"
 msgstr "Extra snelkoppelingen:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "Snelkoppeling op het &amp;bureaublad aanmaken"
+msgid "Create a &desktop icon"
+msgstr "Snelkoppeling op het &bureaublad aanmaken"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "Snelkoppeling in &amp;Snel starten aanmaken"
+msgid "Create a &Quick Launch icon"
+msgstr "Snelkoppeling in &Snel starten aanmaken"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -282,16 +284,16 @@ msgstr ""
 "Verkenner."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "&amp;Alles selecteren"
+msgid "Select &All"
+msgstr "&Alles selecteren"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "&amp;Alles deselecteren"
+msgid "Unselect &All"
+msgstr "&Alles deselecteren"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "&amp;Ongebruikte selecteren"
+msgid "Select &Unused"
+msgstr "&Ongebruikte selecteren"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
@@ -397,9 +399,6 @@ msgid ""
 "anyway?"
 msgstr ""
 "GIMP lijkt niet in de geselecteerde map geïnstalleerd te zijn. Toch doorgaan?"
-
-#~ msgid "E&xit"
-#~ msgstr "&Sluiten"
 
 #~ msgid ""
 #~ "This is a development version of GIMP installer. It hasn't been tested as "

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-09 11:25+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-07-12 19:38+0200\n"
 "Last-Translator: Rodrigo Lledó Milanca <rodhos92@gmail.com>\n"
 "Language-Team: es <gnome-es-list@gnome.org>\n"
@@ -59,8 +59,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Continuar"
+msgid "&Continue"
+msgstr "&Continuar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -89,8 +89,8 @@ msgstr ""
 "color de su pantalla a 32BPP antes de continuar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "&amp;Salir"
+msgid "E&xit"
+msgstr "&Salir"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -103,12 +103,12 @@ msgstr ""
 "quiere tener más control sobre lo que se va a instalar."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "&amp;Instalar"
+msgid "&Install"
+msgstr "&Instalar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Personalizar"
+msgid "&Customize"
+msgstr "&Personalizar"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -226,12 +226,12 @@ msgid "Additional icons:"
 msgstr "Iconos adicionales:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "Crear un icono en el &amp;escritorio"
+msgid "Create a &desktop icon"
+msgstr "Crear un icono en el &escritorio"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "Crear un &amp;icono de inicio rápido"
+msgid "Create a &Quick Launch icon"
+msgstr "Crear un &icono de inicio rápido"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -291,16 +291,16 @@ msgstr ""
 "haga doble clic sobre ellos en el Explorador."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "Seleccionar &amp;todo"
+msgid "Select &All"
+msgstr "Seleccionar &todo"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "Deseleccionar &amp;todo"
+msgid "Unselect &All"
+msgstr "Deseleccionar &todo"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "Seleccionar los &amp;no utilizados"
+msgid "Select &Unused"
+msgstr "Seleccionar los &no utilizados"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
@@ -407,9 +407,6 @@ msgid ""
 msgstr ""
 "GIMP no parece estar instalado en la carpeta seleccionada. ¿Desea continuar "
 "de todos modos?"
-
-#~ msgid "E&xit"
-#~ msgstr "&Salir"
 
 #~ msgid ""
 #~ "Setup built by Jernej Simonèiè, jernej-gimp@ena.si%n%nImage on opening "

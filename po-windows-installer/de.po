@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-09 11:25+0000\n"
+"POT-Creation-Date: 2022-08-22 21:28+0200\n"
 "PO-Revision-Date: 2022-07-20 13:40+0200\n"
 "Last-Translator: Jürgen Benvenuti <gastornis@posteo.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -59,8 +59,8 @@ msgstr ""
 
 #: build/windows/installer/lang/setup.isl.xml.in:31
 #: build/windows/installer/lang/setup.isl.xml.in:54
-msgid "&amp;Continue"
-msgstr "&amp;Weiter"
+msgid "&Continue"
+msgstr "&Weiter"
 
 #: build/windows/installer/lang/setup.isl.xml.in:34
 msgid "Exit"
@@ -90,8 +90,8 @@ msgstr ""
 "Farbtiefe auf 32 Bit pro Pixel einzustellen, bevor Sie fortfahren."
 
 #: build/windows/installer/lang/setup.isl.xml.in:57
-msgid "E&amp;xit"
-msgstr "B&amp;eenden"
+msgid "E&xit"
+msgstr "B&eenden"
 
 #: build/windows/installer/lang/setup.isl.xml.in:61
 msgid ""
@@ -104,12 +104,12 @@ msgstr ""
 "welche Komponenten wo installiert werden."
 
 #: build/windows/installer/lang/setup.isl.xml.in:64
-msgid "&amp;Install"
-msgstr "&amp;Installieren"
+msgid "&Install"
+msgstr "&Installieren"
 
 #: build/windows/installer/lang/setup.isl.xml.in:67
-msgid "&amp;Customize"
-msgstr "&amp;Anpassen"
+msgid "&Customize"
+msgstr "&Anpassen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:72
 msgid "Compact installation"
@@ -225,12 +225,12 @@ msgid "Additional icons:"
 msgstr "Zusätzliche Verknüpfungen:"
 
 #: build/windows/installer/lang/setup.isl.xml.in:182
-msgid "Create a &amp;desktop icon"
-msgstr "&amp;Desktop-Verknüpfung erstellen"
+msgid "Create a &desktop icon"
+msgstr "&Desktop-Verknüpfung erstellen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:186
-msgid "Create a &amp;Quick Launch icon"
-msgstr "&amp;Quicklaunch-Verknüpfung erstellen"
+msgid "Create a &Quick Launch icon"
+msgstr "&Quicklaunch-Verknüpfung erstellen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:190
 msgid "Remove previous GIMP version"
@@ -290,16 +290,16 @@ msgstr ""
 "GIMP geöffnet."
 
 #: build/windows/installer/lang/setup.isl.xml.in:241
-msgid "Select &amp;All"
-msgstr "&amp;Alle auswählen"
+msgid "Select &All"
+msgstr "&Alle auswählen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:245
-msgid "Unselect &amp;All"
-msgstr "Auswahl auf&amp;heben"
+msgid "Unselect &All"
+msgstr "Auswahl auf&heben"
 
 #: build/windows/installer/lang/setup.isl.xml.in:249
-msgid "Select &amp;Unused"
-msgstr "&amp;Unbenutzte auswählen"
+msgid "Select &Unused"
+msgstr "&Unbenutzte auswählen"
 
 #: build/windows/installer/lang/setup.isl.xml.in:254
 msgid "File types to associate with GIMP:"
@@ -326,10 +326,10 @@ msgstr ""
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically."
-"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
-"before installing this version in %2, or choose a Custom install, and select "
-"a different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically.%n"
+"%nPlease remove the previous version of GIMP and any add-ons yourself before "
+"installing this version in %2, or choose a Custom install, and select a "
+"different installation folder.%n%nThe Setup will now exit."
 msgstr ""
 "GIMP %1 kann nicht über die derzeit installierte Version von GIMP "
 "installiert werden und die Installationsroutine konnte die vorhandene "
@@ -345,8 +345,8 @@ msgid ""
 "Setup will continue next time an administrator logs in."
 msgstr ""
 "Die vorhandene GIMP-Version wurde erfolgreich entfernt, aber Windows muss "
-"neu gestartet werden, bevor die Installation fortgeführt werden kann."
-"%n%nNach dem Neustart wird die Installation automatisch fortgesetzt, sobald "
+"neu gestartet werden, bevor die Installation fortgeführt werden kann.%n"
+"%nNach dem Neustart wird die Installation automatisch fortgesetzt, sobald "
 "sich ein Administrator einloggt."
 
 #: build/windows/installer/lang/setup.isl.xml.in:275
@@ -404,6 +404,3 @@ msgid ""
 msgstr ""
 "GIMP scheint nicht im ausgewählten Ordner installiert zu sein. Dennoch "
 "fortfahren?"
-
-#~ msgid "E&xit"
-#~ msgstr "&Abbrechen"
