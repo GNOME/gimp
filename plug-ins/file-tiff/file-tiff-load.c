@@ -1371,11 +1371,25 @@ load_image (GFile        *file,
              */
             if (read_unit != RESUNIT_NONE)
               {
-                gimp_image_set_resolution (*image, xres, yres);
-                if (unit != GIMP_UNIT_PIXEL)
-                  gimp_image_set_unit (*image, unit);
+                if (! isfinite (xres) ||
+                    xres < GIMP_MIN_RESOLUTION || xres > GIMP_MAX_RESOLUTION ||
+                    ! isfinite (yres) ||
+                    yres < GIMP_MIN_RESOLUTION || yres > GIMP_MAX_RESOLUTION)
+                  {
+                    g_message (_("Invalid image resolution info, using default"));
+                    /* We need valid xres and yres for computing
+                     * layer_offset_x_pixel and layer_offset_y_pixel.
+                     */
+                    gimp_image_get_resolution (*image, &xres, &yres);
+                  }
+                else
+                  {
+                    gimp_image_set_resolution (*image, xres, yres);
+                    if (unit != GIMP_UNIT_PIXEL)
+                      gimp_image_set_unit (*image, unit);
 
-                *resolution_loaded = TRUE;
+                    *resolution_loaded = TRUE;
+                  }
               }
           }
 
