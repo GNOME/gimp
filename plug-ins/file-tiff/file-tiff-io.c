@@ -204,6 +204,28 @@ tiff_io_warning (const gchar *module,
 
       va_end (ap_test);
     }
+  else if (! strcmp (fmt, "Incorrect value for \"%s\"; tag ignored"))
+    {
+      va_list ap_test;
+      const char *stag;
+
+      G_VA_COPY (ap_test, ap);
+
+      stag = va_arg (ap_test, const char *);
+
+      if (! strcmp (stag, "RichTIFFIPTC"))
+        {
+          gchar *msg = g_strdup_vprintf (fmt, ap);
+
+          /* This is an error in Adobe products. Just report to stderr. */
+          g_printerr ("[%s] %s\n", module, msg);
+          g_free (msg);
+
+          return;
+        }
+
+      va_end (ap_test);
+    }
 
   /* Workaround for: http://bugzilla.gnome.org/show_bug.cgi?id=131975
    * Ignore the warnings about unregistered private tags (>= 32768).
