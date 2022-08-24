@@ -434,11 +434,11 @@ typedef struct
 /* Image resolution data */
 typedef struct {
   Fixed         hRes;                   /* Horizontal resolution pixels/inch */
-  gint16        hResUnit;               /* Horizontal display resolution unit */
-  gint16        widthUnit;              /* Width unit ?? */
+  gint16        hResUnit;               /* Horizontal display resolution unit (1=pixels per inch, 2=pixels per cm) */
+  gint16        widthUnit;              /* Display width unit (1=inches; 2=cm; 3=points; 4=picas; 5=columns) */
   Fixed         vRes;                   /* Vertical resolution pixels/inch */
   gint16        vResUnit;               /* Vertical display resolution unit */
-  gint16        heightUnit;             /* Height unit ?? */
+  gint16        heightUnit;             /* Display height unit */
 } ResolutionInfo;
 
 /* Grid & guide header */
