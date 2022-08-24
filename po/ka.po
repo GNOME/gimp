@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-17 20:19+0000\n"
-"PO-Revision-Date: 2022-08-18 10:16+0200\n"
+"POT-Creation-Date: 2022-08-23 21:28+0000\n"
+"PO-Revision-Date: 2022-08-24 08:43+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -2506,7 +2506,7 @@ msgstr "240 წამი"
 #: app/widgets/gimpcontrollerlist.c:555 app/widgets/gimpdeviceeditor.c:543
 #: app/widgets/gimpdnd-xds.c:228 app/widgets/gimpfiledialog.c:327
 #: app/widgets/gimphelp.c:439 app/widgets/gimphelp.c:779
-#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:636
+#: app/widgets/gimpiconpicker.c:484 app/widgets/gimpmodifierseditor.c:672
 #: app/widgets/gimpprogressdialog.c:91 app/widgets/gimpsettingsbox.c:712
 msgid "_Cancel"
 msgstr "_გაუქმება"
@@ -2569,7 +2569,7 @@ msgstr "შეიყვანეთ სანიშნის აღწერა"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:896
-#: app/widgets/gimptoolbox.c:691 app/widgets/gimptoolbox-dnd.c:169
+#: app/widgets/gimptoolbox.c:700 app/widgets/gimptoolbox-dnd.c:169
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -2581,7 +2581,7 @@ msgstr ""
 "%s"
 
 #: app/actions/data-commands.c:115 app/actions/tool-options-commands.c:75
-#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2412
+#: app/core/gimpbrushgenerated-load.c:121 app/core/gimpimage.c:2416
 #: app/core/gimppalette.c:430 app/core/gimppalette-import.c:213
 #: app/core/gimppalette-load.c:194 app/dialogs/palette-import-dialog.c:762
 #: app/widgets/gimpdnd-xds.c:87
@@ -7426,7 +7426,7 @@ msgstr "შეუყვანეთ გაერთიანებული პ�
 
 #: app/actions/palettes-commands.c:126
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "შერწყმისათვის არასაკმარისი პალიტრების რაოდენობა. საჭიროა მინიმუმ 2."
 
 #: app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -10092,7 +10092,7 @@ msgstr "ამ ფანჯრის %s-ე ეკრანზე წაღე�
 #: app/display/gimpdisplayshell-scale-dialog.c:123 app/gui/gui.c:194
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:662 app/widgets/gimperrordialog.c:76
-#: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:637
+#: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:673
 msgid "_OK"
 msgstr "_დიახ"
 
@@ -10403,7 +10403,7 @@ msgid "Error parsing '%%s': line longer than %s characters."
 msgstr "'%%s'-ის დამუშავების შეცდომა: ხაზი %s-ზე მეტ სიმბოლოს შეიცავს."
 
 #: app/config/gimpconfig-file.c:153 app/config/gimpconfig-file.c:197
-#: app/core/gimp-tags.c:145 app/gui/themes.c:323
+#: app/core/gimp-tags.c:145 app/gui/themes.c:335
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
@@ -12469,7 +12469,7 @@ msgstr "გაფართოების AppData უნდა აცხად�
 #: app/core/gimpextension.c:444
 #, c-format
 msgid "Unsupported <requires> \"%s\" (type %s)."
-msgstr ""
+msgstr "მხარდაუჭერელი <აუცილებელია> \"%s\" (ტიპი %s)."
 
 #: app/core/gimpextension.c:459
 msgid ""
@@ -12577,7 +12577,7 @@ msgstr "შვილობილი პროცესის %s გაშვე�
 msgid "tags-locale:C"
 msgstr "tips-locale:ka"
 
-#: app/core/gimp-tags.c:156 app/gui/themes.c:335
+#: app/core/gimp-tags.c:156 app/gui/themes.c:347
 #, c-format
 msgid "Error closing '%s': %s"
 msgstr "%s-ის დახურვის შეცდომა: %s"
@@ -13417,145 +13417,145 @@ msgstr "ფენების ჯგუფის გარდაქმნა"
 msgid "Symmetry"
 msgstr "სიმეტრია"
 
-#: app/core/gimpimage.c:2657
+#: app/core/gimpimage.c:2661
 msgid " (exported)"
 msgstr " (გატანილია)"
 
-#: app/core/gimpimage.c:2661
+#: app/core/gimpimage.c:2665
 msgid " (overwritten)"
 msgstr " (გადაწერილია)"
 
-#: app/core/gimpimage.c:2670
+#: app/core/gimpimage.c:2674
 msgid " (imported)"
 msgstr " (შემოტანილია)"
 
-#: app/core/gimpimage.c:2843 app/core/gimpimage.c:2857
-#: app/core/gimpimage.c:2900
+#: app/core/gimpimage.c:2847 app/core/gimpimage.c:2861
+#: app/core/gimpimage.c:2904
 #, c-format
 msgid "Layer mode '%s' was added in %s"
 msgstr "ფენის რეჟიმი %s დაემატა %s-ს"
 
-#: app/core/gimpimage.c:2915
+#: app/core/gimpimage.c:2919
 #, c-format
 msgid "Layer groups were added in %s"
 msgstr "ფენების ჯგუფები დაემატა %s-ს"
 
-#: app/core/gimpimage.c:2922
+#: app/core/gimpimage.c:2926
 #, c-format
 msgid "Masks on layer groups were added in %s"
 msgstr "ნიღბები ფენების ჯგუფზე დაემატა %s-ში"
 
-#: app/core/gimpimage.c:2929
+#: app/core/gimpimage.c:2933
 #, c-format
 msgid "Position locks on layer groups were added in %s"
 msgstr "მდებარეობის ბლოკები ფენების ჯგუფზე, რომლებიც %s-ში ჩაემატა"
 
-#: app/core/gimpimage.c:2936
+#: app/core/gimpimage.c:2940
 #, c-format
 msgid "Alpha channel locks on layer groups were added in %s"
 msgstr "ფენების ჯგუფებზე ალფა არხების დაბლოკვა დაემატა %s-ში"
 
-#: app/core/gimpimage.c:2944 app/core/gimpimage.c:2958
+#: app/core/gimpimage.c:2948 app/core/gimpimage.c:2962
 #, c-format
 msgid "Visibility locks were added in %s"
 msgstr "%s-ში ჩაემატა ხილვადობის ჩაკეტვები"
 
-#: app/core/gimpimage.c:2972
+#: app/core/gimpimage.c:2976
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2980
+#: app/core/gimpimage.c:2984
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:2988
+#: app/core/gimpimage.c:2992
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "%s-ს დაემატა შიდა შეკუმშვა zlib"
 
-#: app/core/gimpimage.c:3005
+#: app/core/gimpimage.c:3009
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "%s-ში დაემატა 4GB- ზე მეტი გამოსახულების ფაილების მხარდაჭერა"
 
-#: app/core/gimpimage.c:3012
+#: app/core/gimpimage.c:3016
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "ერთზე მეტი მონიშნული ფენა დაემატა %s-ს"
 
-#: app/core/gimpimage.c:3029
+#: app/core/gimpimage.c:3033
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3040
+#: app/core/gimpimage.c:3044
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3046
+#: app/core/gimpimage.c:3050
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr ""
 
-#: app/core/gimpimage.c:3150
+#: app/core/gimpimage.c:3154
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "გამოსახულების გაფართოების შეცვლა"
 
-#: app/core/gimpimage.c:3202
+#: app/core/gimpimage.c:3206
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "გამოსახულების ერთეულის სეცვლა"
 
-#: app/core/gimpimage.c:4255
+#: app/core/gimpimage.c:4259
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 
-#: app/core/gimpimage.c:4317
+#: app/core/gimpimage.c:4321
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "გამოსახულებაზე პარაზიტის მიმაგრება"
 
-#: app/core/gimpimage.c:4362
+#: app/core/gimpimage.c:4366
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "გამოსახულებიდან პარაზიტის მოცილება"
 
-#: app/core/gimpimage.c:5350
+#: app/core/gimpimage.c:5354
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "ფენის დამატება"
 
-#: app/core/gimpimage.c:5394 app/core/gimpimage.c:5425
+#: app/core/gimpimage.c:5398 app/core/gimpimage.c:5429
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "ფენის ამოღება"
 
-#: app/core/gimpimage.c:5419
+#: app/core/gimpimage.c:5423
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "მცურავი მონიშვნის ამოღება"
 
-#: app/core/gimpimage.c:5943
+#: app/core/gimpimage.c:5947
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "არხის დამატება"
 
-#: app/core/gimpimage.c:5973 app/core/gimpimage.c:5998
+#: app/core/gimpimage.c:5977 app/core/gimpimage.c:6002
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "არხის ამოღება"
 
-#: app/core/gimpimage.c:6057
+#: app/core/gimpimage.c:6061
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "კონტურის დამატება"
 
-#: app/core/gimpimage.c:6087 app/core/gimpimage.c:6095
+#: app/core/gimpimage.c:6091 app/core/gimpimage.c:6099
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "კონტურის ამოღება"
@@ -13594,41 +13594,41 @@ msgstr "ICC პროფილის დადასტურების შე
 msgid "Simulation ICC profile validation failed: "
 msgstr "ICC პროფილის დადასტურების სიმულაციის შეცდომა: "
 
-#: app/core/gimpimage-color-profile.c:525
+#: app/core/gimpimage-color-profile.c:547
 msgid ""
 "ICC profile validation failed: Color profile is not for grayscale color space"
 msgstr ""
 "ICC პროფილის დადასტურების შეცდომა: ფერის პროფილი არ წარმოადგენს ნაცრისფერი "
 "ფერების სივრცეს"
 
-#: app/core/gimpimage-color-profile.c:535
+#: app/core/gimpimage-color-profile.c:557
 msgid "ICC profile validation failed: Color profile is not for RGB color space"
 msgstr ""
 "ICC პროფილის დადასტურების შეცდომა: ფერის პროფილი არ წარმოადგენს RGB ფერების "
 "სივრცეს"
 
-#: app/core/gimpimage-color-profile.c:594
+#: app/core/gimpimage-color-profile.c:616
 msgid "Assigning color profile"
 msgstr "ფერის პროფილის _მინიჭება"
 
-#: app/core/gimpimage-color-profile.c:595
+#: app/core/gimpimage-color-profile.c:617
 msgid "Discarding color profile"
 msgstr "ფერის პროფილის მოცილება"
 
-#: app/core/gimpimage-color-profile.c:599
+#: app/core/gimpimage-color-profile.c:621
 msgid "Assign color profile"
 msgstr "ფერის პროფილის _მინიჭება"
 
-#: app/core/gimpimage-color-profile.c:600
+#: app/core/gimpimage-color-profile.c:622
 msgid "Discard color profile"
 msgstr "ფერის პროფილის მოცილება"
 
-#: app/core/gimpimage-color-profile.c:643
+#: app/core/gimpimage-color-profile.c:665
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "გადაყვანა %s-დან %s-ში"
 
-#: app/core/gimpimage-color-profile.c:648
+#: app/core/gimpimage-color-profile.c:670
 msgid "Color profile conversion"
 msgstr "ფერის პროფილის გადაყვანა"
 
@@ -14401,8 +14401,8 @@ msgid "Emulate brush dynamics"
 msgstr "ფუნჯის დინამიკის ემულაცია"
 
 #. no undo (or redo) steps available
-#: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:505
-#: app/display/gimpstatusbar.c:2126 app/widgets/gimpimagepropview.c:406
+#: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:506
+#: app/display/gimpstatusbar.c:2128 app/widgets/gimpimagepropview.c:406
 #: app/widgets/gimpsymmetryeditor.c:166
 msgid "None"
 msgstr "არცერთი"
@@ -14869,7 +14869,7 @@ msgstr ""
 
 #: app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
-msgstr ""
+msgstr "აირჩეთ პროგრამულად დამოწმებული პროფილი"
 
 #: app/dialogs/color-profile-dialog.c:209
 #: app/tools/gimpforegroundselecttool.c:332
@@ -15942,12 +15942,12 @@ msgid "Use _black point compensation"
 msgstr "შავ_ი წერტილის კომპენსაციის გამოყენება"
 
 #: app/dialogs/preferences-dialog.c:1426 app/dialogs/preferences-dialog.c:1441
-#: app/display/gimpstatusbar.c:569 app/paint/gimpinkoptions.c:94
+#: app/display/gimpstatusbar.c:571 app/paint/gimpinkoptions.c:94
 msgid "Speed"
 msgstr "სიჩქარე"
 
 #: app/dialogs/preferences-dialog.c:1427 app/dialogs/preferences-dialog.c:1442
-#: app/display/gimpstatusbar.c:570
+#: app/display/gimpstatusbar.c:572
 msgid "Precision / Color Fidelity"
 msgstr ""
 
@@ -15956,7 +15956,7 @@ msgid "_Optimize image display for:"
 msgstr "გამოსახულება მომზადდეს შემდეგი ტიპის მოწყობილობისთვის:"
 
 #. Print Simulation (Soft-proofing)
-#: app/dialogs/preferences-dialog.c:1432 app/display/gimpstatusbar.c:482
+#: app/dialogs/preferences-dialog.c:1432 app/display/gimpstatusbar.c:483
 msgid "Soft-Proofing"
 msgstr ""
 
@@ -18070,7 +18070,7 @@ msgstr "(სუფთა)"
 msgid "(none)"
 msgstr "(არცერთი)"
 
-#: app/display/gimpdisplayshell-tool-events.c:1752
+#: app/display/gimpdisplayshell-tool-events.c:1749
 #, c-format
 msgid "Layer picked: '%s'"
 msgstr "არჩეული ფენა: '%s'"
@@ -18086,45 +18086,49 @@ msgstr "პიქსელი"
 msgid "invalid value '%s' for contextual action"
 msgstr "კონექსტუალური ქმედების არასწორი მნიშვნელობა %s"
 
-#: app/display/gimpstatusbar.c:425
+#: app/display/gimpstatusbar.c:426
 msgid "Cancel"
 msgstr "გაუქმება"
 
-#: app/display/gimpstatusbar.c:459
+#: app/display/gimpstatusbar.c:460
 msgid ""
 "Toggle soft-proofing view when a soft-proofing profile is set\n"
 "Right-click to show the soft-proofing options"
 msgstr ""
 
-#: app/display/gimpstatusbar.c:491
+#: app/display/gimpstatusbar.c:492
 msgid "_Proof Colors"
 msgstr "მტკიცე _ფერები"
 
-#: app/display/gimpstatusbar.c:504 app/display/gimpstatusbar.c:2134
+#: app/display/gimpstatusbar.c:505 app/display/gimpstatusbar.c:2136
 msgid "Current Soft-Proofing Profile"
 msgstr "პროგრამულად-დამოწმებული ფერის მიმდინარე პროფილი"
 
-#: app/display/gimpstatusbar.c:526
+#: app/display/gimpstatusbar.c:519
+msgid "Soft-Proofing Profile"
+msgstr "პროგრამულად დამოწმებულ ფერის პროფილი"
+
+#: app/display/gimpstatusbar.c:528
 msgid "_Soft-proofing Profile: "
 msgstr "პროგრამულად დამოწმებულ ფერის პროფილი: "
 
-#: app/display/gimpstatusbar.c:545
+#: app/display/gimpstatusbar.c:547
 msgid "_Rendering Intent: "
 msgstr "_რენდერის დანიშნულება: "
 
-#: app/display/gimpstatusbar.c:554
+#: app/display/gimpstatusbar.c:556
 msgid "Use _Black Point Compensation"
 msgstr "_შავი წერტილის კომპენსაციის გამოყენება"
 
-#: app/display/gimpstatusbar.c:573
+#: app/display/gimpstatusbar.c:575
 msgid "O_ptimize soft-proofing for: "
 msgstr ""
 
-#: app/display/gimpstatusbar.c:582
+#: app/display/gimpstatusbar.c:584
 msgid "_Mark Out of Gamut Colors"
 msgstr ""
 
-#: app/display/gimpstatusbar.c:698
+#: app/display/gimpstatusbar.c:700
 #, c-format
 msgid "Cancel <i>%s</i>"
 msgstr "<i>%s</i>-ის გაუქმება"
@@ -18240,7 +18244,7 @@ msgstr "წკაპი-გადათრევა პერსპექტი�
 
 #: app/display/gimptoolhandlegrid.c:885
 msgid "Click to add a handle"
-msgstr ""
+msgstr "დამმუშავებლის დასამატებლად დააწკაპუნეთ"
 
 #: app/display/gimptoolhandlegrid.c:891
 msgid "Click-Drag to move this handle"
@@ -26760,21 +26764,21 @@ msgid "Message repeated once."
 msgid_plural "Message repeated %d times."
 msgstr[0] "შეტყობინება %d-ჯერ გამეორდა."
 
-#: app/widgets/gimpmodifierseditor.c:172
+#: app/widgets/gimpmodifierseditor.c:186
 msgid "Click here to set a button's modifiers"
 msgstr ""
 
-#: app/widgets/gimpmodifierseditor.c:184
+#: app/widgets/gimpmodifierseditor.c:198
 msgid "Modifiers cannot be customized on the primary button."
 msgstr ""
 
-#: app/widgets/gimpmodifierseditor.c:321
+#: app/widgets/gimpmodifierseditor.c:338
 #, c-format
 msgid "Editing modifiers for button %d of %s"
 msgstr ""
 
 #. TRANSLATORS: %d is an input device button number.
-#: app/widgets/gimpmodifierseditor.c:325 app/widgets/gimpmodifierseditor.c:624
+#: app/widgets/gimpmodifierseditor.c:342 app/widgets/gimpmodifierseditor.c:660
 #, c-format
 msgid "Editing modifiers for button %d"
 msgstr ""
@@ -26782,18 +26786,18 @@ msgstr ""
 #. TRANSLATORS: first %s is modifier keys, %d is button
 #. * number, last %s is an input device (e.g. a mouse) name.
 #.
-#: app/widgets/gimpmodifierseditor.c:607
+#: app/widgets/gimpmodifierseditor.c:643
 #, c-format
 msgid "Select Action for %s button %d of %s"
 msgstr "აირჩიეთ ქმედება %s %d-ე ღილაკისთვის (%s)"
 
 #. TRANSLATORS: %s is modifiers key, %d is a button number.
-#: app/widgets/gimpmodifierseditor.c:612
+#: app/widgets/gimpmodifierseditor.c:648
 #, c-format
 msgid "Editing modifiers for %s button %d"
 msgstr ""
 
-#: app/widgets/gimpmodifierseditor.c:619
+#: app/widgets/gimpmodifierseditor.c:655
 #, c-format
 msgid "Select Action for button %d of %s"
 msgstr "აირჩიეთ ქმედება %d-ე ღილაკისთვის (%s)"
@@ -27549,24 +27553,24 @@ msgstr "შეცდომა '%s'-ის ჩაწერისას: "
 msgid "Error creating '%s': "
 msgstr "შეცდომა \"%s\"-ის შექმნისას: "
 
-#: app/xcf/xcf-load.c:251
+#: app/xcf/xcf-load.c:252
 msgid "Invalid image mode and precision combination."
 msgstr "გამოსახულების რეჟიმისა და სიზუსტის არასწორი კომბინაცია."
 
-#: app/xcf/xcf-load.c:387
+#: app/xcf/xcf-load.c:459
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
 "Exif data could not be migrated: %s"
 msgstr ""
 
-#: app/xcf/xcf-load.c:426
+#: app/xcf/xcf-load.c:498
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
 msgstr ""
 
-#: app/xcf/xcf-load.c:450
+#: app/xcf/xcf-load.c:522
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -27575,31 +27579,31 @@ msgid ""
 "error: %s."
 msgstr ""
 
-#: app/xcf/xcf-load.c:723
+#: app/xcf/xcf-load.c:795
 msgid "Linked Layers"
 msgstr "გადაბმული ფენები"
 
-#: app/xcf/xcf-load.c:733
+#: app/xcf/xcf-load.c:805
 msgid "Linked Channels"
 msgstr "გადაბმული არხები"
 
-#: app/xcf/xcf-load.c:758
+#: app/xcf/xcf-load.c:830
 msgid "Linked Paths"
 msgstr "გადაბმული კონტურები"
 
-#: app/xcf/xcf-load.c:805
+#: app/xcf/xcf-load.c:877
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr ""
 
-#: app/xcf/xcf-load.c:824
+#: app/xcf/xcf-load.c:896
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 
-#: app/xcf/xcf-load.c:915
+#: app/xcf/xcf-load.c:987
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
