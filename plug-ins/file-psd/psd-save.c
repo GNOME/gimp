@@ -834,11 +834,6 @@ save_resources (GOutputStream  *output,
 
     if (g_unit == GIMP_UNIT_MM)
       {
-        gdouble factor = gimp_unit_get_factor (g_unit) / 10.0;
-
-        xres /= factor;
-        yres /= factor;
-
         psd_unit = PSD_UNIT_CM;
       }
     else
@@ -846,6 +841,8 @@ save_resources (GOutputStream  *output,
         psd_unit = PSD_UNIT_INCH;
       }
 
+    /* Don't convert resolution based on g_unit which is a display unit.
+     * PSD resolution is always in pixels/inch. */
     xres_fix = xres * 65536.0 + .5; /* Convert to 16.16 fixed point */
     yres_fix = yres * 65536.0 + .5; /* Convert to 16.16 fixed point */
 
