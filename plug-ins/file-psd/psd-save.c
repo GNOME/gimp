@@ -133,6 +133,7 @@ static void          reshuffle_cmap_write (guchar         *mapGimp);
 
 static void          save_header          (GOutputStream  *output,
                                            GimpImage      *image,
+                                           gboolean        export_cmyk,
                                            gboolean        export_duotone);
 
 static void          save_color_mode_data (GOutputStream  *output,
@@ -141,13 +142,16 @@ static void          save_color_mode_data (GOutputStream  *output,
 
 static void          save_resources       (GOutputStream  *output,
                                            GimpImage      *image,
+                                           gboolean        export_cmyk,
                                            gboolean        export_duotone);
 
 static void          save_layer_and_mask  (GOutputStream  *output,
-                                           GimpImage      *image);
+                                           GimpImage      *image,
+                                           gboolean        export_cmyk);
 
 static void          save_data            (GOutputStream  *output,
-                                           GimpImage      *image);
+                                           GimpImage      *image,
+                                           gboolean        export_cmyk);
 
 static void          xfwrite              (GOutputStream  *output,
                                            gconstpointer   buf,
@@ -181,10 +185,12 @@ static void          write_datablock_luni (GOutputStream  *output,
 
 
 static void          write_pixel_data     (GOutputStream  *output,
+                                           GimpImage      *image,
                                            GimpDrawable   *drawable,
                                            goffset        *ChanLenPosition,
                                            goffset         rowlenOffset,
-                                           gboolean        write_mask);
+                                           gboolean        write_mask,
+                                           gboolean        export_cmyk);
 
 static GimpLayer   * create_merged_image  (GimpImage      *image);
 
@@ -528,8 +534,11 @@ reshuffle_cmap_write (guchar *mapGimp)
 static void
 save_header (GOutputStream  *output,
              GimpImage      *image,
+             gboolean        export_cmyk,
              gboolean        export_duotone)
 {
+  gint nChannels;
+
   IFDBG(1) g_debug ("Function: save_header\n"
                     "\tRows: %d\n"
                     "\tColumns: %d\n"
@@ -538,18 +547,29 @@ save_header (GOutputStream  *output,
                     PSDImageData.image_height, PSDImageData.image_width,
                     PSDImageData.baseType,     PSDImageData.nChannels);
 
+  if (export_cmyk)
+    {
+      nChannels =
+        gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)) ?
+        5 : 4;
+    }
+  else
+    {
+      nChannels = (PSDImageData.nChannels + nChansLayer (PSDImageData.baseType,
+        gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0));
+    }
+
   xfwrite (output, "8BPS", 4, "signature");
   write_gint16 (output, 1, "version");
   write_gint32 (output, 0, "reserved 1");      /* 6 for the 'reserved' field + 4 bytes for a long */
   write_gint16 (output, 0, "reserved 1");      /* and 2 bytes for a short */
-  write_gint16 (output, (PSDImageData.nChannels +
-                        nChansLayer (PSDImageData.baseType,
-                        gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0)),
-                        "channels");
+  write_gint16 (output, nChannels, "channels");
   write_gint32 (output, PSDImageData.image_height, "rows");
   write_gint32 (output, PSDImageData.image_width, "columns");
   write_gint16 (output, 8 * get_bpc (image), "depth");
-  if (export_duotone)
+  if (export_cmyk)
+    write_gint16 (output, PSD_CMYK, "mode");
+  else if (export_duotone)
     write_gint16 (output, PSD_DUOTONE, "mode");
   else
     write_gint16 (output, gimpBaseTypeToPsdMode (PSDImageData.baseType), "mode");
@@ -634,6 +654,7 @@ save_color_mode_data (GOutputStream  *output,
 static void
 save_resources (GOutputStream  *output,
                 GimpImage      *image,
+                gboolean        export_cmyk,
                 gboolean        export_duotone)
 {
   GList        *iter;
@@ -668,124 +689,125 @@ save_resources (GOutputStream  *output,
 
 
   /* --------------- Write Channel names --------------- */
-
-  if (PSDImageData.nChannels > 0 ||
-      gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+  if (! export_cmyk)
     {
-      xfwrite (output, "8BIM", 4, "imageresources signature");
-      write_gint16 (output, 0x03EE, "0x03EE Id"); /* 1006 */
-      /* write_pascalstring (output, Name, "Id name"); */
-      write_gint16 (output, 0, "Id name"); /* Set to null string (two zeros) */
-
-      /* Mark current position in the file */
-
-      name_sec = g_seekable_tell (G_SEEKABLE (output));
-      write_gint32 (output, 0, "0x03EE resource size");
-
-      /* Write all strings */
-
-      /* if the merged_image contains transparency, write a name for it first */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
-        write_string (output, "Transparency", "channel name");
-
-      for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
+      if (PSDImageData.nChannels > 0 ||
+          gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
         {
-          char *chName = gimp_item_get_name (iter->data);
-          write_string (output, chName, "channel name");
-          g_free (chName);
+          xfwrite (output, "8BIM", 4, "imageresources signature");
+          write_gint16 (output, 0x03EE, "0x03EE Id"); /* 1006 */
+          /* write_pascalstring (output, Name, "Id name"); */
+          write_gint16 (output, 0, "Id name"); /* Set to null string (two zeros) */
+
+          /* Mark current position in the file */
+
+          name_sec = g_seekable_tell (G_SEEKABLE (output));
+          write_gint32 (output, 0, "0x03EE resource size");
+
+          /* Write all strings */
+
+          /* if the merged_image contains transparency, write a name for it first */
+          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+            write_string (output, "Transparency", "channel name");
+
+          for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
+            {
+              char *chName = gimp_item_get_name (iter->data);
+              write_string (output, chName, "channel name");
+              g_free (chName);
+            }
+          /* Calculate and write actual resource's length */
+
+          eof_pos = g_seekable_tell (G_SEEKABLE (output));
+
+          g_seekable_seek (G_SEEKABLE (output),
+                           name_sec, G_SEEK_SET,
+                           NULL, NULL /*FIXME: error*/);
+          write_gint32 (output, eof_pos - name_sec - sizeof (gint32), "0x03EE resource size");
+          IFDBG(1) g_debug ("\tTotal length of 0x03EE resource: %d",
+                            (int) (eof_pos - name_sec - sizeof (gint32)));
+
+          /* Return to EOF to continue writing */
+
+          g_seekable_seek (G_SEEKABLE (output),
+                           eof_pos, G_SEEK_SET,
+                           NULL, NULL /*FIXME: error*/);
+
+          /* Pad if length is odd */
+
+          if ((eof_pos - name_sec - sizeof (gint32)) & 1)
+            write_gchar (output, 0, "pad byte");
         }
-      /* Calculate and write actual resource's length */
 
-      eof_pos = g_seekable_tell (G_SEEKABLE (output));
+      /* --------------- Write Channel properties --------------- */
 
-      g_seekable_seek (G_SEEKABLE (output),
-                       name_sec, G_SEEK_SET,
-                       NULL, NULL /*FIXME: error*/);
-      write_gint32 (output, eof_pos - name_sec - sizeof (gint32), "0x03EE resource size");
-      IFDBG(1) g_debug ("\tTotal length of 0x03EE resource: %d",
-                        (int) (eof_pos - name_sec - sizeof (gint32)));
+      if (PSDImageData.nChannels > 0 ||
+          gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+        {
+          xfwrite (output, "8BIM", 4, "imageresources signature");
+          write_gint16 (output, 0x0435, "0x0435 Id"); /* 1077 */
+          /* write_pascalstring (output, Name, "Id name"); */
+          write_gint16 (output, 0, "Id name"); /* Set to null string (two zeros) */
+          write_gint32 (output,
+                        4  +
+                        13 * (gimp_drawable_has_alpha (
+                                GIMP_DRAWABLE (PSDImageData.merged_layer)) +
+                              PSDImageData.nChannels),
+                        "0x0435 resource size");
 
-      /* Return to EOF to continue writing */
+          /* The function of the first 4 bytes is unclear. As per
+           * load_resource_1077() in psd-image-res-load.c, it seems to be a version
+           * number that is always one.
+           */
+          write_gint32 (output, 1, "0x0435 version");
 
-      g_seekable_seek (G_SEEKABLE (output),
-                       eof_pos, G_SEEK_SET,
-                       NULL, NULL /*FIXME: error*/);
+          /* Write all channel properties */
 
-      /* Pad if length is odd */
+          #define DOUBLE_TO_INT16(x) ROUND (SAFE_CLAMP (x, 0.0, 1.0) * 0xffff)
 
-      if ((eof_pos - name_sec - sizeof (gint32)) & 1)
-        write_gchar (output, 0, "pad byte");
+          /* if the merged_image contains transparency, write its properties first */
+          if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
+            {
+              write_gint16 (output, PSD_CS_RGB, "channel color space");
+              write_gint16 (output, DOUBLE_TO_INT16 (1.0), "channel color r");
+              write_gint16 (output, DOUBLE_TO_INT16 (0.0), "channel color g");
+              write_gint16 (output, DOUBLE_TO_INT16 (0.0), "channel color b");
+              write_gint16 (output, 0,                     "channel color padding");
+              write_gint16 (output, 100,                   "channel opacity");
+              write_gchar  (output, 1,                     "channel mode");
+            }
+
+          for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
+            {
+              GimpChannel *channel = iter->data;
+              GimpRGB      color;
+              gdouble      opacity;
+
+              gimp_channel_get_color (channel, &color);
+              opacity = gimp_channel_get_opacity (channel);
+
+              write_gint16 (output, PSD_CS_RGB,                "channel color space");
+              write_gint16 (output, DOUBLE_TO_INT16 (color.r), "channel color r");
+              write_gint16 (output, DOUBLE_TO_INT16 (color.g), "channel color g");
+              write_gint16 (output, DOUBLE_TO_INT16 (color.b), "channel color b");
+              write_gint16 (output, 0,                         "channel color padding");
+              write_gint16 (output, ROUND (opacity),           "channel opacity");
+              write_gchar  (output, 1,                         "channel mode");
+            }
+
+          #undef DOUBLE_TO_INT16
+
+          /* Pad if length is odd */
+
+          if (g_seekable_tell (G_SEEKABLE (output)) & 1)
+            write_gchar (output, 0, "pad byte");
+        }
     }
-
-  /* --------------- Write Channel properties --------------- */
-
-  if (PSDImageData.nChannels > 0 ||
-      gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
-    {
-      xfwrite (output, "8BIM", 4, "imageresources signature");
-      write_gint16 (output, 0x0435, "0x0435 Id"); /* 1077 */
-      /* write_pascalstring (output, Name, "Id name"); */
-      write_gint16 (output, 0, "Id name"); /* Set to null string (two zeros) */
-      write_gint32 (output,
-                    4  +
-                    13 * (gimp_drawable_has_alpha (
-                            GIMP_DRAWABLE (PSDImageData.merged_layer)) +
-                          PSDImageData.nChannels),
-                    "0x0435 resource size");
-
-      /* The function of the first 4 bytes is unclear. As per
-       * load_resource_1077() in psd-image-res-load.c, it seems to be a version
-       * number that is always one.
-       */
-      write_gint32 (output, 1, "0x0435 version");
-
-      /* Write all channel properties */
-
-      #define DOUBLE_TO_INT16(x) ROUND (SAFE_CLAMP (x, 0.0, 1.0) * 0xffff)
-
-      /* if the merged_image contains transparency, write its properties first */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)))
-        {
-          write_gint16 (output, PSD_CS_RGB, "channel color space");
-          write_gint16 (output, DOUBLE_TO_INT16 (1.0), "channel color r");
-          write_gint16 (output, DOUBLE_TO_INT16 (0.0), "channel color g");
-          write_gint16 (output, DOUBLE_TO_INT16 (0.0), "channel color b");
-          write_gint16 (output, 0,                     "channel color padding");
-          write_gint16 (output, 100,                   "channel opacity");
-          write_gchar  (output, 1,                     "channel mode");
-        }
-
-      for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
-        {
-          GimpChannel *channel = iter->data;
-          GimpRGB      color;
-          gdouble      opacity;
-
-          gimp_channel_get_color (channel, &color);
-          opacity = gimp_channel_get_opacity (channel);
-
-          write_gint16 (output, PSD_CS_RGB,                "channel color space");
-          write_gint16 (output, DOUBLE_TO_INT16 (color.r), "channel color r");
-          write_gint16 (output, DOUBLE_TO_INT16 (color.g), "channel color g");
-          write_gint16 (output, DOUBLE_TO_INT16 (color.b), "channel color b");
-          write_gint16 (output, 0,                         "channel color padding");
-          write_gint16 (output, ROUND (opacity),           "channel opacity");
-          write_gchar  (output, 1,                         "channel mode");
-        }
-
-      #undef DOUBLE_TO_INT16
-
-      /* Pad if length is odd */
-
-      if (g_seekable_tell (G_SEEKABLE (output)) & 1)
-        write_gchar (output, 0, "pad byte");
-    }
-
   /* --------------- Write Guides --------------- */
   if (gimp_image_find_next_guide (image, 0))
     {
       gint n_guides = 0;
-      gint guide_id =0;
+      gint guide_id = 0;
 
       /* Count the guides */
       while ((guide_id = gimp_image_find_next_guide(image, guide_id)))
@@ -914,6 +936,14 @@ save_resources (GOutputStream  *output,
     if (! export_duotone)
       profile = gimp_image_get_effective_color_profile (image);
 
+    if (export_cmyk)
+      {
+        profile = gimp_image_get_simulation_profile (image);
+
+        if (! gimp_color_profile_is_cmyk (profile))
+          g_object_unref (profile);
+      }
+
     if (profile)
       {
         const guint8 *icc_data;
@@ -1038,7 +1068,8 @@ get_compress_channel_data (guchar  *channel_data,
 
 static void
 save_layer_and_mask (GOutputStream  *output,
-                     GimpImage      *image)
+                     GimpImage      *image,
+                     gboolean        export_cmyk)
 {
   gint           i,j;
   gint           idChannel;
@@ -1152,6 +1183,15 @@ save_layer_and_mask (GOutputStream  *output,
                                     gimp_drawable_has_alpha (GIMP_DRAWABLE (psd_layer->layer)),
                                     hasMask);
 
+      /* Manually set channels to 4 or 5 when export as CMYK;
+       * Can be removed once CMYK channels are accessible in GIMP
+       */
+      if (export_cmyk)
+        {
+          nChannelsLayer =
+            gimp_drawable_has_alpha (GIMP_DRAWABLE (psd_layer->layer)) ?
+            5 : 4;
+        }
 
       write_gint16 (output, nChannelsLayer, "Number channels in the layer");
       IFDBG(1) g_debug ("\t\tNumber of channels: %d", nChannelsLayer);
@@ -1352,8 +1392,8 @@ save_layer_and_mask (GOutputStream  *output,
       gimp_progress_update ((PSDImageData.nLayers - i - 1.0) / (PSDImageData.nLayers + 1.0));
 
       IFDBG(1) g_debug ("\t\tWriting pixel data for layer slot %d", i-1);
-      write_pixel_data (output, GIMP_DRAWABLE (psd_layer->layer), ChannelLengthPos[i-1], 0,
-                        psd_layer->type != PSD_LAYER_TYPE_GROUP_END);
+      write_pixel_data (output, image, GIMP_DRAWABLE (psd_layer->layer), ChannelLengthPos[i-1], 0,
+                        psd_layer->type != PSD_LAYER_TYPE_GROUP_END, export_cmyk);
       g_free (ChannelLengthPos[i-1]);
     }
 
@@ -1387,28 +1427,33 @@ save_layer_and_mask (GOutputStream  *output,
 
 static void
 write_pixel_data (GOutputStream  *output,
+                  GimpImage      *image,
                   GimpDrawable   *drawable,
                   goffset        *ChanLenPosition,
                   goffset         ltable_offset,
-                  gboolean        write_mask)
+                  gboolean        write_mask,
+                  gboolean        export_cmyk)
 {
-  GeglBuffer    *buffer = gimp_drawable_get_buffer (drawable);
-  const Babl    *format;
-  GimpLayerMask *mask;
-  gint32         tile_height = gimp_tile_height ();
-  gint32         height = gegl_buffer_get_height (buffer);
-  gint32         width  = gegl_buffer_get_width (buffer);
-  gint32         bytes;
-  gint32         components;
-  gint32         bpc;
-  gint32         colors;
-  gint32         y;
-  gsize          len;                  /* Length of compressed data */
-  gint16        *LengthsTable;         /* Lengths of every compressed row */
-  guchar        *rledata;              /* Compressed data from a region */
-  guchar        *data;                 /* Temporary copy of pixel data */
-  goffset        length_table_pos;     /* position in file of the length table */
-  int            i, j;
+  GeglBuffer       *buffer = gimp_drawable_get_buffer (drawable);
+  const Babl       *format;
+  const Babl       *space  = NULL;
+  const Babl       *type;
+  GimpColorProfile *profile;
+  GimpLayerMask    *mask;
+  gint32            tile_height = gimp_tile_height ();
+  gint32            height = gegl_buffer_get_height (buffer);
+  gint32            width  = gegl_buffer_get_width (buffer);
+  gint32            bytes;
+  gint32            components;
+  gint32            bpc;
+  gint32            colors;
+  gint32            y;
+  gsize             len;                  /* Length of compressed data */
+  gint16           *LengthsTable;         /* Lengths of every compressed row */
+  guchar           *rledata;              /* Compressed data from a region */
+  guchar           *data;                 /* Temporary copy of pixel data */
+  goffset           length_table_pos;     /* position in file of the length table */
+  int               i, j;
 
   IFDBG(1) g_debug ("Function: write_pixel_data, drw %d, lto %" G_GOFFSET_FORMAT,
                     gimp_item_get_id (GIMP_ITEM (drawable)), ltable_offset);
@@ -1429,6 +1474,43 @@ write_pixel_data (GOutputStream  *output,
     format = get_channel_format (drawable);
   else
     format = get_pixel_format (drawable);
+
+  if (export_cmyk && ! gimp_item_is_channel (GIMP_ITEM (drawable)))
+    {
+      profile = gimp_image_get_simulation_profile (image);
+      if (profile && gimp_color_profile_is_cmyk (profile))
+        space = gimp_color_profile_get_space (profile,
+                                              gimp_image_get_simulation_intent (image),
+                                              NULL);
+      if (profile)
+        g_object_unref (profile);
+
+      if (get_bpc (image) == 1)
+        type = babl_type ("u8");
+      else
+        type = babl_type ("u16");
+
+      if (gimp_drawable_has_alpha (drawable))
+        format = babl_format_new (babl_model ("cmykA"),
+                                  type,
+                                  babl_component ("cyan"),
+                                  babl_component ("magenta"),
+                                  babl_component ("yellow"),
+                                  babl_component ("key"),
+                                  babl_component ("A"),
+                                  NULL);
+      else
+        format = babl_format_new (babl_model ("cmyk"),
+                                  type,
+                                  babl_component ("cyan"),
+                                  babl_component ("magenta"),
+                                  babl_component ("yellow"),
+                                  babl_component ("key"),
+                                  NULL);
+
+      format = babl_format_with_space (babl_format_get_encoding (format),
+                                       space);
+    }
 
   bytes      = babl_format_get_bytes_per_pixel (format);
   components = babl_format_get_n_components    (format);
@@ -1635,7 +1717,8 @@ write_pixel_data (GOutputStream  *output,
 
 static void
 save_data (GOutputStream  *output,
-           GimpImage      *image)
+           GimpImage      *image,
+           gboolean        export_cmyk)
 {
   GList  *iter;
   gint    ChanCount;
@@ -1664,8 +1747,8 @@ save_data (GOutputStream  *output,
       write_gint16 (output, 0, "junk line lengths");
 
   IFDBG(1) g_debug ("\t\tWriting compressed image data");
-  write_pixel_data (output, GIMP_DRAWABLE (PSDImageData.merged_layer),
-                    NULL, offset, FALSE);
+  write_pixel_data (output, image, GIMP_DRAWABLE (PSDImageData.merged_layer),
+                    NULL, offset, FALSE, export_cmyk);
 
   chan = nChansLayer (PSDImageData.baseType,
                       gimp_drawable_has_alpha (GIMP_DRAWABLE (PSDImageData.merged_layer)), 0);
@@ -1673,8 +1756,9 @@ save_data (GOutputStream  *output,
   for (iter = PSDImageData.lChannels; iter; iter = g_list_next (iter))
     {
       IFDBG(1) g_debug ("\t\tWriting compressed channel data for channel %d", i);
-      write_pixel_data (output, iter->data, NULL,
-                        offset + 2*imageHeight*chan, FALSE); //check how imgs are channels here
+      write_pixel_data (output, image, iter->data, NULL,
+                        offset + 2*imageHeight*chan, FALSE,
+                        export_cmyk); //check how imgs are channels here
       chan++;
     }
 }
@@ -1786,14 +1870,19 @@ save_image (GFile      *file,
   GeglBuffer     *buffer;
   GList          *iter;
   GError         *local_error = NULL;
-  GimpParasite   *parasite = NULL;
+  GimpParasite   *parasite    = NULL;
+  gboolean        config_cmyk;
   gboolean        config_duotone;
 
   g_object_get (config,
+                "cmyk",    &config_cmyk,
                 "duotone", &config_duotone,
                 NULL);
 
   IFDBG(1) g_debug ("Function: save_image");
+
+  if (config_cmyk)
+    config_duotone = FALSE;
 
   if (gimp_image_get_width (image) > 30000 ||
       gimp_image_get_height (image) > 30000)
@@ -1876,20 +1965,20 @@ save_image (GFile      *file,
   IFDBG(1) g_debug ("\tFile '%s' has been opened",
                     gimp_file_get_utf8_name (file));
 
-  save_header (output, image, config_duotone);
+  save_header (output, image, config_cmyk, config_duotone);
   save_color_mode_data (output, image, config_duotone);
-  save_resources (output, image, config_duotone);
+  save_resources (output, image, config_cmyk, config_duotone);
 
   /* PSD format does not support layers in indexed images */
 
   if (PSDImageData.baseType == GIMP_INDEXED)
     write_gint32 (output, 0, "layers info section length");
   else
-    save_layer_and_mask (output, image);
+    save_layer_and_mask (output, image, config_cmyk);
 
   /* If this is an indexed image, write now channel and layer info */
 
-  save_data (output, image);
+  save_data (output, image, config_cmyk);
 
   /* Delete merged image now */
 
@@ -2079,33 +2168,97 @@ save_dialog (GimpImage     *image,
              GimpProcedure *procedure,
              GObject       *config)
 {
-  GtkWidget *dialog;
-  GtkWidget *duotone_notice;
-  gboolean   run;
+  GtkWidget        *dialog;
+  GtkWidget        *duotone_notice;
+  GtkWidget        *profile_label;
+  GimpColorProfile *cmyk_profile;
+  GimpParasite     *parasite         = NULL;
+  gboolean          has_duotone_data = FALSE;
+  gboolean          run;
 
   dialog = gimp_procedure_dialog_new (procedure,
                                       GIMP_PROCEDURE_CONFIG (config),
                                       _("Export Image as PSD"));
 
-  /* Profile label */
-  duotone_notice = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
-                                                    "duotone-notice",
-                                                    _("Duotone color space information "
-                                                    "from the original\nimported image "
-                                                    "will be used."));
-  gtk_label_set_xalign (GTK_LABEL (duotone_notice), 0.0);
-  gtk_label_set_ellipsize (GTK_LABEL (duotone_notice), PANGO_ELLIPSIZE_END);
-  gimp_label_set_attributes (GTK_LABEL (duotone_notice),
+  /* CMYK profile label. */
+  profile_label = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                   "profile-label", _("No soft-proofing profile"));
+  gtk_label_set_xalign (GTK_LABEL (profile_label), 0.0);
+  gtk_label_set_ellipsize (GTK_LABEL (profile_label), PANGO_ELLIPSIZE_END);
+  gimp_label_set_attributes (GTK_LABEL (profile_label),
                              PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
-
+  gimp_help_set_help_data (profile_label,
+                           _("Name of the color profile used for CMYK export."), NULL);
   gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
-                                    "duotone-frame", "duotone", FALSE,
-                                    "duotone-notice");
+                                    "cmyk-frame", "cmyk", FALSE,
+                                    "profile-label");
+  cmyk_profile = gimp_image_get_simulation_profile (image);
+  if (cmyk_profile)
+    {
+      if (gimp_color_profile_is_cmyk (cmyk_profile))
+        {
+          gchar *label_text;
 
-  gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
-                              "duotone-frame",
-                              NULL);
+          label_text = g_strdup_printf (_("Profile: %s"),
+                                        gimp_color_profile_get_label (cmyk_profile));
+          gtk_label_set_text (GTK_LABEL (profile_label), label_text);
+          gimp_label_set_attributes (GTK_LABEL (profile_label),
+                                     PANGO_ATTR_STYLE, PANGO_STYLE_NORMAL,
+                                     -1);
+          g_free (label_text);
+        }
+      g_object_unref (cmyk_profile);
+    }
+
+  /* Only show dialog if image is grayscale and duotone color space
+   * information was attached from the original image imported
+   */
+   parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
+   if (parasite)
+     {
+       if (gimp_image_get_base_type (image) == GIMP_GRAY)
+         {
+           has_duotone_data = TRUE;
+
+           /* Duotone Option label */
+           duotone_notice = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (dialog),
+                                                             "duotone-notice",
+                                                             _("Duotone color space information "
+                                                             "from the original\nimported image "
+                                                             "will be used."));
+           gtk_label_set_xalign (GTK_LABEL (duotone_notice), 0.0);
+           gtk_label_set_ellipsize (GTK_LABEL (duotone_notice), PANGO_ELLIPSIZE_END);
+           gimp_label_set_attributes (GTK_LABEL (duotone_notice),
+                                      PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                      -1);
+
+           gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (dialog),
+                                             "duotone-frame", "duotone", FALSE,
+                                             "duotone-notice");
+
+           /* Prevent you from setting both Duotone and CMYK exports */
+           gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "duotone",
+                                                TRUE, config, "cmyk", TRUE);
+           gimp_procedure_dialog_set_sensitive (GIMP_PROCEDURE_DIALOG (dialog),
+                                                "cmyk",
+                                                TRUE, config, "duotone", TRUE);
+
+         }
+
+       gimp_parasite_free (parasite);
+     }
+
+  if (has_duotone_data)
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "cmyk-frame",
+                                "duotone-frame",
+                                NULL);
+  else
+    gimp_procedure_dialog_fill (GIMP_PROCEDURE_DIALOG (dialog),
+                                "cmyk-frame",
+                                NULL);
 
   gtk_widget_show (dialog);
 

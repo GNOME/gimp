@@ -224,6 +224,12 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psd");
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
+                             "Export as _CMYK",
+                             "Export a CMYK PSD image using the soft-proofing color profile",
+                             FALSE,
+                             G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_BOOLEAN (procedure, "duotone",
                              "Export as _Duotone",
                              "Export as a Duotone PSD file if Duotone color space information "
@@ -360,17 +366,14 @@ psd_save (GimpProcedure        *procedure,
   GimpProcedureConfig   *config;
   GimpPDBStatusType      status = GIMP_PDB_SUCCESS;
   GimpMetadata          *metadata;
-  GimpMetadataSaveFlags  metadata_flags;
   GimpExportReturn       export = GIMP_EXPORT_IGNORE;
-  GimpParasite          *parasite = NULL;
   GError                *error = NULL;
 
   gegl_init (NULL, NULL);
 
   config = gimp_procedure_create_config (procedure);
-  metadata = gimp_image_metadata_save_prepare (image,
-                                               "image/x-psd",
-                                               &metadata_flags);
+  metadata = gimp_procedure_config_begin_export (config, image, run_mode,
+                                                 args, "image/x-psd");
 
   switch (run_mode)
     {
@@ -397,47 +400,29 @@ psd_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      /* Only show dialog if image is grayscale and duotone color space
-       * information was attached from the original image imported
-       */
-      parasite = gimp_image_get_parasite (image, PSD_PARASITE_DUOTONE_DATA);
-      if (parasite)
-        {
-          if (gimp_image_get_base_type (image) == GIMP_GRAY)
-            {
-              if (! save_dialog (image, procedure, G_OBJECT (config)))
-                return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
-                                                         NULL);
-            }
-          gimp_parasite_free (parasite);
-        }
+      if (! save_dialog (image, procedure, G_OBJECT (config)))
+        return gimp_procedure_new_return_values (procedure, GIMP_PDB_CANCEL,
+                                                 NULL);
     }
 
   if (save_image (file, image, G_OBJECT (config), &error))
     {
       if (metadata)
-        {
-          gimp_metadata_set_bits_per_sample (metadata, 8);
-
-          gimp_image_metadata_save_finish (image,
-                                           "image/x-psd",
-                                           metadata, metadata_flags,
-                                           file, NULL);
-        }
+        gimp_metadata_set_bits_per_sample (metadata, 8);
     }
   else
     {
       status = GIMP_PDB_EXECUTION_ERROR;
     }
 
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
+
   if (export == GIMP_EXPORT_EXPORT)
     {
       gimp_image_delete (image);
       g_free (drawables);
     }
-
-  if (metadata)
-    g_object_unref (metadata);
 
   return gimp_procedure_new_return_values (procedure, status, error);
 }
