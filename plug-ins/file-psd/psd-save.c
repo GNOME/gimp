@@ -824,10 +824,10 @@ save_resources (GOutputStream  *output,
 
   /* --------------- Write resolution data ------------------- */
   {
-    gdouble xres = 0, yres = 0;
-    guint32 xres_fix, yres_fix;
+    gdouble  xres = 0, yres = 0;
+    guint32  xres_fix, yres_fix;
     GimpUnit g_unit;
-    gint16 psd_unit;
+    gint16   psd_unit;
 
     g_unit = gimp_image_get_unit (image);
     gimp_image_get_resolution (image, &xres, &yres);
@@ -850,10 +850,10 @@ save_resources (GOutputStream  *output,
     write_gint16(output, 0x03ed, "0x03ed Id (resolution)"); /* 1005 */
     write_gint16 (output, 0, "Id name"); /* Set to null string (two zeros) */
     write_gint32 (output, 16, "0x0400 resource size");
-    write_gint32 (output,  xres_fix, "hRes (16.16 fixed point)");
+    write_gint32 (output, xres_fix, "hRes (16.16 fixed point)");
     write_gint16 (output, psd_unit, "hRes unit");
     write_gint16 (output, psd_unit, "width unit");
-    write_gint32 (output,  yres_fix, "vRes (16.16 fixed point)");
+    write_gint32 (output, yres_fix, "vRes (16.16 fixed point)");
     write_gint16 (output, psd_unit, "vRes unit");
     write_gint16 (output, psd_unit, "height unit");
   }
