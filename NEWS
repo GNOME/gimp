@@ -73,6 +73,8 @@ Core:
     icons, or smaller when using small icons (which can e.g. be aligned
     on a very narrow single column for people who appreciate this
     organization).
+  - The Welcome dialog can now show "demo" bullet points, from scenarios
+    written within the Appstream metadata.
 
 Tools:
 
@@ -145,7 +147,7 @@ Command Line Interface:
     running the batch commands.
   - If `--quit` is set and batch commands are run, the GIMP binary exit
     code will propagate errors from any batch failure. Exit codes are
-    taken from command Linux error codes: 0 for success, 69 for service
+    taken from common Linux error codes: 0 for success, 69 for service
     unavailable (e.g. setting a non-existing interpreter name), 64 for
     usage (e.g. not specifying any interpreter or calling errors), 70
     for execution errors (bugs in the interpreter plug-in) and 130 for
@@ -199,9 +201,6 @@ Plug-ins:
     * DDS images with 2 16-bit channels correctly converted to 16-bit
       RGB images.
     * More robust DDS loading.
-    * New "Flip image" option: some game engine require a flipped image.
-      Rather than flipping, exporting, unflipping process, let's have an
-      option to flip the result at export time.
   - script-fu:
     * Various updates to get the API back in shape.
     * Porting doc updated.
