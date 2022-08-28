@@ -110,7 +110,10 @@ echo "Icon designers:"
 git --no-pager shortlog -sn $PREV..$CUR -- "icons/*.svg" "icons/*.png"
 
 echo "Theme designers:"
-git --no-pager shortlog -sn $PREV..$CUR -- "themes/*/gtkrc" "themes/*/*png"
+git --no-pager shortlog -sn $PREV..$CUR -- "themes/*/*.css" "themes/*/*png"
+
+echo "Cursor creators:"
+git --no-pager shortlog -sn $PREV..$CUR -- cursors/
 
 echo "Resource creators:"
 git --no-pager shortlog -sn $PREV..$CUR -- data/ etc/ desktop/ menus/
