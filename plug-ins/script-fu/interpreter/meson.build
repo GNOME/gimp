@@ -44,6 +44,6 @@ executable(executable_name,
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
   install_symlink('gimp-script-fu-interpreter' + exec_ext,
     pointing_to: executable_name + exec_ext,
-    install_dir: exec_dir
+    install_dir: get_option('bindir')
   )
 endif

@@ -92,7 +92,6 @@ cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
 prefix    = get_option('prefix')
 buildtype = get_option('buildtype')
-exec_dir  = prefix + '/' + get_option('bindir')
 exec_ext  = ''
 
 compiler_args = []
@@ -1807,6 +1806,7 @@ final_message = [
 '''  Default ICC directory:     @0@'''.format(icc_directory),
 '''  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder')),
 '''  Detailed backtraces:       @0@'''.format(detailed_backtraces),
+'''  Binary symlinks:           @0@'''.format(enable_default_bin),
 '',
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),

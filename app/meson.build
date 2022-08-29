@@ -221,12 +221,12 @@ gimpmain_exe = executable('gimp-'+gimp_app_version,
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
   install_symlink('gimp' + exec_ext,
     pointing_to: 'gimp-' + gimp_app_version + exec_ext,
-    install_dir: exec_dir
+    install_dir: get_option('bindir')
   )
   if enable_console_bin
     install_symlink('gimp-console' + exec_ext,
       pointing_to: 'gimp-console-' + gimp_app_version + exec_ext,
-      install_dir: exec_dir
+      install_dir: get_option('bindir')
     )
   endif
 endif
