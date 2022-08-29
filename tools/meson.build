@@ -30,6 +30,17 @@ executable('gimp-test-clipboard-' + gimp_app_version,
   install: true,
 )
 
+if enable_default_bin and meson.version().version_compare('>=0.61.0')
+  install_symlink('gimptool' + exec_ext,
+    pointing_to: 'gimptool-' + gimp_app_version + exec_ext,
+    install_dir: exec_dir
+  )
+  install_symlink('gimp-test-clipboard' + exec_ext,
+    pointing_to: 'gimp-test-clipboard-' + gimp_app_version + exec_ext,
+    install_dir: exec_dir
+  )
+endif
+
 executable('kernelgen',
   'kernelgen.c',
   include_directories: rootInclude,

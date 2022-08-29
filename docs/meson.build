@@ -17,19 +17,8 @@ man_files = [
     configuration: manconf,
   ),
   configure_file(
-    input : 'gimptool.1.in',
-    output: 'gimptool.1',
-    configuration: manconf,
-  ),
-
-  configure_file(
     input : 'gimprc.5.in',
     output: 'gimprc-' + gimp_app_version + '.5',
-    configuration: manconf,
-  ),
-  configure_file(
-    input : 'gimprc.5.in',
-    output: 'gimprc.5',
     configuration: manconf,
   ),
 ]
@@ -40,24 +29,33 @@ if enable_console_bin
     output: 'gimp-console-' + gimp_app_version + '.1',
     configuration: manconf,
   )
-  man_files += configure_file(
-    input : 'gimp.1.in',
-    output: 'gimp-console.1',
-    configuration: manconf,
-  )
 endif
 
-if enable_default_bin
-  man_files +=  configure_file(
-    input : 'gimp.1.in',
-    output: 'gimp-' + gimp_app_version + '.1',
-    configuration: manconf,
-  )
-  man_files +=  configure_file(
-    input : 'gimp.1.in',
-    output: 'gimp.1',
-    configuration: manconf,
-  )
-endif
+man_files +=  configure_file(
+  input : 'gimp.1.in',
+  output: 'gimp-' + gimp_app_version + '.1',
+  configuration: manconf,
+)
 
 install_man(man_files)
+
+if enable_default_bin and meson.version().version_compare('>=0.61.0')
+  install_symlink('gimptool.1',
+    pointing_to: 'gimptool-' + gimp_app_version + '.1',
+    install_dir: get_option('mandir') + '/man1'
+  )
+  install_symlink('gimprc.5',
+    pointing_to: 'gimprc-' + gimp_app_version + '.5',
+    install_dir: get_option('mandir') + '/man5'
+  )
+  if enable_console_bin
+    install_symlink('gimp-console.1',
+      pointing_to: 'gimp-console-' + gimp_app_version + '.1',
+      install_dir: get_option('mandir') + '/man1'
+    )
+  endif
+  install_symlink('gimp.1',
+    pointing_to: 'gimp-' + gimp_app_version + '.1',
+    install_dir: get_option('mandir') + '/man1'
+  )
+endif

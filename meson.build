@@ -92,6 +92,8 @@ cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
 prefix    = get_option('prefix')
 buildtype = get_option('buildtype')
+exec_dir  = prefix + '/' + get_option('bindir')
+exec_ext  = ''
 
 compiler_args = []
 linker_args = []
@@ -145,6 +147,7 @@ endif
 
 if platform_windows
   windows = import('windows')
+  exec_ext = '.exe'
   # AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
   # AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
   # compiler_args += '-Wl,--large-address-aware'
@@ -1160,6 +1163,9 @@ conf.set_quoted('COLOR_PROFILE_DIRECTORY', icc_directory)
 enable_default_bin = get_option('enable-default-bin')
 enable_console_bin = get_option('enable-console-bin')
 
+if enable_default_bin and meson.version().version_compare('<0.61.0')
+  error('"enable-default-bin" build option requires meson 0.61 or later. Please disable the option or update meson.')
+endif
 
 # Possibly change default gimpdir from $XDG_CONFIG_HOME/GIMP/gimp_user_version
 gimpdir = get_option('gimpdir')
