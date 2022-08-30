@@ -7,7 +7,7 @@ stamp_widgets_enums = custom_target('stamp-gimpwidgetsenums.h',
   output: [ 'stamp-gimpwidgetsenums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'gimpwidgets',
     '#include <gio/gio.h>\n'              +

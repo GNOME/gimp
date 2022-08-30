@@ -126,6 +126,6 @@ endforeach
 test('windows-installer-langs',
   find_program('test-installer-langs.sh'),
   env: [
-    'GIMP_TESTING_ABS_TOP_SRCDIR=' + meson.source_root(),
+    'GIMP_TESTING_ABS_TOP_SRCDIR=' + meson.project_source_root(),
   ],
   suite: 'build')

@@ -17,7 +17,7 @@ stamp_base_enums = custom_target('stamp-gimpbaseenums.h',
   output: [ 'stamp-gimpbaseenums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'gimpbase',
     '#include <glib-object.h>\n'       +
@@ -39,7 +39,7 @@ stamp_compat_enums = custom_target('stamp-gimpcompatenums.h',
   output: [ 'stamp-gimpcompatenums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(), meson.current_build_dir(),
+    meson.project_source_root(), meson.current_source_dir(), meson.current_build_dir(),
     'gimpcompat',
     '#include <glib-object.h>\n'       +
     '#include "gimpbasetypes.h"\n',

@@ -28,7 +28,7 @@ endforeach
 
 if python.found()
   python_config = configuration_data()
-  python_config.set('PYTHON_PATH', python.path())
+  python_config.set('PYTHON_PATH', python.full_path())
 
   configure_file(
     input : 'pygimp.interp.in',

@@ -8,7 +8,7 @@ stamp_config_enums = custom_target('stamp-gimpconfigenums.h',
   output: [ 'stamp-gimpconfigenums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'gimpconfig',
     '#include <gio/gio.h>\n' +

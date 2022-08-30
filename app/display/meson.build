@@ -7,7 +7,7 @@ stamp_display_enums = custom_target('stamp-display-enums.h',
   output: [ 'stamp-display-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'display-',
     '#include <gio/gio.h>\n'              +

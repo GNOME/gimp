@@ -7,7 +7,7 @@ stamp_core_enums = custom_target('stamp-core-enums.h',
   output: [ 'stamp-core-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'core-',
     '#include <gio/gio.h>\n'              +

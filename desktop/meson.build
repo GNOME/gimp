@@ -69,7 +69,7 @@ if appstreamcli.found()
     appstreamcli,
     args: [ 'validate', appdatafile ],
     env: [
-      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.build_root(),
+      'GIMP_TESTING_ABS_TOP_BUILDDIR=' + meson.project_build_root(),
     ],
     suite: 'desktop',
   )

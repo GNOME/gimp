@@ -63,11 +63,11 @@ endforeach
 
 
 enum_headers = [
-  meson.source_root() + '/libgimpbase/gimpbaseenums.h',
-  meson.source_root() + '/libgimpconfig/gimpconfigenums.h',
-  meson.source_root() + '/app/operations/operations-enums.h',
-  meson.source_root() + '/app/core/core-enums.h',
-  meson.source_root() + '/app/paint/paint-enums.h'
+  meson.project_source_root() + '/libgimpbase/gimpbaseenums.h',
+  meson.project_source_root() + '/libgimpconfig/gimpconfigenums.h',
+  meson.project_source_root() + '/app/operations/operations-enums.h',
+  meson.project_source_root() + '/app/core/core-enums.h',
+  meson.project_source_root() + '/app/paint/paint-enums.h'
 ]
 
 # Perl environment
@@ -79,8 +79,8 @@ perl_env = [
   'PDBGEN_GROUPS=' + (pdbgen_groups ? '1' : '0'),
   'rootme='   + perlbindir,
   'srcdir='   + perlsrcdir,
-  'destdir='  + meson.build_root(),
-  'builddir=' + meson.build_root(),
+  'destdir='  + meson.project_build_root(),
+  'builddir=' + meson.project_build_root(),
 ]
 perl_opts = [
   perl,
@@ -183,7 +183,7 @@ else
     ],
     output: [ 'stamp-pdbgen.h', ],
     command: [
-      env, perl_env, pdbgen_run, perl, meson.source_root(), meson.build_root()
+      env, perl_env, pdbgen_run, perl, meson.project_source_root(), meson.project_build_root()
     ],
   )
 

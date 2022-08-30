@@ -7,7 +7,7 @@ stamp_operations_enums = custom_target('stamp-operations-enums.h',
   output: [ 'stamp-operations-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'operations-',
     '#include <gio/gio.h>\n'              +

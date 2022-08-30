@@ -153,7 +153,7 @@ if platform_windows
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(console_rc_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(console_rc_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
     ],
     include_directories: [
       rootInclude, appInclude,
@@ -171,7 +171,7 @@ if platform_windows
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(gui_rc_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(gui_rc_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
     ],
     include_directories: [
       rootInclude, appInclude,

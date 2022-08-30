@@ -7,7 +7,7 @@ stamp_tools_enums = custom_target('stamp-tools-enums.h',
   output: [ 'stamp-tools-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'tools-',
     '#include <gio/gio.h>\n'              +

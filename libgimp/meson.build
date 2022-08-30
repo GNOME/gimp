@@ -552,7 +552,7 @@ if have_python and not platform_windows and not platform_osx
     ],
     output: [ 'check-def-files', ],
     command: [
-      python, meson.source_root() / 'tools' / 'defcheck.py', meson.source_root(),
+      python, meson.project_source_root() / 'tools' / 'defcheck.py', meson.project_source_root(),
     ],
     build_by_default: true,
   )

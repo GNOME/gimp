@@ -7,7 +7,7 @@ stamp_config_enums = custom_target('stamp-config-enums.h',
   output: [ 'stamp-config-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'config-',
     '#include <gio/gio.h>\n'              +

@@ -7,7 +7,7 @@ stamp_gegl_enums = custom_target('stamp-gimp-gegl-enums.h',
   output: [ 'stamp-gimp-gegl-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'gimp-gegl-',
     '#include <gio/gio.h>\n'              +

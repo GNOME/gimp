@@ -385,7 +385,7 @@ if relocatable_bundle
   mypaint_brushes_dir = '${gimp_installation_dir}'\
                         /'share'/'mypaint-data'/'1.0'/'brushes'
 else
-  mypaint_brushes_dir = mypaint_brushes.get_pkgconfig_variable('brushesdir')
+  mypaint_brushes_dir = mypaint_brushes.get_variable(pkgconfig: 'brushesdir')
 endif
 
 conf.set_quoted('MYPAINT_BRUSHES_DIR', mypaint_brushes_dir)
@@ -576,7 +576,7 @@ detailed_backtraces = (
 ################################################################################
 # Check for x11 support
 
-x11_target = gtk3.get_pkgconfig_variable('targets').contains('x11')
+x11_target = gtk3.get_variable(pkgconfig: 'targets').contains('x11')
 
 x11   = x11_target ? dependency('x11')    : no_dep
 xmu   = x11_target ? dependency('xmu')    : no_dep
@@ -733,8 +733,8 @@ have_heif = libheif.found()
 libheif_warning=''
 if have_heif
   have_heif = true
-  can_import_heic = (libheif.get_pkgconfig_variable('builtin_h265_decoder') == 'yes')
-  can_export_heic = (libheif.get_pkgconfig_variable('builtin_h265_encoder') == 'yes')
+  can_import_heic = (libheif.get_variable(pkgconfig: 'builtin_h265_decoder') == 'yes')
+  can_export_heic = (libheif.get_variable(pkgconfig: 'builtin_h265_encoder') == 'yes')
   if can_import_heic
     MIMEtypes += [
       'image/heif',
@@ -742,8 +742,8 @@ if have_heif
     ]
   endif
 
-  can_import_avif = (libheif.get_pkgconfig_variable('builtin_avif_decoder') == 'yes')
-  can_export_avif = (libheif.get_pkgconfig_variable('builtin_avif_encoder') == 'yes')
+  can_import_avif = (libheif.get_variable(pkgconfig: 'builtin_avif_decoder') == 'yes')
+  can_export_avif = (libheif.get_variable(pkgconfig: 'builtin_avif_encoder') == 'yes')
   if can_import_avif
     MIMEtypes += [
       'image/avif'
@@ -907,7 +907,7 @@ else
   xdg_email_path = 'xdg-email'
   xdg_email = find_program(xdg_email_path, required: false)
   if xdg_email.found()
-    xdg_email_path = xdg_email.path()
+    xdg_email_path = xdg_email.full_path()
   else
     mail_warning = 'Xdg-email not found, but required at runtime for email sending.'
     warning(mail_warning)
@@ -923,7 +923,7 @@ endif
 
 isocodes = dependency('iso-codes', required: false)
 if isocodes.found()
-  isocodes_prefix = isocodes.get_pkgconfig_variable('prefix')
+  isocodes_prefix = isocodes.get_variable(pkgconfig: 'prefix')
   isocodes_location = isocodes_prefix / get_option('datadir') / 'xml' / 'iso-codes'
   isocodes_localedir= isocodes_prefix / get_option('datadir') / 'locale'
 endif
@@ -1020,7 +1020,7 @@ endif
 
 
 # Check for GTK Mac Integration
-if platform_osx and (gtk3.get_pkgconfig_variable('targets').contains('quartz'))
+if platform_osx and (gtk3.get_variable(pkgconfig: 'targets').contains('quartz'))
   # Support for homebrew version of gtk-mac-integration
   gtk3_macos = dependency('gtk-mac-integration-gtk3', version: '>=3.0.1', required: false)
   if not gtk3_macos.found()
@@ -1637,7 +1637,7 @@ custom_target('Changelog',
   output: [ 'Changelog', ],
   command: [
     generate_changelog,
-    meson.source_root(),
+    meson.project_source_root(),
     '@OUTPUT@'
   ],
   build_by_default: false,
@@ -1645,7 +1645,7 @@ custom_target('Changelog',
 
 meson.add_dist_script('meson_dist_script.sh',
                       generate_version_h ?  gitversion_h.full_path() : gitversion_h,
-                      meson.source_root(), meson.build_root())
+                      meson.project_source_root(), meson.project_build_root())
 
 
 ################################################################################

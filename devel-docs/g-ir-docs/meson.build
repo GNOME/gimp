@@ -36,10 +36,10 @@ foreach lang : [ 'python', 'gjs' ]
     command: [
       gir_doc_tool,
       '-I', prefix / 'share/gir-1.0/',
-      '-I', meson.build_root() / 'libgimp',
+      '-I', meson.project_build_root() / 'libgimp',
       '--language=' + lang,
       '-o', '@OUTDIR@' + '/pages/' + lang + '/Gimp-' + gimp_api_version,
-      meson.build_root() / '@INPUT@'
+      meson.project_build_root() / '@INPUT@'
     ],
     build_by_default: true)
 
@@ -101,10 +101,10 @@ foreach lang : [ 'python', 'gjs' ]
     command: [
       gir_doc_tool,
       '-I', prefix / 'share/gir-1.0/',
-      '-I', meson.build_root() / 'libgimp',
+      '-I', meson.project_build_root() / 'libgimp',
       '--language=' + lang,
       '-o', '@OUTDIR@' + '/pages/' + lang + '/GimpUi-' + gimp_api_version,
-      meson.build_root() / '@INPUT@'
+      meson.project_build_root() / '@INPUT@'
     ],
     build_by_default: true)
 

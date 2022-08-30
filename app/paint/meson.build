@@ -7,7 +7,7 @@ stamp_paint_enums = custom_target('stamp-paint-enums.h',
   output: [ 'stamp-paint-enums.h', ],
   command: [
     mkenums_wrap, perl,
-    meson.source_root(), meson.current_source_dir(),
+    meson.project_source_root(), meson.current_source_dir(),
     meson.current_build_dir(),
     'paint-',
     '#include <gio/gio.h>\n'              +

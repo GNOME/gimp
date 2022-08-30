@@ -12,7 +12,7 @@ if platform_windows
     args: [
       '--define', 'ORIGINALFILENAME_STR="@0@"'.format(plugin_name+'.exe'),
       '--define', 'INTERNALNAME_STR="@0@"'    .format(plugin_name),
-      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.source_root()),
+      '--define', 'TOP_SRCDIR="@0@"'          .format(meson.project_source_root()),
     ],
     include_directories: [
       rootInclude, appInclude,
