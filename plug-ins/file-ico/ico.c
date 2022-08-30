@@ -242,7 +242,7 @@ ico_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "ani");
       gimp_file_procedure_set_magics (GIMP_FILE_PROCEDURE (procedure),
-                                      "0,string,RIFF");
+                                      "8,string,ACON");
 
       gimp_load_procedure_set_thumbnail_loader (GIMP_LOAD_PROCEDURE (procedure),
                                                 LOAD_ANI_THUMB_PROC);
