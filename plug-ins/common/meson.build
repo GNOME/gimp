@@ -175,6 +175,15 @@ foreach plugin : common_plugins_list
       copy: true,
     )
 
+    # See https://gitlab.gnome.org/GNOME/gimp/-/issues/8537
+    if generate_version_h
+      compile_resources_depfiles = []
+      compile_resources_depends  = [ gitversion_h ]
+    else
+      compile_resources_depfiles = [ gitversion_h ]
+      compile_resources_depends  = []
+    endif
+
     plugin_sources += windows.compile_resources(
       plugin_rc,
       args: [
@@ -185,7 +194,8 @@ foreach plugin : common_plugins_list
       include_directories: [
         rootInclude, appInclude,
       ],
-      depends: [ gitversion_h ],
+      depend_files: compile_resources_depfiles,
+      depends: compile_resources_depends
     )
   endif
 
