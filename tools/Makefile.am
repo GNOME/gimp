@@ -109,6 +109,7 @@ AM_LDFLAGS = \
 EXTRA_DIST = \
 	colorsvg2png.c				\
 	defcheck.py				\
+	generate-welcome-dialog-data.py		\
 	gimp-mkenums				\
 	gimppath2svg.py				\
 	mnemonic-clashes			\
