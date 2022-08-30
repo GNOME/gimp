@@ -1868,10 +1868,9 @@ endif
 if not platform_windows
   warning('''
 
-          MESON BUILD IS STILL EXPERIMENTAL!
+          MESON BUILD IS IN EXTENSIVE TESTING PHASE!
 
-          we encourage usage of meson if you want to test and
-          report bugs. Yet if you are a packager, DO NOT USE
-          meson until we fix all known issues and bugs.
+          we now encourage usage of meson for packagers.
+          Please build GIMP with meson and report bugs.
           ''')
 endif
