@@ -6,7 +6,7 @@ if platform_windows
 endif
 
 
-gimptool = executable('gimptool-' + gimp_app_version,
+gimptool = executable('gimptool' + exec_ver,
   'gimptool.c',
   include_directories: rootInclude,
   dependencies: [
@@ -21,7 +21,7 @@ gimptool = executable('gimptool-' + gimp_app_version,
   install: true,
 )
 
-executable('gimp-test-clipboard-' + gimp_app_version,
+gimp_test_clipboard = executable('gimp-test-clipboard' + exec_ver,
   'gimp-test-clipboard.c',
   include_directories: rootInclude,
   dependencies: [
@@ -31,12 +31,12 @@ executable('gimp-test-clipboard-' + gimp_app_version,
 )
 
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink('gimptool' + exec_ext,
-    pointing_to: 'gimptool-' + gimp_app_version + exec_ext,
+  install_symlink(fs.name(gimptool.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(gimptool.full_path()),
     install_dir: get_option('bindir')
   )
-  install_symlink('gimp-test-clipboard' + exec_ext,
-    pointing_to: 'gimp-test-clipboard-' + gimp_app_version + exec_ext,
+  install_symlink(fs.name(gimp_test_clipboard.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(gimp_test_clipboard.full_path()),
     install_dir: get_option('bindir')
   )
 endif

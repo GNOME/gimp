@@ -1,7 +1,7 @@
 
 scriptfuInclude = include_directories('..')
 
-executable_name = 'gimp-script-fu-interpreter-' + gimp_api_version
+executable_name = 'gimp-script-fu-interpreter' + exec_ver
 
 plugin_sources = [
   'script-fu-interpreter.c',
@@ -25,7 +25,7 @@ endif
 # !!! Installs as a usual binary say to /usr/bin, unlike extension-script-fu
 # GIMP queries scripts with shebangs, which invokes gimp-script-fu-interpreter-3.0.
 
-executable(executable_name,
+script_fu_interpreter = executable(executable_name,
   plugin_sources,
   dependencies: [
     libgimpui_dep,
@@ -42,8 +42,8 @@ executable(executable_name,
 )
 
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink('gimp-script-fu-interpreter' + exec_ext,
-    pointing_to: executable_name + exec_ext,
+  install_symlink(fs.name(script_fu_interpreter.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(script_fu_interpreter.full_path()),
     install_dir: get_option('bindir')
   )
 endif

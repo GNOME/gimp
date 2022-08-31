@@ -87,12 +87,13 @@ i18n      = import('i18n')
 gnome     = import('gnome')
 pythonmod = import('python')
 simd      = import('unstable-simd')
+fs        = import('fs')
 
 cc        = meson.get_compiler('c')
 cxx       = meson.get_compiler('cpp')
 prefix    = get_option('prefix')
 buildtype = get_option('buildtype')
-exec_ext  = ''
+exec_ver  = '-' + gimp_app_version
 
 compiler_args = []
 linker_args = []
@@ -146,7 +147,6 @@ endif
 
 if platform_windows
   windows = import('windows')
-  exec_ext = '.exe'
   # AC_CHECK_PROG(ms_librarian, lib.exe, yes, no)
   # AM_CONDITIONAL(MS_LIB_AVAILABLE, test "x$ms_librarian" = xyes)
   # compiler_args += '-Wl,--large-address-aware'

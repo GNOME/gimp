@@ -183,7 +183,7 @@ else
 endif
 
 if enable_console_bin
-  gimpconsole_exe = executable('gimp-console-'+gimp_app_version,
+  gimpconsole_exe = executable('gimp-console' + exec_ver,
     'main.c',
     libapp_sources,
     console_rc_file,
@@ -201,7 +201,7 @@ if enable_console_bin
   )
 endif
 
-gimpmain_exe = executable('gimp-'+gimp_app_version,
+gimpmain_exe = executable('gimp' + exec_ver,
   'main.c',
   libapp_sources,
   gui_rc_file,
@@ -219,13 +219,13 @@ gimpmain_exe = executable('gimp-'+gimp_app_version,
 )
 
 if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink('gimp' + exec_ext,
-    pointing_to: 'gimp-' + gimp_app_version + exec_ext,
+  install_symlink(fs.name(gimpmain_exe.full_path()).replace(exec_ver, ''),
+    pointing_to: fs.name(gimpmain_exe.full_path()),
     install_dir: get_option('bindir')
   )
   if enable_console_bin
-    install_symlink('gimp-console' + exec_ext,
-      pointing_to: 'gimp-console-' + gimp_app_version + exec_ext,
+    install_symlink(fs.name(gimpconsole_exe.full_path()).replace(exec_ver, ''),
+      pointing_to: fs.name(gimpconsole_exe.full_path()),
       install_dir: get_option('bindir')
     )
   endif
