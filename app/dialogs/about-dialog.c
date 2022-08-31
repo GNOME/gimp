@@ -332,7 +332,8 @@ about_dialog_add_update (GimpAboutDialog *dialog,
   if (config->last_known_release != NULL)
     {
       /* There is a newer version. */
-      gchar *comment = NULL;
+      const gchar *download_url = NULL;
+      gchar       *comment      = NULL;
 
       /* We want the frame to stand out. */
       label = gtk_label_new (NULL);
@@ -350,9 +351,14 @@ about_dialog_add_update (GimpAboutDialog *dialog,
       gtk_image_set_from_icon_name (GTK_IMAGE (button_image),
                                     "software-update-available",
                                     GTK_ICON_SIZE_DIALOG);
+#ifdef GIMP_UNSTABLE
+      download_url = "https://www.gimp.org/downloads/devel/";
+#else
+      download_url = "https://www.gimp.org/downloads/";
+#endif
       g_signal_connect (button, "clicked",
                         (GCallback) about_dialog_download_clicked,
-                        "https://www.gimp.org/downloads/");
+                        (gpointer) download_url);
 
       /* The preferred localized date representation without the time. */
       datetime = g_date_time_new_from_unix_local (config->last_release_timestamp);

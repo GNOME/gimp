@@ -445,7 +445,11 @@ gimp_critical_dialog_response (GtkDialog *dialog,
       break;
 
     case GIMP_CRITICAL_RESPONSE_DOWNLOAD:
+#ifdef GIMP_UNSTABLE
+      url = "https://www.gimp.org/downloads/devel/";
+#else
       url = "https://www.gimp.org/downloads/";
+#endif
     case GIMP_CRITICAL_RESPONSE_URL:
       if (url == NULL)
         {
