@@ -6,6 +6,14 @@
 This is the unstable branch of GIMP.
 
 
+Overview of Changes from GIMP 2.99.12 to GIMP 2.99.14
+=====================================================
+
+Build:
+
+  - meson requirement bump to meson 0.56.0.
+
+
 Overview of Changes from GIMP 2.99.10 to GIMP 2.99.12
 =====================================================
 
