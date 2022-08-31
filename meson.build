@@ -185,8 +185,8 @@ endif
 
 # Note that Meson has a SIMD module which can also do this for us, but it uses
 # its own #defines and we want to stay compatible with the autotools build
-conf.set('USE_MMX', cc.has_argument('-mmx'))
-conf.set('USE_SSE', cc.has_argument('-sse'))
+conf.set('USE_MMX', cc.has_argument('-mmmx'))
+conf.set('USE_SSE', cc.has_argument('-msse'))
 conf.set10('COMPILE_SSE2_INTRINISICS', cc.has_argument('-msse2'))
 conf.set10('COMPILE_SSE4_1_INTRINISICS', cc.has_argument('-msse4.1'))
 
