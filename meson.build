@@ -403,7 +403,7 @@ conf.set('PANGO_DISABLE_DEPRECATED',pangocairo.version().version_compare('<1.43'
 # Check for GLib Networking
 
 glib_networking_works_run=false
-if meson.is_cross_build() and not meson.has_exe_wrapper()
+if meson.is_cross_build() and not meson.can_run_host_binaries()
     # Cross-compilation without run capability: we won't be able to
     # check networking support.
     glib_networking_works = true
@@ -418,7 +418,7 @@ if meson.is_cross_build() and not meson.has_exe_wrapper()
     '''
     warning(glib_warning)
     warnings += glib_warning
-else # not meson.is_cross_build() or meson.has_exe_wrapper()
+else # not meson.is_cross_build() or meson.can_run_host_binaries()
     glib_networking_works_run = cc.run(
       '''#include <gio/gio.h>
       int main() {
