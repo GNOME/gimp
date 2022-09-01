@@ -1,14 +1,14 @@
 # Hungarian translation for gimp-windows-installer.
-# Copyright (C) 2017, 2018, 2021 the gimp authors.
+# Copyright (C) 2017, 2018, 2021, 2022 the gimp authors.
 # This file is distributed under the same license as the gimp package.
 #
-# Balázs Úr <ur.balazs at fsf dot hu>, 2017, 2018, 2021.
+# Balázs Úr <ur.balazs at fsf dot hu>, 2017, 2018, 2021, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-windows-installer\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2021-09-10 22:15+0200\n"
+"POT-Creation-Date: 2022-08-28 13:29+0000\n"
+"PO-Revision-Date: 2022-09-02 01:14+0200\n"
 "Last-Translator: Balázs Úr <ur.balazs at fsf dot hu>\n"
 "Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
 "Language: hu\n"
@@ -133,11 +133,10 @@ msgid "Run-time libraries"
 msgstr "Futásidejű programkönyvtárak"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
-"A GIMP által használt futásidejű programkönyvtárak, beleértve a GTK+ "
-"környezetet"
+"A GIMP által használt futásidejű programkönyvtárak, beleértve a GTK"
+" futtatókörnyezetet is"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -148,9 +147,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Olyan információk hozzáadása, amelyek segítenek a GIMP hibakeresésében"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "MS-Windows motor a GTK+-hoz"
+msgstr "MS-Windows motor a GTK-hoz"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
