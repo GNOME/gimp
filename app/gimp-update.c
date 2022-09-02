@@ -24,6 +24,10 @@
 #include <json-glib/json-glib.h>
 #include <stdio.h>
 
+#ifdef PLATFORM_OSX
+#import <Foundation/Foundation.h>
+#endif /* PLATFORM_OSX */
+
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
 #endif
@@ -43,30 +47,36 @@
 #include "gimp-update.h"
 #include "gimp-version.h"
 
-static gboolean gimp_update_known           (GimpCoreConfig   *config,
-                                             const gchar      *last_version,
-                                             gint64            release_timestamp,
-                                             gint              build_revision,
-                                             const gchar      *comment);
-static gboolean gimp_update_get_highest     (JsonParser       *parser,
-                                             gchar           **highest_version,
-                                             gint64           *release_timestamp,
-                                             gint             *build_revision,
-                                             gchar           **build_comment,
-                                             gboolean          unstable);
-static void     gimp_check_updates_callback (GObject          *source,
-                                             GAsyncResult     *result,
-                                             gpointer          user_data);
-static void     gimp_update_about_dialog    (GimpCoreConfig   *config,
-                                             const GParamSpec *pspec,
-                                             gpointer          user_data);
+static gboolean      gimp_update_known           (GimpCoreConfig   *config,
+                                                  const gchar      *last_version,
+                                                  gint64            release_timestamp,
+                                                  gint              build_revision,
+                                                  const gchar      *comment);
+static gboolean      gimp_version_break          (const gchar      *v,
+                                                  gint             *major,
+                                                  gint             *minor,
+                                                  gint             *micro);
+static void          gimp_check_updates_process  (const gchar      *source,
+                                                  gchar            *file_contents,
+                                                  gsize             file_length,
+                                                  GimpCoreConfig   *config);
+#ifndef PLATFORM_OSX
+static void          gimp_check_updates_callback (GObject          *source,
+                                                  GAsyncResult     *result,
+                                                  gpointer          user_data);
+#endif /* PLATFORM_OSX */
+static void          gimp_update_about_dialog    (GimpCoreConfig   *config,
+                                                  const GParamSpec *pspec,
+                                                  gpointer          user_data);
 
-static gboolean gimp_version_break          (const gchar      *v,
-                                             gint             *major,
-                                             gint             *minor,
-                                             gint             *micro);
-static gint     gimp_version_cmp            (const gchar      *v1,
-                                             const gchar      *v2);
+static gboolean      gimp_version_break          (const gchar      *v,
+                                                  gint             *major,
+                                                  gint             *minor,
+                                                  gint             *micro);
+static gint          gimp_version_cmp            (const gchar      *v1,
+                                                  const gchar      *v2);
+
+static const gchar * gimp_get_version_url        (void);
 
 
 /* Private Functions */
@@ -323,6 +333,76 @@ gimp_update_get_highest (JsonParser  *parser,
 }
 
 static void
+gimp_check_updates_process (const gchar    *source,
+                            gchar          *file_contents,
+                            gsize           file_length,
+                            GimpCoreConfig *config)
+{
+  gchar       *last_version      = NULL;
+  gchar       *build_comment     = NULL;
+  gint64       release_timestamp = 0;
+  gint         build_revision    = 0;
+  GError      *error             = NULL;
+  JsonParser  *parser;
+
+  parser = json_parser_new ();
+  if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
+    {
+      gchar *uri = g_file_get_uri (G_FILE (source));
+
+      g_printerr ("%s: parsing of %s failed: %s\n", G_STRFUNC,
+                  uri, error->message);
+
+      g_free (uri);
+      g_free (file_contents);
+      g_clear_object (&parser);
+      g_clear_error (&error);
+
+      return;
+    }
+
+  gimp_update_get_highest (parser, &last_version, &release_timestamp,
+                           &build_revision, &build_comment, FALSE);
+
+#ifdef GIMP_UNSTABLE
+    {
+      gchar  *dev_version = NULL;
+      gchar  *dev_comment      = NULL;
+      gint64  dev_timestamp    = 0;
+      gint    dev_revision     = 0;
+
+      gimp_update_get_highest (parser, &dev_version, &dev_timestamp,
+                               &dev_revision, &dev_comment, TRUE);
+      if (dev_version)
+        {
+          if (! last_version || gimp_version_cmp (dev_version, last_version) > 0)
+            {
+              g_clear_pointer (&last_version, g_free);
+              g_clear_pointer (&build_comment, g_free);
+              last_version      = dev_version;
+              build_comment     = dev_comment;
+              release_timestamp = dev_timestamp;
+              build_revision    = dev_revision;
+            }
+          else
+            {
+              g_clear_pointer (&dev_version, g_free);
+              g_clear_pointer (&dev_comment, g_free);
+            }
+        }
+    }
+#endif
+
+  gimp_update_known (config, last_version, release_timestamp, build_revision, build_comment);
+
+  g_clear_pointer (&last_version, g_free);
+  g_clear_pointer (&build_comment, g_free);
+  g_object_unref (parser);
+  g_free (file_contents);
+}
+
+#ifndef PLATFORM_OSX
+static void
 gimp_check_updates_callback (GObject      *source,
                              GAsyncResult *result,
                              gpointer      user_data)
@@ -336,66 +416,7 @@ gimp_check_updates_callback (GObject      *source,
                                    &file_contents, &file_length,
                                    NULL, &error))
     {
-      JsonParser  *parser;
-      gchar       *last_version      = NULL;
-      gchar       *build_comment     = NULL;
-      gint64       release_timestamp = 0;
-      gint         build_revision    = 0;
-
-      parser = json_parser_new ();
-      if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
-        {
-          gchar *uri = g_file_get_uri (G_FILE (source));
-
-          g_printerr ("%s: parsing of %s failed: %s\n", G_STRFUNC,
-                      uri, error->message);
-
-          g_free (uri);
-          g_free (file_contents);
-          g_clear_object (&parser);
-          g_clear_error (&error);
-
-          return;
-        }
-
-      gimp_update_get_highest (parser, &last_version, &release_timestamp,
-                               &build_revision, &build_comment, FALSE);
-
-#ifdef GIMP_UNSTABLE
-        {
-          gchar  *dev_version = NULL;
-          gchar  *dev_comment      = NULL;
-          gint64  dev_timestamp    = 0;
-          gint    dev_revision     = 0;
-
-          gimp_update_get_highest (parser, &dev_version, &dev_timestamp,
-                                   &dev_revision, &dev_comment, TRUE);
-          if (dev_version)
-            {
-              if (! last_version || gimp_version_cmp (dev_version, last_version) > 0)
-                {
-                  g_clear_pointer (&last_version, g_free);
-                  g_clear_pointer (&build_comment, g_free);
-                  last_version      = dev_version;
-                  build_comment     = dev_comment;
-                  release_timestamp = dev_timestamp;
-                  build_revision    = dev_revision;
-                }
-              else
-                {
-                  g_clear_pointer (&dev_version, g_free);
-                  g_clear_pointer (&dev_comment, g_free);
-                }
-            }
-        }
-#endif
-
-      gimp_update_known (config, last_version, release_timestamp, build_revision, build_comment);
-
-      g_clear_pointer (&last_version, g_free);
-      g_clear_pointer (&build_comment, g_free);
-      g_object_unref (parser);
-      g_free (file_contents);
+      gimp_check_updates_process (g_file_get_uri (G_FILE (source)), file_contents, file_length, config);
     }
   else
     {
@@ -408,6 +429,7 @@ gimp_check_updates_callback (GObject      *source,
       g_clear_error (&error);
     }
 }
+#endif /* PLATFORM_OSX */
 
 static void
 gimp_update_about_dialog (GimpCoreConfig   *config,
@@ -515,6 +537,19 @@ gimp_version_cmp (const gchar *v1,
     return -1;
 }
 
+static const gchar *
+gimp_get_version_url (void)
+{
+#ifdef GIMP_UNSTABLE
+  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
+    return g_getenv ("GIMP_DEV_VERSIONS_JSON");
+  else
+    return "https://testing.gimp.org/gimp_versions.json";
+#else
+  return "https://www.gimp.org/gimp_versions.json";
+#endif
+}
+
 /* Public Functions */
 
 /*
@@ -596,18 +631,59 @@ gimp_update_auto_check (GimpCoreConfig *config,
 void
 gimp_update_check (GimpCoreConfig *config)
 {
+#ifdef PLATFORM_OSX
+  const gchar *gimp_versions;
+
+  gimp_versions = gimp_get_version_url ();
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+  [request setURL:[NSURL URLWithString:@(gimp_versions)]];
+  [request setHTTPMethod:@"GET"];
+
+  NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+  /* completionHandler is called on a background thread */
+  [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSString *reply;
+    gchar    *json_result;
+
+    if (error)
+      {
+        g_printerr ("%s: gimp_update_check failed to get update from %s, with error: %s\n",
+                    G_STRFUNC,
+                    gimp_versions,
+                    [error.localizedDescription UTF8String]);
+        return;
+      }
+
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+
+        if (statusCode != 200)
+          {
+            g_printerr ("%s: gimp_update_check failed to get update from %s, with status code: %d\n",
+                        G_STRFUNC,
+                        gimp_versions,
+                        (int)statusCode);
+            return;
+          }
+    }
+
+    reply       = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    json_result = g_strdup ([reply UTF8String]); /* will be freed by gimp_check_updates_process */
+
+    gimp_check_updates_process (gimp_versions,
+                                json_result,
+                                [reply lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+                                config);
+  }] resume];
+#else
   GFile *gimp_versions;
 
-#ifdef GIMP_UNSTABLE
-  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
-    gimp_versions = g_file_new_for_path (g_getenv ("GIMP_DEV_VERSIONS_JSON"));
-  else
-    gimp_versions = g_file_new_for_uri ("https://testing.gimp.org/gimp_versions.json");
-#else
-  gimp_versions = g_file_new_for_uri ("https://www.gimp.org/gimp_versions.json");
-#endif
+  gimp_versions = g_file_new_for_uri (gimp_get_version_url ());
+
   g_file_load_contents_async (gimp_versions, NULL, gimp_check_updates_callback, config);
   g_object_unref (gimp_versions);
+#endif /* PLATFORM_OSX */
 }
 
 /*
