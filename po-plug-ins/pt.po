@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-21 18:04+0000\n"
-"PO-Revision-Date: 2022-08-23 18:00+0100\n"
+"POT-Creation-Date: 2022-08-28 13:28+0000\n"
+"PO-Revision-Date: 2022-09-02 14:41+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -93,7 +93,7 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:241
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
 #: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
-#: plug-ins/file-tiff/file-tiff-load.c:2662 plug-ins/flame/flame.c:540
+#: plug-ins/file-tiff/file-tiff-load.c:2689 plug-ins/flame/flame.c:540
 #: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -479,7 +479,7 @@ msgstr "_Vertical"
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
 #: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
-#: plug-ins/file-tiff/file-tiff-load.c:1528
+#: plug-ins/file-tiff/file-tiff-load.c:1555
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
@@ -1021,7 +1021,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
 #: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:1866 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-psd/psd-save.c:1863 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1058,7 +1058,7 @@ msgstr "Carregar parâmetros do explorador CML"
 #: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
 #: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
 #: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:159
-#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:1871
+#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:1868
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
@@ -2055,7 +2055,7 @@ msgstr "'%s': EOF ou erro ao ler dados da paleta"
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
 #: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:1812 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-psd/psd-save.c:1809 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -3197,7 +3197,7 @@ msgid "Import from PDF"
 msgstr "Importar a partir de PDF"
 
 #: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3589
-#: plug-ins/file-tiff/file-tiff-load.c:2663
+#: plug-ins/file-tiff/file-tiff-load.c:2690
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_Importar"
@@ -3328,7 +3328,7 @@ msgstr "Camadas como páginas (%s)"
 
 #: plug-ins/common/file-pdf-save.c:1337 plug-ins/common/file-pdf-save.c:1410
 #: plug-ins/common/file-pdf-save.c:1508 plug-ins/common/file-ps.c:2080
-#: plug-ins/file-tiff/file-tiff-load.c:1530
+#: plug-ins/file-tiff/file-tiff-load.c:1557
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
@@ -7376,7 +7376,7 @@ msgstr ""
 "Erro: não foi possível converter o tipo de imagem base do GIMP para o modo "
 "PSD"
 
-#: plug-ins/file-psd/psd-save.c:1805
+#: plug-ins/file-psd/psd-save.c:1802
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7385,7 +7385,7 @@ msgstr ""
 "Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
 "que tenham mais de 30.000 píxeis de largura ou de altura."
 
-#: plug-ins/file-psd/psd-save.c:1846
+#: plug-ins/file-psd/psd-save.c:1843
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7394,11 +7394,11 @@ msgstr ""
 "Não é possível exportar '%s'. O formato de ficheiro PSD não suporta imagens "
 "cujas camadas tenham mais de 30.000 píxeis de largura ou de altura."
 
-#: plug-ins/file-psd/psd-save.c:2091
+#: plug-ins/file-psd/psd-save.c:2088
 msgid "Export Image as PSD"
 msgstr "Exportar imagem como PSD"
 
-#: plug-ins/file-psd/psd-save.c:2096
+#: plug-ins/file-psd/psd-save.c:2093
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
@@ -7632,7 +7632,7 @@ msgstr[1] ""
 "A contagem do diretório TIFF “%s” por cabeçalho falhou, embora pareça haver "
 "%d páginas. A tentar carregar o ficheiro com essa suposição."
 
-#: plug-ins/file-tiff/file-tiff-load.c:455
+#: plug-ins/file-tiff/file-tiff-load.c:457
 msgid "Extra channels with unspecified data."
 msgstr "Canais extra com dados não especificados."
 
@@ -7643,17 +7643,17 @@ msgstr "Canais extra com dados não especificados."
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:467
+#: plug-ins/file-tiff/file-tiff-load.c:469
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "TIFF não conforme: canais extras sem campo “ExtraSamples”."
 
-#: plug-ins/file-tiff/file-tiff-load.c:549
+#: plug-ins/file-tiff/file-tiff-load.c:551
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 "Não foi possível ler a página %d de %d. A imagem pode estar corrompida.\n"
 
-#: plug-ins/file-tiff/file-tiff-load.c:578
+#: plug-ins/file-tiff/file-tiff-load.c:580
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7663,7 +7663,7 @@ msgstr ""
 "camada. As camadas abaixo da camada nº %d serão interpretadas como não "
 "lineares."
 
-#: plug-ins/file-tiff/file-tiff-load.c:586
+#: plug-ins/file-tiff/file-tiff-load.c:588
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7673,36 +7673,36 @@ msgstr ""
 "a resultados incorretos, considere carregar cada camada como uma imagem "
 "separada."
 
-#: plug-ins/file-tiff/file-tiff-load.c:598
+#: plug-ins/file-tiff/file-tiff-load.c:600
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 "Profundidade de cor suspeita: %d para a página %d. A imagem pode estar "
 "corrompida."
 
-#: plug-ins/file-tiff/file-tiff-load.c:672
+#: plug-ins/file-tiff/file-tiff-load.c:674
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "Profundidade de cor não suportada: %d para a página %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:687
+#: plug-ins/file-tiff/file-tiff-load.c:689
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "Não foi possível obter a largura da imagem de '%s'"
 
-#: plug-ins/file-tiff/file-tiff-load.c:695
+#: plug-ins/file-tiff/file-tiff-load.c:697
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "Não foi possível obter o comprimento da imagem de “%s”"
 
-#: plug-ins/file-tiff/file-tiff-load.c:703
+#: plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 "Dimensões de imagem inválidas (%u x %u) para a página %d. A imagem pode "
 "estar corrompida."
 
-#: plug-ins/file-tiff/file-tiff-load.c:724
+#: plug-ins/file-tiff/file-tiff-load.c:726
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
@@ -7711,7 +7711,7 @@ msgstr ""
 "Não foi possível obter fotometria de “%s”. A imagem é comprimida com CCITT, "
 "a supor que “min-is-white”"
 
-#: plug-ins/file-tiff/file-tiff-load.c:731
+#: plug-ins/file-tiff/file-tiff-load.c:733
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "Não foi possível obter fotometria de “%s”. A supor que “min-is-black”"
@@ -7719,7 +7719,7 @@ msgstr "Não foi possível obter fotometria de “%s”. A supor que “min-is-b
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:763
+#: plug-ins/file-tiff/file-tiff-load.c:765
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
@@ -7727,7 +7727,7 @@ msgstr ""
 "Tipo de canal alfa não definido para %s. A supor que o alfa não seja pré-"
 "multiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:788
+#: plug-ins/file-tiff/file-tiff-load.c:790
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7738,75 +7738,89 @@ msgstr ""
 "“ExtraSamples” não está definido e no entanto existem canais extras. A supor "
 "que o primeiro canal extra seja alfa não pré-multiplicado."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1076
+#: plug-ins/file-tiff/file-tiff-load.c:1078
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 "Compressão “%u” inválida ou desconhecida. A definir a compressão para "
 "“nenhuma compressão”."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1134
+#: plug-ins/file-tiff/file-tiff-load.c:1136
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "Não foi possível criar uma nova imagem: %s"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1166
+#: plug-ins/file-tiff/file-tiff-load.c:1168
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-%d de %d páginas"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1342
+#: plug-ins/file-tiff/file-tiff-load.c:1344
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "Tipo de unidade de resolução desconhecido %d, a assumir ppp (dpi)"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1352
+#: plug-ins/file-tiff/file-tiff-load.c:1354
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "Aviso: resolução especificada sem tipo de unidade, a assumir ppp (dpi)"
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1360
+#: plug-ins/file-tiff/file-tiff-load.c:1362
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "Aviso: nenhuma informação de resolução de y, a assumir o mesmo que x"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1422
+#: plug-ins/file-tiff/file-tiff-load.c:1379
+msgid "Invalid image resolution info, using default"
+msgstr "Informação de resolução de imagem inválida, usando o padrão"
+
+#: plug-ins/file-tiff/file-tiff-load.c:1438
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "Não foi possível obter os mapas de cores de “%s”"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1567
+#. Validate number of channels to the same maximum as we use for
+#. * Photoshop. A higher number most likely means a corrupt image
+#. * and can cause GIMP to become unresponsive and/or stuck.
+#. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
+#.
+#: plug-ins/file-tiff/file-tiff-load.c:1532
+#, c-format
+msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
+msgstr "Número suspeito de canais extra: %d. Imagem possivelmente corrompida."
+
+#: plug-ins/file-tiff/file-tiff-load.c:1594
 msgid "TIFF Channel"
 msgstr "Canal TIFF"
 
-#: plug-ins/file-tiff/file-tiff-load.c:1720
+#: plug-ins/file-tiff/file-tiff-load.c:1747
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 "Não puderam ser lidos nenhuns dados do TIFF “%s”. Provavelmente o ficheiro "
 "está corrompido."
 
-#: plug-ins/file-tiff/file-tiff-load.c:1791
+#: plug-ins/file-tiff/file-tiff-load.c:1818
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s: formato de imagem não suportado, nenhum carregador RGBA disponível"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2103
-#: plug-ins/file-tiff/file-tiff-load.c:2300
+#: plug-ins/file-tiff/file-tiff-load.c:2130
+#: plug-ins/file-tiff/file-tiff-load.c:2327
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "A leitura do bloco falhou. A imagem pode estar corrompida na linha %d."
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2112
-#: plug-ins/file-tiff/file-tiff-load.c:2309
+#: plug-ins/file-tiff/file-tiff-load.c:2139
+#: plug-ins/file-tiff/file-tiff-load.c:2336
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 "A leitura do “scanline” falhou. A imagem pode estar corrompida na linha %d."
 
-#: plug-ins/file-tiff/file-tiff-load.c:2658
+#: plug-ins/file-tiff/file-tiff-load.c:2685
 msgid "Import from TIFF"
 msgstr "Importar de imagem TIFF"
 
@@ -7814,23 +7828,23 @@ msgstr "Importar de imagem TIFF"
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff-load.c:2715
+#: plug-ins/file-tiff/file-tiff-load.c:2742
 msgid "_Keep empty space around imported layers"
 msgstr "_Manter espaço vazio em torno das camadas importadas"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2732
+#: plug-ins/file-tiff/file-tiff-load.c:2759
 msgid "Process extra channel as:"
 msgstr "Processar canal extra como:"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2735
+#: plug-ins/file-tiff/file-tiff-load.c:2762
 msgid "_Non-premultiplied alpha"
 msgstr "Alfa não pré-_multiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2736
+#: plug-ins/file-tiff/file-tiff-load.c:2763
 msgid "Pre_multiplied alpha"
 msgstr "Alfa pré-_multiplicado"
 
-#: plug-ins/file-tiff/file-tiff-load.c:2737
+#: plug-ins/file-tiff/file-tiff-load.c:2764
 msgid "Channe_l"
 msgstr "Cana_l"
 
