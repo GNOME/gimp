@@ -24,6 +24,10 @@
 #include <json-glib/json-glib.h>
 #include <stdio.h>
 
+#ifdef PLATFORM_OSX
+#import <Foundation/Foundation.h>
+#endif /* PLATFORM_OSX */
+
 #ifndef GIMP_CONSOLE_COMPILATION
 #include <gtk/gtk.h>
 #endif
@@ -42,21 +46,28 @@
 #include "gimp-update.h"
 #include "gimp-version.h"
 
-static gboolean gimp_update_known           (GimpCoreConfig   *config,
-                                             const gchar      *last_version,
-                                             gint64            release_timestamp,
-                                             gint              build_revision,
-                                             const gchar      *comment);
-static gboolean gimp_version_break          (const gchar      *v,
-                                             gint             *major,
-                                             gint             *minor,
-                                             gint             *micro);
-static void     gimp_check_updates_callback (GObject          *source,
-                                             GAsyncResult     *result,
-                                             gpointer          user_data);
-static void     gimp_update_about_dialog    (GimpCoreConfig   *config,
-                                             const GParamSpec *pspec,
-                                             gpointer          user_data);
+static gboolean      gimp_update_known           (GimpCoreConfig   *config,
+                                                  const gchar      *last_version,
+                                                  gint64            release_timestamp,
+                                                  gint              build_revision,
+                                                  const gchar      *comment);
+static gboolean      gimp_version_break          (const gchar      *v,
+                                                  gint             *major,
+                                                  gint             *minor,
+                                                  gint             *micro);
+static void          gimp_check_updates_process  (const gchar      *source,
+                                                  gchar            *file_contents,
+                                                  gsize             file_length,
+                                                  GimpCoreConfig   *config);
+#ifndef PLATFORM_OSX
+static void          gimp_check_updates_callback (GObject          *source,
+                                                  GAsyncResult     *result,
+                                                  gpointer          user_data);
+#endif /* PLATFORM_OSX */
+static void          gimp_update_about_dialog    (GimpCoreConfig   *config,
+                                                  const GParamSpec *pspec,
+                                                  gpointer          user_data);
+static const gchar * gimp_get_version_url        (void);
 
 /* Private Functions */
 
@@ -202,6 +213,160 @@ gimp_version_break (const gchar *v,
 }
 
 static void
+gimp_check_updates_process (const gchar    *source,
+                            gchar          *file_contents,
+                            gsize           file_length,
+                            GimpCoreConfig *config)
+{
+  const gchar *platform;
+  const gchar *last_version      = NULL;
+  const gchar *release_date      = NULL;
+  const gchar *build_comment     = NULL;
+  GError      *error             = NULL;
+  gint64       release_timestamp = 0;
+  gint         build_revision    = 0;
+  JsonParser  *parser;
+  JsonPath    *path;
+  JsonNode    *result;
+  JsonArray   *versions;
+  gint         i;
+
+  /* For Windows and macOS, let's look if installers are available.
+    * For other platforms, let's just look for source release.
+    */
+  if (g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "windows") == 0 ||
+      g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "macos") == 0)
+    platform = GIMP_BUILD_PLATFORM_FAMILY;
+  else
+    platform = "source";
+
+  parser = json_parser_new ();
+  if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
+    {
+      g_printerr ("%s: parsing of %s failed: %s\n", G_STRFUNC,
+                  source, error->message);
+      g_free (file_contents);
+      g_clear_object (&parser);
+      g_clear_error (&error);
+
+      return;
+    }
+
+  path = json_path_new ();
+  /* Ideally we could just use Json path filters like this to
+    * retrieve only released binaries for a given platform:
+    * g_strdup_printf ("$['STABLE'][?(@.%s)]['version']", platform);
+    * json_array_get_string_element (result, 0);
+    * And that would be it! We'd have our last release for given
+    * platform.
+    * Unfortunately json-glib does not support filter syntax, so we
+    * end up looping through releases.
+    */
+  if (! json_path_compile (path, "$['STABLE'][*]", &error))
+    {
+#ifdef GIMP_UNSTABLE
+      g_printerr("Path compilation failed: %s\n", error->message);
+#endif
+      g_free (file_contents);
+      g_clear_object (&parser);
+      g_clear_error (&error);
+
+      return;
+    }
+  result = json_path_match (path, json_parser_get_root (parser));
+  g_return_if_fail (JSON_NODE_HOLDS_ARRAY (result));
+
+  versions = json_node_get_array (result);
+  for (i = 0; i < (gint) json_array_get_length (versions); i++)
+    {
+      JsonObject *version;
+
+      /* Note that we don't actually look for the highest version,
+        * but for the highest version for which a build for your
+        * platform (and optional build-id) is available.
+        *
+        * So we loop through the version list then the build array
+        * and break at first compatible release, since JSON arrays
+        * are ordered.
+        */
+      version = json_array_get_object_element (versions, i);
+      if (json_object_has_member (version, platform))
+        {
+          JsonArray *builds;
+          gint       j;
+
+          builds = json_object_get_array_member (version, platform);
+
+          for (j = 0; j < (gint) json_array_get_length (builds); j++)
+            {
+              const gchar *build_id = NULL;
+              JsonObject  *build;
+
+              build = json_array_get_object_element (builds, j);
+              if (json_object_has_member (build, "build-id"))
+                build_id = json_object_get_string_member (build, "build-id");
+              if (g_strcmp0 (build_id, GIMP_BUILD_ID) == 0)
+                {
+                  /* Release date is the build date if any set,
+                    * otherwise the main version release date.
+                    */
+                  if (json_object_has_member (build, "date"))
+                    release_date = json_object_get_string_member (build, "date");
+                  else
+                    release_date = json_object_get_string_member (version, "date");
+
+                  /* These are optional data. */
+                  if (json_object_has_member (build, "revision"))
+                    build_revision = json_object_get_int_member (build, "revision");
+                  if (json_object_has_member (build, "comment"))
+                    build_comment = json_object_get_string_member (build, "comment");
+                  break;
+                }
+            }
+
+          if (release_date)
+            {
+              last_version = json_object_get_string_member (version, "version");
+              break;
+            }
+        }
+    }
+
+  if (last_version && release_date)
+    {
+      GDateTime *datetime;
+      gchar     *str;
+
+      str = g_strdup_printf ("%s 00:00:00Z", release_date);
+      datetime = g_date_time_new_from_iso8601 (str, NULL);
+      g_free (str);
+
+      if (datetime)
+        {
+          release_timestamp = g_date_time_to_unix (datetime);
+          g_date_time_unref (datetime);
+        }
+      else
+        {
+          /* JSON file data bug. */
+          g_printerr ("%s: release date for version %s not properly formatted: %s\n",
+                      G_STRFUNC, last_version, release_date);
+
+          last_version   = NULL;
+          release_date   = NULL;
+          build_revision = 0;
+          build_comment  = NULL;
+        }
+    }
+  gimp_update_known (config, last_version, release_timestamp, build_revision, build_comment);
+
+  g_object_unref (path);
+  g_object_unref (parser);
+  g_free (file_contents);
+}
+
+#ifndef PLATFORM_OSX
+static void
 gimp_check_updates_callback (GObject      *source,
                              GAsyncResult *result,
                              gpointer      user_data)
@@ -215,150 +380,7 @@ gimp_check_updates_callback (GObject      *source,
                                    &file_contents, &file_length,
                                    NULL, &error))
     {
-      const gchar *platform;
-      const gchar *last_version      = NULL;
-      const gchar *release_date      = NULL;
-      const gchar *build_comment     = NULL;
-      gint64       release_timestamp = 0;
-      gint         build_revision    = 0;
-      JsonParser  *parser;
-      JsonPath    *path;
-      JsonNode    *result;
-      JsonArray   *versions;
-      gint         i;
-
-      /* For Windows and macOS, let's look if installers are available.
-       * For other platforms, let's just look for source release.
-       */
-      if (g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "windows") == 0 ||
-          g_strcmp0 (GIMP_BUILD_PLATFORM_FAMILY, "macos") == 0)
-        platform = GIMP_BUILD_PLATFORM_FAMILY;
-      else
-        platform = "source";
-
-      parser = json_parser_new ();
-      if (! json_parser_load_from_data (parser, file_contents, file_length, &error))
-        {
-          g_printerr ("%s: parsing of %s failed: %s\n", G_STRFUNC,
-                      g_file_get_uri (G_FILE (source)), error->message);
-          g_free (file_contents);
-          g_clear_object (&parser);
-          g_clear_error (&error);
-
-          return;
-        }
-
-      path = json_path_new ();
-      /* Ideally we could just use Json path filters like this to
-       * retrieve only released binaries for a given platform:
-       * g_strdup_printf ("$['STABLE'][?(@.%s)]['version']", platform);
-       * json_array_get_string_element (result, 0);
-       * And that would be it! We'd have our last release for given
-       * platform.
-       * Unfortunately json-glib does not support filter syntax, so we
-       * end up looping through releases.
-       */
-      if (! json_path_compile (path, "$['STABLE'][*]", &error))
-        {
-#ifdef GIMP_UNSTABLE
-          g_printerr("Path compilation failed: %s\n", error->message);
-#endif
-          g_free (file_contents);
-          g_clear_object (&parser);
-          g_clear_error (&error);
-
-          return;
-        }
-      result = json_path_match (path, json_parser_get_root (parser));
-      g_return_if_fail (JSON_NODE_HOLDS_ARRAY (result));
-
-      versions = json_node_get_array (result);
-      for (i = 0; i < (gint) json_array_get_length (versions); i++)
-        {
-          JsonObject *version;
-
-          /* Note that we don't actually look for the highest version,
-           * but for the highest version for which a build for your
-           * platform (and optional build-id) is available.
-           *
-           * So we loop through the version list then the build array
-           * and break at first compatible release, since JSON arrays
-           * are ordered.
-           */
-          version = json_array_get_object_element (versions, i);
-          if (json_object_has_member (version, platform))
-            {
-              JsonArray *builds;
-              gint       j;
-
-              builds = json_object_get_array_member (version, platform);
-
-              for (j = 0; j < (gint) json_array_get_length (builds); j++)
-                {
-                  const gchar *build_id = NULL;
-                  JsonObject  *build;
-
-                  build = json_array_get_object_element (builds, j);
-                  if (json_object_has_member (build, "build-id"))
-                    build_id = json_object_get_string_member (build, "build-id");
-                  if (g_strcmp0 (build_id, GIMP_BUILD_ID) == 0)
-                    {
-                      /* Release date is the build date if any set,
-                       * otherwise the main version release date.
-                       */
-                      if (json_object_has_member (build, "date"))
-                        release_date = json_object_get_string_member (build, "date");
-                      else
-                        release_date = json_object_get_string_member (version, "date");
-
-                      /* These are optional data. */
-                      if (json_object_has_member (build, "revision"))
-                        build_revision = json_object_get_int_member (build, "revision");
-                      if (json_object_has_member (build, "comment"))
-                        build_comment = json_object_get_string_member (build, "comment");
-                      break;
-                    }
-                }
-
-              if (release_date)
-                {
-                  last_version = json_object_get_string_member (version, "version");
-                  break;
-                }
-            }
-        }
-
-      if (last_version && release_date)
-        {
-          GDateTime *datetime;
-          gchar     *str;
-
-          str = g_strdup_printf ("%s 00:00:00Z", release_date);
-          datetime = g_date_time_new_from_iso8601 (str, NULL);
-          g_free (str);
-
-          if (datetime)
-            {
-              release_timestamp = g_date_time_to_unix (datetime);
-              g_date_time_unref (datetime);
-            }
-          else
-            {
-              /* JSON file data bug. */
-              g_printerr ("%s: release date for version %s not properly formatted: %s\n",
-                          G_STRFUNC, last_version, release_date);
-
-              last_version   = NULL;
-              release_date   = NULL;
-              build_revision = 0;
-              build_comment  = NULL;
-            }
-        }
-      gimp_update_known (config, last_version, release_timestamp, build_revision, build_comment);
-
-      g_object_unref (path);
-      g_object_unref (parser);
-      g_free (file_contents);
+      gimp_check_updates_process (g_file_get_uri (G_FILE (source)), file_contents, file_length, config);
     }
   else
     {
@@ -367,6 +389,7 @@ gimp_check_updates_callback (GObject      *source,
       g_clear_error (&error);
     }
 }
+#endif /* PLATFORM_OSX */
 
 static void
 gimp_update_about_dialog (GimpCoreConfig   *config,
@@ -387,6 +410,19 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
                  config->last_known_release);
 #endif
     }
+}
+
+static const gchar *
+gimp_get_version_url ()
+{
+#ifdef GIMP_UNSTABLE
+  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
+    return g_getenv ("GIMP_DEV_VERSIONS_JSON");
+  else
+    return "https://testing.gimp.org/gimp_versions.json";
+#else
+  return "https://www.gimp.org/gimp_versions.json";
+#endif
 }
 
 /* Public Functions */
@@ -451,18 +487,59 @@ gimp_update_auto_check (GimpCoreConfig *config)
 void
 gimp_update_check (GimpCoreConfig *config)
 {
+#ifdef PLATFORM_OSX
+  const gchar *gimp_versions;
+
+  gimp_versions = gimp_get_version_url ();
+
+  NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
+  [request setURL:[NSURL URLWithString:@(gimp_versions)]];
+  [request setHTTPMethod:@"GET"];
+
+  NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+  /* completionHandler is called on a background thread */
+  [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+    NSString *reply;
+    gchar    *json_result;
+
+    if (error)
+      {
+        g_printerr ("%s: gimp_update_check failed to get update from %s, with error: %s\n",
+                    G_STRFUNC,
+                    gimp_versions,
+                    [error.localizedDescription UTF8String]);
+        return;
+      }
+
+    if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
+        NSInteger statusCode = [(NSHTTPURLResponse *)response statusCode];
+
+        if (statusCode != 200)
+          {
+            g_printerr ("%s: gimp_update_check failed to get update from %s, with status code: %d\n",
+                        G_STRFUNC,
+                        gimp_versions,
+                        (int)statusCode);
+            return;
+          }
+    }
+
+    reply       = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    json_result = g_strdup ([reply UTF8String]); /* will be freed by gimp_check_updates_process */
+
+    gimp_check_updates_process (gimp_versions,
+                                json_result,
+                                [reply lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
+                                config);
+  }] resume];
+#else
   GFile *gimp_versions;
 
-#ifdef GIMP_UNSTABLE
-  if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
-    gimp_versions = g_file_new_for_path (g_getenv ("GIMP_DEV_VERSIONS_JSON"));
-  else
-    gimp_versions = g_file_new_for_uri ("https://testing.gimp.org/gimp_versions.json");
-#else
-  gimp_versions = g_file_new_for_uri ("https://www.gimp.org/gimp_versions.json");
-#endif
+  gimp_versions = g_file_new_for_uri (gimp_get_version_url ());
+
   g_file_load_contents_async (gimp_versions, NULL, gimp_check_updates_callback, config);
   g_object_unref (gimp_versions);
+#endif /* PLATFORM_OSX */
 }
 
 /*
