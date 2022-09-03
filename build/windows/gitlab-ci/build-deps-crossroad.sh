@@ -40,7 +40,7 @@ crossroad install appstream-glib              \
                   libmypaint mypaint-brushes  \
                   libwebp                     \
                   libwmf                      \
-                  openexr ilmbase             \
+                  openexr                     \
                   poppler poppler-data        \
                   xpm-nox
 
