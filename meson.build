@@ -59,8 +59,13 @@ conf.set_quoted('GETTEXT_PACKAGE', gettext_package)
 
 conf.set_quoted('GIMP_VERSION', gimp_version)
 
+# GIMP_UNSTABLE tells if we are on an unstable or stable development branch.
 stable = (gimp_app_version_minor % 2 == 0)
 conf.set('GIMP_UNSTABLE', stable ? false : 1)
+
+# GIMP_RELEASE tells if this is a release or in-between release (git) code.
+release = (gimp_app_version_micro % 2 == 0)
+conf.set('GIMP_RELEASE', release ? 1 : false)
 
 versionconfig = configuration_data()
 versionconfig.set('GIMP_FULL_NAME',     full_name)

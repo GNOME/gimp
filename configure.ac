@@ -43,6 +43,9 @@ m4_define([gimp_unstable],
 m4_define([gimp_stable],
           m4_if(m4_eval(gimp_minor_version % 2), [0], [yes], [no]))
 
+m4_define([gimp_release],
+          m4_if(m4_eval(gimp_micro_version % 2), [0], [yes], [no]))
+
 m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
@@ -129,6 +132,7 @@ GIMP_DATA_VERSION=gimp_data_version
 GIMP_SYSCONF_VERSION=gimp_sysconf_version
 GIMP_USER_VERSION=gimp_user_version
 GIMP_UNSTABLE=gimp_unstable
+GIMP_RELEASE=gimp_release
 GIMP_FULL_NAME="gimp_full_name"
 AC_SUBST(GIMP_MAJOR_VERSION)
 AC_SUBST(GIMP_MINOR_VERSION)
@@ -148,6 +152,7 @@ AC_SUBST(GIMP_DATA_VERSION)
 AC_SUBST(GIMP_SYSCONF_VERSION)
 AC_SUBST(GIMP_USER_VERSION)
 AC_SUBST(GIMP_UNSTABLE)
+AC_SUBST(GIMP_RELEASE)
 AC_SUBST(GIMP_FULL_NAME)
 
 # Version strings used in some source, though it seems unnecessary to
@@ -234,10 +239,15 @@ AC_SUBST(LIBUNWIND_REQUIRED_VERSION)
 # and automake conditional.
 if test "x$GIMP_UNSTABLE" = "xyes"; then
   AC_DEFINE(GIMP_UNSTABLE, 1,
-            [Define to 1 if this is an unstable version of GIMP])
+            [Define to 1 if this is code from the unstable branch of GIMP])
 fi
 AM_CONDITIONAL(GIMP_UNSTABLE, test "x$GIMP_UNSTABLE" = "xyes")
 
+if test "x$GIMP_RELEASE" = "xyes"; then
+  AC_DEFINE(GIMP_RELEASE, 1,
+            [Define to 1 if this is a release version of GIMP])
+fi
+AM_CONDITIONAL(GIMP_RELEASE, test "x$GIMP_RELEASE" = "xyes")
 
 # libtool versioning
 m4_define([lt_current], [m4_eval(100 * gimp_minor_version + gimp_micro_version - gimp_interface_age)])
