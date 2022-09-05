@@ -75,6 +75,7 @@ pdb_wrappers_sources = [
   'gimpedit_pdb.c',
   'gimpfile_pdb.c',
   'gimpfloatingsel_pdb.c',
+  'gimpfont_pdb.c',
   'gimpfonts_pdb.c',
   'gimpfontselect_pdb.c',
   'gimpgimprc_pdb.c',
@@ -127,6 +128,7 @@ pdb_wrappers_headers = [
   'gimpedit_pdb.h',
   'gimpfile_pdb.h',
   'gimpfloatingsel_pdb.h',
+  'gimpfont_pdb.h',
   'gimpfonts_pdb.h',
   'gimpfontselect_pdb.h',
   'gimpgimprc_pdb.h',
@@ -189,6 +191,8 @@ libgimp_sources_introspectable = [
   'gimpprocedure.c',
   'gimpprocedureconfig.c',
   'gimpprogress.c',
+  'gimpresource.c',
+  'gimpresource-subclass.c',
   'gimpsaveprocedure.c',
   'gimpselection.c',
   'gimptextlayer.c',
@@ -239,12 +243,15 @@ libgimp_headers_introspectable = [
   'gimploadprocedure.h',
   'gimppaletteselect.h',
   'gimpparamspecs.h',
+  'gimpparamspecs-resource.h',
   'gimppatternselect.h',
   'gimppdb.h',
   'gimpplugin.h',
   'gimpprocedure.h',
   'gimpprocedureconfig.h',
   'gimpprogress.h',
+  'gimpresource.h',
+  'gimpresource-subclass.h',
   'gimpsaveprocedure.h',
   'gimpselection.h',
   'gimptextlayer.h',
@@ -260,6 +267,7 @@ libgimp_headers = [
 
 libgimpui_sources_introspectable = [
   'gimpaspectpreview.c',
+  'gimppropbrushchooser.c',
   'gimpbrushselectbutton.c',
   'gimpdrawablepreview.c',
   'gimpexport.c',
@@ -412,6 +420,7 @@ libgimp_introspectable_files = [
   libgimpmath_introspectable,
   libgimpmodule_introspectable,
   'gimpparamspecs-body.c',
+  'gimpparamspecs-body-resource.c',
 ]
 
 libgimpui_introspectable_files = [

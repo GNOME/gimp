@@ -23,6 +23,7 @@ libappinternalprocs_sources = [
   'edit-cmds.c',
   'file-cmds.c',
   'floating-sel-cmds.c',
+  'font-cmds.c',
   'font-select-cmds.c',
   'fonts-cmds.c',
   'gimp-cmds.c',

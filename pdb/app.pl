@@ -239,6 +239,56 @@ gimp_param_spec_image ("$name",
                        $flags)
 CODE
     }
+    elsif ($pdbtype eq 'brush') {
+	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+	$pspec = <<CODE;
+gimp_param_spec_brush ("$name",
+                       "$nick",
+                       "$blurb",
+                       $none_ok,
+                       $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'font') {
+  $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $pspec = <<CODE;
+gimp_param_spec_font ("$name",
+                      "$nick",
+                      "$blurb",
+                      $none_ok,
+                      $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'gradient') {
+  $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $pspec = <<CODE;
+gimp_param_spec_gradient ("$name",
+                          "$nick",
+                          "$blurb",
+                          $none_ok,
+                          $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'palette') {
+  $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $pspec = <<CODE;
+gimp_param_spec_palette ("$name",
+                         "$nick",
+                         "$blurb",
+                         $none_ok,
+                         $flags)
+CODE
+    }
+    elsif ($pdbtype eq 'pattern') {
+  $none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
+  $pspec = <<CODE;
+gimp_param_spec_pattern ("$name",
+                         "$nick",
+                         "$blurb",
+                         $none_ok,
+                         $flags)
+CODE
+    }
     elsif ($pdbtype eq 'item') {
 	$none_ok = exists $arg->{none_ok} ? 'TRUE' : 'FALSE';
 	$pspec = <<CODE;
@@ -793,7 +843,7 @@ CODE
 	}
 	else {
 	    my $invoker = "";
-	
+
 	    $invoker .= ' ' x 2 . "GimpValueArray *return_vals;\n" if scalar @outargs;
 	    $invoker .= &declare_args($proc, $out, 0, qw(inargs));
 	    $invoker .= &declare_args($proc, $out, 1, qw(outargs));

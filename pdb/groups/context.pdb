@@ -24,11 +24,11 @@ sub pdb_misc {
 }
 
 sub context_push {
-    $blurb = 'Pushes a context to the top of the plug-in\'s context stack.';
+    $blurb = 'Pushes a context onto the top of the plug-in\'s context stack.';
 
     $help = <<'HELP';
-This procedure creates a new context by copying the current context. This
-copy becomes the new current context for the calling plug-in until it is
+Creates a new context by copying the current context.
+The copy becomes the new current context for the calling plug-in until it is
 popped again using gimp_context_pop().
 HELP
 
@@ -52,9 +52,9 @@ sub context_pop {
     $blurb = 'Pops the topmost context from the plug-in\'s context stack.';
 
     $help = <<'HELP';
-This procedure removes the topmost context from the plug-in's context
-stack.  The context that was active before the corresponding call to
-gimp_context_push() becomes the new current context of the plug-in.
+Removes the topmost context from the plug-in's context stack.
+The next context on the stack becomes the new current context of the plug-in,
+that is, the context that was active before the corresponding call to gimp_context_push()
 HELP
 
     &pdb_misc;
@@ -77,8 +77,8 @@ sub context_set_defaults {
     $blurb = 'Reset context settings to their default values.';
 
     $help = <<'HELP';
-This procedure resets context settings used by various procedures to their
-default value. This procedure will usually be called after a context push
+Resets context settings used by various procedures to their
+default value. You should usually call this after a context push
 so that a script which calls procedures affected by context settings will
 not be affected by changes in the global context.
 HELP
@@ -101,8 +101,8 @@ sub context_list_paint_methods {
     $blurb = 'Lists the available paint methods.';
 
     $help = <<'HELP';
-This procedure lists the names of the available paint methods. Any
-of the results can be used for gimp_context_set_paint_method().
+Lists the names of the available paint methods.
+Any of the names can be used for gimp_context_set_paint_method().
 HELP
 
     &simon_pdb_misc('2007', '2.4');
@@ -122,10 +122,10 @@ CODE
 }
 
 sub context_get_paint_method {
-    $blurb = 'Retrieve the currently active paint method.';
+    $blurb = 'Get the currently active paint method.';
 
     $help = <<'HELP';
-This procedure returns the name of the currently active paint method.
+Returns the name of the currently active paint method.
 HELP
 
     &mitch_pdb_misc('2005', '2.4');
@@ -150,15 +150,13 @@ CODE
 }
 
 sub context_set_paint_method {
-    $blurb = 'Set the specified paint method as the active paint method.';
+    $blurb = 'Set the active paint method.';
 
     $help = <<'HELP';
-This procedure allows the active paint method to be set by specifying
-its name.  The name is simply a string which corresponds to one of the
-names of the available paint methods. If there is no matching method
-found, this procedure will return an error.  Otherwise, the specified
-method becomes active and will be used in all subsequent paint
-operations.
+Sets the active paint method to the named paint method.
+The paint method will be used in all subsequent paint operations.
+The name should be a name of an available paint method.
+Returns an error if no matching paint method is found.
 HELP
 
     &mitch_pdb_misc('2005', '2.4');
@@ -183,10 +181,10 @@ CODE
 }
 
 sub context_get_stroke_method {
-    $blurb = 'Retrieve the currently active stroke method.';
+    $blurb = 'Get the currently active stroke method.';
 
     $help = <<'HELP';
-This procedure returns the currently active stroke method.
+Returns the currently active stroke method.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -211,12 +209,11 @@ CODE
 }
 
 sub context_set_stroke_method {
-    $blurb = 'Set the specified stroke method as the active stroke method.';
+    $blurb = 'Set the active stroke method.';
 
     $help = <<'HELP';
-This procedure set the specified stroke method as the active stroke
-method. The new method will be used in all subsequent stroke
-operations.
+Sets the active stroke method.
+The method will be used in all subsequent stroke operations.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -244,7 +241,7 @@ sub context_get_foreground {
     $blurb = "Get the current GIMP foreground color.";
 
     $help = <<'HELP';
-This procedure returns the current GIMP foreground color. The foreground
+Returns the current GIMP foreground color. The foreground
 color is used in a variety of tools such as paint tools, blending, and bucket
 fill.
 HELP
@@ -270,7 +267,7 @@ sub context_set_foreground {
     $blurb = "Set the current GIMP foreground color.";
 
     $help = <<'HELP';
-This procedure sets the current GIMP foreground color. After this is set,
+Sets the current GIMP foreground color. After this is set,
 operations which use foreground such as paint tools, blending, and bucket fill
 will use the new value.
 HELP
@@ -296,7 +293,7 @@ sub context_get_background {
     $blurb = "Get the current GIMP background color.";
 
     $help = <<'HELP';
-This procedure returns the current GIMP background color. The background
+Returns the current GIMP background color. The background
 color is used in a variety of tools such as blending, erasing (with non-alpha
 images), and image filling.
 HELP
@@ -322,7 +319,7 @@ sub context_set_background {
     $blurb = "Set the current GIMP background color.";
 
     $help = <<'HELP';
-This procedure sets the current GIMP background color. After this is set,
+Sets the current GIMP background color. After this is set,
 operations which use background such as blending, filling images, clearing,
 and erasing (in non-alpha images) will use the new value.
 HELP
@@ -350,7 +347,7 @@ Set the current GIMP foreground and background colors to black and white.
 BLURB
 
     $help = <<'HELP';
-This procedure sets the current GIMP foreground and background colors to their
+Sets the current GIMP foreground and background colors to their
 initial default values, black and white.
 HELP
 
@@ -369,7 +366,7 @@ sub context_swap_colors {
     $blurb = 'Swap the current GIMP foreground and background colors.';
 
     $help = <<'HELP';
-This procedure swaps the current GIMP foreground and background colors, so that
+Swaps the current GIMP foreground and background colors, so that
 the new foreground color becomes the old background color and vice versa.
 HELP
 
@@ -388,7 +385,7 @@ sub context_get_opacity {
     $blurb = 'Get the opacity.';
 
     $help = <<'HELP';
-This procedure returns the opacity setting. The return
+Returns the opacity setting. The return
 value is a floating point number between 0 and 100.
 HELP
 
@@ -412,7 +409,7 @@ sub context_set_opacity {
     $blurb = 'Set the opacity.';
 
     $help = <<'HELP';
-This procedure modifies the opacity setting. The value
+Modifies the opacity setting. The value
 should be a floating point number between 0 and 100.
 HELP
 
@@ -436,7 +433,7 @@ sub context_get_paint_mode {
     $blurb = 'Get the paint mode.';
 
     $help = <<'HELP';
-This procedure returns the paint-mode setting. The return value
+Returns the paint-mode setting. The return value
 is an integer which corresponds to the values listed in the argument
 description.
 HELP
@@ -462,7 +459,7 @@ sub context_set_paint_mode {
     $blurb = 'Set the paint mode.';
 
     $help = <<'HELP';
-This procedure modifies the paint_mode setting.
+Modifies the paint_mode setting.
 HELP
 
     &pdb_misc;
@@ -489,7 +486,7 @@ sub context_get_line_width {
     $blurb = 'Get the line width setting.';
 
     $help = <<'HELP';
-This procedure returns the line width setting.
+Returns the line width setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -517,7 +514,7 @@ sub context_set_line_width {
     $blurb = 'Set the line width setting.';
 
     $help = <<'HELP';
-This procedure modifies the line width setting for stroking lines.
+Modifies the line width setting for stroking lines.
 
 
 This setting affects the following procedures:
@@ -549,7 +546,7 @@ sub context_get_line_width_unit {
     $blurb = 'Get the line width unit setting.';
 
     $help = <<'HELP';
-This procedure returns the line width unit setting.
+Returns the line width unit setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -577,7 +574,7 @@ sub context_set_line_width_unit {
     $blurb = 'Set the line width unit setting.';
 
     $help = <<'HELP';
-This procedure modifies the line width unit setting for stroking lines.
+Modifies the line width unit setting for stroking lines.
 
 
 This setting affects the following procedures:
@@ -609,7 +606,7 @@ sub context_get_line_cap_style {
     $blurb = 'Get the line cap style setting.';
 
     $help = <<'HELP';
-This procedure returns the line cap style setting.
+Returns the line cap style setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -637,7 +634,7 @@ sub context_set_line_cap_style {
     $blurb = 'Set the line cap style setting.';
 
     $help = <<'HELP';
-This procedure modifies the line cap style setting for stroking lines.
+Modifies the line cap style setting for stroking lines.
 
 
 This setting affects the following procedures:
@@ -669,7 +666,7 @@ sub context_get_line_join_style {
     $blurb = 'Get the line join style setting.';
 
     $help = <<'HELP';
-This procedure returns the line join style setting.
+Returns the line join style setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -697,8 +694,7 @@ sub context_set_line_join_style {
     $blurb = 'Set the line join style setting.';
 
     $help = <<'HELP';
-This procedure modifies the line join style setting for stroking lines.
-
+Modifies the line join style setting for stroking lines.
 
 This setting affects the following procedures:
 gimp_drawable_edit_stroke_selection(), gimp_drawable_edit_stroke_item().
@@ -729,7 +725,7 @@ sub context_get_line_miter_limit {
     $blurb = 'Get the line miter limit setting.';
 
     $help = <<'HELP';
-This procedure returns the line miter limit setting.
+Returns the line miter limit setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -757,7 +753,7 @@ sub context_set_line_miter_limit {
     $blurb = 'Set the line miter limit setting.';
 
     $help = <<'HELP';
-This procedure modifies the line miter limit setting for stroking lines.
+Modifies the line miter limit setting for stroking lines.
 
 A mitered join is converted to a bevelled join if the miter would
 extend to a distance of more than (miter-limit * line-width) from the
@@ -793,7 +789,7 @@ sub context_get_line_dash_offset {
     $blurb = 'Get the line dash offset setting.';
 
     $help = <<'HELP';
-This procedure returns the line dash offset setting.
+Returns the line dash offset setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -821,7 +817,7 @@ sub context_set_line_dash_offset {
     $blurb = 'Set the line dash offset setting.';
 
     $help = <<'HELP';
-This procedure modifies the line dash offset setting for stroking lines.
+Modifies the line dash offset setting for stroking lines.
 
 
 This setting affects the following procedures:
@@ -853,7 +849,7 @@ sub context_get_line_dash_pattern {
     $blurb = 'Get the line dash pattern setting.';
 
     $help = <<'HELP';
-This procedure returns the line dash pattern setting.
+Returns the line dash pattern setting.
 HELP
 
     &mitch_pdb_misc('2015', '2.10');
@@ -882,7 +878,7 @@ sub context_set_line_dash_pattern {
     $blurb = 'Set the line dash pattern setting.';
 
     $help = <<'HELP';
-This procedure modifies the line dash pattern setting for stroking lines.
+Modifies the line dash pattern setting for stroking lines.
 
 
 The unit of the dash pattern segments is the actual line width used
@@ -926,62 +922,52 @@ CODE
 }
 
 sub context_get_brush {
-    $blurb = 'Retrieve the currently active brush.';
+    $blurb = 'Get the currently active brush.';
 
     $help = <<'HELP';
-This procedure returns the name of the currently active brush.
-All paint operations and stroke operations use this brush to control
-the application of paint to the image.
+Returns the currently active brush.
+All paint and stroke operations use this brush.
 HELP
 
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active brush' }
+	{ name  => 'brush',
+    type  => 'brush',
+	  desc  => 'The active brush' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_context_get_brush (context);
-
-  if (brush)
-    name = g_strdup (gimp_object_get_name (brush));
-  else
-    success = FALSE;
+  brush = gimp_context_get_brush (context);
 }
 CODE
     );
 }
 
 sub context_set_brush {
-    $blurb = 'Set the specified brush as the active brush.';
+    $blurb = 'Set the active brush.';
 
     $help = <<'HELP';
-This procedure allows the active brush to be set by specifying its name.
-The name is simply a string which corresponds to one of the names of the
-installed brushes. If there is no matching brush found, this procedure will
-return an error.  Otherwise, the specified brush becomes active and will be
-used in all subsequent paint operations.
+Sets the active brush in the current context.
+The brush will be used in subsequent paint and stroke operations.
+Returns an error when the brush data was uninstalled since the brush object was created.
 HELP
 
     &pdb_misc;
 
     @inargs = (
-        { name => 'name', type => 'string', non_empty => 1,
-          desc => 'The name of the brush' }
+        { name => 'brush',
+          type => 'brush',
+          non_empty => 1, no_validate => 1,
+          desc => 'The brush' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, FALSE, error);
-
-  if (brush)
-    gimp_context_set_brush (context, brush);
-  else
-    success = FALSE;
+  gimp_context_set_brush (context, brush);
 }
 CODE
     );
@@ -1453,11 +1439,11 @@ CODE
 }
 
 sub context_get_dynamics {
-    $blurb = 'Retrieve the currently active paint dynamics.';
+    $blurb = 'Get the currently active paint dynamics.';
 
     $help = <<'HELP';
-This procedure returns the name of the currently active paint
-dynamics. If enabled, all paint operations and stroke operations use
+Returns the name of the currently active paint dynamics.
+If enabled, all paint operations and stroke operations use
 this paint dynamics to control the application of paint to the image.
 If disabled, the dynamics will be ignored during paint actions.
 
@@ -1487,22 +1473,21 @@ CODE
 }
 
 sub context_set_dynamics {
-    $blurb = 'Set the specified paint dynamics as the active paint dynamics.';
+    $blurb = 'Set the active paint dynamics.';
 
     $help = <<'HELP';
-This procedure allows the active paint dynamics to be set by
-specifying its name.  The name is simply a string which corresponds to
-one of the names of the installed paint dynamics. If there is no
-matching paint dynamics found, this procedure will return an error.
-Otherwise, the specified paint dynamics becomes active and will be
-used in all subsequent paint operations as long as dynamics are enabled.
+Sets the active paint dynamics.
+The paint dynamics will be used in all subsequent paint operations
+when dynamics are enabled.
+The name should be a name of an installed paint dynamics.
+Returns an  error if no matching paint dynamics is found.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
 
     @inargs = (
         { name => 'name', type => 'string', non_empty => 1,
-          desc => 'The name of the paint dynamics' }
+          desc => 'A name of a paint dynamics' }
     );
 
     %invoke = (
@@ -1520,10 +1505,10 @@ CODE
 }
 
 sub context_are_dynamics_enabled {
-    $blurb = 'Inform whether the currently active paint dynamics will be applied to painting.';
+    $blurb = 'Whether the currently active paint dynamics will be applied to painting.';
 
     $help = <<'HELP';
-This procedure returns whether the currently active paint dynamics (as
+Returns whether the currently active paint dynamics (as
 returned by gimp_context_get_dynamics()) is enabled.
 HELP
 
@@ -1552,11 +1537,10 @@ CODE
 }
 
 sub context_enable_dynamics {
-    $blurb = 'Set the specified paint dynamics as the active paint dynamics.';
+    $blurb = 'Enables paint dynamics using the active paint dynamics.';
 
     $help = <<'HELP';
-This procedure enables the active paint dynamics to be used in all
-subsequent paint operations.
+Enables the active paint dynamics to be used in all subsequent paint operations.
 HELP
 
     &jehan_pdb_misc('2022', '3.0');
@@ -1583,10 +1567,10 @@ CODE
 }
 
 sub context_get_mypaint_brush {
-    $blurb = 'Retrieve the currently active MyPaint brush.';
+    $blurb = 'Get the currently active MyPaint brush.';
 
     $help = <<'HELP';
-This procedure returns the name of the currently active MyPaint brush.
+Returns the name of the currently active MyPaint brush.
 HELP
 
     &mitch_pdb_misc('2016', '2.10');
@@ -1611,22 +1595,20 @@ CODE
 }
 
 sub context_set_mypaint_brush {
-    $blurb = 'Set the specified MyPaint brush as the active MyPaint brush.';
+    $blurb = 'Set a MyPaint brush as the active MyPaint brush.';
 
     $help = <<'HELP';
-This procedure allows the active MyPaint brush to be set by
-specifying its name.  The name is simply a string which corresponds to
-one of the names of the installed MyPaint brushes. If there is no
-matching MyPaint brush found, this procedure will return an error.
-Otherwise, the specified MyPaint brush becomes active and will be
-used in all subsequent MyPaint paint operations.
+Sets the active MyPaint brush to the named MyPaint brush.
+The brush will be used in all subsequent MyPaint paint operations.
+The name should be a name of an installed MyPaint brush.
+Returns an error if no matching MyPaint brush is found.
 HELP
 
     &mitch_pdb_misc('2016', '2.10');
 
     @inargs = (
         { name => 'name', type => 'string', non_empty => 1,
-          desc => 'The name of the MyPaint brush' }
+          desc => 'A name of a MyPaint brush' }
     );
 
     %invoke = (
@@ -1644,10 +1626,10 @@ CODE
 }
 
 sub context_get_pattern {
-    $blurb = 'Retrieve the currently active pattern.';
+    $blurb = 'Get the currently active pattern.';
 
     $help = <<'HELP';
-This procedure returns name of the the currently active pattern.
+Returns the active pattern in the current context.
 All clone and bucket-fill operations with patterns will use this
 pattern to control the application of paint to the image.
 HELP
@@ -1655,18 +1637,17 @@ HELP
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active pattern' }
+	{ name  => 'pattern',
+    type  => 'pattern',
+	  desc  => 'The active pattern' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_context_get_pattern (context);
+  pattern = gimp_context_get_pattern (context);
 
-  if (pattern)
-    name = g_strdup (gimp_object_get_name (pattern));
-  else
+  if (!pattern)
     success = FALSE;
 }
 CODE
@@ -1674,59 +1655,53 @@ CODE
 }
 
 sub context_set_pattern {
-    $blurb = 'Set the specified pattern as the active pattern.';
+    $blurb = 'Set the active pattern.';
 
     $help = <<'HELP';
-This procedure allows the active pattern to be set by specifying its name.
-The name is simply a string which corresponds to one of the names of the
-installed patterns. If there is no matching pattern found, this procedure will
-return an error. Otherwise, the specified pattern becomes active and will be
-used in all subsequent paint operations.
+Sets the active pattern in the current context.
+The pattern will be used in subsequent fill operations using a pattern.
+Returns an error when the pattern data was uninstalled since the pattern object was created.
 HELP
 
     &pdb_misc;
 
     @inargs = (
-        { name => 'name', type => 'string', non_empty => 1,
-          desc => 'The name of the pattern' }
+        { name => 'pattern',
+          type => 'pattern',
+          non_empty => 1, no_validate => 1,
+          desc => 'The pattern' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
-
-  if (pattern)
-    gimp_context_set_pattern (context, pattern);
-  else
-    success = FALSE;
+  gimp_context_set_pattern (context, pattern);
 }
 CODE
     );
 }
 
 sub context_get_gradient {
-    $blurb = 'Retrieve the currently active gradient.';
+    $blurb = 'Get the currently active gradient.';
 
     $help = <<'HELP';
-This procedure returns the name of the currently active gradient.
+Returns the currently active gradient.
 HELP
 
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active gradient' }
+	{ name  => 'gradient',
+    type  => 'gradient',
+	  desc  => 'The active gradient' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_context_get_gradient (context);
+  gradient = gimp_context_get_gradient (context);
 
-  if (gradient)
-    name = g_strdup (gimp_object_get_name (gradient));
-  else
+  if (!gradient)
     success = FALSE;
 }
 CODE
@@ -1734,32 +1709,27 @@ CODE
 }
 
 sub context_set_gradient {
-    $blurb = 'Sets the specified gradient as the active gradient.';
+    $blurb = 'Sets the active gradient.';
 
     $help = <<'HELP';
-This procedure lets you set the specified gradient as the active or "current"
-one. The name is simply a string which corresponds to one of the loaded
-gradients. If no matching gradient is found, this
-procedure will return an error. Otherwise, the specified gradient will become
-active and will be used for subsequent custom gradient operations.
+Sets the active gradient in the current context.
+The gradient will be used in subsequent gradient operations.
+Returns an error when the gradient data was uninstalled since the gradient object was created.
 HELP
 
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The name of the gradient' }
+    	{ name => 'gradient',
+        type => 'gradient',
+        non_empty => 1, no_validate => 1,
+    	  desc => 'The gradient' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpGradient *gradient = gimp_pdb_get_gradient (gimp, name, FALSE, error);
-
-  if (gradient)
-    gimp_context_set_gradient (context, gradient);
-  else
-    success = FALSE;
+  gimp_context_set_gradient (context, gradient);
 }
 CODE
     );
@@ -1769,7 +1739,7 @@ sub context_set_gradient_fg_bg_rgb {
     $blurb = 'Sets the built-in FG-BG RGB gradient as the active gradient.';
 
     $help = <<'HELP';
-This procedure sets the built-in FG-BG RGB gradient as the active
+Sets the built-in FG-BG RGB gradient as the active
 gradient. The gradient will be used for subsequent gradient operations.
 HELP
 
@@ -1789,7 +1759,7 @@ sub context_set_gradient_fg_bg_hsv_cw {
     $blurb = 'Sets the built-in FG-BG HSV (cw) gradient as the active gradient.';
 
     $help = <<'HELP';
-This procedure sets the built-in FG-BG HSV (cw) gradient as the active
+Sets the built-in FG-BG HSV (cw) gradient as the active
 gradient. The gradient will be used for subsequent gradient operations.
 HELP
 
@@ -1809,7 +1779,7 @@ sub context_set_gradient_fg_bg_hsv_ccw {
     $blurb = 'Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.';
 
     $help = <<'HELP';
-This procedure sets the built-in FG-BG HSV (ccw) gradient as the active
+Sets the built-in FG-BG HSV (ccw) gradient as the active
 gradient. The gradient will be used for subsequent gradient operations.
 HELP
 
@@ -1829,8 +1799,8 @@ sub context_set_gradient_fg_transparent {
     $blurb = 'Sets the built-in FG-Transparent gradient as the active gradient.';
 
     $help = <<'HELP';
-This procedure sets the built-in FG-Transparent gradient as the active
-gradient. The gradient will be used for subsequent gradient operations.
+Sets the built-in FG-Transparent gradient as the active gradient.
+The gradient will be used for subsequent gradient operations.
 HELP
 
     &mitch_pdb_misc('2018', '2.10');
@@ -2020,27 +1990,26 @@ CODE
 }
 
 sub context_get_palette {
-    $blurb = 'Retrieve the currently active palette.';
+    $blurb = 'Get the currently active palette.';
 
     $help = <<'HELP';
-This procedure returns the name of the the currently active palette.
+Returns the currently active palette.
 HELP
 
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active palette' }
+	{ name  => 'palette',
+    type  => 'palette',
+	  desc  => 'The active palette' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_context_get_palette (context);
+  palette = gimp_context_get_palette (context);
 
-  if (palette)
-    name = g_strdup (gimp_object_get_name (palette));
-  else
+  if (!palette)
     success = FALSE;
 }
 CODE
@@ -2048,92 +2017,79 @@ CODE
 }
 
 sub context_set_palette {
-    $blurb = 'Set the specified palette as the active palette.';
+    $blurb = 'Set the active palette.';
 
     $help = <<'HELP';
-This procedure allows the active palette to be set by specifying its name.
-The name is simply a string which corresponds to one of the names of the
-installed palettes. If no matching palette is found, this procedure will
-return an error. Otherwise, the specified palette becomes active and will be
-used in all subsequent palette operations.
+Sets the active palette in the current context.
+The palette will be used in subsequent paint operations.
+Returns an error when the palette data was uninstalled since the palette object was created.
 HELP
 
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The name of the palette' }
+    	{ name => 'palette',
+        type => 'palette',
+        non_empty => 1, no_validate => 1,
+    	  desc => 'The palette' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, FALSE, error);
-
-  if (palette)
-    gimp_context_set_palette (context, palette);
-  else
-    success = FALSE;
+  gimp_context_set_palette (context, palette);
 }
 CODE
     );
 }
 
+
 sub context_get_font {
-    $blurb = 'Retrieve the currently active font.';
+    $blurb = 'Get the currently active font.';
 
     $help = <<'HELP';
-This procedure returns the name of the currently active font.
+Returns the currently active font.
 HELP
 
     &pdb_misc;
 
     @outargs = (
-	{ name  => 'name', type  => 'string',
-	  desc  => 'The name of the active font' }
+	{ name  => 'font',
+    type  => 'font',
+	  desc  => 'The active font' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpFont *font = gimp_context_get_font (context);
-
-  if (font)
-    name = g_strdup (gimp_object_get_name (font));
-  else
-    success = FALSE;
+  font = gimp_context_get_font (context);
 }
 CODE
     );
 }
 
 sub context_set_font {
-    $blurb = 'Set the specified font as the active font.';
+    $blurb = 'Set the active font.';
 
     $help = <<'HELP';
-This procedure allows the active font to be set by specifying its name.
-The name is simply a string which corresponds to one of the names of the
-installed fonts. If no matching font is found, this procedure will
-return an error. Otherwise, the specified font becomes active and will be
-used in all subsequent font operations.
+Sets the active font in the current context.
+The font will be used in subsequent text operations.
+Returns an error when the font data was uninstalled since the font object was created.
 HELP
 
     &pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The name of the font' }
+    	{ name => 'font',
+        type => 'font',
+        non_empty => 1, no_validate => 1,
+    	  desc => 'The font' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpFont *font = gimp_pdb_get_font (gimp, name, error);
-
-  if (font)
-    gimp_context_set_font (context, font);
-  else
-    success = FALSE;
+  gimp_context_set_font (context, font);
 }
 CODE
     );
@@ -2143,7 +2099,7 @@ sub context_get_antialias {
     $blurb = 'Get the antialias setting.';
 
     $help = <<'HELP';
-This procedure returns the antialias setting.
+Returns the antialias setting.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -2168,7 +2124,7 @@ sub context_set_antialias {
     $blurb = 'Set the antialias setting.';
 
     $help = <<'HELP';
-This procedure modifies the antialias setting. If antialiasing is
+Modifies the antialias setting. If antialiasing is
 turned on, the edges of selected region will contain intermediate
 values which give the appearance of a sharper, less pixelized edge.
 This should be set as TRUE most of the time unless a binary-only
@@ -2205,7 +2161,7 @@ sub context_get_feather {
     $blurb = 'Get the feather setting.';
 
     $help = <<'HELP';
-This procedure returns the feather setting.
+Returns the feather setting.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -2230,7 +2186,7 @@ sub context_set_feather {
     $blurb = 'Set the feather setting.';
 
     $help = <<'HELP';
-This procedure modifies the feather setting. If the feather option is
+Modifies the feather setting. If the feather option is
 enabled, selections will be blurred before combining. The blur is a
 gaussian blur; its radii can be controlled using
 gimp_context_set_feather_radius().
@@ -2265,7 +2221,7 @@ sub context_get_feather_radius {
     $blurb = 'Get the feather radius setting.';
 
     $help = <<'HELP';
-This procedure returns the feather radius setting.
+Returns the feather radius setting.
 HELP
 
     &mitch_pdb_misc('2010', '2.8');
@@ -2293,7 +2249,7 @@ sub context_set_feather_radius {
     $blurb = 'Set the feather radius setting.';
 
     $help = <<'HELP';
-This procedure modifies the feather radius setting.
+Modifies the feather radius setting.
 
 
 This setting affects all procedures that are affected
@@ -2325,7 +2281,7 @@ sub context_get_sample_merged {
     $blurb = 'Get the sample merged setting.';
 
     $help = <<'HELP';
-This procedure returns the sample merged setting.
+Returns the sample merged setting.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2350,10 +2306,10 @@ sub context_set_sample_merged {
     $blurb = 'Set the sample merged setting.';
 
     $help = <<'HELP';
-This procedure modifies the sample merged setting. If an operation
+Modifies the sample merged setting. If an operation
 depends on the colors of the pixels present in a drawable, like when
 doing a seed fill, this setting controls whether the pixel data from
-the specified drawable is used ('sample-merged' is FALSE), or the
+the given drawable is used ('sample-merged' is FALSE), or the
 pixel data from the composite image ('sample-merged' is TRUE. This is
 equivalent to sampling for colors after merging all visible layers).
 
@@ -2385,7 +2341,7 @@ sub context_get_sample_criterion {
     $blurb = 'Get the sample criterion setting.';
 
     $help = <<'HELP';
-This procedure returns the sample criterion setting.
+Returns the sample criterion setting.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2410,7 +2366,7 @@ sub context_set_sample_criterion {
     $blurb = 'Set the sample criterion setting.';
 
     $help = <<'HELP';
-This procedure modifies the sample criterion setting. If an operation
+Modifies the sample criterion setting. If an operation
 depends on the colors of the pixels present in a drawable, like when
 doing a seed fill, this setting controls how color similarity is
 determined. SELECT_CRITERION_COMPOSITE is the default value.
@@ -2443,7 +2399,7 @@ sub context_get_sample_threshold {
     $blurb = 'Get the sample threshold setting.';
 
     $help = <<'HELP';
-This procedure returns the sample threshold setting.
+Returns the sample threshold setting.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2468,7 +2424,7 @@ sub context_set_sample_threshold {
     $blurb = 'Set the sample threshold setting.';
 
     $help = <<'HELP';
-This procedure modifies the sample threshold setting. If an operation
+Modifies the sample threshold setting. If an operation
 depends on the colors of the pixels present in a drawable, like when
 doing a seed fill, this setting controls what is "sufficiently close"
 to be considered a similar color. If the sample threshold has not been
@@ -2502,7 +2458,7 @@ sub context_get_sample_threshold_int {
     $blurb = 'Get the sample threshold setting as an integer value.';
 
     $help = <<'HELP';
-This procedure returns the sample threshold setting as an integer
+Returns the sample threshold setting as an integer
 value. See gimp_context_get_sample_threshold().
 HELP
 
@@ -2532,7 +2488,7 @@ sub context_set_sample_threshold_int {
     $blurb = 'Set the sample threshold setting as an integer value.';
 
     $help = <<'HELP';
-This procedure modifies the sample threshold setting as an integer
+Modifies the sample threshold setting as an integer
 value. See gimp_context_set_sample_threshold().
 HELP
 
@@ -2558,7 +2514,7 @@ sub context_get_sample_transparent {
     $blurb = 'Get the sample transparent setting.';
 
     $help = <<'HELP';
-This procedure returns the sample transparent setting.
+Returns the sample transparent setting.
 HELP
 
     &mitch_pdb_misc('2011', '2.8');
@@ -2583,7 +2539,7 @@ sub context_set_sample_transparent {
     $blurb = 'Set the sample transparent setting.';
 
     $help = <<'HELP';
-This procedure modifies the sample transparent setting. If an
+Modifies the sample transparent setting. If an
 operation depends on the colors of the pixels present in a drawable,
 like when doing a seed fill, this setting controls whether
 transparency is considered to be a unique selectable color. When this
@@ -2617,7 +2573,7 @@ sub context_get_diagonal_neighbors {
     $blurb = 'Get the diagonal neighbors setting.';
 
     $help = <<'HELP';
-This procedure returns the diagonal neighbors setting.
+Returns the diagonal neighbors setting.
 HELP
 
     $author = 'Ell';
@@ -2645,7 +2601,7 @@ sub context_set_diagonal_neighbors {
     $blurb = 'Set the diagonal neighbors setting.';
 
     $help = <<'HELP';
-This procedure modifies the diagonal neighbors setting. If the affected
+Modifies the diagonal neighbors setting. If the affected
 region of an operation is based on a seed point, like when doing a seed
 fill, then, when this setting is TRUE, all eight neighbors of each pixel
 are considered when calculating the affected region; in contrast, when
@@ -2682,7 +2638,7 @@ sub context_get_distance_metric {
     $blurb = 'Get the distance metric used in some computations.';
 
     $help = <<'HELP';
-This procedure returns the distance metric in the current context.
+Returns the distance metric in the current context.
 See gimp_context_set_distance_metric() to know more about its usage.
 HELP
 
@@ -2708,7 +2664,7 @@ sub context_set_distance_metric {
     $blurb = 'Set the distance metric used in some computations.';
 
     $help = <<'HELP';
-This procedure modifies the distance metric used in some computations,
+Modifies the distance metric used in some computations,
 such as gimp_drawable_edit_gradient_fill(). In particular, it does not
 change the metric used in generic distance computation on canvas, as
 in the Measure tool.
@@ -2740,7 +2696,7 @@ sub context_get_interpolation {
     $blurb = 'Get the interpolation type.';
 
     $help = <<'HELP';
-This procedure returns the interpolation setting. The return value
+Returns the interpolation setting. The return value
 is an integer which corresponds to the values listed in the argument
 description. If the interpolation has not been set explicitly by
 gimp_context_set_interpolation(), the default interpolation set in
@@ -2769,7 +2725,7 @@ sub context_set_interpolation {
     $blurb = 'Set the interpolation type.';
 
     $help = <<'HELP';
-This procedure modifies the interpolation setting.
+Modifies the interpolation setting.
 
 
 This setting affects affects the following procedures:
@@ -2801,7 +2757,7 @@ sub context_get_transform_direction {
     $blurb = 'Get the transform direction.';
 
     $help = <<'HELP';
-This procedure returns the transform direction. The return value
+Returns the transform direction. The return value
 is an integer which corresponds to the values listed in the argument
 description.
 HELP
@@ -2828,7 +2784,7 @@ sub context_set_transform_direction {
     $blurb = 'Set the transform direction.';
 
     $help = <<'HELP';
-This procedure modifies the transform direction setting.
+Modifies the transform direction setting.
 
 
 This setting affects affects the following procedures:
@@ -2860,7 +2816,7 @@ sub context_get_transform_resize {
     $blurb = 'Get the transform resize type.';
 
     $help = <<'HELP';
-This procedure returns the transform resize setting. The return value
+Returns the transform resize setting. The return value
 is an integer which corresponds to the values listed in the argument
 description.
 HELP
@@ -2887,7 +2843,7 @@ sub context_set_transform_resize {
     $blurb = 'Set the transform resize type.';
 
     $help = <<'HELP';
-This procedure modifies the transform resize setting. When transforming
+Modifies the transform resize setting. When transforming
 pixels, if the result of a transform operation  has a different size
 than the original area, this setting determines how the resulting area
 is sized.

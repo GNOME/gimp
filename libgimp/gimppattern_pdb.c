@@ -30,30 +30,30 @@
 /**
  * SECTION: gimppattern
  * @title: gimppattern
- * @short_description: Functions operating on a single pattern.
+ * @short_description: Installable object used by fill and clone tools.
  *
- * Functions operating on a single pattern.
+ * Installable object used by fill and clone tools.
  **/
 
 
 /**
  * gimp_pattern_get_info:
- * @name: The pattern name.
+ * @pattern: The pattern.
  * @width: (out): The pattern width.
  * @height: (out): The pattern height.
  * @bpp: (out): The pattern bpp.
  *
- * Retrieve information about the specified pattern.
+ * Gets information about the pattern.
  *
- * This procedure retrieves information about the specified pattern.
- * This includes the pattern extents (width and height).
+ * Gets information about the pattern: the pattern extents (width and
+ * height) and bytes per pixel.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_pattern_get_info (const gchar *name,
+gimp_pattern_get_info (GimpPattern *pattern,
                        gint        *width,
                        gint        *height,
                        gint        *bpp)
@@ -63,7 +63,7 @@ gimp_pattern_get_info (const gchar *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PATTERN, pattern,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -91,25 +91,25 @@ gimp_pattern_get_info (const gchar *name,
 
 /**
  * gimp_pattern_get_pixels:
- * @name: The pattern name.
+ * @pattern: The pattern.
  * @width: (out): The pattern width.
  * @height: (out): The pattern height.
  * @bpp: (out): The pattern bpp.
  * @num_color_bytes: (out): Number of pattern bytes.
  * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full): The pattern data.
  *
- * Retrieve information about the specified pattern (including pixels).
+ * Gets information about the pattern (including pixels).
  *
- * This procedure retrieves information about the specified. This
- * includes the pattern extents (width and height), its bpp and its
- * pixel data.
+ * Gets information about the pattern: the pattern extents (width and
+ * height), its bpp, and its pixel data. The pixel data is an array in
+ * C or a list in some languages.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_pattern_get_pixels (const gchar  *name,
+gimp_pattern_get_pixels (GimpPattern  *pattern,
                          gint         *width,
                          gint         *height,
                          gint         *bpp,
@@ -121,7 +121,7 @@ gimp_pattern_get_pixels (const gchar  *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PATTERN, pattern,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -149,4 +149,40 @@ gimp_pattern_get_pixels (const gchar  *name,
   gimp_value_array_unref (return_vals);
 
   return success;
+}
+
+/**
+ * gimp_pattern_id_is_valid:
+ * @id: The pattern ID.
+ *
+ * Whether the ID is a valid reference to installed data.
+ *
+ * Returns TRUE if this ID is valid.
+ *
+ * Returns: TRUE if the pattern ID is valid.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_pattern_id_is_valid (const gchar *id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean valid = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, id,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-pattern-id-is-valid",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return valid;
 }

@@ -32,3 +32,4 @@
  *  libgimp/ but need different headers.
  */
 #include "gimpparamspecs-body.c"
+#include "gimpparamspecs-body-resource.c"

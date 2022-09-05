@@ -16,31 +16,34 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+# The invoke code is compiled on the app side.
+# The invoke code must assign to each result var
+
+$brush_arg_spec = { name => 'brush', type => 'brush', non_empty => 1,
+  desc => 'The brush' };
+
 sub brush_new {
-    $blurb = "Creates a new brush.";
-    $help  = "This procedure creates a new, uninitialized brush.";
+    $blurb = "Create a new generated brush having default parameters.";
+    $help  = "Creates a new, parametric brush.";
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The requested name of the new brush' }
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The requested name of the new brush' }
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new brush name.' }
+      ${brush_arg_spec}
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpData *data = gimp_data_factory_data_new (gimp->brush_factory,
-                                               context, name);
+  brush = (GimpBrush*) gimp_data_factory_data_new (gimp->brush_factory,
+                                                   context, name);
 
-  if (data)
-    actual_name = g_strdup (gimp_object_get_name (data));
-  else
+  if (!brush)
     success = FALSE;
 }
 CODE
@@ -49,133 +52,157 @@ CODE
 
 sub brush_duplicate {
     $blurb = "Duplicates a brush.";
-    $help  = "This procedure creates an identical brush by a different name.";
+    $help  = "Returns a copy having a different, unique ID.";
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'copy_name', type => 'string',
-	  desc => "The name of the brush's copy." }
+      { name => 'brush_copy',
+        type => 'brush',
+        desc => "A copy of the brush." }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
-    {
-      GimpBrush *brush_copy = (GimpBrush *)
-        gimp_data_factory_data_duplicate (gimp->brush_factory,
-                                          GIMP_DATA (brush));
-
-      if (brush_copy)
-        copy_name = g_strdup (gimp_object_get_name (brush_copy));
-      else
-        success = FALSE;
-    }
-  else
+  brush_copy = (GimpBrush *)
+    gimp_data_factory_data_duplicate (gimp->brush_factory, GIMP_DATA (brush));
+  /* Assert the copy has a unique name. */
+  if (!brush_copy)
     success = FALSE;
 }
 CODE
     );
 }
 
-sub brush_is_generated {
-    $blurb = "Tests if brush is generated.";
-    $help  = "Returns TRUE if this brush is parametric, FALSE for other types.";
+sub brush_id_is_valid {
+    $blurb = "Whether the ID is a valid reference to installed brush data.";
+    $help  = "Returns TRUE when ID is valid.";
 
-    &bill_pdb_misc('2004', '2.4');
+    &bootchk_pdb_misc('2022', '3.0');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      { name => 'id',
+        type => 'string',
+        non_empty => 1,
+        no_validate => 1,
+        desc => 'The brush ID' }
     );
 
     @outargs = (
-	{ name => 'generated', type => 'boolean',
-	  desc => 'TRUE if the brush is generated' }
+      { name => 'valid', type => 'boolean',
+        desc => 'TRUE if the brush ID is valid' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  valid = (gimp_pdb_get_brush (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
 
-  if (brush)
-    generated = GIMP_IS_BRUSH_GENERATED (brush);
-  else
-    success = FALSE;
+  /* When ID is not valid, NULL is returned and error is set.
+   * Clear error so GIMP not display error dialog.
+   */
+  g_clear_error (error);
+}
+CODE
+    );
+}
+
+
+sub brush_is_generated {
+    $blurb = "Whether the brush is generated (parametric versus raster).";
+    $help  = "Returns TRUE when brush is parametric.";
+
+    &bill_pdb_misc('2004', '2.4');
+
+    @inargs = (
+      ${brush_arg_spec}
+    );
+
+    @outargs = (
+      { name => 'generated', type => 'boolean',
+        desc => 'TRUE if the brush is generated' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  generated = GIMP_IS_BRUSH_GENERATED (brush);
 }
 CODE
     );
 }
 
 sub brush_is_editable {
-    $blurb = "Tests if brush can be edited.";
+    $blurb = "Whether the brush can be edited.";
     $help  = "Returns TRUE if you have permission to change the brush.";
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean',
-	  desc => 'TRUE if the brush can be edited' }
+      { name => 'editable', type => 'boolean',
+        desc => 'TRUE if the brush can be edited' }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
-    editable = gimp_data_is_writable (GIMP_DATA (brush));
-  else
-    success = FALSE;
+  editable = gimp_data_is_writable (GIMP_DATA (brush));
 }
 CODE
     );
 }
 
 sub brush_rename {
-    $blurb = "Renames a brush.";
-    $help  = "This procedure renames a brush.";
+    $blurb = "Renames a brush. When the name is in use, renames to a unique name.";
+
+    $help = <<'HELP';
+Renames a brush.  The name is the same as the ID.
+When the proposed name is already used, GIMP generates a unique name,
+which get_id() will return.
+
+Returns a reference to a renamed brush, which you should assign
+to the original var or a differently named var.
+Any existing references will be invalid.
+Resources in plugins are proxies holding an ID,
+which can be invalid when the resource is renamed.
+HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-        { name => 'new_name', type => 'string', non_empty => 1,
-          desc => 'The new name of the brush' }
+      ${brush_arg_spec},
+      { name => 'new_name', type => 'string', non_empty => 1,
+        desc => 'The proposed new name of the brush' }
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new name of the brush.' }
+      { name => 'brush_renamed',
+        type => 'brush',
+        desc => "A reference to the renamed brush." }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+  /* Rename the brush in app. */
+  gimp_object_set_name (GIMP_OBJECT (brush), new_name);
+  /* Assert GIMP might have set a name different from new_name. */
 
-  if (brush)
-    {
-      gimp_object_set_name (GIMP_OBJECT (brush), new_name);
-      actual_name = g_strdup (gimp_object_get_name (brush));
-    }
-  else
-    success = FALSE;
+  /* Return a reference.
+   * The wire protocol will create a new proxy on the plugin side.
+   * We don't need an alias here, except to make clear
+   * that we are returning the same real object as passed.
+   */
+   brush_renamed = brush;
 }
 CODE
     );
@@ -183,20 +210,20 @@ CODE
 
 sub brush_delete {
     $blurb = "Deletes a brush.";
-    $help  = "This procedure deletes a brush.";
+    $help = <<'HELP';
+Deletes a brush.  Returns an error if the brush is not deletable.
+Deletes the brush's data.  You should not use the brush afterwards.
+HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
   if (brush && gimp_data_is_deletable (GIMP_DATA (brush)))
     success = gimp_data_factory_data_delete (gimp->brush_factory,
                                              GIMP_DATA (brush),
@@ -209,173 +236,155 @@ CODE
 }
 
 sub brush_get_info {
-    $blurb = "Retrieves information about the specified brush.";
+    $blurb = "Gets information about the brush.";
 
     $help = <<'HELP';
-This procedure retrieves information about the specified brush:
-brush extents (width and height), color depth and mask depth.
+Gets information about the brush:
+brush extents (width and height), color depth and mask depth (bpp).
+The color bpp is zero when the brush is parametric versus raster.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => 1,
-          desc => 'The brush width' },
-	{ name => 'height', type => 'int32',
-          desc => 'The brush height' },
-	{ name => 'mask_bpp', type => 'int32',
-          desc => 'The brush mask bpp' },
-	{ name => 'color_bpp', type => 'int32',
-          desc => 'The brush color bpp' }
+      { name => 'width', type => 'int32', void_ret => 1,
+        desc => 'The brush width' },
+      { name => 'height', type => 'int32',
+        desc => 'The brush height' },
+      { name => 'mask_bpp', type => 'int32',
+        desc => 'The brush mask bpp' },
+      { name => 'color_bpp', type => 'int32',
+        desc => 'The brush color bpp' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpTempBuf *mask   = gimp_brush_get_mask (brush);
+  GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+  const Babl  *format;
 
-  if (brush)
+  format = gimp_babl_compat_u8_mask_format (
+    gimp_temp_buf_get_format (mask));
+
+  width    = gimp_brush_get_width  (brush);
+  height   = gimp_brush_get_height (brush);
+  mask_bpp = babl_format_get_bytes_per_pixel (format);
+
+  if (pixmap)
     {
-      GimpTempBuf *mask   = gimp_brush_get_mask (brush);
-      GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
-      const Babl  *format;
+      format = gimp_babl_compat_u8_format (
+        gimp_temp_buf_get_format (pixmap));
 
-      format = gimp_babl_compat_u8_mask_format (
-        gimp_temp_buf_get_format (mask));
-
-      width    = gimp_brush_get_width  (brush);
-      height   = gimp_brush_get_height (brush);
-      mask_bpp = babl_format_get_bytes_per_pixel (format);
-
-      if (pixmap)
-        {
-          format = gimp_babl_compat_u8_format (
-            gimp_temp_buf_get_format (pixmap));
-
-          color_bpp = babl_format_get_bytes_per_pixel (format);
-        }
+      color_bpp = babl_format_get_bytes_per_pixel (format);
     }
-  else
-    success = FALSE;
 }
 CODE
     );
 }
 
 sub brush_get_pixels {
-    $blurb = 'Retrieves information about the specified brush.';
+    $blurb = 'Gets information about the brush.';
 
     $help = <<'HELP';
-This procedure retrieves information about the specified brush. This
-includes the brush extents (width and height) and its pixels data.
+Gets information about the brush:
+the brush extents (width and height) and its pixels data.
+The color bpp is zero and pixels empty when the brush is parametric versus raster.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => 1,
-          desc => 'The brush width' },
-	{ name => 'height', type => 'int32',
-          desc => 'The brush height' },
-	{ name => 'mask_bpp', type => 'int32',
-          desc => 'The brush mask bpp' },
-        { name => 'mask_bytes', type => 'int8array',
-	  desc => 'The brush mask data',
-          array => { desc => 'Length of brush mask data' } },
-	{ name => 'color_bpp', type => 'int32',
-          desc => 'The brush color bpp' },
-        { name => 'color_bytes', type => 'int8array',
-	  desc => 'The brush color data',
-          array => { desc => 'Length of brush color data' } }
+      { name => 'width', type => 'int32', void_ret => 1,
+        desc => 'The brush width' },
+      { name => 'height', type => 'int32',
+        desc => 'The brush height' },
+      { name => 'mask_bpp', type => 'int32',
+        desc => 'The brush mask bpp' },
+      { name => 'mask_bytes', type => 'int8array',
+        desc => 'The brush mask data',
+        array => { desc => 'Length of brush mask data' } },
+      { name => 'color_bpp', type => 'int32',
+        desc => 'The brush color bpp' },
+      { name => 'color_bytes', type => 'int8array',
+        desc => 'The brush color data',
+        array => { desc => 'Length of brush color data' } }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpTempBuf *mask   = gimp_brush_get_mask (brush);
+  GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
+  const Babl  *format;
+  gpointer     data;
 
-  if (brush)
+  format = gimp_babl_compat_u8_mask_format (
+    gimp_temp_buf_get_format (mask));
+  data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
+
+  width          = gimp_temp_buf_get_width  (mask);
+  height         = gimp_temp_buf_get_height (mask);
+  mask_bpp       = babl_format_get_bytes_per_pixel (format);
+  num_mask_bytes = gimp_temp_buf_get_height (mask) *
+                   gimp_temp_buf_get_width  (mask) * mask_bpp;
+  mask_bytes     = g_memdup2 (data, num_mask_bytes);
+
+  gimp_temp_buf_unlock (mask, data);
+
+  if (pixmap)
     {
-      GimpTempBuf *mask   = gimp_brush_get_mask (brush);
-      GimpTempBuf *pixmap = gimp_brush_get_pixmap (brush);
-      const Babl  *format;
-      gpointer     data;
+      format = gimp_babl_compat_u8_format (
+        gimp_temp_buf_get_format (pixmap));
+      data   = gimp_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
 
-      format = gimp_babl_compat_u8_mask_format (
-        gimp_temp_buf_get_format (mask));
-      data   = gimp_temp_buf_lock (mask, format, GEGL_ACCESS_READ);
+      color_bpp       = babl_format_get_bytes_per_pixel (format);
+      num_color_bytes = gimp_temp_buf_get_height (pixmap) *
+                        gimp_temp_buf_get_width  (pixmap) *
+                        color_bpp;
+      color_bytes     = g_memdup2 (data, num_color_bytes);
 
-      width          = gimp_temp_buf_get_width  (mask);
-      height         = gimp_temp_buf_get_height (mask);
-      mask_bpp       = babl_format_get_bytes_per_pixel (format);
-      num_mask_bytes = gimp_temp_buf_get_height (mask) *
-                       gimp_temp_buf_get_width  (mask) * mask_bpp;
-      mask_bytes     = g_memdup2 (data, num_mask_bytes);
-
-      gimp_temp_buf_unlock (mask, data);
-
-      if (pixmap)
-        {
-          format = gimp_babl_compat_u8_format (
-            gimp_temp_buf_get_format (pixmap));
-          data   = gimp_temp_buf_lock (pixmap, format, GEGL_ACCESS_READ);
-
-          color_bpp       = babl_format_get_bytes_per_pixel (format);
-          num_color_bytes = gimp_temp_buf_get_height (pixmap) *
-                            gimp_temp_buf_get_width  (pixmap) *
-                            color_bpp;
-          color_bytes     = g_memdup2 (data, num_color_bytes);
-
-          gimp_temp_buf_unlock (pixmap, data);
-        }
+      gimp_temp_buf_unlock (pixmap, data);
     }
-  else
-    success = FALSE;
 }
 CODE
     );
 }
 
 sub brush_get_spacing {
-    $blurb = 'Gets the brush spacing.';
+    $blurb = 'Gets the brush spacing, the stamping frequency.';
 
     $help = <<'HELP';
-This procedure returns the spacing setting for the specified brush.
-The return value is an integer between 0 and 1000 which represents
+Returns the spacing setting for the brush.
+Spacing is an integer between 0 and 1000 which represents a
 percentage of the maximum of the width and height of the mask.
+Both parametric and raster brushes have a spacing.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
+    # Always just a value, not "void_ret => 1,"
     @outargs = (
-	{ name => 'spacing', type => '0 <= int32 <= 1000', void_ret => 1,
-	  desc => 'The brush spacing' }
+      { name => 'spacing', type => '0 <= int32 <= 1000',
+        desc => 'The brush spacing' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
-    spacing = gimp_brush_get_spacing (brush);
-  else
-    success = FALSE;
+  spacing = gimp_brush_get_spacing (brush);
 }
 CODE
     );
@@ -385,32 +394,30 @@ sub brush_get_shape {
     $blurb = 'Gets the shape of a generated brush.';
 
     $help = <<'HELP';
-This procedure gets the shape value for a generated brush. If
-called for any other type of brush, it does not succeed.  The
-current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
+Gets the shape of a generated brush.
+Returns an error when called for a non-parametric brush.
+The choices for shape are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
 Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
-(GIMP_BRUSH_GENERATED_DIAMOND).  Other shapes are likely to be
-added in the future. 
+(GIMP_BRUSH_GENERATED_DIAMOND).  Other shapes might be
+added in the future.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'shape', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape' }
+      { name => 'shape', type => 'enum GimpBrushGeneratedShape',
+        void_ret => 1,
+        desc => 'The brush shape' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     shape = GIMP_BRUSH_GENERATED (brush)->shape;
   else
     success = FALSE;
@@ -423,28 +430,26 @@ sub brush_get_radius {
     $blurb = 'Gets the radius of a generated brush.';
 
     $help = <<'HELP';
-This procedure gets the radius value for a generated brush. If
-called for any other type of brush, it does not succeed.
+Gets the radius of a generated brush.
+Returns an error when called for a non-parametric brush.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'radius', type => 'float',
-          desc => 'The radius of the brush in pixels' }
+      { name => 'radius', type => 'float',
+        void_ret => 1,
+        desc => 'The radius of the brush in pixels' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     radius = GIMP_BRUSH_GENERATED (brush)->radius;
   else
     success = FALSE;
@@ -457,28 +462,26 @@ sub brush_get_spikes {
     $blurb = 'Gets the number of spikes for a generated brush.';
 
     $help = <<'HELP';
-This procedure gets the number of spikes for a generated brush.  
-If called for any other type of brush, it does not succeed.
+Gets the number of spikes for a generated brush.
+Returns an error when called for a non-parametric brush.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'spikes', type => 'int32',
-          desc => 'The number of spikes on the brush.' }
+      { name => 'spikes', type => 'int32',
+        void_ret => 1,
+        desc => 'The number of spikes on the brush.' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     spikes = GIMP_BRUSH_GENERATED (brush)->spikes;
   else
     success = FALSE;
@@ -491,31 +494,28 @@ sub brush_get_hardness {
     $blurb = 'Gets the hardness of a generated brush.';
 
     $help = <<'HELP';
-This procedure gets the hardness of a generated brush. The
-hardness of a brush is the amount its intensity fades at the
+Gets the hardness of a generated brush.
+The hardness of a brush is the amount its intensity fades at the
 outside edge, as a float between 0.0 and 1.0.
-If called for any other type of brush, the function does not
-succeed.
+Returns an error when called for a non-parametric brush.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'hardness', type => 'float',
-          desc => 'The hardness of the brush.' }
+      { name => 'hardness', type => 'float',
+        void_ret => 1,
+        desc => 'The hardness of the brush.' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     hardness = GIMP_BRUSH_GENERATED (brush)->hardness;
   else
     success = FALSE;
@@ -528,29 +528,27 @@ sub brush_get_aspect_ratio {
     $blurb = 'Gets the aspect ratio of a generated brush.';
 
     $help = <<'HELP';
-This procedure gets the aspect ratio of a generated brush. 
-If called for any other type of brush, it does not succeed.
-The return value is a float between 0.0 and 1000.0.
+Gets the aspect ratio of a generated brush.
+Returns an error when called for a non-parametric brush.
+The aspect ratio is a float between 0.0 and 1000.0.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'aspect_ratio', type => 'float',
-          desc => 'The aspect ratio of the brush.' }
+      { name => 'aspect_ratio', type => 'float',
+        void_ret => 1,
+        desc => 'The aspect ratio of the brush.' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     aspect_ratio = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
   else
     success = FALSE;
@@ -563,28 +561,26 @@ sub brush_get_angle {
     $blurb = 'Gets the rotation angle of a generated brush.';
 
     $help = <<'HELP';
-This procedure gets the angle of rotation for a generated brush. 
-If called for any other type of brush, it does not succeed.
+Gets the angle of rotation for a generated brush.
+Returns an error when called for a non-parametric brush.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' }
+      ${brush_arg_spec}
     );
 
     @outargs = (
-	{ name => 'angle', type => 'float',
-          desc => 'The rotation angle of the brush in degree.' }
+      { name => 'angle', type => 'float',
+        void_ret => 1,
+        desc => 'The rotation angle of the brush in degree.' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush))
     angle = GIMP_BRUSH_GENERATED (brush)->angle;
   else
     success = FALSE;
@@ -597,25 +593,25 @@ sub brush_set_spacing {
     $blurb = 'Sets the brush spacing.';
 
     $help = <<'HELP';
-This procedure modifies the spacing setting for the specified brush.
-The value should be a integer between 0 and 1000.
+Set the spacing for the brush.
+The spacing must be an integer between 0 and 1000.
+Both parametric and raster brushes have a spacing.
+Returns an error when the brush is not editable.
+Create a new or copied brush or to get an editable brush.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing' }
+      ${brush_arg_spec},
+      { name => 'spacing', type => '0 <= int32 <= 1000',
+        desc => 'The brush spacing' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (gimp_data_is_writable (GIMP_DATA (brush)))
     gimp_brush_set_spacing (brush, spacing);
   else
     success = FALSE;
@@ -628,41 +624,41 @@ sub brush_set_shape {
     $blurb = 'Sets the shape of a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the shape value for a generated brush. If
-called for any other type of brush, it does not succeed. The
-current possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
+Sets the shape of a generated brush.
+Returns an error when brush is non-parametric or not editable.
+The choices for shape are Circle (GIMP_BRUSH_GENERATED_CIRCLE),
 Square (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
-(GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be
-added in the future. 
+(GIMP_BRUSH_GENERATED_DIAMOND).
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'shape_in', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape' }
+      ${brush_arg_spec},
+      { name => 'shape_in', type => 'enum GimpBrushGeneratedShape',
+        desc => 'The brush shape' }
     );
 
     @outargs = (
-	{ name => 'shape_out', type => 'enum GimpBrushGeneratedShape',
-          desc => 'The brush shape actually assigned' }
+      { name => 'shape_out', type => 'enum GimpBrushGeneratedShape',
+        void_ret => 1,
+        desc => 'The brush shape actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       gimp_brush_generated_set_shape (GIMP_BRUSH_GENERATED (brush),
                                       shape_in);
       shape_out = GIMP_BRUSH_GENERATED (brush)->shape;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -672,37 +668,40 @@ sub brush_set_radius {
     $blurb = 'Sets the radius of a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the radius for a generated brush. If
-called for any other type of brush, it does not succeed.
+Sets the radius for a generated brush.
+Clamps radius to [0.0, 32767.0].
+Returns the clamped value.
+Returns an error when brush is non-parametric or not editable.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'radius_in', type => 'float',
-          desc => 'The desired brush radius in pixel' }
+      ${brush_arg_spec},
+      { name => 'radius_in', type => 'float',
+        desc => 'The desired brush radius in pixel' }
     );
 
     @outargs = (
-	{ name => 'radius_out', type => 'float',
-          desc => 'The brush radius actually assigned' }
+      { name => 'radius_out', type => 'float',
+        void_ret => 1,
+        desc => 'The brush radius actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       gimp_brush_generated_set_radius (GIMP_BRUSH_GENERATED (brush),
                                        radius_in);
       radius_out = GIMP_BRUSH_GENERATED (brush)->radius;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -712,37 +711,40 @@ sub brush_set_spikes {
     $blurb = 'Sets the number of spikes for a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the number of spikes for a generated brush. If
-called for any other type of brush, it does not succeed.
+Sets the number of spikes for a generated brush.
+Clamps spikes to [2,20].
+Returns the clamped value.
+Returns an error when brush is non-parametric or not editable.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'spikes_in', type => 'int32',
-          desc => 'The desired number of spikes' }
+      ${brush_arg_spec},
+      { name => 'spikes_in', type => 'int32',
+        desc => 'The desired number of spikes' }
     );
 
     @outargs = (
-	{ name => 'spikes_out', type => 'int32',
-          desc => 'The number of spikes actually assigned' }
+      { name => 'spikes_out', type => 'int32',
+        void_ret => 1,
+        desc => 'The number of spikes actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       gimp_brush_generated_set_spikes (GIMP_BRUSH_GENERATED (brush),
                                        spikes_in);
       spikes_out = GIMP_BRUSH_GENERATED (brush)->spikes;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -752,38 +754,40 @@ sub brush_set_hardness {
     $blurb = 'Sets the hardness of a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the hardness for a generated brush. If
-called for any other type of brush, it does not succeed.
-The value should be a float between 0.0 and 1.0.
+Sets the hardness for a generated brush.
+Clamps hardness to [0.0, 1.0].
+Returns the clamped value.
+Returns an error when brush is non-parametric or not editable.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'hardness_in', type => 'float',
-          desc => 'The desired brush hardness' }
+      ${brush_arg_spec},
+      { name => 'hardness_in', type => 'float',
+        desc => 'The desired brush hardness' }
     );
 
     @outargs = (
-	{ name => 'hardness_out', type => 'float',
-          desc => 'The brush hardness actually assigned' }
+      { name => 'hardness_out', type => 'float',
+        void_ret => 1,
+        desc => 'The brush hardness actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       gimp_brush_generated_set_hardness (GIMP_BRUSH_GENERATED (brush),
                                          hardness_in);
       hardness_out = GIMP_BRUSH_GENERATED (brush)->hardness;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -793,38 +797,40 @@ sub brush_set_aspect_ratio {
     $blurb = 'Sets the aspect ratio of a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the aspect ratio for a generated brush.
-If called for any other type of brush, it does not succeed.
-The value should be a float between 0.0 and 1000.0.
+Sets the aspect ratio for a generated brush.
+Clamps aspect ratio to [0.0, 1000.0].
+Returns the clamped value.
+Returns an error when brush is non-parametric or not editable.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'aspect_ratio_in', type => 'float',
-          desc => 'The desired brush aspect ratio' }
+      ${brush_arg_spec},
+      { name => 'aspect_ratio_in', type => 'float',
+        desc => 'The desired brush aspect ratio' }
     );
 
     @outargs = (
-	{ name => 'aspect_ratio_out', type => 'float',
-          desc => 'The brush aspect ratio actually assigned' }
+      { name => 'aspect_ratio_out', type => 'float',
+        void_ret => 1,
+        desc => 'The brush aspect ratio actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       gimp_brush_generated_set_aspect_ratio (GIMP_BRUSH_GENERATED (brush),
                                              aspect_ratio_in);
       aspect_ratio_out = GIMP_BRUSH_GENERATED (brush)->aspect_ratio;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -834,37 +840,40 @@ sub brush_set_angle {
     $blurb = 'Sets the rotation angle of a generated brush.';
 
     $help = <<'HELP';
-This procedure sets the rotation angle for a generated brush. If
-called for any other type of brush, it does not succeed.
+Sets the rotation angle for a generated brush.
+Sets the angle modulo 180, in the range [-180.0, 180.0].
+Returns the clamped value.
+Returns an error when brush is non-parametric or not editable.
 HELP
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The brush name' },
-	{ name => 'angle_in', type => 'float',
-          desc => 'The desired brush rotation angle in degree' }
-    );
+      ${brush_arg_spec},
+      { name => 'angle_in', type => 'float',
+        desc => 'The desired brush rotation angle in degrees' }
+        );
 
     @outargs = (
-	{ name => 'angle_out', type => 'float',
-          desc => 'The brush rotation angle actually assigned' }
+      { name => 'angle_out', type => 'float',
+        void_ret => 1,
+        desc => 'The brush rotation angle actually assigned' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpBrush *brush = gimp_pdb_get_generated_brush (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (brush)
+  if (GIMP_IS_BRUSH_GENERATED (brush) &&
+      gimp_data_is_writable (GIMP_DATA (brush)))
     {
       gimp_brush_generated_set_angle (GIMP_BRUSH_GENERATED (brush),
                                       angle_in);
       angle_out = GIMP_BRUSH_GENERATED (brush)->angle;
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
@@ -876,32 +885,33 @@ CODE
               "core/gimp.h"
               "core/gimpbrush.h"
               "core/gimpbrushgenerated.h"
-              "core/gimpcontext.h" 
+              "core/gimpcontext.h"
               "core/gimpdatafactory.h"
               "core/gimptempbuf.h"
               "gimppdb-utils.h");
 
 @procs = qw(brush_new
             brush_duplicate
-            brush_is_generated 
+            brush_is_generated
+            brush_id_is_valid
             brush_rename
             brush_delete
             brush_is_editable
             brush_get_info
             brush_get_pixels
-            brush_get_spacing brush_set_spacing
-            brush_get_shape brush_set_shape
-            brush_get_radius brush_set_radius
-            brush_get_spikes brush_set_spikes
-            brush_get_hardness brush_set_hardness
+            brush_get_spacing      brush_set_spacing
+            brush_get_shape        brush_set_shape
+            brush_get_radius       brush_set_radius
+            brush_get_spikes       brush_set_spikes
+            brush_get_hardness     brush_set_hardness
             brush_get_aspect_ratio brush_set_aspect_ratio
-            brush_get_angle brush_set_angle);
+            brush_get_angle        brush_set_angle);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Brush';
 $doc_title = 'gimpbrush';
-$doc_short_desc = 'Functions operating on a single brush.';
-$doc_long_desc = 'Functions operating on a single brush.';
+$doc_short_desc = 'Installable object used by painting and stroking tools.';
+$doc_long_desc = 'Installable object used by painting and stroking tools.';
 
 1;

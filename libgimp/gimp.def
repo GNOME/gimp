@@ -18,8 +18,11 @@ EXPORTS
 	gimp_brush_get_shape
 	gimp_brush_get_spacing
 	gimp_brush_get_spikes
+	gimp_brush_get_type
+	gimp_brush_id_is_valid
 	gimp_brush_is_editable
 	gimp_brush_is_generated
+	gimp_brush_is_valid
 	gimp_brush_new
 	gimp_brush_rename
 	gimp_brush_select_destroy
@@ -293,6 +296,9 @@ EXPORTS
 	gimp_floating_sel_attach
 	gimp_floating_sel_remove
 	gimp_floating_sel_to_layer
+	gimp_font_get_type
+	gimp_font_id_is_valid
+	gimp_font_is_valid
 	gimp_font_select_destroy
 	gimp_font_select_new
 	gimp_fonts_close_popup
@@ -319,8 +325,11 @@ EXPORTS
 	gimp_gradient_duplicate
 	gimp_gradient_get_custom_samples
 	gimp_gradient_get_number_of_segments
+	gimp_gradient_get_type
 	gimp_gradient_get_uniform_samples
+	gimp_gradient_id_is_valid
 	gimp_gradient_is_editable
+	gimp_gradient_is_valid
 	gimp_gradient_new
 	gimp_gradient_rename
 	gimp_gradient_segment_get_blending_function
@@ -643,10 +652,13 @@ EXPORTS
 	gimp_palette_entry_get_name
 	gimp_palette_entry_set_color
 	gimp_palette_entry_set_name
+	gimp_palette_get_color_count
 	gimp_palette_get_colors
 	gimp_palette_get_columns
-	gimp_palette_get_info
+	gimp_palette_get_type
+	gimp_palette_id_is_valid
 	gimp_palette_is_editable
+	gimp_palette_is_valid
 	gimp_palette_new
 	gimp_palette_rename
 	gimp_palette_select_destroy
@@ -657,22 +669,32 @@ EXPORTS
 	gimp_palettes_popup
 	gimp_palettes_refresh
 	gimp_palettes_set_popup
+	gimp_param_brush_get_type
 	gimp_param_channel_get_type
 	gimp_param_display_get_type
 	gimp_param_drawable_get_type
+	gimp_param_font_get_type
+	gimp_param_gradient_get_type
 	gimp_param_image_get_type
 	gimp_param_item_get_type
 	gimp_param_layer_get_type
 	gimp_param_layer_mask_get_type
+	gimp_param_palette_get_type
+	gimp_param_pattern_get_type
 	gimp_param_selection_get_type
+	gimp_param_spec_brush
 	gimp_param_spec_channel
 	gimp_param_spec_display
 	gimp_param_spec_drawable
+	gimp_param_spec_font
 	gimp_param_spec_get_desc
+	gimp_param_spec_gradient
 	gimp_param_spec_image
 	gimp_param_spec_item
 	gimp_param_spec_layer
 	gimp_param_spec_layer_mask
+	gimp_param_spec_palette
+	gimp_param_spec_pattern
 	gimp_param_spec_selection
 	gimp_param_spec_text_layer
 	gimp_param_spec_vectors
@@ -680,6 +702,9 @@ EXPORTS
 	gimp_param_vectors_get_type
 	gimp_pattern_get_info
 	gimp_pattern_get_pixels
+	gimp_pattern_get_type
+	gimp_pattern_id_is_valid
+	gimp_pattern_is_valid
 	gimp_pattern_select_destroy
 	gimp_pattern_select_new
 	gimp_patterns_close_popup
@@ -791,6 +816,8 @@ EXPORTS
 	gimp_progress_uninstall
 	gimp_progress_update
 	gimp_quit
+	gimp_resource_get_id
+	gimp_resource_get_type
 	gimp_save_procedure_get_support_comment
 	gimp_save_procedure_get_support_exif
 	gimp_save_procedure_get_support_iptc

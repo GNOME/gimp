@@ -446,7 +446,8 @@ get_samples_gradient (GimpDrawable *drawable)
 static gdouble *
 get_samples_palette (GimpDrawable *drawable)
 {
-  gchar      *palette_name;
+  GimpPalette *palette;
+
   GimpRGB     color_sample;
   gdouble    *d_samples, *d_samp;
   gboolean    is_rgb;
@@ -455,8 +456,8 @@ get_samples_palette (GimpDrawable *drawable)
   gint        nb_color_chan, nb_chan, i;
   const Babl *format;
 
-  palette_name = gimp_context_get_palette ();
-  gimp_palette_get_info (palette_name, &num_colors);
+  palette = gimp_context_get_palette ();
+  num_colors = gimp_palette_get_color_count (palette);
 
   is_rgb = gimp_drawable_is_rgb (drawable);
 
@@ -472,12 +473,12 @@ get_samples_palette (GimpDrawable *drawable)
       d_samp = &d_samples[i * nb_chan];
       pal_entry = CLAMP ((int)(i * factor), 0, num_colors - 1);
 
-      gimp_palette_entry_get_color (palette_name, pal_entry, &color_sample);
+      gimp_palette_entry_get_color (palette, pal_entry, &color_sample);
       gimp_rgb_get_pixel (&color_sample,
                           format,
                           d_samp);
     }
 
-  g_free (palette_name);
+  g_free (palette);
   return d_samples;
 }

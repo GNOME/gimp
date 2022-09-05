@@ -374,14 +374,13 @@ script_fu_arg_get_param_spec (SFArg       *arg,
       break;
 
     case SF_BRUSH:
-      /* FUTURE: brush object has more fields.
-       * ?? Implement gimp_param_spec_brush
-       */
-      pspec = g_param_spec_string (name,
-                                   nick,
-                                   arg->label,
-                                   arg->default_value.sfa_brush.name,
-                                   G_PARAM_READWRITE);
+      /* FIXME: SF-BRUSH will not have opacity, etc. instead gimp_brush_select will choose only brush. */
+      /* FIXME: font, etc. are resource types.  Brush is just the test for WIP. */
+      pspec = gimp_param_spec_brush (name,
+                                     nick,
+                                     arg->label,
+                                     FALSE,  /* none OK */
+                                     G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
       break;
 
     case SF_ADJUSTMENT:
@@ -569,9 +568,21 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
     case SF_PALETTE:
     case SF_PATTERN:
     case SF_GRADIENT:
-    case SF_BRUSH:
       g_string_append_printf (result_string, "\"%s\"", g_value_get_string (gvalue));
       break;
+
+    case SF_BRUSH:
+      {
+        /* The GValue is a GObject of type GimpBrush having property "id" */
+        GimpBrush *brush;
+        gchar     *brush_name;
+
+        brush = g_value_get_object (gvalue);
+        g_object_get (brush, "id", &brush_name, NULL);
+        g_string_append_printf (result_string, "\"%s\"", brush_name);
+      }
+      break;
+
 
     case SF_OPTION:
       append_int_repr_from_gvalue (result_string, gvalue);

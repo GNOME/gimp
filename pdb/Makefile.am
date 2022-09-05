@@ -17,6 +17,7 @@ pdb_groups = \
 	groups/edit.pdb			\
 	groups/file.pdb			\
 	groups/floating_sel.pdb		\
+	groups/font.pdb			\
 	groups/font_select.pdb		\
 	groups/fonts.pdb		\
 	groups/gimp.pdb			\

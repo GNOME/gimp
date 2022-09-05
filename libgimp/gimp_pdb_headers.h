@@ -43,6 +43,7 @@
 #include <libgimp/gimpedit_pdb.h>
 #include <libgimp/gimpfile_pdb.h>
 #include <libgimp/gimpfloatingsel_pdb.h>
+#include <libgimp/gimpfont_pdb.h>
 #include <libgimp/gimpfonts_pdb.h>
 #include <libgimp/gimpfontselect_pdb.h>
 #include <libgimp/gimpgimprc_pdb.h>

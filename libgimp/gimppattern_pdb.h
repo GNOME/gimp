@@ -32,16 +32,17 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean gimp_pattern_get_info   (const gchar  *name,
-                                  gint         *width,
-                                  gint         *height,
-                                  gint         *bpp);
-gboolean gimp_pattern_get_pixels (const gchar  *name,
-                                  gint         *width,
-                                  gint         *height,
-                                  gint         *bpp,
-                                  gint         *num_color_bytes,
-                                  guint8      **color_bytes);
+gboolean gimp_pattern_get_info    (GimpPattern  *pattern,
+                                   gint         *width,
+                                   gint         *height,
+                                   gint         *bpp);
+gboolean gimp_pattern_get_pixels  (GimpPattern  *pattern,
+                                   gint         *width,
+                                   gint         *height,
+                                   gint         *bpp,
+                                   gint         *num_color_bytes,
+                                   guint8      **color_bytes);
+gboolean gimp_pattern_id_is_valid (const gchar  *id);
 
 
 G_END_DECLS

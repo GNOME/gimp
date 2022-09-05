@@ -30,9 +30,9 @@
 /**
  * SECTION: gimppalette
  * @title: gimppalette
- * @short_description: Functions operating on a single palette.
+ * @short_description: Installable object, a small set of colors a user can choose from.
  *
- * Functions operating on a single palette.
+ * Installable object, a small set of colors a user can choose from.
  **/
 
 
@@ -42,19 +42,21 @@
  *
  * Creates a new palette
  *
- * This procedure creates a new, uninitialized palette
+ * Creates a new palette. The new palette has no color entries. You
+ * must add color entries for a user to choose. The actual name might
+ * be different than the requested name, when the requested name is
+ * already in use.
  *
- * Returns: (transfer full): The actual new palette name.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The palette.
  *
  * Since: 2.2
  **/
-gchar *
+GimpPalette *
 gimp_palette_new (const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *actual_name = NULL;
+  GimpPalette *palette = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
@@ -66,35 +68,34 @@ gimp_palette_new (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    palette = GIMP_VALUES_GET_PALETTE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return actual_name;
+  return palette;
 }
 
 /**
  * gimp_palette_duplicate:
- * @name: The palette name.
+ * @palette: The palette.
  *
  * Duplicates a palette
  *
- * This procedure creates an identical palette by a different name
+ * Returns a copy having a different, unique ID.
  *
- * Returns: (transfer full): The name of the palette's copy.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): A copy of the palette.
  *
  * Since: 2.2
  **/
-gchar *
-gimp_palette_duplicate (const gchar *name)
+GimpPalette *
+gimp_palette_duplicate (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *copy_name = NULL;
+  GimpPalette *palette_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -103,37 +104,78 @@ gimp_palette_duplicate (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    palette_copy = GIMP_VALUES_GET_PALETTE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return copy_name;
+  return palette_copy;
+}
+
+/**
+ * gimp_palette_id_is_valid:
+ * @id: The palette ID.
+ *
+ * Whether the ID is a valid reference to installed data.
+ *
+ * Returns TRUE if this ID is valid.
+ *
+ * Returns: TRUE if the palette ID is valid.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_palette_id_is_valid (const gchar *id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean valid = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, id,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-palette-id-is-valid",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return valid;
 }
 
 /**
  * gimp_palette_rename:
- * @name: The palette name.
- * @new_name: The new name of the palette.
+ * @palette: The palette.
+ * @new_name: The requested new name of the palette.
  *
  * Rename a palette
  *
- * This procedure renames a palette
+ * Renames a palette. The name is the same as the ID. When the proposed
+ * name is already used, GIMP generates a unique name, which get_id()
+ * will return.
+ * Returns a reference to a renamed palette, which you should assign to
+ * the original var or a differently named var. Any existing references
+ * will be invalid. Resources in plugins are proxies holding an ID,
+ * which can be invalid when the resource is renamed.
  *
- * Returns: (transfer full): The actual new name of the palette.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): A reference to the renamed palette.
  *
  * Since: 2.2
  **/
-gchar *
-gimp_palette_rename (const gchar *name,
+GimpPalette *
+gimp_palette_rename (GimpPalette *palette,
                      const gchar *new_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *actual_name = NULL;
+  GimpPalette *palette_renamed = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
@@ -143,34 +185,36 @@ gimp_palette_rename (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    palette_renamed = GIMP_VALUES_GET_PALETTE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return actual_name;
+  return palette_renamed;
 }
 
 /**
  * gimp_palette_delete:
- * @name: The palette name.
+ * @palette: The palette.
  *
  * Deletes a palette
  *
- * This procedure deletes a palette
+ * Deletes a palette. Returns an error if the palette is not deletable.
+ * Deletes the palette's data. You should not use the palette
+ * afterwards.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_delete (const gchar *name)
+gimp_palette_delete (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -187,9 +231,9 @@ gimp_palette_delete (const gchar *name)
 
 /**
  * gimp_palette_is_editable:
- * @name: The palette name.
+ * @palette: The palette.
  *
- * Tests if palette can be edited
+ * Whether the palette can be edited
  *
  * Returns TRUE if you have permission to change the palette
  *
@@ -198,14 +242,14 @@ gimp_palette_delete (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_palette_is_editable (const gchar *name)
+gimp_palette_is_editable (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -222,56 +266,49 @@ gimp_palette_is_editable (const gchar *name)
 }
 
 /**
- * gimp_palette_get_info:
- * @name: The palette name.
- * @num_colors: (out): The number of colors in the palette.
+ * gimp_palette_get_color_count:
+ * @palette: The palette.
  *
- * Retrieve information about the specified palette.
+ * Get the count of colors in the palette.
  *
- * This procedure retrieves information about the specified palette.
- * This includes the name, and the number of colors.
+ * Returns the number of colors in the palette.
  *
- * Returns: TRUE on success.
+ * Returns: The number of colors in the palette.
  *
  * Since: 2.2
  **/
-gboolean
-gimp_palette_get_info (const gchar *name,
-                       gint        *num_colors)
+gint
+gimp_palette_get_color_count (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  gint num_colors = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
-                                              "gimp-palette-get-info",
+                                              "gimp-palette-get-color-count",
                                               args);
   gimp_value_array_unref (args);
 
-  *num_colors = 0;
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    *num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    num_colors = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return num_colors;
 }
 
 /**
  * gimp_palette_get_colors:
- * @name: The palette name.
+ * @palette: The palette.
  * @num_colors: (out): Length of the colors array.
  *
- * Gets all colors from the specified palette.
+ * Gets colors in the palette.
  *
- * This procedure retrieves all color entries of the specified palette.
+ * Returns an array of colors in the palette.
  *
  * Returns: (array length=num_colors) (element-type GimpRGB) (transfer full):
  *          The colors in the palette.
@@ -280,7 +317,7 @@ gimp_palette_get_info (const gchar *name,
  * Since: 2.6
  **/
 GimpRGB *
-gimp_palette_get_colors (const gchar *name,
+gimp_palette_get_colors (GimpPalette *palette,
                          gint        *num_colors)
 {
   GimpValueArray *args;
@@ -288,7 +325,7 @@ gimp_palette_get_colors (const gchar *name,
   GimpRGB *colors = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -311,26 +348,25 @@ gimp_palette_get_colors (const gchar *name,
 
 /**
  * gimp_palette_get_columns:
- * @name: The palette name.
+ * @palette: The palette.
  *
- * Retrieves the number of columns to use to display this palette
+ * Gets the number of columns used to display the palette
  *
- * This procedures retrieves the preferred number of columns to use
- * when the palette is being displayed.
+ * Gets the preferred number of columns to display the palette.
  *
  * Returns: The number of columns used to display this palette.
  *
  * Since: 2.4
  **/
 gint
-gimp_palette_get_columns (const gchar *name)
+gimp_palette_get_columns (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint num_columns = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -348,21 +384,21 @@ gimp_palette_get_columns (const gchar *name)
 
 /**
  * gimp_palette_set_columns:
- * @name: The palette name.
+ * @palette: The palette.
  * @columns: The new number of columns.
  *
- * Sets the number of columns to use when displaying the palette
+ * Sets the number of columns used to display the palette
  *
- * This procedures controls how many colors are shown per row when the
- * palette is being displayed. This value can only be changed if the
- * palette is writable. The maximum allowed value is 64.
+ * Set the number of colors shown per row when the palette is
+ * displayed. Returns an error when the palette is not editable. The
+ * maximum allowed value is 64.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_palette_set_columns (const gchar *name,
+gimp_palette_set_columns (GimpPalette *palette,
                           gint         columns)
 {
   GimpValueArray *args;
@@ -370,7 +406,7 @@ gimp_palette_set_columns (const gchar *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, columns,
                                           G_TYPE_NONE);
 
@@ -388,22 +424,24 @@ gimp_palette_set_columns (const gchar *name,
 
 /**
  * gimp_palette_add_entry:
- * @name: The palette name.
- * @entry_name: The name of the entry.
- * @color: The new entry's color color.
+ * @palette: The palette.
+ * @entry_name: A name for the entry.
+ * @color: The color for the added entry.
  * @entry_num: (out): The index of the added entry.
  *
- * Adds a palette entry to the specified palette.
+ * Appends an entry to the palette.
  *
- * This procedure adds an entry to the specified palette. It returns an
- * error if the entry palette does not exist.
+ * Appends an entry to the palette. Neither color nor name must be
+ * unique within the palette. When name is the empty string, this sets
+ * the entry name to \"Untitled\". Returns the index of the entry.
+ * Returns an error when palette is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_add_entry (const gchar   *name,
+gimp_palette_add_entry (GimpPalette   *palette,
                         const gchar   *entry_name,
                         const GimpRGB *color,
                         gint          *entry_num)
@@ -413,7 +451,7 @@ gimp_palette_add_entry (const gchar   *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_STRING, entry_name,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
@@ -437,20 +475,20 @@ gimp_palette_add_entry (const gchar   *name,
 
 /**
  * gimp_palette_delete_entry:
- * @name: The palette name.
- * @entry_num: The index of the added entry.
+ * @palette: The palette.
+ * @entry_num: The index of the entry to delete.
  *
- * Deletes a palette entry from the specified palette.
+ * Deletes an entry from the palette.
  *
- * This procedure deletes an entry from the specified palette. It
- * returns an error if the entry palette does not exist.
+ * Deletes an entry from the palette. Returns an error if the index is
+ * out or range. Returns an error if the palette is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_delete_entry (const gchar *name,
+gimp_palette_delete_entry (GimpPalette *palette,
                            gint         entry_num)
 {
   GimpValueArray *args;
@@ -458,7 +496,7 @@ gimp_palette_delete_entry (const gchar *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
@@ -476,22 +514,21 @@ gimp_palette_delete_entry (const gchar *name,
 
 /**
  * gimp_palette_entry_get_color:
- * @name: The palette name.
- * @entry_num: The entry to retrieve.
- * @color: (out caller-allocates): The color requested.
+ * @palette: The palette.
+ * @entry_num: The index of the entry to get the color of.
+ * @color: (out caller-allocates): The color at the index.
  *
- * Gets the specified palette entry from the specified palette.
+ * Gets the color of an entry in the palette.
  *
- * This procedure retrieves the color of the zero-based entry specified
- * for the specified palette. It returns an error if the entry does not
- * exist.
+ * Returns the color of the entry at the given zero-based index into
+ * the palette. Returns an error when the index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_get_color (const gchar *name,
+gimp_palette_entry_get_color (GimpPalette *palette,
                               gint         entry_num,
                               GimpRGB     *color)
 {
@@ -500,7 +537,7 @@ gimp_palette_entry_get_color (const gchar *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
@@ -521,22 +558,22 @@ gimp_palette_entry_get_color (const gchar *name,
 
 /**
  * gimp_palette_entry_set_color:
- * @name: The palette name.
- * @entry_num: The entry to retrieve.
+ * @palette: The palette.
+ * @entry_num: The entry to get.
  * @color: The new color.
  *
- * Sets the specified palette entry in the specified palette.
+ * Sets the color of an entry in the palette.
  *
- * This procedure sets the color of the zero-based entry specified for
- * the specified palette. It returns an error if the entry does not
- * exist.
+ * Sets the color of the entry at the zero-based index into the
+ * palette. Returns an error when the index is out of range. Returns an
+ * error when the palette is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_color (const gchar   *name,
+gimp_palette_entry_set_color (GimpPalette   *palette,
                               gint           entry_num,
                               const GimpRGB *color)
 {
@@ -545,7 +582,7 @@ gimp_palette_entry_set_color (const gchar   *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, entry_num,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
@@ -564,22 +601,21 @@ gimp_palette_entry_set_color (const gchar   *name,
 
 /**
  * gimp_palette_entry_get_name:
- * @name: The palette name.
- * @entry_num: The entry to retrieve.
- * @entry_name: (out) (transfer full): The name requested.
+ * @palette: The palette.
+ * @entry_num: The entry to get.
+ * @entry_name: (out) (transfer full): The name of the entry.
  *
- * Gets the specified palette entry from the specified palette.
+ * Gets the name of an entry in the palette.
  *
- * This procedure retrieves the name of the zero-based entry specified
- * for the specified palette. It returns an error if the entry does not
- * exist.
+ * Gets the name of the entry at the zero-based index into the palette.
+ * Returns an error when the index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_get_name (const gchar  *name,
+gimp_palette_entry_get_name (GimpPalette  *palette,
                              gint          entry_num,
                              gchar       **entry_name)
 {
@@ -588,7 +624,7 @@ gimp_palette_entry_get_name (const gchar  *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_NONE);
 
@@ -611,22 +647,22 @@ gimp_palette_entry_get_name (const gchar  *name,
 
 /**
  * gimp_palette_entry_set_name:
- * @name: The palette name.
- * @entry_num: The entry to retrieve.
+ * @palette: The palette.
+ * @entry_num: The entry to get.
  * @entry_name: The new name.
  *
- * Sets the specified palette entry in the specified palette.
+ * Sets the name of an entry in the palette.
  *
- * This procedure sets the name of the zero-based entry specified for
- * the specified palette. It returns an error if the entry does not
- * exist.
+ * Sets the name of the entry at the zero-based index into the palette.
+ * Returns an error if the index is out or range. Returns an error if
+ * the palette is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_palette_entry_set_name (const gchar *name,
+gimp_palette_entry_set_name (GimpPalette *palette,
                              gint         entry_num,
                              const gchar *entry_name)
 {
@@ -635,7 +671,7 @@ gimp_palette_entry_set_name (const gchar *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_INT, entry_num,
                                           G_TYPE_STRING, entry_name,
                                           G_TYPE_NONE);

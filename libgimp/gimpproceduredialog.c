@@ -725,6 +725,12 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                                   property, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
     }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_BRUSH)
+    {
+      widget = gimp_prop_brush_chooser_button_new (G_OBJECT (dialog->priv->config),
+                                                   property, NULL);
+    }
+  /* FIXME add cases for other resources. */
   else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
       GimpIntStore *store;

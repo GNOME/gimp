@@ -69,6 +69,10 @@ sub bill_pdb_misc {
     contrib_pdb_misc('Bill Skaggs', 'weskaggs@primate.ucdavis.edu', @_);
 }
 
+sub bootchk_pdb_misc {
+    contrib_pdb_misc('Lloyd Konneker', '', @_);
+}
+
 sub david_pdb_misc {
     contrib_pdb_misc('David Gowers', '', @_);
 }

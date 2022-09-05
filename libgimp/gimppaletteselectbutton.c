@@ -236,7 +236,7 @@ gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button)
 /**
  * gimp_palette_select_button_set_palette:
  * @button: A #GimpPaletteSelectButton
- * @palette_name: (nullable): Palette name to set; %NULL means no change.
+ * @palette_name: (nullable): Palette name to set; %NULL means set to palette in context.
  *
  * Sets the current palette for the palette select button.
  *
@@ -259,17 +259,18 @@ gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
   else
     {
       gchar *name;
-      gint   num_colors;
 
+      /* If not NULL and not empty string. */
       if (palette_name && *palette_name)
-        name = g_strdup (palette_name);
+        name = palette_name;
       else
-        name = gimp_context_get_palette ();
+        {
+          GimpPalette * palette = gimp_context_get_palette ();
 
-      if (gimp_palette_get_info (name, &num_colors))
-        gimp_palette_select_button_callback (name, FALSE, button);
+          name = gimp_resource_get_id (GIMP_RESOURCE (palette));
+        }
 
-      g_free (name);
+      gimp_palette_select_button_callback (name, FALSE, button);
     }
 }
 

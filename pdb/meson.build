@@ -17,6 +17,7 @@ pdb_names = [
   'edit',
   'file',
   'floating_sel',
+  'font',
   'font_select',
   'fonts',
   'gimp',

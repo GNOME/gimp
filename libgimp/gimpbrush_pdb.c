@@ -30,9 +30,9 @@
 /**
  * SECTION: gimpbrush
  * @title: gimpbrush
- * @short_description: Functions operating on a single brush.
+ * @short_description: Installable object used by painting and stroking tools.
  *
- * Functions operating on a single brush.
+ * Installable object used by painting and stroking tools.
  **/
 
 
@@ -40,21 +40,20 @@
  * gimp_brush_new:
  * @name: The requested name of the new brush.
  *
- * Creates a new brush.
+ * Create a new generated brush having default parameters.
  *
- * This procedure creates a new, uninitialized brush.
+ * Creates a new, parametric brush.
  *
- * Returns: (transfer full): The actual new brush name.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The brush.
  *
  * Since: 2.2
  **/
-gchar *
+GimpBrush *
 gimp_brush_new (const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *actual_name = NULL;
+  GimpBrush *brush = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
@@ -66,35 +65,34 @@ gimp_brush_new (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    brush = GIMP_VALUES_GET_BRUSH (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return actual_name;
+  return brush;
 }
 
 /**
  * gimp_brush_duplicate:
- * @name: The brush name.
+ * @brush: The brush.
  *
  * Duplicates a brush.
  *
- * This procedure creates an identical brush by a different name.
+ * Returns a copy having a different, unique ID.
  *
- * Returns: (transfer full): The name of the brush's copy.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): A copy of the brush.
  *
  * Since: 2.2
  **/
-gchar *
-gimp_brush_duplicate (const gchar *name)
+GimpBrush *
+gimp_brush_duplicate (GimpBrush *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *copy_name = NULL;
+  GimpBrush *brush_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -103,34 +101,34 @@ gimp_brush_duplicate (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    brush_copy = GIMP_VALUES_GET_BRUSH (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return copy_name;
+  return brush_copy;
 }
 
 /**
  * gimp_brush_is_generated:
- * @name: The brush name.
+ * @brush: The brush.
  *
- * Tests if brush is generated.
+ * Whether the brush is generated (parametric versus raster).
  *
- * Returns TRUE if this brush is parametric, FALSE for other types.
+ * Returns TRUE when brush is parametric.
  *
  * Returns: TRUE if the brush is generated.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_brush_is_generated (const gchar *name)
+gimp_brush_is_generated (GimpBrush *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean generated = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -147,29 +145,70 @@ gimp_brush_is_generated (const gchar *name)
 }
 
 /**
+ * gimp_brush_id_is_valid:
+ * @id: The brush ID.
+ *
+ * Whether the ID is a valid reference to installed brush data.
+ *
+ * Returns TRUE when ID is valid.
+ *
+ * Returns: TRUE if the brush ID is valid.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_brush_id_is_valid (const gchar *id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean valid = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, id,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-brush-id-is-valid",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return valid;
+}
+
+/**
  * gimp_brush_rename:
- * @name: The brush name.
- * @new_name: The new name of the brush.
+ * @brush: The brush.
+ * @new_name: The proposed new name of the brush.
  *
- * Renames a brush.
+ * Renames a brush. When the name is in use, renames to a unique name.
  *
- * This procedure renames a brush.
+ * Renames a brush. The name is the same as the ID. When the proposed
+ * name is already used, GIMP generates a unique name, which get_id()
+ * will return.
+ * Returns a reference to a renamed brush, which you should assign to
+ * the original var or a differently named var. Any existing references
+ * will be invalid. Resources in plugins are proxies holding an ID,
+ * which can be invalid when the resource is renamed.
  *
- * Returns: (transfer full): The actual new name of the brush.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): A reference to the renamed brush.
  *
  * Since: 2.2
  **/
-gchar *
-gimp_brush_rename (const gchar *name,
+GimpBrush *
+gimp_brush_rename (GimpBrush   *brush,
                    const gchar *new_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *actual_name = NULL;
+  GimpBrush *brush_renamed = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
@@ -179,34 +218,35 @@ gimp_brush_rename (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    brush_renamed = GIMP_VALUES_GET_BRUSH (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return actual_name;
+  return brush_renamed;
 }
 
 /**
  * gimp_brush_delete:
- * @name: The brush name.
+ * @brush: The brush.
  *
  * Deletes a brush.
  *
- * This procedure deletes a brush.
+ * Deletes a brush. Returns an error if the brush is not deletable.
+ * Deletes the brush's data. You should not use the brush afterwards.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_brush_delete (const gchar *name)
+gimp_brush_delete (GimpBrush *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -223,9 +263,9 @@ gimp_brush_delete (const gchar *name)
 
 /**
  * gimp_brush_is_editable:
- * @name: The brush name.
+ * @brush: The brush.
  *
- * Tests if brush can be edited.
+ * Whether the brush can be edited.
  *
  * Returns TRUE if you have permission to change the brush.
  *
@@ -234,14 +274,14 @@ gimp_brush_delete (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_brush_is_editable (const gchar *name)
+gimp_brush_is_editable (GimpBrush *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -259,34 +299,35 @@ gimp_brush_is_editable (const gchar *name)
 
 /**
  * gimp_brush_get_info:
- * @name: The brush name.
+ * @brush: The brush.
  * @width: (out): The brush width.
  * @height: (out): The brush height.
  * @mask_bpp: (out): The brush mask bpp.
  * @color_bpp: (out): The brush color bpp.
  *
- * Retrieves information about the specified brush.
+ * Gets information about the brush.
  *
- * This procedure retrieves information about the specified brush:
- * brush extents (width and height), color depth and mask depth.
+ * Gets information about the brush: brush extents (width and height),
+ * color depth and mask depth (bpp). The color bpp is zero when the
+ * brush is parametric versus raster.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_brush_get_info (const gchar *name,
-                     gint        *width,
-                     gint        *height,
-                     gint        *mask_bpp,
-                     gint        *color_bpp)
+gimp_brush_get_info (GimpBrush *brush,
+                     gint      *width,
+                     gint      *height,
+                     gint      *mask_bpp,
+                     gint      *color_bpp)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -316,7 +357,7 @@ gimp_brush_get_info (const gchar *name,
 
 /**
  * gimp_brush_get_pixels:
- * @name: The brush name.
+ * @brush: The brush.
  * @width: (out): The brush width.
  * @height: (out): The brush height.
  * @mask_bpp: (out): The brush mask bpp.
@@ -326,32 +367,33 @@ gimp_brush_get_info (const gchar *name,
  * @num_color_bytes: (out): Length of brush color data.
  * @color_bytes: (out) (array length=num_color_bytes) (element-type guint8) (transfer full): The brush color data.
  *
- * Retrieves information about the specified brush.
+ * Gets information about the brush.
  *
- * This procedure retrieves information about the specified brush. This
- * includes the brush extents (width and height) and its pixels data.
+ * Gets information about the brush: the brush extents (width and
+ * height) and its pixels data. The color bpp is zero and pixels empty
+ * when the brush is parametric versus raster.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_brush_get_pixels (const gchar  *name,
-                       gint         *width,
-                       gint         *height,
-                       gint         *mask_bpp,
-                       gint         *num_mask_bytes,
-                       guint8      **mask_bytes,
-                       gint         *color_bpp,
-                       gint         *num_color_bytes,
-                       guint8      **color_bytes)
+gimp_brush_get_pixels (GimpBrush  *brush,
+                       gint       *width,
+                       gint       *height,
+                       gint       *mask_bpp,
+                       gint       *num_mask_bytes,
+                       guint8    **mask_bytes,
+                       gint       *color_bpp,
+                       gint       *num_color_bytes,
+                       guint8    **color_bytes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -389,29 +431,28 @@ gimp_brush_get_pixels (const gchar  *name,
 
 /**
  * gimp_brush_get_spacing:
- * @name: The brush name.
- * @spacing: (out): The brush spacing.
+ * @brush: The brush.
  *
- * Gets the brush spacing.
+ * Gets the brush spacing, the stamping frequency.
  *
- * This procedure returns the spacing setting for the specified brush.
- * The return value is an integer between 0 and 1000 which represents
- * percentage of the maximum of the width and height of the mask.
+ * Returns the spacing setting for the brush. Spacing is an integer
+ * between 0 and 1000 which represents a percentage of the maximum of
+ * the width and height of the mask. Both parametric and raster brushes
+ * have a spacing.
  *
- * Returns: TRUE on success.
+ * Returns: The brush spacing.
  *
  * Since: 2.2
  **/
-gboolean
-gimp_brush_get_spacing (const gchar *name,
-                        gint        *spacing)
+gint
+gimp_brush_get_spacing (GimpBrush *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gboolean success = TRUE;
+  gint spacing = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -419,42 +460,40 @@ gimp_brush_get_spacing (const gchar *name,
                                               args);
   gimp_value_array_unref (args);
 
-  *spacing = 0;
-
-  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
-
-  if (success)
-    *spacing = GIMP_VALUES_GET_INT (return_vals, 1);
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    spacing = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return success;
+  return spacing;
 }
 
 /**
  * gimp_brush_set_spacing:
- * @name: The brush name.
+ * @brush: The brush.
  * @spacing: The brush spacing.
  *
  * Sets the brush spacing.
  *
- * This procedure modifies the spacing setting for the specified brush.
- * The value should be a integer between 0 and 1000.
+ * Set the spacing for the brush. The spacing must be an integer
+ * between 0 and 1000. Both parametric and raster brushes have a
+ * spacing. Returns an error when the brush is not editable. Create a
+ * new or copied brush or to get an editable brush.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
 gboolean
-gimp_brush_set_spacing (const gchar *name,
-                        gint         spacing)
+gimp_brush_set_spacing (GimpBrush *brush,
+                        gint       spacing)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_INT, spacing,
                                           G_TYPE_NONE);
 
@@ -472,30 +511,31 @@ gimp_brush_set_spacing (const gchar *name,
 
 /**
  * gimp_brush_get_shape:
- * @name: The brush name.
+ * @brush: The brush.
+ * @shape: (out): The brush shape.
  *
  * Gets the shape of a generated brush.
  *
- * This procedure gets the shape value for a generated brush. If called
- * for any other type of brush, it does not succeed. The current
- * possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square
- * (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
- * (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
- * in the future.
+ * Gets the shape of a generated brush. Returns an error when called
+ * for a non-parametric brush. The choices for shape are Circle
+ * (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE),
+ * and Diamond (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes might be
+ * added in the future.
  *
- * Returns: The brush shape.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-GimpBrushGeneratedShape
-gimp_brush_get_shape (const gchar *name)
+gboolean
+gimp_brush_get_shape (GimpBrush               *brush,
+                      GimpBrushGeneratedShape *shape)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpBrushGeneratedShape shape = 0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -503,42 +543,46 @@ gimp_brush_get_shape (const gchar *name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    shape = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  *shape = 0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *shape = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return shape;
+  return success;
 }
 
 /**
  * gimp_brush_set_shape:
- * @name: The brush name.
+ * @brush: The brush.
  * @shape_in: The brush shape.
+ * @shape_out: (out): The brush shape actually assigned.
  *
  * Sets the shape of a generated brush.
  *
- * This procedure sets the shape value for a generated brush. If called
- * for any other type of brush, it does not succeed. The current
- * possibilities are Circle (GIMP_BRUSH_GENERATED_CIRCLE), Square
- * (GIMP_BRUSH_GENERATED_SQUARE), and Diamond
- * (GIMP_BRUSH_GENERATED_DIAMOND). Other shapes are likely to be added
- * in the future.
+ * Sets the shape of a generated brush. Returns an error when brush is
+ * non-parametric or not editable. The choices for shape are Circle
+ * (GIMP_BRUSH_GENERATED_CIRCLE), Square (GIMP_BRUSH_GENERATED_SQUARE),
+ * and Diamond (GIMP_BRUSH_GENERATED_DIAMOND).
  *
- * Returns: The brush shape actually assigned.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-GimpBrushGeneratedShape
-gimp_brush_set_shape (const gchar             *name,
-                      GimpBrushGeneratedShape  shape_in)
+gboolean
+gimp_brush_set_shape (GimpBrush               *brush,
+                      GimpBrushGeneratedShape  shape_in,
+                      GimpBrushGeneratedShape *shape_out)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpBrushGeneratedShape shape_out = 0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           GIMP_TYPE_BRUSH_GENERATED_SHAPE, shape_in,
                                           G_TYPE_NONE);
 
@@ -547,36 +591,42 @@ gimp_brush_set_shape (const gchar             *name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    shape_out = GIMP_VALUES_GET_ENUM (return_vals, 1);
+  *shape_out = 0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *shape_out = GIMP_VALUES_GET_ENUM (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return shape_out;
+  return success;
 }
 
 /**
  * gimp_brush_get_radius:
- * @name: The brush name.
+ * @brush: The brush.
+ * @radius: (out): The radius of the brush in pixels.
  *
  * Gets the radius of a generated brush.
  *
- * This procedure gets the radius value for a generated brush. If
- * called for any other type of brush, it does not succeed.
+ * Gets the radius of a generated brush. Returns an error when called
+ * for a non-parametric brush.
  *
- * Returns: The radius of the brush in pixels.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_get_radius (const gchar *name)
+gboolean
+gimp_brush_get_radius (GimpBrush *brush,
+                       gdouble   *radius)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble radius = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -584,38 +634,45 @@ gimp_brush_get_radius (const gchar *name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    radius = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *radius = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *radius = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return radius;
+  return success;
 }
 
 /**
  * gimp_brush_set_radius:
- * @name: The brush name.
+ * @brush: The brush.
  * @radius_in: The desired brush radius in pixel.
+ * @radius_out: (out): The brush radius actually assigned.
  *
  * Sets the radius of a generated brush.
  *
- * This procedure sets the radius for a generated brush. If called for
- * any other type of brush, it does not succeed.
+ * Sets the radius for a generated brush. Clamps radius to [0.0,
+ * 32767.0]. Returns the clamped value. Returns an error when brush is
+ * non-parametric or not editable.
  *
- * Returns: The brush radius actually assigned.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_set_radius (const gchar *name,
-                       gdouble      radius_in)
+gboolean
+gimp_brush_set_radius (GimpBrush *brush,
+                       gdouble    radius_in,
+                       gdouble   *radius_out)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble radius_out = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_DOUBLE, radius_in,
                                           G_TYPE_NONE);
 
@@ -624,36 +681,42 @@ gimp_brush_set_radius (const gchar *name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    radius_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *radius_out = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *radius_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return radius_out;
+  return success;
 }
 
 /**
  * gimp_brush_get_spikes:
- * @name: The brush name.
+ * @brush: The brush.
+ * @spikes: (out): The number of spikes on the brush.
  *
  * Gets the number of spikes for a generated brush.
  *
- * This procedure gets the number of spikes for a generated brush. If
- * called for any other type of brush, it does not succeed.
+ * Gets the number of spikes for a generated brush. Returns an error
+ * when called for a non-parametric brush.
  *
- * Returns: The number of spikes on the brush.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gint
-gimp_brush_get_spikes (const gchar *name)
+gboolean
+gimp_brush_get_spikes (GimpBrush *brush,
+                       gint      *spikes)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint spikes = 0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -661,38 +724,45 @@ gimp_brush_get_spikes (const gchar *name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spikes = GIMP_VALUES_GET_INT (return_vals, 1);
+  *spikes = 0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *spikes = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return spikes;
+  return success;
 }
 
 /**
  * gimp_brush_set_spikes:
- * @name: The brush name.
+ * @brush: The brush.
  * @spikes_in: The desired number of spikes.
+ * @spikes_out: (out): The number of spikes actually assigned.
  *
  * Sets the number of spikes for a generated brush.
  *
- * This procedure sets the number of spikes for a generated brush. If
- * called for any other type of brush, it does not succeed.
+ * Sets the number of spikes for a generated brush. Clamps spikes to
+ * [2,20]. Returns the clamped value. Returns an error when brush is
+ * non-parametric or not editable.
  *
- * Returns: The number of spikes actually assigned.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gint
-gimp_brush_set_spikes (const gchar *name,
-                       gint         spikes_in)
+gboolean
+gimp_brush_set_spikes (GimpBrush *brush,
+                       gint       spikes_in,
+                       gint      *spikes_out)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gint spikes_out = 0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_INT, spikes_in,
                                           G_TYPE_NONE);
 
@@ -701,38 +771,44 @@ gimp_brush_set_spikes (const gchar *name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    spikes_out = GIMP_VALUES_GET_INT (return_vals, 1);
+  *spikes_out = 0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *spikes_out = GIMP_VALUES_GET_INT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return spikes_out;
+  return success;
 }
 
 /**
  * gimp_brush_get_hardness:
- * @name: The brush name.
+ * @brush: The brush.
+ * @hardness: (out): The hardness of the brush.
  *
  * Gets the hardness of a generated brush.
  *
- * This procedure gets the hardness of a generated brush. The hardness
- * of a brush is the amount its intensity fades at the outside edge, as
- * a float between 0.0 and 1.0. If called for any other type of brush,
- * the function does not succeed.
+ * Gets the hardness of a generated brush. The hardness of a brush is
+ * the amount its intensity fades at the outside edge, as a float
+ * between 0.0 and 1.0. Returns an error when called for a
+ * non-parametric brush.
  *
- * Returns: The hardness of the brush.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_get_hardness (const gchar *name)
+gboolean
+gimp_brush_get_hardness (GimpBrush *brush,
+                         gdouble   *hardness)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble hardness = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -740,39 +816,45 @@ gimp_brush_get_hardness (const gchar *name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *hardness = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *hardness = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return hardness;
+  return success;
 }
 
 /**
  * gimp_brush_set_hardness:
- * @name: The brush name.
+ * @brush: The brush.
  * @hardness_in: The desired brush hardness.
+ * @hardness_out: (out): The brush hardness actually assigned.
  *
  * Sets the hardness of a generated brush.
  *
- * This procedure sets the hardness for a generated brush. If called
- * for any other type of brush, it does not succeed. The value should
- * be a float between 0.0 and 1.0.
+ * Sets the hardness for a generated brush. Clamps hardness to [0.0,
+ * 1.0]. Returns the clamped value. Returns an error when brush is
+ * non-parametric or not editable.
  *
- * Returns: The brush hardness actually assigned.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_set_hardness (const gchar *name,
-                         gdouble      hardness_in)
+gboolean
+gimp_brush_set_hardness (GimpBrush *brush,
+                         gdouble    hardness_in,
+                         gdouble   *hardness_out)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble hardness_out = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_DOUBLE, hardness_in,
                                           G_TYPE_NONE);
 
@@ -781,37 +863,43 @@ gimp_brush_set_hardness (const gchar *name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    hardness_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *hardness_out = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *hardness_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return hardness_out;
+  return success;
 }
 
 /**
  * gimp_brush_get_aspect_ratio:
- * @name: The brush name.
+ * @brush: The brush.
+ * @aspect_ratio: (out): The aspect ratio of the brush.
  *
  * Gets the aspect ratio of a generated brush.
  *
- * This procedure gets the aspect ratio of a generated brush. If called
- * for any other type of brush, it does not succeed. The return value
- * is a float between 0.0 and 1000.0.
+ * Gets the aspect ratio of a generated brush. Returns an error when
+ * called for a non-parametric brush. The aspect ratio is a float
+ * between 0.0 and 1000.0.
  *
- * Returns: The aspect ratio of the brush.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_get_aspect_ratio (const gchar *name)
+gboolean
+gimp_brush_get_aspect_ratio (GimpBrush *brush,
+                             gdouble   *aspect_ratio)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble aspect_ratio = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -819,39 +907,45 @@ gimp_brush_get_aspect_ratio (const gchar *name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect_ratio = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *aspect_ratio = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *aspect_ratio = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return aspect_ratio;
+  return success;
 }
 
 /**
  * gimp_brush_set_aspect_ratio:
- * @name: The brush name.
+ * @brush: The brush.
  * @aspect_ratio_in: The desired brush aspect ratio.
+ * @aspect_ratio_out: (out): The brush aspect ratio actually assigned.
  *
  * Sets the aspect ratio of a generated brush.
  *
- * This procedure sets the aspect ratio for a generated brush. If
- * called for any other type of brush, it does not succeed. The value
- * should be a float between 0.0 and 1000.0.
+ * Sets the aspect ratio for a generated brush. Clamps aspect ratio to
+ * [0.0, 1000.0]. Returns the clamped value. Returns an error when
+ * brush is non-parametric or not editable.
  *
- * Returns: The brush aspect ratio actually assigned.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_set_aspect_ratio (const gchar *name,
-                             gdouble      aspect_ratio_in)
+gboolean
+gimp_brush_set_aspect_ratio (GimpBrush *brush,
+                             gdouble    aspect_ratio_in,
+                             gdouble   *aspect_ratio_out)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble aspect_ratio_out = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_DOUBLE, aspect_ratio_in,
                                           G_TYPE_NONE);
 
@@ -860,36 +954,42 @@ gimp_brush_set_aspect_ratio (const gchar *name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    aspect_ratio_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *aspect_ratio_out = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *aspect_ratio_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return aspect_ratio_out;
+  return success;
 }
 
 /**
  * gimp_brush_get_angle:
- * @name: The brush name.
+ * @brush: The brush.
+ * @angle: (out): The rotation angle of the brush in degree.
  *
  * Gets the rotation angle of a generated brush.
  *
- * This procedure gets the angle of rotation for a generated brush. If
- * called for any other type of brush, it does not succeed.
+ * Gets the angle of rotation for a generated brush. Returns an error
+ * when called for a non-parametric brush.
  *
- * Returns: The rotation angle of the brush in degree.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_get_angle (const gchar *name)
+gboolean
+gimp_brush_get_angle (GimpBrush *brush,
+                      gdouble   *angle)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble angle = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -897,38 +997,45 @@ gimp_brush_get_angle (const gchar *name)
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *angle = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *angle = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return angle;
+  return success;
 }
 
 /**
  * gimp_brush_set_angle:
- * @name: The brush name.
- * @angle_in: The desired brush rotation angle in degree.
+ * @brush: The brush.
+ * @angle_in: The desired brush rotation angle in degrees.
+ * @angle_out: (out): The brush rotation angle actually assigned.
  *
  * Sets the rotation angle of a generated brush.
  *
- * This procedure sets the rotation angle for a generated brush. If
- * called for any other type of brush, it does not succeed.
+ * Sets the rotation angle for a generated brush. Sets the angle modulo
+ * 180, in the range [-180.0, 180.0]. Returns the clamped value.
+ * Returns an error when brush is non-parametric or not editable.
  *
- * Returns: The brush rotation angle actually assigned.
+ * Returns: TRUE on success.
  *
  * Since: 2.4
  **/
-gdouble
-gimp_brush_set_angle (const gchar *name,
-                      gdouble      angle_in)
+gboolean
+gimp_brush_set_angle (GimpBrush *brush,
+                      gdouble    angle_in,
+                      gdouble   *angle_out)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gdouble angle_out = 0.0;
+  gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_DOUBLE, angle_in,
                                           G_TYPE_NONE);
 
@@ -937,10 +1044,14 @@ gimp_brush_set_angle (const gchar *name,
                                               args);
   gimp_value_array_unref (args);
 
-  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    angle_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
+  *angle_out = 0.0;
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  if (success)
+    *angle_out = GIMP_VALUES_GET_DOUBLE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return angle_out;
+  return success;
 }

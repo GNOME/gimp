@@ -1,0 +1,68 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 3 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+# The invoke code is compiled on the app side.
+# The invoke code must assign to each result var
+
+sub font_id_is_valid {
+    $blurb = "Whether the ID is a valid reference to installed data.";
+    $help  = "Returns TRUE if this ID is valid.";
+
+    &bootchk_pdb_misc('2022', '3.0');
+
+    @inargs = (
+      { name => 'id',
+        type => 'string',
+        non_empty => 1,
+        no_validate => 1,
+        desc => 'The font ID' }
+    );
+
+    @outargs = (
+      { name => 'valid', type => 'boolean',
+        desc => 'TRUE if the font ID is valid' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  valid = (gimp_pdb_get_font (gimp, id, error) != NULL);
+
+  /* When ID is not valid, NULL is returned and error is set.
+   * Clear error so GIMP not display error dialog.
+   */
+  g_clear_error (error);
+}
+CODE
+    );
+}
+
+
+@headers = qw("core/gimp.h"
+              "gimppdb-utils.h");
+
+@procs = qw(font_id_is_valid);
+
+%exports = (app => [@procs], lib => [@procs]);
+
+$desc = 'Font';
+$doc_title = 'gimpfont';
+$doc_short_desc = 'Installable object used by text tools.';
+$doc_long_desc = 'Installable object used by text tools.';
+
+1;

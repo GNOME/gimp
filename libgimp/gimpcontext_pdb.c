@@ -39,11 +39,11 @@
 /**
  * gimp_context_push:
  *
- * Pushes a context to the top of the plug-in's context stack.
+ * Pushes a context onto the top of the plug-in's context stack.
  *
- * This procedure creates a new context by copying the current context.
- * This copy becomes the new current context for the calling plug-in
- * until it is popped again using gimp_context_pop().
+ * Creates a new context by copying the current context. The copy
+ * becomes the new current context for the calling plug-in until it is
+ * popped again using gimp_context_pop().
  *
  * Returns: TRUE on success.
  *
@@ -76,10 +76,10 @@ gimp_context_push (void)
  *
  * Pops the topmost context from the plug-in's context stack.
  *
- * This procedure removes the topmost context from the plug-in's
- * context stack. The context that was active before the corresponding
- * call to gimp_context_push() becomes the new current context of the
- * plug-in.
+ * Removes the topmost context from the plug-in's context stack. The
+ * next context on the stack becomes the new current context of the
+ * plug-in, that is, the context that was active before the
+ * corresponding call to gimp_context_push()
  *
  * Returns: TRUE on success.
  *
@@ -112,11 +112,10 @@ gimp_context_pop (void)
  *
  * Reset context settings to their default values.
  *
- * This procedure resets context settings used by various procedures to
- * their default value. This procedure will usually be called after a
- * context push so that a script which calls procedures affected by
- * context settings will not be affected by changes in the global
- * context.
+ * Resets context settings used by various procedures to their default
+ * value. You should usually call this after a context push so that a
+ * script which calls procedures affected by context settings will not
+ * be affected by changes in the global context.
  *
  * Returns: TRUE on success.
  *
@@ -150,8 +149,8 @@ gimp_context_set_defaults (void)
  *
  * Lists the available paint methods.
  *
- * This procedure lists the names of the available paint methods. Any
- * of the results can be used for gimp_context_set_paint_method().
+ * Lists the names of the available paint methods. Any of the names can
+ * be used for gimp_context_set_paint_method().
  *
  * Returns: TRUE on success.
  *
@@ -187,10 +186,9 @@ gimp_context_list_paint_methods (gchar ***paint_methods)
 /**
  * gimp_context_get_paint_method:
  *
- * Retrieve the currently active paint method.
+ * Get the currently active paint method.
  *
- * This procedure returns the name of the currently active paint
- * method.
+ * Returns the name of the currently active paint method.
  *
  * Returns: (transfer full): The name of the active paint method.
  *          The returned value must be freed with g_free().
@@ -224,14 +222,12 @@ gimp_context_get_paint_method (void)
  * gimp_context_set_paint_method:
  * @name: The name of the paint method.
  *
- * Set the specified paint method as the active paint method.
+ * Set the active paint method.
  *
- * This procedure allows the active paint method to be set by
- * specifying its name. The name is simply a string which corresponds
- * to one of the names of the available paint methods. If there is no
- * matching method found, this procedure will return an error.
- * Otherwise, the specified method becomes active and will be used in
- * all subsequent paint operations.
+ * Sets the active paint method to the named paint method. The paint
+ * method will be used in all subsequent paint operations. The name
+ * should be a name of an available paint method. Returns an error if
+ * no matching paint method is found.
  *
  * Returns: TRUE on success.
  *
@@ -263,9 +259,9 @@ gimp_context_set_paint_method (const gchar *name)
 /**
  * gimp_context_get_stroke_method:
  *
- * Retrieve the currently active stroke method.
+ * Get the currently active stroke method.
  *
- * This procedure returns the currently active stroke method.
+ * Returns the currently active stroke method.
  *
  * Returns: The active stroke method.
  *
@@ -298,11 +294,10 @@ gimp_context_get_stroke_method (void)
  * gimp_context_set_stroke_method:
  * @stroke_method: The new stroke method.
  *
- * Set the specified stroke method as the active stroke method.
+ * Set the active stroke method.
  *
- * This procedure set the specified stroke method as the active stroke
- * method. The new method will be used in all subsequent stroke
- * operations.
+ * Sets the active stroke method. The method will be used in all
+ * subsequent stroke operations.
  *
  * Returns: TRUE on success.
  *
@@ -337,9 +332,9 @@ gimp_context_set_stroke_method (GimpStrokeMethod stroke_method)
  *
  * Get the current GIMP foreground color.
  *
- * This procedure returns the current GIMP foreground color. The
- * foreground color is used in a variety of tools such as paint tools,
- * blending, and bucket fill.
+ * Returns the current GIMP foreground color. The foreground color is
+ * used in a variety of tools such as paint tools, blending, and bucket
+ * fill.
  *
  * Returns: TRUE on success.
  *
@@ -376,9 +371,9 @@ gimp_context_get_foreground (GimpRGB *foreground)
  *
  * Set the current GIMP foreground color.
  *
- * This procedure sets the current GIMP foreground color. After this is
- * set, operations which use foreground such as paint tools, blending,
- * and bucket fill will use the new value.
+ * Sets the current GIMP foreground color. After this is set,
+ * operations which use foreground such as paint tools, blending, and
+ * bucket fill will use the new value.
  *
  * Returns: TRUE on success.
  *
@@ -413,9 +408,9 @@ gimp_context_set_foreground (const GimpRGB *foreground)
  *
  * Get the current GIMP background color.
  *
- * This procedure returns the current GIMP background color. The
- * background color is used in a variety of tools such as blending,
- * erasing (with non-alpha images), and image filling.
+ * Returns the current GIMP background color. The background color is
+ * used in a variety of tools such as blending, erasing (with non-alpha
+ * images), and image filling.
  *
  * Returns: TRUE on success.
  *
@@ -452,10 +447,9 @@ gimp_context_get_background (GimpRGB *background)
  *
  * Set the current GIMP background color.
  *
- * This procedure sets the current GIMP background color. After this is
- * set, operations which use background such as blending, filling
- * images, clearing, and erasing (in non-alpha images) will use the new
- * value.
+ * Sets the current GIMP background color. After this is set,
+ * operations which use background such as blending, filling images,
+ * clearing, and erasing (in non-alpha images) will use the new value.
  *
  * Returns: TRUE on success.
  *
@@ -490,8 +484,8 @@ gimp_context_set_background (const GimpRGB *background)
  * Set the current GIMP foreground and background colors to black and
  * white.
  *
- * This procedure sets the current GIMP foreground and background
- * colors to their initial default values, black and white.
+ * Sets the current GIMP foreground and background colors to their
+ * initial default values, black and white.
  *
  * Returns: TRUE on success.
  *
@@ -524,9 +518,9 @@ gimp_context_set_default_colors (void)
  *
  * Swap the current GIMP foreground and background colors.
  *
- * This procedure swaps the current GIMP foreground and background
- * colors, so that the new foreground color becomes the old background
- * color and vice versa.
+ * Swaps the current GIMP foreground and background colors, so that the
+ * new foreground color becomes the old background color and vice
+ * versa.
  *
  * Returns: TRUE on success.
  *
@@ -559,8 +553,8 @@ gimp_context_swap_colors (void)
  *
  * Get the opacity.
  *
- * This procedure returns the opacity setting. The return value is a
- * floating point number between 0 and 100.
+ * Returns the opacity setting. The return value is a floating point
+ * number between 0 and 100.
  *
  * Returns: The opacity.
  *
@@ -595,8 +589,8 @@ gimp_context_get_opacity (void)
  *
  * Set the opacity.
  *
- * This procedure modifies the opacity setting. The value should be a
- * floating point number between 0 and 100.
+ * Modifies the opacity setting. The value should be a floating point
+ * number between 0 and 100.
  *
  * Returns: TRUE on success.
  *
@@ -630,9 +624,8 @@ gimp_context_set_opacity (gdouble opacity)
  *
  * Get the paint mode.
  *
- * This procedure returns the paint-mode setting. The return value is
- * an integer which corresponds to the values listed in the argument
- * description.
+ * Returns the paint-mode setting. The return value is an integer which
+ * corresponds to the values listed in the argument description.
  *
  * Returns: The paint mode.
  *
@@ -667,7 +660,7 @@ gimp_context_get_paint_mode (void)
  *
  * Set the paint mode.
  *
- * This procedure modifies the paint_mode setting.
+ * Modifies the paint_mode setting.
  *
  * Returns: TRUE on success.
  *
@@ -701,7 +694,7 @@ gimp_context_set_paint_mode (GimpLayerMode paint_mode)
  *
  * Get the line width setting.
  *
- * This procedure returns the line width setting.
+ * Returns the line width setting.
  *
  * Returns: The line width setting.
  *
@@ -736,7 +729,7 @@ gimp_context_get_line_width (void)
  *
  * Set the line width setting.
  *
- * This procedure modifies the line width setting for stroking lines.
+ * Modifies the line width setting for stroking lines.
  *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
@@ -774,7 +767,7 @@ gimp_context_set_line_width (gdouble line_width)
  *
  * Get the line width unit setting.
  *
- * This procedure returns the line width unit setting.
+ * Returns the line width unit setting.
  *
  * Returns: (transfer none): The line width unit setting.
  *
@@ -809,8 +802,7 @@ gimp_context_get_line_width_unit (void)
  *
  * Set the line width unit setting.
  *
- * This procedure modifies the line width unit setting for stroking
- * lines.
+ * Modifies the line width unit setting for stroking lines.
  *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
@@ -848,7 +840,7 @@ gimp_context_set_line_width_unit (GimpUnit line_width_unit)
  *
  * Get the line cap style setting.
  *
- * This procedure returns the line cap style setting.
+ * Returns the line cap style setting.
  *
  * Returns: The line cap style setting.
  *
@@ -883,8 +875,7 @@ gimp_context_get_line_cap_style (void)
  *
  * Set the line cap style setting.
  *
- * This procedure modifies the line cap style setting for stroking
- * lines.
+ * Modifies the line cap style setting for stroking lines.
  *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
@@ -922,7 +913,7 @@ gimp_context_set_line_cap_style (GimpCapStyle cap_style)
  *
  * Get the line join style setting.
  *
- * This procedure returns the line join style setting.
+ * Returns the line join style setting.
  *
  * Returns: The line join style setting.
  *
@@ -957,9 +948,7 @@ gimp_context_get_line_join_style (void)
  *
  * Set the line join style setting.
  *
- * This procedure modifies the line join style setting for stroking
- * lines.
- *
+ * Modifies the line join style setting for stroking lines.
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
  * gimp_drawable_edit_stroke_item().
@@ -996,7 +985,7 @@ gimp_context_set_line_join_style (GimpJoinStyle join_style)
  *
  * Get the line miter limit setting.
  *
- * This procedure returns the line miter limit setting.
+ * Returns the line miter limit setting.
  *
  * Returns: The line miter limit setting.
  *
@@ -1031,8 +1020,7 @@ gimp_context_get_line_miter_limit (void)
  *
  * Set the line miter limit setting.
  *
- * This procedure modifies the line miter limit setting for stroking
- * lines.
+ * Modifies the line miter limit setting for stroking lines.
  * A mitered join is converted to a bevelled join if the miter would
  * extend to a distance of more than (miter-limit * line-width) from
  * the actual join point.
@@ -1073,7 +1061,7 @@ gimp_context_set_line_miter_limit (gdouble miter_limit)
  *
  * Get the line dash offset setting.
  *
- * This procedure returns the line dash offset setting.
+ * Returns the line dash offset setting.
  *
  * Returns: The line dash offset setting.
  *
@@ -1108,8 +1096,7 @@ gimp_context_get_line_dash_offset (void)
  *
  * Set the line dash offset setting.
  *
- * This procedure modifies the line dash offset setting for stroking
- * lines.
+ * Modifies the line dash offset setting for stroking lines.
  *
  * This setting affects the following procedures:
  * gimp_drawable_edit_stroke_selection(),
@@ -1149,7 +1136,7 @@ gimp_context_set_line_dash_offset (gdouble dash_offset)
  *
  * Get the line dash pattern setting.
  *
- * This procedure returns the line dash pattern setting.
+ * Returns the line dash pattern setting.
  *
  * Returns: TRUE on success.
  *
@@ -1194,8 +1181,7 @@ gimp_context_get_line_dash_pattern (gint     *num_dashes,
  *
  * Set the line dash pattern setting.
  *
- * This procedure modifies the line dash pattern setting for stroking
- * lines.
+ * Modifies the line dash pattern setting for stroking lines.
  *
  * The unit of the dash pattern segments is the actual line width used
  * for the stroke operation, in other words a segment length of 1.0
@@ -1238,23 +1224,21 @@ gimp_context_set_line_dash_pattern (gint           num_dashes,
 /**
  * gimp_context_get_brush:
  *
- * Retrieve the currently active brush.
+ * Get the currently active brush.
  *
- * This procedure returns the name of the currently active brush. All
- * paint operations and stroke operations use this brush to control the
- * application of paint to the image.
+ * Returns the currently active brush. All paint and stroke operations
+ * use this brush.
  *
- * Returns: (transfer full): The name of the active brush.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The active brush.
  *
  * Since: 2.2
  **/
-gchar *
+GimpBrush *
 gimp_context_get_brush (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *name = NULL;
+  GimpBrush *brush = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -1265,38 +1249,36 @@ gimp_context_get_brush (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    brush = GIMP_VALUES_GET_BRUSH (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return name;
+  return brush;
 }
 
 /**
  * gimp_context_set_brush:
- * @name: The name of the brush.
+ * @brush: The brush.
  *
- * Set the specified brush as the active brush.
+ * Set the active brush.
  *
- * This procedure allows the active brush to be set by specifying its
- * name. The name is simply a string which corresponds to one of the
- * names of the installed brushes. If there is no matching brush found,
- * this procedure will return an error. Otherwise, the specified brush
- * becomes active and will be used in all subsequent paint operations.
+ * Sets the active brush in the current context. The brush will be used
+ * in subsequent paint and stroke operations. Returns an error when the
+ * brush data was uninstalled since the brush object was created.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_brush (const gchar *name)
+gimp_context_set_brush (GimpBrush *brush)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_BRUSH, brush,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -1832,13 +1814,12 @@ gimp_context_set_brush_force (gdouble force)
 /**
  * gimp_context_get_dynamics:
  *
- * Retrieve the currently active paint dynamics.
+ * Get the currently active paint dynamics.
  *
- * This procedure returns the name of the currently active paint
- * dynamics. If enabled, all paint operations and stroke operations use
- * this paint dynamics to control the application of paint to the
- * image. If disabled, the dynamics will be ignored during paint
- * actions.
+ * Returns the name of the currently active paint dynamics. If enabled,
+ * all paint operations and stroke operations use this paint dynamics
+ * to control the application of paint to the image. If disabled, the
+ * dynamics will be ignored during paint actions.
  * See gimp_context_are_dynamics_enabled() to enquire whether dynamics
  * are used or ignored.
  *
@@ -1872,17 +1853,14 @@ gimp_context_get_dynamics (void)
 
 /**
  * gimp_context_set_dynamics:
- * @name: The name of the paint dynamics.
+ * @name: A name of a paint dynamics.
  *
- * Set the specified paint dynamics as the active paint dynamics.
+ * Set the active paint dynamics.
  *
- * This procedure allows the active paint dynamics to be set by
- * specifying its name. The name is simply a string which corresponds
- * to one of the names of the installed paint dynamics. If there is no
- * matching paint dynamics found, this procedure will return an error.
- * Otherwise, the specified paint dynamics becomes active and will be
- * used in all subsequent paint operations as long as dynamics are
- * enabled.
+ * Sets the active paint dynamics. The paint dynamics will be used in
+ * all subsequent paint operations when dynamics are enabled. The name
+ * should be a name of an installed paint dynamics. Returns an error if
+ * no matching paint dynamics is found.
  *
  * Returns: TRUE on success.
  *
@@ -1914,11 +1892,11 @@ gimp_context_set_dynamics (const gchar *name)
 /**
  * gimp_context_are_dynamics_enabled:
  *
- * Inform whether the currently active paint dynamics will be applied
- * to painting.
+ * Whether the currently active paint dynamics will be applied to
+ * painting.
  *
- * This procedure returns whether the currently active paint dynamics
- * (as returned by gimp_context_get_dynamics()) is enabled.
+ * Returns whether the currently active paint dynamics (as returned by
+ * gimp_context_get_dynamics()) is enabled.
  *
  * Returns: Whether dynamics enabled or disabled.
  *
@@ -1951,10 +1929,10 @@ gimp_context_are_dynamics_enabled (void)
  * gimp_context_enable_dynamics:
  * @enable: Whether to enable or disable dynamics.
  *
- * Set the specified paint dynamics as the active paint dynamics.
+ * Enables paint dynamics using the active paint dynamics.
  *
- * This procedure enables the active paint dynamics to be used in all
- * subsequent paint operations.
+ * Enables the active paint dynamics to be used in all subsequent paint
+ * operations.
  *
  * Returns: TRUE on success.
  *
@@ -1986,10 +1964,9 @@ gimp_context_enable_dynamics (gboolean enable)
 /**
  * gimp_context_get_mypaint_brush:
  *
- * Retrieve the currently active MyPaint brush.
+ * Get the currently active MyPaint brush.
  *
- * This procedure returns the name of the currently active MyPaint
- * brush.
+ * Returns the name of the currently active MyPaint brush.
  *
  * Returns: (transfer full): The name of the active MyPaint brush.
  *          The returned value must be freed with g_free().
@@ -2021,16 +1998,14 @@ gimp_context_get_mypaint_brush (void)
 
 /**
  * gimp_context_set_mypaint_brush:
- * @name: The name of the MyPaint brush.
+ * @name: A name of a MyPaint brush.
  *
- * Set the specified MyPaint brush as the active MyPaint brush.
+ * Set a MyPaint brush as the active MyPaint brush.
  *
- * This procedure allows the active MyPaint brush to be set by
- * specifying its name. The name is simply a string which corresponds
- * to one of the names of the installed MyPaint brushes. If there is no
- * matching MyPaint brush found, this procedure will return an error.
- * Otherwise, the specified MyPaint brush becomes active and will be
- * used in all subsequent MyPaint paint operations.
+ * Sets the active MyPaint brush to the named MyPaint brush. The brush
+ * will be used in all subsequent MyPaint paint operations. The name
+ * should be a name of an installed MyPaint brush. Returns an error if
+ * no matching MyPaint brush is found.
  *
  * Returns: TRUE on success.
  *
@@ -2062,23 +2037,22 @@ gimp_context_set_mypaint_brush (const gchar *name)
 /**
  * gimp_context_get_pattern:
  *
- * Retrieve the currently active pattern.
+ * Get the currently active pattern.
  *
- * This procedure returns name of the the currently active pattern. All
- * clone and bucket-fill operations with patterns will use this pattern
- * to control the application of paint to the image.
+ * Returns the active pattern in the current context. All clone and
+ * bucket-fill operations with patterns will use this pattern to
+ * control the application of paint to the image.
  *
- * Returns: (transfer full): The name of the active pattern.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The active pattern.
  *
  * Since: 2.2
  **/
-gchar *
+GimpPattern *
 gimp_context_get_pattern (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *name = NULL;
+  GimpPattern *pattern = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -2089,39 +2063,37 @@ gimp_context_get_pattern (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    pattern = GIMP_VALUES_GET_PATTERN (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return name;
+  return pattern;
 }
 
 /**
  * gimp_context_set_pattern:
- * @name: The name of the pattern.
+ * @pattern: The pattern.
  *
- * Set the specified pattern as the active pattern.
+ * Set the active pattern.
  *
- * This procedure allows the active pattern to be set by specifying its
- * name. The name is simply a string which corresponds to one of the
- * names of the installed patterns. If there is no matching pattern
- * found, this procedure will return an error. Otherwise, the specified
- * pattern becomes active and will be used in all subsequent paint
- * operations.
+ * Sets the active pattern in the current context. The pattern will be
+ * used in subsequent fill operations using a pattern. Returns an error
+ * when the pattern data was uninstalled since the pattern object was
+ * created.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_pattern (const gchar *name)
+gimp_context_set_pattern (GimpPattern *pattern)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PATTERN, pattern,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -2139,21 +2111,20 @@ gimp_context_set_pattern (const gchar *name)
 /**
  * gimp_context_get_gradient:
  *
- * Retrieve the currently active gradient.
+ * Get the currently active gradient.
  *
- * This procedure returns the name of the currently active gradient.
+ * Returns the currently active gradient.
  *
- * Returns: (transfer full): The name of the active gradient.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The active gradient.
  *
  * Since: 2.2
  **/
-gchar *
+GimpGradient *
 gimp_context_get_gradient (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *name = NULL;
+  GimpGradient *gradient = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -2164,39 +2135,36 @@ gimp_context_get_gradient (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    gradient = GIMP_VALUES_GET_GRADIENT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return name;
+  return gradient;
 }
 
 /**
  * gimp_context_set_gradient:
- * @name: The name of the gradient.
+ * @gradient: The gradient.
  *
- * Sets the specified gradient as the active gradient.
+ * Sets the active gradient.
  *
- * This procedure lets you set the specified gradient as the active or
- * \"current\" one. The name is simply a string which corresponds to
- * one of the loaded gradients. If no matching gradient is found, this
- * procedure will return an error. Otherwise, the specified gradient
- * will become active and will be used for subsequent custom gradient
- * operations.
+ * Sets the active gradient in the current context. The gradient will
+ * be used in subsequent gradient operations. Returns an error when the
+ * gradient data was uninstalled since the gradient object was created.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_gradient (const gchar *name)
+gimp_context_set_gradient (GimpGradient *gradient)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -2216,9 +2184,8 @@ gimp_context_set_gradient (const gchar *name)
  *
  * Sets the built-in FG-BG RGB gradient as the active gradient.
  *
- * This procedure sets the built-in FG-BG RGB gradient as the active
- * gradient. The gradient will be used for subsequent gradient
- * operations.
+ * Sets the built-in FG-BG RGB gradient as the active gradient. The
+ * gradient will be used for subsequent gradient operations.
  *
  * Returns: TRUE on success.
  *
@@ -2251,9 +2218,8 @@ gimp_context_set_gradient_fg_bg_rgb (void)
  *
  * Sets the built-in FG-BG HSV (cw) gradient as the active gradient.
  *
- * This procedure sets the built-in FG-BG HSV (cw) gradient as the
- * active gradient. The gradient will be used for subsequent gradient
- * operations.
+ * Sets the built-in FG-BG HSV (cw) gradient as the active gradient.
+ * The gradient will be used for subsequent gradient operations.
  *
  * Returns: TRUE on success.
  *
@@ -2286,9 +2252,8 @@ gimp_context_set_gradient_fg_bg_hsv_cw (void)
  *
  * Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.
  *
- * This procedure sets the built-in FG-BG HSV (ccw) gradient as the
- * active gradient. The gradient will be used for subsequent gradient
- * operations.
+ * Sets the built-in FG-BG HSV (ccw) gradient as the active gradient.
+ * The gradient will be used for subsequent gradient operations.
  *
  * Returns: TRUE on success.
  *
@@ -2321,9 +2286,8 @@ gimp_context_set_gradient_fg_bg_hsv_ccw (void)
  *
  * Sets the built-in FG-Transparent gradient as the active gradient.
  *
- * This procedure sets the built-in FG-Transparent gradient as the
- * active gradient. The gradient will be used for subsequent gradient
- * operations.
+ * Sets the built-in FG-Transparent gradient as the active gradient.
+ * The gradient will be used for subsequent gradient operations.
  *
  * Returns: TRUE on success.
  *
@@ -2565,21 +2529,20 @@ gimp_context_set_gradient_reverse (gboolean reverse)
 /**
  * gimp_context_get_palette:
  *
- * Retrieve the currently active palette.
+ * Get the currently active palette.
  *
- * This procedure returns the name of the the currently active palette.
+ * Returns the currently active palette.
  *
- * Returns: (transfer full): The name of the active palette.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The active palette.
  *
  * Since: 2.2
  **/
-gchar *
+GimpPalette *
 gimp_context_get_palette (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *name = NULL;
+  GimpPalette *palette = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -2590,39 +2553,36 @@ gimp_context_get_palette (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    palette = GIMP_VALUES_GET_PALETTE (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return name;
+  return palette;
 }
 
 /**
  * gimp_context_set_palette:
- * @name: The name of the palette.
+ * @palette: The palette.
  *
- * Set the specified palette as the active palette.
+ * Set the active palette.
  *
- * This procedure allows the active palette to be set by specifying its
- * name. The name is simply a string which corresponds to one of the
- * names of the installed palettes. If no matching palette is found,
- * this procedure will return an error. Otherwise, the specified
- * palette becomes active and will be used in all subsequent palette
- * operations.
+ * Sets the active palette in the current context. The palette will be
+ * used in subsequent paint operations. Returns an error when the
+ * palette data was uninstalled since the palette object was created.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_palette (const gchar *name)
+gimp_context_set_palette (GimpPalette *palette)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_PALETTE, palette,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -2640,21 +2600,20 @@ gimp_context_set_palette (const gchar *name)
 /**
  * gimp_context_get_font:
  *
- * Retrieve the currently active font.
+ * Get the currently active font.
  *
- * This procedure returns the name of the currently active font.
+ * Returns the currently active font.
  *
- * Returns: (transfer full): The name of the active font.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The active font.
  *
  * Since: 2.2
  **/
-gchar *
+GimpFont *
 gimp_context_get_font (void)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *name = NULL;
+  GimpFont *font = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_NONE);
@@ -2665,38 +2624,36 @@ gimp_context_get_font (void)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    font = GIMP_VALUES_GET_FONT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return name;
+  return font;
 }
 
 /**
  * gimp_context_set_font:
- * @name: The name of the font.
+ * @font: The font.
  *
- * Set the specified font as the active font.
+ * Set the active font.
  *
- * This procedure allows the active font to be set by specifying its
- * name. The name is simply a string which corresponds to one of the
- * names of the installed fonts. If no matching font is found, this
- * procedure will return an error. Otherwise, the specified font
- * becomes active and will be used in all subsequent font operations.
+ * Sets the active font in the current context. The font will be used
+ * in subsequent text operations. Returns an error when the font data
+ * was uninstalled since the font object was created.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_context_set_font (const gchar *name)
+gimp_context_set_font (GimpFont *font)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_FONT, font,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -2716,7 +2673,7 @@ gimp_context_set_font (const gchar *name)
  *
  * Get the antialias setting.
  *
- * This procedure returns the antialias setting.
+ * Returns the antialias setting.
  *
  * Returns: The antialias setting.
  *
@@ -2751,11 +2708,10 @@ gimp_context_get_antialias (void)
  *
  * Set the antialias setting.
  *
- * This procedure modifies the antialias setting. If antialiasing is
- * turned on, the edges of selected region will contain intermediate
- * values which give the appearance of a sharper, less pixelized edge.
- * This should be set as TRUE most of the time unless a binary-only
- * selection is wanted.
+ * Modifies the antialias setting. If antialiasing is turned on, the
+ * edges of selected region will contain intermediate values which give
+ * the appearance of a sharper, less pixelized edge. This should be set
+ * as TRUE most of the time unless a binary-only selection is wanted.
  *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
@@ -2796,7 +2752,7 @@ gimp_context_set_antialias (gboolean antialias)
  *
  * Get the feather setting.
  *
- * This procedure returns the feather setting.
+ * Returns the feather setting.
  *
  * Returns: The feather setting.
  *
@@ -2831,9 +2787,9 @@ gimp_context_get_feather (void)
  *
  * Set the feather setting.
  *
- * This procedure modifies the feather setting. If the feather option
- * is enabled, selections will be blurred before combining. The blur is
- * a gaussian blur; its radii can be controlled using
+ * Modifies the feather setting. If the feather option is enabled,
+ * selections will be blurred before combining. The blur is a gaussian
+ * blur; its radii can be controlled using
  * gimp_context_set_feather_radius().
  *
  * This setting affects the following procedures:
@@ -2876,7 +2832,7 @@ gimp_context_set_feather (gboolean feather)
  *
  * Get the feather radius setting.
  *
- * This procedure returns the feather radius setting.
+ * Returns the feather radius setting.
  *
  * Returns: TRUE on success.
  *
@@ -2921,7 +2877,7 @@ gimp_context_get_feather_radius (gdouble *feather_radius_x,
  *
  * Set the feather radius setting.
  *
- * This procedure modifies the feather radius setting.
+ * Modifies the feather radius setting.
  *
  * This setting affects all procedures that are affected by
  * gimp_context_set_feather().
@@ -2960,7 +2916,7 @@ gimp_context_set_feather_radius (gdouble feather_radius_x,
  *
  * Get the sample merged setting.
  *
- * This procedure returns the sample merged setting.
+ * Returns the sample merged setting.
  *
  * Returns: The sample merged setting.
  *
@@ -2995,13 +2951,12 @@ gimp_context_get_sample_merged (void)
  *
  * Set the sample merged setting.
  *
- * This procedure modifies the sample merged setting. If an operation
- * depends on the colors of the pixels present in a drawable, like when
- * doing a seed fill, this setting controls whether the pixel data from
- * the specified drawable is used ('sample-merged' is FALSE), or the
- * pixel data from the composite image ('sample-merged' is TRUE. This
- * is equivalent to sampling for colors after merging all visible
- * layers).
+ * Modifies the sample merged setting. If an operation depends on the
+ * colors of the pixels present in a drawable, like when doing a seed
+ * fill, this setting controls whether the pixel data from the given
+ * drawable is used ('sample-merged' is FALSE), or the pixel data from
+ * the composite image ('sample-merged' is TRUE. This is equivalent to
+ * sampling for colors after merging all visible layers).
  *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
@@ -3039,7 +2994,7 @@ gimp_context_set_sample_merged (gboolean sample_merged)
  *
  * Get the sample criterion setting.
  *
- * This procedure returns the sample criterion setting.
+ * Returns the sample criterion setting.
  *
  * Returns: The sample criterion setting.
  *
@@ -3074,11 +3029,10 @@ gimp_context_get_sample_criterion (void)
  *
  * Set the sample criterion setting.
  *
- * This procedure modifies the sample criterion setting. If an
- * operation depends on the colors of the pixels present in a drawable,
- * like when doing a seed fill, this setting controls how color
- * similarity is determined. SELECT_CRITERION_COMPOSITE is the default
- * value.
+ * Modifies the sample criterion setting. If an operation depends on
+ * the colors of the pixels present in a drawable, like when doing a
+ * seed fill, this setting controls how color similarity is determined.
+ * SELECT_CRITERION_COMPOSITE is the default value.
  *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
@@ -3116,7 +3070,7 @@ gimp_context_set_sample_criterion (GimpSelectCriterion sample_criterion)
  *
  * Get the sample threshold setting.
  *
- * This procedure returns the sample threshold setting.
+ * Returns the sample threshold setting.
  *
  * Returns: The sample threshold setting.
  *
@@ -3151,12 +3105,11 @@ gimp_context_get_sample_threshold (void)
  *
  * Set the sample threshold setting.
  *
- * This procedure modifies the sample threshold setting. If an
- * operation depends on the colors of the pixels present in a drawable,
- * like when doing a seed fill, this setting controls what is
- * \"sufficiently close\" to be considered a similar color. If the
- * sample threshold has not been set explicitly, the default threshold
- * set in gimprc will be used.
+ * Modifies the sample threshold setting. If an operation depends on
+ * the colors of the pixels present in a drawable, like when doing a
+ * seed fill, this setting controls what is \"sufficiently close\" to
+ * be considered a similar color. If the sample threshold has not been
+ * set explicitly, the default threshold set in gimprc will be used.
  *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
@@ -3194,8 +3147,8 @@ gimp_context_set_sample_threshold (gdouble sample_threshold)
  *
  * Get the sample threshold setting as an integer value.
  *
- * This procedure returns the sample threshold setting as an integer
- * value. See gimp_context_get_sample_threshold().
+ * Returns the sample threshold setting as an integer value. See
+ * gimp_context_get_sample_threshold().
  *
  * Returns: The sample threshold setting.
  *
@@ -3230,8 +3183,8 @@ gimp_context_get_sample_threshold_int (void)
  *
  * Set the sample threshold setting as an integer value.
  *
- * This procedure modifies the sample threshold setting as an integer
- * value. See gimp_context_set_sample_threshold().
+ * Modifies the sample threshold setting as an integer value. See
+ * gimp_context_set_sample_threshold().
  *
  * Returns: TRUE on success.
  *
@@ -3265,7 +3218,7 @@ gimp_context_set_sample_threshold_int (gint sample_threshold)
  *
  * Get the sample transparent setting.
  *
- * This procedure returns the sample transparent setting.
+ * Returns the sample transparent setting.
  *
  * Returns: The sample transparent setting.
  *
@@ -3300,11 +3253,11 @@ gimp_context_get_sample_transparent (void)
  *
  * Set the sample transparent setting.
  *
- * This procedure modifies the sample transparent setting. If an
- * operation depends on the colors of the pixels present in a drawable,
- * like when doing a seed fill, this setting controls whether
- * transparency is considered to be a unique selectable color. When
- * this setting is TRUE, transparent areas can be selected or filled.
+ * Modifies the sample transparent setting. If an operation depends on
+ * the colors of the pixels present in a drawable, like when doing a
+ * seed fill, this setting controls whether transparency is considered
+ * to be a unique selectable color. When this setting is TRUE,
+ * transparent areas can be selected or filled.
  *
  * This setting affects the following procedures:
  * gimp_image_select_color(), gimp_image_select_contiguous_color(),
@@ -3342,7 +3295,7 @@ gimp_context_set_sample_transparent (gboolean sample_transparent)
  *
  * Get the diagonal neighbors setting.
  *
- * This procedure returns the diagonal neighbors setting.
+ * Returns the diagonal neighbors setting.
  *
  * Returns: The diagonal neighbors setting.
  *
@@ -3377,12 +3330,12 @@ gimp_context_get_diagonal_neighbors (void)
  *
  * Set the diagonal neighbors setting.
  *
- * This procedure modifies the diagonal neighbors setting. If the
- * affected region of an operation is based on a seed point, like when
- * doing a seed fill, then, when this setting is TRUE, all eight
- * neighbors of each pixel are considered when calculating the affected
- * region; in contrast, when this setting is FALSE, only the four
- * orthogonal neighbors of each pixel are considered.
+ * Modifies the diagonal neighbors setting. If the affected region of
+ * an operation is based on a seed point, like when doing a seed fill,
+ * then, when this setting is TRUE, all eight neighbors of each pixel
+ * are considered when calculating the affected region; in contrast,
+ * when this setting is FALSE, only the four orthogonal neighbors of
+ * each pixel are considered.
  *
  * This setting affects the following procedures:
  * gimp_image_select_contiguous_color(),
@@ -3420,8 +3373,8 @@ gimp_context_set_diagonal_neighbors (gboolean diagonal_neighbors)
  *
  * Get the distance metric used in some computations.
  *
- * This procedure returns the distance metric in the current context.
- * See gimp_context_set_distance_metric() to know more about its usage.
+ * Returns the distance metric in the current context. See
+ * gimp_context_set_distance_metric() to know more about its usage.
  *
  * Returns: The distance metric.
  *
@@ -3456,10 +3409,10 @@ gimp_context_get_distance_metric (void)
  *
  * Set the distance metric used in some computations.
  *
- * This procedure modifies the distance metric used in some
- * computations, such as gimp_drawable_edit_gradient_fill(). In
- * particular, it does not change the metric used in generic distance
- * computation on canvas, as in the Measure tool.
+ * Modifies the distance metric used in some computations, such as
+ * gimp_drawable_edit_gradient_fill(). In particular, it does not
+ * change the metric used in generic distance computation on canvas, as
+ * in the Measure tool.
  *
  * This setting affects the following procedures:
  * gimp_drawable_edit_gradient_fill().
@@ -3496,9 +3449,9 @@ gimp_context_set_distance_metric (GeglDistanceMetric metric)
  *
  * Get the interpolation type.
  *
- * This procedure returns the interpolation setting. The return value
- * is an integer which corresponds to the values listed in the argument
- * description. If the interpolation has not been set explicitly by
+ * Returns the interpolation setting. The return value is an integer
+ * which corresponds to the values listed in the argument description.
+ * If the interpolation has not been set explicitly by
  * gimp_context_set_interpolation(), the default interpolation set in
  * gimprc will be used.
  *
@@ -3535,7 +3488,7 @@ gimp_context_get_interpolation (void)
  *
  * Set the interpolation type.
  *
- * This procedure modifies the interpolation setting.
+ * Modifies the interpolation setting.
  *
  * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_perspective(),
@@ -3576,9 +3529,8 @@ gimp_context_set_interpolation (GimpInterpolationType interpolation)
  *
  * Get the transform direction.
  *
- * This procedure returns the transform direction. The return value is
- * an integer which corresponds to the values listed in the argument
- * description.
+ * Returns the transform direction. The return value is an integer
+ * which corresponds to the values listed in the argument description.
  *
  * Returns: The transform direction.
  *
@@ -3613,7 +3565,7 @@ gimp_context_get_transform_direction (void)
  *
  * Set the transform direction.
  *
- * This procedure modifies the transform direction setting.
+ * Modifies the transform direction setting.
  *
  * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_perspective(),
@@ -3653,9 +3605,8 @@ gimp_context_set_transform_direction (GimpTransformDirection transform_direction
  *
  * Get the transform resize type.
  *
- * This procedure returns the transform resize setting. The return
- * value is an integer which corresponds to the values listed in the
- * argument description.
+ * Returns the transform resize setting. The return value is an integer
+ * which corresponds to the values listed in the argument description.
  *
  * Returns: The transform resize type.
  *
@@ -3690,10 +3641,10 @@ gimp_context_get_transform_resize (void)
  *
  * Set the transform resize type.
  *
- * This procedure modifies the transform resize setting. When
- * transforming pixels, if the result of a transform operation has a
- * different size than the original area, this setting determines how
- * the resulting area is sized.
+ * Modifies the transform resize setting. When transforming pixels, if
+ * the result of a transform operation has a different size than the
+ * original area, this setting determines how the resulting area is
+ * sized.
  *
  * This setting affects affects the following procedures:
  * gimp_item_transform_flip(), gimp_item_transform_flip_simple(),

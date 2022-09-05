@@ -16,62 +16,63 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+# The invoke code is compiled on the app side.
+# The invoke code must assign to each result var
+
+
+$palette_arg_spec = { name => 'palette', type => 'palette', non_empty => 1,
+  desc => 'The palette' };
+
 sub palette_new {
     $blurb = "Creates a new palette";
-    $help  = "This procedure creates a new, uninitialized palette";
+    $help = <<'HELP';
+Creates a new palette.
+The new palette has no color entries.
+You must add color entries for a user to choose.
+The actual name might be different than the requested name,
+when the requested name is already in use.
+HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The requested name of the new palette' }
+      { name => 'name', type => 'string', non_empty => 1,
+        desc => 'The requested name of the new palette' }
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string',
-	  desc => 'The actual new palette name' }
+    	${palette_arg_spec}
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpData *data = gimp_data_factory_data_new (gimp->palette_factory,
+  palette = (GimpPalette*) gimp_data_factory_data_new (gimp->palette_factory,
                                                context, name);
-
-  if (data)
-    actual_name = g_strdup (gimp_object_get_name (data));
-  else
-    success = FALSE;
 }
 CODE
     );
 }
 
 sub palette_is_editable {
-    $blurb = "Tests if palette can be edited";
+    $blurb = "Whether the palette can be edited";
     $help  = "Returns TRUE if you have permission to change the palette";
 
     &bill_pdb_misc('2004', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' }
+      ${palette_arg_spec}
     );
 
     @outargs = (
-	{ name => 'editable', type => 'boolean',
-	  desc => "TRUE if the palette can be edited" }
+      { name => 'editable', type => 'boolean',
+        desc => "TRUE if the palette can be edited" }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (palette)
-    editable = gimp_data_is_writable (GIMP_DATA (palette));
-  else
-    success = FALSE;
+  editable = gimp_data_is_writable (GIMP_DATA (palette));
 }
 CODE
     );
@@ -79,38 +80,61 @@ CODE
 
 sub palette_duplicate {
     $blurb = "Duplicates a palette";
-    $help  = "This procedure creates an identical palette by a different name";
+    $help  = "Returns a copy having a different, unique ID.";
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' }
+        ${palette_arg_spec}
     );
 
     @outargs = (
-	{ name => 'copy_name', type => 'string', non_empty => 1,
-	  desc => "The name of the palette's copy" }
+        { name => 'palette_copy',
+          type => 'palette',
+          desc => "A copy of the palette." }
     );
 
     %invoke = (
         code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (palette)
-    {
-      GimpPalette *palette_copy = (GimpPalette *)
-        gimp_data_factory_data_duplicate (gimp->palette_factory,
-                                          GIMP_DATA (palette));
-
-      if (palette_copy)
-        copy_name = g_strdup (gimp_object_get_name (palette_copy));
-      else
-        success = FALSE;
-    }
-  else
+  palette_copy = (GimpPalette *)
+    gimp_data_factory_data_duplicate (gimp->palette_factory, GIMP_DATA (palette));
+  /* Assert the copy has a unique name. */
+  if (!palette_copy)
     success = FALSE;
+}
+CODE
+    );
+}
+
+sub palette_id_is_valid {
+    $blurb = "Whether the ID is a valid reference to installed data.";
+    $help  = "Returns TRUE if this ID is valid.";
+
+    &bootchk_pdb_misc('2022', '3.0');
+
+    @inargs = (
+      { name => 'id',
+        type => 'string',
+        non_empty => 1,
+        no_validate => 1,
+        desc => 'The palette ID' }
+    );
+
+    @outargs = (
+      { name => 'valid', type => 'boolean',
+        desc => 'TRUE if the palette ID is valid' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  valid = (gimp_pdb_get_palette (gimp, id, GIMP_PDB_DATA_ACCESS_READ, error) != NULL);
+
+  /* When ID is not valid, NULL is returned and error is set.
+   * Clear error so GIMP not display error dialog.
+   */
+  g_clear_error (error);
 }
 CODE
     );
@@ -118,34 +142,45 @@ CODE
 
 sub palette_rename {
     $blurb = "Rename a palette";
-    $help  = "This procedure renames a palette";
+    $help = <<'HELP';
+Renames a palette.  The name is the same as the ID.
+When the proposed name is already used, GIMP generates a unique name,
+which get_id() will return.
+
+Returns a reference to a renamed palette, which you should assign
+to the original var or a differently named var.
+Any existing references will be invalid.
+Resources in plugins are proxies holding an ID,
+which can be invalid when the resource is renamed.
+HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'new_name', type => 'string', non_empty => 1,
-          desc => "The new name of the palette" }
+          desc => "The requested new name of the palette" }
     );
 
     @outargs = (
-	{ name => 'actual_name', type => 'string',
-	  desc => "The actual new name of the palette" }
-    );
+        { name => 'palette_renamed',
+          type => 'palette',
+          desc => "A reference to the renamed palette." }
+        );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_RENAME, error);
+  /* Rename the palette in app. */
+  gimp_object_set_name (GIMP_OBJECT (palette), new_name);
+  /* Assert GIMP might have set a name different from new_name. */
 
-  if (palette)
-    {
-      gimp_object_set_name (GIMP_OBJECT (palette), new_name);
-      actual_name = g_strdup (gimp_object_get_name (palette));
-    }
-  else
-    success = FALSE;
+  /* Return a reference.
+   * The wire protocol will create a new proxy on the plugin side.
+   * We don't need an alias here, except to make clear
+   * that we are returning the same real object as passed.
+   */
+   palette_renamed = palette;
 }
 CODE
     );
@@ -153,20 +188,20 @@ CODE
 
 sub palette_delete {
     $blurb = "Deletes a palette";
-    $help  = "This procedure deletes a palette";
+    $help = <<'HELP';
+Deletes a palette.  Returns an error if the palette is not deletable.
+Deletes the palette's data.  You should not use the palette afterwards.
+HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' }
+      ${palette_arg_spec}
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
   if (palette && gimp_data_is_deletable (GIMP_DATA (palette)))
     success = gimp_data_factory_data_delete (gimp->palette_factory,
                                              GIMP_DATA (palette),
@@ -178,101 +213,78 @@ CODE
     );
 }
 
-sub palette_get_info {
-    $blurb = 'Retrieve information about the specified palette.';
+# When returns a single value, omit:  void_ret => 1,
 
-    $help = <<'HELP';
-This procedure retrieves information about the specified palette. This
-includes the name, and the number of colors.
-HELP
+sub palette_get_color_count {
+    $blurb = 'Get the count of colors in the palette.';
+
+    $help = 'Returns the number of colors in the palette.';
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' }
+      ${palette_arg_spec}
     );
-
     @outargs = (
-        { name => 'num_colors', type => 'int32', void_ret => 1,
+        { name => 'num_colors', type => 'int32',
           desc => 'The number of colors in the palette' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (palette)
-    num_colors = gimp_palette_get_n_colors (palette);
-  else
-    success = FALSE;
+  num_colors = gimp_palette_get_n_colors (palette);
 }
 CODE
     );
 }
 
 sub palette_get_colors {
-    $blurb = 'Gets all colors from the specified palette.';
+    $blurb = 'Gets colors in the palette.';
 
-    $help = <<'HELP';
-This procedure retrieves all color entries of the specified palette. 
-HELP
+    $help = "Returns an array of colors in the palette.";
 
     &neo_pdb_misc('2006', '2.6');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' }
+        ${palette_arg_spec}
     );
 
     @outargs = (
     	{ name => 'colors', type => 'colorarray',
-	  desc => 'The colors in the palette',
-	  array => { name => 'num_colors',
-                     desc => 'Length of the colors array' } }
+        desc => 'The colors in the palette',
+        array => { name => 'num_colors',
+                   desc => 'Length of the colors array' } }
     );
 
     %invoke = (
-	vars => [ 'GimpPalette *palette = NULL' ],
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GList *list = gimp_palette_get_colors (palette);
+  gint   i;
 
-  if (palette)
+  num_colors = gimp_palette_get_n_colors (palette);
+  colors     = g_new (GimpRGB, num_colors);
+
+  for (i = 0; i < num_colors; i++, list = g_list_next (list))
     {
-      GList *list = gimp_palette_get_colors (palette);
-      gint   i;
+      GimpPaletteEntry *entry = list->data;
 
-      num_colors = gimp_palette_get_n_colors (palette);
-      colors     = g_new (GimpRGB, num_colors);
-
-      for (i = 0; i < num_colors; i++, list = g_list_next (list))
-        {
-          GimpPaletteEntry *entry = list->data;
-
-          colors[i] = entry->color;
-        }
+      colors[i] = entry->color;
     }
-  else
-    success = FALSE;
 }
 CODE
     );
 }
 
 sub palette_get_columns {
-    $blurb = "Retrieves the number of columns to use to display this palette";
-    $help = <<'HELP';
-This procedures retrieves the preferred number of columns to use when the
-palette is being displayed.
-HELP
+    $blurb = "Gets the number of columns used to display the palette";
+    $help = "Gets the preferred number of columns to display the palette.";
 
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' }
+        ${palette_arg_spec}
     );
 
     @outargs = (
@@ -283,30 +295,24 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
-
-  if (palette)
-    num_columns = gimp_palette_get_columns (palette);
-  else
-    success = FALSE;
+  num_columns = gimp_palette_get_columns (palette);
 }
 CODE
     );
 }
 
 sub palette_set_columns {
-    $blurb = "Sets the number of columns to use when displaying the palette";
+    $blurb = "Sets the number of columns used to display the palette";
     $help = <<'HELP';
-This procedures controls how many colors are shown per row when the
-palette is being displayed. This value can only be changed if the
-palette is writable. The maximum allowed value is 64.
+Set the number of colors shown per row when the palette is displayed.
+Returns an error when the palette is not editable.
+The maximum allowed value is 64.
 HELP
 
     &neo_pdb_misc('2005', '2.4');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'columns', type => '0 <= int32 <= 64',
           desc => "The new number of columns" }
     );
@@ -314,9 +320,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (palette)
+  if (gimp_data_is_writable (GIMP_DATA (palette)))
     gimp_palette_set_columns (palette, columns);
   else
     success = FALSE;
@@ -325,23 +329,28 @@ CODE
     );
 }
 
+
+# FIXME null_ok should allow None in Python for name, but fails.
+
 sub palette_add_entry {
-    $blurb = 'Adds a palette entry to the specified palette.';
+    $blurb = 'Appends an entry to the palette.';
 
     $help = <<'HELP';
-This procedure adds an entry to the specified palette.
-It returns an error if the entry palette does not exist.
+Appends an entry to the palette.
+Neither color nor name must be unique within the palette.
+When name is the empty string, this sets the entry name to "Untitled".
+Returns the index of the entry.
+Returns an error when palette is not editable.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'entry_name', type => 'string', null_ok => 1,
-          desc => 'The name of the entry' },
+          desc => 'A name for the entry' },
         { name => 'color', type => 'color',
-          desc => 'The new entry\'s color color' }
+          desc => 'The color for the added entry.' }
     );
 
     @outargs = (
@@ -352,45 +361,44 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (palette)
+  /* Must check writeable here, because add_entry does not fail when not writeable. */
+  if (gimp_data_is_writable (GIMP_DATA (palette)))
     {
-      GimpPaletteEntry *entry =
-        gimp_palette_add_entry (palette, -1, entry_name, &color);
+      /* -1 for the index means append. */
+      GimpPaletteEntry *entry = gimp_palette_add_entry (palette, -1, entry_name, &color);
 
       entry_num = gimp_palette_get_entry_position (palette, entry);
     }
   else
-    success = FALSE;
+    {
+      success = FALSE;
+    }
 }
 CODE
     );
 }
 
 sub palette_delete_entry {
-    $blurb = 'Deletes a palette entry from the specified palette.';
+    $blurb = 'Deletes an entry from the palette.';
 
     $help = <<'HELP';
-This procedure deletes an entry from the specified palette.
-It returns an error if the entry palette does not exist.
+Deletes an entry from the palette.
+Returns an error if the index is out or range.
+Returns an error if the palette is not editable.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
-          desc => 'The index of the added entry' }
+          desc => 'The index of the entry to delete' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (palette)
+  if (gimp_data_is_writable (GIMP_DATA (palette)))
     {
       GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
@@ -407,41 +415,33 @@ CODE
 }
 
 sub palette_entry_get_color {
-    $blurb = 'Gets the specified palette entry from the specified palette.';
+    $blurb = 'Gets the color of an entry in the palette.';
 
     $help = <<'HELP';
-This procedure retrieves the color of the zero-based entry specified for the
-specified palette. It returns an error if the entry does not exist.
+Returns the color of the entry at the given zero-based index into the palette.
+Returns an error when the index is out of range.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
-          desc => 'The entry to retrieve' }
+          desc => 'The index of the entry to get the color of.' }
     );
 
     @outargs = (
         { name => 'color', type => 'color', void_ret => 1,
-          desc => 'The color requested' }
+          desc => 'The color at the index.' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
-  if (palette)
-    {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
-
-      if (entry)
-        color = entry->color;
-      else
-        success = FALSE;
-    }
+  if (entry)
+    color = entry->color;
   else
     success = FALSE;
 }
@@ -450,20 +450,20 @@ CODE
 }
 
 sub palette_entry_set_color {
-    $blurb = 'Sets the specified palette entry in the specified palette.';
+    $blurb = 'Sets the color of an entry in the palette.';
 
     $help = <<'HELP';
-This procedure sets the color of the zero-based entry specified for the
-specified palette. It returns an error if the entry does not exist.
+Sets the color of the entry at the zero-based index into the palette.
+Returns an error when the index is out of range.
+Returns an error when the palette is not editable.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
-          desc => 'The entry to retrieve' },
+          desc => 'The entry to get' },
         { name => 'color', type => 'color',
           desc => 'The new color' }
     );
@@ -471,9 +471,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (palette)
+  if (gimp_data_is_writable (GIMP_DATA (palette)))
     success = gimp_palette_set_entry_color (palette, entry_num, &color);
   else
     success = FALSE;
@@ -483,41 +481,33 @@ CODE
 }
 
 sub palette_entry_get_name {
-    $blurb = 'Gets the specified palette entry from the specified palette.';
+    $blurb = 'Gets the name of an entry in the palette.';
 
     $help = <<'HELP';
-This procedure retrieves the name of the zero-based entry specified for the
-specified palette. It returns an error if the entry does not exist.
+Gets the name of the entry at the zero-based index into the palette.
+Returns an error when the index is out of range.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
-          desc => 'The entry to retrieve' }
+          desc => 'The entry to get' }
     );
 
     @outargs = (
         { name => 'entry_name', type => 'string', void_ret => 1,
-          desc => 'The name requested' }
+          desc => 'The name of the entry.' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_READ, error);
+  GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
 
-  if (palette)
-    {
-      GimpPaletteEntry *entry = gimp_palette_get_entry (palette, entry_num);
-
-      if (entry)
-        entry_name = g_strdup (entry->name);
-      else
-        success = FALSE;
-    }
+  if (entry)
+    entry_name = g_strdup (entry->name);
   else
     success = FALSE;
 }
@@ -526,20 +516,20 @@ CODE
 }
 
 sub palette_entry_set_name {
-    $blurb = 'Sets the specified palette entry in the specified palette.';
+    $blurb = 'Sets the name of an entry in the palette.';
 
     $help = <<'HELP';
-This procedure sets the name of the zero-based entry specified for the
-specified palette. It returns an error if the entry does not exist.
+Sets the name of the entry at the zero-based index into the palette.
+Returns an error if the index is out or range.
+Returns an error if the palette is not editable.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The palette name' },
+        ${palette_arg_spec},
         { name => 'entry_num', type => 'int32',
-          desc => 'The entry to retrieve' },
+          desc => 'The entry to get' },
         { name => 'entry_name', type => 'string', null_ok => 1,
           desc => 'The new name' }
     );
@@ -547,9 +537,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPalette *palette = gimp_pdb_get_palette (gimp, name, GIMP_PDB_DATA_ACCESS_WRITE, error);
-
-  if (palette)
+  if (gimp_data_is_writable (GIMP_DATA (palette)))
     success = gimp_palette_set_entry_name (palette, entry_num, entry_name);
   else
     success = FALSE;
@@ -568,10 +556,12 @@ CODE
 
 @procs = qw(palette_new
             palette_duplicate
+            palette_id_is_valid
             palette_rename
             palette_delete
             palette_is_editable
-            palette_get_info palette_get_colors
+            palette_get_color_count
+            palette_get_colors
             palette_get_columns palette_set_columns
             palette_add_entry palette_delete_entry
             palette_entry_get_color palette_entry_set_color
@@ -581,7 +571,7 @@ CODE
 
 $desc = 'Palette';
 $doc_title = 'gimppalette';
-$doc_short_desc = 'Functions operating on a single palette.';
-$doc_long_desc = 'Functions operating on a single palette.';
+$doc_short_desc = 'Installable object, a small set of colors a user can choose from.';
+$doc_long_desc = 'Installable object, a small set of colors a user can choose from.';
 
 1;

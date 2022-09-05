@@ -134,7 +134,8 @@ libgimp_private_sources = \
 libgimp_extra_sources = \
 	gimpenums.c.tail	\
 	gimpgpparams-body.c	\
-	gimpparamspecs-body.c
+	gimpparamspecs-body.c	\
+	gimpparamspecs-body-resource.c
 
 libgimp_@GIMP_API_VERSION@_la_SOURCES = \
 	$(libgimp_private_sources)	\
@@ -329,6 +330,7 @@ Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_LIBS = \
 Gimp_@GIMP_API_MAJOR_VERSION@_@GIMP_API_MINOR_VERSION@_gir_FILES = 	\
 	$(libgimp_introspectable)					\
 	../libgimp/gimpparamspecs-body.c				\
+	../libgimp/gimpparamspecs-body-resource.c			\
 	$(libgimpbase_introspectable)					\
 	$(libgimpcolor_introspectable)					\
 	$(libgimpconfig_introspectable)					\

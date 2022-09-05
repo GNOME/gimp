@@ -32,49 +32,61 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gchar*                  gimp_brush_new              (const gchar              *name);
-gchar*                  gimp_brush_duplicate        (const gchar              *name);
-gboolean                gimp_brush_is_generated     (const gchar              *name);
-gchar*                  gimp_brush_rename           (const gchar              *name,
-                                                     const gchar              *new_name);
-gboolean                gimp_brush_delete           (const gchar              *name);
-gboolean                gimp_brush_is_editable      (const gchar              *name);
-gboolean                gimp_brush_get_info         (const gchar              *name,
-                                                     gint                     *width,
-                                                     gint                     *height,
-                                                     gint                     *mask_bpp,
-                                                     gint                     *color_bpp);
-gboolean                gimp_brush_get_pixels       (const gchar              *name,
-                                                     gint                     *width,
-                                                     gint                     *height,
-                                                     gint                     *mask_bpp,
-                                                     gint                     *num_mask_bytes,
-                                                     guint8                  **mask_bytes,
-                                                     gint                     *color_bpp,
-                                                     gint                     *num_color_bytes,
-                                                     guint8                  **color_bytes);
-gboolean                gimp_brush_get_spacing      (const gchar              *name,
-                                                     gint                     *spacing);
-gboolean                gimp_brush_set_spacing      (const gchar              *name,
-                                                     gint                      spacing);
-GimpBrushGeneratedShape gimp_brush_get_shape        (const gchar              *name);
-GimpBrushGeneratedShape gimp_brush_set_shape        (const gchar              *name,
-                                                     GimpBrushGeneratedShape   shape_in);
-gdouble                 gimp_brush_get_radius       (const gchar              *name);
-gdouble                 gimp_brush_set_radius       (const gchar              *name,
-                                                     gdouble                   radius_in);
-gint                    gimp_brush_get_spikes       (const gchar              *name);
-gint                    gimp_brush_set_spikes       (const gchar              *name,
-                                                     gint                      spikes_in);
-gdouble                 gimp_brush_get_hardness     (const gchar              *name);
-gdouble                 gimp_brush_set_hardness     (const gchar              *name,
-                                                     gdouble                   hardness_in);
-gdouble                 gimp_brush_get_aspect_ratio (const gchar              *name);
-gdouble                 gimp_brush_set_aspect_ratio (const gchar              *name,
-                                                     gdouble                   aspect_ratio_in);
-gdouble                 gimp_brush_get_angle        (const gchar              *name);
-gdouble                 gimp_brush_set_angle        (const gchar              *name,
-                                                     gdouble                   angle_in);
+GimpBrush* gimp_brush_new              (const gchar              *name);
+GimpBrush* gimp_brush_duplicate        (GimpBrush                *brush);
+gboolean   gimp_brush_is_generated     (GimpBrush                *brush);
+gboolean   gimp_brush_id_is_valid      (const gchar              *id);
+GimpBrush* gimp_brush_rename           (GimpBrush                *brush,
+                                        const gchar              *new_name);
+gboolean   gimp_brush_delete           (GimpBrush                *brush);
+gboolean   gimp_brush_is_editable      (GimpBrush                *brush);
+gboolean   gimp_brush_get_info         (GimpBrush                *brush,
+                                        gint                     *width,
+                                        gint                     *height,
+                                        gint                     *mask_bpp,
+                                        gint                     *color_bpp);
+gboolean   gimp_brush_get_pixels       (GimpBrush                *brush,
+                                        gint                     *width,
+                                        gint                     *height,
+                                        gint                     *mask_bpp,
+                                        gint                     *num_mask_bytes,
+                                        guint8                  **mask_bytes,
+                                        gint                     *color_bpp,
+                                        gint                     *num_color_bytes,
+                                        guint8                  **color_bytes);
+gint       gimp_brush_get_spacing      (GimpBrush                *brush);
+gboolean   gimp_brush_set_spacing      (GimpBrush                *brush,
+                                        gint                      spacing);
+gboolean   gimp_brush_get_shape        (GimpBrush                *brush,
+                                        GimpBrushGeneratedShape  *shape);
+gboolean   gimp_brush_set_shape        (GimpBrush                *brush,
+                                        GimpBrushGeneratedShape   shape_in,
+                                        GimpBrushGeneratedShape  *shape_out);
+gboolean   gimp_brush_get_radius       (GimpBrush                *brush,
+                                        gdouble                  *radius);
+gboolean   gimp_brush_set_radius       (GimpBrush                *brush,
+                                        gdouble                   radius_in,
+                                        gdouble                  *radius_out);
+gboolean   gimp_brush_get_spikes       (GimpBrush                *brush,
+                                        gint                     *spikes);
+gboolean   gimp_brush_set_spikes       (GimpBrush                *brush,
+                                        gint                      spikes_in,
+                                        gint                     *spikes_out);
+gboolean   gimp_brush_get_hardness     (GimpBrush                *brush,
+                                        gdouble                  *hardness);
+gboolean   gimp_brush_set_hardness     (GimpBrush                *brush,
+                                        gdouble                   hardness_in,
+                                        gdouble                  *hardness_out);
+gboolean   gimp_brush_get_aspect_ratio (GimpBrush                *brush,
+                                        gdouble                  *aspect_ratio);
+gboolean   gimp_brush_set_aspect_ratio (GimpBrush                *brush,
+                                        gdouble                   aspect_ratio_in,
+                                        gdouble                  *aspect_ratio_out);
+gboolean   gimp_brush_get_angle        (GimpBrush                *brush,
+                                        gdouble                  *angle);
+gboolean   gimp_brush_set_angle        (GimpBrush                *brush,
+                                        gdouble                   angle_in,
+                                        gdouble                  *angle_out);
 
 
 G_END_DECLS

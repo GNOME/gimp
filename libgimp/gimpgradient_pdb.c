@@ -30,9 +30,9 @@
 /**
  * SECTION: gimpgradient
  * @title: gimpgradient
- * @short_description: Functions operating on a single gradient.
+ * @short_description: Installable object used by the gradient rendering tool.
  *
- * Functions operating on a single gradient.
+ * Installable object used by the gradient rendering tool.
  **/
 
 
@@ -42,19 +42,18 @@
  *
  * Creates a new gradient
  *
- * This procedure creates a new, uninitialized gradient
+ * Creates a new gradient having no segments.
  *
- * Returns: (transfer full): The actual new gradient name.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): The gradient.
  *
  * Since: 2.2
  **/
-gchar *
+GimpGradient *
 gimp_gradient_new (const gchar *name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *actual_name = NULL;
+  GimpGradient *gradient = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, name,
@@ -66,35 +65,34 @@ gimp_gradient_new (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    gradient = GIMP_VALUES_GET_GRADIENT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return actual_name;
+  return gradient;
 }
 
 /**
  * gimp_gradient_duplicate:
- * @name: The gradient name.
+ * @gradient: The gradient.
  *
  * Duplicates a gradient
  *
- * This procedure creates an identical gradient by a different name
+ * Returns a copy having a different, unique ID
  *
- * Returns: (transfer full): The name of the gradient's copy.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): A copy of the gradient.
  *
  * Since: 2.2
  **/
-gchar *
-gimp_gradient_duplicate (const gchar *name)
+GimpGradient *
+gimp_gradient_duplicate (GimpGradient *gradient)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *copy_name = NULL;
+  GimpGradient *gradient_copy = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -103,16 +101,16 @@ gimp_gradient_duplicate (const gchar *name)
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    copy_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    gradient_copy = GIMP_VALUES_GET_GRADIENT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return copy_name;
+  return gradient_copy;
 }
 
 /**
  * gimp_gradient_is_editable:
- * @name: The gradient name.
+ * @gradient: The gradient.
  *
  * Tests if gradient can be edited
  *
@@ -123,14 +121,14 @@ gimp_gradient_duplicate (const gchar *name)
  * Since: 2.4
  **/
 gboolean
-gimp_gradient_is_editable (const gchar *name)
+gimp_gradient_is_editable (GimpGradient *gradient)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean editable = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -148,28 +146,34 @@ gimp_gradient_is_editable (const gchar *name)
 
 /**
  * gimp_gradient_rename:
- * @name: The gradient name.
+ * @gradient: The gradient.
  * @new_name: The new name of the gradient.
  *
- * Rename a gradient
+ * Renames a gradient. When the name is in use, renames to a unique
+ * name.
  *
- * This procedure renames a gradient
+ * Renames a gradient. The name is the same as the ID. When the
+ * proposed name is already used, GIMP generates a unique name, which
+ * get_id() will return.
+ * Returns a reference to a renamed gradient, which you should assign
+ * to the original var or a differently named var. Any existing
+ * references will be invalid. Resources in plugins are proxies holding
+ * an ID, which can be invalid when the resource is renamed.
  *
- * Returns: (transfer full): The actual new name of the gradient.
- *          The returned value must be freed with g_free().
+ * Returns: (transfer full): A reference to the renamed gradient.
  *
  * Since: 2.2
  **/
-gchar *
-gimp_gradient_rename (const gchar *name,
-                      const gchar *new_name)
+GimpGradient *
+gimp_gradient_rename (GimpGradient *gradient,
+                      const gchar  *new_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  gchar *actual_name = NULL;
+  GimpGradient *gradient_renamed = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_STRING, new_name,
                                           G_TYPE_NONE);
 
@@ -179,34 +183,36 @@ gimp_gradient_rename (const gchar *name,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    actual_name = GIMP_VALUES_DUP_STRING (return_vals, 1);
+    gradient_renamed = GIMP_VALUES_GET_GRADIENT (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
-  return actual_name;
+  return gradient_renamed;
 }
 
 /**
  * gimp_gradient_delete:
- * @name: The gradient name.
+ * @gradient: The gradient.
  *
  * Deletes a gradient
  *
- * This procedure deletes a gradient
+ * Deletes a gradient. Returns an error if the gradient is not
+ * deletable. Deletes the gradient's data. You should not use the
+ * gradient afterwards.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_delete (const gchar *name)
+gimp_gradient_delete (GimpGradient *gradient)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -223,26 +229,25 @@ gimp_gradient_delete (const gchar *name)
 
 /**
  * gimp_gradient_get_number_of_segments:
- * @name: The gradient name.
+ * @gradient: The gradient.
  *
- * Returns the number of segments of the specified gradient
+ * Gets the number of segments of the gradient
  *
- * This procedure returns the number of segments of the specified
- * gradient.
+ * Gets the number of segments of the gradient
  *
  * Returns: Number of segments.
  *
  * Since: 2.6
  **/
 gint
-gimp_gradient_get_number_of_segments (const gchar *name)
+gimp_gradient_get_number_of_segments (GimpGradient *gradient)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gint num_segments = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -260,39 +265,38 @@ gimp_gradient_get_number_of_segments (const gchar *name)
 
 /**
  * gimp_gradient_get_uniform_samples:
- * @name: The gradient name.
+ * @gradient: The gradient.
  * @num_samples: The number of samples to take.
  * @reverse: Use the reverse gradient.
  * @num_color_samples: (out): Length of the color_samples array (4 * num_samples).
  * @color_samples: (out) (array length=num_color_samples) (element-type gdouble) (transfer full): Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
- * Sample the specified in uniform parts.
+ * Sample the gradient in uniform parts.
  *
- * This procedure samples the active gradient in the specified number
- * of uniform parts. It returns a list of floating-point values which
- * correspond to the RGBA values for each sample. The minimum number of
- * samples to take is 2, in which case the returned colors will
- * correspond to the { 0.0, 1.0 } positions in the gradient. For
- * example, if the number of samples is 3, the procedure will return
- * the colors at positions { 0.0, 0.5, 1.0 }.
+ * Samples colors uniformly across the gradient. It returns a list of
+ * floating-point values which correspond to the RGBA values for each
+ * sample. The minimum number of samples to take is 2, in which case
+ * the returned colors will correspond to the { 0.0, 1.0 } positions in
+ * the gradient. For example, if the number of samples is 3, the
+ * procedure will return the colors at positions { 0.0, 0.5, 1.0 }.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_get_uniform_samples (const gchar  *name,
-                                   gint          num_samples,
-                                   gboolean      reverse,
-                                   gint         *num_color_samples,
-                                   gdouble     **color_samples)
+gimp_gradient_get_uniform_samples (GimpGradient  *gradient,
+                                   gint           num_samples,
+                                   gboolean       reverse,
+                                   gint          *num_color_samples,
+                                   gdouble      **color_samples)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, num_samples,
                                           G_TYPE_BOOLEAN, reverse,
                                           G_TYPE_NONE);
@@ -320,28 +324,26 @@ gimp_gradient_get_uniform_samples (const gchar  *name,
 
 /**
  * gimp_gradient_get_custom_samples:
- * @name: The gradient name.
+ * @gradient: The gradient.
  * @num_samples: The number of samples to take.
  * @positions: (array length=num_samples) (element-type gdouble): The list of positions to sample along the gradient.
  * @reverse: Use the reverse gradient.
  * @num_color_samples: (out): Length of the color_samples array (4 * num_samples).
  * @color_samples: (out) (array length=num_color_samples) (element-type gdouble) (transfer full): Color samples: { R1, G1, B1, A1, ..., Rn, Gn, Bn, An }.
  *
- * Sample the specified gradient in custom positions.
+ * Sample the gradient in custom positions.
  *
- * This procedure samples the active gradient in the specified number
- * of points. The procedure will sample the gradient in the specified
- * positions from the list. The left endpoint of the gradient
- * corresponds to position 0.0, and the right endpoint corresponds to
- * 1.0. The procedure returns a list of floating-point values which
- * correspond to the RGBA values for each sample.
+ * Samples the color of the gradient at positions from a list. The left
+ * endpoint of the gradient corresponds to position 0.0, and the right
+ * endpoint corresponds to 1.0. Returns a list of floating-point
+ * values, four for each sample (RGBA.)
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_get_custom_samples (const gchar    *name,
+gimp_gradient_get_custom_samples (GimpGradient   *gradient,
                                   gint            num_samples,
                                   const gdouble  *positions,
                                   gboolean        reverse,
@@ -353,7 +355,7 @@ gimp_gradient_get_custom_samples (const gchar    *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, num_samples,
                                           GIMP_TYPE_FLOAT_ARRAY, NULL,
                                           G_TYPE_BOOLEAN, reverse,
@@ -382,33 +384,69 @@ gimp_gradient_get_custom_samples (const gchar    *name,
 }
 
 /**
+ * gimp_gradient_id_is_valid:
+ * @id: The gradient ID.
+ *
+ * Whether the ID is a valid reference to installed data.
+ *
+ * Returns TRUE if this ID is valid.
+ *
+ * Returns: TRUE if the gradient ID is valid.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_gradient_id_is_valid (const gchar *id)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean valid = FALSE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          G_TYPE_STRING, id,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-gradient-id-is-valid",
+                                              args);
+  gimp_value_array_unref (args);
+
+  if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
+    valid = GIMP_VALUES_GET_BOOLEAN (return_vals, 1);
+
+  gimp_value_array_unref (return_vals);
+
+  return valid;
+}
+
+/**
  * gimp_gradient_segment_get_left_color:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @color: (out caller-allocates): The return color.
  * @opacity: (out): The opacity of the endpoint.
  *
- * Retrieves the left endpoint color of the specified segment
+ * Gets the left endpoint color of the segment
  *
- * This procedure retrieves the left endpoint color of the specified
- * segment of the specified gradient.
+ * Gets the left endpoint color of the indexed segment of the gradient.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_left_color (const gchar *name,
-                                      gint         segment,
-                                      GimpRGB     *color,
-                                      gdouble     *opacity)
+gimp_gradient_segment_get_left_color (GimpGradient *gradient,
+                                      gint          segment,
+                                      GimpRGB      *color,
+                                      gdouble      *opacity)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -434,22 +472,24 @@ gimp_gradient_segment_get_left_color (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_left_color:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
  *
- * Sets the left endpoint color of the specified segment
+ * Sets the left endpoint color of a segment
  *
- * This procedure sets the left endpoint color of the specified segment
- * of the specified gradient.
+ * Sets the color of the left endpoint the indexed segment of the
+ * gradient.
+ * Returns an error when gradient is not editable or index is out of
+ * range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_left_color (const gchar   *name,
+gimp_gradient_segment_set_left_color (GimpGradient  *gradient,
                                       gint           segment,
                                       const GimpRGB *color,
                                       gdouble        opacity)
@@ -459,7 +499,7 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_DOUBLE, opacity,
@@ -479,32 +519,33 @@ gimp_gradient_segment_set_left_color (const gchar   *name,
 
 /**
  * gimp_gradient_segment_get_right_color:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @color: (out caller-allocates): The return color.
  * @opacity: (out): The opacity of the endpoint.
  *
- * Retrieves the right endpoint color of the specified segment
+ * Gets the right endpoint color of the segment
  *
- * This procedure retrieves the right endpoint color of the specified
- * segment of the specified gradient.
+ * Gets the color of the right endpoint color of the segment of the
+ * gradient.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_right_color (const gchar *name,
-                                       gint         segment,
-                                       GimpRGB     *color,
-                                       gdouble     *opacity)
+gimp_gradient_segment_get_right_color (GimpGradient *gradient,
+                                       gint          segment,
+                                       GimpRGB      *color,
+                                       gdouble      *opacity)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -530,22 +571,23 @@ gimp_gradient_segment_get_right_color (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_right_color:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @color: The color to set.
  * @opacity: The opacity to set for the endpoint.
  *
- * Sets the right endpoint color of the specified segment
+ * Sets the right endpoint color of the segment
  *
- * This procedure sets the right endpoint color of the specified
- * segment of the specified gradient.
+ * Sets the right endpoint color of the segment of the gradient.
+ * Returns an error when gradient is not editable or segment index is
+ * out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_right_color (const gchar   *name,
+gimp_gradient_segment_set_right_color (GimpGradient  *gradient,
                                        gint           segment,
                                        const GimpRGB *color,
                                        gdouble        opacity)
@@ -555,7 +597,7 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_DOUBLE, opacity,
@@ -575,30 +617,31 @@ gimp_gradient_segment_set_right_color (const gchar   *name,
 
 /**
  * gimp_gradient_segment_get_left_pos:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @pos: (out): The return position.
  *
- * Retrieves the left endpoint position of the specified segment
+ * Gets the left endpoint position of a segment
  *
- * This procedure retrieves the left endpoint position of the specified
- * segment of the specified gradient.
+ * Gets the position of the left endpoint of the segment of the
+ * gradient.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_left_pos (const gchar *name,
-                                    gint         segment,
-                                    gdouble     *pos)
+gimp_gradient_segment_get_left_pos (GimpGradient *gradient,
+                                    gint          segment,
+                                    gdouble      *pos)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -621,35 +664,35 @@ gimp_gradient_segment_get_left_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_left_pos:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @pos: The position to set the guidepoint to.
  * @final_pos: (out): The return position.
  *
- * Sets the left endpoint position of the specified segment
+ * Sets the left endpoint position of the segment
  *
- * This procedure sets the left endpoint position of the specified
- * segment of the specified gradient. The final position will be
- * between the position of the middle point to the left to the middle
- * point of the current segment.
- * This procedure returns the final position.
+ * Sets the position of the left endpoint of the segment of the
+ * gradient. The final position will be the given fraction from the
+ * midpoint to the left to the midpoint of the current segment.
+ * Returns the final position. Returns an error when gradient is not
+ * editable or segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_left_pos (const gchar *name,
-                                    gint         segment,
-                                    gdouble      pos,
-                                    gdouble     *final_pos)
+gimp_gradient_segment_set_left_pos (GimpGradient *gradient,
+                                    gint          segment,
+                                    gdouble       pos,
+                                    gdouble      *final_pos)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_DOUBLE, pos,
                                           G_TYPE_NONE);
@@ -673,30 +716,30 @@ gimp_gradient_segment_set_left_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_middle_pos:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @pos: (out): The return position.
  *
- * Retrieves the middle point position of the specified segment
+ * Gets the midpoint position of the segment
  *
- * This procedure retrieves the middle point position of the specified
- * segment of the specified gradient.
+ * Gets the position of the midpoint of the segment of the gradient.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_middle_pos (const gchar *name,
-                                      gint         segment,
-                                      gdouble     *pos)
+gimp_gradient_segment_get_middle_pos (GimpGradient *gradient,
+                                      gint          segment,
+                                      gdouble      *pos)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -719,34 +762,35 @@ gimp_gradient_segment_get_middle_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_middle_pos:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @pos: The position to set the guidepoint to.
  * @final_pos: (out): The return position.
  *
- * Sets the middle point position of the specified segment
+ * Sets the midpoint position of the segment
  *
- * This procedure sets the middle point position of the specified
- * segment of the specified gradient. The final position will be
- * between the two endpoints of the segment.
- * This procedure returns the final position.
+ * Sets the midpoint position of the segment of the gradient. The final
+ * position will be the given fraction between the two endpoints of the
+ * segment.
+ * Returns the final position. Returns an error when gradient is not
+ * editable or segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_middle_pos (const gchar *name,
-                                      gint         segment,
-                                      gdouble      pos,
-                                      gdouble     *final_pos)
+gimp_gradient_segment_set_middle_pos (GimpGradient *gradient,
+                                      gint          segment,
+                                      gdouble       pos,
+                                      gdouble      *final_pos)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_DOUBLE, pos,
                                           G_TYPE_NONE);
@@ -770,30 +814,31 @@ gimp_gradient_segment_set_middle_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_right_pos:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @pos: (out): The return position.
  *
- * Retrieves the right endpoint position of the specified segment
+ * Gets the right endpoint position of the segment
  *
- * This procedure retrieves the right endpoint position of the
- * specified segment of the specified gradient.
+ * Gets the position of the right endpoint of the segment of the
+ * gradient.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_right_pos (const gchar *name,
-                                     gint         segment,
-                                     gdouble     *pos)
+gimp_gradient_segment_get_right_pos (GimpGradient *gradient,
+                                     gint          segment,
+                                     gdouble      *pos)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -816,35 +861,35 @@ gimp_gradient_segment_get_right_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_set_right_pos:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
- * @pos: The position to set the guidepoint to.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
+ * @pos: The position to set the right endpoint to.
  * @final_pos: (out): The return position.
  *
- * Sets the right endpoint position of the specified segment
+ * Sets the right endpoint position of the segment
  *
- * This procedure sets the right endpoint position of the specified
- * segment of the specified gradient. The final position will be
- * between the position of the middle point of the current segment and
- * the middle point of the segment to the right.
- * This procedure returns the final position.
+ * Sets the right endpoint position of the segment of the gradient. The
+ * final position will be the given fraction from the midpoint of the
+ * current segment to the midpoint of the segment to the right.
+ * Returns the final position. Returns an error when gradient is not
+ * editable or segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_set_right_pos (const gchar *name,
-                                     gint         segment,
-                                     gdouble      pos,
-                                     gdouble     *final_pos)
+gimp_gradient_segment_set_right_pos (GimpGradient *gradient,
+                                     gint          segment,
+                                     gdouble       pos,
+                                     gdouble      *final_pos)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_DOUBLE, pos,
                                           G_TYPE_NONE);
@@ -868,21 +913,21 @@ gimp_gradient_segment_set_right_pos (const gchar *name,
 
 /**
  * gimp_gradient_segment_get_blending_function:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @blend_func: (out): The blending function of the segment.
  *
- * Retrieves the gradient segment's blending function
+ * Gets the gradient segment's blending function
  *
- * This procedure retrieves the blending function of the segment at the
- * specified gradient name and segment index.
+ * Gets the blending function of the segment at the index.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_blending_function (const gchar             *name,
+gimp_gradient_segment_get_blending_function (GimpGradient            *gradient,
                                              gint                     segment,
                                              GimpGradientSegmentType *blend_func)
 {
@@ -891,7 +936,7 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -914,21 +959,21 @@ gimp_gradient_segment_get_blending_function (const gchar             *name,
 
 /**
  * gimp_gradient_segment_get_coloring_type:
- * @name: The gradient name.
- * @segment: The index of the segment within the gradient.
+ * @gradient: The gradient.
+ * @segment: The index of a segment within the gradient.
  * @coloring_type: (out): The coloring type of the segment.
  *
- * Retrieves the gradient segment's coloring type
+ * Gets the gradient segment's coloring type
  *
- * This procedure retrieves the coloring type of the segment at the
- * specified gradient name and segment index.
+ * Gets the coloring type of the segment at the index.
+ * Returns an error when the segment index is out of range.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_get_coloring_type (const gchar              *name,
+gimp_gradient_segment_get_coloring_type (GimpGradient             *gradient,
                                          gint                      segment,
                                          GimpGradientSegmentColor *coloring_type)
 {
@@ -937,7 +982,7 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, segment,
                                           G_TYPE_NONE);
 
@@ -960,22 +1005,23 @@ gimp_gradient_segment_get_coloring_type (const gchar              *name,
 
 /**
  * gimp_gradient_segment_range_set_blending_function:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  * @blending_function: The blending function.
  *
- * Change the blending function of a segments range
+ * Sets the blending function of a range of segments
  *
- * This function changes the blending function of a segment range to
- * the specified blending function.
+ * Sets the blending function of a range of segments.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_set_blending_function (const gchar             *name,
+gimp_gradient_segment_range_set_blending_function (GimpGradient            *gradient,
                                                    gint                     start_segment,
                                                    gint                     end_segment,
                                                    GimpGradientSegmentType  blending_function)
@@ -985,7 +1031,7 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           GIMP_TYPE_GRADIENT_SEGMENT_TYPE, blending_function,
@@ -1005,22 +1051,23 @@ gimp_gradient_segment_range_set_blending_function (const gchar             *name
 
 /**
  * gimp_gradient_segment_range_set_coloring_type:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  * @coloring_type: The coloring type.
  *
- * Change the coloring type of a segments range
+ * Sets the coloring type of a range of segments
  *
- * This function changes the coloring type of a segment range to the
- * specified coloring type.
+ * Sets the coloring type of a range of segments.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
+gimp_gradient_segment_range_set_coloring_type (GimpGradient             *gradient,
                                                gint                      start_segment,
                                                gint                      end_segment,
                                                GimpGradientSegmentColor  coloring_type)
@@ -1030,7 +1077,7 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           GIMP_TYPE_GRADIENT_SEGMENT_COLOR, coloring_type,
@@ -1050,29 +1097,33 @@ gimp_gradient_segment_range_set_coloring_type (const gchar              *name,
 
 /**
  * gimp_gradient_segment_range_flip:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  *
  * Flip the segment range
  *
- * This function flips a segment range.
+ * Reverses the order of segments in a range, and swaps the left and
+ * right colors in each segment. As if the range as a 1D line were
+ * rotated in a plane.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_flip (const gchar *name,
-                                  gint         start_segment,
-                                  gint         end_segment)
+gimp_gradient_segment_range_flip (GimpGradient *gradient,
+                                  gint          start_segment,
+                                  gint          end_segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
@@ -1091,33 +1142,35 @@ gimp_gradient_segment_range_flip (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_replicate:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
- * @replicate_times: The number of times to replicate.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
+ * @replicate_times: The number of replicas for each segment.
  *
  * Replicate the segment range
  *
- * This function replicates a segment range a given number of times.
- * Instead of the original segment range, several smaller scaled copies
- * of it will appear in equal widths.
+ * Replicates a segment range a given number of times. Instead of the
+ * original segment range, several smaller scaled copies of it will
+ * appear in equal widths.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_replicate (const gchar *name,
-                                       gint         start_segment,
-                                       gint         end_segment,
-                                       gint         replicate_times)
+gimp_gradient_segment_range_replicate (GimpGradient *gradient,
+                                       gint          start_segment,
+                                       gint          end_segment,
+                                       gint          replicate_times)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_INT, replicate_times,
@@ -1137,30 +1190,31 @@ gimp_gradient_segment_range_replicate (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_split_midpoint:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  *
  * Splits each segment in the segment range at midpoint
  *
- * This function splits each segment in the segment range at its
- * midpoint.
+ * Splits each segment in the segment range at its midpoint.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_split_midpoint (const gchar *name,
-                                            gint         start_segment,
-                                            gint         end_segment)
+gimp_gradient_segment_range_split_midpoint (GimpGradient *gradient,
+                                            gint          start_segment,
+                                            gint          end_segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
@@ -1179,32 +1233,34 @@ gimp_gradient_segment_range_split_midpoint (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_split_uniform:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  * @split_parts: The number of uniform divisions to split each segment to.
  *
  * Splits each segment in the segment range uniformly
  *
- * This function splits each segment in the segment range uniformly
- * according to the number of times specified by the parameter.
+ * Splits each segment in the segment range uniformly into to the
+ * number of parts given.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_split_uniform (const gchar *name,
-                                           gint         start_segment,
-                                           gint         end_segment,
-                                           gint         split_parts)
+gimp_gradient_segment_range_split_uniform (GimpGradient *gradient,
+                                           gint          start_segment,
+                                           gint          end_segment,
+                                           gint          split_parts)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_INT, split_parts,
@@ -1224,29 +1280,31 @@ gimp_gradient_segment_range_split_uniform (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_delete:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  *
  * Delete the segment range
  *
- * This function deletes a segment range.
+ * Deletes a range of segments.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable. Deleting all the segments is undefined behavior.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_delete (const gchar *name,
-                                    gint         start_segment,
-                                    gint         end_segment)
+gimp_gradient_segment_range_delete (GimpGradient *gradient,
+                                    gint          start_segment,
+                                    gint          end_segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
@@ -1265,30 +1323,33 @@ gimp_gradient_segment_range_delete (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_redistribute_handles:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  *
  * Uniformly redistribute the segment range's handles
  *
- * This function redistributes the handles of the specified segment
- * range of the specified gradient, so they'll be evenly spaced.
+ * Redistributes the handles of the segment range of the gradient, so
+ * they'll be evenly spaced. A handle is where two segments meet.
+ * Segments will then have the same width.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_redistribute_handles (const gchar *name,
-                                                  gint         start_segment,
-                                                  gint         end_segment)
+gimp_gradient_segment_range_redistribute_handles (GimpGradient *gradient,
+                                                  gint          start_segment,
+                                                  gint          end_segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
@@ -1307,31 +1368,32 @@ gimp_gradient_segment_range_redistribute_handles (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_blend_colors:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  *
  * Blend the colors of the segment range.
  *
- * This function blends the colors (but not the opacity) of the
- * segments' range of the gradient. Using it, the colors' transition
- * will be uniform across the range.
+ * Blends the colors (but not the opacity) of the range of segments.
+ * The colors' transition will then be uniform across the range.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_blend_colors (const gchar *name,
-                                          gint         start_segment,
-                                          gint         end_segment)
+gimp_gradient_segment_range_blend_colors (GimpGradient *gradient,
+                                          gint          start_segment,
+                                          gint          end_segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
@@ -1350,31 +1412,32 @@ gimp_gradient_segment_range_blend_colors (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_blend_opacity:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  *
  * Blend the opacity of the segment range.
  *
- * This function blends the opacity (but not the colors) of the
- * segments' range of the gradient. Using it, the opacity's transition
- * will be uniform across the range.
+ * Blends the opacity (but not the colors) of the range of segments.
+ * The opacity's transition will then be uniform across the range.
+ * Returns an error when a segment index is out of range, or gradient
+ * is not editable.
  *
  * Returns: TRUE on success.
  *
  * Since: 2.2
  **/
 gboolean
-gimp_gradient_segment_range_blend_opacity (const gchar *name,
-                                           gint         start_segment,
-                                           gint         end_segment)
+gimp_gradient_segment_range_blend_opacity (GimpGradient *gradient,
+                                           gint          start_segment,
+                                           gint          end_segment)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_NONE);
@@ -1393,35 +1456,37 @@ gimp_gradient_segment_range_blend_opacity (const gchar *name,
 
 /**
  * gimp_gradient_segment_range_move:
- * @name: The gradient name.
- * @start_segment: The index of the first segment to operate on.
- * @end_segment: The index of the last segment to operate on. If negative, the selection will extend to the end of the string.
+ * @gradient: The gradient.
+ * @start_segment: Index of the first segment to operate on.
+ * @end_segment: Index of the last segment to operate on. If negative, the range will extend to the end segment.
  * @delta: The delta to move the segment range.
  * @control_compress: Whether or not to compress the neighboring segments.
  *
  * Move the position of an entire segment range by a delta.
  *
- * This function moves the position of an entire segment range by a
- * delta. The actual delta (which is returned) will be limited by the
- * control points of the neighboring segments.
+ * Moves the position of an entire segment range by a delta. The actual
+ * delta (which is returned) will be limited by the control points of
+ * the neighboring segments.
+ * Returns the actual delta. Returns an error when a segment index is
+ * out of range, or gradient is not editable.
  *
  * Returns: The final delta by which the range moved.
  *
  * Since: 2.2
  **/
 gdouble
-gimp_gradient_segment_range_move (const gchar *name,
-                                  gint         start_segment,
-                                  gint         end_segment,
-                                  gdouble      delta,
-                                  gboolean     control_compress)
+gimp_gradient_segment_range_move (GimpGradient *gradient,
+                                  gint          start_segment,
+                                  gint          end_segment,
+                                  gdouble       delta,
+                                  gboolean      control_compress)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble final_delta = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          G_TYPE_STRING, name,
+                                          GIMP_TYPE_GRADIENT, gradient,
                                           G_TYPE_INT, start_segment,
                                           G_TYPE_INT, end_segment,
                                           G_TYPE_DOUBLE, delta,

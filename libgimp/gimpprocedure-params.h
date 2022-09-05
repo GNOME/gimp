@@ -859,6 +859,33 @@ G_BEGIN_DECLS
   g_value_take_object (gimp_value_array_index (args, n), value)
 
 
+/*  Resource  */
+
+#define GIMP_VALUES_GET_BRUSH(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_BRUSH(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_GET_FONT(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_FONT(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_GET_GRADIENT(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_GRADIENT(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_GET_PALETTE(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_PALETTE(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+#define GIMP_VALUES_GET_PATTERN(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+#define GIMP_VALUES_SET_PATTERN(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
 G_END_DECLS
 
 #endif /* __GIMP_PROCEDURE_PARAMS_H__ */

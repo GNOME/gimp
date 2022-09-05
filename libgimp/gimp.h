@@ -54,12 +54,15 @@
 #include <libgimp/gimploadprocedure.h>
 #include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimpparamspecs.h>
+#include <libgimp/gimpparamspecs-resource.h>
 #include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpprocedureconfig.h>
 #include <libgimp/gimpprocedure-params.h>
 #include <libgimp/gimpprogress.h>
+#include <libgimp/gimpresource.h>
+#include <libgimp/gimpresource-subclass.h>
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
 #include <libgimp/gimptextlayer.h>

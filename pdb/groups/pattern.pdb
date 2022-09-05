@@ -16,48 +16,48 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+# The invoke code is compiled on the app side.
+# The invoke code must assign to each result var
+
+
+$pattern_arg_spec = { name => 'pattern', type => 'pattern', non_empty => 1,
+  desc => 'The pattern' };
+
+
 sub pattern_get_info {
-    $blurb = 'Retrieve information about the specified pattern.';
+    $blurb = 'Gets information about the pattern.';
 
     $help = <<'HELP';
-This procedure retrieves information about the specified pattern.
-This includes the pattern extents (width and height).
+Gets information about the pattern:
+the pattern extents (width and height) and bytes per pixel.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The pattern name.' }
+      ${pattern_arg_spec}
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => 1,
-          desc => "The pattern width" },
-	{ name => 'height', type => 'int32',
-          desc => "The pattern height" },
-	{ name => 'bpp', type => 'int32',
-          desc => "The pattern bpp" }
+      { name => 'width', type => 'int32', void_ret => 1,
+        desc => "The pattern width" },
+      { name => 'height', type => 'int32',
+        desc => "The pattern height" },
+      { name => 'bpp', type => 'int32',
+        desc => "The pattern bpp" }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
+  const Babl *format;
 
-  if (pattern)
-    {
-      const Babl *format;
+  format = gimp_babl_compat_u8_format (
+    gimp_temp_buf_get_format (pattern->mask));
 
-      format = gimp_babl_compat_u8_format (
-        gimp_temp_buf_get_format (pattern->mask));
-
-      width  = gimp_temp_buf_get_width  (pattern->mask);
-      height = gimp_temp_buf_get_height (pattern->mask);
-      bpp    = babl_format_get_bytes_per_pixel (format);
-    }
-  else
-    success = FALSE;
+  width  = gimp_temp_buf_get_width  (pattern->mask);
+  height = gimp_temp_buf_get_height (pattern->mask);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 }
 CODE
     );
@@ -65,58 +65,85 @@ CODE
 
 sub pattern_get_pixels {
     $blurb = <<'BLURB';
-Retrieve information about the specified pattern (including pixels).
+Gets information about the pattern (including pixels).
 BLURB
 
     $help = <<'HELP';
-This procedure retrieves information about the specified. This
-includes the pattern extents (width and height), its bpp and its pixel
-data.
+Gets information about the pattern:
+the pattern extents (width and height), its bpp, and its pixel data.
+The pixel data is an array in C or a list in some languages.
 HELP
 
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string', non_empty => 1,
-	  desc => 'The pattern name.' }
+      ${pattern_arg_spec}
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => 1,
-          desc => "The pattern width" },
-	{ name => 'height', type => 'int32',
-          desc => "The pattern height" },
-	{ name => 'bpp', type => 'int32',
-          desc => "The pattern bpp" },
-        { name => 'color_bytes', type => 'int8array',
-	  desc => 'The pattern data.',
-          array => { desc => 'Number of pattern bytes' } }
+      { name => 'width', type => 'int32', void_ret => 1,
+        desc => "The pattern width" },
+      { name => 'height', type => 'int32',
+        desc => "The pattern height" },
+      { name => 'bpp', type => 'int32',
+        desc => "The pattern bpp" },
+      { name => 'color_bytes', type => 'int8array',
+        desc => 'The pattern data.',
+        array => { desc => 'Number of pattern bytes' } }
     );
-    
+
     %invoke = (
 	code => <<'CODE'
 {
-  GimpPattern *pattern = gimp_pdb_get_pattern (gimp, name, error);
 
-  if (pattern)
-    {
-      const Babl *format;
-      gpointer    data;
+  const Babl *format;
+  gpointer    data;
 
-      format = gimp_babl_compat_u8_format (
-        gimp_temp_buf_get_format (pattern->mask));
-      data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
+  format = gimp_babl_compat_u8_format (
+    gimp_temp_buf_get_format (pattern->mask));
+  data   = gimp_temp_buf_lock (pattern->mask, format, GEGL_ACCESS_READ);
 
-      width           = gimp_temp_buf_get_width  (pattern->mask);
-      height          = gimp_temp_buf_get_height (pattern->mask);
-      bpp             = babl_format_get_bytes_per_pixel (format);
-      num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
-      color_bytes     = g_memdup2 (data, num_color_bytes);
+  width           = gimp_temp_buf_get_width  (pattern->mask);
+  height          = gimp_temp_buf_get_height (pattern->mask);
+  bpp             = babl_format_get_bytes_per_pixel (format);
+  num_color_bytes = gimp_temp_buf_get_data_size (pattern->mask);
+  color_bytes     = g_memdup2 (data, num_color_bytes);
 
-      gimp_temp_buf_unlock (pattern->mask, data);
-    }
-  else
-    success = FALSE;
+  gimp_temp_buf_unlock (pattern->mask, data);
+}
+CODE
+    );
+}
+
+sub pattern_id_is_valid {
+    $blurb = "Whether the ID is a valid reference to installed data.";
+    $help  = "Returns TRUE if this ID is valid.";
+
+    &bootchk_pdb_misc('2022', '3.0');
+
+    @inargs = (
+      { name => 'id',
+        type => 'string',
+        non_empty => 1,
+        no_validate => 1,
+        desc => 'The pattern ID' }
+    );
+
+    @outargs = (
+      { name => 'valid', type => 'boolean',
+        desc => 'TRUE if the pattern ID is valid' }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  /* !!! pattern has one fewer args than other resources. */
+  valid = (gimp_pdb_get_pattern (gimp, id, error) != NULL);
+
+  /* When ID is not valid, NULL is returned and error is set.
+   * Clear error so GIMP not display error dialog.
+   */
+  g_clear_error (error);
 }
 CODE
     );
@@ -132,13 +159,14 @@ CODE
               "gimppdb-utils.h");
 
 @procs = qw(pattern_get_info
-            pattern_get_pixels);
+            pattern_get_pixels
+            pattern_id_is_valid);
 
 %exports = (app => [@procs], lib => [@procs]);
 
 $desc = 'Pattern';
 $doc_title = 'gimppattern';
-$doc_short_desc = 'Functions operating on a single pattern.';
-$doc_long_desc = 'Functions operating on a single pattern.';
+$doc_short_desc = 'Installable object used by fill and clone tools.';
+$doc_long_desc =  'Installable object used by fill and clone tools.';
 
 1;

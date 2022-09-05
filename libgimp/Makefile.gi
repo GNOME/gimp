@@ -17,6 +17,7 @@ PDB_WRAPPERS_C = \
 	../libgimp/gimpedit_pdb.c		\
 	../libgimp/gimpfile_pdb.c		\
 	../libgimp/gimpfloatingsel_pdb.c	\
+	../libgimp/gimpfont_pdb.c		\
 	../libgimp/gimpfonts_pdb.c		\
 	../libgimp/gimpfontselect_pdb.c		\
 	../libgimp/gimpgimprc_pdb.c		\
@@ -68,6 +69,7 @@ PDB_WRAPPERS_H = \
 	../libgimp/gimpedit_pdb.h		\
 	../libgimp/gimpfile_pdb.h		\
 	../libgimp/gimpfloatingsel_pdb.h	\
+	../libgimp/gimpfont_pdb.h		\
 	../libgimp/gimpfonts_pdb.h		\
 	../libgimp/gimpfontselect_pdb.h		\
 	../libgimp/gimpgimprc_pdb.h		\
@@ -128,12 +130,15 @@ libgimp_introspectable_headers = \
 	../libgimp/gimploadprocedure.h		\
 	../libgimp/gimppaletteselect.h		\
 	../libgimp/gimpparamspecs.h		\
+	../libgimp/gimpparamspecs-resource.h	\
 	../libgimp/gimppatternselect.h		\
 	../libgimp/gimppdb.h			\
 	../libgimp/gimpplugin.h			\
 	../libgimp/gimpprocedure.h		\
 	../libgimp/gimpprocedureconfig.h	\
 	../libgimp/gimpprogress.h		\
+	../libgimp/gimpresource.h		\
+	../libgimp/gimpresource-subclass.h	\
 	../libgimp/gimpsaveprocedure.h		\
 	../libgimp/gimpselection.h		\
 	../libgimp/gimptextlayer.h		\
@@ -171,6 +176,8 @@ libgimp_introspectable = \
 	../libgimp/gimpprocedure.c		\
 	../libgimp/gimpprocedureconfig.c	\
 	../libgimp/gimpprogress.c		\
+	../libgimp/gimpresource.c		\
+	../libgimp/gimpresource-subclass.c	\
 	../libgimp/gimpsaveprocedure.c		\
 	../libgimp/gimpselection.c		\
 	../libgimp/gimptextlayer.c		\
@@ -194,6 +201,7 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimpproceduredialog.h	\
 	../libgimp/gimpprocview.h		\
 	../libgimp/gimpprogressbar.h		\
+	../libgimp/gimppropbrushchooser.h	\
 	../libgimp/gimpsaveproceduredialog.h	\
 	../libgimp/gimpselectbutton.h		\
 	../libgimp/gimpzoompreview.h
@@ -214,6 +222,7 @@ libgimpui_introspectable = \
 	../libgimp/gimpprocbrowserdialog.c	\
 	../libgimp/gimpproceduredialog.c	\
 	../libgimp/gimpprocview.c		\
+	../libgimp/gimppropbrushchooser.c	\
 	../libgimp/gimpsaveproceduredialog.c	\
 	../libgimp/gimpprogressbar.c		\
 	../libgimp/gimpselectbutton.c		\

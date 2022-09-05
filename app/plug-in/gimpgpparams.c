@@ -36,7 +36,16 @@
 #include "core/gimplayer.h"
 #include "core/gimplayermask.h"
 #include "core/gimpselection.h"
+/* resource types. */
+#include "core/gimpbrush.h"
+#include "core/gimpgradient.h"
+#include "core/gimppalette.h"
+#include "core/gimppattern.h"
+#include "text/gimpfont.h"
+
 #include "core/gimpparamspecs.h"
+
+#include "pdb/gimppdb-utils.h"
 
 #include "vectors/gimpvectors.h"
 

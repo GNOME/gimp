@@ -443,7 +443,16 @@ gimp_brush_select_button_set_brush (GimpBrushSelectButton *button,
             opacity = gimp_context_get_opacity ();
 
           if (spacing == -1)
-            gimp_brush_get_spacing (name, &spacing);
+            {
+              /* GimpBrush now a class. get_spacing is now an instance method.
+               * FIXME: when this widget takes a brush instance instead of a name,
+               * the next two lines should be deleted.
+               */
+              GimpBrush *brush = g_object_new (GIMP_TYPE_BRUSH, NULL);
+              g_object_set (brush, "id", name, NULL);
+
+              spacing = gimp_brush_get_spacing (brush);
+            }
 
           if (paint_mode == -1)
             paint_mode = gimp_context_get_paint_mode ();

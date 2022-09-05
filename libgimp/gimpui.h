@@ -46,6 +46,7 @@
 #include <libgimp/gimpsaveproceduredialog.h>
 #include <libgimp/gimpselectbutton.h>
 #include <libgimp/gimpzoompreview.h>
+#include <libgimp/gimppropbrushchooser.h>
 
 #undef __GIMP_UI_H_INSIDE__
 

@@ -1215,6 +1215,27 @@ script_fu_marshal_procedure_call (scheme   *sc,
                                        "Status is for return types, not arguments",
                                        sc->vptr->pair_car (a));
         }
+      else if (GIMP_VALUE_HOLDS_RESOURCE (&value))
+        {
+          GType type = G_VALUE_TYPE (&value);
+
+          if (! sc->vptr->is_string (sc->vptr->pair_car (a)))
+            return script_type_error (sc, "string", i, proc_name);
+          else
+            {
+              /* Create new instance of a resource object. */
+              GimpResource *resource;
+              gchar* id = sc->vptr->string_value (sc->vptr->pair_car (a));
+
+              resource = g_object_new (type, NULL);
+
+              g_object_set (resource, "id", id,  NULL);
+              /* Assert set property copies the string. */
+
+              g_value_set_object (&value, resource);
+              /* Assert set_object refs the resource. */
+            }
+        }
       else
         {
           g_snprintf (error_str, sizeof (error_str),
@@ -1310,7 +1331,11 @@ script_fu_marshal_procedure_call (scheme   *sc,
 
           g_debug ("Return value %d is type %s", i+1, G_VALUE_TYPE_NAME (value));
 
-          /* Order is important. GFile before GIMP objects. */
+          /* Order is important.
+           * GFile before other objects.
+           * GIMP resource objects before GIMP Image, Drawable, etc. objects.
+           * Alternatively, more specific tests.
+           */
           if (G_VALUE_TYPE (value) == G_TYPE_FILE)
             {
               gchar *parsed_filepath = marshal_returned_gfile_to_string (value);
@@ -1329,11 +1354,37 @@ script_fu_marshal_procedure_call (scheme   *sc,
                 }
               /* Ensure return_val holds a string, possibly empty. */
             }
+          else if (GIMP_VALUE_HOLDS_RESOURCE (value))
+            {
+              /* ScriptFu represents resource objects by ther unique string ID's. */
+              GObject *object = g_value_get_object (value);
+              gchar   *id     = "";
+
+              /* expect a GIMP opaque object having an "id" property */
+              if (object)
+                {
+                  g_object_get (object, "id", &id, NULL);
+                  g_object_unref (object);
+                }
+
+              /* id is empty when the gvalue had no GObject*,
+               * or the referenced object had no property "id".
+               * This can be an undetected fault in the called procedure.
+               * It is not necessarily an error in the script.
+               */
+              if (strlen(id) == 0)
+                g_warning("PDB procedure returned NULL GIMP object or non-GIMP object.");
+
+              g_debug ("PDB procedure returned object ID: %s", id);
+
+              return_val = sc->vptr->cons (sc, sc->vptr->mk_string (sc, id), return_val);
+            }
           else if (G_VALUE_HOLDS_OBJECT (value))
             {
               /* G_VALUE_HOLDS_OBJECT only ensures value derives from GObject.
                * Could be a GIMP or a GLib type.
                * Here we handle GIMP types, which all have an id property.
+               * Resources have a string ID and Images and Drawables etc. have an int ID.
                */
               GObject *object = g_value_get_object (value);
               gint     id     = -1;

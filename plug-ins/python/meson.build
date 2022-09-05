@@ -15,6 +15,12 @@ plugins = [
   { 'name': 'spyro-plus' },
 ]
 
+if not stable
+  plugins += [
+    { 'name': 'test-dialog' },
+  ]
+endif
+
 subdir('python-console')
 
 foreach plugin : plugins

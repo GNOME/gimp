@@ -652,7 +652,7 @@ gfig_read_gimp_style (Style       *style,
   gimp_brush_get_info (style->brush_name,
                        &style->brush_width, &style->brush_height,
                        &dummy, &dummy);
-  gimp_brush_get_spacing (style->brush_name, &style->brush_spacing);
+  style->brush_spacing = gimp_brush_get_spacing (style->brush_name);
 
   style->gradient = gimp_context_get_gradient ();
   style->pattern  = gimp_context_get_pattern ();
