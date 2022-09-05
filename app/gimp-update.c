@@ -416,13 +416,13 @@ gimp_update_about_dialog (GimpCoreConfig   *config,
 static const gchar *
 gimp_get_version_url ()
 {
-#ifdef GIMP_UNSTABLE
+#ifdef GIMP_RELEASE
+  return "https://www.gimp.org/gimp_versions.json";
+#else
   if (g_getenv ("GIMP_DEV_VERSIONS_JSON"))
     return g_getenv ("GIMP_DEV_VERSIONS_JSON");
   else
     return "https://testing.gimp.org/gimp_versions.json";
-#else
-  return "https://www.gimp.org/gimp_versions.json";
 #endif
 }
 
@@ -464,7 +464,7 @@ gimp_update_auto_check (GimpCoreConfig *config)
   if (prev_update_timestamp > current_timestamp)
     prev_update_timestamp = -1;
 
-#ifndef GIMP_UNSTABLE
+#ifdef GIMP_RELEASE
   /* Do not check more than once a week. */
   if (current_timestamp - prev_update_timestamp < 3600L * 24L * 7L)
     return FALSE;
