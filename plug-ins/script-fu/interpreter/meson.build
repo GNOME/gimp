@@ -1,7 +1,7 @@
 
 scriptfuInclude = include_directories('..')
 
-executable_name = 'gimp-script-fu-interpreter' + exec_ver
+executable_name = 'gimp-script-fu-interpreter-' + gimp_api_version
 
 plugin_sources = [
   'script-fu-interpreter.c',
@@ -40,10 +40,3 @@ script_fu_interpreter = executable(executable_name,
   link_with : libscriptfu,
   install: true,
 )
-
-if enable_default_bin and meson.version().version_compare('>=0.61.0')
-  install_symlink(fs.name(script_fu_interpreter.full_path()).replace(exec_ver, ''),
-    pointing_to: fs.name(script_fu_interpreter.full_path()),
-    install_dir: get_option('bindir')
-  )
-endif
