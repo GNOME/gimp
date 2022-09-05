@@ -156,6 +156,9 @@ static void   gimp_resource_select_drag_data_received (GimpResourceSelectButton 
 static void   gimp_resource_select_button_set_remote_dialog (GimpResourceSelectButton *self,
                                                              GimpResource             *resource);
 
+static void   gimp_resource_select_button_draw_interior     (GimpResourceSelectButton *self,
+                                                             GimpResource             *resource);
+
 static guint resource_button_signals[LAST_SIGNAL] = { 0 };
 static GParamSpec *resource_button_props[N_PROPS] = { NULL, };
 
@@ -409,20 +412,15 @@ gimp_resource_select_button_embed_interior (GimpResourceSelectButton *self, GtkW
   /* We can't draw the interior until self property "resource" is set. */
 }
 
-/**
- * gimp_resource_select_button_draw_interior:
- * @self: A #GimpResourceSelectButton
- * @resource: A resource instance whose attributes should be drawn.
+/* Calls the virtual method of a similar name, which subclasses must override.
  *
- * Calls the virtual method of a similar name, which subclasses must override.
+ * resource: The instance to be drawn.
  *
  * A subclass knows how to draw its interior.
  * Called by super when the view is invalidated (needs to be redrawn.)
- * Public, but subclasses do not ordinarily call this function.
- *
- * Since: 3.0
- **/
-void
+ * Not public.
+ */
+static void
 gimp_resource_select_button_draw_interior (GimpResourceSelectButton  *self, GimpResource *resource)
 {
   GimpResourceSelectButtonClass *klass;
@@ -489,7 +487,7 @@ gimp_resource_select_button_set_property (GObject      *object,
                                           const GValue *gvalue,
                                           GParamSpec   *pspec)
 {
-  GimpResourceSelectButton *self = GIMP_RESOURCE_SELECT_BUTTON (object);
+  GimpResourceSelectButton        *self = GIMP_RESOURCE_SELECT_BUTTON (object);
   GimpResourceSelectButtonPrivate *priv = gimp_resource_select_button_get_instance_private (self);
 
   g_debug ("%s, id: %i", G_STRFUNC, property_id);
@@ -725,7 +723,7 @@ gimp_resource_select_button_finalize (GObject *object)
 
   g_debug ("%s", G_STRFUNC);
 
-  g_clear_pointer (&priv->resource,  g_free);
+  g_clear_pointer (&priv->resource,  g_object_unref);
   g_free ((gpointer) priv->title);
 
   /* Chain up. */

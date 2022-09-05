@@ -223,17 +223,17 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
     pgrain = quantization_grain(pchannel, pquantize)
 
     # If palette is read only, work on a copy:
-    editable = Gimp.palette_is_editable(palette)
+    editable = palette.is_editable()
     if not editable:
-        palette = Gimp.palette_duplicate(palette)
+        palette = palette.duplicate()
 
-    (exists, num_colors) = Gimp.palette_get_info(palette)
+    num_colors = palette.get_color_count()
 
     start, nrows, length = None, None, None
     if selection == SELECT_AUTOSLICE:
         def find_index(color, startindex=0):
             for i in range(startindex, num_colors):
-                c = Gimp.palette_entry_get_color(palette, i)
+                c = palette.entry_get_color(i)
                 if c[1].r == color[1].r and c[1].g == color[1].g and c[1].b == color[1].b:
                     return i
             return None
@@ -279,8 +279,8 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
     def get_colors(start, end):
         result = []
         for i in range(start, end):
-            entry =  (Gimp.palette_entry_get_name (palette, i)[1],
-                      Gimp.palette_entry_get_color (palette, i)[1])
+            entry =  (palette.entry_get_name(i)[1],
+                      palette.entry_get_color(i)[1])
             index1 = channels_getter_1(entry[1], i)
             index2 = channels_getter_2(entry[1], i)
             index = ((index1 - (index1 % grain1)) * (1 if ascending1 else -1),
@@ -293,8 +293,8 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         entry_list = get_colors(0, num_colors)
         entry_list.sort(key=lambda v: v[0])
         for i in range(num_colors):
-            Gimp.palette_entry_set_name (palette, i, entry_list[i][1][0])
-            Gimp.palette_entry_set_color (palette, i, entry_list[i][1][1])
+            palette.entry_set_name(i, entry_list[i][1][0])
+            palette.entry_set_color(i, entry_list[i][1][1])
 
     elif selection == SELECT_PARTITIONED:
         if num_colors < (start + length * nrows) - 1:
@@ -305,12 +305,11 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
         for row in range(nrows):
             partition_spans = [1]
             rowstart = start + (row * length)
-            old_color = Gimp.palette_entry_get_color (palette,
-                                                      rowstart)[1]
+            old_color = palette.entry_get_color(rowstart)[1]
             old_partition = pchannels_getter(old_color, rowstart)
             old_partition = old_partition - (old_partition % pgrain)
             for i in range(rowstart + 1, rowstart + length):
-                this_color = Gimp.palette_entry_get_color (palette, i)[1]
+                this_color = palette.entry_get_color(i)[1]
                 this_partition = pchannels_getter(this_color, i)
                 this_partition = this_partition - (this_partition % pgrain)
                 if this_partition == old_partition:
@@ -320,7 +319,7 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
                     old_partition = this_partition
             base = rowstart
             for size in partition_spans:
-                palette_sort(palette, SELECT_SLICE, '%d:1,%d' % (base, size),
+                palette_sort(SELECT_SLICE, '%d:1,%d' % (base, size),
                              channel1, ascending1,
                              channel2, ascending2,
                              quantize, 0, 1.0)
@@ -337,10 +336,23 @@ def palette_sort(palette, selection, slice_expr, channel1, ascending1,
             sublist = get_colors(row_start, row_start + stride)
             sublist.sort(key=lambda v: v[0])
             for i, entry in zip(range(row_start, row_start + stride), sublist):
-                Gimp.palette_entry_set_name (palette, i, entry[1][0])
-                Gimp.palette_entry_set_color (palette, i, entry[1][1])
+                palette.entry_set_name(i, entry[1][0])
+                palette.entry_set_color(i, entry[1][1])
 
     return palette
+
+# FIXME: Write humanly readable help -
+# See for reference: https://gitlab.gnome.org/GNOME/gimp/-/issues/4368#note_763460
+
+# Important to describe the general effect on palettes rather than details of the sort.
+help_doc = r"""
+Sorts a palette, or part of a palette.
+Sorts the given palette when it is editable, otherwise creates a new sorted palette.
+The default is a 1D sort, but you can also sort over two color channels
+or create a 2D sorted palette with sorted rows.
+You can optionally install colormath (https://pypi.python.org/pypi/colormath/1.0.8)
+to GIMP's Python to get even more channels to choose from.
+"""
 
 selections_option = [ _("All"), _("Slice / Array"), _("Autoslice (fg->bg)"), _("Partitioned") ]
 class PaletteSort (Gimp.PlugIn):
@@ -351,12 +363,10 @@ class PaletteSort (Gimp.PlugIn):
                      "The run mode",
                      Gimp.RunMode.INTERACTIVE,
                      GObject.ParamFlags.READWRITE),
-        # TODO. originally was:   (PF_PALETTE, "palette",  _("Palette"), ""),
-        # Should probably be of type Gimp.Palette .
-        "palette": (str,
+        # Originally:   (PF_PALETTE, "palette",  _("Palette"), ""),
+        "palette": (Gimp.Palette,
                     _("_Palette"),
                     _("Palette"),
-                    "",
                     GObject.ParamFlags.READWRITE),
         "selections": (int,
                        _("Select_ions"),
@@ -407,10 +417,9 @@ class PaletteSort (Gimp.PlugIn):
                      GObject.ParamFlags.READWRITE),
 
         # Returned value
-        "new_palette": (str,
+        "new_palette": (Gimp.Palette,
                         _("Palette"),
                         _("Palette"),
-                        "",
                         GObject.ParamFlags.READWRITE),
     }
 
@@ -428,22 +437,9 @@ class PaletteSort (Gimp.PlugIn):
                                            Gimp.PDBProcType.PLUGIN,
                                            self.run, None)
             procedure.set_menu_label(_("_Sort Palette..."))
-
-            # FIXME: Write humanly readable help -
-            # See for reference: https://gitlab.gnome.org/GNOME/gimp/-/issues/4368#note_763460
             procedure.set_documentation(
-                N_("Sort the colors in a palette"),
-                dedent("""\
-                    palette_sort (palette, selection, slice_expr, channel,
-                    channel2, quantize, ascending, pchannel, pquantize) -> new_palette
-                    Sorts a palette, or part of a palette, using several options.
-                    One can select two color channels over which to sort,
-                    and several auxiliary parameters create a 2D sorted
-                    palette with sorted rows, among other things.
-                    One can optionally install colormath
-                    (https://pypi.python.org/pypi/colormath/1.0.8)
-                    to GIMP's Python to get even more channels to choose from.
-                    """),
+                _("Sort the colors in a palette"),
+                help_doc,
                 ""
             )
             procedure.set_attribution("João S. O. Bueno, Carol Spears, David Gowers",
@@ -481,6 +477,15 @@ class PaletteSort (Gimp.PlugIn):
         quantize = args.index(8)
         pchannel = args.index(9)
         pquantize = args.index(10)
+
+        if palette is None:
+            palette = Gimp.context_get_palette()
+
+        if not palette.is_valid():
+            palette_name = palette.get_id()
+            error = f'Invalid palette id: {palette_name}'
+            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
+                                               GLib.Error(error))
 
         if run_mode == Gimp.RunMode.INTERACTIVE:
             GimpUi.init('python-fu-palette-sort')
@@ -531,14 +536,6 @@ class PaletteSort (Gimp.PlugIn):
 
                 dialog.destroy()
 
-        if palette == '' or palette is None:
-            palette = Gimp.context_get_palette()
-        (exists, num_colors) = Gimp.palette_get_info(palette)
-        if not exists:
-            error = 'Unknown palette: {}'.format(palette)
-            return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
-                                               GLib.Error(error))
-
         try:
             new_palette = palette_sort(palette, selection, slice_expr, channel1, ascending1,
                                        channel2, ascending2, quantize, pchannel, pquantize)
@@ -549,7 +546,7 @@ class PaletteSort (Gimp.PlugIn):
         config.end_run(Gimp.PDBStatusType.SUCCESS)
 
         return_val = procedure.new_return_values(Gimp.PDBStatusType.SUCCESS, GLib.Error())
-        value = GObject.Value(GObject.TYPE_STRING, new_palette)
+        value = GObject.Value(Gimp.Palette, new_palette)
         return_val.remove(1)
         return_val.insert(1, value)
         return return_val

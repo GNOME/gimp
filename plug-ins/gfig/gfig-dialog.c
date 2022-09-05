@@ -298,6 +298,8 @@ gfig_dialog (void)
 
                                    NULL);
 
+  gimp_window_set_transient (GTK_WINDOW (top_level_dlg));
+
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (top_level_dlg),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -394,8 +396,8 @@ gfig_dialog (void)
   /* brush selector in Stroke frame */
   gfig_context->brush_select
     = gimp_brush_select_button_new ("Brush",
-                                    gfig_context->default_style.brush);
-  g_signal_connect (gfig_context->brush_select, "brush-set",
+                                    GIMP_RESOURCE (gfig_context->default_style.brush));
+  g_signal_connect (gfig_context->brush_select, "resource-set",
                     G_CALLBACK (gfig_brush_changed_callback), NULL);
   gtk_box_pack_start (GTK_BOX (vbox), gfig_context->brush_select,
                       FALSE, FALSE, 0);
@@ -459,8 +461,9 @@ gfig_dialog (void)
 
   /* A page for the pattern selector */
   gfig_context->pattern_select
-    = gimp_pattern_select_button_new ("Pattern", gfig_context->default_style.pattern);
-  g_signal_connect (gfig_context->pattern_select, "pattern-set",
+    = gimp_pattern_select_button_new ("Pattern",
+                                      GIMP_RESOURCE (gfig_context->default_style.pattern));
+  g_signal_connect (gfig_context->pattern_select, "resource-set",
                     G_CALLBACK (gfig_pattern_changed_callback), NULL);
   gtk_widget_show (gfig_context->pattern_select);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
@@ -468,8 +471,9 @@ gfig_dialog (void)
 
   /* A page for the gradient selector */
   gfig_context->gradient_select
-    = gimp_gradient_select_button_new ("Gradient", gfig_context->default_style.gradient);
-  g_signal_connect (gfig_context->gradient_select, "gradient-set",
+    = gimp_gradient_select_button_new ("Gradient",
+                                       GIMP_RESOURCE (gfig_context->default_style.gradient));
+  g_signal_connect (gfig_context->gradient_select, "resource-set",
                     G_CALLBACK (gfig_gradient_changed_callback), NULL);
   gtk_widget_show (gfig_context->gradient_select);
   gtk_notebook_append_page (GTK_NOTEBOOK (fill_type_notebook),
@@ -518,8 +522,7 @@ gfig_dialog (void)
   gfig_list_load_all (gfig_path);
 
   /* Setup initial brush settings */
-  gfig_context->bdesc.name = gimp_context_get_brush ();
-  mygimp_brush_info (&gfig_context->bdesc.width, &gfig_context->bdesc.height);
+  set_context_bdesc (gimp_context_get_brush ());
 
   gtk_widget_show (main_hbox);
 
@@ -2031,7 +2034,13 @@ toggle_obj_type (GtkRadioAction *action,
                  GtkRadioAction *current,
                  gpointer        data)
 {
-  static GdkCursor *p_cursors[DEL_OBJ + 1];
+  /* cache of cursors.
+   * Must be larger than action values, i.e. NULL_OPER.
+   * Test by clicking the "select object" icon.
+   * C ensures is initialized to NULL.
+   */
+  static GdkCursor *p_cursors[NULL_OPER];
+
   GdkCursorType     ctype = GDK_LAST_CURSOR;
   DobjType          new_type;
 
@@ -2045,13 +2054,17 @@ toggle_obj_type (GtkRadioAction *action,
 
       if (new_type < MOVE_OBJ) /* Eeeeek */
         {
+          g_debug ("%s new_type < MOVE_OBJ", G_STRFUNC);
           obj_show_single = -1; /* Cancel select preview */
         }
       /* Update draw areas */
       gtk_widget_queue_draw (gfig_context->preview);
     }
 
+  g_debug ("%s: old and new obj type %d %d", G_STRFUNC, selvals.otype, new_type);
+
   selvals.otype = new_type;
+
   gtk_notebook_set_current_page (GTK_NOTEBOOK (tool_options_notebook),
                                  new_type - 1);
 
@@ -2066,7 +2079,6 @@ toggle_obj_type (GtkRadioAction *action,
     case STAR:
     case SPIRAL:
     case BEZIER:
-    default:
       ctype = GDK_CROSSHAIR;
       break;
     case MOVE_OBJ:
@@ -2078,14 +2090,26 @@ toggle_obj_type (GtkRadioAction *action,
     case DEL_OBJ:
       ctype = GDK_PIRATE;
       break;
+    case OBJ_TYPE_NONE:
+      ctype = GDK_CROSSHAIR;
+      break;
+    default:
+      g_debug ("%s: default cursor for object type %d.", G_STRFUNC, selvals.otype);
+      ctype = GDK_CROSSHAIR;
+      break;
     }
 
+  /* Get cached cursor. */
   if (!p_cursors[selvals.otype])
     {
-      GdkDisplay *display = gtk_widget_get_display (gfig_context->preview);
+      GdkCursor *cursor;
 
-      p_cursors[selvals.otype] = gdk_cursor_new_for_display (display, ctype);
+      GdkDisplay *display = gtk_widget_get_display (gfig_context->preview);
+      cursor = gdk_cursor_new_for_display (display, ctype);
+      p_cursors[selvals.otype] = cursor;
     }
+  /* Require cursor (possibly from cache) is-a cursor. */
+  g_assert (GDK_IS_CURSOR (p_cursors[selvals.otype]));
 
   gdk_window_set_cursor (gtk_widget_get_window (gfig_context->preview),
                          p_cursors[selvals.otype]);

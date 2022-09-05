@@ -44,7 +44,7 @@
  */
 
 /* FUTURE: delete this after v3 is stable. */
-#define DEBUG_CONFIG_PROPERTIES  FALSE
+#define DEBUG_CONFIG_PROPERTIES  TRUE
 
 #if DEBUG_CONFIG_PROPERTIES
 static void
@@ -59,6 +59,72 @@ dump_properties (GimpProcedureConfig  *config)
     g_printerr ("%s %s\n", pspecs[i]->name, G_PARAM_SPEC_TYPE_NAME (pspecs[i]));
   g_free (pspecs);
 }
+
+static gint
+get_length (GimpProcedureConfig  *config)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                           &n_pspecs);
+  g_debug ("length config: %d", n_pspecs);
+  return n_pspecs;
+}
+
+/* Fill a new (length zero) gva with new gvalues (empty but holding the correct type)
+ from the config.
+ */
+static void
+fill_gva_from (GimpProcedureConfig  *config, GimpValueArray * gva)
+{
+  GParamSpec **pspecs;
+  guint        n_pspecs;
+
+  pspecs = g_object_class_list_properties (G_OBJECT_GET_CLASS (config),
+                                           &n_pspecs);
+  /* !!! Start at property 1 */
+  for (guint i = 1; i < n_pspecs; i++)
+    {
+      g_debug ("%s %s\n", pspecs[i]->name, G_PARAM_SPEC_TYPE_NAME (pspecs[i]));
+      /* append empty gvalue */
+      gimp_value_array_append (gva, NULL);
+    }
+
+  g_free (pspecs);
+}
+
+static void
+dump_objects (GimpProcedureConfig  *config)
+{
+  /* Check it will return non-null objects. */
+  GimpValueArray *args;
+  gint length;
+
+  /* Need one less gvalue !!! */
+  args = gimp_value_array_new (get_length (config) - 1);
+  /* The array still has length zero. */
+  g_debug ("GVA length: %d", gimp_value_array_length (args));
+
+  fill_gva_from (config, args);
+
+  gimp_procedure_config_get_values (config, args);
+  if (args == NULL)
+    {
+      g_debug ("config holds no values");
+      return;
+    }
+  length = gimp_value_array_length (args);
+
+  for (guint i = 1; i < length; i++)
+    {
+      GValue *gvalue = gimp_value_array_index (args, i);
+      if (G_VALUE_HOLDS_OBJECT (gvalue))
+        if (g_value_get_object (gvalue) == NULL)
+          g_debug ("gvalue %d holds NULL object", i);
+    }
+}
+
 #endif
 
 /* Run a dialog for a procedure, then interpret the script.
@@ -117,6 +183,10 @@ script_fu_dialog_run (GimpProcedure        *procedure,
    * Instead, last used values or default values populate the config.
    */
   gimp_procedure_config_begin_run (config, NULL, GIMP_RUN_INTERACTIVE, initial_args);
+  #if DEBUG_CONFIG_PROPERTIES
+
+    dump_objects (config);
+  #endif
 
   /* Create a dialog having properties (describing arguments of the procedure)
    * taken from the config.
@@ -142,6 +212,11 @@ script_fu_dialog_run (GimpProcedure        *procedure,
 
   not_canceled = gimp_procedure_dialog_run (dialog);
   /* Assert config holds validated arg values from a user interaction. */
+
+  #if DEBUG_CONFIG_PROPERTIES
+    dump_objects (config);
+  #endif
+
   if (not_canceled)
     {
       /* initial_args is declared const.

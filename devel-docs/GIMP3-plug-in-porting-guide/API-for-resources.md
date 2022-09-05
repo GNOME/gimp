@@ -28,8 +28,8 @@ Now, there are methods on resource objects.
 Methods take an instance of the object as the first argument,
 often called "self."
 
-This means that whenever you used a string name to refer to a resource object,
-you usually should pass an instance of an object.
+This means that where you formerly used a string name to refer to a resource object,
+now you usually should pass an instance of an object.
 
 ### Changes to reference documents
 
@@ -38,7 +38,22 @@ you usually should pass an instance of an object.
 Shows classes Brush, Font, and so forth.
 The classes have instance methods taking the instance as the first argument.
 
+Example:
+
+```
+gboolean gboolean gimp_brush_delete(gcharray) => gboolean gimp_brush_delete ( GimpBrush*)
+```
+
 The classes may also have class methods still taking string names.
+
+Example:
+
+```
+gboolean gimp_brush_id_is_valid (const gchar* id)
+```
+
+Is a class method (in the "Functions" section of the class) taking the ID
+(same as the name) to test whether such a brush is installed in Gimp core.
 
 #### PDB Browser
 
@@ -50,6 +65,28 @@ where formerly they took type gcharray i.e. strings.
 
 Shows some procedures that take a string name of a brush.
 These are usually class methods.
+
+#### Other changes to the API
+
+Many of the Gimp functions dealing with the context
+now take or return an instance of a resource.
+
+Example:
+
+```
+gcharray* gimp_context_get_brush (void) =>  GimpBrush* gimp_context_get_brush (void)
+```
+
+A few functions have even more changed signature:
+
+```
+gint gimp_palette_get_info (gcharray) =>
+gint gimp_palette_get_color_count (GimpPalette*)
+```
+
+The name and description of this function are changed
+to accurately describe that the function only returns an integer
+(formerly, the description said it also returned the name of the palette.)
 
 ### New resource objects
 

@@ -65,10 +65,6 @@ GimpResource *gimp_resource_select_button_get_resource (GimpResourceSelectButton
 void          gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
                                                         GimpResource             *resource);
 
-/* Public, but called by super. */
-void      gimp_resource_select_button_draw_interior     (GimpResourceSelectButton *self,
-                                                         GimpResource             *resource);
-
 /* API from below, used by subclasses e.g. GimpBrushSelectButton */
 
 void      gimp_resource_select_button_embed_interior   (GimpResourceSelectButton *self,

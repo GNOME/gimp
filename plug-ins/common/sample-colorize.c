@@ -2478,7 +2478,8 @@ fill_missing_colors (void)
 static void
 get_gradient (gint mode)
 {
-  gchar   *name;
+  GimpGradient *gradient;
+
   gint     n_f_samples;
   gdouble *f_samples;
   gdouble *f_samp;        /* float samples */
@@ -2486,13 +2487,11 @@ get_gradient (gint mode)
 
   free_colors ();
 
-  name = gimp_context_get_gradient ();
+  gradient = gimp_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (name, 256 /* n_samples */,
+  gimp_gradient_get_uniform_samples (gradient, 256 /* n_samples */,
                                      mode == SMP_INV_GRADIENT,
                                      &n_f_samples, &f_samples);
-
-  g_free (name);
 
   for (lum = 0; lum < 256; lum++)
     {

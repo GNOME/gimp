@@ -24,8 +24,8 @@
 #include "libgimp/gimp.h"
 #include "libgimp/gimpui.h"
 
- static GimpResource * get_initial_resource_from_config (GObject     *config,
-                                                         const gchar *property_name);
+static GimpResource * get_initial_resource_from_config (GObject     *config,
+                                                        const gchar *property_name);
 
 /**
 * gimp_prop_chooser_factory:

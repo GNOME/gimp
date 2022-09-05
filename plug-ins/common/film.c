@@ -44,6 +44,7 @@
 
 /* Define how the plug-in works. Values marked (r) are with regard */
 /* to film_height (i.e. it should be a value from 0.0 to 1.0) */
+/* Saved as settings.  Must be trivially serializable; no pointers. */
 typedef struct
 {
   gint     film_height;           /* height of the film */
@@ -57,7 +58,8 @@ typedef struct
   gdouble  number_height;         /* height of picture numbering (r) */
   gint     number_start;          /* number for first picture */
   GimpRGB  number_color;          /* color of number */
-  gchar    number_font[FONT_LEN]; /* font family to use for numbering */
+  GimpFont *number_font;          /* font family for numbering */
+  gchar    font_name[FONT_LEN];   /* serializable name of font for numbering */
   gint     number_pos[2];         /* flags where to draw numbers (top/bottom) */
   gint     keep_height;           /* flag if to keep max. image height */
   gint     num_images;            /* number of images */
@@ -142,12 +144,15 @@ static gboolean        film_dialog            (GimpImage            *image);
 static void            film_reset_callback    (GtkWidget            *widget,
                                                gpointer              data);
 static void         film_font_select_callback (GimpFontSelectButton *button,
-                                               const gchar          *name,
+                                               GimpResource         *font,
                                                gboolean              closing,
                                                gpointer              data);
 
 static void    film_scale_entry_update_double (GimpLabelSpin        *entry,
                                                gdouble              *value);
+
+static void    film_load_settings             (void);
+static void    film_save_settings             (void);
 
 G_DEFINE_TYPE (Film, film, GIMP_TYPE_PLUG_IN)
 
@@ -179,7 +184,8 @@ static FilmVals filmvals =
   0.052,           /* Image number height */
   1,               /* Start index of numbering */
   { 0.93, 0.61, 0.0, 1.0 }, /* Color of number */
-  "Monospace",     /* Font family for numbering */
+  NULL,            /* !!! No default, must be set later. */
+  "Monospace",     /* Case sensitive, must be name of an installed font. */
   { TRUE, TRUE },  /* Numbering on top and bottom */
   0,               /* Don't keep max. image height */
   0,               /* Number of images */
@@ -263,11 +269,10 @@ film_create_procedure (GimpPlugIn  *plug_in,
                          G_MININT, G_MAXINT, 1,
                          G_PARAM_READWRITE);
 
-      GIMP_PROC_ARG_STRING (procedure, "number-font",
-                            "Number font",
-                            "Font for drawing numbers",
-                            NULL,
-                            G_PARAM_READWRITE);
+      GIMP_PROC_ARG_FONT (procedure, "number-font",
+                          "Number font",
+                          "Font for drawing numbers",
+                          G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_RGB (procedure, "number-color",
                          "Number color",
@@ -328,7 +333,7 @@ film_run (GimpProcedure        *procedure,
   switch (run_mode)
     {
     case GIMP_RUN_INTERACTIVE:
-      gimp_get_data (PLUG_IN_PROC, &filmvals);
+      film_load_settings();
 
       if (! film_dialog (image))
         {
@@ -350,9 +355,7 @@ film_run (GimpProcedure        *procedure,
         }
       GIMP_VALUES_GET_RGB (args, 1, &filmvals.film_color);
       filmvals.number_start = GIMP_VALUES_GET_INT           (args, 2);
-      g_strlcpy              (filmvals.number_font,
-                              GIMP_VALUES_GET_STRING        (args, 3),
-                              FONT_LEN);
+      filmvals.number_font  = GIMP_VALUES_GET_FONT          (args, 3);
       GIMP_VALUES_GET_RGB (args, 4, &filmvals.number_color);
       filmvals.number_pos[0] = GIMP_VALUES_GET_INT          (args, 5);
       filmvals.number_pos[1] = GIMP_VALUES_GET_INT          (args, 6);
@@ -364,7 +367,7 @@ film_run (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      gimp_get_data (PLUG_IN_PROC, &filmvals);
+      film_load_settings();
       break;
 
     default:
@@ -400,9 +403,8 @@ film_run (GimpProcedure        *procedure,
             gimp_display_new (image);
         }
 
-      /*  Store data  */
       if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_set_data (PLUG_IN_PROC, &filmvals, sizeof (FilmVals));
+        film_save_settings();
     }
 
   if (! return_vals)
@@ -646,8 +648,9 @@ check_filmvals (void)
   if (filmvals.number_start < 0)
     filmvals.number_start = 0;
 
-  if (filmvals.number_font[0] == '\0')
-    strcpy (filmvals.number_font, "Monospace");
+  if (filmvals.number_font == NULL)
+    filmvals.number_font = gimp_context_get_font ();
+  g_assert (GIMP_IS_FONT (filmvals.number_font));
 
   for (i = 0, j = 0; i < filmvals.num_images; i++)
     {
@@ -737,7 +740,12 @@ draw_number (GimpLayer *layer,
   GimpImage    *image;
   GimpLayer    *text_layer;
   gint          text_width, text_height, text_ascent, descent;
-  gchar        *fontname = filmvals.number_font;
+
+  GimpFont     *font = filmvals.number_font;
+  gchar        *fontname;
+
+  /* FIXME: gimp_text methods should take GimpFont font instead of font_name */
+  g_object_get (font, "id", &fontname, NULL);
 
   g_snprintf (buf, sizeof (buf), "%d", num);
 
@@ -1124,8 +1132,9 @@ create_selection_tab (GtkWidget *notebook,
                     &filmvals.number_start);
 
   /* Fontfamily for numbering */
-  font_button = gimp_font_select_button_new (NULL, filmvals.number_font);
-  g_signal_connect (font_button, "font-set",
+  /* Require filmvals.number_font is NULL or a valid GimpFont. */
+  font_button = gimp_font_select_button_new (NULL, GIMP_RESOURCE (filmvals.number_font));
+  g_signal_connect (font_button, "resource-set",
                     G_CALLBACK (film_font_select_callback), &filmvals);
   label = gimp_grid_attach_aligned (GTK_GRID (grid), 0, 1,
                                     _("_Font:"), 0.0, 0.5,
@@ -1388,13 +1397,13 @@ film_reset_callback (GtkWidget *widget,
 
 static void
 film_font_select_callback (GimpFontSelectButton *button,
-                           const gchar          *name,
+                           GimpResource         *resource,
                            gboolean              closing,
                            gpointer              data)
 {
   FilmVals *vals = (FilmVals *) data;
 
-  g_strlcpy (vals->number_font, name, FONT_LEN);
+  vals->number_font = GIMP_FONT (resource);
 }
 
 static void
@@ -1402,4 +1411,33 @@ film_scale_entry_update_double (GimpLabelSpin *entry,
                                 gdouble       *value)
 {
   *value = gimp_label_spin_get_value (entry);
+}
+
+/* FIXME: use GimpProcedureConfig
+ *
+ * Now using the old method: get_data.
+ * And chunking the settings into global struct filmvals instead of properties.
+ */
+static void
+film_load_settings (void)
+{
+  (void) gimp_get_data (PLUG_IN_PROC, &filmvals);
+  /* When no data, returns false and filmvals is as statically initialized. */
+
+  /* The GimpFont pointer was unserialized but garbage.
+   * Restore pointer from the name which was also serialized.
+   * A hack that goes away when GimpProcedureConfig is used.
+   */
+  filmvals.number_font = g_object_new (GIMP_TYPE_FONT, "id", filmvals.font_name, NULL);
+}
+
+static void
+film_save_settings (void)
+{
+  /* Copy font name from font, i.e. serialize string not pointer. */
+  g_strlcpy (filmvals.font_name,
+             gimp_resource_get_id (GIMP_RESOURCE (filmvals.number_font)),
+             FONT_LEN);
+
+  gimp_set_data (PLUG_IN_PROC, &filmvals, sizeof (FilmVals));
 }

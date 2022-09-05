@@ -604,8 +604,13 @@ gimp_gp_param_to_value (gpointer        gimp,
   g_return_if_fail (param != NULL);
   g_return_if_fail (value != NULL);
 
-  if (type == G_TYPE_NONE)
-    type = g_type_from_name (param->type_name);
+  if (type == G_TYPE_NONE || type == G_TYPE_INVALID)
+    {
+      type = g_type_from_name (param->type_name);
+      if (type == 0)
+        g_critical ("%s: type name %s is not registered", G_STRFUNC, param->type_name);
+    }
+  /* assert type is not G_TYPE_NONE and type is not G_TYPE_INVALID. */
 
   g_value_init (value, type);
 
@@ -730,7 +735,9 @@ gimp_gp_param_to_value (gpointer        gimp,
     }
   else if (GIMP_VALUE_HOLDS_RESOURCE (value))
     {
-      g_value_set_object (value, get_resource_by_id (gimp, G_VALUE_TYPE (value),  param->data.d_string));
+      gpointer resource;  /* when compiled in app, use generic pointer. */
+      resource = get_resource_by_id (gimp, G_VALUE_TYPE (value),  param->data.d_string);
+      g_value_set_object (value, resource);
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {
@@ -1054,9 +1061,27 @@ gimp_value_to_gp_param (const GValue *value,
     {
       GObject *resource = g_value_get_object (value);
 
+      /* Represent by a char*, which must be NULL when resource is NULL.
+       * resource may be NULL e.g. for return value of a canceled dialog.
+       */
       param->param_type = GP_PARAM_TYPE_STRING;
 
-      param->data.d_string = resource ? get_resource_id (resource) : "";
+      if (resource != NULL)
+        {
+          gchar * resource_id = get_resource_id (resource);
+          /* resource_id can be NULL if resource is invalid. */
+          if (full_copy)
+            param->data.d_string = g_strdup (resource_id);
+          else
+            param->data.d_string = resource_id;
+        }
+      else
+        {
+          param->data.d_string = NULL;
+        }
+      /* Ensure ( full_copy AND ( d_string==NULL OR points to new allocation ))
+       *     OR ( not full copy AND ( d_string==NULL OR points to resource's ID char* )
+       */
     }
   else if (G_VALUE_HOLDS_PARAM (value))
     {

@@ -81,33 +81,15 @@ static void   script_fu_file_callback       (GtkWidget     *widget,
                                              SFFilename    *file);
 static void   script_fu_combo_callback      (GtkWidget     *widget,
                                              SFOption      *option);
-static void   script_fu_pattern_callback    (gpointer       data,
-                                             const gchar   *name,
-                                             gint           width,
-                                             gint           height,
-                                             gint           bytes,
-                                             const guchar  *mask_data,
-                                             gboolean       closing);
-static void   script_fu_gradient_callback   (gpointer       data,
-                                             const gchar   *name,
-                                             gint           width,
-                                             const gdouble *mask_data,
-                                             gboolean       closing);
-static void   script_fu_font_callback       (gpointer       data,
-                                             const gchar   *name,
-                                             gboolean       closing);
-static void   script_fu_palette_callback    (gpointer       data,
-                                             const gchar   *name,
-                                             gboolean       closing);
-static void   script_fu_brush_callback      (gpointer       data,
-                                             const gchar   *name,
-                                             gdouble        opacity,
-                                             gint           spacing,
-                                             GimpLayerMode  paint_mode,
-                                             gint           width,
-                                             gint           height,
-                                             const guchar  *mask_data,
-                                             gboolean       closing);
+
+static void   script_fu_resource_set_handler (gpointer       data,
+                                              gpointer       resource,
+                                              gboolean       closing);
+
+static GtkWidget * script_fu_resource_widget (const gchar   *title,
+                                              gchar        **id,
+                                              GType          resource_type);
+
 static void   script_fu_flush_events         (void);
 static void   script_fu_activate_main_dialog (void);
 
@@ -481,45 +463,36 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_FONT:
-          widget = gimp_font_select_button_new (_("Script-Fu Font Selection"),
-                                                arg->value.sfa_font);
-          g_signal_connect_swapped (widget, "font-set",
-                                    G_CALLBACK (script_fu_font_callback),
-                                    &arg->value.sfa_font);
+          widget = script_fu_resource_widget (_("Script-Fu Font Selection"),
+                                              &arg->value.sfa_font,
+                                              GIMP_TYPE_FONT);
           break;
 
         case SF_PALETTE:
-          widget = gimp_palette_select_button_new (_("Script-Fu Palette Selection"),
-                                                   arg->value.sfa_palette);
-          g_signal_connect_swapped (widget, "palette-set",
-                                    G_CALLBACK (script_fu_palette_callback),
-                                    &arg->value.sfa_palette);
+          widget = script_fu_resource_widget (_("Script-Fu Palette Selection"),
+                                              &arg->value.sfa_palette,
+                                              GIMP_TYPE_PALETTE);
           break;
 
         case SF_PATTERN:
           left_align = TRUE;
-          widget = gimp_pattern_select_button_new (_("Script-Fu Pattern Selection"),
-                                                   arg->value.sfa_pattern);
-          g_signal_connect_swapped (widget, "pattern-set",
-                                    G_CALLBACK (script_fu_pattern_callback),
-                                    &arg->value.sfa_pattern);
+          widget = script_fu_resource_widget (_("Script-Fu Pattern Selection"),
+                                              &arg->value.sfa_pattern,
+                                              GIMP_TYPE_PATTERN);
           break;
 
         case SF_GRADIENT:
           left_align = TRUE;
-          widget = gimp_gradient_select_button_new (_("Script-Fu Gradient Selection"),
-                                                    arg->value.sfa_gradient);
-          g_signal_connect_swapped (widget, "gradient-set",
-                                    G_CALLBACK (script_fu_gradient_callback),
-                                    &arg->value.sfa_gradient);
+          widget = script_fu_resource_widget (_("Script-Fu Gradient Selection"),
+                                              &arg->value.sfa_gradient,
+                                              GIMP_TYPE_GRADIENT);
           break;
 
         case SF_BRUSH:
           left_align = TRUE;
-          widget = gimp_brush_select_button_new (_("Script-Fu Brush Selection"), NULL);
-          g_signal_connect_swapped (widget, "brush-set",
-                                    G_CALLBACK (script_fu_brush_callback),
-                                    &arg->value.sfa_brush);
+          widget = script_fu_resource_widget (_("Script-Fu Brush Selection"),
+                                              &arg->value.sfa_brush,
+                                              GIMP_TYPE_BRUSH);
           break;
 
         case SF_OPTION:
@@ -618,6 +591,75 @@ script_fu_interface (SFScript  *script,
   return sf_status;
 }
 
+/* Return a widget for choosing a resource.
+ * Generic on type.
+ */
+GtkWidget *
+script_fu_resource_widget (const gchar   *title,
+                           gchar        **id_handle,
+                           GType          resource_type)
+{
+  GtkWidget    *result_widget = NULL;
+  GimpResource *resource;
+
+  /* New resource instance, from string *id_handle. */
+  resource = g_object_new (resource_type, "id", *id_handle, NULL);
+
+  /* If not valid, substitute NULL
+   * String provided by script author might not name an installed font.
+   */
+  /*
+  if ( ! gimp_resource_is_valid (resource) )
+    {
+      g_object_unref (resource);
+      resource = NULL;
+    }
+    */
+
+  if (resource_type == GIMP_TYPE_FONT)
+    {
+      if ( ! gimp_font_is_valid (GIMP_FONT (resource)))
+        {
+          g_object_unref (resource);
+          resource = NULL;
+        }
+      result_widget = gimp_font_select_button_new (title, resource);
+    }
+  else if (resource_type == GIMP_TYPE_BRUSH)
+    {
+      result_widget = gimp_brush_select_button_new (title, resource);
+    }
+  else if (resource_type == GIMP_TYPE_GRADIENT)
+    {
+      result_widget = gimp_gradient_select_button_new (title, resource);
+    }
+  else if (resource_type == GIMP_TYPE_PALETTE)
+    {
+      result_widget = gimp_palette_select_button_new (title, resource);
+    }
+  else if (resource_type == GIMP_TYPE_PATTERN)
+    {
+      result_widget = gimp_pattern_select_button_new (title, resource);
+    }
+  else
+    {
+      g_warning ("%s: Unhandled resource type", G_STRFUNC);
+    }
+
+  if (result_widget != NULL)
+  {
+    /* All resource widgets emit signal resource-set
+     * Connect to our handler which will be passed the id_handle,
+     * the place to store the ID of the new choice of resource.
+     */
+    g_signal_connect_swapped (result_widget, "resource-set",
+                              G_CALLBACK (script_fu_resource_set_handler),
+                              id_handle);
+  }
+
+  return result_widget;
+}
+
 static void
 script_fu_interface_quit (SFScript *script)
 {
@@ -676,77 +718,26 @@ script_fu_combo_callback (GtkWidget *widget,
   option->history = gtk_combo_box_get_active (GTK_COMBO_BOX (widget));
 }
 
+/* Handle resource-set signal.
+ * Store id of newly chosen resource in SF local cache of args.
+ *
+ * Note the callback is the same for all resource types.
+ * The callback passes only the resource, and no attributes of the resource,
+ * except it's ID.
+ */
 static void
-script_fu_string_update (gchar       **dest,
-                         const gchar  *src)
+script_fu_resource_set_handler (gpointer      data,  /* callback "data" */
+                                gpointer      resource,
+                                gboolean      closing)
 {
-  if (*dest)
-    g_free (*dest);
+  gchar **id_handle = data;
 
-  *dest = g_strdup (src);
-}
+  /* Free any existing copy of the id string. */
+  if (*id_handle)
+    g_free (*id_handle);
 
-static void
-script_fu_pattern_callback (gpointer      data,
-                            const gchar  *name,
-                            gint          width,
-                            gint          height,
-                            gint          bytes,
-                            const guchar *mask_data,
-                            gboolean      closing)
-{
-  script_fu_string_update (data, name);
-  if (closing) script_fu_activate_main_dialog ();
-}
-
-static void
-script_fu_gradient_callback (gpointer       data,
-                             const gchar   *name,
-                             gint           width,
-                             const gdouble *mask_data,
-                             gboolean       closing)
-{
-  script_fu_string_update (data, name);
-  if (closing) script_fu_activate_main_dialog ();
-}
-
-static void
-script_fu_font_callback (gpointer     data,
-                         const gchar *name,
-                         gboolean     closing)
-{
-  script_fu_string_update (data, name);
-  if (closing) script_fu_activate_main_dialog ();
-}
-
-static void
-script_fu_palette_callback (gpointer     data,
-                            const gchar *name,
-                            gboolean     closing)
-{
-  script_fu_string_update (data, name);
-  if (closing) script_fu_activate_main_dialog ();
-}
-
-static void
-script_fu_brush_callback (gpointer       data,
-                          const gchar   *name,
-                          gdouble        opacity,
-                          gint           spacing,
-                          GimpLayerMode  paint_mode,
-                          gint           width,
-                          gint           height,
-                          const guchar  *mask_data,
-                          gboolean       closing)
-{
-  SFBrush *brush = data;
-
-  g_free (brush->name);
-
-  brush->name       = g_strdup (name);
-  brush->opacity    = opacity;
-  brush->spacing    = spacing;
-  brush->paint_mode = paint_mode;
+  /* We don't own the resource, nor its string.  Copy the string. */
+  *id_handle = g_strdup (gimp_resource_get_id (resource));
 
   if (closing) script_fu_activate_main_dialog ();
 }
@@ -991,24 +982,34 @@ script_fu_reset (SFScript *script)
                                          value->sfa_file.filename);
           break;
 
+        /* Reset should get the initial/default value that the plugin author
+         * declared by name in the SF- declaration.
+         * Said name is a string stored in the default_value.sfa_font
+         *
+         * But this code goes away when ScriptFu uses GimpProcedureDialog.
+         * Rather than make this temporary code do the correct thing,
+         * instead simply pass NULL to reset to the value from context.
+         * It is extremely unlikely that any user depends on or will notice
+         * this temporaryily slightly changed behavior.
+         */
         case SF_FONT:
           gimp_font_select_button_set_font (GIMP_FONT_SELECT_BUTTON (widget),
-                                            value->sfa_font);
+                                            NULL);
           break;
 
         case SF_PALETTE:
           gimp_palette_select_button_set_palette (GIMP_PALETTE_SELECT_BUTTON (widget),
-                                                  value->sfa_palette);
+                                                  NULL);
           break;
 
         case SF_PATTERN:
           gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (widget),
-                                                  value->sfa_pattern);
+                                                  NULL);
           break;
 
         case SF_GRADIENT:
           gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (widget),
-                                                    value->sfa_gradient);
+                                                    NULL);
           break;
 
         case SF_BRUSH:

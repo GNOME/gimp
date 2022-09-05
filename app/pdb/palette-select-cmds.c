@@ -161,7 +161,7 @@ register_palette_select_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("initial-palette-name",
                                                        "initial palette name",
-                                                       "The palette to set as the initial choice.",
+                                                       "The name of the palette to set as the initial choice.",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));

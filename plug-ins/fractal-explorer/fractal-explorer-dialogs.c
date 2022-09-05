@@ -38,7 +38,7 @@
 
 static gint              n_gradient_samples = 0;
 static gdouble          *gradient_samples = NULL;
-static gchar            *gradient_name    = NULL;
+static GimpGradient     *gradient = NULL;
 static gboolean          ready_now = FALSE;
 static gchar            *tpath = NULL;
 static DialogElements   *elements = NULL;
@@ -286,10 +286,10 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
 
   g_free (gradient_samples);
 
-  if (! gradient_name)
-    gradient_name = gimp_context_get_gradient ();
+  if (! gradient)
+    gradient = gimp_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (gradient_name,
+  gimp_gradient_get_uniform_samples (gradient,
                                      wvals.ncolors,
                                      wvals.gradinvert,
                                      &n_gradient_samples,
@@ -299,20 +299,15 @@ explorer_number_of_colors_callback (GtkAdjustment *adjustment,
   dialog_update_preview ();
 }
 
+/* Same signature as all GimpResourceSelectButton */
 static void
-explorer_gradient_select_callback (GimpGradientSelectButton *gradient_button,
-                                   const gchar              *name,
-                                   gint                      width,
-                                   const gdouble            *gradient_data,
-                                   gboolean                  dialog_closing,
-                                   gpointer                  data)
+explorer_gradient_select_callback (gpointer                  data,  /* widget */
+                                   GimpGradient             *gradient,
+                                   gboolean                  dialog_closing)
 {
-  g_free (gradient_name);
   g_free (gradient_samples);
 
-  gradient_name = g_strdup (name);
-
-  gimp_gradient_get_uniform_samples (gradient_name,
+  gimp_gradient_get_uniform_samples (gradient,
                                      wvals.ncolors,
                                      wvals.gradinvert,
                                      &n_gradient_samples,
@@ -521,9 +516,9 @@ explorer_dialog (void)
   GtkWidget *hbox;
   GtkWidget *grid;
   GtkWidget *button;
-  GtkWidget *gradient;
+  GtkWidget *gradient_button;
   gchar     *path;
-  gchar     *gradient_name;
+  GimpGradient *gradient;
   GSList    *group = NULL;
   gint       i;
 
@@ -1156,21 +1151,21 @@ explorer_dialog (void)
                            _("Create a color-map using a gradient from "
                              "the gradient editor"), NULL);
 
-  gradient_name = gimp_context_get_gradient ();
+  gradient = gimp_context_get_gradient ();
 
-  gimp_gradient_get_uniform_samples (gradient_name,
+  gimp_gradient_get_uniform_samples (gradient,
                                      wvals.ncolors,
                                      wvals.gradinvert,
                                      &n_gradient_samples,
                                      &gradient_samples);
 
-  gradient = gimp_gradient_select_button_new (_("FractalExplorer Gradient"),
-                                              gradient_name);
-  g_signal_connect (gradient, "gradient-set",
+  gradient_button = gimp_gradient_select_button_new (_("FractalExplorer Gradient"),
+                                                     GIMP_RESOURCE (gradient));
+  g_signal_connect (gradient_button, "resource-set",
                     G_CALLBACK (explorer_gradient_select_callback), NULL);
-  g_free (gradient_name);
-  gtk_box_pack_start (GTK_BOX (hbox), gradient, FALSE, FALSE, 0);
-  gtk_widget_show (gradient);
+
+  gtk_box_pack_start (GTK_BOX (hbox), gradient_button, FALSE, FALSE, 0);
+  gtk_widget_show (gradient_button);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
   {
@@ -1341,15 +1336,13 @@ make_color_map (void)
    */
   if (gradient_samples == NULL)
     {
-      gchar *gradient_name = gimp_context_get_gradient ();
+      GimpGradient *gradient = gimp_context_get_gradient ();
 
-      gimp_gradient_get_uniform_samples (gradient_name,
+      gimp_gradient_get_uniform_samples (gradient,
                                          wvals.ncolors,
                                          wvals.gradinvert,
                                          &n_gradient_samples,
                                          &gradient_samples);
-
-      g_free (gradient_name);
     }
 
   redstretch   = wvals.redstretch * 127.5;

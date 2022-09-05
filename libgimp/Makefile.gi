@@ -193,7 +193,6 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimpproceduredialog.h	\
 	../libgimp/gimpprocview.h		\
 	../libgimp/gimpprogressbar.h		\
-	../libgimp/gimppropchooser.h		\
 	../libgimp/gimppropchooserfactory.h	\
 	../libgimp/gimpresourceselectbutton.h	\
 	../libgimp/gimpsaveproceduredialog.h	\
@@ -215,7 +214,6 @@ libgimpui_introspectable = \
 	../libgimp/gimpprocbrowserdialog.c	\
 	../libgimp/gimpproceduredialog.c	\
 	../libgimp/gimpprocview.c		\
-	../libgimp/gimppropchooser.c		\
 	../libgimp/gimppropchooserfactory.c	\
 	../libgimp/gimpsaveproceduredialog.c	\
 	../libgimp/gimpprogressbar.c		\

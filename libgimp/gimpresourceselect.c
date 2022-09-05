@@ -129,9 +129,8 @@ static gboolean         gimp_temp_resource_idle (GimpResourceAdaption *adaption)
  * libgimp simply ignores the extra args (adapts the signature.)
  */
 static void
-create_callback_PDB_procedure_params (
-  GimpProcedure *procedure,
-  GType          resource_type)
+create_callback_PDB_procedure_params (GimpProcedure *procedure,
+                                      GType          resource_type)
 {
   /* Order of args is important. */
 
@@ -263,11 +262,10 @@ create_callback_PDB_procedure_params (
  * Call a PDB procedure that communicates with core to create remote dialog.
  */
 static gboolean
-popup_remote_chooser (
-  const gchar   *title,
-  GimpResource  *resource,
-  gchar         *temp_PDB_callback_name,
-  GType          resource_type)
+popup_remote_chooser (const gchar   *title,
+                      GimpResource  *resource,
+                      gchar         *temp_PDB_callback_name,
+                      GType          resource_type)
 {
   gboolean result = FALSE;
   gchar   *resource_name;
@@ -306,9 +304,8 @@ popup_remote_chooser (
 
 /*Does nothing, quietly, when the remote dialog is not open. */
 static void
-close_remote_chooser (
-  gchar *temp_PDB_callback_name,
-  GType  resource_type)
+close_remote_chooser (gchar *temp_PDB_callback_name,
+                      GType  resource_type)
 {
   if (g_type_is_a (resource_type, GIMP_TYPE_FONT))
     {
@@ -393,13 +390,12 @@ index_of_is_closing_arg (GType  resource_type)
 
 
 const gchar *
-gimp_resource_select_new (
-  const gchar                 *title,
-  GimpResource                *resource,
-  GType                        resource_type,
-  GimpResourceChoosedCallback  callback,
-  gpointer                     owner_data,
-  GDestroyNotify               data_destroy)
+  gimp_resource_select_new (const gchar                 *title,
+                            GimpResource                *resource,
+                            GType                        resource_type,
+                            GimpResourceChoosedCallback  callback,
+                            gpointer                     owner_data,
+                            GDestroyNotify               data_destroy)
 {
   GimpPlugIn    *plug_in = gimp_get_plug_in ();
   GimpProcedure *procedure;
@@ -478,10 +474,9 @@ gimp_resource_select_destroy (const gchar *temp_PDB_callback_name)
  * so pdb/groups/<foo>_select.pdb, <foo>_set_popup must have type string.
  */
 void
-gimp_resource_select_set (
-  const gchar  *temp_pdb_callback,
-  GimpResource *resource,
-  GType         resource_type)
+gimp_resource_select_set (const gchar  *temp_pdb_callback,
+                          GimpResource *resource,
+                          GType         resource_type)
 {
   gchar * resource_name;
 
@@ -556,10 +551,9 @@ gimp_resource_data_free (GimpResourceAdaption *adaption)
  * Called when user chooses a resource in remote dialog.
  */
 static GimpValueArray *
-gimp_temp_resource_run (
-  GimpProcedure        *procedure,
-  const GimpValueArray *args,
-  gpointer              run_data) /* is-a adaption */
+gimp_temp_resource_run (GimpProcedure        *procedure,
+                        const GimpValueArray *args,
+                        gpointer              run_data) /* is-a adaption */
 {
   GimpResourceAdaption *adaption = run_data;
   const gchar          *resource_name;
@@ -585,8 +579,7 @@ gimp_temp_resource_run (
    * but idle_id is not used by the idle func.
    */
   if (! adaption->idle_id)
-    adaption->idle_id = g_idle_add ((GSourceFunc) gimp_temp_resource_idle,
-                                adaption);
+    adaption->idle_id = g_idle_add ((GSourceFunc) gimp_temp_resource_idle, adaption);
 
   return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, NULL);
 }

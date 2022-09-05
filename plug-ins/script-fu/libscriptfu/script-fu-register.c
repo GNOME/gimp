@@ -332,6 +332,10 @@ script_fu_script_create_formal_args (scheme   *sc,
                 if (!sc->vptr->is_list (sc, a))
                   return foreign_error (sc, "script-fu-register: brush defaults must be a list", 0);
 
+                #ifdef OLD
+                temporarily, still a list, but use only the name
+                future: not a list, only a name
+
                 brush_list = sc->vptr->pair_car (a);
                 arg->default_value.sfa_brush.name =
                   g_strdup (sc->vptr->string_value (sc->vptr->pair_car (brush_list)));
@@ -347,6 +351,11 @@ script_fu_script_create_formal_args (scheme   *sc,
                 brush_list = sc->vptr->pair_cdr (brush_list);
                 arg->default_value.sfa_brush.paint_mode =
                   sc->vptr->ivalue (sc->vptr->pair_car (brush_list));
+                #else
+                brush_list = sc->vptr->pair_car (a);
+                arg->default_value.sfa_brush =
+                  g_strdup (sc->vptr->string_value (sc->vptr->pair_car (brush_list)));
+                #endif
               }
               break;
 

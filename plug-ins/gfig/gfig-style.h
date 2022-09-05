@@ -30,7 +30,11 @@
 struct _Style
 {
   gchar     *name;
-  GimpBrush *brush;
+
+  GimpBrush    *brush;
+  GimpPattern  *pattern;
+  GimpGradient *gradient;
+
   gint       brush_width;
   gint       brush_height;
   gint       brush_spacing;
@@ -40,8 +44,7 @@ struct _Style
   gdouble    airbrushpressure;
   FillType   fill_type;
   gdouble    fill_opacity;
-  gchar     *pattern;
-  gchar     *gradient;
+
   PaintType  paint_type;
   GimpRGB    foreground;
   GimpRGB    background;
@@ -75,32 +78,15 @@ void     set_background_callback           (GimpColorButton      *button,
 void     set_paint_type_callback           (GtkToggleButton      *toggle,
                                             gpointer              data);
 
-void     gfig_brush_changed_callback       (GimpBrushSelectButton *button,
-                                            const gchar          *brush_name,
-                                            gdouble               opacity,
-                                            gint                  spacing,
-                                            GimpLayerMode         paint_mode,
-                                            gint                  width,
-                                            gint                  height,
-                                            const guchar         *mask_data,
-                                            gboolean              dialog_closing,
-                                            gpointer              user_data);
-
-void     gfig_pattern_changed_callback     (GimpPatternSelectButton *button,
-                                            const gchar          *pattern_name,
-                                            gint                  width,
-                                            gint                  height,
-                                            gint                  bpp,
-                                            const guchar         *mask_data,
-                                            gboolean              dialog_closing,
-                                            gpointer              user_data);
-
-void     gfig_gradient_changed_callback    (GimpGradientSelectButton *button,
-                                            const gchar          *gradient_name,
-                                            gint                  width,
-                                            const gdouble        *grad_data,
-                                            gboolean              dialog_closing,
-                                            gpointer              user_data);
+void     gfig_brush_changed_callback       (gpointer              user_data,
+                                            GimpBrush            *brush,
+                                            gboolean              dialog_closing);
+void     gfig_pattern_changed_callback     (gpointer              user_data,
+                                            GimpPattern          *pattern,
+                                            gboolean              dialog_closing);
+void     gfig_gradient_changed_callback    (gpointer              user_data,
+                                            GimpGradient         *gradient,
+                                            gboolean              dialog_closing);
 
 void     gfig_rgba_copy                    (GimpRGB              *color1,
                                             GimpRGB              *color2);
@@ -118,8 +104,7 @@ void     gfig_style_set_context_from_style (Style                *style);
 
 void     gfig_style_set_style_from_context (Style                *style);
 
-void     mygimp_brush_info                 (gint                 *width,
-                                            gint                 *height);
+void     set_context_bdesc                 (GimpBrush            *brush);
 
 Style   *gfig_context_get_current_style    (void);
 

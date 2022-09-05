@@ -492,31 +492,29 @@ shapes = [
 
 
 def get_gradient_samples(num_samples):
-    gradient_name = Gimp.context_get_gradient()
+    gradient = Gimp.context_get_gradient()
     reverse_mode = Gimp.context_get_gradient_reverse()
     repeat_mode = Gimp.context_get_gradient_repeat_mode()
 
     if repeat_mode == Gimp.RepeatMode.TRIANGULAR:
         # Get two uniform samples, which are reversed from each other, and connect them.
 
-        samples = num_samples/2 + 1
-        success, color_samples = Gimp.gradient_get_uniform_samples(gradient_name,
-                                 samples, reverse_mode)
+        sample_count = num_samples/2 + 1
+        success, color_samples  = gradient.get_uniform_samples(sample_count, reverse_mode)
 
         del color_samples[-4:]   # Delete last color because it will appear in the next sample
 
         # If num_samples is odd, lets get an extra sample this time.
         if num_samples % 2 == 1:
-            samples += 1
+            sample_count += 1
 
-        success, color_samples2 = Gimp.gradient_get_uniform_samples(gradient_name,
-             samples, 1 - reverse_mode)
+        success, color_samples2 = gradient.get_uniform_samples(sample_count, 1 - reverse_mode)
 
         del color_samples2[-4:]  # Delete last color because it will appear in the very first sample
 
         color_samples = tuple(color_samples)
     else:
-        success, color_samples = Gimp.gradient_get_uniform_samples(gradient_name, num_samples, reverse_mode)
+        success, color_samples = gradient.get_uniform_samples(num_samples, reverse_mode)
 
     return color_samples
 
@@ -592,7 +590,15 @@ class PreviewTool:
         Gimp.context_set_defaults()
         Gimp.context_set_foreground(foreground)
         Gimp.context_enable_dynamics(False)
-        Gimp.context_set_brush('1. Pixel')
+
+        # Create a brush proxy. Set the 'id' property, not a Python attribute.
+        # The id must match an installed real brush.
+        # FUTURE: add method of brush, say get_named()
+        brush = Gimp.Brush()
+        brush.set_property('id', '1. Pixel')
+        assert brush.is_valid()
+
+        Gimp.context_set_brush(brush)
         Gimp.context_set_brush_size(1.0)
         Gimp.context_set_brush_spacing(3.0)
         Gimp.pencil(layer, strokes)

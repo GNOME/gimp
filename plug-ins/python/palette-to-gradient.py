@@ -26,25 +26,29 @@ def _(message): return GLib.dgettext(None, message)
 
 
 def make_gradient(palette, num_segments, num_colors):
-    gradient = Gimp.gradient_new(palette)
 
-    if (num_segments > 1):
-        Gimp.gradient_segment_range_split_uniform(gradient, 0, -1,
-                                                  num_segments)
+    # name the gradient same as the source palette
+    # For now, the name of a resource is the same as the ID
+    palette_name = palette.get_id()
+    gradient = Gimp.Gradient.new(palette_name)
+    # assert gradient is valid but is has only one segment
+    assert gradient.get_number_of_segments() == 1
+
+    # split one segment into desired count
+    # index is zero-based
+    gradient.segment_range_split_uniform( 0, 0, num_segments)
 
     for color_number in range(0,num_segments):
         if color_number == num_colors - 1:
             color_number_next = 0
         else:
             color_number_next = color_number + 1
-        _, color_left = Gimp.palette_entry_get_color(palette, color_number)
-        _, color_right = Gimp.palette_entry_get_color(palette, color_number_next)
-        Gimp.gradient_segment_set_left_color(gradient,
-                                             color_number, color_left,
-                                             100.0)
-        Gimp.gradient_segment_set_right_color(gradient,
-                                              color_number, color_right,
-                                              100.0)
+        _, color_left = palette.entry_get_color(color_number)
+        _, color_right = palette.entry_get_color(color_number_next)
+        gradient.segment_set_left_color( color_number, color_left, 100.0)
+        gradient.segment_set_right_color(color_number, color_right, 100.0)
+
+    # Side effects on the context. Probably not what most would expect.
     Gimp.context_set_gradient(gradient)
     return gradient
 
@@ -53,13 +57,11 @@ def run(procedure, args, data):
     palette = None
     if args.length() > 1:
         palette = args.index(1)
-    if palette == '' or palette is None:
+    if palette is None:
         palette = Gimp.context_get_palette()
-    (exists, num_colors) = Gimp.palette_get_info(palette)
-    if not exists:
-        error = 'Unknown palette: {}'.format(palette)
-        return procedure.new_return_values(Gimp.PDBStatusType.CALLING_ERROR,
-                                           GLib.Error(error))
+
+    assert palette.is_valid()
+    num_colors = palette.get_color_count()
 
     if procedure.get_name() == 'python-fu-palette-to-gradient':
         num_segments = num_colors - 1
@@ -78,7 +80,10 @@ def run(procedure, args, data):
     # XXX: I don't try to get the GValue with retval.index(1) because it
     # actually return a string (cf. pygobject#353). Just create a new
     # GValue and replace the default one with this one.
-    value = GObject.Value(GObject.TYPE_STRING, gradient)
+    # This comment dates from when resources are strings:
+    # value = GObject.Value(GObject.TYPE_STRING, gradient)
+
+    value = GObject.Value(Gimp.Gradient, gradient)
     retval.remove(1)
     retval.insert(1, value)
 
@@ -98,11 +103,11 @@ class PaletteToGradient (Gimp.PlugIn):
         self.runmode = runmode
 
     ## Parameter: palette ##
-    @GObject.Property(type=str,
+    @GObject.Property(type=Gimp.Palette,
                       default=None,
                       nick= _("Palette"))
     def palette(self):
-        '''Palette name or empty string for the currently selected palette'''
+        '''Palette or None for the currently selected palette'''
         return self.palette
 
     @palette.setter
@@ -110,10 +115,10 @@ class PaletteToGradient (Gimp.PlugIn):
         self.palette = palette
 
     ## Properties: return values ##
-    @GObject.Property(type=str,
+    @GObject.Property(type=Gimp.Gradient,
                       default="",
-                      nick=_("Name of the newly created gradient"),
-                      blurb=_("Name of the newly created gradient"))
+                      nick=_("The newly created gradient"),
+                      blurb=_("The newly created gradient"))
     def new_gradient(self):
         """Read-write integer property."""
         return self.new_gradient

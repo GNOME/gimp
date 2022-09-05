@@ -40,14 +40,6 @@ typedef struct
 
 typedef struct
 {
-  gchar         *name;
-  gdouble        opacity;
-  gint           spacing;
-  GimpLayerMode  paint_mode;
-} SFBrush;
-
-typedef struct
-{
   GSList *list;
   gint    history;
 } SFOption;
@@ -75,7 +67,7 @@ typedef union
   gchar         *sfa_gradient;
   gchar         *sfa_palette;
   gchar         *sfa_pattern;
-  SFBrush        sfa_brush;
+  gchar         *sfa_brush;
   SFOption       sfa_option;
   SFEnum         sfa_enum;
 } SFArgValue;
@@ -106,7 +98,7 @@ typedef struct
 
 typedef struct
 {
-  SFScript *script;   // script which defined this menu path and label
+  SFScript *script;   /* script which defined this menu path and label */
   gchar    *menu_path;
 } SFMenu;
 

@@ -416,16 +416,16 @@ map (GeglBuffer   *buffer,
 static gdouble *
 get_samples_gradient (GimpDrawable *drawable)
 {
-  gchar   *gradient_name;
+  GimpGradient *gradient;
+
   gint     n_d_samples;
   gdouble *d_samples = NULL;
 
-  gradient_name = gimp_context_get_gradient ();
+  gradient = gimp_context_get_gradient ();
 
   /* FIXME: "reverse" hardcoded to FALSE. */
-  gimp_gradient_get_uniform_samples (gradient_name, NSAMPLES, FALSE,
+  gimp_gradient_get_uniform_samples (gradient, NSAMPLES, FALSE,
                                      &n_d_samples, &d_samples);
-  g_free (gradient_name);
 
   if (! gimp_drawable_is_rgb (drawable))
     {

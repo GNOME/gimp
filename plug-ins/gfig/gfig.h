@@ -115,7 +115,7 @@ struct _GFigObj
 /* this is temp, should be able to get rid of */
 typedef struct BrushDesc
 {
-  gchar         *name;
+  GimpBrush     *brush;
   gdouble        opacity;
   gint           spacing;
   GimpLayerMode  paint_mode;

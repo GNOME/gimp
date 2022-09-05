@@ -37,10 +37,11 @@
 #include "gfig-style.h"
 
 
-static void gfig_read_parameter_string   (gchar       **text,
+static void gfig_read_resource           (gchar       **text,
                                           gint          nitems,
-                                          const gchar  *name,
-                                          gchar       **style_entry);
+                                          const gchar  *tag,
+                                          GimpResource **style_entry,
+                                          GType         resource_type);
 
 static void gfig_read_parameter_int      (gchar       **text,
                                           gint          nitems,
@@ -57,17 +58,20 @@ static void gfig_read_parameter_gimp_rgb (gchar        **text,
                                           const gchar   *name,
                                           GimpRGB       *style_entry);
 
+/* From a style string, read a resource name,
+ * create a resource object, and put it in
+ * given entry of a style.
+ */
 static void
-gfig_read_parameter_string (gchar       **text,
-                            gint          nitems,
-                            const gchar  *name,
-                            gchar        **style_entry)
+gfig_read_resource (gchar        **text,
+                    gint           nitems,
+                    const gchar   *tag,
+                    GimpResource **style_entry,
+                    GType          resource_type)
 {
   gint  n = 0;
   gchar *ptr;
   gchar *tmpstr;
-
-  *style_entry = NULL;
 
   while (n < nitems)
     {
@@ -76,9 +80,21 @@ gfig_read_parameter_string (gchar       **text,
         {
           tmpstr = g_strndup (text[n], ptr - text[n]);
           ptr++;
-          if (!strcmp (tmpstr, name))
+          if (!strcmp (tmpstr, tag))
             {
-              *style_entry = g_strdup (g_strchug (ptr));
+              /* Create a resource object, just a proxy for the thing in core. */
+              GimpResource *resource;
+              gchar *resource_id = g_strdup (g_strchug (ptr));
+
+              resource = g_object_new (resource_type, "id", resource_id, NULL);
+              /* We own the resource object, its refcount is one.
+               * The resource object owns its string ID.
+               */
+              *style_entry = resource;
+              /* We are not checking the ID is valid.
+               * The user might have uninstalled the resource.
+               */
+
               g_free (tmpstr);
               return;
             }
@@ -87,7 +103,9 @@ gfig_read_parameter_string (gchar       **text,
       ++n;
     }
 
-  g_message ("Parameter '%s' not found", name);
+  /* Fail */
+  *style_entry = NULL;
+  g_message ("Parameter '%s' not found", tag);
 }
 
 
@@ -254,14 +272,16 @@ gfig_load_style (Style *style,
       return TRUE;
     }
 
-  gfig_read_parameter_string (style_text, nitems, "BrushName",
-                              &style->brush);
+  gfig_read_resource (style_text, nitems, "BrushName",
+                      (GimpResource**) &style->brush, GIMP_TYPE_BRUSH);
 
   if (style->brush == NULL)
-    g_message ("Error loading style: got NULL for brush name.");
+    g_message ("Error loading style: missing brush.");
 
-  gfig_read_parameter_string (style_text, nitems, "Pattern", &style->pattern);
-  gfig_read_parameter_string (style_text, nitems, "Gradient", &style->gradient);
+  gfig_read_resource (style_text, nitems, "Pattern",
+                      (GimpResource**) &style->pattern, GIMP_TYPE_PATTERN);
+  gfig_read_resource (style_text, nitems, "Gradient",
+                      (GimpResource**) &style->gradient, GIMP_TYPE_GRADIENT);
 
   gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground",
                                 &style->foreground);
@@ -353,10 +373,12 @@ gfig_save_style (Style   *style,
   gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
 
   if (gfig_context->debug_styles)
-    g_printerr ("Saving style %s, brush name '%s'\n", style->name, style->brush);
+    g_printerr ("Saving style %s, brush name '%s'\n", style->name,
+                gimp_resource_get_id (GIMP_RESOURCE (style->brush)));
 
   g_string_append_printf (string, "<Style %s>\n", style->name);
-  g_string_append_printf (string, "BrushName:      %s\n",          style->brush);
+  g_string_append_printf (string, "BrushName:      %s\n",
+                          gimp_resource_get_id (GIMP_RESOURCE (style->brush)));
   if (!style->brush)
     g_message ("Error saving style %s: saving NULL for brush name", style->name);
 
@@ -367,9 +389,10 @@ gfig_save_style (Style   *style,
   g_string_append_printf (string, "FillOpacity:    %s\n",
                           g_ascii_dtostr (buffer, blen, style->fill_opacity));
 
-  g_string_append_printf (string, "Pattern:        %s\n",          style->pattern);
-
-  g_string_append_printf (string, "Gradient:       %s\n",          style->gradient);
+  g_string_append_printf (string, "Pattern:        %s\n",
+                          gimp_resource_get_id (GIMP_RESOURCE (style->pattern)));
+  g_string_append_printf (string, "Gradient:       %s\n",
+                          gimp_resource_get_id (GIMP_RESOURCE (style->gradient)));
 
   g_string_append_printf (string, "Foreground: %s %s %s %s\n",
                           g_ascii_dtostr (buffer_r, blen, style->foreground.r),
@@ -399,7 +422,11 @@ gfig_style_save_as_attributes (Style   *style,
 
   if (gfig_context->debug_styles)
     g_printerr ("Saving style %s as attributes\n", style->name);
-  g_string_append_printf (string, "BrushName=\"%s\" ",  style->brush);
+
+  /* Tags must match the ones written, see below in the code. */
+  g_string_append_printf (string, "BrushName=\"%s\" ",
+                          gimp_resource_get_id (GIMP_RESOURCE (style->brush)));
+  /* Why only brush and not pattern and gradient? */
 
   g_string_append_printf (string, "Foreground=\"%s %s %s %s\" ",
                           g_ascii_dtostr (buffer_r, blen, style->foreground.r),
@@ -494,19 +521,15 @@ set_paint_type_callback (GtkToggleButton *toggle,
 
 /*
  * gfig_brush_changed_callback() is the callback for the brush
- * selector widget.  It reads the brush name from the widget, and
- * applies this to the current style, as well as the gfig_context->bdesc
+ * selector widget.  It receives the brush from the widget, and
+ * sets the brush in the current style, as well as the gfig_context->bdesc
  * values.  It then produces a repaint (which will be suppressed if
  * gfig_context->enable_repaint is FALSE).
  */
 void
-gfig_brush_changed_callback (GimpBrushSelectButton *button,
-                             const GimpBrush       *brush,
-                             gint                   width,
-                             gint                   height,
-                             const guchar          *mask_data,
-                             gboolean               dialog_closing,
-                             gpointer               user_data)
+gfig_brush_changed_callback (gpointer               user_data,
+                             GimpBrush             *brush,
+                             gboolean               dialog_closing)
 {
   Style *current_style;
 
@@ -514,9 +537,8 @@ gfig_brush_changed_callback (GimpBrushSelectButton *button,
   current_style->brush = brush;
 
   /* this will soon be unneeded. How soon? */
-  gfig_context->bdesc.name = g_strdup (brush);
-  gfig_context->bdesc.width = width;
-  gfig_context->bdesc.height = height;
+  set_context_bdesc (brush);
+
   gimp_context_set_brush (brush);
   gimp_context_set_brush_default_size ();
 
@@ -524,35 +546,27 @@ gfig_brush_changed_callback (GimpBrushSelectButton *button,
 }
 
 void
-gfig_pattern_changed_callback (GimpPatternSelectButton *button,
-                               const gchar             *pattern_name,
-                               gint                     width,
-                               gint                     height,
-                               gint                     bpp,
-                               const guchar            *mask_data,
-                               gboolean                 dialog_closing,
-                               gpointer                 user_data)
+gfig_pattern_changed_callback (gpointer                 user_data,
+                               GimpPattern             *pattern,
+                               gboolean                 dialog_closing)
 {
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
-  current_style->pattern = g_strdup (pattern_name);
+  current_style->pattern = pattern;
 
   gfig_paint_callback ();
 }
 
 void
-gfig_gradient_changed_callback (GimpGradientSelectButton *button,
-                                const gchar              *gradient_name,
-                                gint                      width,
-                                const gdouble            *grad_data,
-                                gboolean                  dialog_closing,
-                                gpointer                  user_data)
+gfig_gradient_changed_callback (gpointer                  user_data,
+                                GimpGradient             *gradient,
+                                gboolean                  dialog_closing)
 {
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
-  current_style->gradient = g_strdup (gradient_name);
+  current_style->gradient = gradient;
 
   gfig_paint_callback ();
 }
@@ -586,9 +600,11 @@ gfig_style_copy (Style       *style1,
   if (!style0->brush)
     g_message ("Error copying style %s: brush name is NULL.", style0->name);
 
-  style1->brush    = g_strdup (style0->brush);
-  style1->gradient      = g_strdup (style0->gradient);
-  style1->pattern       = g_strdup (style0->pattern);
+  /* ownership issues ? */
+  style1->brush         = style0->brush;
+  style1->gradient      = style0->gradient;
+  style1->pattern       = style0->pattern;
+
   style1->fill_type    = style0->fill_type;
   style1->fill_opacity = style0->fill_opacity;
   style1->paint_type   = style0->paint_type;
@@ -611,10 +627,12 @@ gfig_style_apply (Style *style)
 
   if (! gimp_context_set_brush (style->brush))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",
-               style->brush, style->name);
+               gimp_resource_get_id (GIMP_RESOURCE (style->brush)),
+               style->name);
 
   gimp_context_set_brush_default_size ();
 
+  g_assert (style->pattern != NULL);
   gimp_context_set_pattern (style->pattern);
 
   gimp_context_set_gradient (style->gradient);
@@ -645,20 +663,19 @@ gfig_read_gimp_style (Style       *style,
   gimp_context_get_foreground (&style->foreground);
   gimp_context_get_background (&style->background);
 
-  style->brush = gimp_context_get_brush ();
-  gimp_brush_get_info (style->brush,
-                       &style->brush_width, &style->brush_height,
-                       &dummy, &dummy);
-  style->brush_spacing = gimp_brush_get_spacing (style->brush);
-
+  style->brush    = gimp_context_get_brush ();
   style->gradient = gimp_context_get_gradient ();
   style->pattern  = gimp_context_get_pattern ();
 
   style->fill_opacity = 100.;
 
-  gfig_context->bdesc.name   = style->brush;
-  gfig_context->bdesc.width  = style->brush_width;
-  gfig_context->bdesc.height = style->brush_height;
+  /* Cache attributes of brush. */
+  gimp_brush_get_info (style->brush,
+                       &style->brush_width, &style->brush_height,
+                       &dummy, &dummy);
+  style->brush_spacing = gimp_brush_get_spacing (style->brush);
+
+  set_context_bdesc (style->brush);
 }
 
 /*
@@ -697,7 +714,8 @@ gfig_style_set_context_from_style (Style *style)
   gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
                                             style->gradient);
 
-  gfig_context->bdesc.name = style->brush;
+  set_context_bdesc (style->brush);
+
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");
 
@@ -734,13 +752,16 @@ gfig_style_set_style_from_context (Style *style)
                                &color);
   gfig_rgba_copy (&style->background, &color);
 
+  /* FIXME: issues of ownership.
+   * A resource is a pointer to an object.
+   * We own each resource object returned by gimp_context_get_<resource> and should unref it.
+   * Here this is possibly overwriting a reference that should be unreffed.
+   * Also, this is copying a reference, so we should ref the object.
+   *
+   * For now, its just a plugin, we don't care much about leaks.
+   */
   style->brush = current_style->brush;
-
-  if (!style->pattern || strcmp (style->pattern, current_style->pattern))
-    {
-      style->pattern = g_strdup (current_style->pattern); /* why strduping? */
-    }
-
+  style->pattern = current_style->pattern;
   style->gradient = current_style->gradient;
 
   if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo), &value))
@@ -752,25 +773,29 @@ gfig_style_set_style_from_context (Style *style)
   style->paint_type = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle));
 }
 
+/* Set bdesc from brush.  Side effects on gfig_context->bdesc */
 void
-mygimp_brush_info (gint *width,
-                   gint *height)
+set_context_bdesc (GimpBrush *brush)
 {
-  gchar *name = gimp_context_get_brush ();
-  gint   dummy;
+  gint width;
+  gint height;
+  gint dummy;
 
-  if (name && gimp_brush_get_info (name, width, height, &dummy, &dummy))
+  g_return_if_fail (brush != NULL);
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+
+  if (brush && gimp_brush_get_info (brush, &width, &height, &dummy, &dummy))
     {
-      *width  = MAX (*width, 32);
-      *height = MAX (*height, 32);
+      gfig_context->bdesc.brush  = brush;
+      gfig_context->bdesc.width  = MAX (width, 32);
+      gfig_context->bdesc.height = MAX (height, 32);
     }
   else
     {
       g_message ("Failed to get brush info");
-      *width = *height = 48;
+      gfig_context->bdesc.width  = 48;
+      gfig_context->bdesc.height = 48;
     }
-
-  g_free (name);
 }
 
 Style *

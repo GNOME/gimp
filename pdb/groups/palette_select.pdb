@@ -28,7 +28,7 @@ sub palettes_popup {
       { name => 'popup_title', type => 'string',
         desc => 'Title of the palette selection dialog' },
       { name => 'initial_palette_name', type => 'string', null_ok => 1,
-        desc => 'The palette to set as the initial choice.' }
+        desc => 'The name of the palette to set as the initial choice.' }
     );
 
     %invoke = (

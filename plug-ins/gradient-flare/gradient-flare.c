@@ -5062,7 +5062,12 @@ gradient_get_values_real_external (const gchar *gradient_name,
   gint     i;
   gint     j;
 
-  gimp_gradient_get_uniform_samples (gradient_name, nvalues, reverse,
+  GimpGradient *gradient;
+
+  /* New proxy for gradient. */
+  gradient = g_object_new (GIMP_TYPE_GRADIENT, "id", gradient_name, NULL);
+
+  gimp_gradient_get_uniform_samples (gradient, nvalues, reverse,
                                      &n_tmp_values, &tmp_values);
 
   for (i = 0; i < nvalues; i++)

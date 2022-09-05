@@ -98,13 +98,13 @@ def gradient_css_save(procedure, args, data):
 
     stops = []
     wk_stops = []
-    n_segments = Gimp.gradient_get_number_of_segments(gradient)
+    n_segments = gradient.get_number_of_segments()
     last_stop = None
     for index in range(n_segments):
-        success, lcolor, lopacity = Gimp.gradient_segment_get_left_color(gradient, index)
-        success, rcolor, ropacity = Gimp.gradient_segment_get_right_color(gradient, index)
-        success, lpos = Gimp.gradient_segment_get_left_pos(gradient, index)
-        success, rpos = Gimp.gradient_segment_get_right_pos(gradient, index)
+        success, lcolor, lopacity = gradient.segment_get_left_color(index)
+        success, rcolor, ropacity = gradient.segment_get_right_color(index)
+        success, lpos = gradient.segment_get_left_pos(index)
+        success, rpos = gradient.segment_get_right_pos(index)
 
         lstop = color_to_html(lcolor) + " %d%%" % int(100 * lpos)
         wk_lstop = "color-stop(%.03f, %s)" %(lpos, color_to_html(lcolor))
@@ -142,8 +142,8 @@ class GradientsSaveAsCSS (Gimp.PlugIn):
                      _("The run mode"),
                      Gimp.RunMode.NONINTERACTIVE,
                      GObject.ParamFlags.READWRITE),
-        "gradient": (str,
-                     _("Gradient to use"), "", "",
+        "gradient": (Gimp.Gradient,
+                     _("Gradient to use"), "",
                      GObject.ParamFlags.READWRITE),
         "file": (Gio.File,
                  _("File"), None,

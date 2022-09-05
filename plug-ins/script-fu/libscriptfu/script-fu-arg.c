@@ -146,8 +146,8 @@ script_fu_arg_free (SFArg *arg)
       break;
 
     case SF_BRUSH:
-      g_free (arg->default_value.sfa_brush.name);
-      g_free (arg->value.sfa_brush.name);
+      g_free (arg->default_value.sfa_brush);
+      g_free (arg->value.sfa_brush);
       break;
 
     case SF_OPTION:
@@ -237,11 +237,8 @@ script_fu_arg_reset (SFArg *arg, gboolean should_reset_ids)
       break;
 
     case SF_BRUSH:
-      g_free (value->sfa_brush.name);
-      value->sfa_brush.name = g_strdup (default_value->sfa_brush.name);
-      value->sfa_brush.opacity    = default_value->sfa_brush.opacity;
-      value->sfa_brush.spacing    = default_value->sfa_brush.spacing;
-      value->sfa_brush.paint_mode = default_value->sfa_brush.paint_mode;
+      g_free (value->sfa_brush);
+      value->sfa_brush = g_strdup (default_value->sfa_brush);
       break;
 
     case SF_OPTION:
@@ -355,17 +352,6 @@ script_fu_arg_get_param_spec (SFArg       *arg,
     case SF_VALUE:
     case SF_STRING:
     case SF_TEXT:
-
-    /* FUTURE special widgets.
-     * script-fu-interface does, but GimpProcedureDialog does not?
-     */
-    case SF_FONT:
-    case SF_PALETTE:
-    case SF_PATTERN:
-    case SF_GRADIENT:
-      /* These cases the same type: gchar *.
-       * Use arbitrary SFArg field of that type.
-       */
       pspec = g_param_spec_string (name,
                                    nick,
                                    arg->label,
@@ -373,9 +359,39 @@ script_fu_arg_get_param_spec (SFArg       *arg,
                                    G_PARAM_READWRITE);
       break;
 
+    /* Subclasses of GimpResource.  Special widgets. */
+    case SF_FONT:
+      pspec = gimp_param_spec_font (name,
+                                    nick,
+                                    arg->label,
+                                    FALSE,  /* none OK */
+                                    G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
+    case SF_PALETTE:
+      pspec = gimp_param_spec_palette (name,
+                                       nick,
+                                       arg->label,
+                                       FALSE,  /* none OK */
+                                       G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
+
+    case SF_PATTERN:
+      pspec = gimp_param_spec_pattern (name,
+                                       nick,
+                                       arg->label,
+                                       FALSE,  /* none OK */
+                                       G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
+
+    case SF_GRADIENT:
+      pspec = gimp_param_spec_gradient (name,
+                                        nick,
+                                        arg->label,
+                                        FALSE,  /* none OK */
+                                        G_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE);
+      break;
+
     case SF_BRUSH:
-      /* FIXME: SF-BRUSH will not have opacity, etc. instead gimp_brush_select will choose only brush. */
-      /* FIXME: font, etc. are resource types.  Brush is just the test for WIP. */
       pspec = gimp_param_spec_brush (name,
                                      nick,
                                      arg->label,
@@ -568,21 +584,28 @@ script_fu_arg_append_repr_from_gvalue (SFArg       *arg,
     case SF_PALETTE:
     case SF_PATTERN:
     case SF_GRADIENT:
-      g_string_append_printf (result_string, "\"%s\"", g_value_get_string (gvalue));
-      break;
-
     case SF_BRUSH:
       {
-        /* The GValue is a GObject of type GimpBrush having property "id" */
-        GimpBrush *brush;
-        gchar     *brush_name;
+        /* The GValue is a GObject of type inheriting GimpResource having property "id" */
+        GimpResource *resource;
+        gchar        *resource_name;
 
-        brush = g_value_get_object (gvalue);
-        g_object_get (brush, "id", &brush_name, NULL);
-        g_string_append_printf (result_string, "\"%s\"", brush_name);
+        /* !!! These only check whether gvalue CAN hold object type, not that it does. */
+        g_assert (G_VALUE_HOLDS_OBJECT (gvalue));
+        g_assert (GIMP_VALUE_HOLDS_RESOURCE (gvalue));
+        g_debug ("gvalue type is: %s", G_VALUE_TYPE_NAME(gvalue));
+        /* Check the value's type is suitable for a gvalue. */
+        g_assert (G_TYPE_IS_VALUE (G_VALUE_TYPE (gvalue)));
+
+        /* Check that gvalue actually holds type, AND IS NOT NULL. */
+        g_assert (G_VALUE_HOLDS (gvalue, GIMP_TYPE_RESOURCE ));
+
+        resource = g_value_get_object (gvalue);
+
+        g_object_get (resource, "id", &resource_name, NULL);
+        g_string_append_printf (result_string, "\"%s\"", resource_name);
       }
       break;
-
 
     case SF_OPTION:
       append_int_repr_from_gvalue (result_string, gvalue);
@@ -699,17 +722,7 @@ script_fu_arg_append_repr_from_self (SFArg       *arg,
       break;
 
     case SF_BRUSH:
-      {
-        gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
-
-        g_ascii_dtostr (buffer, sizeof (buffer),
-                        arg_value->sfa_brush.opacity);
-        g_string_append_printf (result_string, "'(\"%s\" %s %d %d)",
-                                arg_value->sfa_brush.name,
-                                buffer,
-                                arg_value->sfa_brush.spacing,
-                                arg_value->sfa_brush.paint_mode);
-      }
+      g_string_append_printf (result_string, "\"%s\"", arg_value->sfa_brush);
       break;
 
     case SF_OPTION:

@@ -318,15 +318,15 @@ drawable_to_cmap (control_point *cp)
     }
   else if (GRADIENT_DRAWABLE == config.cmap_drawable_id)
     {
-      gchar   *name = gimp_context_get_gradient ();
+      GimpGradient *gradient = gimp_context_get_gradient ();
+
       gint     num;
       gdouble *g;
 
       /* FIXME: "reverse" hardcoded to FALSE. */
-      gimp_gradient_get_uniform_samples (name, 256, FALSE,
+      gimp_gradient_get_uniform_samples (gradient, 256, FALSE,
                                          &num, &g);
 
-      g_free (name);
 
       for (i = 0; i < 256; i++)
         for (j = 0; j < 3; j++)

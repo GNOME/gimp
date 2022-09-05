@@ -24,7 +24,6 @@
 
 #include "gimpui.h"
 
-
 /* PropChooser
  * A GtkWidget, more specifically a GtkButtonWidget.
  * Pops up a chooser widget.
@@ -34,28 +33,19 @@
  * For now, only for Resource choosers,
  * which are named GimpResourceSelectButton ("select" means "choose")
  *
- * Call a factory to create PropWidgets, passing a creator function of
- * a kind of wrapped widget.
+ * A factory creates the widgets.
+ */
+
+/* Not public i.e. not annotated.
  *
- * Stack of objects:
- * PropWidget<Resource> (this file)
- * <Resource>SelectButton button pops up a
- * <Resource>Select dialog lets user choose <resource>
- * libgimp wire protocol to core
- * PDBDialog (app/widgets/gimppdbdialog.c)
- */
+ * Used only by GimpProcedureDialog.
+ * These could be in the public API,
+ * if we want plugins to create their own widget that updates the plugin's own property.
+ *
+ * The following is in the style of GObject annotations, but is not public.
 
-/* Only brush is annotated.
- * Usually these are created by GimpProcedureDialog.
- * FIXME: It is not clear that these need to be public API,
- * unless a plugin creates its own dialog.
- */
-
-/**
- * gimp_prop_chooser_brush_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of property controlled by button.
- * @chooser_title: Title for the popup chooser dialog.
  *
  * Creates a #GimpBrushSelectButton that displays and sets the property.
  *
@@ -67,13 +57,9 @@
  *
  * The button is labeled with the @property_name's nick.
  *
- * When pushed, the button pops up a dialog that lets the user choose a brush.
- * The dialog will have the given title.
- *
- * Returns: (transfer full): The newly created #GimpBrushSelectButton widget.
- *
- * Since: 3.0
+ * When pushed, the button shows a dialog that lets the user choose a brush.
  */
+
 GtkWidget *
 gimp_prop_chooser_brush_new (GObject *config, const gchar *property_name, const gchar *title)
 {
