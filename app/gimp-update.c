@@ -47,37 +47,36 @@
 #include "gimp-update.h"
 #include "gimp-version.h"
 
-static gboolean      gimp_update_known           (GimpCoreConfig   *config,
-                                                  const gchar      *last_version,
-                                                  gint64            release_timestamp,
-                                                  gint              build_revision,
-                                                  const gchar      *comment);
-static gboolean      gimp_version_break          (const gchar      *v,
-                                                  gint             *major,
-                                                  gint             *minor,
-                                                  gint             *micro);
-static void          gimp_check_updates_process  (const gchar      *source,
-                                                  gchar            *file_contents,
-                                                  gsize             file_length,
-                                                  GimpCoreConfig   *config);
+static gboolean      gimp_update_known               (GimpCoreConfig   *config,
+                                                      const gchar      *last_version,
+                                                      gint64            release_timestamp,
+                                                      gint              build_revision,
+                                                      const gchar      *comment);
+static void          gimp_check_updates_process      (const gchar      *source,
+                                                      gchar            *file_contents,
+                                                      gsize             file_length,
+                                                      GimpCoreConfig   *config);
 #ifndef PLATFORM_OSX
-static void          gimp_check_updates_callback (GObject          *source,
-                                                  GAsyncResult     *result,
-                                                  gpointer          user_data);
+static void          gimp_check_updates_callback     (GObject          *source,
+                                                      GAsyncResult     *result,
+                                                      gpointer          user_data);
 #endif /* PLATFORM_OSX */
-static void          gimp_update_about_dialog    (GimpCoreConfig   *config,
-                                                  const GParamSpec *pspec,
-                                                  gpointer          user_data);
+static void          gimp_update_about_dialog        (GimpCoreConfig   *config,
+                                                      const GParamSpec *pspec,
+                                                      gpointer          user_data);
 
-static gboolean      gimp_version_break          (const gchar      *v,
-                                                  gint             *major,
-                                                  gint             *minor,
-                                                  gint             *micro);
-static gint          gimp_version_cmp            (const gchar      *v1,
-                                                  const gchar      *v2);
+static gboolean      gimp_version_break              (const gchar      *v,
+                                                      gint             *major,
+                                                      gint             *minor,
+                                                      gint             *micro);
+static gint          gimp_version_cmp                (const gchar      *v1,
+                                                      const gchar      *v2);
 
-static const gchar * gimp_get_version_url        (void);
+static const gchar * gimp_get_version_url            (void);
 
+#ifdef PLATFORM_OSX
+static gint          gimp_check_updates_process_idle (gpointer          data);
+#endif
 
 /* Private Functions */
 
@@ -550,6 +549,31 @@ gimp_get_version_url (void)
 #endif
 }
 
+#ifdef PLATFORM_OSX
+typedef struct _GimpCheckUpdatesData
+{
+  const gchar    *gimp_versions;
+  gchar          *json_result;
+  gsize           json_size;
+  GimpCoreConfig *config;
+} GimpCheckUpdatesData;
+
+static int
+gimp_check_updates_process_idle (gpointer data)
+{
+  GimpCheckUpdatesData *check_updates_data = (GimpCheckUpdatesData *) data;
+
+  gimp_check_updates_process (check_updates_data->gimp_versions,
+                              check_updates_data->json_result,
+                              check_updates_data->json_size,
+                              check_updates_data->config);
+
+  g_free (check_updates_data);
+
+  return FALSE; /* remove idle */
+}
+#endif /* PLATFORM_OSX */
+
 /* Public Functions */
 
 /*
@@ -643,8 +667,9 @@ gimp_update_check (GimpCoreConfig *config)
   NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
   /* completionHandler is called on a background thread */
   [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-    NSString *reply;
-    gchar    *json_result;
+    NSString             *reply;
+    gchar                *json_result;
+    GimpCheckUpdatesData *update_results;
 
     if (error)
       {
@@ -671,10 +696,14 @@ gimp_update_check (GimpCoreConfig *config)
     reply       = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     json_result = g_strdup ([reply UTF8String]); /* will be freed by gimp_check_updates_process */
 
-    gimp_check_updates_process (gimp_versions,
-                                json_result,
-                                [reply lengthOfBytesUsingEncoding:NSUTF8StringEncoding],
-                                config);
+    update_results = g_new (GimpCheckUpdatesData, 1);
+
+    update_results->gimp_versions = gimp_versions;
+    update_results->json_result   = json_result;
+    update_results->json_size     = [reply lengthOfBytesUsingEncoding:NSUTF8StringEncoding];
+    update_results->config        = config;
+
+    g_idle_add ((GSourceFunc) gimp_check_updates_process_idle, (gpointer) update_results);
   }] resume];
 #else
   GFile *gimp_versions;
