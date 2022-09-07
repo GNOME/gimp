@@ -73,7 +73,7 @@ build-image:
     - echo "FROM debian:testing" > Dockerfile
     - echo "RUN apt-get update" >> Dockerfile
     - echo "RUN apt-get install -y --no-install-recommends \\" >> Dockerfile
-    - echo "appstream at-spi2-core automake autopoint build-essential desktop-file-utils ffmpeg gettext ghostscript git glib-networking gobject-introspection graphviz graphviz-dev hicolor-icon-theme iso-codes libappstream-glib-dev libbz2-dev libdbus-glib-1-dev libexif-dev libgexiv2-dev libgirepository1.0-dev libgtk-3-bin libgtk-3-dev libgudev-1.0-dev libjson-glib-dev liblcms2-dev liblzma-dev libmng-dev libmypaint-dev libopenexr-dev libpoppler-glib-dev libraw-dev libraw20 librsvg2-dev libspiro-dev libsuitesparse-dev libtiff-dev libtiff5-dev libtool libumfpack5 libwebp-dev libwmf-dev libxmu-dev libxpm-dev luajit meson mypaint-brushes poppler-data python3 python3-pip valac xauth xsltproc xvfb yelp-tools" >> Dockerfile
+    - echo "appstream at-spi2-core automake autopoint build-essential desktop-file-utils ffmpeg gettext ghostscript git glib-networking gobject-introspection graphviz graphviz-dev hicolor-icon-theme iso-codes libappstream-glib-dev libbz2-dev libdbus-glib-1-dev libexif-dev libgexiv2-dev libgirepository1.0-dev libgtk-3-bin libgtk-3-dev libgudev-1.0-dev libjson-glib-dev liblcms2-dev liblzma-dev libmng-dev libmypaint-dev libopenexr-dev libpoppler-glib-dev libraw-dev libraw20 librsvg2-dev libspiro-dev libsuitesparse-dev libtiff-dev libtiff5-dev libtool libumfpack5 libwebp-dev libwmf-dev libxmu-dev libxpm-dev luajit meson mypaint-brushes poppler-data python3 python3-pip valac xauth xsltproc xvfb xz-utils yelp-tools" >> Dockerfile
     - echo "RUN pip3 install --no-cache-dir gi-docgen jinja2 Markdown markupsafe pygments toml typogrify" >> Dockerfile
 
     - /kaniko/executor --context $CI_PROJECT_DIR --dockerfile $CI_PROJECT_DIR/Dockerfile --destination $CI_REGISTRY_IMAGE:build-debian-latest --cache=true --cache-ttl=120h
@@ -238,6 +238,7 @@ gimp-meson-debian:
   script:
     - meson _build
       --prefix="${INSTALL_PREFIX}"
+      -Dg-ir-doc=true -Dgi-docgen=enabled
     - ninja -C _build
     - ninja -C _build test
     # The src should not be changed by the build. If it is, something is
@@ -821,19 +822,26 @@ dev-docs:
     # Custom builds though web GUI, API or schedules.
     - if: '$GIMP_CI_SOURCES != null'
   stage: distribution
+  image: $CI_REGISTRY_IMAGE:build-debian-latest
   dependencies:
-    - gimp-distcheck-debian
+    - gimp-meson-debian
   artifacts:
     name: "GIMP-sources-${CI_COMMIT_SHORT_SHA}"
     when: always
     expire_in: 2 days
     paths:
-    - g-ir-docs
-    - reference
+    - gimp-docs-*.tar.xz
+    - gimp-docs-*.tar.xz.SHA256SUMS
+    - gimp-docs-*.tar.xz.SHA512SUMS
   script:
     - mv _build/devel-docs/g-ir-docs .
     - mv _build/devel-docs/reference .
-  needs: ["gimp-distcheck-debian"]
+    - GIMP_VER=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
+      FILENAME="gimp-docs-$GIMP_VER.tar.xz"                                                 &&
+      tar -cJf ${FILENAME} g-ir-docs reference                                              &&
+      sha256sum gimp-docs-*.tar.xz > ${FILENAME}.SHA256SUMS                                 &&
+      sha512sum gimp-docs-*.tar.xz > ${FILENAME}.SHA512SUMS
+  needs: ["gimp-meson-debian"]
 
 flatpak-nightly:
   extends: '.publish_nightly'
