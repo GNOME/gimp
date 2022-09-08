@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2022-04-12 10:05+0000\n"
+"POT-Creation-Date: 2022-09-06 17:59+0000\n"
+"PO-Revision-Date: 2022-09-08 16:45+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic\n"
 "Language: is\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Lokalize 19.12.3\n"
+"X-Generator: Lokalize 21.12.3\n"
 
 #: build/windows/installer/lang/setup.isl.xml.in:7
 msgid "License Agreement"
@@ -134,11 +134,10 @@ msgid "Run-time libraries"
 msgstr "Aðgerðasöfn fyrir keyrsluumhverfi (run-time)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
-"Aðgerðasöfn fyrir keyrsluumhverfi sem GIMP notar, þar með talið GTK+ "
-"keyrsluumhverfið (run-time environment)"
+"Aðgerðasöfn fyrir keyrsluumhverfi sem GIMP notar, þar með talið"
+" GTK-keyrsluumhverfið (run-time environment)"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -149,9 +148,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Hafa með upplýsingar sem hjálpa til við að villukemba GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "MS-Windows kerfi fyrir GTK+"
+msgstr "MS-Windows kerfi fyrir GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
