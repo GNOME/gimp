@@ -8,13 +8,13 @@ gimp_ui_doc_toml = configure_file(
   output: '@BASENAME@',
   configuration: {
     'GIMP_VERSION': gimp_version,
-    'GIMP_LOGO': gimp_logo_dir / 'gimp-logo.png',
+    'GIMP_LOGO': '../images/' + (stable ? 'gimp-logo.png' : 'gimp-devel-logo.png'),
   },
 )
 
 gimp_ui_docs = custom_target('gimp-ui-docs',
   input: libgimpui_gir[0],
-  output: 'GimpUi-@0@'.format(gimp_api_version),
+  output: 'libgimpui-@0@'.format(gimp_api_version),
   command: [
     gi_docgen,
     'generate',
@@ -34,5 +34,5 @@ gimp_ui_docs = custom_target('gimp-ui-docs',
   ],
   build_by_default: true,
   install: true,
-  install_dir: get_option('datadir') / 'doc',
+  install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version),
 )

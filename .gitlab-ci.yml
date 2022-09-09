@@ -189,7 +189,7 @@ deps-debian:
     name: "app-build-${CI_JOB_NAME}-${CI_COMMIT_REF_SLUG}"
     paths:
     - _build
-    #- "${INSTALL_DIR}"
+    - "${INSTALL_DIR}"
   before_script:
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/pkgconfig:${INSTALL_PREFIX}/share/pkgconfig"
     - export PKG_CONFIG_PATH="${INSTALL_PREFIX}/lib/`gcc -print-multiarch`/pkgconfig/:$PKG_CONFIG_PATH"
@@ -249,6 +249,7 @@ gimp-meson-debian:
         exit 1;
       fi
     - ninja -C _build dist
+    - ninja -C _build install
 
 gimp-clang-debian:
   rules:
@@ -830,17 +831,20 @@ dev-docs:
     when: always
     expire_in: 2 days
     paths:
-    - gimp-docs-*.tar.xz
-    - gimp-docs-*.tar.xz.SHA256SUMS
-    - gimp-docs-*.tar.xz.SHA512SUMS
+    - gimp-api-docs-*.tar.xz
+    - gimp-api-docs-*.tar.xz.SHA256SUMS
+    - gimp-api-docs-*.tar.xz.SHA512SUMS
   script:
-    - mv _build/devel-docs/g-ir-docs .
-    - mv _build/devel-docs/reference .
     - GIMP_VER=$(grep GIMP_VERSION _build/config.h | head -1 | sed 's/^.*"\([^"]*\)"$/\1/') &&
-      FILENAME="gimp-docs-$GIMP_VER.tar.xz"                                                 &&
-      tar -cJf ${FILENAME} g-ir-docs reference                                              &&
-      sha256sum gimp-docs-*.tar.xz > ${FILENAME}.SHA256SUMS                                 &&
-      sha512sum gimp-docs-*.tar.xz > ${FILENAME}.SHA512SUMS
+      APP_VER=$(echo $GIMP_VER | sed 's/\([0-9]\+\.[0-9]\+\)\..*/\1/')                      &&
+      DIR_NAME=gimp-api-docs-$GIMP_VER                                                      &&
+      mkdir $DIR_NAME                                                                       &&
+      mv "${INSTALL_PREFIX}/share/doc/gimp-$APP_VER" $DIR_NAME/reference                    &&
+      mv _build/devel-docs/g-ir-docs $DIR_NAME/                                             &&
+      TAR_NAME="$DIR_NAME.tar.xz"                                                           &&
+      tar -cJf ${TAR_NAME} $DIR_NAME                                                        &&
+      sha256sum $TAR_NAME > ${TAR_NAME}.SHA256SUMS                                          &&
+      sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
   needs: ["gimp-meson-debian"]
 
 flatpak-nightly:

@@ -7,13 +7,13 @@ gimp_doc_toml = configure_file(
   output: '@BASENAME@',
   configuration: {
     'GIMP_VERSION': gimp_version,
-    'GIMP_LOGO_PATH': gimp_logo_dir / 'gimp-logo.png',
+    'GIMP_LOGO_PATH': '../images/' + (stable ? 'gimp-logo.png' : 'gimp-devel-logo.png'),
   },
 )
 
 gimp_docs = custom_target('gimp-docs',
   input: libgimp_gir[0],
-  output: 'Gimp-@0@'.format(gimp_api_version),
+  output: 'libgimp-@0@'.format(gimp_api_version),
   command: [
     gi_docgen,
     'generate',
@@ -31,5 +31,5 @@ gimp_docs = custom_target('gimp-docs',
   ],
   build_by_default: true,
   install: true,
-  install_dir: get_option('datadir') / 'doc',
+  install_dir: get_option('datadir') / 'doc' / 'gimp-@0@'.format(gimp_app_version),
 )
