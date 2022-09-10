@@ -852,14 +852,22 @@ endif
 alsa = dependency('alsa', version: '>=1.0.0', required: get_option('alsa'))
 conf.set('HAVE_ALSA', alsa.found())
 
+# Linux Input
 
 if get_option('linux-input').disabled()
   have_linuxinput = false
-elif get_option('linux-input').enabled() and not cc.has_header('linux/input.h')
-  error('linux/input.h header not found.')
 else
-  have_linuxinput = x11_target
+  have_linuxinput = cc.has_header('linux/input.h',
+                                  required: get_option('linux-input'))
 endif
+
+if have_linuxinput
+  gudev = dependency('gudev-1.0', version: '>=167', required: get_option('gudev'))
+else
+  gudev = no_dep
+endif
+conf.set('HAVE_LIBGUDEV', gudev.found())
+
 
 # DirectX DirectInput
 directx = no_dep
@@ -880,9 +888,6 @@ if directx_sdk_path != '' and platform_windows
   )
 endif
 conf.set('HAVE_DX_DINPUT', directx.found())
-
-gudev = dependency('gudev-1.0', version: '>=167', required: get_option('gudev'))
-conf.set('HAVE_LIBGUDEV', gudev.found())
 
 
 ################################################################################
