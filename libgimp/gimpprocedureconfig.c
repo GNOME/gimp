@@ -861,6 +861,10 @@ gimp_procedure_config_save_metadata (GimpProcedureConfig *config,
               else
                 config->priv->metadata_flags &= ~prop_flag;
             }
+          else
+            {
+              config->priv->metadata_flags &= ~prop_flag;
+            }
         }
 
       if (! gimp_image_metadata_save_finish (exported_image,
