@@ -35,7 +35,7 @@ fi
 compute_viewbox="$(pwd)/../../tools/compute-svg-viewbox"
 source="$1"
 id="$2"
-if [ "$#" == 4 ]; then
+if [ "$#" = 4 ]; then
   # The expected display width/height for the image.
   width="$3"
   height="$4"
@@ -107,7 +107,7 @@ rm -f $svg_temp
 
 # The finale SVG file with properly set viewBox.
 svg="$svg_start  $viewBox"
-if [ "$#" == 5 ]; then
+if [ "$#" = 5 ]; then
   svg="$svg
   width=\"$width\"
   height=\"$height\""
