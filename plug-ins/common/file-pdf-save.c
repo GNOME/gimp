@@ -119,7 +119,6 @@
 #define PLUG_IN_BINARY          "file-pdf-save"
 #define PLUG_IN_ROLE            "gimp-file-pdf-save"
 
-#define DATA_OPTIMIZE           "file-pdf-data-optimize"
 #define DATA_IMAGE_LIST         "file-pdf-data-multi-page"
 
 /* Gimp will crash before you reach this limitation :D */
@@ -138,49 +137,12 @@ typedef enum
 
 GQuark gimp_plugin_pdf_save_error_quark (void);
 
-typedef enum
-{
-  SA_VECTORIZE,
-  SA_IGNORE_HIDDEN,
-  SA_APPLY_MASKS,
-  SA_LAYERS_AS_PAGES,
-  SA_REVERSE_ORDER,
-  SA_CONVERT_TEXT
-} SaveArgs;
-
-typedef enum
-{
-  SMA_RUN_MODE,
-  SMA_COUNT,
-  SMA_IMAGES,
-  SMA_VECTORIZE,
-  SMA_IGNORE_HIDDEN,
-  SMA_APPLY_MASKS,
-  SMA_FILENAME
-} SaveMultiArgs;
-
-typedef struct
-{
-  gboolean vectorize;
-  gboolean ignore_hidden;
-  gboolean apply_masks;
-  gboolean layers_as_pages;
-  gboolean reverse_order;
-  gboolean convert_text;
-} PdfOptimize;
-
 typedef struct
 {
   GimpImage *images[MAX_PAGE_COUNT];
   guint32    image_count;
   gchar      file_name[MAX_FILE_NAME_LENGTH];
 } PdfMultiPage;
-
-typedef struct
-{
-  PdfOptimize  optimize;
-  GArray      *images;
-} PdfMultiVals;
 
 enum
 {
@@ -233,20 +195,21 @@ static GimpValueArray * pdf_save_multi           (GimpProcedure        *procedur
                                                   const GimpValueArray *args,
                                                   gpointer              run_data);
 
-static GimpValueArray * pdf_save_image           (GimpProcedure        *procedure,
+static GimpPDBStatusType pdf_save_image          (GimpProcedure        *procedure,
+                                                  GimpProcedureConfig  *config,
                                                   gboolean              single_image,
-                                                  gboolean              defaults_proc,
-                                                  gboolean              show_progress);
+                                                  gboolean              show_progress,
+                                                  GError              **error);
 
 static void             init_image_list_defaults (GimpImage            *image);
 
 static void             validate_image_list      (void);
 
-static gboolean         gui_single               (void);
-static gboolean         gui_multi                (void);
-
-static void             reverse_order_toggled    (GtkToggleButton      *reverse_order,
-                                                  GtkButton            *layers_as_pages);
+static gboolean         gui_single               (GimpProcedure        *procedure,
+                                                  GimpProcedureConfig  *config,
+                                                  GimpImage            *image);
+static gboolean         gui_multi                (GimpProcedure        *procedure,
+                                                  GimpProcedureConfig  *config);
 
 static void             choose_file_call         (GtkWidget            *browse_button,
                                                   gpointer              file_entry);
@@ -279,6 +242,7 @@ static void             drawText                 (GimpLayer            *layer,
 
 static gboolean         draw_layer               (GimpLayer           **layers,
                                                   gint                  n_layers,
+                                                  GimpProcedureConfig  *config,
                                                   gint                  j,
                                                   cairo_t              *cr,
                                                   gdouble               x_res,
@@ -298,16 +262,6 @@ DEFINE_STD_SET_I18N
 
 static gboolean     dnd_remove = TRUE;
 static PdfMultiPage multi_page;
-
-static PdfOptimize optimize =
-{
-  TRUE,  /* vectorize */
-  TRUE,  /* ignore_hidden */
-  TRUE,  /* apply_masks */
-  FALSE, /* layers_as_pages */
-  FALSE, /* reverse_order */
-  FALSE  /* convert text layers to raster */
-};
 
 static GtkTreeModel *model;
 static GtkWidget    *file_choose;
@@ -371,27 +325,29 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                                       "Copyright Barak Itkin, Lionel N., Jehan",
                                       "August 2009, 2017");
 
+      gimp_file_procedure_set_format_name (GIMP_FILE_PROCEDURE (procedure),
+                                           _("PDF"));
       gimp_file_procedure_set_mime_types (GIMP_FILE_PROCEDURE (procedure),
                                           "application/pdf");
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "pdf");
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "vectorize",
-                             "Vectorize",
-                             "Convert bitmaps to vector graphics where possible.",
+                             "Convert bitmaps to vector graphics where possible",
+                             "Convert bitmaps to vector graphics where possible",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "ignore-hidden",
-                             "Ignore hidden",
-                             "Omit hidden layers and layers with zero opacity.",
+                             "Omit hidden layers and layers with zero opacity",
+                             "Non-visible layers will not be exported",
                              TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "apply-masks",
-                             "Apply masks",
-                             "Apply layer masks before saving (Keeping them "
-                             "will not change the output),",
+                             "Apply layer masks",
+                             "Apply layer masks before saving (Keeping the mask "
+                             "will not change the output, only the PDF structure),",
                              TRUE,
                              G_PARAM_READWRITE);
 
@@ -498,27 +454,20 @@ pdf_save (GimpProcedure        *procedure,
           const GimpValueArray *args,
           gpointer              run_data)
 {
-  gboolean had_saved_list = FALSE;
-  gboolean defaults = FALSE;
+  GimpProcedureConfig *config;
+  GError              *error          = NULL;
+  GimpPDBStatusType    status         = GIMP_PDB_SUCCESS;
+  gboolean             had_saved_list = FALSE;
 
   gegl_init (NULL, NULL);
 
   /* Initializing all the settings */
   multi_page.image_count = 0;
 
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_export (config, image, run_mode,
+                                      args, "application/pdf");
   file_name = g_file_get_path (file);
-
-  if (run_mode == GIMP_RUN_NONINTERACTIVE)
-    {
-      optimize.apply_masks     = GIMP_VALUES_GET_BOOLEAN (args, SA_APPLY_MASKS);
-      optimize.vectorize       = GIMP_VALUES_GET_BOOLEAN (args, SA_VECTORIZE);
-      optimize.ignore_hidden   = GIMP_VALUES_GET_BOOLEAN (args, SA_IGNORE_HIDDEN);
-      optimize.layers_as_pages = GIMP_VALUES_GET_BOOLEAN (args, SA_LAYERS_AS_PAGES);
-      optimize.reverse_order   = GIMP_VALUES_GET_BOOLEAN (args, SA_REVERSE_ORDER);
-      optimize.convert_text    = GIMP_VALUES_GET_BOOLEAN (args, SA_CONVERT_TEXT);
-    }
-  else
-    defaults = TRUE;
 
   switch (run_mode)
     {
@@ -528,7 +477,6 @@ pdf_save (GimpProcedure        *procedure,
 
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data (DATA_OPTIMIZE, &optimize);
       had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
 
       if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
@@ -540,9 +488,7 @@ pdf_save (GimpProcedure        *procedure,
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
-      /* Possibly retrieve data */
       init_image_list_defaults (image);
-      gimp_get_data (DATA_OPTIMIZE, &optimize);
       break;
     }
 
@@ -550,16 +496,19 @@ pdf_save (GimpProcedure        *procedure,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! gui_single ())
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+      if (! gui_single (procedure, config, image))
+        status = GIMP_PDB_CANCEL;
     }
 
-  return pdf_save_image (procedure, TRUE, defaults,
-                         (run_mode != GIMP_RUN_NONINTERACTIVE));
+  if (status == GIMP_PDB_SUCCESS)
+    status = pdf_save_image (procedure, config, TRUE,
+                             (run_mode != GIMP_RUN_NONINTERACTIVE),
+                             &error);
+
+  gimp_procedure_config_end_export (config, image, file, status);
+  g_object_unref (config);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static GimpValueArray *
@@ -567,7 +516,13 @@ pdf_save_multi (GimpProcedure        *procedure,
                 const GimpValueArray *args,
                 gpointer              run_data)
 {
-  GimpRunMode  run_mode;
+  GimpProcedureConfig *config;
+  GError              *error  = NULL;
+  GimpPDBStatusType    status = GIMP_PDB_SUCCESS;
+  GimpRunMode          run_mode;
+  gchar               *uri;
+  const gint32        *image_ids;
+
   GimpImage   *image = NULL;
   GFile       *file;
   gboolean     had_saved_list = FALSE;
@@ -575,25 +530,23 @@ pdf_save_multi (GimpProcedure        *procedure,
   gegl_init (NULL, NULL);
 
   run_mode = GIMP_VALUES_GET_ENUM (args, 0);
+  config = gimp_procedure_create_config (procedure);
+  gimp_procedure_config_begin_run (config, NULL, run_mode, args);
+  g_object_get (config,
+                "uri",    &uri,
+                "count",  &multi_page.image_count,
+                "images", &image_ids,
+                NULL);
 
-  file = g_file_new_for_uri (GIMP_VALUES_GET_STRING (args, SMA_FILENAME));
+  file = g_file_new_for_uri (uri);
+  g_free (uri);
   file_name = g_file_get_path (file);
-
-  /* Initializing all the settings */
-  multi_page.image_count = 0;
-
-  optimize.apply_masks   = GIMP_VALUES_GET_BOOLEAN (args, SMA_APPLY_MASKS);
-  optimize.vectorize     = GIMP_VALUES_GET_BOOLEAN (args, SMA_VECTORIZE);
-  optimize.ignore_hidden = GIMP_VALUES_GET_BOOLEAN (args, SMA_IGNORE_HIDDEN);
 
   switch (run_mode)
     {
-      const gint32 *image_ids;
-      gint          i;
+      gint i;
 
     case GIMP_RUN_NONINTERACTIVE:
-      multi_page.image_count = GIMP_VALUES_GET_INT (args, SMA_COUNT);
-      image_ids = GIMP_VALUES_GET_INT32_ARRAY (args, SMA_IMAGES);
       if (image_ids)
         for (i = 0; i < multi_page.image_count; i++)
           multi_page.images[i] = gimp_image_get_by_id (image_ids[i]);
@@ -601,7 +554,6 @@ pdf_save_multi (GimpProcedure        *procedure,
 
     case GIMP_RUN_INTERACTIVE:
       /* Possibly retrieve data */
-      gimp_get_data (DATA_OPTIMIZE, &optimize);
       had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
 
       if (had_saved_list && (file_name == NULL || strlen (file_name) == 0))
@@ -618,8 +570,6 @@ pdf_save_multi (GimpProcedure        *procedure,
       had_saved_list = gimp_get_data (DATA_IMAGE_LIST, &multi_page);
       if (had_saved_list)
         file_name = multi_page.file_name;
-
-      gimp_get_data (DATA_OPTIMIZE, &optimize);
       break;
     }
 
@@ -628,16 +578,19 @@ pdf_save_multi (GimpProcedure        *procedure,
   /* Starting the executions */
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
-      if (! gui_multi ())
-        {
-          return gimp_procedure_new_return_values (procedure,
-                                                   GIMP_PDB_CANCEL,
-                                                   NULL);
-        }
+      if (! gui_multi (procedure, config))
+        status = GIMP_PDB_CANCEL;
     }
 
-  return pdf_save_image (procedure, FALSE, FALSE,
-                         (run_mode != GIMP_RUN_NONINTERACTIVE));
+  if (status == GIMP_PDB_SUCCESS)
+    status = pdf_save_image (procedure, config, FALSE,
+                             (run_mode != GIMP_RUN_NONINTERACTIVE),
+                             &error);
+
+  gimp_procedure_config_end_run (config, status);
+  g_object_unref (config);
+
+  return gimp_procedure_new_return_values (procedure, status, error);
 }
 
 static cairo_status_t
@@ -717,44 +670,48 @@ get_missing_fonts (GList *layers)
   return missing_fonts;
 }
 
-static GimpValueArray *
-pdf_save_image (GimpProcedure *procedure,
-                gboolean       single_image,
-                gboolean       defaults_proc,
-                gboolean       show_progress)
+static GimpPDBStatusType
+pdf_save_image (GimpProcedure        *procedure,
+                GimpProcedureConfig  *config,
+                gboolean              single_image,
+                gboolean              show_progress,
+                GError              **error)
 {
   cairo_surface_t        *pdf_file;
   cairo_t                *cr;
   GimpExportCapabilities  capabilities;
   FILE                   *fp;
   gint                    i;
-  GError                 *error = NULL;
+  gboolean                apply_masks;
+  gboolean                layers_as_pages;
+
+  g_object_get (config,
+                "apply-masks",     &apply_masks,
+                "layers-as-pages", &layers_as_pages,
+                NULL);
 
   fp = g_fopen (file_name, "wb");
   if (! fp)
     {
-      g_set_error (&error, G_FILE_ERROR, g_file_error_from_errno (errno),
+      g_set_error (error, G_FILE_ERROR, g_file_error_from_errno (errno),
                    _("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (file_name), g_strerror (errno));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   pdf_file = cairo_pdf_surface_create_for_stream (write_func, fp, 1, 1);
 
   if (cairo_surface_status (pdf_file) != CAIRO_STATUS_SUCCESS)
     {
-      g_message (_("An error occurred while creating the PDF file:\n"
-                   "%s\n"
-                   "Make sure you entered a valid filename and that the "
-                   "selected location isn't read only!"),
-                 cairo_status_to_string (cairo_surface_status (pdf_file)));
+      g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
+                   _("An error occurred while creating the PDF file:\n"
+                     "%s\n"
+                     "Make sure you entered a valid filename and that the "
+                     "selected location isn't read only!"),
+                   cairo_status_to_string (cairo_surface_status (pdf_file)));
 
-      return gimp_procedure_new_return_values (procedure,
-                                               GIMP_PDB_EXECUTION_ERROR,
-                                               error);
+      return GIMP_PDB_EXECUTION_ERROR;
     }
 
   cr = cairo_create (pdf_file);
@@ -767,7 +724,7 @@ pdf_save_image (GimpProcedure *procedure,
   /* This seems counter-intuitive, but not setting the mask capability
    * will apply any layer mask upon gimp_export_image().
    */
-  if (! optimize.apply_masks)
+  if (! apply_masks)
     capabilities |= GIMP_EXPORT_CAN_HANDLE_LAYER_MASKS;
 
   for (i = 0; i < multi_page.image_count; i++)
@@ -865,7 +822,8 @@ pdf_save_image (GimpProcedure *procedure,
       /* Now, we should loop over the layers of each image */
       for (j = 0; j < n_layers; j++)
         {
-          if (! draw_layer (layers, n_layers, j, cr, x_res, y_res,
+          if (! draw_layer (layers, n_layers, config,
+                            j, cr, x_res, y_res,
                             gimp_procedure_get_name (procedure),
                             show_progress,
                             /* Progression is showed per image, and would restart at 0
@@ -873,7 +831,7 @@ pdf_save_image (GimpProcedure *procedure,
                              */
                             (gdouble) j / n_layers,
                             (gdouble) (j + 1) / n_layers,
-                            &error))
+                            error))
             {
               /* free the resources */
               g_free (layers);
@@ -881,9 +839,7 @@ pdf_save_image (GimpProcedure *procedure,
               cairo_destroy (cr);
               fclose (fp);
 
-              return gimp_procedure_new_return_values (procedure,
-                                                       GIMP_PDB_EXECUTION_ERROR,
-                                                       error);
+              return GIMP_PDB_EXECUTION_ERROR;
             }
         }
       if (show_progress)
@@ -895,7 +851,7 @@ pdf_save_image (GimpProcedure *procedure,
        * Unless that's a multi-page to avoid blank page at the end
        */
 
-      if (! optimize.layers_as_pages)
+      if (! layers_as_pages)
         cairo_show_page (cr);
 
       cairo_restore (cr);
@@ -909,16 +865,13 @@ pdf_save_image (GimpProcedure *procedure,
 
   fclose (fp);
 
-  /* Finally done, let's save the parameters */
-  gimp_set_data (DATA_OPTIMIZE, &optimize, sizeof (optimize));
-
   if (! single_image)
     {
       g_strlcpy (multi_page.file_name, file_name, MAX_FILE_NAME_LENGTH);
       gimp_set_data (DATA_IMAGE_LIST, &multi_page, sizeof (multi_page));
     }
 
-  return gimp_procedure_new_return_values (procedure, GIMP_PDB_SUCCESS, error);
+  return GIMP_PDB_SUCCESS;
 }
 
 /******************************************************/
@@ -969,58 +922,43 @@ validate_image_list (void)
 /* The main GUI function for saving single-paged PDFs */
 
 static gboolean
-gui_single (void)
+gui_single (GimpProcedure       *procedure,
+            GimpProcedureConfig *config,
+            GimpImage           *image)
 {
   GtkWidget *window;
-  GtkWidget *vbox;
-  GtkWidget *vectorize_c;
-  GtkWidget *ignore_hidden_c;
-  GtkWidget *convert_text_c;
-  GtkWidget *apply_c;
-  GtkWidget *layers_as_pages_c;
-  GtkWidget *reverse_order_c;
-  GtkWidget *frame;
-  gchar     *text;
+  GtkWidget *widget;
   GList     *missing_fonts;
+  GList     *dialog_props = NULL;
   gboolean   run;
   gint32     n_layers;
 
   gimp_ui_init (PLUG_IN_BINARY);
 
-  window = gimp_export_dialog_new ("PDF", PLUG_IN_ROLE, SAVE_PROC);
+  window = gimp_save_procedure_dialog_new (GIMP_SAVE_PROCEDURE (procedure),
+                                           GIMP_PROCEDURE_CONFIG (config),
+                                           image);
 
-  vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
-  gtk_box_pack_start (GTK_BOX (gimp_export_dialog_get_content_area (window)),
-                      vbox, TRUE, TRUE, 0);
+  /* XXX the "layers-as-pages" checkbox label used to be changing,
+   * showing "top layers first" or "bottom layers first" depending on
+   * the value of "reverse-order". Should we want this? Or do it
+   * differently, i.e. maybe with an additional label showing the order?
+   */
+  widget = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
+                                            "pages-frame", "layers-as-pages", FALSE,
+                                            "reverse-order");
+  g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
+  gtk_widget_set_sensitive (widget, n_layers > 1);
 
-  gtk_container_set_border_width (GTK_CONTAINER (window), 12);
-
-  convert_text_c = gtk_check_button_new_with_mnemonic (_("_Convert text layers to image"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (convert_text_c),
-                                optimize.convert_text);
+  /* Warning for missing fonts (non-embeddable with rasterization
+   * possible).
+   */
   missing_fonts = get_missing_fonts (gimp_image_list_layers (multi_page.images[0]));
   if (missing_fonts != NULL)
     {
-      GtkWidget *label;
-      GtkWidget *image;
-      GtkWidget *warn_box;
-      GList     *iter;
-      gchar     *font_list = NULL;
-
-      frame = gtk_frame_new (NULL);
-      gtk_box_pack_end (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-
-      /* Checkbox is frame label. */
-      gtk_frame_set_label_widget (GTK_FRAME (frame), convert_text_c);
-
-      /* Show warning inside the frame. */
-      warn_box = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 4);
-      gtk_container_add (GTK_CONTAINER (frame), warn_box);
-
-      image = gtk_image_new_from_icon_name (GIMP_ICON_WILBER_EEK,
-                                            GTK_ICON_SIZE_BUTTON);
-      gtk_box_pack_start (GTK_BOX (warn_box), image, FALSE, FALSE, 0);
-      gtk_widget_show (image);
+      GList *iter;
+      gchar *font_list = NULL;
+      gchar *text;
 
       for (iter = missing_fonts; iter; iter = iter->next)
         {
@@ -1044,83 +982,38 @@ gui_single (void)
                                 "or to install the missing fonts before exporting, "
                                 "otherwise your design may not look right."),
                               font_list);
-      label = gtk_label_new (text);
-      gtk_label_set_line_wrap (GTK_LABEL (label), TRUE);
-      g_free (text);
-      gtk_box_pack_start (GTK_BOX (warn_box), label, TRUE, TRUE, 0);
+      /* TODO: we used to have a GtkImage showing a GIMP_ICON_WILBER_EEK
+       * icon in GTK_ICON_SIZE_BUTTON size, next to the label, to make
+       * the warning more obvious.
+       */
+      widget = gimp_procedure_dialog_get_label (GIMP_PROCEDURE_DIALOG (window),
+                                       "missing-fonts-label",
+                                       text);
+      gtk_label_set_line_wrap (GTK_LABEL (widget), TRUE);
+      gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
+                                        "convert-text-layers-frame",
+                                        "convert-text-layers", TRUE,
+                                        "missing-fonts-label");
+
+      dialog_props = g_list_prepend (dialog_props, "convert-text-layers-frame");
 
       g_list_free_full (missing_fonts, g_free);
+      g_free (text);
+      g_free (font_list);
     }
   else
     {
-      gtk_box_pack_end (GTK_BOX (vbox), convert_text_c, TRUE, TRUE, 0);
+      dialog_props = g_list_prepend (dialog_props, "convert-text-layers");
     }
 
-  ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
-                                optimize.ignore_hidden);
-  gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, TRUE, TRUE, 0);
+  dialog_props = g_list_prepend (dialog_props, "ignore-hidden");
+  dialog_props = g_list_prepend (dialog_props, "vectorize");
+  dialog_props = g_list_prepend (dialog_props, "apply-masks");
+  dialog_props = g_list_prepend (dialog_props, "pages-frame");
+  gimp_procedure_dialog_fill_list (GIMP_PROCEDURE_DIALOG (window),
+                                   dialog_props);
 
-  vectorize_c = gtk_check_button_new_with_mnemonic (_("Convert _bitmaps to vector graphics where possible"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c),
-                                optimize.vectorize);
-  gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, TRUE, TRUE, 0);
-
-  apply_c = gtk_check_button_new_with_mnemonic (_("_Apply layer masks before saving"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c),
-                                optimize.apply_masks);
-  gtk_box_pack_end (GTK_BOX (vbox), apply_c, TRUE, TRUE, 0);
-  gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
-
-  /* Frame for multi-page from layers. */
-  frame = gtk_frame_new (NULL);
-  gtk_box_pack_end (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-
-  text = g_strdup_printf (_("_Layers as pages (%s)"),
-                          optimize.reverse_order ?
-                          _("top layers first") : _("bottom layers first"));
-  layers_as_pages_c = gtk_check_button_new_with_mnemonic (text);
-  g_free (text);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                optimize.layers_as_pages);
-  gtk_frame_set_label_widget (GTK_FRAME (frame), layers_as_pages_c);
-  g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
-
-  reverse_order_c = gtk_check_button_new_with_mnemonic (_("_Reverse the pages order"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (reverse_order_c),
-                                optimize.reverse_order);
-  gtk_container_add (GTK_CONTAINER (frame), reverse_order_c);
-
-  if (n_layers <= 1)
-    {
-      gtk_widget_set_sensitive (layers_as_pages_c, FALSE);
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (layers_as_pages_c),
-                                    FALSE);
-    }
-
-  g_object_bind_property (layers_as_pages_c, "active",
-                          reverse_order_c,  "sensitive",
-                          G_BINDING_SYNC_CREATE);
-  g_signal_connect (G_OBJECT (reverse_order_c), "toggled",
-                    G_CALLBACK (reverse_order_toggled),
-                    layers_as_pages_c);
-
-  gtk_widget_show_all (window);
-
-  run = gtk_dialog_run (GTK_DIALOG (window)) == GTK_RESPONSE_OK;
-
-  optimize.convert_text =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (convert_text_c));
-  optimize.ignore_hidden =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
-  optimize.vectorize =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
-  optimize.apply_masks =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
-  optimize.layers_as_pages =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (layers_as_pages_c));
-  optimize.reverse_order =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (reverse_order_c));
+  run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (window));
 
   gtk_widget_destroy (window);
 
@@ -1130,7 +1023,8 @@ gui_single (void)
 /* The main GUI function for saving multi-paged PDFs */
 
 static gboolean
-gui_multi (void)
+gui_multi (GimpProcedure       *procedure,
+           GimpProcedureConfig *config)
 {
   GtkWidget   *window;
   GtkWidget   *vbox;
@@ -1150,6 +1044,21 @@ gui_multi (void)
   GtkWidget   *add_image;
   gboolean     run;
   const gchar *temp;
+  gboolean     vectorize;
+  gboolean     ignore_hidden;
+  gboolean     apply_masks;
+  gboolean     layers_as_pages;
+  gboolean     reverse_order;
+  gboolean     convert_text;
+
+  g_object_get (config,
+                "vectorize",           &vectorize,
+                "ignore-hidden",       &ignore_hidden,
+                "apply-masks",         &apply_masks,
+                "layers-as-pages",     &layers_as_pages,
+                "reverse-order",       &reverse_order,
+                "convert-text-layers", &convert_text,
+                NULL);
 
   gimp_ui_init (PLUG_IN_BINARY);
 
@@ -1220,17 +1129,17 @@ gui_multi (void)
 
   ignore_hidden_c = gtk_check_button_new_with_mnemonic (_("_Omit hidden layers and layers with zero opacity"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (ignore_hidden_c),
-                                optimize.ignore_hidden);
+                                ignore_hidden);
   gtk_box_pack_end (GTK_BOX (vbox), ignore_hidden_c, FALSE, FALSE, 0);
 
   vectorize_c = gtk_check_button_new_with_mnemonic (_("Convert _bitmaps to vector graphics where possible"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (vectorize_c),
-                                optimize.vectorize);
+                                vectorize);
   gtk_box_pack_end (GTK_BOX (vbox), vectorize_c, FALSE, FALSE, 0);
 
   apply_c = gtk_check_button_new_with_mnemonic (_("_Apply layer masks before saving"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (apply_c),
-                                optimize.apply_masks);
+                                apply_masks);
   gtk_box_pack_end (GTK_BOX (vbox), apply_c, FALSE, FALSE, 0);
   gimp_help_set_help_data (apply_c, _("Keeping the masks will not change the output"), NULL);
 
@@ -1259,29 +1168,16 @@ gui_multi (void)
   temp = gtk_entry_get_text (GTK_ENTRY (file_entry));
   g_stpcpy (file_name, temp);
 
-  optimize.ignore_hidden =
+  ignore_hidden =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (ignore_hidden_c));
-  optimize.vectorize =
+  vectorize =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (vectorize_c));
-  optimize.apply_masks =
+  apply_masks =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (apply_c));
 
   gtk_widget_destroy (window);
 
   return run;
-}
-
-static void
-reverse_order_toggled (GtkToggleButton *reverse_order,
-                       GtkButton       *layers_as_pages)
-{
-  gchar *text;
-
-  text = g_strdup_printf (_("Layers as pages (%s)"),
-                          gtk_toggle_button_get_active (reverse_order) ?
-                          _("top layers first") : _("bottom layers first"));
-  gtk_button_set_label (layers_as_pages, text);
-  g_free (text);
 }
 
 /* A function that is called when the button for browsing for file
@@ -1919,29 +1815,43 @@ drawText (GimpLayer *layer,
 }
 
 static gboolean
-draw_layer (GimpLayer   **layers,
-            gint          n_layers,
-            gint          j,
-            cairo_t      *cr,
-            gdouble       x_res,
-            gdouble       y_res,
-            const gchar  *name,
-            gboolean      show_progress,
-            gdouble       progress_start,
-            gdouble       progress_end,
-            GError      **error)
+draw_layer (GimpLayer           **layers,
+            gint                  n_layers,
+            GimpProcedureConfig  *config,
+            gint                  j,
+            cairo_t              *cr,
+            gdouble               x_res,
+            gdouble               y_res,
+            const gchar          *name,
+            gboolean              show_progress,
+            gdouble               progress_start,
+            gdouble               progress_end,
+            GError              **error)
 {
   GimpLayer *layer;
   gdouble    opacity;
+  gboolean   vectorize;
+  gboolean   ignore_hidden;
+  gboolean   layers_as_pages;
+  gboolean   reverse_order;
+  gboolean   convert_text;
 
-  if (optimize.reverse_order && optimize.layers_as_pages)
+  g_object_get (config,
+                "vectorize",           &vectorize,
+                "ignore-hidden",       &ignore_hidden,
+                "layers-as-pages",     &layers_as_pages,
+                "reverse-order",       &reverse_order,
+                "convert-text-layers", &convert_text,
+                NULL);
+
+  if (reverse_order && layers_as_pages)
     layer = layers [j];
   else
     layer = layers [n_layers - j - 1];
 
   opacity = gimp_layer_get_opacity (layer) / 100.0;
   if ((! gimp_item_get_visible (GIMP_ITEM (layer)) || opacity == 0.0) &&
-      optimize.ignore_hidden)
+      ignore_hidden)
     return TRUE;
 
   if (gimp_item_is_group (GIMP_ITEM (layer)))
@@ -1953,7 +1863,8 @@ draw_layer (GimpLayer   **layers,
       children = gimp_item_get_children (GIMP_ITEM (layer), &children_num);
       for (i = 0; i < children_num; i++)
         {
-          if (! draw_layer ((GimpLayer **) children, children_num, i,
+          if (! draw_layer ((GimpLayer **) children, children_num,
+                            config, i,
                             cr, x_res, y_res, name,
                             show_progress,
                             progress_start + i * (progress_end - progress_start) / children_num,
@@ -1987,7 +1898,7 @@ draw_layer (GimpLayer   **layers,
 
       gimp_drawable_get_offsets (GIMP_DRAWABLE (layer), &x, &y);
 
-      if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || optimize.convert_text)
+      if (! gimp_item_is_text_layer (GIMP_ITEM (layer)) || convert_text)
         {
           /* For raster layers */
 
@@ -2000,7 +1911,7 @@ draw_layer (GimpLayer   **layers,
                            gimp_drawable_get_width  (GIMP_DRAWABLE (layer)),
                            gimp_drawable_get_height (GIMP_DRAWABLE (layer)));
 
-          if (optimize.vectorize && single_color)
+          if (vectorize && single_color)
             {
               cairo_set_source_rgba (cr,
                                      layer_color.r,
@@ -2046,7 +1957,7 @@ draw_layer (GimpLayer   **layers,
         }
 
       /* draw new page if "layers as pages" option is checked */
-      if (optimize.layers_as_pages)
+      if (layers_as_pages)
         cairo_show_page (cr);
 
       /* We are done with the layer - time to free some resources */
