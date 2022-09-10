@@ -55,6 +55,21 @@ static void   welcome_size_allocate                 (GtkWidget      *welcome_dia
                                                      GtkAllocation  *allocation,
                                                      gpointer        user_data);
 
+static gboolean
+on_delete (GtkWidget* self)
+{
+  printf("%s\n", G_STRFUNC);
+  gtk_widget_destroy (self);
+  return FALSE;
+}
+
+static gboolean
+on_response (GtkWidget* self)
+{
+  printf("%s\n", G_STRFUNC);
+  gtk_widget_destroy (self);
+  return FALSE;
+}
 
 GtkWidget *
 welcome_dialog_create (Gimp *gimp)
@@ -96,7 +111,11 @@ welcome_dialog_create (Gimp *gimp)
 
   g_signal_connect (welcome_dialog,
                     "response",
-                    G_CALLBACK (gtk_widget_destroy),
+                    G_CALLBACK (on_response),
+                    NULL);
+  g_signal_connect (welcome_dialog,
+                    "delete-event",
+                    G_CALLBACK (on_delete),
                     NULL);
 
   main_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 12);
