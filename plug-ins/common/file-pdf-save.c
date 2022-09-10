@@ -251,6 +251,7 @@ static gboolean         draw_layer               (GimpLayer           **layers,
                                                   gboolean              show_progress,
                                                   gdouble               progress_start,
                                                   gdouble               progress_end,
+                                                  gint                  layer_level,
                                                   GError              **error);
 
 
@@ -361,6 +362,12 @@ pdf_create_procedure (GimpPlugIn  *plug_in,
                              "Reverse order",
                              "Reverse the pages order (top layers first).",
                              FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "root-layers-only",
+                             "Root layers only",
+                             "Only the root layers are considered pages",
+                             TRUE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "convert-text-layers",
@@ -831,7 +838,7 @@ pdf_save_image (GimpProcedure        *procedure,
                              */
                             (gdouble) j / n_layers,
                             (gdouble) (j + 1) / n_layers,
-                            error))
+                            0, error))
             {
               /* free the resources */
               g_free (layers);
@@ -939,6 +946,9 @@ gui_single (GimpProcedure       *procedure,
                                            GIMP_PROCEDURE_CONFIG (config),
                                            image);
 
+  gimp_procedure_dialog_fill_box (GIMP_PROCEDURE_DIALOG (window),
+                                  "pages-box",
+                                  "reverse-order", "root-layers-only", NULL);
   /* XXX the "layers-as-pages" checkbox label used to be changing,
    * showing "top layers first" or "bottom layers first" depending on
    * the value of "reverse-order". Should we want this? Or do it
@@ -946,7 +956,7 @@ gui_single (GimpProcedure       *procedure,
    */
   widget = gimp_procedure_dialog_fill_frame (GIMP_PROCEDURE_DIALOG (window),
                                             "pages-frame", "layers-as-pages", FALSE,
-                                            "reverse-order");
+                                            "pages-box");
   g_free (gimp_image_get_layers (multi_page.images[0], &n_layers));
   gtk_widget_set_sensitive (widget, n_layers > 1);
 
@@ -1826,6 +1836,7 @@ draw_layer (GimpLayer           **layers,
             gboolean              show_progress,
             gdouble               progress_start,
             gdouble               progress_end,
+            gint                  layer_level,
             GError              **error)
 {
   GimpLayer *layer;
@@ -1834,6 +1845,7 @@ draw_layer (GimpLayer           **layers,
   gboolean   ignore_hidden;
   gboolean   layers_as_pages;
   gboolean   reverse_order;
+  gboolean   root_layers_only;
   gboolean   convert_text;
 
   g_object_get (config,
@@ -1841,6 +1853,7 @@ draw_layer (GimpLayer           **layers,
                 "ignore-hidden",       &ignore_hidden,
                 "layers-as-pages",     &layers_as_pages,
                 "reverse-order",       &reverse_order,
+                "root-layers-only",    &root_layers_only,
                 "convert-text-layers", &convert_text,
                 NULL);
 
@@ -1869,13 +1882,17 @@ draw_layer (GimpLayer           **layers,
                             show_progress,
                             progress_start + i * (progress_end - progress_start) / children_num,
                             progress_end,
-                            error))
+                            layer_level + 1, error))
             {
               g_free (children);
               return FALSE;
             }
         }
       g_free (children);
+
+      if (root_layers_only && layers_as_pages &&
+          children_num > 0 && layer_level == 0)
+        cairo_show_page (cr);
     }
   else
     {
@@ -1957,7 +1974,7 @@ draw_layer (GimpLayer           **layers,
         }
 
       /* draw new page if "layers as pages" option is checked */
-      if (layers_as_pages)
+      if (layers_as_pages && (! root_layers_only || layer_level == 0))
         cairo_show_page (cr);
 
       /* We are done with the layer - time to free some resources */
