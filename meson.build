@@ -328,7 +328,11 @@ conf.set('ENABLE_RELOCATABLE_RESOURCES', relocatable_bundle)
 
 
 math              = cc.find_library('m')
-dl                = platform_windows ? no_dep : cc.find_library('dl')
+# libdl is only required on Linux. On Windows and some (all?) BSD, it
+# doesn't exist, but the API exists in libc by default (see #8604). On
+# macOS, it apparently exists but linking it explicitly is actually
+# unneeded as well.
+dl                = cc.find_library('dl', required: platform_linux)
 rpc               = platform_windows ? cc.find_library('rpcrt4') : no_dep
 dbghelp           = platform_windows ? cc.find_library('dbghelp') : no_dep
 winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
