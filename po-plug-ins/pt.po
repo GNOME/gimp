@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-28 13:28+0000\n"
-"PO-Revision-Date: 2022-09-02 14:41+0100\n"
+"POT-Creation-Date: 2022-09-10 20:29+0000\n"
+"PO-Revision-Date: 2022-09-11 14:46+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -81,7 +81,7 @@ msgstr "Exercitar uma cabra (C)"
 #: plug-ins/common/file-cel.c:1003 plug-ins/common/file-gif-save.c:1160
 #: plug-ins/common/file-heif.c:2306 plug-ins/common/file-jp2-load.c:976
 #: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
-#: plug-ins/common/file-pdf-save.c:1174 plug-ins/common/file-ps.c:3588
+#: plug-ins/common/file-pdf-save.c:1083 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1315 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
@@ -146,8 +146,8 @@ msgstr "_Executar"
 #, c-format, python-format
 msgid ""
 "This plug-in is an exercise in '%s' to demo plug-in creation.\n"
-"Check out the last version of the source code online by clicking the \"Source"
-"\" button."
+"Check out the last version of the source code online by clicking the "
+"\"Source\" button."
 msgstr ""
 "Este complemento é um exercício em “%s” para a criação de um complemento de "
 "demonstração.\n"
@@ -824,7 +824,7 @@ msgstr "_Abrir"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
 #: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1173 plug-ins/common/qbist.c:891
+#: plug-ins/common/file-pdf-save.c:1082 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
@@ -1014,7 +1014,7 @@ msgstr "Guardar parâmetros do explorador CML"
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1559 plug-ins/common/file-mng.c:874
 #: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:908
-#: plug-ins/common/file-pdf-save.c:737 plug-ins/common/file-png.c:1504
+#: plug-ins/common/file-pdf-save.c:697 plug-ins/common/file-png.c:1504
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
@@ -3145,7 +3145,7 @@ msgstr "Contorno inferior fora dos limites (tem de ser < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Ocorreu uma falha ao escrever no ficheiro '%s': %s"
 
-#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:359
+#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:313
 msgid "Portable Document Format"
 msgstr "PDF (Formato de Documento Portátil)"
 
@@ -3235,11 +3235,15 @@ msgstr "Usar _suavização"
 msgid "pixels/%a"
 msgstr "píxeis/%a"
 
-#: plug-ins/common/file-pdf-save.c:424
+#: plug-ins/common/file-pdf-save.c:329
+msgid "PDF"
+msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:380
 msgid "_Create multipage PDF..."
 msgstr "_Criar PDF multipáginas..."
 
-#: plug-ins/common/file-pdf-save.c:749
+#: plug-ins/common/file-pdf-save.c:708
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3252,11 +3256,7 @@ msgstr ""
 "Certifique-se que inseriu um nome de ficheiro válido e que a localização "
 "selecionada não é só de leitura!"
 
-#: plug-ins/common/file-pdf-save.c:998
-msgid "_Convert text layers to image"
-msgstr "_Converter camadas de texto em imagem"
-
-#: plug-ins/common/file-pdf-save.c:1042
+#: plug-ins/common/file-pdf-save.c:980
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3268,77 +3268,55 @@ msgstr ""
 "de letra que faltam antes de exportar, caso contrário a imagem pode não ser "
 "mostrada corretamente."
 
-#: plug-ins/common/file-pdf-save.c:1059 plug-ins/common/file-pdf-save.c:1221
-msgid "_Omit hidden layers and layers with zero opacity"
-msgstr "_Omitir camadas ocultas e camadas com opacidade 0"
-
-#: plug-ins/common/file-pdf-save.c:1064 plug-ins/common/file-pdf-save.c:1226
-msgid "Convert _bitmaps to vector graphics where possible"
-msgstr "Converter mapas de _bits para gráficos vetoriais sempre que possível"
-
-#: plug-ins/common/file-pdf-save.c:1069 plug-ins/common/file-pdf-save.c:1231
-msgid "_Apply layer masks before saving"
-msgstr "_Aplicar máscaras de camada antes de guardar"
-
-#: plug-ins/common/file-pdf-save.c:1073 plug-ins/common/file-pdf-save.c:1235
-msgid "Keeping the masks will not change the output"
-msgstr "Manter as máscaras não altera o resultado"
-
-#: plug-ins/common/file-pdf-save.c:1079
-#, c-format
-msgid "_Layers as pages (%s)"
-msgstr "_Camadas como páginas (%s)"
-
-#: plug-ins/common/file-pdf-save.c:1081 plug-ins/common/file-pdf-save.c:1282
-msgid "top layers first"
-msgstr "primeiro as camadas de cima"
-
-#: plug-ins/common/file-pdf-save.c:1081 plug-ins/common/file-pdf-save.c:1282
-msgid "bottom layers first"
-msgstr "primeiro as camadas de baixo"
-
-#: plug-ins/common/file-pdf-save.c:1089
-msgid "_Reverse the pages order"
-msgstr "_Inverter ordem das páginas"
-
-#: plug-ins/common/file-pdf-save.c:1165
+#: plug-ins/common/file-pdf-save.c:1074
 msgid "Save to:"
 msgstr "Guardar em:"
 
-#: plug-ins/common/file-pdf-save.c:1169
+#: plug-ins/common/file-pdf-save.c:1078
 msgid "Browse..."
 msgstr "Navegar..."
 
-#: plug-ins/common/file-pdf-save.c:1170
+#: plug-ins/common/file-pdf-save.c:1079
 msgid "Multipage PDF export"
 msgstr "Exportação PDF multipáginas"
 
-#: plug-ins/common/file-pdf-save.c:1206
+#: plug-ins/common/file-pdf-save.c:1115
 msgid "Remove the selected pages"
 msgstr "Remover as páginas selecionadas"
 
-#: plug-ins/common/file-pdf-save.c:1216
+#: plug-ins/common/file-pdf-save.c:1125
 msgid "Add this image"
 msgstr "Adicionar esta imagem"
 
-#: plug-ins/common/file-pdf-save.c:1280
-#, c-format
-msgid "Layers as pages (%s)"
-msgstr "Camadas como páginas (%s)"
+#: plug-ins/common/file-pdf-save.c:1130
+msgid "_Omit hidden layers and layers with zero opacity"
+msgstr "_Omitir camadas ocultas e camadas com opacidade 0"
 
-#: plug-ins/common/file-pdf-save.c:1337 plug-ins/common/file-pdf-save.c:1410
-#: plug-ins/common/file-pdf-save.c:1508 plug-ins/common/file-ps.c:2080
+#: plug-ins/common/file-pdf-save.c:1135
+msgid "Convert _bitmaps to vector graphics where possible"
+msgstr "Converter mapas de _bits para gráficos vetoriais sempre que possível"
+
+#: plug-ins/common/file-pdf-save.c:1140
+msgid "_Apply layer masks before saving"
+msgstr "_Aplicar máscaras de camada antes de guardar"
+
+#: plug-ins/common/file-pdf-save.c:1144
+msgid "Keeping the masks will not change the output"
+msgstr "Manter as máscaras não altera o resultado"
+
+#: plug-ins/common/file-pdf-save.c:1233 plug-ins/common/file-pdf-save.c:1306
+#: plug-ins/common/file-pdf-save.c:1404 plug-ins/common/file-ps.c:2080
 #: plug-ins/file-tiff/file-tiff-load.c:1557
 #, c-format
 msgid "Page %d"
 msgstr "Página %d"
 
-#: plug-ins/common/file-pdf-save.c:1377
+#: plug-ins/common/file-pdf-save.c:1273
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Erro! Para guardar este ficheiro, tem de adicionar pelo menos uma imagem!"
 
-#: plug-ins/common/file-pdf-save.c:1555 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1451 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Não é possível gerir o tamanho (largura ou altura) da imagem."
 
@@ -12914,8 +12892,8 @@ msgid ""
 "detect the cases where we didn't find any corners."
 msgstr ""
 "Quantidade de erro para a qual já não há motivo para re-parametrizar. Isto "
-"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um \"O"
-"\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
+"acontece, por exemplo, quando tentamos ajustar o contorno exterior de um "
+"\"O\" com uma simples curva. O ajuste inicial não é bom o suficiente para a "
 "iteração de Newton-Raphson o melhorarem. Pode ser que seja melhor detetar "
 "casos onde não encontramos cantos."
 
@@ -12983,6 +12961,26 @@ msgstr "_Digitalizador/câmara..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "A transferir imagem do digitalizador/câmara"
+
+#~ msgid "_Convert text layers to image"
+#~ msgstr "_Converter camadas de texto em imagem"
+
+#, c-format
+#~ msgid "_Layers as pages (%s)"
+#~ msgstr "_Camadas como páginas (%s)"
+
+#~ msgid "top layers first"
+#~ msgstr "primeiro as camadas de cima"
+
+#~ msgid "bottom layers first"
+#~ msgstr "primeiro as camadas de baixo"
+
+#~ msgid "_Reverse the pages order"
+#~ msgstr "_Inverter ordem das páginas"
+
+#, c-format
+#~ msgid "Layers as pages (%s)"
+#~ msgstr "Camadas como páginas (%s)"
 
 #~ msgid "bad image dimensions"
 #~ msgstr "dimensões da imagem erradas"
