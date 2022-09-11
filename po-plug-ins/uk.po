@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-24 18:21+0000\n"
-"PO-Revision-Date: 2022-08-25 23:13+0300\n"
+"POT-Creation-Date: 2022-09-10 20:29+0000\n"
+"PO-Revision-Date: 2022-09-11 09:10+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -74,7 +74,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/file-cel.c:1003 plug-ins/common/file-gif-save.c:1160
 #: plug-ins/common/file-heif.c:2306 plug-ins/common/file-jp2-load.c:976
 #: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
-#: plug-ins/common/file-pdf-save.c:1174 plug-ins/common/file-ps.c:3588
+#: plug-ins/common/file-pdf-save.c:1083 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1315 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
@@ -820,7 +820,7 @@ msgstr "_Відкрити"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
 #: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1173 plug-ins/common/qbist.c:891
+#: plug-ins/common/file-pdf-save.c:1082 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
@@ -1010,7 +1010,7 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1559 plug-ins/common/file-mng.c:874
 #: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:908
-#: plug-ins/common/file-pdf-save.c:737 plug-ins/common/file-png.c:1504
+#: plug-ins/common/file-pdf-save.c:697 plug-ins/common/file-png.c:1504
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
@@ -3141,7 +3141,7 @@ msgstr "Нижня межа знаходиться за припустимими
 msgid "Writing to file '%s' failed: %s"
 msgstr "Помилка при записі до файлу «%s»: %s"
 
-#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:359
+#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:313
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
@@ -3231,11 +3231,15 @@ msgstr "_Застосувати згладжування"
 msgid "pixels/%a"
 msgstr "точок/%a"
 
-#: plug-ins/common/file-pdf-save.c:424
+#: plug-ins/common/file-pdf-save.c:329
+msgid "PDF"
+msgstr "PDF"
+
+#: plug-ins/common/file-pdf-save.c:380
 msgid "_Create multipage PDF..."
 msgstr "_Створити PDF з кількома сторінками…"
 
-#: plug-ins/common/file-pdf-save.c:749
+#: plug-ins/common/file-pdf-save.c:708
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3248,11 +3252,7 @@ msgstr ""
 "Переконайтесь, що ввели правильну назву файла й вибрана адреса не лише для "
 "читання! "
 
-#: plug-ins/common/file-pdf-save.c:998
-msgid "_Convert text layers to image"
-msgstr "П_еретворити текстові шари на зображення"
-
-#: plug-ins/common/file-pdf-save.c:1042
+#: plug-ins/common/file-pdf-save.c:980
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3264,77 +3264,55 @@ msgstr ""
 "шрифти, яких не вистачає, до експортування зображення. Якщо ви цього не "
 "зробите, досягти прийнятних результатів не вдасться."
 
-#: plug-ins/common/file-pdf-save.c:1059 plug-ins/common/file-pdf-save.c:1221
-msgid "_Omit hidden layers and layers with zero opacity"
-msgstr "_Пропустити приховані шари і шари без прозорості"
-
-#: plug-ins/common/file-pdf-save.c:1064 plug-ins/common/file-pdf-save.c:1226
-msgid "Convert _bitmaps to vector graphics where possible"
-msgstr "Перетворити _растрові малюнки у векторну графіку, де це можливо "
-
-#: plug-ins/common/file-pdf-save.c:1069 plug-ins/common/file-pdf-save.c:1231
-msgid "_Apply layer masks before saving"
-msgstr "З_астосувати маски шарів перед збереженням"
-
-#: plug-ins/common/file-pdf-save.c:1073 plug-ins/common/file-pdf-save.c:1235
-msgid "Keeping the masks will not change the output"
-msgstr "Утримання маски не вплине на результат"
-
-#: plug-ins/common/file-pdf-save.c:1079
-#, c-format
-msgid "_Layers as pages (%s)"
-msgstr "_Шари як сторінки (%s)"
-
-#: plug-ins/common/file-pdf-save.c:1081 plug-ins/common/file-pdf-save.c:1282
-msgid "top layers first"
-msgstr "спочатку верхній шар"
-
-#: plug-ins/common/file-pdf-save.c:1081 plug-ins/common/file-pdf-save.c:1282
-msgid "bottom layers first"
-msgstr "спочатку нижній шар"
-
-#: plug-ins/common/file-pdf-save.c:1089
-msgid "_Reverse the pages order"
-msgstr "З_воротний порядок сторінок"
-
-#: plug-ins/common/file-pdf-save.c:1165
+#: plug-ins/common/file-pdf-save.c:1074
 msgid "Save to:"
 msgstr "Зберегти у:"
 
-#: plug-ins/common/file-pdf-save.c:1169
+#: plug-ins/common/file-pdf-save.c:1078
 msgid "Browse..."
 msgstr "Огляд…"
 
-#: plug-ins/common/file-pdf-save.c:1170
+#: plug-ins/common/file-pdf-save.c:1079
 msgid "Multipage PDF export"
 msgstr "Експортування в PDF з кількома сторінками"
 
-#: plug-ins/common/file-pdf-save.c:1206
+#: plug-ins/common/file-pdf-save.c:1115
 msgid "Remove the selected pages"
 msgstr "Вилучити вибрані сторінки"
 
-#: plug-ins/common/file-pdf-save.c:1216
+#: plug-ins/common/file-pdf-save.c:1125
 msgid "Add this image"
 msgstr "Додати це зображення"
 
-#: plug-ins/common/file-pdf-save.c:1280
-#, c-format
-msgid "Layers as pages (%s)"
-msgstr "Шари як сторінки (%s)"
+#: plug-ins/common/file-pdf-save.c:1130
+msgid "_Omit hidden layers and layers with zero opacity"
+msgstr "_Пропустити приховані шари і шари без прозорості"
 
-#: plug-ins/common/file-pdf-save.c:1337 plug-ins/common/file-pdf-save.c:1410
-#: plug-ins/common/file-pdf-save.c:1508 plug-ins/common/file-ps.c:2080
+#: plug-ins/common/file-pdf-save.c:1135
+msgid "Convert _bitmaps to vector graphics where possible"
+msgstr "Перетворити _растрові малюнки у векторну графіку, де це можливо "
+
+#: plug-ins/common/file-pdf-save.c:1140
+msgid "_Apply layer masks before saving"
+msgstr "З_астосувати маски шарів перед збереженням"
+
+#: plug-ins/common/file-pdf-save.c:1144
+msgid "Keeping the masks will not change the output"
+msgstr "Утримання маски не вплине на результат"
+
+#: plug-ins/common/file-pdf-save.c:1233 plug-ins/common/file-pdf-save.c:1306
+#: plug-ins/common/file-pdf-save.c:1404 plug-ins/common/file-ps.c:2080
 #: plug-ins/file-tiff/file-tiff-load.c:1557
 #, c-format
 msgid "Page %d"
 msgstr "Сторінка %d"
 
-#: plug-ins/common/file-pdf-save.c:1377
+#: plug-ins/common/file-pdf-save.c:1273
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr ""
 "Помилка! Щоб зберегти файл, потрібно додати щонайменше одне зображення!"
 
-#: plug-ins/common/file-pdf-save.c:1555 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1451 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Неможливо опрацювати розмір (ширину чи висоту) зображення."
 
@@ -7770,7 +7748,6 @@ msgstr ""
 "x"
 
 #: plug-ins/file-tiff/file-tiff-load.c:1379
-#| msgid "Warning: no y resolution info, assuming same as x"
 msgid "Invalid image resolution info, using default"
 msgstr ""
 "Некоректні дані щодо роздільності зображення, використовуємо типові значення"
@@ -7787,11 +7764,10 @@ msgstr "Не вдалося отримати мапи кольорів з «%s»
 #.
 #: plug-ins/file-tiff/file-tiff-load.c:1532
 #, c-format
-#| msgid "Failed to read frame %d. Possibly corrupt animation.\n"
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
-"Підозрілива кількість додаткових каналів: %d. Ймовірно, пошкоджене"
-" зображення."
+"Підозрілива кількість додаткових каналів: %d. Ймовірно, пошкоджене "
+"зображення."
 
 #: plug-ins/file-tiff/file-tiff-load.c:1594
 msgid "TIFF Channel"
@@ -12961,6 +12937,26 @@ msgstr "_Сканер/Камера..."
 #: plug-ins/twain/twain.c:521
 msgid "Transferring data from scanner/camera"
 msgstr "Отримання даних зі сканера/камери"
+
+#~ msgid "_Convert text layers to image"
+#~ msgstr "П_еретворити текстові шари на зображення"
+
+#, c-format
+#~ msgid "_Layers as pages (%s)"
+#~ msgstr "_Шари як сторінки (%s)"
+
+#~ msgid "top layers first"
+#~ msgstr "спочатку верхній шар"
+
+#~ msgid "bottom layers first"
+#~ msgstr "спочатку нижній шар"
+
+#~ msgid "_Reverse the pages order"
+#~ msgstr "З_воротний порядок сторінок"
+
+#, c-format
+#~ msgid "Layers as pages (%s)"
+#~ msgstr "Шари як сторінки (%s)"
 
 #~ msgid "bad image dimensions"
 #~ msgstr "хибні розміри зображення"
