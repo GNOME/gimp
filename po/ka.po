@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-08-23 21:28+0000\n"
-"PO-Revision-Date: 2022-09-03 20:26+0200\n"
+"PO-Revision-Date: 2022-09-14 17:43+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -11031,66 +11031,90 @@ msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"ნაგულისხმები \"შავი წერტილის კომპენსაციის\" მდგომარეობის დაყენება \"ფერის "
+"პროფილზე გარდაქმნის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:557
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"ნაგულისხმები ფენის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:560
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"ნაგულისხმები ტექსტის ფენის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის"
+"\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:563
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"ნაგულისხმები არხის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:566
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
+"ნაგულისხმები პალიტრის ტიპის დაყენება \"დაინდექსებულზე გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:569
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"ნაგულისხმები ფერების მაქსიმალური რაოდენობის დაყენება \"დაინდექსებულზე "
+"გარდაქმნის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:572
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
+"ნაგულისხმები \"დუბლიკატის ფერების წაშლის\" მდგომარების დაყენება "
+"\"დაინდექსებულზე გარდაქმნის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:575
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
+"ნაგულისხმები დიზერინგის ტიპის დაყენება \"დაინდექსებულზე გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:578
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
+"ნაგულისხმები \"ალფას დიზერინგის\" მდგომარეობის დაყენება \"დაინდექსებულზე "
+"გარდაქმნის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:581
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"ნაგულისხმები \"ტექსტური ფენების დიზერინგის\" მნიშვნელობის დაყენება "
+"\"დაინდექსებულზე გარდაქმნის\" ფანჯრისთვის"
 
 #: app/config/gimprc-blurbs.h:584
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr ""
+msgstr "ნაგულისხმები შევსების ტიპის დაყენება \"ტილოს ზომის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:587
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
+"ნაგულისხმები ფენების სეტის დაყენება ზომის შესაცვლელად \"ტილოს ზომის\" "
+"ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:590
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
+"ნაგულისხმები \"ტექსტური ფენის ზომის შეცვლის\" მდგომარეობის დაყენება \"ტილოს "
+"ზომის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:593
 msgid "Sets how items are searched and selected from a textual pattern."
@@ -11098,11 +11122,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:596
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები ფენის სახელის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:599
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები რეჟიმის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:602
 msgid "Sets the default blend space for the 'New Layer' dialog."
@@ -11110,23 +11134,24 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:605
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები კომპოზიტური სივრცის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:608
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები კომპოზიტური რეჟიმის დაყენება \"ახალი ფენის\" ფანჯრისთვის"
 
 #: app/config/gimprc-blurbs.h:611
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები გაუმჭვირვალობის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:614
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები შევსების ტიპის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:617
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
+"ნაგულისხმები შევსების ტიპის დაყენება \"ფენის საზღვრის ზომის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:620
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
@@ -11141,37 +11166,46 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:626
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
+"ნაგულისხმები შერწყმის ტიპის დაყენება \"ხილული ფენების შერწყმის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:629
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"ნაგულისხმები \"მხოლოდ აქტიური ჯგუფის\" დაყენება \"ხილული ფენების შერწყმის\" "
+"ფანჯრისთვის"
 
 #: app/config/gimprc-blurbs.h:632
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"ნაგულისხმები \"უხილავის მოცილების\" დაყენება \"ხილული ფენების შერწყმის \" "
+"ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:635
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "ნაგულისხმები არხის სახელის დაყენება \"ახალი არხის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:638
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
+"ნაგულისხმები ფერისა და გაუმჭვირვალობის დაყენება \"ახალი არხის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:641
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr ""
+msgstr "ნაგულიხმები ბილიკის სახელი \"ახალი ბილიკის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:644
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
+"ნაგულისხმები საქაღალდის ბილიკის დაყენება \"გატანის ბილიკის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:647
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
+"ნაგულისხმები \"აქტიური ბილიკის გატანის\" მდგომარეობის დაყენება \"ბილიკის "
+"გატანის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:650
 msgid "Sets the default folder path for the 'Import Path' dialog."
@@ -11182,12 +11216,16 @@ msgstr ""
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
+"ნაგულისხმები \"შემოტანილი ბილიკების შერწყმის\" დაყენება \"შემოტანის ბილიკის"
+"\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:656
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
+"ნაგულისხმები \"შემოტანილი ბილიკის ჩატევის\" მდგომარეობის დაყენება "
+"\"შემოტანის ბილიკის\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:659
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
@@ -11202,10 +11240,13 @@ msgstr ""
 #: app/config/gimprc-blurbs.h:666
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
+"ნაგულისხმები ზრდის რადიუსის დაყენება \"მონიშნულის გადიდების\" ფანჯრისთვის."
 
 #: app/config/gimprc-blurbs.h:669
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
+"ნაგულისხმები შემცირების რადიუსის დაყენება \"მონიშნულის შემცირების\" "
+"ფანჯრისთვის"
 
 #: app/config/gimprc-blurbs.h:672
 msgid ""
@@ -14341,11 +14382,11 @@ msgstr "გასანძრევი მონიშნული არ არ
 
 #: app/core/gimpselection.c:750
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr ""
+msgstr "ამოჭრა და კოპირება შეუძლებელია, რადგან მონიშნული რეგიონი ცარიელია."
 
 #: app/core/gimpselection.c:894
 msgid "Cannot float selection because the selected region is empty."
-msgstr ""
+msgstr "მონიშნულის გაცურება შეუძლებელია, რადგან მონიშნული რეგიონი ცარიელია."
 
 #: app/core/gimpselection.c:901
 msgctxt "undo-type"
@@ -14919,7 +14960,7 @@ msgstr "გარდავქმნა გამოსახულება ჩ�
 
 #: app/dialogs/color-profile-import-dialog.c:100
 msgid "Convert to RGB Working Space?"
-msgstr ""
+msgstr "გარდავქმნა RGB სამუშაო სივრცედ?"
 
 #: app/dialogs/color-profile-import-dialog.c:101
 msgid "Convert the image to the built-in sRGB color profile?"
@@ -15735,7 +15776,7 @@ msgstr ""
 
 #: app/dialogs/preferences-dialog.c:906 app/dialogs/preferences-dialog.c:2637
 msgid "There's a local installation of the user manual."
-msgstr ""
+msgstr "არსებობს მომხმარებლის სახელმძღვანელოს ლოკალური ვერსია."
 
 #: app/dialogs/preferences-dialog.c:911 app/dialogs/preferences-dialog.c:2643
 msgid "The user manual is not installed locally."
