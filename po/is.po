@@ -12,16 +12,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-06 17:57+0000\n"
-"PO-Revision-Date: 2022-09-08 16:38+0000\n"
+"POT-Creation-Date: 2022-09-10 12:55+0000\n"
+"PO-Revision-Date: 2022-09-15 22:44+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic\n"
+"Language-Team: Icelandic <translation-team-is@lists.sourceforge.org>\n"
 "Language: is\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=1;\n"
-"X-Generator: Lokalize 21.12.3\n"
+"X-Generator: Lokalize 19.12.3\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -136,7 +136,7 @@ msgstr ""
 "Með GIMP hefði átt að fylgja eintak af GNU General Public License; en ef svo "
 "er ekki þá skaltu skoða: https://www.gnu.org/licenses/"
 
-#: app/gimp-update.c:448
+#: app/gimp-update.c:447
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -230,12 +230,12 @@ msgstr "Senda skilaboð á stjórnskjá í stað þess að nota samskiptaglugga"
 #. don't translate the mode names (off|on|warn)
 #: app/main.c:257
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB samhæfin (af|á|aðvörun)"
+msgstr "PDB-samhæfnihamur (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: app/main.c:263
 msgid "Debug in case of a crash (never|query|always)"
-msgstr "Villukemba ef kemur til hruns (aldrei|spyrja|alltaf)"
+msgstr "Villukemba ef hrun á sér stað (never|query|always)"
 
 #: app/main.c:268
 msgid "Enable non-fatal debugging signal handlers"
@@ -5686,15 +5686,11 @@ msgid "Remove the image's color profile"
 msgstr "Fjarlægja litasnið myndarinnar"
 
 #: app/actions/image-actions.c:110
-#| msgctxt "view-action"
-#| msgid "Soft-_Proofing Profile..."
 msgctxt "image-action"
 msgid "_Softproof Profile..."
 msgstr "Litasnið fyrir _sýndarpróförk..."
 
 #: app/actions/image-actions.c:111
-#| msgctxt "view-action"
-#| msgid "Set the soft-proofing profile"
 msgctxt "image-action"
 msgid "Set the softproofing profile"
 msgstr "Setja litasnið fyrir sýndarpróförk"
@@ -5710,8 +5706,6 @@ msgid "Save the image's color profile to an ICC file"
 msgstr "Vista litasnið myndarinnar í ICC-skrá"
 
 #: app/actions/image-actions.c:122
-#| msgctxt "view-action"
-#| msgid "Soft-Proofing Re_ndering Intent"
 msgctxt "image-action"
 msgid "Soft-Proofing Re_ndering Intent"
 msgstr "My_ndgerðarmarkmið fyrir sýndarpróförk"
@@ -5845,14 +5839,11 @@ msgstr ""
 "litasniði myndarinnar, en gerir auðvelt að endurheimta litasniðið."
 
 #: app/actions/image-actions.c:203
-#| msgid "_Black Point Compensation"
 msgctxt "image-action"
 msgid "_Black Point Compensation"
 msgstr "_BPC svartgildismótvægi"
 
 #: app/actions/image-actions.c:204
-#| msgctxt "view-action"
-#| msgid "Use black point compensation for soft-proofing"
 msgctxt "image-action"
 msgid "Use black point compensation for soft-proofing"
 msgstr "Nota svartgildismótvægi (BPC) fyrir próförk"
@@ -6028,56 +6019,41 @@ msgid "Rotate the image 90 degrees to the left"
 msgstr "Snúa myndinni 90 gráður til vinstri"
 
 #: app/actions/image-actions.c:327
-#| msgctxt "view-action"
-#| msgid "_Perceptual"
 msgctxt "image-action"
 msgid "_Perceptual"
 msgstr "S_kynjanlegt"
 
 #: app/actions/image-actions.c:328
-#| msgctxt "view-action"
-#| msgid "Soft-proofing rendering intent is perceptual"
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is perceptual"
 msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er skynjanlegt"
 
 #: app/actions/image-actions.c:333
-#| msgctxt "view-action"
-#| msgid "_Relative Colorimetric"
 msgctxt "image-action"
 msgid "_Relative Colorimetric"
 msgstr "Afstæð lit_mæling"
 
 #: app/actions/image-actions.c:334
-#| msgctxt "view-action"
-#| msgid "Soft-proofing rendering intent is relative colorimetric"
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is relative colorimetric"
 msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er afstæð litmæling"
 
 #: app/actions/image-actions.c:339
-#| msgid "_Saturation"
 msgctxt "image-action"
 msgid "_Saturation"
 msgstr "Litmett_un"
 
 #: app/actions/image-actions.c:340
-#| msgctxt "view-action"
-#| msgid "Soft-proofing rendering intent is saturation"
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is saturation"
 msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er litmettun"
 
 #: app/actions/image-actions.c:345
-#| msgctxt "view-action"
-#| msgid "_Absolute Colorimetric"
 msgctxt "image-action"
 msgid "_Absolute Colorimetric"
 msgstr "_Algild litmæling"
 
 #: app/actions/image-actions.c:346
-#| msgctxt "view-action"
-#| msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgctxt "image-action"
 msgid "Soft-proofing rendering intent is absolute colorimetric"
 msgstr "Myndgerðarmarkmið fyrir sýndarpróförk er algild litmæling"
@@ -8192,7 +8168,6 @@ msgstr "Lóðrétt, vinstri til hægri (upprétt stefna)"
 
 #: app/actions/text-tool-commands.c:188
 #, c-format
-#| msgid "Test along path failed: %s"
 msgid "Text along path failed: %s"
 msgstr "Texti eftir ferli mistókst: %s"
 
@@ -10441,13 +10416,11 @@ msgid "Right"
 msgstr "Hægri"
 
 #: app/config/config-enums.c:249
-#| msgid "Distance"
 msgctxt "drag-zoom-mode"
 msgid "By distance"
 msgstr "Eftir vegalengd"
 
 #: app/config/config-enums.c:250
-#| msgid "Saturation"
 msgctxt "drag-zoom-mode"
 msgid "By duration"
 msgstr "Eftir tímalengd"
@@ -13842,7 +13815,6 @@ msgstr "Gera 'Nota sRGB litasnið' óvirkt"
 
 #: app/core/gimpimage-color-profile.c:201
 #, c-format
-#| msgid "ICC profile validation failed: Parasite's name is not 'icc-profile'"
 msgid "ICC profile validation failed: Parasite's name is not '%s'"
 msgstr "Prófun ICC litasniðs mistókst: Heiti sníkils er ekki '%s'"
 
@@ -13858,7 +13830,6 @@ msgid "ICC profile validation failed: "
 msgstr "Prófun ICC litasniðs mistókst: "
 
 #: app/core/gimpimage-color-profile.c:277
-#| msgid "ICC profile validation failed: "
 msgid "Simulation ICC profile validation failed: "
 msgstr "Herming á prófun ICC litasniðs mistókst: "
 
@@ -14869,19 +14840,14 @@ msgid "Color profile"
 msgstr "Litasnið"
 
 #: app/core/gimptemplate.c:228
-#| msgid "_Print simulation profile:"
 msgid "Simulation profile"
 msgstr "Litasnið hermingar"
 
 #: app/core/gimptemplate.c:235
-#| msgctxt "view-action"
-#| msgid "Display _Rendering Intent"
 msgid "Simulation Rendering Intent"
 msgstr "Myndgerðarmarkmið hermingar"
 
 #: app/core/gimptemplate.c:243
-#| msgctxt "view-action"
-#| msgid "Use black point compensation for image display"
 msgid "Use Black Point Compensation for Simulation"
 msgstr "Nota svartgildismótvægi (BPC) fyrir hermingu"
 
@@ -17158,8 +17124,6 @@ msgid "_Reset Saved Window Positions to Default Values"
 msgstr "F_rumstilla stöðu vistaðra glugga á sjálfgefin gildi"
 
 #: app/dialogs/preferences-dialog.c:2938 app/dialogs/preferences-dialog.c:2939
-#| msgctxt "image-action"
-#| msgid "F_it Canvas to Selection"
 msgid "Canvas Interaction"
 msgstr "Gagnvikni myndflatar"
 
@@ -17186,17 +17150,14 @@ msgid "Drag-to-zoom spe_ed:"
 msgstr "Hraði Draga-fyrir-aðdrátt:"
 
 #: app/dialogs/preferences-dialog.c:2980 app/dialogs/preferences-dialog.c:2981
-#| msgid "(modified)"
 msgid "Modifiers"
 msgstr "Breytilyklar"
 
 #: app/dialogs/preferences-dialog.c:2991
-#| msgid "_Reset Saved Input Device Settings to Default Values"
 msgid "_Reset Saved Modifiers Settings to Default Values"
 msgstr "F_rumstilla vistaðar breytilykla á sjálfgefin gildi"
 
 #: app/dialogs/preferences-dialog.c:3005
-#| msgid "Image Window Snapping Behavior"
 msgid "Snapping Behavior"
 msgstr "Hegðun grips"
 
@@ -18108,53 +18069,41 @@ msgid "Move"
 msgstr "Færa"
 
 #: app/display/display-enums.c:616
-#| msgctxt "space-bar-action"
-#| msgid "No action"
 msgctxt "modifier-action"
 msgid "No action"
 msgstr "Engin aðgerð"
 
 #: app/display/display-enums.c:617
-#| msgid "Paint"
 msgctxt "modifier-action"
 msgid "Pan"
 msgstr "Hliðra"
 
 #: app/display/display-enums.c:618
-#| msgid "Zoom"
 msgctxt "modifier-action"
 msgid "Zoom"
 msgstr "Aðdráttur"
 
 #: app/display/display-enums.c:619
-#| msgid "Rotate View"
 msgctxt "modifier-action"
 msgid "Rotate View"
 msgstr "Snúa sýn"
 
 #: app/display/display-enums.c:620
-#| msgctxt "view-action"
-#| msgid "Rotate the view 15 degrees to the left"
 msgctxt "modifier-action"
 msgid "Rotate View by 15 degree steps"
 msgstr "Snúa sýn í 15 gráðu þrepum"
 
 #: app/display/display-enums.c:621
-#| msgid "Pick a layer or guide"
 msgctxt "modifier-action"
 msgid "Pick a layer"
 msgstr "Veldu lag"
 
 #: app/display/display-enums.c:622
-#| msgctxt "view-action"
-#| msgid "Display the image's guides"
 msgctxt "modifier-action"
 msgid "Display the menu"
 msgstr "Birta valmyndina"
 
 #: app/display/display-enums.c:623
-#| msgctxt "space-bar-action"
-#| msgid "No action"
 msgctxt "modifier-action"
 msgid "Custom action"
 msgstr "Sérsniðin aðgerð"
@@ -18172,7 +18121,6 @@ msgid "Change brush radius' size in canvas pixels"
 msgstr ""
 
 #: app/display/display-enums.c:626
-#| msgid "Image opacity"
 msgctxt "modifier-action"
 msgid "Change tool opacity"
 msgstr "Breyta ógegnsæi verkfæris"
@@ -18457,13 +18405,12 @@ msgid "pixels"
 msgstr "mynddílar"
 
 #: app/display/gimpmodifiersmanager.c:232
-#, fuzzy, c-format
+#, c-format
 #| msgid "invalid value '%s' for icon type"
 msgid "invalid value '%s' for contextual action"
-msgstr "Ógilt gildi '%s' fyrir tegund táknmyndar"
+msgstr "ógilt gildi '%s' fyrir samhengistengda aðgerð"
 
 #: app/display/gimpstatusbar.c:426
-#| msgid "_Cancel"
 msgid "Cancel"
 msgstr "Hætta við"
 
@@ -18474,44 +18421,34 @@ msgid ""
 msgstr ""
 
 #: app/display/gimpstatusbar.c:492
-#| msgctxt "view-action"
-#| msgid "_Proof Colors"
 msgid "_Proof Colors"
 msgstr "_Litir í próförk"
 
 #: app/display/gimpstatusbar.c:505 app/display/gimpstatusbar.c:2136
-#| msgid "Select Soft-Proof Profile"
 msgid "Current Soft-Proofing Profile"
 msgstr "Núverandi litasnið fyrir sýndarpróförk"
 
 #: app/display/gimpstatusbar.c:519
-#| msgid "Soft-Proof Profile"
 msgid "Soft-Proofing Profile"
 msgstr "Litasnið fyrir sýndarpróförk"
 
 #: app/display/gimpstatusbar.c:528
-#| msgid "_Soft-proofing profile:"
 msgid "_Soft-proofing Profile: "
 msgstr "Litasnið fyrir _sýndarpróförk: "
 
 #: app/display/gimpstatusbar.c:547
-#| msgid "_Rendering Intent:"
 msgid "_Rendering Intent: "
 msgstr "Myndge_rðarmarkmið: "
 
 #: app/display/gimpstatusbar.c:556
-#| msgid "_Black Point Compensation"
 msgid "Use _Black Point Compensation"
 msgstr "Nota svartgildismótvægi (_BPC)"
 
 #: app/display/gimpstatusbar.c:575
-#| msgid "O_ptimize soft-proofing for:"
 msgid "O_ptimize soft-proofing for: "
 msgstr "_Besta sýndarpróförk fyrir: "
 
 #: app/display/gimpstatusbar.c:584
-#| msgctxt "view-action"
-#| msgid "_Mark Out Of Gamut Colors"
 msgid "_Mark Out of Gamut Colors"
 msgstr "_Merkja liti utan litrófs"
 
@@ -25724,20 +25661,17 @@ msgid "K:"
 msgstr "K:"
 
 #: app/widgets/gimpcolorframe.c:1117
-#| msgid "Profile folder:"
 msgctxt "Color"
 msgid "Profile:"
 msgstr "Litasnið:"
 
 #: app/widgets/gimpcolorframe.c:1119
-#| msgid "C_olor Profile"
 msgctxt "Color"
 msgid "No Profile"
 msgstr "Ekkert litasnið"
 
 #: app/widgets/gimpcolorframe.c:1144 app/widgets/gimpcolorframe.c:1145
 #, c-format
-#| msgid "%g/s"
 msgid "%s"
 msgstr "%s"
 
@@ -26870,7 +26804,6 @@ msgstr "Litur hægri enda litstigilgeira"
 
 #: app/widgets/gimpgradienteditor.c:930
 #, c-format
-#| msgid "Zoom factor: %d:1"
 msgid "Zoom factor: %f:1"
 msgstr "Aðdráttarhlutfall: %f:1"
 
@@ -27301,7 +27234,6 @@ msgstr ""
 #.
 #: app/widgets/gimpmodifierseditor.c:643
 #, c-format
-#| msgid "Select Action for Event '%s'"
 msgid "Select Action for %s button %d of %s"
 msgstr "Velja aðgerð fyrir %s hnapp %d af %s"
 
@@ -27313,7 +27245,6 @@ msgstr ""
 
 #: app/widgets/gimpmodifierseditor.c:655
 #, c-format
-#| msgid "Select Action for Event '%s'"
 msgid "Select Action for button %d of %s"
 msgstr "Velja aðgerð fyrir hnapp %d af %s"
 
@@ -27478,22 +27409,18 @@ msgid "Delete the selected preset"
 msgstr "Eyða valinni forstillingu"
 
 #: app/widgets/gimpshortcutbutton.c:142 app/widgets/gimpshortcutbutton.c:440
-#| msgid "Shortcut"
 msgid "No shortcut"
 msgstr "Enginn flýtilykill"
 
 #: app/widgets/gimpshortcutbutton.c:431
-#| msgid "(modified)"
 msgid "Set modifier"
 msgstr "Setja breytilykil"
 
 #: app/widgets/gimpshortcutbutton.c:433
-#| msgid "Shortcut"
 msgid "Set shortcut"
 msgstr "Setja flýtilykil"
 
 #: app/widgets/gimpshortcutbutton.c:438
-#| msgid "(modified)"
 msgid "No modifier"
 msgstr "Enginn breytilykill"
 
@@ -27581,23 +27508,18 @@ msgid "Co_lor profile:"
 msgstr "_Litasnið:"
 
 #: app/widgets/gimptemplateeditor.c:464
-#| msgid "Select Soft-Proofing Color Profile"
 msgid "Choose A Soft-Proofing Color Profile"
 msgstr "Veldu litasnið fyrir sýndarpróförk"
 
 #: app/widgets/gimptemplateeditor.c:468
-#| msgid "_Soft-proofing profile:"
 msgid "_Soft-proofing color profile:"
 msgstr "Litasnið fyrir _sýndarpróförk:"
 
 #: app/widgets/gimptemplateeditor.c:475
-#| msgctxt "view-action"
-#| msgid "Soft-Proofing Re_ndering Intent"
 msgid "_Soft-proofing rendering intent:"
 msgstr "_Myndgerðarmarkmið fyrir sýndarpróförk::"
 
 #: app/widgets/gimptemplateeditor.c:486
-#| msgid "_Black Point Compensation"
 msgid "_Use Black Point Compensation"
 msgstr "N_ota svartgildismótvægi (BPC)"
 
@@ -27625,7 +27547,6 @@ msgstr "%d pát, %s"
 
 #: app/widgets/gimptemplateeditor.c:923
 #, c-format
-#| msgid "Preferred RGB (%s)"
 msgid "Preferred CMYK (%s)"
 msgstr "Forgangs-CMYK (%s)"
 
