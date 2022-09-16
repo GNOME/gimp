@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp.gimp-2-8.is\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-09-10 12:55+0000\n"
-"PO-Revision-Date: 2022-09-15 22:44+0000\n"
+"PO-Revision-Date: 2022-09-16 21:47+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
 "Language-Team: Icelandic <translation-team-is@lists.sourceforge.org>\n"
 "Language: is\n"
@@ -221,7 +221,7 @@ msgstr "Aðgerð sem nota á við magnvinnsluskipanir"
 
 #: app/main.c:246
 msgid "Quit immediately after performing requested actions"
-msgstr ""
+msgstr "Hætta strax eftir að hafa framkvæmt umbeðnar aðgerðir"
 
 #: app/main.c:251
 msgid "Send messages to console instead of using a dialog"
@@ -12588,39 +12588,36 @@ msgid "Modules"
 msgstr "Forritseiningar"
 
 #: app/core/gimp-batch.c:69
-#, fuzzy
 #| msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgid "No batch interpreters are available. Batch mode disabled."
-msgstr "Magnvinnsluforritið '%s'er ekki tiltækt. Magnvinnsla er ekki möguleg."
+msgstr "Engir magnvinnslutúlkarar eru tiltækir. Magnvinnsluhamur er óvirkur."
 
 #: app/core/gimp-batch.c:86
-#, fuzzy, c-format
+#, c-format
 #| msgid "No batch interpreter specified, using the default '%s'.\n"
 msgid "No batch interpreter specified, using '%s'.\n"
-msgstr "Ekkert magnvinnsluforrit uppgefið, nota sjálfgefið '%s'.\n"
+msgstr "Enginn magnvinnslutúlkari tilgreindur, nota '%s'.\n"
 
 #: app/core/gimp-batch.c:93
-#, fuzzy
 #| msgid "No batch interpreter specified, using the default '%s'.\n"
 msgid "No batch interpreter specified."
-msgstr "Ekkert magnvinnsluforrit uppgefið, nota sjálfgefið '%s'.\n"
+msgstr "Enginn magnvinnslutúlkari tilgreindur."
 
 #: app/core/gimp-batch.c:94 app/core/gimp-batch.c:132
-#, fuzzy
 #| msgid "Available Filters"
 msgid "Available interpreters are:"
-msgstr "Nothæfar síur"
+msgstr "Tiltækir túlkar eru:"
 
 #: app/core/gimp-batch.c:112 app/core/gimp-batch.c:150
 msgid "Specify one of these interpreters as --batch-interpreter option."
-msgstr ""
+msgstr "Tilgreindu einn af þessum túlkurum sem --batch-interpreter valkost."
 
 #. EX_UNAVAILABLE - service unavailable (sysexits.h)
 #: app/core/gimp-batch.c:128
-#, fuzzy, c-format
+#, c-format
 #| msgid "Procedure name '%s' is not a canonical identifier"
 msgid "The procedure '%s' is not a valid batch interpreter."
-msgstr "Nafn aðgerðarinnar '%s' er ekki formlegt auðkenni"
+msgstr "Aðgerðarunan '%s' er ekki gildur magnvinnslutúlkari."
 
 #: app/core/gimp-batch.c:131
 msgid "Batch mode disabled."
@@ -12630,7 +12627,8 @@ msgstr "Magnvinnsla er óvirk."
 #: app/core/gimp-batch.c:184
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "Magnvinnsluforritið '%s'er ekki tiltækt. Magnvinnsla er ekki möguleg."
+msgstr ""
+"Magnvinnslutúlkarinn '%s' er ekki tiltækur. Magnvinnsla er ekki möguleg."
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
@@ -18109,16 +18107,15 @@ msgid "Custom action"
 msgstr "Sérsniðin aðgerð"
 
 #: app/display/display-enums.c:624
-#, fuzzy
 #| msgid "Link brush size with canvas zoom"
 msgctxt "modifier-action"
 msgid "Change brush size in canvas pixels"
-msgstr "Tengja pensilstærð við aðdrátt að myndfleti"
+msgstr "Breyta pensilstærð í mynddílum myndflatar"
 
 #: app/display/display-enums.c:625
 msgctxt "modifier-action"
 msgid "Change brush radius' size in canvas pixels"
-msgstr ""
+msgstr "Breyta stærð á radíus pensils í mynddílum myndflatar"
 
 #: app/display/display-enums.c:626
 msgctxt "modifier-action"
@@ -27212,7 +27209,7 @@ msgstr[1] "Skilaboð endurtekin %d sinnum."
 
 #: app/widgets/gimpmodifierseditor.c:186
 msgid "Click here to set a button's modifiers"
-msgstr ""
+msgstr "Smelltu hér til að stilla breytilykla hnapps"
 
 #: app/widgets/gimpmodifierseditor.c:198
 msgid "Modifiers cannot be customized on the primary button."
@@ -27221,13 +27218,13 @@ msgstr ""
 #: app/widgets/gimpmodifierseditor.c:338
 #, c-format
 msgid "Editing modifiers for button %d of %s"
-msgstr ""
+msgstr "Breyti breytilyklum fyrir hnapp %d af %s"
 
 #. TRANSLATORS: %d is an input device button number.
 #: app/widgets/gimpmodifierseditor.c:342 app/widgets/gimpmodifierseditor.c:660
 #, c-format
 msgid "Editing modifiers for button %d"
-msgstr ""
+msgstr "Breyti breytilyklum fyrir hnapp %d"
 
 #. TRANSLATORS: first %s is modifier keys, %d is button
 #. * number, last %s is an input device (e.g. a mouse) name.
@@ -27241,7 +27238,7 @@ msgstr "Velja aðgerð fyrir %s hnapp %d af %s"
 #: app/widgets/gimpmodifierseditor.c:648
 #, c-format
 msgid "Editing modifiers for %s button %d"
-msgstr ""
+msgstr "Breyti breytilyklum fyrir %s hnapp %d"
 
 #: app/widgets/gimpmodifierseditor.c:655
 #, c-format
