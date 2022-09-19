@@ -149,6 +149,10 @@ heif_init_procedures (GimpPlugIn *plug_in)
 {
   GList *list = NULL;
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+  heif_init (NULL);
+#endif
+
   if (heif_have_decoder_for_format (heif_compression_HEVC))
     {
       list = g_list_append (list, g_strdup (LOAD_PROC));
@@ -169,6 +173,11 @@ heif_init_procedures (GimpPlugIn *plug_in)
       list = g_list_append (list, g_strdup (SAVE_PROC_AV1));
     }
 #endif
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+  heif_deinit ();
+#endif
+
   return list;
 }
 
@@ -425,7 +434,15 @@ heif_load (GimpProcedure        *procedure,
   if (interactive)
     gimp_ui_init (PLUG_IN_BINARY);
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+  heif_init (NULL);
+#endif
+
   image = load_image (file, interactive, &status, &error);
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+  heif_deinit ();
+#endif
 
   if (! image)
     return gimp_procedure_new_return_values (procedure, status, error);
@@ -502,11 +519,19 @@ heif_save (GimpProcedure        *procedure,
 
       metadata = gimp_image_metadata_save_prepare (image, "image/heif", &metadata_flags);
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_init (NULL);
+#endif
+
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_HEVC, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_deinit ();
+#endif
 
       if (metadata)
         {
@@ -590,11 +615,19 @@ heif_av1_save (GimpProcedure        *procedure,
 
       metadata = gimp_image_metadata_save_prepare (image, "image/avif", &metadata_flags);
 
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_init (NULL);
+#endif
+
       if (! save_image (file, image, drawables[0], G_OBJECT (config),
                         &error, heif_compression_AV1, metadata))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
+
+#if LIBHEIF_HAVE_VERSION(1,13,0)
+      heif_deinit ();
+#endif
 
       if (metadata)
         {
@@ -1406,6 +1439,7 @@ save_image (GFile                        *file,
   struct heif_image                    *h_image = NULL;
   struct heif_context                  *context = heif_context_alloc ();
   struct heif_encoder                  *encoder = NULL;
+  struct heif_encoding_options         *encoder_options = NULL;
   const struct heif_encoder_descriptor *encoder_descriptor;
   const char                           *encoder_name;
   struct heif_image_handle             *handle  = NULL;
@@ -1936,11 +1970,25 @@ save_image (GFile                        *file,
     }
 #endif
 
+#if LIBHEIF_HAVE_VERSION(1,10,0)
+  if (pixel_format == HEIFPLUGIN_EXPORT_FORMAT_RGB)
+    {
+      encoder_options = heif_encoding_options_alloc ();
+      encoder_options->save_two_colr_boxes_when_ICC_and_nclx_available = 1;
+    }
+#endif
+
   err = heif_context_encode_image (context,
                                    h_image,
                                    encoder,
-                                   NULL,
+                                   encoder_options,
                                    &handle);
+
+  if (encoder_options)
+    {
+      heif_encoding_options_free (encoder_options);
+    }
+
   if (err.code != 0)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
