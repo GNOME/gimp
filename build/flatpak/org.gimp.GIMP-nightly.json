@@ -618,8 +618,8 @@
             ],
             "sources": [
                 {
-                    "url": "https://github.com/strukturag/libheif/releases/download/v1.12.0/libheif-1.12.0.tar.gz",
-                    "sha256": "e1ac2abb354fdc8ccdca71363ebad7503ad731c84022cf460837f0839e171718",
+                    "url": "https://github.com/strukturag/libheif/releases/download/v1.13.0/libheif-1.13.0.tar.gz",
+                    "sha256": "c20ae01bace39e89298f6352f1ff4a54b415b33b9743902da798e8a1e51d7ca1",
                     "type": "archive",
                     "x-checker-data": {
                         "type": "anitya",
@@ -638,6 +638,7 @@
                 "-DJPEGXL_WARNINGS_AS_ERRORS=OFF",
                 "-DJPEGXL_ENABLE_SJPEG=OFF",
                 "-DJPEGXL_ENABLE_BENCHMARK=OFF",
+                "-DJPEGXL_ENABLE_DOXYGEN=OFF",
                 "-DJPEGXL_ENABLE_EXAMPLES=OFF",
                 "-DJPEGXL_ENABLE_MANPAGES=OFF",
                 "-DJPEGXL_ENABLE_SKCMS=ON",
@@ -651,8 +652,8 @@
                 {
                     "type": "git",
                     "url": "https://github.com/libjxl/libjxl.git",
-                    "tag": "v0.6.1",
-                    "commit": "a205468bc5d3a353fb15dae2398a101dff52f2d3"
+                    "tag": "v0.7.0",
+                    "commit": "f95da131cf7c7ccd4da256356fde2fec1fa23bb5"
                 }
             ]
         },
