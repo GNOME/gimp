@@ -137,6 +137,16 @@ notebook header tabs tab:hover {
   background-color: @hover-color;
 }
 
+/* The disabled notebook selection arrows,
+ * when the first or last tab is selected
+ */
+notebook header tabs arrow:disabled, 
+notebook header tabs arrow:hover
+{
+  background-color: @strong-border-color;
+  background-image: none;
+}
+
 /* The background of many dialogs, e.g. Preferences and gimpcolordialog */
 .vertical {
   color: @fg-color;
