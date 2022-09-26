@@ -83,6 +83,8 @@ static void
                                                      gint             *minimum_width,
                                                      gint             *natural_width);
 
+static void     gimp_fg_bg_editor_size_allocate     (GtkWidget        *editor,
+                                                     GtkAllocation    *allocation);
 static void     gimp_fg_bg_editor_style_updated     (GtkWidget        *widget);
 static gboolean gimp_fg_bg_editor_draw              (GtkWidget        *widget,
                                                      cairo_t          *cr);
@@ -190,6 +192,7 @@ gimp_fg_bg_editor_class_init (GimpFgBgEditorClass *klass)
 
   widget_class->get_request_mode               = gimp_fg_bg_editor_get_request_mode;
   widget_class->get_preferred_width_for_height = gimp_fg_bg_editor_get_preferred_width_for_height;
+  widget_class->size_allocate                  = gimp_fg_bg_editor_size_allocate;
   widget_class->style_updated                  = gimp_fg_bg_editor_style_updated;
   widget_class->draw                           = gimp_fg_bg_editor_draw;
   widget_class->button_press_event             = gimp_fg_bg_editor_button_press;
@@ -309,6 +312,15 @@ gimp_fg_bg_editor_get_preferred_width_for_height (GtkWidget *widget,
 {
   *minimum_width = height;
   *natural_width = height;
+}
+
+static void
+gimp_fg_bg_editor_size_allocate (GtkWidget      *widget,
+                                 GtkAllocation  *allocation)
+{
+  GTK_WIDGET_CLASS (parent_class)->size_allocate (widget, allocation);
+
+  gimp_fg_bg_editor_style_updated (widget);
 }
 
 static void

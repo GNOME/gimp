@@ -121,10 +121,18 @@ static void        gimp_toolbox_book_added              (GimpDock       *dock,
                                                          GimpDockbook   *dockbook);
 static void        gimp_toolbox_book_removed            (GimpDock       *dock,
                                                          GimpDockbook   *dockbook);
+
+static void        gimp_toolbox_notify_theme            (GimpGuiConfig  *config,
+                                                         GParamSpec     *pspec,
+                                                         GimpToolbox    *toolbox);
+
+static void        gimp_toolbox_palette_style_updated   (GtkWidget      *palette,
+                                                         GimpToolbox    *toolbox);
+
 static void        gimp_toolbox_wilber_style_updated    (GtkWidget      *widget,
                                                          GimpToolbox    *toolbox);
-static gboolean    gimp_toolbox_draw_wilber             (GtkWidget             *widget,
-                                                         cairo_t               *cr);
+static gboolean    gimp_toolbox_draw_wilber             (GtkWidget      *widget,
+                                                         cairo_t        *cr);
 static GtkWidget * toolbox_create_color_area            (GimpToolbox    *toolbox,
                                                          GimpContext    *context);
 static GtkWidget * toolbox_create_foo_area              (GimpToolbox    *toolbox,
@@ -565,6 +573,33 @@ gimp_toolbox_set_drag_handler (GimpToolbox  *toolbox,
 /*  private functions  */
 
 static void
+gimp_toolbox_notify_theme (GimpGuiConfig *config,
+                           GParamSpec    *pspec,
+                           GimpToolbox   *toolbox)
+{
+  gimp_toolbox_palette_style_updated (GTK_WIDGET (toolbox->p->tool_palette), toolbox);
+}
+
+static void
+gimp_toolbox_palette_style_updated (GtkWidget   *widget,
+                                    GimpToolbox *toolbox)
+{
+  GtkIconSize  tool_icon_size = GTK_ICON_SIZE_LARGE_TOOLBAR;
+  gint         icon_width     = 40;
+  gint         icon_height    = 38;
+
+  gtk_widget_style_get (widget,
+                        "tool-icon-size", &tool_icon_size,
+                        NULL);
+  gtk_icon_size_lookup (tool_icon_size, &icon_width, &icon_height);
+
+  gtk_widget_set_size_request (toolbox->p->color_area,
+                               (gint) (icon_width * 1.75),
+                               (gint) (icon_height * 1.75));
+  gtk_widget_queue_resize (toolbox->p->color_area);
+}
+
+static void
 gimp_toolbox_wilber_style_updated (GtkWidget   *widget,
                                    GimpToolbox *toolbox)
 {
@@ -614,6 +649,13 @@ toolbox_create_color_area (GimpToolbox *toolbox,
                 "margin-bottom", 2,
                 NULL);
 
+  g_signal_connect (toolbox->p->tool_palette, "style-updated",
+                    G_CALLBACK (gimp_toolbox_palette_style_updated),
+                    toolbox);
+  g_signal_connect_after (GIMP_GUI_CONFIG (toolbox->p->context->gimp->config),
+                          "notify::theme",
+                          G_CALLBACK (gimp_toolbox_notify_theme),
+                          toolbox);
   return col_area;
 }
 
