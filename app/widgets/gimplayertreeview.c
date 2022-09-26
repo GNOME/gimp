@@ -39,6 +39,7 @@
 #include "core/gimp.h"
 #include "core/gimpchannel.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage-undo.h"
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpimage.h"
@@ -77,6 +78,7 @@ struct _GimpLayerTreeViewPrivate
 
   GtkWidget       *link_button;
   GtkWidget       *link_popover;
+  GtkWidget       *new_link_button;
   GtkWidget       *link_list;
   GtkWidget       *link_entry;
   GtkWidget       *link_search_entry;
@@ -101,6 +103,8 @@ static void       gimp_layer_tree_view_view_iface_init            (GimpContainer
 
 static void       gimp_layer_tree_view_constructed                (GObject                    *object);
 static void       gimp_layer_tree_view_finalize                   (GObject                    *object);
+
+static void       gimp_layer_tree_view_style_updated              (GtkWidget                  *widget);
 
 static void       gimp_layer_tree_view_set_container              (GimpContainerView          *view,
                                                                    GimpContainer              *container);
@@ -218,12 +222,16 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
   GObjectClass               *object_class = G_OBJECT_CLASS (klass);
   GimpContainerTreeViewClass *tree_view_class;
   GimpItemTreeViewClass      *item_view_class;
+  GtkWidgetClass             *widget_class;
 
+  widget_class    = GTK_WIDGET_CLASS (klass);
   tree_view_class = GIMP_CONTAINER_TREE_VIEW_CLASS (klass);
   item_view_class = GIMP_ITEM_TREE_VIEW_CLASS (klass);
 
   object_class->constructed = gimp_layer_tree_view_constructed;
   object_class->finalize    = gimp_layer_tree_view_finalize;
+
+  widget_class->style_updated      = gimp_layer_tree_view_style_updated;
 
   tree_view_class->drop_possible   = gimp_layer_tree_view_drop_possible;
   tree_view_class->drop_color      = gimp_layer_tree_view_drop_color;
@@ -513,6 +521,7 @@ gimp_layer_tree_view_constructed (GObject *object)
                             G_CALLBACK (gimp_layer_tree_view_new_link_clicked),
                             layer_view);
   gtk_widget_show (button);
+  layer_view->priv->new_link_button = button;
 
   /* Enter on any entry activates the link creation then exits in case
    * of success.
@@ -563,6 +572,50 @@ gimp_layer_tree_view_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
+
+/*  GimpWidget methods  */
+
+static void
+gimp_layer_tree_view_style_updated (GtkWidget *widget)
+{
+  GimpLayerTreeView *view = GIMP_LAYER_TREE_VIEW (widget);
+  GtkWidget         *image;
+  const gchar       *old_icon_name;
+  GtkReliefStyle     button_relief;
+  GtkIconSize        old_size;
+  GtkIconSize        button_size;
+
+  gtk_widget_style_get (widget,
+                        "button-relief",    &button_relief,
+                        "button-icon-size", &button_size,
+                        NULL);
+
+  gtk_button_set_relief (GTK_BUTTON (view->priv->link_button),
+                         button_relief);
+
+  image = gtk_button_get_image (GTK_BUTTON (view->priv->link_button));
+
+  gtk_image_get_icon_name (GTK_IMAGE (image), &old_icon_name, &old_size);
+
+  if (button_size != old_size)
+    {
+      gchar *icon_name;
+
+      /* Changing the link button in dockable button box. */
+      icon_name = g_strdup (old_icon_name);
+      gtk_image_set_from_icon_name (GTK_IMAGE (image),
+                                    icon_name, button_size);
+      g_free (icon_name);
+
+      /* Changing the new link button inside the popover. */
+      image = gtk_button_get_image (GTK_BUTTON (view->priv->new_link_button));
+      gtk_image_get_icon_name (GTK_IMAGE (image), &old_icon_name, &old_size);
+      icon_name = g_strdup (old_icon_name);
+      gtk_image_set_from_icon_name (GTK_IMAGE (image),
+                                    icon_name, button_size);
+      g_free (icon_name);
+    }
+}
 
 /*  GimpContainerView methods  */
 
@@ -651,8 +704,34 @@ gimp_layer_tree_view_set_context (GimpContainerView *view,
 {
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (view);
   GimpLayerTreeView     *layer_view = GIMP_LAYER_TREE_VIEW (view);
+  GimpContext           *old_context;
+
+  old_context = gimp_container_view_get_context (view);
+
+  if (old_context)
+    {
+      g_signal_handlers_disconnect_by_func (old_context->gimp->config,
+                                            G_CALLBACK (gimp_layer_tree_view_style_updated),
+                                            view);
+    }
 
   parent_view_iface->set_context (view, context);
+
+  if (context)
+    {
+      g_signal_connect_object (context->gimp->config,
+                               "notify::theme",
+                               G_CALLBACK (gimp_layer_tree_view_style_updated),
+                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (context->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_layer_tree_view_style_updated),
+                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (context->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_layer_tree_view_style_updated),
+                               view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+    }
 
   if (tree_view->model)
     {

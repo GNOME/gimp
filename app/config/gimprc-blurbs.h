@@ -540,6 +540,12 @@ _("The name of the theme to use.")
 #define ICON_THEME_BLURB \
 "The name of the icon theme to use."
 
+#define OVERRIDE_THEME_ICON_SIZE_BLURB \
+_("Override theme-set icon sizes.")
+
+#define ICON_SIZE_BLURB \
+_("The size of the icons to use.")
+
 #define PREFER_SYMBOLIC_ICONS_BLURB \
 _("When enabled, symbolic icons will be preferred if available.")
 

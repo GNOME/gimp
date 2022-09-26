@@ -72,6 +72,9 @@ struct _GimpItemTreeViewPrivate
   GtkWidget       *options_box;
   GtkSizeGroup    *options_group;
 
+  GtkWidget       *eye_header_image;
+  GtkWidget       *lock_header_image;
+
   GimpItem        *lock_box_item;
   GtkTreePath     *lock_box_path;
   GtkWidget       *lock_popover;
@@ -374,7 +377,8 @@ gimp_item_tree_view_constructed (GObject *object)
   GimpItemTreeView      *item_view       = GIMP_ITEM_TREE_VIEW (object);
   GtkTreeViewColumn     *column;
   GtkWidget             *image;
-  GtkIconSize            button_icon_size;
+  GtkIconSize            button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+  gint                   pixel_icon_size  = 16;
   gint                   button_spacing;
 
   G_OBJECT_CLASS (parent_class)->constructed (object);
@@ -385,6 +389,7 @@ gimp_item_tree_view_constructed (GObject *object)
                         "button-icon-size", &button_icon_size,
                         "button-spacing", &button_spacing,
                         NULL);
+  gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
 
   gimp_container_tree_view_connect_name_edited (tree_view,
                                                 G_CALLBACK (gimp_item_tree_view_name_edited),
@@ -403,11 +408,13 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_tree_view_column_set_widget (column, image);
   gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 0);
+  item_view->priv->eye_header_image = image;
 
   item_view->priv->eye_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_VISIBLE);
   g_object_set (item_view->priv->eye_cell,
                 "xpad",                0,
                 "ypad",                0,
+                "icon-size",           pixel_icon_size,
                 "override-background", TRUE,
                 NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->eye_cell, FALSE);
@@ -432,11 +439,13 @@ gimp_item_tree_view_constructed (GObject *object)
   gtk_tree_view_column_set_widget (column, image);
   gtk_widget_show (image);
   gtk_tree_view_insert_column (tree_view->view, column, 1);
+  item_view->priv->lock_header_image = image;
 
   item_view->priv->lock_cell = gimp_cell_renderer_toggle_new (GIMP_ICON_LOCK_MULTI);
   g_object_set (item_view->priv->lock_cell,
-                "xpad", 0,
-                "ypad", 0,
+                "xpad",      0,
+                "ypad",      0,
+                "icon-size", pixel_icon_size,
                 NULL);
   gtk_tree_view_column_pack_start (column, item_view->priv->lock_cell, FALSE);
   gtk_tree_view_column_set_attributes (column, item_view->priv->lock_cell,
@@ -606,10 +615,15 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
   GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (widget);
   GList            *children;
   GList            *list;
+  const gchar      *old_icon_name;
+  gchar            *icon_name;
   GtkReliefStyle    button_relief;
-  GtkIconSize       button_icon_size;
+  GtkIconSize       old_size;
+  GtkIconSize       button_icon_size = GTK_ICON_SIZE_SMALL_TOOLBAR;
+  gint              pixel_icon_size  = 16;
   gint              content_spacing;
   gint              button_spacing;
+
 
   gtk_widget_style_get (widget,
                         "button-relief",    &button_relief,
@@ -658,14 +672,17 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
               if (GTK_IS_IMAGE (image))
                 {
                   GtkIconSize  old_size;
-                  const gchar *icon_name;
 
                   gtk_image_get_icon_name (GTK_IMAGE (image),
-                                           &icon_name, &old_size);
+                                           &old_icon_name, &old_size);
 
                   if (button_icon_size != old_size)
-                    gtk_image_set_from_icon_name (GTK_IMAGE (image),
-                                                  icon_name, button_icon_size);
+                    {
+                      icon_name = g_strdup (old_icon_name);
+                      gtk_image_set_from_icon_name (GTK_IMAGE (image),
+                                                    icon_name, button_icon_size);
+                      g_free (icon_name);
+                    }
                 }
             }
         }
@@ -673,12 +690,36 @@ gimp_item_tree_view_style_updated (GtkWidget *widget)
       g_list_free (children);
     }
 
-  /* force the toggle cells to recreate their icon */
+  gtk_image_get_icon_name (GTK_IMAGE (view->priv->lock_header_image),
+                           &old_icon_name, &old_size);
+
+  if (button_icon_size != old_size)
+    {
+      icon_name = g_strdup (old_icon_name);
+      gtk_image_set_from_icon_name (GTK_IMAGE (view->priv->lock_header_image),
+                                    icon_name, button_icon_size);
+      g_free (icon_name);
+    }
+
+  gtk_image_get_icon_name (GTK_IMAGE (view->priv->eye_header_image),
+                           &old_icon_name, &old_size);
+  if (button_icon_size != old_size)
+    {
+      icon_name = g_strdup (old_icon_name);
+      gtk_image_set_from_icon_name (GTK_IMAGE (view->priv->eye_header_image),
+                                    icon_name, button_icon_size);
+      g_free (icon_name);
+    }
+
+  /* force the eye and toggle cells to recreate their icon */
+  gtk_icon_size_lookup (button_icon_size, &pixel_icon_size, NULL);
   g_object_set (view->priv->eye_cell,
                 "icon-name", GIMP_ICON_VISIBLE,
+                "icon-size", pixel_icon_size,
                 NULL);
   g_object_set (view->priv->lock_cell,
                 "icon-name", GIMP_ICON_LOCK_MULTI,
+                "icon-size", pixel_icon_size,
                 NULL);
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
@@ -1099,6 +1140,9 @@ gimp_item_tree_view_set_context (GimpContainerView *view,
       g_signal_handlers_disconnect_by_func (old_context,
                                             gimp_item_tree_view_set_image,
                                             item_view);
+      g_signal_handlers_disconnect_by_func (old_context->gimp->config,
+                                            G_CALLBACK (gimp_item_tree_view_style_updated),
+                                            item_view);
     }
 
   parent_view_iface->set_context (view, context);
@@ -1111,6 +1155,19 @@ gimp_item_tree_view_set_context (GimpContainerView *view,
       g_signal_connect_swapped (context, "image-changed",
                                 G_CALLBACK (gimp_item_tree_view_set_image),
                                 item_view);
+
+      g_signal_connect_object (context->gimp->config,
+                               "notify::theme",
+                               G_CALLBACK (gimp_item_tree_view_style_updated),
+                               item_view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (context->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_item_tree_view_style_updated),
+                               item_view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (context->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_item_tree_view_style_updated),
+                               item_view, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
       image = gimp_context_get_image (context);
     }

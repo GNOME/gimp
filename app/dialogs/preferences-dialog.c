@@ -150,6 +150,12 @@ static void   prefs_check_style_callback           (GObject      *config,
                                                     GParamSpec   *pspec,
                                                     GtkWidget    *widget);
 
+static void   prefs_gui_config_notify_icon_size    (GObject       *config,
+                                                    GParamSpec    *pspec,
+                                                    GtkRange      *range);
+static void   prefs_icon_size_value_changed        (GtkRange      *range,
+                                                    GimpGuiConfig *config);
+
 
 /*  private variables  */
 
@@ -933,6 +939,39 @@ prefs_check_style_callback (GObject    *config,
 
   gtk_widget_set_sensitive (widget,
                             display_config->transparency_type == GIMP_CHECK_TYPE_CUSTOM_CHECKS);
+}
+
+static void
+prefs_icon_size_value_changed (GtkRange      *range,
+                               GimpGuiConfig *config)
+{
+  gint value = (gint) gtk_range_get_value (range);
+
+  g_signal_handlers_block_by_func (config,
+                                   G_CALLBACK (prefs_gui_config_notify_icon_size),
+                                   range);
+  g_object_set (G_OBJECT (config),
+                "custom-icon-size", (GimpIconSize) value,
+                NULL);
+  g_signal_handlers_unblock_by_func (config,
+                                     G_CALLBACK (prefs_gui_config_notify_icon_size),
+                                     range);
+}
+
+static void
+prefs_gui_config_notify_icon_size (GObject    *config,
+                                   GParamSpec *pspec,
+                                   GtkRange   *range)
+{
+  GimpIconSize size = GIMP_GUI_CONFIG (config)->custom_icon_size;
+
+  g_signal_handlers_block_by_func (range,
+                                   G_CALLBACK (prefs_icon_size_value_changed),
+                                   config);
+  gtk_range_set_value (range, (gdouble) size);
+  g_signal_handlers_unblock_by_func (range,
+                                     G_CALLBACK (prefs_icon_size_value_changed),
+                                     config);
 }
 
 static void
@@ -1975,6 +2014,7 @@ prefs_dialog_new (Gimp       *gimp,
     GtkWidget         *scrolled_win;
     GtkListStore      *list_store;
     GtkWidget         *view;
+    GtkWidget         *scale;
     GtkTreeSelection  *sel;
     gchar            **themes;
     gint               n_themes;
@@ -2044,23 +2084,56 @@ prefs_dialog_new (Gimp       *gimp,
     g_signal_connect (sel, "changed",
                       G_CALLBACK (prefs_theme_select_callback),
                       gimp);
+
+    prefs_check_button_add (object, "prefer-dark-theme",
+                            _("Use dark theme variant if available"),
+                            GTK_BOX (vbox2));
+
+    /* Override icon sizes. */
+    button = prefs_check_button_add (object, "override-theme-icon-size",
+                                     _("_Override icon sizes set by the theme"),
+                                     GTK_BOX (vbox2));
+
+    vbox3 = prefs_frame_new (NULL, GTK_CONTAINER (vbox2), FALSE);
+    g_object_bind_property (button, "active",
+                            vbox3,  "sensitive",
+                            G_BINDING_SYNC_CREATE);
+    scale = gtk_scale_new_with_range (GTK_ORIENTATION_HORIZONTAL,
+                                      0.0, 3.0, 1.0);
+    /* 'draw_value' updates round_digits. So set it first. */
+    gtk_scale_set_draw_value (GTK_SCALE (scale), FALSE);
+    gtk_range_set_round_digits (GTK_RANGE (scale), 0.0);
+    gtk_scale_add_mark (GTK_SCALE (scale), 0.0, GTK_POS_BOTTOM,
+                        _("Small"));
+    gtk_scale_add_mark (GTK_SCALE (scale), 1.0, GTK_POS_BOTTOM,
+                        _("Medium"));
+    gtk_scale_add_mark (GTK_SCALE (scale), 2.0, GTK_POS_BOTTOM,
+                        _("Large"));
+    gtk_scale_add_mark (GTK_SCALE (scale), 3.0, GTK_POS_BOTTOM,
+                        _("Huge"));
+    gtk_range_set_value (GTK_RANGE (scale),
+                         (gdouble) GIMP_GUI_CONFIG (object)->custom_icon_size);
+    g_signal_connect (G_OBJECT (scale), "value-changed",
+                      G_CALLBACK (prefs_icon_size_value_changed),
+                      GIMP_GUI_CONFIG (object));
+    g_signal_connect (G_OBJECT (object), "notify::custom-icon-size",
+                      G_CALLBACK (prefs_gui_config_notify_icon_size),
+                      scale);
+    gtk_box_pack_start (GTK_BOX (vbox3), scale, FALSE, FALSE, 0);
+    gtk_widget_show (scale);
+
+    /* Reload Current Theme button */
+    hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
+    gtk_widget_show (hbox);
+
+    button = prefs_button_add (GIMP_ICON_VIEW_REFRESH,
+                               _("Reload C_urrent Theme"),
+                               GTK_BOX (hbox));
+    g_signal_connect (button, "clicked",
+                      G_CALLBACK (prefs_theme_reload_callback),
+                      gimp);
   }
-
-  prefs_check_button_add (object, "prefer-dark-theme",
-                          _("Use dark theme variant if available"),
-                          GTK_BOX (vbox2));
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox2), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = prefs_button_add (GIMP_ICON_VIEW_REFRESH,
-                             _("Reload C_urrent Theme"),
-                             GTK_BOX (hbox));
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (prefs_theme_reload_callback),
-                    gimp);
-
 
   /****************************/
   /*  Interface / Icon Theme  */

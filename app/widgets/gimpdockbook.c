@@ -95,6 +95,7 @@ struct _GimpDockbookPrivate
 
 static void         gimp_dockbook_finalize          (GObject        *object);
 
+static void         gimp_dockbook_style_updated     (GtkWidget       *widget);
 static void         gimp_dockbook_drag_begin        (GtkWidget      *widget,
                                                      GdkDragContext *context);
 static void         gimp_dockbook_drag_end          (GtkWidget      *widget,
@@ -133,6 +134,7 @@ static void         gimp_dockbook_menu_end          (GimpDockable   *dockable);
 static void         gimp_dockbook_tab_locked_notify (GimpDockable   *dockable,
                                                      GParamSpec     *pspec,
                                                      GimpDockbook   *dockbook);
+
 static void         gimp_dockbook_help_func         (const gchar    *help_id,
                                                      gpointer        help_data);
 
@@ -184,6 +186,7 @@ gimp_dockbook_class_init (GimpDockbookClass *klass)
 
   object_class->finalize         = gimp_dockbook_finalize;
 
+  widget_class->style_updated    = gimp_dockbook_style_updated;
   widget_class->drag_begin       = gimp_dockbook_drag_begin;
   widget_class->drag_end         = gimp_dockbook_drag_end;
   widget_class->drag_motion      = gimp_dockbook_drag_motion;
@@ -261,6 +264,36 @@ gimp_dockbook_finalize (GObject *object)
   g_clear_object (&dockbook->p->ui_manager);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_dockbook_style_updated (GtkWidget *widget)
+{
+  GimpDockbook *dockbook = GIMP_DOCKBOOK (widget);
+  GimpContext  *context;
+  GtkWidget    *tab_widget;
+  GList        *children;
+  GList        *iter;
+
+  GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
+
+  if (! dockbook->p->dock ||
+      ! (context = gimp_dock_get_context (dockbook->p->dock)))
+    return;
+
+  children = gtk_container_get_children (GTK_CONTAINER (dockbook));
+  for (iter = children; iter; iter = g_list_next (iter))
+    {
+      GimpDockable *dockable = GIMP_DOCKABLE (iter->data);
+
+      tab_widget = gimp_dockbook_create_tab_widget (dockbook, dockable);
+      gtk_notebook_set_tab_label (GTK_NOTEBOOK (dockbook),
+                                  GTK_WIDGET (dockable),
+                                  tab_widget);
+    }
+  g_list_free (children);
+
+  gimp_dock_invalidate_geometry (GIMP_DOCK (dockbook->p->dock));
 }
 
 static void
@@ -693,10 +726,37 @@ void
 gimp_dockbook_set_dock (GimpDockbook *dockbook,
                         GimpDock     *dock)
 {
+  GimpContext *context;
+
   g_return_if_fail (GIMP_IS_DOCKBOOK (dockbook));
   g_return_if_fail (dock == NULL || GIMP_IS_DOCK (dock));
 
+  if (dockbook->p->dock &&
+      (context = gimp_dock_get_context (dockbook->p->dock)) != NULL)
+    {
+      g_signal_handlers_disconnect_by_func (GIMP_GUI_CONFIG (context->gimp->config),
+                                            G_CALLBACK (gimp_dockbook_style_updated),
+                                            dockbook);
+    }
+
   dockbook->p->dock = dock;
+
+  if (dockbook->p->dock &&
+      (context = gimp_dock_get_context (dockbook->p->dock)) != NULL)
+    {
+      g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+                               "notify::theme",
+                               G_CALLBACK (gimp_dockbook_style_updated),
+                               dockbook, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_dockbook_style_updated),
+                               dockbook, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_dockbook_style_updated),
+                               dockbook, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+    }
 }
 
 GimpUIManager *

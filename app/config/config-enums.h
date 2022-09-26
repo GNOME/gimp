@@ -95,6 +95,19 @@ typedef enum
 } GimpHelpBrowserType;
 
 
+#define GIMP_TYPE_ICON_SIZE (gimp_icon_size_get_type ())
+
+GType gimp_icon_size_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ICON_SIZE_SMALL,   /*< desc="Small size"       > */
+  GIMP_ICON_SIZE_MEDIUM,  /*< desc="Medium size"      > */
+  GIMP_ICON_SIZE_LARGE,   /*< desc="Large size"       > */
+  GIMP_ICON_SIZE_HUGE     /*< desc="Huge size"        > */
+} GimpIconSize;
+
+
 #define GIMP_TYPE_POSITION (gimp_position_get_type ())
 
 GType gimp_position_get_type (void) G_GNUC_CONST;

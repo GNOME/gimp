@@ -244,6 +244,19 @@ gimp_editor_constructed (GObject *object)
         gimp_menu_factory_manager_new (editor->priv->menu_factory,
                                        editor->priv->menu_identifier,
                                        editor->priv->popup_data);
+
+      g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+                               "notify::theme",
+                               G_CALLBACK (gimp_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
     }
 }
 
@@ -430,12 +443,27 @@ gimp_editor_create_menu (GimpEditor      *editor,
 
   if (editor->priv->ui_manager)
     {
+      g_signal_handlers_disconnect_by_func (editor->priv->ui_manager->gimp->config,
+                                            G_CALLBACK (gimp_editor_style_updated),
+                                            editor);
       g_object_unref (editor->priv->ui_manager);
     }
 
   editor->priv->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                             menu_identifier,
                                                             popup_data);
+  g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+                           "notify::theme",
+                           G_CALLBACK (gimp_editor_style_updated),
+                           editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_editor_style_updated),
+                           editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (editor->priv->ui_manager->gimp->config,
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_editor_style_updated),
+                           editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
   if (editor->priv->ui_path)
     g_free (editor->priv->ui_path);
@@ -786,16 +814,23 @@ gimp_editor_set_box_style (GimpEditor *editor,
 
           child = gtk_bin_get_child (GTK_BIN (list->data));
 
-          if (GTK_IS_IMAGE (child))
+          if (GTK_IS_IMAGE (child) &&
+              gtk_image_get_storage_type (GTK_IMAGE (child)) == GTK_IMAGE_ICON_NAME)
             {
               GtkIconSize  old_size;
-              const gchar *icon_name;
+              const gchar *old_icon_name;
 
-              gtk_image_get_icon_name (GTK_IMAGE (child), &icon_name, &old_size);
+              gtk_image_get_icon_name (GTK_IMAGE (child), &old_icon_name, &old_size);
 
               if (button_icon_size != old_size)
-                gtk_image_set_from_icon_name (GTK_IMAGE (child),
-                                              icon_name, button_icon_size);
+                {
+                  gchar *icon_name;
+
+                  icon_name = g_strdup (old_icon_name);
+                  gtk_image_set_from_icon_name (GTK_IMAGE (child),
+                                                icon_name, button_icon_size);
+                  g_free (icon_name);
+                }
             }
         }
     }

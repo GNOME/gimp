@@ -159,6 +159,8 @@ gimp_color_editor_init (GimpColorEditor *editor)
   GimpHSV      hsv;
   GList       *list;
   GSList      *group;
+  gint         icon_width  = 40;
+  gint         icon_height = 38;
 
   editor->context = NULL;
   editor->edit_bg = FALSE;
@@ -241,6 +243,10 @@ gimp_color_editor_init (GimpColorEditor *editor)
 
   /*  FG/BG editor  */
   editor->fg_bg = gimp_fg_bg_editor_new (NULL);
+  gtk_icon_size_lookup (button_icon_size, &icon_width, &icon_height);
+  gtk_widget_set_size_request (editor->fg_bg,
+                               (gint) (icon_width * 1.75),
+                               (gint) (icon_height * 1.75));
   gtk_box_pack_start (GTK_BOX (hbox), editor->fg_bg, FALSE, FALSE, 0);
   gtk_widget_show (editor->fg_bg);
 
@@ -438,6 +444,10 @@ gimp_color_editor_set_context (GimpDocked  *docked,
                                             gimp_color_editor_bg_changed,
                                             editor);
 
+      g_signal_handlers_disconnect_by_func (editor->context->gimp->config,
+                                            G_CALLBACK (gimp_color_editor_style_updated),
+                                            editor);
+
       g_object_unref (editor->context);
     }
 
@@ -455,6 +465,19 @@ gimp_color_editor_set_context (GimpDocked  *docked,
       g_signal_connect (editor->context, "background-changed",
                         G_CALLBACK (gimp_color_editor_bg_changed),
                         editor);
+
+      g_signal_connect_object (editor->context->gimp->config,
+                               "notify::theme",
+                               G_CALLBACK (gimp_color_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (context->gimp->config,
+                               "notify::override-theme-icon-size",
+                               G_CALLBACK (gimp_color_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+      g_signal_connect_object (context->gimp->config,
+                               "notify::custom-icon-size",
+                               G_CALLBACK (gimp_color_editor_style_updated),
+                               editor, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 
       if (editor->edit_bg)
         {
@@ -492,11 +515,22 @@ static void
 gimp_color_editor_style_updated (GtkWidget *widget)
 {
   GimpColorEditor *editor = GIMP_COLOR_EDITOR (widget);
+  GtkIconSize      button_icon_size;
+  gint             icon_width  = 40;
+  gint             icon_height = 38;
 
   GTK_WIDGET_CLASS (parent_class)->style_updated (widget);
 
   if (editor->hbox)
     gimp_editor_set_box_style (GIMP_EDITOR (editor), GTK_BOX (editor->hbox));
+
+  gtk_widget_style_get (GTK_WIDGET (editor),
+                        "button-icon-size", &button_icon_size,
+                        NULL);
+  gtk_icon_size_lookup (button_icon_size, &icon_width, &icon_height);
+  gtk_widget_set_size_request (editor->fg_bg,
+                               (gint) (icon_width * 1.75),
+                               (gint) (icon_height * 1.75));
 }
 
 

@@ -96,6 +96,12 @@ themes_init (Gimp *gimp)
   g_signal_connect (config, "notify::prefer-symbolic-icons",
                     G_CALLBACK (themes_theme_change_notify),
                     gimp);
+  g_signal_connect (config, "notify::override-theme-icon-size",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
+  g_signal_connect (config, "notify::custom-icon-size",
+                    G_CALLBACK (themes_theme_change_notify),
+                    gimp);
 
   themes_theme_change_notify (config, NULL, gimp);
 }
@@ -321,10 +327,60 @@ themes_apply_theme (Gimp          *gimp,
             "\n"
             "* { -gtk-icon-style: %s; }\n"
             "\n"
-            "%s"
-            "/* end of theme.css */\n",
+            "%s",
             config->prefer_symbolic_icons ? "symbolic" : "regular",
-            config->prefer_dark_theme ? "/* prefer-dark-theme */\n\n" : "");
+            config->prefer_dark_theme ? "/* prefer-dark-theme */\n" : "");
+        }
+
+      if (! error && config->override_icon_size)
+        {
+          const gchar *tool_icon_size   = "large-toolbar";
+          const gchar *tab_icon_size    = "small-toolbar";
+          const gchar *button_icon_size = "small-toolbar";
+
+          switch (config->custom_icon_size)
+            {
+            case GIMP_ICON_SIZE_SMALL:
+              tool_icon_size   = "small-toolbar";
+              tab_icon_size    = "small-toolbar";
+              button_icon_size = "small-toolbar";
+              break;
+            case GIMP_ICON_SIZE_MEDIUM:
+              tool_icon_size   = "large-toolbar";
+              tab_icon_size    = "small-toolbar";
+              button_icon_size = "small-toolbar";
+              break;
+            case GIMP_ICON_SIZE_LARGE:
+              tool_icon_size   = "dnd";
+              tab_icon_size    = "large-toolbar";
+              button_icon_size = "large-toolbar";
+              break;
+            case GIMP_ICON_SIZE_HUGE:
+              tool_icon_size   = "dialog";
+              tab_icon_size    = "dnd";
+              button_icon_size = "dnd";
+              break;
+            }
+
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n"
+            "* { -GimpToolPalette-tool-icon-size: %s; }"
+            "\n"
+            "* { -GimpDockbook-tab-icon-size: %s; }"
+            "\n"
+            "* { -GimpEditor-button-icon-size: %s; }",
+            tool_icon_size,
+            tab_icon_size,
+            button_icon_size);
+        }
+
+      if (! error)
+        {
+          g_output_stream_printf (
+            output, NULL, NULL, &error,
+            "\n\n"
+            "/* end of theme.css */\n");
         }
 
       if (error)

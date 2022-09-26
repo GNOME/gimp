@@ -202,6 +202,39 @@ gimp_help_browser_type_get_type (void)
 }
 
 GType
+gimp_icon_size_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ICON_SIZE_SMALL, "GIMP_ICON_SIZE_SMALL", "small" },
+    { GIMP_ICON_SIZE_MEDIUM, "GIMP_ICON_SIZE_MEDIUM", "medium" },
+    { GIMP_ICON_SIZE_LARGE, "GIMP_ICON_SIZE_LARGE", "large" },
+    { GIMP_ICON_SIZE_HUGE, "GIMP_ICON_SIZE_HUGE", "huge" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ICON_SIZE_SMALL, NC_("icon-size", "Small size"), NULL },
+    { GIMP_ICON_SIZE_MEDIUM, NC_("icon-size", "Medium size"), NULL },
+    { GIMP_ICON_SIZE_LARGE, NC_("icon-size", "Large size"), NULL },
+    { GIMP_ICON_SIZE_HUGE, NC_("icon-size", "Huge size"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (G_UNLIKELY (! type))
+    {
+      type = g_enum_register_static ("GimpIconSize", values);
+      gimp_type_set_translation_context (type, "icon-size");
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_position_get_type (void)
 {
   static const GEnumValue values[] =

@@ -78,10 +78,6 @@ static void     gimp_tool_palette_height_for_width    (GtkWidget       *widget,
                                                        gint            *pref_height);
 static void     gimp_tool_palette_style_updated       (GtkWidget       *widget);
 
-static void     gimp_tool_palette_notify_theme        (GimpGuiConfig   *config,
-                                                       GParamSpec      *pspec,
-                                                       GimpToolPalette *palette);
-
 static void     gimp_tool_palette_tool_add            (GimpContainer   *container,
                                                        GimpToolItem    *tool_item,
                                                        GimpToolPalette *palette);
@@ -302,14 +298,6 @@ gimp_tool_palette_style_updated (GtkWidget *widget)
   gimp_dock_invalidate_geometry (GIMP_DOCK (private->toolbox));
 }
 
-static void
-gimp_tool_palette_notify_theme (GimpGuiConfig   *config,
-                                GParamSpec      *pspec,
-                                GimpToolPalette *palette)
-{
-  gimp_tool_palette_style_updated (GTK_WIDGET (palette));
-}
-
 
 /*  public functions  */
 
@@ -361,10 +349,18 @@ gimp_tool_palette_set_toolbox (GimpToolPalette *palette,
                            G_CALLBACK (gimp_tool_palette_tool_reorder),
                            palette, 0);
 
-  g_signal_connect_after (GIMP_GUI_CONFIG (context->gimp->config),
-                          "notify::theme",
-                          G_CALLBACK (gimp_tool_palette_notify_theme),
-                          palette);
+  g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+                           "notify::theme",
+                           G_CALLBACK (gimp_tool_palette_style_updated),
+                           palette, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+                           "notify::override-theme-icon-size",
+                           G_CALLBACK (gimp_tool_palette_style_updated),
+                           palette, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
+  g_signal_connect_object (GIMP_GUI_CONFIG (context->gimp->config),
+                           "notify::custom-icon-size",
+                           G_CALLBACK (gimp_tool_palette_style_updated),
+                           palette, G_CONNECT_AFTER | G_CONNECT_SWAPPED);
 }
 
 gboolean

@@ -656,6 +656,14 @@ toolbox_create_color_area (GimpToolbox *toolbox,
                           "notify::theme",
                           G_CALLBACK (gimp_toolbox_notify_theme),
                           toolbox);
+  g_signal_connect_after (GIMP_GUI_CONFIG (toolbox->p->context->gimp->config),
+                          "notify::override-theme-icon-size",
+                          G_CALLBACK (gimp_toolbox_notify_theme),
+                          toolbox);
+  g_signal_connect_after (GIMP_GUI_CONFIG (toolbox->p->context->gimp->config),
+                          "notify::custom-icon-size",
+                          G_CALLBACK (gimp_toolbox_notify_theme),
+                          toolbox);
   return col_area;
 }
 
