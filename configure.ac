@@ -3154,6 +3154,7 @@ icons/hicolor/Makefile
 themes/Makefile
 themes/Compact/Makefile
 themes/Default/Makefile
+themes/Gray/Makefile
 themes/System/Makefile
 data/Makefile
 data/brushes/Makefile

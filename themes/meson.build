@@ -2,6 +2,7 @@ subdir('Default')
 subdir('Compact')
 
 themes = [
+  'Gray',
   'System',
 ]
 
