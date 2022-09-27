@@ -23,8 +23,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-06-19 15:25+0000\n"
-"PO-Revision-Date: 2022-06-28 18:59+0200\n"
+"POT-Creation-Date: 2022-09-19 22:54+0000\n"
+"PO-Revision-Date: 2022-09-27 18:13+0200\n"
 "Last-Translator: Tim Sabsch <tim@sabsch.com>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "Language: de\n"
@@ -32,7 +32,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.1.1\n"
 "X-Project-Style: gnome\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
@@ -1081,7 +1081,7 @@ msgstr ""
 "erhalten haben. Falls nicht, finden Sie sie unter http://www.gnu.org/"
 "licenses/"
 
-#: ../app/gimp-update.c:385
+#: ../app/gimp-update.c:415
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -22777,7 +22777,7 @@ msgstr "Alles außerhalb der Auswahl abdunkeln"
 #: ../app/tools/gimpcropoptions.c:87
 #: ../app/tools/gimprectangleselectoptions.c:87
 msgid "Highlight opacity"
-msgstr "Glanzlichter-Deckkraft"
+msgstr "Abdunkeln-Deckkraft"
 
 #: ../app/tools/gimpcropoptions.c:88
 #: ../app/tools/gimprectangleselectoptions.c:88
