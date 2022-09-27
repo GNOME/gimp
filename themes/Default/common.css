@@ -127,10 +127,13 @@ notebook header tabs tab:hover {
 
 /* Background for many button bars and dialog titles.
  * Also, unexpectedly, controls the prefs "Reload Current Theme" button content.
+ *
+ * Warning: setting a background-color here "breaks" the marks added by
+ * gtk_scale_add_mark() on a GtkScale. I'm still unsure why, but the conclusion
+ * is probably that it's a bad idea to set too broad background-color rules.
  */
 .horizontal {
   color: @fg-color;
-  background-color: @bg-color;
 }
 
 /* Text buttons, e.g. the main buttons at the bottoms of dialogs,
