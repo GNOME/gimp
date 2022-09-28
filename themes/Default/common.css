@@ -31,6 +31,7 @@
   color: @fg-color;
 }
 
+/* Selected items in a treeview list. */
 .view:selected {
   background-color: @extreme-selected-color;
   color: @fg-color;
@@ -38,6 +39,12 @@
 
 .view:disabled {
   color: @disabled-fg-color;
+}
+
+/* Selected text in a treeview cell (e.g. layer name in edition mode). */
+.view selection {
+  background-color: @fg-color;
+  color: @bg-color;
 }
 
 /* The main image window before it has an image in it,
@@ -222,7 +229,8 @@ entry {
 }
 
 entry selection {
-  background: @extreme-selected-color;
+  background-color: @fg-color;
+  color: @bg-color;
 }
 
 paned separator {
