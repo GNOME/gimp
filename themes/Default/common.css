@@ -389,6 +389,7 @@ list {
 
 switch {
   background-color: @bg-color;
+  border: 1px solid @stronger-border-color;
 }
 
 /* The switch button is quite hard to understand without color IMO. So
