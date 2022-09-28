@@ -382,7 +382,7 @@ gimp_temp_progress_run (GimpProcedure        *procedure,
     case GIMP_PROGRESS_COMMAND_GET_WINDOW:
       {
         GimpValueArray *return_vals;
-        guint32         window_id = 0;
+        guint64         window_id = 0;
 
         if (progress_data->vtable.get_window)
           window_id = progress_data->vtable.get_window (progress_data->data);

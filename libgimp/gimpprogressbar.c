@@ -63,7 +63,7 @@ static void     gimp_progress_bar_set_text   (const gchar *message,
 static void     gimp_progress_bar_set_value  (gdouble      percentage,
                                               gpointer     user_data);
 static void     gimp_progress_bar_pulse      (gpointer     user_data);
-static guint32  gimp_progress_bar_get_window (gpointer     user_data);
+static guint64  gimp_progress_bar_get_window (gpointer     user_data);
 
 
 G_DEFINE_TYPE (GimpProgressBar, gimp_progress_bar, GTK_TYPE_PROGRESS_BAR)
@@ -180,7 +180,7 @@ gimp_progress_bar_pulse (gpointer user_data)
       gtk_main_iteration ();
 }
 
-static guint32
+static guint64
 gimp_window_get_native_id (GtkWindow *window)
 {
   GdkWindow *surface;
@@ -209,7 +209,7 @@ gimp_window_get_native_id (GtkWindow *window)
   return 0;
 }
 
-static guint32
+static guint64
 gimp_progress_bar_get_window (gpointer user_data)
 {
   GimpProgressBar *bar = GIMP_PROGRESS_BAR (user_data);

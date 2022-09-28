@@ -81,7 +81,7 @@ typedef void (* GimpProgressVtablePulseFunc) (gpointer user_data);
  *
  * Returns: the ID of the window where the progress is displayed.
  */
-typedef guint32 (* GimpProgressVtableGetWindowFunc) (gpointer user_data);
+typedef guint64 (* GimpProgressVtableGetWindowFunc) (gpointer user_data);
 
 
 typedef struct _GimpProgressVtable GimpProgressVtable;
