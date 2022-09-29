@@ -255,6 +255,22 @@ button:disabled, button:disabled image {
   color: @disabled-button-color;
 }
 
+/* E.g. the currently active action of a dialog will slightly stand out so that
+ * people know what action is activated when they will just hit Enter.
+ */
+button.default {
+  border: 1px solid shade(@fg-color, 0.7);
+}
+
+/* This is the default active action, the somehow "suggested" action. Usually it
+ * means this is either the expected next step action (e.g. activating a
+ * filter), or else the less destructive action (e.g. when closing an unsaved
+ * image, the default is "Cancel").
+ */
+button.suggested-action {
+  border: 1px dotted shade(@fg-color, 0.5);
+}
+
 /* Spinbuttons: there are two kinds:
  * spinbutton, spinbutton button
  *   e.g. the "width" field in the New Image dialog.
