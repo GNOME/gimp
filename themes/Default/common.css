@@ -163,25 +163,20 @@ notebook header tabs tab:hover {
   background-color: @hover-color;
 }
 
-.text-button:checked {
-  background-color: @selected-color;
-  font-weight: bold;
-}
-
 /* .flat covers the tool buttons and the buttons at the bottom
  * of the Toolbox window.
 */
 
-button .flat {
+toolbutton button.flat {
   background-color: @bg-color;
   color: @fg-color;
 }
 
-.flat:checked {
+toolbutton button.flat:checked {
   background: @selected-color;
 }
 
-.flat:hover {
+toolbutton button.flat:hover {
   background: @selected-color;
 }
 
@@ -285,7 +280,12 @@ GimpSpinScale entry progress {
 }
 
 /* Checkboxes */
-checkbutton check {
+checkbutton, radiobutton {
+  color: @fg-color;
+  background-color: @bg-color;
+}
+
+checkbutton check, radiobutton radio {
   background-image: none;
   background-color: @extreme-bg-color;
   border: 1px solid @stronger-border-color;
@@ -293,6 +293,10 @@ checkbutton check {
 
 checkbutton check:checked {
   color: @fg-color;
+}
+
+checkbutton:checked label, radiobutton:checked label {
+  font-weight: bold;
 }
 
 /* Some plugins have radio buttons, e.g. Fractal Explorer */
