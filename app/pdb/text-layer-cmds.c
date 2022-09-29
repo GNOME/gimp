@@ -1350,7 +1350,8 @@ register_text_layer_procs (GimpPDB *pdb)
                                "gimp-text-layer-set-markup");
   gimp_procedure_set_static_help (procedure,
                                   "Set the markup for a text layer from a string.",
-                                  "This procedure sets the markup of the styles for a text layer. The markup should be in the form of Pango's markup - See https://docs.gtk.org/Pango/pango_markup.html for a reference.",
+                                  "This procedure sets the markup of the styles for a text layer. The markup should be in the form of Pango's markup - See https://docs.gtk.org/Pango/pango_markup.html for a reference.\n"
+                                  "Note that GIMP's text tool does not support all of Pango markup. Any unsupported markup will still be applied to your text layer, yet would be dropped as soon as you edit text with the tool.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Ian Munsie <darkstarsword@gmail.com>",

@@ -215,6 +215,9 @@ gimp_text_layer_get_markup (GimpLayer *layer)
  * This procedure sets the markup of the styles for a text layer. The
  * markup should be in the form of Pango's markup - See
  * https://docs.gtk.org/Pango/pango_markup.html for a reference.
+ * Note that GIMP's text tool does not support all of Pango markup. Any
+ * unsupported markup will still be applied to your text layer, yet
+ * would be dropped as soon as you edit text with the tool.
  *
  * Returns: TRUE on success.
  *
