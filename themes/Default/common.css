@@ -70,7 +70,7 @@ GimpDisplayShell, GimpDock, .dialog-action-box, .dialog-vbox {
 
 /* GtkTextView */
 textview text, textview {
-  background-color: rgba (184, 184, 184, 0.5);
+  background-color: @extreme-bg-color;
   color: @fg-color;
 }
 /* End GtkTextView */
