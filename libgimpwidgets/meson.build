@@ -189,6 +189,10 @@ if gtk3_macos.found()
   libgimpwidgets_sources += [
     'gimppickbutton-quartz.c',
   ]
+elif platform_windows
+  libgimpwidgets_sources += [
+    'gimppickbutton-win32.c',
+  ]
 else
   libgimpwidgets_sources += [
     'gimppickbutton-default.c',
