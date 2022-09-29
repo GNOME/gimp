@@ -39,12 +39,12 @@
 
 /* Background color more extreme in the theme tendency, i.e. darker on a
  * dark theme, ligther on a light theme. */
-@define-color extreme-bg-color       rgb(5,5,5);
+@define-color extreme-bg-color       rgb(20,20,20);
 /* Color for a selected item to "stick out" when @extreme-bg-color is
  * used. It will usually be darker than @bg-color on a light theme,
- * ligher on a dark theme.
+ * lighter on a dark theme.
  */
-@define-color extreme-selected-color rgb(35,35,35);
+@define-color extreme-selected-color rgb(40,40,40);
 
 /********* Variants for border colors *********/
 

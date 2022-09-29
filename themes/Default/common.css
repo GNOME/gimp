@@ -47,6 +47,11 @@
   color: @bg-color;
 }
 
+.view header button {
+  background-color: @bg-color;
+  border: 1px solid @stronger-border-color;
+}
+
 /* The main image window before it has an image in it,
  * and the buttonbar along the bottoms of dialogs.
  * Foreground color here is the text color, not the Wilber color.
