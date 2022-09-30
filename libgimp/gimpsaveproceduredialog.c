@@ -279,6 +279,7 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           GtkWidget     *frame2;
           GtkWidget     *title;
           GParamSpec    *pspec;
+          GtkWidget     *scrolled_window;
 
           pspec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
                                                 "gimp-comment");
@@ -302,9 +303,17 @@ gimp_save_procedure_dialog_fill_list (GimpProcedureDialog *dialog,
           if (tooltip)
             gimp_help_set_help_data (widget, tooltip, NULL);
 
+          scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+          gtk_widget_set_size_request (scrolled_window, -1, 100);
+          gtk_scrolled_window_set_shadow_type (GTK_SCROLLED_WINDOW (scrolled_window), GTK_SHADOW_OUT);
+          gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                          GTK_POLICY_NEVER,
+                                          GTK_POLICY_AUTOMATIC);
+          gtk_container_add (GTK_CONTAINER (frame2), scrolled_window);
+          gtk_widget_show (scrolled_window);
           gtk_widget_set_hexpand (widget, TRUE);
           gtk_widget_set_vexpand (widget, TRUE);
-          gtk_container_add (GTK_CONTAINER (frame2), widget);
+          gtk_container_add (GTK_CONTAINER (scrolled_window), widget);
           gtk_widget_show (widget);
 
           gtk_grid_attach (GTK_GRID (grid), frame2, 0, top, 6, 1);
