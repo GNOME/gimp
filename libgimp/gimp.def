@@ -665,7 +665,9 @@ EXPORTS
 	gimp_param_spec_layer
 	gimp_param_spec_layer_mask
 	gimp_param_spec_selection
+	gimp_param_spec_text_layer
 	gimp_param_spec_vectors
+	gimp_param_text_layer_get_type
 	gimp_param_vectors_get_type
 	gimp_pattern_get_info
 	gimp_pattern_get_pixels
@@ -819,6 +821,7 @@ EXPORTS
 	gimp_text_get_extents_fontname
 	gimp_text_layer_get_antialias
 	gimp_text_layer_get_base_direction
+	gimp_text_layer_get_by_id
 	gimp_text_layer_get_color
 	gimp_text_layer_get_font
 	gimp_text_layer_get_font_size
@@ -831,6 +834,7 @@ EXPORTS
 	gimp_text_layer_get_line_spacing
 	gimp_text_layer_get_markup
 	gimp_text_layer_get_text
+	gimp_text_layer_get_type
 	gimp_text_layer_new
 	gimp_text_layer_resize
 	gimp_text_layer_set_antialias

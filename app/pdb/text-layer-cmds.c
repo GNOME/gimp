@@ -37,7 +37,6 @@
 
 #include "core/gimpcontext.h"
 #include "core/gimpimage.h"
-#include "core/gimplayer.h"
 #include "core/gimpparamspecs.h"
 #include "text/gimptext.h"
 #include "text/gimptextlayer.h"
@@ -66,7 +65,7 @@ text_layer_new_invoker (GimpProcedure         *procedure,
   const gchar *fontname;
   gdouble size;
   GimpUnit unit;
-  GimpLayer *layer = NULL;
+  GimpTextLayer *layer = NULL;
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   text = g_value_get_string (gimp_value_array_index (args, 1));
@@ -89,7 +88,7 @@ text_layer_new_invoker (GimpProcedure         *procedure,
                                 "color",          &color,
                                 NULL);
 
-      layer = gimp_text_layer_new (image, gimp_text);
+      layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
       g_object_unref (gimp_text);
 
       if (! layer)
@@ -120,23 +119,16 @@ text_layer_get_text_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gchar *text = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "text", &text,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "text", &text,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -157,7 +149,7 @@ text_layer_set_text_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   const gchar *text;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -165,17 +157,10 @@ text_layer_set_text_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "text", text,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "text", text,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -192,23 +177,16 @@ text_layer_get_markup_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gchar *markup = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "markup", &markup,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "markup", &markup,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -229,7 +207,7 @@ text_layer_set_markup_invoker (GimpProcedure         *procedure,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   const gchar *markup;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -237,35 +215,28 @@ text_layer_set_markup_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
+      gchar *markup_cat = NULL;
+      const gchar *markup_ptr = markup;
+
+      if (strstr(markup, "<markup>") == NULL || strstr(markup, "</markup>") == NULL)
         {
-          gchar *markup_cat = NULL;
-          const gchar *markup_ptr = markup;
+          markup_cat = g_strconcat("<markup>", markup, "</markup>", NULL);
+          markup_ptr = markup_cat;
+        }
 
-          if (strstr(markup, "<markup>") == NULL || strstr(markup, "</markup>") == NULL)
-            {
-              markup_cat = g_strconcat("<markup>", markup, "</markup>", NULL);
-              markup_ptr = markup_cat;
-            }
-
-          if (pango_parse_markup (markup_ptr, -1, 0, NULL, NULL, NULL, error))
-            {
-              gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                                   _("Set text layer markup"),
-                                   "markup", markup_ptr,
-                                   NULL);
-            }
-          else
-            {
-              success = FALSE;
-            }
-
-          g_free(markup_cat);
+      if (pango_parse_markup (markup_ptr, -1, 0, NULL, NULL, NULL, error))
+        {
+          gimp_text_layer_set (layer,
+                               _("Set text layer markup"),
+                               "markup", markup_ptr,
+                               NULL);
         }
       else
         {
           success = FALSE;
         }
+
+      g_free(markup_cat);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -282,23 +253,16 @@ text_layer_get_font_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gchar *font = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "font", &font,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "font", &font,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -319,7 +283,7 @@ text_layer_set_font_invoker (GimpProcedure         *procedure,
                              GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   const gchar *font;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -327,17 +291,10 @@ text_layer_set_font_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "font", font,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "font", font,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -354,7 +311,7 @@ text_layer_get_font_size_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble font_size = 0.0;
   GimpUnit unit = GIMP_UNIT_PIXEL;
 
@@ -362,17 +319,10 @@ text_layer_get_font_size_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "font-size",      &font_size,
-                        "font-size-unit", &unit,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+       g_object_get (gimp_text_layer_get_text (layer),
+                     "font-size",      &font_size,
+                     "font-size-unit", &unit,
+                     NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -396,7 +346,7 @@ text_layer_set_font_size_invoker (GimpProcedure         *procedure,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble font_size;
   GimpUnit unit;
 
@@ -406,18 +356,11 @@ text_layer_set_font_size_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "font-size-unit", unit,
-                               "font-size",      font_size,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "font-size-unit", unit,
+                           "font-size",      font_size,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -434,23 +377,16 @@ text_layer_get_antialias_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gboolean antialias = FALSE;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "antialias", &antialias,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "antialias", &antialias,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -471,7 +407,7 @@ text_layer_set_antialias_invoker (GimpProcedure         *procedure,
                                   GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gboolean antialias;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -479,17 +415,10 @@ text_layer_set_antialias_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "antialias", antialias,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "antialias", antialias,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -506,23 +435,16 @@ text_layer_get_hint_style_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gint style = 0;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "hint-style", &style,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "hint-style", &style,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -543,7 +465,7 @@ text_layer_set_hint_style_invoker (GimpProcedure         *procedure,
                                    GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gint style;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -551,17 +473,10 @@ text_layer_set_hint_style_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "hint-style", style,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "hint-style", style,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -578,23 +493,16 @@ text_layer_get_kerning_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gboolean kerning = FALSE;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "kerning", &kerning,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "kerning", &kerning,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -615,7 +523,7 @@ text_layer_set_kerning_invoker (GimpProcedure         *procedure,
                                 GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gboolean kerning;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -623,17 +531,10 @@ text_layer_set_kerning_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "kerning", kerning,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "kerning", kerning,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -650,23 +551,16 @@ text_layer_get_language_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gchar *language = NULL;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "language", &language,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "language", &language,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -687,7 +581,7 @@ text_layer_set_language_invoker (GimpProcedure         *procedure,
                                  GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   const gchar *language;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -695,17 +589,10 @@ text_layer_set_language_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "language", language,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "language", language,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -722,23 +609,16 @@ text_layer_get_base_direction_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gint direction = 0;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "base-direction", &direction,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "base-direction", &direction,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -759,7 +639,7 @@ text_layer_set_base_direction_invoker (GimpProcedure         *procedure,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gint direction;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -767,17 +647,10 @@ text_layer_set_base_direction_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "base-direction", direction,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "base-direction", direction,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -794,23 +667,16 @@ text_layer_get_justification_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gint justify = 0;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "justify", &justify,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "justify", &justify,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -831,7 +697,7 @@ text_layer_set_justification_invoker (GimpProcedure         *procedure,
                                       GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gint justify;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -839,17 +705,10 @@ text_layer_set_justification_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "justify", justify,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "justify", justify,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -866,21 +725,14 @@ text_layer_get_color_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   GimpRGB color = { 0.0, 0.0, 0.0, 1.0 };
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          color = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer))->color;
-        }
-      else
-        {
-          success = FALSE;
-        }
+      color = gimp_text_layer_get_text (layer)->color;
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -901,7 +753,7 @@ text_layer_set_color_invoker (GimpProcedure         *procedure,
                               GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   GimpRGB color;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -909,17 +761,10 @@ text_layer_set_color_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "color", &color,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "color", &color,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -936,23 +781,16 @@ text_layer_get_indent_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble indent = 0.0;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "indent", &indent,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "indent", &indent,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -973,7 +811,7 @@ text_layer_set_indent_invoker (GimpProcedure         *procedure,
                                GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble indent;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -981,17 +819,10 @@ text_layer_set_indent_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "indent", indent,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "indent", indent,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1008,23 +839,16 @@ text_layer_get_line_spacing_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble line_spacing = 0.0;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "line-spacing", &line_spacing,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "line-spacing", &line_spacing,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1045,7 +869,7 @@ text_layer_set_line_spacing_invoker (GimpProcedure         *procedure,
                                      GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble line_spacing;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -1053,17 +877,10 @@ text_layer_set_line_spacing_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "line-spacing", line_spacing,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "line-spacing", line_spacing,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1080,23 +897,16 @@ text_layer_get_letter_spacing_invoker (GimpProcedure         *procedure,
 {
   gboolean success = TRUE;
   GimpValueArray *return_vals;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble letter_spacing = 0.0;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-        {
-          g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                        "letter-spacing", &letter_spacing,
-                        NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      g_object_get (gimp_text_layer_get_text (layer),
+                    "letter-spacing", &letter_spacing,
+                    NULL);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success,
@@ -1117,7 +927,7 @@ text_layer_set_letter_spacing_invoker (GimpProcedure         *procedure,
                                        GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble letter_spacing;
 
   layer = g_value_get_object (gimp_value_array_index (args, 0));
@@ -1125,17 +935,10 @@ text_layer_set_letter_spacing_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "letter-spacing", letter_spacing,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "letter-spacing", letter_spacing,
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1151,7 +954,7 @@ text_layer_resize_invoker (GimpProcedure         *procedure,
                            GError               **error)
 {
   gboolean success = TRUE;
-  GimpLayer *layer;
+  GimpTextLayer *layer;
   gdouble width;
   gdouble height;
 
@@ -1161,29 +964,22 @@ text_layer_resize_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-        {
-          GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-          gdouble   xres, yres;
+      GimpText *text = gimp_text_layer_get_text (layer);
+      gdouble   xres, yres;
 
-          gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
-                                     &xres, &yres);
+      gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
+                                 &xres, &yres);
 
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer attribute"),
-                               "box-mode",   GIMP_TEXT_BOX_FIXED,
-                               "box-width",  gimp_pixels_to_units (width,
-                                                                   text->box_unit,
-                                                                   xres),
-                               "box-height", gimp_pixels_to_units (height,
-                                                                   text->box_unit,
-                                                                   yres),
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
+      gimp_text_layer_set (layer,
+                           _("Set text layer attribute"),
+                           "box-mode",   GIMP_TEXT_BOX_FIXED,
+                           "box-width",  gimp_pixels_to_units (width,
+                                                               text->box_unit,
+                                                               xres),
+                           "box-height", gimp_pixels_to_units (height,
+                                                               text->box_unit,
+                                                               yres),
+                           NULL);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1244,11 +1040,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                                      GIMP_UNIT_PIXEL,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
-                                   gimp_param_spec_layer ("layer",
-                                                          "layer",
-                                                          "The new text layer.",
-                                                          FALSE,
-                                                          GIMP_PARAM_READWRITE));
+                                   gimp_param_spec_text_layer ("layer",
+                                                               "layer",
+                                                               "The new text layer.",
+                                                               FALSE,
+                                                               GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1267,11 +1063,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("text",
                                                            "text",
@@ -1297,11 +1093,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("text",
                                                        "text",
@@ -1327,11 +1123,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Barak Itkin",
                                          "2010");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("markup",
                                                            "markup",
@@ -1358,11 +1154,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Ian Munsie",
                                          "2014");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("markup",
                                                        "markup",
@@ -1388,11 +1184,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("font",
                                                            "font",
@@ -1418,11 +1214,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("font",
                                                        "font",
@@ -1448,11 +1244,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("font-size",
                                                         "font size",
@@ -1485,11 +1281,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("font-size",
                                                     "font size",
@@ -1522,11 +1318,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("antialias",
                                                          "antialias",
@@ -1551,11 +1347,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("antialias",
                                                      "antialias",
@@ -1580,11 +1376,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("style",
                                                       "style",
@@ -1610,11 +1406,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Sven Neumann",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("style",
                                                   "style",
@@ -1640,11 +1436,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("kerning",
                                                          "kerning",
@@ -1669,11 +1465,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("kerning",
                                                      "kerning",
@@ -1698,11 +1494,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("language",
                                                            "language",
@@ -1728,11 +1524,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("language",
                                                        "language",
@@ -1758,11 +1554,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("direction",
                                                       "direction",
@@ -1788,11 +1584,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("direction",
                                                   "direction",
@@ -1818,11 +1614,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_enum ("justify",
                                                       "justify",
@@ -1848,11 +1644,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("justify",
                                                   "justify",
@@ -1878,11 +1674,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_rgb ("color",
                                                         "color",
@@ -1908,11 +1704,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_rgb ("color",
                                                     "color",
@@ -1938,11 +1734,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("indent",
                                                         "indent",
@@ -1967,11 +1763,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("indent",
                                                     "indent",
@@ -1996,11 +1792,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("line-spacing",
                                                         "line spacing",
@@ -2025,11 +1821,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("line-spacing",
                                                     "line spacing",
@@ -2054,11 +1850,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer.",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer.",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_double ("letter-spacing",
                                                         "letter spacing",
@@ -2083,11 +1879,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Marcus Heese",
                                          "2008");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("letter-spacing",
                                                     "letter spacing",
@@ -2112,11 +1908,11 @@ register_text_layer_procs (GimpPDB *pdb)
                                          "Barak Itkin",
                                          "2009");
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_layer ("layer",
-                                                      "layer",
-                                                      "The text layer",
-                                                      FALSE,
-                                                      GIMP_PARAM_READWRITE));
+                               gimp_param_spec_text_layer ("layer",
+                                                           "layer",
+                                                           "The text layer",
+                                                           FALSE,
+                                                           GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("width",
                                                     "width",

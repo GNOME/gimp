@@ -31,6 +31,8 @@ HELP
 
     &marcus_pdb_misc('2008', '2.6');
 
+    $lib_private = 1;
+
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
@@ -45,7 +47,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The new text layer.' }
     );
 
@@ -65,7 +67,7 @@ HELP
                             "color",          &color,
                             NULL);
   
-  layer = gimp_text_layer_new (image, gimp_text);
+  layer = GIMP_TEXT_LAYER (gimp_text_layer_new (image, gimp_text));
   g_object_unref (gimp_text);
 
   if (! layer)
@@ -90,7 +92,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -102,16 +104,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "text", &text,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "text", &text,
+                NULL);
 }
 CODE
     );
@@ -127,7 +122,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'text', type => 'string',
           desc => 'The new text to set' }
@@ -136,17 +131,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "text", text,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "text", text,
+                       NULL);
 }
 CODE
     );
@@ -164,7 +152,7 @@ HELP
     barak_pdb_misc('2010', '2.8');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -176,16 +164,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "markup", &markup,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "markup", &markup,
+                NULL);
 }
 CODE
     );
@@ -210,7 +191,7 @@ HELP
     $since = '3.0';
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'markup', type => 'string',
           desc => 'The new markup to set' }
@@ -219,35 +200,28 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
+  gchar *markup_cat = NULL;
+  const gchar *markup_ptr = markup;
+
+  if (strstr(markup, "<markup>") == NULL || strstr(markup, "</markup>") == NULL)
     {
-      gchar *markup_cat = NULL;
-      const gchar *markup_ptr = markup;
+      markup_cat = g_strconcat("<markup>", markup, "</markup>", NULL);
+      markup_ptr = markup_cat;
+    }
 
-      if (strstr(markup, "<markup>") == NULL || strstr(markup, "</markup>") == NULL)
-        {
-          markup_cat = g_strconcat("<markup>", markup, "</markup>", NULL);
-          markup_ptr = markup_cat;
-        }
-
-      if (pango_parse_markup (markup_ptr, -1, 0, NULL, NULL, NULL, error))
-        {
-          gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                               _("Set text layer markup"),
-                               "markup", markup_ptr,
-                               NULL);
-        }
-      else
-        {
-          success = FALSE;
-        }
-
-      g_free(markup_cat);
+  if (pango_parse_markup (markup_ptr, -1, 0, NULL, NULL, NULL, error))
+    {
+      gimp_text_layer_set (layer,
+                           _("Set text layer markup"),
+                           "markup", markup_ptr,
+                           NULL);
     }
   else
     {
       success = FALSE;
     }
+
+  g_free(markup_cat);
 }
 CODE
     );
@@ -263,7 +237,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -275,16 +249,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "font", &font,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "font", &font,
+                NULL);
 }
 CODE
     );
@@ -300,7 +267,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'font', type => 'string',
           desc => 'The new font to use' }
@@ -309,17 +276,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "font", font,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "font", font,
+                       NULL);
 }
 CODE
     );
@@ -337,7 +297,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -351,17 +311,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "font-size",      &font_size,
-                    "font-size-unit", &unit,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+   g_object_get (gimp_text_layer_get_text (layer),
+                 "font-size",      &font_size,
+                 "font-size-unit", &unit,
+                 NULL);
 }
 CODE
     );
@@ -378,7 +331,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'font_size', type => '0.0 <= float <= 8192.0',
           desc => 'The font size' },
@@ -389,18 +342,11 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "font-size-unit", unit,
-                           "font-size",      font_size,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "font-size-unit", unit,
+                       "font-size",      font_size,
+                       NULL);
 }
 CODE
     );
@@ -416,7 +362,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -428,16 +374,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "antialias", &antialias,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "antialias", &antialias,
+                NULL);
 }
 CODE
     );
@@ -453,7 +392,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'antialias', type => 'boolean',
           desc => 'Enable/disable antialiasing of the text' }
@@ -462,17 +401,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "antialias", antialias,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "antialias", antialias,
+                       NULL);
 }
 CODE
     );
@@ -490,7 +422,7 @@ HELP
     &marcus_pdb_misc('2008', '2.8');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -502,16 +434,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "hint-style", &style,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "hint-style", &style,
+                NULL);
 }
 CODE
     );
@@ -529,7 +454,7 @@ HELP
     &neo_pdb_misc('2008', '2.8');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'style', type => 'enum GimpTextHintStyle',
           desc => 'The new hint style' }
@@ -538,17 +463,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "hint-style", style,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "hint-style", style,
+                       NULL);
 }
 CODE
     );
@@ -564,7 +482,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' }
     );
 
@@ -576,16 +494,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "kerning", &kerning,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "kerning", &kerning,
+                NULL);
 }
 CODE
     );
@@ -601,7 +512,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'kerning', type => 'boolean',
           desc => 'Enable/disable kerning in the text' }
@@ -610,17 +521,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "kerning", kerning,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "kerning", kerning,
+                       NULL);
 }
 CODE
     );
@@ -637,7 +541,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -649,16 +553,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "language", &language,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "language", &language,
+                NULL);
 }
 CODE
     );
@@ -675,7 +572,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'language', type => 'string',
           desc => 'The new language to use for the text layer' }
@@ -684,17 +581,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "language", language,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "language", language,
+                       NULL);
 }
 CODE
     );
@@ -711,7 +601,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -723,16 +613,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "base-direction", &direction,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "base-direction", &direction,
+                NULL);
 }
 CODE
     );
@@ -749,7 +632,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'direction', type => 'enum GimpTextDirection',
           desc => 'The base direction of the text.' }
@@ -758,17 +641,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "base-direction", direction,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "base-direction", direction,
+                       NULL);
 }
 CODE
     );
@@ -785,7 +661,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -797,16 +673,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "justify", &justify,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "justify", &justify,
+                NULL);
 }
 CODE
     );
@@ -823,7 +692,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'justify', type => 'enum GimpTextJustification',
           desc => 'The justification for your text.' }
@@ -832,17 +701,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "justify", justify,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "justify", justify,
+                       NULL);
 }
 CODE
     );
@@ -858,7 +720,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -870,14 +732,7 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      color = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer))->color;
-    }
-  else
-    {
-      success = FALSE;
-    }
+  color = gimp_text_layer_get_text (layer)->color;
 }
 CODE
     );
@@ -893,7 +748,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'color', type => 'color',
           desc => 'The color to use for the text' }
@@ -902,17 +757,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "color", &color,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "color", &color,
+                       NULL);
 }
 CODE
     );
@@ -928,7 +776,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -940,16 +788,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "indent", &indent,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "indent", &indent,
+                NULL);
 }
 CODE
     );
@@ -965,7 +806,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'indent', type => '-8192.0 <= float <= 8192.0',
           desc => 'The indentation for the first line.' }
@@ -974,17 +815,10 @@ HELP
      %invoke = (
          code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "indent", indent,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "indent", indent,
+                       NULL);
 }
 CODE
     );
@@ -1000,7 +834,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -1012,16 +846,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "line-spacing", &line_spacing,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "line-spacing", &line_spacing,
+                NULL);
 }
 CODE
     );
@@ -1037,7 +864,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'line_spacing', type => '-8192.0 <= float <= 8192.0',
           desc => 'The additional line spacing to use.' }
@@ -1046,17 +873,10 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "line-spacing", line_spacing,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "line-spacing", line_spacing,
+                       NULL);
 }
 CODE
     );
@@ -1073,7 +893,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer.' }
     );
 
@@ -1085,16 +905,9 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, 0, error))
-    {
-      g_object_get (gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer)),
-                    "letter-spacing", &letter_spacing,
-                    NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  g_object_get (gimp_text_layer_get_text (layer),
+                "letter-spacing", &letter_spacing,
+                NULL);
 }
 CODE
     );
@@ -1111,7 +924,7 @@ HELP
     &marcus_pdb_misc('2008', '2.6');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'letter_spacing', type => '-8192.0 <= float <= 8192.0',
           desc => 'The additional letter spacing to use.' }
@@ -1120,17 +933,10 @@ HELP
     %invoke = (    
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "letter-spacing", letter_spacing,
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "letter-spacing", letter_spacing,
+                       NULL);
 }
 CODE
     );
@@ -1148,7 +954,7 @@ HELP
     barak_pdb_misc('2009', '2.8');
 
     @inargs = (
-        { name => 'layer', type => 'layer',
+        { name => 'layer', type => 'text_layer',
           desc => 'The text layer' },
         { name => 'width', type => '0.0 <= float <= GIMP_MAX_IMAGE_SIZE',
           desc => 'The new box width in pixels' },
@@ -1159,29 +965,22 @@ HELP
     %invoke = (
         code => <<'CODE'
 {
-  if (gimp_pdb_layer_is_text_layer (layer, GIMP_PDB_ITEM_CONTENT, error))
-    {
-      GimpText *text = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
-      gdouble   xres, yres;
+  GimpText *text = gimp_text_layer_get_text (layer);
+  gdouble   xres, yres;
 
-      gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
-                                 &xres, &yres);
+  gimp_image_get_resolution (gimp_item_get_image (GIMP_ITEM (layer)),
+                             &xres, &yres);
 
-      gimp_text_layer_set (GIMP_TEXT_LAYER (layer),
-                           _("Set text layer attribute"),
-                           "box-mode",   GIMP_TEXT_BOX_FIXED,
-                           "box-width",  gimp_pixels_to_units (width,
-                                                               text->box_unit,
-                                                               xres),
-                           "box-height", gimp_pixels_to_units (height,
-                                                               text->box_unit,
-                                                               yres),
-                           NULL);
-    }
-  else
-    {
-      success = FALSE;
-    }
+  gimp_text_layer_set (layer,
+                       _("Set text layer attribute"),
+                       "box-mode",   GIMP_TEXT_BOX_FIXED,
+                       "box-width",  gimp_pixels_to_units (width,
+                                                           text->box_unit,
+                                                           xres),
+                       "box-height", gimp_pixels_to_units (height,
+                                                           text->box_unit,
+                                                           yres),
+                       NULL);
 }
 CODE
     );

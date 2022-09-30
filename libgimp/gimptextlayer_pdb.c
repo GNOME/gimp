@@ -37,7 +37,7 @@
 
 
 /**
- * gimp_text_layer_new:
+ * _gimp_text_layer_new:
  * @image: The image.
  * @text: The text to generate (in UTF-8 encoding).
  * @fontname: The name of the font.
@@ -57,16 +57,16 @@
  *
  * Since: 2.6
  **/
-GimpLayer *
-gimp_text_layer_new (GimpImage   *image,
-                     const gchar *text,
-                     const gchar *fontname,
-                     gdouble      size,
-                     GimpUnit     unit)
+GimpTextLayer *
+_gimp_text_layer_new (GimpImage   *image,
+                      const gchar *text,
+                      const gchar *fontname,
+                      gdouble      size,
+                      GimpUnit     unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
-  GimpLayer *layer = NULL;
+  GimpTextLayer *layer = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_IMAGE, image,
@@ -82,7 +82,7 @@ gimp_text_layer_new (GimpImage   *image,
   gimp_value_array_unref (args);
 
   if (GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS)
-    layer = GIMP_VALUES_GET_LAYER (return_vals, 1);
+    layer = GIMP_VALUES_GET_TEXT_LAYER (return_vals, 1);
 
   gimp_value_array_unref (return_vals);
 
@@ -103,14 +103,14 @@ gimp_text_layer_new (GimpImage   *image,
  * Since: 2.6
  **/
 gchar *
-gimp_text_layer_get_text (GimpLayer *layer)
+gimp_text_layer_get_text (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *text = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -140,15 +140,15 @@ gimp_text_layer_get_text (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_text (GimpLayer   *layer,
-                          const gchar *text)
+gimp_text_layer_set_text (GimpTextLayer *layer,
+                          const gchar   *text)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, text,
                                           G_TYPE_NONE);
 
@@ -182,14 +182,14 @@ gimp_text_layer_set_text (GimpLayer   *layer,
  * Since: 2.8
  **/
 gchar *
-gimp_text_layer_get_markup (GimpLayer *layer)
+gimp_text_layer_get_markup (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *markup = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -224,15 +224,15 @@ gimp_text_layer_get_markup (GimpLayer *layer)
  * Since: 3.0
  **/
 gboolean
-gimp_text_layer_set_markup (GimpLayer   *layer,
-                            const gchar *markup)
+gimp_text_layer_set_markup (GimpTextLayer *layer,
+                            const gchar   *markup)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, markup,
                                           G_TYPE_NONE);
 
@@ -263,14 +263,14 @@ gimp_text_layer_set_markup (GimpLayer   *layer,
  * Since: 2.6
  **/
 gchar *
-gimp_text_layer_get_font (GimpLayer *layer)
+gimp_text_layer_get_font (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *font = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -300,15 +300,15 @@ gimp_text_layer_get_font (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_font (GimpLayer   *layer,
-                          const gchar *font)
+gimp_text_layer_set_font (GimpTextLayer *layer,
+                          const gchar   *font)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, font,
                                           G_TYPE_NONE);
 
@@ -340,15 +340,15 @@ gimp_text_layer_set_font (GimpLayer   *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_font_size (GimpLayer *layer,
-                               GimpUnit  *unit)
+gimp_text_layer_get_font_size (GimpTextLayer *layer,
+                               GimpUnit      *unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble font_size = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -383,16 +383,16 @@ gimp_text_layer_get_font_size (GimpLayer *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_font_size (GimpLayer *layer,
-                               gdouble    font_size,
-                               GimpUnit   unit)
+gimp_text_layer_set_font_size (GimpTextLayer *layer,
+                               gdouble        font_size,
+                               GimpUnit       unit)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, font_size,
                                           GIMP_TYPE_UNIT, unit,
                                           G_TYPE_NONE);
@@ -423,14 +423,14 @@ gimp_text_layer_set_font_size (GimpLayer *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_get_antialias (GimpLayer *layer)
+gimp_text_layer_get_antialias (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean antialias = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -461,15 +461,15 @@ gimp_text_layer_get_antialias (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_antialias (GimpLayer *layer,
-                               gboolean   antialias)
+gimp_text_layer_set_antialias (GimpTextLayer *layer,
+                               gboolean       antialias)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_BOOLEAN, antialias,
                                           G_TYPE_NONE);
 
@@ -500,14 +500,14 @@ gimp_text_layer_set_antialias (GimpLayer *layer,
  * Since: 2.8
  **/
 GimpTextHintStyle
-gimp_text_layer_get_hint_style (GimpLayer *layer)
+gimp_text_layer_get_hint_style (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpTextHintStyle style = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -539,7 +539,7 @@ gimp_text_layer_get_hint_style (GimpLayer *layer)
  * Since: 2.8
  **/
 gboolean
-gimp_text_layer_set_hint_style (GimpLayer         *layer,
+gimp_text_layer_set_hint_style (GimpTextLayer     *layer,
                                 GimpTextHintStyle  style)
 {
   GimpValueArray *args;
@@ -547,7 +547,7 @@ gimp_text_layer_set_hint_style (GimpLayer         *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           GIMP_TYPE_TEXT_HINT_STYLE, style,
                                           G_TYPE_NONE);
 
@@ -577,14 +577,14 @@ gimp_text_layer_set_hint_style (GimpLayer         *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_get_kerning (GimpLayer *layer)
+gimp_text_layer_get_kerning (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean kerning = FALSE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -614,15 +614,15 @@ gimp_text_layer_get_kerning (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_kerning (GimpLayer *layer,
-                             gboolean   kerning)
+gimp_text_layer_set_kerning (GimpTextLayer *layer,
+                             gboolean       kerning)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_BOOLEAN, kerning,
                                           G_TYPE_NONE);
 
@@ -653,14 +653,14 @@ gimp_text_layer_set_kerning (GimpLayer *layer,
  * Since: 2.6
  **/
 gchar *
-gimp_text_layer_get_language (GimpLayer *layer)
+gimp_text_layer_get_language (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gchar *language = NULL;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -691,15 +691,15 @@ gimp_text_layer_get_language (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_language (GimpLayer   *layer,
-                              const gchar *language)
+gimp_text_layer_set_language (GimpTextLayer *layer,
+                              const gchar   *language)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_STRING, language,
                                           G_TYPE_NONE);
 
@@ -729,14 +729,14 @@ gimp_text_layer_set_language (GimpLayer   *layer,
  * Since: 2.6
  **/
 GimpTextDirection
-gimp_text_layer_get_base_direction (GimpLayer *layer)
+gimp_text_layer_get_base_direction (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpTextDirection direction = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -767,7 +767,7 @@ gimp_text_layer_get_base_direction (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_base_direction (GimpLayer         *layer,
+gimp_text_layer_set_base_direction (GimpTextLayer     *layer,
                                     GimpTextDirection  direction)
 {
   GimpValueArray *args;
@@ -775,7 +775,7 @@ gimp_text_layer_set_base_direction (GimpLayer         *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           GIMP_TYPE_TEXT_DIRECTION, direction,
                                           G_TYPE_NONE);
 
@@ -805,14 +805,14 @@ gimp_text_layer_set_base_direction (GimpLayer         *layer,
  * Since: 2.6
  **/
 GimpTextJustification
-gimp_text_layer_get_justification (GimpLayer *layer)
+gimp_text_layer_get_justification (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   GimpTextJustification justify = 0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -843,7 +843,7 @@ gimp_text_layer_get_justification (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_justification (GimpLayer             *layer,
+gimp_text_layer_set_justification (GimpTextLayer         *layer,
                                    GimpTextJustification  justify)
 {
   GimpValueArray *args;
@@ -851,7 +851,7 @@ gimp_text_layer_set_justification (GimpLayer             *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           GIMP_TYPE_TEXT_JUSTIFICATION, justify,
                                           G_TYPE_NONE);
 
@@ -881,15 +881,15 @@ gimp_text_layer_set_justification (GimpLayer             *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_get_color (GimpLayer *layer,
-                           GimpRGB   *color)
+gimp_text_layer_get_color (GimpTextLayer *layer,
+                           GimpRGB       *color)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -921,7 +921,7 @@ gimp_text_layer_get_color (GimpLayer *layer,
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_color (GimpLayer     *layer,
+gimp_text_layer_set_color (GimpTextLayer *layer,
                            const GimpRGB *color)
 {
   GimpValueArray *args;
@@ -929,7 +929,7 @@ gimp_text_layer_set_color (GimpLayer     *layer,
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           GIMP_TYPE_RGB, color,
                                           G_TYPE_NONE);
 
@@ -959,14 +959,14 @@ gimp_text_layer_set_color (GimpLayer     *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_indent (GimpLayer *layer)
+gimp_text_layer_get_indent (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble indent = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -997,15 +997,15 @@ gimp_text_layer_get_indent (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_indent (GimpLayer *layer,
-                            gdouble    indent)
+gimp_text_layer_set_indent (GimpTextLayer *layer,
+                            gdouble        indent)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, indent,
                                           G_TYPE_NONE);
 
@@ -1035,14 +1035,14 @@ gimp_text_layer_set_indent (GimpLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_line_spacing (GimpLayer *layer)
+gimp_text_layer_get_line_spacing (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble line_spacing = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -1073,15 +1073,15 @@ gimp_text_layer_get_line_spacing (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_line_spacing (GimpLayer *layer,
-                                  gdouble    line_spacing)
+gimp_text_layer_set_line_spacing (GimpTextLayer *layer,
+                                  gdouble        line_spacing)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, line_spacing,
                                           G_TYPE_NONE);
 
@@ -1111,14 +1111,14 @@ gimp_text_layer_set_line_spacing (GimpLayer *layer,
  * Since: 2.6
  **/
 gdouble
-gimp_text_layer_get_letter_spacing (GimpLayer *layer)
+gimp_text_layer_get_letter_spacing (GimpTextLayer *layer)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gdouble letter_spacing = 0.0;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -1149,15 +1149,15 @@ gimp_text_layer_get_letter_spacing (GimpLayer *layer)
  * Since: 2.6
  **/
 gboolean
-gimp_text_layer_set_letter_spacing (GimpLayer *layer,
-                                    gdouble    letter_spacing)
+gimp_text_layer_set_letter_spacing (GimpTextLayer *layer,
+                                    gdouble        letter_spacing)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, letter_spacing,
                                           G_TYPE_NONE);
 
@@ -1190,16 +1190,16 @@ gimp_text_layer_set_letter_spacing (GimpLayer *layer,
  * Since: 2.8
  **/
 gboolean
-gimp_text_layer_resize (GimpLayer *layer,
-                        gdouble    width,
-                        gdouble    height)
+gimp_text_layer_resize (GimpTextLayer *layer,
+                        gdouble        width,
+                        gdouble        height)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
   gboolean success = TRUE;
 
   args = gimp_value_array_new_from_types (NULL,
-                                          GIMP_TYPE_LAYER, layer,
+                                          GIMP_TYPE_TEXT_LAYER, layer,
                                           G_TYPE_DOUBLE, width,
                                           G_TYPE_DOUBLE, height,
                                           G_TYPE_NONE);

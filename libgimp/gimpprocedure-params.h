@@ -676,6 +676,36 @@ G_BEGIN_DECLS
   g_value_set_object (gimp_value_array_index (args, n), value)
 
 
+/*  text layer */
+
+#define GIMP_PROC_ARG_TEXT_LAYER(procedure, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_text_layer (name, nick, blurb,\
+                               none_ok,\
+                               flags))
+
+#define GIMP_PROC_AUX_ARG_TEXT_LAYER(procedure, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_aux_argument (procedure,\
+                                   gimp_param_spec_text_layer (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
+
+#define GIMP_PROC_VAL_TEXT_LAYER(procedure, name, nick, blurb, none_ok, flags) \
+  gimp_procedure_add_return_value (procedure,\
+                                   gimp_param_spec_text_layer (name, nick, blurb,\
+                                   none_ok,\
+                                   flags))
+
+#define GIMP_VALUES_GET_TEXT_LAYER(args, n) \
+  g_value_get_object (gimp_value_array_index (args, n))
+
+#define GIMP_VALUES_GET_TEXT_LAYER_ID(args, n) \
+  gimp_item_get_id (g_value_get_object (gimp_value_array_index (args, n)))
+
+#define GIMP_VALUES_SET_TEXT_LAYER(args, n, value) \
+  g_value_set_object (gimp_value_array_index (args, n), value)
+
+
 /*  channel  */
 
 #define GIMP_PROC_ARG_CHANNEL(procedure, name, nick, blurb, none_ok, flags) \

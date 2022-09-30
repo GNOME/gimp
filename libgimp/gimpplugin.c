@@ -1516,7 +1516,13 @@ _gimp_plug_in_get_item (GimpPlugIn *plug_in,
 
   if (! item)
     {
-      if (gimp_item_id_is_layer (item_id))
+      if (gimp_item_id_is_text_layer (item_id))
+        {
+          item = g_object_new (GIMP_TYPE_TEXT_LAYER,
+                               "id", item_id,
+                               NULL);
+        }
+      else if (gimp_item_id_is_layer (item_id))
         {
           item = g_object_new (GIMP_TYPE_LAYER,
                                "id", item_id,

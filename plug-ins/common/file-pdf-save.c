@@ -648,7 +648,7 @@ get_missing_fonts (GList *layers)
           fontmap = pango_cairo_font_map_new_for_font_type (CAIRO_FONT_TYPE_FT);
           context = pango_font_map_create_context (fontmap);
 
-          font_family = gimp_text_layer_get_font (layer);
+          font_family = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
           font_description = pango_font_description_from_string (font_family);
 
           font = pango_font_map_load_font (fontmap, context, font_description);
@@ -1583,8 +1583,8 @@ drawText (GimpLayer *layer,
           gdouble    y_res)
 {
   GimpImageType         type   = gimp_drawable_type (GIMP_DRAWABLE (layer));
-  gchar                *text   = gimp_text_layer_get_text (layer);
-  gchar                *markup = gimp_text_layer_get_markup (layer);
+  gchar                *text   = gimp_text_layer_get_text (GIMP_TEXT_LAYER (layer));
+  gchar                *markup = gimp_text_layer_get_markup (GIMP_TEXT_LAYER (layer));
   gchar                *font_family;
   gchar                *language;
   cairo_font_options_t *options;
@@ -1622,7 +1622,7 @@ drawText (GimpLayer *layer,
   /* When dealing with a gray/indexed image, the viewed color of the text layer
    * can be different than the one kept in the memory */
   if (type == GIMP_RGBA_IMAGE)
-    gimp_text_layer_get_color (layer, &color);
+    gimp_text_layer_get_color (GIMP_TEXT_LAYER (layer), &color);
   else
     gimp_image_pick_color (gimp_item_get_image (GIMP_ITEM (layer)), 1,
                            (const GimpItem**) &layer, x, y, FALSE, FALSE, 0,
@@ -1631,7 +1631,7 @@ drawText (GimpLayer *layer,
   cairo_set_source_rgba (cr, color.r, color.g, color.b, opacity);
 
   /* Hinting */
-  hinting = gimp_text_layer_get_hint_style (layer);
+  hinting = gimp_text_layer_get_hint_style (GIMP_TEXT_LAYER (layer));
   switch (hinting)
     {
     case GIMP_TEXT_HINT_STYLE_NONE:
@@ -1652,7 +1652,7 @@ drawText (GimpLayer *layer,
     }
 
   /* Antialiasing */
-  if (gimp_text_layer_get_antialias (layer))
+  if (gimp_text_layer_get_antialias (GIMP_TEXT_LAYER (layer)))
     cairo_font_options_set_antialias (options, CAIRO_ANTIALIAS_DEFAULT);
   else
     cairo_font_options_set_antialias (options, CAIRO_ANTIALIAS_NONE);
@@ -1670,13 +1670,13 @@ drawText (GimpLayer *layer,
   pango_cairo_context_set_font_options (context, options);
 
   /* Language */
-  language = gimp_text_layer_get_language (layer);
+  language = gimp_text_layer_get_language (GIMP_TEXT_LAYER (layer));
   if (language)
     pango_context_set_language (context,
                                 pango_language_from_string(language));
 
   /* Text Direction */
-  dir = gimp_text_layer_get_base_direction (layer);
+  dir = gimp_text_layer_get_base_direction (GIMP_TEXT_LAYER (layer));
 
   switch (dir)
     {
@@ -1724,7 +1724,7 @@ drawText (GimpLayer *layer,
   pango_layout_set_wrap (layout, PANGO_WRAP_WORD_CHAR);
 
   /* Font */
-  font_family = gimp_text_layer_get_font (layer);
+  font_family = gimp_text_layer_get_font (GIMP_TEXT_LAYER (layer));
 
   /* We need to find a way to convert GIMP's returned font name to a
    * normal Pango name... Hopefully GIMP 2.8 with Pango will fix it.
@@ -1732,7 +1732,7 @@ drawText (GimpLayer *layer,
   font_description = pango_font_description_from_string (font_family);
 
   /* Font Size */
-  size = gimp_text_layer_get_font_size (layer, &unit);
+  size = gimp_text_layer_get_font_size (GIMP_TEXT_LAYER (layer), &unit);
   size = gimp_units_to_pixels (size, unit, y_res);
   pango_font_description_set_absolute_size (font_description, size * PANGO_SCALE);
 
@@ -1750,7 +1750,7 @@ drawText (GimpLayer *layer,
 
   /* Justification, and Alignment */
   justify = FALSE;
-  j = gimp_text_layer_get_justification (layer);
+  j = gimp_text_layer_get_justification (GIMP_TEXT_LAYER (layer));
   align = PANGO_ALIGN_LEFT;
   switch (j)
     {
@@ -1772,15 +1772,15 @@ drawText (GimpLayer *layer,
   pango_layout_set_justify (layout, justify);
 
   /* Indentation */
-  indent = gimp_text_layer_get_indent (layer);
+  indent = gimp_text_layer_get_indent (GIMP_TEXT_LAYER (layer));
   pango_layout_set_indent (layout, (int)(PANGO_SCALE * indent));
 
   /* Line Spacing */
-  line_spacing = gimp_text_layer_get_line_spacing (layer);
+  line_spacing = gimp_text_layer_get_line_spacing (GIMP_TEXT_LAYER (layer));
   pango_layout_set_spacing (layout, (int)(PANGO_SCALE * line_spacing));
 
   /* Letter Spacing */
-  letter_spacing = gimp_text_layer_get_letter_spacing (layer);
+  letter_spacing = gimp_text_layer_get_letter_spacing (GIMP_TEXT_LAYER (layer));
   letter_spacing_at = pango_attr_letter_spacing_new ((int)(PANGO_SCALE * letter_spacing));
   pango_attr_list_insert (attr_list, letter_spacing_at);
 

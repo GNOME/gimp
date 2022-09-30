@@ -143,6 +143,32 @@ GParamSpec * gimp_param_spec_layer     (const gchar  *name,
 
 
 /*
+ * GIMP_TYPE_PARAM_TEXT_LAYER
+ */
+
+#define GIMP_VALUE_HOLDS_TEXT_LAYER(value)   (G_TYPE_CHECK_VALUE_TYPE ((value),\
+                                              GIMP_TYPE_TEXT_LAYER))
+
+#define GIMP_TYPE_PARAM_TEXT_LAYER           (gimp_param_text_layer_get_type ())
+#define GIMP_PARAM_SPEC_TEXT_LAYER(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_TEXT_LAYER, GimpParamSpecTextLayer))
+#define GIMP_IS_PARAM_SPEC_TEXT_LAYER(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_TEXT_LAYER))
+
+typedef struct _GimpParamSpecTextLayer GimpParamSpecTextLayer;
+
+struct _GimpParamSpecTextLayer
+{
+  GimpParamSpecLayer parent_instance;
+};
+
+GType        gimp_param_text_layer_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_text_layer     (const gchar  *name,
+                                             const gchar  *nick,
+                                             const gchar  *blurb,
+                                             gboolean      none_ok,
+                                             GParamFlags   flags);
+
+/*
  * GIMP_TYPE_PARAM_CHANNEL
  */
 

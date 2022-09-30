@@ -62,6 +62,7 @@
 #include <libgimp/gimpprogress.h>
 #include <libgimp/gimpsaveprocedure.h>
 #include <libgimp/gimpselection.h>
+#include <libgimp/gimptextlayer.h>
 #include <libgimp/gimpthumbnailprocedure.h>
 #include <libgimp/gimpvectors.h>
 

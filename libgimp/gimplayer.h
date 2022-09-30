@@ -31,8 +31,26 @@ G_BEGIN_DECLS
 
 
 #define GIMP_TYPE_LAYER (gimp_layer_get_type ())
-G_DECLARE_FINAL_TYPE (GimpLayer, gimp_layer, GIMP, LAYER, GimpDrawable)
+G_DECLARE_DERIVABLE_TYPE (GimpLayer, gimp_layer, GIMP, LAYER, GimpDrawable)
 
+struct _GimpLayerClass
+{
+  GimpDrawableClass parent_class;
+
+  /*  virtual functions  */
+  GimpLayer * (* copy) (GimpLayer *layer);
+
+  /* Padding for future expansion */
+  void (*_gimp_reserved1) (void);
+  void (*_gimp_reserved2) (void);
+  void (*_gimp_reserved3) (void);
+  void (*_gimp_reserved4) (void);
+  void (*_gimp_reserved5) (void);
+  void (*_gimp_reserved6) (void);
+  void (*_gimp_reserved7) (void);
+  void (*_gimp_reserved8) (void);
+  void (*_gimp_reserved9) (void);
+};
 
 GimpLayer * gimp_layer_get_by_id          (gint32           layer_id);
 

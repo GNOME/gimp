@@ -25,10 +25,8 @@
 #include "gimp.h"
 
 
-struct _GimpLayer
-{
-  GimpDrawable parent_instance;
-};
+static GimpLayer * gimp_layer_real_copy (GimpLayer *layer);
+
 
 G_DEFINE_TYPE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE)
 
@@ -38,6 +36,7 @@ G_DEFINE_TYPE (GimpLayer, gimp_layer, GIMP_TYPE_DRAWABLE)
 static void
 gimp_layer_class_init (GimpLayerClass *klass)
 {
+  klass->copy = gimp_layer_real_copy;
 }
 
 static void
@@ -134,7 +133,7 @@ gimp_layer_new (GimpImage     *image,
 GimpLayer *
 gimp_layer_copy (GimpLayer *layer)
 {
-  return _gimp_layer_copy (layer, FALSE);
+  return GIMP_LAYER_GET_CLASS (layer)->copy (layer);
 }
 
 /**
@@ -299,4 +298,13 @@ gimp_layer_new_from_surface (GimpImage            *image,
     gimp_progress_update (progress_end);
 
   return layer;
+}
+
+
+/*  private functions  */
+
+static GimpLayer *
+gimp_layer_real_copy (GimpLayer *layer)
+{
+  return _gimp_layer_copy (layer, FALSE);
 }

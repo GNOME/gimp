@@ -32,6 +32,8 @@
 #include "gimpparamspecs.h"
 #include "gimpselection.h"
 
+#include "text/gimptextlayer.h"
+
 #include "vectors/gimpvectors.h"
 
 

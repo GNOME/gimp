@@ -248,6 +248,18 @@ package Gimp::CodeGen::pdb;
 		     take_value_func => 'g_value_set_object ($value, $var)',
 		     headers         => [ qw("core/gimplayer.h") ] },
 
+    text_layer  => { name            => 'TEXT_LAYER',
+		     gtype           => 'GIMP_TYPE_TEXT_LAYER',
+		     type            => 'GimpTextLayer *',
+		     const_type      => 'GimpTextLayer *',
+		     init_value      => 'NULL',
+		     out_annotate    => '(transfer none)',
+		     get_value_func  => '$var = g_value_get_object ($value)',
+		     dup_value_func  => '$var = GIMP_VALUES_GET_TEXT_LAYER ($value)',
+		     set_value_func  => 'g_value_set_object ($value, $var)',
+		     take_value_func => 'g_value_set_object ($value, $var)',
+		     headers         => [ qw("text/gimptextlayer.h") ] },
+
     channel     => { name            => 'CHANNEL',
 		     gtype           => 'GIMP_TYPE_CHANNEL',
 		     type            => 'GimpChannel *',

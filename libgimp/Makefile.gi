@@ -136,6 +136,7 @@ libgimp_introspectable_headers = \
 	../libgimp/gimpprogress.h		\
 	../libgimp/gimpsaveprocedure.h		\
 	../libgimp/gimpselection.h		\
+	../libgimp/gimptextlayer.h		\
 	../libgimp/gimpthumbnailprocedure.h	\
 	../libgimp/gimpvectors.h
 
@@ -172,6 +173,7 @@ libgimp_introspectable = \
 	../libgimp/gimpprogress.c		\
 	../libgimp/gimpsaveprocedure.c		\
 	../libgimp/gimpselection.c		\
+	../libgimp/gimptextlayer.h		\
 	../libgimp/gimpthumbnailprocedure.c	\
 	../libgimp/gimpvectors.c
 
