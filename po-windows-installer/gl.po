@@ -8,10 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-08-22 21:28+0200\n"
-"PO-Revision-Date: 2022-03-12 21:58+0100\n"
+"POT-Creation-Date: 2022-09-27 16:19+0000\n"
+"PO-Revision-Date: 2022-10-01 21:08+0200\n"
 "Last-Translator: Fran Dieguez <frandieguez@gnome.org>\n"
-"Language-Team: Galician <Proxecto Trasno <proxecto@trasno.gal>>\n"
+"Language-Team: Galician <proxecto@trasno.gal>\n"
 "Language: gl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -141,11 +141,10 @@ msgid "Run-time libraries"
 msgstr "Bibliotecas de execución"
 
 #: build/windows/installer/lang/setup.isl.xml.in:101
-#, fuzzy
 msgid "Run-time libraries used by GIMP, including GTK Run-time Environment"
 msgstr ""
 "Bibliotecas de execución usadas por GIMP, incluíndo o ambiente de execución "
-"GTK+"
+"GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:105
 msgid "Debug symbols"
@@ -156,9 +155,8 @@ msgid "Include information to help with debugging GIMP"
 msgstr "Inclúe información para axudarlle a depurar GIMP"
 
 #: build/windows/installer/lang/setup.isl.xml.in:113
-#, fuzzy
 msgid "MS-Windows engine for GTK"
-msgstr "Motor MS-Windows para GTK+"
+msgstr "Motor MS-Windows para GTK"
 
 #: build/windows/installer/lang/setup.isl.xml.in:117
 msgid "Native Windows look for GIMP"
@@ -323,15 +321,26 @@ msgid ""
 "choose a Custom install, and select a different installation folder.%n%nThe "
 "Setup will now exit."
 msgstr ""
+"GIMP %1 non puido instalarse sobre a versión de GIMP actualmente instalada, "
+"e a desinstalación automática da versión anterior fallou. %n%nElimine a "
+"versión anterior de GIMP vostede mesmo antes de instalar esta versión en %2, "
+"ou seleccione unha instalación personalizada e seleccione un cartafol de "
+"instalación diferente %n%nO Instalador sairá agora."
 
 #: build/windows/installer/lang/setup.isl.xml.in:266
 msgid ""
 "GIMP %1 cannot be installed over your currently installed GIMP version, and "
-"Setup couldn't determine how to remove the old version automatically.%n"
-"%nPlease remove the previous version of GIMP and any add-ons yourself before "
-"installing this version in %2, or choose a Custom install, and select a "
-"different installation folder.%n%nThe Setup will now exit."
+"Setup couldn't determine how to remove the old version automatically."
+"%n%nPlease remove the previous version of GIMP and any add-ons yourself "
+"before installing this version in %2, or choose a Custom install, and select "
+"a different installation folder.%n%nThe Setup will now exit."
 msgstr ""
+"GIMP %1 non puido instalarse sobre a versión de GIMP actualmente instalada, "
+"o Instalador non puido determinar como eliminar a versión anterior "
+"automaticamente. %n%nElimine a versión anterior de GIMP vostede mesmo antes "
+"de instalar esta versión en %2, ou seleccione unha instalación personalizada "
+"e seleccione un cartafol de instalación diferente %n%nO Instalador sairá "
+"agora."
 
 #: build/windows/installer/lang/setup.isl.xml.in:270
 msgid ""
@@ -339,6 +348,10 @@ msgid ""
 "restarted before the Setup can continue.%n%nAfter restarting your computer, "
 "Setup will continue next time an administrator logs in."
 msgstr ""
+"A versión de GIMP anterior eliminouse correctamente, pero Windows debe "
+"reiniciarse antes de que o Instalador poida continuar.%n%nDespois de "
+"reiniciar o computador o Instalador continuará a seguinte vez que o "
+"administrador inicie sesión."
 
 #: build/windows/installer/lang/setup.isl.xml.in:275
 msgid "There was an error restarting the Setup. (%1)"
