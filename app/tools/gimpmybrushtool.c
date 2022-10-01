@@ -56,6 +56,10 @@ static GimpCanvasItem * gimp_mybrush_tool_get_outline (GimpPaintTool *paint_tool
                                                        gdouble        x,
                                                        gdouble        y);
 
+static void   gimp_mybrush_tool_cursor_update         (GimpTool         *tool,
+                                                       const GimpCoords *coords,
+                                                       GdkModifierType   state,
+                                                       GimpDisplay      *display);
 
 void
 gimp_mybrush_tool_register (GimpToolRegisterCallback  callback,
@@ -84,6 +88,7 @@ gimp_mybrush_tool_class_init (GimpMybrushToolClass *klass)
   GimpToolClass      *tool_class       = GIMP_TOOL_CLASS (klass);
   GimpPaintToolClass *paint_tool_class = GIMP_PAINT_TOOL_CLASS (klass);
 
+  tool_class->cursor_update     = gimp_mybrush_tool_cursor_update;
   tool_class->options_notify    = gimp_mybrush_tool_options_notify;
 
   paint_tool_class->get_outline = gimp_mybrush_tool_get_outline;
@@ -175,4 +180,20 @@ gimp_mybrush_tool_create_cursor (GimpPaintTool *paint_tool,
     }
 
   return NULL;
+}
+
+static void gimp_mybrush_tool_cursor_update (GimpTool         *tool,
+                                             const GimpCoords *coords,
+                                             GdkModifierType   state,
+                                             GimpDisplay      *display)
+{
+  GimpDisplayShell   *shell;
+  GimpMybrushOptions *options = GIMP_MYBRUSH_TOOL_GET_OPTIONS (tool);
+
+  g_return_if_fail (GIMP_IS_DISPLAY (display));
+
+  shell = gimp_display_get_shell (display);
+
+  options->view_zoom = gimp_zoom_model_get_factor (shell->zoom);
+  options->view_rotation = shell->rotate_angle;
 }

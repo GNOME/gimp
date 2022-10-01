@@ -84,7 +84,7 @@ gimp_mybrush_load (GimpContext   *context,
       return NULL;
     }
 
-  mypaint_brush = mypaint_brush_new ();
+  mypaint_brush = mypaint_brush_new_with_buckets (64);
   mypaint_brush_from_defaults (mypaint_brush);
 
   if (! mypaint_brush_from_string (mypaint_brush, (const gchar *) buffer))
@@ -146,6 +146,17 @@ gimp_mybrush_load (GimpContext   *context,
   brush->priv->offset_by_random =
     mypaint_brush_get_base_value (mypaint_brush,
                                   MYPAINT_BRUSH_SETTING_OFFSET_BY_RANDOM);
+
+  /* Version 2 MyPaint Brush options */
+  brush->priv->pigment = -0.1;
+
+  brush->priv->posterize =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_POSTERIZE);
+
+  brush->priv->posterize_num =
+    mypaint_brush_get_base_value (mypaint_brush,
+                                  MYPAINT_BRUSH_SETTING_POSTERIZE_NUM);
 
   mypaint_brush_unref (mypaint_brush);
 

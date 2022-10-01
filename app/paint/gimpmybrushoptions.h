@@ -36,9 +36,14 @@ struct _GimpMybrushOptions
 {
   GimpPaintOptions  parent_instance;
 
+  gdouble           view_zoom;
+  gdouble           view_rotation;
   gdouble           radius;
   gdouble           opaque;
   gdouble           hardness;
+  gdouble           pigment;
+  gdouble           posterize;
+  gdouble           posterize_num;
   gboolean          eraser;
   gboolean          no_erasing;
 };

@@ -27,6 +27,9 @@ struct _GimpMybrushPrivate
   gdouble  radius;
   gdouble  opaque;
   gdouble  hardness;
+  gdouble  pigment;
+  gdouble  posterize;
+  gdouble  posterize_num;
   gdouble  offset_by_random;
   gboolean eraser;
 };

@@ -78,5 +78,10 @@ gimp_mybrush_options_gui (GimpToolOptions *tool_options)
                                     0.1, 1.0, 2);
   gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
 
+  /* pigment */
+  scale = gimp_prop_spin_scale_new (config, "pigment",
+                                    0.1, 0.0, 2);
+  gtk_box_pack_start (GTK_BOX (vbox), scale, FALSE, FALSE, 0);
+
   return vbox;
 }

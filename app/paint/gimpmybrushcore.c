@@ -80,7 +80,10 @@ static void      gimp_mybrush_core_motion         (GimpPaintCore     *paint_core
                                                    GimpDrawable      *drawable,
                                                    GimpPaintOptions  *paint_options,
                                                    GimpSymmetry      *sym,
-                                                   guint32            time);
+                                                   guint32            time,
+                                                   gfloat             view_zoom,
+                                                   gfloat             view_rotation,
+                                                   gfloat             barrel_rotation);
 static void      gimp_mybrush_core_create_brushes (GimpMybrushCore   *mybrush,
                                                    GimpDrawable      *drawable,
                                                    GimpPaintOptions  *paint_options,
@@ -200,11 +203,12 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
                          GimpPaintState    paint_state,
                          guint32           time)
 {
-  GimpMybrushCore *mybrush = GIMP_MYBRUSH_CORE (paint_core);
-  GimpContext     *context = GIMP_CONTEXT (paint_options);
-  gint             offset_x;
-  gint             offset_y;
-  GimpRGB          fg;
+  GimpMybrushCore    *mybrush         = GIMP_MYBRUSH_CORE (paint_core);
+  GimpMybrushOptions *mybrush_options = GIMP_MYBRUSH_OPTIONS (paint_options);
+  GimpContext        *context         = GIMP_CONTEXT (paint_options);
+  gint                offset_x;
+  gint                offset_y;
+  GimpRGB             fg;
 
   g_return_if_fail (g_list_length (drawables) == 1);
 
@@ -231,12 +235,14 @@ gimp_mybrush_core_paint (GimpPaintCore    *paint_core,
 
     case GIMP_PAINT_STATE_MOTION:
       gimp_mybrush_core_motion (paint_core, drawables->data, paint_options,
-                                sym, time);
+                                sym, time, mybrush_options->view_zoom,
+                                mybrush_options->view_rotation, 1.0f);
       break;
 
     case GIMP_PAINT_STATE_FINISH:
       gimp_symmetry_set_stateful (sym, FALSE);
-      mypaint_surface_unref ((MyPaintSurface *) mybrush->private->surface);
+      mypaint_surface_unref (mypaint_surface2_to_surface (
+                             (MyPaintSurface2 *) mybrush->private->surface));
       mybrush->private->surface = NULL;
 
       g_list_free_full (mybrush->private->brushes,
@@ -251,10 +257,14 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
                           GimpDrawable     *drawable,
                           GimpPaintOptions *paint_options,
                           GimpSymmetry     *sym,
-                          guint32           time)
+                          guint32           time,
+                          gfloat            view_zoom,
+                          gfloat            view_rotation,
+                          gfloat            barrel_rotation)
 {
   GimpMybrushCore  *mybrush = GIMP_MYBRUSH_CORE (paint_core);
   MyPaintRectangle  rect;
+  MyPaintRectangles rects = {1, &rect};
   GimpCoords        coords;
   GList            *iter;
   gdouble           dt = 0.0;
@@ -278,7 +288,8 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       gimp_mybrush_core_create_brushes (mybrush, drawable, paint_options, sym);
     }
 
-  mypaint_surface_begin_atomic ((MyPaintSurface *) mybrush->private->surface);
+  mypaint_surface_begin_atomic (mypaint_surface2_to_surface (
+                                (MyPaintSurface2 *) mybrush->private->surface));
 
   if (mybrush->private->last_time < 0)
     {
@@ -291,14 +302,17 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
 
           coords = *(gimp_symmetry_get_coords (sym, i));
 
-          mypaint_brush_stroke_to (brush,
-                                   (MyPaintSurface *) mybrush->private->surface,
-                                   coords.x,
-                                   coords.y,
-                                   0.0f,
-                                   coords.xtilt,
-                                   coords.ytilt,
-                                   1.0f /* Pretend the cursor hasn't moved in a while */);
+          mypaint_brush_stroke_to_2 (brush,
+                                     (MyPaintSurface2 *) mybrush->private->surface,
+                                      coords.x,
+                                      coords.y,
+                                      0.0f,
+                                      coords.xtilt,
+                                      coords.ytilt,
+                                      1.0f, /* Pretend the cursor hasn't moved in a while */
+                                      view_zoom,
+                                      view_rotation,
+                                      barrel_rotation);
         }
 
       dt = 0.015;
@@ -323,29 +337,36 @@ gimp_mybrush_core_motion (GimpPaintCore    *paint_core,
       GimpCoords    coords   = *(gimp_symmetry_get_coords (sym, i));
       gdouble       pressure = coords.pressure;
 
-      mypaint_brush_stroke_to (brush,
-                               (MyPaintSurface *) mybrush->private->surface,
-                               coords.x,
-                               coords.y,
-                               pressure,
-                               coords.xtilt,
-                               coords.ytilt,
-                               dt);
+      mypaint_brush_stroke_to_2 (brush,
+                                 (MyPaintSurface2 *) mybrush->private->surface,
+                                  coords.x,
+                                  coords.y,
+                                  pressure,
+                                  coords.xtilt,
+                                  coords.ytilt,
+                                  dt,
+                                  view_zoom,
+                                  view_rotation,
+                                  barrel_rotation);
     }
 
   mybrush->private->last_time = time;
 
-  mypaint_surface_end_atomic ((MyPaintSurface *) mybrush->private->surface,
-                              &rect);
+  mypaint_surface2_end_atomic ((MyPaintSurface2 *) mybrush->private->surface,
+                               &rects);
 
-  if (rect.width > 0 && rect.height > 0)
+  if (rects.rectangles[0].width > 0 && rects.rectangles[0].height > 0)
     {
-      paint_core->x1 = MIN (paint_core->x1, rect.x);
-      paint_core->y1 = MIN (paint_core->y1, rect.y);
-      paint_core->x2 = MAX (paint_core->x2, rect.x + rect.width);
-      paint_core->y2 = MAX (paint_core->y2, rect.y + rect.height);
+      paint_core->x1 = MIN (paint_core->x1, rects.rectangles[0].x);
+      paint_core->y1 = MIN (paint_core->y1, rects.rectangles[0].y);
+      paint_core->x2 = MAX (paint_core->x2,
+                            rects.rectangles[0].x + rects.rectangles[0].width);
+      paint_core->y2 = MAX (paint_core->y2,
+                            rects.rectangles[0].y + rects.rectangles[0].height);
 
-      gimp_drawable_update (drawable, rect.x, rect.y, rect.width, rect.height);
+      gimp_drawable_update (drawable, rects.rectangles[0].x,
+                            rects.rectangles[0].y, rects.rectangles[0].width,
+                            rects.rectangles[0].height);
     }
 }
 
@@ -382,7 +403,7 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
 
   for (i = 0; i < n_strokes; i++)
     {
-      MyPaintBrush *brush = mypaint_brush_new ();
+      MyPaintBrush *brush = mypaint_brush_new_with_buckets (64);
       const gchar  *brush_data;
 
       mypaint_brush_from_defaults (brush);
@@ -419,6 +440,15 @@ gimp_mybrush_core_create_brushes (GimpMybrushCore  *mybrush,
                                     (options->eraser &&
                                      gimp_drawable_has_alpha (drawable)) ?
                                     1.0f : 0.0f);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_PAINT_MODE,
+                                    options->pigment);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_POSTERIZE,
+                                    options->posterize);
+      mypaint_brush_set_base_value (brush,
+                                    MYPAINT_BRUSH_SETTING_POSTERIZE_NUM,
+                                    options->posterize_num);
 
       mypaint_brush_new_stroke (brush);
 
