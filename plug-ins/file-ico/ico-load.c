@@ -775,6 +775,7 @@ ani_load_image (GFile   *file,
   GimpParasite *parasite;
   gchar         id[4];
   guint32       size;
+  guint8        padding;
   gint32        file_offset;
   gint          frame = 1;
   AniFileHeader header;
@@ -825,12 +826,23 @@ ani_load_image (GFile   *file,
           fread (&size, sizeof (size), 1, fp);
           fread (&inam, sizeof (char), size, fp);
           inam[size] = '\0';
+
+          /* Metadata length must be even. If data itself is odd,
+           * then an extra 0x00 is added for padding. We read in
+           * that extra byte to keep loading properly.
+           * See discussion in #8562.
+           */
+          if (size % 2 != 0)
+            fread (&padding, sizeof (padding), 1, fp);
         }
       else if (memcmp (id, "IART", 4) == 0)
         {
           fread (&size, sizeof (size), 1, fp);
           fread (&iart, sizeof (char), size, fp);
           iart[size] = '\0';
+
+          if (size % 2 != 0)
+            fread (&padding, sizeof (padding), 1, fp);
         }
       else if (memcmp (id, "icon", 4) == 0)
         {

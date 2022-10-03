@@ -1226,8 +1226,10 @@ ani_save_image (GFile         *file,
   GimpParasite *parasite = NULL;
   gchar         id[5];
   guint32       size;
+  guint8        padding       = 0;
   gint32        offset, ofs_size_riff, ofs_size_list, ofs_size_icon;
   gint32        ofs_size_info = 0;
+  gint32        ofs_metadata  = 0;
   IcoSaveInfo   info;
 
   if (! ico_save_init (image, run_mode, &info,
@@ -1361,6 +1363,11 @@ ani_save_image (GFile         *file,
           string_size = strlen (ani_info->inam) + 1;
           fwrite (&string_size, 4, 1, fp);
           fwrite (ani_info->inam, string_size, 1, fp);
+          ofs_metadata += 4;
+
+          /* Length of metadata must be even. */
+          if (string_size % 2 != 0)
+            fwrite (&padding, sizeof (padding), 1, fp);
         }
       if (ani_info->iart && strlen (ani_info->iart) > 0) /* Author name */
         {
@@ -1369,6 +1376,10 @@ ani_save_image (GFile         *file,
           string_size = strlen (ani_info->iart) + 1;
           fwrite (&string_size, 4, 1, fp);
           fwrite (ani_info->iart, string_size, 1, fp);
+          ofs_metadata += 4;
+
+          if (string_size % 2 != 0)
+            fwrite (&padding, sizeof (padding), 1, fp);
         }
 
       /* Go back and update info list size */
@@ -1426,10 +1437,12 @@ ani_save_image (GFile         *file,
 
   fseek (fp, 0L, SEEK_END);
   size = ftell (fp);
+  size -= ofs_metadata;
   fseek (fp, ofs_size_riff, SEEK_SET);
   fwrite (&size, sizeof (size), 1, fp);
 
   size -= ofs_size_list;
+  size += (ofs_metadata - 4);
   fseek (fp, ofs_size_list, SEEK_SET);
   fwrite (&size, sizeof (size), 1, fp);
   fclose (fp);
