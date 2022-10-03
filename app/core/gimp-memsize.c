@@ -243,6 +243,20 @@ gimp_g_value_get_memsize (GValue *value)
                 memsize += gimp_string_get_memsize (array[i]);
             }
         }
+      else if (strcmp ("GimpValueArray", G_VALUE_TYPE_NAME (value)) == 0)
+        {
+          GimpValueArray *array = g_value_get_boxed (value);
+
+          if (array)
+            {
+              gint n_values = gimp_value_array_length (array), i;
+
+              memsize += /* sizeof (GimpValueArray) */ sizeof (GValue *) + 3 * sizeof (gint);
+
+              for (i = 0; i < n_values; i++)
+                memsize += gimp_g_value_get_memsize (gimp_value_array_index (array, i));
+            }
+        }
       else
         {
           g_printerr ("%s: unhandled boxed value type: %s\n",
@@ -251,8 +265,11 @@ gimp_g_value_get_memsize (GValue *value)
     }
   else if (G_VALUE_HOLDS_OBJECT (value))
     {
-      g_printerr ("%s: unhandled object value type: %s\n",
-                  G_STRFUNC, G_VALUE_TYPE_NAME (value));
+      if (strcmp ("GimpPattern", G_VALUE_TYPE_NAME (value)) == 0)
+        memsize += gimp_g_object_get_memsize (g_value_get_object (value));
+      else
+        g_printerr ("%s: unhandled object value type: %s\n",
+                    G_STRFUNC, G_VALUE_TYPE_NAME (value));
     }
 
   return memsize + sizeof (GValue);

@@ -65,6 +65,7 @@ gimp_text_to_parasite (GimpText *text)
 
 GimpText *
 gimp_text_from_parasite (const GimpParasite  *parasite,
+                         Gimp                *gimp,
                          GError             **error)
 {
   GimpText *text;
@@ -76,7 +77,7 @@ gimp_text_from_parasite (const GimpParasite  *parasite,
                                 gimp_text_parasite_name ()) == 0, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  text = g_object_new (GIMP_TYPE_TEXT, NULL);
+  text = g_object_new (GIMP_TYPE_TEXT, "gimp", gimp, NULL);
 
   parasite_data = (gchar *) gimp_parasite_get_data (parasite, &parasite_data_size);
   if (parasite_data)

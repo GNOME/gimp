@@ -69,7 +69,9 @@ gimp_text_layer_xcf_load_hack (GimpLayer **layer)
     {
       GError *error = NULL;
 
-      text = gimp_text_from_parasite (parasite, &error);
+      text = gimp_text_from_parasite (parasite,
+                                      gimp_item_get_image (GIMP_ITEM (*layer))->gimp,
+                                      &error);
 
       if (error)
         {

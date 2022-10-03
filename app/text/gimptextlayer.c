@@ -39,8 +39,8 @@
 
 #include "core/gimp.h"
 #include "core/gimp-utils.h"
-#include "core/gimpcontext.h"
 #include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
 #include "core/gimpdatafactory.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-color-profile.h"
@@ -48,6 +48,8 @@
 #include "core/gimpimage-undo-push.h"
 #include "core/gimpitemtree.h"
 #include "core/gimpparasitelist.h"
+#include "core/gimppattern.h"
+#include "core/gimptempbuf.h"
 
 #include "gimptext.h"
 #include "gimptextlayer.h"
@@ -800,6 +802,121 @@ gimp_text_layer_render (GimpTextLayer *layer)
 }
 
 static void
+gimp_text_layer_set_dash_info (cairo_t      *cr,
+                               gdouble       width,
+                               gdouble       dash_offset,
+                               const GArray *dash_info)
+{
+  if (dash_info && dash_info->len >= 2)
+    {
+      gint     n_dashes = dash_info->len;
+      gdouble *dashes   = g_new (gdouble, dash_info->len);
+      gint     i;
+
+      dash_offset = dash_offset * MAX (width, 1.0);
+
+      for (i = 0; i < n_dashes; i++)
+        dashes[i] = MAX (width, 1.0) * g_array_index (dash_info, gdouble, i);
+
+      /* correct 0.0 in the first element (starts with a gap) */
+
+      if (dashes[0] == 0.0)
+        {
+          gdouble first;
+
+          first = dashes[1];
+
+          /* shift the pattern to really starts with a dash and
+           * use the offset to skip into it.
+           */
+          for (i = 0; i < n_dashes - 2; i++)
+            {
+              dashes[i] = dashes[i + 2];
+              dash_offset += dashes[i];
+            }
+
+          if (n_dashes % 2 == 1)
+            {
+              dashes[n_dashes - 2] = first;
+              n_dashes--;
+            }
+          else if (dash_info->len > 2)
+            {
+              dashes[n_dashes - 3] += first;
+              n_dashes -= 2;
+            }
+        }
+
+      /* correct odd number of dash specifiers */
+
+      if (n_dashes % 2 == 1)
+        {
+          gdouble last = dashes[n_dashes - 1];
+
+          dashes[0] += last;
+          dash_offset += last;
+          n_dashes--;
+        }
+
+      if (n_dashes >= 2)
+        cairo_set_dash (cr,
+                        dashes,
+                        n_dashes,
+                        dash_offset);
+
+      g_free (dashes);
+    }
+}
+
+static cairo_surface_t *
+gimp_temp_buf_create_cairo_surface (GimpTempBuf *temp_buf)
+{
+  cairo_surface_t *surface;
+  gboolean         has_alpha;
+  const Babl      *format;
+  const Babl      *fish = NULL;
+  const guchar    *data;
+  gint             width;
+  gint             height;
+  gint             bpp;
+  guchar          *pixels;
+  gint             rowstride;
+  gint             i;
+
+  g_return_val_if_fail (temp_buf != NULL, NULL);
+
+  data      = gimp_temp_buf_get_data (temp_buf);
+  format    = gimp_temp_buf_get_format (temp_buf);
+  width     = gimp_temp_buf_get_width (temp_buf);
+  height    = gimp_temp_buf_get_height (temp_buf);
+  bpp       = babl_format_get_bytes_per_pixel (format);
+  has_alpha = babl_format_has_alpha (format);
+
+  surface = cairo_image_surface_create (has_alpha ?
+                                        CAIRO_FORMAT_ARGB32 : CAIRO_FORMAT_RGB24,
+                                        width, height);
+
+  pixels    = cairo_image_surface_get_data (surface);
+  rowstride = cairo_image_surface_get_stride (surface);
+
+  if (format != babl_format (has_alpha ? "cairo-ARGB32" : "cairo-RGB24"))
+    fish = babl_fish (format, babl_format (has_alpha ? "cairo-ARGB32" : "cairo-RGB24"));
+
+  for (i = 0; i < height; i++)
+    {
+      if (fish)
+        babl_process (fish, data, pixels, width);
+      else
+        memcpy (pixels, data, width * bpp);
+
+      data += width * bpp;
+      pixels += rowstride;
+    }
+
+  return surface;
+}
+
+static void
 gimp_text_layer_render_layout (GimpTextLayer  *layer,
                                GimpTextLayout *layout)
 {
@@ -834,7 +951,60 @@ gimp_text_layer_render_layout (GimpTextLayer  *layer,
     }
 
   cr = cairo_create (surface);
-  gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
+  if (layer->text->outline != GIMP_TEXT_OUTLINE_STROKE_ONLY)
+    {
+      cairo_save (cr);
+
+      gimp_text_layout_render (layout, cr, layer->text->base_dir, FALSE);
+
+      cairo_restore (cr);
+    }
+
+  if (layer->text->outline != GIMP_TEXT_OUTLINE_NONE)
+    {
+      GimpText *text = layer->text;
+      GimpRGB   col  = text->outline_foreground;
+
+      cairo_save (cr);
+
+      cairo_set_antialias (cr, text->outline_antialias ?
+                           CAIRO_ANTIALIAS_GRAY : CAIRO_ANTIALIAS_NONE);
+      cairo_set_line_cap (cr,
+                          text->outline_cap_style == GIMP_CAP_BUTT ? CAIRO_LINE_CAP_BUTT :
+                          text->outline_cap_style == GIMP_CAP_ROUND ? CAIRO_LINE_CAP_ROUND :
+                          CAIRO_LINE_CAP_SQUARE);
+      cairo_set_line_join (cr, text->outline_join_style == GIMP_JOIN_MITER ? CAIRO_LINE_JOIN_MITER :
+                               text->outline_join_style == GIMP_JOIN_ROUND ? CAIRO_LINE_JOIN_ROUND :
+                               CAIRO_LINE_JOIN_BEVEL);
+      cairo_set_miter_limit (cr, text->outline_miter_limit);
+
+      if (text->outline_dash_info)
+        gimp_text_layer_set_dash_info (cr, text->outline_width, text->outline_dash_offset, text->outline_dash_info);
+
+      if (text->outline_style == GIMP_FILL_STYLE_PATTERN && text->outline_pattern)
+        {
+          GimpTempBuf     *tempbuf = gimp_pattern_get_mask (text->outline_pattern);
+          cairo_surface_t *surface = gimp_temp_buf_create_cairo_surface (tempbuf);
+
+          cairo_set_source_surface (cr, surface, 0.0, 0.0);
+          cairo_surface_destroy (surface);
+
+          cairo_pattern_set_extend (cairo_get_source (cr), CAIRO_EXTEND_REPEAT);
+        }
+      else
+        {
+          cairo_set_source_rgba (cr, col.r, col.g, col.b, col.a);
+        }
+
+      cairo_set_line_width (cr, text->outline_width * 2);
+
+      gimp_text_layout_render (layout, cr, text->base_dir, TRUE);
+      cairo_clip_preserve (cr);
+      cairo_stroke (cr);
+
+      cairo_restore (cr);
+    }
+
   cairo_destroy (cr);
 
   cairo_surface_flush (surface);

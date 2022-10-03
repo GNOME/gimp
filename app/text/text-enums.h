@@ -36,9 +36,9 @@ GType gimp_text_outline_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_TEXT_OUTLINE_NONE,
-  GIMP_TEXT_OUTLINE_STROKE_ONLY,
-  GIMP_TEXT_OUTLINE_STROKE_FILL
+  GIMP_TEXT_OUTLINE_NONE,        /*< desc="Filled"              >*/
+  GIMP_TEXT_OUTLINE_STROKE_ONLY, /*< desc="Outlined"            >*/
+  GIMP_TEXT_OUTLINE_STROKE_FILL  /*< desc="Outlined and filled" >*/
 } GimpTextOutline;
 
 
