@@ -844,6 +844,7 @@ file_jpegxl_LDADD = \
 	$(GEGL_LIBS)		\
 	$(JXL_THREADS_LIBS)		\
 	$(JXL_LIBS)		\
+	$(GEXIV2_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)		\
 	$(file_jpegxl_RC)

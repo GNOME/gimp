@@ -20,6 +20,7 @@
 
 #include "config.h"
 
+#include <gexiv2/gexiv2.h>
 #include <glib/gstdio.h>
 
 #include <jxl/decode.h>
@@ -191,6 +192,18 @@ jpegxl_create_procedure (GimpPlugIn  *plug_in,
                              _("Store ICC profile to exported JXL file"),
                              FALSE,
                              G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-exif",
+                             _("Save Exi_f"),
+                             _("Toggle saving Exif data"),
+                             gimp_export_exif (),
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_BOOLEAN (procedure, "save-xmp",
+                             _("Save _XMP"),
+                             _("Toggle saving XMP data"),
+                             gimp_export_xmp (),
+                             G_PARAM_READWRITE);
     }
 
   return procedure;
@@ -299,6 +312,8 @@ load_image (GFile        *file,
       g_free (memory);
       return NULL;
     }
+
+  JxlDecoderCloseInput (decoder);
 
   if (JxlDecoderSubscribeEvents (decoder, JXL_DEC_BASIC_INFO | JXL_DEC_COLOR_ENCODING | JXL_DEC_FULL_IMAGE) != JXL_DEC_SUCCESS)
     {
@@ -627,6 +642,208 @@ load_image (GFile        *file,
     {
       g_object_unref (profile);
     }
+
+  if (basicinfo.have_container)
+    {
+      JxlDecoderReleaseInput (decoder);
+      JxlDecoderRewind (decoder);
+
+      if (JxlDecoderSetInput (decoder, memory, inputFileSize) != JXL_DEC_SUCCESS)
+        {
+          g_printerr ("%s: JxlDecoderSetInput failed after JxlDecoderRewind\n", G_STRFUNC);
+        }
+      else
+        {
+          JxlDecoderCloseInput (decoder);
+          if (JxlDecoderSubscribeEvents (decoder, JXL_DEC_BOX) != JXL_DEC_SUCCESS)
+            {
+              g_printerr ("%s: JxlDecoderSubscribeEvents for JXL_DEC_BOX failed\n", G_STRFUNC);
+            }
+          else
+            {
+              gboolean    search_exif  = TRUE;
+              gboolean    search_xmp   = TRUE;
+              gboolean    success_exif = FALSE;
+              gboolean    success_xmp  = FALSE;
+              JxlBoxType  box_type     = { 0, 0, 0, 0 };
+              GByteArray *exif_box     = NULL;
+              GByteArray *xml_box      = NULL;
+              size_t      exif_remains = 0;
+              size_t      xml_remains  = 0;
+
+              while (search_exif || search_xmp)
+                {
+                  status = JxlDecoderProcessInput (decoder);
+                  switch (status)
+                    {
+                    case JXL_DEC_SUCCESS:
+                      if (box_type[0] == 'E' && box_type[1] == 'x' && box_type[2] == 'i' && box_type[3] == 'f' && search_exif)
+                        {
+                          exif_remains = JxlDecoderReleaseBoxBuffer (decoder);
+                          g_byte_array_set_size (exif_box, exif_box->len - exif_remains);
+                          success_exif = TRUE;
+                        }
+                      else if (box_type[0] == 'x' && box_type[1] == 'm' && box_type[2] == 'l' && box_type[3] == ' ' && search_xmp)
+                        {
+                          xml_remains = JxlDecoderReleaseBoxBuffer (decoder);
+                          g_byte_array_set_size (xml_box, xml_box->len - xml_remains);
+                          success_xmp = TRUE;
+                        }
+
+                      search_exif = FALSE;
+                      search_xmp  = FALSE;
+                      break;
+                    case JXL_DEC_ERROR:
+                      search_exif = FALSE;
+                      search_xmp  = FALSE;
+                      g_printerr ("%s: Metadata decoding error\n", G_STRFUNC);
+                      break;
+                    case JXL_DEC_NEED_MORE_INPUT:
+                      search_exif = FALSE;
+                      search_xmp  = FALSE;
+                      g_printerr ("%s: JXL metadata are probably incomplete\n", G_STRFUNC);
+                      break;
+                    case JXL_DEC_BOX:
+                      JxlDecoderSetDecompressBoxes (decoder, JXL_TRUE);
+
+                      if (box_type[0] == 'E' && box_type[1] == 'x' && box_type[2] == 'i' && box_type[3] == 'f' && search_exif && exif_box)
+                        {
+                          exif_remains = JxlDecoderReleaseBoxBuffer (decoder);
+                          g_byte_array_set_size (exif_box, exif_box->len - exif_remains);
+
+                          search_exif  = FALSE;
+                          success_exif = TRUE;
+                        }
+                      else if (box_type[0] == 'x' && box_type[1] == 'm' && box_type[2] == 'l' && box_type[3] == ' ' && search_xmp && xml_box)
+                        {
+                          xml_remains = JxlDecoderReleaseBoxBuffer (decoder);
+                          g_byte_array_set_size (xml_box, xml_box->len - xml_remains);
+
+                          search_xmp  = FALSE;
+                          success_xmp = TRUE;
+                        }
+
+                      if (JxlDecoderGetBoxType (decoder, box_type, JXL_TRUE) == JXL_DEC_SUCCESS)
+                        {
+                          if (box_type[0] == 'E' && box_type[1] == 'x' && box_type[2] == 'i' && box_type[3] == 'f' && search_exif)
+                            {
+                              exif_box = g_byte_array_sized_new (4096);
+                              g_byte_array_set_size (exif_box, 4096);
+
+                              JxlDecoderSetBoxBuffer (decoder, exif_box->data, exif_box->len);
+                            }
+                          else if (box_type[0] == 'x' && box_type[1] == 'm' && box_type[2] == 'l' && box_type[3] == ' ' && search_xmp)
+                            {
+                              xml_box = g_byte_array_sized_new (4096);
+                              g_byte_array_set_size (xml_box, 4096);
+
+                              JxlDecoderSetBoxBuffer (decoder, xml_box->data, xml_box->len);
+                            }
+                        }
+                      else
+                        {
+                          search_exif = FALSE;
+                          search_xmp  = FALSE;
+                          g_printerr ("%s: Error in JxlDecoderGetBoxType\n", G_STRFUNC);
+                        }
+                      break;
+                    case JXL_DEC_BOX_NEED_MORE_OUTPUT:
+                      if (box_type[0] == 'E' && box_type[1] == 'x' && box_type[2] == 'i' && box_type[3] == 'f' && search_exif)
+                        {
+                          exif_remains = JxlDecoderReleaseBoxBuffer (decoder);
+                          g_byte_array_set_size (exif_box, exif_box->len + 4096);
+                          JxlDecoderSetBoxBuffer (decoder, exif_box->data + exif_box->len - (4096 + exif_remains), 4096 + exif_remains);
+                        }
+                      else if (box_type[0] == 'x' && box_type[1] == 'm' && box_type[2] == 'l' && box_type[3] == ' ' && search_xmp)
+                        {
+                          xml_remains = JxlDecoderReleaseBoxBuffer (decoder);
+                          g_byte_array_set_size (xml_box, xml_box->len + 4096);
+                          JxlDecoderSetBoxBuffer (decoder, xml_box->data + xml_box->len - (4096 + xml_remains), 4096 + xml_remains);
+                        }
+                      else
+                        {
+                          search_exif = FALSE;
+                          search_xmp  = FALSE;
+                        }
+                      break;
+                    default:
+                      break;
+                    }
+                }
+
+              if (success_exif || success_xmp)
+                {
+                  GimpMetadata *metadata = gimp_metadata_new ();
+
+                  if (success_exif && exif_box)
+                    {
+                      const guint8  tiffHeaderBE[4] = { 'M', 'M', 0, 42 };
+                      const guint8  tiffHeaderLE[4] = { 'I', 'I', 42, 0 };
+                      const guint8 *tiffheader      = exif_box->data;
+                      glong         new_exif_size   = exif_box->len;
+
+                      while (new_exif_size >= 4) /*Searching for TIFF Header*/
+                        {
+                          if (tiffheader[0] == tiffHeaderBE[0] && tiffheader[1] == tiffHeaderBE[1] &&
+                              tiffheader[2] == tiffHeaderBE[2] && tiffheader[3] == tiffHeaderBE[3])
+                            {
+                              break;
+                            }
+                          if (tiffheader[0] == tiffHeaderLE[0] && tiffheader[1] == tiffHeaderLE[1] &&
+                              tiffheader[2] == tiffHeaderLE[2] && tiffheader[3] == tiffHeaderLE[3])
+                            {
+                              break;
+                            }
+                          new_exif_size--;
+                          tiffheader++;
+                        }
+
+                      if (new_exif_size > 4) /* TIFF header + some data found*/
+                        {
+                          if (! gexiv2_metadata_open_buf (GEXIV2_METADATA (metadata), tiffheader, new_exif_size, error))
+                            {
+                              g_printerr ("%s: Failed to set EXIF metadata: %s\n", G_STRFUNC, (*error)->message);
+                              g_clear_error (error);
+                            }
+                        }
+                      else
+                        {
+                          g_printerr ("%s: EXIF metadata not set\n", G_STRFUNC);
+                        }
+                    }
+
+                  if (success_xmp && xml_box)
+                    {
+                      if (! gimp_metadata_set_from_xmp (metadata, xml_box->data, xml_box->len, error))
+                        {
+                          g_printerr ("%s: Failed to set XMP metadata: %s\n", G_STRFUNC, (*error)->message);
+                          g_clear_error (error);
+                        }
+                    }
+
+                  gexiv2_metadata_try_set_orientation (GEXIV2_METADATA (metadata),
+                                                       GEXIV2_ORIENTATION_NORMAL, NULL);
+                  gexiv2_metadata_try_set_metadata_pixel_width (GEXIV2_METADATA (metadata),
+                                                                basicinfo.xsize, NULL);
+                  gexiv2_metadata_try_set_metadata_pixel_height (GEXIV2_METADATA (metadata),
+                                                                 basicinfo.ysize, NULL);
+                  gimp_image_metadata_load_finish (image, "image/jxl", metadata,
+                                                   GIMP_METADATA_LOAD_COMMENT | GIMP_METADATA_LOAD_RESOLUTION);
+                }
+
+              if (exif_box)
+                {
+                  g_byte_array_free (exif_box, TRUE);
+                }
+
+              if (xml_box)
+                {
+                  g_byte_array_free (xml_box, TRUE);
+                }
+            }
+        }
+    }
+
   JxlThreadParallelRunnerDestroy (runner);
   JxlDecoderDestroy (decoder);
   g_free (memory);
@@ -674,47 +891,49 @@ jpegxl_load (GimpProcedure        *procedure,
   return return_vals;
 }
 
-
 static gboolean
-save_image (GFile                *file,
-            GimpProcedureConfig  *config,
-            GimpImage            *image,
-            GimpDrawable         *drawable,
-            GError              **error)
+save_image (GFile               *file,
+            GimpProcedureConfig *config,
+            GimpImage           *image,
+            GimpDrawable        *drawable,
+            GimpMetadata        *metadata,
+            GError             **error)
 {
-  JxlEncoder        *encoder;
-  void              *runner;
-  JxlEncoderOptions *encoder_options;
-  JxlPixelFormat     pixel_format;
-  JxlBasicInfo       output_info;
-  JxlColorEncoding   color_profile;
-  JxlEncoderStatus   status;
-  size_t             buffer_size;
+  JxlEncoder              *encoder;
+  void                    *runner;
+  JxlEncoderFrameSettings *encoder_options;
+  JxlPixelFormat           pixel_format;
+  JxlBasicInfo             output_info;
+  JxlColorEncoding         color_profile;
+  JxlEncoderStatus         status;
+  size_t                   buffer_size;
 
-  GByteArray        *compressed;
+  GByteArray              *compressed;
 
-  FILE              *outfile;
-  GeglBuffer        *buffer;
-  GimpImageType      drawable_type;
+  FILE                    *outfile;
+  GeglBuffer              *buffer;
+  GimpImageType            drawable_type;
 
-  gint               drawable_width;
-  gint               drawable_height;
-  gpointer           picture_buffer;
+  gint                     drawable_width;
+  gint                     drawable_height;
+  gpointer                 picture_buffer;
 
-  GimpColorProfile  *profile = NULL;
-  const Babl        *file_format = NULL;
-  const Babl        *space = NULL;
-  gboolean           out_linear = FALSE;
+  GimpColorProfile        *profile = NULL;
+  const Babl              *file_format = NULL;
+  const Babl              *space = NULL;
+  gboolean                 out_linear = FALSE;
 
-  size_t             offset = 0;
-  uint8_t           *next_out;
-  size_t             avail_out;
+  size_t                   offset = 0;
+  uint8_t                 *next_out;
+  size_t                   avail_out;
 
-  gdouble            compression = 1.0;
-  gboolean           lossless = FALSE;
-  gint               speed = 7;
-  gint               bit_depth = 8;
-  gboolean           uses_original_profile = FALSE;
+  gdouble                  compression = 1.0;
+  gboolean                 lossless = FALSE;
+  gint                     speed = 7;
+  gint                     bit_depth = 8;
+  gboolean                 uses_original_profile = FALSE;
+  gboolean                 save_exif = FALSE;
+  gboolean                 save_xmp = FALSE;
 
   gimp_progress_init_printf (_("Exporting '%s'"),
                              gimp_file_get_utf8_name (file));
@@ -725,6 +944,8 @@ save_image (GFile                *file,
                 "speed",                 &speed,
                 "save-bit-depth",        &bit_depth,
                 "uses-original-profile", &uses_original_profile,
+                "save-exif",             &save_exif,
+                "save-xmp",              &save_xmp,
                 NULL);
 
   if (lossless)
@@ -792,7 +1013,6 @@ save_image (GFile                *file,
   output_info.xsize = drawable_width;
   output_info.ysize = drawable_height;
   output_info.exponent_bits_per_sample = 0;
-  output_info.intensity_target = 255.0f;
   output_info.orientation = JXL_ORIENT_IDENTITY;
   output_info.animation.tps_numerator = 10;
   output_info.animation.tps_denominator = 1;
@@ -911,6 +1131,22 @@ save_image (GFile                *file,
       return FALSE;
     }
 
+  if ( (output_info.bits_per_sample > 12 && (output_info.uses_original_profile || output_info.alpha_bits > 12)) || (metadata && (save_exif || save_xmp)))
+    {
+      output_info.have_container = JXL_TRUE;
+      JxlEncoderUseContainer (encoder, JXL_TRUE);
+
+      if (output_info.bits_per_sample > 12 && (output_info.uses_original_profile || output_info.alpha_bits > 12))
+        {
+          JxlEncoderSetCodestreamLevel (encoder, 10);
+        }
+
+      if (metadata && (save_exif || save_xmp))
+        {
+          JxlEncoderUseBoxes (encoder);
+        }
+    }
+
   runner = JxlThreadParallelRunnerCreate (NULL, gimp_get_num_processors ());
   if (JxlEncoderSetParallelRunner (encoder, JxlThreadParallelRunner, runner) != JXL_ENC_SUCCESS)
     {
@@ -981,23 +1217,23 @@ save_image (GFile                *file,
         }
     }
 
-  encoder_options = JxlEncoderOptionsCreate (encoder, NULL);
+  encoder_options = JxlEncoderFrameSettingsCreate (encoder, NULL);
 
   if (lossless)
     {
-      JxlEncoderOptionsSetDistance (encoder_options, 0);
-      JxlEncoderOptionsSetLossless (encoder_options, JXL_TRUE);
+      JxlEncoderSetFrameDistance (encoder_options, 0);
+      JxlEncoderSetFrameLossless (encoder_options, JXL_TRUE);
     }
   else
     {
-      JxlEncoderOptionsSetDistance (encoder_options, compression);
-      JxlEncoderOptionsSetLossless (encoder_options, JXL_FALSE);
+      JxlEncoderSetFrameDistance (encoder_options, compression);
+      JxlEncoderSetFrameLossless (encoder_options, JXL_FALSE);
     }
 
-  status = JxlEncoderOptionsSetEffort (encoder_options, speed);
+  status = JxlEncoderFrameSettingsSetOption (encoder_options, JXL_ENC_FRAME_SETTING_EFFORT, speed);
   if (status != JXL_ENC_SUCCESS)
     {
-      g_printerr ("JxlEncoderOptionsSetEffort failed to set effort %d", speed);
+      g_printerr ("JxlEncoderFrameSettingsSetOption failed to set effort %d", speed);
     }
 
   gimp_progress_update (0.5);
@@ -1011,6 +1247,104 @@ save_image (GFile                *file,
       JxlEncoderDestroy (encoder);
       g_free (picture_buffer);
       return FALSE;
+    }
+
+  gimp_progress_update (0.65);
+
+  if (metadata && (save_exif || save_xmp))
+    {
+      GimpMetadata         *filtered_metadata;
+      GimpMetadataSaveFlags metadata_flags = 0;
+
+      if (save_exif)
+        {
+          metadata_flags |= GIMP_METADATA_SAVE_EXIF;
+        }
+
+      if (save_xmp)
+        {
+          metadata_flags |= GIMP_METADATA_SAVE_XMP;
+        }
+
+      filtered_metadata = gimp_image_metadata_save_filter (image, "image/jxl", metadata, metadata_flags, NULL, error);
+      if (! filtered_metadata)
+        {
+          if (error && *error)
+            {
+              g_printerr ("%s: error filtering metadata: %s",
+                          G_STRFUNC, (*error)->message);
+              g_clear_error (error);
+            }
+        }
+      else
+        {
+          GExiv2Metadata *filtered_g2metadata = GEXIV2_METADATA (filtered_metadata);
+
+          /*  EXIF metadata  */
+          if (save_exif && gexiv2_metadata_has_exif (filtered_g2metadata))
+            {
+              GBytes *raw_exif_data;
+
+              raw_exif_data = gexiv2_metadata_get_exif_data (filtered_g2metadata, GEXIV2_BYTE_ORDER_LITTLE, error);
+              if (raw_exif_data)
+                {
+                  gsize exif_size = 0;
+                  gconstpointer exif_buffer = g_bytes_get_data (raw_exif_data, &exif_size);
+
+                  if (exif_size >= 4)
+                    {
+                      const JxlBoxType exif_box_type = { 'E', 'x', 'i', 'f' };
+                      uint8_t         *content = g_new (uint8_t, exif_size + 4);
+
+                      content[0] = 0;
+                      content[1] = 0;
+                      content[2] = 0;
+                      content[3] = 0;
+                      memcpy (content + 4, exif_buffer, exif_size);
+
+                      if (JxlEncoderAddBox (encoder, exif_box_type, content, exif_size + 4, JXL_FALSE) != JXL_ENC_SUCCESS)
+                        {
+                          g_printerr ("%s: Failed to save EXIF metadata.\n", G_STRFUNC);
+                        }
+
+                      g_free (content);
+                    }
+                  g_bytes_unref (raw_exif_data);
+                }
+              else
+                {
+                  if (error && *error)
+                    {
+                      g_printerr ("%s: error preparing EXIF metadata: %s",
+                                  G_STRFUNC, (*error)->message);
+                      g_clear_error (error);
+                    }
+                }
+            }
+
+          /*  XMP metadata  */
+          if (save_xmp && gexiv2_metadata_has_xmp (filtered_g2metadata))
+            {
+              gchar *xmp_packet;
+
+              xmp_packet = gexiv2_metadata_try_generate_xmp_packet (filtered_g2metadata, GEXIV2_USE_COMPACT_FORMAT | GEXIV2_OMIT_ALL_FORMATTING, 0, NULL);
+              if (xmp_packet)
+                {
+                  int xmp_size = strlen (xmp_packet);
+                  if (xmp_size > 0)
+                    {
+                      const JxlBoxType xml_box_type = { 'x', 'm', 'l', ' ' };
+                      if (JxlEncoderAddBox (encoder, xml_box_type, (const uint8_t *) xmp_packet, xmp_size, JXL_FALSE) != JXL_ENC_SUCCESS)
+                        {
+                          g_printerr ("%s: Failed to save XMP metadata.\n", G_STRFUNC);
+                        }
+                    }
+                  g_free (xmp_packet);
+                }
+            }
+
+          g_object_unref (filtered_metadata);
+        }
     }
 
   JxlEncoderCloseInput (encoder);
@@ -1139,6 +1473,7 @@ save_dialog (GimpImage     *image,
                               "lossless", "compression",
                               "speed", "save-bit-depth",
                               "uses-original-profile",
+                              "save-exif", "save-xmp",
                               NULL);
 
   run = gimp_procedure_dialog_run (GIMP_PROCEDURE_DIALOG (dialog));
@@ -1212,10 +1547,18 @@ jpegxl_save (GimpProcedure        *procedure,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! save_image (file, config,
-                        image, drawables[0], &error))
+      GimpMetadataSaveFlags metadata_flags;
+
+      GimpMetadata *metadata = gimp_image_metadata_save_prepare (image, "image/jxl", &metadata_flags);
+
+      if (! save_image (file, config, image, drawables[0], metadata, &error))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
+        }
+
+      if (metadata)
+        {
+          g_object_unref (metadata);
         }
     }
 
