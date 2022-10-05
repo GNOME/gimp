@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-05 15:38+0000\n"
-"PO-Revision-Date: 2022-10-05 17:06+0100\n"
+"POT-Creation-Date: 2022-10-05 16:06+0000\n"
+"PO-Revision-Date: 2022-10-05 23:07+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -2959,7 +2959,7 @@ msgstr "tartaruga (mais lenta)"
 
 #: plug-ins/common/file-jpegxl.c:1457
 msgid "16 bit/channel"
-msgstr "10 bits/canal"
+msgstr "16 bits/canal"
 
 #: plug-ins/common/file-mng.c:254
 msgid "MNG animation"
