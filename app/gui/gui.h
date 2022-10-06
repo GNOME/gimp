@@ -18,7 +18,6 @@
 #ifndef __GUI_H__
 #define __GUI_H__
 
-#include "gimpapp.h"
 
 void               gui_libs_init (GOptionContext *context);
 void               gui_abort     (const gchar    *abort_message);

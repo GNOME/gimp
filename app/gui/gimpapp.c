@@ -16,9 +16,24 @@
 
 #include <config.h>
 
-#include "gimpapp.h"
+#include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
+
+#include "core/core-types.h"
+
+#include "core/gimp.h"
+
+#include "gimpcoreapp.h"
+
+#include "gimpapp.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_NO_SPLASH = GIMP_CORE_APP_PROP_LAST + 1,
+};
 
 struct _GimpApp
 {
@@ -27,9 +42,20 @@ struct _GimpApp
   gboolean       no_splash;
 };
 
+
+static void gimp_app_get_property (GObject      *object,
+                                   guint         property_id,
+                                   GValue       *value,
+                                   GParamSpec   *pspec);
+static void gimp_app_set_property (GObject      *object,
+                                   guint         property_id,
+                                   const GValue *value,
+                                   GParamSpec   *pspec);
+
+
 G_DEFINE_TYPE_WITH_CODE (GimpApp, gimp_app, GTK_TYPE_APPLICATION,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_CORE_APP,
-                                                gimp_app_class_init))
+                                                NULL))
 
 
 static void
@@ -38,11 +64,57 @@ gimp_app_class_init (GimpAppClass *klass)
   GObjectClass *gobj_class = G_OBJECT_CLASS (klass);
 
   gobj_class->finalize     = gimp_core_app_finalize;
+  gobj_class->get_property = gimp_app_get_property;
+  gobj_class->set_property = gimp_app_set_property;
+
+  gimp_core_app_install_properties (gobj_class);
+
+  g_object_class_install_property (gobj_class, PROP_NO_SPLASH,
+                                   g_param_spec_boolean ("no-splash", NULL, NULL,
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE |
+                                                         G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
 gimp_app_init (GimpApp *self)
 {
+}
+
+static void
+gimp_app_get_property (GObject    *object,
+                       guint       property_id,
+                       GValue     *value,
+                       GParamSpec *pspec)
+{
+  switch (property_id)
+    {
+    case PROP_NO_SPLASH:
+      g_value_set_boolean (value, GIMP_APP (object)->no_splash);
+      break;
+
+    default:
+      gimp_core_app_get_property (object, property_id, value, pspec);
+      break;
+    }
+}
+
+static void
+gimp_app_set_property (GObject      *object,
+                       guint         property_id,
+                       const GValue *value,
+                       GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    case PROP_NO_SPLASH:
+      GIMP_APP (object)->no_splash = g_value_get_boolean (value);
+      break;
+
+    default:
+      gimp_core_app_set_property (object, property_id, value, pspec);
+      break;
+    }
 }
 
 /*  public functions  */
@@ -58,15 +130,17 @@ gimp_app_new (Gimp        *gimp,
 {
   GimpApp *app;
 
-  app = g_object_new (GIMP_TYPE_APP, NULL);
+  app = g_object_new (GIMP_TYPE_APP,
+                      "gimp",              gimp,
+                      "filenames",         filenames,
+                      "as-new",            as_new,
 
-  /* We shouldn't have to pass these externally, so I didn't bother making
-   * GObject properties for them. In the end, they should just be parsed by
-   * the GApplication code */
-  app->no_splash         = no_splash;
+                      "quit",              quit,
+                      "batch-interpreter", batch_interpreter,
+                      "batch-commands",    batch_commands,
 
-  gimp_core_app_set_values(GIMP_CORE_APP(app), gimp, quit, as_new, filenames,
-                           batch_interpreter, batch_commands);
+                      "no-splash",         no_splash,
+                      NULL);
 
   return G_APPLICATION (app);
 }

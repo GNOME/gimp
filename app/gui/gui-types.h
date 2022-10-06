@@ -23,5 +23,6 @@
 #include "dialogs/dialogs-types.h"
 #include "menus/menus-types.h"
 
+#include "gimpapp.h"
 
 #endif /* __GUI_TYPES_H__ */

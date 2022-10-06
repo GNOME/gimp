@@ -16,9 +16,16 @@
 
 #include <config.h>
 
-#include "gimpconsoleapp.h"
+#include <gio/gio.h>
 
 #include "libgimpbase/gimpbase.h"
+
+#include "core/core-types.h"
+
+#include "core/gimp.h"
+
+#include "gimpconsoleapp.h"
+#include "gimpcoreapp.h"
 
 struct _GimpConsoleApp
 {
@@ -36,6 +43,10 @@ gimp_console_app_class_init (GimpConsoleAppClass *klass)
   GObjectClass *gobj_class = G_OBJECT_CLASS (klass);
 
   gobj_class->finalize     = gimp_core_app_finalize;
+  gobj_class->get_property = gimp_core_app_get_property;
+  gobj_class->set_property = gimp_core_app_set_property;
+
+  gimp_core_app_install_properties (gobj_class);
 }
 
 static void
@@ -55,11 +66,15 @@ gimp_console_app_new (Gimp        *gimp,
 {
   GimpConsoleApp *app;
 
-  app = g_object_new (GIMP_TYPE_CONSOLE_APP, NULL);
+  app = g_object_new (GIMP_TYPE_CONSOLE_APP,
+                      "gimp",              gimp,
+                      "filenames",         filenames,
+                      "as-new",            as_new,
 
-  gimp_core_app_set_values (GIMP_CORE_APP (app), gimp,
-                            quit, as_new, filenames,
-                            batch_interpreter, batch_commands);
+                      "quit",              quit,
+                      "batch-interpreter", batch_interpreter,
+                      "batch-commands",    batch_commands,
+                      NULL);
 
   return G_APPLICATION (app);
 }

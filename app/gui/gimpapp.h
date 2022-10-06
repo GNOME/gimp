@@ -1,4 +1,3 @@
-
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
@@ -18,9 +17,6 @@
 #ifndef __GIMP_APP_H__
 #define __GIMP_APP_H__
 
-#include <gtk/gtk.h>
-
-#include "gimpcoreapp.h"
 
 #define GIMP_TYPE_APP (gimp_app_get_type ())
 G_DECLARE_FINAL_TYPE (GimpApp, gimp_app, GIMP, APP, GtkApplication)
