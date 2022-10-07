@@ -162,14 +162,14 @@ gimp_plug_in_shm_new (void)
           }
         else
           {
-            g_printerr ("MapViewOfFile error: %d... " ERRMSG_SHM_DISABLE,
-                        GetLastError ());
+            g_printerr ("MapViewOfFile error: %u... " ERRMSG_SHM_DISABLE,
+                        (unsigned) GetLastError ());
           }
       }
     else
       {
-        g_printerr ("CreateFileMapping error: %d... " ERRMSG_SHM_DISABLE,
-                    GetLastError ());
+        g_printerr ("CreateFileMapping error: %u... " ERRMSG_SHM_DISABLE,
+                    (unsigned) GetLastError ());
       }
   }
 
