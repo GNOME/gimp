@@ -429,13 +429,13 @@ vectors_stroke_translate_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   GimpVectors *vectors;
   gint stroke_id;
-  gint off_x;
-  gint off_y;
+  gdouble off_x;
+  gdouble off_y;
 
   vectors = g_value_get_object (gimp_value_array_index (args, 0));
   stroke_id = g_value_get_int (gimp_value_array_index (args, 1));
-  off_x = g_value_get_int (gimp_value_array_index (args, 2));
-  off_y = g_value_get_int (gimp_value_array_index (args, 3));
+  off_x = g_value_get_double (gimp_value_array_index (args, 2));
+  off_y = g_value_get_double (gimp_value_array_index (args, 3));
 
   if (success)
     {
@@ -1692,17 +1692,17 @@ register_vectors_procs (GimpPDB *pdb)
                                                  G_MININT32, G_MAXINT32, 0,
                                                  GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("off-x",
-                                                 "off x",
-                                                 "Offset in x direction",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("off-x",
+                                                    "off x",
+                                                    "Offset in x direction",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               g_param_spec_int ("off-y",
-                                                 "off y",
-                                                 "Offset in y direction",
-                                                 G_MININT32, G_MAXINT32, 0,
-                                                 GIMP_PARAM_READWRITE));
+                               g_param_spec_double ("off-y",
+                                                    "off y",
+                                                    "Offset in y direction",
+                                                    -G_MAXDOUBLE, G_MAXDOUBLE, 0,
+                                                    GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

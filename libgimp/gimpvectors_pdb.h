@@ -58,8 +58,8 @@ gboolean              gimp_vectors_stroke_reverse            (GimpVectors       
                                                               gint                     stroke_id);
 gboolean              gimp_vectors_stroke_translate          (GimpVectors             *vectors,
                                                               gint                     stroke_id,
-                                                              gint                     off_x,
-                                                              gint                     off_y);
+                                                              gdouble                  off_x,
+                                                              gdouble                  off_y);
 gboolean              gimp_vectors_stroke_scale              (GimpVectors             *vectors,
                                                               gint                     stroke_id,
                                                               gdouble                  scale_x,

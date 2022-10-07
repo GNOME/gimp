@@ -392,9 +392,9 @@ HELP
 	  desc => 'The vectors object' },
 	{ name => 'stroke_id', type => 'int32',
 	  desc => 'The stroke ID' },
-	{ name => "off_x", type => 'int32',
+	{ name => "off_x", type => 'float',
           desc => "Offset in x direction" },
-	{ name => "off_y", type => 'int32',
+	{ name => "off_y", type => 'float',
           desc => "Offset in y direction" }
     );
 
@@ -1333,7 +1333,7 @@ CODE
 @procs = qw(vectors_new
 	    vectors_new_from_text_layer
             vectors_copy
-            vectors_get_strokes 
+            vectors_get_strokes
             vectors_stroke_get_length
             vectors_stroke_get_point_at_dist
             vectors_remove_stroke

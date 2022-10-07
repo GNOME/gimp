@@ -444,8 +444,8 @@ gimp_vectors_stroke_reverse (GimpVectors *vectors,
 gboolean
 gimp_vectors_stroke_translate (GimpVectors *vectors,
                                gint         stroke_id,
-                               gint         off_x,
-                               gint         off_y)
+                               gdouble      off_x,
+                               gdouble      off_y)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -454,8 +454,8 @@ gimp_vectors_stroke_translate (GimpVectors *vectors,
   args = gimp_value_array_new_from_types (NULL,
                                           GIMP_TYPE_VECTORS, vectors,
                                           G_TYPE_INT, stroke_id,
-                                          G_TYPE_INT, off_x,
-                                          G_TYPE_INT, off_y,
+                                          G_TYPE_DOUBLE, off_x,
+                                          G_TYPE_DOUBLE, off_y,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
