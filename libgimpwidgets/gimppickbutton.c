@@ -34,12 +34,15 @@
 #include "gimphelpui.h"
 #include "gimpicons.h"
 #include "gimppickbutton.h"
+
+#if defined (GDK_WINDOWING_QUARTZ)
+#include "gimppickbutton-quartz.h"
+#elif defined (GDK_WINDOWING_WIN32)
+#include "gimppickbutton-win32.h"
+#else
 #include "gimppickbutton-default.h"
 #include "gimppickbutton-kwin.h"
 #include "gimppickbutton-xdg.h"
-
-#ifdef GDK_WINDOWING_QUARTZ
-#include "gimppickbutton-quartz.h"
 #endif
 
 #include "libgimp/libgimp-intl.h"
@@ -142,9 +145,11 @@ gimp_pick_button_dispose (GObject *object)
 static void
 gimp_pick_button_clicked (GtkButton *button)
 {
-#ifdef GDK_WINDOWING_QUARTZ
+#if defined (GDK_WINDOWING_QUARTZ)
   _gimp_pick_button_quartz_pick (GIMP_PICK_BUTTON (button));
-#elif defined GDK_WINDOWING_X11
+#elif defined (GDK_WINDOWING_WIN32)
+  _gimp_pick_button_win32_pick (GIMP_PICK_BUTTON (button));
+#elif defined (GDK_WINDOWING_X11)
   /* It's a bit weird as we use the default pick code both in first and
    * last cases. It's because when running GIMP on X11 in particular,
    * the portals don't return color space information. So the returned

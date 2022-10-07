@@ -316,6 +316,8 @@ EXTRA_DIST = \
 if PLATFORM_OSX_QUARTZ
 libgimpwidgets_sources += gimppickbutton-quartz.c gimppickbutton-quartz.h
 AM_CPPFLAGS += "-xobjective-c"
+else if PLATFORM_WIN32
+libgimpwidgets_sources += gimppickbutton-win32.c gimppickbutton-win32.h
 else
 libgimpwidgets_sources += \
 	gimppickbutton-default.c 	\
