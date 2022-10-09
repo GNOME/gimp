@@ -173,7 +173,7 @@ libgimp_introspectable = \
 	../libgimp/gimpprogress.c		\
 	../libgimp/gimpsaveprocedure.c		\
 	../libgimp/gimpselection.c		\
-	../libgimp/gimptextlayer.h		\
+	../libgimp/gimptextlayer.c		\
 	../libgimp/gimpthumbnailprocedure.c	\
 	../libgimp/gimpvectors.c
 
