@@ -18,6 +18,19 @@
 #ifndef __JPEG_LOAD_H__
 #define __JPEG_LOAD_H__
 
+/* Path record types */
+typedef enum {
+  PSD_PATH_CL_LEN    = 0, /* Closed sub-path length record */
+  PSD_PATH_CL_LNK    = 1, /* Closed sub-path Bezier knot, linked */
+  PSD_PATH_CL_UNLNK  = 2, /* Closed sub-path Bezier knot, unlinked */
+  PSD_PATH_OP_LEN    = 3, /* Open sub-path length record */
+  PSD_PATH_OP_LNK    = 4, /* Open sub-path Bezier knot, linked */
+  PSD_PATH_OP_UNLNK  = 5, /* Open sub-path Bezier knot, unlinked */
+  PSD_PATH_FILL_RULE = 6, /* Path fill rule record */
+  PSD_PATH_CLIPBOARD = 7, /* Path clipboard record */
+  PSD_PATH_FILL_INIT = 8  /* Path initial fill record */
+} PSDpathtype;
+
 GimpImage * load_image           (GFile        *file,
                                   GimpRunMode   runmode,
                                   gboolean      preview,

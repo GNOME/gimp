@@ -40,11 +40,17 @@
 #include "jpeg-settings.h"
 #include "jpeg-load.h"
 
-static gboolean  jpeg_load_resolution       (GimpImage *image,
+static gboolean  jpeg_load_resolution       (GimpImage    *image,
                                              struct jpeg_decompress_struct
-                                                       *cinfo);
+                                                          *cinfo);
 
-static void      jpeg_load_sanitize_comment (gchar    *comment);
+static void      jpeg_load_sanitize_comment (gchar        *comment);
+
+static gboolean  load_paths                 (GimpImage    *image,
+                                             const guchar *data,
+                                             gint          data_len,
+                                             gint          start);
+
 
 
 GimpImage * volatile  preview_image;
@@ -139,6 +145,9 @@ load_image (GFile        *file,
 
       /* - step 2.3: tell the lib to save APP2 data (ICC profiles) */
       jpeg_save_markers (&cinfo, JPEG_APP0 + 2, 0xffff);
+
+      /* - step 2.4: tell the lib to save APP13 data (clipping path) */
+      jpeg_save_markers (&cinfo, JPEG_APP0 + 13, 0xffff);
     }
 
   /* Step 3: read file parameters with jpeg_read_header() */
@@ -219,6 +228,8 @@ load_image (GFile        *file,
   else
     {
       GString *comment_buffer = NULL;
+      guchar  *photoshop_data = NULL;
+      guint    photoshop_len  = 0;
       guint8  *icc_data       = NULL;
       guint    icc_length     = 0;
 
@@ -266,6 +277,16 @@ load_image (GFile        *file,
 #ifdef GIMP_UNSTABLE
               g_print ("jpeg-load: found Exif block (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
+#endif
+            }
+          else if ((marker->marker == JPEG_APP0 + 13))
+            {
+              photoshop_data = g_new (guchar, len);
+              photoshop_len  = len;
+              memcpy (photoshop_data, (guchar *) marker->data, len);
+#ifdef GIMP_UNSTABLE
+              g_print ("jpeg-load: found Photoshop block (%d bytes) %s\n",
+                       (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)), data);
 #endif
             }
         }
@@ -317,6 +338,29 @@ load_image (GFile        *file,
         }
 
       g_free (icc_data);
+
+      /* Step 5.4: check for clipping path in APP13 markers */
+      if (photoshop_data)
+        {
+          for (int i = 0; i < ((gint) photoshop_len) - 6; i += 2)
+            {
+              if (photoshop_data[i] == '8' && photoshop_data[i + 1] == 'B' &&
+                  photoshop_data[i + 2] == 'I' && photoshop_data[i + 3] == 'M')
+                {
+                  gshort resource_id = (photoshop_data[i + 4] << 8)
+                                        + photoshop_data[i + 5];
+
+                  if (resource_id == 0x07D0)
+                    {
+                      if (! load_paths (image, photoshop_data, photoshop_len, i + 6))
+                        g_message ("Unable to load JPEG clipping path");
+
+                      break;
+                    }
+                }
+            }
+          g_free (photoshop_data);
+        }
 
       /* Do not attach the "jpeg-save-options" parasite to the image
        * because this conflicts with the global defaults (bug #75398).
@@ -524,6 +568,152 @@ jpeg_load_sanitize_comment (gchar *comment)
             *c = '?';
         }
     }
+}
+
+/* Adapted from /plug-ins/file-psd/psd-image-res-load.c */
+static gboolean
+load_paths (GimpImage    *image,
+            const guchar *data,
+            gint          data_len,
+            gint          start)
+{
+  gint         name_length;
+  gchar       *name;
+  GimpVectors *vectors = NULL;
+  gint         image_width;
+  gint         image_height;
+  gint         data_size;
+  gint16       type;
+  gdouble     *controlpoints;
+  gint32       x[3];
+  gint32       y[3];
+  gint16       num_rec;
+  gint16       cntr;
+  gboolean     closed;
+
+  name_length = data[start++];
+  name        = g_new (gchar, name_length + 1);
+  if (data_len < (start + name_length))
+    return FALSE;
+
+  strncpy (name, (const gchar *) data + start, name_length);
+  name[name_length] = '\0';
+  start += name_length;
+
+  /* Even-length path names are padded */
+  if (name_length % 2 == 0)
+    start++;
+
+  vectors = gimp_vectors_new (image, name);
+  gimp_image_insert_vectors (image, vectors, NULL, -1);
+  g_free (name);
+
+  if (data_len < (start + 4))
+    return FALSE;
+  data_size = (data[start] << 24) + (data[start + 1] << 16)
+              + (data[start + 2] << 8) + data[start + 3];
+  start += 4;
+
+  /* First path must be 0x0006, with 24 0x00s as padding */
+  if (data_len < (start + 26))
+    return FALSE;
+  type = (data[start] << 8) + data[start + 1];
+  if (type != 6)
+    return FALSE;
+
+  start += 2;
+  for (int i = 0; i < 24; i++)
+    if (data[start + i] != 0)
+      return FALSE;
+
+  start += 24;
+  /* All path blocks are 26 bytes */
+  data_size -= 26;
+
+  image_width = gimp_image_get_width (image);
+  image_height = gimp_image_get_height (image);
+
+  /* Load the path control points */
+  while (data_size > 0 && (start + 26) < data_len)
+    {
+      type = (data[start] << 8) + data[start + 1];
+      start += 2;
+
+      /* Skip "fill" blocks */
+      if (type == PSD_PATH_FILL_RULE)
+        start += 24;
+      else if (type == PSD_PATH_FILL_INIT)
+        start += 24;
+      else if (type == PSD_PATH_CL_LEN || type == PSD_PATH_OP_LEN)
+        {
+          num_rec = (data[start] << 8) + data[start + 1];
+          start += 2;
+
+          if (type == PSD_PATH_CL_LEN)
+            closed = TRUE;
+          else
+            closed = FALSE;
+
+          cntr = 0;
+          controlpoints = g_malloc (sizeof (gdouble) * num_rec * 6);
+
+          /* Moving to next 26 byte block */
+          start += 22;
+
+          while (num_rec > 0 && (start + 26) < data_len)
+            {
+              type = (data[start] << 8) + data[start + 1];
+              start += 2;
+
+              if (type == PSD_PATH_CL_LNK   ||
+                  type == PSD_PATH_CL_UNLNK ||
+                  type == PSD_PATH_OP_LNK   ||
+                  type == PSD_PATH_OP_UNLNK)
+                {
+                  y[0] = (data[start] << 24) + (data[start + 1] << 16)
+                          + (data[start + 2] << 8) + data[start + 3];
+                  start += 4;
+                  x[0] = (data[start] << 24) + (data[start + 1] << 16)
+                         + (data[start + 2] << 8) + data[start + 3];
+                  start += 4;
+                  y[1] = (data[start] << 24) + (data[start + 1] << 16)
+                         + (data[start + 2] << 8) + data[start + 3];
+                  start += 4;
+                  x[1] = (data[start] << 24) + (data[start + 1] << 16)
+                         + (data[start + 2] << 8) + data[start + 3];
+                  start += 4;
+                  y[2] = (data[start] << 24) + (data[start + 1] << 16)
+                         + (data[start + 2] << 8) + data[start + 3];
+                  start += 4;
+                  x[2] = (data[start] << 24) + (data[start + 1] << 16)
+                         + (data[start + 2] << 8) + data[start + 3];
+                  start += 4;
+
+                  for (int i = 0; i < 3; ++i)
+                    {
+                      controlpoints[cntr] = x[i] / 16777216.0 * image_width;
+                      cntr++;
+
+                      controlpoints[cntr] = y[i] / 16777216.0 * image_height;
+                      cntr++;
+                    }
+                }
+              else
+                {
+                  return FALSE;
+                }
+              num_rec--;
+              data_size -= 26;
+            }
+          gimp_vectors_stroke_new_from_points (vectors,
+                                               GIMP_VECTORS_STROKE_TYPE_BEZIER,
+                                               cntr, controlpoints, closed);
+          g_free (controlpoints);
+        }
+    data_size -= 26;
+  }
+
+  return TRUE;
 }
 
 GimpImage *
