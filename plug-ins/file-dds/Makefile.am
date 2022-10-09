@@ -20,7 +20,7 @@ file_dds_RC = file-dds.rc.o
 endif
 
 AM_LDFLAGS = $(mwindows)
-AM_CFLAGS = -fno-strict-aliasing
+AM_CFLAGS = -fno-strict-aliasing -fopenmp
 
 libexecdir = $(gimpplugindir)/plug-ins/file-dds
 

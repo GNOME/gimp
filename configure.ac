@@ -1373,6 +1373,17 @@ if test "x$enable_mp" != "xno"; then
 	    [Define to 1 to enable support for multiple processors.])
 fi
 
+enable_openmp=no
+
+m4_ifdef([AC_OPENMP], [AC_OPENMP], [AX_OPENMP([enable_openmp=yes],[enable_openmp=no])])
+if test "x$ac_cv_prog_c_openmp" != "xunsupported" && test "x$ac_cv_prog_c_openmp" != "x"; then
+	enable_openmp=yes
+fi
+
+if test "x$enable_openmp" = "xyes"; then
+    AC_DEFINE(USE_OPENMP, 1, [Define to 1 to enable support for OpenMP])
+ 	CFLAGS="$CFLAGS $(OPENMP_CFLAGS)"
+fi
 
 ################################
 # Some plug-ins are X11 specific

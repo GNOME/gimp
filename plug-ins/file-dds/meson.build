@@ -29,6 +29,7 @@ executable(plugin_name,
   dependencies: [
     libgimpui_dep,
     math,
+    openmp,
   ],
   install: true,
   install_dir: gimpplugindir / 'plug-ins' / plugin_name,

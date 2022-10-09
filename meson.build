@@ -1256,6 +1256,15 @@ conf.set('HAVE_GETTEXT', true)
 # Enable support for multiprocessing
 conf.set10('ENABLE_MP', get_option('enable-multiproc'))
 
+# Enable support for OpenMP
+openmp = dependency('openmp', required : false)
+if openmp.found()
+  have_openmp = true
+else
+  have_openmp = false
+endif
+conf.set('HAVE_OPENMP', have_openmp)
+
 # Check for available functions
 foreach fn : [
     { 'm': 'HAVE_ALLOCA',                   'v': 'alloca', },
@@ -1831,6 +1840,7 @@ final_message = [
 '''  32-bit DLL folder (Win32): @0@'''.format(get_option('win32-32bits-dll-folder')),
 '''  Detailed backtraces:       @0@'''.format(detailed_backtraces),
 '''  Binary symlinks:           @0@'''.format(enable_default_bin),
+'''  OpenMP:                    @0@'''.format(have_openmp),
 '',
 '''Optional Plug-Ins:''',
 '''  Ascii Art:           @0@'''.format(libaa.found()),
