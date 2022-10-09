@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-10 20:29+0000\n"
-"PO-Revision-Date: 2022-09-18 11:38+0200\n"
+"POT-Creation-Date: 2022-10-05 15:38+0000\n"
+"PO-Revision-Date: 2022-10-09 10:08+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -75,9 +75,9 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/curve-bend.c:1995 plug-ins/common/curve-bend.c:2030
 #: plug-ins/common/depth-merge.c:733 plug-ins/common/destripe.c:484
 #: plug-ins/common/file-cel.c:1003 plug-ins/common/file-gif-save.c:1160
-#: plug-ins/common/file-heif.c:2306 plug-ins/common/file-jp2-load.c:976
+#: plug-ins/common/file-heif.c:2354 plug-ins/common/file-jp2-load.c:976
 #: plug-ins/common/file-pdf-load.c:655 plug-ins/common/file-pdf-load.c:1065
-#: plug-ins/common/file-pdf-save.c:1083 plug-ins/common/file-ps.c:3588
+#: plug-ins/common/file-pdf-save.c:1093 plug-ins/common/file-ps.c:3588
 #: plug-ins/common/file-svg.c:774 plug-ins/common/file-wmf.c:546
 #: plug-ins/common/film.c:1315 plug-ins/common/grid.c:761
 #: plug-ins/common/hot.c:679 plug-ins/common/jigsaw.c:2498
@@ -173,7 +173,7 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/cml-explorer.c:1349 plug-ins/common/colormap-remap.c:667
 #: plug-ins/common/compose.c:1184 plug-ins/common/contrast-retinex.c:352
 #: plug-ins/common/curve-bend.c:1222 plug-ins/common/depth-merge.c:734
-#: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2307
+#: plug-ins/common/destripe.c:485 plug-ins/common/file-heif.c:2355
 #: plug-ins/common/file-pdf-load.c:656 plug-ins/common/file-svg.c:775
 #: plug-ins/common/file-wmf.c:547 plug-ins/common/film.c:1316
 #: plug-ins/common/grid.c:762 plug-ins/common/hot.c:680
@@ -820,7 +820,7 @@ msgstr "_Odpri"
 #. The Save button
 #: plug-ins/common/cml-explorer.c:1433 plug-ins/common/cml-explorer.c:2115
 #: plug-ins/common/curve-bend.c:1493 plug-ins/common/curve-bend.c:2031
-#: plug-ins/common/file-pdf-save.c:1082 plug-ins/common/qbist.c:891
+#: plug-ins/common/file-pdf-save.c:1092 plug-ins/common/qbist.c:891
 #: plug-ins/common/qbist.c:1040 plug-ins/common/sphere-designer.c:2290
 #: plug-ins/common/sphere-designer.c:2689 plug-ins/flame/flame.c:542
 #: plug-ins/flame/flame.c:1112
@@ -1010,14 +1010,14 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/cml-explorer.c:2166 plug-ins/common/curve-bend.c:837
 #: plug-ins/common/file-dicom.c:1559 plug-ins/common/file-mng.c:874
 #: plug-ins/common/file-mng.c:1221 plug-ins/common/file-pcx.c:908
-#: plug-ins/common/file-pdf-save.c:697 plug-ins/common/file-png.c:1504
+#: plug-ins/common/file-pdf-save.c:704 plug-ins/common/file-png.c:1504
 #: plug-ins/common/file-raw-data.c:1345 plug-ins/common/file-raw-data.c:1374
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
 #: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
 #: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:1863 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-psd/psd-save.c:2124 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1054,7 +1054,7 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
 #: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
 #: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:159
-#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:1868
+#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:2129
 #: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
 #: plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
@@ -1254,7 +1254,7 @@ msgid "_Redness cr709:"
 msgstr "_Pordelost cr709:"
 
 #: plug-ins/common/compose.c:242 plug-ins/common/decompose.c:193
-#: plug-ins/common/file-heif.c:2495
+#: plug-ins/common/file-heif.c:2543
 msgid "RGB"
 msgstr "RGB"
 
@@ -1953,7 +1953,7 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #.
 #: plug-ins/common/file-cel.c:394 plug-ins/common/file-dicom.c:369
 #: plug-ins/common/file-gegl.c:352 plug-ins/common/file-gif-load.c:395
-#: plug-ins/common/file-heif.c:846 plug-ins/common/file-jp2-load.c:1085
+#: plug-ins/common/file-heif.c:879 plug-ins/common/file-jp2-load.c:1085
 #: plug-ins/common/file-pcx.c:402 plug-ins/common/file-pdf-load.c:820
 #: plug-ins/common/file-pix.c:381 plug-ins/common/file-png.c:665
 #: plug-ins/common/file-pnm.c:645 plug-ins/common/file-ps.c:1140
@@ -2035,7 +2035,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #. * Open the file for writing...
 #.
 #: plug-ins/common/file-cel.c:842 plug-ins/common/file-gif-save.c:913
-#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:719
+#: plug-ins/common/file-html-table.c:362 plug-ins/common/file-jpegxl.c:938
 #: plug-ins/common/file-pcx.c:793 plug-ins/common/file-pix.c:562
 #: plug-ins/common/file-png.c:1496 plug-ins/common/file-pnm.c:1336
 #: plug-ins/common/file-ps.c:1365 plug-ins/common/file-sunras.c:626
@@ -2044,7 +2044,7 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
 #: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
 #: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:1809 plug-ins/file-sgi/sgi.c:645
+#: plug-ins/file-psd/psd-save.c:2070 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
@@ -2443,15 +2443,15 @@ msgstr "Glava izvorne kode programskega jezika C"
 msgid "Header plug-in does not support multiple layers."
 msgstr "Vstavek glave ne podpira več plasti."
 
-#: plug-ins/common/file-heif.c:187 plug-ins/common/file-heif.c:227
+#: plug-ins/common/file-heif.c:196 plug-ins/common/file-heif.c:236
 msgid "HEIF/HEIC"
 msgstr "HEIF/HEIC"
 
-#: plug-ins/common/file-heif.c:190
+#: plug-ins/common/file-heif.c:199
 msgid "Loads HEIF images"
 msgstr "Naloži slike HEIF"
 
-#: plug-ins/common/file-heif.c:191
+#: plug-ins/common/file-heif.c:200
 msgid ""
 "Load image stored in HEIF format (High Efficiency Image File Format). "
 "Typical suffices for HEIF files are .heif, .heic."
@@ -2459,145 +2459,145 @@ msgstr ""
 "Naloži sliko, shranjeno v zapisu HEIF (High Efficiency Image File Format). "
 "Običajne končnice za datoteke HEIF so .heif, .heic."
 
-#: plug-ins/common/file-heif.c:230
+#: plug-ins/common/file-heif.c:239
 msgid "Exports HEIF images"
 msgstr "Izvozi slike HEIF"
 
-#: plug-ins/common/file-heif.c:231
+#: plug-ins/common/file-heif.c:240
 msgid "Save image in HEIF format (High Efficiency Image File Format)."
 msgstr "Shrani sliko v zapisu HEIF (High Efficiency Image File Format)."
 
-#: plug-ins/common/file-heif.c:306
+#: plug-ins/common/file-heif.c:315
 msgid "Loads AVIF images"
 msgstr "Naloži slike AVIF"
 
-#: plug-ins/common/file-heif.c:307
+#: plug-ins/common/file-heif.c:316
 msgid "Load image stored in AV1 Image File Format (AVIF)"
 msgstr "Naloži sliko v zapisu AVIF (AV1 Image File Format)."
 
-#: plug-ins/common/file-heif.c:337
+#: plug-ins/common/file-heif.c:346
 msgid "Exports AVIF images"
 msgstr "Izvozi slike AVIF"
 
-#: plug-ins/common/file-heif.c:338
+#: plug-ins/common/file-heif.c:347
 msgid "Save image in AV1 Image File Format (AVIF)"
 msgstr "Shrani sliko v zapisu AVIF (AV1 Image File Format)."
 
-#: plug-ins/common/file-heif.c:486 plug-ins/common/file-heif.c:574
+#: plug-ins/common/file-heif.c:503 plug-ins/common/file-heif.c:599
 msgid "HEIF format does not support multiple layers."
 msgstr "Zapis HEIF ne podpira več plasti."
 
-#: plug-ins/common/file-heif.c:886 plug-ins/common/file-heif.c:919
-#: plug-ins/common/file-heif.c:960 plug-ins/common/file-heif.c:1026
+#: plug-ins/common/file-heif.c:919 plug-ins/common/file-heif.c:952
+#: plug-ins/common/file-heif.c:993 plug-ins/common/file-heif.c:1059
 #, c-format
 msgid "Loading HEIF image failed: %s"
 msgstr "Nalaganje slike HEIF slike ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:908
+#: plug-ins/common/file-heif.c:941
 msgid "Loading HEIF image failed: Input file contains no readable images"
 msgstr ""
 "Nalaganje slike HEIF ni uspelo: vhodna datoteka ne vsebuje berljivih slik."
 
-#: plug-ins/common/file-heif.c:1153
+#: plug-ins/common/file-heif.c:1186
 msgid "image content"
 msgstr "Vsebina slike"
 
-#: plug-ins/common/file-heif.c:1504
+#: plug-ins/common/file-heif.c:1538
 #, c-format
 msgid "Exporting '%s' using %s encoder"
 msgstr "Izvažanje »%s« z uporabo kodirnika %s ..."
 
-#: plug-ins/common/file-heif.c:1554 plug-ins/common/file-heif.c:1947
+#: plug-ins/common/file-heif.c:1588 plug-ins/common/file-heif.c:1995
 #, c-format
 msgid "Encoding HEIF image failed: %s"
 msgstr "Kodiranje slike HEIF je spodletelo: %s"
 
-#: plug-ins/common/file-heif.c:2068
+#: plug-ins/common/file-heif.c:2116
 #, c-format
 msgid "Writing HEIF image failed: %s"
 msgstr "Zapisovanje slike HEIF ni uspelo: %s"
 
-#: plug-ins/common/file-heif.c:2157
+#: plug-ins/common/file-heif.c:2205
 msgid "primary"
 msgstr "Primarno"
 
-#: plug-ins/common/file-heif.c:2302
+#: plug-ins/common/file-heif.c:2350
 msgid "Load HEIF Image"
 msgstr "Naloži sliko HEIF"
 
-#: plug-ins/common/file-heif.c:2316
+#: plug-ins/common/file-heif.c:2364
 msgid "Select Image"
 msgstr "Izberi sliko"
 
-#: plug-ins/common/file-heif.c:2460
+#: plug-ins/common/file-heif.c:2508
 msgid "Export Image as AVIF"
 msgstr "Izvozi sliko kot AVIF"
 
-#: plug-ins/common/file-heif.c:2460
+#: plug-ins/common/file-heif.c:2508
 msgid "Export Image as HEIF"
 msgstr "Izvozi sliko kot HEIF"
 
-#: plug-ins/common/file-heif.c:2473
+#: plug-ins/common/file-heif.c:2521
 msgid "_Lossless"
 msgstr "_Brez izgub"
 
-#: plug-ins/common/file-heif.c:2491
+#: plug-ins/common/file-heif.c:2539
 msgid "_Quality"
 msgstr "_Kakovost"
 
-#: plug-ins/common/file-heif.c:2496
+#: plug-ins/common/file-heif.c:2544
 msgid "YUV444"
 msgstr "YUV444"
 
-#: plug-ins/common/file-heif.c:2497
+#: plug-ins/common/file-heif.c:2545
 msgid "YUV420"
 msgstr "YUV420"
 
-#: plug-ins/common/file-heif.c:2504
+#: plug-ins/common/file-heif.c:2552
 msgid "Pixel format:"
 msgstr "Oblika slikovnih točk:"
 
-#: plug-ins/common/file-heif.c:2515 plug-ins/common/file-jpegxl.c:1122
+#: plug-ins/common/file-heif.c:2563 plug-ins/common/file-jpegxl.c:1456
 msgid "8 bit/channel"
 msgstr "8 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2516
+#: plug-ins/common/file-heif.c:2564
 msgid "10 bit/channel"
 msgstr "10 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2517
+#: plug-ins/common/file-heif.c:2565
 msgid "12 bit/channel"
 msgstr "12 bitov/kanal"
 
-#: plug-ins/common/file-heif.c:2524
+#: plug-ins/common/file-heif.c:2572
 msgid "Bit depth:"
 msgstr "Bitna globina:"
 
-#: plug-ins/common/file-heif.c:2527
+#: plug-ins/common/file-heif.c:2575
 msgid "Slow"
 msgstr "Počasi"
 
-#: plug-ins/common/file-heif.c:2528
+#: plug-ins/common/file-heif.c:2576
 msgid "Balanced"
 msgstr "Uravnoteženo"
 
-#: plug-ins/common/file-heif.c:2529
+#: plug-ins/common/file-heif.c:2577
 msgid "Fast"
 msgstr "Hitro"
 
-#: plug-ins/common/file-heif.c:2536
+#: plug-ins/common/file-heif.c:2584
 msgid "Speed:"
 msgstr "Hitrost:"
 
-#: plug-ins/common/file-heif.c:2542
+#: plug-ins/common/file-heif.c:2590
 msgid "Save color _profile"
 msgstr "Shrani _barvni profil"
 
-#: plug-ins/common/file-heif.c:2548
+#: plug-ins/common/file-heif.c:2596
 msgid "_Save Exif data"
 msgstr "_Shrani podatke Exif"
 
-#: plug-ins/common/file-heif.c:2553
+#: plug-ins/common/file-heif.c:2601
 msgid "Save _XMP data"
 msgstr "Shrani podatke _XMP"
 
@@ -2831,31 +2831,31 @@ msgstr "Slike xvYCC JP2 »%s« ni mogoče pretvoriti v RGB."
 msgid "Unsupported color space in JP2 image '%s'."
 msgstr "Nepodprti barvni prostor v sliki JP2 »%s«."
 
-#: plug-ins/common/file-jpegxl.c:119 plug-ins/common/file-jpegxl.c:146
+#: plug-ins/common/file-jpegxl.c:120 plug-ins/common/file-jpegxl.c:147
 msgid "JPEG XL image"
 msgstr "Slika JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:122 plug-ins/common/file-jpegxl.c:123
+#: plug-ins/common/file-jpegxl.c:123 plug-ins/common/file-jpegxl.c:124
 msgid "Loads files in the JPEG XL file format"
 msgstr "Naloži datoteke v zapisu JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:149 plug-ins/common/file-jpegxl.c:150
+#: plug-ins/common/file-jpegxl.c:150 plug-ins/common/file-jpegxl.c:151
 msgid "Saves files in the JPEG XL file format"
 msgstr "Shrani datoteke v zapisu JPEG XL"
 
-#: plug-ins/common/file-jpegxl.c:165 plug-ins/file-webp/file-webp.c:175
+#: plug-ins/common/file-jpegxl.c:166 plug-ins/file-webp/file-webp.c:175
 msgid "L_ossless"
 msgstr "_Brez izgub"
 
-#: plug-ins/common/file-jpegxl.c:166
+#: plug-ins/common/file-jpegxl.c:167
 msgid "Use lossless compression"
 msgstr "Uporabi stiskanje brez izgub"
 
-#: plug-ins/common/file-jpegxl.c:171
+#: plug-ins/common/file-jpegxl.c:172
 msgid "Co_mpression/maxError"
 msgstr "_Stiskanje/najvNapaka"
 
-#: plug-ins/common/file-jpegxl.c:172
+#: plug-ins/common/file-jpegxl.c:173
 msgid ""
 "Max. butteraugli distance, lower = higher quality. Range: 0 .. 15. 1.0 = "
 "visually lossless."
@@ -2863,67 +2863,83 @@ msgstr ""
 "Največja razdalja butteraugli, nižje = višja kakovost. Obseg: 0 .. 15. 1,0 = "
 "navidez brez izgub."
 
-#: plug-ins/common/file-jpegxl.c:177
+#: plug-ins/common/file-jpegxl.c:178
 msgid "_Bit depth"
 msgstr "_Bitna globina"
 
-#: plug-ins/common/file-jpegxl.c:178
+#: plug-ins/common/file-jpegxl.c:179
 msgid "Bit depth of exported image"
 msgstr "Bitna globina izvožene slike"
 
-#: plug-ins/common/file-jpegxl.c:183
+#: plug-ins/common/file-jpegxl.c:184
 msgid "Effort/S_peed"
 msgstr "Napor/_hitrost"
 
-#: plug-ins/common/file-jpegxl.c:184
+#: plug-ins/common/file-jpegxl.c:185
 msgid "Encoder effort setting"
 msgstr "Nastavitev napora kodirnika"
 
-#: plug-ins/common/file-jpegxl.c:190
+#: plug-ins/common/file-jpegxl.c:191
 msgid "Save ori_ginal profile"
 msgstr "Shrani ori_ginalni profil"
 
-#: plug-ins/common/file-jpegxl.c:191
+#: plug-ins/common/file-jpegxl.c:192
 msgid "Store ICC profile to exported JXL file"
 msgstr "Shrani profil ICC v izvoženo datoteko JXL"
 
-#: plug-ins/common/file-jpegxl.c:1108
+#: plug-ins/common/file-jpegxl.c:197
+msgid "Save Exi_f"
+msgstr "Shrani podatke Exi_f"
+
+#: plug-ins/common/file-jpegxl.c:198
+msgid "Toggle saving Exif data"
+msgstr "Preklopi shranjevanje podatkov Exif"
+
+#: plug-ins/common/file-jpegxl.c:203
+msgid "Save _XMP"
+msgstr "Shrani podatke _XMP"
+
+#: plug-ins/common/file-jpegxl.c:204
+msgid "Toggle saving XMP data"
+msgstr "Preklopi shranjevanje podatkov XMP"
+
+#: plug-ins/common/file-jpegxl.c:1442
 msgid "lightning (fastest)"
 msgstr "strela (najhitrejše)"
 
-#: plug-ins/common/file-jpegxl.c:1109
+#: plug-ins/common/file-jpegxl.c:1443
 msgid "thunder"
 msgstr "grom"
 
-#: plug-ins/common/file-jpegxl.c:1110
+#: plug-ins/common/file-jpegxl.c:1444
 msgid "falcon (faster)"
 msgstr "sokol (hitreje)"
 
-#: plug-ins/common/file-jpegxl.c:1111
+#: plug-ins/common/file-jpegxl.c:1445
 msgid "cheetah"
 msgstr "gepard"
 
-#: plug-ins/common/file-jpegxl.c:1112
+#: plug-ins/common/file-jpegxl.c:1446
 msgid "hare"
 msgstr "zajec"
 
-#: plug-ins/common/file-jpegxl.c:1113
+#: plug-ins/common/file-jpegxl.c:1447
 msgid "wombat"
 msgstr "vombat"
 
-#: plug-ins/common/file-jpegxl.c:1114
+#: plug-ins/common/file-jpegxl.c:1448
 msgid "squirrel"
 msgstr "veverica"
 
-#: plug-ins/common/file-jpegxl.c:1115
+#: plug-ins/common/file-jpegxl.c:1449
 msgid "kitten"
 msgstr "mucka"
 
-#: plug-ins/common/file-jpegxl.c:1116
+#: plug-ins/common/file-jpegxl.c:1450
 msgid "tortoise (slower)"
 msgstr "želva (počasneje)"
 
-#: plug-ins/common/file-jpegxl.c:1123
+#: plug-ins/common/file-jpegxl.c:1457
 msgid "16 bit/channel"
 msgstr "16 bitov/kanal"
 
@@ -3125,7 +3141,7 @@ msgstr "Spodnji rob je zunaj meja (mora biti < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Pisanje v datoteko »%s« ni uspelo: %s"
 
-#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:313
+#: plug-ins/common/file-pdf-load.c:331 plug-ins/common/file-pdf-save.c:314
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
@@ -3213,15 +3229,15 @@ msgstr "Uporabi _glajenje robov"
 msgid "pixels/%a"
 msgstr "slik. točk/%a"
 
-#: plug-ins/common/file-pdf-save.c:329
+#: plug-ins/common/file-pdf-save.c:330
 msgid "PDF"
 msgstr "PDF"
 
-#: plug-ins/common/file-pdf-save.c:380
+#: plug-ins/common/file-pdf-save.c:387
 msgid "_Create multipage PDF..."
 msgstr "_Ustvari večstranski PDF ..."
 
-#: plug-ins/common/file-pdf-save.c:708
+#: plug-ins/common/file-pdf-save.c:715
 #, c-format
 msgid ""
 "An error occurred while creating the PDF file:\n"
@@ -3234,7 +3250,7 @@ msgstr ""
 "Prepričajte se, da ste vnesli veljavno ime datoteke in da na izbranem mestu "
 "ni dovoljeno le branje!"
 
-#: plug-ins/common/file-pdf-save.c:980
+#: plug-ins/common/file-pdf-save.c:990
 #, c-format
 msgid ""
 "The following fonts cannot be found: %s.\n"
@@ -3245,54 +3261,54 @@ msgstr ""
 "Priporočamo, da svoje plasti besedila pretvorite v sliko ali da namestite "
 "manjkajoče pisave pred izvozom, sicer vaše oblikovanje ne bo videti pravilno."
 
-#: plug-ins/common/file-pdf-save.c:1074
+#: plug-ins/common/file-pdf-save.c:1084
 msgid "Save to:"
 msgstr "Shrani v:"
 
-#: plug-ins/common/file-pdf-save.c:1078
+#: plug-ins/common/file-pdf-save.c:1088
 msgid "Browse..."
 msgstr "Prebrskaj ..."
 
-#: plug-ins/common/file-pdf-save.c:1079
+#: plug-ins/common/file-pdf-save.c:1089
 msgid "Multipage PDF export"
 msgstr "Izvoz večstranskega PDF"
 
-#: plug-ins/common/file-pdf-save.c:1115
+#: plug-ins/common/file-pdf-save.c:1125
 msgid "Remove the selected pages"
 msgstr "Izbrišite izbrane strani"
 
-#: plug-ins/common/file-pdf-save.c:1125
+#: plug-ins/common/file-pdf-save.c:1135
 msgid "Add this image"
 msgstr "Dodaj to sliko"
 
-#: plug-ins/common/file-pdf-save.c:1130
+#: plug-ins/common/file-pdf-save.c:1140
 msgid "_Omit hidden layers and layers with zero opacity"
 msgstr "Izp_usti skrite plasti in plasti z ničelno prekrivnostjo"
 
-#: plug-ins/common/file-pdf-save.c:1135
+#: plug-ins/common/file-pdf-save.c:1145
 msgid "Convert _bitmaps to vector graphics where possible"
 msgstr "Pretvori _bitne slike v vektorsko grafiko, kjer je to mogoče"
 
-#: plug-ins/common/file-pdf-save.c:1140
+#: plug-ins/common/file-pdf-save.c:1150
 msgid "_Apply layer masks before saving"
 msgstr "Pre_d shranjevanjem uveljavi maske plasti"
 
-#: plug-ins/common/file-pdf-save.c:1144
+#: plug-ins/common/file-pdf-save.c:1154
 msgid "Keeping the masks will not change the output"
 msgstr "Ohranjanje mask ne bo spremenilo izhoda"
 
-#: plug-ins/common/file-pdf-save.c:1233 plug-ins/common/file-pdf-save.c:1306
-#: plug-ins/common/file-pdf-save.c:1404 plug-ins/common/file-ps.c:2080
+#: plug-ins/common/file-pdf-save.c:1243 plug-ins/common/file-pdf-save.c:1316
+#: plug-ins/common/file-pdf-save.c:1414 plug-ins/common/file-ps.c:2080
 #: plug-ins/file-tiff/file-tiff-load.c:1557
 #, c-format
 msgid "Page %d"
 msgstr "Stran %d"
 
-#: plug-ins/common/file-pdf-save.c:1273
+#: plug-ins/common/file-pdf-save.c:1283
 msgid "Error! In order to save the file, at least one image should be added!"
 msgstr "Napaka! Če želite shraniti datoteko, morate dodati vsaj eno sliko!"
 
-#: plug-ins/common/file-pdf-save.c:1451 plug-ins/print/print-draw-page.c:125
+#: plug-ins/common/file-pdf-save.c:1461 plug-ins/print/print-draw-page.c:125
 msgid "Cannot handle the size (either width or height) of the image."
 msgstr "Velikosti slike ni mogoče obvladati (širina ali višina)."
 
@@ -7108,15 +7124,18 @@ msgstr "Velikost datoteke: neznana"
 msgid "Enable preview to obtain the file size."
 msgstr "Omogoči predogled za izračun velikosti datoteke."
 
-#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-tiff/file-tiff-save.c:1362
+#: plug-ins/file-jpeg/jpeg-save.c:891 plug-ins/file-psd/psd-save.c:2357
+#: plug-ins/file-tiff/file-tiff-save.c:1362
 msgid "No soft-proofing profile"
 msgstr "Brez profila preverjanja videza"
 
-#: plug-ins/file-jpeg/jpeg-save.c:898 plug-ins/file-tiff/file-tiff-save.c:1369
+#: plug-ins/file-jpeg/jpeg-save.c:898 plug-ins/file-psd/psd-save.c:2364
+#: plug-ins/file-tiff/file-tiff-save.c:1369
 msgid "Name of the color profile used for CMYK export."
 msgstr "Ime barvnega profila, uporabljenega za izvoz CMYK."
 
-#: plug-ins/file-jpeg/jpeg-save.c:909 plug-ins/file-tiff/file-tiff-save.c:1381
+#: plug-ins/file-jpeg/jpeg-save.c:909 plug-ins/file-psd/psd-save.c:2375
+#: plug-ins/file-tiff/file-tiff-save.c:1381
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -7302,11 +7321,11 @@ msgstr ""
 "Shranjeni so podatki o barvnem prostoru duotone\n"
 "in se lahko ponovno uporabijo pri izvozu."
 
-#: plug-ins/file-psd/psd-save.c:473
+#: plug-ins/file-psd/psd-save.c:485
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Napaka: Osnovne vrste slike GIMP ni mogoče pretvoriti v način PSD"
 
-#: plug-ins/file-psd/psd-save.c:1802
+#: plug-ins/file-psd/psd-save.c:2063
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images that are "
@@ -7315,7 +7334,7 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik, ki so daljše "
 "ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-save.c:1843
+#: plug-ins/file-psd/psd-save.c:2104
 #, c-format
 msgid ""
 "Unable to export '%s'.  The PSD file format does not support images with "
@@ -7324,11 +7343,11 @@ msgstr ""
 "Izvažanje »%s« ni uspelo. Vrsta datotek PSD ne podpira slik s plastmi, ki so "
 "daljše ali širše od 30.000 slikovnih točk."
 
-#: plug-ins/file-psd/psd-save.c:2088
+#: plug-ins/file-psd/psd-save.c:2353
 msgid "Export Image as PSD"
 msgstr "Izvozi sliko kot PSD"
 
-#: plug-ins/file-psd/psd-save.c:2093
+#: plug-ins/file-psd/psd-save.c:2399
 msgid ""
 "Duotone color space information from the original\n"
 "imported image will be used."
