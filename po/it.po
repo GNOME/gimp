@@ -39,8 +39,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-07-08 23:56+0200\n"
-"PO-Revision-Date: 2022-07-08 23:56+0200\n"
+"POT-Creation-Date: 2022-10-10 09:36+0200\n"
+"PO-Revision-Date: 2022-10-10 09:36+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@posteo.net>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "Language: it\n"
@@ -332,8 +332,7 @@ msgstr "Controllo sull'area disegnabile del filtro Vignettatura"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:45
 msgid "New filters: Bloom, Focus Blur, Lens Blur, Variable Blur"
-msgstr ""
-"Nuovi filtri: Bloom, Sfocatura fuoco, Sfocatura lente, Sfocatura variabile"
+msgstr "Nuovi filtri: Fiore, Sfocatura fuoco, Sfocatura lente, Sfocatura variabile"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:46
 msgid "Over 30 bugfixes"
@@ -427,8 +426,8 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:60
 msgid "Foreground Select tool: new \"Grayscale\" Preview Mode"
 msgstr ""
-"Strumento di selezione primo piano: nuova modalità anteprima \"Scala di grigi"
-"\""
+"Strumento di selezione primo piano: nuova modalità anteprima \"Scala di "
+"grigi\""
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:61
 msgid "Foreground Select tool: color/opacity selector for \"Color\" preview"
@@ -556,8 +555,8 @@ msgstr ""
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:82
 msgid "New generic canvas modifier 'Alt + middle click' to pick layers"
 msgstr ""
-"Nuovo modificatore generico dell'area di disegno \"Alt + clic tasto centrale"
-"\" per prelevare i livelli"
+"Nuovo modificatore generico dell'area di disegno \"Alt + clic tasto "
+"centrale\" per prelevare i livelli"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:83
 msgid "Parametric brushes now 32-bit float to avoid posterization"
@@ -1089,7 +1088,7 @@ msgstr ""
 "Dovresti aver ricevuto una copia della GNU General Public License con GIMP. "
 "Se così non fosse, vedere https://www.gnu.org/licenses/."
 
-#: ../app/gimp-update.c:385
+#: ../app/gimp-update.c:415
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -11234,8 +11233,8 @@ msgstr "Tracciato"
 #: ../app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Se abilitata, un'immagine diventa attiva se la sua finestra riceve il focus. "
 "Utile per i gestori di finestre che usano il \"focus con clic\"."
@@ -12070,8 +12069,8 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:610
 msgid "Sets the default channel name for the 'New Channel' dialog."
 msgstr ""
-"Imposta il nome canale predefinito per la finestra di dialogo \"Nuovo canale"
-"\"."
+"Imposta il nome canale predefinito per la finestra di dialogo \"Nuovo "
+"canale\"."
 
 #: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
@@ -12167,8 +12166,8 @@ msgid ""
 "'Border Selection' dialog."
 msgstr ""
 "Imposta il valore predefinito dell'impostazione \"Le aree selezionate "
-"continuano fuori dall'immagine\" per la finestra di dialogo \"Selezione bordo"
-"\"."
+"continuano fuori dall'immagine\" per la finestra di dialogo \"Selezione "
+"bordo\"."
 
 #: ../app/config/gimprc-blurbs.h:658
 msgid "Sets the default border style for the 'Border Selection' dialog."
@@ -21050,8 +21049,8 @@ msgstr ""
 #: ../app/pdb/gimpprocedure.c:765
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "La procedura \"%s\" è stata chiamata con tipo di valore errato per "
 "l'argomento \"%s\" (#%d). Era previsto %s, ottenuto invece %s. "
@@ -21111,8 +21110,8 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
-"\" (#%d, tipo %s). Questo valore è fuori limite."
+"La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento "
+"\"%s\" (#%d, tipo %s). Questo valore è fuori limite."
 
 #: ../app/pdb/image-cmds.c:2569
 msgid ""
