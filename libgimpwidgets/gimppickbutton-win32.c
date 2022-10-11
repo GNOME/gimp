@@ -23,7 +23,6 @@
 
 #include "gimpwidgetstypes.h"
 #include "gimppickbutton.h"
-#include "gimppickbutton-private.h"
 #include "gimppickbutton-win32.h"
 
 #include <sdkddkver.h>
