@@ -405,7 +405,7 @@ file_gex_decompress (GFile   *file,
                   g_free (path);
 
                   r = archive_write_header (ext, entry);
-                  if (r < ARCHIVE_OK)
+                  if (r < ARCHIVE_WARN)
                     {
                       *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
                                             _("Fatal error when uncompressing GIMP extension '%s': %s"),
@@ -414,28 +414,40 @@ file_gex_decompress (GFile   *file,
                       break;
                     }
 
-                  while (TRUE)
+                  if (archive_entry_size (entry) > 0)
                     {
-                      r = archive_read_data_block (a, &buffer, &size, &offset);
-                      if (r == ARCHIVE_FATAL)
+                      while (TRUE)
                         {
-                          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                                gimp_file_get_utf8_name (file),
-                                                archive_error_string (a));
-                          break;
-                        }
-                      else if (r == ARCHIVE_EOF)
-                        break;
+                          r = archive_read_data_block (a, &buffer, &size, &offset);
+                          if (r == ARCHIVE_EOF)
+                            {
+                              break;
+                            }
+                          else if (r < ARCHIVE_WARN)
+                            {
+                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                    _("Fatal error when uncompressing GIMP extension '%s': %s"),
+                                                    gimp_file_get_utf8_name (file),
+                                                    archive_error_string (a));
+                              break;
+                            }
 
-                      r = archive_write_data_block (ext, buffer, size, offset);
-                      if (r < ARCHIVE_OK)
-                        {
-                          *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
-                                                _("Fatal error when uncompressing GIMP extension '%s': %s"),
-                                                gimp_file_get_utf8_name (file),
-                                                archive_error_string (ext));
-                          break;
+                          r = archive_write_data_block (ext, buffer, size, offset);
+                          if (r == ARCHIVE_WARN)
+                            {
+                              g_printerr (_("Warning when uncompressing GIMP extension '%s': %s\n"),
+                                          gimp_file_get_utf8_name (file),
+                                          archive_error_string (ext));
+                              break;
+                            }
+                          else if (r < ARCHIVE_OK)
+                            {
+                              *error = g_error_new (GIMP_EXTENSION_ERROR, GIMP_EXTENSION_FAILED,
+                                                    _("Fatal error when uncompressing GIMP extension '%s': %s"),
+                                                    gimp_file_get_utf8_name (file),
+                                                    archive_error_string (ext));
+                              break;
+                            }
                         }
                     }
                   if (*error)
