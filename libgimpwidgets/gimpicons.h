@@ -265,7 +265,7 @@ G_BEGIN_DECLS
 #define GIMP_ICON_GO_PREVIOUS               "go-previous"
 #define GIMP_ICON_GO_NEXT                   "go-next"
 
-#define GIMP_ICON_HELP                      "help"
+#define GIMP_ICON_HELP                      "system-help"
 #define GIMP_ICON_HELP_ABOUT                "help-about"
 #define GIMP_ICON_HELP_USER_MANUAL          "gimp-user-manual"
 
