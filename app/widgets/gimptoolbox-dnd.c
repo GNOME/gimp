@@ -154,17 +154,26 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
   for (list = uri_list; list; list = g_list_next (list))
     {
       GFile             *file = g_file_new_for_uri (list->data);
-      GimpImage         *image;
       GimpPDBStatusType  status;
       GError            *error = NULL;
 
-      image = file_open_with_display (context->gimp, context, NULL,
-                                      file, FALSE,
-                                      G_OBJECT (gimp_widget_get_monitor (widget)),
-                                      &status, &error);
+      file_open_with_display (context->gimp, context, NULL,
+                              file, FALSE,
+                              G_OBJECT (gimp_widget_get_monitor (widget)),
+                              &status, &error);
 
-      if (! image && status != GIMP_PDB_CANCEL)
+      if (status != GIMP_PDB_CANCEL && status != GIMP_PDB_SUCCESS)
         {
+          /* file_open_image() took care of always having a filled error when
+           * the status is neither CANCEL nor SUCCESS (and to transform a
+           * wrongful success without a returned image into an EXECUTION_ERROR).
+           *
+           * In some case, we may also have a SUCCESS without an image, when the
+           * file procedure is a `generic_file_proc` (e.g. for a .gex extension
+           * file). So we should not rely on having a returned image or not.
+           * Once again, sanitizing the returned status is handled by
+           * file_open_image().
+           */
           gimp_message (context->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
                         gimp_file_get_utf8_name (file), error->message);
