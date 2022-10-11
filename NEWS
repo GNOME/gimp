@@ -16,6 +16,10 @@ Core:
     branch code.
   - The update check on macOS now uses native HTTPS-able API, so that we
     don't have to wait for GIO to have HTTPS modules for macOS.
+  - The main process is now run as a GimpApp which is a new class derived from
+    GtkApplication. The main process of `gimp-console` on the other hand is a
+    `GimpConsoleApp` which is derived from GApplication. Both new classes share
+    a same GimpCoreApp interface. This is a main step for the GTK+3 port.
 
 Graphical User Interface:
 
@@ -48,12 +52,24 @@ Plug-ins:
   - PSD:
     * export of CMYK(A) files added, with 8 or 16-bit precision per channel,
       using a CMYK soft-proof profile for conversion.
+    * Paths are now exported with PSD files.
+  - JPEG-XL:
+    * Metadata import/export now supported (requires libjxl 0.7.0).
 
 API:
 
   - Changes in libgimp:
     * Abstract method get_window() of GimpProgressVtable had its signature
       changed. The window ID is now a guint64.
+    * New functions:
+      + gimp_text_layer_set_markup()
+    * New classes:
+      + GimpTextLayer: child class of GimpLayer.
+  - Changes in libgimpwidgets:
+    * Updated widgets:
+      + GimpPickButton now has a specific implementation for Windows. In
+        particular it improves color picking with multi-monitor and scales
+        different than 100%.
 
 Build:
 
