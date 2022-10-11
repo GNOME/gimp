@@ -79,23 +79,29 @@ static GimpValueArray * editor_run              (GimpProcedure        *procedure
                                                  const GimpValueArray *args,
                                                  gpointer              run_data);
 
-static GimpUnit new_unit_dialog        (GtkWindow             *main_window,
-                                        GimpUnit               template);
-static void     on_app_activate        (GApplication          *gapp,
-                                        gpointer               user_data);
-static void     new_unit_action        (GSimpleAction         *action,
-                                        GVariant              *param,
-                                        gpointer               user_data);
-static void     duplicate_unit_action  (GSimpleAction         *action,
-                                        GVariant              *param,
-                                        gpointer               user_data);
-static void     refresh_action         (GSimpleAction         *action,
-                                        GVariant              *param,
-                                        gpointer               user_data);
-static void     saved_toggled_callback (GtkCellRendererToggle *celltoggle,
-                                        gchar                 *path_string,
-                                        GtkListStore          *list_store);
-static void     unit_list_init         (GtkTreeView           *tv);
+static GimpUnit new_unit_dialog                 (GtkWindow             *main_window,
+                                                 GimpUnit               template);
+static void     on_app_activate                 (GApplication          *gapp,
+                                                 gpointer               user_data);
+
+static gboolean unit_editor_key_press_event     (GtkWidget            *window,
+                                                 GdkEventKey          *event,
+                                                 gpointer              user_data);
+static void     unit_editor_help_clicked        (GtkWidget            *window);
+
+static void     new_unit_action                 (GSimpleAction         *action,
+                                                 GVariant              *param,
+                                                 gpointer               user_data);
+static void     duplicate_unit_action           (GSimpleAction         *action,
+                                                 GVariant              *param,
+                                                 gpointer               user_data);
+static void     refresh_action                  (GSimpleAction         *action,
+                                                 GVariant              *param,
+                                                 gpointer               user_data);
+static void     saved_toggled_callback          (GtkCellRendererToggle *celltoggle,
+                                                 gchar                 *path_string,
+                                                 GtkListStore          *list_store);
+static void     unit_list_init                  (GtkTreeView           *tv);
 
 
 G_DEFINE_TYPE (GimpUnitEditor, gimp_unit_editor, GIMP_TYPE_PLUG_IN)
@@ -244,21 +250,27 @@ on_app_activate (GApplication *gapp, gpointer user_data)
   gtk_header_bar_set_has_subtitle (GTK_HEADER_BAR (headerbar), FALSE);
   gtk_header_bar_set_show_close_button (GTK_HEADER_BAR (headerbar), TRUE);
 
-  button = gtk_button_new_from_icon_name (GIMP_ICON_VIEW_REFRESH,
-                                          GTK_ICON_SIZE_BUTTON);
+  button = gtk_button_new_with_mnemonic (_("_Refresh"));
   gtk_actionable_set_action_name (GTK_ACTIONABLE (button), "win.refresh");
-  gtk_widget_set_tooltip_text (button, _("Refresh"));
   gtk_widget_show (button);
   gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
 
   if (gimp_show_help_button ())
     {
-      button = gtk_button_new_from_icon_name (GIMP_ICON_HELP,
-                                              GTK_ICON_SIZE_BUTTON);
-      gtk_widget_set_tooltip_text (button, _("Help"));
+      button = gtk_button_new_with_mnemonic (_("_Help"));
+      g_signal_connect_swapped (button, "clicked",
+                                G_CALLBACK (unit_editor_help_clicked),
+                                self->window);
       gtk_widget_show (button);
-      gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
+      gtk_header_bar_pack_start (GTK_HEADER_BAR (headerbar), button);
     }
+
+  button = gtk_button_new_with_mnemonic (_("_OK"));
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (gtk_widget_destroy),
+                            self->window);
+  gtk_widget_show (button);
+  gtk_header_bar_pack_end (GTK_HEADER_BAR (headerbar), button);
 
   gtk_window_set_titlebar (self->window, headerbar);
   gtk_widget_show (headerbar);
@@ -299,6 +311,7 @@ on_app_activate (GApplication *gapp, gpointer user_data)
 
   gtk_widget_set_size_request (self->tv, -1, 220);
   gtk_container_add (GTK_CONTAINER (scrolled_win), self->tv);
+  gtk_widget_set_vexpand (self->tv, TRUE);
   gtk_widget_show (self->tv);
 
   rend = gtk_cell_renderer_toggle_new ();
@@ -352,7 +365,29 @@ on_app_activate (GApplication *gapp, gpointer user_data)
 
   unit_list_init (GTK_TREE_VIEW (self->tv));
 
+  g_signal_connect (self->window, "key-press-event",
+                    G_CALLBACK (unit_editor_key_press_event),
+                    NULL);
+
   gtk_widget_show (GTK_WIDGET (self->window));
+}
+
+static gboolean
+unit_editor_key_press_event (GtkWidget   *window,
+                             GdkEventKey *event,
+                             gpointer     user_data)
+{
+  if (event->state == 0 &&
+      event->keyval == GDK_KEY_Escape)
+    gtk_widget_destroy (GTK_WIDGET (window));
+
+  return FALSE;
+}
+
+static void
+unit_editor_help_clicked (GtkWidget *window)
+{
+  gimp_standard_help_func (PLUG_IN_PROC, window);
 }
 
 static GimpValueArray *
@@ -361,6 +396,8 @@ editor_run (GimpProcedure        *procedure,
             gpointer              run_data)
 {
   GimpUnitEditor *editor = GIMP_UNIT_EDITOR (run_data);
+
+  gimp_ui_init (PLUG_IN_BINARY);
 
   editor->app = gtk_application_new (NULL, G_APPLICATION_FLAGS_NONE);
   g_signal_connect (editor->app, "activate", G_CALLBACK (on_app_activate), editor);
@@ -401,9 +438,9 @@ new_unit_dialog (GtkWindow *main_window,
                             NULL);
 
   gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+                                            GTK_RESPONSE_OK,
+                                            GTK_RESPONSE_CANCEL,
+                                            -1);
 
   grid = gtk_grid_new ();
   gtk_grid_set_row_spacing (GTK_GRID (grid), 6);
