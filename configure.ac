@@ -3284,7 +3284,12 @@ if test "x$required_deps" = "x"; then
   AC_MSG_RESULT([
 Building GIMP with prefix=$prefix, datarootdir=$datarootdir
 Desktop files install into $DESKTOP_DATADIR
-$optional_deps]);
+$optional_deps
+
+INFO: MESON BUILD IS IN EXTENSIVE TESTING PHASE TO LIKELY REPLACE AUTOTOOLS!
+
+      we now encourage usage of meson for packagers, instead of autotools.
+      Please build GIMP with meson and report bugs.]);
 else
   AC_MSG_ERROR([
 $optional_deps
