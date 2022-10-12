@@ -264,16 +264,16 @@ gimp_vectors_tree_view_drag_svg (GtkWidget *widget,
 {
   GimpItemTreeView *view  = GIMP_ITEM_TREE_VIEW (data);
   GimpImage        *image = gimp_item_tree_view_get_image (view);
-  GimpItem         *item;
+  GList            *items;
   gchar            *svg_data = NULL;
 
-  item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+  items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
 
   *svg_data_len = 0;
 
-  if (item)
+  if (items)
     {
-      svg_data = gimp_vectors_export_string (image, GIMP_VECTORS (item));
+      svg_data = gimp_vectors_export_string (image, items);
 
       if (svg_data)
         *svg_data_len = strlen (svg_data);

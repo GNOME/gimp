@@ -118,7 +118,7 @@ vectors_export_dialog_new (GimpImage                 *image,
                     G_CALLBACK (vectors_export_dialog_response),
                     private);
 
-  combo = gimp_int_combo_box_new (_("Export the active path"),           TRUE,
+  combo = gimp_int_combo_box_new (_("Export the selected paths"),           TRUE,
                                   _("Export all paths from this image"), FALSE,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),

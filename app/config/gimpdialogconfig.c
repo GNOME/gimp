@@ -441,7 +441,7 @@ gimp_dialog_config_class_init (GimpDialogConfigClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_VECTORS_EXPORT_ACTIVE_ONLY,
                             "path-export-active-only",
-                            "Default export only the active path",
+                            "Default export only the selected paths",
                             VECTORS_EXPORT_ACTIVE_ONLY_BLURB,
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);

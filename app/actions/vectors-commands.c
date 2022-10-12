@@ -590,9 +590,9 @@ vectors_copy_cmd_callback (GimpAction *action,
                            gpointer    data)
 {
   GimpImage   *image;
-  GimpVectors *vectors;
+  GList       *vectors;
   gchar       *svg;
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_vectors_list (image, vectors, data);
 
   svg = gimp_vectors_export_string (image, vectors);
 
@@ -645,10 +645,10 @@ vectors_export_cmd_callback (GimpAction *action,
                              gpointer    data)
 {
   GimpImage   *image;
-  GimpVectors *vectors;
+  GList       *vectors;
   GtkWidget   *widget;
   GtkWidget   *dialog;
-  return_if_no_vectors (image, vectors, data);
+  return_if_no_vectors_list (image, vectors, data);
   return_if_no_widget (widget, data);
 
 #define EXPORT_DIALOG_KEY "gimp-vectors-export-dialog"
@@ -903,7 +903,7 @@ vectors_export_callback (GtkWidget *dialog,
                          gpointer   user_data)
 {
   GimpDialogConfig *config  = GIMP_DIALOG_CONFIG (image->gimp->config);
-  GimpVectors      *vectors = NULL;
+  GList            *vectors = NULL;
   gchar            *path    = NULL;
   GError           *error   = NULL;
 
@@ -919,7 +919,7 @@ vectors_export_callback (GtkWidget *dialog,
     g_free (path);
 
   if (config->vectors_export_active_only)
-    vectors = gimp_image_get_active_vectors (image);
+    vectors = gimp_image_get_selected_vectors (image);
 
   if (! gimp_vectors_export_file (image, vectors, file, &error))
     {

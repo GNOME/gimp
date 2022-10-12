@@ -140,7 +140,7 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_STROKE },
 
   { "vectors-copy", GIMP_ICON_EDIT_COPY,
-    NC_("vectors-action", "Co_py Path"), "", NULL,
+    NC_("vectors-action", "Co_py Paths"), "", NULL,
     vectors_copy_cmd_callback,
     GIMP_HELP_PATH_COPY },
 
@@ -150,7 +150,7 @@ static const GimpActionEntry vectors_actions[] =
     GIMP_HELP_PATH_PASTE },
 
   { "vectors-export", GIMP_ICON_DOCUMENT_SAVE,
-    NC_("vectors-action", "E_xport Path..."), "", NULL,
+    NC_("vectors-action", "E_xport Paths..."), "", NULL,
     vectors_export_cmd_callback,
     GIMP_HELP_PATH_EXPORT },
 
@@ -431,9 +431,9 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-lower",           n_selected_vectors > 0 && have_next);
   SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors > 0 && have_next);
 
-  SET_SENSITIVE ("vectors-copy",   n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-copy",   n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-paste",  image);
-  SET_SENSITIVE ("vectors-export", n_selected_vectors == 1);
+  SET_SENSITIVE ("vectors-export", n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-import", image);
 
   SET_SENSITIVE ("vectors-selection-to-vectors",          image && !mask_empty);

@@ -37,7 +37,7 @@
 
 
 static GString * gimp_vectors_export            (GimpImage   *image,
-                                                 GimpVectors *vectors);
+                                                 GList       *vectors);
 static void      gimp_vectors_export_image_size (GimpImage   *image,
                                                  GString     *str);
 static void      gimp_vectors_export_path       (GimpVectors *vectors,
@@ -48,7 +48,7 @@ static gchar   * gimp_vectors_export_path_data  (GimpVectors *vectors);
 /**
  * gimp_vectors_export_file:
  * @image: the #GimpImage from which to export vectors
- * @vectors: a #GimpVectors object or %NULL to export all vectors in @image
+ * @vectors: a #GList of #GimpVectors objects or %NULL to export all vectors in @image
  * @file: the file to write
  * @error: return location for errors
  *
@@ -59,7 +59,7 @@ static gchar   * gimp_vectors_export_path_data  (GimpVectors *vectors);
  **/
 gboolean
 gimp_vectors_export_file (GimpImage    *image,
-                          GimpVectors  *vectors,
+                          GList        *vectors,
                           GFile        *file,
                           GError      **error)
 {
@@ -68,7 +68,6 @@ gimp_vectors_export_file (GimpImage    *image,
   GError        *my_error = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), FALSE);
   g_return_val_if_fail (G_IS_FILE (file), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
@@ -116,20 +115,20 @@ gimp_vectors_export_file (GimpImage    *image,
  * Returns: a %NUL-terminated string that holds a complete XML document
  **/
 gchar *
-gimp_vectors_export_string (GimpImage   *image,
-                            GimpVectors *vectors)
+gimp_vectors_export_string (GimpImage *image,
+                            GList     *vectors)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (vectors == NULL || GIMP_IS_VECTORS (vectors), NULL);
 
   return g_string_free (gimp_vectors_export (image, vectors), FALSE);
 }
 
 static GString *
-gimp_vectors_export (GimpImage   *image,
-                     GimpVectors *vectors)
+gimp_vectors_export (GimpImage *image,
+                     GList     *vectors)
 {
   GString *str = g_string_new (NULL);
+  GList   *list;
 
   g_string_append_printf (str,
                           "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n"
@@ -147,21 +146,11 @@ gimp_vectors_export (GimpImage   *image,
                           gimp_image_get_width  (image),
                           gimp_image_get_height (image));
 
-  if (vectors)
-    {
-      gimp_vectors_export_path (vectors, str);
-    }
-  else
-    {
-      GList *list;
+  if (! vectors)
+    vectors = gimp_image_get_vectors_iter (image);
 
-      for (list = gimp_image_get_vectors_iter (image);
-           list;
-           list = list->next)
-        {
-          gimp_vectors_export_path (GIMP_VECTORS (list->data), str);
-        }
-    }
+  for (list = vectors; list; list = list->next)
+    gimp_vectors_export_path (GIMP_VECTORS (list->data), str);
 
   g_string_append (str, "</svg>\n");
 

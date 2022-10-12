@@ -2540,7 +2540,7 @@ prefs_dialog_new (Gimp       *gimp,
                                  GTK_GRID (grid), 0, size_group);
 
   prefs_check_button_add (object, "path-export-active-only",
-                          _("Export the active path only"),
+                          _("Export the selected paths only"),
                           GTK_BOX (vbox2));
 
   /*  Import Path Dialog  */

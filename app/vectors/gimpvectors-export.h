@@ -20,11 +20,11 @@
 
 
 gboolean   gimp_vectors_export_file   (GimpImage    *image,
-                                       GimpVectors  *vectors,
+                                       GList        *vectors,
                                        GFile        *file,
                                        GError      **error);
 gchar    * gimp_vectors_export_string (GimpImage    *image,
-                                       GimpVectors  *vectors);
+                                       GList        *vectors);
 
 
 #endif /* __GIMP_VECTORS_IMPORT_H__ */

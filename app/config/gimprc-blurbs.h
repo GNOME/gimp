@@ -650,7 +650,7 @@ _("Sets the default path name for the 'New Path' dialog.")
 _("Sets the default folder path for the 'Export Path' dialog.")
 
 #define VECTORS_EXPORT_ACTIVE_ONLY_BLURB \
-_("Sets the default 'Export the active path' state for the 'Export Path' dialog.")
+_("Sets the default 'Export the selected paths' state for the 'Export Path' dialog.")
 
 #define VECTORS_IMPORT_PATH_BLURB \
 _("Sets the default folder path for the 'Import Path' dialog.")
