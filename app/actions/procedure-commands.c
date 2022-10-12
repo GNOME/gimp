@@ -149,9 +149,9 @@ procedure_commands_get_image_args (GimpProcedure   *procedure,
 }
 
 GimpValueArray *
-procedure_commands_get_item_args (GimpProcedure *procedure,
-                                  GimpImage     *image,
-                                  GimpItem      *item)
+procedure_commands_get_items_args (GimpProcedure *procedure,
+                                   GimpImage     *image,
+                                   GList         *items_list)
 {
   GimpValueArray *args;
   gint            n_args = 0;
@@ -178,20 +178,48 @@ procedure_commands_get_item_args (GimpProcedure *procedure,
           if (gimp_value_array_length (args) > n_args &&
               GIMP_IS_PARAM_SPEC_ITEM (procedure->args[n_args]))
             {
-              if (item &&
-                  g_type_is_a (G_TYPE_FROM_INSTANCE (item),
-                               G_PARAM_SPEC_VALUE_TYPE (procedure->args[n_args])))
+              if (items_list)
                 {
+                  g_printerr ("%s: plug-in procedures expecting a single item are deprecated!\n",
+                              G_STRFUNC);
                   g_value_set_object (gimp_value_array_index (args, n_args),
-                                      item);
+                                      items_list->data);
                   n_args++;
                 }
               else
                 {
-                  g_warning ("Uh-oh, no active item for the plug-in!");
+                  g_warning ("Uh-oh, no selected items for the plug-in!");
                   gimp_value_array_unref (args);
                   return NULL;
                 }
+            }
+          else if (gimp_value_array_length (args) > n_args + 1        &&
+                   G_IS_PARAM_SPEC_INT (procedure->args[n_args])      &&
+                   GIMP_IS_PARAM_SPEC_OBJECT_ARRAY (procedure->args[n_args + 1]))
+            {
+              GimpItem **items   = NULL;
+              gint       n_items;
+
+              n_items = g_list_length (items_list);
+
+              g_value_set_int (gimp_value_array_index (args, n_args++),
+                               n_items);
+
+              if (items_list)
+                {
+                  GList *iter;
+                  gint   i;
+
+                  items = g_new (GimpItem *, n_items);
+                  for (iter = items_list, i = 0; iter; iter = iter->next, i++)
+                    items[i] = iter->data;
+                }
+
+              gimp_value_set_object_array (gimp_value_array_index (args, n_args++),
+                                           GIMP_TYPE_ITEM,
+                                           (GObject **) items, n_items);
+
+              g_free (items);
             }
         }
     }
@@ -262,7 +290,7 @@ procedure_commands_get_display_args (GimpProcedure *procedure,
                 }
               else
                 {
-                  g_warning ("Uh-oh, no active drawable for the plug-in!");
+                  g_warning ("Uh-oh, no selected drawables for the plug-in!");
 
                   gimp_value_array_unref (args);
                   g_list_free (drawables_list);

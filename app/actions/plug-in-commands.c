@@ -119,16 +119,16 @@ plug_in_run_cmd_callback (GimpAction *action,
         {
           GimpItemTreeView *view = GIMP_ITEM_TREE_VIEW (data);
           GimpImage        *image;
-          GimpItem         *item;
+          GList            *items;
 
           image = gimp_item_tree_view_get_image (view);
 
           if (image)
-            item = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_active_item (image);
+            items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
           else
-            item = NULL;
+            items = NULL;
 
-          args = procedure_commands_get_item_args (procedure, image, item);
+          args = procedure_commands_get_items_args (procedure, image, items);
         }
       else
         {

@@ -24,9 +24,9 @@ GimpValueArray * procedure_commands_get_data_args    (GimpProcedure  *procedure,
                                                       GimpObject     *object);
 GimpValueArray * procedure_commands_get_image_args   (GimpProcedure  *procedure,
                                                       GimpImage      *image);
-GimpValueArray * procedure_commands_get_item_args    (GimpProcedure  *procedure,
+GimpValueArray * procedure_commands_get_items_args   (GimpProcedure  *procedure,
                                                       GimpImage      *image,
-                                                      GimpItem       *item);
+                                                      GList          *items);
 GimpValueArray * procedure_commands_get_display_args (GimpProcedure  *procedure,
                                                       GimpDisplay    *display,
                                                       GimpObject     *settings);
