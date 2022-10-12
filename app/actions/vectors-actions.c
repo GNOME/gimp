@@ -366,30 +366,39 @@ vectors_actions_update (GimpActionGroup *group,
   gboolean      mask_empty    = TRUE;
   gboolean      dr_writable   = FALSE;
   gboolean      dr_children   = FALSE;
-  GList        *next          = NULL;
-  GList        *prev          = NULL;
+
+  gboolean      have_prev     = FALSE; /* At least 1 selected path has a previous sibling. */
+  gboolean      have_next     = FALSE; /* At least 1 selected path has a next sibling.     */
 
   if (image)
     {
+      GList *iter;
+
       n_vectors  = gimp_image_get_n_vectors (image);
       mask_empty = gimp_channel_is_empty (gimp_image_get_mask (image));
 
       selected_vectors = gimp_image_get_selected_vectors (image);
       n_selected_vectors = g_list_length (selected_vectors);
-      if (n_selected_vectors == 1)
+
+      for (iter = selected_vectors; iter; iter = iter->next)
         {
           GList *vectors_list;
-          GList *list;
+          GList *iter2;
 
-          vectors_list = gimp_item_get_container_iter (GIMP_ITEM (selected_vectors->data));
+          vectors_list = gimp_item_get_container_iter (GIMP_ITEM (iter->data));
+          iter2 = g_list_find (vectors_list, iter->data);
 
-          list = g_list_find (vectors_list, selected_vectors->data);
-
-          if (list)
+          if (iter2)
             {
-              prev = g_list_previous (list);
-              next = g_list_next (list);
+              if (g_list_previous (iter2))
+                have_prev = TRUE;
+
+              if (g_list_next (iter2))
+                have_next = TRUE;
             }
+
+          if (have_prev && have_next)
+            break;
         }
 
       drawable = gimp_image_get_active_drawable (image);
@@ -417,10 +426,10 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-delete",          n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
 
-  SET_SENSITIVE ("vectors-raise",           n_selected_vectors == 1 && prev);
-  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_vectors == 1 && prev);
-  SET_SENSITIVE ("vectors-lower",           n_selected_vectors == 1 && next);
-  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors == 1 && next);
+  SET_SENSITIVE ("vectors-raise",           n_selected_vectors == 1 && have_prev);
+  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_vectors == 1 && have_prev);
+  SET_SENSITIVE ("vectors-lower",           n_selected_vectors == 1 && have_next);
+  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors == 1 && have_next);
 
   SET_SENSITIVE ("vectors-copy",   n_selected_vectors == 1);
   SET_SENSITIVE ("vectors-paste",  image);
@@ -449,10 +458,10 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-selection-subtract",     n_selected_vectors == 1);
   SET_SENSITIVE ("vectors-selection-intersect",    n_selected_vectors == 1);
 
-  SET_SENSITIVE ("vectors-select-top",       n_selected_vectors == 1 && prev);
-  SET_SENSITIVE ("vectors-select-bottom",    n_selected_vectors == 1 && next);
-  SET_SENSITIVE ("vectors-select-previous",  n_selected_vectors == 1 && prev);
-  SET_SENSITIVE ("vectors-select-next",      n_selected_vectors == 1 && next);
+  SET_SENSITIVE ("vectors-select-top",       n_selected_vectors > 0 && have_prev);
+  SET_SENSITIVE ("vectors-select-bottom",    n_selected_vectors > 0 && have_next);
+  SET_SENSITIVE ("vectors-select-previous",  n_selected_vectors > 0 && have_prev);
+  SET_SENSITIVE ("vectors-select-next",      n_selected_vectors > 0 && have_next);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE

@@ -838,28 +838,44 @@ vectors_select_cmd_callback (GimpAction *action,
                              gpointer    data)
 {
   GimpImage            *image;
-  GimpVectors          *vectors;
-  GimpContainer        *container;
-  GimpVectors          *new_vectors;
+  GList                *new_vectors = NULL;
+  GList                *vectors;
+  GList                *iter;
   GimpActionSelectType  select_type;
+  gboolean              run_once;
   return_if_no_image (image, data);
 
   select_type = (GimpActionSelectType) g_variant_get_int32 (value);
 
-  vectors = gimp_image_get_active_vectors (image);
+  vectors = gimp_image_get_selected_vectors (image);
+  run_once = (g_list_length (vectors) == 0);
 
-  if (vectors)
-    container = gimp_item_get_container (GIMP_ITEM (vectors));
-  else
-    container = gimp_image_get_vectors (image);
-
-  new_vectors = (GimpVectors *) action_select_object (select_type,
-                                                      container,
-                                                      (GimpObject *) vectors);
-
-  if (new_vectors && new_vectors != vectors)
+  for (iter = vectors; iter || run_once; iter = iter ? iter->next : NULL)
     {
-      gimp_image_set_active_vectors (image, new_vectors);
+      GimpVectors   *new_vec;
+      GimpContainer *container;
+
+      if (iter)
+        {
+          container = gimp_item_get_container (GIMP_ITEM (iter->data));
+        }
+      else /* run_once */
+        {
+          container = gimp_image_get_vectors (image);
+          run_once  = FALSE;
+        }
+      new_vec = (GimpVectors *) action_select_object (select_type,
+                                                      container,
+                                                      iter ? iter->data : NULL);
+      if (new_vec)
+        new_vectors = g_list_prepend (new_vectors, new_vec);
+    }
+
+  if (new_vectors)
+    {
+      gimp_image_set_selected_vectors (image, new_vectors);
       gimp_image_flush (image);
     }
+
+  g_list_free (new_vectors);
 }
