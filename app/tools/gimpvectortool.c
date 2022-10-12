@@ -527,8 +527,13 @@ static void
 gimp_vector_tool_vectors_changed (GimpImage      *image,
                                   GimpVectorTool *vector_tool)
 {
-  gimp_vector_tool_set_vectors (vector_tool,
-                                gimp_image_get_active_vectors (image));
+  GimpVectors *vectors = NULL;
+
+  /* The vectors tool can only work on one path at a time. */
+  if (g_list_length (gimp_image_get_selected_vectors (image)) == 1)
+    vectors = gimp_image_get_selected_vectors (image)->data;
+
+  gimp_vector_tool_set_vectors (vector_tool, vectors);
 }
 
 static void
