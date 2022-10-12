@@ -134,5 +134,11 @@ void               action_message          (GimpDisplay          *display,
   if (! vectors) \
     return
 
+#define return_if_no_vectors_list(image,list,data) \
+  return_if_no_image (image,data); \
+  list = gimp_image_get_selected_vectors (image); \
+  if (! list) \
+    return
+
 
 #endif /* __ACTIONS_H__ */

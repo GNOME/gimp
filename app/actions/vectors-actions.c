@@ -426,10 +426,10 @@ vectors_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("vectors-delete",          n_selected_vectors > 0);
   SET_SENSITIVE ("vectors-merge-visible",   n_vectors > 1);
 
-  SET_SENSITIVE ("vectors-raise",           n_selected_vectors == 1 && have_prev);
-  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_vectors == 1 && have_prev);
-  SET_SENSITIVE ("vectors-lower",           n_selected_vectors == 1 && have_next);
-  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors == 1 && have_next);
+  SET_SENSITIVE ("vectors-raise",           n_selected_vectors > 0 && have_prev);
+  SET_SENSITIVE ("vectors-raise-to-top",    n_selected_vectors > 0 && have_prev);
+  SET_SENSITIVE ("vectors-lower",           n_selected_vectors > 0 && have_next);
+  SET_SENSITIVE ("vectors-lower-to-bottom", n_selected_vectors > 0 && have_next);
 
   SET_SENSITIVE ("vectors-copy",   n_selected_vectors == 1);
   SET_SENSITIVE ("vectors-paste",  image);
