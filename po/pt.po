@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-29 22:52+0000\n"
-"PO-Revision-Date: 2022-10-01 23:09+0100\n"
+"POT-Creation-Date: 2022-10-11 22:10+0000\n"
+"PO-Revision-Date: 2022-10-12 16:48+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -512,7 +512,7 @@ msgstr "Ferramenta Texto"
 msgid "Text Editor"
 msgstr "Editor de texto"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:539
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:542
 msgid "Tool Options"
 msgstr "Definições da ferramenta"
 
@@ -2632,14 +2632,14 @@ msgstr "Introduza uma descrição para o marcador"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:975
-#: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:169
+#: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
 "\n"
 "%s"
 msgstr ""
-"Não foi possível abrir \"%s\":\n"
+"Não foi possível abrir '%s':\n"
 "\n"
 "%s"
 
@@ -4070,7 +4070,7 @@ msgid ""
 "Error writing file '%s':\n"
 "%s"
 msgstr ""
-"Erro ao guardar o ficheiro \"%s\":\n"
+"Erro ao guardar o ficheiro '%s':\n"
 "%s"
 
 #: app/actions/file-actions.c:72
@@ -4328,7 +4328,7 @@ msgstr "_Reverter"
 #: app/actions/file-commands.c:450
 #, c-format
 msgid "Revert '%s' to '%s'?"
-msgstr "Reverter \"%s\" para \"%s\"?"
+msgstr "Reverter '%s' para '%s'?"
 
 #: app/actions/file-commands.c:455
 msgid ""
@@ -4349,7 +4349,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Não foi possível reverter para \"%s\":\n"
+"Não foi possível reverter para '%s':\n"
 "\n"
 "%s"
 
@@ -5617,7 +5617,7 @@ msgstr "Editar este gradiente"
 #: app/actions/gradients-commands.c:73
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr "Guardar \"%s\" como POV-Ray"
+msgstr "Guardar '%s' como POV-Ray"
 
 #: app/actions/help-actions.c:38 app/actions/help-actions.c:41
 msgctxt "help-action"
@@ -6224,7 +6224,7 @@ msgstr "A converter imagem para %s"
 #: app/actions/image-commands.c:1342
 #, c-format
 msgid "Converting to '%s'"
-msgstr "A converter para \"%s\""
+msgstr "A converter para '%s'"
 
 #: app/actions/image-commands.c:1426
 msgid "Change Canvas Size"
@@ -8100,7 +8100,7 @@ msgstr "_Eliminar"
 msgid ""
 "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr ""
-"Quer mesmo eliminar o modelo de imagem \"%s\" da lista e do disco rígido?"
+"Quer mesmo eliminar o modelo de imagem '%s' da lista e do disco rígido?"
 
 #: app/actions/text-editor-actions.c:44
 msgctxt "text-editor-action"
@@ -8200,7 +8200,7 @@ msgstr "_Abrir"
 #: app/tools/gimpfiltertool-settings.c:170 app/widgets/gimptextbuffer.c:1663
 #, c-format
 msgid "Could not open '%s' for reading: %s"
-msgstr "Não foi possível abrir \"%s\" para leitura: %s"
+msgstr "Não foi possível abrir '%s' para leitura: %s"
 
 #: app/actions/text-tool-actions.c:50
 msgctxt "text-tool-action"
@@ -8390,8 +8390,8 @@ msgstr "Editar modelo de definições da ferramenta ativa"
 #, c-format
 msgid "Can't save '%s' tool options to an existing '%s' tool preset."
 msgstr ""
-"Não foi possível guardar as definições da ferramenta \"%s\" num modelo de "
-"definições da ferramenta \"%s\" já existente."
+"Não foi possível guardar as definições da ferramenta '%s' num modelo de "
+"definições da ferramenta '%s' já existente."
 
 #: app/actions/tool-presets-actions.c:46
 msgctxt "tool-presets-action"
@@ -10311,7 +10311,7 @@ msgstr "Move esta janela para o ecrã %s"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
-#: app/display/gimpdisplayshell-scale-dialog.c:123 app/gui/gui.c:194
+#: app/display/gimpdisplayshell-scale-dialog.c:123 app/gui/gui.c:195
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:662 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:673
@@ -10647,7 +10647,7 @@ msgstr "Alta"
 #: app/config/gimpconfig-file.c:83
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Não foi possível abrir \"%s\" para escrita: %s"
+msgstr "Não foi possível abrir '%s' para escrita: %s"
 
 #: app/config/gimpconfig-file.c:117
 #, c-format
@@ -10659,13 +10659,13 @@ msgstr "Erro ao processar \"%%s\": linha maior que %s caracteres."
 #: app/tools/gimpfiltertool-settings.c:229
 #, c-format
 msgid "Error writing '%s': %s"
-msgstr "Erro ao escrever \"%s\": %s"
+msgstr "Erro ao escrever '%s': %s"
 
 #: app/config/gimpconfig-file.c:183 app/plug-in/gimpenvirontable.c:369
 #: app/plug-in/gimpinterpreterdb.c:268 app/tools/gimpfiltertool-settings.c:182
 #, c-format
 msgid "Error reading '%s': %s"
-msgstr "Erro ao ler \"%s\": %s"
+msgstr "Erro ao ler '%s': %s"
 
 #: app/config/gimpconfig-file.c:233
 #, c-format
@@ -10673,9 +10673,8 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"Ocorreu um erro ao processar o seu ficheiro \"%s\". Serão usados os valores "
-"predefinidos. Foi criada uma cópia de segurança da sua configuração em \"%s"
-"\"."
+"Ocorreu um erro ao processar o seu ficheiro '%s'. Serão usados os valores "
+"predefinidos. Foi criada uma cópia de segurança da sua configuração em '%s'."
 
 #: app/config/gimpcoreconfig.c:811 app/dialogs/preferences-dialog.c:1954
 msgid "Pattern syntax for searching and selecting items:"
@@ -12909,7 +12908,7 @@ msgstr "Especifique um destes intérpretes como opção --batch-interpreter."
 #: app/core/gimp-batch.c:128
 #, c-format
 msgid "The procedure '%s' is not a valid batch interpreter."
-msgstr "O nome do procedimento \"%s\" não é um intérprete de lote."
+msgstr "O nome do procedimento '%s' não é um intérprete de lote."
 
 #: app/core/gimp-batch.c:131
 msgid "Batch mode disabled."
@@ -12920,14 +12919,14 @@ msgstr "Modo de lote desativado."
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
-"O intérprete de lotes \"%s\" não está disponível. Modo de lote desativado."
+"O intérprete de lotes '%s' não está disponível. Modo de lote desativado."
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
 #: app/core/gimptooloptions.c:361 app/gui/modifiers.c:191 app/gui/session.c:449
 #: app/menus/menus.c:492 app/widgets/gimpdevices.c:225
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
-msgstr "Não foi possível eliminar \"%s\": %s"
+msgstr "Não foi possível eliminar '%s': %s"
 
 #. initialize the list of gimp dynamics
 #: app/core/gimp-data-factories.c:361 app/core/gimpcontext.c:707
@@ -12997,22 +12996,22 @@ msgstr ""
 #: app/core/gimpextension.c:754
 #, c-format
 msgid "'%s' is not a relative path."
-msgstr "\"%s\" não é um caminho de localização relativo."
+msgstr "'%s' não é um caminho de localização relativo."
 
 #: app/core/gimpextension.c:788
 #, c-format
 msgid "'%s' is not a child of the extension."
-msgstr "\"%s\" não é um filho da extensão."
+msgstr "'%s' não é um filho da extensão."
 
 #: app/core/gimpextension.c:802
 #, c-format
 msgid "'%s' is not a directory."
-msgstr "\"%s\" não é um diretório."
+msgstr "'%s' não é um diretório."
 
 #: app/core/gimpextension.c:816
 #, c-format
 msgid "'%s' is not a valid file."
-msgstr "\"%s\" não é um ficheiro válido."
+msgstr "'%s' não é um ficheiro válido."
 
 #: app/core/gimpextensionmanager.c:810
 msgid "System extensions cannot be uninstalled."
@@ -13065,12 +13064,12 @@ msgstr "Por favor aguarde: %s\n"
 #: app/core/gimpdata.c:547 app/core/gimpdata.c:560
 #, c-format
 msgid "Error saving '%s': "
-msgstr "Erro ao guardar \"%s\": "
+msgstr "Erro ao guardar '%s': "
 
 #: app/core/gimp-internal-data.c:305 app/core/gimpdata.c:566
 #, c-format
 msgid "Error saving '%s'"
-msgstr "Erro ao executar \"%s\""
+msgstr "Erro ao executar '%s'"
 
 #: app/core/gimp-spawn.c:186
 #, c-format
@@ -13095,7 +13094,7 @@ msgstr "tags-locale:pt"
 #: app/core/gimp-tags.c:156 app/gui/themes.c:403
 #, c-format
 msgid "Error closing '%s': %s"
-msgstr "Erro ao fechar \"%s\": %s"
+msgstr "Erro ao fechar '%s': %s"
 
 #: app/core/gimp-user-install.c:219
 #, c-format
@@ -13104,7 +13103,7 @@ msgid ""
 "settings to '%s'."
 msgstr ""
 "Parece que já usou o GIMP %s. O GIMP irá migrar as suas configurações de "
-"utilizador para \"%s\"."
+"utilizador para '%s'."
 
 #: app/core/gimp-user-install.c:224
 #, c-format
@@ -13113,22 +13112,22 @@ msgid ""
 "a folder named '%s' and copy some files to it."
 msgstr ""
 "Aparentemente está a usar o GIMP pela primeira vez. O GIMP irá criar agora "
-"uma pasta chamada \"%s\" e copiar alguns ficheiros para essa pasta."
+"uma pasta chamada '%s' e copiar alguns ficheiros para essa pasta."
 
 #: app/core/gimp-user-install.c:424
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "A copiar o ficheiro \"%s\" de \"%s\"..."
+msgstr "A copiar o ficheiro '%s' de '%s'..."
 
 #: app/core/gimp-user-install.c:439 app/core/gimp-user-install.c:465
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "A criar a pasta \"%s\"..."
+msgstr "A criar a pasta '%s'..."
 
 #: app/core/gimp-user-install.c:450 app/core/gimp-user-install.c:476
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Não é possível criar a pasta \"%s\": %s"
+msgstr "Não é possível criar a pasta '%s': %s"
 
 #: app/core/gimp-utils.c:567 app/core/gimpfilloptions.c:383
 msgid "No patterns available for this operation."
@@ -13192,7 +13191,7 @@ msgstr ""
 #: app/core/gimpbrushpipe-load.c:70
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Expressão UTF-8 inválida no ficheiro de pincel \"%s\"."
+msgstr "Expressão UTF-8 inválida no ficheiro de pincel '%s'."
 
 #: app/core/gimpbrush-load.c:279 app/core/gimppattern-load.c:142
 #: app/dialogs/template-options-dialog.c:110 app/display/gimptoolpath.c:618
@@ -13350,14 +13349,14 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr ""
-"Erro fatal de processamento no ficheiro de pincel \"%s\": o ficheiro está "
+"Erro fatal de processamento no ficheiro de pincel '%s': o ficheiro está "
 "corrompido."
 
 #: app/core/gimpbrushpipe-load.c:142
 #, c-format
 msgid "Fatal parse error in brush file '%s': Inconsistent parameters."
 msgstr ""
-"Erro fatal de processamento no ficheiro de pincel \"%s\": parâmetros "
+"Erro fatal de processamento no ficheiro de pincel '%s': parâmetros "
 "inconsistentes."
 
 #: app/core/gimpchannel-select.c:70
@@ -13661,20 +13660,20 @@ msgstr "Não existe uma pasta configurada para guardar dados."
 #: app/core/gimpdataloaderfactory.c:476
 #, c-format
 msgid "Error loading '%s': "
-msgstr "Erro ao carregar \"%s\": "
+msgstr "Erro ao carregar '%s': "
 
 #: app/core/gimpdataloaderfactory.c:482
 #, c-format
 msgid "Error loading '%s'"
-msgstr "Erro ao carregar \"%s\""
+msgstr "Erro ao carregar '%s'"
 
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
-#: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:481
+#: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
 #: app/xcf/xcf.c:442
 #, c-format
 msgid "Could not open '%s' for reading: "
-msgstr "Não foi possível abrir \"%s\" para leitura: "
+msgstr "Não foi possível abrir '%s' para leitura: "
 
 #: app/core/gimpdataloaderfactory.c:552
 #, c-format
@@ -13841,7 +13840,7 @@ msgstr "Não é um ficheiro de gradientes do GIMP."
 #: app/core/gimpgradient-load.c:96
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Expressão UTF-8 inválida no ficheiro de gradiente \"%s\"."
+msgstr "Expressão UTF-8 inválida no ficheiro de gradiente '%s'."
 
 #: app/core/gimpgradient-load.c:122
 msgid "File is corrupt."
@@ -13870,7 +13869,7 @@ msgstr "Nenhum gradiente linear encontrado."
 #: app/core/gimpgradient-save.c:202
 #, c-format
 msgid "Writing POV file '%s' failed: %s"
-msgstr "Não foi possível escrever o ficheiro POV \"%s\": %s"
+msgstr "Não foi possível escrever o ficheiro POV '%s': %s"
 
 #: app/core/gimpgrid.c:86
 msgid "Line style"
@@ -14193,7 +14192,7 @@ msgstr "Descartar perfil de cor"
 #: app/core/gimpimage-color-profile.c:665
 #, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr "A converter \"%s\" para \"%s\""
+msgstr "A converter '%s' para '%s'"
 
 #: app/core/gimpimage-color-profile.c:670
 msgid "Color profile conversion"
@@ -14462,7 +14461,7 @@ msgstr[1] "%d camadas"
 #: app/core/gimpimagefile.c:899
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr "Não foi possível abrir a miniatura \"%s\": %s"
+msgstr "Não foi possível abrir a miniatura '%s': %s"
 
 #: app/core/gimpitem.c:2205
 msgctxt "undo-type"
@@ -14736,7 +14735,7 @@ msgstr "Falta o cabeçalho mágico."
 #: app/core/gimppalette-load.c:94
 #, c-format
 msgid "Invalid UTF-8 string in palette file '%s'"
-msgstr "Expressão UTF-8 inválida no ficheiro de paleta \"%s\""
+msgstr "Expressão UTF-8 inválida no ficheiro de paleta '%s'"
 
 #: app/core/gimppalette-load.c:114
 msgid "Invalid column count."
@@ -14748,36 +14747,35 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Ler o ficheiro de paleta \"%s\": número de colunas inválido na linha %d. A "
+"Ler o ficheiro de paleta '%s': número de colunas inválido na linha %d. A "
 "usar valor predefinido."
 
 #: app/core/gimppalette-load.c:155
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
 msgstr ""
-"Ler o ficheiro de paleta \"%s\": falta o componente VERMELHO na linha %d."
+"Ler o ficheiro de paleta '%s': falta o componente VERMELHO na linha %d."
 
 #: app/core/gimppalette-load.c:163
 #, c-format
 msgid "Reading palette file '%s': Missing GREEN component in line %d."
 msgstr ""
-"Ler o ficheiro de paleta \"%s\": falta o componente VERDE (G) na linha %d."
+"Ler o ficheiro de paleta '%s': falta o componente VERDE (G) na linha %d."
 
 #: app/core/gimppalette-load.c:171
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr "Ler o ficheiro de paleta \"%s\": falta o componente AZUL na linha %d."
+msgstr "Ler o ficheiro de paleta '%s': falta o componente AZUL na linha %d."
 
 #: app/core/gimppalette-load.c:181
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"Ler o ficheiro de paleta \"%s\": valor RGB fora dos limites na linha %d."
+msgstr "Ler o ficheiro de paleta '%s': valor RGB fora dos limites na linha %d."
 
 #: app/core/gimppalette-load.c:208 app/core/gimppalette-load.c:453
 #, c-format
 msgid "Reading palette file '%s': Read %d colors from truncated file: %s"
-msgstr "Ler o ficheiro de paleta \"%s\": ler %d cores de ficheiro truncado %s"
+msgstr "Ler o ficheiro de paleta '%s': ler %d cores de ficheiro truncado %s"
 
 #: app/core/gimppalette-load.c:230
 #, c-format
@@ -14787,7 +14785,7 @@ msgstr "Na linha %d do ficheiro de paleta: "
 #: app/core/gimppalette-load.c:426
 #, c-format
 msgid "Could not read header from palette file '%s': "
-msgstr "Não foi possível ler o cabeçalho do ficheiro da paleta \"%s\": "
+msgstr "Não foi possível ler o cabeçalho do ficheiro da paleta '%s': "
 
 #: app/core/gimppalette-load.c:458
 msgid "Premature end of file."
@@ -14837,7 +14835,7 @@ msgstr "O ficheiro parece truncado."
 #: app/core/gimppattern-load.c:135
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Expressão UTF-8 inválida no ficheiro de textura \"%s\"."
+msgstr "Expressão UTF-8 inválida no ficheiro de textura '%s'."
 
 #: app/core/gimppattern-load.c:178
 msgid "Fatal parse error in pattern file: "
@@ -15127,12 +15125,12 @@ msgstr "Número máximo de pinceladas no eixo Y (vertical)"
 #: app/core/gimptagcache.c:437
 #, c-format
 msgid "Error writing '%s': %s\n"
-msgstr "Erro ao escrever \"%s\": %s\n"
+msgstr "Erro ao escrever '%s': %s\n"
 
 #: app/core/gimptagcache.c:447
 #, c-format
 msgid "Error closing '%s': %s\n"
-msgstr "Erro ao fechar \"%s\": %s\n"
+msgstr "Erro ao fechar '%s': %s\n"
 
 #: app/core/gimptemplate.c:142
 msgid "Width"
@@ -15563,7 +15561,7 @@ msgstr "_Manter"
 #: app/dialogs/color-profile-import-dialog.c:136
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr "A imagem \"%s\" contém um perfil de cor"
+msgstr "A imagem '%s' contém um perfil de cor"
 
 #: app/dialogs/color-profile-import-dialog.c:166
 msgid "Convert the image to the preferred grayscale color profile?"
@@ -15663,15 +15661,15 @@ msgstr "Eliminar objeto"
 #: app/dialogs/data-delete-dialog.c:105
 #, c-format
 msgid "Delete '%s'?"
-msgstr "Eliminar \"%s\"?"
+msgstr "Eliminar '%s'?"
 
 #: app/dialogs/data-delete-dialog.c:108
 #, c-format
 msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
-msgstr "Quer mesmo remover \"%s\" da lista e eliminá-lo do disco rígido?"
+msgstr "Quer mesmo remover '%s' da lista e eliminá-lo do disco rígido?"
 
-#: app/dialogs/dialogs-constructors.c:236 app/gui/gui.c:191
+#: app/dialogs/dialogs-constructors.c:236 app/gui/gui.c:192
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "Mensagem do GIMP"
@@ -15864,7 +15862,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Não foi possível guardar \"%s\":\n"
+"Não foi possível guardar '%s':\n"
 "\n"
 "%s"
 
@@ -18216,7 +18214,7 @@ msgstr "Parece que falta o ficheiro de dicas do GIMP!"
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
-"Devia existir um ficheiro com o nome \"%s\". Por favor verifique a sua "
+"Devia existir um ficheiro com o nome '%s'. Por favor verifique a sua "
 "instalação."
 
 #: app/dialogs/tips-dialog.c:100
@@ -18650,7 +18648,7 @@ msgstr "Prima as teclas [%s] para descartar as alterações e fechar a imagem."
 #: app/display/gimpdisplayshell-close.c:274
 #, c-format
 msgid "Save the changes to image '%s' before closing?"
-msgstr "Guardar as alterações à imagem \"%s\" antes de fechar?"
+msgstr "Guardar as alterações à imagem '%s' antes de fechar?"
 
 #: app/display/gimpdisplayshell-close.c:307
 #, c-format
@@ -18736,7 +18734,7 @@ msgstr "Camadas largadas"
 
 #: app/display/gimpdisplayshell-dnd.c:743
 #: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1043
-#: app/widgets/gimptoolbox-dnd.c:268
+#: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Cópia largada (da lista de cópias)"
 
@@ -18751,12 +18749,12 @@ msgstr "Configurar filtros de visualização de cores"
 #: app/display/gimpdisplayshell-handlers.c:948
 #, c-format
 msgid "Image saved to '%s'"
-msgstr "Imagem guardada em \"%s\""
+msgstr "Imagem guardada em '%s'"
 
 #: app/display/gimpdisplayshell-handlers.c:961
 #, c-format
 msgid "Image exported to '%s'"
-msgstr "Imagem exportada para \"%s\""
+msgstr "Imagem exportada para '%s'"
 
 #: app/display/gimpdisplayshell-layer-select.c:135
 msgid "Layer Select"
@@ -18832,7 +18830,7 @@ msgstr "pixéis"
 #: app/display/gimpmodifiersmanager.c:232
 #, c-format
 msgid "invalid value '%s' for contextual action"
-msgstr "valor \"%s\" inválido para a ação contextual"
+msgstr "valor '%s' inválido para a ação contextual"
 
 #: app/display/gimpstatusbar.c:426
 msgid "Cancel"
@@ -19288,7 +19286,7 @@ msgstr "A imagem não contém nenhuma camada"
 #: app/file/file-open.c:696
 #, c-format
 msgid "Opening '%s' failed: %s"
-msgstr "Não foi possível abrir \"%s\": %s"
+msgstr "Não foi possível abrir '%s': %s"
 
 #: app/file/file-remote.c:113
 msgid "Mounting remote volume"
@@ -19334,7 +19332,7 @@ msgstr "O complemento “%s” não conseguiu guardar a imagem"
 #: app/file/file-utils.c:65
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
-msgstr "\"%s\" não é um esquema de URI válido"
+msgstr "'%s' não é um esquema de URI válido"
 
 #: app/file/file-utils.c:81 app/file/file-utils.c:114 app/file/file-utils.c:132
 msgid "Invalid character sequence in URI"
@@ -19343,7 +19341,7 @@ msgstr "Sequência de caracteres inválida no URI"
 #: app/file-data/file-data-gex.c:146
 #, c-format
 msgid "Absolute path are forbidden in GIMP extension '%s': %s"
-msgstr "O caminho absoluto é proibido na extensão do GIMP “%s”: %s"
+msgstr "O caminho absoluto é proibido na extensão do GIMP '%s': %s"
 
 #: app/file-data/file-data-gex.c:157
 #, c-format
@@ -19358,17 +19356,17 @@ msgstr ""
 "(identificador) “%s”: %s"
 
 #: app/file-data/file-data-gex.c:264 app/file-data/file-data-gex.c:411
-#: app/file-data/file-data-gex.c:423 app/file-data/file-data-gex.c:435
-#: app/file-data/file-data-gex.c:448
+#: app/file-data/file-data-gex.c:429 app/file-data/file-data-gex.c:446
+#: app/file-data/file-data-gex.c:460
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
-msgstr "Erro fatal ao descomprimir a extensão do GIMP “%s”: %s"
+msgstr "Erro fatal ao descomprimir a extensão do GIMP '%s': %s"
 
 #: app/file-data/file-data-gex.c:299
 #, c-format
 msgid "GIMP extension '%s' directory (%s) different from AppStream id: %s"
 msgstr ""
-"O diretório “%s” da extensão do GIMP (%s) é diferente do ID (identificador) "
+"O diretório '%s' da extensão do GIMP (%s) é diferente do ID (identificador) "
 "da AppStream: %s"
 
 #: app/file-data/file-data-gex.c:308
@@ -19376,10 +19374,15 @@ msgstr ""
 msgid "GIMP extension '%s' requires an AppStream file: %s"
 msgstr "A extensão do GIMP “%s” requer um ficheiro AppStream: %s"
 
-#: app/file-data/file-data-gex.c:323 app/file-data/file-data-gex.c:458
+#: app/file-data/file-data-gex.c:323 app/file-data/file-data-gex.c:470
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
-msgstr "Extensão GIMP inválida “%s”: %s"
+msgstr "Extensão GIMP inválida '%s': %s"
+
+#: app/file-data/file-data-gex.c:438
+#, c-format
+msgid "Warning when uncompressing GIMP extension '%s': %s\n"
+msgstr "Aviso ao descomprimir a extensão do GIMP '%s': %s\n"
 
 #: app/file-data/file-data-gih.c:292
 #, c-format
@@ -20318,19 +20321,19 @@ msgstr "Valor"
 msgid "The alpha value"
 msgstr "O valor alfa"
 
-#: app/gui/gui.c:328
+#: app/gui/gui.c:331
 msgid "Image Recovery"
 msgstr "Recuperação de imagem"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:333
 msgid "_Discard"
 msgstr "_Descartar"
 
-#: app/gui/gui.c:331
+#: app/gui/gui.c:334
 msgid "_Recover"
 msgstr "_Recuperar"
 
-#: app/gui/gui.c:342
+#: app/gui/gui.c:345
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "Parece que o GIMP recuperou de uma falha de sistema!"
 
@@ -20340,7 +20343,7 @@ msgstr "Parece que o GIMP recuperou de uma falha de sistema!"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:351
+#: app/gui/gui.c:354
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -20354,11 +20357,11 @@ msgstr[1] ""
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:583
+#: app/gui/gui.c:586
 msgid "Documents"
 msgstr "Documentos"
 
-#: app/gui/splash.c:168
+#: app/gui/splash.c:170
 msgid "GIMP Startup"
 msgstr "Arranque do GIMP"
 
@@ -20873,7 +20876,7 @@ msgstr ""
 #: app/pdb/gimppdb-query.c:140
 #, c-format
 msgid "Writing PDB file '%s' failed: %s"
-msgstr "Não foi possível guardar o ficheiro PDB \"%s\": %s"
+msgstr "Não foi possível guardar o ficheiro PDB '%s': %s"
 
 #: app/pdb/gimppdb-utils.c:88
 msgid "Invalid empty brush name"
@@ -20882,22 +20885,22 @@ msgstr "Pincel com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:97
 #, c-format
 msgid "Brush '%s' not found"
-msgstr "Pincel \"%s\" não foi encontrado"
+msgstr "Pincel '%s' não foi encontrado"
 
 #: app/pdb/gimppdb-utils.c:103
 #, c-format
 msgid "Brush '%s' is not editable"
-msgstr "Pincel \"%s\" não é editável"
+msgstr "Pincel '%s' não é editável"
 
 #: app/pdb/gimppdb-utils.c:110
 #, c-format
 msgid "Brush '%s' is not renamable"
-msgstr "Pincel \"%s\" não é renomeável"
+msgstr "Pincel '%s' não é renomeável"
 
 #: app/pdb/gimppdb-utils.c:136
 #, c-format
 msgid "Brush '%s' is not a generated brush"
-msgstr "Pincel \"%s\" não é um pincel gerado"
+msgstr "Pincel '%s' não é um pincel gerado"
 
 #: app/pdb/gimppdb-utils.c:157
 msgid "Invalid empty paint dynamics name"
@@ -20906,17 +20909,17 @@ msgstr "Dinâmica de pintura com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:166
 #, c-format
 msgid "Paint dynamics '%s' not found"
-msgstr "Dinâmica de pintura \"%s\" não foi encontrada"
+msgstr "Dinâmica de pintura '%s' não foi encontrada"
 
 #: app/pdb/gimppdb-utils.c:172
 #, c-format
 msgid "Paint dynamics '%s' is not editable"
-msgstr "Dinâmica de pintura \"%s\" não é editável"
+msgstr "Dinâmica de pintura '%s' não é editável"
 
 #: app/pdb/gimppdb-utils.c:179
 #, c-format
 msgid "Paint dynamics '%s' is not renamable"
-msgstr "Dinâmica de pintura \"%s\" não é renomeável"
+msgstr "Dinâmica de pintura '%s' não é renomeável"
 
 #: app/pdb/gimppdb-utils.c:200
 msgid "Invalid empty MyPaint brush name"
@@ -20925,17 +20928,17 @@ msgstr "Pincel MyPaint com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:209
 #, c-format
 msgid "MyPaint brush '%s' not found"
-msgstr "Pincel MyPaint \"%s\" não foi encontrado"
+msgstr "Pincel MyPaint '%s' não foi encontrado"
 
 #: app/pdb/gimppdb-utils.c:215
 #, c-format
 msgid "MyPaint brush '%s' is not editable"
-msgstr "Pincel MyPaint \"%s\" não é editável"
+msgstr "Pincel MyPaint '%s' não é editável"
 
 #: app/pdb/gimppdb-utils.c:222
 #, c-format
 msgid "MyPaint brush '%s' is not renamable"
-msgstr "Pincel MyPaint \"%s\" não é renomeável"
+msgstr "Pincel MyPaint '%s' não é renomeável"
 
 #: app/pdb/gimppdb-utils.c:242
 msgid "Invalid empty pattern name"
@@ -20944,7 +20947,7 @@ msgstr "Textura com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:251
 #, c-format
 msgid "Pattern '%s' not found"
-msgstr "Textura \"%s\" não foi encontrada"
+msgstr "Textura '%s' não foi encontrada"
 
 #: app/pdb/gimppdb-utils.c:271
 msgid "Invalid empty gradient name"
@@ -20953,17 +20956,17 @@ msgstr "Gradiente com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:280
 #, c-format
 msgid "Gradient '%s' not found"
-msgstr "Gradiente \"%s\" não foi encontrado"
+msgstr "Gradiente '%s' não foi encontrado"
 
 #: app/pdb/gimppdb-utils.c:286
 #, c-format
 msgid "Gradient '%s' is not editable"
-msgstr "Gradiente \"%s\" não é editável"
+msgstr "Gradiente '%s' não é editável"
 
 #: app/pdb/gimppdb-utils.c:293
 #, c-format
 msgid "Gradient '%s' is not renamable"
-msgstr "Gradiente \"%s\" não é renomeável"
+msgstr "Gradiente '%s' não é renomeável"
 
 #: app/pdb/gimppdb-utils.c:314
 msgid "Invalid empty palette name"
@@ -20972,17 +20975,17 @@ msgstr "Paleta com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:323
 #, c-format
 msgid "Palette '%s' not found"
-msgstr "Paleta \"%s\" não foi encontrada"
+msgstr "Paleta '%s' não foi encontrada"
 
 #: app/pdb/gimppdb-utils.c:329
 #, c-format
 msgid "Palette '%s' is not editable"
-msgstr "Paleta \"%s\" não é editável"
+msgstr "Paleta '%s' não é editável"
 
 #: app/pdb/gimppdb-utils.c:336
 #, c-format
 msgid "Palette '%s' is not renamable"
-msgstr "Paleta \"%s\" não é renomeável"
+msgstr "Paleta '%s' não é renomeável"
 
 #: app/pdb/gimppdb-utils.c:356
 msgid "Invalid empty font name"
@@ -20991,7 +20994,7 @@ msgstr "Tipo de letra com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:365
 #, c-format
 msgid "Font '%s' not found"
-msgstr "O tipo de letra \"%s\" não foi encontrado"
+msgstr "O tipo de letra '%s' não foi encontrado"
 
 #: app/pdb/gimppdb-utils.c:384
 msgid "Invalid empty buffer name"
@@ -21001,7 +21004,7 @@ msgstr "Cópia no painel da lista de cópias com nome vazio inválido"
 #, c-format
 msgid "Named buffer '%s' not found"
 msgstr ""
-"Não foi encontrada a cópia no painel da lista de cópias com o nome \"%s\""
+"Não foi encontrada a cópia no painel da lista de cópias com o nome '%s'"
 
 #: app/pdb/gimppdb-utils.c:413
 msgid "Invalid empty paint method name"
@@ -21010,19 +21013,18 @@ msgstr "Método de pintura com nome vazio inválido"
 #: app/pdb/gimppdb-utils.c:423
 #, c-format
 msgid "Paint method '%s' does not exist"
-msgstr "O método de pintura \"%s\" não existe"
+msgstr "O método de pintura '%s' não existe"
 
 #: app/pdb/gimppdb-utils.c:442
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it has not been added to an image"
 msgstr ""
-"O item \"%s\" (%d) não pode ser usado porque não foi adicionado a uma imagem"
+"O item '%s' (%d) não pode ser usado porque não foi adicionado a uma imagem"
 
 #: app/pdb/gimppdb-utils.c:452
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is attached to another image"
-msgstr ""
-"O item \"%s\" (%d) não pode ser usado porque está anexado a outra imagem"
+msgstr "O item '%s' (%d) não pode ser usado porque está anexado a outra imagem"
 
 #: app/pdb/gimppdb-utils.c:478
 #, c-format
@@ -21030,7 +21032,7 @@ msgid ""
 "Item '%s' (%d) cannot be used because it is not a direct child of an item "
 "tree"
 msgstr ""
-"O item \"%s\" (%d) não pode ser usado porque não é um filho direto de uma "
+"O item '%s' (%d) não pode ser usado porque não é um filho direto de uma "
 "árvore de item"
 
 #: app/pdb/gimppdb-utils.c:506
@@ -21039,65 +21041,63 @@ msgid ""
 "Items '%s' (%d) and '%s' (%d) cannot be used because they are not part of "
 "the same item tree"
 msgstr ""
-"Os itens \"%s\" (%d) e \"%s\" (%d) não podem ser usados porque eles não são "
+"Os itens '%s' (%d) e '%s' (%d) não podem ser usados porque eles não são "
 "parte da mesma árvore de itens"
 
 #: app/pdb/gimppdb-utils.c:531
 #, c-format
 msgid "Item '%s' (%d) must not be an ancestor of '%s' (%d)"
-msgstr "O item \"%s\" (%d) não pode ser um pai de \"%s\" (%d)"
+msgstr "O item '%s' (%d) não pode ser um pai de '%s' (%d)"
 
 #: app/pdb/gimppdb-utils.c:555
 #, c-format
 msgid "Item '%s' (%d) has already been added to an image"
-msgstr "O item \"%s\" (%d) já foi adicionado a uma imagem"
+msgstr "O item '%s' (%d) já foi adicionado a uma imagem"
 
 #: app/pdb/gimppdb-utils.c:563
 #, c-format
 msgid "Trying to add item '%s' (%d) to wrong image"
-msgstr "Tentativa de adicionar o item \"%s\" (%d) à imagem errada"
+msgstr "Tentativa de adicionar o item '%s' (%d) à imagem errada"
 
 #: app/pdb/gimppdb-utils.c:590
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
-"O item \"%s\" (%d) não pode ser alterado porque o seu conteúdo está bloqueado"
+"O item '%s' (%d) não pode ser alterado porque o seu conteúdo está bloqueado"
 
 #: app/pdb/gimppdb-utils.c:600
 #, c-format
 msgid ""
 "Item '%s' (%d) cannot be modified because its position and size are locked"
 msgstr ""
-"O item \"%s\" (%d) não pode ser alterado porque a sua posição e tamanho "
-"estão bloqueados"
+"O item '%s' (%d) não pode ser alterado porque a sua posição e tamanho estão "
+"bloqueados"
 
 #: app/pdb/gimppdb-utils.c:620
 #, c-format
 msgid "Item '%s' (%d) cannot be used because it is not a group item"
-msgstr "O item \"%s\" (%d) não pode ser usado porque não é um item de grupo"
+msgstr "O item '%s' (%d) não pode ser usado porque não é um item de grupo"
 
 #: app/pdb/gimppdb-utils.c:640
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because it is a group item"
-msgstr "O item \"%s\" (%d) não pode ser alterado porque é um item de grupo"
+msgstr "O item '%s' (%d) não pode ser alterado porque é um item de grupo"
 
 #: app/pdb/gimppdb-utils.c:661
 #, c-format
 msgid "Layer '%s' (%d) cannot be used because it is not a text layer"
-msgstr ""
-"A camada \"%s\" (%d) não pode ser usada porque não é uma camada de texto"
+msgstr "A camada '%s' (%d) não pode ser usada porque não é uma camada de texto"
 
 #: app/pdb/gimppdb-utils.c:702
 #, c-format
 msgid "Image '%s' (%d) is of type '%s', but an image of type '%s' is expected"
 msgstr ""
-"A imagem \"%s\" (%d) é do tipo \"%s\", mas era esperada uma imagem do tipo "
-"\"%s\""
+"A imagem '%s' (%d) é do tipo '%s', mas era esperada uma imagem do tipo '%s'"
 
 #: app/pdb/gimppdb-utils.c:725
 #, c-format
 msgid "Image '%s' (%d) must not be of type '%s'"
-msgstr "A imagem \"%s\" (%d) não pode ser do tipo \"%s\""
+msgstr "A imagem '%s' (%d) não pode ser do tipo '%s'"
 
 #: app/pdb/gimppdb-utils.c:745
 #, c-format
@@ -21105,23 +21105,23 @@ msgid ""
 "Image '%s' (%d) has precision '%s', but an image of precision '%s' is "
 "expected"
 msgstr ""
-"A imagem \"%s\" (%d) tem precisão \"%s\", mas era esperada uma imagem de "
-"precisão \"%s\""
+"A imagem '%s' (%d) tem precisão '%s', mas era esperada uma imagem de "
+"precisão '%s'"
 
 #: app/pdb/gimppdb-utils.c:768
 #, c-format
 msgid "Image '%s' (%d) must not be of precision '%s'"
-msgstr "A imagem \"%s\" (%d) não pode ser da precisão \"%s\""
+msgstr "A imagem '%s' (%d) não pode ser da precisão '%s'"
 
 #: app/pdb/gimppdb-utils.c:792 app/pdb/image-guides-cmds.c:181
 #, c-format
 msgid "Image '%s' (%d) does not contain guide with ID %d"
-msgstr "A imagem \"%s\" (%d) não contém a guia com o ID %d"
+msgstr "A imagem '%s' (%d) não contém a guia com o ID %d"
 
 #: app/pdb/gimppdb-utils.c:815 app/pdb/image-sample-points-cmds.c:146
 #, c-format
 msgid "Image '%s' (%d) does not contain sample point with ID %d"
-msgstr "A imagem \"%s\" (%d) não contém pontos de amostragem com o ID %d"
+msgstr "A imagem '%s' (%d) não contém pontos de amostragem com o ID %d"
 
 #: app/pdb/gimppdb-utils.c:843
 #, c-format
@@ -21131,12 +21131,12 @@ msgstr "O objeto de vetores %d não contém o traço com o ID %d"
 #: app/pdb/gimppdb-utils.c:859
 #, c-format
 msgid "Procedure name '%s' is not a canonical identifier"
-msgstr "O nome do procedimento \"%s\" não é um identificador canónico"
+msgstr "O nome do procedimento '%s' não é um identificador canónico"
 
 #: app/pdb/gimppdb.c:304 app/pdb/gimppdb.c:377 app/pdb/pdb-cmds.c:71
 #, c-format
 msgid "Procedure '%s' not found"
-msgstr "O procedimento \"%s\" não foi encontrado"
+msgstr "O procedimento '%s' não foi encontrado"
 
 #: app/pdb/gimppdb.c:433
 #, c-format
@@ -21144,8 +21144,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong type for argument #%d. Expected "
 "%s, got %s."
 msgstr ""
-"O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
-"argumento nº %d. Esperado \"%s\", obtido \"%s\"."
+"O procedimento '%s' foi chamado com um valor de tipo incorreto para o "
+"argumento nº %d. Esperado '%s', obtido '%s'."
 
 #: app/pdb/gimppdbcontext.c:102 app/tools/gimpselectionoptions.c:82
 msgid "Smooth edges"
@@ -21201,7 +21201,7 @@ msgstr "Métrica de distância"
 #: app/pdb/gimpprocedure.c:561 app/plug-in/gimppluginprocframe.c:191
 #, c-format
 msgid "Procedure '%s' returned no return values"
-msgstr "O procedimento \"%s\" não devolveu nenhuns valores"
+msgstr "O procedimento '%s' não devolveu nenhuns valores"
 
 #: app/pdb/gimpprocedure.c:848
 #, c-format
@@ -21209,8 +21209,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
-"O procedimento \"%s\" devolveu um valor de tipo incorreto para o valor \"%s"
-"\" (n°%d). Esperado %s, obtido %s."
+"O procedimento '%s' devolveu um valor de tipo incorreto para o valor '%s' (n°"
+"%d). Esperado %s, obtido %s."
 
 #: app/pdb/gimpprocedure.c:860
 #, c-format
@@ -21218,8 +21218,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#"
 "%d). Expected %s, got %s."
 msgstr ""
-"O procedimento \"%s\" foi chamado com um valor de tipo incorreto para o "
-"argumento \"%s\" (n°%d). Esperado %s, obtido %s."
+"O procedimento '%s' foi chamado com um valor de tipo incorreto para o "
+"argumento '%s' (n°%d). Esperado %s, obtido %s."
 
 #: app/pdb/gimpprocedure.c:893
 #, c-format
@@ -21227,9 +21227,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" devolveu um ID inválido para o argumento \"%s\". O "
-"mais provável é que um complemento esteja a tentar operar numa camada que já "
-"não existe."
+"O procedimento '%s' devolveu um ID inválido para o argumento '%s'. O mais "
+"provável é que um complemento esteja a tentar operar numa camada que já não "
+"existe."
 
 #: app/pdb/gimpprocedure.c:906
 #, c-format
@@ -21237,9 +21237,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" foi chamado com um ID inválido para o argumento \"%s"
-"\". O mais provável é que um complemento esteja a tentar operar numa camada "
-"que já não existe."
+"O procedimento '%s' foi chamado com um ID inválido para o argumento '%s'. O "
+"mais provável é que um complemento esteja a tentar operar numa camada que já "
+"não existe."
 
 #: app/pdb/gimpprocedure.c:923
 #, c-format
@@ -21247,9 +21247,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" devolveu um ID inválido para o argumento \"%s\". O "
-"mais provável é que um complemento esteja a tentar operar numa imagem que já "
-"não existe."
+"O procedimento '%s' devolveu um ID inválido para o argumento '%s'. O mais "
+"provável é que um complemento esteja a tentar operar numa imagem que já não "
+"existe."
 
 #: app/pdb/gimpprocedure.c:936
 #, c-format
@@ -21257,9 +21257,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
-"O procedimento \"%s\" foi chamado com um ID inválido para o argumento \"%s"
-"\". O mais provável é que um complemento esteja a tentar operar numa imagem "
-"que já não existe."
+"O procedimento '%s' foi chamado com um ID inválido para o argumento '%s'. O "
+"mais provável é que um complemento esteja a tentar operar numa imagem que já "
+"não existe."
 
 #: app/pdb/gimpprocedure.c:957
 #, c-format
@@ -21267,8 +21267,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
-"O procedimento \"%s\" devolveu \"%s\" como valor de retorno \"%s\" (nº %d, "
-"tipo %s). Este valor está fora dos limites permitidos."
+"O procedimento '%s' devolveu '%s' como valor de retorno '%s' (nº %d, tipo "
+"%s). Este valor está fora dos limites permitidos."
 
 #: app/pdb/gimpprocedure.c:971
 #, c-format
@@ -21276,14 +21276,14 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
 "%s). This value is out of range."
 msgstr ""
-"O procedimento \"%s\" foi chamado com o valor \"%s\" para o argumento \"%s"
-"\" (nº %d, tipo %s). Este valor está fora dos limites permitidos."
+"O procedimento '%s' foi chamado com o valor '%s' para o argumento '%s' (nº "
+"%d, tipo %s). Este valor está fora dos limites permitidos."
 
 #: app/pdb/gimpprocedure.c:1025
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr ""
-"O procedimento \"%s\" devolveu uma expressão UTF-8 inválida para o argumento "
+"O procedimento '%s' devolveu uma expressão UTF-8 inválida para o argumento "
 "“%s”."
 
 #: app/pdb/gimpprocedure.c:1035
@@ -21292,7 +21292,7 @@ msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
 "'%s'."
 msgstr ""
-"O procedimento \"%s\" foi chamado com uma expressão UTF-8 inválida para o "
+"O procedimento '%s' foi chamado com uma expressão UTF-8 inválida para o "
 "argumento “%s”."
 
 #: app/pdb/image-cmds.c:2290
@@ -21687,21 +21687,21 @@ msgctxt "undo-type"
 msgid "Wind"
 msgstr "Vento"
 
-#: app/pdb/text-layer-cmds.c:98
+#: app/pdb/text-layer-cmds.c:97
 msgid "Failed to create text layer"
 msgstr "Não foi possível criar a camada de texto"
 
-#: app/pdb/text-layer-cmds.c:171 app/pdb/text-layer-cmds.c:333
-#: app/pdb/text-layer-cmds.c:412 app/pdb/text-layer-cmds.c:485
-#: app/pdb/text-layer-cmds.c:557 app/pdb/text-layer-cmds.c:629
-#: app/pdb/text-layer-cmds.c:701 app/pdb/text-layer-cmds.c:773
-#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:915
-#: app/pdb/text-layer-cmds.c:987 app/pdb/text-layer-cmds.c:1059
-#: app/pdb/text-layer-cmds.c:1131 app/pdb/text-layer-cmds.c:1173
+#: app/pdb/text-layer-cmds.c:161 app/pdb/text-layer-cmds.c:295
+#: app/pdb/text-layer-cmds.c:360 app/pdb/text-layer-cmds.c:419
+#: app/pdb/text-layer-cmds.c:477 app/pdb/text-layer-cmds.c:535
+#: app/pdb/text-layer-cmds.c:593 app/pdb/text-layer-cmds.c:651
+#: app/pdb/text-layer-cmds.c:709 app/pdb/text-layer-cmds.c:765
+#: app/pdb/text-layer-cmds.c:823 app/pdb/text-layer-cmds.c:881
+#: app/pdb/text-layer-cmds.c:939 app/pdb/text-layer-cmds.c:974
 msgid "Set text layer attribute"
 msgstr "Definir atributo da camada de texto"
 
-#: app/pdb/text-layer-cmds.c:254
+#: app/pdb/text-layer-cmds.c:230
 msgid "Set text layer markup"
 msgstr "Definir marcação da camada de texto"
 
@@ -21786,7 +21786,7 @@ msgid ""
 "Calling error for procedure '%s':\n"
 "%s"
 msgstr ""
-"Erro de chamada para o procedimento \"%s\":\n"
+"Erro de chamada para o procedimento '%s':\n"
 "%s"
 
 #: app/plug-in/gimpplugin-message.c:487
@@ -21795,7 +21795,7 @@ msgid ""
 "Execution error for procedure '%s':\n"
 "%s"
 msgstr ""
-"Erro de execução no procedimento \"%s\" :\n"
+"Erro de execução no procedimento '%s' :\n"
 "%s"
 
 #: app/plug-in/gimpplugin-progress.c:337
@@ -21894,7 +21894,7 @@ msgid ""
 "Calling error for '%s':\n"
 "%s"
 msgstr ""
-"Erro de chamada de \"%s\":\n"
+"Erro de chamada de '%s':\n"
 "%s"
 
 #: app/plug-in/gimppluginprocedure.c:1309
@@ -21903,23 +21903,23 @@ msgid ""
 "Execution error for '%s':\n"
 "%s"
 msgstr ""
-"Erro ao executar \"%s\": \n"
+"Erro ao executar '%s': \n"
 "%s"
 
 #: app/plug-in/plug-in-rc.c:235
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "A ignorar \"%s\": versão de protocolo GIMP incorreta."
+msgstr "A ignorar '%s': versão de protocolo GIMP incorreta."
 
 #: app/plug-in/plug-in-rc.c:242
 #, c-format
 msgid "Skipping '%s': wrong pluginrc file format version."
-msgstr "A ignorar \"%s\": versão de formato de ficheiro “pluginrc” incorreta."
+msgstr "A ignorar '%s': versão de formato de ficheiro “pluginrc” incorreta."
 
 #: app/plug-in/plug-in-rc.c:544
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr "valor \"%s\" inválido para o tipo de ícone"
+msgstr "valor '%s' inválido para o tipo de ícone"
 
 #: app/plug-in/plug-in-rc.c:559
 #, c-format
@@ -22389,7 +22389,7 @@ msgid ""
 "Some text properties may be wrong. Unless you want to edit the text layer, "
 "you don't need to worry about this."
 msgstr ""
-"Problemas ao processar o parasita de texto para a camada \"%s\":\n"
+"Problemas ao processar o parasita de texto para a camada '%s':\n"
 "%s\n"
 "\n"
 "Algumas propriedades de texto poderão estar incorretas. Exceto se desejar "
@@ -23375,12 +23375,12 @@ msgstr "Opções avançadas de cores"
 #: app/tools/gimpfiltertool.c:1559 app/tools/gimpfiltertool-settings.c:71
 #, c-format
 msgid "Import '%s' Settings"
-msgstr "Importar definições \"%s\""
+msgstr "Importar definições '%s'"
 
 #: app/tools/gimpfiltertool.c:1561 app/tools/gimpfiltertool-settings.c:73
 #, c-format
 msgid "Export '%s' Settings"
-msgstr "Exportar definições \"%s\""
+msgstr "Exportar definições '%s'"
 
 #: app/tools/gimpfiltertool-settings.c:100
 msgid "Pre_sets:"
@@ -23389,7 +23389,7 @@ msgstr "Modelo de definições:"
 #: app/tools/gimpfiltertool-settings.c:248
 #, c-format
 msgid "Settings saved to '%s'"
-msgstr "Definições guardadas em \"%s\""
+msgstr "Definições guardadas em '%s'"
 
 #: app/tools/gimpflipoptions.c:67
 msgid "Flip Type"
@@ -25894,7 +25894,7 @@ msgstr "Transformar caminho"
 #: app/vectors/gimpvectors-export.c:89
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
-msgstr "Não foi possível guardar o ficheiro SVG \"%s\": %s"
+msgstr "Não foi possível guardar o ficheiro SVG '%s': %s"
 
 #: app/vectors/gimpvectors-import.c:344
 msgid "Import Paths"
@@ -25907,7 +25907,7 @@ msgstr "Caminho importado"
 #: app/vectors/gimpvectors-import.c:386
 #, c-format
 msgid "No paths found in '%s'"
-msgstr "Nenhum caminho encontrado em \"%s\""
+msgstr "Nenhum caminho encontrado em '%s'"
 
 #: app/vectors/gimpvectors-import.c:390
 msgid "No paths found in the buffer"
@@ -25916,7 +25916,7 @@ msgstr "Nenhum caminho encontrado no buffer"
 #: app/vectors/gimpvectors-import.c:400
 #, c-format
 msgid "Failed to import paths from '%s': %s"
-msgstr "Não foi possível importar os caminhos de \"%s\": %s"
+msgstr "Não foi possível importar os caminhos de '%s': %s"
 
 #: app/widgets/gimpactioneditor.c:70
 msgid "_Search:"
@@ -26024,12 +26024,12 @@ msgstr "Repor os valores predefinidos do filtro selecionado"
 #: app/widgets/gimpcolordisplayeditor.c:530
 #, c-format
 msgid "Add '%s' to the list of active filters"
-msgstr "Adicionar \"%s\" à lista de filtros ativos"
+msgstr "Adicionar '%s' à lista de filtros ativos"
 
 #: app/widgets/gimpcolordisplayeditor.c:567
 #, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "Remover \"%s\" da lista de filtros ativos"
+msgstr "Remover '%s' da lista de filtros ativos"
 
 #: app/widgets/gimpcolordisplayeditor.c:608
 msgid "No filter selected"
@@ -26321,17 +26321,17 @@ msgstr "_Limpar evento"
 #: app/widgets/gimpcontrollereditor.c:522
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr "Remover a ação atribuída a \"%s\""
+msgstr "Remover a ação atribuída a '%s'"
 
 #: app/widgets/gimpcontrollereditor.c:527
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr "Atribuir uma ação para \"%s\""
+msgstr "Atribuir uma ação para '%s'"
 
 #: app/widgets/gimpcontrollereditor.c:648
 #, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Selecionar ação para o evento \"%s\""
+msgstr "Selecionar ação para o evento '%s'"
 
 #: app/widgets/gimpcontrollereditor.c:653
 msgid "Select Controller Event Action"
@@ -26425,12 +26425,12 @@ msgstr "Mover o controlador selecionado para baixo"
 #: app/widgets/gimpcontrollerlist.c:423
 #, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr "Adicionar \"%s\" à lista de controladores ativos"
+msgstr "Adicionar '%s' à lista de controladores ativos"
 
 #: app/widgets/gimpcontrollerlist.c:476
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr "Remover \"%s\" da lista de controladores ativos"
+msgstr "Remover '%s' da lista de controladores ativos"
 
 #: app/widgets/gimpcontrollerlist.c:512
 msgid ""
@@ -26467,7 +26467,7 @@ msgstr "_Remover controlador"
 #: app/widgets/gimpcontrollerlist.c:568
 #, c-format
 msgid "Remove Controller '%s'?"
-msgstr "Remover controlador \"%s\"?"
+msgstr "Remover controlador '%s'?"
 
 #: app/widgets/gimpcontrollerlist.c:572
 msgid ""
@@ -26668,7 +26668,7 @@ msgstr "Erro do Microsoft Windows desconhecido."
 #: app/widgets/gimpcriticaldialog.c:404
 #, c-format
 msgid "Failed to open '%s': %s"
-msgstr "Não foi possível abrir \"%s\": %s"
+msgstr "Não foi possível abrir '%s': %s"
 
 #: app/widgets/gimpcriticaldialog.c:561
 #, c-format
@@ -27157,7 +27157,7 @@ msgstr "_Repor curva"
 #: app/widgets/gimpdeviceinfoeditor.c:453
 #, c-format
 msgid "The axis '%s' has no curve"
-msgstr "O eixo \"%s\" não tem uma curva"
+msgstr "O eixo '%s' não tem uma curva"
 
 #: app/widgets/gimpdevicestatus.c:153
 msgid "Save device status"
@@ -27917,7 +27917,7 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Não foi possível converter o nome do ficheiro \"%s\" num URI válido:\n"
+"Não foi possível converter o nome do ficheiro '%s' num URI válido:\n"
 "\n"
 "%s"
 
@@ -28133,17 +28133,17 @@ msgstr "O elemento mais extremo no texto tem de ser <markup> e não <%s>"
 #: app/widgets/gimptextbuffer.c:1700
 #, c-format
 msgid "Input file '%s' appears truncated: %s"
-msgstr "O ficheiro de entrada \"%s\" parece truncado: %s"
+msgstr "O ficheiro de entrada '%s' parece truncado: %s"
 
 #: app/widgets/gimptextbuffer.c:1718
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Dados UTF-8 inválidos no ficheiro \"%s\"."
+msgstr "Dados UTF-8 inválidos no ficheiro '%s'."
 
 #: app/widgets/gimptextbuffer.c:1769
 #, c-format
 msgid "Writing text file '%s' failed: %s"
-msgstr "Não foi possível guardar o ficheiro de texto \"%s\": %s"
+msgstr "Não foi possível guardar o ficheiro de texto '%s': %s"
 
 #: app/widgets/gimptexteditor.c:228
 msgid "_Use selected font"
@@ -28566,7 +28566,7 @@ msgstr "Fluxo de memória"
 #: app/xcf/xcf.c:275
 #, c-format
 msgid "Opening '%s'"
-msgstr "A abrir \"%s\""
+msgstr "A abrir '%s'"
 
 #: app/xcf/xcf.c:317
 #, c-format
@@ -28577,7 +28577,7 @@ msgstr ""
 #: app/xcf/xcf.c:376
 #, c-format
 msgid "Saving '%s'"
-msgstr "A guardar \"%s\""
+msgstr "A guardar '%s'"
 
 #: app/xcf/xcf.c:384
 #, c-format
@@ -28587,12 +28587,12 @@ msgstr "A fechar %s"
 #: app/xcf/xcf.c:402
 #, c-format
 msgid "Error writing '%s': "
-msgstr "Erro ao escrever \"%s\": "
+msgstr "Erro ao escrever '%s': "
 
 #: app/xcf/xcf.c:490
 #, c-format
 msgid "Error creating '%s': "
-msgstr "Erro ao criar \"%s\": "
+msgstr "Erro ao criar '%s': "
 
 #: app/xcf/xcf-load.c:252
 msgid "Invalid image mode and precision combination."
