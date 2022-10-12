@@ -821,11 +821,12 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
     }
   else if (tr_options->type == GIMP_TRANSFORM_TYPE_PATH)
     {
-      GimpVectors *vectors = gimp_image_get_active_vectors (image);
+      GList *iter;
 
-      if (vectors)
+      for (iter = gimp_image_get_selected_vectors (image); iter; iter = iter->next)
         {
-          GimpStroke *stroke = NULL;
+          GimpVectors *vectors = iter->data;
+          GimpStroke  *stroke  = NULL;
 
           while ((stroke = gimp_vectors_stroke_get_next (vectors, stroke)))
             {
