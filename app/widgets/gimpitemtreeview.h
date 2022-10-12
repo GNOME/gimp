@@ -85,8 +85,6 @@ struct _GimpItemTreeViewClass
 
   /*  virtual functions for manipulating the image's item tree  */
   GimpGetContainerFunc  get_container;
-  GimpGetItemFunc       get_active_item;
-  GimpSetItemFunc       set_active_item;
   GimpGetItemsFunc      get_selected_items;
   GimpSetItemsFunc      set_selected_items;
   GimpAddItemFunc       add_item;

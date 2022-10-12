@@ -281,8 +281,6 @@ gimp_item_tree_view_class_init (GimpItemTreeViewClass *klass)
   klass->signal_name             = NULL;
 
   klass->get_container           = NULL;
-  klass->get_active_item         = NULL;
-  klass->set_active_item         = NULL;
   klass->get_selected_items      = NULL;
   klass->set_selected_items      = NULL;
   klass->add_item                = NULL;
@@ -813,7 +811,7 @@ gimp_item_tree_view_add_options (GimpItemTreeView *view,
       gtk_widget_show (view->priv->options_box);
 
       if (! view->priv->image ||
-          ! item_view_class->get_active_item (view->priv->image))
+          ! item_view_class->get_selected_items (view->priv->image))
         {
           gtk_widget_set_sensitive (view->priv->options_box, FALSE);
         }

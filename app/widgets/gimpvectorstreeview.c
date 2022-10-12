@@ -91,8 +91,6 @@ gimp_vectors_tree_view_class_init (GimpVectorsTreeViewClass *klass)
   iv_class->signal_name     = "selected-vectors-changed";
 
   iv_class->get_container   = gimp_image_get_vectors;
-  iv_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_vectors;
-  iv_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_vectors;
   iv_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_vectors;
   iv_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_vectors;
   iv_class->add_item        = (GimpAddItemFunc) gimp_image_add_vectors;

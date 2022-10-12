@@ -244,8 +244,6 @@ gimp_layer_tree_view_class_init (GimpLayerTreeViewClass *klass)
 
   item_view_class->set_image       = gimp_layer_tree_view_set_image;
   item_view_class->get_container   = gimp_image_get_layers;
-  item_view_class->get_active_item = (GimpGetItemFunc) gimp_image_get_active_layer;
-  item_view_class->set_active_item = (GimpSetItemFunc) gimp_image_set_active_layer;
   item_view_class->get_selected_items = (GimpGetItemsFunc) gimp_image_get_selected_layers;
   item_view_class->set_selected_items = (GimpSetItemsFunc) gimp_image_set_selected_layers;
   item_view_class->add_item        = (GimpAddItemFunc) gimp_image_add_layer;
