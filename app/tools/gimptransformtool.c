@@ -541,17 +541,42 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
             gimp_item_bounds (GIMP_ITEM (selection),
                               &tr_tool->x1, &tr_tool->y1,
                               &tr_tool->x2, &tr_tool->y2);
+
+            tr_tool->x2 += tr_tool->x1;
+            tr_tool->y2 += tr_tool->y1;
           }
         else
           {
+            GList *iter;
+
             /* without selection, test the emptiness of the path bounds :
              * if empty, use the canvas bounds
              * else use the path bounds
              */
 
-            if (! gimp_item_bounds (GIMP_ITEM (gimp_image_get_active_vectors (image)),
-                                    &tr_tool->x1, &tr_tool->y1,
-                                    &tr_tool->x2, &tr_tool->y2))
+            tr_tool->x1 = G_MAXINT;
+            tr_tool->y1 = G_MAXINT;
+            tr_tool->x2 = G_MININT;
+            tr_tool->y2 = G_MININT;
+
+            for (iter = gimp_image_get_selected_vectors (image); iter; iter = iter->next)
+              {
+                GimpItem *item   = iter->data;
+                gint      x;
+                gint      y;
+                gint      width;
+                gint      height;
+
+                if (gimp_item_bounds (item, &x, &y, &width, &height))
+                  {
+                    tr_tool->x1 = MIN (tr_tool->x1, x);
+                    tr_tool->y1 = MIN (tr_tool->y1, y);
+                    tr_tool->x2 = MAX (tr_tool->x2, x + width);
+                    tr_tool->y2 = MAX (tr_tool->y2, y + height);
+                  }
+              }
+
+            if (tr_tool->x2 <= tr_tool->x1 || tr_tool->y2 <= tr_tool->y1)
               {
                 tr_tool->x1 = 0;
                 tr_tool->y1 = 0;
@@ -559,9 +584,6 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
                 tr_tool->y2 = gimp_image_get_height (image);
               }
           }
-
-        tr_tool->x2 += tr_tool->x1;
-        tr_tool->y2 += tr_tool->y1;
       }
 
       break;
