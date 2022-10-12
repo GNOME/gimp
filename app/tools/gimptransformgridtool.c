@@ -1778,9 +1778,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
 static void
 gimp_transform_grid_tool_update_filters (GimpTransformGridTool *tg_tool)
 {
-  GimpTool                 *tool      = GIMP_TOOL (tg_tool);
-  GimpTransformGridOptions *options   = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
-  GimpImage                *image     = gimp_display_get_image (tool->display);
+  GimpTool                 *tool = GIMP_TOOL (tg_tool);
   GHashTable               *new_drawables;
   GList                    *drawables;
   GList                    *iter;
