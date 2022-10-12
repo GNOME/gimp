@@ -61,7 +61,7 @@ struct _GimpTransformGridTool
 
   GimpToolWidget     *widget;
   GimpToolWidget     *grab_widget;
-  GimpCanvasItem     *preview;
+  GList              *previews;
   GimpCanvasItem     *boundary_in;
   GimpCanvasItem     *boundary_out;
   GPtrArray          *strokes;

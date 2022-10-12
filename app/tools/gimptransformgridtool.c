@@ -692,7 +692,7 @@ gimp_transform_grid_tool_options_notify (GimpTool         *tool,
   else if (! strcmp (pspec->name, "show-preview") ||
            ! strcmp (pspec->name, "composited-preview"))
     {
-      if (tg_tool->preview)
+      if (tg_tool->previews)
         {
           GimpDisplay *display;
           GList       *objects;
@@ -752,31 +752,38 @@ gimp_transform_grid_tool_draw (GimpDrawTool *draw_tool)
   if (tr_options->type == GIMP_TRANSFORM_TYPE_LAYER ||
       tr_options->type == GIMP_TRANSFORM_TYPE_IMAGE)
     {
-      GimpPickable *pickable;
+      GList *pickables = NULL;
+      GList *iter;
 
       if (tr_options->type == GIMP_TRANSFORM_TYPE_IMAGE)
         {
           if (! shell->show_all)
-            pickable = GIMP_PICKABLE (image);
+            pickables = g_list_prepend (pickables, image);
           else
-            pickable = GIMP_PICKABLE (gimp_image_get_projection (image));
+            pickables = g_list_prepend (pickables, gimp_image_get_projection (image));
         }
       else
         {
-          /* TODO */
-          pickable = GIMP_PICKABLE (tool->drawables->data);
+          for (iter = tool->drawables; iter; iter = iter->next)
+            pickables = g_list_prepend (pickables, iter->data);
         }
 
-      tg_tool->preview =
-        gimp_draw_tool_add_transform_preview (draw_tool,
-                                              pickable,
-                                              &matrix,
-                                              tr_tool->x1,
-                                              tr_tool->y1,
-                                              tr_tool->x2,
-                                              tr_tool->y2);
-      g_object_add_weak_pointer (G_OBJECT (tg_tool->preview),
-                                 (gpointer) &tg_tool->preview);
+      for (iter = pickables; iter; iter = iter->next)
+        {
+          GimpCanvasItem *preview;
+
+          preview = gimp_draw_tool_add_transform_preview (draw_tool,
+                                                          GIMP_PICKABLE (iter->data),
+                                                          &matrix,
+                                                          tr_tool->x1,
+                                                          tr_tool->y1,
+                                                          tr_tool->x2,
+                                                          tr_tool->y2);
+          tg_tool->previews = g_list_prepend (tg_tool->previews, preview);
+          g_object_add_weak_pointer (G_OBJECT (tg_tool->previews->data),
+                                     (gpointer) &tg_tool->previews->data);
+        }
+      g_list_free (pickables);
     }
 
   if (tr_options->type == GIMP_TRANSFORM_TYPE_SELECTION)
@@ -1154,6 +1161,7 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
   GimpTool                 *tool       = GIMP_TOOL (tg_tool);
   GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GList                    *iter;
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tg_tool)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tg_tool));
@@ -1163,6 +1171,13 @@ gimp_transform_grid_tool_halt (GimpTransformGridTool *tg_tool)
 
   g_clear_pointer (&tg_tool->filters, g_hash_table_unref);
   g_clear_pointer (&tg_tool->preview_drawables, g_list_free);
+
+  for (iter = tg_tool->previews; iter; iter = iter->next)
+    {
+      if (iter->data)
+        g_object_unref (iter->data);
+    }
+  g_clear_pointer (&tg_tool->previews, g_list_free);
 
   if (tg_tool->gui)
     gimp_tool_gui_hide (tg_tool->gui);
@@ -1562,6 +1577,7 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
   GimpTransformTool        *tr_tool    = GIMP_TRANSFORM_TOOL (tg_tool);
   GimpTransformOptions     *tr_options = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tg_tool);
   GimpTransformGridOptions *tg_options = GIMP_TRANSFORM_GRID_TOOL_GET_OPTIONS (tg_tool);
+  GList                    *iter;
   gint                      i;
 
   if (! tool->display)
@@ -1696,26 +1712,31 @@ gimp_transform_grid_tool_update_preview (GimpTransformGridTool *tg_tool)
       g_clear_pointer (&tg_tool->preview_drawables, g_list_free);
     }
 
-  if (tg_tool->preview)
+  for (iter = tg_tool->previews; iter; iter = iter->next)
     {
+      GimpCanvasItem *preview = iter->data;
+
+      if (preview == NULL)
+        continue;
+
       if (tg_options->show_preview                                &&
           ! gimp_transform_grid_tool_composited_preview (tg_tool) &&
           tr_tool->transform_valid)
         {
-          gimp_canvas_item_begin_change (tg_tool->preview);
-          gimp_canvas_item_set_visible (tg_tool->preview, TRUE);
+          gimp_canvas_item_begin_change (preview);
+          gimp_canvas_item_set_visible (preview, TRUE);
           g_object_set (
-            tg_tool->preview,
+            preview,
             "transform", &tr_tool->transform,
             "clip",      gimp_item_get_clip (GIMP_ITEM (tool->drawables->data),
                                              tr_options->clip),
             "opacity",   tg_options->preview_opacity,
             NULL);
-          gimp_canvas_item_end_change (tg_tool->preview);
+          gimp_canvas_item_end_change (preview);
         }
       else
         {
-          gimp_canvas_item_set_visible (tg_tool->preview, FALSE);
+          gimp_canvas_item_set_visible (preview, FALSE);
         }
     }
 
