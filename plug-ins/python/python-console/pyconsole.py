@@ -80,6 +80,14 @@ class _ReadLine(object):
         def write(self, text):
             pos = self.buffer.get_iter_at_mark(self.buffer.get_insert())
             self.buffer.insert_with_tags_by_name(pos, text, self.tag_name)
+        def flush(self):
+            # The output is just a GtkTextBuffer inside a GtkTexView so I
+            # believe it should be always in-sync without needing to be flushed.
+            # Nevertheless someone might be just copy-pasting plug-in code to
+            # test it, for instance. So let's just add a no-op flush() method to
+            # get a similar interface as the real sys.stdout which we overrode.
+            # It avoids useless and unexpected code failure.
+            pass
 
     class History(object):
         def __init__(self):
