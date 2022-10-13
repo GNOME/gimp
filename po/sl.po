@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-12 20:14+0000\n"
-"PO-Revision-Date: 2022-10-12 22:17+0200\n"
+"POT-Creation-Date: 2022-10-12 22:28+0000\n"
+"PO-Revision-Date: 2022-10-13 10:09+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1030,7 +1030,7 @@ msgstr "Uredi barvo kanala"
 msgid "_Fill opacity:"
 msgstr "Pro_sojnost polnila:"
 
-#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:330
+#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Nov kanal"
 
@@ -1075,8 +1075,8 @@ msgstr[2] "Spusti kanala na dno"
 msgstr[3] "Spusti kanale na dno"
 
 #: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:472
-#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:261
-#: app/widgets/gimplayertreeview.c:1017
+#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:259
+#: app/widgets/gimplayertreeview.c:1015
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopija kanala %s"
@@ -2623,7 +2623,7 @@ msgstr "Vnesite opis oznake"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:975
+#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:973
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -7042,8 +7042,8 @@ msgstr "Lastnosti plasti"
 msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
-#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
-#: app/widgets/gimplayertreeview.c:1104
+#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:358
+#: app/widgets/gimplayertreeview.c:1102
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Novih plasti"
@@ -7240,7 +7240,7 @@ msgid "Empty Selection"
 msgstr "Izprazni izbor"
 
 #: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
-#: app/widgets/gimplayertreeview.c:1615
+#: app/widgets/gimplayertreeview.c:1613
 msgid "Set layers opacity"
 msgstr "Nastavi prekrivnost plasti"
 
@@ -7256,19 +7256,19 @@ msgstr "Nastavi prostor skladanja plasti"
 msgid "Set layers' composite mode"
 msgstr "Nastavi način skladanja plasti"
 
-#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:533
+#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:531
 msgid "Lock content"
 msgstr "Zakleni vsebino"
 
-#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:534
+#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:532
 msgid "Unlock content"
 msgstr "Odkleni vsebino"
 
-#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:549
+#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:547
 msgid "Lock position"
 msgstr "Zakleni položaj"
 
-#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:550
+#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:548
 msgid "Unlock position"
 msgstr "Odkleni položaj"
 
@@ -10589,12 +10589,12 @@ msgstr "Plast"
 #: app/config/gimpdialogconfig.c:416 app/core/gimpchannel.c:254
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:90
-#: app/widgets/gimpchanneltreeview.c:335
+#: app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Kanal"
 
 #: app/config/gimpdialogconfig.c:431 app/vectors/gimpvectors.c:224
-#: app/widgets/gimpvectorstreeview.c:252
+#: app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "Pot"
 
@@ -13350,7 +13350,7 @@ msgstr "Barva ozadja"
 
 #: app/core/gimpcontext.c:683 app/core/gimpcontext.c:684
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimplayertreeview.c:321
 msgid "Opacity"
 msgstr "Prekrivnost"
 
@@ -13388,7 +13388,7 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:551
+#: app/tools/gimptextoptions.c:779
 msgid "Font"
 msgstr "Pisava"
 
@@ -13418,7 +13418,7 @@ msgstr "kopija"
 msgid "%s copy"
 msgstr "Kopija %s"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:532
+#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:760
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "Nalaganje pisav (to lahko traja dlje časa …)"
@@ -13568,7 +13568,7 @@ msgstr "Slog"
 
 #: app/core/gimpfilloptions.c:117 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:136
+#: app/tools/gimptextoptions.c:174
 msgid "Antialiasing"
 msgstr "Glajenje robov"
 
@@ -14734,7 +14734,7 @@ msgid "Line width"
 msgstr "Širina črte"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:123
+#: app/tools/gimptextoptions.c:161 app/tools/gimptextoptions.c:297
 msgid "Unit"
 msgstr "Enota"
 
@@ -14750,7 +14750,7 @@ msgstr "Slog stikališča"
 msgid "Miter limit"
 msgstr "Meja sredice"
 
-#: app/core/gimpstrokeoptions.c:190
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:314
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -16663,7 +16663,7 @@ msgstr "Uporabniški vmesnik"
 msgid "Interface"
 msgstr "Vmesnik"
 
-#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:153
+#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:191
 msgid "Language"
 msgstr "Jezik"
 
@@ -18429,25 +18429,25 @@ msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
 #: app/display/gimpdisplayshell-dnd.c:426
 #: app/widgets/gimpdrawabletreeview.c:267
-#: app/widgets/gimpdrawabletreeview.c:386
+#: app/widgets/gimpdrawabletreeview.c:385
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Spusti vzorec na plast"
 
 #: app/display/gimpdisplayshell-dnd.c:448
 #: app/widgets/gimpdrawabletreeview.c:298
-#: app/widgets/gimpdrawabletreeview.c:406
+#: app/widgets/gimpdrawabletreeview.c:405
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
 
-#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1408
-#: app/widgets/gimplayertreeview.c:966
+#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1406
+#: app/widgets/gimplayertreeview.c:964
 msgid "Drop layers"
 msgstr "Spusti plasti"
 
 #: app/display/gimpdisplayshell-dnd.c:743
-#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1043
+#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1041
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Spuščen medpomnilnik"
@@ -19941,7 +19941,7 @@ msgstr "Spremeni barve v sivinske odtenke"
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:110 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:308
+#: app/widgets/gimplayertreeview.c:306
 msgid "Mode"
 msgstr "Način"
 
@@ -21991,55 +21991,55 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Dodaj plast besedila"
 
-#: app/text/gimptext-parasite.c:94
+#: app/text/gimptext-parasite.c:95
 msgid "Empty text parasite"
 msgstr "Sprazni parazit besedila"
 
-#: app/text/gimptextlayer.c:156
+#: app/text/gimptextlayer.c:158
 msgid "Text Layer"
 msgstr "Plast besedila"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:159
 msgid "Rename Text Layer"
 msgstr "Preimenuj plast besedila"
 
-#: app/text/gimptextlayer.c:158
+#: app/text/gimptextlayer.c:160
 msgid "Move Text Layer"
 msgstr "Premakni plast besedila"
 
-#: app/text/gimptextlayer.c:159
+#: app/text/gimptextlayer.c:161
 msgid "Scale Text Layer"
 msgstr "Spremeni merilo plasti besedila"
 
-#: app/text/gimptextlayer.c:160
+#: app/text/gimptextlayer.c:162
 msgid "Resize Text Layer"
 msgstr "Spremeni velikost plasti z besedilom"
 
-#: app/text/gimptextlayer.c:161
+#: app/text/gimptextlayer.c:163
 msgid "Flip Text Layer"
 msgstr "Prezrcali plast besedila"
 
-#: app/text/gimptextlayer.c:162
+#: app/text/gimptextlayer.c:164
 msgid "Rotate Text Layer"
 msgstr "Zasukaj plast besedila"
 
-#: app/text/gimptextlayer.c:163
+#: app/text/gimptextlayer.c:165
 msgid "Transform Text Layer"
 msgstr "Preoblikuj plast besedila"
 
-#: app/text/gimptextlayer.c:579
+#: app/text/gimptextlayer.c:581
 msgid "Discard Text Information"
 msgstr "Zavrži besedilne podatke"
 
-#: app/text/gimptextlayer.c:714
+#: app/text/gimptextlayer.c:716
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "Zaradi odsotnosti vseh pisav funkcionalnost besedila ni na voljo."
 
-#: app/text/gimptextlayer.c:777
+#: app/text/gimptextlayer.c:779
 msgid "Empty Text Layer"
 msgstr "Sprazni plast besedila"
 
-#: app/text/gimptextlayer.c:830
+#: app/text/gimptextlayer.c:947
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -22047,7 +22047,7 @@ msgstr ""
 "Besedila ni mogoče upodobiti. Najbrž je preveliko. Okrajšajte ga ali "
 "uporabite manjšo pisavo."
 
-#: app/text/gimptextlayer-xcf.c:78
+#: app/text/gimptextlayer-xcf.c:80
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -22079,6 +22079,21 @@ msgstr "Dinamično"
 msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Nespremenljivo"
+
+#: app/text/text-enums.c:54
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Zapolnjeno"
+
+#: app/text/text-enums.c:55
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Orisano"
+
+#: app/text/text-enums.c:56
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Orisano in zapolnjeno"
 
 #: app/tools/gimpairbrushtool.c:68
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
@@ -23365,7 +23380,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:604
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:832
 msgid "Color:"
 msgstr "Barva:"
 
@@ -24222,7 +24237,7 @@ msgstr "Trenutna"
 msgid "Fixed"
 msgstr "Nespremenljivo"
 
-#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:565
+#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:793
 msgid "Size:"
 msgstr "Velikost:"
 
@@ -24499,66 +24514,66 @@ msgstr "Kliknite za razmazanje"
 msgid "Click to smudge the line"
 msgstr "Kliknite za razmaz črte"
 
-#: app/tools/gimptextoptions.c:124
+#: app/tools/gimptextoptions.c:162
 msgid "Font size unit"
 msgstr "Enota velikosti pisave"
 
-#: app/tools/gimptextoptions.c:129 app/tools/gimptextoptions.c:130
+#: app/tools/gimptextoptions.c:167 app/tools/gimptextoptions.c:168
 msgid "Font size"
 msgstr "Velikost pisave"
 
-#: app/tools/gimptextoptions.c:143
+#: app/tools/gimptextoptions.c:181
 msgid "Hinting"
 msgstr "Namigovanje"
 
-#: app/tools/gimptextoptions.c:144
+#: app/tools/gimptextoptions.c:182
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Namigovanje popravi obris pisave tako, da ta ostane ostra pri majhnih "
 "velikostih."
 
-#: app/tools/gimptextoptions.c:154
+#: app/tools/gimptextoptions.c:192
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "Jezik besedila lahko vpliva na to, kako bo besedilo upodobljeno."
 
-#: app/tools/gimptextoptions.c:168
+#: app/tools/gimptextoptions.c:206
 msgid "Justify"
 msgstr "Poravnaj obojestransko"
 
-#: app/tools/gimptextoptions.c:169
+#: app/tools/gimptextoptions.c:207
 msgid "Text alignment"
 msgstr "Poravnava besedila"
 
-#: app/tools/gimptextoptions.c:176
+#: app/tools/gimptextoptions.c:214
 msgid "Indentation"
 msgstr "Zamikanje"
 
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:215
 msgid "Indentation of the first line"
 msgstr "Zamik prve vrstice"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:222
 msgid "Line spacing"
 msgstr "Razmik med vrsticami"
 
-#: app/tools/gimptextoptions.c:185
+#: app/tools/gimptextoptions.c:223
 msgid "Adjust line spacing"
 msgstr "Prilagodi razmik vrstic"
 
-#: app/tools/gimptextoptions.c:192
+#: app/tools/gimptextoptions.c:230
 msgid "Letter spacing"
 msgstr "Razmik med črkami"
 
-#: app/tools/gimptextoptions.c:193
+#: app/tools/gimptextoptions.c:231
 msgid "Adjust letter spacing"
 msgstr "Prilagodi razmik črk"
 
-#: app/tools/gimptextoptions.c:200
+#: app/tools/gimptextoptions.c:238
 msgid "Box"
 msgstr "Polje"
 
-#: app/tools/gimptextoptions.c:201
+#: app/tools/gimptextoptions.c:239
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24566,31 +24581,55 @@ msgstr ""
 "Ali besedilo poteka po pravokotnem liku ali pa se premakne v novo vrstico, "
 "ko pritisnete tipko Enter"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:247
 msgid "Use editor"
 msgstr "Uporabi urejevalnik"
 
-#: app/tools/gimptextoptions.c:210
+#: app/tools/gimptextoptions.c:248
 msgid "Use an external editor window for text entry"
 msgstr "Za vnos besedila uporabi okno zunanjega urejevalnika."
 
-#: app/tools/gimptextoptions.c:593
+#: app/tools/gimptextoptions.c:290
+msgid "Outline width"
+msgstr "Širina orisa"
+
+#: app/tools/gimptextoptions.c:291
+msgid "Adjust outline width"
+msgstr "Prilagodi širino orisa"
+
+#: app/tools/gimptextoptions.c:298
+msgid "Outline width unit"
+msgstr "Enota širine orisa"
+
+#: app/tools/gimptextoptions.c:313
+msgid "Outline miter limit"
+msgstr "Meja sredice orisa"
+
+#: app/tools/gimptextoptions.c:821
 msgid "Hinting:"
 msgstr "Namigovanje:"
 
-#: app/tools/gimptextoptions.c:597
+#: app/tools/gimptextoptions.c:825
 msgid "Text Color"
 msgstr "Barva besedila"
 
-#: app/tools/gimptextoptions.c:611
+#: app/tools/gimptextoptions.c:838
+msgid "Style:"
+msgstr "Slog:"
+
+#: app/tools/gimptextoptions.c:842
+msgid "Outline Options"
+msgstr "Možnosti orisa"
+
+#: app/tools/gimptextoptions.c:862
 msgid "Justify:"
 msgstr "Poravnaj:"
 
-#: app/tools/gimptextoptions.c:641
+#: app/tools/gimptextoptions.c:892
 msgid "Box:"
 msgstr "Polje:"
 
-#: app/tools/gimptextoptions.c:658
+#: app/tools/gimptextoptions.c:932
 msgid "Language:"
 msgstr "Jezik:"
 
@@ -24643,19 +24682,19 @@ msgstr ""
 "\n"
 "Lahko urejate plast ali pa iz lastnosti besedila ustvarite novo plast."
 
-#: app/tools/gimptexttool.c:2347
+#: app/tools/gimptexttool.c:2348
 msgid "Text is required."
 msgstr "Besedilo je obvezno."
 
-#: app/tools/gimptexttool.c:2350
+#: app/tools/gimptexttool.c:2351
 msgid "No image."
 msgstr "Ni slike."
 
-#: app/tools/gimptexttool.c:2353
+#: app/tools/gimptexttool.c:2354
 msgid "No layer."
 msgstr "Ni plasti."
 
-#: app/tools/gimptexttool.c:2364
+#: app/tools/gimptexttool.c:2365
 msgid "Exactly one path must be selected."
 msgstr "Izbrana mora biti natanko ena pot."
 
@@ -26846,7 +26885,7 @@ msgstr "Zakleni slikovne točke"
 msgid "Lock position and size"
 msgstr "Zakleni položaj in velikost"
 
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:565
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:563
 msgid "Lock visibility"
 msgstr "Zakleni vidljivost"
 
@@ -27269,19 +27308,19 @@ msgstr[1] "Indeksirane barve (%d barva, monokromatsko)"
 msgstr[2] "Indeksirane barve (%d barvi)"
 msgstr[3] "Indeksirane barve (%d barve)"
 
-#: app/widgets/gimpitemtreeview.c:535
+#: app/widgets/gimpitemtreeview.c:533
 msgid "Set Item Exclusive Content Lock"
 msgstr "Predmetu določite izključen zaklep vsebine"
 
-#: app/widgets/gimpitemtreeview.c:551
+#: app/widgets/gimpitemtreeview.c:549
 msgid "Set Item Exclusive Position Lock"
 msgstr "Predmetu določite izključen zaklep položaja"
 
-#: app/widgets/gimpitemtreeview.c:566
+#: app/widgets/gimpitemtreeview.c:564
 msgid "Unlock visibility"
 msgstr "Odkleni vidljivost"
 
-#: app/widgets/gimpitemtreeview.c:567
+#: app/widgets/gimpitemtreeview.c:565
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Predmetu določite izključen zaklep vidljivosti"
 
@@ -27293,78 +27332,78 @@ msgstr "Sistemski jezik"
 msgid "Switch to another group of modes"
 msgstr "Preklopi na drugo skupino načinov"
 
-#: app/widgets/gimplayertreeview.c:443
+#: app/widgets/gimplayertreeview.c:441
 msgid "Select layers by patterns and store layer sets"
 msgstr "Izberi plasti po vzorcih in shrani množice plasti"
 
-#: app/widgets/gimplayertreeview.c:487
+#: app/widgets/gimplayertreeview.c:485
 msgid "No layer set stored"
 msgstr "Nobena množica plasti ni shranjena"
 
-#: app/widgets/gimplayertreeview.c:509
+#: app/widgets/gimplayertreeview.c:507
 msgid "New layer set's name"
 msgstr "Ime novega nabora plasti"
 
-#: app/widgets/gimplayertreeview.c:548 app/widgets/gimplayertreeview.c:551
+#: app/widgets/gimplayertreeview.c:546 app/widgets/gimplayertreeview.c:549
 msgid "Lock alpha channel"
 msgstr "Zakleni kanal alfa"
 
-#: app/widgets/gimplayertreeview.c:549
+#: app/widgets/gimplayertreeview.c:547
 msgid "Unlock alpha channel"
 msgstr "Odkleni kanal alfa"
 
-#: app/widgets/gimplayertreeview.c:550
+#: app/widgets/gimplayertreeview.c:548
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Predmetu določite izključen zaklep kanala alfa"
 
-#: app/widgets/gimplayertreeview.c:1209
+#: app/widgets/gimplayertreeview.c:1207
 msgid "search"
 msgstr "išči"
 
-#: app/widgets/gimplayertreeview.c:1210
+#: app/widgets/gimplayertreeview.c:1208
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimplayertreeview.c:1210
+#: app/widgets/gimplayertreeview.c:1208
 msgid "regexp"
 msgstr "regularni izraz"
 
-#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
+#: app/widgets/gimplayertreeview.c:1312 app/widgets/gimplayertreeview.c:1325
 msgid "Select layers by text search"
 msgstr "Izberi plati z iskanjem besedila"
 
-#: app/widgets/gimplayertreeview.c:1316 app/widgets/gimplayertreeview.c:1329
+#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
 msgid "Text search"
 msgstr "Iskanje besedila"
 
-#: app/widgets/gimplayertreeview.c:1333
+#: app/widgets/gimplayertreeview.c:1331
 msgid "Select layers by glob patterns"
 msgstr "Izberite plasti po vzorcih glob"
 
-#: app/widgets/gimplayertreeview.c:1335
+#: app/widgets/gimplayertreeview.c:1333
 msgid "Glob pattern search"
 msgstr "Iskanje vzorcev Glob"
 
-#: app/widgets/gimplayertreeview.c:1339
+#: app/widgets/gimplayertreeview.c:1337
 msgid "Select layers by regular expressions"
 msgstr "Izberi plasti z regularnimi izrazi"
 
-#: app/widgets/gimplayertreeview.c:1341
+#: app/widgets/gimplayertreeview.c:1339
 msgid "Regular Expression search"
 msgstr "Iskanje z regularnimi izrazi"
 
-#: app/widgets/gimplayertreeview.c:1405
+#: app/widgets/gimplayertreeview.c:1403
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Neveljaven regularni izraz: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1558
+#: app/widgets/gimplayertreeview.c:1556
 msgid "Set layers mode"
 msgstr "Določi način plasti"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2039
+#: app/widgets/gimplayertreeview.c:2037
 msgid "No channels to create a layer mask from."
 msgstr "Ni kanalov, da bi iz njih ustvarili masko plasti."
 
@@ -27946,11 +27985,11 @@ msgstr "Pri razčlenjevanju definicije menija iz %s je prišlo do napake: %s"
 msgid "[ Base Image ]"
 msgstr "[ Osnovna slika ]"
 
-#: app/widgets/gimpvectorstreeview.c:113
+#: app/widgets/gimpvectorstreeview.c:111
 msgid "Lock path strokes"
 msgstr "Zakleni poteze poti"
 
-#: app/widgets/gimpvectorstreeview.c:116
+#: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
 msgstr "Zakleni položaj poti"
 
