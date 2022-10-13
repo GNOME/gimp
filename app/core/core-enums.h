@@ -42,12 +42,9 @@ GType gimp_align_reference_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_ALIGN_REFERENCE_FIRST,          /*< desc="First item"     >*/
-  GIMP_ALIGN_REFERENCE_IMAGE,          /*< desc="Image"          >*/
-  GIMP_ALIGN_REFERENCE_SELECTION,      /*< desc="Selection"      >*/
-  GIMP_ALIGN_REFERENCE_ACTIVE_LAYER,   /*< desc="Active layer"   >*/
-  GIMP_ALIGN_REFERENCE_ACTIVE_CHANNEL, /*< desc="Active channel" >*/
-  GIMP_ALIGN_REFERENCE_ACTIVE_PATH     /*< desc="Active path"    >*/
+  GIMP_ALIGN_REFERENCE_IMAGE,          /*< desc="Image"                   >*/
+  GIMP_ALIGN_REFERENCE_SELECTION,      /*< desc="Selection"               >*/
+  GIMP_ALIGN_REFERENCE_PICK,           /*< desc="Picked reference object" >*/
 } GimpAlignReferenceType;
 
 
