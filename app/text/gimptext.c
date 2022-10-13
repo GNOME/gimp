@@ -49,6 +49,7 @@
 enum
 {
   PROP_0,
+  PROP_GIMP,
   PROP_TEXT,
   PROP_MARKUP,
   PROP_FONT,
@@ -86,9 +87,7 @@ enum
   PROP_OUTLINE_DASH_OFFSET,
   PROP_OUTLINE_DASH_INFO,
   /* for backward compatibility */
-  PROP_HINTING,
-
-  PROP_GIMP
+  PROP_HINTING
 };
 
 enum
