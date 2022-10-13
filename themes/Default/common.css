@@ -271,6 +271,10 @@ button.suggested-action {
   border: 1px dotted shade(@fg-color, 0.5);
 }
 
+button:checked {
+  background: @selected-color;
+}
+
 /* Spinbuttons: there are two kinds:
  * spinbutton, spinbutton button
  *   e.g. the "width" field in the New Image dialog.
