@@ -33,6 +33,7 @@ SUBDIRS = \
 	file-faxg3		\
 	file-fits		\
 	file-fli		\
+	file-icns		\
 	file-ico		\
 	file-jpeg		\
 	file-psd		\

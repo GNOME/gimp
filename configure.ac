@@ -3091,6 +3091,7 @@ plug-ins/file-exr/Makefile
 plug-ins/file-faxg3/Makefile
 plug-ins/file-fits/Makefile
 plug-ins/file-fli/Makefile
+plug-ins/file-icns/Makefile
 plug-ins/file-ico/Makefile
 plug-ins/file-jpeg/Makefile
 plug-ins/file-psd/Makefile
