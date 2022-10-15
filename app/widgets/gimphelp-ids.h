@@ -297,7 +297,6 @@
 #define GIMP_HELP_TOOL_CONVOLVE                   "gimp-tool-convolve"
 #define GIMP_HELP_TOOL_CROP                       "gimp-tool-crop"
 #define GIMP_HELP_TOOL_CURVES                     "gimp-tool-curves"
-#define GIMP_HELP_TOOL_CURVES                     "gimp-tool-curves"
 #define GIMP_HELP_TOOL_DODGE_BURN                 "gimp-tool-dodge-burn"
 #define GIMP_HELP_TOOL_ELLIPSE_SELECT             "gimp-tool-ellipse-select"
 #define GIMP_HELP_TOOL_ERASER                     "gimp-tool-eraser"
