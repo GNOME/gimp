@@ -37,13 +37,10 @@
 #include <libgimp/gimptypes.h>
 
 #include <libgimp/gimpbatchprocedure.h>
-#include <libgimp/gimpbrushselect.h>
 #include <libgimp/gimpchannel.h>
 #include <libgimp/gimpdisplay.h>
 #include <libgimp/gimpdrawable.h>
-#include <libgimp/gimpfontselect.h>
 #include <libgimp/gimpgimprc.h>
-#include <libgimp/gimpgradientselect.h>
 #include <libgimp/gimpimage.h>
 #include <libgimp/gimpimagecolorprofile.h>
 #include <libgimp/gimpimagemetadata.h>
@@ -52,10 +49,8 @@
 #include <libgimp/gimplayer.h>
 #include <libgimp/gimplayermask.h>
 #include <libgimp/gimploadprocedure.h>
-#include <libgimp/gimppaletteselect.h>
 #include <libgimp/gimpparamspecs.h>
 #include <libgimp/gimpparamspecs-resource.h>
-#include <libgimp/gimppatternselect.h>
 #include <libgimp/gimppdb.h>
 #include <libgimp/gimpplugin.h>
 #include <libgimp/gimpprocedureconfig.h>
@@ -68,6 +63,11 @@
 #include <libgimp/gimptextlayer.h>
 #include <libgimp/gimpthumbnailprocedure.h>
 #include <libgimp/gimpvectors.h>
+
+/* Resources and their widgets. Order important. */
+#include <libgimp/gimpresource.h>
+#include <libgimp/gimpresourceselect.h>
+#include <libgimp/gimpresource-subclass.h>
 
 #include <libgimp/gimp_pdb_headers.h>
 

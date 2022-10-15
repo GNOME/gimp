@@ -1,0 +1,85 @@
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
+ *
+ * This library is free software: you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 3 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+
+#if !defined (__GIMP_UI_H_INSIDE__) && !defined (GIMP_COMPILATION)
+#error "Only <libgimp/gimpui.h> can be included directly."
+#endif
+
+#ifndef __GIMP_RESOURCE_SELECT_BUTTON_H__
+#define __GIMP_RESOURCE_SELECT_BUTTON_H__
+
+G_BEGIN_DECLS
+
+/* Inherits GtkBox
+ * Inheritable by e.g. GimpBrushSelectButton.
+ */
+#define GIMP_TYPE_RESOURCE_SELECT_BUTTON gimp_resource_select_button_get_type ()
+G_DECLARE_DERIVABLE_TYPE (GimpResourceSelectButton, gimp_resource_select_button, GIMP, RESOURCE_SELECT_BUTTON, GtkBox)
+
+struct _GimpResourceSelectButtonClass
+{
+  GtkBoxClass parent_class;
+
+  /* Signal resource_set. Emitted when user chooses a resource.
+   * The signal carries only the resource (a proxy having an ID).
+   * The resource knows its own attributes needed for drawing it.
+   * Such attributes are NOT in the signal.
+   *
+   * Seems to be unused by GIMP internal code,
+   * instead GimpPropChooser binds to property.
+   */
+  /* FIXME: should be an annotation. */
+  void (* resource_set) (GimpResourceSelectButton *self,
+                         GimpResource             *resource,
+                         gboolean                  dialog_closing);
+
+  /* virtual methods. */
+  void (*draw_interior) (GimpResourceSelectButton *self);
+
+  /* Specialized by subclass. */
+  GType resource_type;  /* e.g. GimpBrush */
+
+  /* Padding for future expansion */
+  gpointer padding[8];
+};
+
+/* Abstract, no new(), instead new a subclass. */
+
+/* API from above, e.g. used by GimpPropChooser */
+GimpResource *gimp_resource_select_button_get_resource (GimpResourceSelectButton *self);
+void          gimp_resource_select_button_set_resource (GimpResourceSelectButton *self,
+                                                        GimpResource             *resource);
+
+/* Public, but called by super. */
+void      gimp_resource_select_button_draw_interior     (GimpResourceSelectButton *self,
+                                                         GimpResource             *resource);
+
+/* API from below, used by subclasses e.g. GimpBrushSelectButton */
+
+void      gimp_resource_select_button_embed_interior   (GimpResourceSelectButton *self,
+                                                        GtkWidget                *interior);
+void      gimp_resource_select_button_set_drag_target  (GimpResourceSelectButton *self,
+                                                        GtkWidget                *drag_region_widget,
+                                                        const GtkTargetEntry     *drag_target);
+void      gimp_resource_select_button_set_clickable    (GimpResourceSelectButton *self,
+                                                        GtkWidget                *widget);
+void      gimp_resource_select_button_close_popup      (GimpResourceSelectButton *self);
+
+G_END_DECLS
+
+#endif /* __GIMP_RESOURCE_SELECT_BUTTON_H__ */

@@ -255,9 +255,9 @@ gfig_load_style (Style *style,
     }
 
   gfig_read_parameter_string (style_text, nitems, "BrushName",
-                              &style->brush_name);
+                              &style->brush);
 
-  if (style->brush_name == NULL)
+  if (style->brush == NULL)
     g_message ("Error loading style: got NULL for brush name.");
 
   gfig_read_parameter_string (style_text, nitems, "Pattern", &style->pattern);
@@ -353,11 +353,11 @@ gfig_save_style (Style   *style,
   gint  blen = G_ASCII_DTOSTR_BUF_SIZE;
 
   if (gfig_context->debug_styles)
-    g_printerr ("Saving style %s, brush name '%s'\n", style->name, style->brush_name);
+    g_printerr ("Saving style %s, brush name '%s'\n", style->name, style->brush);
 
   g_string_append_printf (string, "<Style %s>\n", style->name);
-  g_string_append_printf (string, "BrushName:      %s\n",          style->brush_name);
-  if (!style->brush_name)
+  g_string_append_printf (string, "BrushName:      %s\n",          style->brush);
+  if (!style->brush)
     g_message ("Error saving style %s: saving NULL for brush name", style->name);
 
   g_string_append_printf (string, "PaintType:       %d\n",          style->paint_type);
@@ -399,7 +399,7 @@ gfig_style_save_as_attributes (Style   *style,
 
   if (gfig_context->debug_styles)
     g_printerr ("Saving style %s as attributes\n", style->name);
-  g_string_append_printf (string, "BrushName=\"%s\" ",  style->brush_name);
+  g_string_append_printf (string, "BrushName=\"%s\" ",  style->brush);
 
   g_string_append_printf (string, "Foreground=\"%s %s %s %s\" ",
                           g_ascii_dtostr (buffer_r, blen, style->foreground.r),
@@ -501,10 +501,7 @@ set_paint_type_callback (GtkToggleButton *toggle,
  */
 void
 gfig_brush_changed_callback (GimpBrushSelectButton *button,
-                             const gchar           *brush_name,
-                             gdouble                opacity,
-                             gint                   spacing,
-                             GimpLayerMode          paint_mode,
+                             const GimpBrush       *brush,
                              gint                   width,
                              gint                   height,
                              const guchar          *mask_data,
@@ -514,13 +511,13 @@ gfig_brush_changed_callback (GimpBrushSelectButton *button,
   Style *current_style;
 
   current_style = gfig_context_get_current_style ();
-  current_style->brush_name = g_strdup (brush_name);
+  current_style->brush = brush;
 
   /* this will soon be unneeded. How soon? */
-  gfig_context->bdesc.name = g_strdup (brush_name);
+  gfig_context->bdesc.name = g_strdup (brush);
   gfig_context->bdesc.width = width;
   gfig_context->bdesc.height = height;
-  gimp_context_set_brush (brush_name);
+  gimp_context_set_brush (brush);
   gimp_context_set_brush_default_size ();
 
   gfig_paint_callback ();
@@ -586,10 +583,10 @@ gfig_style_copy (Style       *style1,
   gfig_rgba_copy (&style1->foreground, &style0->foreground);
   gfig_rgba_copy (&style1->background, &style0->background);
 
-  if (!style0->brush_name)
+  if (!style0->brush)
     g_message ("Error copying style %s: brush name is NULL.", style0->name);
 
-  style1->brush_name    = g_strdup (style0->brush_name);
+  style1->brush    = g_strdup (style0->brush);
   style1->gradient      = g_strdup (style0->gradient);
   style1->pattern       = g_strdup (style0->pattern);
   style1->fill_type    = style0->fill_type;
@@ -612,9 +609,9 @@ gfig_style_apply (Style *style)
 
   gimp_context_set_background (&style->background);
 
-  if (! gimp_context_set_brush (style->brush_name))
+  if (! gimp_context_set_brush (style->brush))
     g_message ("Style apply: Failed to set brush to '%s' in style '%s'",
-               style->brush_name, style->name);
+               style->brush, style->name);
 
   gimp_context_set_brush_default_size ();
 
@@ -648,18 +645,18 @@ gfig_read_gimp_style (Style       *style,
   gimp_context_get_foreground (&style->foreground);
   gimp_context_get_background (&style->background);
 
-  style->brush_name = gimp_context_get_brush ();
-  gimp_brush_get_info (style->brush_name,
+  style->brush = gimp_context_get_brush ();
+  gimp_brush_get_info (style->brush,
                        &style->brush_width, &style->brush_height,
                        &dummy, &dummy);
-  style->brush_spacing = gimp_brush_get_spacing (style->brush_name);
+  style->brush_spacing = gimp_brush_get_spacing (style->brush);
 
   style->gradient = gimp_context_get_gradient ();
   style->pattern  = gimp_context_get_pattern ();
 
   style->fill_opacity = 100.;
 
-  gfig_context->bdesc.name   = style->brush_name;
+  gfig_context->bdesc.name   = style->brush;
   gfig_context->bdesc.width  = style->brush_width;
   gfig_context->bdesc.height = style->brush_height;
 }
@@ -686,14 +683,13 @@ gfig_style_set_context_from_style (Style *style)
                                &style->foreground);
   gimp_color_button_set_color (GIMP_COLOR_BUTTON (gfig_context->bg_color_button),
                                &style->background);
-  if (! gimp_context_set_brush (style->brush_name))
-    g_message ("Style from context: Failed to set brush to '%s'",
-               style->brush_name);
+  if (! gimp_context_set_brush (style->brush))
+    g_message ("Style from context: Failed to set brush");
 
   gimp_context_set_brush_default_size ();
 
   gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (gfig_context->brush_select),
-                                      style->brush_name, -1.0, -1, -1);  /* FIXME */
+                                      style->brush);  /* FIXME */
 
   gimp_pattern_select_button_set_pattern (GIMP_PATTERN_SELECT_BUTTON (gfig_context->pattern_select),
                                           style->pattern);
@@ -701,7 +697,7 @@ gfig_style_set_context_from_style (Style *style)
   gimp_gradient_select_button_set_gradient (GIMP_GRADIENT_SELECT_BUTTON (gfig_context->gradient_select),
                                             style->gradient);
 
-  gfig_context->bdesc.name = style->brush_name;
+  gfig_context->bdesc.name = style->brush;
   if (gfig_context->debug_styles)
     g_printerr ("done.\n");
 
@@ -738,7 +734,7 @@ gfig_style_set_style_from_context (Style *style)
                                &color);
   gfig_rgba_copy (&style->background, &color);
 
-  style->brush_name = current_style->brush_name;
+  style->brush = current_style->brush;
 
   if (!style->pattern || strcmp (style->pattern, current_style->pattern))
     {

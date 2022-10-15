@@ -25,61 +25,35 @@
 #ifndef __GIMP_PALETTE_SELECT_BUTTON_H__
 #define __GIMP_PALETTE_SELECT_BUTTON_H__
 
-#include <libgimp/gimpselectbutton.h>
+#include <libgimp/gimpresourceselectbutton.h>
 
 G_BEGIN_DECLS
 
-/* For information look into the C source or the html documentation */
+/* This defines certain structs and the usual macros.
+ * A final type has no private.
+ */
+#define GIMP_TYPE_PALETTE_SELECT_BUTTON (gimp_palette_select_button_get_type ())
+G_DECLARE_FINAL_TYPE (GimpPaletteSelectButton,
+                      gimp_palette_select_button,
+                      GIMP, PALETTE_SELECT_BUTTON,
+                      GimpResourceSelectButton)
 
-
-#define GIMP_TYPE_PALETTE_SELECT_BUTTON            (gimp_palette_select_button_get_type ())
-#define GIMP_PALETTE_SELECT_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_PALETTE_SELECT_BUTTON, GimpPaletteSelectButton))
-#define GIMP_PALETTE_SELECT_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_PALETTE_SELECT_BUTTON, GimpPaletteSelectButtonClass))
-#define GIMP_IS_PALETTE_SELECT_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_PALETTE_SELECT_BUTTON))
-#define GIMP_IS_PALETTE_SELECT_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PALETTE_SELECT_BUTTON))
-#define GIMP_PALETTE_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PALETTE_SELECT_BUTTON, GimpPaletteSelectButtonClass))
-
-
-typedef struct _GimpPaletteSelectButtonPrivate GimpPaletteSelectButtonPrivate;
-typedef struct _GimpPaletteSelectButtonClass   GimpPaletteSelectButtonClass;
-
-struct _GimpPaletteSelectButton
-{
-  GimpSelectButton                parent_instance;
-
-  GimpPaletteSelectButtonPrivate *priv;
-};
 
 struct _GimpPaletteSelectButtonClass
 {
-  GimpSelectButtonClass  parent_class;
+  GimpResourceSelectButtonClass  parent_class;
 
-  /* palette_set signal is emitted when palette is chosen */
-  void (* palette_set) (GimpPaletteSelectButton *button,
-                        const gchar             *palette_name,
-                        gboolean                 dialog_closing);
-
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  /* _set signal is not defined.  Use resource_set signal from superclass */
 };
 
 
-GType         gimp_palette_select_button_get_type    (void) G_GNUC_CONST;
+GtkWidget   * gimp_palette_select_button_new      (const gchar          *title,
+                                                   GimpResource         *resource);
 
-GtkWidget   * gimp_palette_select_button_new         (const gchar *title,
-                                                      const gchar *palette_name);
-
-const gchar * gimp_palette_select_button_get_palette (GimpPaletteSelectButton *button);
-void          gimp_palette_select_button_set_palette (GimpPaletteSelectButton *button,
-                                                      const gchar             *palette_name);
-
+/* FUTURE eliminate.  Use superclass method get_resource */
+GimpPalette  *gimp_palette_select_button_get_palette (GimpPaletteSelectButton *self);
+void          gimp_palette_select_button_set_palette (GimpPaletteSelectButton *self,
+                                                      GimpPalette             *palette);
 
 G_END_DECLS
 

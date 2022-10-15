@@ -861,6 +861,32 @@ G_BEGIN_DECLS
 
 /*  Resource  */
 
+#define GIMP_PROC_ARG_BRUSH(procedure, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_brush (name, nick, blurb,\
+                                                      GIMP_TYPE_BRUSH,\
+                                                      flags))
+#define GIMP_PROC_ARG_FONT(procedure, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_font (name, nick, blurb,\
+                                                      GIMP_TYPE_FONT,\
+                                                      flags))
+#define GIMP_PROC_ARG_GRADIENT(procedure, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_gradient (name, nick, blurb,\
+                                                         GIMP_TYPE_GRADIENT,\
+                                                         flags))
+#define GIMP_PROC_ARG_PALETTE(procedure, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_palette (name, nick, blurb,\
+                                                        GIMP_TYPE_PALETTE,\
+                                                        flags))
+#define GIMP_PROC_ARG_PATTERN(procedure, name, nick, blurb, flags)  \
+  gimp_procedure_add_argument (procedure,\
+                               gimp_param_spec_pattern (name, nick, blurb,\
+                                                        GIMP_TYPE_PATTERN,\
+                                                        flags))
+
 #define GIMP_VALUES_GET_BRUSH(args, n) \
   g_value_get_object (gimp_value_array_index (args, n))
 #define GIMP_VALUES_SET_BRUSH(args, n, value) \

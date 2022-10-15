@@ -433,6 +433,8 @@ libappcore_a_sources = \
 	gimpprojectable.h			\
 	gimpprojection.c			\
 	gimpprojection.h			\
+	gimpresource.c				\
+	gimpresource.h				\
 	gimpsamplepoint.c			\
 	gimpsamplepoint.h			\
 	gimpsamplepointundo.c			\

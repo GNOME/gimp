@@ -27,6 +27,34 @@
 
 G_BEGIN_DECLS
 
+/*
+ * GIMP_TYPE_PARAM_RESOURCE
+ */
+
+/* See bottom of this file for definition of GIMP_VALUE_HOLDS_RESOURCE(value) */
+
+#define GIMP_TYPE_PARAM_RESOURCE           (gimp_param_resource_get_type ())
+#define GIMP_PARAM_SPEC_RESOURCE(pspec)    (G_TYPE_CHECK_INSTANCE_CAST ((pspec), GIMP_TYPE_PARAM_RESOURCE, GimpParamSpecResource))
+#define GIMP_IS_PARAM_SPEC_RESOURCE(pspec) (G_TYPE_CHECK_INSTANCE_TYPE ((pspec), GIMP_TYPE_PARAM_RESOURCE))
+
+typedef struct _GimpParamSpecResource GimpParamSpecResource;
+
+struct _GimpParamSpecResource
+{
+  GParamSpecObject  parent_instance;
+  gboolean          none_ok;
+};
+
+GType        gimp_param_resource_get_type (void) G_GNUC_CONST;
+
+GParamSpec * gimp_param_spec_resource (
+    const gchar  *name,
+    const gchar  *nick,
+    const gchar  *blurb,
+    gboolean      none_ok,
+    GParamFlags   flags);
+
+
 
 /*
  * GIMP_TYPE_PARAM_BRUSH
@@ -164,7 +192,11 @@ GParamSpec * gimp_param_spec_pattern (const gchar  *name,
 
 
 
-#define GIMP_VALUE_HOLDS_RESOURCE(value)  (GIMP_VALUE_HOLDS_BRUSH (value) ||  GIMP_VALUE_HOLDS_FONT (value) ||  GIMP_VALUE_HOLDS_GRADIENT (value) ||  GIMP_VALUE_HOLDS_PALETTE (value) ||  GIMP_VALUE_HOLDS_PATTERN (value) )
+#define GIMP_VALUE_HOLDS_RESOURCE(value)  (GIMP_VALUE_HOLDS_BRUSH (value)    || \
+                                           GIMP_VALUE_HOLDS_FONT (value)     || \
+                                           GIMP_VALUE_HOLDS_GRADIENT (value) || \
+                                           GIMP_VALUE_HOLDS_PALETTE (value)  || \
+                                           GIMP_VALUE_HOLDS_PATTERN (value) )
 
 
 

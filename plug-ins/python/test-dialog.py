@@ -38,14 +38,46 @@ Not localized, no i18n
 '''
 
 
-def process_args(brush):
+def process_args(brush, font, gradient, palette, pattern):
     '''
     Test the args are sane.
     '''
     assert brush is not None
     assert isinstance(brush, Gimp.Brush)
-    assert brush.get_id() is not None
-    print( "Brush id is:", brush.get_id())
+    id = brush.get_id()
+    assert id is not None
+    print("Brush id is:", id)
+    Gimp.message(id)
+
+    assert font is not None
+    assert isinstance(font, Gimp.Font)
+    id = font.get_id()
+    assert id is not None
+    print("font id is:", id)
+    Gimp.message(id)
+
+    assert gradient is not None
+    assert isinstance(gradient, Gimp.Gradient)
+    id = gradient.get_id()
+    assert id is not None
+    print("gradient id is:", id)
+    Gimp.message(id)
+
+    assert palette is not None
+    assert isinstance(palette, Gimp.Palette)
+    id = palette.get_id()
+    assert id is not None
+    print("palette id is:", id)
+    Gimp.message(id)
+
+    assert pattern is not None
+    assert isinstance(pattern, Gimp.Pattern)
+    id = pattern.get_id()
+    assert id is not None
+    print("pattern id is:", id)
+    Gimp.message(id)
+
+
     return
 
 
@@ -69,13 +101,15 @@ def test_dialog(procedure, run_mode, image, n_drawables, drawables, args, data):
             dialog.destroy()
 
     brush = config.get_property('brush')
-
-    # opacity = config.get_property('opacity')
+    font = config.get_property('font')
+    gradient = config.get_property('gradient')
+    palette = config.get_property('palette')
+    pattern = config.get_property('pattern')
 
     Gimp.context_push()
     image.undo_group_start()
 
-    process_args(brush)
+    process_args(brush, font, gradient, palette, pattern)
 
     Gimp.displays_flush()
 
@@ -96,9 +130,20 @@ class TestDialogPlugin (Gimp.PlugIn):
     # See comments about this in foggify.py, from which we borrowed
 
     brush = GObject.Property(type =Gimp.Brush,
-                             # no default?
                              nick ="Brush",
                              blurb="Brush")
+    font = GObject.Property(type =Gimp.Font,
+                            nick ="Font",
+                            blurb="Font")
+    gradient = GObject.Property(type =Gimp.Gradient,
+                                nick ="Gradient",
+                                blurb="Gradient")
+    palette = GObject.Property(type =Gimp.Palette,
+                               nick ="Palette",
+                               blurb="Palette")
+    pattern = GObject.Property(type =Gimp.Pattern,
+                               nick ="Pattern",
+                               blurb="Pattern")
 
     # FUTURE all other Gimp classes that have GimpParamSpecs
 
@@ -127,6 +172,10 @@ class TestDialogPlugin (Gimp.PlugIn):
         procedure.add_menu_path ("<Image>/Test")
 
         procedure.add_argument_from_property(self, "brush")
+        procedure.add_argument_from_property(self, "font")
+        procedure.add_argument_from_property(self, "gradient")
+        procedure.add_argument_from_property(self, "palette")
+        procedure.add_argument_from_property(self, "pattern")
 
         return procedure
 

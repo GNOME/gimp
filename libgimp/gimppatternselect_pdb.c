@@ -30,28 +30,29 @@
 /**
  * SECTION: gimppatternselect
  * @title: gimppatternselect
- * @short_description: Functions providing a pattern selection dialog.
+ * @short_description: Methods of a pattern chooser dialog
  *
- * Functions providing a pattern selection dialog.
+ * A dialog letting a user choose a pattern.  Read more at
+ * gimpfontselect.
  **/
 
 
 /**
  * gimp_patterns_popup:
- * @pattern_callback: The callback PDB proc to call when pattern selection is made.
+ * @pattern_callback: The callback PDB proc to call when the user chooses a pattern.
  * @popup_title: Title of the pattern selection dialog.
- * @initial_pattern: The name of the pattern to set as the first selected.
+ * @initial_pattern_name: The name of the pattern to set as the initial choice.
  *
  * Invokes the Gimp pattern selection.
  *
- * This procedure opens the pattern selection dialog.
+ * Opens the pattern selection dialog.
  *
  * Returns: TRUE on success.
  **/
 gboolean
 gimp_patterns_popup (const gchar *pattern_callback,
                      const gchar *popup_title,
-                     const gchar *initial_pattern)
+                     const gchar *initial_pattern_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -60,7 +61,7 @@ gimp_patterns_popup (const gchar *pattern_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, pattern_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_pattern,
+                                          G_TYPE_STRING, initial_pattern_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -81,7 +82,7 @@ gimp_patterns_popup (const gchar *pattern_callback,
  *
  * Close the pattern selection dialog.
  *
- * This procedure closes an opened pattern selection dialog.
+ * Closes an open pattern selection dialog.
  *
  * Returns: TRUE on success.
  **/

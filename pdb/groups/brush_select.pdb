@@ -17,43 +17,28 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub brushes_popup {
-    $blurb = 'Invokes the Gimp brush selection.';
-    $help  = 'This procedure opens the brush selection dialog.';
+    $blurb = 'Invokes the GIMP brush selection dialog.';
+    $help  = 'Opens a dialog letting a user choose a brush.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'brush_callback', type => 'string', non_empty => 1,
-	  desc => 'The callback PDB proc to call when brush selection is
-		   made' },
-	{ name => 'popup_title', type => 'string',
-	  desc => 'Title of the brush selection dialog' },
-	{ name => 'initial_brush', type => 'string', null_ok => 1,
-	  desc => 'The name of the brush to set as the first selected' },
-	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The initial opacity of the brush' },
-	{ name => 'spacing', type => 'int32 <= 1000',
-	  desc => 'The initial spacing of the brush (if < 0 then use brush
-                   default spacing)' },
-	{ name => 'paint_mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
-	  desc => 'The initial paint mode' }
+      { name => 'brush_callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when user chooses a brush' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the brush selection dialog' },
+      { name => 'initial_brush_name', type => 'string', null_ok => 1,
+        desc => 'The name of the brush to set as the initial choice' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
-
-  if (gimp->no_interface ||
+    if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->brush_factory),
-                             popup_title, brush_callback, initial_brush,
-                             "opacity",    opacity / 100.0,
-                             "paint-mode", paint_mode,
-                             "spacing",    spacing,
+                             popup_title, brush_callback, initial_brush_name,
                              NULL))
     success = FALSE;
 }
@@ -63,13 +48,13 @@ CODE
 
 sub brushes_close_popup {
     $blurb = 'Close the brush selection dialog.';
-    $help  = 'This procedure closes an opened brush selection dialog.';
+    $help  = 'Closes an open brush selection dialog.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'brush_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' }
+      { name => 'brush_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -86,39 +71,25 @@ CODE
 }
 
 sub brushes_set_popup {
-    $blurb = 'Sets the current brush in a brush selection dialog.';
+    $blurb = 'Sets the selected brush in a brush selection dialog.';
     $help  = $blurb;
 
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'brush_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' },
-	{ name => 'brush_name', type => 'string',
-	  desc => 'The name of the brush to set as selected' },
-	{ name => 'opacity', type => '0 <= float <= 100',
-	  desc => 'The initial opacity of the brush' },
-	{ name => 'spacing', type => 'int32 <= 1000',
-	  desc => 'The initial spacing of the brush (if < 0 then use brush
-                   default spacing)' },
-	{ name => 'paint_mode', type => 'enum GimpLayerMode',
-          default => 'GIMP_LAYER_MODE_NORMAL',
-	  desc => 'The initial paint mode' }
+      { name => 'brush_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' },
+      { name => 'brush_name', type => 'string',
+        desc => 'The name of the brush to set as selected' }
     );
 
     %invoke = (
 	code => <<'CODE'
 {
-  if (paint_mode == GIMP_LAYER_MODE_OVERLAY_LEGACY)
-    paint_mode = GIMP_LAYER_MODE_SOFTLIGHT_LEGACY;
-
   if (gimp->no_interface ||
       ! gimp_pdb_lookup_procedure (gimp->pdb, brush_callback) ||
       ! gimp_pdb_dialog_set (gimp, gimp_data_factory_get_container (gimp->brush_factory),
                              brush_callback, brush_name,
-                             "opacity",    opacity / 100.0,
-                             "paint-mode", paint_mode,
-                             "spacing",    spacing,
                              NULL))
     success = FALSE;
 }
@@ -138,7 +109,7 @@ CODE
 
 $desc = 'Brush UI';
 $doc_title = 'gimpbrushselect';
-$doc_short_desc = 'Functions providing a brush selection dialog.';
-$doc_long_desc = 'Functions providing a brush selection dialog.';
+$doc_short_desc = 'Methods of a font chooser dialog';
+$doc_long_desc = 'A dialog letting a user choose a brush.  Read more at gimpfontselect.';
 
 1;

@@ -30,30 +30,29 @@
 /**
  * SECTION: gimpgradientselect
  * @title: gimpgradientselect
- * @short_description: Functions providing a gradient selection dialog.
+ * @short_description: Methods of a gradient chooser dialog
  *
- * Functions providing a gradient selection dialog.
+ * A dialog letting a user choose a gradient.  Read more at
+ * gimpfontselect.
  **/
 
 
 /**
  * gimp_gradients_popup:
- * @gradient_callback: The callback PDB proc to call when gradient selection is made.
+ * @gradient_callback: The callback PDB proc to call when user chooses a gradient.
  * @popup_title: Title of the gradient selection dialog.
- * @initial_gradient: The name of the gradient to set as the first selected.
- * @sample_size: Size of the sample to return when the gradient is changed.
+ * @initial_gradient_name: The name of the initial gradient choice.
  *
- * Invokes the Gimp gradients selection.
+ * Invokes the Gimp gradients selection dialog.
  *
- * This procedure opens the gradient selection dialog.
+ * Opens a dialog letting a user choose a gradient.
  *
  * Returns: TRUE on success.
  **/
 gboolean
 gimp_gradients_popup (const gchar *gradient_callback,
                       const gchar *popup_title,
-                      const gchar *initial_gradient,
-                      gint         sample_size)
+                      const gchar *initial_gradient_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -62,8 +61,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, gradient_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_gradient,
-                                          G_TYPE_INT, sample_size,
+                                          G_TYPE_STRING, initial_gradient_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -84,7 +82,7 @@ gimp_gradients_popup (const gchar *gradient_callback,
  *
  * Close the gradient selection dialog.
  *
- * This procedure closes an opened gradient selection dialog.
+ * Closes an open gradient selection dialog.
  *
  * Returns: TRUE on success.
  **/

@@ -34,7 +34,7 @@ G_BEGIN_DECLS
 
 gboolean gimp_patterns_popup       (const gchar *pattern_callback,
                                     const gchar *popup_title,
-                                    const gchar *initial_pattern);
+                                    const gchar *initial_pattern_name);
 gboolean gimp_patterns_close_popup (const gchar *pattern_callback);
 gboolean gimp_patterns_set_popup   (const gchar *pattern_callback,
                                     const gchar *pattern_name);

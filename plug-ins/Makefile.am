@@ -24,6 +24,10 @@ if HAVE_WEBP
 file_webp = file-webp
 endif
 
+# lkk temporarily not making these plugins until next commit fixes them for Resource
+# 	gfig
+#	pagecurl
+
 SUBDIRS = \
 	script-fu		\
 	file-bmp		\
@@ -43,7 +47,6 @@ SUBDIRS = \
 	$(file_webp)		\
 	flame			\
 	fractal-explorer	\
-	gfig			\
 	gimpressionist		\
 	gradient-flare		\
 	help			\
@@ -53,7 +56,6 @@ SUBDIRS = \
 	lighting		\
 	map-object		\
 	metadata		\
-	pagecurl		\
 	$(print)		\
 	$(python)		\
 	screenshot		\

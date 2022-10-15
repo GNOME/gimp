@@ -25,6 +25,139 @@
  */
 
 
+ /*
+  * GIMP_TYPE_PARAM_RESOURCE
+  */
+
+ static void       gimp_param_resource_class_init (GParamSpecClass *klass);
+ static void       gimp_param_resource_init       (GParamSpec      *pspec);
+ static gboolean   gimp_param_resource_validate   (GParamSpec      *pspec,
+                                                   GValue          *value);
+
+ GType
+ gimp_param_resource_get_type (void)
+ {
+   static GType type = 0;
+
+   if (! type)
+     {
+       const GTypeInfo info =
+       {
+         sizeof (GParamSpecClass),
+         NULL, NULL,
+         (GClassInitFunc) gimp_param_resource_class_init,
+         NULL, NULL,
+         sizeof (GimpParamSpecResource),
+         0,
+         (GInstanceInitFunc) gimp_param_resource_init
+       };
+
+       type = g_type_register_static (G_TYPE_PARAM_OBJECT,
+                                      "GimpParamResource", &info, 0);
+     }
+
+   return type;
+ }
+
+ static void
+ gimp_param_resource_class_init (GParamSpecClass *klass)
+ {
+   klass->value_type     = GIMP_TYPE_RESOURCE;
+   klass->value_validate = gimp_param_resource_validate;
+ }
+
+ static void
+ gimp_param_resource_init (GParamSpec *pspec)
+ {
+   GimpParamSpecResource *ispec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+
+   ispec->none_ok = FALSE;
+ }
+
+ /* Return TRUE when value is invalid!!!
+  * FIXME: should be named is_invalid.
+  */
+static gboolean
+gimp_param_resource_validate (GParamSpec *pspec,
+                              GValue     *value)
+{
+  GimpParamSpecResource *ispec = GIMP_PARAM_SPEC_RESOURCE (pspec);
+  GimpResource          *resource = value->data[0].v_pointer;
+
+  g_debug (">>>>>%s", G_STRFUNC);
+
+  if (! ispec->none_ok && resource == NULL)
+    /* NULL when NULL not allowed is invalid. */
+    return TRUE;
+
+  if (resource != NULL)
+    {
+      if (GIMP_IS_BRUSH (resource) && gimp_brush_is_valid (GIMP_BRUSH (resource)))
+        return FALSE;
+      else if (GIMP_IS_FONT (resource) && gimp_font_is_valid (GIMP_FONT (resource)))
+        return FALSE;
+      else if (GIMP_IS_GRADIENT (resource) && gimp_gradient_is_valid (GIMP_GRADIENT (resource)))
+        return FALSE;
+      else if (GIMP_IS_PALETTE (resource) && gimp_palette_is_valid (GIMP_PALETTE (resource)))
+        return FALSE;
+      else if (GIMP_IS_PATTERN (resource) && gimp_pattern_is_valid (GIMP_PATTERN (resource)))
+        return FALSE;
+      else
+        {
+          /* Not a resource type or is invalid reference to core resource.
+           * Plugin might be using a resource that was uninstalled.
+           */
+          g_object_unref (resource);
+          value->data[0].v_pointer = NULL;
+          return TRUE;
+        }
+    }
+  else
+    {
+      /* resource is NULL but null is valid.*/
+      return FALSE;
+    }
+}
+
+ /**
+  * gimp_param_spec_resource:
+  * @name:    Canonical name of the property specified.
+  * @nick:    Nick name of the property specified.
+  * @blurb:   Description of the property specified.
+  * @none_ok: Whether no  is a valid value.
+  * @flags:   Flags for the property specified.
+  *
+  * Creates a new #GimpParamSpecResource specifying a
+  * #GIMP_TYPE_RESOURCE property.
+  *
+  * See g_param_spec_internal() for details on property names.
+  *
+  * Returns: (transfer full): The newly created #GimpParamSpecResource.
+  *
+  * Since: 3.0
+  **/
+ GParamSpec *
+ gimp_param_spec_resource (const gchar *name,
+                           const gchar *nick,
+                           const gchar *blurb,
+                           gboolean     none_ok,
+                           GParamFlags  flags)
+ {
+   GimpParamSpecResource *ispec;
+
+   ispec = g_param_spec_internal (GIMP_TYPE_PARAM_RESOURCE,
+                                  name, nick, blurb, flags);
+
+   g_return_val_if_fail (ispec, NULL);
+
+   ispec->none_ok = none_ok ? TRUE : FALSE;
+
+   return G_PARAM_SPEC (ispec);
+ }
+
+
+
+
 /*
  * GIMP_TYPE_PARAM_BRUSH
  */

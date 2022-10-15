@@ -725,12 +725,28 @@ gimp_procedure_dialog_get_widget (GimpProcedureDialog *dialog,
                                                   property, NULL,
                                                   GTK_FILE_CHOOSER_ACTION_OPEN);
     }
+  /* GimpResource subclasses */
+  /* FUTURE: title the chooser more specifically, with a prefix that is the nick of the property. */
   else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_BRUSH)
     {
-      widget = gimp_prop_brush_chooser_button_new (G_OBJECT (dialog->priv->config),
-                                                   property, NULL);
+      widget = gimp_prop_chooser_brush_new (G_OBJECT (dialog->priv->config), property, _("Brush Chooser"));
     }
-  /* FIXME add cases for other resources. */
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_FONT)
+    {
+      widget = gimp_prop_chooser_font_new (G_OBJECT (dialog->priv->config), property, _("Font Chooser"));
+    }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_GRADIENT)
+    {
+      widget = gimp_prop_chooser_gradient_new (G_OBJECT (dialog->priv->config), property, _("Gradient Chooser"));
+    }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_PALETTE)
+    {
+      widget = gimp_prop_chooser_palette_new (G_OBJECT (dialog->priv->config), property, _("Palette Chooser"));
+    }
+  else if (G_IS_PARAM_SPEC_OBJECT (pspec) && pspec->value_type == GIMP_TYPE_PATTERN)
+    {
+      widget = gimp_prop_chooser_pattern_new (G_OBJECT (dialog->priv->config), property, _("Pattern Chooser"));
+    }
   else  if (G_PARAM_SPEC_TYPE (pspec) == G_TYPE_PARAM_ENUM)
     {
       GimpIntStore *store;

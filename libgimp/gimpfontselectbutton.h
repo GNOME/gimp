@@ -25,61 +25,35 @@
 #ifndef __GIMP_FONT_SELECT_BUTTON_H__
 #define __GIMP_FONT_SELECT_BUTTON_H__
 
-#include <libgimp/gimpselectbutton.h>
+#include <libgimp/gimpresourceselectbutton.h>
 
 G_BEGIN_DECLS
 
-/* For information look into the C source or the html documentation */
+/* This defines certain structs and the usual macros.
+ * A final type has no private.
+ */
+#define GIMP_TYPE_FONT_SELECT_BUTTON (gimp_font_select_button_get_type ())
+G_DECLARE_FINAL_TYPE (GimpFontSelectButton,
+                      gimp_font_select_button,
+                      GIMP, FONT_SELECT_BUTTON,
+                      GimpResourceSelectButton)
 
-
-#define GIMP_TYPE_FONT_SELECT_BUTTON            (gimp_font_select_button_get_type ())
-#define GIMP_FONT_SELECT_BUTTON(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButton))
-#define GIMP_FONT_SELECT_BUTTON_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButtonClass))
-#define GIMP_IS_FONT_SELECT_BUTTON(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_FONT_SELECT_BUTTON))
-#define GIMP_IS_FONT_SELECT_BUTTON_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_FONT_SELECT_BUTTON))
-#define GIMP_FONT_SELECT_BUTTON_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_FONT_SELECT_BUTTON, GimpFontSelectButtonClass))
-
-
-typedef struct _GimpFontSelectButtonPrivate GimpFontSelectButtonPrivate;
-typedef struct _GimpFontSelectButtonClass   GimpFontSelectButtonClass;
-
-struct _GimpFontSelectButton
-{
-  GimpSelectButton             parent_instance;
-
-  GimpFontSelectButtonPrivate *priv;
-};
 
 struct _GimpFontSelectButtonClass
 {
-  GimpSelectButtonClass  parent_class;
+  GimpResourceSelectButtonClass  parent_class;
 
-  /* font_set signal is emitted when font is chosen */
-  void (* font_set) (GimpFontSelectButton *button,
-                     const gchar          *font_name,
-                     gboolean              dialog_closing);
-
-  /* Padding for future expansion */
-  void (*_gimp_reserved1) (void);
-  void (*_gimp_reserved2) (void);
-  void (*_gimp_reserved3) (void);
-  void (*_gimp_reserved4) (void);
-  void (*_gimp_reserved5) (void);
-  void (*_gimp_reserved6) (void);
-  void (*_gimp_reserved7) (void);
-  void (*_gimp_reserved8) (void);
+  /* _set signal is not defined.  Use resource_set signal from superclass */
 };
 
 
-GType         gimp_font_select_button_get_type (void) G_GNUC_CONST;
-
 GtkWidget   * gimp_font_select_button_new      (const gchar          *title,
-                                                const gchar          *font_name);
+                                                GimpResource         *resource);
 
-const gchar * gimp_font_select_button_get_font (GimpFontSelectButton *button);
-void          gimp_font_select_button_set_font (GimpFontSelectButton *button,
-                                                const gchar          *font_name);
-
+/* FUTURE eliminate.  Use superclass method get_resource */
+GimpFont    * gimp_font_select_button_get_font (GimpFontSelectButton *self);
+void          gimp_font_select_button_set_font (GimpFontSelectButton *self,
+                                                GimpFont             *font);
 
 G_END_DECLS
 

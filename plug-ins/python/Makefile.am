@@ -45,6 +45,12 @@ EXTRA_DIST = \
 	python-eval.py			\
 	spyro-plus.py
 
+if GIMP_UNSTABLE
+test_dialogdir = $(gimpplugindir)/plug-ins/test-dialog
+test_dialog_SCRIPTS = test-dialog.py
+EXTRA_DIST += test-dialog.py
+endif
+
 # Python interpreter file.
 
 pyinterpdir = $(gimpplugindir)/interpreters

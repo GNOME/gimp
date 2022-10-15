@@ -352,6 +352,10 @@ gimp_config_param_spec_duplicate (GParamSpec *pspec)
           g_strcmp0 (type_name, "GimpChannel")   == 0 ||
           g_strcmp0 (type_name, "GimpSelection") == 0 ||
           g_strcmp0 (type_name, "GimpBrush")     == 0 ||
+          g_strcmp0 (type_name, "GimpFont")      == 0 ||
+          g_strcmp0 (type_name, "GimpGradient")  == 0 ||
+          g_strcmp0 (type_name, "GimpPalette")   == 0 ||
+          g_strcmp0 (type_name, "GimpPattern")   == 0 ||
           g_strcmp0 (type_name, "GimpVectors")   == 0)
         {
           copy = g_param_spec_object (name, nick, blurb,

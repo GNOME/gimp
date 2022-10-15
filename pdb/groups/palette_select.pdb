@@ -17,19 +17,18 @@
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
 sub palettes_popup {
-    $blurb = 'Invokes the Gimp palette selection.';
-    $help  = 'This procedure opens the palette selection dialog.';
+    $blurb = 'Invokes the Gimp palette selection dialog.';
+    $help  = 'Opens a dialog letting a user choose a palette.';
 
     &mitch_pdb_misc('2002');
 
     @inargs = (
-	{ name => 'palette_callback', type => 'string', non_empty => 1,
-	  desc => 'The callback PDB proc to call when palette selection is
-		   made' },
-	{ name => 'popup_title', type => 'string',
-	  desc => 'Title of the palette selection dialog' },
-	{ name => 'initial_palette', type => 'string', null_ok => 1,
-	  desc => 'The name of the palette to set as the first selected' }
+      { name => 'palette_callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when user chooses a palette' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the palette selection dialog' },
+      { name => 'initial_palette_name', type => 'string', null_ok => 1,
+        desc => 'The palette to set as the initial choice.' }
     );
 
     %invoke = (
@@ -39,7 +38,7 @@ sub palettes_popup {
       ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->palette_factory),
-                             popup_title, palette_callback, initial_palette,
+                             popup_title, palette_callback, initial_palette_name,
                              NULL))
     success = FALSE;
 }
@@ -49,13 +48,13 @@ CODE
 
 sub palettes_close_popup {
     $blurb = 'Close the palette selection dialog.';
-    $help  = 'This procedure closes an opened palette selection dialog.';
+    $help  = 'Closes an open palette selection dialog.';
 
     &mitch_pdb_misc('2002');
 
     @inargs = (
-	{ name => 'palette_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' }
+      { name => 'palette_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -78,10 +77,10 @@ sub palettes_set_popup {
     &mitch_pdb_misc('2002');
 
     @inargs = (
-	{ name => 'palette_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' },
-	{ name => 'palette_name', type => 'string',
-	  desc => 'The name of the palette to set as selected' },
+      { name => 'palette_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' },
+      { name => 'palette_name', type => 'string',
+        desc => 'The name of the palette to set as selected' },
     );
 
     %invoke = (
@@ -110,7 +109,7 @@ CODE
 
 $desc = 'Palette UI';
 $doc_title = 'gimppaletteselect';
-$doc_short_desc = 'Functions providing a palette selection dialog.';
-$doc_long_desc = 'Functions providing a palette selection dialog.';
+$doc_short_desc = 'Methods of a palette chooser dialog';
+$doc_long_desc = 'A dialog letting a user choose a palette.  Read more at gimpfontselect.';
 
 1;

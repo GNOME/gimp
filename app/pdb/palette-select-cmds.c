@@ -49,11 +49,11 @@ palettes_popup_invoker (GimpProcedure         *procedure,
   gboolean success = TRUE;
   const gchar *palette_callback;
   const gchar *popup_title;
-  const gchar *initial_palette;
+  const gchar *initial_palette_name;
 
   palette_callback = g_value_get_string (gimp_value_array_index (args, 0));
   popup_title = g_value_get_string (gimp_value_array_index (args, 1));
-  initial_palette = g_value_get_string (gimp_value_array_index (args, 2));
+  initial_palette_name = g_value_get_string (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -61,7 +61,7 @@ palettes_popup_invoker (GimpProcedure         *procedure,
           ! gimp_pdb_lookup_procedure (gimp->pdb, palette_callback) ||
           ! gimp_pdb_dialog_new (gimp, context, progress,
                                  gimp_data_factory_get_container (gimp->palette_factory),
-                                 popup_title, palette_callback, initial_palette,
+                                 popup_title, palette_callback, initial_palette_name,
                                  NULL))
         success = FALSE;
     }
@@ -137,8 +137,8 @@ register_palette_select_procs (GimpPDB *pdb)
   gimp_object_set_static_name (GIMP_OBJECT (procedure),
                                "gimp-palettes-popup");
   gimp_procedure_set_static_help (procedure,
-                                  "Invokes the Gimp palette selection.",
-                                  "This procedure opens the palette selection dialog.",
+                                  "Invokes the Gimp palette selection dialog.",
+                                  "Opens a dialog letting a user choose a palette.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",
@@ -147,7 +147,7 @@ register_palette_select_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("palette-callback",
                                                        "palette callback",
-                                                       "The callback PDB proc to call when palette selection is made",
+                                                       "The callback PDB proc to call when user chooses a palette",
                                                        FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -159,9 +159,9 @@ register_palette_select_procs (GimpPDB *pdb)
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
-                               gimp_param_spec_string ("initial-palette",
-                                                       "initial palette",
-                                                       "The name of the palette to set as the first selected",
+                               gimp_param_spec_string ("initial-palette-name",
+                                                       "initial palette name",
+                                                       "The palette to set as the initial choice.",
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
@@ -176,7 +176,7 @@ register_palette_select_procs (GimpPDB *pdb)
                                "gimp-palettes-close-popup");
   gimp_procedure_set_static_help (procedure,
                                   "Close the palette selection dialog.",
-                                  "This procedure closes an opened palette selection dialog.",
+                                  "Closes an open palette selection dialog.",
                                   NULL);
   gimp_procedure_set_static_attribution (procedure,
                                          "Michael Natterer <mitch@gimp.org>",

@@ -33,6 +33,7 @@
 #include <libgimp/gimpbrushselectbutton.h>
 #include <libgimp/gimpdrawablepreview.h>
 #include <libgimp/gimpexport.h>
+#include <libgimp/gimpresourceselectbutton.h>
 #include <libgimp/gimpfontselectbutton.h>
 #include <libgimp/gimpgradientselectbutton.h>
 #include <libgimp/gimpimagecombobox.h>
@@ -43,10 +44,10 @@
 #include <libgimp/gimpproceduredialog.h>
 #include <libgimp/gimpprocview.h>
 #include <libgimp/gimpprogressbar.h>
+#include <libgimp/gimppropchooser.h>
+#include <libgimp/gimppropchooserfactory.h>
 #include <libgimp/gimpsaveproceduredialog.h>
-#include <libgimp/gimpselectbutton.h>
 #include <libgimp/gimpzoompreview.h>
-#include <libgimp/gimppropbrushchooser.h>
 
 #undef __GIMP_UI_H_INSIDE__
 

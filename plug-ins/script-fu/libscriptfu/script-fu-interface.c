@@ -516,11 +516,7 @@ script_fu_interface (SFScript  *script,
 
         case SF_BRUSH:
           left_align = TRUE;
-          widget = gimp_brush_select_button_new (_("Script-Fu Brush Selection"),
-                                                 arg->value.sfa_brush.name,
-                                                 arg->value.sfa_brush.opacity,
-                                                 arg->value.sfa_brush.spacing,
-                                                 arg->value.sfa_brush.paint_mode);
+          widget = gimp_brush_select_button_new (_("Script-Fu Brush Selection"), NULL);
           g_signal_connect_swapped (widget, "brush-set",
                                     G_CALLBACK (script_fu_brush_callback),
                                     &arg->value.sfa_brush);
@@ -640,8 +636,8 @@ script_fu_interface_quit (SFScript *script)
       case SF_PATTERN:
       case SF_GRADIENT:
       case SF_BRUSH:
-        gimp_select_button_close_popup
-          (GIMP_SELECT_BUTTON (sf_interface->widgets[i]));
+        gimp_resource_select_button_close_popup
+          (GIMP_RESOURCE_SELECT_BUTTON (sf_interface->widgets[i]));
         break;
 
       default:
@@ -1016,11 +1012,7 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_BRUSH:
-          gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget),
-                                              value->sfa_brush.name,
-                                              value->sfa_brush.opacity,
-                                              value->sfa_brush.spacing,
-                                              value->sfa_brush.paint_mode);
+          gimp_brush_select_button_set_brush (GIMP_BRUSH_SELECT_BUTTON (widget), NULL);
           break;
 
         case SF_OPTION:

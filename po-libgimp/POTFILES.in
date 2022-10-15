@@ -4,11 +4,8 @@
 libgimp/gimp.c
 libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
-libgimp/gimpfontselectbutton.c
-libgimp/gimpgradientselectbutton.c
 libgimp/gimpimagemetadata.c
 libgimp/gimpimagemetadata-save.c
-libgimp/gimppaletteselectbutton.c
 libgimp/gimppatternselectbutton.c
 libgimp/gimppdb.c
 libgimp/gimpprocbrowserdialog.c

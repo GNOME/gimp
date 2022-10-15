@@ -37,6 +37,7 @@
 #include "vectors/gimpvectors.h"
 
 /* resource types */
+#include "gimpresource.h"
 #include "gimpbrush.h"
 #include "gimpgradient.h"
 #include "gimppalette.h"

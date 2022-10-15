@@ -30,28 +30,29 @@
 /**
  * SECTION: gimppaletteselect
  * @title: gimppaletteselect
- * @short_description: Functions providing a palette selection dialog.
+ * @short_description: Methods of a palette chooser dialog
  *
- * Functions providing a palette selection dialog.
+ * A dialog letting a user choose a palette.  Read more at
+ * gimpfontselect.
  **/
 
 
 /**
  * gimp_palettes_popup:
- * @palette_callback: The callback PDB proc to call when palette selection is made.
+ * @palette_callback: The callback PDB proc to call when user chooses a palette.
  * @popup_title: Title of the palette selection dialog.
- * @initial_palette: The name of the palette to set as the first selected.
+ * @initial_palette_name: The palette to set as the initial choice.
  *
- * Invokes the Gimp palette selection.
+ * Invokes the Gimp palette selection dialog.
  *
- * This procedure opens the palette selection dialog.
+ * Opens a dialog letting a user choose a palette.
  *
  * Returns: TRUE on success.
  **/
 gboolean
 gimp_palettes_popup (const gchar *palette_callback,
                      const gchar *popup_title,
-                     const gchar *initial_palette)
+                     const gchar *initial_palette_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -60,7 +61,7 @@ gimp_palettes_popup (const gchar *palette_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, palette_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_palette,
+                                          G_TYPE_STRING, initial_palette_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -81,7 +82,7 @@ gimp_palettes_popup (const gchar *palette_callback,
  *
  * Close the palette selection dialog.
  *
- * This procedure closes an opened palette selection dialog.
+ * Closes an open palette selection dialog.
  *
  * Returns: TRUE on success.
  **/

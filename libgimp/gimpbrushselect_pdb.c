@@ -30,34 +30,29 @@
 /**
  * SECTION: gimpbrushselect
  * @title: gimpbrushselect
- * @short_description: Functions providing a brush selection dialog.
+ * @short_description: Methods of a font chooser dialog
  *
- * Functions providing a brush selection dialog.
+ * A dialog letting a user choose a brush.  Read more at
+ * gimpfontselect.
  **/
 
 
 /**
  * gimp_brushes_popup:
- * @brush_callback: The callback PDB proc to call when brush selection is made.
+ * @brush_callback: The callback PDB proc to call when user chooses a brush.
  * @popup_title: Title of the brush selection dialog.
- * @initial_brush: The name of the brush to set as the first selected.
- * @opacity: The initial opacity of the brush.
- * @spacing: The initial spacing of the brush (if < 0 then use brush default spacing).
- * @paint_mode: The initial paint mode.
+ * @initial_brush_name: The name of the brush to set as the initial choice.
  *
- * Invokes the Gimp brush selection.
+ * Invokes the GIMP brush selection dialog.
  *
- * This procedure opens the brush selection dialog.
+ * Opens a dialog letting a user choose a brush.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_brushes_popup (const gchar   *brush_callback,
-                    const gchar   *popup_title,
-                    const gchar   *initial_brush,
-                    gdouble        opacity,
-                    gint           spacing,
-                    GimpLayerMode  paint_mode)
+gimp_brushes_popup (const gchar *brush_callback,
+                    const gchar *popup_title,
+                    const gchar *initial_brush_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -66,10 +61,7 @@ gimp_brushes_popup (const gchar   *brush_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, brush_callback,
                                           G_TYPE_STRING, popup_title,
-                                          G_TYPE_STRING, initial_brush,
-                                          G_TYPE_DOUBLE, opacity,
-                                          G_TYPE_INT, spacing,
-                                          GIMP_TYPE_LAYER_MODE, paint_mode,
+                                          G_TYPE_STRING, initial_brush_name,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
@@ -90,7 +82,7 @@ gimp_brushes_popup (const gchar   *brush_callback,
  *
  * Close the brush selection dialog.
  *
- * This procedure closes an opened brush selection dialog.
+ * Closes an open brush selection dialog.
  *
  * Returns: TRUE on success.
  **/
@@ -121,22 +113,16 @@ gimp_brushes_close_popup (const gchar *brush_callback)
  * gimp_brushes_set_popup:
  * @brush_callback: The name of the callback registered for this pop-up.
  * @brush_name: The name of the brush to set as selected.
- * @opacity: The initial opacity of the brush.
- * @spacing: The initial spacing of the brush (if < 0 then use brush default spacing).
- * @paint_mode: The initial paint mode.
  *
- * Sets the current brush in a brush selection dialog.
+ * Sets the selected brush in a brush selection dialog.
  *
- * Sets the current brush in a brush selection dialog.
+ * Sets the selected brush in a brush selection dialog.
  *
  * Returns: TRUE on success.
  **/
 gboolean
-gimp_brushes_set_popup (const gchar   *brush_callback,
-                        const gchar   *brush_name,
-                        gdouble        opacity,
-                        gint           spacing,
-                        GimpLayerMode  paint_mode)
+gimp_brushes_set_popup (const gchar *brush_callback,
+                        const gchar *brush_name)
 {
   GimpValueArray *args;
   GimpValueArray *return_vals;
@@ -145,9 +131,6 @@ gimp_brushes_set_popup (const gchar   *brush_callback,
   args = gimp_value_array_new_from_types (NULL,
                                           G_TYPE_STRING, brush_callback,
                                           G_TYPE_STRING, brush_name,
-                                          G_TYPE_DOUBLE, opacity,
-                                          G_TYPE_INT, spacing,
-                                          GIMP_TYPE_LAYER_MODE, paint_mode,
                                           G_TYPE_NONE);
 
   return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),

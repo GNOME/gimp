@@ -30,7 +30,7 @@
 struct _Style
 {
   gchar     *name;
-  gchar     *brush_name;
+  GimpBrush *brush;
   gint       brush_width;
   gint       brush_height;
   gint       brush_spacing;

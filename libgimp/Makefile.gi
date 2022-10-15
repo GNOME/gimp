@@ -112,14 +112,11 @@ libgimp_introspectable_headers = \
 	../libgimp/gimpenums.h			\
 	${PDB_WRAPPERS_H}			\
 	../libgimp/gimpbatchprocedure.h		\
-	../libgimp/gimpbrushselect.h		\
 	../libgimp/gimpchannel.h		\
 	../libgimp/gimpdisplay.h		\
 	../libgimp/gimpdrawable.h		\
 	../libgimp/gimpfileprocedure.h		\
-	../libgimp/gimpfontselect.h		\
 	../libgimp/gimpgimprc.h			\
-	../libgimp/gimpgradientselect.h		\
 	../libgimp/gimpimage.h			\
 	../libgimp/gimpimagecolorprofile.h	\
 	../libgimp/gimpimagemetadata.h		\
@@ -128,16 +125,15 @@ libgimp_introspectable_headers = \
 	../libgimp/gimplayer.h			\
 	../libgimp/gimplayermask.h		\
 	../libgimp/gimploadprocedure.h		\
-	../libgimp/gimppaletteselect.h		\
 	../libgimp/gimpparamspecs.h		\
 	../libgimp/gimpparamspecs-resource.h	\
-	../libgimp/gimppatternselect.h		\
 	../libgimp/gimppdb.h			\
 	../libgimp/gimpplugin.h			\
 	../libgimp/gimpprocedure.h		\
 	../libgimp/gimpprocedureconfig.h	\
 	../libgimp/gimpprogress.h		\
 	../libgimp/gimpresource.h		\
+	../libgimp/gimpresourceselect.h		\
 	../libgimp/gimpresource-subclass.h	\
 	../libgimp/gimpsaveprocedure.h		\
 	../libgimp/gimpselection.h		\
@@ -151,14 +147,11 @@ libgimp_introspectable = \
 	../libgimp/gimp.c			\
 	${PDB_WRAPPERS_C}			\
 	../libgimp/gimpbatchprocedure.c		\
-	../libgimp/gimpbrushselect.c		\
 	../libgimp/gimpchannel.c		\
 	../libgimp/gimpdisplay.c		\
 	../libgimp/gimpdrawable.c		\
 	../libgimp/gimpfileprocedure.c		\
-	../libgimp/gimpfontselect.c		\
 	../libgimp/gimpgimprc.c			\
-	../libgimp/gimpgradientselect.c		\
 	../libgimp/gimpimage.c			\
 	../libgimp/gimpimagecolorprofile.c	\
 	../libgimp/gimpimagemetadata.c		\
@@ -168,15 +161,14 @@ libgimp_introspectable = \
 	../libgimp/gimplayer.c			\
 	../libgimp/gimplayermask.c		\
 	../libgimp/gimploadprocedure.c		\
-	../libgimp/gimppaletteselect.c		\
 	../libgimp/gimpparamspecs.c		\
-	../libgimp/gimppatternselect.c		\
 	../libgimp/gimppdb.c			\
 	../libgimp/gimpplugin.c			\
 	../libgimp/gimpprocedure.c		\
 	../libgimp/gimpprocedureconfig.c	\
 	../libgimp/gimpprogress.c		\
 	../libgimp/gimpresource.c		\
+	../libgimp/gimpresourceselect.c		\
 	../libgimp/gimpresource-subclass.c	\
 	../libgimp/gimpsaveprocedure.c		\
 	../libgimp/gimpselection.c		\
@@ -201,9 +193,10 @@ libgimpui_introspectable_headers = \
 	../libgimp/gimpproceduredialog.h	\
 	../libgimp/gimpprocview.h		\
 	../libgimp/gimpprogressbar.h		\
-	../libgimp/gimppropbrushchooser.h	\
+	../libgimp/gimppropchooser.h		\
+	../libgimp/gimppropchooserfactory.h	\
+	../libgimp/gimpresourceselectbutton.h	\
 	../libgimp/gimpsaveproceduredialog.h	\
-	../libgimp/gimpselectbutton.h		\
 	../libgimp/gimpzoompreview.h
 
 libgimpui_introspectable = \
@@ -222,8 +215,9 @@ libgimpui_introspectable = \
 	../libgimp/gimpprocbrowserdialog.c	\
 	../libgimp/gimpproceduredialog.c	\
 	../libgimp/gimpprocview.c		\
-	../libgimp/gimppropbrushchooser.c	\
+	../libgimp/gimppropchooser.c		\
+	../libgimp/gimppropchooserfactory.c	\
 	../libgimp/gimpsaveproceduredialog.c	\
 	../libgimp/gimpprogressbar.c		\
-	../libgimp/gimpselectbutton.c		\
+	../libgimp/gimpresourceselectbutton.c	\
 	../libgimp/gimpzoompreview.c

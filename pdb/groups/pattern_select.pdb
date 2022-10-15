@@ -18,18 +18,17 @@
 
 sub patterns_popup {
     $blurb = 'Invokes the Gimp pattern selection.';
-    $help  = 'This procedure opens the pattern selection dialog.';
+    $help  = 'Opens the pattern selection dialog.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string', non_empty => 1,
-	  desc => 'The callback PDB proc to call when pattern selection is
-		   made' },
-	{ name => 'popup_title', type => 'string',
-	  desc => 'Title of the pattern selection dialog' },
-	{ name => 'initial_pattern', type => 'string', null_ok => 1,
-	  desc => 'The name of the pattern to set as the first selected' }
+      { name => 'pattern_callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when the user chooses a pattern' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the pattern selection dialog' },
+      { name => 'initial_pattern_name', type => 'string', null_ok => 1,
+        desc => 'The name of the pattern to set as the initial choice' }
     );
 
     %invoke = (
@@ -39,7 +38,7 @@ sub patterns_popup {
       ! gimp_pdb_lookup_procedure (gimp->pdb, pattern_callback) ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->pattern_factory),
-                             popup_title, pattern_callback, initial_pattern,
+                             popup_title, pattern_callback, initial_pattern_name,
                              NULL))
     success = FALSE;
 }
@@ -49,13 +48,13 @@ CODE
 
 sub patterns_close_popup {
     $blurb = 'Close the pattern selection dialog.';
-    $help  = 'This procedure closes an opened pattern selection dialog.';
+    $help  = 'Closes an open pattern selection dialog.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' }
+      { name => 'pattern_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -78,10 +77,10 @@ sub patterns_set_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' },
-	{ name => 'pattern_name', type => 'string',
-	  desc => 'The name of the pattern to set as selected' }
+      { name => 'pattern_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered for this pop-up' },
+      { name => 'pattern_name', type => 'string',
+        desc => 'The name of the pattern to set as selected' }
     );
 
     %invoke = (
@@ -110,7 +109,7 @@ CODE
 
 $desc = 'Pattern UI';
 $doc_title = 'gimppatternselect';
-$doc_short_desc = 'Functions providing a pattern selection dialog.';
-$doc_long_desc = 'Functions providing a pattern selection dialog.';
+$doc_short_desc = 'Methods of a pattern chooser dialog';
+$doc_long_desc = 'A dialog letting a user choose a pattern.  Read more at gimpfontselect.';
 
 1;

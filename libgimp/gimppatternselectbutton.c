@@ -19,6 +19,10 @@
  * <https://www.gnu.org/licenses/>.
  */
 
+/* Similar to gimpbrushselectbutton.c.
+ * FUTURE: inherit or share common code.
+ */
+
 #include "config.h"
 
 #include <gegl.h>
@@ -38,301 +42,244 @@
 /**
  * SECTION: gimppatternselectbutton
  * @title: GimpPatternSelectButton
- * @short_description: A button which pops up a pattern select dialog.
+ * @short_description: A button which pops up a pattern selection dialog.
  *
- * A button which pops up a pattern select dialog.
+ * A button which pops up a pattern selection dialog.
  **/
-
 
 #define CELL_SIZE 20
 
-
-#define GET_PRIVATE(obj) (((GimpPatternSelectButtonPrivate *) (obj))->priv)
-
-struct _GimpPatternSelectButtonPrivate
+/* An image. pixelels is allocated and must be freed. */
+typedef struct _PreviewImage
 {
-  gchar     *title;
+  gint           width;
+  gint           height;
+  gint           bpp;
+  guchar        *pixelels;
+} _PreviewImage;
 
-  gchar     *pattern_name;      /* Local copy */
-  gint       width;
-  gint       height;
-  gint       bytes;
-  guchar    *mask_data;         /* local copy */
+struct _GimpPatternSelectButton
+{
+  /* !! Not a pointer, is contained. */
+  GimpResourceSelectButton parent_instance;
 
-  GtkWidget *inside;
-  GtkWidget *preview;
-  GtkWidget *popup;
+  /* Partial view of pattern image. Receives drag.  Receives mouse down to popup zoom. */
+  GtkWidget     *peephole_view;
+  GtkWidget     *popup;         /* Popup showing entire, full-size pattern image. */
+  GtkWidget     *browse_button; /* Clickable area that popups remote chooser. */
 };
 
-enum
-{
-  PATTERN_SET,
-  LAST_SIGNAL
-};
+/*  local  */
 
-enum
-{
-  PROP_0,
-  PROP_TITLE,
-  PROP_PATTERN_NAME,
-  N_PROPS
-};
+/* implement virtual. */
+static void gimp_pattern_select_button_finalize        (GObject                  *object);
+static void gimp_pattern_select_button_draw_interior   (GimpResourceSelectButton *self);
 
+/* init methods. */
+static GtkWidget *gimp_pattern_select_button_create_interior (GimpPatternSelectButton *self);
 
-/*  local function prototypes  */
+/* Event handlers. */
+static void     gimp_pattern_select_on_preview_resize  (GimpPatternSelectButton *button);
+static gboolean gimp_pattern_select_on_preview_events  (GtkWidget               *widget,
+                                                        GdkEvent                *event,
+                                                        GimpPatternSelectButton *button);
 
-static void   gimp_pattern_select_button_finalize     (GObject      *object);
+/* local drawing methods. */
+static void     gimp_pattern_select_preview_draw      (GimpPreviewArea      *area,
+                                                       gint                  x,
+                                                       gint                  y,
+                                                       _PreviewImage         image,
+                                                       gint                  rowstride);
+static void     gimp_pattern_select_preview_fill_draw (GtkWidget             *preview,
+                                                       _PreviewImage         image);
 
-static void   gimp_pattern_select_button_set_property (GObject      *object,
-                                                       guint         property_id,
-                                                       const GValue *value,
-                                                       GParamSpec   *pspec);
-static void   gimp_pattern_select_button_get_property (GObject      *object,
-                                                       guint         property_id,
-                                                       GValue       *value,
-                                                       GParamSpec   *pspec);
+static void          gimp_pattern_select_button_draw              (GimpPatternSelectButton *self);
+static _PreviewImage gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self);
 
-static void   gimp_pattern_select_button_clicked  (GimpPatternSelectButton *button);
-
-static void   gimp_pattern_select_button_callback (const gchar  *pattern_name,
-                                                   gint          width,
-                                                   gint          height,
-                                                   gint          bytes,
-                                                   const guchar *mask_data,
-                                                   gboolean      dialog_closing,
-                                                   gpointer      user_data);
-
-static void     gimp_pattern_select_preview_resize  (GimpPatternSelectButton *button);
-static gboolean gimp_pattern_select_preview_events  (GtkWidget               *widget,
-                                                     GdkEvent                *event,
-                                                     GimpPatternSelectButton *button);
-static void     gimp_pattern_select_preview_update  (GtkWidget               *preview,
-                                                     gint                     width,
-                                                     gint                     height,
-                                                     gint                     bytes,
-                                                     const guchar            *mask_data);
-
+/* Popup methods. */
 static void     gimp_pattern_select_button_open_popup  (GimpPatternSelectButton *button,
                                                         gint                     x,
                                                         gint                     y);
 static void     gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button);
 
-static void   gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
-                                                      GdkDragContext          *context,
-                                                      gint                     x,
-                                                      gint                     y,
-                                                      GtkSelectionData        *selection,
-                                                      guint                    info,
-                                                      guint                    time);
-
-static GtkWidget * gimp_pattern_select_button_create_inside (GimpPatternSelectButton *button);
 
 
-static const GtkTargetEntry target = { "application/x-gimp-pattern-name", 0 };
 
-static guint pattern_button_signals[LAST_SIGNAL] = { 0 };
-static GParamSpec *pattern_button_props[N_PROPS] = { NULL, };
+/* A GtkTargetEntry has a string and two ints.
+ * This is one, but we treat it as an array.
+ */
+static const GtkTargetEntry drag_target = { "application/x-gimp-pattern-name", 0, 0 };
 
-
-G_DEFINE_TYPE_WITH_PRIVATE (GimpPatternSelectButton, gimp_pattern_select_button,
-                            GIMP_TYPE_SELECT_BUTTON)
+G_DEFINE_FINAL_TYPE (GimpPatternSelectButton,
+                     gimp_pattern_select_button,
+                     GIMP_TYPE_RESOURCE_SELECT_BUTTON)
 
 
 static void
 gimp_pattern_select_button_class_init (GimpPatternSelectButtonClass *klass)
 {
-  GObjectClass          *object_class        = G_OBJECT_CLASS (klass);
-  GimpSelectButtonClass *select_button_class = GIMP_SELECT_BUTTON_CLASS (klass);
+  /* Alias cast klass to super classes. */
+  GObjectClass                  *object_class  = G_OBJECT_CLASS (klass);
+  GimpResourceSelectButtonClass *superclass    = GIMP_RESOURCE_SELECT_BUTTON_CLASS (klass);
+
+  g_debug ("%s called", G_STRFUNC);
 
   object_class->finalize     = gimp_pattern_select_button_finalize;
-  object_class->set_property = gimp_pattern_select_button_set_property;
-  object_class->get_property = gimp_pattern_select_button_get_property;
 
-  select_button_class->select_destroy = gimp_pattern_select_destroy;
+  /* Implement pure virtual functions. */
+  superclass->draw_interior = gimp_pattern_select_button_draw_interior;
 
-  klass->pattern_set = NULL;
+  /* Set data member of class. */
+  superclass->resource_type = GIMP_TYPE_PATTERN;
 
-  /**
-   * GimpPatternSelectButton:title:
-   *
-   * The title to be used for the pattern selection popup dialog.
-   *
-   * Since: 2.4
+  /* We don't define property getter/setters: use superclass getter/setters.
+   * But super property name is "resource", not "pattern"
    */
-  pattern_button_props[PROP_TITLE] = g_param_spec_string ("title",
-                                                          "Title",
-                                                          "The title to be used for the pattern selection popup dialog",
-                                                          _("Pattern Selection"),
-                                                          GIMP_PARAM_READWRITE |
-                                                          G_PARAM_CONSTRUCT_ONLY);
-
-  /**
-   * GimpPatternSelectButton:pattern-name:
-   *
-   * The name of the currently selected pattern.
-   *
-   * Since: 2.4
-   */
-  pattern_button_props[PROP_PATTERN_NAME] = g_param_spec_string ("pattern-name",
-                                                                 "Pattern name",
-                                                                 "The name of the currently selected pattern",
-                                                                 NULL,
-                                                                 GIMP_PARAM_READWRITE);
-
-  g_object_class_install_properties (object_class, N_PROPS, pattern_button_props);
-
-  /**
-   * GimpPatternSelectButton::pattern-set:
-   * @widget: the object which received the signal.
-   * @pattern_name: the name of the currently selected pattern.
-   * @width: width of the pattern
-   * @height: height of the pattern
-   * @bpp: bpp of the pattern
-   * @mask_data: pattern mask data
-   * @dialog_closing: whether the dialog was closed or not.
-   *
-   * The ::pattern-set signal is emitted when the user selects a pattern.
-   *
-   * Since: 2.4
-   */
-  pattern_button_signals[PATTERN_SET] =
-    g_signal_new ("pattern-set",
-                  G_TYPE_FROM_CLASS (klass),
-                  G_SIGNAL_RUN_FIRST,
-                  G_STRUCT_OFFSET (GimpPatternSelectButtonClass, pattern_set),
-                  NULL, NULL,
-                  _gimpui_marshal_VOID__STRING_INT_INT_INT_POINTER_BOOLEAN,
-                  G_TYPE_NONE, 6,
-                  G_TYPE_STRING,
-                  G_TYPE_INT,
-                  G_TYPE_INT,
-                  G_TYPE_INT,
-                  G_TYPE_POINTER,
-                  G_TYPE_BOOLEAN);
 }
 
 static void
-gimp_pattern_select_button_init (GimpPatternSelectButton *button)
+gimp_pattern_select_button_init (GimpPatternSelectButton *self)
 {
-  gint mask_data_size;
+  GtkWidget *interior;
 
-  button->priv = gimp_pattern_select_button_get_instance_private (button);
+  g_debug ("%s called", G_STRFUNC);
 
-  button->priv->pattern_name = gimp_context_get_pattern ();
-  gimp_pattern_get_pixels (button->priv->pattern_name,
-                           &button->priv->width,
-                           &button->priv->height,
-                           &button->priv->bytes,
-                           &mask_data_size,
-                           &button->priv->mask_data);
+  /* Specialize:
+   *     - embed our widget interior instance to super widget instance.
+   *     - connect our widget to dnd
+   * These will call superclass methods.
+   * These are on instance, not our subclass.
+   */
+  interior = gimp_pattern_select_button_create_interior (self);
 
-  button->priv->inside = gimp_pattern_select_button_create_inside (button);
-  gtk_container_add (GTK_CONTAINER (button), button->priv->inside);
+  gimp_resource_select_button_embed_interior (GIMP_RESOURCE_SELECT_BUTTON (self), interior);
+
+  /* Self knows the GtkTargetEntry, super knows how to create target and receive drag. */
+  /* Only the peephole_view receives drag. */
+  gimp_resource_select_button_set_drag_target (GIMP_RESOURCE_SELECT_BUTTON (self),
+                                               self->peephole_view,
+                                               &drag_target);
+
+  /* Tell super which sub widget pops up remote chooser.
+   * Only the browse_button.
+   * A click in the peephole_view does something else: popup a zoom.
+   */
+  gimp_resource_select_button_set_clickable (GIMP_RESOURCE_SELECT_BUTTON (self),
+                                             self->browse_button);
 }
 
 /**
  * gimp_pattern_select_button_new:
  * @title: (nullable): Title of the dialog to use or %NULL to use the default title.
- * @pattern_name: (nullable): Initial pattern name or %NULL to use current selection.
+ * @resource: (nullable): Initial pattern.
  *
- * Creates a new #GtkWidget that completely controls the selection of
- * a pattern.  This widget is suitable for placement in a table in a
- * plug-in dialog.
+ * Creates a new #GtkWidget that lets a user choose a pattern.
+ * You can put this widget in a table in a plug-in dialog.
+ *
+ * When pattern is NULL, initial choice is from context.
  *
  * Returns: A #GtkWidget that you can use in your UI.
  *
  * Since: 2.4
  */
 GtkWidget *
-gimp_pattern_select_button_new (const gchar *title,
-                                const gchar *pattern_name)
+gimp_pattern_select_button_new (const gchar  *title,
+                             GimpResource *resource)
 {
-  GtkWidget *button;
+  GtkWidget *self;
 
-  if (title)
-    button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
-                           "title",        title,
-                           "pattern-name", pattern_name,
-                           NULL);
-  else
-    button = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
-                           "pattern-name", pattern_name,
-                           NULL);
+  g_debug ("%s called", G_STRFUNC);
 
-  return button;
+  if (resource == NULL)
+    {
+      g_debug ("%s defaulting pattern from context", G_STRFUNC);
+      resource = GIMP_RESOURCE (gimp_context_get_pattern ());
+    }
+  g_assert (resource != NULL);
+  /* This method is polymorphic, so a factory can call it, but requires Pattern. */
+  g_return_val_if_fail (GIMP_IS_PATTERN (resource), NULL);
+
+  /* Create instance of self (not super.)
+   * This will call superclass init, self class init, superclass init, and instance init.
+   * Self subclass class_init will specialize by implementing virtual funcs
+   * that open and set remote chooser dialog, and that draw self interior.
+   *
+   * !!! property belongs to superclass and is named "resource"
+   */
+   if (title)
+     self = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
+                          "title",     title,
+                          "resource",  resource,
+                          NULL);
+   else
+     self = g_object_new (GIMP_TYPE_PATTERN_SELECT_BUTTON,
+                          "resource",  resource,
+                          NULL);
+
+  /* We don't subscribe to events from super.
+   * Super will queue a draw when it's resource changes.
+   * Except that the above setting of property happens too late,
+   * so we now draw the initial resource.
+   */
+
+  /* Draw it with the initial resource.
+   * Easier to call draw method than to queue a draw.
+   *
+   * Cast self from Widget.
+   */
+  gimp_pattern_select_button_draw_interior (GIMP_RESOURCE_SELECT_BUTTON (self));
+
+  g_debug ("%s returns", G_STRFUNC);
+
+  return self;
 }
+
+
+/* Getter and setter.
+ * We could omit these, and use only the superclass methods.
+ * But script-fu-interface.c uses these, until FUTURE.
+ */
 
 /**
  * gimp_pattern_select_button_get_pattern:
- * @button: A #GimpPatternSelectButton
+ * @self: A #GimpPatternSelectButton
  *
- * Retrieves the name of currently selected pattern.
+ * Gets the currently selected pattern.
  *
- * Returns: an internal copy of the pattern name which must not be freed.
+ * Returns: (transfer none): an internal copy of the pattern which must not be freed.
  *
  * Since: 2.4
  */
-const gchar *
-gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *button)
+GimpPattern *
+gimp_pattern_select_button_get_pattern (GimpPatternSelectButton *self)
 {
-  g_return_val_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (button), NULL);
+  g_return_val_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self), NULL);
 
-  return button->priv->pattern_name;
+  /* Delegate to super w upcast arg and downcast result. */
+  return (GimpPattern *) gimp_resource_select_button_get_resource ((GimpResourceSelectButton*) self);
 }
 
 /**
  * gimp_pattern_select_button_set_pattern:
- * @button: A #GimpPatternSelectButton
- * @pattern_name: (nullable): Pattern name to set; %NULL means no change.
+ * @self: A #GimpPatternSelectButton
+ * @pattern: Pattern to set.
  *
- * Sets the current pattern for the pattern select button.
+ * Sets the currently selected pattern.
+ * Usually you should not call this; the user is in charge.
+ * Changes the selection in both the button and it's popup chooser.
  *
  * Since: 2.4
  */
 void
-gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
-                                        const gchar             *pattern_name)
+gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *self,
+                                  GimpPattern             *pattern)
 {
-  GimpSelectButton *select_button;
+  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self));
 
-  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (button));
+  g_debug ("%s", G_STRFUNC);
 
-  select_button = GIMP_SELECT_BUTTON (button);
-
-  if (select_button->temp_callback)
-    {
-      gimp_patterns_set_popup (select_button->temp_callback, pattern_name);
-    }
-  else
-    {
-      gchar  *name;
-      gint    width;
-      gint    height;
-      gint    bytes;
-      gint    mask_data_size;
-      guint8 *mask_data;
-
-      if (pattern_name && *pattern_name)
-        name = g_strdup (pattern_name);
-      else
-        name = gimp_context_get_pattern ();
-
-      if (gimp_pattern_get_pixels (name,
-                                   &width,
-                                   &height,
-                                   &bytes,
-                                   &mask_data_size,
-                                   &mask_data))
-        {
-          gimp_pattern_select_button_callback (name,
-                                               width, height, bytes, mask_data,
-                                               FALSE, button);
-
-          g_free (mask_data);
-        }
-
-      g_free (name);
-    }
+  /* Delegate to super with upcasts */
+  gimp_resource_select_button_set_resource (GIMP_RESOURCE_SELECT_BUTTON (self), GIMP_RESOURCE (pattern));
 }
 
 
@@ -341,305 +288,28 @@ gimp_pattern_select_button_set_pattern (GimpPatternSelectButton *button,
 static void
 gimp_pattern_select_button_finalize (GObject *object)
 {
-  GimpPatternSelectButton *button = GIMP_PATTERN_SELECT_BUTTON (object);
+  g_debug ("%s called", G_STRFUNC);
 
-  g_clear_pointer (&button->priv->pattern_name, g_free);
-  g_clear_pointer (&button->priv->mask_data,    g_free);
-  g_clear_pointer (&button->priv->title,        g_free);
+  /* Has no allocations.*/
 
+  /* Chain up. */
   G_OBJECT_CLASS (gimp_pattern_select_button_parent_class)->finalize (object);
 }
 
-static void
-gimp_pattern_select_button_set_property (GObject      *object,
-                                         guint         property_id,
-                                         const GValue *value,
-                                         GParamSpec   *pspec)
-{
-  GimpPatternSelectButton *button = GIMP_PATTERN_SELECT_BUTTON (object);
 
-  switch (property_id)
-    {
-    case PROP_TITLE:
-      button->priv->title = g_value_dup_string (value);
-      break;
-
-    case PROP_PATTERN_NAME:
-      gimp_pattern_select_button_set_pattern (button,
-                                              g_value_get_string (value));
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_pattern_select_button_get_property (GObject    *object,
-                                         guint       property_id,
-                                         GValue     *value,
-                                         GParamSpec *pspec)
-{
-  GimpPatternSelectButton *button = GIMP_PATTERN_SELECT_BUTTON (object);
-
-  switch (property_id)
-    {
-    case PROP_TITLE:
-      g_value_set_string (value, button->priv->title);
-      break;
-
-    case PROP_PATTERN_NAME:
-      g_value_set_string (value, button->priv->pattern_name);
-      break;
-
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
-}
-
-static void
-gimp_pattern_select_button_callback (const gchar  *pattern_name,
-                                     gint          width,
-                                     gint          height,
-                                     gint          bytes,
-                                     const guchar *mask_data,
-                                     gboolean      dialog_closing,
-                                     gpointer      user_data)
-{
-  GimpPatternSelectButton *button        = user_data;
-  GimpSelectButton        *select_button = GIMP_SELECT_BUTTON (button);
-
-  g_free (button->priv->pattern_name);
-  g_free (button->priv->mask_data);
-
-  button->priv->pattern_name = g_strdup (pattern_name);
-  button->priv->width        = width;
-  button->priv->height       = height;
-  button->priv->bytes        = bytes;
-  button->priv->mask_data    = g_memdup2 (mask_data, width * height * bytes);
-
-  gimp_pattern_select_preview_update (button->priv->preview,
-                                      width, height, bytes, mask_data);
-
-  if (dialog_closing)
-    select_button->temp_callback = NULL;
-
-  g_signal_emit (button, pattern_button_signals[PATTERN_SET], 0,
-                 pattern_name, width, height, bytes, dialog_closing);
-  g_object_notify_by_pspec (G_OBJECT (button), pattern_button_props[PROP_PATTERN_NAME]);
-}
-
-static void
-gimp_pattern_select_button_clicked (GimpPatternSelectButton *button)
-{
-  GimpSelectButton *select_button = GIMP_SELECT_BUTTON (button);
-
-  if (select_button->temp_callback)
-    {
-      /*  calling gimp_patterns_set_popup() raises the dialog  */
-      gimp_patterns_set_popup (select_button->temp_callback,
-                               button->priv->pattern_name);
-    }
-  else
-    {
-      select_button->temp_callback =
-        gimp_pattern_select_new (button->priv->title,
-                                 button->priv->pattern_name,
-                                 gimp_pattern_select_button_callback,
-                                 button, NULL);
-    }
-}
-
-static void
-gimp_pattern_select_preview_resize (GimpPatternSelectButton *button)
-{
-  if (button->priv->width > 0 && button->priv->height > 0)
-    gimp_pattern_select_preview_update (button->priv->preview,
-                                        button->priv->width,
-                                        button->priv->height,
-                                        button->priv->bytes,
-                                        button->priv->mask_data);
-}
-
-static gboolean
-gimp_pattern_select_preview_events (GtkWidget               *widget,
-                                    GdkEvent                *event,
-                                    GimpPatternSelectButton *button)
-{
-  GdkEventButton *bevent;
-
-  if (button->priv->mask_data)
-    {
-      switch (event->type)
-        {
-        case GDK_BUTTON_PRESS:
-          bevent = (GdkEventButton *) event;
-
-          if (bevent->button == 1)
-            {
-              gtk_grab_add (widget);
-              gimp_pattern_select_button_open_popup (button,
-                                                     bevent->x, bevent->y);
-            }
-          break;
-
-        case GDK_BUTTON_RELEASE:
-          bevent = (GdkEventButton *) event;
-
-          if (bevent->button == 1)
-            {
-              gtk_grab_remove (widget);
-              gimp_pattern_select_button_close_popup (button);
-            }
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  return FALSE;
-}
-
-static void
-gimp_pattern_select_preview_update (GtkWidget    *preview,
-                                    gint          width,
-                                    gint          height,
-                                    gint          bytes,
-                                    const guchar *mask_data)
-{
-  GimpImageType type;
-
-  switch (bytes)
-    {
-    case 1:  type = GIMP_GRAY_IMAGE;   break;
-    case 2:  type = GIMP_GRAYA_IMAGE;  break;
-    case 3:  type = GIMP_RGB_IMAGE;    break;
-    case 4:  type = GIMP_RGBA_IMAGE;   break;
-    default:
-      return;
-    }
-
-  gimp_preview_area_draw (GIMP_PREVIEW_AREA (preview),
-                          0, 0, width, height,
-                          type,
-                          mask_data,
-                          width * bytes);
-}
-
-static void
-gimp_pattern_select_button_open_popup (GimpPatternSelectButton *button,
-                                       gint                     x,
-                                       gint                     y)
-{
-  GimpPatternSelectButtonPrivate *priv = button->priv;
-  GtkWidget                      *frame;
-  GtkWidget                      *preview;
-  GdkMonitor                    *monitor;
-  GdkRectangle                   workarea;
-  gint                            x_org;
-  gint                            y_org;
-
-  if (priv->popup)
-    gimp_pattern_select_button_close_popup (button);
-
-  if (priv->width <= CELL_SIZE && priv->height <= CELL_SIZE)
-    return;
-
-  priv->popup = gtk_window_new (GTK_WINDOW_POPUP);
-  gtk_window_set_type_hint (GTK_WINDOW (priv->popup), GDK_WINDOW_TYPE_HINT_DND);
-  gtk_window_set_screen (GTK_WINDOW (priv->popup),
-                         gtk_widget_get_screen (GTK_WIDGET (button)));
-
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-  gtk_container_add (GTK_CONTAINER (priv->popup), frame);
-  gtk_widget_show (frame);
-
-  preview = gimp_preview_area_new ();
-  gtk_widget_set_size_request (preview, priv->width, priv->height);
-  gtk_container_add (GTK_CONTAINER (frame), preview);
-  gtk_widget_show (preview);
-
-  /* decide where to put the popup */
-  gdk_window_get_origin (gtk_widget_get_window (priv->preview),
-                         &x_org, &y_org);
-
-  monitor = gimp_widget_get_monitor (GTK_WIDGET (button));
-  gdk_monitor_get_workarea (monitor, &workarea);
-
-  x = x_org + x - (priv->width  / 2);
-  y = y_org + y - (priv->height / 2);
-
-  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - priv->width);
-  y = CLAMP (y, workarea.y, workarea.y + workarea.height - priv->height);
-
-  gtk_window_move (GTK_WINDOW (priv->popup), x, y);
-
-  gtk_widget_show (priv->popup);
-
-  /*  Draw the pattern  */
-  gimp_pattern_select_preview_update (preview,
-                                      priv->width,
-                                      priv->height,
-                                      priv->bytes,
-                                      priv->mask_data);
-}
-
-static void
-gimp_pattern_select_button_close_popup (GimpPatternSelectButton *button)
-{
-  g_clear_pointer (&button->priv->popup, gtk_widget_destroy);
-}
-
-static void
-gimp_pattern_select_drag_data_received (GimpPatternSelectButton *button,
-                                        GdkDragContext          *context,
-                                        gint                     x,
-                                        gint                     y,
-                                        GtkSelectionData        *selection,
-                                        guint                    info,
-                                        guint                    time)
-{
-  gint   length = gtk_selection_data_get_length (selection);
-  gchar *str;
-
-  if (gtk_selection_data_get_format (selection) != 8 || length < 1)
-    {
-      g_warning ("Received invalid pattern data!");
-      return;
-    }
-
-  str = g_strndup ((const gchar *) gtk_selection_data_get_data (selection),
-                   length);
-
-  if (g_utf8_validate (str, -1, NULL))
-    {
-      gint     pid;
-      gpointer unused;
-      gint     name_offset = 0;
-
-      if (sscanf (str, "%i:%p:%n", &pid, &unused, &name_offset) >= 2 &&
-          pid == gimp_getpid () && name_offset > 0)
-        {
-          gchar *name = str + name_offset;
-
-          gimp_pattern_select_button_set_pattern (button, name);
-        }
-    }
-
-  g_free (str);
-}
-
+/* Create a widget that is the interior of another widget, a GimpPatternSelectButton.
+ * Super creates the exterior, self creates interior.
+ * Exterior is-a container and self calls super to add interior to the container.
+ */
 static GtkWidget *
-gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_button)
+gimp_pattern_select_button_create_interior (GimpPatternSelectButton *self)
 {
-  GimpPatternSelectButtonPrivate *priv = pattern_button->priv;
-  GtkWidget                      *hbox;
-  GtkWidget                      *frame;
-  GtkWidget                      *button;
+  GtkWidget *hbox;
+  GtkWidget *frame;
+  GtkWidget *peephole_view;
+  GtkWidget *browse_button;
+
+  g_debug ("%s", G_STRFUNC);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
 
@@ -647,38 +317,291 @@ gimp_pattern_select_button_create_inside (GimpPatternSelectButton *pattern_butto
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (hbox), frame, FALSE, FALSE, 0);
 
-  priv->preview = gimp_preview_area_new ();
-  gtk_widget_add_events (priv->preview,
+  peephole_view = gimp_preview_area_new ();
+  gtk_widget_add_events (peephole_view,
                          GDK_BUTTON_PRESS_MASK | GDK_BUTTON_RELEASE_MASK);
-  gtk_widget_set_size_request (priv->preview, CELL_SIZE, CELL_SIZE);
-  gtk_container_add (GTK_CONTAINER (frame), priv->preview);
+  gtk_widget_set_size_request (peephole_view, CELL_SIZE, CELL_SIZE);
+  gtk_container_add (GTK_CONTAINER (frame), peephole_view);
 
-  g_signal_connect_swapped (priv->preview, "size-allocate",
-                            G_CALLBACK (gimp_pattern_select_preview_resize),
-                            pattern_button);
-  g_signal_connect (priv->preview, "event",
-                    G_CALLBACK (gimp_pattern_select_preview_events),
-                    pattern_button);
+  g_signal_connect_swapped (peephole_view, "size-allocate",
+                            G_CALLBACK (gimp_pattern_select_on_preview_resize),
+                            self);
 
-  gtk_drag_dest_set (GTK_WIDGET (priv->preview),
-                     GTK_DEST_DEFAULT_HIGHLIGHT |
-                     GTK_DEST_DEFAULT_MOTION |
-                     GTK_DEST_DEFAULT_DROP,
-                     &target, 1,
-                     GDK_ACTION_COPY);
+  /* preview receives mouse events to popup and down. */
+  g_signal_connect (peephole_view, "event",
+                    G_CALLBACK (gimp_pattern_select_on_preview_events),
+                    self);
 
-  g_signal_connect_swapped (priv->preview, "drag-data-received",
-                            G_CALLBACK (gimp_pattern_select_drag_data_received),
-                            pattern_button);
-
-  button = gtk_button_new_with_mnemonic (_("_Browse..."));
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gimp_pattern_select_button_clicked),
-                            pattern_button);
+  browse_button = gtk_button_new_with_mnemonic (_("_Browse..."));
+  gtk_box_pack_start (GTK_BOX (hbox), browse_button, TRUE, TRUE, 0);
 
   gtk_widget_show_all (hbox);
 
+  /* Ensure self knows sub widgets. */
+  self->peephole_view = peephole_view;
+  self->browse_button = browse_button;
+
+  /* Return the whole, it is not a button, only contains a button. */
   return hbox;
+}
+
+
+/* Knows how to draw self interior.
+ * Self knows resource, it is not passed.
+ *
+ * Overrides virtual method in super, so it is generic on Resource.
+ */
+static void
+gimp_pattern_select_button_draw_interior (GimpResourceSelectButton *self)
+{
+  g_debug ("%s", G_STRFUNC);
+
+  g_return_if_fail (GIMP_IS_PATTERN_SELECT_BUTTON (self));
+
+  gimp_pattern_select_button_draw (GIMP_PATTERN_SELECT_BUTTON (self));
+}
+
+
+/* Draw self.
+ *
+ * This knows that we only draw the peephole_view. Gtk draws the browse button.
+ */
+static void
+gimp_pattern_select_button_draw (GimpPatternSelectButton *self)
+{
+  _PreviewImage image;
+
+  g_debug ("%s", G_STRFUNC);
+
+  /* Draw the peephole. */
+  image = gimp_pattern_select_button_get_pattern_image (self);
+  gimp_pattern_select_preview_fill_draw (self->peephole_view, image);
+  g_free (image.pixelels);
+}
+
+
+
+/* Return the image of self's pattern.
+ * Caller must free pixelels.
+ */
+static _PreviewImage
+gimp_pattern_select_button_get_pattern_image (GimpPatternSelectButton *self)
+{
+  GimpPattern    *pattern;
+  gint            pixelels_size;
+  _PreviewImage   result;
+
+  g_debug ("%s", G_STRFUNC);
+
+  g_object_get (self, "resource", &pattern, NULL);
+
+  gimp_pattern_get_pixels (pattern,
+                           &result.width,
+                           &result.height,
+                           &result.bpp,
+                           &pixelels_size, /* discarded. */
+                           &result.pixelels);
+
+  return result;
+}
+
+
+/* On resize event, redraw. */
+static void
+gimp_pattern_select_on_preview_resize (GimpPatternSelectButton *self)
+{
+  g_debug ("%s", G_STRFUNC);
+
+  gimp_pattern_select_button_draw (self);
+}
+
+
+/* On mouse events in self's peephole_view, popup a zoom view of entire pattern */
+static gboolean
+gimp_pattern_select_on_preview_events (GtkWidget               *widget,
+                                       GdkEvent                *event,
+                                       GimpPatternSelectButton *self)
+{
+  GdkEventButton *bevent;
+
+  g_debug ("%s", G_STRFUNC);
+
+  switch (event->type)
+    {
+    case GDK_BUTTON_PRESS:
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 1)
+        {
+          gtk_grab_add (widget);
+          gimp_pattern_select_button_open_popup (self,
+                                               bevent->x, bevent->y);
+        }
+      break;
+
+    case GDK_BUTTON_RELEASE:
+      bevent = (GdkEventButton *) event;
+
+      if (bevent->button == 1)
+        {
+          gtk_grab_remove (widget);
+          gimp_pattern_select_button_close_popup (self);
+        }
+      break;
+
+    default:
+      break;
+    }
+
+  return FALSE;
+}
+
+/* Draw a GimpPreviewArea with a given image. */
+static void
+gimp_pattern_select_preview_draw (GimpPreviewArea *area,
+                                  gint             x,
+                                  gint             y,
+                                  _PreviewImage    image,
+                                  gint             rowstride)
+{
+  GimpImageType type;
+
+  g_debug ("%s", G_STRFUNC);
+
+  switch (image.bpp)
+    {
+    case 1:  type = GIMP_GRAY_IMAGE;   break;
+    case 2:  type = GIMP_GRAYA_IMAGE;  break;
+    case 3:  type = GIMP_RGB_IMAGE;    break;
+    case 4:  type = GIMP_RGBA_IMAGE;   break;
+    default:
+      g_warning ("Invalid bpp");
+      return;
+    }
+
+  gimp_preview_area_draw (area,
+                          x, y,
+                          image.width, image.height,
+                          type,
+                          image.pixelels,
+                          rowstride);
+}
+
+/* Fill a GimpPreviewArea with a image then draw. */
+static void
+gimp_pattern_select_preview_fill_draw (GtkWidget      *preview,
+                                       _PreviewImage  image)
+{
+  GimpPreviewArea *area = GIMP_PREVIEW_AREA (preview);
+  GtkAllocation    allocation;
+  gint             x, y;
+  gint             width, height;
+  _PreviewImage    drawn_image;
+
+  g_debug ("%s", G_STRFUNC);
+
+  gtk_widget_get_allocation (preview, &allocation);
+
+  width  = MIN (image.width,  allocation.width);
+  height = MIN (image.height, allocation.height);
+
+  x = ((allocation.width  - width)  / 2);
+  y = ((allocation.height - height) / 2);
+
+  if (x || y)
+    gimp_preview_area_fill (area,
+                            0, 0,
+                            allocation.width,
+                            allocation.height,
+                            0xFF, 0xFF, 0xFF);
+
+  /* Draw same data to new bounds.
+   * drawn_image.pixelels points to same array.
+   */
+  drawn_image.width = width;
+  drawn_image.height = height;
+  drawn_image.pixelels = image.pixelels;
+  drawn_image.bpp = image.bpp;
+
+  gimp_pattern_select_preview_draw (area,
+                                    x, y,
+                                    drawn_image,
+                                    image.width * image.bpp );  /* row stride */
+  /* Caller will free image.pixelels */
+}
+
+/* popup methods. */
+
+static void
+gimp_pattern_select_button_open_popup (GimpPatternSelectButton *self,
+                                       gint                     x,
+                                       gint                     y)
+{
+  GtkWidget    *frame;
+  GtkWidget    *preview;
+  GdkMonitor   *monitor;
+  GdkRectangle  workarea;
+  gint          x_org;
+  gint          y_org;
+  _PreviewImage image;
+
+  g_debug ("%s", G_STRFUNC);
+
+  if (self->popup)
+    gimp_pattern_select_button_close_popup (self);
+
+  image = gimp_pattern_select_button_get_pattern_image (self);
+
+  if (image.width <= CELL_SIZE && image.height <= CELL_SIZE)
+    {
+      g_debug ("%s: omit popup smaller than peephole.", G_STRFUNC);
+      return;
+    }
+
+  self->popup = gtk_window_new (GTK_WINDOW_POPUP);
+  gtk_window_set_type_hint (GTK_WINDOW (self->popup), GDK_WINDOW_TYPE_HINT_DND);
+  gtk_window_set_screen (GTK_WINDOW (self->popup),
+                         gtk_widget_get_screen (GTK_WIDGET (self)));
+
+  frame = gtk_frame_new (NULL);
+  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
+  gtk_container_add (GTK_CONTAINER (self->popup), frame);
+  gtk_widget_show (frame);
+
+  preview = gimp_preview_area_new ();
+  gtk_widget_set_size_request (preview, image.width, image.height);
+  gtk_container_add (GTK_CONTAINER (frame), preview);
+  gtk_widget_show (preview);
+
+  /* decide where to put the popup: near the peephole_view i.e. at mousedown coords */
+  gdk_window_get_origin (gtk_widget_get_window (self->peephole_view),
+                         &x_org, &y_org);
+
+  monitor = gimp_widget_get_monitor (GTK_WIDGET (self));
+  gdk_monitor_get_workarea (monitor, &workarea);
+
+  x = x_org + x - (image.width  / 2);
+  y = y_org + y - (image.height / 2);
+
+  x = CLAMP (x, workarea.x, workarea.x + workarea.width  - image.width);
+  y = CLAMP (y, workarea.y, workarea.y + workarea.height - image.height);
+
+  gtk_window_move (GTK_WINDOW (self->popup), x, y);
+
+  gtk_widget_show (self->popup);
+
+  /*  Draw popup now. Usual events do not cause a draw. */
+  gimp_pattern_select_preview_draw (GIMP_PREVIEW_AREA (preview),
+                                    0, 0,
+                                    image,
+                                    image.width * image.bpp);
+  g_free (image.pixelels);
+}
+
+static void
+gimp_pattern_select_button_close_popup (GimpPatternSelectButton *self)
+{
+  g_debug ("%s", G_STRFUNC);
+
+  g_clear_pointer (&self->popup, gtk_widget_destroy);
 }

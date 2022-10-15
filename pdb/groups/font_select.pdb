@@ -16,19 +16,20 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+
 sub fonts_popup {
-    $blurb = 'Invokes the Gimp font selection.';
-    $help  = 'This procedure opens the font selection dialog.';
+    $blurb = 'Invokes the Gimp font selection dialog.';
+    $help  = 'Opens a dialog letting a user choose a font.';
 
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'font_callback', type => 'string', non_empty => 1,
-	  desc => 'The callback PDB proc to call when font selection is made' },
-	{ name => 'popup_title', type => 'string',
-	  desc => 'Title of the font selection dialog' },
-	{ name => 'initial_font', type => 'string', null_ok => 1,
-	  desc => 'The name of the font to set as the first selected' }
+      { name => 'font_callback', type => 'string', non_empty => 1,
+        desc => 'The callback PDB proc to call when user chooses a font' },
+      { name => 'popup_title', type => 'string',
+        desc => 'Title of the font selection dialog' },
+      { name => 'initial_font_name', type => 'string', null_ok => 1,
+        desc => 'The name of the initial font choice.' }
     );
 
     %invoke = (
@@ -39,7 +40,7 @@ sub fonts_popup {
       ! gimp_data_factory_data_wait (gimp->font_factory)     ||
       ! gimp_pdb_dialog_new (gimp, context, progress,
                              gimp_data_factory_get_container (gimp->font_factory),
-                             popup_title, font_callback, initial_font,
+                             popup_title, font_callback, initial_font_name,
                              NULL))
     success = FALSE;
 }
@@ -49,13 +50,13 @@ CODE
 
 sub fonts_close_popup {
     $blurb = 'Close the font selection dialog.';
-    $help  = 'This procedure closes an opened font selection dialog.';
+    $help  = 'Closes an open font selection dialog.';
 
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'font_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' }
+      { name => 'font_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered in the PDB for this dialog' }
     );
 
     %invoke = (
@@ -65,7 +66,7 @@ sub fonts_close_popup {
       ! gimp_pdb_lookup_procedure (gimp->pdb, font_callback) ||
       ! gimp_pdb_dialog_close (gimp,
                                gimp_data_factory_get_container (gimp->font_factory),
-			       font_callback))
+                               font_callback))
     success = FALSE;
 }
 CODE
@@ -79,10 +80,10 @@ sub fonts_set_popup {
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'font_callback', type => 'string', non_empty => 1,
-	  desc => 'The name of the callback registered for this pop-up' },
-	{ name => 'font_name', type => 'string',
-	  desc => 'The name of the font to set as selected' }
+      { name => 'font_callback', type => 'string', non_empty => 1,
+        desc => 'The name of the callback registered in the PDB for the dialog.' },
+      { name => 'font_name', type => 'string',
+        desc => 'The name of the font to set as selected' }
     );
 
     %invoke = (
@@ -93,7 +94,7 @@ sub fonts_set_popup {
       ! gimp_data_factory_data_wait (gimp->font_factory)     ||
       ! gimp_pdb_dialog_set (gimp,
                              gimp_data_factory_get_container (gimp->font_factory),
-			     font_callback, font_name,
+                             font_callback, font_name,
                              NULL))
     success = FALSE;
 }
@@ -113,7 +114,18 @@ CODE
 
 $desc = 'Font UI';
 $doc_title = 'gimpfontselect';
-$doc_short_desc = 'Functions providing a font selection dialog.';
-$doc_long_desc = 'Functions providing a font selection dialog.';
+$doc_short_desc = 'Methods of a font chooser dialog.';
+$doc_long_desc = <<'LONG_DESC';
+A font chooser dialog shows installed fonts.
+The dialog is non-modal with its owning dialog,
+which is usually a plugin procedure's dialog.
+When a user selects a font,
+the dialog calls back but the dialog remains open.
+The chosen font is only a choice for the owning widget
+and does not select the font for the context.
+The user can close but not cancel the dialog.
+The owning dialog can close the font chooser dialog
+when the user closes or cancels the owning dialog.
+LONG_DESC
 
 1;

@@ -217,6 +217,7 @@ libappcore_sources = [
   'gimpprogress.c',
   'gimpprojectable.c',
   'gimpprojection.c',
+  'gimpresource.c',
   'gimpsamplepoint.c',
   'gimpsamplepointundo.c',
   'gimpscanconvert.c',
