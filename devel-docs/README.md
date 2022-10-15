@@ -383,7 +383,7 @@ Eventually we want to move this pipeline to Gitlab as well.
 
 When writing code, any core developer is expected to follow:
 
-- GIMP's [coding style](CODING_STYLE.md);
+- GIMP's [coding style](https://developer.gimp.org/core/coding_style/);
 - the [directory structure](#directory-structure-of-gimp-source-tree)
 - our [header file inclusion policy](includes.txt)
 
@@ -589,7 +589,7 @@ Developers are welcome to read the [specifications of XCF](specifications/xcf.tx
 Items in an image can be locked in various ways to prevent different
 types of edits.
 
-This is further explained in [the specifications of locks](specifications/locks.md).
+This is further explained in [the specifications of locks](https://developer.gimp.org/core/specifications/locks/).
 
 #### UI Framework
 
@@ -627,11 +627,11 @@ GIMP supports Exif, IPTC and XMP metadata as well as various image
 format-specific metadata. The topic is quite huge and complex, if not
 overwhelming.
 
-This [old document](exif-handling.txt) might be of interest (or maybe
-not, it has not been recently reviewed and might be widely outdated; in
-any case, it is not a complete document at all as we definitely do a lot
-more nowadays). **TODO**: review this document and delete or update it
-depending of whether it still makes sense.
+This [old document](https://developer.gimp.org/core/specifications/exif_handling/)
+might be of interest (or maybe not, it has not been recently reviewed and might
+be widely outdated; in any case, it is not a complete document at all as we
+definitely do a lot more nowadays). **TODO**: review this document and delete or
+update it depending of whether it still makes sense.
 
 #### Tagging
 

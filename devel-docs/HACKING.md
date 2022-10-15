@@ -135,10 +135,10 @@ request or attach your patch to the report as a plain text file, not
 compressed.
 
 Please follow the guidelines for coding style and other requirements
-listed in [CODING_STYLE.md](CODING_STYLE.md). When you will contribute
-your first patches, you will notice that we care very much about clean
-and tidy code, which helps for understanding. Hence we care about coding
-style and consistency!
+listed in [CODING_STYLE.md](https://developer.gimp.org/core/coding_style/). When
+you will contribute your first patches, you will notice that we care very much
+about clean and tidy code, which helps for understanding. Hence we care about
+coding style and consistency!
 
 
 ## Auto-generated Files
