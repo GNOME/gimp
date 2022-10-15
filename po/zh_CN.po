@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-29 22:52+0000\n"
-"PO-Revision-Date: 2022-10-01 07:55+0800\n"
+"POT-Creation-Date: 2022-10-11 22:10+0000\n"
+"PO-Revision-Date: 2022-10-12 10:34+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -504,7 +504,7 @@ msgstr "文字工具"
 msgid "Text Editor"
 msgstr "文字编辑器"
 
-#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:539
+#: app/actions/actions.c:232 app/dialogs/dialogs.c:315 app/gui/gui.c:542
 msgid "Tool Options"
 msgstr "工具选项"
 
@@ -2610,7 +2610,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
 #: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:975
-#: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:169
+#: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -10110,7 +10110,7 @@ msgstr "移动此窗口至屏幕 %s"
 #: app/dialogs/template-options-dialog.c:119
 #: app/display/gimpdisplayshell-filter-dialog.c:88
 #: app/display/gimpdisplayshell-rotate-dialog.c:123
-#: app/display/gimpdisplayshell-scale-dialog.c:123 app/gui/gui.c:194
+#: app/display/gimpdisplayshell-scale-dialog.c:123 app/gui/gui.c:195
 #: app/tools/gimpfiltertool.c:365 app/widgets/gimpcolordialog.c:464
 #: app/widgets/gimpcontrollereditor.c:662 app/widgets/gimperrordialog.c:76
 #: app/widgets/gimpfiledialog.c:176 app/widgets/gimpmodifierseditor.c:673
@@ -13181,7 +13181,7 @@ msgid "Error loading '%s'"
 msgstr "载入“%s”时出错"
 
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
-#: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:481
+#: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
 #: app/xcf/xcf.c:442
 #, c-format
@@ -15121,7 +15121,7 @@ msgid ""
 "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "您确认要从列表删除“%s”并在硬盘上删除它吗？"
 
-#: app/dialogs/dialogs-constructors.c:236 app/gui/gui.c:191
+#: app/dialogs/dialogs-constructors.c:236 app/gui/gui.c:192
 #: app/gui/gui-message.c:268
 msgid "GIMP Message"
 msgstr "GIMP 消息"
@@ -18098,7 +18098,7 @@ msgstr "拖放图层"
 
 #: app/display/gimpdisplayshell-dnd.c:743
 #: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1043
-#: app/widgets/gimptoolbox-dnd.c:268
+#: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "删除缓冲区"
 
@@ -18705,8 +18705,8 @@ msgid "File not in GIMP extension '%s' folder id '%s': %s"
 msgstr "文件不在 GIMP 扩展“%s”的文件夹目录“%s”中：%s"
 
 #: app/file-data/file-data-gex.c:264 app/file-data/file-data-gex.c:411
-#: app/file-data/file-data-gex.c:423 app/file-data/file-data-gex.c:435
-#: app/file-data/file-data-gex.c:448
+#: app/file-data/file-data-gex.c:429 app/file-data/file-data-gex.c:446
+#: app/file-data/file-data-gex.c:460
 #, c-format
 msgid "Fatal error when uncompressing GIMP extension '%s': %s"
 msgstr "解压 GIMP 扩展 %s 是发生严重错误：%s"
@@ -18721,10 +18721,15 @@ msgstr "GIMP 扩展“%s”目录（%s）与 AppStream 标识不同：%s"
 msgid "GIMP extension '%s' requires an AppStream file: %s"
 msgstr "GIMP 扩展 %s 需要 AppStream 文件：%s"
 
-#: app/file-data/file-data-gex.c:323 app/file-data/file-data-gex.c:458
+#: app/file-data/file-data-gex.c:323 app/file-data/file-data-gex.c:470
 #, c-format
 msgid "Invalid GIMP extension '%s': %s"
 msgstr "无效的 GIMP 扩展“%s”：%s"
+
+#: app/file-data/file-data-gex.c:438
+#, c-format
+msgid "Warning when uncompressing GIMP extension '%s': %s\n"
+msgstr "解压 GIMP 扩展“%s”时警告：%s\n"
 
 #: app/file-data/file-data-gih.c:292
 #, c-format
@@ -19652,19 +19657,19 @@ msgstr "明度"
 msgid "The alpha value"
 msgstr "透明通道明度"
 
-#: app/gui/gui.c:328
+#: app/gui/gui.c:331
 msgid "Image Recovery"
 msgstr "图像恢复"
 
-#: app/gui/gui.c:330
+#: app/gui/gui.c:333
 msgid "_Discard"
 msgstr "放弃(_D)"
 
-#: app/gui/gui.c:331
+#: app/gui/gui.c:334
 msgid "_Recover"
 msgstr "恢复(_R)"
 
-#: app/gui/gui.c:342
+#: app/gui/gui.c:345
 msgid "Eeek! It looks like GIMP recovered from a crash!"
 msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 
@@ -19674,7 +19679,7 @@ msgstr "哈！貌似 GIMP 从崩溃中恢复了！"
 #. * suited. It will just work and be replaced by the
 #. * number of images as expected.
 #.
-#: app/gui/gui.c:351
+#: app/gui/gui.c:354
 #, c-format
 msgid ""
 "An image was salvaged from the crash. Do you want to try and recover it?"
@@ -19685,11 +19690,11 @@ msgstr[0] "从崩溃中抢救了 %d 张图像。您想要尝试并恢复它们�
 #. load the recent documents after gimp_real_restore() because we
 #. *  need the mime-types implemented by plug-ins
 #.
-#: app/gui/gui.c:583
+#: app/gui/gui.c:586
 msgid "Documents"
 msgstr "文档"
 
-#: app/gui/splash.c:168
+#: app/gui/splash.c:170
 msgid "GIMP Startup"
 msgstr "GIMP 启动"
 
@@ -20965,21 +20970,21 @@ msgctxt "undo-type"
 msgid "Wind"
 msgstr "风"
 
-#: app/pdb/text-layer-cmds.c:98
+#: app/pdb/text-layer-cmds.c:97
 msgid "Failed to create text layer"
 msgstr "创建文字图层失败"
 
-#: app/pdb/text-layer-cmds.c:171 app/pdb/text-layer-cmds.c:333
-#: app/pdb/text-layer-cmds.c:412 app/pdb/text-layer-cmds.c:485
-#: app/pdb/text-layer-cmds.c:557 app/pdb/text-layer-cmds.c:629
-#: app/pdb/text-layer-cmds.c:701 app/pdb/text-layer-cmds.c:773
-#: app/pdb/text-layer-cmds.c:845 app/pdb/text-layer-cmds.c:915
-#: app/pdb/text-layer-cmds.c:987 app/pdb/text-layer-cmds.c:1059
-#: app/pdb/text-layer-cmds.c:1131 app/pdb/text-layer-cmds.c:1173
+#: app/pdb/text-layer-cmds.c:161 app/pdb/text-layer-cmds.c:295
+#: app/pdb/text-layer-cmds.c:360 app/pdb/text-layer-cmds.c:419
+#: app/pdb/text-layer-cmds.c:477 app/pdb/text-layer-cmds.c:535
+#: app/pdb/text-layer-cmds.c:593 app/pdb/text-layer-cmds.c:651
+#: app/pdb/text-layer-cmds.c:709 app/pdb/text-layer-cmds.c:765
+#: app/pdb/text-layer-cmds.c:823 app/pdb/text-layer-cmds.c:881
+#: app/pdb/text-layer-cmds.c:939 app/pdb/text-layer-cmds.c:974
 msgid "Set text layer attribute"
 msgstr "设定文字图层属性"
 
-#: app/pdb/text-layer-cmds.c:254
+#: app/pdb/text-layer-cmds.c:230
 msgid "Set text layer markup"
 msgstr "设定文字图层标记"
 
