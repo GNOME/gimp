@@ -284,8 +284,6 @@
 #define GIMP_HELP_PATH_EXPORT                     "gimp-path-export"
 #define GIMP_HELP_PATH_EDIT                       "gimp-path-edit"
 
-#define GIMP_HELP_TOOLS_DIALOG                    "gimp-tools-dialog"
-
 #define GIMP_HELP_TOOL_AIRBRUSH                   "gimp-tool-airbrush"
 #define GIMP_HELP_TOOL_ALIGN                      "gimp-tool-align"
 #define GIMP_HELP_TOOL_BRIGHTNESS_CONTRAST        "gimp-tool-brightness-contrast"
