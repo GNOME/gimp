@@ -19,8 +19,6 @@
 #include "config.h"
 
 #include <libgimp/gimp.h>
-/* FIXME We only need gimpui because script-fu-types.h refers to GtkAdjustment. */
-#include <libgimp/gimpui.h>
 
 #include "script-fu-lib.h"
 

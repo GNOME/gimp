@@ -17,7 +17,7 @@
 
 #include "config.h"
 
-#include <libgimp/gimpui.h>
+#include <libgimp/gimp.h>
 
 #include "script-fu-types.h"    /* SFScript */
 #include "script-fu-lib.h"

@@ -18,7 +18,6 @@
 #include "config.h"
 #include <glib.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "tinyscheme/scheme-private.h"
 #include "script-fu-types.h"

@@ -24,7 +24,6 @@
 
 typedef struct
 {
-  GtkAdjustment    *adj;
   gdouble           value;
   gdouble           lower;
   gdouble           upper;

@@ -21,7 +21,6 @@
 #include <glib.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "scheme-wrapper.h"       /* type "pointer" */
 

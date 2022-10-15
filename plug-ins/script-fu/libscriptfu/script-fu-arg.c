@@ -20,7 +20,6 @@
 #include <string.h>
 
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "script-fu-types.h"
 #include "script-fu-arg.h"

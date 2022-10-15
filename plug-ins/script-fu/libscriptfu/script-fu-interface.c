@@ -405,9 +405,12 @@ script_fu_interface (SFScript  *script,
           break;
 
         case SF_ADJUSTMENT:
-          switch (arg->default_value.sfa_adjustment.type)
-            {
-            case SF_SLIDER:
+          {
+            GtkAdjustment *adj_widget;
+
+            switch (arg->default_value.sfa_adjustment.type)
+              {
+              case SF_SLIDER:
                 {
                   GtkWidget *spinbutton;
 
@@ -420,38 +423,43 @@ script_fu_interface (SFScript  *script,
                                                   arg->default_value.sfa_adjustment.step,
                                                   arg->default_value.sfa_adjustment.page);
                   spinbutton = gimp_label_spin_get_spin_button (GIMP_LABEL_SPIN (widget));
-                  arg->value.sfa_adjustment.adj = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
+                  adj_widget = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (spinbutton));
 
                   gtk_entry_set_activates_default (GTK_ENTRY (spinbutton), TRUE);
                 }
-              break;
+                break;
 
-            default:
-              g_warning ("unexpected adjustment type: %d",
-                         arg->default_value.sfa_adjustment.type);
-              /* fallthrough */
+              default:
+                g_warning ("unexpected adjustment type: %d",
+                           arg->default_value.sfa_adjustment.type);
+                /* fallthrough */
 
-            case SF_SPINNER:
-              left_align = TRUE;
-              arg->value.sfa_adjustment.adj =
-                gtk_adjustment_new (arg->value.sfa_adjustment.value,
-                                    arg->default_value.sfa_adjustment.lower,
-                                    arg->default_value.sfa_adjustment.upper,
-                                    arg->default_value.sfa_adjustment.step,
-                                    arg->default_value.sfa_adjustment.page,
-                                    0);
-              widget = gimp_spin_button_new (arg->value.sfa_adjustment.adj,
-                                             arg->default_value.sfa_adjustment.step,
-                                             arg->default_value.sfa_adjustment.digits);
-              gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (widget), TRUE);
-              gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
-              break;
-            }
+              case SF_SPINNER:
+                left_align = TRUE;
+                adj_widget =
+                  gtk_adjustment_new (arg->value.sfa_adjustment.value,
+                                      arg->default_value.sfa_adjustment.lower,
+                                      arg->default_value.sfa_adjustment.upper,
+                                      arg->default_value.sfa_adjustment.step,
+                                      arg->default_value.sfa_adjustment.page,
+                                      0);
+                widget = gimp_spin_button_new (adj_widget,
+                                               arg->default_value.sfa_adjustment.step,
+                                               arg->default_value.sfa_adjustment.digits);
+                gtk_spin_button_set_numeric (GTK_SPIN_BUTTON (widget), TRUE);
+                gtk_entry_set_activates_default (GTK_ENTRY (widget), TRUE);
 
-          g_signal_connect (arg->value.sfa_adjustment.adj,
-                            "value-changed",
-                            G_CALLBACK (gimp_double_adjustment_update),
-                            &arg->value.sfa_adjustment.value);
+                break;
+              } /* end switch on adjustment type. */
+
+            /* Each case set adj_widget. */
+            g_assert (adj_widget != NULL);
+
+            g_signal_connect (adj_widget,
+                              "value-changed",
+                              G_CALLBACK (gimp_double_adjustment_update),
+                              &arg->value.sfa_adjustment.value);
+          } /* end case SF_ADJUSTMENT */
           break;
 
         case SF_FILENAME:
@@ -952,8 +960,33 @@ script_fu_reset (SFScript *script)
           break;
 
         case SF_ADJUSTMENT:
-          gtk_adjustment_set_value (value->sfa_adjustment.adj,
-                                    value->sfa_adjustment.value);
+          {
+            /* Reset the widget's underlying GtkAdjustment.
+             * The widget knows its own GtkAdjustment.
+             * The widget is a GimpScaleEntry or a GimpSpinButton.
+             */
+            GtkAdjustment *adj_widget = NULL;
+
+            switch (script->args[i].default_value.sfa_adjustment.type)
+              {
+              case SF_SLIDER:  /* GimpScaleEntry */
+                {
+                  /* Widget knows its range which knows its adjustment. */
+                  /* Unfortunately, gimp_scale_entry_get_range returns GtkWidget*, we must downcast.*/
+                  GtkRange *range = GTK_RANGE (gimp_scale_entry_get_range (GIMP_SCALE_ENTRY (widget)));
+
+                  adj_widget = gtk_range_get_adjustment (range);
+                }
+                break;
+
+              case SF_SPINNER:  /* GimpSpinButton */
+                adj_widget = gtk_spin_button_get_adjustment (GTK_SPIN_BUTTON (widget));
+                break;
+              }
+            g_assert (adj_widget != NULL);
+
+            gtk_adjustment_set_value (adj_widget, value->sfa_adjustment.value);
+          }
           break;
 
         case SF_FILENAME:
