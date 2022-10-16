@@ -37,13 +37,12 @@
 #define GIMP_HELP_FILE_EXPORT                     "gimp-file-export"
 #define GIMP_HELP_FILE_EXPORT_AS                  "gimp-file-export-as"
 #define GIMP_HELP_FILE_OVERWRITE                  "gimp-file-overwrite"
-#define GIMP_HELP_FILE_SAVE_AS_TEMPLATE           "gimp-file-save-as-template"
 #define GIMP_HELP_FILE_REVERT                     "gimp-file-revert"
 #define GIMP_HELP_FILE_CLOSE                      "gimp-file-close"
 #define GIMP_HELP_FILE_CLOSE_ALL                  "gimp-file-close-all"
 #define GIMP_HELP_FILE_COPY_LOCATION              "gimp-file-copy-location"
 #define GIMP_HELP_FILE_SHOW_IN_FILE_MANAGER       "gimp-file-show-in-file-manager"
-#define GIMP_HELP_FILE_CREATE_TEMPLATE            "gimp-file-save-as-template" /* Update string along with gimp-help-2 */
+#define GIMP_HELP_FILE_CREATE_TEMPLATE            "gimp-file-create-template"
 #define GIMP_HELP_FILE_QUIT                       "gimp-file-quit"
 
 #define GIMP_HELP_EDIT_UNDO                       "gimp-edit-undo"
