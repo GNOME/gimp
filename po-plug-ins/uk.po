@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-05 15:38+0000\n"
-"PO-Revision-Date: 2022-10-05 22:54+0300\n"
+"POT-Creation-Date: 2022-10-16 04:09+0000\n"
+"PO-Revision-Date: 2022-10-16 08:50+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <kde-i18n-doc@kde.org>\n"
 "Language: uk\n"
@@ -83,7 +83,7 @@ msgstr "Потренувати козу (Сі)"
 #: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
 #: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
-#: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:241
+#: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
 #: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
 #: plug-ins/file-tiff/file-tiff-load.c:2689 plug-ins/flame/flame.c:540
@@ -178,9 +178,10 @@ msgstr "Потренувати козу (Javascript)"
 #: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
 #: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3284
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
+#: plug-ins/file-psd/psd-load.c:3284 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -991,11 +992,10 @@ msgstr "Графік поточних параметрів"
 
 #: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:168
-#: plug-ins/common/sample-colorize.c:1415 plug-ins/common/unit-editor.c:447
-#: plug-ins/gfig/gfig-dialog.c:297 plug-ins/gfig/gfig-dialog.c:887
-#: plug-ins/gfig/gfig-dialog.c:1253 plug-ins/gfig/gfig-dialog.c:1397
-#: plug-ins/ifs-compose/ifs-compose.c:1212 plug-ins/imagemap/imap_menu.c:156
-#: plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:297
+#: plug-ins/gfig/gfig-dialog.c:887 plug-ins/gfig/gfig-dialog.c:1253
+#: plug-ins/gfig/gfig-dialog.c:1397 plug-ins/ifs-compose/ifs-compose.c:1212
+#: plug-ins/imagemap/imap_menu.c:156 plug-ins/metadata/metadata-viewer.c:287
 msgid "_Close"
 msgstr "З_акрити"
 
@@ -1015,8 +1015,8 @@ msgstr "Збереження параметрів CML Explorer"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
-#: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1332
+#: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
 #: plug-ins/file-psd/psd-save.c:2124 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -1051,12 +1051,13 @@ msgstr "Завантажити параметри CML Explorer"
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
-#: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:159
-#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:2129
-#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
-#: plug-ins/flame/flame.c:478
+#: plug-ins/file-icns/file-icns-load.c:517
+#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:682
+#: plug-ins/file-ico/ico-load.c:794 plug-ins/file-ico/ico-load.c:958
+#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
+#: plug-ins/file-psd/psd-load.c:159 plug-ins/file-psd/psd-load.c:164
+#: plug-ins/file-psd/psd-save.c:2129 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1967,9 +1968,10 @@ msgstr "Кінець файлу або помилка при читанні за
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
-#: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:172 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:509
+#: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:786
+#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:172
+#: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2046,8 +2048,8 @@ msgstr "«%s»: Кінець файлу або помилка при читан�
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
-#: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1324
+#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2070 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
@@ -2903,22 +2905,18 @@ msgid "Store ICC profile to exported JXL file"
 msgstr "Зберегти профіль ICC у експортованому файлі JXL"
 
 #: plug-ins/common/file-jpegxl.c:197
-#| msgid "Save Exif data"
 msgid "Save Exi_f"
 msgstr "Зберегти дані Exi_f"
 
 #: plug-ins/common/file-jpegxl.c:198
-#| msgid "Save Exif data"
 msgid "Toggle saving Exif data"
 msgstr "Увімкнути або вимкнути збереження даних Exif"
 
 #: plug-ins/common/file-jpegxl.c:203
-#| msgid "Save _XMP data"
 msgid "Save _XMP"
 msgstr "Зберегти дані _XMP"
 
 #: plug-ins/common/file-jpegxl.c:204
-#| msgid "Save XMP data"
 msgid "Toggle saving XMP data"
 msgstr "Увімкнути або вимкнути збереження даних XMP"
 
@@ -4940,7 +4938,7 @@ msgstr "Доступні:"
 msgid "On film:"
 msgstr "На плівку:"
 
-#: plug-ins/common/film.c:982 plug-ins/common/unit-editor.c:242
+#: plug-ins/common/film.c:982 plug-ins/common/unit-editor.c:436
 msgid "_Add"
 msgstr "_Додати"
 
@@ -5980,11 +5978,11 @@ msgstr "_Непрозорість:"
 msgid "Number of Segments"
 msgstr "Кількість сегментів"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:115
 msgid "Saved"
 msgstr "Збережене"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:115
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -5992,30 +5990,30 @@ msgstr ""
 "Визначення одиниці буде збережено лише перед виходом з GIMP, якщо цей "
 "стовпчик відмічений."
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:117
 msgid "ID"
 msgstr "Ідентифікатор"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:117
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Рядок, який буде використовуватись для ідентифікації одиниці в "
 "конфігураційному файлі GIMP."
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:119
 msgid "Factor"
 msgstr "Множник"
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:119
 msgid "How many units make up an inch."
 msgstr "Скільки одиниць припадає на дюйм."
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:120
 msgid "Digits"
 msgstr "Цифри"
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:120
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -6025,11 +6023,11 @@ msgstr ""
 "знаків у полі вводу, які будуть давати приблизно таку ж точність як поле "
 "вводу дюймів з двома десятковими знаками."
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:125
 msgid "Symbol"
 msgstr "Символ"
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:125
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -6037,97 +6035,101 @@ msgstr ""
 "Символ одиниці, якщо він є (наприклад \"'\" для дюймів). Використовуйте "
 "абревіатури, для одиниць які не мають символу."
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:128
 msgid "Abbreviation"
 msgstr "Абревіатура"
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:128
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Абревіатура одиниці (наприклад, \"см\" для сантиметрів)."
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:130
 msgid "Singular"
 msgstr "Однина"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:130
 msgid "The unit's singular form."
 msgstr "Одиниця в однині."
 
-#: plug-ins/common/unit-editor.c:128
+#: plug-ins/common/unit-editor.c:131
 msgid "Plural"
 msgstr "Множина"
 
-#: plug-ins/common/unit-editor.c:128
+#: plug-ins/common/unit-editor.c:131
 msgid "The unit's plural form."
 msgstr "Одиниця в множині."
 
-#: plug-ins/common/unit-editor.c:139
-msgid "Create a new unit from scratch"
-msgstr "Створити нову одиницю"
-
-#: plug-ins/common/unit-editor.c:145
-msgid "Create a new unit using the currently selected unit as template"
-msgstr "Створити нову одиницю, використовуючи вибрану як шаблон"
-
-#: plug-ins/common/unit-editor.c:184
+#: plug-ins/common/unit-editor.c:175
 msgid "U_nits"
 msgstr "_Одиниці виміру"
 
-#: plug-ins/common/unit-editor.c:189
+#: plug-ins/common/unit-editor.c:180
 msgid "Create or alter units used in GIMP"
 msgstr "Створити чи змінити одиниці виміру, що використовуються у GIMP"
 
-#: plug-ins/common/unit-editor.c:237
-msgid "Add a New Unit"
-msgstr "Створити нову одиницю"
-
-#: plug-ins/common/unit-editor.c:266
-msgid "_ID:"
-msgstr "_Ідентифікатор:"
-
-#: plug-ins/common/unit-editor.c:278
-msgid "_Factor:"
-msgstr "_Множник:"
-
-#: plug-ins/common/unit-editor.c:289
-msgid "_Digits:"
-msgstr "_Цифри:"
-
-#: plug-ins/common/unit-editor.c:301
-msgid "_Symbol:"
-msgstr "С_имвол:"
-
-#: plug-ins/common/unit-editor.c:313
-msgid "_Abbreviation:"
-msgstr "_Абревіатура:"
-
-#: plug-ins/common/unit-editor.c:325
-msgid "Si_ngular:"
-msgstr "_Однина:"
-
-#: plug-ins/common/unit-editor.c:337
-msgid "_Plural:"
-msgstr "Мно_жина:"
-
-#: plug-ins/common/unit-editor.c:380
-msgid "Incomplete input"
-msgstr "Незавершений ввід"
-
-#: plug-ins/common/unit-editor.c:383
-msgid "Please fill in all text fields."
-msgstr "Заповніть всі поля"
-
-#: plug-ins/common/unit-editor.c:442
+#: plug-ins/common/unit-editor.c:230 plug-ins/common/unit-editor.c:249
 msgid "Unit Editor"
 msgstr "Редактор одиниць"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:446
+#: plug-ins/common/unit-editor.c:253
 #: plug-ins/fractal-explorer/fractal-explorer.c:1214
 #: plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "_Оновити"
+
+#: plug-ins/common/unit-editor.c:260 plug-ins/imagemap/imap_menu.c:213
+msgid "_Help"
+msgstr "_Довідка"
+
+#: plug-ins/common/unit-editor.c:291
+msgid "Create a new unit from scratch"
+msgstr "Створити нову одиницю"
+
+#: plug-ins/common/unit-editor.c:298
+msgid "Create a new unit using the currently selected unit as template"
+msgstr "Створити нову одиницю, використовуючи вибрану як шаблон"
+
+#: plug-ins/common/unit-editor.c:431
+msgid "Add a New Unit"
+msgstr "Створити нову одиницю"
+
+#: plug-ins/common/unit-editor.c:460
+msgid "_ID:"
+msgstr "_Ідентифікатор:"
+
+#: plug-ins/common/unit-editor.c:472
+msgid "_Factor:"
+msgstr "_Множник:"
+
+#: plug-ins/common/unit-editor.c:483
+msgid "_Digits:"
+msgstr "_Цифри:"
+
+#: plug-ins/common/unit-editor.c:495
+msgid "_Symbol:"
+msgstr "С_имвол:"
+
+#: plug-ins/common/unit-editor.c:507
+msgid "_Abbreviation:"
+msgstr "_Абревіатура:"
+
+#: plug-ins/common/unit-editor.c:519
+msgid "Si_ngular:"
+msgstr "_Однина:"
+
+#: plug-ins/common/unit-editor.c:531
+msgid "_Plural:"
+msgstr "Мно_жина:"
+
+#: plug-ins/common/unit-editor.c:574
+msgid "Incomplete input"
+msgstr "Незавершений ввід"
+
+#: plug-ins/common/unit-editor.c:577
+msgid "Please fill in all text fields."
+msgstr "Заповніть всі поля"
 
 #: plug-ins/common/van-gogh-lic.c:632 plug-ins/common/van-gogh-lic.c:705
 msgid "Van Gogh (LIC)"
@@ -7009,6 +7011,26 @@ msgstr "_Кому:"
 msgid "Export Image as FLI Animation"
 msgstr "Експортувати зображення як анімацію FLI"
 
+#: plug-ins/file-icns/file-icns-load.c:433
+#, c-format
+#| msgid "Error trying to open temporary file '%s' for parasite loading: %s"
+msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
+msgstr ""
+"Помилка при відкриванні тимчасового файла %s «%s» для завантаження icns: %s"
+
+#. ----- Open PSD file -----
+#: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:950
+#: plug-ins/file-jpeg/jpeg-load.c:541 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-raw/file-darktable.c:515
+#: plug-ins/file-raw/file-rawtherapee.c:457
+#, c-format
+msgid "Opening thumbnail for '%s'"
+msgstr "Відкривається перегляд для «%s»"
+
+#: plug-ins/file-icns/file-icns.c:121
+msgid "Icns"
+msgstr "Icns"
+
 #: plug-ins/file-ico/ico-dialog.c:61
 msgid "Windows Animated Cursor"
 msgstr "Анімований вказівник Windows"
@@ -7093,14 +7115,6 @@ msgstr "Піктограма #%d має нульову ширину або ви�
 #, c-format
 msgid "Icon #%i"
 msgstr "Значок #%i"
-
-#. ----- Open PSD file -----
-#: plug-ins/file-ico/ico-load.c:938 plug-ins/file-jpeg/jpeg-load.c:541
-#: plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-darktable.c:515
-#: plug-ins/file-raw/file-rawtherapee.c:457
-#, c-format
-msgid "Opening thumbnail for '%s'"
-msgstr "Відкривається перегляд для «%s»"
 
 #: plug-ins/file-ico/ico-save.c:213
 #, c-format
@@ -11341,10 +11355,6 @@ msgstr "Використовувати напрямні GIMP…"
 #: plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
 msgstr "Створити напрямні…"
-
-#: plug-ins/imagemap/imap_menu.c:213
-msgid "_Help"
-msgstr "_Довідка"
 
 #: plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
