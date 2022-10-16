@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-11 22:10+0000\n"
-"PO-Revision-Date: 2022-10-12 16:48+0100\n"
+"POT-Creation-Date: 2022-10-15 20:35+0000\n"
+"PO-Revision-Date: 2022-10-16 15:14+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -1045,7 +1045,7 @@ msgstr "Editar cor do canal"
 msgid "_Fill opacity:"
 msgstr "Opacidade do pr_eenchimento:"
 
-#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:330
+#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "Novo canal"
 
@@ -1082,8 +1082,8 @@ msgstr[0] "Baixar canal para o fundo"
 msgstr[1] "Baixar canais para o fundo"
 
 #: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:472
-#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:261
-#: app/widgets/gimplayertreeview.c:1017
+#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:259
+#: app/widgets/gimplayertreeview.c:1015
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Cópia do canal %s"
@@ -2563,7 +2563,7 @@ msgstr "240 segundos"
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/display/gimpdisplayshell-scale-dialog.c:122
 #: app/tools/gimpfiltertool.c:364 app/tools/gimpforegroundselecttool.c:331
-#: app/tools/gimptexttool.c:1759 app/tools/gimptransformgridtool.c:1248
+#: app/tools/gimptexttool.c:1759 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:622
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:661
 #: app/widgets/gimpcontrollerlist.c:555 app/widgets/gimpdeviceeditor.c:543
@@ -2631,7 +2631,7 @@ msgstr "Introduza uma descrição para o marcador"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:975
+#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:973
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -6283,12 +6283,12 @@ msgid "Delete this image"
 msgstr "Eliminar esta imagem"
 
 #: app/actions/items-commands.c:180 app/actions/items-commands.c:226
-#: app/tools/gimpvectortool.c:737
+#: app/tools/gimpvectortool.c:742
 msgid "There are no selected layers or channels to fill."
 msgstr "Não existe nenhuma camada ou canal selecionados para preencher."
 
 #: app/actions/items-commands.c:267 app/actions/items-commands.c:313
-#: app/tools/gimpvectortool.c:811
+#: app/tools/gimpvectortool.c:816
 msgid "There are no selected layers or channels to stroke to."
 msgstr "Não existe nenhuma camada ou canal selecionados para traçar."
 
@@ -7138,8 +7138,8 @@ msgstr "Definições da camada"
 msgid "Edit Layer Attributes"
 msgstr "Editar definições da camada"
 
-#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
-#: app/widgets/gimplayertreeview.c:1104
+#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:358
+#: app/widgets/gimplayertreeview.c:1102
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nova camada"
@@ -7317,7 +7317,7 @@ msgid "Empty Selection"
 msgstr "Seleção vazia"
 
 #: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
-#: app/widgets/gimplayertreeview.c:1615
+#: app/widgets/gimplayertreeview.c:1613
 msgid "Set layers opacity"
 msgstr "Definir opacidade das camadas"
 
@@ -7333,19 +7333,19 @@ msgstr "Definir espaço de combinação da camada"
 msgid "Set layers' composite mode"
 msgstr "Definir modo de combinação da camada"
 
-#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:533
+#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:531
 msgid "Lock content"
 msgstr "Bloquear conteúdo"
 
-#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:534
+#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:532
 msgid "Unlock content"
 msgstr "Desbloquear conteúdo"
 
-#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:549
+#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:547
 msgid "Lock position"
 msgstr "Bloquear posição"
 
-#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:550
+#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:548
 msgid "Unlock position"
 msgstr "Desbloquear posição"
 
@@ -7715,7 +7715,7 @@ msgstr "Repor todos os filtros"
 #: app/dialogs/preferences-dialog.c:1225 app/dialogs/print-size-dialog.c:123
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:127
 #: app/display/gimpdisplayshell-rotate-dialog.c:121
-#: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1245
+#: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:462 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "_Repor"
@@ -9152,8 +9152,8 @@ msgstr "Pintar ao longo do caminho usando os últimos valores"
 
 #: app/actions/vectors-actions.c:143
 msgctxt "vectors-action"
-msgid "Co_py Path"
-msgstr "Cop_iar caminho"
+msgid "Co_py Paths"
+msgstr "Cop_iar caminhos"
 
 #: app/actions/vectors-actions.c:148
 msgctxt "vectors-action"
@@ -9162,8 +9162,8 @@ msgstr "Colar camin_ho"
 
 #: app/actions/vectors-actions.c:153
 msgctxt "vectors-action"
-msgid "E_xport Path..."
-msgstr "E_xportar caminho…"
+msgid "E_xport Paths..."
+msgstr "E_xportar caminhos…"
 
 #: app/actions/vectors-actions.c:158
 msgctxt "vectors-action"
@@ -9392,7 +9392,7 @@ msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "Selecionar caminho abaixo do caminho atual"
 
-#: app/actions/vectors-commands.c:162 app/actions/vectors-commands.c:726
+#: app/actions/vectors-commands.c:162 app/actions/vectors-commands.c:827
 msgid "Path Attributes"
 msgstr "Definições do caminho"
 
@@ -9408,13 +9408,37 @@ msgstr "Novo caminho"
 msgid "Create a New Path"
 msgstr "Criar um novo caminho"
 
-#: app/actions/vectors-commands.c:434 app/tools/gimpvectoroptions.c:201
-#: app/tools/gimpvectortool.c:744
+#: app/actions/vectors-commands.c:264
+msgid "Raise Path"
+msgid_plural "Raise Paths"
+msgstr[0] "Elevar caminho"
+msgstr[1] "Elevar caminhos"
+
+#: app/actions/vectors-commands.c:300
+msgid "Raise Path to Top"
+msgid_plural "Raise Paths to Top"
+msgstr[0] "Elevar caminho para o topo"
+msgstr[1] "Elevar caminhos para o topo"
+
+#: app/actions/vectors-commands.c:340
+msgid "Lower Path"
+msgid_plural "Lower Paths"
+msgstr[0] "Baixar caminho"
+msgstr[1] "Baixar caminhos"
+
+#: app/actions/vectors-commands.c:380
+msgid "Lower Path to Bottom"
+msgid_plural "Lower Paths to Bottom"
+msgstr[0] "Baixar caminho para o fundo"
+msgstr[1] "Baixar caminhos para o fundo"
+
+#: app/actions/vectors-commands.c:535 app/tools/gimpvectoroptions.c:201
+#: app/tools/gimpvectortool.c:749
 msgid "Fill Path"
 msgstr "Preencher caminho"
 
-#: app/actions/vectors-commands.c:466 app/tools/gimpvectoroptions.c:209
-#: app/tools/gimpvectortool.c:818
+#: app/actions/vectors-commands.c:567 app/tools/gimpvectoroptions.c:209
+#: app/tools/gimpvectortool.c:823
 msgid "Stroke Path"
 msgstr "Traçar caminho"
 
@@ -10687,12 +10711,12 @@ msgstr "Camada"
 #: app/config/gimpdialogconfig.c:416 app/core/gimpchannel.c:254
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:90
-#: app/widgets/gimpchanneltreeview.c:335
+#: app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "Canal"
 
 #: app/config/gimpdialogconfig.c:431 app/vectors/gimpvectors.c:224
-#: app/widgets/gimpvectorstreeview.c:252
+#: app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "Caminho"
 
@@ -11615,10 +11639,11 @@ msgstr ""
 
 #: app/config/gimprc-blurbs.h:653
 msgid ""
-"Sets the default 'Export the active path' state for the 'Export Path' dialog."
+"Sets the default 'Export the selected paths' state for the 'Export Path' "
+"dialog."
 msgstr ""
-"Define o estado predefinido de “Exportar o caminho ativo\" no diálogo "
-"\"Exportar caminho”."
+"Define o estado predefinido de 'Exportar os caminhos selecionados' no "
+"diálogo 'Exportar caminho'."
 
 #: app/config/gimprc-blurbs.h:656
 msgid "Sets the default folder path for the 'Import Path' dialog."
@@ -13559,7 +13584,7 @@ msgstr "Cor de fundo"
 # Campo que aparece nas opções da ferramenta como Pincel, etc.
 #: app/core/gimpcontext.c:683 app/core/gimpcontext.c:684
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimplayertreeview.c:321
 msgid "Opacity"
 msgstr "Opacidade"
 
@@ -13597,7 +13622,7 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:551
+#: app/tools/gimptextoptions.c:779
 msgid "Font"
 msgstr "Tipo de letra"
 
@@ -13627,7 +13652,7 @@ msgstr "copiar"
 msgid "%s copy"
 msgstr "Cópia de %s"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:532
+#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:760
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "A carregar tipos de letra (isto pode demorar um bocado…)"
@@ -13778,7 +13803,7 @@ msgstr "Estilo"
 # Parece que o ideal é manter o mais próximo do original com "antisserrilhado" e diferenciar "antialiasing" de "feather", que apesar da similaridade são muito diferentes. Estava com "suavizar" e "desvanecer" margens  mas são demasiado vagos para se distinguirem. "Desvanecer" fica reservado para a tradução de "fade".
 #: app/core/gimpfilloptions.c:117 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:136
+#: app/tools/gimptextoptions.c:174
 msgid "Antialiasing"
 msgstr "Antisserrilhado"
 
@@ -14958,7 +14983,7 @@ msgid "Line width"
 msgstr "Espessura da linha"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:123
+#: app/tools/gimptextoptions.c:161 app/tools/gimptextoptions.c:297
 msgid "Unit"
 msgstr "Unidade"
 
@@ -14974,7 +14999,7 @@ msgstr "Estilo da esquina"
 msgid "Miter limit"
 msgstr "Limite da meia-esquadria"
 
-#: app/core/gimpstrokeoptions.c:190
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:314
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -15336,8 +15361,8 @@ msgstr ""
 "Pedro Barreira \n"
 "Duarte Loreto <happyguy_pt@hotmail.com>\n"
 "Pedro Albuquerque <palbuquerque73@gmail.com>\n"
-"Sara Campos <lalocas@protonmail.com>\n"
 "Hugo Carvalho <hugokarvalho@hotmail.com>\n"
+"Sara Campos <lalocas@protonmail.com>\n"
 "\n"
 "Contribuições no Launchpad:\n"
 "  Pedro Barreira https://launchpad.net/~almufadado\n"
@@ -15358,9 +15383,7 @@ msgstr ""
 "  Paulo Murphy de Freitas https://launchpad.net/~powlow\n"
 "  Pedro Fragoso https://launchpad.net/~ember\n"
 "  Susana Pereira https://launchpad.net/~susana\n"
-"  Tiago Silva https://launchpad.net/~tiagosilva\n"
-"  lijealso https://launchpad.net/~lijealso\n"
-"  peter https://launchpad.net/~nudos2003"
+"  Tiago Silva https://launchpad.net/~tiagosilva"
 
 #: app/dialogs/about-dialog.c:341
 msgid "Update available!"
@@ -16932,7 +16955,7 @@ msgstr "Interface do utilizador"
 msgid "Interface"
 msgstr "Interface"
 
-#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:153
+#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:191
 msgid "Language"
 msgstr "Idioma"
 
@@ -17289,8 +17312,8 @@ msgid "Select Default Folder for Exporting Paths"
 msgstr "Selecionar pasta predefinida para a exportação de caminhos"
 
 #: app/dialogs/preferences-dialog.c:2543
-msgid "Export the active path only"
-msgstr "Exportar apenas o caminho ativo"
+msgid "Export the selected paths only"
+msgstr "Exportar apenas os caminhos selecionados"
 
 #. Import Path Dialog
 #: app/dialogs/preferences-dialog.c:2547
@@ -18270,8 +18293,8 @@ msgid "Export Path to SVG"
 msgstr "Exportar caminho para SVG"
 
 #: app/dialogs/vectors-export-dialog.c:121
-msgid "Export the active path"
-msgstr "Exportar o caminho ativo"
+msgid "Export the selected paths"
+msgstr "Exportar os caminhos selecionados"
 
 #: app/dialogs/vectors-export-dialog.c:122
 msgid "Export all paths from this image"
@@ -18709,31 +18732,31 @@ msgstr "Largar novo caminho"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "Não é possível alterar os pixéis de grupos de camadas."
 
-#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:682
+#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 msgid "A selected layer's pixels are locked."
 msgstr "Os pixéis de uma camada selecionada estão bloqueados."
 
 #: app/display/gimpdisplayshell-dnd.c:426
 #: app/widgets/gimpdrawabletreeview.c:267
-#: app/widgets/gimpdrawabletreeview.c:386
+#: app/widgets/gimpdrawabletreeview.c:385
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Largada textura na camada"
 
 #: app/display/gimpdisplayshell-dnd.c:448
 #: app/widgets/gimpdrawabletreeview.c:298
-#: app/widgets/gimpdrawabletreeview.c:406
+#: app/widgets/gimpdrawabletreeview.c:405
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Largada cor na camada"
 
-#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1408
-#: app/widgets/gimplayertreeview.c:966
+#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1406
+#: app/widgets/gimplayertreeview.c:964
 msgid "Drop layers"
 msgstr "Camadas largadas"
 
 #: app/display/gimpdisplayshell-dnd.c:743
-#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1043
+#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1041
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Cópia largada (da lista de cópias)"
@@ -20246,7 +20269,7 @@ msgstr "Transforma cores em tons de cinzento"
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:110 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:308
+#: app/widgets/gimplayertreeview.c:306
 msgid "Mode"
 msgstr "Modo"
 
@@ -22322,57 +22345,57 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "Adicionar camada de texto"
 
-#: app/text/gimptext-parasite.c:94
+#: app/text/gimptext-parasite.c:95
 msgid "Empty text parasite"
 msgstr "Parasita de texto vazio"
 
-#: app/text/gimptextlayer.c:156
+#: app/text/gimptextlayer.c:158
 msgid "Text Layer"
 msgstr "Camada de texto"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:159
 msgid "Rename Text Layer"
 msgstr "Renomear camada de texto"
 
-#: app/text/gimptextlayer.c:158
+#: app/text/gimptextlayer.c:160
 msgid "Move Text Layer"
 msgstr "Mover camada de texto"
 
-#: app/text/gimptextlayer.c:159
+#: app/text/gimptextlayer.c:161
 msgid "Scale Text Layer"
 msgstr "Alterar tamanho da camada de texto"
 
-#: app/text/gimptextlayer.c:160
+#: app/text/gimptextlayer.c:162
 msgid "Resize Text Layer"
 msgstr "Redimensionar camada de texto"
 
-#: app/text/gimptextlayer.c:161
+#: app/text/gimptextlayer.c:163
 msgid "Flip Text Layer"
 msgstr "Inverter camada de texto"
 
-#: app/text/gimptextlayer.c:162
+#: app/text/gimptextlayer.c:164
 msgid "Rotate Text Layer"
 msgstr "Rodar camada de texto"
 
-#: app/text/gimptextlayer.c:163
+#: app/text/gimptextlayer.c:165
 msgid "Transform Text Layer"
 msgstr "Transformar camada de texto"
 
-#: app/text/gimptextlayer.c:579
+#: app/text/gimptextlayer.c:581
 msgid "Discard Text Information"
 msgstr "Descartar informação de texto"
 
-#: app/text/gimptextlayer.c:714
+#: app/text/gimptextlayer.c:716
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr ""
 "Devido à inexistência de quaisquer tipos de letra, a funcionalidade de texto "
 "está indisponível."
 
-#: app/text/gimptextlayer.c:777
+#: app/text/gimptextlayer.c:779
 msgid "Empty Text Layer"
 msgstr "Camada de texto vazia"
 
-#: app/text/gimptextlayer.c:830
+#: app/text/gimptextlayer.c:947
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
@@ -22380,7 +22403,7 @@ msgstr ""
 "O seu texto não pode ser renderizado. Provavelmente é demasiado grande. Por "
 "favor torne-o mais curto ou use um tipo de letra mais pequeno."
 
-#: app/text/gimptextlayer-xcf.c:78
+#: app/text/gimptextlayer-xcf.c:80
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -22412,6 +22435,21 @@ msgstr "Dinâmica"
 msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "Fixa"
+
+#: app/text/text-enums.c:54
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "Preenchido"
+
+#: app/text/text-enums.c:55
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "Contornado"
+
+#: app/text/text-enums.c:56
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "Contornado e preenchido"
 
 #: app/tools/gimpairbrushtool.c:68
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
@@ -23250,7 +23288,7 @@ msgstr "Mover seleção flutuante"
 msgid "There is no path to move."
 msgstr "Não existe nenhum caminho para mover."
 
-#: app/tools/gimpeditselectiontool.c:1086 app/tools/gimptransformtool.c:729
+#: app/tools/gimpeditselectiontool.c:1086 app/tools/gimptransformtool.c:751
 msgid "The selected path's position is locked."
 msgstr "A posição do caminho selecionado está bloqueada."
 
@@ -23335,7 +23373,7 @@ msgid "A selected item's pixels are locked."
 msgstr "Os pixéis de um item selecionado estão bloqueados."
 
 #: app/tools/gimpfiltertool.c:328 app/tools/gimppainttool.c:362
-#: app/tools/gimptransformtool.c:691
+#: app/tools/gimptransformtool.c:713
 msgid "A selected layer is not visible."
 msgstr "A camada selecionada não está visível."
 
@@ -23719,7 +23757,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:604
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:832
 msgid "Color:"
 msgstr "Cor:"
 
@@ -24595,7 +24633,7 @@ msgstr "Atual"
 msgid "Fixed"
 msgstr "Fixar"
 
-#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:565
+#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:793
 msgid "Size:"
 msgstr "Tamanho:"
 
@@ -24875,19 +24913,19 @@ msgstr "[Clique] para esborratar"
 msgid "Click to smudge the line"
 msgstr "[Clique] para esborratar a linha"
 
-#: app/tools/gimptextoptions.c:124
+#: app/tools/gimptextoptions.c:162
 msgid "Font size unit"
 msgstr "Unidade de tamanho do tipo de letra"
 
-#: app/tools/gimptextoptions.c:129 app/tools/gimptextoptions.c:130
+#: app/tools/gimptextoptions.c:167 app/tools/gimptextoptions.c:168
 msgid "Font size"
 msgstr "Tamanho do tipo de letra"
 
-#: app/tools/gimptextoptions.c:143
+#: app/tools/gimptextoptions.c:181
 msgid "Hinting"
 msgstr "Otimizar"
 
-#: app/tools/gimptextoptions.c:144
+#: app/tools/gimptextoptions.c:182
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
@@ -24895,47 +24933,47 @@ msgstr ""
 "letras em tamanhos pequenos (abaixo de 10 pt) em ecrãs. Para impressão isto "
 "não é necessário"
 
-#: app/tools/gimptextoptions.c:154
+#: app/tools/gimptextoptions.c:192
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "O idioma do texto pode afetar a forma como o texto é apresentado."
 
-#: app/tools/gimptextoptions.c:168
+#: app/tools/gimptextoptions.c:206
 msgid "Justify"
 msgstr "Justificar"
 
-#: app/tools/gimptextoptions.c:169
+#: app/tools/gimptextoptions.c:207
 msgid "Text alignment"
 msgstr "Alinhamento do texto"
 
-#: app/tools/gimptextoptions.c:176
+#: app/tools/gimptextoptions.c:214
 msgid "Indentation"
 msgstr "Avanço"
 
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:215
 msgid "Indentation of the first line"
 msgstr "Avanço (indentação) da primeira linha"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:222
 msgid "Line spacing"
 msgstr "Espaçamento das linhas"
 
-#: app/tools/gimptextoptions.c:185
+#: app/tools/gimptextoptions.c:223
 msgid "Adjust line spacing"
 msgstr "Ajustar espaçamento entre linhas"
 
-#: app/tools/gimptextoptions.c:192
+#: app/tools/gimptextoptions.c:230
 msgid "Letter spacing"
 msgstr "Espaçamento das letras"
 
-#: app/tools/gimptextoptions.c:193
+#: app/tools/gimptextoptions.c:231
 msgid "Adjust letter spacing"
 msgstr "Ajustar espaçamento entre letras"
 
-#: app/tools/gimptextoptions.c:200
+#: app/tools/gimptextoptions.c:238
 msgid "Box"
 msgstr "Caixa"
 
-#: app/tools/gimptextoptions.c:201
+#: app/tools/gimptextoptions.c:239
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -24943,31 +24981,55 @@ msgstr ""
 "Se o texto flui dentro da caixa retangular ou se move para uma nova linha "
 "quando se prime a tecla [↵ Enter]"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:247
 msgid "Use editor"
 msgstr "Usar o editor flutuante"
 
-#: app/tools/gimptextoptions.c:210
+#: app/tools/gimptextoptions.c:248
 msgid "Use an external editor window for text entry"
 msgstr "Usar uma janela flutuante dedicada para introduzir e alterar o texto"
 
-#: app/tools/gimptextoptions.c:593
+#: app/tools/gimptextoptions.c:290
+msgid "Outline width"
+msgstr "Largura do contorno"
+
+#: app/tools/gimptextoptions.c:291
+msgid "Adjust outline width"
+msgstr "Ajustar largura do contorno"
+
+#: app/tools/gimptextoptions.c:298
+msgid "Outline width unit"
+msgstr "Unidade de largura de contorno"
+
+#: app/tools/gimptextoptions.c:313
+msgid "Outline miter limit"
+msgstr "Limite da meia-esquadria de contorno"
+
+#: app/tools/gimptextoptions.c:821
 msgid "Hinting:"
 msgstr "Otimizar:"
 
-#: app/tools/gimptextoptions.c:597
+#: app/tools/gimptextoptions.c:825
 msgid "Text Color"
 msgstr "Cor do texto"
 
-#: app/tools/gimptextoptions.c:611
+#: app/tools/gimptextoptions.c:838
+msgid "Style:"
+msgstr "Estilo:"
+
+#: app/tools/gimptextoptions.c:842
+msgid "Outline Options"
+msgstr "Opções de contorno"
+
+#: app/tools/gimptextoptions.c:862
 msgid "Justify:"
 msgstr "Justificar:"
 
-#: app/tools/gimptextoptions.c:641
+#: app/tools/gimptextoptions.c:892
 msgid "Box:"
 msgstr "Caixa:"
 
-#: app/tools/gimptextoptions.c:658
+#: app/tools/gimptextoptions.c:932
 msgid "Language:"
 msgstr "Idioma:"
 
@@ -25022,19 +25084,19 @@ msgstr ""
 "Pode editar a camada ou criar uma nova camada de texto a partir das suas "
 "definições de texto."
 
-#: app/tools/gimptexttool.c:2347
+#: app/tools/gimptexttool.c:2348
 msgid "Text is required."
 msgstr "O texto é necessário."
 
-#: app/tools/gimptexttool.c:2350
+#: app/tools/gimptexttool.c:2351
 msgid "No image."
 msgstr "Sem imagem."
 
-#: app/tools/gimptexttool.c:2353
+#: app/tools/gimptexttool.c:2354
 msgid "No layer."
 msgstr "Sem camada."
 
-#: app/tools/gimptexttool.c:2364
+#: app/tools/gimptexttool.c:2365
 msgid "Exactly one path must be selected."
 msgstr "Deve ser selecionado exatamente um caminho."
 
@@ -25242,16 +25304,16 @@ msgid "Transform Step"
 msgstr "Passo de transformação"
 
 # Manter “inverso”. O original é críptico.
-#: app/tools/gimptransformgridtool.c:984
+#: app/tools/gimptransformgridtool.c:992
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s (inverso)"
 
-#: app/tools/gimptransformgridtool.c:1247
+#: app/tools/gimptransformgridtool.c:1263
 msgid "Re_adjust"
 msgstr "Re_ajustar"
 
-#: app/tools/gimptransformgridtool.c:1500
+#: app/tools/gimptransformgridtool.c:1516
 msgid "Cannot readjust the transformation"
 msgstr "Não é possível reajustar a transformação"
 
@@ -25388,35 +25450,35 @@ msgstr "A transformação cria uma imagem muito grande."
 msgid "Applying the transformation will enlarge the image by a factor of %g."
 msgstr "Aplicar a transformação irá alargar a imagem por um fator de %g."
 
-#: app/tools/gimptransformtool.c:675
+#: app/tools/gimptransformtool.c:697
 msgid "There is no layer to transform."
 msgstr "Não existe nenhuma camada para transformar."
 
-#: app/tools/gimptransformtool.c:684
+#: app/tools/gimptransformtool.c:706
 msgid "A selected layer's position and size are locked."
 msgstr "A posição e o tamanho da camada selecionada estão bloqueados."
 
-#: app/tools/gimptransformtool.c:698
+#: app/tools/gimptransformtool.c:720
 msgid "The selection does not intersect with a selected layer."
 msgstr "A seleção não interseta com uma camada selecionada."
 
-#: app/tools/gimptransformtool.c:705
+#: app/tools/gimptransformtool.c:727
 msgid "There is no selection to transform."
 msgstr "Não há nenhuma seleção para transformar."
 
-#: app/tools/gimptransformtool.c:720
+#: app/tools/gimptransformtool.c:742
 msgid "There is no path to transform."
 msgstr "Não há nenhum caminho para transformar."
 
-#: app/tools/gimptransformtool.c:727
+#: app/tools/gimptransformtool.c:749
 msgid "The selected path's strokes are locked."
 msgstr "Os traços do caminho selecionado estão bloqueados."
 
-#: app/tools/gimptransformtool.c:731
+#: app/tools/gimptransformtool.c:753
 msgid "The selected path has no strokes."
 msgstr "O caminho selecionado não tem traços."
 
-#: app/tools/gimptransformtool.c:811
+#: app/tools/gimptransformtool.c:833
 msgid "The current transform is invalid"
 msgstr "A transformação atual é inválida"
 
@@ -25891,7 +25953,7 @@ msgstr "Rodar caminho"
 msgid "Transform Path"
 msgstr "Transformar caminho"
 
-#: app/vectors/gimpvectors-export.c:89
+#: app/vectors/gimpvectors-export.c:88
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "Não foi possível guardar o ficheiro SVG '%s': %s"
@@ -27240,7 +27302,7 @@ msgstr "Bloquear pixéis"
 msgid "Lock position and size"
 msgstr "Bloquear posição e tamanho"
 
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:565
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:563
 msgid "Lock visibility"
 msgstr "Bloquear visibilidade"
 
@@ -27662,19 +27724,19 @@ msgid_plural "Indexed color (%d colors)"
 msgstr[0] "Cor indexada (monocromático)"
 msgstr[1] "Cor indexada (%d cores)"
 
-#: app/widgets/gimpitemtreeview.c:535
+#: app/widgets/gimpitemtreeview.c:533
 msgid "Set Item Exclusive Content Lock"
 msgstr "Definir bloqueio de conteúdo exclusivo do item"
 
-#: app/widgets/gimpitemtreeview.c:551
+#: app/widgets/gimpitemtreeview.c:549
 msgid "Set Item Exclusive Position Lock"
 msgstr "Definir bloqueio de posição exclusiva do item"
 
-#: app/widgets/gimpitemtreeview.c:566
+#: app/widgets/gimpitemtreeview.c:564
 msgid "Unlock visibility"
 msgstr "Desbloquear visibilidade"
 
-#: app/widgets/gimpitemtreeview.c:567
+#: app/widgets/gimpitemtreeview.c:565
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "Definir bloqueio de visibilidade exclusiva do item"
 
@@ -27690,78 +27752,78 @@ msgstr ""
 "profundidade de cor de 8 bits, levando a mais perda de informação nas "
 "operações de cores do que no atual"
 
-#: app/widgets/gimplayertreeview.c:443
+#: app/widgets/gimplayertreeview.c:441
 msgid "Select layers by patterns and store layer sets"
 msgstr "Selecionar camadas por padrões e armazenar conjuntos de camadas"
 
-#: app/widgets/gimplayertreeview.c:487
+#: app/widgets/gimplayertreeview.c:485
 msgid "No layer set stored"
 msgstr "Nenhuma definição de camada armazenada"
 
-#: app/widgets/gimplayertreeview.c:509
+#: app/widgets/gimplayertreeview.c:507
 msgid "New layer set's name"
 msgstr "Nome do novo conjunto de camadas"
 
-#: app/widgets/gimplayertreeview.c:548 app/widgets/gimplayertreeview.c:551
+#: app/widgets/gimplayertreeview.c:546 app/widgets/gimplayertreeview.c:549
 msgid "Lock alpha channel"
 msgstr "Bloquear canal alfa"
 
-#: app/widgets/gimplayertreeview.c:549
+#: app/widgets/gimplayertreeview.c:547
 msgid "Unlock alpha channel"
 msgstr "Desbloquear canal alfa"
 
-#: app/widgets/gimplayertreeview.c:550
+#: app/widgets/gimplayertreeview.c:548
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Definir bloqueio exclusivo do canal alfa do item"
 
-#: app/widgets/gimplayertreeview.c:1209
+#: app/widgets/gimplayertreeview.c:1207
 msgid "search"
 msgstr "procurar"
 
-#: app/widgets/gimplayertreeview.c:1210
+#: app/widgets/gimplayertreeview.c:1208
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimplayertreeview.c:1210
+#: app/widgets/gimplayertreeview.c:1208
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
+#: app/widgets/gimplayertreeview.c:1312 app/widgets/gimplayertreeview.c:1325
 msgid "Select layers by text search"
 msgstr "Selecionar camadas por pesquisa de texto"
 
-#: app/widgets/gimplayertreeview.c:1316 app/widgets/gimplayertreeview.c:1329
+#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
 msgid "Text search"
 msgstr "Pesquisa de texto"
 
-#: app/widgets/gimplayertreeview.c:1333
+#: app/widgets/gimplayertreeview.c:1331
 msgid "Select layers by glob patterns"
 msgstr "Definir camadas por padrão glob"
 
-#: app/widgets/gimplayertreeview.c:1335
+#: app/widgets/gimplayertreeview.c:1333
 msgid "Glob pattern search"
 msgstr "Pesquisa padrão glob"
 
-#: app/widgets/gimplayertreeview.c:1339
+#: app/widgets/gimplayertreeview.c:1337
 msgid "Select layers by regular expressions"
 msgstr "Selecionar camadas por expressões regulares"
 
-#: app/widgets/gimplayertreeview.c:1341
+#: app/widgets/gimplayertreeview.c:1339
 msgid "Regular Expression search"
 msgstr "Pesquisa de expressão regular"
 
-#: app/widgets/gimplayertreeview.c:1405
+#: app/widgets/gimplayertreeview.c:1403
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Expressão regular inválida: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1558
+#: app/widgets/gimplayertreeview.c:1556
 msgid "Set layers mode"
 msgstr "Definir modo das camadas"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2039
+#: app/widgets/gimplayertreeview.c:2037
 msgid "No channels to create a layer mask from."
 msgstr "Sem canais onde criar uma máscara na camada."
 
@@ -28351,11 +28413,11 @@ msgstr "Surgiu um erro ao processar a definição do menu %s: %s"
 msgid "[ Base Image ]"
 msgstr "[ imagem base ]"
 
-#: app/widgets/gimpvectorstreeview.c:113
+#: app/widgets/gimpvectorstreeview.c:111
 msgid "Lock path strokes"
 msgstr "Bloquear traços do caminho"
 
-#: app/widgets/gimpvectorstreeview.c:116
+#: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
 msgstr "Bloquear posição do caminho"
 
