@@ -22,6 +22,7 @@ plug-ins/file-exr
 plug-ins/file-faxg3
 plug-ins/file-fits
 plug-ins/file-fli
+plug-ins/file-icns
 plug-ins/file-ico
 plug-ins/file-jpeg
 plug-ins/file-psd
