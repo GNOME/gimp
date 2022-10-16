@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-05 15:38+0000\n"
-"PO-Revision-Date: 2022-10-09 10:08+0200\n"
+"POT-Creation-Date: 2022-10-16 04:09+0000\n"
+"PO-Revision-Date: 2022-10-16 08:21+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -86,7 +86,7 @@ msgstr "Povadi kozo (C)"
 #: plug-ins/common/qbist.c:944 plug-ins/common/smooth-palette.c:511
 #: plug-ins/common/sparkle.c:426 plug-ins/common/sphere-designer.c:2287
 #: plug-ins/common/sphere-designer.c:2632 plug-ins/common/tile.c:492
-#: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:241
+#: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
 #: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
 #: plug-ins/file-tiff/file-tiff-load.c:2689 plug-ins/flame/flame.c:540
@@ -181,9 +181,10 @@ msgstr "Povadi kozo (JavaScript)"
 #: plug-ins/common/qbist.c:945 plug-ins/common/smooth-palette.c:512
 #: plug-ins/common/sparkle.c:427 plug-ins/common/sphere-designer.c:2633
 #: plug-ins/common/tile.c:493 plug-ins/common/tile-small.c:447
-#: plug-ins/common/van-gogh-lic.c:710 plug-ins/common/warp.c:491
-#: plug-ins/common/wavelet-decompose.c:410 plug-ins/file-psd/psd-load.c:3284
-#: plug-ins/flame/flame.c:717 plug-ins/flame/flame.c:1034
+#: plug-ins/common/unit-editor.c:268 plug-ins/common/van-gogh-lic.c:710
+#: plug-ins/common/warp.c:491 plug-ins/common/wavelet-decompose.c:410
+#: plug-ins/file-psd/psd-load.c:3284 plug-ins/flame/flame.c:717
+#: plug-ins/flame/flame.c:1034
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:567
 #: plug-ins/fractal-explorer/fractal-explorer.c:1270
 #: plug-ins/gimpressionist/gimpressionist.c:143
@@ -991,11 +992,10 @@ msgstr "Graf trenutnih nastavitev"
 
 #: plug-ins/common/cml-explorer.c:1983 plug-ins/common/plugin-browser.c:560
 #: plug-ins/common/procedure-browser.c:168
-#: plug-ins/common/sample-colorize.c:1415 plug-ins/common/unit-editor.c:447
-#: plug-ins/gfig/gfig-dialog.c:297 plug-ins/gfig/gfig-dialog.c:887
-#: plug-ins/gfig/gfig-dialog.c:1253 plug-ins/gfig/gfig-dialog.c:1397
-#: plug-ins/ifs-compose/ifs-compose.c:1212 plug-ins/imagemap/imap_menu.c:156
-#: plug-ins/metadata/metadata-viewer.c:287
+#: plug-ins/common/sample-colorize.c:1415 plug-ins/gfig/gfig-dialog.c:297
+#: plug-ins/gfig/gfig-dialog.c:887 plug-ins/gfig/gfig-dialog.c:1253
+#: plug-ins/gfig/gfig-dialog.c:1397 plug-ins/ifs-compose/ifs-compose.c:1212
+#: plug-ins/imagemap/imap_menu.c:156 plug-ins/metadata/metadata-viewer.c:287
 msgid "_Close"
 msgstr "Z_apri"
 
@@ -1015,8 +1015,8 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1330
-#: plug-ins/file-ico/ico-save.c:1536 plug-ins/file-jpeg/jpeg-save.c:317
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1332
+#: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
 #: plug-ins/file-psd/psd-save.c:2124 plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
@@ -1051,12 +1051,13 @@ msgstr "Naloži parametre raziskovalca MZP"
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-ico/ico-load.c:682 plug-ins/file-ico/ico-load.c:793
-#: plug-ins/file-ico/ico-load.c:946 plug-ins/file-jpeg/jpeg-load.c:96
-#: plug-ins/file-jpeg/jpeg-load.c:555 plug-ins/file-psd/psd-load.c:159
-#: plug-ins/file-psd/psd-load.c:164 plug-ins/file-psd/psd-save.c:2129
-#: plug-ins/file-psd/psd-thumb-load.c:82 plug-ins/file-psd/psd-thumb-load.c:87
-#: plug-ins/flame/flame.c:478
+#: plug-ins/file-icns/file-icns-load.c:517
+#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:682
+#: plug-ins/file-ico/ico-load.c:794 plug-ins/file-ico/ico-load.c:958
+#: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
+#: plug-ins/file-psd/psd-load.c:159 plug-ins/file-psd/psd-load.c:164
+#: plug-ins/file-psd/psd-save.c:2129 plug-ins/file-psd/psd-thumb-load.c:82
+#: plug-ins/file-psd/psd-thumb-load.c:87 plug-ins/flame/flame.c:478
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1862
 #: plug-ins/fractal-explorer/fractal-explorer.c:1038 plug-ins/gfig/gfig.c:476
 #: plug-ins/help/gimphelplocale.c:222 plug-ins/help/gimphelplocale.c:238
@@ -1963,9 +1964,10 @@ msgstr "EOF ali napaka pri branju zaglavja slike"
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-ico/ico-load.c:674
-#: plug-ins/file-ico/ico-load.c:785 plug-ins/file-jpeg/jpeg-load.c:87
-#: plug-ins/file-psd/psd-load.c:172 plug-ins/file-raw/file-darktable.c:413
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:509
+#: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:786
+#: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:172
+#: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
 #: plug-ins/file-tiff/file-tiff-load.c:285
 #, c-format
@@ -2042,8 +2044,8 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1322
-#: plug-ins/file-ico/ico-save.c:1520 plug-ins/file-jpeg/jpeg-save.c:272
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1324
+#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
 #: plug-ins/file-psd/psd-save.c:2070 plug-ins/file-sgi/sgi.c:645
 #: plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
@@ -4904,7 +4906,7 @@ msgstr "Razpoložljive slike:"
 msgid "On film:"
 msgstr "Na traku:"
 
-#: plug-ins/common/film.c:982 plug-ins/common/unit-editor.c:242
+#: plug-ins/common/film.c:982 plug-ins/common/unit-editor.c:436
 msgid "_Add"
 msgstr "_Dodaj"
 
@@ -5945,11 +5947,11 @@ msgstr "_Prekrivnost:"
 msgid "Number of Segments"
 msgstr "Število odsekov"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:115
 msgid "Saved"
 msgstr "Shranjeno"
 
-#: plug-ins/common/unit-editor.c:112
+#: plug-ins/common/unit-editor.c:115
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
@@ -5957,28 +5959,28 @@ msgstr ""
 "Definicija enote bo v primeru potrditve v tem stolpcu shranjena šele ob "
 "izhodu iz programa GIMP."
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:117
 msgid "ID"
 msgstr "ID"
 
-#: plug-ins/common/unit-editor.c:114
+#: plug-ins/common/unit-editor.c:117
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
 msgstr "Ta niz identificira enoto v datotekah z nastavitvami GIMPa."
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:119
 msgid "Factor"
 msgstr "Faktor"
 
-#: plug-ins/common/unit-editor.c:116
+#: plug-ins/common/unit-editor.c:119
 msgid "How many units make up an inch."
 msgstr "Koliko enot zapolni palec."
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:120
 msgid "Digits"
 msgstr "Številke"
 
-#: plug-ins/common/unit-editor.c:117
+#: plug-ins/common/unit-editor.c:120
 msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
@@ -5988,11 +5990,11 @@ msgstr ""
 "vnosno polje, da bi zagotovili približno enako natančnost kot jo ima vnosno "
 "polje »palec« z dvema decimalkama."
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:125
 msgid "Symbol"
 msgstr "Simbol"
 
-#: plug-ins/common/unit-editor.c:122
+#: plug-ins/common/unit-editor.c:125
 msgid ""
 "The unit's symbol if it has one (e.g. \" for inches). The unit's "
 "abbreviation is used if doesn't have a symbol."
@@ -6000,97 +6002,101 @@ msgstr ""
 "Simbol enote, če ga ima (npr. \" za palce). Če simbol ne obstaja, bo "
 "uporabljena okrajšava enote."
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:128
 msgid "Abbreviation"
 msgstr "Okrajšava"
 
-#: plug-ins/common/unit-editor.c:125
+#: plug-ins/common/unit-editor.c:128
 msgid "The unit's abbreviation (e.g. \"cm\" for centimeters)."
 msgstr "Okrajšava enote (npr. »cm« za centimetre)."
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:130
 msgid "Singular"
 msgstr "Ednina"
 
-#: plug-ins/common/unit-editor.c:127
+#: plug-ins/common/unit-editor.c:130
 msgid "The unit's singular form."
 msgstr "Edninska oblika enote."
 
-#: plug-ins/common/unit-editor.c:128
+#: plug-ins/common/unit-editor.c:131
 msgid "Plural"
 msgstr "Množina"
 
-#: plug-ins/common/unit-editor.c:128
+#: plug-ins/common/unit-editor.c:131
 msgid "The unit's plural form."
 msgstr "Množinska oblika enote."
 
-#: plug-ins/common/unit-editor.c:139
-msgid "Create a new unit from scratch"
-msgstr "Ustvari novo enoto iz nič"
-
-#: plug-ins/common/unit-editor.c:145
-msgid "Create a new unit using the currently selected unit as template"
-msgstr "Ustvari novo enoto iz izbrane enote kot predloge"
-
-#: plug-ins/common/unit-editor.c:184
+#: plug-ins/common/unit-editor.c:175
 msgid "U_nits"
 msgstr "E_note"
 
-#: plug-ins/common/unit-editor.c:189
+#: plug-ins/common/unit-editor.c:180
 msgid "Create or alter units used in GIMP"
 msgstr "Ustvari ali spremeni enote, uporabljene v programu GIMP"
 
-#: plug-ins/common/unit-editor.c:237
-msgid "Add a New Unit"
-msgstr "Dodaj novo enoto"
-
-#: plug-ins/common/unit-editor.c:266
-msgid "_ID:"
-msgstr "_ID:"
-
-#: plug-ins/common/unit-editor.c:278
-msgid "_Factor:"
-msgstr "_Faktor:"
-
-#: plug-ins/common/unit-editor.c:289
-msgid "_Digits:"
-msgstr "_Številke:"
-
-#: plug-ins/common/unit-editor.c:301
-msgid "_Symbol:"
-msgstr "_Simbol:"
-
-#: plug-ins/common/unit-editor.c:313
-msgid "_Abbreviation:"
-msgstr "_Okrajšava:"
-
-#: plug-ins/common/unit-editor.c:325
-msgid "Si_ngular:"
-msgstr "_Ednina:"
-
-#: plug-ins/common/unit-editor.c:337
-msgid "_Plural:"
-msgstr "_Množina:"
-
-#: plug-ins/common/unit-editor.c:380
-msgid "Incomplete input"
-msgstr "Nepopoln vnos"
-
-#: plug-ins/common/unit-editor.c:383
-msgid "Please fill in all text fields."
-msgstr "Prosimo, izpolnite vsa polja."
-
-#: plug-ins/common/unit-editor.c:442
+#: plug-ins/common/unit-editor.c:230 plug-ins/common/unit-editor.c:249
 msgid "Unit Editor"
 msgstr "Urejevalnik enot"
 
 #. destroy model automatically with view
 #. Put buttons in
-#: plug-ins/common/unit-editor.c:446
+#: plug-ins/common/unit-editor.c:253
 #: plug-ins/fractal-explorer/fractal-explorer.c:1214
 #: plug-ins/gimpressionist/presets.c:1073
 msgid "_Refresh"
 msgstr "Osve_ži"
+
+#: plug-ins/common/unit-editor.c:260 plug-ins/imagemap/imap_menu.c:213
+msgid "_Help"
+msgstr "_Pomoč"
+
+#: plug-ins/common/unit-editor.c:291
+msgid "Create a new unit from scratch"
+msgstr "Ustvari novo enoto iz nič"
+
+#: plug-ins/common/unit-editor.c:298
+msgid "Create a new unit using the currently selected unit as template"
+msgstr "Ustvari novo enoto iz izbrane enote kot predloge"
+
+#: plug-ins/common/unit-editor.c:431
+msgid "Add a New Unit"
+msgstr "Dodaj novo enoto"
+
+#: plug-ins/common/unit-editor.c:460
+msgid "_ID:"
+msgstr "_ID:"
+
+#: plug-ins/common/unit-editor.c:472
+msgid "_Factor:"
+msgstr "_Faktor:"
+
+#: plug-ins/common/unit-editor.c:483
+msgid "_Digits:"
+msgstr "_Številke:"
+
+#: plug-ins/common/unit-editor.c:495
+msgid "_Symbol:"
+msgstr "_Simbol:"
+
+#: plug-ins/common/unit-editor.c:507
+msgid "_Abbreviation:"
+msgstr "_Okrajšava:"
+
+#: plug-ins/common/unit-editor.c:519
+msgid "Si_ngular:"
+msgstr "_Ednina:"
+
+#: plug-ins/common/unit-editor.c:531
+msgid "_Plural:"
+msgstr "_Množina:"
+
+#: plug-ins/common/unit-editor.c:574
+msgid "Incomplete input"
+msgstr "Nepopoln vnos"
+
+#: plug-ins/common/unit-editor.c:577
+msgid "Please fill in all text fields."
+msgstr "Prosimo, izpolnite vsa polja."
 
 #: plug-ins/common/van-gogh-lic.c:632 plug-ins/common/van-gogh-lic.c:705
 msgid "Van Gogh (LIC)"
@@ -6969,6 +6975,24 @@ msgstr "_Do:"
 msgid "Export Image as FLI Animation"
 msgstr "Izvozi sliko kot animacijo FLI"
 
+#: plug-ins/file-icns/file-icns-load.c:433
+#, c-format
+msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
+msgstr "Napaka pri odpiranju začasne datoteke %s »%s« za nalaganje icns: %s"
+
+#. ----- Open PSD file -----
+#: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:950
+#: plug-ins/file-jpeg/jpeg-load.c:541 plug-ins/file-psd/psd-thumb-load.c:72
+#: plug-ins/file-raw/file-darktable.c:515
+#: plug-ins/file-raw/file-rawtherapee.c:457
+#, c-format
+msgid "Opening thumbnail for '%s'"
+msgstr "Odpri sličico predogleda za »%s« ..."
+
+#: plug-ins/file-icns/file-icns.c:121
+msgid "Icns"
+msgstr "Icns"
+
 #: plug-ins/file-ico/ico-dialog.c:61
 msgid "Windows Animated Cursor"
 msgstr "Animirani kazalec Windows"
@@ -7053,14 +7077,6 @@ msgstr "Ikona #%d ima ničelno širino ali višino"
 #, c-format
 msgid "Icon #%i"
 msgstr "Ikona #%i"
-
-#. ----- Open PSD file -----
-#: plug-ins/file-ico/ico-load.c:938 plug-ins/file-jpeg/jpeg-load.c:541
-#: plug-ins/file-psd/psd-thumb-load.c:72 plug-ins/file-raw/file-darktable.c:515
-#: plug-ins/file-raw/file-rawtherapee.c:457
-#, c-format
-msgid "Opening thumbnail for '%s'"
-msgstr "Odpri sličico predogleda za »%s« ..."
 
 #: plug-ins/file-ico/ico-save.c:213
 #, c-format
@@ -11286,10 +11302,6 @@ msgstr "Uporabi vodila GIMP-a ..."
 #: plug-ins/imagemap/imap_menu.c:210
 msgid "Create Guides..."
 msgstr "Ustvari vodila ..."
-
-#: plug-ins/imagemap/imap_menu.c:213
-msgid "_Help"
-msgstr "_Pomoč"
 
 #: plug-ins/imagemap/imap_menu.c:214
 msgid "_Contents"
