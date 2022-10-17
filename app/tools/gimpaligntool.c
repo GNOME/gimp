@@ -41,6 +41,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
+#include "display/gimpcanvasitem.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
@@ -95,11 +96,17 @@ static void     gimp_align_tool_cursor_update  (GimpTool              *tool,
                                                 const GimpCoords      *coords,
                                                 GdkModifierType        state,
                                                 GimpDisplay           *display);
+const gchar *   gimp_align_tool_can_undo       (GimpTool              *tool,
+                                                GimpDisplay           *display);
+static gboolean gimp_align_tool_undo           (GimpTool              *tool,
+                                                GimpDisplay           *display);
 
 static void     gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
 static void     gimp_align_tool_align          (GimpAlignTool         *align_tool,
                                                 GimpAlignmentType      align_type);
+
+static gint     gimp_align_tool_undo_idle      (gpointer               data);
 
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
@@ -140,6 +147,8 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   tool_class->key_press      = gimp_align_tool_key_press;
   tool_class->oper_update    = gimp_align_tool_oper_update;
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
+  tool_class->can_undo       = gimp_align_tool_can_undo;
+  tool_class->undo           = gimp_align_tool_undo;
 
   draw_tool_class->draw      = gimp_align_tool_draw;
 }
@@ -170,6 +179,9 @@ gimp_align_tool_constructed (GObject *object)
   g_signal_connect_object (options, "align-button-clicked",
                            G_CALLBACK (gimp_align_tool_align),
                            align_tool, G_CONNECT_SWAPPED);
+  g_signal_connect_object (align_tool, "undo",
+                           G_CALLBACK (gimp_align_tool_undo),
+                           align_tool, G_CONNECT_AFTER);
 }
 
 static void
@@ -494,6 +506,22 @@ gimp_align_tool_cursor_update (GimpTool         *tool,
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
 
+const gchar *
+gimp_align_tool_can_undo (GimpTool    *tool,
+                          GimpDisplay *display)
+{
+  return _("Arrange Objects");
+}
+
+static gboolean
+gimp_align_tool_undo (GimpTool    *tool,
+                      GimpDisplay *display)
+{
+  g_idle_add ((GSourceFunc) gimp_align_tool_undo_idle, (gpointer) tool);
+
+  return FALSE;
+}
+
 static void
 gimp_align_tool_status_update (GimpTool        *tool,
                                GimpDisplay     *display,
@@ -562,6 +590,8 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (draw_tool);
   GimpAlignOptions *options = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
   GObject          *reference;
+  GList            *objects;
+  GList            *iter;
   gint              x, y, w, h;
 
   /* draw rubber-band rectangle */
@@ -650,6 +680,28 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
           break;
         }
     }
+
+  /* Highlight picked guides, similarly to how they are highlighted in Move
+   * tool.
+   */
+  objects = gimp_align_options_get_objects (options);
+  for (iter = objects; iter; iter = iter->next)
+    {
+      if (GIMP_IS_GUIDE (iter->data))
+        {
+          GimpGuide      *guide = iter->data;
+          GimpCanvasItem *item;
+          GimpGuideStyle  style;
+
+          style = gimp_guide_get_style (guide);
+
+          item = gimp_draw_tool_add_guide (draw_tool,
+                                           gimp_guide_get_orientation (guide),
+                                           gimp_guide_get_position (guide),
+                                           style);
+          gimp_canvas_item_set_highlight (item, TRUE);
+        }
+    }
 }
 
 static void
@@ -719,4 +771,19 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
 
   gimp_image_flush (image);
   g_list_free (objects);
+}
+
+static gint
+gimp_align_tool_undo_idle (gpointer data)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (data);
+  GimpDisplay  *display   = draw_tool->display;
+
+  /* This makes sure that we properly undraw then redraw the various handles and
+   * highlighted guides after undoing.
+   */
+  gimp_draw_tool_stop (draw_tool);
+  gimp_draw_tool_start (draw_tool, display);
+
+  return FALSE; /* remove idle */
 }
