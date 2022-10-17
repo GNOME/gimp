@@ -34,6 +34,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpalignoptions.h"
@@ -56,12 +57,14 @@ enum
   PROP_OFFSET_Y,
   PROP_ALIGN_LAYERS,
   PROP_ALIGN_VECTORS,
+  PROP_ALIGN_CONTENTS,
 };
 
 struct _GimpAlignOptionsPrivate
 {
   gboolean   align_layers;
   gboolean   align_vectors;
+  gboolean   align_contents;
 
   GList     *selected_guides;
   GObject   *reference;
@@ -158,6 +161,12 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                             _("Selected paths will be aligned or distributed by the tool"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_CONTENTS,
+                            "align-contents",
+                            _("Use extents of layer contents"),
+                            _("Instead of aligning or distributing on layer borders, use its content bounding box"),
+                            TRUE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -209,6 +218,10 @@ gimp_align_options_set_property (GObject      *object,
       gimp_align_options_update_area (options);
       break;
 
+    case PROP_ALIGN_CONTENTS:
+      options->priv->align_contents = g_value_get_boolean (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -241,6 +254,10 @@ gimp_align_options_get_property (GObject    *object,
       break;
     case PROP_ALIGN_VECTORS:
       g_value_set_boolean (value, options->priv->align_vectors);
+      break;
+
+    case PROP_ALIGN_CONTENTS:
+      g_value_set_boolean (value, options->priv->align_contents);
       break;
 
     default:
@@ -360,14 +377,24 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gint              n = 0;
 
   /* Selected objects */
-  widget = gimp_prop_check_button_new (config, "align-layers", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  frame = gimp_frame_new (_("Objects to align or distribute"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  align_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), align_vbox);
+  gtk_widget_show (align_vbox);
+
+  widget = gimp_prop_check_button_new (config, "align-contents", NULL);
+  widget = gimp_prop_expanding_frame_new (config, "align-layers",
+                                          NULL, widget, NULL);
+  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
 
   widget = gimp_prop_check_button_new (config, "align-vectors", NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
@@ -387,7 +414,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
 
   widget = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
   options->priv->selected_guides_label = widget;
 
@@ -641,6 +668,12 @@ gimp_align_options_get_reference (GimpAlignOptions *options,
     }
 
   return reference;
+}
+
+gboolean
+gimp_align_options_align_contents (GimpAlignOptions *options)
+{
+  return options->priv->align_contents;
 }
 
 void

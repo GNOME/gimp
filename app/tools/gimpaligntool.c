@@ -179,9 +179,6 @@ gimp_align_tool_constructed (GObject *object)
   g_signal_connect_object (options, "align-button-clicked",
                            G_CALLBACK (gimp_align_tool_align),
                            align_tool, G_CONNECT_SWAPPED);
-  g_signal_connect_object (align_tool, "undo",
-                           G_CALLBACK (gimp_align_tool_undo),
-                           align_tool, G_CONNECT_AFTER);
 }
 
 static void
@@ -765,6 +762,7 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
                               align_type,
                               reference_object,
                               align_type,
+                              gimp_align_options_align_contents (options),
                               offset);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));

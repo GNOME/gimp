@@ -30,15 +30,19 @@
 #include "gimpimage-undo.h"
 #include "gimpitem.h"
 #include "gimpguide.h"
+#include "gimppickable.h"
+#include "gimppickable-auto-shrink.h"
 
 #include "gimp-intl.h"
 
 
 static GList * sort_by_offset  (GList             *list);
 static void    compute_offsets (GList             *list,
-                                GimpAlignmentType  alignment);
+                                GimpAlignmentType  alignment,
+                                gboolean           align_contents);
 static void    compute_offset  (GObject           *object,
-                                GimpAlignmentType  alignment);
+                                GimpAlignmentType  alignment,
+                                gboolean           align_contents);
 static gint    offset_compare  (gconstpointer      a,
                                 gconstpointer      b);
 
@@ -50,6 +54,7 @@ static gint    offset_compare  (gconstpointer      a,
  * @alignment:            The point on each target object to bring into alignment.
  * @reference:            The #GObject to align the targets with, or %NULL.
  * @reference_alignment:  The point on the reference object to align the target item with..
+ * @align_contents:       Take into account non-empty contents rather than item borders.
  * @offset:               How much to shift the target from perfect alignment..
  *
  * This function shifts the positions of a set of target objects,
@@ -75,6 +80,7 @@ gimp_image_arrange_objects (GimpImage         *image,
                             GimpAlignmentType  alignment,
                             GObject           *reference,
                             GimpAlignmentType  reference_alignment,
+                            gboolean           align_contents,
                             gint               offset)
 {
   gboolean do_x = FALSE;
@@ -93,7 +99,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ALIGN_HCENTER:
     case GIMP_ALIGN_RIGHT:
       do_x = TRUE;
-      compute_offsets (list, GIMP_ALIGN_TOP);
+      compute_offsets (list, GIMP_ALIGN_TOP, align_contents);
       break;
 
       /* order horizontally for horizontal arrangement */
@@ -102,7 +108,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ARRANGE_RIGHT:
     case GIMP_ARRANGE_HFILL:
       do_x = TRUE;
-      compute_offsets (list, alignment);
+      compute_offsets (list, alignment, align_contents);
       break;
 
       /* order horizontally for vertical alignment */
@@ -110,7 +116,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ALIGN_VCENTER:
     case GIMP_ALIGN_BOTTOM:
       do_y = TRUE;
-      compute_offsets (list, GIMP_ALIGN_LEFT);
+      compute_offsets (list, GIMP_ALIGN_LEFT, align_contents);
       break;
 
       /* order vertically for vertical arrangement */
@@ -119,7 +125,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ARRANGE_BOTTOM:
     case GIMP_ARRANGE_VFILL:
       do_y = TRUE;
-      compute_offsets (list, alignment);
+      compute_offsets (list, alignment, align_contents);
       break;
 
     default:
@@ -129,7 +135,7 @@ gimp_image_arrange_objects (GimpImage         *image,
   object_list = sort_by_offset (list);
 
   /* now get offsets used for aligning */
-  compute_offsets (list, alignment);
+  compute_offsets (list, alignment, align_contents);
 
   if (reference == NULL)
     {
@@ -139,7 +145,7 @@ gimp_image_arrange_objects (GimpImage         *image,
     }
   else
     {
-      compute_offset (reference, reference_alignment);
+      compute_offset (reference, reference_alignment, FALSE);
     }
 
   z0 = GPOINTER_TO_INT (g_object_get_data (reference, "align-offset"));
@@ -266,17 +272,19 @@ offset_compare (gconstpointer a,
  */
 static void
 compute_offsets (GList             *list,
-                 GimpAlignmentType  alignment)
+                 GimpAlignmentType  alignment,
+                 gboolean           align_contents)
 {
   GList *l;
 
   for (l = list; l; l = g_list_next (l))
-    compute_offset (l->data, alignment);
+    compute_offset (l->data, alignment, align_contents);
 }
 
 static void
 compute_offset (GObject           *object,
-                GimpAlignmentType  alignment)
+                GimpAlignmentType  alignment,
+                gboolean           align_contents)
 {
   gint object_offset_x = 0;
   gint object_offset_y = 0;
@@ -304,7 +312,28 @@ compute_offset (GObject           *object,
                         &object_width,
                         &object_height);
 
+      if (align_contents && GIMP_IS_PICKABLE (object))
+        {
+          gint x;
+          gint y;
+          gint width;
+          gint height;
+
+          if (gimp_pickable_auto_shrink (GIMP_PICKABLE (object),
+                                         0, 0,
+                                         gimp_item_get_width  (GIMP_ITEM (object)),
+                                         gimp_item_get_height (GIMP_ITEM (object)),
+                                         &x, &y, &width, &height) == GIMP_AUTO_SHRINK_SHRINK)
+            {
+              object_offset_x += x;
+              object_offset_y += y;
+              object_width     = width;
+              object_height    = height;
+            }
+        }
+
       gimp_item_get_offset (item, &off_x, &off_y);
+
       object_offset_x += off_x;
       object_offset_y += off_y;
     }
