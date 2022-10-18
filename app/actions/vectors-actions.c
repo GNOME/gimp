@@ -361,7 +361,6 @@ vectors_actions_update (GimpActionGroup *group,
   GList        *selected_vectors   = NULL;
   gint          n_selected_vectors = 0;
 
-  GimpDrawable *drawable      = NULL;
   gint          n_vectors     = 0;
   gboolean      mask_empty    = TRUE;
   gboolean      dr_writable   = FALSE;
@@ -372,6 +371,7 @@ vectors_actions_update (GimpActionGroup *group,
 
   if (image)
     {
+      GList *drawables;
       GList *iter;
 
       n_vectors  = gimp_image_get_n_vectors (image);
@@ -401,15 +401,17 @@ vectors_actions_update (GimpActionGroup *group,
             break;
         }
 
-      drawable = gimp_image_get_active_drawable (image);
+      drawables = gimp_image_get_selected_drawables (image);
 
-      if (drawable)
+      if (g_list_length (drawables) == 1)
         {
-          dr_writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL);
+          dr_writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL);
 
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawables->data)))
             dr_children = TRUE;
         }
+
+      g_list_free (drawables);
     }
 
 #define SET_SENSITIVE(action,condition) \
