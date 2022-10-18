@@ -49,11 +49,23 @@ drawable_equalize_cmd_callback (GimpAction *action,
                                 GVariant   *value,
                                 gpointer    data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  return_if_no_drawable (image, drawable, data);
+  GimpImage *image;
+  GList     *drawables;
+  GList     *iter;
 
-  gimp_drawable_equalize (drawable, TRUE);
+  return_if_no_drawables (image, drawables, data);
+
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_start (image,
+                                 GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                                 _("Equalize"));
+
+  for (iter = drawables; iter; iter = iter->next)
+    gimp_drawable_equalize (iter->data, TRUE);
+
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_end (image);
+
   gimp_image_flush (image);
 }
 
@@ -63,23 +75,38 @@ drawable_levels_stretch_cmd_callback (GimpAction *action,
                                       gpointer    data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable;
+  GList        *drawables;
+  GList        *iter;
   GimpDisplay  *display;
   GtkWidget    *widget;
-  return_if_no_drawable (image, drawable, data);
+
+  return_if_no_drawables (image, drawables, data);
   return_if_no_display (display, data);
   return_if_no_widget (widget, data);
 
-  if (! gimp_drawable_is_rgb (drawable))
+  for (iter = drawables; iter; iter = iter->next)
     {
-      gimp_message_literal (image->gimp,
-                            G_OBJECT (widget), GIMP_MESSAGE_WARNING,
-                            _("White Balance operates only on RGB color "
-                              "layers."));
-      return;
+      if (! gimp_drawable_is_rgb (iter->data))
+        {
+          gimp_message_literal (image->gimp,
+                                G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                                _("White Balance operates only on RGB color "
+                                  "layers."));
+          return;
+        }
     }
 
-  gimp_drawable_levels_stretch (drawable, GIMP_PROGRESS (display));
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_start (image,
+                                 GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                                 _("Levels"));
+
+  for (iter = drawables; iter; iter = iter->next)
+    gimp_drawable_levels_stretch (iter->data, GIMP_PROGRESS (display));
+
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_end (image);
+
   gimp_image_flush (image);
 }
 
@@ -298,37 +325,51 @@ drawable_flip_cmd_callback (GimpAction *action,
                             gpointer    data)
 {
   GimpImage           *image;
-  GimpDrawable        *drawable;
-  GimpItem            *item;
+  GList               *drawables;
+  GList               *iter;
   GimpContext         *context;
   gint                 off_x, off_y;
   gdouble              axis = 0.0;
   GimpOrientationType  orientation;
-  return_if_no_drawable (image, drawable, data);
+
+  return_if_no_drawables (image, drawables, data);
   return_if_no_context (context, data);
 
   orientation = (GimpOrientationType) g_variant_get_int32 (value);
 
-  item = GIMP_ITEM (drawable);
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_start (image,
+                                 GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                                 _("Flip Drawables"));
 
-  gimp_item_get_offset (item, &off_x, &off_y);
-
-  switch (orientation)
+  for (iter = drawables; iter; iter = iter->next)
     {
-    case GIMP_ORIENTATION_HORIZONTAL:
-      axis = ((gdouble) off_x + (gdouble) gimp_item_get_width (item) / 2.0);
-      break;
+      GimpItem *item;
 
-    case GIMP_ORIENTATION_VERTICAL:
-      axis = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
-      break;
+      item = GIMP_ITEM (iter->data);
 
-    default:
-      break;
+      gimp_item_get_offset (item, &off_x, &off_y);
+
+      switch (orientation)
+        {
+        case GIMP_ORIENTATION_HORIZONTAL:
+          axis = ((gdouble) off_x + (gdouble) gimp_item_get_width (item) / 2.0);
+          break;
+
+        case GIMP_ORIENTATION_VERTICAL:
+          axis = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+          break;
+
+        default:
+          break;
+        }
+
+      gimp_item_flip (item, context, orientation, axis,
+                      gimp_item_get_clip (item, FALSE));
     }
 
-  gimp_item_flip (item, context, orientation, axis,
-                  gimp_item_get_clip (item, FALSE));
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
 }
@@ -339,27 +380,41 @@ drawable_rotate_cmd_callback (GimpAction *action,
                               gpointer    data)
 {
   GimpImage        *image;
-  GimpDrawable     *drawable;
+  GList            *drawables;
+  GList            *iter;
   GimpContext      *context;
-  GimpItem         *item;
-  gint              off_x, off_y;
-  gdouble           center_x, center_y;
   GimpRotationType  rotation_type;
-  return_if_no_drawable (image, drawable, data);
+
+  return_if_no_drawables (image, drawables, data);
   return_if_no_context (context, data);
 
   rotation_type = (GimpRotationType) g_variant_get_int32 (value);
 
-  item = GIMP_ITEM (drawable);
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_start (image,
+                                 GIMP_UNDO_GROUP_DRAWABLE_MOD,
+                                 _("Rotate Drawables"));
 
-  gimp_item_get_offset (item, &off_x, &off_y);
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      GimpItem *item;
+      gint      off_x, off_y;
+      gdouble   center_x, center_y;
 
-  center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
-  center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+      item = GIMP_ITEM (iter->data);
 
-  gimp_item_rotate (item, context,
-                    rotation_type, center_x, center_y,
-                    gimp_item_get_clip (item, FALSE));
+      gimp_item_get_offset (item, &off_x, &off_y);
+
+      center_x = ((gdouble) off_x + (gdouble) gimp_item_get_width  (item) / 2.0);
+      center_y = ((gdouble) off_y + (gdouble) gimp_item_get_height (item) / 2.0);
+
+      gimp_item_rotate (item, context,
+                        rotation_type, center_x, center_y,
+                        gimp_item_get_clip (item, FALSE));
+    }
+
+  if (g_list_length (drawables) > 1)
+    gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
 }

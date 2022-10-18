@@ -151,18 +151,18 @@ void
 drawable_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
-  GimpImage    *image;
-  GList        *drawables    = NULL;
-  gboolean      has_visible  = FALSE;
-  gboolean      is_rgb       = FALSE;
-  gboolean      locked       = TRUE;
-  gboolean      can_lock     = FALSE;
-  gboolean      locked_pos   = TRUE;
-  gboolean      can_lock_pos = FALSE;
-  gboolean      writable     = FALSE;
-  gboolean      movable      = FALSE;
-  gboolean      children     = FALSE;
-  GList        *iter;
+  GimpImage *image;
+  GList     *drawables     = NULL;
+  GList     *iter;
+  gboolean   has_visible   = FALSE;
+  gboolean   locked        = TRUE;
+  gboolean   can_lock      = FALSE;
+  gboolean   locked_pos    = TRUE;
+  gboolean   can_lock_pos  = FALSE;
+  gboolean   all_rgb       = TRUE;
+  gboolean   all_writable  = TRUE;
+  gboolean   all_movable   = TRUE;
+  gboolean   none_children = TRUE;
 
   image = action_data_get_image (data);
 
@@ -172,6 +172,8 @@ drawable_actions_update (GimpActionGroup *group,
 
       for (iter = drawables; iter; iter = iter->next)
         {
+          GimpItem *item;
+
           if (gimp_item_get_visible (iter->data))
             has_visible = TRUE;
 
@@ -189,27 +191,27 @@ drawable_actions_update (GimpActionGroup *group,
               can_lock_pos = TRUE;
             }
 
-          if (has_visible && ! locked && ! locked_pos)
-            break;
-        }
+          if (gimp_viewable_get_children (GIMP_VIEWABLE (iter->data)))
+            none_children = FALSE;
 
-      if (g_list_length (drawables) == 1)
-        {
-          GimpDrawable *drawable = drawables->data;
-          GimpItem     *item;
+          if (! gimp_drawable_is_rgb (iter->data))
+            all_rgb = FALSE;
 
-          is_rgb = gimp_drawable_is_rgb (drawable);
-
-          if (GIMP_IS_LAYER_MASK (drawable))
-            item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+          if (GIMP_IS_LAYER_MASK (iter->data))
+            item = GIMP_ITEM (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (iter->data)));
           else
-            item = GIMP_ITEM (drawable);
+            item = GIMP_ITEM (iter->data);
 
-          writable      = ! gimp_item_is_content_locked (item, NULL);
-          movable       = ! gimp_item_is_position_locked (item, NULL);
+          if (gimp_item_is_content_locked (item, NULL))
+            all_writable = FALSE;
 
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-            children = TRUE;
+          if (gimp_item_is_position_locked (item, NULL))
+            all_movable = FALSE;
+
+          if (has_visible && ! locked && ! locked_pos &&
+              ! none_children && ! all_rgb &&
+              ! all_writable && ! all_movable)
+            break;
         }
     }
 
@@ -218,8 +220,8 @@ drawable_actions_update (GimpActionGroup *group,
 #define SET_ACTIVE(action,condition) \
         gimp_action_group_set_action_active (group, action, (condition) != 0)
 
-  SET_SENSITIVE ("drawable-equalize",       writable && !children);
-  SET_SENSITIVE ("drawable-levels-stretch", writable && !children && is_rgb);
+  SET_SENSITIVE ("drawable-equalize",       drawables && all_writable && none_children);
+  SET_SENSITIVE ("drawable-levels-stretch", drawables && all_writable && none_children && all_rgb);
 
   SET_SENSITIVE ("drawable-visible",       drawables);
   SET_SENSITIVE ("drawable-lock-content",  can_lock);
@@ -229,12 +231,12 @@ drawable_actions_update (GimpActionGroup *group,
   SET_ACTIVE ("drawable-lock-content",  locked);
   SET_ACTIVE ("drawable-lock-position", locked_pos);
 
-  SET_SENSITIVE ("drawable-flip-horizontal", writable && movable);
-  SET_SENSITIVE ("drawable-flip-vertical",   writable && movable);
+  SET_SENSITIVE ("drawable-flip-horizontal", drawables && all_writable && all_movable);
+  SET_SENSITIVE ("drawable-flip-vertical",   drawables && all_writable && all_movable);
 
-  SET_SENSITIVE ("drawable-rotate-90",  writable && movable);
-  SET_SENSITIVE ("drawable-rotate-180", writable && movable);
-  SET_SENSITIVE ("drawable-rotate-270", writable && movable);
+  SET_SENSITIVE ("drawable-rotate-90",  drawables && all_writable && all_movable);
+  SET_SENSITIVE ("drawable-rotate-180", drawables && all_writable && all_movable);
+  SET_SENSITIVE ("drawable-rotate-270", drawables && all_writable && all_movable);
 
 #undef SET_SENSITIVE
 #undef SET_ACTIVE
