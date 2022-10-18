@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-17 17:07+0000\n"
-"PO-Revision-Date: 2022-10-17 22:12+0300\n"
+"POT-Creation-Date: 2022-10-17 22:51+0000\n"
+"PO-Revision-Date: 2022-10-18 21:48+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3661,7 +3661,7 @@ msgstr "З _буфера обміну"
 #: app/actions/edit-actions.c:124 app/actions/edit-actions.c:130
 msgctxt "edit-action"
 msgid "Create a new image from the content of the clipboard"
-msgstr "Створити нове зображення зі змісту буфера обміну"
+msgstr "Створити нове зображення із вмісту буфера обміну"
 
 #: app/actions/edit-actions.c:129
 msgctxt "edit-action"
@@ -3707,7 +3707,7 @@ msgstr "Вст_авити з буфера з назвою…"
 #: app/actions/edit-actions.c:155
 msgctxt "edit-action"
 msgid "Paste the content of a named buffer"
-msgstr "Вставити зміст іменованого буфера обміну"
+msgstr "Вставити вміст іменованого буфера обміну"
 
 #: app/actions/edit-actions.c:160
 msgctxt "edit-action"
@@ -3770,7 +3770,7 @@ msgstr "Новий _шар"
 #: app/actions/edit-actions.c:198
 msgctxt "edit-action"
 msgid "Create a new layer from the content of the clipboard"
-msgstr "Створити новий шар зі змісту буфера обміну"
+msgstr "Створити новий шар зі вмісту буфера обміну"
 
 #: app/actions/edit-actions.c:203
 msgctxt "edit-action"
@@ -3783,7 +3783,7 @@ msgid ""
 "Create a new layer from the content of the clipboard and place it at its "
 "original position"
 msgstr ""
-"Створити новий шар зі змісту буфера обміну і розташувати його на його "
+"Створити новий шар зі вмісту буфера обміну і розташувати його на його "
 "початковому місці"
 
 #: app/actions/edit-actions.c:214
@@ -5769,7 +5769,7 @@ msgstr "Ро_змір зображення…"
 #: app/actions/image-actions.c:150
 msgctxt "image-action"
 msgid "Change the size of the image content"
-msgstr "Зміна розміру змісту зображення"
+msgstr "Зміна розміру вмісту зображення"
 
 #: app/actions/image-actions.c:155
 msgctxt "image-action"
@@ -6527,7 +6527,7 @@ msgstr "Р_озмір шару…"
 #: app/actions/layers-actions.c:245
 msgctxt "layers-action"
 msgid "Change the size of the layer content"
-msgstr "Зміна розміру змісту шару"
+msgstr "Зміна розміру вмісту шару"
 
 #: app/actions/layers-actions.c:250
 msgctxt "layers-action"
@@ -13930,7 +13930,7 @@ msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
 
-#: app/core/gimpimage-arrange.c:173
+#: app/core/gimpimage-arrange.c:179
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Розставити об'єкти"
@@ -15883,11 +15883,11 @@ msgid "Height:"
 msgstr "Висота:"
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:514
+#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:541
 msgid "Offset X:"
 msgstr "Зсув за X:"
 
-#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:526
+#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:553
 msgid "Offset Y:"
 msgstr "Зсув за Y:"
 
@@ -17862,8 +17862,8 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:137
-#: app/tools/gimpalignoptions.c:144 app/tools/gimpgradientoptions.c:89
+#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:140
+#: app/tools/gimpalignoptions.c:147 app/tools/gimpgradientoptions.c:89
 #: app/tools/gimpoffsettool.c:129 app/tools/gimpoffsettool.c:473
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
 msgid "Offset"
@@ -20490,7 +20490,7 @@ msgstr ""
 "Неможливо малювати на вирівнюванні «Зареєстровано» на декількох об'єктах для "
 "малювання."
 
-#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:119
+#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:126
 #: app/tools/gimpcloneoptions-gui.c:301 app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "Вирівнювання"
@@ -20798,7 +20798,7 @@ msgstr "Спроба додати елемент «%s» (%d) до неправи
 #, c-format
 msgid "Item '%s' (%d) cannot be modified because its contents are locked"
 msgstr ""
-"Неможливо змінити об'єкт «%s» (%d), оскільки його зміст замкнено від змін"
+"Неможливо змінити об'єкт «%s» (%d), оскільки його вміст заблоковано від змін"
 
 #: app/pdb/gimppdb-utils.c:600
 #, c-format
@@ -22160,121 +22160,138 @@ msgstr "Аерограф: рисування пензлем зі змінним 
 msgid "_Airbrush"
 msgstr "_Аерограф"
 
-#: app/tools/gimpalignoptions.c:129 app/tools/gimpalignoptions.c:404
+#: app/tools/gimpalignoptions.c:132 app/tools/gimpalignoptions.c:431
 msgid "Relative to"
 msgstr "Відносно"
 
-#: app/tools/gimpalignoptions.c:130
+#: app/tools/gimpalignoptions.c:133
 msgid "Reference image object a layer will be aligned on"
 msgstr "Посилання об'єкта зображення на шар буде вирівняно на"
 
-#: app/tools/gimpalignoptions.c:138
+#: app/tools/gimpalignoptions.c:141
 msgid "Horizontal offset for distribution"
 msgstr "Горизонтальний зсув для розповсюдження"
 
-#: app/tools/gimpalignoptions.c:145
+#: app/tools/gimpalignoptions.c:148
 msgid "Vertical offset for distribution"
 msgstr "Вертикальний зсув для розповсюдження"
 
-#: app/tools/gimpalignoptions.c:151
-#| msgid "Move the selected layers"
+#: app/tools/gimpalignoptions.c:154
 msgid "Align or distribute selected layers"
 msgstr "Вирівняти або розподілити позначені шари"
 
-#: app/tools/gimpalignoptions.c:152
+#: app/tools/gimpalignoptions.c:155
 msgid "Selected layers will be aligned or distributed by the tool"
 msgstr "Позначені шари буде вирівняно або розподілено інструментом"
 
-#: app/tools/gimpalignoptions.c:157
-#| msgid "Export the selected paths"
+#: app/tools/gimpalignoptions.c:160
 msgid "Align or distribute selected paths"
 msgstr "Вирівняти або розподілити позначені контури"
 
-#: app/tools/gimpalignoptions.c:158
+#: app/tools/gimpalignoptions.c:161
 msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Позначені контури буде вирівняно або розподілено інструментом"
 
+#: app/tools/gimpalignoptions.c:166
+#| msgctxt "layers-action"
+#| msgid "Change the size of the layer content"
+msgid "Use extents of layer contents"
+msgstr "Використати рамку вмісту шару"
+
+#: app/tools/gimpalignoptions.c:167
+msgid ""
+"Instead of aligning or distributing on layer borders, use its content "
+"bounding box"
+msgstr ""
+"Замість вирівнювання або розподілу за межею шару, скористатися його"
+" обмежувальним прямокутником"
+
+#. Selected objects
+#: app/tools/gimpalignoptions.c:380
+#| msgid "1 guide will be aligned or distributed"
+#| msgid_plural "%d guides will be aligned or distributed"
+msgid "Objects to align or distribute"
+msgstr "Об'єкти для вирівнювання або розподілу"
+
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
-#: app/tools/gimpalignoptions.c:378
+#: app/tools/gimpalignoptions.c:405
 #, c-format
 msgid "%s-pick guides to align or distribute (%s-%s for more)"
 msgstr ""
-"%s-захопіть напрямні, щоб вирівняти або розподілити (%s-%s — ширші"
-" можливості)"
+"%s-захопіть напрямні, щоб вирівняти або розподілити (%s-%s — ширші "
+"можливості)"
 
 #. Align frame
-#: app/tools/gimpalignoptions.c:395
+#: app/tools/gimpalignoptions.c:422
 msgid "Align"
 msgstr "Вирівнювання"
 
-#: app/tools/gimpalignoptions.c:419
-#| msgctxt "dialogs-action"
-#| msgid "Open the preferences dialog"
+#: app/tools/gimpalignoptions.c:446
 msgid "Select the reference object"
 msgstr "Виберіть еталонний об'єкт"
 
-#: app/tools/gimpalignoptions.c:435
+#: app/tools/gimpalignoptions.c:462
 msgid "Align left edge of target"
 msgstr "Вирівняти зі лівою межею краю об'єкта"
 
-#: app/tools/gimpalignoptions.c:439
+#: app/tools/gimpalignoptions.c:466
 msgid "Align center of target"
 msgstr "Центрувати по вертикальній осі"
 
-#: app/tools/gimpalignoptions.c:443
+#: app/tools/gimpalignoptions.c:470
 msgid "Align right edge of target"
 msgstr "Вирівняти за правою межею об'єкта"
 
-#: app/tools/gimpalignoptions.c:451
+#: app/tools/gimpalignoptions.c:478
 msgid "Align top edge of target"
 msgstr "Вирівняти за верхньою межею об'єкта"
 
-#: app/tools/gimpalignoptions.c:455
+#: app/tools/gimpalignoptions.c:482
 msgid "Align middle of target"
 msgstr "Центрувати по горизонтальній осі"
 
-#: app/tools/gimpalignoptions.c:459
+#: app/tools/gimpalignoptions.c:486
 msgid "Align bottom of target"
 msgstr "Вирівняти за нижньою межею об'єкта"
 
 #. Distribute frame
-#: app/tools/gimpalignoptions.c:462
+#: app/tools/gimpalignoptions.c:489
 msgid "Distribute"
 msgstr "Розташувати"
 
-#: app/tools/gimpalignoptions.c:476
+#: app/tools/gimpalignoptions.c:503
 msgid "Distribute left edges of targets"
 msgstr "Рівно розташувати ліві межі об'єктів"
 
-#: app/tools/gimpalignoptions.c:480
+#: app/tools/gimpalignoptions.c:507
 msgid "Distribute horizontal centers of targets"
 msgstr "Рівно розташувати центри об'єктів за горизонталлю"
 
-#: app/tools/gimpalignoptions.c:484
+#: app/tools/gimpalignoptions.c:511
 msgid "Distribute right edges of targets"
 msgstr "Рівно розташувати праві межі об'єктів"
 
-#: app/tools/gimpalignoptions.c:488
+#: app/tools/gimpalignoptions.c:515
 msgid "Distribute targets evenly in the horizontal"
 msgstr "Розподілити цілі рівномірно по горизонталі"
 
-#: app/tools/gimpalignoptions.c:496
+#: app/tools/gimpalignoptions.c:523
 msgid "Distribute top edges of targets"
 msgstr "Рівно розташувати верхні краї об'єктів"
 
-#: app/tools/gimpalignoptions.c:500
+#: app/tools/gimpalignoptions.c:527
 msgid "Distribute vertical centers of targets"
 msgstr "Рівно розташувати центри об'єктів за вертикаллю"
 
-#: app/tools/gimpalignoptions.c:504
+#: app/tools/gimpalignoptions.c:531
 msgid "Distribute bottoms of targets"
 msgstr "Рівно розташувати нижні межі об'єктів"
 
-#: app/tools/gimpalignoptions.c:508
+#: app/tools/gimpalignoptions.c:535
 msgid "Distribute targets evenly in the vertical"
 msgstr "Розподілити цілі рівномірно по вертикалі"
 
-#: app/tools/gimpalignoptions.c:751
+#: app/tools/gimpalignoptions.c:784
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
@@ -22283,76 +22300,70 @@ msgstr[1] "%d напрямні буде вирівняно або розподі
 msgstr[2] "%d напрямних буде вирівняно або розподілено"
 msgstr[3] "1 напрямну буде вирівняно або розподілено"
 
-#: app/tools/gimpalignoptions.c:777
+#: app/tools/gimpalignoptions.c:810
 #, c-format
-#| msgctxt "undo-type"
-#| msgid "Merge layers"
 msgid "Reference layer: %s"
 msgstr "Еталонний шар: %s"
 
-#: app/tools/gimpalignoptions.c:780
+#: app/tools/gimpalignoptions.c:813
 #, c-format
-#| msgid "Green channel"
 msgid "Reference channel: %s"
 msgstr "Еталонний канал: %s"
 
-#: app/tools/gimpalignoptions.c:783
+#: app/tools/gimpalignoptions.c:816
 #, c-format
-#| msgid "Reverse path stroke"
 msgid "Reference path: %s"
 msgstr "Еталонний контур: %s"
 
-#: app/tools/gimpalignoptions.c:786
-#| msgid "Preferences"
+#: app/tools/gimpalignoptions.c:819
 msgid "Reference guide"
 msgstr "Еталонна напрямна"
 
-#: app/tools/gimpaligntool.c:120
+#: app/tools/gimpaligntool.c:127
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Вирівнювання: вирівнювання чи розстановка шарів та інших областей"
 
-#: app/tools/gimpaligntool.c:121
+#: app/tools/gimpaligntool.c:128
 msgid "_Align"
 msgstr "_Вирівнювання"
 
-#: app/tools/gimpaligntool.c:516
-#| msgid ""
-#| "Click on a layer, path or guide, or Click-Drag to pick several layers"
+#: app/tools/gimpaligntool.c:510
+#| msgctxt "undo-type"
+#| msgid "Arrange Objects"
+msgid "Arrange Objects"
+msgstr "Розставити об'єкти"
+
+#: app/tools/gimpaligntool.c:541
 msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
 msgstr ""
 "Натисніть на шарі, контур чи напрямну, або використовуйте перетягування для "
 "вибору еталона"
 
-#: app/tools/gimpaligntool.c:520
-#| msgid "Click to pick this layer as first item"
+#: app/tools/gimpaligntool.c:545
 msgid "Click to pick this layer as reference"
 msgstr "Натисніть, щоб зробити цей шар еталоном"
 
-#: app/tools/gimpaligntool.c:523
-#| msgid "Click to pick this guide as first item"
+#: app/tools/gimpaligntool.c:548
 msgid "Click to pick this guide as reference"
 msgstr "Натисніть, щоб зробити цю напрямну еталоном"
 
-#: app/tools/gimpaligntool.c:528
-#| msgid "Click to pick this path as first item"
+#: app/tools/gimpaligntool.c:553
 msgid "Click to pick this path as reference"
 msgstr "Натисніть, щоб зробити цей контур еталоном"
 
-#: app/tools/gimpaligntool.c:535
+#: app/tools/gimpaligntool.c:560
 msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
 msgstr ""
-"Натисніть на напрямній, щоб додати її до об'єктів, які слід вирівняти,"
-" клацніть будь-де в іншому місці, щоб скасувати позначення усіх напрямних."
+"Натисніть на напрямній, щоб додати її до об'єктів, які слід вирівняти, "
+"клацніть будь-де в іншому місці, щоб скасувати позначення усіх напрямних."
 
-#: app/tools/gimpaligntool.c:539
-#| msgid "Click to add this guide to the list"
+#: app/tools/gimpaligntool.c:564
 msgid "Click to select this guide for alignment"
 msgstr "Натисніть, щоб вибрати цю напрямну для вирівнювання"
 
-#: app/tools/gimpaligntool.c:544
-#| msgid "Click to add this guide to the list"
+#: app/tools/gimpaligntool.c:569
 msgid "Click to add this guide to the list of objects to align"
 msgstr "Натисніть, щоб додати цю напрямну до списку об'єктів для вирівнювання"
 
