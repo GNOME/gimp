@@ -57,23 +57,23 @@ static const GimpActionEntry drawable_actions[] =
 static const GimpToggleActionEntry drawable_toggle_actions[] =
 {
   { "drawable-visible", GIMP_ICON_VISIBLE,
-    NC_("drawable-action", "Toggle Drawable _Visibility"), NULL, NULL,
+    NC_("drawable-action", "Toggle Drawables _Visibility"), NULL, NULL,
     drawable_visible_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_VISIBLE },
 
   { "drawable-lock-content", GIMP_ICON_LOCK_CONTENT,
-    NC_("drawable-action", "L_ock Pixels of Drawable"), NULL,
+    NC_("drawable-action", "L_ock Pixels of Drawables"), NULL,
     NC_("drawable-action",
-        "Keep the pixels on this drawable from being modified"),
+        "Keep the pixels on selected drawables from being modified"),
     drawable_lock_content_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LOCK_PIXELS },
 
   { "drawable-lock-position", GIMP_ICON_LOCK_POSITION,
-    NC_("drawable-action", "L_ock Position of Drawable"), NULL,
+    NC_("drawable-action", "L_ock Position of Drawables"), NULL,
     NC_("drawable-action",
-        "Keep the position on this drawable from being modified"),
+        "Keep the position on selected drawables from being modified"),
     drawable_lock_position_cmd_callback,
     FALSE,
     GIMP_HELP_LAYER_LOCK_POSITION },
@@ -152,13 +152,12 @@ drawable_actions_update (GimpActionGroup *group,
                          gpointer         data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable     = NULL;
   GList        *drawables    = NULL;
   gboolean      has_visible  = FALSE;
   gboolean      is_rgb       = FALSE;
-  gboolean      locked       = FALSE;
+  gboolean      locked       = TRUE;
   gboolean      can_lock     = FALSE;
-  gboolean      locked_pos   = FALSE;
+  gboolean      locked_pos   = TRUE;
   gboolean      can_lock_pos = FALSE;
   gboolean      writable     = FALSE;
   gboolean      movable      = FALSE;
@@ -169,7 +168,6 @@ drawable_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      drawable = gimp_image_get_active_drawable (image);
       drawables = gimp_image_get_selected_drawables (image);
 
       for (iter = drawables; iter; iter = iter->next)
@@ -177,13 +175,28 @@ drawable_actions_update (GimpActionGroup *group,
           if (gimp_item_get_visible (iter->data))
             has_visible = TRUE;
 
-          if (has_visible)
+          if (gimp_item_can_lock_content (iter->data))
+            {
+              if (! gimp_item_get_lock_content (iter->data))
+                locked = FALSE;
+              can_lock = TRUE;
+            }
+
+          if (gimp_item_can_lock_position (iter->data))
+            {
+              if (! gimp_item_get_lock_position (iter->data))
+                locked_pos = FALSE;
+              can_lock_pos = TRUE;
+            }
+
+          if (has_visible && ! locked && ! locked_pos)
             break;
         }
 
-      if (drawable)
+      if (g_list_length (drawables) == 1)
         {
-          GimpItem *item;
+          GimpDrawable *drawable = drawables->data;
+          GimpItem     *item;
 
           is_rgb = gimp_drawable_is_rgb (drawable);
 
@@ -192,11 +205,7 @@ drawable_actions_update (GimpActionGroup *group,
           else
             item = GIMP_ITEM (drawable);
 
-          locked        = gimp_item_get_lock_content (item);
-          can_lock      = gimp_item_can_lock_content (item);
           writable      = ! gimp_item_is_content_locked (item, NULL);
-          locked_pos    = gimp_item_get_lock_position (item);
-          can_lock_pos  = gimp_item_can_lock_position (item);
           movable       = ! gimp_item_is_position_locked (item, NULL);
 
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))

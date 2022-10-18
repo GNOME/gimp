@@ -154,6 +154,7 @@ drawable_visible_cmd_callback (GimpAction *action,
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void
@@ -161,35 +162,67 @@ drawable_lock_content_cmd_callback (GimpAction *action,
                                     GVariant   *value,
                                     gpointer    data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  gboolean      locked;
-  return_if_no_drawable (image, drawable, data);
+  GimpImage *image;
+  GList     *drawables;
+  GList     *iter;
+  gboolean   locked;
+  gboolean   push_undo = TRUE;
+
+  return_if_no_drawables (image, drawables, data);
 
   locked = g_variant_get_boolean (value);
 
-  if (GIMP_IS_LAYER_MASK (drawable))
-    drawable =
-      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
-
-  if (locked != gimp_item_get_lock_content (GIMP_ITEM (drawable)))
+  if (GIMP_IS_LAYER_MASK (drawables->data))
     {
-#if 0
-      GimpUndo *undo;
-#endif
-      gboolean  push_undo = TRUE;
+      GimpLayerMask *mask = GIMP_LAYER_MASK (drawables->data);
 
-#if 0
-      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
-                                           GIMP_UNDO_ITEM_VISIBILITY);
-
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
-        push_undo = FALSE;
-#endif
-
-      gimp_item_set_lock_content (GIMP_ITEM (drawable), locked, push_undo);
-      gimp_image_flush (image);
+      g_list_free (drawables);
+      drawables = g_list_prepend (NULL, gimp_layer_mask_get_layer (mask));
     }
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      if (! locked && ! gimp_item_get_lock_content (iter->data))
+        {
+          /* If any of the drawables are already unlocked, we don't toggle the
+           * lock. This prevents the SET_ACTIVE() in drawables-actions.c to
+           * toggle locks unexpectedly.
+           */
+          g_list_free (drawables);
+          return;
+        }
+    }
+
+  for (iter = drawables; iter; iter = iter->next)
+    if (locked != gimp_item_get_lock_content (iter->data))
+      break;
+
+  if (g_list_length (drawables) == 1)
+    {
+      GimpUndo *undo;
+
+      undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
+                                           GIMP_UNDO_ITEM_LOCK_CONTENT);
+
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawables->data))
+        push_undo = FALSE;
+    }
+  else
+    {
+      /* TODO: undo groups cannot be compressed so far. */
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_LOCK_CONTENTS,
+                                   _("Lock/Unlock content"));
+    }
+
+  for (; iter; iter = iter->next)
+    gimp_item_set_lock_content (iter->data, locked, push_undo);
+
+  if (g_list_length (drawables) != 1)
+    gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void
@@ -197,31 +230,66 @@ drawable_lock_position_cmd_callback (GimpAction *action,
                                      GVariant   *value,
                                      gpointer    data)
 {
-  GimpImage    *image;
-  GimpDrawable *drawable;
-  gboolean      locked;
-  return_if_no_drawable (image, drawable, data);
+  GimpImage *image;
+  GList     *drawables;
+  GList     *iter;
+  gboolean   locked;
+  gboolean   push_undo = TRUE;
+
+  return_if_no_drawables (image, drawables, data);
 
   locked = g_variant_get_boolean (value);
 
-  if (GIMP_IS_LAYER_MASK (drawable))
-    drawable =
-      GIMP_DRAWABLE (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)));
+  if (GIMP_IS_LAYER_MASK (drawables->data))
+    {
+      GimpLayerMask *mask = GIMP_LAYER_MASK (drawables->data);
 
-  if (locked != gimp_item_get_lock_position (GIMP_ITEM (drawable)))
+      g_list_free (drawables);
+      drawables = g_list_prepend (NULL, gimp_layer_mask_get_layer (mask));
+    }
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      if (! locked && ! gimp_item_get_lock_position (iter->data))
+        {
+          /* If any of the drawables are already unlocked, we don't toggle the
+           * lock. This prevents the SET_ACTIVE() in drawables-actions.c to
+           * toggle locks unexpectedly.
+           */
+          g_list_free (drawables);
+          return;
+        }
+    }
+
+  for (iter = drawables; iter; iter = iter->next)
+    if (locked != gimp_item_get_lock_position (iter->data))
+      break;
+
+  if (g_list_length (drawables) == 1)
     {
       GimpUndo *undo;
-      gboolean  push_undo = TRUE;
 
       undo = gimp_image_undo_can_compress (image, GIMP_TYPE_ITEM_UNDO,
                                            GIMP_UNDO_ITEM_LOCK_POSITION);
 
-      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawable))
+      if (undo && GIMP_ITEM_UNDO (undo)->item == GIMP_ITEM (drawables->data))
         push_undo = FALSE;
-
-      gimp_item_set_lock_position (GIMP_ITEM (drawable), locked, push_undo);
-      gimp_image_flush (image);
     }
+  else
+    {
+      /* TODO: undo groups cannot be compressed so far. */
+      gimp_image_undo_group_start (image,
+                                   GIMP_UNDO_GROUP_ITEM_LOCK_POSITION,
+                                   _("Lock/Unlock position"));
+    }
+
+  for (; iter; iter = iter->next)
+    gimp_item_set_lock_position (iter->data, locked, push_undo);
+
+  if (g_list_length (drawables) != 1)
+    gimp_image_undo_group_end (image);
+
+  gimp_image_flush (image);
 }
 
 void
