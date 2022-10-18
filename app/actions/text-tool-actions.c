@@ -162,7 +162,7 @@ text_tool_actions_update (GimpActionGroup *group,
   GimpDisplay      *display    = GIMP_TOOL (text_tool)->display;
   GimpImage        *image      = gimp_display_get_image (display);
   GList            *layers;
-  GimpVectors      *vectors;
+  GList            *paths;
   GimpDisplayShell *shell;
   GtkClipboard     *clipboard;
   gboolean          text_layer = FALSE;
@@ -176,7 +176,7 @@ text_tool_actions_update (GimpActionGroup *group,
   if (g_list_length (layers) == 1)
     text_layer = gimp_item_is_text_layer (GIMP_ITEM (layers->data));
 
-  vectors = gimp_image_get_active_vectors (image);
+  paths = gimp_image_get_selected_vectors (image);
 
   text_sel = gimp_text_tool_get_has_text_selection (text_tool);
 
@@ -200,7 +200,7 @@ text_tool_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("text-tool-clear",           text_layer);
   SET_SENSITIVE ("text-tool-load",            image);
   SET_SENSITIVE ("text-tool-text-to-path",    text_layer);
-  SET_SENSITIVE ("text-tool-text-along-path", text_layer && vectors);
+  SET_SENSITIVE ("text-tool-text-along-path", text_layer && g_list_length (paths) == 1);
 
   direction = gimp_text_tool_get_direction (text_tool);
   for (i = 0; i < G_N_ELEMENTS (text_tool_direction_actions); i++)
