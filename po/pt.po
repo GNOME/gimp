@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-17 17:07+0000\n"
-"PO-Revision-Date: 2022-10-18 12:00+0100\n"
+"POT-Creation-Date: 2022-10-18 11:02+0000\n"
+"PO-Revision-Date: 2022-10-18 12:11+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -5866,7 +5866,7 @@ msgid ""
 "image)"
 msgstr ""
 "Recortar a imagem pelos limites externos do conteúdo na camada ativa (remove "
-"áreas vazias, ou com a mesma cor, das margens exteriores da imagem)"
+"áreas vazias, ou com a mesma cor, dos contornos exteriores da imagem)"
 
 #: app/actions/image-actions.c:167
 msgctxt "image-action"
@@ -6633,8 +6633,8 @@ msgid ""
 "Crop the layers to the extents of their content (remove empty borders from "
 "the layer)"
 msgstr ""
-"Remove as margens de todas as camadas visíveis que não tenham informação (ou "
-"tenham uma cor sólida predominante no fundo)"
+"Recorta as camadas até ao limite do seu conteúdo (remover os contornos "
+"vazios da camada)"
 
 #: app/actions/layers-actions.c:262 app/actions/layers-actions.c:272
 msgctxt "layers-action"
@@ -14136,7 +14136,7 @@ msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
 
-#: app/core/gimpimage-arrange.c:173
+#: app/core/gimpimage-arrange.c:179
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Distribuir objetos"
@@ -16120,11 +16120,11 @@ msgid "Height:"
 msgstr "Altura:"
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:514
+#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:541
 msgid "Offset X:"
 msgstr "Desvio X:"
 
-#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:526
+#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:553
 msgid "Offset Y:"
 msgstr "Desvio Y:"
 
@@ -18120,8 +18120,8 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:137
-#: app/tools/gimpalignoptions.c:144 app/tools/gimpgradientoptions.c:89
+#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:140
+#: app/tools/gimpalignoptions.c:147 app/tools/gimpgradientoptions.c:89
 #: app/tools/gimpoffsettool.c:129 app/tools/gimpoffsettool.c:473
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
 msgid "Offset"
@@ -20763,7 +20763,7 @@ msgstr "Primeiro tem de definir a imagem de origem."
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr "O alinhamento \"registado\" não pode pintar em vários drawables."
 
-#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:119
+#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:126
 #: app/tools/gimpcloneoptions-gui.c:301 app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "Alinhar"
@@ -22446,171 +22446,192 @@ msgstr ""
 msgid "_Airbrush"
 msgstr "_Aerógrafo"
 
-#: app/tools/gimpalignoptions.c:129 app/tools/gimpalignoptions.c:404
+#: app/tools/gimpalignoptions.c:132 app/tools/gimpalignoptions.c:431
 msgid "Relative to"
 msgstr "Relativamente a"
 
-#: app/tools/gimpalignoptions.c:130
+#: app/tools/gimpalignoptions.c:133
 msgid "Reference image object a layer will be aligned on"
 msgstr ""
 "Indicar qual o item (camada, seleção, caminho…) ao qual alinhar ou "
 "distribuir os itens"
 
-#: app/tools/gimpalignoptions.c:138
+#: app/tools/gimpalignoptions.c:141
 msgid "Horizontal offset for distribution"
 msgstr "Deslocar na horizontal o resultado da distribuição"
 
-#: app/tools/gimpalignoptions.c:145
+#: app/tools/gimpalignoptions.c:148
 msgid "Vertical offset for distribution"
 msgstr "Deslocar na vertical o resultado da distribuição"
 
-#: app/tools/gimpalignoptions.c:151
+#: app/tools/gimpalignoptions.c:154
 msgid "Align or distribute selected layers"
 msgstr "Alinhar ou distribuir as camadas selecionadas"
 
-#: app/tools/gimpalignoptions.c:152
+#: app/tools/gimpalignoptions.c:155
 msgid "Selected layers will be aligned or distributed by the tool"
 msgstr ""
 "As camadas selecionadas serão alinhadas ou distribuídas pela ferramenta"
 
-#: app/tools/gimpalignoptions.c:157
+#: app/tools/gimpalignoptions.c:160
 msgid "Align or distribute selected paths"
 msgstr "Alinhar ou distribuir os caminhos selecionados"
 
-#: app/tools/gimpalignoptions.c:158
+#: app/tools/gimpalignoptions.c:161
 msgid "Selected paths will be aligned or distributed by the tool"
 msgstr ""
 "Os caminhos selecionados serão alinhados ou distribuídos pela ferramenta"
 
+#: app/tools/gimpalignoptions.c:166
+msgid "Use extents of layer contents"
+msgstr "Usar extensões de conteúdos em camadas"
+
+#: app/tools/gimpalignoptions.c:167
+msgid ""
+"Instead of aligning or distributing on layer borders, use its content "
+"bounding box"
+msgstr ""
+"Em vez de alinhar ou distribuir em contornos de camadas, use a sua caixa de "
+"delimitação de conteúdo"
+
+#. Selected objects
+#: app/tools/gimpalignoptions.c:380
+msgid "Objects to align or distribute"
+msgstr "Objetos a alinhar ou distribuir"
+
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
-#: app/tools/gimpalignoptions.c:378
+#: app/tools/gimpalignoptions.c:405
 #, c-format
 msgid "%s-pick guides to align or distribute (%s-%s for more)"
 msgstr "%s-guias de escolha para alinhar ou distribuir (%s-%s para mais)"
 
 #. Align frame
-#: app/tools/gimpalignoptions.c:395
+#: app/tools/gimpalignoptions.c:422
 msgid "Align"
 msgstr "Alinhar"
 
-#: app/tools/gimpalignoptions.c:419
+#: app/tools/gimpalignoptions.c:446
 msgid "Select the reference object"
 msgstr "Selecione o objeto de referência"
 
-#: app/tools/gimpalignoptions.c:435
+#: app/tools/gimpalignoptions.c:462
 msgid "Align left edge of target"
 msgstr "Alinhar à margem esquerda do alvo"
 
-#: app/tools/gimpalignoptions.c:439
+#: app/tools/gimpalignoptions.c:466
 msgid "Align center of target"
 msgstr "Alinhar ao centro do alvo"
 
-#: app/tools/gimpalignoptions.c:443
+#: app/tools/gimpalignoptions.c:470
 msgid "Align right edge of target"
 msgstr "Alinhar à margem direita do alvo"
 
-#: app/tools/gimpalignoptions.c:451
+#: app/tools/gimpalignoptions.c:478
 msgid "Align top edge of target"
 msgstr "Alinhar à margem superior do alvo"
 
-#: app/tools/gimpalignoptions.c:455
+#: app/tools/gimpalignoptions.c:482
 msgid "Align middle of target"
 msgstr "Alinhar ao meio do alvo"
 
-#: app/tools/gimpalignoptions.c:459
+#: app/tools/gimpalignoptions.c:486
 msgid "Align bottom of target"
 msgstr "Alinhar à margem inferior do alvo"
 
 #. Distribute frame
-#: app/tools/gimpalignoptions.c:462
+#: app/tools/gimpalignoptions.c:489
 msgid "Distribute"
 msgstr "Distribuir"
 
-#: app/tools/gimpalignoptions.c:476
+#: app/tools/gimpalignoptions.c:503
 msgid "Distribute left edges of targets"
 msgstr "Distribuir margens esquerdas dos alvos"
 
-#: app/tools/gimpalignoptions.c:480
+#: app/tools/gimpalignoptions.c:507
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuir centros horizontais dos objetos"
 
-#: app/tools/gimpalignoptions.c:484
+#: app/tools/gimpalignoptions.c:511
 msgid "Distribute right edges of targets"
 msgstr "Distribuir margens direitas dos alvos"
 
-#: app/tools/gimpalignoptions.c:488
+#: app/tools/gimpalignoptions.c:515
 msgid "Distribute targets evenly in the horizontal"
 msgstr "Distribuir alvos uniformemente na horizontal"
 
-#: app/tools/gimpalignoptions.c:496
+#: app/tools/gimpalignoptions.c:523
 msgid "Distribute top edges of targets"
 msgstr "Distribuir margens superiores dos alvos"
 
-#: app/tools/gimpalignoptions.c:500
+#: app/tools/gimpalignoptions.c:527
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuir centros verticais dos alvos"
 
-#: app/tools/gimpalignoptions.c:504
+#: app/tools/gimpalignoptions.c:531
 msgid "Distribute bottoms of targets"
 msgstr "Distribuir margens inferiores dos alvos"
 
-#: app/tools/gimpalignoptions.c:508
+#: app/tools/gimpalignoptions.c:535
 msgid "Distribute targets evenly in the vertical"
 msgstr "Distribuir alvos uniformemente na vertical"
 
-#: app/tools/gimpalignoptions.c:751
+#: app/tools/gimpalignoptions.c:784
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
 msgstr[0] "1 guia será alinhado ou distribuído"
 msgstr[1] "%d guias serão alinhados ou distribuídos"
 
-#: app/tools/gimpalignoptions.c:777
+#: app/tools/gimpalignoptions.c:810
 #, c-format
 msgid "Reference layer: %s"
 msgstr "Camada de referência: %s"
 
-#: app/tools/gimpalignoptions.c:780
+#: app/tools/gimpalignoptions.c:813
 #, c-format
 msgid "Reference channel: %s"
 msgstr "Canal de referência: %s"
 
-#: app/tools/gimpalignoptions.c:783
+#: app/tools/gimpalignoptions.c:816
 #, c-format
 msgid "Reference path: %s"
 msgstr "Caminho de referência: %s"
 
-#: app/tools/gimpalignoptions.c:786
+#: app/tools/gimpalignoptions.c:819
 msgid "Reference guide"
 msgstr "Guia de referência"
 
-#: app/tools/gimpaligntool.c:120
+#: app/tools/gimpaligntool.c:127
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Ferramenta Alinhar: alinha e distribui camadas e outros objetos"
 
-#: app/tools/gimpaligntool.c:121
+#: app/tools/gimpaligntool.c:128
 msgid "_Align"
 msgstr "_Alinhar"
 
-#: app/tools/gimpaligntool.c:516
+#: app/tools/gimpaligntool.c:510
+msgid "Arrange Objects"
+msgstr "Organizar objectos"
+
+#: app/tools/gimpaligntool.c:541
 msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
 msgstr ""
 "Clique numa camada, caminho ou guia, ou Clicar-Arrastar para escolher uma "
 "referência"
 
-#: app/tools/gimpaligntool.c:520
+#: app/tools/gimpaligntool.c:545
 msgid "Click to pick this layer as reference"
 msgstr "Clique para escolher esta camada como referência"
 
-#: app/tools/gimpaligntool.c:523
+#: app/tools/gimpaligntool.c:548
 msgid "Click to pick this guide as reference"
 msgstr "Clique para escolher este guia como referência"
 
-#: app/tools/gimpaligntool.c:528
+#: app/tools/gimpaligntool.c:553
 msgid "Click to pick this path as reference"
 msgstr "Clique para escolher este caminho como referência"
 
-#: app/tools/gimpaligntool.c:535
+#: app/tools/gimpaligntool.c:560
 msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
@@ -22618,11 +22639,11 @@ msgstr ""
 "Clique num guia para adicioná-lo aos objetos a alinhar, clique em qualquer "
 "outro lugar para desseleccionar todos os guias"
 
-#: app/tools/gimpaligntool.c:539
+#: app/tools/gimpaligntool.c:564
 msgid "Click to select this guide for alignment"
 msgstr "Clique para selecionar este guia para alinhamento"
 
-#: app/tools/gimpaligntool.c:544
+#: app/tools/gimpaligntool.c:569
 msgid "Click to add this guide to the list of objects to align"
 msgstr "Clique para adicionar este guia à lista de objetos para alinhar"
 
