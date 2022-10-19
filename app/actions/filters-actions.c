@@ -866,7 +866,6 @@ filters_actions_update (GimpActionGroup *group,
                         gpointer         data)
 {
   GimpImage    *image;
-  GimpDrawable *drawable       = NULL;
   gboolean      writable       = FALSE;
   gboolean      gray           = FALSE;
   gboolean      alpha          = FALSE;
@@ -876,11 +875,14 @@ filters_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      drawable = gimp_image_get_active_drawable (image);
+      GList *drawables;
 
-      if (drawable)
+      drawables = gimp_image_get_selected_drawables (image);
+
+      if (g_list_length (drawables) == 1)
         {
-          GimpItem *item;
+          GimpDrawable *drawable = drawables->data;
+          GimpItem     *item;
 
           gray           = gimp_drawable_is_gray (drawable);
           alpha          = gimp_drawable_has_alpha (drawable);
@@ -896,6 +898,8 @@ filters_actions_update (GimpActionGroup *group,
           if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
             writable = FALSE;
         }
+
+      g_list_free (drawables);
    }
 
 #define SET_SENSITIVE(action,condition) \
