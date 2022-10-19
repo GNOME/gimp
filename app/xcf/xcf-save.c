@@ -85,6 +85,10 @@ static gboolean xcf_save_channel_props (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpChannel       *channel,
                                         GError           **error);
+static gboolean xcf_save_path_props    (XcfInfo           *info,
+                                        GimpImage         *image,
+                                        GimpVectors       *vectors,
+                                        GError           **error);
 static gboolean xcf_save_prop          (XcfInfo           *info,
                                         GimpImage         *image,
                                         PropType           prop_type,
@@ -97,6 +101,10 @@ static gboolean xcf_save_layer         (XcfInfo           *info,
 static gboolean xcf_save_channel       (XcfInfo           *info,
                                         GimpImage         *image,
                                         GimpChannel       *channel,
+                                        GError           **error);
+static gboolean xcf_save_path          (XcfInfo           *info,
+                                        GimpImage         *image,
+                                        GimpVectors       *vectors,
                                         GError           **error);
 static gboolean xcf_save_buffer        (XcfInfo           *info,
                                         GeglBuffer        *buffer,
@@ -129,7 +137,7 @@ static gboolean xcf_save_parasite_list (XcfInfo           *info,
 static gboolean xcf_save_old_paths     (XcfInfo           *info,
                                         GimpImage         *image,
                                         GError           **error);
-static gboolean xcf_save_vectors       (XcfInfo           *info,
+static gboolean xcf_save_old_vectors   (XcfInfo           *info,
                                         GimpImage         *image,
                                         GError           **error);
 
@@ -224,16 +232,19 @@ xcf_save_image (XcfInfo    *info,
 {
   GList   *all_layers;
   GList   *all_channels;
+  GList   *all_paths = NULL;
   GList   *list;
   goffset  saved_pos;
   goffset  offset;
   guint32  value;
   guint    n_layers;
   guint    n_channels;
+  guint    n_paths  = 0;
   guint    progress = 0;
   guint    max_progress;
   gchar    version_tag[16];
-  GError  *tmp_error = NULL;
+  gboolean write_paths = FALSE;
+  GError  *tmp_error   = NULL;
 
   /* write out the tag information for the image */
   if (info->file_version > 0)
@@ -264,6 +275,9 @@ xcf_save_image (XcfInfo    *info,
       xcf_write_int32_check_error (info, &value, 1);
     }
 
+  if (info->file_version >= 18)
+    write_paths = TRUE;
+
   /* determine the number of layers and channels in the image */
   all_layers   = gimp_image_get_layer_list (image);
   all_channels = gimp_image_get_channel_list (image);
@@ -277,7 +291,13 @@ xcf_save_image (XcfInfo    *info,
   n_layers   = (guint) g_list_length (all_layers);
   n_channels = (guint) g_list_length (all_channels);
 
-  max_progress = 1 + n_layers + n_channels;
+  if (write_paths)
+    {
+      all_paths = gimp_image_get_vectors_list (image);
+      n_paths   = (guint) g_list_length (all_paths);
+    }
+
+  max_progress = 1 + n_layers + n_channels + n_paths;
 
   /* write the property information for the image */
   xcf_check_error (xcf_save_image_props (info, image, error));
@@ -288,7 +308,9 @@ xcf_save_image (XcfInfo    *info,
   saved_pos = info->cp;
 
   /* write an empty offset table */
-  xcf_write_zero_offset_check_error (info, n_layers + n_channels + 2);
+  xcf_write_zero_offset_check_error (info,
+                                     n_layers + n_channels + 2 +
+                                     (write_paths ? n_paths + 1 : 0));
 
   /* 'offset' is where we will write the next layer or channel */
   offset = info->cp;
@@ -344,12 +366,44 @@ xcf_save_image (XcfInfo    *info,
       xcf_progress_update (info);
     }
 
+  if (write_paths)
+    {
+      /* skip a '0' in the offset table to indicate the end of the channel
+       * offsets
+       */
+      saved_pos += info->bytes_per_offset;
+
+      for (list = all_paths; list; list = g_list_next (list))
+        {
+          GimpVectors *vectors = list->data;
+
+          /* seek back to the next slot in the offset table and write the
+           * offset of the channel
+           */
+          xcf_check_error (xcf_seek_pos (info, saved_pos, error));
+          xcf_write_offset_check_error (info, &offset, 1);
+
+          /* remember the next slot in the offset table */
+          saved_pos = info->cp;
+
+          /* seek to the channel offset and save the channel */
+          xcf_check_error (xcf_seek_pos (info, offset, error));
+          xcf_check_error (xcf_save_path (info, image, vectors, error));
+
+          /* the next channels's offset is after the channel we just wrote */
+          offset = info->cp;
+
+          xcf_progress_update (info);
+        }
+    }
+
   /* there is already a '0' at the end of the offset table to indicate
    * the end of the channel offsets
    */
 
   g_list_free (all_layers);
   g_list_free (all_channels);
+  g_list_free (all_paths);
 
   return ! g_output_stream_is_closed (info->output);
 }
@@ -408,7 +462,8 @@ xcf_save_image_props (XcfInfo    *info,
   if (unit < gimp_unit_get_number_of_built_in_units ())
     xcf_check_error (xcf_save_prop (info, image, PROP_UNIT, error, unit));
 
-  if (gimp_container_get_n_children (gimp_image_get_vectors (image)) > 0)
+  if (gimp_container_get_n_children (gimp_image_get_vectors (image)) > 0 &&
+      info->file_version < 18)
     {
       if (gimp_vectors_compat_is_compatible (image))
         xcf_check_error (xcf_save_prop (info, image, PROP_PATHS, error));
@@ -715,6 +770,60 @@ xcf_save_channel_props (XcfInfo      *info,
 }
 
 static gboolean
+xcf_save_path_props (XcfInfo      *info,
+                     GimpImage    *image,
+                     GimpVectors  *vectors,
+                     GError      **error)
+{
+  GimpParasiteList *parasites;
+
+  if (g_list_find (gimp_image_get_selected_vectors (image), vectors))
+    xcf_check_error (xcf_save_prop (info, image, PROP_SELECTED_PATH, error));
+
+  xcf_check_error (xcf_save_prop (info, image, PROP_VISIBLE, error,
+                                  gimp_item_get_visible (GIMP_ITEM (vectors))));
+  xcf_check_error (xcf_save_prop (info, image, PROP_COLOR_TAG, error,
+                                  gimp_item_get_color_tag (GIMP_ITEM (vectors))));
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_CONTENT, error,
+                                  gimp_item_get_lock_content (GIMP_ITEM (vectors))));
+  xcf_check_error (xcf_save_prop (info, image, PROP_LOCK_POSITION, error,
+                                  gimp_item_get_lock_position (GIMP_ITEM (vectors))));
+
+  xcf_check_error (xcf_save_prop (info, image, PROP_TATTOO, error,
+                                  gimp_item_get_tattoo (GIMP_ITEM (vectors))));
+
+  parasites = gimp_item_get_parasites (GIMP_ITEM (vectors));
+
+  if (gimp_parasite_list_length (parasites) > 0)
+    {
+      xcf_check_error (xcf_save_prop (info, image, PROP_PARASITES, error,
+                                      parasites));
+    }
+
+#if 0
+  for (iter = info->vectors_sets; iter; iter = iter->next)
+    {
+      GimpItemList *set = iter->data;
+
+      if (! gimp_item_list_is_pattern (set, NULL))
+        {
+          GList *items = gimp_item_list_get_items (set, NULL);
+
+          if (g_list_find (items, GIMP_ITEM (vectors)))
+            xcf_check_error (xcf_save_prop (info, image, PROP_ITEM_SET_ITEM, error,
+                                            g_list_position (info->layer_sets, iter)));
+
+          g_list_free (items);
+        }
+    }
+#endif
+
+  xcf_check_error (xcf_save_prop (info, image, PROP_END, error));
+
+  return TRUE;
+}
+
+static gboolean
 xcf_save_prop (XcfInfo    *info,
                GimpImage  *image,
                PropType    prop_type,
@@ -753,6 +862,7 @@ xcf_save_prop (XcfInfo    *info,
 
     case PROP_ACTIVE_LAYER:
     case PROP_ACTIVE_CHANNEL:
+    case PROP_SELECTED_PATH:
     case PROP_SELECTION:
     case PROP_GROUP_ITEM:
       size = 0;
@@ -1352,7 +1462,7 @@ xcf_save_prop (XcfInfo    *info,
 
         base = info->cp;
 
-        xcf_check_error (xcf_save_vectors (info, image, error));
+        xcf_check_error (xcf_save_old_vectors (info, image, error));
 
         size = info->cp - base;
 
@@ -2124,12 +2234,13 @@ xcf_save_parasite_list (XcfInfo           *info,
   return TRUE;
 }
 
+/* This is the oldest way to save paths. */
 static gboolean
 xcf_save_old_paths (XcfInfo    *info,
                     GimpImage  *image,
                     GError    **error)
 {
-  GimpVectors *active_vectors;
+  GimpVectors *active_vectors = NULL;
   guint32      num_paths;
   guint32      active_index = 0;
   GList       *list;
@@ -2145,7 +2256,16 @@ xcf_save_old_paths (XcfInfo    *info,
 
   num_paths = gimp_container_get_n_children (gimp_image_get_vectors (image));
 
-  active_vectors = gimp_image_get_active_vectors (image);
+  if (gimp_image_get_selected_vectors (image))
+    {
+      active_vectors = gimp_image_get_selected_vectors (image)->data;
+      /* Having more than 1 selected vectors should not have happened in this
+       * code path but let's not break saving, only produce a critical.
+       */
+      if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+        g_critical ("%s: this code path should not happen with multiple paths selected",
+                    G_STRFUNC);
+    }
 
   if (active_vectors)
     active_index = gimp_container_get_child_index (gimp_image_get_vectors (image),
@@ -2233,14 +2353,18 @@ xcf_save_old_paths (XcfInfo    *info,
   return TRUE;
 }
 
+/* This is an older way to save paths, though more recent than
+ * xcf_save_old_paths(). It used to be the normal path storing format until all
+ * 2.10 versions. It changed with GIMP 3.0.
+ */
 static gboolean
-xcf_save_vectors (XcfInfo    *info,
-                  GimpImage  *image,
-                  GError    **error)
+xcf_save_old_vectors (XcfInfo    *info,
+                      GimpImage  *image,
+                      GError    **error)
 {
-  GimpVectors *active_vectors;
-  guint32      version      = 1;
-  guint32      active_index = 0;
+  GimpVectors *active_vectors = NULL;
+  guint32      version        = 1;
+  guint32      active_index   = 0;
   guint32      num_paths;
   GList       *list;
   GList       *stroke_list;
@@ -2255,7 +2379,16 @@ xcf_save_vectors (XcfInfo    *info,
    * then each path:-
    */
 
-  active_vectors = gimp_image_get_active_vectors (image);
+  if (gimp_image_get_selected_vectors (image))
+    {
+      active_vectors = gimp_image_get_selected_vectors (image)->data;
+      /* Having more than 1 selected vectors should not have happened in this
+       * code path but let's not break saving, only produce a critical.
+       */
+      if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+        g_critical ("%s: this code path should not happen with multiple paths selected",
+                    G_STRFUNC);
+    }
 
   if (active_vectors)
     active_index = gimp_container_get_child_index (gimp_image_get_vectors (image),
@@ -2385,6 +2518,131 @@ xcf_save_vectors (XcfInfo    *info,
           g_array_free (control_points, TRUE);
         }
     }
+
+  return TRUE;
+}
+
+static gboolean
+xcf_save_path (XcfInfo      *info,
+               GimpImage    *image,
+               GimpVectors  *vectors,
+               GError      **error)
+{
+  const gchar *string;
+  GList       *stroke_list;
+  GError      *tmp_error = NULL;
+  /* Version of the path format is always 1 for now. */
+  guint32      version   = 1;
+  guint32      num_strokes;
+  guint32      size;
+  goffset      base;
+  goffset      pos;
+
+  /* write out the path name */
+  string = gimp_object_get_name (vectors);
+  xcf_write_string_check_error (info, (gchar **) &string, 1);
+
+  /* Payload size */
+  size = 0;
+  pos = info->cp;
+  xcf_write_int32_check_error (info, &size, 1);
+  base = info->cp;
+
+  /* write out the path properties */
+  xcf_save_path_props (info, image, vectors, error);
+
+  /* Path version */
+  xcf_write_int32_check_error (info, &version, 1);
+
+  /* Write out the number of strokes. */
+  num_strokes = g_queue_get_length (vectors->strokes);
+  xcf_write_int32_check_error  (info, &num_strokes, 1);
+
+  for (stroke_list = g_list_first (vectors->strokes->head);
+       stroke_list;
+       stroke_list = g_list_next (stroke_list))
+    {
+      GimpStroke *stroke = stroke_list->data;
+      guint32     stroke_type;
+      guint32     closed;
+      guint32     num_axes;
+      GArray     *control_points;
+      gint        i;
+
+      guint32     type;
+      gfloat      coords[6];
+
+      /*
+       * stroke_type (gint)
+       * closed (gint)
+       * num_axes (gint)
+       * num_control_points (gint)
+       *
+       * then each control point.
+       */
+
+      if (GIMP_IS_BEZIER_STROKE (stroke))
+        {
+          stroke_type = XCF_STROKETYPE_BEZIER_STROKE;
+          num_axes = 2;   /* hardcoded, might be increased later */
+        }
+      else
+        {
+          g_printerr ("Skipping unknown stroke type!\n");
+          continue;
+        }
+
+      control_points = gimp_stroke_control_points_get (stroke,
+                                                       (gint32 *) &closed);
+
+      /* Stroke type. */
+      xcf_write_int32_check_error (info, &stroke_type,         1);
+      /* close path or not? */
+      xcf_write_int32_check_error (info, &closed,              1);
+      /* Number of floats given for each point. */
+      xcf_write_int32_check_error (info, &num_axes,            1);
+      /* Number of control points. */
+      xcf_write_int32_check_error (info, &control_points->len, 1);
+
+      for (i = 0; i < control_points->len; i++)
+        {
+          GimpAnchor *anchor;
+
+          anchor = & (g_array_index (control_points, GimpAnchor, i));
+
+          type      = anchor->type;
+          coords[0] = anchor->position.x;
+          coords[1] = anchor->position.y;
+          coords[2] = anchor->position.pressure;
+          coords[3] = anchor->position.xtilt;
+          coords[4] = anchor->position.ytilt;
+          coords[5] = anchor->position.wheel;
+
+          /*
+           * type (gint)
+           *
+           * the first num_axis elements of:
+           * [0] x (gfloat)
+           * [1] y (gfloat)
+           * [2] pressure (gfloat)
+           * [3] xtilt (gfloat)
+           * [4] ytilt (gfloat)
+           * [5] wheel (gfloat)
+           */
+
+          xcf_write_int32_check_error (info, &type,  1);
+          xcf_write_float_check_error (info, coords, num_axes);
+        }
+
+      g_array_free (control_points, TRUE);
+    }
+
+  /* go back to the saved position and write the length */
+  size = info->cp - base;
+  xcf_check_error (xcf_seek_pos (info, pos, error));
+  xcf_write_int32_check_error (info, &size, 1);
+
+  xcf_check_error (xcf_seek_pos (info, base + size, error));
 
   return TRUE;
 }

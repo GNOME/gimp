@@ -105,6 +105,9 @@ static gboolean        xcf_check_layer_props  (XcfInfo       *info,
 static gboolean        xcf_load_channel_props (XcfInfo       *info,
                                                GimpImage     *image,
                                                GimpChannel  **channel);
+static gboolean        xcf_load_vectors_props (XcfInfo       *info,
+                                               GimpImage     *image,
+                                               GimpVectors  **vectors);
 static gboolean        xcf_load_prop          (XcfInfo       *info,
                                                PropType      *prop_type,
                                                guint32       *prop_size);
@@ -112,6 +115,8 @@ static GimpLayer     * xcf_load_layer         (XcfInfo       *info,
                                                GimpImage     *image,
                                                GList        **item_path);
 static GimpChannel   * xcf_load_channel       (XcfInfo       *info,
+                                               GimpImage     *image);
+static GimpVectors   * xcf_load_vectors       (XcfInfo       *info,
                                                GimpImage     *image);
 static GimpLayerMask * xcf_load_layer_mask    (XcfInfo       *info,
                                                GimpImage     *image);
@@ -138,9 +143,9 @@ static gboolean        xcf_load_old_paths     (XcfInfo       *info,
                                                GimpImage     *image);
 static gboolean        xcf_load_old_path      (XcfInfo       *info,
                                                GimpImage     *image);
-static gboolean        xcf_load_vectors       (XcfInfo       *info,
+static gboolean        xcf_load_old_vectors   (XcfInfo       *info,
                                                GimpImage     *image);
-static gboolean        xcf_load_vector        (XcfInfo       *info,
+static gboolean        xcf_load_old_vector    (XcfInfo       *info,
                                                GimpImage     *image);
 
 static gboolean        xcf_skip_unknown_prop  (XcfInfo       *info,
@@ -176,6 +181,7 @@ xcf_load_image (Gimp     *gimp,
   gint                num_successful_elements = 0;
   gint                n_broken_layers         = 0;
   gint                n_broken_channels       = 0;
+  gint                n_broken_vectors        = 0;
   GList              *broken_paths            = NULL;
   GList              *group_layers            = NULL;
   GList              *syms;
@@ -775,6 +781,67 @@ xcf_load_image (Gimp     *gimp,
       floating_sel_attach (info->floating_sel, info->floating_sel_drawable);
     }
 
+  if (info->file_version >= 18)
+    {
+      while (TRUE)
+        {
+          GimpVectors *vectors;
+
+          /* read in the offset of the next path */
+          xcf_read_offset (info, &offset, 1);
+
+          /* if the offset is 0 then we are at the end
+           *  of the path list.
+           */
+          if (offset == 0)
+            break;
+
+          /* save the current position as it is where the
+           *  next channel offset is stored.
+           */
+          saved_pos = info->cp;
+
+          if (offset < saved_pos)
+            {
+              GIMP_LOG (XCF, "Invalid path offset: %" G_GOFFSET_FORMAT
+                        " at offset: % "G_GOFFSET_FORMAT, offset, saved_pos);
+              goto error;
+            }
+
+          /* seek to the path offset */
+          if (! xcf_seek_pos (info, offset, NULL))
+            goto error;
+
+          /* read in the path */
+          vectors = xcf_load_vectors (info, image);
+          if (! vectors)
+            {
+              n_broken_vectors++;
+              GIMP_LOG (XCF, "Failed to load path.");
+
+              if (! xcf_seek_pos (info, saved_pos, NULL))
+                goto error;
+
+              continue;
+            }
+
+          num_successful_elements++;
+
+          xcf_progress_update (info);
+
+          gimp_image_add_vectors (image, vectors,
+                                  NULL, /* can't be a tree */
+                                  gimp_container_get_n_children (gimp_image_get_vectors (image)),
+                                  FALSE);
+
+          /* restore the saved position so we'll be ready to
+           *  read the next offset.
+           */
+          if (! xcf_seek_pos (info, saved_pos, NULL))
+            goto error;
+        }
+    }
+
   if (info->selected_layers)
     {
       gimp_image_set_selected_layers (image, info->selected_layers);
@@ -783,6 +850,9 @@ xcf_load_image (Gimp     *gimp,
 
   if (info->selected_channels)
     gimp_image_set_selected_channels (image, info->selected_channels);
+
+  if (info->selected_vectors)
+    gimp_image_set_selected_vectors (image, info->selected_vectors);
 
   /* We don't have linked items concept anymore. We transform formerly
    * linked items into stored sets of named items instead.
@@ -854,7 +924,7 @@ xcf_load_image (Gimp     *gimp,
   if (info->tattoo_state > 0)
     gimp_image_set_tattoo_state (image, info->tattoo_state);
 
-  if (n_broken_layers > 0 || n_broken_channels > 0)
+  if (n_broken_layers > 0 || n_broken_channels > 0 || n_broken_vectors > 0)
     goto error;
 
   gimp_image_undo_enable (image);
@@ -1267,6 +1337,12 @@ xcf_load_image_props (XcfInfo   *info,
           {
             goffset base = info->cp;
 
+            if (info->file_version >= 18)
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            "XCF %d file should not contain PROP_PATHS image properties",
+                            info->file_version);
+
             if (! xcf_load_old_paths (info, image))
               xcf_seek_pos (info, base + prop_size, NULL);
           }
@@ -1326,7 +1402,13 @@ xcf_load_image_props (XcfInfo   *info,
           {
             goffset base = info->cp;
 
-            if (xcf_load_vectors (info, image))
+            if (info->file_version >= 18)
+              gimp_message (info->gimp, G_OBJECT (info->progress),
+                            GIMP_MESSAGE_WARNING,
+                            "XCF %d file should not contain PROP_VECTORS image properties",
+                            info->file_version);
+
+            if (xcf_load_old_vectors (info, image))
               {
                 if (base + prop_size != info->cp)
                   {
@@ -1339,7 +1421,7 @@ xcf_load_image_props (XcfInfo   *info,
             else
               {
                 /* skip silently since we don't understand the format and
-                 * xcf_load_vectors already explained what was wrong
+                 * xcf_load_old_vectors already explained what was wrong
                  */
                 xcf_seek_pos (info, base + prop_size, NULL);
               }
@@ -2190,6 +2272,165 @@ xcf_load_channel_props (XcfInfo      *info,
 }
 
 static gboolean
+xcf_load_vectors_props (XcfInfo      *info,
+                        GimpImage    *image,
+                        GimpVectors **vectors)
+{
+  PropType prop_type;
+  guint32  prop_size;
+
+  while (TRUE)
+    {
+      if (! xcf_load_prop (info, &prop_type, &prop_size))
+        return FALSE;
+
+      switch (prop_type)
+        {
+        case PROP_END:
+          return TRUE;
+
+        case PROP_SELECTED_PATH:
+          info->selected_vectors = g_list_prepend (info->selected_vectors, *vectors);
+          break;
+
+        case PROP_VISIBLE:
+          {
+            gboolean visible;
+
+            xcf_read_int32 (info, (guint32 *) &visible, 1);
+
+            gimp_item_set_visible (GIMP_ITEM (*vectors), visible, FALSE);
+          }
+          break;
+
+        case PROP_COLOR_TAG:
+          {
+            GimpColorTag color_tag;
+
+            xcf_read_int32 (info, (guint32 *) &color_tag, 1);
+
+            gimp_item_set_color_tag (GIMP_ITEM (*vectors), color_tag, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_CONTENT:
+          {
+            gboolean lock_content;
+
+            xcf_read_int32 (info, (guint32 *) &lock_content, 1);
+
+            if (gimp_item_can_lock_content (GIMP_ITEM (*vectors)))
+              gimp_item_set_lock_content (GIMP_ITEM (*vectors),
+                                          lock_content, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_POSITION:
+          {
+            gboolean lock_position;
+
+            xcf_read_int32 (info, (guint32 *) &lock_position, 1);
+
+            if (gimp_item_can_lock_position (GIMP_ITEM (*vectors)))
+              gimp_item_set_lock_position (GIMP_ITEM (*vectors),
+                                           lock_position, FALSE);
+          }
+          break;
+
+        case PROP_LOCK_VISIBILITY:
+          {
+            gboolean lock_visibility;
+
+            xcf_read_int32 (info, (guint32 *) &lock_visibility, 1);
+
+            if (gimp_item_can_lock_visibility (GIMP_ITEM (*vectors)))
+              gimp_item_set_lock_visibility (GIMP_ITEM (*vectors),
+                                             lock_visibility, FALSE);
+          }
+          break;
+
+        case PROP_TATTOO:
+          {
+            GimpTattoo tattoo;
+
+            xcf_read_int32 (info, (guint32 *) &tattoo, 1);
+
+            gimp_item_set_tattoo (GIMP_ITEM (*vectors), tattoo);
+          }
+          break;
+
+        case PROP_PARASITES:
+          {
+            goffset base = info->cp;
+
+            while ((info->cp - base) < prop_size)
+              {
+                GimpParasite *p     = xcf_load_parasite (info);
+                GError       *error = NULL;
+
+                if (! p)
+                  return FALSE;
+
+                if (! gimp_item_parasite_validate (GIMP_ITEM (*vectors), p,
+                                                    &error))
+                  {
+                    gimp_message (info->gimp, G_OBJECT (info->progress),
+                                  GIMP_MESSAGE_WARNING,
+                                  "Warning, invalid path parasite in XCF file: %s",
+                                  error->message);
+                    g_clear_error (&error);
+                  }
+                else
+                  {
+                    gimp_item_parasite_attach (GIMP_ITEM (*vectors), p, FALSE);
+                  }
+
+                gimp_parasite_free (p);
+              }
+
+            if (info->cp - base != prop_size)
+              gimp_message_literal (info->gimp, G_OBJECT (info->progress),
+                                    GIMP_MESSAGE_WARNING,
+                                    "Error while loading a path's parasites");
+          }
+          break;
+
+#if 0
+        case PROP_ITEM_SET_ITEM:
+            {
+              GimpItemList *set;
+              guint32       n;
+
+              xcf_read_int32 (info, &n, 1);
+              set = g_list_nth_data (info->vectors_sets, n);
+              if (set == NULL)
+                g_printerr ("xcf: unknown path set: %d (skipping)\n", n);
+              else if (! g_type_is_a (G_TYPE_FROM_INSTANCE (*vectors),
+                                      gimp_item_list_get_item_type (set)))
+                g_printerr ("xcf: path '%s' cannot be added to item set '%s' with item type %s (skipping)\n",
+                            gimp_object_get_name (*vectors), gimp_object_get_name (set),
+                            g_type_name (gimp_item_list_get_item_type (set)));
+              else
+                gimp_item_list_add (set, GIMP_ITEM (*vectors));
+            }
+          break;
+#endif
+
+        default:
+#ifdef GIMP_UNSTABLE
+          g_printerr ("unexpected/unknown path property: %d (skipping)\n",
+                      prop_type);
+#endif
+          if (! xcf_skip_unknown_prop (info, prop_size))
+            return FALSE;
+          break;
+        }
+    }
+
+  return FALSE;
+}
+
+static gboolean
 xcf_load_prop (XcfInfo  *info,
                PropType *prop_type,
                guint32  *prop_size)
@@ -2548,6 +2789,162 @@ xcf_load_channel (XcfInfo   *info,
 
       g_object_unref (channel);
     }
+
+  return NULL;
+}
+
+/* The new path structure since XCF 18. */
+static GimpVectors *
+xcf_load_vectors (XcfInfo   *info,
+                  GimpImage *image)
+{
+  GimpVectors *vectors = NULL;
+  gchar       *name;
+  guint32      version;
+  guint32      plength;
+  guint32      num_strokes;
+  goffset      base;
+  gint         i;
+
+  /* read in the path name. */
+  xcf_read_string (info, &name,   1);
+
+  GIMP_LOG (XCF, "Path name='%s'", name);
+
+  /* create a new path */
+  vectors = gimp_vectors_new (image, name);
+  g_free (name);
+  if (! vectors)
+    return NULL;
+
+  /* Read the path's payload size. */
+  xcf_read_int32 (info, (guint32 *) &plength, 1);
+  base = info->cp;
+
+  /* read in the path properties */
+  if (! xcf_load_vectors_props (info, image, &vectors))
+    goto error;
+
+  GIMP_LOG (XCF, "path props loaded");
+
+  xcf_progress_update (info);
+
+  xcf_read_int32 (info, (guint32 *) &version, 1);
+
+  if (version != 1)
+    {
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_WARNING,
+                    "Unknown vectors version: %d (skipping)", version);
+      goto error;
+    }
+
+  /* Read the number of strokes. */
+  xcf_read_int32  (info, &num_strokes, 1);
+
+  for (i = 0; i < num_strokes; i++)
+    {
+      guint32      stroke_type_id;
+      guint32      closed;
+      guint32      num_axes;
+      guint32      num_control_points;
+      guint32      type;
+      gfloat       coords[13] = GIMP_COORDS_DEFAULT_VALUES;
+      GimpStroke  *stroke;
+      gint         j;
+
+      GimpValueArray *control_points;
+      GValue          value  = G_VALUE_INIT;
+      GimpAnchor      anchor = { { 0, } };
+      GType           stroke_type;
+
+      g_value_init (&value, GIMP_TYPE_ANCHOR);
+
+      xcf_read_int32 (info, &stroke_type_id,     1);
+      xcf_read_int32 (info, &closed,             1);
+      xcf_read_int32 (info, &num_axes,           1);
+      xcf_read_int32 (info, &num_control_points, 1);
+
+#ifdef GIMP_XCF_PATH_DEBUG
+      g_printerr ("stroke_type: %d, closed: %d, num_axes %d, len %d\n",
+                  stroke_type_id, closed, num_axes, num_control_points);
+#endif
+
+      switch (stroke_type_id)
+        {
+        case XCF_STROKETYPE_BEZIER_STROKE:
+          stroke_type = GIMP_TYPE_BEZIER_STROKE;
+          break;
+
+        default:
+          g_printerr ("skipping unknown stroke type\n");
+          xcf_seek_pos (info,
+                        info->cp + 4 * num_axes * num_control_points,
+                        NULL);
+          continue;
+        }
+
+      if (num_axes < 2 || num_axes > 6)
+        {
+          g_printerr ("bad number of axes in stroke description\n");
+          goto error;
+        }
+
+      control_points = gimp_value_array_new (num_control_points);
+
+      anchor.selected = FALSE;
+
+      for (j = 0; j < num_control_points; j++)
+        {
+          xcf_read_int32 (info, &type,  1);
+          xcf_read_float (info, coords, num_axes);
+
+          anchor.type              = type;
+          anchor.position.x        = coords[0];
+          anchor.position.y        = coords[1];
+          anchor.position.pressure = coords[2];
+          anchor.position.xtilt    = coords[3];
+          anchor.position.ytilt    = coords[4];
+          anchor.position.wheel    = coords[5];
+
+          g_value_set_boxed (&value, &anchor);
+          gimp_value_array_append (control_points, &value);
+
+#ifdef GIMP_XCF_PATH_DEBUG
+          g_printerr ("Anchor: %d, (%f, %f, %f, %f, %f, %f)\n", type,
+                      coords[0], coords[1], coords[2], coords[3],
+                      coords[4], coords[5]);
+#endif
+        }
+
+      g_value_unset (&value);
+
+      stroke = g_object_new (stroke_type,
+                             "closed",         closed,
+                             "control-points", control_points,
+                             NULL);
+
+      gimp_vectors_stroke_add (vectors, stroke);
+
+      g_object_unref (stroke);
+      gimp_value_array_unref (control_points);
+    }
+
+
+  if (plength != info->cp - base)
+    {
+      gimp_message (info->gimp, G_OBJECT (info->progress),
+                    GIMP_MESSAGE_WARNING,
+                    "Path payload size does not match stored size (skipping)");
+      goto error;
+    }
+
+  return vectors;
+
+error:
+
+  xcf_seek_pos (info, base + plength, NULL);
+  g_clear_object (&vectors);
 
   return NULL;
 }
@@ -3174,6 +3571,7 @@ xcf_load_parasite (XcfInfo *info)
   return parasite;
 }
 
+/* Old paths are the PROP_PATHS property, even older than PROP_VECTORS. */
 static gboolean
 xcf_load_old_paths (XcfInfo   *info,
                     GimpImage *image)
@@ -3302,9 +3700,10 @@ xcf_load_old_path (XcfInfo   *info,
   return TRUE;
 }
 
+/* Old vectors are the PROP_VECTORS property up to all GIMP 2.10 versions. */
 static gboolean
-xcf_load_vectors (XcfInfo   *info,
-                  GimpImage *image)
+xcf_load_old_vectors (XcfInfo   *info,
+                      GimpImage *image)
 {
   guint32      version;
   guint32      active_index;
@@ -3312,7 +3711,7 @@ xcf_load_vectors (XcfInfo   *info,
   GimpVectors *active_vectors;
 
 #ifdef GIMP_XCF_PATH_DEBUG
-  g_printerr ("xcf_load_vectors\n");
+  g_printerr ("xcf_load_old_vectors\n");
 #endif
 
   xcf_read_int32 (info, &version, 1);
@@ -3333,7 +3732,7 @@ xcf_load_vectors (XcfInfo   *info,
 #endif
 
   while (num_paths-- > 0)
-    if (! xcf_load_vector (info, image))
+    if (! xcf_load_old_vector (info, image))
       return FALSE;
 
   /* FIXME tree */
@@ -3345,14 +3744,14 @@ xcf_load_vectors (XcfInfo   *info,
     gimp_image_set_active_vectors (image, active_vectors);
 
 #ifdef GIMP_XCF_PATH_DEBUG
-  g_printerr ("xcf_load_vectors: loaded %d bytes\n", info->cp - base);
+  g_printerr ("xcf_load_old_vectors: loaded %d bytes\n", info->cp - base);
 #endif
   return TRUE;
 }
 
 static gboolean
-xcf_load_vector (XcfInfo   *info,
-                 GimpImage *image)
+xcf_load_old_vector (XcfInfo   *info,
+                     GimpImage *image)
 {
   gchar       *name;
   GimpTattoo   tattoo = 0;
@@ -3364,7 +3763,7 @@ xcf_load_vector (XcfInfo   *info,
   gint         i;
 
 #ifdef GIMP_XCF_PATH_DEBUG
-  g_printerr ("xcf_load_vector\n");
+  g_printerr ("xcf_load_old_vector\n");
 #endif
 
   xcf_read_string (info, &name,          1);

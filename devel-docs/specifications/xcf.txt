@@ -199,6 +199,11 @@ Since GIMP 3.0.0, released on TODO.
 - New PROP_LOCK_VISIBILITY on layers and channels.
 - PROP_LOCK_POSITION and PROP_LOCK_ALPHA can now be set on layer groups.
 
+Vection 18:
+Since GIMP 3.0.0, released on TODO.
+- New Vectors Structure for storing paths with properties.
+
+
 1. BASIC CONCEPTS
 =================
 
@@ -506,8 +511,9 @@ names which will be ignored by other plug-ins.
 A list of known parasites and their data formats can be found in the
 file devel-doc/parasites.txt of the GIMP source tree.
 
-The PROP_PARASITE property stores the parasites of the image, layers
-and channels and the PROP_VECTORS property those of the paths.
+The PROP_PARASITE property stores the parasites of the image, layers, channels
+and vectors structures. The PROP_VECTORS stores those of paths when using this
+image property instead of proper vectors structure.
 
 The number of parasites there is not directly encoded; the list ends when
 the total length of the parasite data read equals the property payload length.
@@ -601,6 +607,11 @@ GIMP stores vector paths as properties of the image.
 If all paths are continuous sequences of Bezier strokes, then GIMP uses
 the PROP_PATHS property, otherwise PROP_VECTORS. PROP_PATHS is for old
 files from GIMP up to version 1.2.
+
+If more than 2 paths are selected or if a path have a color tag, a content lock
+or a position lock, GIMP will use vectors structures, which bumps the XCF to at
+least version 18. If the XCF is already 18 or later, GIMP will always use
+vectors structure.
 
 
 2. GENERAL PROPERTIES
@@ -728,8 +739,9 @@ PROP_TATTOO (internal GIMP state)
   uint32  4          Four bytes of payload
   uint32  tattoo     Nonzero unsigned integer identifier
 
-  PROP_TATTOO is an unique identifier for the denoted image, channel or layer.
-  It appears in the property list of layers, channels, and the image.
+  PROP_TATTOO is an unique identifier for the denoted image, channel, layer or
+  path.
+  It appears in the property list of layers, channels, vectors and the image.
 
 PROP_VISIBLE (essential)
   uint32  8          Type identification
@@ -737,8 +749,10 @@ PROP_VISIBLE (essential)
   uint32  visible    1 if the layer/channel is visible; 0 if not
 
   PROP_VISIBLE specifies the visibility of a layer or channel.
-  It appears in the property list for layers and channels.
-  For the visibility of a path see the PROP_VECTORS property.
+  It appears in the property list for layers, channels and paths.
+
+  For the visibility of a path stored with the older PROP_VECTORS property, see
+  this property's description.
 
   When reading old XCF files that lack this property, assume that
   layers are visible and channels are not.
@@ -827,6 +841,10 @@ The image structure always starts at offset 0 in the XCF file.
   | pointer cptr       Pointer to the channel structure.
   `--
   pointer   0           Zero marks the end of the array of channel pointers.
+  ,------------------  Repeat once for each path, in no particular order:
+  | pointer cptr       Pointer to the vectors structure.
+  `--
+  pointer   0           Zero marks the end of the array of vectors pointers.
 
 The last 4 characters of the initial 13-character identification string are
 a version indicator. The version will be higher than 3 if the correct
@@ -960,7 +978,7 @@ PROP_PATHS
 
   This format is used to save path data if all paths in the image are
   continuous sequences of Bezier strokes. Otherwise GIMP stores the paths in
-  PROP_VECTORS.
+  PROP_VECTORS or in Vectors Structure.
 
   Note: the attribute 'linked' was formerly erroneously called 'locked'
   (but meant 'linked' anyway).
@@ -1526,8 +1544,54 @@ PROP_TEXT_LAYER_FLAGS
   The actual text (and other parameters such as font and color) is a
   parasite rather than a property.
 
+6. THE VECTORS STRUCTURE
+========================
 
-6. THE HIERARCHY STRUCTURE
+Vectors structures are pointed to from the master image structure.
+
+  string    name       Name of the path
+  uint32    plength    Total length of the following payload in bytes
+  property-list        Vectors properties
+  uint32    1          Version tag; so far always 1
+  uint32    k          Number of strokes in the path
+  ,-------------------- Repeat k times:
+  | uint32   1          The stroke is a Bezier stroke
+  | uint32   closed     1 if path is closed; 0 otherwise
+  | uint32   nf         Number of floats given for each point;
+  |                     must be >= 2 and <= 6.
+  | uint32   np         Number of control points for this stroke
+  | ,------------------ Repeat np times:
+  | | uint32 type       Type of the first point; one of
+  | |                     0: Anchor
+  | |                     1: Bezier control point
+  | | float  x          X coordinate
+  | | float  y          Y coordinate
+  | | float  pressure   Only if nf >= 3; otherwise defaults to 1.0
+  | | float  xtilt      Only if nf >= 4; otherwise defaults to 0.5
+  | | float  ytilt      Only if nf >= 5; otherwise defaults to 0.5
+  | | float  wheel      Only if nf == 6; otherwise defaults to 0.5
+  | `--
+  `--
+
+Vectors properties
+------------------
+
+The following properties are found only in the property list of
+vectors structures. Additionally the list can also contain the
+properties: PROP_COLOR_TAG, PROP_END, PROP_LOCK_CONTENT, PROP_LOCK_POSITION,
+PROP_PARASITES, PROP_TATTOO and PROP_VISIBLE, defined in chapter 2.
+
+PROP_SELECTED_PATH (editing state)
+  uint32  43     Type identification
+  uint32  0      PROP_SELECTED_PATH has no payload
+
+  The presence of PROP_SELECTED_PATH indicates that the path is currently
+  selected.
+  It appears in the property list of any currently selected path.
+  Any number of paths (or none) can have this property at any time.
+
+
+7. THE HIERARCHY STRUCTURE
 ==========================
 
 A hierarchy contains data for a rectangular array of pixels.
@@ -1581,7 +1645,7 @@ hierarchy structure (except for the dummy levels).
 Ceil(x) is the smallest integer not smaller than x.
 
 
-7. TILE DATA ORGANIZATION
+8. TILE DATA ORGANIZATION
 =========================
 
 The format of the data blocks pointed to by the tile pointers in the
@@ -1683,7 +1747,7 @@ TODO: If each tile has a maximum of 64 pixels (resulting in a maximum of 64
 bytes for each color in this tile), do values>64 and long runs apply at all?
 
 
-8. MISCELLANEOUS
+9. MISCELLANEOUS
 ================
 
 

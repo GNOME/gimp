@@ -2966,6 +2966,34 @@ gimp_image_get_xcf_version (GimpImage    *image,
     }
   g_list_free (items);
 
+  if (g_list_length (gimp_image_get_selected_vectors (image)) > 1)
+    {
+      ADD_REASON (g_strdup_printf (_("Multiple path selection was "
+                                     "added in %s"), "GIMP 3.0.0"));
+      version = MAX (18, version);
+    }
+
+  items = gimp_image_get_vectors_list (image);
+  for (list = items; list; list = g_list_next (list))
+    {
+      GimpVectors *vectors = GIMP_VECTORS (list->data);
+
+      if (gimp_item_get_color_tag (GIMP_ITEM (vectors)) != GIMP_COLOR_TAG_NONE)
+        {
+          ADD_REASON (g_strdup_printf (_("Storing color tags in path was "
+                                         "added in %s"), "GIMP 3.0.0"));
+          version = MAX (18, version);
+        }
+      if (gimp_item_get_lock_content (GIMP_ITEM (list->data)) ||
+          gimp_item_get_lock_position (GIMP_ITEM (list->data)))
+        {
+          ADD_REASON (g_strdup_printf (_("Storing locks in path was "
+                                         "added in %s"), "GIMP 3.0.0"));
+          version = MAX (18, version);
+        }
+    }
+  g_list_free (items);
+
   /* version 6 for new metadata has been dropped since they are
    * saved through parasites, which is compatible with older versions.
    */
@@ -3086,6 +3114,7 @@ gimp_image_get_xcf_version (GimpImage    *image,
     case 15:
     case 16:
     case 17:
+    case 18:
       if (gimp_version)   *gimp_version   = 300;
       if (version_string) *version_string = "GIMP 3.0";
       break;

@@ -68,6 +68,7 @@ typedef enum
   PROP_ITEM_SET           = 40,
   PROP_ITEM_SET_ITEM      = 41,
   PROP_LOCK_VISIBILITY    = 42,
+  PROP_SELECTED_PATH      = 43,
 } PropType;
 
 typedef enum
@@ -110,6 +111,7 @@ struct _XcfInfo
   GimpTattoo          tattoo_state;
   GList              *selected_layers;
   GList              *selected_channels;
+  GList              *selected_vectors;
 
   /* Old deprecated "linked" concept which we keep in the XcfInfo
    * probably forever to transform these tags into named stored item
