@@ -152,11 +152,8 @@ select_actions_update (GimpActionGroup *group,
                        gpointer         data)
 {
   GimpImage    *image    = action_data_get_image (data);
-  GimpDrawable *drawable = NULL;
   gboolean      fs       = FALSE;
   gboolean      sel      = FALSE;
-  gboolean      writable = FALSE;
-  gboolean      children = FALSE;
 
   GList        *drawables    = NULL;
   GList        *iter;
@@ -165,7 +162,6 @@ select_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      drawable = gimp_image_get_active_drawable (image);
       drawables = gimp_image_get_selected_drawables (image);
 
       for (iter = drawables; iter; iter = iter->next)
@@ -180,14 +176,6 @@ select_actions_update (GimpActionGroup *group,
             break;
         }
 
-      if (drawable)
-        {
-          writable = ! gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL);
-
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-            children = TRUE;
-        }
-
       fs  = (gimp_image_get_floating_selection (image) != NULL);
       sel = ! gimp_channel_is_empty (gimp_image_get_mask (image));
     }
@@ -198,7 +186,9 @@ select_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("select-all",    image);
   SET_SENSITIVE ("select-none",   image && sel);
   SET_SENSITIVE ("select-invert", image);
-  SET_SENSITIVE ("select-float",  writable && !children && sel);
+  SET_SENSITIVE ("select-float",  g_list_length (drawables) == 1 && sel                 &&
+                                  ! gimp_item_is_content_locked (drawables->data, NULL) &&
+                                  ! gimp_viewable_get_children (drawables->data));
 
   SET_SENSITIVE ("select-feather", image && sel);
   SET_SENSITIVE ("select-sharpen", image && sel);
