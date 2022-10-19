@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-17 22:51+0000\n"
-"PO-Revision-Date: 2022-10-18 06:23+0200\n"
+"POT-Creation-Date: 2022-10-19 13:48+0000\n"
+"PO-Revision-Date: 2022-10-19 16:45+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -3388,27 +3388,27 @@ msgstr "Samodejno nastavljanje ravnovesja beline"
 
 #: app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
-msgid "Toggle Drawable _Visibility"
+msgid "Toggle Drawables _Visibility"
 msgstr "Preklopi _vidnost risanega predmeta"
 
 #: app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
-msgid "L_ock Pixels of Drawable"
+msgid "L_ock Pixels of Drawables"
 msgstr "Za_kleni slikovne točke risanega predmeta"
 
 #: app/actions/drawable-actions.c:68
 msgctxt "drawable-action"
-msgid "Keep the pixels on this drawable from being modified"
+msgid "Keep the pixels on selected drawables from being modified"
 msgstr "Ohrani slikovne točke na tem risanem predmetu nespremenjene"
 
 #: app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
-msgid "L_ock Position of Drawable"
+msgid "L_ock Position of Drawables"
 msgstr "Za_kleni položaj risanega predmeta"
 
 #: app/actions/drawable-actions.c:76
 msgctxt "drawable-action"
-msgid "Keep the position on this drawable from being modified"
+msgid "Keep the position on selected drawables from being modified"
 msgstr "Ohrani položaj tega risanega predmeta nespremenljiv"
 
 #: app/actions/drawable-actions.c:85
@@ -3461,9 +3461,34 @@ msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "Zasukaj risani predmet za 90° v levo"
 
-#: app/actions/drawable-commands.c:77
+#: app/actions/drawable-commands.c:61
+msgid "Equalize"
+msgstr "Izenači"
+
+#: app/actions/drawable-commands.c:93
 msgid "White Balance operates only on RGB color layers."
 msgstr "Uravnovešanje beline deluje le na barvnih plasteh RGB."
+
+#: app/actions/drawable-commands.c:102 app/core/gimpdrawable-levels.c:72
+#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
+msgid "Levels"
+msgstr "Ravni"
+
+#: app/actions/drawable-commands.c:242
+msgid "Lock/Unlock content"
+msgstr "Zakleni/odkleni vsebino"
+
+#: app/actions/drawable-commands.c:310
+msgid "Lock/Unlock position"
+msgstr "Zakleni/odkleni položaj"
+
+#: app/actions/drawable-commands.c:343
+msgid "Flip Drawables"
+msgstr "Obrni risani predmet"
+
+#: app/actions/drawable-commands.c:396
+msgid "Rotate Drawables"
+msgstr "Zasukaj risani predmet"
 
 #: app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
@@ -5067,25 +5092,25 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Pokaži znova pogovorno okno nazadnje uporabljenega filtra"
 
-#: app/actions/filters-actions.c:1133
+#: app/actions/filters-actions.c:1137
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "_Ponovi »%s«"
 
-#: app/actions/filters-actions.c:1134
+#: app/actions/filters-actions.c:1138
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Ponovno po_kaži »%s«"
 
-#: app/actions/filters-actions.c:1172
+#: app/actions/filters-actions.c:1176
 msgid "Repeat Last"
 msgstr "Ponovi zadnjega"
 
-#: app/actions/filters-actions.c:1174
+#: app/actions/filters-actions.c:1178
 msgid "Re-Show Last"
 msgstr "Ponovno pokaži zadnjega"
 
-#: app/actions/filters-actions.c:1177 app/actions/filters-actions.c:1179
+#: app/actions/filters-actions.c:1181 app/actions/filters-actions.c:1183
 msgid "No last used filters"
 msgstr "Ni nazadnje uporabljenih filtrov"
 
@@ -13508,11 +13533,6 @@ msgstr "Preliv"
 #: app/core/gimpdrawable-gradient.c:226
 msgid "Calculating distance map"
 msgstr "Računanje zemljevida oddaljenosti"
-
-#: app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
-msgid "Levels"
-msgstr "Ravni"
 
 #: app/core/gimpdrawable-offset.c:79
 msgctxt "undo-type"
@@ -22506,7 +22526,7 @@ msgstr "Noben risani predmet ni izbran."
 msgid "The active layer is not visible."
 msgstr "Aktivna plast je nevidna."
 
-#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1111
+#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1117
 #: app/tools/gimpgradienttool.c:281 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Slikovne točke izbrane plasti so zaklenjene."
@@ -22980,34 +23000,34 @@ msgstr "Vrsta  (%s)"
 msgid "Move: "
 msgstr "Premakni: "
 
-#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1195
+#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1198
 msgid "Move Floating Selection"
 msgstr "Premakni plavajoči izbor"
 
-#: app/tools/gimpeditselectiontool.c:1081
-msgid "There is no path to move."
+#: app/tools/gimpeditselectiontool.c:1082 app/tools/gimpmovetool.c:293
+msgid "There are no paths to move."
 msgstr "Ni poti za premikanje."
 
-#: app/tools/gimpeditselectiontool.c:1086 app/tools/gimptransformtool.c:751
-msgid "The selected path's position is locked."
+#: app/tools/gimpeditselectiontool.c:1090
+msgid "A selected path's position is locked."
 msgstr "Položaj izbrane poti je zaklenjen."
 
-#: app/tools/gimpeditselectiontool.c:1097 app/tools/gimpmovetool.c:338
+#: app/tools/gimpeditselectiontool.c:1103 app/tools/gimpmovetool.c:338
 msgid "There is no layer to move."
 msgstr "Ni plasti za premikanje."
 
-#: app/tools/gimpeditselectiontool.c:1106
-#: app/tools/gimpeditselectiontool.c:1135 app/tools/gimpmovetool.c:347
+#: app/tools/gimpeditselectiontool.c:1112
+#: app/tools/gimpeditselectiontool.c:1139 app/tools/gimpmovetool.c:347
 msgid "The selected layer's position is locked."
 msgstr "Položaj izbrane plasti je zaklenjen."
 
-#: app/tools/gimpeditselectiontool.c:1126
-msgid "All selected channels' positions or pixels are locked."
-msgstr "Položaji ali slikovne točke vseh izbranih kanalov so zaklenjene."
+#: app/tools/gimpeditselectiontool.c:1128
+msgid "A selected channel's position is locked."
+msgstr "Položaj izbranega kanala je zaklenjen."
 
-#: app/tools/gimpeditselectiontool.c:1149
-msgid "All selected layers' positions are locked."
-msgstr "Položaji vseh izbranih plasti so zaklenjeni."
+#: app/tools/gimpeditselectiontool.c:1150 app/tools/gimpmovetool.c:366
+msgid "A selected layer's position is locked."
+msgstr "Položaj izbrane plasti je zaklenjen."
 
 #: app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -23918,10 +23938,6 @@ msgstr "Orodje Premakni: Premakne plasti, izbor in druge predmete"
 msgid "_Move"
 msgstr "_Premakni"
 
-#: app/tools/gimpmovetool.c:293
-msgid "There are no paths to move."
-msgstr "Ni poti za premikanje."
-
 #: app/tools/gimpmovetool.c:306
 msgid "All selected path's position are locked."
 msgstr "Položaji vseh izbranih plasti so zaklenjeni."
@@ -23929,10 +23945,6 @@ msgstr "Položaji vseh izbranih plasti so zaklenjeni."
 #: app/tools/gimpmovetool.c:358
 msgid "A selected channel's position or pixels are locked."
 msgstr "Položaj izbranega kanala ali slikovne točke so zaklenjene."
-
-#: app/tools/gimpmovetool.c:366
-msgid "A selected layer's position is locked."
-msgstr "Položaj izbrane plasti je zaklenjen."
 
 #: app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25127,6 +25139,10 @@ msgstr "Ni poti za preoblikovanje."
 #: app/tools/gimptransformtool.c:749
 msgid "The selected path's strokes are locked."
 msgstr "Poteze izbrane poti so zaklenjene."
+
+#: app/tools/gimptransformtool.c:751
+msgid "The selected path's position is locked."
+msgstr "Položaj izbrane poti je zaklenjen."
 
 #: app/tools/gimptransformtool.c:753
 msgid "The selected path has no strokes."
