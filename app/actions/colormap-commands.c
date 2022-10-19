@@ -81,6 +81,7 @@ colormap_to_selection_cmd_callback (GimpAction *action,
   GimpColormapSelection *selection;
   GimpColormapEditor    *editor;
   GimpImage             *image;
+  GList                 *drawables;
   GimpChannelOps         op;
   gint                   col_index;
 
@@ -92,10 +93,22 @@ colormap_to_selection_cmd_callback (GimpAction *action,
 
   op = (GimpChannelOps) g_variant_get_int32 (value);
 
+  drawables = gimp_image_get_selected_drawables (image);
+  if (g_list_length (drawables) != 1)
+    {
+      /* We should not reach this anyway as colormap-actions.c normally takes
+       * care at making the action insensitive when the item selection is wrong.
+       */
+      g_warning ("This action requires exactly one selected drawable.");
+      g_list_free (drawables);
+      return;
+    }
+
   gimp_channel_select_by_index (gimp_image_get_mask (image),
-                                gimp_image_get_active_drawable (image),
+                                drawables->data,
                                 col_index, op,
                                 FALSE, 0.0, 0.0);
 
+  g_list_free (drawables);
   gimp_image_flush (image);
 }

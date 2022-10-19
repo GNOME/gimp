@@ -130,10 +130,14 @@ colormap_actions_update (GimpActionGroup *group,
 
       if (indexed)
         {
-          GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+          GList *drawables = gimp_image_get_selected_drawables (image);
 
-          num_colors       = gimp_image_get_colormap_size (image);
-          drawable_indexed = gimp_drawable_is_indexed (drawable);
+          num_colors = gimp_image_get_colormap_size (image);
+
+          if (g_list_length (drawables) == 1)
+            drawable_indexed = gimp_drawable_is_indexed (drawables->data);
+
+          g_list_free (drawables);
         }
     }
 
