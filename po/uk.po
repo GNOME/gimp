@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-17 22:51+0000\n"
-"PO-Revision-Date: 2022-10-18 21:48+0300\n"
+"POT-Creation-Date: 2022-10-19 13:48+0000\n"
+"PO-Revision-Date: 2022-10-19 17:40+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3387,29 +3387,40 @@ msgid "Automatic white balance correction"
 msgstr "Автоматична корекція балансу білого"
 
 #: app/actions/drawable-actions.c:60
+#| msgctxt "drawable-action"
+#| msgid "Toggle Drawable _Visibility"
 msgctxt "drawable-action"
-msgid "Toggle Drawable _Visibility"
-msgstr "Перемикнути в_идимість"
+msgid "Toggle Drawables _Visibility"
+msgstr "Перемкнути в_идимість намальованого"
 
 #: app/actions/drawable-actions.c:66
+#| msgctxt "drawable-action"
+#| msgid "L_ock Pixels of Drawable"
 msgctxt "drawable-action"
-msgid "L_ock Pixels of Drawable"
-msgstr "_Замкнути пікселі"
+msgid "L_ock Pixels of Drawables"
+msgstr "_Замкнути пікселі намальованого"
 
 #: app/actions/drawable-actions.c:68
+#| msgctxt "drawable-action"
+#| msgid "Keep the pixels on this drawable from being modified"
 msgctxt "drawable-action"
-msgid "Keep the pixels on this drawable from being modified"
-msgstr "Запобігає змінам інформації про прозорість"
+msgid "Keep the pixels on selected drawables from being modified"
+msgstr ""
+"Запобігає змінам інформації про прозорість позначених намальованих об'єктів"
 
 #: app/actions/drawable-actions.c:74
+#| msgctxt "drawable-action"
+#| msgid "L_ock Position of Drawable"
 msgctxt "drawable-action"
-msgid "L_ock Position of Drawable"
-msgstr "За_мкнути позицію"
+msgid "L_ock Position of Drawables"
+msgstr "За_мкнути позицію намальованого"
 
 #: app/actions/drawable-actions.c:76
+#| msgctxt "drawable-action"
+#| msgid "Keep the position on this drawable from being modified"
 msgctxt "drawable-action"
-msgid "Keep the position on this drawable from being modified"
-msgstr "Запобігати змінам позиції на промальованому"
+msgid "Keep the position on selected drawables from being modified"
+msgstr "Запобігати змінам позиції на позначеному намальованому"
 
 #: app/actions/drawable-actions.c:85
 msgctxt "drawable-action"
@@ -3461,9 +3472,42 @@ msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "Обернути на 90° ліворуч"
 
-#: app/actions/drawable-commands.c:77
+#: app/actions/drawable-commands.c:61
+#| msgctxt "undo-type"
+#| msgid "Equalize"
+msgid "Equalize"
+msgstr "Вирівнювання"
+
+#: app/actions/drawable-commands.c:93
 msgid "White Balance operates only on RGB color layers."
 msgstr "Баланс кольорів діє лише на шари у форматі RGB."
+
+#: app/actions/drawable-commands.c:102 app/core/gimpdrawable-levels.c:72
+#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
+msgid "Levels"
+msgstr "Рівні"
+
+#: app/actions/drawable-commands.c:242
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock content"
+msgid "Lock/Unlock content"
+msgstr "Заблокувати/розблокувати вміст"
+
+#: app/actions/drawable-commands.c:310
+#| msgctxt "undo-type"
+#| msgid "Lock/Unlock position"
+msgid "Lock/Unlock position"
+msgstr "Заблокувати/розблокувати позицію"
+
+#: app/actions/drawable-commands.c:343
+#| msgid "Drawable"
+msgid "Flip Drawables"
+msgstr "Віддзеркалити намальоване"
+
+#: app/actions/drawable-commands.c:396
+#| msgid "No active drawables."
+msgid "Rotate Drawables"
+msgstr "Обертати намальоване"
 
 #: app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
@@ -5068,25 +5112,25 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Знову відкрити діалог останнього використаного фільтру"
 
-#: app/actions/filters-actions.c:1133
+#: app/actions/filters-actions.c:1137
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Пов_торити \"%s\""
 
-#: app/actions/filters-actions.c:1134
+#: app/actions/filters-actions.c:1138
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "П_овторити з налаштуванням «%s»"
 
-#: app/actions/filters-actions.c:1172
+#: app/actions/filters-actions.c:1176
 msgid "Repeat Last"
 msgstr "Повторити останній"
 
-#: app/actions/filters-actions.c:1174
+#: app/actions/filters-actions.c:1178
 msgid "Re-Show Last"
 msgstr "Показати останній ще раз"
 
-#: app/actions/filters-actions.c:1177 app/actions/filters-actions.c:1179
+#: app/actions/filters-actions.c:1181 app/actions/filters-actions.c:1183
 msgid "No last used filters"
 msgstr "Немає останніх використаних фільтрів"
 
@@ -13543,11 +13587,6 @@ msgstr "Градієнтна"
 #: app/core/gimpdrawable-gradient.c:226
 msgid "Calculating distance map"
 msgstr "Обчислюється мапа відстані"
-
-#: app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
-msgid "Levels"
-msgstr "Рівні"
 
 #: app/core/gimpdrawable-offset.c:79
 msgctxt "undo-type"
@@ -22193,8 +22232,6 @@ msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Позначені контури буде вирівняно або розподілено інструментом"
 
 #: app/tools/gimpalignoptions.c:166
-#| msgctxt "layers-action"
-#| msgid "Change the size of the layer content"
 msgid "Use extents of layer contents"
 msgstr "Використати рамку вмісту шару"
 
@@ -22203,13 +22240,11 @@ msgid ""
 "Instead of aligning or distributing on layer borders, use its content "
 "bounding box"
 msgstr ""
-"Замість вирівнювання або розподілу за межею шару, скористатися його"
-" обмежувальним прямокутником"
+"Замість вирівнювання або розподілу за межею шару, скористатися його "
+"обмежувальним прямокутником"
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:380
-#| msgid "1 guide will be aligned or distributed"
-#| msgid_plural "%d guides will be aligned or distributed"
 msgid "Objects to align or distribute"
 msgstr "Об'єкти для вирівнювання або розподілу"
 
@@ -22328,8 +22363,6 @@ msgid "_Align"
 msgstr "_Вирівнювання"
 
 #: app/tools/gimpaligntool.c:510
-#| msgctxt "undo-type"
-#| msgid "Arrange Objects"
 msgid "Arrange Objects"
 msgstr "Розставити об'єкти"
 
@@ -22584,7 +22617,7 @@ msgstr "Немає позначених об'єктів малювання."
 msgid "The active layer is not visible."
 msgstr "Активний шар - невидимий."
 
-#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1111
+#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1117
 #: app/tools/gimpgradienttool.c:281 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Точки растру позначеного шару заблоковані від змін."
@@ -23065,34 +23098,36 @@ msgstr "Тип (%s)"
 msgid "Move: "
 msgstr "Переміщення: "
 
-#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1195
+#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1198
 msgid "Move Floating Selection"
 msgstr "Перенесення рухомого вибору"
 
-#: app/tools/gimpeditselectiontool.c:1081
-msgid "There is no path to move."
-msgstr "Немає контуру для переміщення."
+#: app/tools/gimpeditselectiontool.c:1082 app/tools/gimpmovetool.c:293
+msgid "There are no paths to move."
+msgstr "Немає контурів для переміщення."
 
-#: app/tools/gimpeditselectiontool.c:1086 app/tools/gimptransformtool.c:751
-msgid "The selected path's position is locked."
+#: app/tools/gimpeditselectiontool.c:1090
+#| msgid "The selected path's position is locked."
+msgid "A selected path's position is locked."
 msgstr "Позиція позначеного контуру заблокована від змін."
 
-#: app/tools/gimpeditselectiontool.c:1097 app/tools/gimpmovetool.c:338
+#: app/tools/gimpeditselectiontool.c:1103 app/tools/gimpmovetool.c:338
 msgid "There is no layer to move."
 msgstr "Немає шару для переміщення."
 
-#: app/tools/gimpeditselectiontool.c:1106
-#: app/tools/gimpeditselectiontool.c:1135 app/tools/gimpmovetool.c:347
+#: app/tools/gimpeditselectiontool.c:1112
+#: app/tools/gimpeditselectiontool.c:1139 app/tools/gimpmovetool.c:347
 msgid "The selected layer's position is locked."
 msgstr "Позиція позначеного шару заблокована від змін."
 
-#: app/tools/gimpeditselectiontool.c:1126
-msgid "All selected channels' positions or pixels are locked."
-msgstr "Позиції або пікселі усіх позначених каналів заблоковано."
+#: app/tools/gimpeditselectiontool.c:1128
+#| msgid "A selected layer's position is locked."
+msgid "A selected channel's position is locked."
+msgstr "Позиція позначеного каналу заблокована від змін."
 
-#: app/tools/gimpeditselectiontool.c:1149
-msgid "All selected layers' positions are locked."
-msgstr "Усі позиції позначених шарів заблоковано."
+#: app/tools/gimpeditselectiontool.c:1150 app/tools/gimpmovetool.c:366
+msgid "A selected layer's position is locked."
+msgstr "Позиція позначеного шару заблокована від змін."
 
 #: app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -24007,10 +24042,6 @@ msgstr "Переміщення: переміщення шарів, познач�
 msgid "_Move"
 msgstr "Пере_міщення"
 
-#: app/tools/gimpmovetool.c:293
-msgid "There are no paths to move."
-msgstr "Немає контурів для переміщення."
-
 #: app/tools/gimpmovetool.c:306
 msgid "All selected path's position are locked."
 msgstr "Усі позиції позначеного шару заблоковано."
@@ -24018,10 +24049,6 @@ msgstr "Усі позиції позначеного шару заблокова
 #: app/tools/gimpmovetool.c:358
 msgid "A selected channel's position or pixels are locked."
 msgstr "Позначену позицію або пікселі каналу заблоковано."
-
-#: app/tools/gimpmovetool.c:366
-msgid "A selected layer's position is locked."
-msgstr "Позиція позначеного шару заблокована від змін."
 
 #: app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25227,6 +25254,10 @@ msgstr "Немає контуру для перетворення."
 #: app/tools/gimptransformtool.c:749
 msgid "The selected path's strokes are locked."
 msgstr "Елементи позначеного контуру заблоковані від змін"
+
+#: app/tools/gimptransformtool.c:751
+msgid "The selected path's position is locked."
+msgstr "Позиція позначеного контуру заблокована від змін."
 
 #: app/tools/gimptransformtool.c:753
 msgid "The selected path has no strokes."
@@ -28484,6 +28515,15 @@ msgstr ""
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Діагностика аварій GIMP"
+
+#~ msgid "There is no path to move."
+#~ msgstr "Немає контуру для переміщення."
+
+#~ msgid "All selected channels' positions or pixels are locked."
+#~ msgstr "Позиції або пікселі усіх позначених каналів заблоковано."
+
+#~ msgid "All selected layers' positions are locked."
+#~ msgstr "Усі позиції позначених шарів заблоковано."
 
 #~ msgctxt "align-reference-type"
 #~ msgid "First item"
