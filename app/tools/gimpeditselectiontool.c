@@ -1087,7 +1087,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
             if (gimp_item_is_position_locked (iter->data, NULL))
               {
                 locked_item    = iter->data;
-                locked_message = _("A selected path' positions is locked.");
+                locked_message = _("A selected path's position is locked.");
                 break;
               }
         }
@@ -1119,17 +1119,15 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         }
       else if (GIMP_IS_CHANNEL (selected_items->data))
         {
-          gint n_items = 0;
-
           edit_mode = GIMP_TRANSLATE_MODE_CHANNEL;
 
           for (iter = selected_items; iter; iter = iter->next)
-            if (! gimp_item_is_position_locked (iter->data, NULL) &&
-                ! gimp_item_is_content_locked (iter->data, NULL))
-              n_items++;
-
-          if (n_items == 0)
-            locked_message = _("All selected channels' positions or pixels are locked.");
+            if (gimp_item_is_position_locked (iter->data, NULL))
+              {
+                locked_item    = iter->data;
+                locked_message = _("A selected channel's position is locked.");
+                break;
+              }
         }
       else if (gimp_layer_is_floating_sel (selected_items->data))
         {
@@ -1143,16 +1141,15 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
         }
       else
         {
-          gint n_items = 0;
-
           edit_mode = GIMP_TRANSLATE_MODE_LAYER;
 
           for (iter = selected_items; iter; iter = iter->next)
-            if (! gimp_item_is_position_locked (iter->data, NULL))
-              n_items++;
-
-          if (n_items == 0)
-            locked_message = _("All selected layers' positions are locked.");
+            if (gimp_item_is_position_locked (iter->data, NULL))
+              {
+                locked_item    = iter->data;
+                locked_message = _("A selected layer's position is locked.");
+                break;
+              }
         }
 
       break;
