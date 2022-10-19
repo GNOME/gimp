@@ -1071,19 +1071,25 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = GIMP_ITEM (gimp_image_get_active_vectors (image));
+      selected_items = gimp_image_get_selected_vectors (image);
+      selected_items = g_list_copy (selected_items);
 
       edit_mode = GIMP_TRANSLATE_MODE_VECTORS;
       undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
 
-      if (! active_item)
+      if (selected_items == NULL)
         {
-          null_message = _("There is no path to move.");
+          null_message = _("There are no paths to move.");
         }
-      else if (gimp_item_is_position_locked (active_item,
-                                             &locked_item))
+      else
         {
-          locked_message = _("The selected path's position is locked.");
+          for (iter = selected_items; iter; iter = iter->next)
+            if (gimp_item_is_position_locked (iter->data, NULL))
+              {
+                locked_item    = iter->data;
+                locked_message = _("A selected path' positions is locked.");
+                break;
+              }
         }
       break;
 
