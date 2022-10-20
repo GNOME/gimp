@@ -414,8 +414,10 @@ EXPORTS
 	gimp_image_get_precision
 	gimp_image_get_resolution
 	gimp_image_get_sample_point_position
+	gimp_image_get_selected_channels
 	gimp_image_get_selected_drawables
 	gimp_image_get_selected_layers
+	gimp_image_get_selected_vectors
 	gimp_image_get_selection
 	gimp_image_get_simulation_bpc
 	gimp_image_get_simulation_intent
@@ -448,7 +450,9 @@ EXPORTS
 	gimp_image_is_valid
 	gimp_image_list_channels
 	gimp_image_list_layers
+	gimp_image_list_selected_channels
 	gimp_image_list_selected_layers
+	gimp_image_list_selected_vectors
 	gimp_image_list_vectors
 	gimp_image_lower_item
 	gimp_image_lower_item_to_bottom
@@ -494,14 +498,18 @@ EXPORTS
 	gimp_image_set_file
 	gimp_image_set_metadata
 	gimp_image_set_resolution
+	gimp_image_set_selected_channels
 	gimp_image_set_selected_layers
+	gimp_image_set_selected_vectors
 	gimp_image_set_simulation_bpc
 	gimp_image_set_simulation_intent
 	gimp_image_set_simulation_profile
 	gimp_image_set_simulation_profile_from_file
 	gimp_image_set_tattoo_state
 	gimp_image_set_unit
+	gimp_image_take_selected_channels
 	gimp_image_take_selected_layers
+	gimp_image_take_selected_vectors
 	gimp_image_thaw_channels
 	gimp_image_thaw_layers
 	gimp_image_thaw_vectors

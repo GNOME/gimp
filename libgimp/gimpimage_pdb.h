@@ -138,6 +138,16 @@ GimpLayer**              gimp_image_get_selected_layers        (GimpImage       
 gboolean                 gimp_image_set_selected_layers        (GimpImage           *image,
                                                                 gint                 num_layers,
                                                                 const GimpLayer    **layers);
+GimpChannel**            gimp_image_get_selected_channels      (GimpImage           *image,
+                                                                gint                *num_channels);
+gboolean                 gimp_image_set_selected_channels      (GimpImage           *image,
+                                                                gint                 num_channels,
+                                                                const GimpChannel  **channels);
+GimpVectors**            gimp_image_get_selected_vectors       (GimpImage           *image,
+                                                                gint                *num_vectors);
+gboolean                 gimp_image_set_selected_vectors       (GimpImage           *image,
+                                                                gint                 num_vectors,
+                                                                const GimpVectors  **vectors);
 GimpItem**               gimp_image_get_selected_drawables     (GimpImage           *image,
                                                                 gint                *num_drawables);
 GimpSelection*           gimp_image_get_selection              (GimpImage           *image);

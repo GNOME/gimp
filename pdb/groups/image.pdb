@@ -1884,6 +1884,171 @@ CODE
     );
 }
 
+sub image_get_selected_channels {
+    $blurb = "Returns the specified image's selected channels.";
+
+    $help = <<'HELP';
+This procedure returns the list of selected channels in the specified image.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0.0');
+
+    $skip_gi = 1;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'channels', type => 'channelarray',
+          desc => 'The list of selected channels in the image.',
+          array => { name => 'num_channels',
+                     desc => 'The number of selected channels in the image' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *list = gimp_image_get_selected_channels (image);
+
+  num_channels = g_list_length (list);
+
+  if (num_channels)
+    {
+      gint i;
+
+      channels = g_new (GimpLayer *, num_channels);
+
+      for (i = 0; i < num_channels; i++, list = g_list_next (list))
+        channels[i] = g_object_ref (list->data);
+    }
+}
+CODE
+    );
+}
+
+sub image_set_selected_channels {
+    $blurb = "Sets the specified image's selected channels.";
+
+    $help = <<'HELP';
+The channels are set as the selected channels in the image. Any previous
+selected layers or channels are unselected. An exception is a previously
+existing floating selection, in which case this procedure will return an
+execution error.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'channels', type => 'channelarray',
+          desc => 'The list of channels to select',
+          no_validate => 1,
+          array => { name => 'num_channels',
+                     type => '0 <= int32',
+                     desc => 'The number of channels to select' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *selected_channels = NULL;
+  gint   i;
+
+  for (i = 0; i < num_channels; i++)
+    selected_channels = g_list_prepend (selected_channels,
+                                        GIMP_LAYER (channels[i]));
+
+  gimp_image_set_selected_channels (image, selected_channels);
+  g_list_free (selected_channels);
+}
+CODE
+    );
+}
+
+sub image_get_selected_vectors {
+    $blurb = "Returns the specified image's selected vectors.";
+
+    $help = <<'HELP';
+This procedure returns the list of selected vectors in the specified image.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0.0');
+
+    $skip_gi = 1;
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    @outargs = (
+        { name => 'vectors', type => 'vectorarray',
+          desc => 'The list of selected vectors in the image.',
+          array => { name => 'num_vectors',
+                     desc => 'The number of selected vectors in the image' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *list = gimp_image_get_selected_vectors (image);
+
+  num_vectors = g_list_length (list);
+
+  if (num_vectors)
+    {
+      gint i;
+
+      vectors = g_new (GimpVectors *, num_vectors);
+
+      for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+        vectors[i] = g_object_ref (list->data);
+    }
+}
+CODE
+    );
+}
+
+sub image_set_selected_vectors {
+    $blurb = "Sets the specified image's selected vectors.";
+
+    $help = <<'HELP';
+The vectors are set as the selected vectors in the image.
+HELP
+
+    &jehan_pdb_misc('2022', '3.0.0');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' },
+        { name => 'vectors', type => 'vectorarray',
+          desc => 'The list of vectors to select',
+          no_validate => 1,
+          array => { name => 'num_vectors',
+                     type => '0 <= int32',
+                     desc => 'The number of vectors to select' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  GList *selected_vectors = NULL;
+  gint   i;
+
+  for (i = 0; i < num_vectors; i++)
+    selected_vectors = g_list_prepend (selected_vectors,
+                                       GIMP_LAYER (vectors[i]));
+
+  gimp_image_set_selected_vectors (image, selected_vectors);
+  g_list_free (selected_vectors);
+}
+CODE
+    );
+}
+
 sub image_get_selected_drawables {
     $blurb = "Get the image's selected drawables";
 
@@ -3015,6 +3180,8 @@ CODE
             image_clean_all image_is_dirty
             image_thumbnail
             image_get_selected_layers image_set_selected_layers
+            image_get_selected_channels image_set_selected_channels
+            image_get_selected_vectors image_set_selected_vectors
             image_get_selected_drawables
             image_get_selection
             image_get_component_active image_set_component_active

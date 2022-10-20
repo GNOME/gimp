@@ -261,7 +261,7 @@ gimp_image_list_layers (GimpImage *image)
  * image.
  *
  * Returns: (element-type GimpLayer) (transfer container):
- *          The list of layers contained in the image.
+ *          The list of selected layers in the image.
  *          The returned list must be freed with g_list_free(). Layer
  *          elements belong to libgimp and must not be freed.
  *
@@ -315,6 +315,140 @@ gimp_image_take_selected_layers (GimpImage *image,
   success = gimp_image_set_selected_layers (image, g_list_length (layers),
                                             (const GimpLayer **) sel_layers);
   g_list_free (layers);
+
+  return success;
+}
+
+/**
+ * gimp_image_list_selected_channels:
+ * @image: The image.
+ *
+ * Returns the list of channels selected in the specified image.
+ *
+ * This procedure returns the list of channels selected in the specified
+ * image.
+ *
+ * Returns: (element-type GimpChannel) (transfer container):
+ *          The list of selected channels in the image.
+ *          The returned list must be freed with g_list_free(). Layer
+ *          elements belong to libgimp and must not be freed.
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_list_selected_channels (GimpImage *image)
+{
+  GimpChannel **channels;
+  gint          num_channels;
+  GList        *list = NULL;
+  gint          i;
+
+  channels = gimp_image_get_selected_channels (image, &num_channels);
+
+  for (i = 0; i < num_channels; i++)
+    list = g_list_prepend (list, channels[i]);
+
+  g_free (channels);
+
+  return g_list_reverse (list);
+}
+
+/**
+ * gimp_image_take_selected_channels:
+ * @image: The image.
+ * @channels: (transfer container) (element-type GimpChannel): The list of channels to select.
+ *
+ * The channels are set as the selected channels in the image. Any previous
+ * selected layers or channels are unselected. An exception is a previously
+ * existing floating selection, in which case this procedure will return an
+ * execution error.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_take_selected_channels (GimpImage *image,
+                                   GList     *channels)
+{
+  GimpChannel **sel_channels;
+  GList        *list;
+  gboolean      success;
+  gint          i;
+
+  sel_channels = g_new0 (GimpChannel *, g_list_length (channels));
+  for (list = channels, i = 0; list; list = list->next, i++)
+    sel_channels[i] = list->data;
+
+  success = gimp_image_set_selected_channels (image, g_list_length (channels),
+                                              (const GimpChannel **) sel_channels);
+  g_list_free (channels);
+
+  return success;
+}
+
+/**
+ * gimp_image_list_selected_vectors:
+ * @image: The image.
+ *
+ * Returns the list of paths selected in the specified image.
+ *
+ * This procedure returns the list of paths selected in the specified
+ * image.
+ *
+ * Returns: (element-type GimpVectors) (transfer container):
+ *          The list of selected paths in the image.
+ *          The returned list must be freed with g_list_free().
+ *          Path elements belong to libgimp and must not be freed.
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_list_selected_vectors (GimpImage *image)
+{
+  GimpVectors **vectors;
+  gint          num_vectors;
+  GList        *list = NULL;
+  gint          i;
+
+  vectors = gimp_image_get_selected_vectors (image, &num_vectors);
+
+  for (i = 0; i < num_vectors; i++)
+    list = g_list_prepend (list, vectors[i]);
+
+  g_free (vectors);
+
+  return g_list_reverse (list);
+}
+
+/**
+ * gimp_image_take_selected_vectors:
+ * @image: The image.
+ * @vectors: (transfer container) (element-type GimpVectors): The list of paths to select.
+ *
+ * The paths are set as the selected paths in the image. Any previous
+ * selected paths are unselected.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 3.0
+ **/
+gboolean
+gimp_image_take_selected_vectors (GimpImage *image,
+                                  GList     *vectors)
+{
+  GimpVectors **sel_vectors;
+  GList        *list;
+  gboolean      success;
+  gint          i;
+
+  sel_vectors = g_new0 (GimpVectors *, g_list_length (vectors));
+  for (list = vectors, i = 0; list; list = list->next, i++)
+    sel_vectors[i] = list->data;
+
+  success = gimp_image_set_selected_vectors (image, g_list_length (vectors),
+                                             (const GimpVectors **) sel_vectors);
+  g_list_free (vectors);
 
   return success;
 }

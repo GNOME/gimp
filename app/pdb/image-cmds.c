@@ -1837,6 +1837,164 @@ image_set_selected_layers_invoker (GimpProcedure         *procedure,
 }
 
 static GimpValueArray *
+image_get_selected_channels_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gint num_channels = 0;
+  GimpChannel **channels = NULL;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *list = gimp_image_get_selected_channels (image);
+
+      num_channels = g_list_length (list);
+
+      if (num_channels)
+        {
+          gint i;
+
+          channels = g_new (GimpLayer *, num_channels);
+
+          for (i = 0; i < num_channels; i++, list = g_list_next (list))
+            channels[i] = g_object_ref (list->data);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_channels);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_CHANNEL, (GObject **) channels, num_channels);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_set_selected_channels_invoker (GimpProcedure         *procedure,
+                                     Gimp                  *gimp,
+                                     GimpContext           *context,
+                                     GimpProgress          *progress,
+                                     const GimpValueArray  *args,
+                                     GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint num_channels;
+  const GimpChannel **channels;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  num_channels = g_value_get_int (gimp_value_array_index (args, 1));
+  channels = gimp_value_get_object_array (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      GList *selected_channels = NULL;
+      gint   i;
+
+      for (i = 0; i < num_channels; i++)
+        selected_channels = g_list_prepend (selected_channels,
+                                            GIMP_LAYER (channels[i]));
+
+      gimp_image_set_selected_channels (image, selected_channels);
+      g_list_free (selected_channels);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
+image_get_selected_vectors_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  GimpValueArray *return_vals;
+  GimpImage *image;
+  gint num_vectors = 0;
+  GimpVectors **vectors = NULL;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+
+  if (success)
+    {
+      GList *list = gimp_image_get_selected_vectors (image);
+
+      num_vectors = g_list_length (list);
+
+      if (num_vectors)
+        {
+          gint i;
+
+          vectors = g_new (GimpVectors *, num_vectors);
+
+          for (i = 0; i < num_vectors; i++, list = g_list_next (list))
+            vectors[i] = g_object_ref (list->data);
+        }
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success,
+                                                  error ? *error : NULL);
+
+  if (success)
+    {
+      g_value_set_int (gimp_value_array_index (return_vals, 1), num_vectors);
+      gimp_value_take_object_array (gimp_value_array_index (return_vals, 2), GIMP_TYPE_VECTORS, (GObject **) vectors, num_vectors);
+    }
+
+  return return_vals;
+}
+
+static GimpValueArray *
+image_set_selected_vectors_invoker (GimpProcedure         *procedure,
+                                    Gimp                  *gimp,
+                                    GimpContext           *context,
+                                    GimpProgress          *progress,
+                                    const GimpValueArray  *args,
+                                    GError               **error)
+{
+  gboolean success = TRUE;
+  GimpImage *image;
+  gint num_vectors;
+  const GimpVectors **vectors;
+
+  image = g_value_get_object (gimp_value_array_index (args, 0));
+  num_vectors = g_value_get_int (gimp_value_array_index (args, 1));
+  vectors = (const GimpVectors **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
+
+  if (success)
+    {
+      GList *selected_vectors = NULL;
+      gint   i;
+
+      for (i = 0; i < num_vectors; i++)
+        selected_vectors = g_list_prepend (selected_vectors,
+                                           GIMP_LAYER (vectors[i]));
+
+      gimp_image_set_selected_vectors (image, selected_vectors);
+      g_list_free (selected_vectors);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success,
+                                           error ? *error : NULL);
+}
+
+static GimpValueArray *
 image_get_selected_drawables_invoker (GimpProcedure         *procedure,
                                       Gimp                  *gimp,
                                       GimpContext           *context,
@@ -4421,6 +4579,146 @@ register_image_procs (GimpPDB *pdb)
                                                              "layers",
                                                              "The list of layers to select",
                                                              GIMP_TYPE_LAYER,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-selected-channels
+   */
+  procedure = gimp_procedure_new (image_get_selected_channels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-selected-channels");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the specified image's selected channels.",
+                                  "This procedure returns the list of selected channels in the specified image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-channels",
+                                                     "num channels",
+                                                     "The number of selected channels in the image",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_object_array ("channels",
+                                                                 "channels",
+                                                                 "The list of selected channels in the image.",
+                                                                 GIMP_TYPE_CHANNEL,
+                                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-selected-channels
+   */
+  procedure = gimp_procedure_new (image_set_selected_channels_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-selected-channels");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the specified image's selected channels.",
+                                  "The channels are set as the selected channels in the image. Any previous selected layers or channels are unselected. An exception is a previously existing floating selection, in which case this procedure will return an execution error.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("num-channels",
+                                                 "num channels",
+                                                 "The number of channels to select",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("channels",
+                                                             "channels",
+                                                             "The list of channels to select",
+                                                             GIMP_TYPE_CHANNEL,
+                                                             GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-get-selected-vectors
+   */
+  procedure = gimp_procedure_new (image_get_selected_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-get-selected-vectors");
+  gimp_procedure_set_static_help (procedure,
+                                  "Returns the specified image's selected vectors.",
+                                  "This procedure returns the list of selected vectors in the specified image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_int ("num-vectors",
+                                                     "num vectors",
+                                                     "The number of selected vectors in the image",
+                                                     0, G_MAXINT32, 0,
+                                                     GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_object_array ("vectors",
+                                                                 "vectors",
+                                                                 "The list of selected vectors in the image.",
+                                                                 GIMP_TYPE_VECTORS,
+                                                                 GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-image-set-selected-vectors
+   */
+  procedure = gimp_procedure_new (image_set_selected_vectors_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure),
+                               "gimp-image-set-selected-vectors");
+  gimp_procedure_set_static_help (procedure,
+                                  "Sets the specified image's selected vectors.",
+                                  "The vectors are set as the selected vectors in the image.",
+                                  NULL);
+  gimp_procedure_set_static_attribution (procedure,
+                                         "Jehan",
+                                         "Jehan",
+                                         "2022");
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_image ("image",
+                                                      "image",
+                                                      "The image",
+                                                      FALSE,
+                                                      GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               g_param_spec_int ("num-vectors",
+                                                 "num vectors",
+                                                 "The number of vectors to select",
+                                                 0, G_MAXINT32, 0,
+                                                 GIMP_PARAM_READWRITE));
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_object_array ("vectors",
+                                                             "vectors",
+                                                             "The list of vectors to select",
+                                                             GIMP_TYPE_VECTORS,
                                                              GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

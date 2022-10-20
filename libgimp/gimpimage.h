@@ -46,9 +46,15 @@ GList        * gimp_image_list_layers        (GimpImage    *image);
 GList        * gimp_image_list_channels      (GimpImage    *image);
 GList        * gimp_image_list_vectors       (GimpImage    *image);
 
-GList      * gimp_image_list_selected_layers (GimpImage    *image);
-gboolean     gimp_image_take_selected_layers (GimpImage    *image,
+GList    * gimp_image_list_selected_layers   (GimpImage    *image);
+gboolean   gimp_image_take_selected_layers   (GimpImage    *image,
                                               GList        *layers);
+GList    * gimp_image_list_selected_channels (GimpImage    *image);
+gboolean   gimp_image_take_selected_channels (GimpImage    *image,
+                                              GList        *channels);
+GList    * gimp_image_list_selected_vectors  (GimpImage    *image);
+gboolean   gimp_image_take_selected_vectors  (GimpImage    *image,
+                                              GList        *vectors);
 
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
