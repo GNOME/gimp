@@ -1293,7 +1293,11 @@ vectors_export_to_file_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      success = gimp_vectors_export_file (image, vectors, file, error);
+      GList *vectors_list = g_list_prepend (NULL, vectors);
+
+      success = gimp_vectors_export_file (image, vectors_list, file, error);
+
+      g_list_free (vectors_list);
     }
 
   return gimp_procedure_get_return_values (procedure, success,
@@ -1319,7 +1323,10 @@ vectors_export_to_string_invoker (GimpProcedure         *procedure,
 
   if (success)
     {
-      string = gimp_vectors_export_string (image, vectors);
+      GList *vectors_list = g_list_prepend (NULL, vectors);
+
+      string = gimp_vectors_export_string (image, vectors_list);
+      g_list_free (vectors_list);
 
       success = (string != NULL);
     }
