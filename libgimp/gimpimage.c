@@ -525,6 +525,44 @@ gimp_image_list_vectors (GimpImage *image)
 }
 
 /**
+ * gimp_image_list_selected_drawables:
+ * @image: The image.
+ *
+ * Returns the list of drawables selected in the specified image.
+ *
+ * This procedure returns the list of drawables selected in the specified
+ * image.
+ * These can be either a list of layers or a list of channels (a list mixing
+ * layers and channels is not possible), or it can be a layer mask (a list
+ * containing only a layer mask as single item), if a layer mask is in edit
+ * mode.
+ *
+ * Returns: (element-type GimpItem) (transfer container):
+ *          The list of selected drawables in the image.
+ *          The returned list must be freed with g_list_free(). Layer
+ *          elements belong to libgimp and must not be freed.
+ *
+ * Since: 3.0
+ **/
+GList *
+gimp_image_list_selected_drawables (GimpImage *image)
+{
+  GimpItem **drawables;
+  gint       num_drawables;
+  GList     *list = NULL;
+  gint       i;
+
+  drawables = gimp_image_get_selected_drawables (image, &num_drawables);
+
+  for (i = 0; i < num_drawables; i++)
+    list = g_list_prepend (list, drawables[i]);
+
+  g_free (drawables);
+
+  return g_list_reverse (list);
+}
+
+/**
  * gimp_image_get_colormap:
  * @image:      The image.
  * @num_colors: (out): Returns the number of colors in the colormap array.

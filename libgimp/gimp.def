@@ -451,6 +451,7 @@ EXPORTS
 	gimp_image_list_channels
 	gimp_image_list_layers
 	gimp_image_list_selected_channels
+	gimp_image_list_selected_drawables
 	gimp_image_list_selected_layers
 	gimp_image_list_selected_vectors
 	gimp_image_list_vectors

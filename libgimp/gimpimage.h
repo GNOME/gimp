@@ -56,6 +56,8 @@ GList    * gimp_image_list_selected_vectors  (GimpImage    *image);
 gboolean   gimp_image_take_selected_vectors  (GimpImage    *image,
                                               GList        *vectors);
 
+GList    * gimp_image_list_selected_drawables(GimpImage    *image);
+
 guchar       * gimp_image_get_colormap       (GimpImage    *image,
                                               gint         *num_colors);
 gboolean       gimp_image_set_colormap       (GimpImage    *image,
