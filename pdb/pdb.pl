@@ -169,7 +169,7 @@ package Gimp::CodeGen::pdb;
 		     init_value      => 'NULL',
 		     in_annotate     => '(element-type GimpChannel)',
 		     out_annotate    => '(element-type GimpChannel) (transfer container)',
-		     get_value_func  => '$var = gimp_value_get_object_array ($value)',
+		     get_value_func  => '$var = (const GimpChannel **) gimp_value_get_object_array ($value)',
 		     dup_value_func  => '{ GimpObjectArray *a = g_value_get_boxed (gimp_value_array_index ($value)); if (a) $var = g_memdup2 (a->data, a->length * sizeof (gpointer)); }',
 		     set_value_func  => 'gimp_value_set_object_array ($value, GIMP_TYPE_CHANNEL, (GObject **) $var, $var_len)',
 		     take_value_func => 'gimp_value_take_object_array ($value, GIMP_TYPE_CHANNEL, (GObject **) $var, $var_len)' },

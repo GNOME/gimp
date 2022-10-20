@@ -1862,7 +1862,7 @@ image_get_selected_channels_invoker (GimpProcedure         *procedure,
         {
           gint i;
 
-          channels = g_new (GimpLayer *, num_channels);
+          channels = g_new (GimpChannel *, num_channels);
 
           for (i = 0; i < num_channels; i++, list = g_list_next (list))
             channels[i] = g_object_ref (list->data);
@@ -1896,7 +1896,7 @@ image_set_selected_channels_invoker (GimpProcedure         *procedure,
 
   image = g_value_get_object (gimp_value_array_index (args, 0));
   num_channels = g_value_get_int (gimp_value_array_index (args, 1));
-  channels = gimp_value_get_object_array (gimp_value_array_index (args, 2));
+  channels = (const GimpChannel **) gimp_value_get_object_array (gimp_value_array_index (args, 2));
 
   if (success)
     {
@@ -1905,7 +1905,7 @@ image_set_selected_channels_invoker (GimpProcedure         *procedure,
 
       for (i = 0; i < num_channels; i++)
         selected_channels = g_list_prepend (selected_channels,
-                                            GIMP_LAYER (channels[i]));
+                                            GIMP_CHANNEL (channels[i]));
 
       gimp_image_set_selected_channels (image, selected_channels);
       g_list_free (selected_channels);
