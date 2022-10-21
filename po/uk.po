@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-19 13:48+0000\n"
-"PO-Revision-Date: 2022-10-19 17:40+0300\n"
+"POT-Creation-Date: 2022-10-20 21:17+0000\n"
+"PO-Revision-Date: 2022-10-21 17:40+0300\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -3387,37 +3387,27 @@ msgid "Automatic white balance correction"
 msgstr "Автоматична корекція балансу білого"
 
 #: app/actions/drawable-actions.c:60
-#| msgctxt "drawable-action"
-#| msgid "Toggle Drawable _Visibility"
 msgctxt "drawable-action"
 msgid "Toggle Drawables _Visibility"
 msgstr "Перемкнути в_идимість намальованого"
 
 #: app/actions/drawable-actions.c:66
-#| msgctxt "drawable-action"
-#| msgid "L_ock Pixels of Drawable"
 msgctxt "drawable-action"
 msgid "L_ock Pixels of Drawables"
 msgstr "_Замкнути пікселі намальованого"
 
 #: app/actions/drawable-actions.c:68
-#| msgctxt "drawable-action"
-#| msgid "Keep the pixels on this drawable from being modified"
 msgctxt "drawable-action"
 msgid "Keep the pixels on selected drawables from being modified"
 msgstr ""
 "Запобігає змінам інформації про прозорість позначених намальованих об'єктів"
 
 #: app/actions/drawable-actions.c:74
-#| msgctxt "drawable-action"
-#| msgid "L_ock Position of Drawable"
 msgctxt "drawable-action"
 msgid "L_ock Position of Drawables"
 msgstr "За_мкнути позицію намальованого"
 
 #: app/actions/drawable-actions.c:76
-#| msgctxt "drawable-action"
-#| msgid "Keep the position on this drawable from being modified"
 msgctxt "drawable-action"
 msgid "Keep the position on selected drawables from being modified"
 msgstr "Запобігати змінам позиції на позначеному намальованому"
@@ -3473,8 +3463,6 @@ msgid "Rotate drawable 90 degrees to the left"
 msgstr "Обернути на 90° ліворуч"
 
 #: app/actions/drawable-commands.c:61
-#| msgctxt "undo-type"
-#| msgid "Equalize"
 msgid "Equalize"
 msgstr "Вирівнювання"
 
@@ -3488,24 +3476,18 @@ msgid "Levels"
 msgstr "Рівні"
 
 #: app/actions/drawable-commands.c:242
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock content"
 msgid "Lock/Unlock content"
 msgstr "Заблокувати/розблокувати вміст"
 
 #: app/actions/drawable-commands.c:310
-#| msgctxt "undo-type"
-#| msgid "Lock/Unlock position"
 msgid "Lock/Unlock position"
 msgstr "Заблокувати/розблокувати позицію"
 
 #: app/actions/drawable-commands.c:343
-#| msgid "Drawable"
 msgid "Flip Drawables"
 msgstr "Віддзеркалити намальоване"
 
 #: app/actions/drawable-commands.c:396
-#| msgid "No active drawables."
 msgid "Rotate Drawables"
 msgstr "Обертати намальоване"
 
@@ -13525,7 +13507,7 @@ msgstr "Помилка завантаження «%s»: "
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:442
+#: app/xcf/xcf.c:443
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Не вдалось відкрити «%s» для зчитування: "
@@ -13865,106 +13847,124 @@ msgstr "Блокування каналу прозорості для груп �
 msgid "Visibility locks were added in %s"
 msgstr "Блокування видимості було додано у %s"
 
-#: app/core/gimpimage.c:2976
+#: app/core/gimpimage.c:2971
+#, c-format
+#| msgid "Multiple layer selection was added in %s"
+msgid "Multiple path selection was added in %s"
+msgstr "Було додано позначення декількох контурів у %s"
+
+#: app/core/gimpimage.c:2983
+#, c-format
+#| msgid "Support for image files larger than 4GB was added in %s"
+msgid "Storing color tags in path was added in %s"
+msgstr "Зберігання міток кольорів у контурі було додано у %s"
+
+#: app/core/gimpimage.c:2990
+#, c-format
+#| msgid "Position locks on layer groups were added in %s"
+msgid "Storing locks in path was added in %s"
+msgstr "Зберігання блокувань у контурі було додано у %s"
+
+#: app/core/gimpimage.c:3004
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr ""
 "Підтримку зображень із великою бітовою розрядністю кольорів було додано у %s"
 
-#: app/core/gimpimage.c:2984
+#: app/core/gimpimage.c:3012
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Кодування зображень із великою глибиною кольорів було виправлено у %s"
 
-#: app/core/gimpimage.c:2992
+#: app/core/gimpimage.c:3020
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "Додано вбудовані засоби стискання zlib у %s"
 
-#: app/core/gimpimage.c:3009
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr ""
 "Підтримку файлів зображень, розмір яких перевищує 4 ГБ, було додано у %s"
 
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3044
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Було додано позначення декількох шарів у %s"
 
-#: app/core/gimpimage.c:3033
+#: app/core/gimpimage.c:3061
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "У %s додано напрямні поза полотном"
 
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3072
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "Набір записів та пошук за взірцем у назві запису було додано у %s"
 
-#: app/core/gimpimage.c:3050
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Було додано позначення декількох каналів у %s"
 
-#: app/core/gimpimage.c:3154
+#: app/core/gimpimage.c:3183
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Змінити роздільність зображення"
 
-#: app/core/gimpimage.c:3206
+#: app/core/gimpimage.c:3235
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Змінити одиницю вимірювання"
 
-#: app/core/gimpimage.c:4259
+#: app/core/gimpimage.c:4288
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "не вдалося перевірити додаток «gimp-comment»: коментар містить некоректні "
 "символи UTF-8"
 
-#: app/core/gimpimage.c:4321
+#: app/core/gimpimage.c:4350
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Додати шум до зображення"
 
-#: app/core/gimpimage.c:4366
+#: app/core/gimpimage.c:4395
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Вилучити шум із зображення"
 
-#: app/core/gimpimage.c:5354
+#: app/core/gimpimage.c:5383
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Додати шар"
 
-#: app/core/gimpimage.c:5398 app/core/gimpimage.c:5429
+#: app/core/gimpimage.c:5427 app/core/gimpimage.c:5458
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Вилучити шар"
 
-#: app/core/gimpimage.c:5423
+#: app/core/gimpimage.c:5452
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Вилучити рухомий вибір"
 
-#: app/core/gimpimage.c:5947
+#: app/core/gimpimage.c:5976
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Додати канал"
 
-#: app/core/gimpimage.c:5977 app/core/gimpimage.c:6002
+#: app/core/gimpimage.c:6006 app/core/gimpimage.c:6031
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Вилучити канал"
 
-#: app/core/gimpimage.c:6061
+#: app/core/gimpimage.c:6090
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Додати контур"
 
-#: app/core/gimpimage.c:6091 app/core/gimpimage.c:6099
+#: app/core/gimpimage.c:6120 app/core/gimpimage.c:6128
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Вилучити контур"
@@ -21062,7 +21062,7 @@ msgid ""
 msgstr ""
 "Процедуру «%s» було викликано з некоректним рядком UTF-8 для аргументу «%s»."
 
-#: app/pdb/image-cmds.c:2290
+#: app/pdb/image-cmds.c:2448
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -23107,7 +23107,6 @@ msgid "There are no paths to move."
 msgstr "Немає контурів для переміщення."
 
 #: app/tools/gimpeditselectiontool.c:1090
-#| msgid "The selected path's position is locked."
 msgid "A selected path's position is locked."
 msgstr "Позиція позначеного контуру заблокована від змін."
 
@@ -23121,7 +23120,6 @@ msgid "The selected layer's position is locked."
 msgstr "Позиція позначеного шару заблокована від змін."
 
 #: app/tools/gimpeditselectiontool.c:1128
-#| msgid "A selected layer's position is locked."
 msgid "A selected channel's position is locked."
 msgstr "Позиція позначеного каналу заблокована від змін."
 
@@ -28380,49 +28378,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Стан та опис"
 
-#: app/xcf/xcf.c:119 app/xcf/xcf.c:187
+#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
 msgid "GIMP XCF image"
 msgstr "Файл XCF GIMP"
 
-#: app/xcf/xcf.c:264 app/xcf/xcf.c:353
+#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
 msgid "Memory Stream"
 msgstr "Потік пам'яті"
 
-#: app/xcf/xcf.c:275
+#: app/xcf/xcf.c:276
 #, c-format
 msgid "Opening '%s'"
 msgstr "Відкривається \"%s\""
 
-#: app/xcf/xcf.c:317
+#: app/xcf/xcf.c:318
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Помилка XCF: версія файла XCF %d не підтримується"
 
-#: app/xcf/xcf.c:376
+#: app/xcf/xcf.c:377
 #, c-format
 msgid "Saving '%s'"
 msgstr "Збереження \"%s\""
 
-#: app/xcf/xcf.c:384
+#: app/xcf/xcf.c:385
 #, c-format
 msgid "Closing '%s'"
 msgstr "Закривається %s"
 
-#: app/xcf/xcf.c:402
+#: app/xcf/xcf.c:403
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Помилка запису файла «%s»: "
 
-#: app/xcf/xcf.c:490
+#: app/xcf/xcf.c:491
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Помилка при створенні «%s»:"
 
-#: app/xcf/xcf-load.c:252
+#: app/xcf/xcf-load.c:258
 msgid "Invalid image mode and precision combination."
 msgstr "Хибне поєднання режиму зображення і точності."
 
-#: app/xcf/xcf-load.c:459
+#: app/xcf/xcf-load.c:465
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28431,7 +28429,7 @@ msgstr ""
 "Виявлено пошкоджені паразитом 'exif-data'.\n"
 "Дані exif не можна перенести: %s"
 
-#: app/xcf/xcf-load.c:498
+#: app/xcf/xcf-load.c:504
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28439,7 +28437,7 @@ msgstr ""
 "Виявлено пошкодження додатка «gimp-metadata».\n"
 "Не вдалося перенести дані XMP."
 
-#: app/xcf/xcf-load.c:522
+#: app/xcf/xcf-load.c:528
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28452,32 +28450,32 @@ msgstr ""
 "Якщо ви нічого не знаєте про XMP, ймовірно, ці дані вам не потрібні. "
 "Повідомлення про помилку: %s."
 
-#: app/xcf/xcf-load.c:795
+#: app/xcf/xcf-load.c:865
 msgid "Linked Layers"
 msgstr "Пов'язані шари"
 
-#: app/xcf/xcf-load.c:805
+#: app/xcf/xcf-load.c:875
 msgid "Linked Channels"
 msgstr "Пов'язані канали"
 
-#: app/xcf/xcf-load.c:830
+#: app/xcf/xcf-load.c:900
 msgid "Linked Paths"
 msgstr "Пов'язані контури"
 
-#: app/xcf/xcf-load.c:877
+#: app/xcf/xcf-load.c:947
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "Цей файл XCF зіпсований! Деяку його частину все ж вийшло відновити."
 
-#: app/xcf/xcf-load.c:896
+#: app/xcf/xcf-load.c:966
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr ""
 "Цей файл XCF пошкоджений! Не вдалось відновити навіть малу його частину!"
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:1057
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
