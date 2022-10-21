@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-18 11:02+0000\n"
-"PO-Revision-Date: 2022-10-18 12:11+0100\n"
+"POT-Creation-Date: 2022-10-20 21:17+0000\n"
+"PO-Revision-Date: 2022-10-21 13:25+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -3424,28 +3424,28 @@ msgstr "Correção automática de brancos"
 
 #: app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
-msgid "Toggle Drawable _Visibility"
-msgstr "Alternar _visibilidade do desenho"
+msgid "Toggle Drawables _Visibility"
+msgstr "Alternar _visibilidade dos desenhos"
 
 #: app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
-msgid "L_ock Pixels of Drawable"
-msgstr "_Bloquear pixéis do desenho"
+msgid "L_ock Pixels of Drawables"
+msgstr "_Bloquear pixéis dos desenhos"
 
 #: app/actions/drawable-actions.c:68
 msgctxt "drawable-action"
-msgid "Keep the pixels on this drawable from being modified"
-msgstr "Impede que os pixéis deste desenho sejam alterados"
+msgid "Keep the pixels on selected drawables from being modified"
+msgstr "Impede que os pixéis destes desenhos sejam alterados"
 
 #: app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
-msgid "L_ock Position of Drawable"
-msgstr "Bloquear p_osição do desenho"
+msgid "L_ock Position of Drawables"
+msgstr "Bloquear p_osição dos desenhos"
 
 #: app/actions/drawable-actions.c:76
 msgctxt "drawable-action"
-msgid "Keep the position on this drawable from being modified"
-msgstr "Impede que a posição neste desenho seja alterado"
+msgid "Keep the position on selected drawables from being modified"
+msgstr "Impede que a posição nestes desenhos seja alterada"
 
 #: app/actions/drawable-actions.c:85
 msgctxt "drawable-action"
@@ -3497,9 +3497,35 @@ msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "Roda o desenho 90 graus para a esquerda"
 
-#: app/actions/drawable-commands.c:77
+#: app/actions/drawable-commands.c:61
+msgid "Equalize"
+msgstr "Equalizar"
+
+#: app/actions/drawable-commands.c:93
 msgid "White Balance operates only on RGB color layers."
 msgstr "Equilíbrio de brancos só opera sobre camadas do cores RGB."
+
+#: app/actions/drawable-commands.c:102 app/core/gimpdrawable-levels.c:72
+#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
+msgid "Levels"
+msgstr "Níveis"
+
+#: app/actions/drawable-commands.c:242
+msgid "Lock/Unlock content"
+msgstr "Bloquear/Desbloquear conteúdo"
+
+#: app/actions/drawable-commands.c:310
+msgid "Lock/Unlock position"
+msgstr "Bloquear/Desbloquear posição"
+
+# Determinar se o correto é “desenho” ou “desenhável”. Onde aparece isto?
+#: app/actions/drawable-commands.c:343
+msgid "Flip Drawables"
+msgstr "Inverter desenhos"
+
+#: app/actions/drawable-commands.c:396
+msgid "Rotate Drawables"
+msgstr "Rodar desenhos"
 
 #: app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
@@ -5135,25 +5161,25 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "Mostrar novamente as configurações do último filtro utilizado"
 
-#: app/actions/filters-actions.c:1133
+#: app/actions/filters-actions.c:1137
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "R_epetir: %s"
 
-#: app/actions/filters-actions.c:1134
+#: app/actions/filters-actions.c:1138
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "Repetir com _opções: %s"
 
-#: app/actions/filters-actions.c:1172
+#: app/actions/filters-actions.c:1176
 msgid "Repeat Last"
 msgstr "Repetir o último"
 
-#: app/actions/filters-actions.c:1174
+#: app/actions/filters-actions.c:1178
 msgid "Re-Show Last"
 msgstr "Repetir o último com opções"
 
-#: app/actions/filters-actions.c:1177 app/actions/filters-actions.c:1179
+#: app/actions/filters-actions.c:1181 app/actions/filters-actions.c:1183
 msgid "No last used filters"
 msgstr "Sem últimos filtros utilizados"
 
@@ -13680,7 +13706,7 @@ msgstr "Erro ao carregar '%s'"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:442
+#: app/xcf/xcf.c:443
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "Não foi possível abrir '%s' para leitura: "
@@ -13742,11 +13768,6 @@ msgstr "Gradiente"
 #: app/core/gimpdrawable-gradient.c:226
 msgid "Calculating distance map"
 msgstr "A calcular mapa de distâncias"
-
-#: app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
-msgid "Levels"
-msgstr "Níveis"
 
 #: app/core/gimpdrawable-offset.c:79
 msgctxt "undo-type"
@@ -14030,108 +14051,123 @@ msgstr ""
 msgid "Visibility locks were added in %s"
 msgstr "Os bloqueios de visibilidade foram introduzidos no %s"
 
-#: app/core/gimpimage.c:2976
+#: app/core/gimpimage.c:2971
+#, c-format
+msgid "Multiple path selection was added in %s"
+msgstr "A seleção múltipla do caminho foi adicionada no %s"
+
+#: app/core/gimpimage.c:2983
+#, c-format
+msgid "Storing color tags in path was added in %s"
+msgstr "O armazenamento de etiquetas de cor no caminho foi adicionado no %s"
+
+#: app/core/gimpimage.c:2990
+#, c-format
+msgid "Storing locks in path was added in %s"
+msgstr "O armazenamento de bloqueios no caminho foi adicionado no %s"
+
+#: app/core/gimpimage.c:3004
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "As imagens com alta profundidade de cor foram introduzidas no %s"
 
-#: app/core/gimpimage.c:2984
+#: app/core/gimpimage.c:3012
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr ""
 "A codificação das imagens com alta profundidade de cor foi corrigida no %s"
 
-#: app/core/gimpimage.c:2992
+#: app/core/gimpimage.c:3020
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "A compressão zlib interna foi introduzida no %s"
 
-#: app/core/gimpimage.c:3009
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "O suporte a imagens maiores que 4GB foi introduzido no %s"
 
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3044
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "A seleção múltipla de camadas foi introduzida no %s"
 
 # Determinar o que aparece em %s para ver se o texto está correto.
-#: app/core/gimpimage.c:3033
+#: app/core/gimpimage.c:3061
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "As guias fora da área de trabalho foram adicionadas em %s"
 
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3072
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "A definição de itens e pesquisa de padrões no nome dos itens foram "
 "adicionados no %s"
 
-#: app/core/gimpimage.c:3050
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "A seleção múltipla de canais foi introduzida no %s"
 
-#: app/core/gimpimage.c:3154
+#: app/core/gimpimage.c:3183
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Alterar resolução da imagem"
 
-#: app/core/gimpimage.c:3206
+#: app/core/gimpimage.c:3235
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Alterar unidade da imagem"
 
-#: app/core/gimpimage.c:4259
+#: app/core/gimpimage.c:4288
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "Não foi possível validar o parasita \"gimp-comment\" parasita: comentário "
 "contém caracteres UTF-8 inválidos"
 
-#: app/core/gimpimage.c:4321
+#: app/core/gimpimage.c:4350
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Anexar parasita à imagem"
 
-#: app/core/gimpimage.c:4366
+#: app/core/gimpimage.c:4395
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: app/core/gimpimage.c:5354
+#: app/core/gimpimage.c:5383
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: app/core/gimpimage.c:5398 app/core/gimpimage.c:5429
+#: app/core/gimpimage.c:5427 app/core/gimpimage.c:5458
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: app/core/gimpimage.c:5423
+#: app/core/gimpimage.c:5452
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: app/core/gimpimage.c:5947
+#: app/core/gimpimage.c:5976
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: app/core/gimpimage.c:5977 app/core/gimpimage.c:6002
+#: app/core/gimpimage.c:6006 app/core/gimpimage.c:6031
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: app/core/gimpimage.c:6061
+#: app/core/gimpimage.c:6090
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: app/core/gimpimage.c:6091 app/core/gimpimage.c:6099
+#: app/core/gimpimage.c:6120 app/core/gimpimage.c:6128
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
@@ -21303,7 +21339,7 @@ msgstr ""
 "O procedimento '%s' foi chamado com uma expressão UTF-8 inválida para o "
 "argumento “%s”."
 
-#: app/pdb/image-cmds.c:2290
+#: app/pdb/image-cmds.c:2448
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -22866,7 +22902,7 @@ msgstr "Nenhum desenho selecionado."
 msgid "The active layer is not visible."
 msgstr "A camada ativa não é visível."
 
-#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1111
+#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1117
 #: app/tools/gimpgradienttool.c:281 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "Os pixéis da camada selecionada estão bloqueados."
@@ -23346,34 +23382,34 @@ msgstr "Efeito da ferramenta [%s]"
 msgid "Move: "
 msgstr "Mover: "
 
-#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1195
+#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1198
 msgid "Move Floating Selection"
 msgstr "Mover seleção flutuante"
 
-#: app/tools/gimpeditselectiontool.c:1081
-msgid "There is no path to move."
-msgstr "Não existe nenhum caminho para mover."
+#: app/tools/gimpeditselectiontool.c:1082 app/tools/gimpmovetool.c:293
+msgid "There are no paths to move."
+msgstr "Não existem caminhos para mover."
 
-#: app/tools/gimpeditselectiontool.c:1086 app/tools/gimptransformtool.c:751
-msgid "The selected path's position is locked."
-msgstr "A posição do caminho selecionado está bloqueada."
+#: app/tools/gimpeditselectiontool.c:1090
+msgid "A selected path's position is locked."
+msgstr "A posição de um caminho selecionado está bloqueada."
 
-#: app/tools/gimpeditselectiontool.c:1097 app/tools/gimpmovetool.c:338
+#: app/tools/gimpeditselectiontool.c:1103 app/tools/gimpmovetool.c:338
 msgid "There is no layer to move."
 msgstr "Não existe nenhuma camada para mover."
 
-#: app/tools/gimpeditselectiontool.c:1106
-#: app/tools/gimpeditselectiontool.c:1135 app/tools/gimpmovetool.c:347
+#: app/tools/gimpeditselectiontool.c:1112
+#: app/tools/gimpeditselectiontool.c:1139 app/tools/gimpmovetool.c:347
 msgid "The selected layer's position is locked."
 msgstr "A posição da camada selecionada está bloqueada."
 
-#: app/tools/gimpeditselectiontool.c:1126
-msgid "All selected channels' positions or pixels are locked."
-msgstr "Todas as posições dos canais selecionados ou pixéis estão bloqueados."
+#: app/tools/gimpeditselectiontool.c:1128
+msgid "A selected channel's position is locked."
+msgstr "Uma posição de um canal selecionado é bloqueada."
 
-#: app/tools/gimpeditselectiontool.c:1149
-msgid "All selected layers' positions are locked."
-msgstr "Todas as posições das camadas selecionadas estão bloqueadas."
+#: app/tools/gimpeditselectiontool.c:1150 app/tools/gimpmovetool.c:366
+msgid "A selected layer's position is locked."
+msgstr "Uma posição da camada selecionada está bloqueada."
 
 #: app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -24304,10 +24340,6 @@ msgstr "Ferramenta Mover: move camadas, seleções e outros objetos"
 msgid "_Move"
 msgstr "_Mover"
 
-#: app/tools/gimpmovetool.c:293
-msgid "There are no paths to move."
-msgstr "Não existem caminhos para mover."
-
 #: app/tools/gimpmovetool.c:306
 msgid "All selected path's position are locked."
 msgstr "Todas as posições dos caminhos selecionados estão bloqueadas."
@@ -24315,10 +24347,6 @@ msgstr "Todas as posições dos caminhos selecionados estão bloqueadas."
 #: app/tools/gimpmovetool.c:358
 msgid "A selected channel's position or pixels are locked."
 msgstr "A posição dos canais ou pixéis selecionados está bloqueada."
-
-#: app/tools/gimpmovetool.c:366
-msgid "A selected layer's position is locked."
-msgstr "Uma posição da camada selecionada está bloqueada."
 
 #: app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -25539,6 +25567,10 @@ msgstr "Não há nenhum caminho para transformar."
 #: app/tools/gimptransformtool.c:749
 msgid "The selected path's strokes are locked."
 msgstr "Os traços do caminho selecionado estão bloqueados."
+
+#: app/tools/gimptransformtool.c:751
+msgid "The selected path's position is locked."
+msgstr "A posição do caminho selecionado está bloqueada."
 
 #: app/tools/gimptransformtool.c:753
 msgid "The selected path has no strokes."
@@ -28683,50 +28715,50 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Estado e descrição"
 
-#: app/xcf/xcf.c:119 app/xcf/xcf.c:187
+#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
 msgid "GIMP XCF image"
 msgstr "Imagem XCF do GIMP"
 
-#: app/xcf/xcf.c:264 app/xcf/xcf.c:353
+#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
 msgid "Memory Stream"
 msgstr "Fluxo de memória"
 
-#: app/xcf/xcf.c:275
+#: app/xcf/xcf.c:276
 #, c-format
 msgid "Opening '%s'"
 msgstr "A abrir '%s'"
 
-#: app/xcf/xcf.c:317
+#: app/xcf/xcf.c:318
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr ""
 "Erro XCF: foi encontrada a versão “%d” do ficheiro XCF que já não é suportada"
 
-#: app/xcf/xcf.c:376
+#: app/xcf/xcf.c:377
 #, c-format
 msgid "Saving '%s'"
 msgstr "A guardar '%s'"
 
-#: app/xcf/xcf.c:384
+#: app/xcf/xcf.c:385
 #, c-format
 msgid "Closing '%s'"
 msgstr "A fechar %s"
 
-#: app/xcf/xcf.c:402
+#: app/xcf/xcf.c:403
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Erro ao escrever '%s': "
 
-#: app/xcf/xcf.c:490
+#: app/xcf/xcf.c:491
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Erro ao criar '%s': "
 
-#: app/xcf/xcf-load.c:252
+#: app/xcf/xcf-load.c:258
 msgid "Invalid image mode and precision combination."
 msgstr "Combinação de precisão e modo de imagem inválida."
 
-#: app/xcf/xcf-load.c:459
+#: app/xcf/xcf-load.c:465
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28735,7 +28767,7 @@ msgstr ""
 "Foi descoberto um \"exif-data\" parasita corrompido.\n"
 "Os dados Exif não podem ser migrados: %s"
 
-#: app/xcf/xcf-load.c:498
+#: app/xcf/xcf-load.c:504
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28743,7 +28775,7 @@ msgstr ""
 "Foi descoberto um \"gimp-metadata\" parasita corrompido.\n"
 "Os dados XMP não podem ser migrados."
 
-#: app/xcf/xcf-load.c:522
+#: app/xcf/xcf-load.c:528
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28756,19 +28788,19 @@ msgstr ""
 "Se não sabe o que é o XMP, provavelmente não precisa dele. Erro reportado: "
 "%s."
 
-#: app/xcf/xcf-load.c:795
+#: app/xcf/xcf-load.c:865
 msgid "Linked Layers"
 msgstr "Camadas interligadas"
 
-#: app/xcf/xcf-load.c:805
+#: app/xcf/xcf-load.c:875
 msgid "Linked Channels"
 msgstr "Canais interligados"
 
-#: app/xcf/xcf-load.c:830
+#: app/xcf/xcf-load.c:900
 msgid "Linked Paths"
 msgstr "Caminhos interligados"
 
-#: app/xcf/xcf-load.c:877
+#: app/xcf/xcf-load.c:947
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28776,7 +28808,7 @@ msgstr ""
 "Este ficheiro XCF está corrompido! Foi carregado o máximo do ficheiro "
 "possível, mas ainda está incompleto."
 
-#: app/xcf/xcf-load.c:896
+#: app/xcf/xcf-load.c:966
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28784,7 +28816,7 @@ msgstr ""
 "Este ficheiro XCF está corrompido! Não foi possível recuperar nenhuma "
 "informação da imagem."
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:1057
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -28819,6 +28851,16 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#~ msgid "There is no path to move."
+#~ msgstr "Não existe nenhum caminho para mover."
+
+#~ msgid "All selected channels' positions or pixels are locked."
+#~ msgstr ""
+#~ "Todas as posições dos canais selecionados ou pixéis estão bloqueados."
+
+#~ msgid "All selected layers' positions are locked."
+#~ msgstr "Todas as posições das camadas selecionadas estão bloqueadas."
 
 #~ msgctxt "align-reference-type"
 #~ msgid "First item"
