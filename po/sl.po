@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-19 13:48+0000\n"
-"PO-Revision-Date: 2022-10-19 16:45+0200\n"
+"POT-Creation-Date: 2022-10-20 21:17+0000\n"
+"PO-Revision-Date: 2022-10-21 10:43+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -13471,7 +13471,7 @@ msgstr "Napaka pri nalaganju »%s«"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:442
+#: app/xcf/xcf.c:443
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "»%s« ni mogoče odpreti za branje: "
@@ -13810,105 +13810,120 @@ msgstr "Zaklepi kanala alfa na skupinah plasti so bili dodani v %s"
 msgid "Visibility locks were added in %s"
 msgstr "Zaklepi vidnosti so bili dodani v %s"
 
-#: app/core/gimpimage.c:2976
+#: app/core/gimpimage.c:2971
+#, c-format
+msgid "Multiple path selection was added in %s"
+msgstr "Izbor več plasti je bil dodan v %s"
+
+#: app/core/gimpimage.c:2983
+#, c-format
+msgid "Storing color tags in path was added in %s"
+msgstr "Podpora za barvne značke v poti je bila dodana v %s"
+
+#: app/core/gimpimage.c:2990
+#, c-format
+msgid "Storing locks in path was added in %s"
+msgstr "Shranjevanje zaklepov v poteh je bilo dodano v %s"
+
+#: app/core/gimpimage.c:3004
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "Slike z visoko bitno globino so dodane v %s"
 
-#: app/core/gimpimage.c:2984
+#: app/core/gimpimage.c:3012
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "Kodiranje slik z visoko bitno globino je bilo popravljeno v %s"
 
-#: app/core/gimpimage.c:2992
+#: app/core/gimpimage.c:3020
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "V %s je bilo dodano notranje stiskanje zlib"
 
-#: app/core/gimpimage.c:3009
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "Podpora za slikovne datoteke, večje od 4 GB, je bila dodana v %s"
 
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3044
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "Izbor več plasti je bil dodan v %s"
 
-#: app/core/gimpimage.c:3033
+#: app/core/gimpimage.c:3061
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "Vodila izven platna dodana v %s"
 
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3072
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr ""
 "Element določen in iskanje vzorca v imenu elementa so bili dodani v %s."
 
-#: app/core/gimpimage.c:3050
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "Izbor več kanalov je bil dodan v %s"
 
-#: app/core/gimpimage.c:3154
+#: app/core/gimpimage.c:3183
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "Spremeni ločljivost slike"
 
-#: app/core/gimpimage.c:3206
+#: app/core/gimpimage.c:3235
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "Spremeni enoto slike"
 
-#: app/core/gimpimage.c:4259
+#: app/core/gimpimage.c:4288
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr ""
 "Preverjanje veljavnosti parazita »gimp-comment« ni uspelo: komentar vsebuje "
 "neveljaven UTF-8"
 
-#: app/core/gimpimage.c:4321
+#: app/core/gimpimage.c:4350
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "Sliki dodaj zajedalca"
 
-#: app/core/gimpimage.c:4366
+#: app/core/gimpimage.c:4395
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Odstrani zajedalca s slike"
 
-#: app/core/gimpimage.c:5354
+#: app/core/gimpimage.c:5383
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Dodaj plast"
 
-#: app/core/gimpimage.c:5398 app/core/gimpimage.c:5429
+#: app/core/gimpimage.c:5427 app/core/gimpimage.c:5458
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Odstrani plast"
 
-#: app/core/gimpimage.c:5423
+#: app/core/gimpimage.c:5452
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Odstrani plavajoči izbor"
 
-#: app/core/gimpimage.c:5947
+#: app/core/gimpimage.c:5976
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Dodaj kanal"
 
-#: app/core/gimpimage.c:5977 app/core/gimpimage.c:6002
+#: app/core/gimpimage.c:6006 app/core/gimpimage.c:6031
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Odstrani kanal"
 
-#: app/core/gimpimage.c:6061
+#: app/core/gimpimage.c:6090
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Dodaj pot"
 
-#: app/core/gimpimage.c:6091 app/core/gimpimage.c:6099
+#: app/core/gimpimage.c:6120 app/core/gimpimage.c:6128
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Odstrani pot"
@@ -20971,7 +20986,7 @@ msgid ""
 msgstr ""
 "Procedura »%s« je bila klicana z neveljavnim nizom UTF-8 za argument »%s«."
 
-#: app/pdb/image-cmds.c:2290
+#: app/pdb/image-cmds.c:2448
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -28266,49 +28281,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "Stanje in opis"
 
-#: app/xcf/xcf.c:119 app/xcf/xcf.c:187
+#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
 msgid "GIMP XCF image"
 msgstr "slika GIMP XCF"
 
-#: app/xcf/xcf.c:264 app/xcf/xcf.c:353
+#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
 msgid "Memory Stream"
 msgstr "Pomnilniški tok"
 
-#: app/xcf/xcf.c:275
+#: app/xcf/xcf.c:276
 #, c-format
 msgid "Opening '%s'"
 msgstr "Odpiranje »%s«"
 
-#: app/xcf/xcf.c:317
+#: app/xcf/xcf.c:318
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Napaka XCF: nepodprta različica datoteke XCF %d"
 
-#: app/xcf/xcf.c:376
+#: app/xcf/xcf.c:377
 #, c-format
 msgid "Saving '%s'"
 msgstr "Shranjevanje »%s«"
 
-#: app/xcf/xcf.c:384
+#: app/xcf/xcf.c:385
 #, c-format
 msgid "Closing '%s'"
 msgstr "Zapiranje »%s«"
 
-#: app/xcf/xcf.c:402
+#: app/xcf/xcf.c:403
 #, c-format
 msgid "Error writing '%s': "
 msgstr "Napaka pri pisanju »%s«: "
 
-#: app/xcf/xcf.c:490
+#: app/xcf/xcf.c:491
 #, c-format
 msgid "Error creating '%s': "
 msgstr "Napaka pri ustvarjanju ‘%s’: "
 
-#: app/xcf/xcf-load.c:252
+#: app/xcf/xcf-load.c:258
 msgid "Invalid image mode and precision combination."
 msgstr "Neveljavna kombinacija načina slike in natančnosti."
 
-#: app/xcf/xcf-load.c:459
+#: app/xcf/xcf-load.c:465
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -28317,7 +28332,7 @@ msgstr ""
 "Najden okvarjen parazit »exif-data«.\n"
 "Migracija podatkov Exif je spodletela: %s"
 
-#: app/xcf/xcf-load.c:498
+#: app/xcf/xcf-load.c:504
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -28325,7 +28340,7 @@ msgstr ""
 "Najden okvarjen parazit »gimp-metadata«.\n"
 "Migracija podatkov XMP je spodletela."
 
-#: app/xcf/xcf-load.c:522
+#: app/xcf/xcf-load.c:528
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -28338,19 +28353,19 @@ msgstr ""
 "Če ne veste, kaj je XMP, tega najverjetneje niti ne potrebujete. Javljena "
 "napaka: %s."
 
-#: app/xcf/xcf-load.c:795
+#: app/xcf/xcf-load.c:865
 msgid "Linked Layers"
 msgstr "Povezane plasti"
 
-#: app/xcf/xcf-load.c:805
+#: app/xcf/xcf-load.c:875
 msgid "Linked Channels"
 msgstr "Povezani kanali"
 
-#: app/xcf/xcf-load.c:830
+#: app/xcf/xcf-load.c:900
 msgid "Linked Paths"
 msgstr "Povezane poti"
 
-#: app/xcf/xcf-load.c:877
+#: app/xcf/xcf-load.c:947
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
@@ -28358,7 +28373,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Naložen je njen začetni pravilno oblikovan del, "
 "vendar ne v celoti."
 
-#: app/xcf/xcf-load.c:896
+#: app/xcf/xcf-load.c:966
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
@@ -28366,7 +28381,7 @@ msgstr ""
 "Datoteka XCF je okvarjena!  Iz nje ni bilo mogoče rešiti niti najmanjšega "
 "dela podatkov."
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:1057
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
