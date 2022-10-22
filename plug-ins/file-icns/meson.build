@@ -3,6 +3,7 @@ plugin_name = 'file-icns'
 plugin_sources = [
   'file-icns-data.c',
   'file-icns-load.c',
+  'file-icns-save.c',
   'file-icns.c',
 ]
 

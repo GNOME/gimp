@@ -30,6 +30,8 @@ file_icns_SOURCES = \
 	file-icns-data.h	\
 	file-icns-load.c	\
 	file-icns-load.h	\
+	file-icns-save.c	\
+	file-icns-save.h	\
 	file-icns.c	\
 	file-icns.h
 

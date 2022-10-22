@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995-1999 Spencer Kimball and Peter Mattis
  *
- * file-icns.h
+ * file-icns-save.h
  * Copyright (C) 2004 Brion Vibber <brion@pobox.com>
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,49 +18,13 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef __ICNS_H__
-#define __ICNS_H__
+#ifndef __ICNS_SAVE_H__
+#define __ICNS_SAVE_H__
 
 
-#ifdef ICNS_DBG
-#define D(x) \
-{ \
-  printf("ICNS plugin: "); \
-  printf x; \
-}
-#else
-#define D(x)
-#endif
+GimpPDBStatusType icns_save_image (GFile     *file,
+                                   GimpImage *image,
+                                   gint32     run_mode,
+                                   GError   **error);
 
-#define PLUG_IN_BINARY      "file-icns"
-#define PLUG_IN_ROLE        "gimp-file-icns"
-
-#define ICNS_MAXBUF          4096
-#define ICNS_TYPE_NUM        34
-
-typedef struct _IcnsResourceHeader
-{
-  /* Big-endian! */
-  gchar    type[4];
-  guint32  size;
-} IcnsResourceHeader;
-
-typedef struct _IcnsResource
-{
-  gchar    type[5];
-  guint32  size;
-  guint32  cursor;
-  guchar  *data;
-} IcnsResource;
-
-typedef struct _IcnsSaveInfo
-{
-  GList *layers;
-  gint   num_icons;
-} IcnsSaveInfo;
-
-void
-fourcc_get_string (gchar *fourcc,
-                   gchar *buf);
-
-#endif /* __ICNS_H__ */
+#endif /* __ICNS_SAVE_H__ */
