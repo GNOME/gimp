@@ -110,6 +110,8 @@ gimp_viewable_button_init (GimpViewableButton *button)
 
   button->button_view_size  = GIMP_VIEW_SIZE_SMALL;
   button->view_border_width = 1;
+
+  gtk_widget_add_events (GTK_WIDGET (button), GDK_SCROLL_MASK);
 }
 
 static void
