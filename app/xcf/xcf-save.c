@@ -75,25 +75,32 @@
 
 #include "gimp-intl.h"
 
+typedef void (* CompressTileFunc) (GeglRectangle  *tile_rect,
+                                   guchar         *tile_data,
+                                   const Babl     *format,
+                                   guchar         *out_data,
+                                   gint            out_data_max_len,
+                                   gint           *lenptr);
 
 /* Per thread data for xcf_save_tile_rle */
 typedef struct
 {
   /* Common to all jobs. */
-  GeglBuffer     *buffer;
-  gint            file_version;
-  gint            max_rle_size;
+  GeglBuffer       *buffer;
+  gint              file_version;
+  gint              max_out_data_len;
+  CompressTileFunc  compress;
 
   /* Job specific. */
-  gint            tile;
-  gint            batch_size;
+  gint              tile;
+  gint              batch_size;
 
   /* Temp data to avoid too many allocations. */
-  guchar         *tile_data;
+  guchar           *tile_data;
 
   /* Return data. */
-  guchar         *rle_data;
-  gint            rle_data_len[XCF_TILE_SAVE_BATCH_SIZE];
+  guchar           *out_data;
+  gint              out_data_len[XCF_TILE_SAVE_BATCH_SIZE];
 } XcfJobData;
 
 static gboolean xcf_save_image_props   (XcfInfo           *info,
@@ -145,19 +152,20 @@ static void     xcf_save_free_job_data (XcfJobData        *data);
 static gint     xcf_save_sort_job_data (XcfJobData        *data1,
                                         XcfJobData        *data2,
                                         gpointer           user_data);
-static void xcf_save_tile_rle_parallel (XcfJobData        *job_data,
+static void     xcf_save_tile_parallel (XcfJobData        *job_data,
                                         GAsyncQueue       *queue);
-static void xcf_save_tile_rle          (GeglRectangle     *tile_rect,
+static void     xcf_save_tile_rle      (GeglRectangle     *tile_rect,
                                         guchar            *tile_data,
                                         const Babl        *format,
                                         guchar            *rlebuf,
-                                        gint              *lenptr,
-                                        gint               file_version);
-static gboolean xcf_save_tile_zlib     (XcfInfo           *info,
-                                        GeglBuffer        *buffer,
-                                        GeglRectangle     *tile_rect,
+                                        gint               rlebuf_max_len,
+                                        gint              *lenptr);
+static void     xcf_save_tile_zlib     (GeglRectangle     *tile_rect,
+                                        guchar            *tile_data,
                                         const Babl        *format,
-                                        GError           **error);
+                                        guchar            *zlib_data,
+                                        gint               zlib_data_max_len,
+                                        gint              *lenptr);
 static gboolean xcf_save_parasite      (XcfInfo           *info,
                                         GimpParasite      *parasite,
                                         GError           **error);
@@ -1900,23 +1908,24 @@ xcf_save_level (XcfInfo     *info,
   /* 'offset' is where we will write the next tile */
   offset = info->cp;
 
-  if (info->compression == COMPRESS_RLE)
+  if (info->compression == COMPRESS_RLE ||
+      info->compression == COMPRESS_ZLIB)
     {
       /* parallel implementation */
       XcfJobData  *job_data;
-      guchar      *switch_rle_data;
-      gint         rle_data_len[XCF_TILE_SAVE_BATCH_SIZE];
+      guchar      *switch_out_data;
+      gint         out_data_len[XCF_TILE_SAVE_BATCH_SIZE];
 
       GThreadPool *pool;
       GAsyncQueue *queue;
       gint         num_tasks = num_processors * 2;
       gint         tile_size = XCF_TILE_WIDTH * XCF_TILE_HEIGHT * bpp;
-      gint         rle_data_max_size;
+      gint         out_data_max_size;
       gint         next_tile = 0;
 
-      rle_data_max_size = tile_size * XCF_TILE_MAX_DATA_LENGTH_FACTOR;
-      /* Prepare an additional rle_data to quickly switch. */
-      switch_rle_data   = g_malloc (rle_data_max_size * XCF_TILE_SAVE_BATCH_SIZE);
+      out_data_max_size = tile_size * XCF_TILE_MAX_DATA_LENGTH_FACTOR;
+      /* Prepare an additional out_data to quickly switch. */
+      switch_out_data   = g_malloc (out_data_max_size * XCF_TILE_SAVE_BATCH_SIZE);
 
       /* The free function passed to the queue and thread pool will likely never
        * be used. It would mean the thread pool is unfinidhed or the result
@@ -1924,7 +1933,7 @@ xcf_save_level (XcfInfo     *info,
        * i.e. there is a bug in our code.
        */
       queue = g_async_queue_new_full ((GDestroyNotify) xcf_save_free_job_data);
-      pool  = g_thread_pool_new_full ((GFunc) xcf_save_tile_rle_parallel,
+      pool  = g_thread_pool_new_full ((GFunc) xcf_save_tile_parallel,
                                       queue,
                                       (GDestroyNotify) xcf_save_free_job_data,
                                       num_processors, TRUE, NULL);
@@ -1938,9 +1947,11 @@ xcf_save_level (XcfInfo     *info,
           job_data = g_malloc (sizeof (XcfJobData ));
           job_data->buffer        = buffer;
           job_data->file_version  = info->file_version;
-          job_data->max_rle_size  = rle_data_max_size;
+          job_data->max_out_data_len = out_data_max_size;
+          job_data->compress      = (info->compression == COMPRESS_RLE) ?
+                                      xcf_save_tile_rle : xcf_save_tile_zlib;
           job_data->tile_data     = g_malloc (tile_size);
-          job_data->rle_data      = g_malloc (rle_data_max_size * XCF_TILE_SAVE_BATCH_SIZE);
+          job_data->out_data      = g_malloc (out_data_max_size * XCF_TILE_SAVE_BATCH_SIZE);
 
           job_data->tile       = i;
           job_data->batch_size = MIN (XCF_TILE_SAVE_BATCH_SIZE, ntiles - i);
@@ -1958,17 +1969,17 @@ xcf_save_level (XcfInfo     *info,
             {
               if (next_tile == job_data->tile)
                 {
-                  guchar *tmp_rle_data;
+                  guchar *tmp_out_data;
                   gint    batch_size;
 
-                  tmp_rle_data = job_data->rle_data;
-                  job_data->rle_data = switch_rle_data;
-                  switch_rle_data = tmp_rle_data;
+                  tmp_out_data = job_data->out_data;
+                  job_data->out_data = switch_out_data;
+                  switch_out_data = tmp_out_data;
 
                   batch_size = job_data->batch_size;
 
                   for (k = 0; k < batch_size; k++)
-                    rle_data_len[k] = job_data->rle_data_len[k];
+                    out_data_len[k] = job_data->out_data_len[k];
 
                   /* First immediately push a new task for the thread pool,
                    * ensuring it always has work to do.
@@ -1984,8 +1995,8 @@ xcf_save_level (XcfInfo     *info,
                     {
                       *next_offset++ = offset;
                       xcf_write_int8_check_error (info,
-                                                  switch_rle_data + rle_data_max_size * k,
-                                                  rle_data_len[k]);
+                                                  switch_out_data + out_data_max_size * k,
+                                                  out_data_len[k]);
                       if (info->cp < offset || info->cp - offset > max_data_length)
                         {
                           g_message ("xcf: invalid tile data length: %" G_GOFFSET_FORMAT,
@@ -2008,7 +2019,7 @@ xcf_save_level (XcfInfo     *info,
                 }
             }
         }
-      g_free (switch_rle_data);
+      g_free (switch_out_data);
 
       /* Finally wait for all remaining tasks to write. */
       while ((job_data = g_async_queue_pop (queue)))
@@ -2021,8 +2032,8 @@ xcf_save_level (XcfInfo     *info,
                 {
                   *next_offset++ = offset;
                   xcf_write_int8_check_error (info,
-                                              job_data->rle_data + rle_data_max_size * k,
-                                              job_data->rle_data_len[k]);
+                                              job_data->out_data + out_data_max_size * k,
+                                              job_data->out_data_len[k]);
                   if (info->cp < offset || info->cp - offset > max_data_length)
                     {
                       g_message ("xcf: invalid tile data length: %" G_GOFFSET_FORMAT,
@@ -2075,10 +2086,6 @@ xcf_save_level (XcfInfo     *info,
             case COMPRESS_NONE:
               xcf_check_error (xcf_save_tile (info, buffer, &rect, format,
                                               error));
-              break;
-            case COMPRESS_ZLIB:
-              xcf_check_error (xcf_save_tile_zlib (info, buffer, &rect, format,
-                                                   error));
               break;
             case COMPRESS_FRACTAL:
               g_warning ("xcf: fractal compression unimplemented");
@@ -2151,7 +2158,7 @@ xcf_save_tile (XcfInfo        *info,
 static void
 xcf_save_free_job_data (XcfJobData *data)
 {
-  g_free (data->rle_data);
+  g_free (data->out_data);
   g_free (data->tile_data);
   g_free (data);
 }
@@ -2170,10 +2177,15 @@ xcf_save_sort_job_data (XcfJobData *data1,
 }
 
 static void
-xcf_save_tile_rle_parallel (XcfJobData  *job_data,
-                            GAsyncQueue *queue)
+xcf_save_tile_parallel (XcfJobData  *job_data,
+                        GAsyncQueue *queue)
 {
-  GeglRectangle tile_rect;
+  const Babl    *format;
+  GeglRectangle  tile_rect;
+  gint           bpp;
+
+  format = gegl_buffer_get_format (job_data->buffer);
+  bpp    = babl_format_get_bytes_per_pixel (format);
 
   for (gint i = 0; i < job_data->batch_size; ++i)
     {
@@ -2183,16 +2195,23 @@ xcf_save_tile_rle_parallel (XcfJobData  *job_data,
                                       job_data->tile + i,
                                       &tile_rect);
       /* only single thread can create tile data when cache miss */
-      gegl_buffer_get (job_data->buffer, &tile_rect,
-                       1.0, gegl_buffer_get_format (job_data->buffer),
+      gegl_buffer_get (job_data->buffer, &tile_rect, 1.0, format,
                        job_data->tile_data,
                        GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-      xcf_save_tile_rle (&tile_rect,
-                         job_data->tile_data,
-                         gegl_buffer_get_format (job_data->buffer),
-                         job_data->rle_data + job_data->max_rle_size * i,
-                         job_data->rle_data_len + i,
-                         job_data->file_version);
+
+      if (job_data->file_version >= 12)
+        {
+          gint n_components = babl_format_get_n_components (format);
+          gint tile_size    = bpp * tile_rect.width * tile_rect.height;
+
+          xcf_write_to_be (bpp / n_components, job_data->tile_data,
+                           tile_size / bpp * n_components);
+        }
+
+      job_data->compress (&tile_rect, job_data->tile_data, format,
+                          job_data->out_data + job_data->max_out_data_len * i,
+                          job_data->max_out_data_len,
+                          job_data->out_data_len + i);
     }
 
   g_async_queue_push_sorted (queue, job_data,
@@ -2205,21 +2224,12 @@ xcf_save_tile_rle (GeglRectangle  *tile_rect,
                    guchar         *tile_data,
                    const Babl     *format,
                    guchar         *rlebuf,
-                   gint           *lenptr,
-                   gint            file_version)
+                   gint            rlebuf_max_len,
+                   gint           *lenptr)
 {
-  gint bpp       = babl_format_get_bytes_per_pixel (format);
-  gint tile_size = bpp * tile_rect->width * tile_rect->height;
-  gint len       = 0;
+  gint bpp = babl_format_get_bytes_per_pixel (format);
+  gint len = 0;
   gint i, j;
-
-  if (file_version >= 12)
-    {
-      gint n_components = babl_format_get_n_components (format);
-
-      xcf_write_to_be (bpp / n_components, tile_data,
-                       tile_size / bpp * n_components);
-    }
 
   for (i = 0; i < bpp; i++)
     {
@@ -2327,33 +2337,22 @@ xcf_save_tile_rle (GeglRectangle  *tile_rect,
   *lenptr = len;
 }
 
-static gboolean
-xcf_save_tile_zlib (XcfInfo        *info,
-                    GeglBuffer     *buffer,
-                    GeglRectangle  *tile_rect,
+static void
+xcf_save_tile_zlib (GeglRectangle  *tile_rect,
+                    guchar         *tile_data,
                     const Babl     *format,
-                    GError        **error)
+                    guchar         *zlib_data,
+                    gint            zlib_data_max_len,
+                    gint           *lenptr)
 {
   gint      bpp       = babl_format_get_bytes_per_pixel (format);
   gint      tile_size = bpp * tile_rect->width * tile_rect->height;
-  guchar   *tile_data = g_alloca (tile_size);
   /* The buffer for compressed data. */
-  guchar   *buf       = g_alloca (tile_size);
-  GError   *tmp_error = NULL;
   z_stream  strm;
   int       action;
   int       status;
 
-  gegl_buffer_get (buffer, tile_rect, 1.0, format, tile_data,
-                   GEGL_AUTO_ROWSTRIDE, GEGL_ABYSS_NONE);
-
-  if (info->file_version >= 12)
-    {
-      gint n_components = babl_format_get_n_components (format);
-
-      xcf_write_to_be (bpp / n_components, tile_data,
-                       tile_size / bpp * n_components);
-    }
+  *lenptr = 0;
 
   /* allocate deflate state */
   strm.zalloc = Z_NULL;
@@ -2362,12 +2361,12 @@ xcf_save_tile_zlib (XcfInfo        *info,
 
   status = deflateInit (&strm, Z_DEFAULT_COMPRESSION);
   if (status != Z_OK)
-    return FALSE;
+    return;
 
   strm.next_in   = tile_data;
   strm.avail_in  = tile_size;
-  strm.next_out  = buf;
-  strm.avail_out = tile_size;
+  strm.next_out  = zlib_data;
+  strm.avail_out = zlib_data_max_len;
 
   action = Z_NO_FLUSH;
 
@@ -2383,24 +2382,23 @@ xcf_save_tile_zlib (XcfInfo        *info,
 
       if (status == Z_STREAM_END || status == Z_BUF_ERROR)
         {
-          size_t write_size = tile_size - strm.avail_out;
+          size_t write_size = zlib_data_max_len - strm.avail_out;
 
-          xcf_write_int8_check_error (info, buf, write_size);
+          *lenptr = write_size;
 
           /* Reset next_out and avail_out. */
-          strm.next_out  = buf;
-          strm.avail_out = tile_size;
+          strm.next_out  = zlib_data;
+          strm.avail_out = zlib_data_max_len;
         }
       else if (status != Z_OK)
         {
           g_printerr ("xcf: tile compression failed: %s", zError (status));
           deflateEnd (&strm);
-          return FALSE;
+          return;
         }
     }
 
   deflateEnd (&strm);
-  return TRUE;
 }
 
 static gboolean
