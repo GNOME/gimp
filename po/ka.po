@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-22 14:37+0000\n"
-"PO-Revision-Date: 2022-08-18 16:26+0200\n"
+"POT-Creation-Date: 2022-10-15 20:33+0000\n"
+"PO-Revision-Date: 2022-10-24 23:18+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: Georgian <(nothing)>\n"
 "Language: ka\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: ../desktop/org.gimp.GIMP.appdata.xml.in.in.h:1
 #: ../desktop/gimp.desktop.in.in.h:1 ../app/about.h:26
@@ -838,7 +838,7 @@ msgid ""
 "GIMP. If not, see: https://www.gnu.org/licenses/"
 msgstr ""
 
-#: ../app/gimp-update.c:385
+#: ../app/gimp-update.c:415
 #, c-format
 msgid ""
 "A new version of GIMP (%s) was released.\n"
@@ -7248,7 +7248,7 @@ msgstr "ფენის კომპოზიტური რეჟიმი: �
 #: ../app/actions/layers-actions.c:410
 msgctxt "layers-action"
 msgid "Clip to Backdrop"
-msgstr ""
+msgstr "ფონამდე ამოჭრა"
 
 #: ../app/actions/layers-actions.c:411
 msgctxt "layers-action"
@@ -7857,7 +7857,7 @@ msgstr "შეუყვანეთ გაერთიანებული პ�
 
 #: ../app/actions/palettes-commands.c:125
 msgid "There must be at least two palettes selected to merge."
-msgstr ""
+msgstr "შერწყმისათვის არასაკმარისი პალიტრების რაოდენობა. საჭიროა მინიმუმ 2."
 
 #: ../app/actions/patterns-actions.c:43
 msgctxt "patterns-action"
@@ -8455,7 +8455,7 @@ msgstr "ტექსტის ხელსაწყოს მენიუ"
 #: ../app/actions/text-tool-actions.c:54
 msgctxt "text-tool-action"
 msgid "Input _Methods"
-msgstr ""
+msgstr "შეტანის _მეთოდები"
 
 #: ../app/actions/text-tool-actions.c:58
 msgctxt "text-tool-action"
@@ -10767,22 +10767,22 @@ msgstr ""
 #: ../app/config/config-enums.c:221
 msgctxt "icon-size"
 msgid "Small size"
-msgstr ""
+msgstr "პატარა ზომა"
 
 #: ../app/config/config-enums.c:222
 msgctxt "icon-size"
 msgid "Medium size"
-msgstr ""
+msgstr "საშუალო ტირეები"
 
 #: ../app/config/config-enums.c:223
 msgctxt "icon-size"
 msgid "Large size"
-msgstr ""
+msgstr "დიდი ზომა"
 
 #: ../app/config/config-enums.c:224
 msgctxt "icon-size"
 msgid "Huge size"
-msgstr ""
+msgstr "უზარმაზარი ზომა"
 
 #: ../app/config/config-enums.c:254
 msgctxt "position"
@@ -11463,74 +11463,98 @@ msgid ""
 "Sets the default 'Black Point Compensation' state for the 'Convert to Color "
 "Profile' dialog."
 msgstr ""
+"ნაგულისხმები \"შავი წერტილის კომპენსაციის\" მდგომარეობის დაყენება \"ფერის "
+"პროფილზე გარდაქმნის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:535
 msgid ""
 "Sets the default layer dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"ნაგულისხმები ფენის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:538
 msgid ""
 "Sets the default text layer dithering method for the 'Convert Precision' "
 "dialog."
 msgstr ""
+"ნაგულისხმები ტექსტის ფენის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის"
+"\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:541
 msgid ""
 "Sets the default channel dithering method for the 'Convert Precision' dialog."
 msgstr ""
+"ნაგულისხმები არხის დიზერინგის მეთოდის დაყენება \"სიზუსტის გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:544
 msgid "Sets the default palette type for the 'Convert to Indexed' dialog."
 msgstr ""
+"ნაგულისხმები პალიტრის ტიპის დაყენება \"დაინდექსებულზე გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:547
 msgid ""
 "Sets the default maximum number of colors for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"ნაგულისხმები ფერების მაქსიმალური რაოდენობის დაყენება \"დაინდექსებულზე "
+"გარდაქმნის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:550
 msgid ""
 "Sets the default 'Remove duplicate colors' state for the 'Convert to "
 "Indexed' dialog."
 msgstr ""
+"ნაგულისხმები \"დუბლიკატის ფერების წაშლის\" მდგომარების დაყენება "
+"\"დაინდექსებულზე გარდაქმნის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:553
 msgid "Sets the default dithering type for the 'Convert to Indexed' dialog."
 msgstr ""
+"ნაგულისხმები დიზერინგის ტიპის დაყენება \"დაინდექსებულზე გარდაქმნის\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:556
 msgid ""
 "Sets the default 'Dither alpha' state for the 'Convert to Indexed' dialog."
 msgstr ""
+"ნაგულისხმები \"ალფას დიზერინგის\" მდგომარეობის დაყენება \"დაინდექსებულზე "
+"გარდაქმნის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:559
 msgid ""
 "Sets the default 'Dither text layers' state for the 'Convert to Indexed' "
 "dialog."
 msgstr ""
+"ნაგულისხმები \"ტექსტური ფენების დიზერინგის\" მნიშვნელობის დაყენება "
+"\"დაინდექსებულზე გარდაქმნის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:562
 msgid "Sets the default fill type for the 'Canvas Size' dialog."
-msgstr ""
+msgstr "ნაგულისხმები შევსების ტიპის დაყენება \"ტილოს ზომის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:565
 msgid "Sets the default set of layers to resize for the 'Canvas Size' dialog."
 msgstr ""
+"ნაგულისხმები ფენების სეტის დაყენება ზომის შესაცვლელად \"ტილოს ზომის\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:568
 msgid ""
 "Sets the default 'Resize text layers' state for the 'Canvas Size' dialog."
 msgstr ""
+"ნაგულისხმები \"ტექსტური ფენის ზომის შეცვლის\" მდგომარეობის დაყენება \"ტილოს "
+"ზომის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:571
 msgid "Sets the default layer name for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები ფენის სახელის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:574
 msgid "Sets the default mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები რეჟიმის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:577
 msgid "Sets the default blend space for the 'New Layer' dialog."
@@ -11538,23 +11562,24 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:580
 msgid "Sets the default composite space for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები კომპოზიტური სივრცის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:583
 msgid "Sets the default composite mode for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები კომპოზიტური რეჟიმის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:586
 msgid "Sets the default opacity for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები გაუმჭვირვალობის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:589
 msgid "Sets the default fill type for the 'New Layer' dialog."
-msgstr ""
+msgstr "ნაგულისხმები შევსების ტიპის დაყენება \"ახალი ფენის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:592
 msgid "Sets the default fill type for the 'Layer Boundary Size' dialog."
 msgstr ""
+"ნაგულისხმები შევსების ტიპის დაყენება \"ფენის საზღვრის ზომის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:595
 msgid "Sets the default mask for the 'Add Layer Mask' dialog."
@@ -11569,37 +11594,46 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:601
 msgid "Sets the default merge type for the 'Merge Visible Layers' dialog."
 msgstr ""
+"ნაგულისხმები შერწყმის ტიპის დაყენება \"ხილული ფენების შერწყმის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:604
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"ნაგულისხმები \"მხოლოდ აქტიური ჯგუფის\" დაყენება \"ხილული ფენების შერწყმის\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:607
 msgid ""
 "Sets the default 'Discard invisible' for the 'Merge Visible Layers' dialog."
 msgstr ""
+"ნაგულისხმები \"უხილავის მოცილების\" დაყენება \"ხილული ფენების შერწყმის \" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:610
 msgid "Sets the default channel name for the 'New Channel' dialog."
-msgstr ""
+msgstr "ნაგულისხმები არხის სახელის დაყენება \"ახალი არხის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:613
 msgid "Sets the default color and opacity for the 'New Channel' dialog."
 msgstr ""
+"ნაგულისხმები ფერისა და გაუმჭვირვალობის დაყენება \"ახალი არხის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:616
 msgid "Sets the default path name for the 'New Path' dialog."
-msgstr ""
+msgstr "ნაგულიხმები ბილიკის სახელი \"ახალი ბილიკის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:619
 msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr ""
+"ნაგულისხმები საქაღალდის ბილიკის დაყენება \"გატანის ბილიკის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:622
 msgid ""
 "Sets the default 'Export the active path' state for the 'Export Path' dialog."
 msgstr ""
+"ნაგულისხმები \"აქტიური ბილიკის გატანის\" მდგომარეობის დაყენება \"ბილიკის "
+"გატანის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:625
 msgid "Sets the default folder path for the 'Import Path' dialog."
@@ -11610,12 +11644,16 @@ msgstr ""
 msgid ""
 "Sets the default 'Merge imported paths' state for the 'Import Path' dialog."
 msgstr ""
+"ნაგულისხმები \"შემოტანილი ბილიკების შერწყმის\" დაყენება \"შემოტანის ბილიკის"
+"\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:631
 msgid ""
 "Sets the default 'Scale imported paths to fit size' state for the 'Import "
 "Path' dialog."
 msgstr ""
+"ნაგულისხმები \"შემოტანილი ბილიკის ჩატევის\" მდგომარეობის დაყენება "
+"\"შემოტანის ბილიკის\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:634
 msgid "Sets the default feather radius for the 'Feather Selection' dialog."
@@ -11630,10 +11668,13 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:641
 msgid "Sets the default grow radius for the 'Grow Selection' dialog."
 msgstr ""
+"ნაგულისხმები ზრდის რადიუსის დაყენება \"მონიშნულის გადიდების\" ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:644
 msgid "Sets the default shrink radius for the 'Shrink Selection' dialog."
 msgstr ""
+"ნაგულისხმები შემცირების რადიუსის დაყენება \"მონიშნულის შემცირების\" "
+"ფანჯრისთვის."
 
 #: ../app/config/gimprc-blurbs.h:647
 msgid ""
@@ -12166,12 +12207,12 @@ msgstr ""
 #: ../app/core/core-enums.c:839
 msgctxt "matting-engine"
 msgid "Matting Global"
-msgstr ""
+msgstr "ფონის გლობალური დაჩრდილვა"
 
 #: ../app/core/core-enums.c:840
 msgctxt "matting-engine"
 msgid "Matting Levin"
-msgstr ""
+msgstr "Matting Levin"
 
 #: ../app/core/core-enums.c:871
 msgctxt "message-severity"
@@ -12735,15 +12776,15 @@ msgstr "FG-დან BG-მდე (RGB)"
 
 #: ../app/core/gimp-gradients.c:82
 msgid "FG to BG (Hardedge)"
-msgstr ""
+msgstr "FG-დან BG-მდე (სწრაფი გადასვლა)"
 
 #: ../app/core/gimp-gradients.c:90
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr ""
+msgstr "FG-დან BG-მდე (HSV საათის საპირისპიროდ)"
 
 #: ../app/core/gimp-gradients.c:98
 msgid "FG to BG (HSV clockwise hue)"
-msgstr ""
+msgstr "FG-დან BG-მდე (HSV საათის მიმართულებით)"
 
 #: ../app/core/gimp-gradients.c:106
 msgid "FG to Transparent"
@@ -14558,11 +14599,11 @@ msgstr "გასანძრევი მონიშნული არ არ
 
 #: ../app/core/gimpselection.c:699
 msgid "Unable to cut or copy because the selected region is empty."
-msgstr ""
+msgstr "ამოჭრა და კოპირება შეუძლებელია, რადგან მონიშნული რეგიონი ცარიელია."
 
 #: ../app/core/gimpselection.c:817
 msgid "Cannot float selection because the selected region is empty."
-msgstr ""
+msgstr "მონიშნულის გაცურება შეუძლებელია, რადგან მონიშნული რეგიონი ცარიელია."
 
 #: ../app/core/gimpselection.c:824
 msgctxt "undo-type"
@@ -14661,7 +14702,7 @@ msgstr "კალეიდოსკოპი"
 
 #: ../app/core/gimpsymmetry-mandala.c:162
 msgid "Reflect consecutive strokes"
-msgstr ""
+msgstr "მიმდევრობითი შტრიხების არეკვლა"
 
 #: ../app/core/gimpsymmetry-mirror.c:120
 msgid "Mirror"
@@ -14989,7 +15030,7 @@ msgstr "განახლებების შემოწმება"
 #: ../app/dialogs/about-dialog.c:456
 #, c-format
 msgid "Last checked on %s at %s"
-msgstr ""
+msgstr "ბოლოს შემოწმების თარიღი %s %s"
 
 #: ../app/dialogs/about-dialog.c:759
 msgid "GIMP is brought to you by"
@@ -15081,7 +15122,7 @@ msgstr "გამოსახულების ნაცრისფერშ�
 
 #: ../app/dialogs/color-profile-dialog.c:200
 msgid "Soft-Proof Profile"
-msgstr ""
+msgstr "ფერების პროგრამულად დამუშავების პროფილი"
 
 #: ../app/dialogs/color-profile-dialog.c:203
 msgid "Select Soft-Proof Profile"
@@ -15107,7 +15148,7 @@ msgstr "პროფილის დეტალები"
 #: ../app/dialogs/color-profile-dialog.c:290
 #: ../app/dialogs/color-profile-import-dialog.c:160
 msgid "_Rendering Intent:"
-msgstr ""
+msgstr "_ფერების გადაცემის სქემა:"
 
 #: ../app/dialogs/color-profile-dialog.c:306
 #: ../app/dialogs/color-profile-import-dialog.c:176
@@ -15127,7 +15168,7 @@ msgstr "არცერთი"
 
 #: ../app/dialogs/color-profile-import-dialog.c:85
 msgid "Convert to Grayscale Working Space?"
-msgstr ""
+msgstr "გარდავქმნა ნაცრისფერ სამუშაო სივრცედ?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:86
 msgid "Convert the image to the built-in grayscale color profile?"
@@ -15135,7 +15176,7 @@ msgstr "გარდავქმნა გამოსახულება ჩ�
 
 #: ../app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert to RGB Working Space?"
-msgstr ""
+msgstr "გარდავქმნა RGB სამუშაო სივრცედ?"
 
 #: ../app/dialogs/color-profile-import-dialog.c:91
 msgid "Convert the image to the built-in sRGB color profile?"
@@ -15152,7 +15193,7 @@ msgstr "დატოვება"
 #: ../app/dialogs/color-profile-import-dialog.c:122
 #, c-format
 msgid "The image '%s' has an embedded color profile"
-msgstr ""
+msgstr "გამოსახულებას '%s' ფერის ჩაშენებული პროფილი გააჩნია"
 
 #: ../app/dialogs/color-profile-import-dialog.c:185
 msgid "_Don't ask me again"
@@ -15346,7 +15387,7 @@ msgstr ""
 
 #: ../app/dialogs/file-save-dialog.c:618
 msgid "The given filename cannot be used for exporting"
-msgstr ""
+msgstr "მითითებული სახელის გატანისას გამოყენება შეუძლებელია"
 
 #: ../app/dialogs/file-save-dialog.c:619
 msgid ""
@@ -15360,7 +15401,7 @@ msgstr "შენახვის ფანჯრის გახსნა"
 
 #: ../app/dialogs/file-save-dialog.c:626
 msgid "The given filename cannot be used for saving"
-msgstr ""
+msgstr "მითითებული სახელის შენახვისას გამოყენება შეუძლებელია"
 
 #: ../app/dialogs/file-save-dialog.c:627
 msgid ""
@@ -15705,7 +15746,7 @@ msgstr ""
 
 #: ../app/dialogs/lebl-dialog.c:807
 msgid "Killer GEGLs from Outer Space"
-msgstr ""
+msgstr "ჯოჯოხეთური უცხოპლანეტელი GEGL-ები"
 
 #: ../app/dialogs/module-dialog.c:129
 msgid "Module Manager"
@@ -15879,7 +15920,7 @@ msgstr ""
 #: ../app/dialogs/preferences-dialog.c:852
 #: ../app/dialogs/preferences-dialog.c:2607
 msgid "There's a local installation of the user manual."
-msgstr ""
+msgstr "არსებობს მომხმარებლის სახელმძღვანელოს ლოკალური ვერსია."
 
 #: ../app/dialogs/preferences-dialog.c:857
 #: ../app/dialogs/preferences-dialog.c:2613
@@ -16106,7 +16147,7 @@ msgstr "გამოსახულება მომზადდეს შე�
 #. Print Simulation (Soft-proofing)
 #: ../app/dialogs/preferences-dialog.c:1386
 msgid "Soft-Proofing"
-msgstr ""
+msgstr "ფერების პროგრამული დამუშავება"
 
 #: ../app/dialogs/preferences-dialog.c:1396
 msgid "Select Soft-Proofing Color Profile"
@@ -16126,7 +16167,7 @@ msgstr "შავ_ი წერტილის კომპენსაციი
 
 #: ../app/dialogs/preferences-dialog.c:1418
 msgid "O_ptimize soft-proofing for:"
-msgstr ""
+msgstr "ფერების პროგრამული დამუშავების სამიზნე:"
 
 #: ../app/dialogs/preferences-dialog.c:1427
 msgid "Mar_k out of gamut colors"
@@ -16994,7 +17035,7 @@ msgstr "\"წ_ერტილი წერტილისთვის\"-ის �
 
 #: ../app/dialogs/preferences-dialog.c:2892
 msgid "Marching ants s_peed:"
-msgstr ""
+msgstr "მოსიარულე ჭიანჭველის სიჩქარე:"
 
 #. Zoom & Resize Behavior
 #: ../app/dialogs/preferences-dialog.c:2896
@@ -18189,7 +18230,7 @@ msgstr "წკაპი-გადათრევა პერსპექტი�
 
 #: ../app/display/gimptoolhandlegrid.c:885
 msgid "Click to add a handle"
-msgstr ""
+msgstr "დამმუშავებლის დასამატებლად დააწკაპუნეთ"
 
 #: ../app/display/gimptoolhandlegrid.c:891
 msgid "Click-Drag to move this handle"
@@ -18271,23 +18312,23 @@ msgstr ""
 
 #: ../app/display/gimptoolpath.c:616
 msgid "Add Anchor"
-msgstr ""
+msgstr "კვანძის დამატება"
 
 #: ../app/display/gimptoolpath.c:640
 msgid "Insert Anchor"
-msgstr ""
+msgstr "კვანძის ჩასმა"
 
 #: ../app/display/gimptoolpath.c:669
 msgid "Drag Handle"
-msgstr ""
+msgstr "სახელურის გადათრევა"
 
 #: ../app/display/gimptoolpath.c:700
 msgid "Drag Anchor"
-msgstr ""
+msgstr "კვანძის გადათრევა"
 
 #: ../app/display/gimptoolpath.c:718
 msgid "Drag Anchors"
-msgstr ""
+msgstr "კვანძების  გადათრევა"
 
 #: ../app/display/gimptoolpath.c:740
 msgid "Drag Curve"
@@ -18295,7 +18336,7 @@ msgstr "მრუდის გადათრევა"
 
 #: ../app/display/gimptoolpath.c:769
 msgid "Connect Strokes"
-msgstr ""
+msgstr "კონტურების შეერთება"
 
 #: ../app/display/gimptoolpath.c:801
 msgid "Drag Path"
@@ -18307,7 +18348,7 @@ msgstr "კუთხის გარდაქმნა"
 
 #: ../app/display/gimptoolpath.c:843
 msgid "Delete Anchor"
-msgstr ""
+msgstr "კვანძის წაშლა"
 
 #: ../app/display/gimptoolpath.c:866
 msgid "Delete Segment"
@@ -18315,7 +18356,7 @@ msgstr "სეგმენტის წაშლა"
 
 #: ../app/display/gimptoolpath.c:1118
 msgid "Move Anchors"
-msgstr ""
+msgstr "კვანძების გადატანა"
 
 #: ../app/display/gimptoolpath.c:1505
 msgid "Click to pick path to edit"
@@ -18331,7 +18372,7 @@ msgstr "წკაპი ბილიკის ახალი კომპონ
 
 #: ../app/display/gimptoolpath.c:1517
 msgid "Click or Click-Drag to create a new anchor"
-msgstr ""
+msgstr "წკაპი ან წკაპი-გადათრევა ახალი კვანძის დასამატებლად"
 
 #: ../app/display/gimptoolpath.c:1527 ../app/display/gimptoolpath.c:1534
 msgid "Click-Drag to move the anchor around"
@@ -18343,11 +18384,11 @@ msgstr "წკაპი-გადათრევა ღუზების გა
 
 #: ../app/display/gimptoolpath.c:1544
 msgid "Click-Drag to move the handle around"
-msgstr ""
+msgstr "წკაპი-გადათრევა სახელურის გასამოძრავებლად"
 
 #: ../app/display/gimptoolpath.c:1551
 msgid "Click-Drag to move the handles around symmetrically"
-msgstr ""
+msgstr "წკაპი-გადათრევა სახელურების სიმეტრიულად გასამოძრავებლად"
 
 #: ../app/display/gimptoolpath.c:1566
 msgid "Click-Drag to change the shape of the curve"
@@ -18372,11 +18413,11 @@ msgstr "წკაპი-გადათრევა ბილიკზე ღუ
 
 #: ../app/display/gimptoolpath.c:1594
 msgid "Click to delete this anchor"
-msgstr ""
+msgstr "წკაპი კვანძის წასაშლელად"
 
 #: ../app/display/gimptoolpath.c:1598
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr ""
+msgstr "წკაპი ამ კვანძის მონიშნულ ბოლო წერტილთან შესაერთებლად"
 
 #: ../app/display/gimptoolpath.c:1603
 msgid "Click to open up the path"
@@ -18392,7 +18433,7 @@ msgstr "აქ წკაპუნი არაფერს აკეთებს
 
 #: ../app/display/gimptoolpath.c:1819
 msgid "Delete Anchors"
-msgstr ""
+msgstr "კვანძის წაშლა"
 
 #: ../app/display/gimptoolpolygon.c:892
 msgid "Click to close shape"
@@ -18440,7 +18481,7 @@ msgstr "წკაპი-გადათრევა საყრდენი წ
 
 #: ../app/display/gimptooltransformgrid.c:1839
 msgid "Click-Drag to shear"
-msgstr ""
+msgstr "წკაპი-გადათრევა დასახრელად"
 
 #: ../app/file/file-open.c:137 ../app/file/file-save.c:127
 msgid "Not a regular file"
@@ -18523,12 +18564,12 @@ msgstr "URI-ის სიმბოლოების არასწორი �
 #: ../app/file-data/file-data-gih.c:295
 #, c-format
 msgid "Negative x offset: %d for layer %s corrected."
-msgstr ""
+msgstr "უარყოფითი X წანაცვლება: %d ფენისთვის %s გასწორდა."
 
 #: ../app/file-data/file-data-gih.c:302
 #, c-format
 msgid "Negative y offset: %d for layer %s corrected."
-msgstr ""
+msgstr "უარყოფითი Y წანაცვლება: %d ფენისთვის %s გასწორდა."
 
 #: ../app/file-data/file-data.c:59 ../app/file-data/file-data.c:124
 msgid "GIMP brush"
@@ -18668,12 +18709,12 @@ msgstr "გაერთიანება"
 #: ../app/operations/operations-enums.c:61
 msgctxt "layer-composite-mode"
 msgid "Clip to backdrop"
-msgstr ""
+msgstr "ფონამდე ამოჭრა"
 
 #: ../app/operations/operations-enums.c:62
 msgctxt "layer-composite-mode"
 msgid "Clip to layer"
-msgstr ""
+msgstr "ფენამდე ამოჭრა"
 
 #: ../app/operations/operations-enums.c:63
 msgctxt "layer-composite-mode"
@@ -19114,7 +19155,7 @@ msgstr ""
 #: ../app/operations/operations-enums.c:276
 msgctxt "layer-mode"
 msgid "Luma darken only"
-msgstr ""
+msgstr "მხოლოდ მუქი (Luma)"
 
 #: ../app/operations/operations-enums.c:277
 msgctxt "layer-mode"
@@ -19290,7 +19331,7 @@ msgstr "მაღალი სიგნალი"
 
 #: ../app/operations/gimplevelsconfig.c:134
 msgid "Clamp Input"
-msgstr ""
+msgstr "შეყვანის დიაპაზ. შეზღ"
 
 #: ../app/operations/gimplevelsconfig.c:135
 msgid "Clamp input values before applying output mapping."
@@ -19308,7 +19349,7 @@ msgstr "მაღალი გამოტანა"
 
 #: ../app/operations/gimplevelsconfig.c:158
 msgid "Clamp Output"
-msgstr ""
+msgstr "გამოტანის დიაპაზ. შეზღ"
 
 #: ../app/operations/gimplevelsconfig.c:159
 msgid "Clamp final output values."
@@ -20462,7 +20503,7 @@ msgstr "ფენის ავტოამოჭრა"
 #: ../app/pdb/plug-in-compat-cmds.c:777
 msgctxt "undo-type"
 msgid "Stretch Contrast HSV"
-msgstr ""
+msgstr "კონტრასტის გაწელვა HSV-ში"
 
 #: ../app/pdb/plug-in-compat-cmds.c:931
 msgctxt "undo-type"
@@ -20636,17 +20677,17 @@ msgstr "_წითელი თვალის მოცილება"
 #: ../app/pdb/plug-in-compat-cmds.c:3563
 msgctxt "undo-type"
 msgid "Random Hurl"
-msgstr ""
+msgstr "შემთხვევით გასროლა"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3616
 msgctxt "undo-type"
 msgid "Random Pick"
-msgstr ""
+msgstr "შემთხვევითი არჩევა"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3669
 msgctxt "undo-type"
 msgid "Random Slur"
-msgstr ""
+msgstr "შემთხვევითი დნობა"
 
 #: ../app/pdb/plug-in-compat-cmds.c:3744
 msgctxt "undo-type"
@@ -21043,7 +21084,7 @@ msgstr "დანიშნულების დიაპაზონი"
 
 #: ../app/propgui/gimppropgui-color-rotate.c:236
 msgid "Gray Handling"
-msgstr ""
+msgstr "ნაცრისფრის დამუშავება"
 
 #: ../app/propgui/gimppropgui-color-to-alpha.c:109
 msgid "Pick farthest full-transparency color"
@@ -21441,7 +21482,7 @@ msgstr "_აეროგრაფი"
 
 #: ../app/tools/gimpalignoptions.c:92 ../app/tools/gimpalignoptions.c:291
 msgid "Relative to"
-msgstr ""
+msgstr "ორიენტრირი"
 
 #: ../app/tools/gimpalignoptions.c:93
 msgid "Reference image object a layer will be aligned on"
@@ -21663,7 +21704,7 @@ msgstr "მსგავსი ფერების ძებნა"
 
 #: ../app/tools/gimpbucketfilloptions.c:485
 msgid "Line Art Detection"
-msgstr ""
+msgstr "კონტურული სურათივით შევსება"
 
 #: ../app/tools/gimpbucketfilloptions.c:495
 msgid "(computing...)"
@@ -21679,11 +21720,11 @@ msgstr ""
 
 #: ../app/tools/gimpbucketfilltool.c:169
 msgid "_Bucket Fill"
-msgstr ""
+msgstr "_ბრტყლად ჩასხმა"
 
 #: ../app/tools/gimpbucketfilltool.c:344
 msgid "Bucket fill"
-msgstr ""
+msgstr "ბრტყლად ჩასხმა"
 
 #: ../app/tools/gimpbucketfilltool.c:562 ../app/tools/gimpcagetool.c:244
 #: ../app/tools/gimpfiltertool.c:312
@@ -21782,7 +21823,7 @@ msgstr "ყველა კომპოზიტური ხილული ფ
 
 #: ../app/tools/gimpcoloroptions.c:77 ../app/tools/gimpcolorpickeroptions.c:71
 msgid "Sample average"
-msgstr ""
+msgstr "არჩევითი საშუალო მნიშვნელობა"
 
 #: ../app/tools/gimpcoloroptions.c:78 ../app/tools/gimpcolorpickeroptions.c:72
 msgid "Use averaged color value from nearby pixels"
@@ -22179,11 +22220,11 @@ msgstr "ხ_ედის გაყოფა"
 
 #: ../app/tools/gimpfilteroptions.c:101
 msgid "On-canvas con_trols"
-msgstr ""
+msgstr "მანიპულატორები _ტილოზე"
 
 #: ../app/tools/gimpfilteroptions.c:102
 msgid "Show on-canvas filter controls"
-msgstr ""
+msgstr "ტილოზე-მდებარე ფილტრის კონტროლის ჩვენება"
 
 #: ../app/tools/gimpfiltertool.c:627
 msgid "Click to switch the original and filtered sides"
@@ -22312,7 +22353,7 @@ msgstr "გადახედვის ფერი"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Color of selection preview mask"
-msgstr ""
+msgstr "მონიშნულის გადახედვის ნიღბის ფერი"
 
 #: ../app/tools/gimpforegroundselectoptions.c:119
 #: ../app/tools/gimpforegroundselectoptions.c:345
@@ -22488,7 +22529,7 @@ msgstr "ახლავე გადატარება"
 
 #: ../app/tools/gimpgradientoptions.c:136
 msgid "Commit gradient instantly"
-msgstr ""
+msgstr "გრადიენტის დაუყოვნებლივი გამოყენება"
 
 #: ../app/tools/gimpgradientoptions.c:142
 msgid "Modify active gradient"
@@ -22839,7 +22880,7 @@ msgstr "შემავალი დონეები"
 
 #: ../app/tools/gimplevelstool.c:497
 msgid "Clamp _input"
-msgstr ""
+msgstr "_შეყვანის შეზღუდვა"
 
 #. Output levels frame
 #: ../app/tools/gimplevelstool.c:540
@@ -22848,7 +22889,7 @@ msgstr "დონეები გამოსავალზე"
 
 #: ../app/tools/gimplevelstool.c:588
 msgid "Clamp outpu_t"
-msgstr ""
+msgstr "_გამოტანის შეზღუდვა"
 
 #. all channels frame
 #: ../app/tools/gimplevelstool.c:603
@@ -22869,7 +22910,7 @@ msgstr "როგორც მრუდების, ისე ჩასწო�
 
 #: ../app/tools/gimplevelstool.c:862
 msgid "Use _old levels file format"
-msgstr ""
+msgstr "_ძველი დომეების ფაილის ფორმატის გამოყენება"
 
 #: ../app/tools/gimplevelstool.c:1005 ../app/tools/gimpthresholdtool.c:412
 msgid "Calculating histogram..."
@@ -23079,7 +23120,7 @@ msgstr "მასშტაბირება"
 
 #: ../app/tools/gimpnpointdeformationoptions.c:231
 msgid "Rigid (Rubber)"
-msgstr ""
+msgstr "უხეში (რეზინა)"
 
 #: ../app/tools/gimpnpointdeformationtool.c:158
 #: ../app/tools/gimpnpointdeformationtool.c:1002
@@ -23209,7 +23250,7 @@ msgstr "ფერის პარამეტრები"
 
 #: ../app/tools/gimppaintoptions-gui.c:579
 msgid "Link to brush default"
-msgstr ""
+msgstr "ფუნჯის საწყის მდებარეობაზე მიბმა"
 
 #: ../app/tools/gimppainttool.c:175
 msgid "Click to paint"
@@ -23496,7 +23537,7 @@ msgstr "%d %d-ზე მასშტაბირება"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:72
 msgid "Refinement scale"
-msgstr ""
+msgstr "დეტალიზაციის მასშტაბი"
 
 #: ../app/tools/gimpseamlesscloneoptions.c:73
 msgid ""
@@ -23577,51 +23618,51 @@ msgstr "ცარიელ მონიშნულს ვერაფერთ�
 #: ../app/tools/gimpsheartool.c:88 ../app/tools/gimptransformgridoptions.c:597
 #: ../app/tools/gimptransformgridoptions.c:606
 msgid "Shear"
-msgstr ""
+msgstr "დახრა"
 
 #: ../app/tools/gimpsheartool.c:89
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr ""
+msgstr "დახრის ხელსაწყო: დახარეთ ფენა, მონიშნული ან ბილიკი"
 
 #: ../app/tools/gimpsheartool.c:90
 msgid "S_hear"
-msgstr ""
+msgstr "_დახრა"
 
 #: ../app/tools/gimpsheartool.c:111
 msgctxt "undo-type"
 msgid "Shear"
-msgstr ""
+msgstr "დახრა"
 
 #: ../app/tools/gimpsheartool.c:113
 msgid "_Shear"
-msgstr ""
+msgstr "_დახრა"
 
 #: ../app/tools/gimpsheartool.c:163
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g"
-msgstr ""
+msgstr "ჰორიზონტალურად დახრა %-3.3g-ით"
 
 #: ../app/tools/gimpsheartool.c:167
 #, c-format
 msgctxt "undo-type"
 msgid "Shear vertically by %-3.3g"
-msgstr ""
+msgstr "ვერტიკალურად დახრა %-3.3g-ით"
 
 #. e.g. user entered numbers but no notification callback
 #: ../app/tools/gimpsheartool.c:172
 #, c-format
 msgctxt "undo-type"
 msgid "Shear horizontally by %-3.3g, vertically by %-3.3g"
-msgstr ""
+msgstr "დახრა ჰორიზონტალურად %-3.3g-ით, ვერტიკალურად კი %-3.3g-ით"
 
 #: ../app/tools/gimpsheartool.c:191
 msgid "Shear magnitude _X"
-msgstr ""
+msgstr "დახრის ინტენსივობის _X"
 
 #: ../app/tools/gimpsheartool.c:202
 msgid "Shear magnitude _Y"
-msgstr ""
+msgstr "დახრის ინტენსივობის _Y"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -23662,7 +23703,7 @@ msgstr ""
 
 #: ../app/tools/gimptextoptions.c:168
 msgid "Justify"
-msgstr ""
+msgstr "გადამრთეველი"
 
 #: ../app/tools/gimptextoptions.c:169
 msgid "Text alignment"
@@ -23887,7 +23928,7 @@ msgstr "მასშტაბირება ცენტრალური წ�
 #: ../app/tools/gimptransformgridoptions.c:553
 #, c-format
 msgid "Constrain handles (%s)"
-msgstr ""
+msgstr "სახელურების შეზღუდვა (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:561
 #, c-format
@@ -24661,7 +24702,7 @@ msgstr "მალსახმობი"
 
 #: ../app/widgets/gimpactionview.c:387
 msgid "Name"
-msgstr ""
+msgstr "_სახელი"
 
 #: ../app/widgets/gimpactionview.c:626 ../app/widgets/gimpactionview.c:867
 msgid "Changing shortcut failed."
@@ -25000,7 +25041,7 @@ msgstr "ა_მ კონტროლერის ჩართვა"
 
 #: ../app/widgets/gimpcontrollereditor.c:226
 msgid "Name:"
-msgstr ""
+msgstr "სახელი:"
 
 #: ../app/widgets/gimpcontrollereditor.c:232
 msgid "State:"
@@ -25139,7 +25180,7 @@ msgstr "%s-ის აქტიური კონტროლერების 
 #: ../app/widgets/gimpcontrollerlist.c:476
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr ""
+msgstr "%s-ის აქტური კონტროლერების სიიდან წაშლა"
 
 #: ../app/widgets/gimpcontrollerlist.c:510
 msgid ""
@@ -25385,11 +25426,11 @@ msgstr ""
 
 #: ../app/widgets/gimpcriticaldialog.c:262
 msgid "Copy-paste this whole debug data to report to developers"
-msgstr ""
+msgstr "გამართვის ეს ყველა მონაცემები პროგრამისტებს დაუკოპირეთ"
 
 #: ../app/widgets/gimpcriticaldialog.c:360
 msgid "The operating system is out of memory or resources."
-msgstr ""
+msgstr "ოპერაციულ სისტემას მეტი რესურსები აღარ გააჩნია."
 
 #: ../app/widgets/gimpcriticaldialog.c:363
 msgid "The specified file was not found."
@@ -25400,7 +25441,6 @@ msgid "The specified path was not found."
 msgstr "მითითებული მისამართი ვერ მოიძებნა."
 
 #: ../app/widgets/gimpcriticaldialog.c:369
-#, fuzzy
 msgid ""
 "The .exe file is invalid (non-Microsoft Win32 .exe or error in .exe image)."
 msgstr ""
@@ -25785,7 +25825,7 @@ msgstr "დიახ"
 #: ../app/widgets/gimpdashboard.c:3345 ../app/widgets/gimpdashboard.c:4348
 msgctxt "dashboard-value"
 msgid "No"
-msgstr ""
+msgstr "არა"
 
 #. Translators:  This string reports the rate of change of a measured
 #. * value.  The "%g" is replaced by a certain quantity, and the "/s"
@@ -25805,7 +25845,7 @@ msgstr "%g/s"
 #: ../app/widgets/gimpdashboard.c:4337
 #, c-format
 msgid "%s/s"
-msgstr ""
+msgstr "%s/s"
 
 #: ../app/widgets/gimpdashboard.c:4415
 msgid "N/A"
@@ -25938,7 +25978,7 @@ msgstr "გნებავთ შეცვალოთ ის გამოსა
 #: ../app/widgets/gimpdock.h:34
 msgctxt "dock"
 msgid ", "
-msgstr ""
+msgstr ", "
 
 #. String used to separate books (GtkNotebooks) within a dock,
 #. e.g. "Tool Options, Layers - Brushes"
@@ -25946,7 +25986,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:39
 msgctxt "dock"
 msgid " - "
-msgstr ""
+msgstr " - "
 
 #. String used to separate dock columns,
 #. e.g. "Tool Options, Layers - Brushes | Gradients"
@@ -25954,7 +25994,7 @@ msgstr ""
 #: ../app/widgets/gimpdock.h:44
 msgctxt "dock"
 msgid " | "
-msgstr ""
+msgstr " | "
 
 #: ../app/widgets/gimpdockbook.c:313
 msgid "Configure this tab"
@@ -25999,7 +26039,7 @@ msgstr "მინავლება"
 
 #: ../app/widgets/gimpdynamicseditor.c:182
 msgid "Mapping matrix"
-msgstr ""
+msgstr "მიბმის მატრიცა"
 
 #: ../app/widgets/gimpdynamicseditor.c:315
 #: ../app/widgets/gimptoolpreseteditor.c:147
@@ -26115,7 +26155,7 @@ msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 #: ../app/widgets/gimpgradienteditor.c:1243
 #, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
-msgstr "HSV (%0.3f, %0.3f, %0.3f)"
+msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
 #: ../app/widgets/gimpgradienteditor.c:1245
 #, c-format
@@ -26490,6 +26530,8 @@ msgid ""
 "Unable to run %s callback.\n"
 "%s"
 msgstr ""
+"%s-ის უკანა გამოძახების გაშვების შეცდომა.\n"
+"%s"
 
 #: ../app/widgets/gimppickablepopup.c:203
 #: ../app/widgets/gimppickablepopup.c:420
