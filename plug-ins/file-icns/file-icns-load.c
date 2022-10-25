@@ -108,7 +108,6 @@ resource_load (FILE *file)
         {
           g_message (("** couldn't read icns header.\n"));
         }
-      fclose (file);
     }
   else
     {
