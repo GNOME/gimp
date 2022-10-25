@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 2.6\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-16 04:09+0000\n"
-"PO-Revision-Date: 2022-10-16 14:06+0100\n"
+"POT-Creation-Date: 2022-10-25 16:16+0000\n"
+"PO-Revision-Date: 2022-10-25 17:32+0100\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -22,7 +22,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -7035,9 +7035,14 @@ msgstr ""
 msgid "Opening thumbnail for '%s'"
 msgstr "A abrir miniatura de '%s'"
 
-#: plug-ins/file-icns/file-icns.c:121
+# Talvez seja um "typo" do ficheiro original
+#: plug-ins/file-icns/file-icns.c:131
 msgid "Icns"
-msgstr "Icns"
+msgstr "Ícones"
+
+#: plug-ins/file-icns/file-icns.c:175
+msgid "Apple Icon Image"
+msgstr "Imagem de ícone da Apple"
 
 #: plug-ins/file-ico/ico-dialog.c:61
 msgid "Windows Animated Cursor"
