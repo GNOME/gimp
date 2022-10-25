@@ -824,8 +824,19 @@ gimp_procedure_get_menu_label (GimpProcedure *procedure)
  * Adds a menu path to the procedure. Only procedures which have a menu
  * label can add a menu path.
  *
- * Menu paths are untranslated paths to menus and submenus with the
- * syntax `<Prefix>/Path/To/Submenu`, for example `<Image>/Layer/Transform`
+ * Menu paths are untranslated paths to known menus and submenus with the
+ * syntax `<Prefix>/Path/To/Submenu`, for example `<Image>/Layer/Transform`.
+ * GIMP will localize these.
+ * Nevertheless you should localize unknown parts of the path. For instance, say
+ * you want to create procedure to create customized layers and add a `Create`
+ * submenu which you want to localize from your plug-in with gettext. You could
+ * call:
+ *
+ * ```
+ * gimp_procedure_add_menu_path (procedure,
+ *                               g_build_path ("/", "<Image>/Layer",
+ *                                             _("Create"), NULL));
+ * ```
  *
  * See also: gimp_plug_in_add_menu_branch().
  *
