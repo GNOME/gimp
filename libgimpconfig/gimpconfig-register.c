@@ -24,6 +24,8 @@
 #include <cairo.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
+#include <gegl-paramspecs.h>
+
 #include "libgimpbase/gimpbase.h"
 
 #include "gimpconfig.h"
@@ -155,9 +157,16 @@ gimp_config_class_init (GObjectClass  *klass,
            * more cases. We keep warnings for all the other types which we
            * explicitly don't support.
            */
-          if (g_strcmp0 (type_name, "GimpContext") != 0)
-            g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
-                       g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
+          if (g_strcmp0 (type_name, "GimpContext") != 0 &&
+              /* Format specs are a GParamSpecPointer. There might be other
+               * pointer specs we might be able to serialize, but BablFormat are
+               * not one of these (there might be easy serializable formats, but
+               * many are not and anyway it's probably not a data which ops or
+               * plug-ins want to remember across run).
+               */
+              ! GEGL_IS_PARAM_SPEC_FORMAT (pspec))
+            g_warning ("%s: not supported: %s (%s | %s)\n", G_STRFUNC,
+                       g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name, type_name);
         }
     }
 }
