@@ -882,9 +882,6 @@ win64-nightly:
     - mkdir ${GIMP_DISTRIB}/bin
     - cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
 
-    - mkdir ${GIMP_DISTRIB}/libexec
-    - cp -fr ${GIMP_PREFIX}/libexec/gimp*.exe ${GIMP_DISTRIB}/libexec/
-
     # Add a wrapper at tree root, less messy than having to look for the
     # binary inside bin/, in the middle of all the DLLs.
     - echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
@@ -964,9 +961,6 @@ win32-nightly:
     # Package executables.
     - mkdir ${GIMP_DISTRIB}/bin
     - cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
-
-    - mkdir ${GIMP_DISTRIB}/libexec
-    - cp -fr ${GIMP_PREFIX}/libexec/gimp*.exe ${GIMP_DISTRIB}/libexec/
 
     # Add a wrapper at tree root, less messy than having to look for the
     # binary inside bin/, in the middle of all the DLLs.
