@@ -20,6 +20,16 @@ Core:
     GtkApplication. The main process of `gimp-console` on the other hand is a
     `GimpConsoleApp` which is derived from GApplication. Both new classes share
     a same GimpCoreApp interface. This is a main step for the GTK+3 port.
+  - Various improvements on awareness of multi-item selection across core
+    features. A notable fix is the preview when transforming multiple layers at
+    once (with various transform tools). Various actions are now multi-drawable
+    aware as well.
+  - New "Vectors Structure" in the XCF format: XCF files (format bumped to
+    version 18) can now store and load all the usual and common properties of
+    other items. In other words, it makes XCF now able to store locks, color
+    tags and several selected paths.
+  - XCF saving with RLE and zlib encoding are now multi-threaded and therefore
+    much faster in most cases.
 
 Graphical User Interface:
 
@@ -34,6 +44,29 @@ Graphical User Interface:
     editor in toolbox, fg/bg editor in Colors dockable, dockables tab icons,
     bottom buttons (in the button box) of dockables, header eye and lock icons
     above item trees, and eye and lock icon switches in item tree cells.
+  - Symmetry dockable contents is now shown, yet deactivated, when no images are
+    opened, improving discoverability.
+
+Tools:
+
+  - Text tool: new "Outlined" and "Outlined and filled" options, with various
+    sub-options to choose the outline style, color, pattern, width, cap and join
+    styles, miter limit, anti-aliasing and dash pattern.
+  - Align tool:
+    * now multi-item aware, it is much more usable than it used to be when we
+      had to click on canvas to select items.
+    * On-canvas clicks are now only needed to select guides (Alt or Alt-Shift
+      click and selected guide colors change) or for the reference object
+      (normal click).
+    * Also the reference object gets on-canvas handles and the name is written
+      in the dockable, making it obvious if you selected the right reference or
+      not.
+    * Moreover the selected reference will now loop when layers are stacked on
+      each other, which allow to select a bottom layer, even if there are layers
+      above it everywhere.
+    * New option "Use extents of layer contents" to Align tool: this is similar
+      to first run "Crop to Content" on every layer to align or distribute
+      (without actually cropping the layers).
 
 Plug-ins:
 
@@ -55,6 +88,11 @@ Plug-ins:
     * Paths are now exported with PSD files.
   - JPEG-XL:
     * Metadata import/export now supported (requires libjxl 0.7.0).
+  - Python-Console:
+    * sys.stdout.flush() implemented as a no-op inside the console, to be able
+      to easily copy-paste code, or using libraries which flush the output.
+  - ICNS:
+    * Initial support for loading and exporting.
 
 API:
 
@@ -63,6 +101,17 @@ API:
       changed. The window ID is now a guint64.
     * New functions:
       + gimp_text_layer_set_markup()
+      + gimp_image_get_selected_channels()
+      + gimp_image_get_selected_vectors()
+      + gimp_image_list_selected_channels()
+      + gimp_image_list_selected_vectors()
+      + gimp_image_set_selected_channels()
+      + gimp_image_set_selected_vectors()
+      + gimp_image_take_selected_channels()
+      + gimp_image_take_selected_vectors()
+      + gimp_image_list_selected_drawables()
+    * Updated functions:
+      + gimp_vectors_stroke_translate() now uses offsets in double type.
     * New classes:
       + GimpTextLayer: child class of GimpLayer.
   - Changes in libgimpwidgets:
