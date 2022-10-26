@@ -237,6 +237,7 @@ guillotine (gint32   image_ID,
               GString *new_filename;
               gchar   *fileextension;
               gchar   *fileindex;
+              gchar   *fileindex_with_xcf_extension;
               gint     pos;
 
               if (new_image == -1)
@@ -263,13 +264,19 @@ guillotine (gint32   image_ID,
               /* show the rough coordinates of the image in the title */
               fileindex    = g_strdup_printf (format, x, y);
 
+              /* preparation to replace original image extension with GIMP default
+                 see issue #8581 for details */
+              fileindex_with_xcf_extension  = g_strdup_printf ("%s.xcf", fileindex);
+              g_free (fileindex);
+
               /* get the position of the file extension - last . in filename */
               fileextension = strrchr (new_filename->str, '.');
               pos           = fileextension - new_filename->str;
 
               /* insert the coordinates before the extension */
-              g_string_insert (new_filename, pos, fileindex);
-              g_free (fileindex);
+              g_string_truncate (new_filename, pos);
+              g_string_insert (new_filename, pos, fileindex_with_xcf_extension);
+              g_free (fileindex_with_xcf_extension);
 
               gimp_image_set_filename (new_image, new_filename->str);
               g_string_free (new_filename, TRUE);
