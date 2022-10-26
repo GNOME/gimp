@@ -143,8 +143,21 @@ gimp_config_class_init (GObjectClass  *klass,
         }
       else
         {
-          g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
-                     g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
+          GType        value_type = G_PARAM_SPEC_VALUE_TYPE (pspec);
+          const gchar *type_name  = g_type_name (value_type);
+
+          /* There are some properties that we don't care to copy because they
+           * are not serializable anyway (or we don't want them to be).
+           * GimpContext properties are one such property type. We can find them
+           * e.g. in some custom GEGL ops, such as "gimp:offset". So we silently
+           * ignore these.
+           * We might add more types of properties to the list as we discover
+           * more cases. We keep warnings for all the other types which we
+           * explicitly don't support.
+           */
+          if (g_strcmp0 (type_name, "GimpContext") != 0)
+            g_warning ("%s: not supported: %s (%s)\n", G_STRFUNC,
+                       g_type_name (G_TYPE_FROM_INSTANCE (pspec)), pspec->name);
         }
     }
 }
