@@ -847,6 +847,174 @@ dev-docs:
       sha512sum $TAR_NAME > ${TAR_NAME}.SHA512SUMS
   needs: ["gimp-meson-debian"]
 
+win64-nightly:
+  rules:
+    # On commits except tags.
+    - if: '$CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_TAG == null'
+    # Custom builds though web GUI, API or schedules.
+    - if: '$GIMP_CI_CROSSROAD_WIN64 != null'
+  stage: distribution
+  dependencies:
+    - gimp-win64
+  variables:
+    GIMP_PREFIX: "gimp-prefix"
+    GIMP_DISTRIB: "gimp-w64"
+  artifacts:
+    name: "GIMP-Win64-CI-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    expire_in: 2 days
+    paths:
+    - gimp-w64
+  script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+                      python3 binutils-mingw-w64-x86-64 file
+                      libglib2.0-bin
+
+    # Package ressources.
+    - mkdir -p ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/etc ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/include ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/ssl ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/share ${GIMP_DISTRIB}
+
+    # Package executables.
+    - mkdir ${GIMP_DISTRIB}/bin
+    - cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
+
+    - mkdir ${GIMP_DISTRIB}/libexec
+    - cp -fr ${GIMP_PREFIX}/libexec/gimp*.exe ${GIMP_DISTRIB}/libexec/
+
+    # Add a wrapper at tree root, less messy than having to look for the
+    # binary inside bin/, in the middle of all the DLLs.
+    - echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
+
+    # Package library data and modules.
+    - mkdir ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gimp ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gegl-0.4 ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
+
+    # Remove files for older GIMP
+    - rm -fr ${GIMP_DISTRIB}/lib/gimp/2.0/
+
+    # Generate share/glib-2.0/schemas/gschemas.compiled
+    - glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
+
+    # Package needed DLLs only
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-console-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-test-clipboard-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimptool-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+
+    - for dll in ${GIMP_DISTRIB}/lib/babl-0.1/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gegl-0.4/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gio/modules/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+  needs: ["gimp-win64"]
+
+win32-nightly:
+  rules:
+    # Custom builds only (web GUI, API or schedules).
+    - if: '$GIMP_CI_CROSSROAD_WIN32 != null'
+  stage: distribution
+  dependencies:
+    - gimp-win32
+    - deps-win64
+  variables:
+    GIMP_PREFIX: "gimp-prefix"
+    GIMP_DISTRIB: "gimp-w32"
+    XDG_DATA_HOME:  "$CI_PROJECT_DIR/.local/share/"
+  artifacts:
+    name: "GIMP-Win32-${CI_COMMIT_SHORT_SHA}"
+    when: always
+    expire_in: 2 days
+    paths:
+    - gimp-w32
+  script:
+    - apt-get update
+    - apt-get install -y --no-install-recommends
+                      python3 binutils-mingw-w64-i686 file
+                      libglib2.0-bin
+
+    # Package ressources.
+    - mkdir -p ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/etc ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/include ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/ssl ${GIMP_DISTRIB}
+    - cp -fr ${GIMP_PREFIX}/share ${GIMP_DISTRIB}
+
+    # Package executables.
+    - mkdir ${GIMP_DISTRIB}/bin
+    - cp -fr ${GIMP_PREFIX}/bin/gimp*.exe ${GIMP_DISTRIB}/bin/
+
+    - mkdir ${GIMP_DISTRIB}/libexec
+    - cp -fr ${GIMP_PREFIX}/libexec/gimp*.exe ${GIMP_DISTRIB}/libexec/
+
+    # Add a wrapper at tree root, less messy than having to look for the
+    # binary inside bin/, in the middle of all the DLLs.
+    - echo "bin\gimp-2.99.exe" > ${GIMP_DISTRIB}/gimp.cmd
+
+    # Package library data and modules.
+    - mkdir ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gimp ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gio ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gdk-pixbuf-2.0 ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/gegl-0.4 ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/babl-0.1 ${GIMP_DISTRIB}/lib/
+    - cp -fr ${GIMP_PREFIX}/lib/girepository-1.0 ${GIMP_DISTRIB}/lib/
+
+    # I fail to install wine32 inside the Gitlab runner. So instead, I
+    # just reuse the loaders.cache generated in the deps-win64 job as
+    # they should be the same (text format).
+    - cp ${XDG_DATA_HOME}/crossroad/roads/w64/gimp/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders.cache
+
+    # Generate share/glib-2.0/schemas/gschemas.compiled
+    - glib-compile-schemas --targetdir=${GIMP_DISTRIB}/share/glib-2.0/schemas ${GIMP_DISTRIB}/share/glib-2.0/schemas
+
+    # Package needed DLLs only.
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-console-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimp-test-clipboard-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+    - python3 build/windows/gitlab-ci/dll_link.py ${GIMP_DISTRIB}/bin/gimptool-2.99.exe ${GIMP_PREFIX}/ ${GIMP_DISTRIB}
+
+    - for dll in ${GIMP_DISTRIB}/lib/babl-0.1/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gegl-0.4/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gio/modules/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gdk-pixbuf-2.0/2.10.0/loaders/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/modules/*.dll; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+    - for dll in ${GIMP_DISTRIB}/lib/gimp/2.99/plug-ins/*/*.exe; do
+        python3 build/windows/gitlab-ci/dll_link.py $dll ${GIMP_PREFIX}/ ${GIMP_DISTRIB};
+      done
+  needs: ["gimp-win32", "deps-win64"]
+
 flatpak-nightly:
   extends: '.publish_nightly'
   stage: distribution
