@@ -31,6 +31,7 @@ crossroad install appstream-glib              \
                   drmingw                     \
                   gexiv2                      \
                   glib2                       \
+                  glib-networking             \
                   json-c                      \
                   ghostscript                 \
                   iso-codes                   \
