@@ -97,6 +97,7 @@ plug-ins/file-fits/fits.c
 plug-ins/file-fli/fli.c
 plug-ins/file-fli/fli-gimp.c
 plug-ins/file-icns/file-icns-load.c
+plug-ins/file-icns/file-icns-save.c
 plug-ins/file-icns/file-icns.c
 plug-ins/file-ico/ico-dialog.c
 plug-ins/file-ico/ico-load.c
