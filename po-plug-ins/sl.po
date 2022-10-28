@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-26 20:55+0000\n"
-"PO-Revision-Date: 2022-10-26 23:28+0200\n"
+"POT-Creation-Date: 2022-10-27 12:38+0000\n"
+"PO-Revision-Date: 2022-10-28 08:28+0200\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -1015,9 +1015,10 @@ msgstr "Shrani parametre raziskovalca MZP"
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1332
-#: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:2124 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:426
+#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2124
+#: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -2044,10 +2045,10 @@ msgstr "»%s«: EOF ali napaka pri branju podatkov palete"
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1324
-#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:2070 plug-ins/file-sgi/sgi.c:645
-#: plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-icns/file-icns-save.c:610
+#: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2070
+#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr "Izvažanje »%s« ..."
@@ -6989,13 +6990,69 @@ msgstr "Napaka pri odpiranju začasne datoteke %s »%s« za nalaganje icns: %s"
 msgid "Opening thumbnail for '%s'"
 msgstr "Odpri sličico predogleda za »%s« ..."
 
+#: plug-ins/file-icns/file-icns-save.c:228
+msgid ""
+"Invalid icon size. \n"
+"It will not be exported"
+msgstr ""
+"Neveljavna velikost ikone. \n"
+"Ne bo izvožena"
+
+#: plug-ins/file-icns/file-icns-save.c:231
+msgid ""
+"Duplicate layer size. \n"
+"It will not be exported"
+msgstr ""
+"Podvojena velikost plasti. \n"
+"Ne bo izvožena"
+
+#: plug-ins/file-icns/file-icns-save.c:292 plug-ins/file-icns/file-icns.c:175
+msgid "Apple Icon Image"
+msgstr "Slika ikone Apple"
+
+#: plug-ins/file-icns/file-icns-save.c:307
+msgid ""
+"Valid ICNS icons sizes are:\n"
+" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
+"64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
+"Any other sized layers will be ignored on export."
+msgstr ""
+"Veljavne velikosti ikon ICNS so:\n"
+" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
+"64x64, 128x128, 256x256, 512x512 in 1024x1024.\n"
+"Pri izvozu plasti drugih velikosti ne bodo upoštevane."
+
+#. Don't show warning by default
+#: plug-ins/file-icns/file-icns-save.c:315
+msgid "Export Icons"
+msgstr "Izvozi ikone"
+
+#: plug-ins/file-icns/file-icns-save.c:522
+#, c-format
+msgid "Error writing icns: %s"
+msgstr "Napaka pri zapisovanju icns: %s"
+
+#: plug-ins/file-icns/file-icns-save.c:584
+msgid ""
+"No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+"Ni veljavne velikosti plasti. Veljavne velikosti plasti so le 16x12, 16x16, "
+"18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512 in "
+"1024x1024."
+
+#: plug-ins/file-icns/file-icns-save.c:602
+msgid ""
+"Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+"Neveljavna velikost plasti. Veljavne velikosti plasti so le 16x12, 16x16, "
+"18x18, 24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512 in "
+"1024x1024."
+
 #: plug-ins/file-icns/file-icns.c:131
 msgid "Icns"
 msgstr "Icns"
-
-#: plug-ins/file-icns/file-icns.c:175
-msgid "Apple Icon Image"
-msgstr "Slika ikone Apple"
 
 #: plug-ins/file-ico/ico-dialog.c:61
 msgid "Windows Animated Cursor"
