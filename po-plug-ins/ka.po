@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-25 16:16+0000\n"
-"PO-Revision-Date: 2022-10-26 05:40+0200\n"
+"POT-Creation-Date: 2022-10-27 12:38+0000\n"
+"PO-Revision-Date: 2022-10-28 06:13+0200\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -83,7 +83,7 @@ msgstr "ავარჯიშეთ თხა (c)"
 #: plug-ins/common/tile-small.c:446 plug-ins/common/unit-editor.c:435
 #: plug-ins/common/van-gogh-lic.c:709 plug-ins/common/warp.c:490
 #: plug-ins/common/wavelet-decompose.c:409 plug-ins/common/web-page.c:278
-#: plug-ins/file-tiff/file-tiff-load.c:2689 plug-ins/flame/flame.c:540
+#: plug-ins/file-tiff/file-tiff-load.c:2711 plug-ins/flame/flame.c:540
 #: plug-ins/flame/flame.c:716 plug-ins/flame/flame.c:1033
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1638
@@ -289,7 +289,7 @@ msgstr ""
 #: plug-ins/common/align-layers.c:691 plug-ins/common/align-layers.c:722
 msgctxt "align-style"
 msgid "None"
-msgstr ""
+msgstr "არცერთი"
 
 #: plug-ins/common/align-layers.c:692 plug-ins/common/align-layers.c:723
 msgid "Collect"
@@ -461,7 +461,7 @@ msgstr "_ვერტიკალური"
 #: plug-ins/file-jpeg/jpeg-load.c:225
 #: plug-ins/file-psd/psd-image-res-load.c:1067
 #: plug-ins/file-psd/psd-load.c:2502 plug-ins/file-sgi/sgi.c:474
-#: plug-ins/file-tiff/file-tiff-load.c:1555
+#: plug-ins/file-tiff/file-tiff-load.c:1576
 #: plug-ins/file-webp/file-webp-load.c:166 plug-ins/gfig/gfig-dialog.c:1325
 #: plug-ins/gimpressionist/general.c:139
 #: plug-ins/map-object/map-object-apply.c:245
@@ -905,7 +905,7 @@ msgstr ""
 
 #: plug-ins/common/cml-explorer.c:1724
 msgid "Function type:"
-msgstr ""
+msgstr "ფუნქციის ტიპი:"
 
 #: plug-ins/common/cml-explorer.c:1740
 msgid "Composition:"
@@ -996,9 +996,10 @@ msgstr ""
 #: plug-ins/common/file-sunras.c:635 plug-ins/common/file-tga.c:1231
 #: plug-ins/common/file-xmc.c:1385 plug-ins/common/sphere-designer.c:2201
 #: plug-ins/file-bmp/bmp-save.c:340 plug-ins/file-fits/fits.c:513
-#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-ico/ico-save.c:1332
-#: plug-ins/file-ico/ico-save.c:1549 plug-ins/file-jpeg/jpeg-save.c:317
-#: plug-ins/file-psd/psd-save.c:2124 plug-ins/file-tiff/file-tiff-save.c:1084
+#: plug-ins/file-fli/fli-gimp.c:817 plug-ins/file-icns/file-icns-save.c:426
+#: plug-ins/file-ico/ico-save.c:1332 plug-ins/file-ico/ico-save.c:1549
+#: plug-ins/file-jpeg/jpeg-save.c:317 plug-ins/file-psd/psd-save.c:2124
+#: plug-ins/file-tiff/file-tiff-save.c:1084
 #: plug-ins/file-tiff/file-tiff-save.c:1173 plug-ins/flame/flame.c:509
 #: plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1545
 #: plug-ins/gfig/gfig.c:846 plug-ins/ifs-compose/ifs-compose.c:2423
@@ -1032,8 +1033,8 @@ msgstr ""
 #: plug-ins/file-bmp/bmp-load.c:226 plug-ins/file-dds/ddsread.c:155
 #: plug-ins/file-faxg3/faxg3.c:256 plug-ins/file-fits/fits.c:381
 #: plug-ins/file-fli/fli-gimp.c:458 plug-ins/file-fli/fli-gimp.c:509
-#: plug-ins/file-icns/file-icns-load.c:517
-#: plug-ins/file-icns/file-icns-load.c:568 plug-ins/file-ico/ico-load.c:682
+#: plug-ins/file-icns/file-icns-load.c:516
+#: plug-ins/file-icns/file-icns-load.c:567 plug-ins/file-ico/ico-load.c:682
 #: plug-ins/file-ico/ico-load.c:794 plug-ins/file-ico/ico-load.c:958
 #: plug-ins/file-jpeg/jpeg-load.c:96 plug-ins/file-jpeg/jpeg-load.c:555
 #: plug-ins/file-psd/psd-load.c:159 plug-ins/file-psd/psd-load.c:164
@@ -1932,12 +1933,12 @@ msgstr ""
 #: plug-ins/common/file-xmc.c:648 plug-ins/common/file-xpm.c:382
 #: plug-ins/common/file-xwd.c:473 plug-ins/file-bmp/bmp-load.c:218
 #: plug-ins/file-exr/file-exr.c:188 plug-ins/file-faxg3/faxg3.c:240
-#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:509
+#: plug-ins/file-fli/fli-gimp.c:501 plug-ins/file-icns/file-icns-load.c:508
 #: plug-ins/file-ico/ico-load.c:674 plug-ins/file-ico/ico-load.c:786
 #: plug-ins/file-jpeg/jpeg-load.c:87 plug-ins/file-psd/psd-load.c:172
 #: plug-ins/file-raw/file-darktable.c:413
 #: plug-ins/file-raw/file-rawtherapee.c:341 plug-ins/file-sgi/sgi.c:331
-#: plug-ins/file-tiff/file-tiff-load.c:285
+#: plug-ins/file-tiff/file-tiff-load.c:289
 #, c-format
 msgid "Opening '%s'"
 msgstr "'%s'-ის გახსნა"
@@ -2010,10 +2011,10 @@ msgstr ""
 #: plug-ins/common/file-tga.c:1223 plug-ins/common/file-xbm.c:1049
 #: plug-ins/common/file-xpm.c:701 plug-ins/common/file-xwd.c:675
 #: plug-ins/file-bmp/bmp-save.c:332 plug-ins/file-fits/fits.c:504
-#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-ico/ico-save.c:1324
-#: plug-ins/file-ico/ico-save.c:1533 plug-ins/file-jpeg/jpeg-save.c:272
-#: plug-ins/file-psd/psd-save.c:2070 plug-ins/file-sgi/sgi.c:645
-#: plug-ins/file-tiff/file-tiff-save.c:1074
+#: plug-ins/file-fli/fli-gimp.c:784 plug-ins/file-icns/file-icns-save.c:610
+#: plug-ins/file-ico/ico-save.c:1324 plug-ins/file-ico/ico-save.c:1533
+#: plug-ins/file-jpeg/jpeg-save.c:272 plug-ins/file-psd/psd-save.c:2070
+#: plug-ins/file-sgi/sgi.c:645 plug-ins/file-tiff/file-tiff-save.c:1074
 #, c-format
 msgid "Exporting '%s'"
 msgstr ""
@@ -2825,7 +2826,6 @@ msgid "Store ICC profile to exported JXL file"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:197
-#| msgid "Save _as"
 msgid "Save Exi_f"
 msgstr "Exi_f-ის შენახვა"
 
@@ -2834,7 +2834,6 @@ msgid "Toggle saving Exif data"
 msgstr ""
 
 #: plug-ins/common/file-jpegxl.c:203
-#| msgid "Save _as"
 msgid "Save _XMP"
 msgstr "_XMP-ის შენახვა"
 
@@ -3124,7 +3123,7 @@ msgid "Import from PDF"
 msgstr ""
 
 #: plug-ins/common/file-pdf-load.c:1066 plug-ins/common/file-ps.c:3589
-#: plug-ins/file-tiff/file-tiff-load.c:2690
+#: plug-ins/file-tiff/file-tiff-load.c:2712
 #: plug-ins/metadata/metadata-editor.c:4635
 msgid "_Import"
 msgstr "_იმპორტირება"
@@ -3225,7 +3224,7 @@ msgstr ""
 
 #: plug-ins/common/file-pdf-save.c:1243 plug-ins/common/file-pdf-save.c:1316
 #: plug-ins/common/file-pdf-save.c:1414 plug-ins/common/file-ps.c:2080
-#: plug-ins/file-tiff/file-tiff-load.c:1557
+#: plug-ins/file-tiff/file-tiff-load.c:1578
 #, c-format
 msgid "Page %d"
 msgstr "%d გვერდი"
@@ -6791,13 +6790,13 @@ msgstr ""
 msgid "Export Image as FLI Animation"
 msgstr ""
 
-#: plug-ins/file-icns/file-icns-load.c:433
+#: plug-ins/file-icns/file-icns-load.c:432
 #, c-format
 msgid "Error trying to open temporary %s file '%s' for icns loading: %s"
 msgstr ""
 
 #. ----- Open PSD file -----
-#: plug-ins/file-icns/file-icns-load.c:560 plug-ins/file-ico/ico-load.c:950
+#: plug-ins/file-icns/file-icns-load.c:559 plug-ins/file-ico/ico-load.c:950
 #: plug-ins/file-jpeg/jpeg-load.c:541 plug-ins/file-psd/psd-thumb-load.c:72
 #: plug-ins/file-raw/file-darktable.c:515
 #: plug-ins/file-raw/file-rawtherapee.c:457
@@ -6805,13 +6804,55 @@ msgstr ""
 msgid "Opening thumbnail for '%s'"
 msgstr ""
 
+#: plug-ins/file-icns/file-icns-save.c:228
+msgid ""
+"Invalid icon size. \n"
+"It will not be exported"
+msgstr ""
+
+#: plug-ins/file-icns/file-icns-save.c:231
+msgid ""
+"Duplicate layer size. \n"
+"It will not be exported"
+msgstr ""
+
+#: plug-ins/file-icns/file-icns-save.c:292 plug-ins/file-icns/file-icns.c:175
+msgid "Apple Icon Image"
+msgstr "Apple-ის ხატულის გამოსახულება"
+
+#: plug-ins/file-icns/file-icns-save.c:307
+msgid ""
+"Valid ICNS icons sizes are:\n"
+" 16x12, 16x16, 18x18, 24x24, 32x32, 36x36, 48x48,\n"
+"64x64, 128x128, 256x256, 512x512, and 1024x1024.\n"
+"Any other sized layers will be ignored on export."
+msgstr ""
+
+#. Don't show warning by default
+#: plug-ins/file-icns/file-icns-save.c:315
+msgid "Export Icons"
+msgstr ""
+
+#: plug-ins/file-icns/file-icns-save.c:522
+#, c-format
+msgid "Error writing icns: %s"
+msgstr "ხატულის ჩაწერის შეცდომა: %s"
+
+#: plug-ins/file-icns/file-icns-save.c:584
+msgid ""
+"No valid sized layers. Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+
+#: plug-ins/file-icns/file-icns-save.c:602
+msgid ""
+"Invalid layer size(s). Only valid layer sizes are 16x12, 16x16, 18x18, "
+"24x24, 32x32, 36x36, 48x48,64x64, 128x128, 256x256, 512x512, or 1024x1024."
+msgstr ""
+
 #: plug-ins/file-icns/file-icns.c:131
 msgid "Icns"
 msgstr ""
-
-#: plug-ins/file-icns/file-icns.c:175
-msgid "Apple Icon Image"
-msgstr "Apple-ის ხატულის გამოსახულება"
 
 #: plug-ins/file-ico/ico-dialog.c:61
 msgid "Windows Animated Cursor"
@@ -7370,16 +7411,16 @@ msgstr "TIFF"
 msgid "\"Save layers\" option not set while trying to export multiple layers."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:293
+#: plug-ins/file-tiff/file-tiff-load.c:297
 msgid "Not a TIFF image or image is corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:324
+#: plug-ins/file-tiff/file-tiff-load.c:328
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:331
+#: plug-ins/file-tiff/file-tiff-load.c:335
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7390,7 +7431,7 @@ msgid_plural ""
 msgstr[0] ""
 msgstr[1] ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:457
+#: plug-ins/file-tiff/file-tiff-load.c:466
 msgid "Extra channels with unspecified data."
 msgstr ""
 
@@ -7401,62 +7442,62 @@ msgstr ""
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:469
+#: plug-ins/file-tiff/file-tiff-load.c:478
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:551
+#: plug-ins/file-tiff/file-tiff-load.c:572
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:580
+#: plug-ins/file-tiff/file-tiff-load.c:601
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
 "The layers below layer # %d will be interpreted as non linear."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:588
+#: plug-ins/file-tiff/file-tiff-load.c:609
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
 "separate image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:600
+#: plug-ins/file-tiff/file-tiff-load.c:621
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:674
+#: plug-ins/file-tiff/file-tiff-load.c:695
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:689
+#: plug-ins/file-tiff/file-tiff-load.c:710
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:697
+#: plug-ins/file-tiff/file-tiff-load.c:718
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:705
+#: plug-ins/file-tiff/file-tiff-load.c:726
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:726
+#: plug-ins/file-tiff/file-tiff-load.c:747
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:733
+#: plug-ins/file-tiff/file-tiff-load.c:754
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr ""
@@ -7464,13 +7505,13 @@ msgstr ""
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: plug-ins/file-tiff/file-tiff-load.c:765
+#: plug-ins/file-tiff/file-tiff-load.c:786
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:790
+#: plug-ins/file-tiff/file-tiff-load.c:811
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7478,42 +7519,42 @@ msgid ""
 "is non-premultiplied alpha."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1078
+#: plug-ins/file-tiff/file-tiff-load.c:1099
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1136
+#: plug-ins/file-tiff/file-tiff-load.c:1157
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1168
+#: plug-ins/file-tiff/file-tiff-load.c:1189
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1344
+#: plug-ins/file-tiff/file-tiff-load.c:1365
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr ""
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: plug-ins/file-tiff/file-tiff-load.c:1354
+#: plug-ins/file-tiff/file-tiff-load.c:1375
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr ""
 
 #. xres but no yres
-#: plug-ins/file-tiff/file-tiff-load.c:1362
+#: plug-ins/file-tiff/file-tiff-load.c:1383
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1379
+#: plug-ins/file-tiff/file-tiff-load.c:1400
 msgid "Invalid image resolution info, using default"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1438
+#: plug-ins/file-tiff/file-tiff-load.c:1459
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr ""
@@ -7523,63 +7564,67 @@ msgstr ""
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: plug-ins/file-tiff/file-tiff-load.c:1532
+#: plug-ins/file-tiff/file-tiff-load.c:1553
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1594
+#: plug-ins/file-tiff/file-tiff-load.c:1615
 msgid "TIFF Channel"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1747
+#: plug-ins/file-tiff/file-tiff-load.c:1768
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:1818
+#: plug-ins/file-tiff/file-tiff-load.c:1839
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2130
-#: plug-ins/file-tiff/file-tiff-load.c:2327
+#: plug-ins/file-tiff/file-tiff-load.c:2151
+#: plug-ins/file-tiff/file-tiff-load.c:2348
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr ""
 
 #. Error reading scanline, stop loading
-#: plug-ins/file-tiff/file-tiff-load.c:2139
-#: plug-ins/file-tiff/file-tiff-load.c:2336
+#: plug-ins/file-tiff/file-tiff-load.c:2160
+#: plug-ins/file-tiff/file-tiff-load.c:2357
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2685
+#: plug-ins/file-tiff/file-tiff-load.c:2707
 msgid "Import from TIFF"
 msgstr ""
+
+#: plug-ins/file-tiff/file-tiff-load.c:2728
+msgid "_Show reduced images"
+msgstr "შემცირებული გამოსახულებების _ჩვენება"
 
 #. Option to shrink the loaded image to its bounding box
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: plug-ins/file-tiff/file-tiff-load.c:2742
+#: plug-ins/file-tiff/file-tiff-load.c:2762
 msgid "_Keep empty space around imported layers"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2759
+#: plug-ins/file-tiff/file-tiff-load.c:2779
 msgid "Process extra channel as:"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2762
+#: plug-ins/file-tiff/file-tiff-load.c:2782
 msgid "_Non-premultiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2763
+#: plug-ins/file-tiff/file-tiff-load.c:2783
 msgid "Pre_multiplied alpha"
 msgstr ""
 
-#: plug-ins/file-tiff/file-tiff-load.c:2764
+#: plug-ins/file-tiff/file-tiff-load.c:2784
 msgid "Channe_l"
 msgstr ""
 
@@ -10672,7 +10717,7 @@ msgstr "ჩასმა"
 
 #: plug-ins/imagemap/imap_cmd_select.c:52
 msgid "Select"
-msgstr ""
+msgstr "არჩევა"
 
 #: plug-ins/imagemap/imap_cmd_select_all.c:50
 msgid "Select All"
@@ -10909,7 +10954,7 @@ msgstr ""
 
 #: plug-ins/imagemap/imap_menu.c:148
 msgid "Open"
-msgstr "გახსნა "
+msgstr "გახსნა"
 
 #: plug-ins/imagemap/imap_menu.c:151
 msgid "Save"
