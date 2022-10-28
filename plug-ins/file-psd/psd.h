@@ -41,6 +41,8 @@
 #define GIMP_PARASITE_COMMENT           "gimp-comment"
 
 #define PSD_PARASITE_DUOTONE_DATA       "psd-duotone-data"
+#define PSD_PARASITE_CLIPPING_PATH      "psd-clipping-path"
+#define PSD_PARASITE_PATH_FLATNESS      "psd-path-flatness"
 
 /* Copied from app/base/gimpimage-quick-mask.h - internal identifier for quick mask channel */
 #define GIMP_IMAGE_QUICK_MASK_NAME      "Qmask"

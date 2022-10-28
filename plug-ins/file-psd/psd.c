@@ -224,16 +224,37 @@ psd_create_procedure (GimpPlugIn  *plug_in,
       gimp_file_procedure_set_extensions (GIMP_FILE_PROCEDURE (procedure),
                                           "psd");
 
+      GIMP_PROC_ARG_BOOLEAN (procedure, "clippingpath",
+                             _("Assign a Clipping _Path"),
+                             _("Select a path to be the "
+                             "clipping path"),
+                             FALSE,
+                             G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_STRING (procedure, "clippingpathname",
+                            _("Clipping Path _Name"),
+                            _("Clipping path name\n"
+                            "(ignored if no clipping path)"),
+                            NULL,
+                            G_PARAM_READWRITE);
+
+      GIMP_PROC_ARG_DOUBLE (procedure, "clippingpathflatness",
+                            _("Path _Flatness"),
+                            _("Clipping path flatness in device pixels\n"
+                            "(ignored if no clipping path)"),
+                            0.0, 100.0, 0.2,
+                            G_PARAM_READWRITE);
+
       GIMP_PROC_ARG_BOOLEAN (procedure, "cmyk",
-                             "Export as _CMYK",
-                             "Export a CMYK PSD image using the soft-proofing color profile",
+                             _("Export as _CMYK"),
+                             _("Export a CMYK PSD image using the soft-proofing color profile"),
                              FALSE,
                              G_PARAM_READWRITE);
 
       GIMP_PROC_ARG_BOOLEAN (procedure, "duotone",
-                             "Export as _Duotone",
-                             "Export as a Duotone PSD file if Duotone color space information "
-                             "was attached to the image when originally imported.",
+                             _("Export as _Duotone"),
+                             _("Export as a Duotone PSD file if Duotone color space information "
+                             "was attached to the image when originally imported."),
                              FALSE,
                              G_PARAM_READWRITE);
     }

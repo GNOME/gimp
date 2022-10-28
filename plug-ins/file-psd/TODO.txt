@@ -1,6 +1,6 @@
 Load
 ====
-Photoshop 2.0 and lower files are not supported due to lack of 
+Photoshop 2.0 and lower files are not supported due to lack of
 file specs and test files.
 
 Add text names for color modes
@@ -49,6 +49,3 @@ Image resources:
 
 2000-2998 - Paths
   Add initial fill rule and clipboard parasites.
-
-2999 - Clipping path
-  Add as parasite to path record.

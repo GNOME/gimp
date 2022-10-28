@@ -243,6 +243,11 @@ static gint     load_resource_2000     (const PSDimageres     *res_a,
                                         GInputStream          *input,
                                         GError               **error);
 
+static gint     load_resource_2999     (const PSDimageres     *res_a,
+                                        GimpImage             *image,
+                                        GInputStream          *input,
+                                        GError               **error);
+
 /* Public Functions */
 gint
 get_image_resource_header (PSDimageres   *res_a,
@@ -408,6 +413,10 @@ load_image_resource (PSDimageres  *res_a,
 
           case PSD_DISPLAY_INFO_NEW:
             load_resource_1077 (res_a, image, img_a, input, error);
+            break;
+
+          case PSD_CLIPPING_PATH:
+            load_resource_2999 (res_a, image, input, error);
             break;
 
           default:
@@ -1682,6 +1691,62 @@ load_resource_2000 (const PSDimageres  *res_a,
 
       path_rec--;
     }
+
+  return 0;
+}
+
+static gint
+load_resource_2999 (const PSDimageres  *res_a,
+                    GimpImage          *image,
+                    GInputStream       *input,
+                    GError            **error)
+{
+  gchar        *path_name;
+  gint16        path_flatness_int;
+  gint16        path_flatness_fixed;
+  gfloat        path_flatness;
+  GimpParasite *parasite;
+  gint32        read_len;
+  gint32        write_len;
+
+  path_name = fread_pascal_string (&read_len, &write_len, 2, input, error);
+  if (*error)
+    return -1;
+
+  /* Convert from fixed to floating point */
+  if (psd_read (input, &path_flatness_int, 1, error) < 1 ||
+      psd_read (input, &path_flatness_fixed, 1, error) < 1)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+  path_flatness_fixed = GINT16_FROM_BE (path_flatness_fixed);
+  /* Converting from Adobe fixed point value to float */
+  path_flatness = (path_flatness_fixed - 0.5f) / 65536.0;
+  path_flatness += path_flatness_int;
+
+  /* Adobe path flatness range is 0.2 to 100.0 */
+  path_flatness = CLAMP (path_flatness, 0.2f, 100.0f);
+
+  /* Save to image parasite */
+  parasite = gimp_parasite_new (PSD_PARASITE_CLIPPING_PATH, 0,
+                                read_len, path_name);
+  gimp_image_attach_parasite (image, parasite);
+  gimp_parasite_free (parasite);
+
+  parasite = gimp_parasite_new (PSD_PARASITE_PATH_FLATNESS, 0,
+                                sizeof (gfloat), &path_flatness);
+  gimp_image_attach_parasite (image, parasite);
+  gimp_parasite_free (parasite);
+
+  /* Adobe says they ignore the last two bytes, the fill rule */
+  if (psd_read (input, &path_flatness_fixed, 1, error) < 1)
+    {
+      psd_set_error (error);
+      return -1;
+    }
+
+  g_free (path_name);
 
   return 0;
 }
