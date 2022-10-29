@@ -11369,15 +11369,12 @@ msgid "The name of the theme to use."
 msgstr "El nom del tema per a utilitzar."
 
 #: app/config/gimprc-blurbs.h:544
-#, fuzzy
 msgid "Override theme-set icon sizes."
 msgstr "Sobreescriu les mides de les icones del conjunt de temes."
 
 #: app/config/gimprc-blurbs.h:547
-#, fuzzy
-#| msgid "The name of the theme to use."
 msgid "The size of the icons to use."
-msgstr "El nom del tema per a utilitzar."
+msgstr "La mida de les icones a utilitzar."
 
 #: app/config/gimprc-blurbs.h:550
 msgid "When enabled, symbolic icons will be preferred if available."
@@ -11571,16 +11568,12 @@ msgid "Sets the default folder path for the 'Export Path' dialog."
 msgstr "Defineix el nom del camí per defecte per al diàleg «Exporta el camí»."
 
 #: app/config/gimprc-blurbs.h:653
-#, fuzzy
-#| msgid ""
-#| "Sets the default 'Export the active path' state for the 'Export Path' "
-#| "dialog."
 msgid ""
 "Sets the default 'Export the selected paths' state for the 'Export Path' "
 "dialog."
 msgstr ""
-"Defineix l'estat per defecte d'«Exporta el camí actiu» per al diàleg "
-"«Exporta el camí»."
+"Defineix l'estat per defecte d'«Exporta els camins seleccionats» per al "
+"diàleg «Exporta el camí»."
 
 #: app/config/gimprc-blurbs.h:656
 msgid "Sets the default folder path for the 'Import Path' dialog."
@@ -11795,7 +11788,6 @@ msgid "Selection"
 msgstr "Selecció"
 
 #: app/core/core-enums.c:27
-#, fuzzy
 msgctxt "align-reference-type"
 msgid "Picked reference object"
 msgstr "Objecte de referència seleccionat"
@@ -12814,12 +12806,9 @@ msgid "Modules"
 msgstr "Mòduls"
 
 #: app/core/gimp-batch.c:69
-#, fuzzy
-#| msgid ""
-#| "The batch interpreter '%s' is not available. Batch mode disabled."
 msgid "No batch interpreters are available. Batch mode disabled."
 msgstr ""
-"L'intèrpret d'ordres «%s» no està disponible. El mode d'ordres està "
+"L'intèrpret d'ordres «%s» no està disponible. El mode per lots està "
 "desactivat."
 
 #: app/core/gimp-batch.c:86
@@ -12828,38 +12817,33 @@ msgid "No batch interpreter specified, using '%s'.\n"
 msgstr "No s'ha definit cap intèrpret d'ordres, s'utilitza «%s».\n"
 
 #: app/core/gimp-batch.c:93
-#, fuzzy
 msgid "No batch interpreter specified."
 msgstr "No s'ha especificat cap intèrpret per lots."
 
 #: app/core/gimp-batch.c:94 app/core/gimp-batch.c:132
-#, fuzzy
 msgid "Available interpreters are:"
 msgstr "Els intèrprets disponibles són:"
 
 #: app/core/gimp-batch.c:112 app/core/gimp-batch.c:150
-#, fuzzy
 msgid "Specify one of these interpreters as --batch-interpreter option."
 msgstr "Especifiqueu un d'aquests intèrprets com a opció --batch-interpreter."
 
 #. EX_UNAVAILABLE - service unavailable (sysexits.h)
 #: app/core/gimp-batch.c:128
-#, fuzzy, c-format
-#| msgid "Procedure name '%s' is not a canonical identifier"
+#, c-format
 msgid "The procedure '%s' is not a valid batch interpreter."
-msgstr "El nom del procediment «%s» no és un identificador canònic"
+msgstr "El procediment «%s» no és un intèrpret per lots vàlid."
 
 #: app/core/gimp-batch.c:131
-#, fuzzy
 msgid "Batch mode disabled."
-msgstr "Mode de lot desactivat."
+msgstr "Mode per lots desactivat."
 
 #. EX_UNAVAILABLE - service unavailable (sysexits.h)
 #: app/core/gimp-batch.c:184
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
-"L'intèrpret d'ordres «%s» no està disponible. El mode d'ordres està "
+"L'intèrpret d'ordres «%s» no està disponible. El mode per lots està "
 "desactivat."
 
 #: app/core/gimp-contexts.c:153 app/core/gimp-internal-data.c:338
@@ -13949,11 +13933,10 @@ msgstr "Els bloquejos de canals alfa dels grups de capes s'han afegit a %s"
 msgid "Visibility locks were added in %s"
 msgstr "S'han afegit bloquejos de visibilitat a %s"
 
+# c-format
 #: app/core/gimpimage.c:2971
-#, fuzzy, c-format
-#| msgid "Multiple layer selection was added in %s"
 msgid "Multiple path selection was added in %s"
-msgstr "S'ha afegit una selecció de múltiples capes %s"
+msgstr "S'ha afegit una selecció de múltiple de camins a %s"
 
 #: app/core/gimpimage.c:2983
 #, fuzzy, c-format
@@ -16944,9 +16927,8 @@ msgid "Use dark theme variant if available"
 msgstr "Useu alguna variant del tema fosc si està disponible"
 
 #: app/dialogs/preferences-dialog.c:2094
-#, fuzzy
 msgid "_Override icon sizes set by the theme"
-msgstr "Sobreescriu les mides de les icones establertes pel tema"
+msgstr "_Sobreescriu les mides de les icones establertes pel tema"
 
 #: app/dialogs/preferences-dialog.c:2107
 msgid "Small"
@@ -17222,10 +17204,8 @@ msgid "Select Default Folder for Exporting Paths"
 msgstr "Seleccioneu la carpeta defecte per a exportar camins"
 
 #: app/dialogs/preferences-dialog.c:2543
-#, fuzzy
-#| msgid "Export the active path only"
 msgid "Export the selected paths only"
-msgstr "Exporta només el camí actiu"
+msgstr "Exporta només els camins seleccionats"
 
 #. Import Path Dialog
 #: app/dialogs/preferences-dialog.c:2547
@@ -17493,20 +17473,16 @@ msgid "Zoom"
 msgstr "Ampliació/Reducció"
 
 #: app/dialogs/preferences-dialog.c:3037
-#, fuzzy
 msgid "Dra_g-to-zoom behavior:"
-msgstr "Comportament d'arrossegar a fer zoom:"
+msgstr "_Comportament d'arrossegar a fer zoom:"
 
 #: app/dialogs/preferences-dialog.c:3043
-#, fuzzy
 msgid "Drag-to-zoom spe_ed:"
-msgstr "Velocitat d'arrossegament a zoom:"
+msgstr "_Velocitat d'arrossegament a zoom:"
 
 #: app/dialogs/preferences-dialog.c:3053 app/dialogs/preferences-dialog.c:3054
-#, fuzzy
-#| msgid "(modified)"
 msgid "Modifiers"
-msgstr "(modificat)"
+msgstr "Modificadors"
 
 #: app/dialogs/preferences-dialog.c:3064
 #, fuzzy
@@ -18220,10 +18196,8 @@ msgid "Export Path to SVG"
 msgstr "Exporta el camí a SVG"
 
 #: app/dialogs/vectors-export-dialog.c:121
-#, fuzzy
-#| msgid "Export the active path"
 msgid "Export the selected paths"
-msgstr "Exporta el camí actiu"
+msgstr "Exporta els camins seleccionats"
 
 #: app/dialogs/vectors-export-dialog.c:122
 msgid "Export all paths from this image"
@@ -18473,19 +18447,14 @@ msgid "Rotate View by 15 degree steps"
 msgstr "Gira la visualització 15 graus cap a l'esquerra"
 
 #: app/display/display-enums.c:621
-#, fuzzy
-#| msgid "Pick a layer or guide"
 msgctxt "modifier-action"
 msgid "Pick a layer"
-msgstr "Selecciona una capa o guia"
+msgstr "Tria una capa"
 
 #: app/display/display-enums.c:622
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Display the image's guides"
 msgctxt "modifier-action"
 msgid "Display the menu"
-msgstr "Mostra les guies de la imatge"
+msgstr "Mostra el menú"
 
 #: app/display/display-enums.c:623
 msgctxt "modifier-action"
@@ -18493,23 +18462,19 @@ msgid "Custom action"
 msgstr "Acció personalitzada"
 
 #: app/display/display-enums.c:624
-#, fuzzy
 msgctxt "modifier-action"
 msgid "Change brush size in canvas pixels"
-msgstr "Canvia la mida del pinzell en píxels del llenç"
+msgstr "Canvia la mida del pinzell en els píxels del llenç"
 
 #: app/display/display-enums.c:625
-#, fuzzy
 msgctxt "modifier-action"
 msgid "Change brush radius' size in canvas pixels"
-msgstr "Canvia la mida del radi del pinzell en píxels del llenç"
+msgstr "Canvia la mida del radi del pinzell en els píxels del llenç"
 
 #: app/display/display-enums.c:626
-#, fuzzy
-#| msgid "Image opacity"
 msgctxt "modifier-action"
 msgid "Change tool opacity"
-msgstr "Opacitat de la imatge"
+msgstr "Canvia l'opacitat de l'eina"
 
 #: app/display/gimpcursorview.c:233 app/display/gimpcursorview.c:239
 #: app/display/gimpcursorview.c:258 app/display/gimpcursorview.c:264
@@ -22394,20 +22359,16 @@ msgid "Fixed"
 msgstr "Fixat"
 
 #: app/text/text-enums.c:54
-#, fuzzy
-#| msgid "_Fill"
 msgctxt "text-outline"
 msgid "Filled"
-msgstr "_Omple"
+msgstr "Emplenat"
 
 #: app/text/text-enums.c:55
-#, fuzzy
 msgctxt "text-outline"
 msgid "Outlined"
 msgstr "Contorn"
 
 #: app/text/text-enums.c:56
-#, fuzzy
 msgctxt "text-outline"
 msgid "Outlined and filled"
 msgstr "Contorn i emplenat"
@@ -22448,12 +22409,10 @@ msgid "Selected layers will be aligned or distributed by the tool"
 msgstr "Les capes seleccionades s'alinearan o distribuiran per l'eina"
 
 #: app/tools/gimpalignoptions.c:160
-#, fuzzy
 msgid "Align or distribute selected paths"
 msgstr "Alinea o distribueix els camins seleccionats"
 
 #: app/tools/gimpalignoptions.c:161
-#, fuzzy
 msgid "Selected paths will be aligned or distributed by the tool"
 msgstr "Els camins seleccionats s'alinearan o distribuiran per l'eina"
 
@@ -22465,7 +22424,6 @@ msgid "Use extents of layer contents"
 msgstr "Canvia la mida del contingut de la capa"
 
 #: app/tools/gimpalignoptions.c:167
-#, fuzzy
 msgid ""
 "Instead of aligning or distributing on layer borders, use its content "
 "bounding box"
@@ -22475,10 +22433,8 @@ msgstr ""
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:380
-#, fuzzy
-#| msgid "Adjust color distribution"
 msgid "Objects to align or distribute"
-msgstr "Ajusta la distribució de colors"
+msgstr "Objectes a alinear o distribuir"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:405
@@ -22492,11 +22448,8 @@ msgid "Align"
 msgstr "Alinea"
 
 #: app/tools/gimpalignoptions.c:446
-#, fuzzy
-#| msgctxt "dialogs-action"
-#| msgid "Open the preferences dialog"
 msgid "Select the reference object"
-msgstr "Mostra el diàleg de les preferències"
+msgstr "Selecciona l'objecte de referència"
 
 #: app/tools/gimpalignoptions.c:462
 msgid "Align left edge of target"
@@ -24275,7 +24228,7 @@ msgstr "Commutador d'eines (%s)"
 
 #: app/tools/gimpmoveoptions.c:155
 msgid "Pick a layer or guide"
-msgstr "Selecciona una capa o guia"
+msgstr "Tria una capa o guia"
 
 #: app/tools/gimpmoveoptions.c:156
 msgid "Move the selected layers"
@@ -24283,7 +24236,7 @@ msgstr "Desplaceu les capes seleccionades"
 
 #: app/tools/gimpmoveoptions.c:160
 msgid "Pick a path"
-msgstr "Selecciona un camí"
+msgstr "Tria un camí"
 
 #: app/tools/gimpmoveoptions.c:161
 msgid "Move the active path"
