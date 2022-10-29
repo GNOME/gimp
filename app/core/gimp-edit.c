@@ -37,6 +37,7 @@
 #include "gimpimage-undo.h"
 #include "gimplayer-floating-selection.h"
 #include "gimplayer-new.h"
+#include "gimplayermask.h"
 #include "gimplist.h"
 #include "gimppickable.h"
 #include "gimpselection.h"
@@ -266,11 +267,13 @@ gimp_edit_paste_is_in_place (GimpPasteType paste_type)
     case GIMP_PASTE_TYPE_FLOATING:
     case GIMP_PASTE_TYPE_FLOATING_INTO:
     case GIMP_PASTE_TYPE_NEW_LAYER:
+    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
       return FALSE;
 
     case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
     case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
     case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
       return TRUE;
     }
 
@@ -278,7 +281,8 @@ gimp_edit_paste_is_in_place (GimpPasteType paste_type)
 }
 
 static gboolean
-gimp_edit_paste_is_floating (GimpPasteType paste_type)
+gimp_edit_paste_is_floating (GimpPasteType  paste_type,
+                             GimpDrawable  *drawable)
 {
   switch (paste_type)
     {
@@ -291,6 +295,13 @@ gimp_edit_paste_is_floating (GimpPasteType paste_type)
     case GIMP_PASTE_TYPE_NEW_LAYER:
     case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
       return FALSE;
+
+    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+      if (GIMP_IS_LAYER_MASK (drawable))
+        return TRUE;
+      else
+        return FALSE;
     }
 
   g_return_val_if_reached (FALSE);
@@ -321,7 +332,7 @@ gimp_edit_paste_get_layers (GimpImage     *image,
   /*  floating pastes always have the pasted-to drawable's format with
    *  alpha; if drawable == NULL, user is pasting into an empty image
    */
-  if (drawable && gimp_edit_paste_is_floating (*paste_type))
+  if (drawable && gimp_edit_paste_is_floating (*paste_type, drawable))
     floating_format = gimp_drawable_get_format_with_alpha (drawable);
   else
     floating_format = gimp_image_get_layer_format (image, TRUE);
@@ -605,6 +616,18 @@ gimp_edit_paste_paste (GimpImage     *image,
         case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
           floating_sel_attach (iter->data, drawable);
           break;
+
+        case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+        case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+          if (GIMP_IS_LAYER_MASK (drawable))
+            {
+              if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
+                gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
+              floating_sel_attach (iter->data, drawable);
+              break;
+            }
+
+          /* fall thru if not a layer mask */
 
         case GIMP_PASTE_TYPE_NEW_LAYER:
         case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:

@@ -168,14 +168,14 @@ static const GimpEnumActionEntry edit_paste_actions[] =
   { "edit-paste", GIMP_ICON_EDIT_PASTE,
     NC_("edit-action", "_Paste"), "<primary>V",
     NC_("edit-action", "Paste the content of the clipboard"),
-    GIMP_PASTE_TYPE_FLOATING, FALSE,
+    GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING, FALSE,
     GIMP_HELP_EDIT_PASTE },
 
   { "edit-paste-in-place", GIMP_ICON_EDIT_PASTE,
     NC_("edit-action", "Paste In P_lace"), "<primary><alt>V",
     NC_("edit-action",
         "Paste the content of the clipboard at its original position"),
-    GIMP_PASTE_TYPE_FLOATING_IN_PLACE, FALSE,
+    GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE, FALSE,
     GIMP_HELP_EDIT_PASTE_IN_PLACE },
 
   { "edit-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
@@ -191,21 +191,7 @@ static const GimpEnumActionEntry edit_paste_actions[] =
         "Paste the content of the clipboard into the current selection "
         "at its original position"),
     GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE, FALSE,
-    GIMP_HELP_EDIT_PASTE_INTO_IN_PLACE },
-
-  { "edit-paste-as-new-layer", GIMP_ICON_EDIT_PASTE_AS_NEW,
-    NC_("edit-action", "New _Layer"), NULL,
-    NC_("edit-action", "Create a new layer from the content of the clipboard"),
-    GIMP_PASTE_TYPE_NEW_LAYER, FALSE,
-    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER },
-
-  { "edit-paste-as-new-layer-in-place", GIMP_ICON_EDIT_PASTE_AS_NEW,
-    NC_("edit-action", "New Layer In _Place"), NULL,
-    NC_("edit-action",
-        "Create a new layer from the content of the clipboard "
-        "and place it at its original position"),
-    GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE, FALSE,
-    GIMP_HELP_EDIT_PASTE_AS_NEW_LAYER_IN_PLACE }
+    GIMP_HELP_EDIT_PASTE_INTO_IN_PLACE }
 };
 
 static const GimpEnumActionEntry edit_fill_actions[] =
@@ -369,8 +355,6 @@ edit_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("edit-paste-in-place",              image);
   SET_SENSITIVE ("edit-paste-into",                  image);
   SET_SENSITIVE ("edit-paste-into-in-place",         image);
-  SET_SENSITIVE ("edit-paste-as-new-layer",          image);
-  SET_SENSITIVE ("edit-paste-as-new-layer-in-place", image);
 
   SET_SENSITIVE ("edit-named-cut",          have_writable && have_no_groups);
   SET_SENSITIVE ("edit-named-copy",         drawables);

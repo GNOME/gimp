@@ -199,8 +199,6 @@
         <menuitem action="edit-paste-into-in-place" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
-        <menuitem action="edit-paste-as-new-layer" />
-        <menuitem action="edit-paste-as-new-layer-in-place" />
         <menuitem action="edit-paste-as-new-image-short" />
       </menu>
       <menu action="edit-buffer-menu" name="Buffer">

@@ -36,6 +36,7 @@
 #include "core/gimpfilloptions.h"
 #include "core/gimplayer.h"
 #include "core/gimplayer-new.h"
+#include "core/gimplayermask.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-undo.h"
 
@@ -340,8 +341,13 @@ edit_paste_cmd_callback (GimpAction *action,
                          GVariant   *value,
                          gpointer    data)
 {
+  GimpImage     *image;
   GimpDisplay   *display    = action_data_get_display (data);
   GimpPasteType  paste_type = (GimpPasteType) g_variant_get_int32 (value);
+  GimpPasteType  converted_type;
+  GList         *drawables;
+
+  return_if_no_image (image, data);
 
   if (paste_type == GIMP_PASTE_TYPE_FLOATING)
     {
@@ -367,6 +373,31 @@ edit_paste_cmd_callback (GimpAction *action,
     case GIMP_PASTE_TYPE_NEW_LAYER:
     case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
       edit_paste (display, paste_type, FALSE);
+      break;
+
+    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+    case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+      drawables = gimp_image_get_selected_drawables (image);
+
+      if (drawables &&
+         (g_list_length (drawables) == 1) &&
+          GIMP_IS_LAYER_MASK (drawables->data))
+        {
+          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING) ?
+                            GIMP_PASTE_TYPE_FLOATING :
+                            GIMP_PASTE_TYPE_FLOATING_IN_PLACE;
+
+          edit_paste (display, converted_type, TRUE);
+        }
+      else
+        {
+          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING) ?
+                            GIMP_PASTE_TYPE_NEW_LAYER :
+                            GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
+
+          edit_paste (display, converted_type, FALSE);
+        }
+
       break;
     }
 }
