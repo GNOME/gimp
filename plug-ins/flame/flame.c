@@ -495,7 +495,7 @@ file_response_callback (GtkFileChooser *chooser,
           fclose (f);
           /* i want to update the existing dialogue, but it's
              too painful */
-          gimp_set_data ("plug_in_flame", &config, sizeof (config));
+          gimp_set_data (PLUG_IN_PROC, &config, sizeof (config));
           /* gtk_widget_destroy(dialog); */
           set_flame_preview ();
           set_edit_preview ();
