@@ -842,10 +842,12 @@ tokenize (char **ss,
           char  *argv[],
           int   *argc)
 {
-  char *s = *ss;
-  int   i = 0, state = 0;
+  char *s   = *ss;
+  int   i   = 0, state = 0;
+  gint  len = 0;
 
-  while (*s != ';')
+  len = strlen (s);
+  while (*s != ';' && len > 0)
     {
       char c = *s;
       switch (state)
@@ -870,6 +872,7 @@ tokenize (char **ss,
             state = 0;
         }
       s++;
+      len--;
     }
   *s = 0;
   *ss = s + 1;
