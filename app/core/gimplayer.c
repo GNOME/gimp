@@ -779,8 +779,20 @@ gimp_layer_get_description (GimpViewable  *viewable,
 {
   if (gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
     {
-      return g_strdup_printf (_("Floating Selection\n(%s)"),
-                              gimp_object_get_name (viewable));
+      GimpDrawable *drawable;
+      const gchar  *header = _("Floating Selection");
+
+      drawable = gimp_layer_get_floating_sel_drawable (GIMP_LAYER (viewable));
+      if (GIMP_IS_LAYER_MASK (drawable))
+        header = _("Floating Mask");
+      else if (GIMP_IS_LAYER (drawable))
+        header = _("Floating Layer");
+      /* TRANSLATORS: the first %s will be the type of floating item, i.e.
+       * either a "Floating Layer" or "Floating Mask" usually. The second will
+       * be a layer name.
+       */
+      return g_strdup_printf (_("%s\n(%s)"),
+                              header, gimp_object_get_name (viewable));
     }
 
   return GIMP_VIEWABLE_CLASS (parent_class)->get_description (viewable,
