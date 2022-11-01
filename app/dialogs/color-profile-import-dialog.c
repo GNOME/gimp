@@ -73,7 +73,6 @@ color_profile_import_dialog_run (GimpImage                 *image,
   GimpColorProfile       *src_profile;
   GimpColorProfile       *pref_profile = NULL;
   GimpColorProfilePolicy  policy;
-  const gchar            *title;
   const gchar            *frame_title;
   gchar                  *text;
 
@@ -88,7 +87,6 @@ color_profile_import_dialog_run (GimpImage                 *image,
 
   if (gimp_image_get_base_type (image) == GIMP_GRAY)
     {
-      title       = _("Convert to Grayscale Working Space?");
       frame_title = _("Convert the image to the built-in grayscale color profile?");
 
       pref_profile = gimp_color_config_get_gray_color_profile (image->gimp->config->color_management, NULL);
@@ -97,7 +95,6 @@ color_profile_import_dialog_run (GimpImage                 *image,
     }
   else
     {
-      title       = _("Convert to RGB Working Space?");
       frame_title = _("Convert the image to the built-in sRGB color profile?");
 
       pref_profile = gimp_color_config_get_rgb_color_profile (image->gimp->config->color_management, NULL);
@@ -107,23 +104,20 @@ color_profile_import_dialog_run (GimpImage                 *image,
 
   dialog =
     gimp_viewable_dialog_new (g_list_prepend (NULL, image), context,
-                              title,
+                              _("Keep the Embedded Working Space?"),
                               "gimp-image-color-profile-import",
                               NULL,
-                              _("Import the image from a color profile"),
+                              _("Keep the image's color profile"),
                               parent,
                               gimp_standard_help_func,
                               GIMP_HELP_IMAGE_COLOR_PROFILE_IMPORT,
 
-                              _("_Keep"),    GTK_RESPONSE_CANCEL,
-                              _("C_onvert"), GTK_RESPONSE_OK,
+                              _("_Keep"),    GTK_RESPONSE_YES,
+                              _("_Convert"), GTK_RESPONSE_NO,
 
                               NULL);
 
-  gimp_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
-                                           GTK_RESPONSE_CANCEL,
-                                           -1);
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_YES);
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
@@ -231,7 +225,7 @@ color_profile_import_dialog_run (GimpImage                 *image,
 
   switch (gtk_dialog_run (GTK_DIALOG (dialog)))
     {
-    case GTK_RESPONSE_OK:
+    case GTK_RESPONSE_NO:
       if (g_strcmp0 (gtk_stack_get_visible_child_name (GTK_STACK (stack)),
                      "builtin") == 0)
         {
