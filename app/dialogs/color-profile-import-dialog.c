@@ -218,6 +218,8 @@ color_profile_import_dialog_run (GimpImage                 *image,
     {
       dont_ask_toggle =
         gtk_check_button_new_with_mnemonic (_("_Don't ask me again"));
+      gtk_widget_set_tooltip_text (dont_ask_toggle,
+                                   _("Your choice can later be edited in Preferences > Color Management"));
       gtk_box_pack_end (GTK_BOX (main_vbox), dont_ask_toggle, FALSE, FALSE, 0);
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dont_ask_toggle), FALSE);
       gtk_widget_show (dont_ask_toggle);
