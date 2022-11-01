@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-20 21:17+0000\n"
-"PO-Revision-Date: 2022-10-21 13:25+0100\n"
+"POT-Creation-Date: 2022-11-01 16:39+0000\n"
+"PO-Revision-Date: 2022-11-01 21:43+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.0.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -10753,8 +10753,8 @@ msgstr "Caminho"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to focus"
-"\"."
+"receives the focus. This is useful for window managers using \"click to "
+"focus\"."
 msgstr ""
 "Quando ativado, uma imagem torna-se a imagem ativa quando a sua janela de "
 "imagem recebe o foco. Isto é útil para gestores de janelas que usem \"clique "
@@ -11356,8 +11356,8 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Quando ativado, os pontos de amostragem estão visíveis por predefinição. "
-"Pode também ser alternado com o comando \"Ver → Mostrar pontos de amostragem"
-"\"."
+"Pode também ser alternado com o comando \"Ver → Mostrar pontos de "
+"amostragem\"."
 
 #: app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -11634,8 +11634,8 @@ msgstr ""
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas visíveis"
-"\"."
+"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas "
+"visíveis\"."
 
 # O original em inglês devia ser "Discard invisible layers" e não "Discard invisible".
 #: app/config/gimprc-blurbs.h:638
@@ -13298,7 +13298,7 @@ msgstr ""
 msgid "Brush Spacing"
 msgstr ""
 "Espaço intervalado entre as pinceladas. Um valor pequeno produz uma "
-"pincelada contínua. Valores maiores produzem um tracejado."
+"pincelada contínua. Valores maiores produzem um tracejado"
 
 #: app/core/gimpbrushclipboard.c:187
 msgid "Clipboard Mask"
@@ -13366,14 +13366,14 @@ msgstr "Pontas do pincel"
 msgid "Brush Hardness"
 msgstr ""
 "Define a dureza ou suavidade das margens das pinceladas. O valor máximo de "
-"dureza não tem suavidade nas margens."
+"dureza não tem suavidade nas margens"
 
 # Descrição melhorada. O original em inglês nada explica
 #: app/core/gimpbrushgenerated.c:165 app/paint/gimppaintoptions.c:211
 msgid "Brush Aspect Ratio"
 msgstr ""
 "Proporção entre o raio vertical e o raio horizontal do pincel. Valores "
-"diferentes de zero alteram a forma do pincel de circular para elíptica."
+"diferentes de zero alteram a forma do pincel de circular para elíptica"
 
 #: app/core/gimpbrushgenerated.c:172 app/paint/gimppaintoptions.c:218
 msgid "Brush Angle"
@@ -15503,7 +15503,6 @@ msgstr "Converter a imagem para um perfil de cor"
 #: app/dialogs/color-profile-dialog.c:155
 #: app/dialogs/color-profile-dialog.c:173
 #: app/dialogs/color-profile-dialog.c:191
-#: app/dialogs/color-profile-import-dialog.c:119
 #: app/dialogs/convert-indexed-dialog.c:143
 #: app/dialogs/convert-precision-dialog.c:147
 msgid "C_onvert"
@@ -15557,12 +15556,12 @@ msgid "Profile _details"
 msgstr "_Detalhes do perfil"
 
 #: app/dialogs/color-profile-dialog.c:290
-#: app/dialogs/color-profile-import-dialog.c:201
+#: app/dialogs/color-profile-import-dialog.c:195
 msgid "_Rendering Intent:"
 msgstr "_Intenção de visualização:"
 
 #: app/dialogs/color-profile-dialog.c:306
-#: app/dialogs/color-profile-import-dialog.c:217
+#: app/dialogs/color-profile-import-dialog.c:211
 msgid "_Black Point Compensation"
 msgstr "_Compensação de ponto negro"
 
@@ -15577,48 +15576,53 @@ msgctxt "profile"
 msgid "None"
 msgstr "Nenhum"
 
-#: app/dialogs/color-profile-import-dialog.c:91
-msgid "Convert to Grayscale Working Space?"
-msgstr "Converter para o espaço de trabalho em tons de cinzento?"
-
-#: app/dialogs/color-profile-import-dialog.c:92
+#: app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert the image to the built-in grayscale color profile?"
 msgstr "Converter a imagem para o perfil de cor em tons de cinzento do GIMP?"
 
-#: app/dialogs/color-profile-import-dialog.c:100
-msgid "Convert to RGB Working Space?"
-msgstr "Converter para o espaço de trabalho RGB?"
-
 # É necessário distinguir aqui entre o perfil de cor "embebed" numa imagem e o "built-in" do GIMP que estavam traduzidos com o mesmo significado, o que causava confusão. Esta mensagem refere-se a "GIMP built-in sRGB".
-#: app/dialogs/color-profile-import-dialog.c:101
+#: app/dialogs/color-profile-import-dialog.c:98
 msgid "Convert the image to the built-in sRGB color profile?"
 msgstr "Converter a imagem para o perfil de cor sRGB do GIMP?"
 
-#: app/dialogs/color-profile-import-dialog.c:113
-msgid "Import the image from a color profile"
-msgstr "Importar imagem que contém um perfil de cor"
+#: app/dialogs/color-profile-import-dialog.c:107
+msgid "Keep the Embedded Working Space?"
+msgstr "Manter o espaço de cor contido na imagem?"
 
-#: app/dialogs/color-profile-import-dialog.c:118
+#: app/dialogs/color-profile-import-dialog.c:110
+msgid "Keep the image's color profile"
+msgstr "Manter o perfil de cor da imagem"
+
+#: app/dialogs/color-profile-import-dialog.c:115
 msgid "_Keep"
 msgstr "_Manter"
 
-#: app/dialogs/color-profile-import-dialog.c:136
+#: app/dialogs/color-profile-import-dialog.c:116
+msgid "_Convert"
+msgstr "_Converter"
+
+#: app/dialogs/color-profile-import-dialog.c:130
 #, c-format
 msgid "The image '%s' has an embedded color profile"
 msgstr "A imagem '%s' contém um perfil de cor"
 
-#: app/dialogs/color-profile-import-dialog.c:166
+#: app/dialogs/color-profile-import-dialog.c:160
 msgid "Convert the image to the preferred grayscale color profile?"
 msgstr "Converter a imagem para o perfil de cor em tons de cinzento preferido?"
 
-#: app/dialogs/color-profile-import-dialog.c:168
+#: app/dialogs/color-profile-import-dialog.c:162
 msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Converter a imagem para o perfil de cor RGB preferido?"
 
-#: app/dialogs/color-profile-import-dialog.c:226
+#: app/dialogs/color-profile-import-dialog.c:220
 #: app/dialogs/metadata-rotation-import-dialog.c:218
 msgid "_Don't ask me again"
 msgstr "_Não perguntar novamente"
+
+#: app/dialogs/color-profile-import-dialog.c:222
+msgid "Your choice can later be edited in Preferences > Color Management"
+msgstr ""
+"A sua escolha pode mais tarde ser editada em Preferências > Gestão de Cores"
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -21259,8 +21263,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
-"%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument "
+"'%s' (#%d). Expected %s, got %s."
 msgstr ""
 "O procedimento '%s' foi chamado com um valor de tipo incorreto para o "
 "argumento '%s' (n°%d). Esperado %s, obtido %s."
@@ -23237,8 +23241,7 @@ msgstr "[Clique] + [arrastar] para desenhar um retângulo de recorte"
 # O original em inglês devia indicar como se cancela pois aparentemente não há outra forma de cancelar sem ser com a tecla Esc e nem toda a gente sabe isso. Dúvida: [Esc] é a tecla em todos os sistemas operativos?
 #: app/tools/gimpcroptool.c:282
 msgid "Click or press Enter to crop"
-msgstr ""
-"[Clique] ou prima a tecla [↵ Enter] para recortar. [Esc] para cancelar."
+msgstr "[Clique] ou prima a tecla [↵ Enter] para recortar. [Esc] para cancelar"
 
 #: app/tools/gimpcroptool.c:389
 msgid "Crop to: "
@@ -28852,6 +28855,15 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
 
+#~ msgid "Convert to Grayscale Working Space?"
+#~ msgstr "Converter para o espaço de trabalho em tons de cinzento?"
+
+#~ msgid "Convert to RGB Working Space?"
+#~ msgstr "Converter para o espaço de trabalho RGB?"
+
+#~ msgid "Import the image from a color profile"
+#~ msgstr "Importar imagem que contém um perfil de cor"
+
 #~ msgid "There is no path to move."
 #~ msgstr "Não existe nenhum caminho para mover."
 
@@ -30550,9 +30562,6 @@ msgstr "Depuração de falha de sistema do GIMP"
 
 #~ msgid "Convert the image to the RGB working space?"
 #~ msgstr "Converter imagem para espaço de cores RGB?"
-
-#~ msgid "Convert"
-#~ msgstr "Converter"
 
 #~ msgid "Fade %s"
 #~ msgstr "Desvanecer %s"
