@@ -334,6 +334,7 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
   GList *items;
 
   items = GIMP_ITEM_TREE_VIEW_GET_CLASS (view)->get_selected_items (image);
+  items = g_list_copy (items);
 
   /*  update button states  */
   g_signal_handlers_block_by_func (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)),
@@ -343,7 +344,7 @@ gimp_drawable_tree_view_floating_selection_changed (GimpImage            *image,
   g_signal_handlers_unblock_by_func (gimp_item_tree_view_get_image (GIMP_ITEM_TREE_VIEW (view)),
                                      gimp_drawable_tree_view_floating_selection_changed,
                                      view);
-
+  g_list_free (items);
 }
 
 static void
