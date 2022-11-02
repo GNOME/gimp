@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-09-02 13:45+0000\n"
-"PO-Revision-Date: 2022-09-04 14:40+0800\n"
+"POT-Creation-Date: 2022-11-01 20:45+0000\n"
+"PO-Revision-Date: 2022-11-02 16:16+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -73,7 +73,7 @@ msgstr "对齐可见图层"
 #: ../plug-ins/common/wavelet-decompose.c:354 ../plug-ins/common/web-page.c:234
 #: ../plug-ins/file-dds/ddsread.c:1363 ../plug-ins/file-dds/ddswrite.c:1983
 #: ../plug-ins/file-fits/fits.c:1150 ../plug-ins/file-fli/fli-gimp.c:877
-#: ../plug-ins/file-tiff/file-tiff-load.c:2643 ../plug-ins/flame/flame.c:481
+#: ../plug-ins/file-tiff/file-tiff-load.c:2664 ../plug-ins/flame/flame.c:481
 #: ../plug-ins/flame/flame.c:657 ../plug-ins/flame/flame.c:979
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:566
 #: ../plug-ins/fractal-explorer/fractal-explorer-dialogs.c:1641
@@ -453,7 +453,7 @@ msgstr "垂直(_V)"
 #: ../plug-ins/file-jpeg/jpeg-load.c:240
 #: ../plug-ins/file-psd/psd-image-res-load.c:1043
 #: ../plug-ins/file-psd/psd-load.c:2067 ../plug-ins/file-sgi/sgi.c:416
-#: ../plug-ins/file-tiff/file-tiff-load.c:1524
+#: ../plug-ins/file-tiff/file-tiff-load.c:1544
 #: ../plug-ins/file-webp/file-webp-load.c:164
 #: ../plug-ins/gfig/gfig-dialog.c:1321 ../plug-ins/gimpressionist/general.c:139
 #: ../plug-ins/map-object/map-object-apply.c:245
@@ -2147,7 +2147,7 @@ msgstr "读取图像头部信息时遇到文件尾或错误"
 #: ../plug-ins/file-psd/psd-load.c:135
 #: ../plug-ins/file-raw/file-darktable.c:399
 #: ../plug-ins/file-raw/file-rawtherapee.c:319 ../plug-ins/file-sgi/sgi.c:325
-#: ../plug-ins/file-tiff/file-tiff-load.c:296
+#: ../plug-ins/file-tiff/file-tiff-load.c:299
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
@@ -3130,7 +3130,7 @@ msgid "Import from PDF"
 msgstr "从 PDF 导入"
 
 #: ../plug-ins/common/file-pdf-load.c:1283 ../plug-ins/common/file-ps.c:3448
-#: ../plug-ins/file-tiff/file-tiff-load.c:2644
+#: ../plug-ins/file-tiff/file-tiff-load.c:2665
 #: ../plug-ins/metadata/metadata-editor.c:4627
 msgid "_Import"
 msgstr "导入(_I)"
@@ -3255,7 +3255,7 @@ msgstr "图层作为页面（%s）"
 #: ../plug-ins/common/file-pdf-save.c:1099
 #: ../plug-ins/common/file-pdf-save.c:1167
 #: ../plug-ins/common/file-pdf-save.c:1265 ../plug-ins/common/file-ps.c:1941
-#: ../plug-ins/file-tiff/file-tiff-load.c:1526
+#: ../plug-ins/file-tiff/file-tiff-load.c:1546
 #, c-format
 msgid "Page %d"
 msgstr "第 %d 页"
@@ -7346,17 +7346,17 @@ msgstr ""
 msgid "TIFF image"
 msgstr "TIFF 图像"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:304
+#: ../plug-ins/file-tiff/file-tiff-load.c:307
 #, c-format
 msgid "Not a TIFF image or image is corrupt."
 msgstr "不是 TIFF 图像或图像已损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:335
+#: ../plug-ins/file-tiff/file-tiff-load.c:338
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF “%s”不包含任何目录"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:342
+#: ../plug-ins/file-tiff/file-tiff-load.c:345
 #, c-format
 msgid ""
 "TIFF '%s' directory count by header failed though there seems to be %d page. "
@@ -7368,7 +7368,7 @@ msgstr[0] ""
 "TIFF“%s”虽然看起来存在 %d 页但通过文件头计算目录失败。正在尝试使用该假设值加"
 "载文件。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:468
+#: ../plug-ins/file-tiff/file-tiff-load.c:476
 msgid "Extra channels with unspecified data."
 msgstr "具有未指明数据的额外通道。"
 
@@ -7379,16 +7379,16 @@ msgstr "具有未指明数据的额外通道。"
 #. * can be considered non-conformant.
 #. * Let's ask what to do with the channel.
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:480
+#: ../plug-ins/file-tiff/file-tiff-load.c:488
 msgid "Non-conformant TIFF: extra channels without 'ExtraSamples' field."
 msgstr "非一致性 TIFF：没有“额外采样”区域的额外通道。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:562
+#: ../plug-ins/file-tiff/file-tiff-load.c:582
 #, c-format
 msgid "Couldn't read page %d of %d. Image might be corrupt.\n"
 msgstr "无法读取 %2$d 页中的第 %1$d 页。图像可能是损坏的。\n"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:591
+#: ../plug-ins/file-tiff/file-tiff-load.c:611
 #, c-format
 msgid ""
 "This image has a linear color profile but it was not set on the first layer. "
@@ -7397,7 +7397,7 @@ msgstr ""
 "该图像具有线性色彩配置文件但未在第一个图层上设置。第 %d # 图层以下的图层将视"
 "为非线性。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:599
+#: ../plug-ins/file-tiff/file-tiff-load.c:619
 msgid ""
 "This image has multiple color profiles. We will use the first one. If this "
 "leads to incorrect results you should consider loading each layer as a "
@@ -7406,39 +7406,39 @@ msgstr ""
 "该图像具有多个色彩配置文件。我们将使用第一个。如果这导致不正确的结果您应考虑"
 "将每个图层作为单独图像载入。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:611
+#: ../plug-ins/file-tiff/file-tiff-load.c:631
 #, c-format
 msgid "Suspicious bit depth: %d for page %d. Image may be corrupt."
 msgstr "可疑的位深度：%2$d 页中的 %1$d。图像可能是损坏的。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:685
+#: ../plug-ins/file-tiff/file-tiff-load.c:705
 #, c-format
 msgid "Unsupported bit depth: %d for page %d."
 msgstr "不支持的位深度：第 %2$d 页的 %1$d。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:700
+#: ../plug-ins/file-tiff/file-tiff-load.c:720
 #, c-format
 msgid "Could not get image width from '%s'"
 msgstr "无法从“%s”获取图像宽度"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:708
+#: ../plug-ins/file-tiff/file-tiff-load.c:728
 #, c-format
 msgid "Could not get image length from '%s'"
 msgstr "无法从“%s”获取图像长度"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:716
+#: ../plug-ins/file-tiff/file-tiff-load.c:736
 #, c-format
 msgid "Invalid image dimensions (%u x %u) for page %d. Image may be corrupt."
 msgstr "第 %3$d 页有无效图像尺寸（%1$u x %2$u）。图像可能已损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:737
+#: ../plug-ins/file-tiff/file-tiff-load.c:757
 #, c-format
 msgid ""
 "Could not get photometric from '%s'. Image is CCITT compressed, assuming min-"
 "is-white"
 msgstr "无法从“%s”获取测光。图像是 CCITT 压缩的，假定最小值为白色"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:744
+#: ../plug-ins/file-tiff/file-tiff-load.c:764
 #, c-format
 msgid "Could not get photometric from '%s'. Assuming min-is-black"
 msgstr "无法从“%s”获取测光。假定最小值为黑色"
@@ -7446,13 +7446,13 @@ msgstr "无法从“%s”获取测光。假定最小值为黑色"
 #. In non-interactive mode, we assume unassociated alpha if unspecified.
 #. * We don't output messages in interactive mode as the user
 #. * has already the ability to choose through a dialog.
-#: ../plug-ins/file-tiff/file-tiff-load.c:776
+#: ../plug-ins/file-tiff/file-tiff-load.c:796
 #, c-format
 msgid ""
 "Alpha channel type not defined for %s. Assuming alpha is not premultiplied"
 msgstr "没有为 %s 定义透明通道类型。假定透明不是自左乘的"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:801
+#: ../plug-ins/file-tiff/file-tiff-load.c:821
 #, c-format
 msgid ""
 "Image '%s' does not conform to the TIFF specification: ExtraSamples field is "
@@ -7462,42 +7462,42 @@ msgstr ""
 "图像“%s”不符合 TIFF 标准：额外通道呈现的情况下未设置额外采样域。假定第一个额"
 "外通道是非自左乘透明。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1090
+#: ../plug-ins/file-tiff/file-tiff-load.c:1110
 #, c-format
 msgid "Invalid or unknown compression %u. Setting compression to none."
 msgstr "无效或未知的压缩方式 %u。将设置压缩为无。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1148
+#: ../plug-ins/file-tiff/file-tiff-load.c:1168
 #, c-format
 msgid "Could not create a new image: %s"
 msgstr "无法创建新图像：%s"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1168
+#: ../plug-ins/file-tiff/file-tiff-load.c:1188
 #, c-format
 msgid "%s-%d-of-%d-pages"
 msgstr "%s-第 %d 页-共 %d 页"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1313
+#: ../plug-ins/file-tiff/file-tiff-load.c:1333
 #, c-format
 msgid "Unknown resolution unit type %d, assuming dpi"
 msgstr "未知的分辨率单位类型 %d，假定为 dpi"
 
 #. no res unit tag
 #. old AppleScan software produces these
-#: ../plug-ins/file-tiff/file-tiff-load.c:1323
+#: ../plug-ins/file-tiff/file-tiff-load.c:1343
 msgid "Warning: resolution specified without unit type, assuming dpi"
 msgstr "警告：指定的分辨率没有单位类型，假定为 dpi"
 
 #. xres but no yres
-#: ../plug-ins/file-tiff/file-tiff-load.c:1331
+#: ../plug-ins/file-tiff/file-tiff-load.c:1351
 msgid "Warning: no y resolution info, assuming same as x"
 msgstr "警告：没有 y 分辨率信息，假定与 x 相同"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1348
+#: ../plug-ins/file-tiff/file-tiff-load.c:1368
 msgid "Invalid image resolution info, using default"
 msgstr "无效的图像分辨率信息，将使用默认值"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1407
+#: ../plug-ins/file-tiff/file-tiff-load.c:1427
 #, c-format
 msgid "Could not get colormaps from '%s'"
 msgstr "无法从“%s”获取颜色表"
@@ -7507,63 +7507,67 @@ msgstr "无法从“%s”获取颜色表"
 #. * and can cause GIMP to become unresponsive and/or stuck.
 #. * See m2-d0f86ab189cbe900ec389ca6d7464713.tif from imagetestsuite
 #.
-#: ../plug-ins/file-tiff/file-tiff-load.c:1501
+#: ../plug-ins/file-tiff/file-tiff-load.c:1521
 #, c-format
 msgid "Suspicious number of extra channels: %d. Possibly corrupt image."
 msgstr "可疑的额外通道数量：%d。可能是损坏的图像。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1563
+#: ../plug-ins/file-tiff/file-tiff-load.c:1583
 msgid "TIFF Channel"
 msgstr "TIFF 通道"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1701
+#: ../plug-ins/file-tiff/file-tiff-load.c:1721
 #, c-format
 msgid "No data could be read from TIFF '%s'. The file is probably corrupted."
 msgstr "从 TIFF“%s”读取不到数据。该文件可能已损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:1772
+#: ../plug-ins/file-tiff/file-tiff-load.c:1792
 #, c-format
 msgid "%s: Unsupported image format, no RGBA loader available"
 msgstr "%s：不支持的图像格式，没有可用的 RGBA 加载器"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2084
-#: ../plug-ins/file-tiff/file-tiff-load.c:2281
+#: ../plug-ins/file-tiff/file-tiff-load.c:2104
+#: ../plug-ins/file-tiff/file-tiff-load.c:2301
 #, c-format
 msgid "Reading tile failed. Image may be corrupt at line %d."
 msgstr "读取分块失败。图像可能在第 %d 行损坏。"
 
 #. Error reading scanline, stop loading
-#: ../plug-ins/file-tiff/file-tiff-load.c:2093
-#: ../plug-ins/file-tiff/file-tiff-load.c:2290
+#: ../plug-ins/file-tiff/file-tiff-load.c:2113
+#: ../plug-ins/file-tiff/file-tiff-load.c:2310
 #, c-format
 msgid "Reading scanline failed. Image may be corrupt at line %d."
 msgstr "读取扫描线失败。图像可能在第 %d 行损坏。"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2639
+#: ../plug-ins/file-tiff/file-tiff-load.c:2660
 msgid "Import from TIFF"
 msgstr "从 TIFF 导入"
+
+#: ../plug-ins/file-tiff/file-tiff-load.c:2681
+msgid "_Show reduced images"
+msgstr "显示缩减的图像(_S)"
 
 #. Option to shrink the loaded image to its bounding box
 #. or keep as much empty space as possible.
 #. Note that there seems to be no way to keep the empty
 #. space on the right and bottom.
-#: ../plug-ins/file-tiff/file-tiff-load.c:2696
+#: ../plug-ins/file-tiff/file-tiff-load.c:2715
 msgid "_Keep empty space around imported layers"
 msgstr "保持导入图层周围的空白空间(_K)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2713
+#: ../plug-ins/file-tiff/file-tiff-load.c:2732
 msgid "Process extra channel as:"
 msgstr "处理额外通道为："
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2716
+#: ../plug-ins/file-tiff/file-tiff-load.c:2735
 msgid "_Non-premultiplied alpha"
 msgstr "非自左乘透明(_N)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2717
+#: ../plug-ins/file-tiff/file-tiff-load.c:2736
 msgid "Pre_multiplied alpha"
 msgstr "自左乘透明(_M)"
 
-#: ../plug-ins/file-tiff/file-tiff-load.c:2718
+#: ../plug-ins/file-tiff/file-tiff-load.c:2737
 msgid "Channe_l"
 msgstr "通道(_L)"
 
