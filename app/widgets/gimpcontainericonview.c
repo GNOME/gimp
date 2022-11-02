@@ -212,7 +212,7 @@ gimp_container_icon_view_constructed (GObject *object)
                                   NULL);
 
   gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (icon_view->model),
-                                               icon_view->renderer_cell);
+                                               icon_view->renderer_cell, -1);
 
   g_signal_connect (icon_view->view, "selection-changed",
                     G_CALLBACK (gimp_container_icon_view_selection_changed),

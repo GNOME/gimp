@@ -122,7 +122,8 @@ void        gimp_container_tree_view_add_toggle_cell
 
 void        gimp_container_tree_view_add_renderer_cell
                                               (GimpContainerTreeView *tree_view,
-                                               GtkCellRenderer       *cell);
+                                               GtkCellRenderer       *cell,
+                                               gint                   column_number);
 
 void        gimp_container_tree_view_set_dnd_drop_to_empty
                                               (GimpContainerTreeView *tree_view,

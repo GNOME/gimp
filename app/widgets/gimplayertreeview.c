@@ -368,7 +368,8 @@ gimp_layer_tree_view_constructed (GObject *object)
                                        NULL);
 
   gimp_container_tree_view_add_renderer_cell (tree_view,
-                                              layer_view->priv->mask_cell);
+                                              layer_view->priv->mask_cell,
+                                              layer_view->priv->model_column_mask);
 
   g_signal_connect (tree_view->renderer_cell, "clicked",
                     G_CALLBACK (gimp_layer_tree_view_layer_clicked),
@@ -761,6 +762,32 @@ gimp_layer_tree_view_insert_item (GimpContainerView *view,
     gimp_layer_tree_view_alpha_update (layer_view, iter, layer);
 
   gimp_layer_tree_view_mask_update (layer_view, iter, layer);
+
+  if (GIMP_IS_LAYER (viewable) && gimp_layer_is_floating_sel (GIMP_LAYER (viewable)))
+    {
+      GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
+      GimpLayer             *floating  = GIMP_LAYER (viewable);
+      GimpDrawable          *drawable  = gimp_layer_get_floating_sel_drawable (floating);
+
+      if (GIMP_IS_LAYER_MASK (drawable))
+        {
+          /* Display floating mask in the mask column. */
+          GimpViewRenderer *renderer  = NULL;
+
+          gtk_tree_model_get (GTK_TREE_MODEL (tree_view->model), iter,
+                              GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
+                              -1);
+          if (renderer)
+            {
+              gtk_tree_store_set (GTK_TREE_STORE (tree_view->model), iter,
+                                  layer_view->priv->model_column_mask,         renderer,
+                                  layer_view->priv->model_column_mask_visible, TRUE,
+                                  GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER,   NULL,
+                                  -1);
+              g_object_unref (renderer);
+            }
+        }
+    }
 
   return iter;
 }
@@ -1901,7 +1928,7 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
   GimpContainerTreeView *tree_view  = GIMP_CONTAINER_TREE_VIEW (layer_view);
   GimpViewRenderer      *layer_renderer;
   GimpViewRenderer      *mask_renderer;
-  GimpLayer             *layer;
+  GimpLayer             *layer      = NULL;
   GimpLayerMask         *mask       = NULL;
   GimpViewBorderType     layer_type = GIMP_VIEW_BORDER_BLACK;
 
@@ -1910,15 +1937,25 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
                       layer_view->priv->model_column_mask,       &mask_renderer,
                       -1);
 
-  layer = GIMP_LAYER (layer_renderer->viewable);
+  if (layer_renderer)
+    layer = GIMP_LAYER (layer_renderer->viewable);
+  else if (mask_renderer && GIMP_IS_LAYER (mask_renderer->viewable))
+    /* This happens when floating masks are displayed (in the mask column).
+     * In such a case, the mask_renderer will actually be a layer renderer
+     * showing the floating mask.
+     */
+    layer = GIMP_LAYER (mask_renderer->viewable);
 
-  if (mask_renderer)
+  g_return_if_fail (layer != NULL);
+
+  if (mask_renderer && GIMP_IS_LAYER_MASK (mask_renderer->viewable))
     mask = GIMP_LAYER_MASK (mask_renderer->viewable);
 
   if (! mask || (mask && ! gimp_layer_get_edit_mask (layer)))
     layer_type = GIMP_VIEW_BORDER_WHITE;
 
-  gimp_view_renderer_set_border_type (layer_renderer, layer_type);
+  if (layer_renderer)
+    gimp_view_renderer_set_border_type (layer_renderer, layer_type);
 
   if (mask)
     {
@@ -1938,6 +1975,11 @@ gimp_layer_tree_view_update_borders (GimpLayerTreeView *layer_view,
         }
 
       gimp_view_renderer_set_border_type (mask_renderer, mask_color);
+    }
+  else if (mask_renderer)
+    {
+      /* Floating mask. */
+      gimp_view_renderer_set_border_type (mask_renderer, GIMP_VIEW_BORDER_WHITE);
     }
 
   if (layer_renderer)

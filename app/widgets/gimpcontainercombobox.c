@@ -167,7 +167,7 @@ gimp_container_combo_box_init (GimpContainerComboBox *combo)
                                   NULL);
 
   gimp_container_tree_store_add_renderer_cell (GIMP_CONTAINER_TREE_STORE (model),
-                                               cell);
+                                               cell, -1);
 
   combo->viewable_renderer = cell;
 

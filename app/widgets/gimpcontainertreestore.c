@@ -52,6 +52,7 @@ struct _GimpContainerTreeStorePrivate
 {
   GimpContainerView *container_view;
   GList             *renderer_cells;
+  GList             *renderer_columns;
   gboolean           use_name;
 };
 
@@ -123,11 +124,8 @@ gimp_container_tree_store_finalize (GObject *object)
 {
   GimpContainerTreeStorePrivate *private = GET_PRIVATE (object);
 
-  if (private->renderer_cells)
-    {
-      g_list_free (private->renderer_cells);
-      private->renderer_cells = NULL;
-    }
+  g_list_free (private->renderer_cells);
+  g_list_free (private->renderer_columns);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -203,7 +201,8 @@ gimp_container_tree_store_new (GimpContainerView *container_view,
 
 void
 gimp_container_tree_store_add_renderer_cell (GimpContainerTreeStore *store,
-                                             GtkCellRenderer        *cell)
+                                             GtkCellRenderer        *cell,
+                                             gint                    column_number)
 {
   GimpContainerTreeStorePrivate *private;
 
@@ -213,6 +212,37 @@ gimp_container_tree_store_add_renderer_cell (GimpContainerTreeStore *store,
   private = GET_PRIVATE (store);
 
   private->renderer_cells = g_list_prepend (private->renderer_cells, cell);
+  if (column_number >= 0)
+    private->renderer_columns = g_list_append (private->renderer_columns,
+                                               GINT_TO_POINTER (column_number));
+
+}
+
+GimpViewRenderer *
+gimp_container_tree_store_get_renderer (GimpContainerTreeStore *store,
+                                        GtkTreeIter            *iter)
+{
+  GimpContainerTreeStorePrivate *private;
+  GimpViewRenderer              *renderer = NULL;
+  GList                         *c;
+
+  g_return_val_if_fail (GIMP_IS_CONTAINER_TREE_STORE (store), NULL);
+
+  private = GET_PRIVATE (store);
+
+  for (c = private->renderer_columns; c; c = c->next)
+    {
+      gtk_tree_model_get (GTK_TREE_MODEL (store), iter,
+                          GPOINTER_TO_INT (c->data), &renderer,
+                          -1);
+
+      if (renderer)
+        break;
+    }
+
+  g_return_val_if_fail (renderer != NULL, NULL);
+
+  return renderer;
 }
 
 void

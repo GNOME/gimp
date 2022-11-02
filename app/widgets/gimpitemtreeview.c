@@ -1569,9 +1569,8 @@ gimp_item_tree_view_name_edited (GtkCellRendererText *cell,
       const gchar      *old_name;
       GError           *error = NULL;
 
-      gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
+      renderer = gimp_container_tree_store_get_renderer (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+                                                         &iter);
 
       item = GIMP_ITEM (renderer->viewable);
 
@@ -1666,9 +1665,8 @@ gimp_item_tree_view_eye_clicked (GtkCellRendererToggle *toggle,
 
       context = gimp_container_view_get_context (GIMP_CONTAINER_VIEW (view));
 
-      gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
+      renderer = gimp_container_tree_store_get_renderer (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+                                                         &iter);
       g_object_get (toggle,
                     "active", &active,
                     NULL);
@@ -1724,14 +1722,14 @@ gimp_item_tree_view_lock_clicked (GtkCellRendererToggle *toggle,
   if (gtk_tree_model_get_iter (GIMP_CONTAINER_TREE_VIEW (view)->model,
                                &iter, path))
     {
-      GimpViewRenderer *renderer;
-      GimpItem         *item;
-      GdkRectangle      rect;
+      GimpViewRenderer       *renderer;
+      GimpContainerTreeStore *store;
+      GimpItem               *item;
+      GdkRectangle            rect;
 
       /* Update the lock state. */
-      gtk_tree_model_get (GIMP_CONTAINER_TREE_VIEW (view)->model,    &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
+      store = GIMP_CONTAINER_TREE_STORE (GIMP_CONTAINER_TREE_VIEW (view)->model);
+      renderer = gimp_container_tree_store_get_renderer (store, &iter);
       item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
       gimp_item_tree_view_update_lock_box (view, item, path);
@@ -1918,9 +1916,8 @@ gimp_item_tree_view_item_pre_clicked (GimpCellRendererViewable *cell,
       GimpImage        *image    = gimp_item_tree_view_get_image (item_view);
       GimpViewRenderer *renderer = NULL;
 
-      gtk_tree_model_get (tree_view->model, &iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
+      renderer = gimp_container_tree_store_get_renderer (GIMP_CONTAINER_TREE_STORE (tree_view->model),
+                                                         &iter);
 
       if (renderer)
         {
@@ -2062,12 +2059,12 @@ gimp_item_tree_view_row_expanded (GtkTreeView      *tree_view,
 
   if (selected_items)
     {
-      GimpViewRenderer *renderer;
-      GimpItem         *expanded_item;
+      GimpContainerTreeStore *store;
+      GimpViewRenderer       *renderer;
+      GimpItem               *expanded_item;
 
-      gtk_tree_model_get (GIMP_CONTAINER_TREE_VIEW (item_view)->model, iter,
-                          GIMP_CONTAINER_TREE_STORE_COLUMN_RENDERER, &renderer,
-                          -1);
+      store    = GIMP_CONTAINER_TREE_STORE (GIMP_CONTAINER_TREE_VIEW (item_view)->model);
+      renderer = gimp_container_tree_store_get_renderer (store, iter);
       expanded_item = GIMP_ITEM (renderer->viewable);
       g_object_unref (renderer);
 

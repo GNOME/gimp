@@ -67,7 +67,12 @@ GtkTreeModel * gimp_container_tree_store_new           (GimpContainerView      *
                                                         GType                  *types);
 
 void       gimp_container_tree_store_add_renderer_cell (GimpContainerTreeStore *store,
-                                                        GtkCellRenderer        *cell);
+                                                        GtkCellRenderer        *cell,
+                                                        gint                    column_number);
+GimpViewRenderer *
+               gimp_container_tree_store_get_renderer  (GimpContainerTreeStore *store,
+                                                        GtkTreeIter            *iter);
+
 void           gimp_container_tree_store_set_use_name  (GimpContainerTreeStore *store,
                                                         gboolean                use_name);
 gboolean       gimp_container_tree_store_get_use_name  (GimpContainerTreeStore *store);
