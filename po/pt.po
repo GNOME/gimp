@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-01 16:39+0000\n"
-"PO-Revision-Date: 2022-11-01 21:43+0000\n"
+"POT-Creation-Date: 2022-11-03 09:22+0000\n"
+"PO-Revision-Date: 2022-11-03 11:35+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -7164,7 +7164,7 @@ msgstr "Definições da camada"
 msgid "Edit Layer Attributes"
 msgstr "Editar definições da camada"
 
-#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:358
+#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
 #: app/widgets/gimplayertreeview.c:1102
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -13742,7 +13742,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Equalizar"
 
-#: app/core/gimpdrawable-floating-selection.c:203
+#: app/core/gimpdrawable-floating-selection.c:203 app/core/gimplayer.c:783
 msgid "Floating Selection"
 msgstr "Seleção flutuante"
 
@@ -14533,7 +14533,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Ancorar seleção flutuante"
 
-#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1046
+#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1058
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14609,91 +14609,104 @@ msgstr "A camada não pode ser mais elevada."
 msgid "Layer cannot be lowered more."
 msgstr "A camada não pode ser mais baixada."
 
-#: app/core/gimplayer.c:743 app/core/gimplayer.c:2026
+#: app/core/gimplayer.c:743 app/core/gimplayer.c:2038
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "Máscara %s"
 
-#: app/core/gimplayer.c:782
+#: app/core/gimplayer.c:787
+msgid "Floating Mask"
+msgstr "Máscara flutuante"
+
+#: app/core/gimplayer.c:789
+msgid "Floating Layer"
+msgstr "Camada flutuante"
+
+#. TRANSLATORS: the first %s will be the type of floating item, i.e.
+#. * either a "Floating Layer" or "Floating Mask" usually. The second will
+#. * be a layer name.
+#.
+#: app/core/gimplayer.c:794
 #, c-format
+#| msgid "%s (%s)"
 msgid ""
-"Floating Selection\n"
+"%s\n"
 "(%s)"
 msgstr ""
-"Seleção flutuante\n"
+"%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1927
+#: app/core/gimplayer.c:1939
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 "Não é possível adicionar uma máscara à camada porque a camada já tem uma."
 
-#: app/core/gimplayer.c:1938
+#: app/core/gimplayer.c:1950
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 "Não é possível adicionar uma máscara à camada de dimensões diferentes da "
 "camada especificada."
 
-#: app/core/gimplayer.c:1944
+#: app/core/gimplayer.c:1956
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Adicionar máscara à camada"
 
-#: app/core/gimplayer.c:2067
+#: app/core/gimplayer.c:2079
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Transferir canal alfa para máscara"
 
-#: app/core/gimplayer.c:2230
+#: app/core/gimplayer.c:2242
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Aplicar máscara à camada"
 
-#: app/core/gimplayer.c:2231
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Eliminar máscara da camada"
 
-#: app/core/gimplayer.c:2338
+#: app/core/gimplayer.c:2350
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Ativar máscara da camada"
 
-#: app/core/gimplayer.c:2339
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Desativar máscara da camada"
 
-#: app/core/gimplayer.c:2420
+#: app/core/gimplayer.c:2432
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Mostrar máscara da camada"
 
-#: app/core/gimplayer.c:2499
+#: app/core/gimplayer.c:2511
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Adicionar canal alfa"
 
-#: app/core/gimplayer.c:2535
+#: app/core/gimplayer.c:2547
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Remover canal alfa"
 
-#: app/core/gimplayer.c:2556
+#: app/core/gimplayer.c:2568
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Camada no tamanho da imagem"
 
-#: app/core/gimplayer.c:2739
+#: app/core/gimplayer.c:2751
 msgid "Set layer's blend space"
 msgstr "Definir o espaço de mistura da camada"
 
-#: app/core/gimplayer.c:2786
+#: app/core/gimplayer.c:2798
 msgid "Set layer's composite space"
 msgstr "Definir o espaço de combinação da camada"
 
-#: app/core/gimplayer.c:2833
+#: app/core/gimplayer.c:2845
 msgid "Set layer's composite mode"
 msgstr "Definir o modo de combinação da camada"
 
@@ -18763,14 +18776,14 @@ msgstr "Os pixéis de uma camada selecionada estão bloqueados."
 
 #: app/display/gimpdisplayshell-dnd.c:426
 #: app/widgets/gimpdrawabletreeview.c:267
-#: app/widgets/gimpdrawabletreeview.c:385
+#: app/widgets/gimpdrawabletreeview.c:386
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Largada textura na camada"
 
 #: app/display/gimpdisplayshell-dnd.c:448
 #: app/widgets/gimpdrawabletreeview.c:298
-#: app/widgets/gimpdrawabletreeview.c:405
+#: app/widgets/gimpdrawabletreeview.c:406
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Largada cor na camada"
@@ -28854,6 +28867,14 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#, c-format
+#~ msgid ""
+#~ "Floating Selection\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "Seleção flutuante\n"
+#~ "(%s)"
 
 #~ msgid "Convert to Grayscale Working Space?"
 #~ msgstr "Converter para o espaço de trabalho em tons de cinzento?"
