@@ -22,8 +22,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP-master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-11 22:10+0000\n"
-"PO-Revision-Date: 2022-10-12 10:34+0800\n"
+"POT-Creation-Date: 2022-11-01 21:57+0000\n"
+"PO-Revision-Date: 2022-11-02 16:15+0800\n"
 "Last-Translator: lumingzh <lumingzh@qq.com>\n"
 "Language-Team: Chinese - China <i18n-zh@googlegroups.com>\n"
 "Language: zh_CN\n"
@@ -1029,7 +1029,7 @@ msgstr "编辑通道颜色"
 msgid "_Fill opacity:"
 msgstr "填充不透明度(_F)："
 
-#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:330
+#: app/actions/channels-commands.c:159 app/widgets/gimpchanneltreeview.c:328
 msgid "New Channel"
 msgstr "新建通道"
 
@@ -1062,8 +1062,8 @@ msgid_plural "Lower Channels to Bottom"
 msgstr[0] "通道移至底端"
 
 #: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:472
-#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:261
-#: app/widgets/gimplayertreeview.c:1017
+#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:259
+#: app/widgets/gimplayertreeview.c:1015
 #, c-format
 msgid "%s Channel Copy"
 msgstr "%s 通道副本"
@@ -2541,7 +2541,7 @@ msgstr "240 秒"
 #: app/display/gimpdisplayshell-rotate-dialog.c:122
 #: app/display/gimpdisplayshell-scale-dialog.c:122
 #: app/tools/gimpfiltertool.c:364 app/tools/gimpforegroundselecttool.c:331
-#: app/tools/gimptexttool.c:1759 app/tools/gimptransformgridtool.c:1248
+#: app/tools/gimptexttool.c:1759 app/tools/gimptransformgridtool.c:1264
 #: app/tools/gimptransformtool.c:428 app/widgets/gimpactionview.c:622
 #: app/widgets/gimpcolordialog.c:463 app/widgets/gimpcontrollereditor.c:661
 #: app/widgets/gimpcontrollerlist.c:555 app/widgets/gimpdeviceeditor.c:543
@@ -2609,7 +2609,7 @@ msgstr "为该标记添加描述"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:975
+#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:973
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3372,27 +3372,27 @@ msgstr "自动校正白平衡"
 
 #: app/actions/drawable-actions.c:60
 msgctxt "drawable-action"
-msgid "Toggle Drawable _Visibility"
+msgid "Toggle Drawables _Visibility"
 msgstr "切换可绘区的可见性(_V)"
 
 #: app/actions/drawable-actions.c:66
 msgctxt "drawable-action"
-msgid "L_ock Pixels of Drawable"
+msgid "L_ock Pixels of Drawables"
 msgstr "锁定可绘区的像素(_O)"
 
 #: app/actions/drawable-actions.c:68
 msgctxt "drawable-action"
-msgid "Keep the pixels on this drawable from being modified"
+msgid "Keep the pixels on selected drawables from being modified"
 msgstr "保持此可绘区上的像素不被修改"
 
 #: app/actions/drawable-actions.c:74
 msgctxt "drawable-action"
-msgid "L_ock Position of Drawable"
+msgid "L_ock Position of Drawables"
 msgstr "锁定可绘区的位置(_O)"
 
 #: app/actions/drawable-actions.c:76
 msgctxt "drawable-action"
-msgid "Keep the position on this drawable from being modified"
+msgid "Keep the position on selected drawables from being modified"
 msgstr "保持此可绘区上的位置不被修改"
 
 #: app/actions/drawable-actions.c:85
@@ -3445,9 +3445,34 @@ msgctxt "drawable-action"
 msgid "Rotate drawable 90 degrees to the left"
 msgstr "向左旋转可绘区 90 度"
 
-#: app/actions/drawable-commands.c:77
+#: app/actions/drawable-commands.c:61
+msgid "Equalize"
+msgstr "均化"
+
+#: app/actions/drawable-commands.c:93
 msgid "White Balance operates only on RGB color layers."
 msgstr "仅对使用 RGB 颜色的图层进行白平衡操作。"
+
+#: app/actions/drawable-commands.c:102 app/core/gimpdrawable-levels.c:72
+#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
+msgid "Levels"
+msgstr "色阶"
+
+#: app/actions/drawable-commands.c:242
+msgid "Lock/Unlock content"
+msgstr "锁定/解锁内容"
+
+#: app/actions/drawable-commands.c:310
+msgid "Lock/Unlock position"
+msgstr "锁定/解锁位置"
+
+#: app/actions/drawable-commands.c:343
+msgid "Flip Drawables"
+msgstr "翻转可绘区"
+
+#: app/actions/drawable-commands.c:396
+msgid "Rotate Drawables"
+msgstr "旋转可绘区"
 
 #: app/actions/dynamics-actions.c:43
 msgctxt "dynamics-action"
@@ -5041,25 +5066,25 @@ msgctxt "filters-action"
 msgid "Show the last used filter dialog again"
 msgstr "再次显示上次使用的滤镜对话框"
 
-#: app/actions/filters-actions.c:1133
+#: app/actions/filters-actions.c:1137
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "重复(_P)“%s”"
 
-#: app/actions/filters-actions.c:1134
+#: app/actions/filters-actions.c:1138
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "重新显示(_E)“%s”"
 
-#: app/actions/filters-actions.c:1172
+#: app/actions/filters-actions.c:1176
 msgid "Repeat Last"
 msgstr "重复上次操作"
 
-#: app/actions/filters-actions.c:1174
+#: app/actions/filters-actions.c:1178
 msgid "Re-Show Last"
 msgstr "显示上次操作"
 
-#: app/actions/filters-actions.c:1177 app/actions/filters-actions.c:1179
+#: app/actions/filters-actions.c:1181 app/actions/filters-actions.c:1183
 msgid "No last used filters"
 msgstr "无上次使用滤镜"
 
@@ -6164,12 +6189,12 @@ msgid "Delete this image"
 msgstr "删除此图像"
 
 #: app/actions/items-commands.c:180 app/actions/items-commands.c:226
-#: app/tools/gimpvectortool.c:737
+#: app/tools/gimpvectortool.c:742
 msgid "There are no selected layers or channels to fill."
 msgstr "没有选中的图层或通道可以填充。"
 
 #: app/actions/items-commands.c:267 app/actions/items-commands.c:313
-#: app/tools/gimpvectortool.c:811
+#: app/tools/gimpvectortool.c:816
 msgid "There are no selected layers or channels to stroke to."
 msgstr "没有选中的图层或通道可以勾画。"
 
@@ -7006,7 +7031,7 @@ msgid "Edit Layer Attributes"
 msgstr "编辑图层属性"
 
 #: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
-#: app/widgets/gimplayertreeview.c:1104
+#: app/widgets/gimplayertreeview.c:1102
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "新建图层"
@@ -7171,7 +7196,7 @@ msgid "Empty Selection"
 msgstr "空选区"
 
 #: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
-#: app/widgets/gimplayertreeview.c:1615
+#: app/widgets/gimplayertreeview.c:1613
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
@@ -7187,19 +7212,19 @@ msgstr "设置图层合成空间"
 msgid "Set layers' composite mode"
 msgstr "设置图层合成模式"
 
-#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:533
+#: app/actions/layers-commands.c:2061 app/widgets/gimpitemtreeview.c:531
 msgid "Lock content"
 msgstr "锁定内容"
 
-#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:534
+#: app/actions/layers-commands.c:2063 app/widgets/gimpitemtreeview.c:532
 msgid "Unlock content"
 msgstr "解锁内容"
 
-#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:549
+#: app/actions/layers-commands.c:2110 app/widgets/gimpitemtreeview.c:547
 msgid "Lock position"
 msgstr "锁定位置"
 
-#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:550
+#: app/actions/layers-commands.c:2112 app/widgets/gimpitemtreeview.c:548
 msgid "Unlock position"
 msgstr "解锁位置"
 
@@ -7561,7 +7586,7 @@ msgstr "重置所有滤镜"
 #: app/dialogs/preferences-dialog.c:1225 app/dialogs/print-size-dialog.c:123
 #: app/dialogs/scale-dialog.c:136 app/dialogs/stroke-dialog.c:127
 #: app/display/gimpdisplayshell-rotate-dialog.c:121
-#: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1245
+#: app/tools/gimpfiltertool.c:363 app/tools/gimptransformgridtool.c:1261
 #: app/widgets/gimpcolordialog.c:462 app/widgets/gimpcolordisplayeditor.c:332
 msgid "_Reset"
 msgstr "重置(_R)"
@@ -8975,7 +9000,7 @@ msgstr "按上次使用的值勾画路径"
 
 #: app/actions/vectors-actions.c:143
 msgctxt "vectors-action"
-msgid "Co_py Path"
+msgid "Co_py Paths"
 msgstr "复制路径(_P)"
 
 #: app/actions/vectors-actions.c:148
@@ -8985,7 +9010,7 @@ msgstr "粘贴路径(_H)"
 
 #: app/actions/vectors-actions.c:153
 msgctxt "vectors-action"
-msgid "E_xport Path..."
+msgid "E_xport Paths..."
 msgstr "导出路径(_X)…"
 
 #: app/actions/vectors-actions.c:158
@@ -9213,7 +9238,7 @@ msgctxt "vectors-action"
 msgid "Select the vector below the current path"
 msgstr "选择当前路径下方的路径"
 
-#: app/actions/vectors-commands.c:162 app/actions/vectors-commands.c:726
+#: app/actions/vectors-commands.c:162 app/actions/vectors-commands.c:827
 msgid "Path Attributes"
 msgstr "路径属性"
 
@@ -9229,13 +9254,33 @@ msgstr "新建路径"
 msgid "Create a New Path"
 msgstr "创建一个新的路径"
 
-#: app/actions/vectors-commands.c:434 app/tools/gimpvectoroptions.c:201
-#: app/tools/gimpvectortool.c:744
+#: app/actions/vectors-commands.c:264
+msgid "Raise Path"
+msgid_plural "Raise Paths"
+msgstr[0] "升高路径"
+
+#: app/actions/vectors-commands.c:300
+msgid "Raise Path to Top"
+msgid_plural "Raise Paths to Top"
+msgstr[0] "路径移至顶端"
+
+#: app/actions/vectors-commands.c:340
+msgid "Lower Path"
+msgid_plural "Lower Paths"
+msgstr[0] "降低路径"
+
+#: app/actions/vectors-commands.c:380
+msgid "Lower Path to Bottom"
+msgid_plural "Lower Paths to Bottom"
+msgstr[0] "路径移至底端"
+
+#: app/actions/vectors-commands.c:535 app/tools/gimpvectoroptions.c:201
+#: app/tools/gimpvectortool.c:749
 msgid "Fill Path"
 msgstr "填充路径"
 
-#: app/actions/vectors-commands.c:466 app/tools/gimpvectoroptions.c:209
-#: app/tools/gimpvectortool.c:818
+#: app/actions/vectors-commands.c:567 app/tools/gimpvectoroptions.c:209
+#: app/tools/gimpvectortool.c:823
 msgid "Stroke Path"
 msgstr "勾画路径"
 
@@ -10474,12 +10519,12 @@ msgstr "图层"
 #: app/config/gimpdialogconfig.c:416 app/core/gimpchannel.c:254
 #: app/operations/gimpcurvesconfig.c:119 app/operations/gimplevelsconfig.c:124
 #: app/operations/gimpoperationthreshold.c:90
-#: app/widgets/gimpchanneltreeview.c:335
+#: app/widgets/gimpchanneltreeview.c:333
 msgid "Channel"
 msgstr "通道"
 
 #: app/config/gimpdialogconfig.c:431 app/vectors/gimpvectors.c:224
-#: app/widgets/gimpvectorstreeview.c:252
+#: app/widgets/gimpvectorstreeview.c:250
 msgid "Path"
 msgstr "路径"
 
@@ -11232,8 +11277,9 @@ msgstr "为“导出路径”对话框设置默认文件夹路径。"
 
 #: app/config/gimprc-blurbs.h:653
 msgid ""
-"Sets the default 'Export the active path' state for the 'Export Path' dialog."
-msgstr "为“导出路径”对话框设置默认“导出激活路径”状态。"
+"Sets the default 'Export the selected paths' state for the 'Export Path' "
+"dialog."
+msgstr "为“导出路径”对话框设置默认“导出选中路径”状态。"
 
 #: app/config/gimprc-blurbs.h:656
 msgid "Sets the default folder path for the 'Import Path' dialog."
@@ -11403,1016 +11449,1001 @@ msgstr "严重解析错误"
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s 的值不是有效的 UTF-8 字符串"
 
-#: app/core/core-enums.c:28
-msgctxt "align-reference-type"
-msgid "First item"
-msgstr "第一项"
-
-#: app/core/core-enums.c:29
+#: app/core/core-enums.c:25
 msgctxt "align-reference-type"
 msgid "Image"
 msgstr "图像"
 
-#: app/core/core-enums.c:30
+#: app/core/core-enums.c:26
 msgctxt "align-reference-type"
 msgid "Selection"
 msgstr "选区"
 
-#: app/core/core-enums.c:31
+#: app/core/core-enums.c:27
 msgctxt "align-reference-type"
-msgid "Active layer"
-msgstr "激活图层"
+msgid "Picked reference object"
+msgstr "拾取的参考对象"
 
-#: app/core/core-enums.c:32
-msgctxt "align-reference-type"
-msgid "Active channel"
-msgstr "活动通道"
-
-#: app/core/core-enums.c:33
-msgctxt "align-reference-type"
-msgid "Active path"
-msgstr "活动路径"
-
-#: app/core/core-enums.c:115
+#: app/core/core-enums.c:109
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "前景色填充"
 
-#: app/core/core-enums.c:116
+#: app/core/core-enums.c:110
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "背景色填充"
 
-#: app/core/core-enums.c:117
+#: app/core/core-enums.c:111
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "图案填充"
 
-#: app/core/core-enums.c:146
+#: app/core/core-enums.c:140
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "硬边"
 
-#: app/core/core-enums.c:147
+#: app/core/core-enums.c:141
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "平滑"
 
-#: app/core/core-enums.c:148
+#: app/core/core-enums.c:142
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "羽化"
 
-#: app/core/core-enums.c:183
+#: app/core/core-enums.c:177
 msgctxt "color-pick-mode"
 msgid "Pixel"
 msgstr "像素"
 
-#: app/core/core-enums.c:184
+#: app/core/core-enums.c:178
 msgctxt "color-pick-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
-#: app/core/core-enums.c:185
+#: app/core/core-enums.c:179
 msgctxt "color-pick-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
-#: app/core/core-enums.c:186
+#: app/core/core-enums.c:180
 msgctxt "color-pick-mode"
 msgid "HSV"
 msgstr "HSV"
 
-#: app/core/core-enums.c:187
+#: app/core/core-enums.c:181
 msgctxt "color-pick-mode"
 msgid "CIE LCh"
 msgstr "CIE LCh"
 
-#: app/core/core-enums.c:188
+#: app/core/core-enums.c:182
 msgctxt "color-pick-mode"
 msgid "CIE LAB"
 msgstr "CIE LAB"
 
-#: app/core/core-enums.c:189
+#: app/core/core-enums.c:183
 msgctxt "color-pick-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: app/core/core-enums.c:190
+#: app/core/core-enums.c:184
 msgctxt "color-pick-mode"
 msgid "CIE xyY"
 msgstr "CIE xyY"
 
-#: app/core/core-enums.c:191
+#: app/core/core-enums.c:185
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
 msgstr "CIE Yu'v'"
 
-#: app/core/core-enums.c:221
+#: app/core/core-enums.c:215
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "询问做什么"
 
-#: app/core/core-enums.c:222
+#: app/core/core-enums.c:216
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "保持内嵌的配置文件"
 
-#: app/core/core-enums.c:223
+#: app/core/core-enums.c:217
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "转换为内置 sRGB 或灰阶配置文件"
 
-#: app/core/core-enums.c:224
+#: app/core/core-enums.c:218
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
 msgstr "转换为首选的 RGB 或灰阶色彩配置文件（默认为内置）"
 
-#: app/core/core-enums.c:318
+#: app/core/core-enums.c:312
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "无"
 
-#: app/core/core-enums.c:319
+#: app/core/core-enums.c:313
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
 msgstr "弗洛伊德-斯坦伯格算法（标准）"
 
-#: app/core/core-enums.c:320
+#: app/core/core-enums.c:314
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "弗洛伊德-斯坦伯格算法（减少渗色）"
 
-#: app/core/core-enums.c:321
+#: app/core/core-enums.c:315
 msgctxt "convert-dither-type"
 msgid "Positioned"
 msgstr "定位"
 
-#: app/core/core-enums.c:380
+#: app/core/core-enums.c:374
 msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "平滑"
 
-#: app/core/core-enums.c:381
+#: app/core/core-enums.c:375
 msgctxt "curve-point-type"
 msgid "Corner"
 msgstr "拐角"
 
-#: app/core/core-enums.c:409
+#: app/core/core-enums.c:403
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "光滑"
 
-#: app/core/core-enums.c:410
+#: app/core/core-enums.c:404
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "手绘"
 
-#: app/core/core-enums.c:447
+#: app/core/core-enums.c:441
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "自定义"
 
-#: app/core/core-enums.c:448
+#: app/core/core-enums.c:442
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "直线"
 
-#: app/core/core-enums.c:449
+#: app/core/core-enums.c:443
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "长划线"
 
-#: app/core/core-enums.c:450
+#: app/core/core-enums.c:444
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "中划线"
 
-#: app/core/core-enums.c:451
+#: app/core/core-enums.c:445
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "短划线"
 
-#: app/core/core-enums.c:452
+#: app/core/core-enums.c:446
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "稀疏虚线"
 
-#: app/core/core-enums.c:453
+#: app/core/core-enums.c:447
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "标准虚线"
 
-#: app/core/core-enums.c:454
+#: app/core/core-enums.c:448
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "密集虚线"
 
-#: app/core/core-enums.c:455
+#: app/core/core-enums.c:449
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "细点线"
 
-#: app/core/core-enums.c:456
+#: app/core/core-enums.c:450
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "划-点线"
 
-#: app/core/core-enums.c:457
+#: app/core/core-enums.c:451
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "划-点-点线"
 
-#: app/core/core-enums.c:487
+#: app/core/core-enums.c:481
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "调试警告，严重错误和崩溃"
 
-#: app/core/core-enums.c:488
+#: app/core/core-enums.c:482
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "调试严重错误和崩溃"
 
-#: app/core/core-enums.c:489
+#: app/core/core-enums.c:483
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "仅调试崩溃"
 
-#: app/core/core-enums.c:490
+#: app/core/core-enums.c:484
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "从不调试 GIMP"
 
-#: app/core/core-enums.c:576
+#: app/core/core-enums.c:570
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "不透明度"
 
-#: app/core/core-enums.c:577
+#: app/core/core-enums.c:571
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "大小"
 
-#: app/core/core-enums.c:578
+#: app/core/core-enums.c:572
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "角度"
 
-#: app/core/core-enums.c:579
+#: app/core/core-enums.c:573
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "颜色"
 
-#: app/core/core-enums.c:580
+#: app/core/core-enums.c:574
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "硬度"
 
-#: app/core/core-enums.c:581
+#: app/core/core-enums.c:575
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "力度"
 
-#: app/core/core-enums.c:582
+#: app/core/core-enums.c:576
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "宽高比"
 
-#: app/core/core-enums.c:583
+#: app/core/core-enums.c:577
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "间距"
 
-#: app/core/core-enums.c:584
+#: app/core/core-enums.c:578
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "速率"
 
-#: app/core/core-enums.c:585
+#: app/core/core-enums.c:579
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "流量"
 
-#: app/core/core-enums.c:586
+#: app/core/core-enums.c:580
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "抖动"
 
-#: app/core/core-enums.c:614
+#: app/core/core-enums.c:608
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "纯色"
 
-#: app/core/core-enums.c:615
+#: app/core/core-enums.c:609
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "图案"
 
-#: app/core/core-enums.c:643
+#: app/core/core-enums.c:637
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "将选区用作输入"
 
-#: app/core/core-enums.c:644
+#: app/core/core-enums.c:638
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "将整个图层用作输入"
 
-#: app/core/core-enums.c:675
+#: app/core/core-enums.c:669
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "固定"
 
-#: app/core/core-enums.c:676
+#: app/core/core-enums.c:670
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "前景色"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: app/core/core-enums.c:679
+#: app/core/core-enums.c:673
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "前景"
 
-#: app/core/core-enums.c:680
+#: app/core/core-enums.c:674
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "前景色（透明）"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:683
+#: app/core/core-enums.c:677
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "前景(透)"
 
-#: app/core/core-enums.c:684
+#: app/core/core-enums.c:678
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "背景色"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: app/core/core-enums.c:687
+#: app/core/core-enums.c:681
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "背景"
 
-#: app/core/core-enums.c:688
+#: app/core/core-enums.c:682
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "背景色（透明）"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:691
+#: app/core/core-enums.c:685
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "背景(透)"
 
-#: app/core/core-enums.c:804
+#: app/core/core-enums.c:798
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "明度"
 
-#: app/core/core-enums.c:805
+#: app/core/core-enums.c:799
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "红色"
 
-#: app/core/core-enums.c:806
+#: app/core/core-enums.c:800
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "绿色"
 
-#: app/core/core-enums.c:807
+#: app/core/core-enums.c:801
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "蓝色"
 
-#: app/core/core-enums.c:808
+#: app/core/core-enums.c:802
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "透明"
 
-#: app/core/core-enums.c:809
+#: app/core/core-enums.c:803
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr "亮度"
 
-#: app/core/core-enums.c:810
+#: app/core/core-enums.c:804
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: app/core/core-enums.c:840
+#: app/core/core-enums.c:834
 msgctxt "item-set"
 msgid "None"
 msgstr "无"
 
-#: app/core/core-enums.c:841
+#: app/core/core-enums.c:835
 msgctxt "item-set"
 msgid "All layers"
 msgstr "全部图层"
 
-#: app/core/core-enums.c:842
+#: app/core/core-enums.c:836
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "有尺寸的图像的图层"
 
-#: app/core/core-enums.c:843
+#: app/core/core-enums.c:837
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "全部可见图层"
 
-#: app/core/core-enums.c:871
+#: app/core/core-enums.c:865
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "全局抠图"
 
-#: app/core/core-enums.c:872
+#: app/core/core-enums.c:866
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "莱文抠图"
 
-#: app/core/core-enums.c:903
+#: app/core/core-enums.c:897
 msgctxt "message-severity"
 msgid "Message"
 msgstr "消息"
 
-#: app/core/core-enums.c:904
+#: app/core/core-enums.c:898
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "警告"
 
-#: app/core/core-enums.c:905
+#: app/core/core-enums.c:899
 msgctxt "message-severity"
 msgid "Error"
 msgstr "错误"
 
-#: app/core/core-enums.c:906
+#: app/core/core-enums.c:900
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "警告"
 
-#: app/core/core-enums.c:907
+#: app/core/core-enums.c:901
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "严重"
 
-#: app/core/core-enums.c:936
+#: app/core/core-enums.c:930
 msgctxt "metadata-rotation-policy"
 msgid "Ask what to do"
 msgstr "询问如何处理"
 
-#: app/core/core-enums.c:937
+#: app/core/core-enums.c:931
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
 msgstr "丢弃元数据并不作旋转"
 
-#: app/core/core-enums.c:938
+#: app/core/core-enums.c:932
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr "旋转图像后丢弃元数据"
 
-#: app/core/core-enums.c:1003
+#: app/core/core-enums.c:997
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "Wintab"
 
-#: app/core/core-enums.c:1004
+#: app/core/core-enums.c:998
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
 
-#: app/core/core-enums.c:1033
+#: app/core/core-enums.c:1027
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "无缩略图"
 
-#: app/core/core-enums.c:1034
+#: app/core/core-enums.c:1028
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "普通 (128x128)"
 
-#: app/core/core-enums.c:1035
+#: app/core/core-enums.c:1029
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "大 (256x256)"
 
-#: app/core/core-enums.c:1064
+#: app/core/core-enums.c:1058
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "线性"
 
-#: app/core/core-enums.c:1065
+#: app/core/core-enums.c:1059
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "非线性"
 
-#: app/core/core-enums.c:1066
+#: app/core/core-enums.c:1060
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "感官"
 
-#: app/core/core-enums.c:1265
+#: app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<无效>>"
 
-#: app/core/core-enums.c:1266
+#: app/core/core-enums.c:1260
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "缩放图像"
 
-#: app/core/core-enums.c:1267
+#: app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "改变图像大小"
 
-#: app/core/core-enums.c:1268
+#: app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "翻转图像"
 
-#: app/core/core-enums.c:1269
+#: app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "旋转图像"
 
-#: app/core/core-enums.c:1270
+#: app/core/core-enums.c:1264
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "变换图像"
 
-#: app/core/core-enums.c:1271
+#: app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "剪裁图像"
 
-#: app/core/core-enums.c:1272
+#: app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "转换图像"
 
-#: app/core/core-enums.c:1273
+#: app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "删除项目"
 
-#: app/core/core-enums.c:1274 app/core/core-enums.c:1327
+#: app/core/core-enums.c:1268 app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "重新排列项目"
 
-#: app/core/core-enums.c:1275
+#: app/core/core-enums.c:1269
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "合并图层"
 
-#: app/core/core-enums.c:1276
+#: app/core/core-enums.c:1270
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "合并路径"
 
-#: app/core/core-enums.c:1277
+#: app/core/core-enums.c:1271
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "快速蒙版"
 
-#: app/core/core-enums.c:1278 app/core/core-enums.c:1317
+#: app/core/core-enums.c:1272 app/core/core-enums.c:1311
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "网格"
 
-#: app/core/core-enums.c:1279 app/core/core-enums.c:1321
+#: app/core/core-enums.c:1273 app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "参考线"
 
-#: app/core/core-enums.c:1280 app/core/core-enums.c:1322
+#: app/core/core-enums.c:1274 app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "采样点"
 
-#: app/core/core-enums.c:1281 app/core/core-enums.c:1323
+#: app/core/core-enums.c:1275 app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "图层/通道"
 
-#: app/core/core-enums.c:1282 app/core/core-enums.c:1324
+#: app/core/core-enums.c:1276 app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "图层/通道修改"
 
-#: app/core/core-enums.c:1283 app/core/core-enums.c:1326
+#: app/core/core-enums.c:1277 app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "选区蒙版"
 
-#: app/core/core-enums.c:1284 app/core/core-enums.c:1330
+#: app/core/core-enums.c:1278 app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "项目可见性"
 
-#: app/core/core-enums.c:1285
+#: app/core/core-enums.c:1279
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "锁定/解锁内容"
 
-#: app/core/core-enums.c:1286 app/core/core-enums.c:1333
+#: app/core/core-enums.c:1280 app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "锁定/解锁位置"
 
-#: app/core/core-enums.c:1287 app/core/core-enums.c:1334
+#: app/core/core-enums.c:1281 app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "锁定/解锁可见性"
 
-#: app/core/core-enums.c:1288
+#: app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "项目属性"
 
-#: app/core/core-enums.c:1289 app/core/core-enums.c:1329
+#: app/core/core-enums.c:1283 app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "移动项目"
 
-#: app/core/core-enums.c:1290
+#: app/core/core-enums.c:1284
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "缩放项目"
 
-#: app/core/core-enums.c:1291
+#: app/core/core-enums.c:1285
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "更改项目大小"
 
-#: app/core/core-enums.c:1292
+#: app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "添加图层"
 
-#: app/core/core-enums.c:1293
+#: app/core/core-enums.c:1287
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "添加透明通道"
 
-#: app/core/core-enums.c:1294 app/core/core-enums.c:1350
+#: app/core/core-enums.c:1288 app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "添加图层蒙版"
 
-#: app/core/core-enums.c:1295 app/core/core-enums.c:1352
+#: app/core/core-enums.c:1289 app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "应用图层蒙版"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "删除透明通道"
 
-#: app/core/core-enums.c:1297
+#: app/core/core-enums.c:1291
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "锁定/解锁透明通道"
 
-#: app/core/core-enums.c:1298
+#: app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "设置图层不透明度"
 
-#: app/core/core-enums.c:1299
+#: app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "设置图层模式"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "添加通道"
 
-#: app/core/core-enums.c:1301 app/core/core-enums.c:1360
+#: app/core/core-enums.c:1295 app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "浮动选区到图层"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "浮动选区"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "固定浮动选区"
 
-#: app/core/core-enums.c:1304 app/core/gimp-edit.c:583
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:583
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "粘贴"
 
-#: app/core/core-enums.c:1305 app/core/gimp-edit.c:837
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:837
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "剪切"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Text"
 msgstr "文字"
 
-#: app/core/core-enums.c:1307 app/core/gimpdrawable-transform.c:721
+#: app/core/core-enums.c:1301 app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "变换"
 
-#: app/core/core-enums.c:1308 app/core/core-enums.c:1362
+#: app/core/core-enums.c:1302 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "绘画"
 
-#: app/core/core-enums.c:1309 app/core/core-enums.c:1365
+#: app/core/core-enums.c:1303 app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "添加内嵌信息"
 
-#: app/core/core-enums.c:1310 app/core/core-enums.c:1366
+#: app/core/core-enums.c:1304 app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "删除内嵌信息"
 
-#: app/core/core-enums.c:1311
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "导入路径"
 
-#: app/core/core-enums.c:1312
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "插件"
 
-#: app/core/core-enums.c:1313
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "图像类型"
 
-#: app/core/core-enums.c:1314
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "图像精度"
 
-#: app/core/core-enums.c:1315
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "图像大小"
 
-#: app/core/core-enums.c:1316
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "图像分辨率更改"
 
-#: app/core/core-enums.c:1318
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "更改元数据"
 
-#: app/core/core-enums.c:1319
+#: app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "更改索引色板"
 
-#: app/core/core-enums.c:1320
+#: app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "隐藏/显示色彩配置文件"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "图层/通道格式"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "重命名项目"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "项目颜色标签"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "锁定/解锁内容"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "新建图层"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "删除图层"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "设置图层模式"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "设置图层不透明度"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "锁定/解锁透明通道"
 
-#: app/core/core-enums.c:1340
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "暂停改变群组图层大小"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "恢复改变群组图层大小"
 
-#: app/core/core-enums.c:1342
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "停用群组图层蒙版"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "恢复群组图层蒙版"
 
-#: app/core/core-enums.c:1344
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "开始变换群组图层"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "结束变换群组图层"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "转换群组图层"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "文字图层"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "文字图层修改"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "转换文字图层"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "删除图层蒙版"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "显示图层蒙版"
 
-#: app/core/core-enums.c:1354
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "新建通道"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "删除通道"
 
-#: app/core/core-enums.c:1356
+#: app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "通道颜色"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "New path"
 msgstr "新建路径"
 
-#: app/core/core-enums.c:1358
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "删除路径"
 
-#: app/core/core-enums.c:1359
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "路径修改"
 
-#: app/core/core-enums.c:1361
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "变换网格"
 
-#: app/core/core-enums.c:1363
+#: app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "墨水"
 
-#: app/core/core-enums.c:1364
+#: app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "选择前景"
 
-#: app/core/core-enums.c:1367
+#: app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "不可撤消"
 
-#: app/core/core-enums.c:1402
+#: app/core/core-enums.c:1396
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "细小"
 
-#: app/core/core-enums.c:1403
+#: app/core/core-enums.c:1397
 msgctxt "view-size"
 msgid "Very small"
 msgstr "很小"
 
-#: app/core/core-enums.c:1404
+#: app/core/core-enums.c:1398
 msgctxt "view-size"
 msgid "Small"
 msgstr "小"
 
-#: app/core/core-enums.c:1405
+#: app/core/core-enums.c:1399
 msgctxt "view-size"
 msgid "Medium"
 msgstr "正常"
 
-#: app/core/core-enums.c:1406
+#: app/core/core-enums.c:1400
 msgctxt "view-size"
 msgid "Large"
 msgstr "大"
 
-#: app/core/core-enums.c:1407
+#: app/core/core-enums.c:1401
 msgctxt "view-size"
 msgid "Very large"
 msgstr "很大"
 
-#: app/core/core-enums.c:1408
+#: app/core/core-enums.c:1402
 msgctxt "view-size"
 msgid "Huge"
 msgstr "庞大"
 
-#: app/core/core-enums.c:1409
+#: app/core/core-enums.c:1403
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "巨大"
 
-#: app/core/core-enums.c:1410
+#: app/core/core-enums.c:1404
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "极大"
 
-#: app/core/core-enums.c:1438
+#: app/core/core-enums.c:1432
 msgctxt "view-type"
 msgid "View as list"
 msgstr "以列表方式查看"
 
-#: app/core/core-enums.c:1439
+#: app/core/core-enums.c:1433
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "以阵列方式查看"
 
-#: app/core/core-enums.c:1468
+#: app/core/core-enums.c:1462
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "通过基本文字搜索来选择"
 
-#: app/core/core-enums.c:1469
+#: app/core/core-enums.c:1463
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "通过正则表达式搜索来选择"
 
-#: app/core/core-enums.c:1470
+#: app/core/core-enums.c:1464
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "通过 glob 模式搜索来选择"
@@ -13074,7 +13105,7 @@ msgstr "背景色"
 
 #: app/core/gimpcontext.c:683 app/core/gimpcontext.c:684
 #: app/operations/gimpoperationsettings.c:100 app/widgets/gimpbrushselect.c:176
-#: app/widgets/gimplayertreeview.c:323
+#: app/widgets/gimplayertreeview.c:321
 msgid "Opacity"
 msgstr "不透明度"
 
@@ -13112,7 +13143,7 @@ msgid "Palette"
 msgstr "色板"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:551
+#: app/tools/gimptextoptions.c:779
 msgid "Font"
 msgstr "字体"
 
@@ -13142,7 +13173,7 @@ msgstr "副本"
 msgid "%s copy"
 msgstr "%s 副本"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:532
+#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:760
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "正在加载字体（这将耗费一些时间）"
@@ -13183,7 +13214,7 @@ msgstr "载入“%s”时出错"
 #: app/core/gimpdataloaderfactory.c:492 app/file-data/file-data-gbr.c:95
 #: app/file-data/file-data-gex.c:343 app/file-data/file-data-gex.c:493
 #: app/file-data/file-data-gih.c:99 app/file-data/file-data-pat.c:102
-#: app/xcf/xcf.c:442
+#: app/xcf/xcf.c:443
 #, c-format
 msgid "Could not open '%s' for reading: "
 msgstr "无法打开“%s”以读取："
@@ -13219,7 +13250,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "均化"
 
-#: app/core/gimpdrawable-floating-selection.c:203
+#: app/core/gimpdrawable-floating-selection.c:203 app/core/gimplayer.c:783
 msgid "Floating Selection"
 msgstr "浮动选区"
 
@@ -13245,11 +13276,6 @@ msgstr "渐变"
 #: app/core/gimpdrawable-gradient.c:226
 msgid "Calculating distance map"
 msgstr "正在计算距离映射"
-
-#: app/core/gimpdrawable-levels.c:72
-#: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
-msgid "Levels"
-msgstr "色阶"
 
 #: app/core/gimpdrawable-offset.c:79
 msgctxt "undo-type"
@@ -13290,7 +13316,7 @@ msgstr "样式"
 
 #: app/core/gimpfilloptions.c:117 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:136
+#: app/tools/gimptextoptions.c:174
 msgid "Antialiasing"
 msgstr "抗锯齿"
 
@@ -13480,7 +13506,7 @@ msgctxt "undo-type"
 msgid "Transform Layer Group"
 msgstr "变换图层组"
 
-#: app/core/gimpimage.c:706 app/widgets/gimpsymmetryeditor.c:176
+#: app/core/gimpimage.c:706 app/widgets/gimpsymmetryeditor.c:182
 msgid "Symmetry"
 msgstr "对称"
 
@@ -13527,107 +13553,122 @@ msgstr "图层组透明通道锁定已添加到 %s"
 msgid "Visibility locks were added in %s"
 msgstr "可见性锁定已添加到 %s"
 
-#: app/core/gimpimage.c:2976
+#: app/core/gimpimage.c:2971
+#, c-format
+msgid "Multiple path selection was added in %s"
+msgstr "多个路径选区已添加到 %s"
+
+#: app/core/gimpimage.c:2983
+#, c-format
+msgid "Storing color tags in path was added in %s"
+msgstr "路径中存储的颜色标签已添加到 %s"
+
+#: app/core/gimpimage.c:2990
+#, c-format
+msgid "Storing locks in path was added in %s"
+msgstr "路径中存储的锁定已添加到 %s"
+
+#: app/core/gimpimage.c:3004
 #, c-format
 msgid "High bit-depth images were added in %s"
 msgstr "高位深图像已添加到 %s"
 
-#: app/core/gimpimage.c:2984
+#: app/core/gimpimage.c:3012
 #, c-format
 msgid "Encoding of high bit-depth images was fixed in %s"
 msgstr "高位深图像编码已固定到 %s"
 
-#: app/core/gimpimage.c:2992
+#: app/core/gimpimage.c:3020
 #, c-format
 msgid "Internal zlib compression was added in %s"
 msgstr "内置 zlib 压缩已添加到 %s"
 
-#: app/core/gimpimage.c:3009
+#: app/core/gimpimage.c:3037
 #, c-format
 msgid "Support for image files larger than 4GB was added in %s"
 msgstr "对大于 4GB 图像文件的支持已添加到 %s"
 
-#: app/core/gimpimage.c:3016
+#: app/core/gimpimage.c:3044
 #, c-format
 msgid "Multiple layer selection was added in %s"
 msgstr "多个图层选区被添加进 %s"
 
-#: app/core/gimpimage.c:3033
+#: app/core/gimpimage.c:3061
 #, c-format
 msgid "Off-canvas guides added in %s"
 msgstr "画布外参考线添加至 %s"
 
-#: app/core/gimpimage.c:3044
+#: app/core/gimpimage.c:3072
 #, c-format
 msgid "Item set and pattern search in item's name were added in %s"
 msgstr "项目设置和项目名称中的模式搜索已添加进 %s"
 
-#: app/core/gimpimage.c:3050
+#: app/core/gimpimage.c:3078
 #, c-format
 msgid "Multiple channel selection was added in %s"
 msgstr "多个通道选择已添加进 %s"
 
-#: app/core/gimpimage.c:3154
+#: app/core/gimpimage.c:3183
 msgctxt "undo-type"
 msgid "Change Image Resolution"
 msgstr "改变图像分辨率"
 
-#: app/core/gimpimage.c:3206
+#: app/core/gimpimage.c:3235
 msgctxt "undo-type"
 msgid "Change Image Unit"
 msgstr "改变图像单位"
 
-#: app/core/gimpimage.c:4259
+#: app/core/gimpimage.c:4288
 msgid ""
 "'gimp-comment' parasite validation failed: comment contains invalid UTF-8"
 msgstr "“GIMP 注释”内嵌信息校验失败：注释包含无效的 UTF-8"
 
-#: app/core/gimpimage.c:4321
+#: app/core/gimpimage.c:4350
 msgctxt "undo-type"
 msgid "Attach Parasite to Image"
 msgstr "添加内嵌信息到图像"
 
-#: app/core/gimpimage.c:4366
+#: app/core/gimpimage.c:4395
 msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "从图像删除内嵌信息"
 
-#: app/core/gimpimage.c:5354
+#: app/core/gimpimage.c:5383
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "添加图层"
 
-#: app/core/gimpimage.c:5398 app/core/gimpimage.c:5429
+#: app/core/gimpimage.c:5427 app/core/gimpimage.c:5458
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "删除图层"
 
-#: app/core/gimpimage.c:5423
+#: app/core/gimpimage.c:5452
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "删除浮动选区"
 
-#: app/core/gimpimage.c:5947
+#: app/core/gimpimage.c:5976
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "添加通道"
 
-#: app/core/gimpimage.c:5977 app/core/gimpimage.c:6002
+#: app/core/gimpimage.c:6006 app/core/gimpimage.c:6031
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "删除通道"
 
-#: app/core/gimpimage.c:6061
+#: app/core/gimpimage.c:6090
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "添加路径"
 
-#: app/core/gimpimage.c:6091 app/core/gimpimage.c:6099
+#: app/core/gimpimage.c:6120 app/core/gimpimage.c:6128
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "删除路径"
 
-#: app/core/gimpimage-arrange.c:173
+#: app/core/gimpimage-arrange.c:179
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "整理对象"
@@ -13978,7 +14019,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "固定浮动选区"
 
-#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1046
+#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1058
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14052,88 +14093,100 @@ msgstr "图层无法再升高。"
 msgid "Layer cannot be lowered more."
 msgstr "图层无法再降低。"
 
-#: app/core/gimplayer.c:743 app/core/gimplayer.c:2026
+#: app/core/gimplayer.c:743 app/core/gimplayer.c:2038
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "%s 蒙版"
 
-#: app/core/gimplayer.c:782
+#: app/core/gimplayer.c:787
+msgid "Floating Mask"
+msgstr "浮动蒙版"
+
+#: app/core/gimplayer.c:789
+msgid "Floating Layer"
+msgstr "浮动图层"
+
+#. TRANSLATORS: the first %s will be the type of floating item, i.e.
+#. * either a "Floating Layer" or "Floating Mask" usually. The second will
+#. * be a layer name.
+#.
+#: app/core/gimplayer.c:794
 #, c-format
 msgid ""
-"Floating Selection\n"
+"%s\n"
 "(%s)"
 msgstr ""
-"浮动选区\n"
+"%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1927
+#: app/core/gimplayer.c:1939
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "无法添加图层蒙版，因为已有一个。"
 
-#: app/core/gimplayer.c:1938
+#: app/core/gimplayer.c:1950
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "无法添加跟指定图层尺寸不同的图层蒙版。"
 
-#: app/core/gimplayer.c:1944
+#: app/core/gimplayer.c:1956
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "添加图层蒙版"
 
-#: app/core/gimplayer.c:2067
+#: app/core/gimplayer.c:2079
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "将透明度转移到蒙版"
 
-#: app/core/gimplayer.c:2230
+#: app/core/gimplayer.c:2242
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "应用图层蒙版"
 
-#: app/core/gimplayer.c:2231
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "删除图层蒙版"
 
-#: app/core/gimplayer.c:2338
+#: app/core/gimplayer.c:2350
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "启用图层蒙版"
 
-#: app/core/gimplayer.c:2339
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "禁用图层蒙版"
 
-#: app/core/gimplayer.c:2420
+#: app/core/gimplayer.c:2432
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "显示图层蒙版"
 
-#: app/core/gimplayer.c:2499
+#: app/core/gimplayer.c:2511
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "添加透明通道"
 
-#: app/core/gimplayer.c:2535
+#: app/core/gimplayer.c:2547
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "删除透明通道"
 
-#: app/core/gimplayer.c:2556
+#: app/core/gimplayer.c:2568
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "图层到图像大小"
 
-#: app/core/gimplayer.c:2739
+#: app/core/gimplayer.c:2751
 msgid "Set layer's blend space"
 msgstr "设置图层混合空间"
 
-#: app/core/gimplayer.c:2786
+#: app/core/gimplayer.c:2798
 msgid "Set layer's composite space"
 msgstr "设置图层合成空间"
 
-#: app/core/gimplayer.c:2833
+#: app/core/gimplayer.c:2845
 msgid "Set layer's composite mode"
 msgstr "设置图层合成模式"
 
@@ -14431,7 +14484,7 @@ msgid "Line width"
 msgstr "线宽"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:123
+#: app/tools/gimptextoptions.c:161 app/tools/gimptextoptions.c:297
 msgid "Unit"
 msgstr "单位"
 
@@ -14447,7 +14500,7 @@ msgstr "接合样式"
 msgid "Miter limit"
 msgstr "斜接限制"
 
-#: app/core/gimpstrokeoptions.c:190
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:314
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -14466,7 +14519,7 @@ msgstr "模拟动态笔刷"
 #. no undo (or redo) steps available
 #: app/core/gimpsymmetry.c:137 app/display/gimpstatusbar.c:506
 #: app/display/gimpstatusbar.c:2128 app/widgets/gimpimagepropview.c:406
-#: app/widgets/gimpsymmetryeditor.c:166
+#: app/widgets/gimpsymmetryeditor.c:166 app/widgets/gimpsymmetryeditor.c:176
 msgid "None"
 msgstr "无"
 
@@ -14913,7 +14966,6 @@ msgstr "转换图像为色彩配置文件"
 #: app/dialogs/color-profile-dialog.c:155
 #: app/dialogs/color-profile-dialog.c:173
 #: app/dialogs/color-profile-dialog.c:191
-#: app/dialogs/color-profile-import-dialog.c:119
 #: app/dialogs/convert-indexed-dialog.c:143
 #: app/dialogs/convert-precision-dialog.c:147
 msgid "C_onvert"
@@ -14967,12 +15019,12 @@ msgid "Profile _details"
 msgstr "配置文件详情(_D)"
 
 #: app/dialogs/color-profile-dialog.c:290
-#: app/dialogs/color-profile-import-dialog.c:201
+#: app/dialogs/color-profile-import-dialog.c:195
 msgid "_Rendering Intent:"
 msgstr "渲染效果(_R)："
 
 #: app/dialogs/color-profile-dialog.c:306
-#: app/dialogs/color-profile-import-dialog.c:217
+#: app/dialogs/color-profile-import-dialog.c:211
 msgid "_Black Point Compensation"
 msgstr "黑点补偿(_B)"
 
@@ -14987,47 +15039,51 @@ msgctxt "profile"
 msgid "None"
 msgstr "无"
 
-#: app/dialogs/color-profile-import-dialog.c:91
-msgid "Convert to Grayscale Working Space?"
-msgstr "是否转换为灰度工作空间？"
-
-#: app/dialogs/color-profile-import-dialog.c:92
+#: app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert the image to the built-in grayscale color profile?"
 msgstr "要将图像转换为内置的灰阶色彩配置文件吗？"
 
-#: app/dialogs/color-profile-import-dialog.c:100
-msgid "Convert to RGB Working Space?"
-msgstr "是否转换为 RGB 工作空间？"
-
-#: app/dialogs/color-profile-import-dialog.c:101
+#: app/dialogs/color-profile-import-dialog.c:98
 msgid "Convert the image to the built-in sRGB color profile?"
 msgstr "将图像转换为内置 sRGB 色彩配置文件吗？"
 
-#: app/dialogs/color-profile-import-dialog.c:113
-msgid "Import the image from a color profile"
-msgstr "从色彩配置文件中导入图像"
+#: app/dialogs/color-profile-import-dialog.c:107
+msgid "Keep the Embedded Working Space?"
+msgstr "保持内嵌的工作空间吗？"
 
-#: app/dialogs/color-profile-import-dialog.c:118
+#: app/dialogs/color-profile-import-dialog.c:110
+msgid "Keep the image's color profile"
+msgstr "保持该图像的色彩配置文件"
+
+#: app/dialogs/color-profile-import-dialog.c:115
 msgid "_Keep"
 msgstr "保持(_K)"
 
-#: app/dialogs/color-profile-import-dialog.c:136
+#: app/dialogs/color-profile-import-dialog.c:116
+msgid "_Convert"
+msgstr "转换(_C)"
+
+#: app/dialogs/color-profile-import-dialog.c:130
 #, c-format
 msgid "The image '%s' has an embedded color profile"
 msgstr "图像“%s”带有嵌入的色彩配置文件"
 
-#: app/dialogs/color-profile-import-dialog.c:166
+#: app/dialogs/color-profile-import-dialog.c:160
 msgid "Convert the image to the preferred grayscale color profile?"
 msgstr "要将图像转换为首选的灰阶色彩配置文件吗？"
 
-#: app/dialogs/color-profile-import-dialog.c:168
+#: app/dialogs/color-profile-import-dialog.c:162
 msgid "Convert the image to the preferred RGB color profile?"
 msgstr "将图像转换为首选的 RGB 色彩配置文件吗？"
 
-#: app/dialogs/color-profile-import-dialog.c:226
+#: app/dialogs/color-profile-import-dialog.c:220
 #: app/dialogs/metadata-rotation-import-dialog.c:218
 msgid "_Don't ask me again"
 msgstr "不再询问(_D)"
+
+#: app/dialogs/color-profile-import-dialog.c:222
+msgid "Your choice can later be edited in Preferences > Color Management"
+msgstr "您的选择可以稍后在首选项 > 色彩管理中编辑"
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -15548,11 +15604,11 @@ msgid "Height:"
 msgstr "高度："
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:376
+#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:541
 msgid "Offset X:"
 msgstr "位移 X："
 
-#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:388
+#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:553
 msgid "Offset Y:"
 msgstr "位移 Y："
 
@@ -16337,7 +16393,7 @@ msgstr "用户界面"
 msgid "Interface"
 msgstr "界面"
 
-#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:153
+#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:191
 msgid "Language"
 msgstr "语言"
 
@@ -16691,8 +16747,8 @@ msgid "Select Default Folder for Exporting Paths"
 msgstr "为导出路径选择默认文件夹"
 
 #: app/dialogs/preferences-dialog.c:2543
-msgid "Export the active path only"
-msgstr "仅导出激活路径"
+msgid "Export the selected paths only"
+msgstr "仅导出选中路径"
 
 #. Import Path Dialog
 #: app/dialogs/preferences-dialog.c:2547
@@ -17502,8 +17558,8 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:97
-#: app/tools/gimpalignoptions.c:104 app/tools/gimpgradientoptions.c:89
+#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:140
+#: app/tools/gimpalignoptions.c:147 app/tools/gimpgradientoptions.c:89
 #: app/tools/gimpoffsettool.c:129 app/tools/gimpoffsettool.c:473
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
 msgid "Offset"
@@ -17656,8 +17712,8 @@ msgid "Export Path to SVG"
 msgstr "将路径导出为 SVG"
 
 #: app/dialogs/vectors-export-dialog.c:121
-msgid "Export the active path"
-msgstr "导出激活路径"
+msgid "Export the selected paths"
+msgstr "导出选中路径"
 
 #: app/dialogs/vectors-export-dialog.c:122
 msgid "Export all paths from this image"
@@ -18073,7 +18129,7 @@ msgstr "拖放新路径"
 msgid "Cannot modify the pixels of layer groups."
 msgstr "不能修改图层组的像素。"
 
-#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:682
+#: app/display/gimpdisplayshell-dnd.c:374 app/tools/gimptransformtool.c:704
 msgid "A selected layer's pixels are locked."
 msgstr "一个选中图层的像素已被锁定。"
 
@@ -18091,13 +18147,13 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "将颜色放置到图层"
 
-#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1408
-#: app/widgets/gimplayertreeview.c:966
+#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1406
+#: app/widgets/gimplayertreeview.c:964
 msgid "Drop layers"
 msgstr "拖放图层"
 
 #: app/display/gimpdisplayshell-dnd.c:743
-#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1043
+#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1041
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "删除缓冲区"
@@ -19584,7 +19640,7 @@ msgstr "将颜色转换为灰阶"
 #: app/operations/gimpoperationsettings.c:92 app/tools/gimpfiltertool.c:1137
 #: app/tools/gimppaintoptions-gui.c:110 app/tools/gimppaintselectoptions.c:73
 #: app/tools/gimptransform3doptions.c:77 app/widgets/gimpdeviceinfo.c:173
-#: app/widgets/gimplayertreeview.c:308
+#: app/widgets/gimplayertreeview.c:306
 msgid "Mode"
 msgstr "模式"
 
@@ -20071,7 +20127,7 @@ msgstr "先设置源图像。"
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr "“已登记”对齐无法在多个可绘区上绘画。"
 
-#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:123
+#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:126
 #: app/tools/gimpcloneoptions-gui.c:301 app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "对齐方式"
@@ -20580,7 +20636,7 @@ msgid ""
 "'%s'."
 msgstr "调用“%s”过程时为参数“%s”使用了无效的 UTF-8 字符串。"
 
-#: app/pdb/image-cmds.c:2290
+#: app/pdb/image-cmds.c:2448
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "图像分辨率超出范围，使用默认的分辨率替代。"
@@ -21600,61 +21656,61 @@ msgstr ""
 msgid "Add Text Layer"
 msgstr "添加文字图层"
 
-#: app/text/gimptext-parasite.c:94
+#: app/text/gimptext-parasite.c:95
 msgid "Empty text parasite"
 msgstr "空白文字内嵌"
 
-#: app/text/gimptextlayer.c:156
+#: app/text/gimptextlayer.c:158
 msgid "Text Layer"
 msgstr "文字图层"
 
-#: app/text/gimptextlayer.c:157
+#: app/text/gimptextlayer.c:159
 msgid "Rename Text Layer"
 msgstr "重命名文字图层"
 
-#: app/text/gimptextlayer.c:158
+#: app/text/gimptextlayer.c:160
 msgid "Move Text Layer"
 msgstr "移动文字图层"
 
-#: app/text/gimptextlayer.c:159
+#: app/text/gimptextlayer.c:161
 msgid "Scale Text Layer"
 msgstr "缩放文字图层"
 
-#: app/text/gimptextlayer.c:160
+#: app/text/gimptextlayer.c:162
 msgid "Resize Text Layer"
 msgstr "改变文字图层大小"
 
-#: app/text/gimptextlayer.c:161
+#: app/text/gimptextlayer.c:163
 msgid "Flip Text Layer"
 msgstr "翻转文字图层"
 
-#: app/text/gimptextlayer.c:162
+#: app/text/gimptextlayer.c:164
 msgid "Rotate Text Layer"
 msgstr "旋转文字图层"
 
-#: app/text/gimptextlayer.c:163
+#: app/text/gimptextlayer.c:165
 msgid "Transform Text Layer"
 msgstr "变换文字图层"
 
-#: app/text/gimptextlayer.c:579
+#: app/text/gimptextlayer.c:581
 msgid "Discard Text Information"
 msgstr "放弃文字信息"
 
-#: app/text/gimptextlayer.c:714
+#: app/text/gimptextlayer.c:716
 msgid "Due to lack of any fonts, text functionality is not available."
 msgstr "由于缺少字体，文字功能不可用。"
 
-#: app/text/gimptextlayer.c:777
+#: app/text/gimptextlayer.c:779
 msgid "Empty Text Layer"
 msgstr "空白文字图层"
 
-#: app/text/gimptextlayer.c:830
+#: app/text/gimptextlayer.c:947
 msgid ""
 "Your text cannot be rendered. It is likely too big. Please make it shorter "
 "or use a smaller font."
 msgstr "你的文字无法被渲染。可能是太大了。请缩短文字或使用小一些的字体。"
 
-#: app/text/gimptextlayer-xcf.c:78
+#: app/text/gimptextlayer-xcf.c:80
 #, c-format
 msgid ""
 "Problems parsing the text parasite for layer '%s':\n"
@@ -21684,6 +21740,21 @@ msgctxt "text-box-mode"
 msgid "Fixed"
 msgstr "固定"
 
+#: app/text/text-enums.c:54
+msgctxt "text-outline"
+msgid "Filled"
+msgstr "填充"
+
+#: app/text/text-enums.c:55
+msgctxt "text-outline"
+msgid "Outlined"
+msgstr "轮廓"
+
+#: app/text/text-enums.c:56
+msgctxt "text-outline"
+msgid "Outlined and filled"
+msgstr "轮廓和填充"
+
 #: app/tools/gimpairbrushtool.c:68
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
 msgstr "喷枪工具：使用带有可变压力的笔刷绘图"
@@ -21692,121 +21763,197 @@ msgstr "喷枪工具：使用带有可变压力的笔刷绘图"
 msgid "_Airbrush"
 msgstr "喷枪(_A)"
 
-#: app/tools/gimpalignoptions.c:89 app/tools/gimpalignoptions.c:288
+#: app/tools/gimpalignoptions.c:132 app/tools/gimpalignoptions.c:431
 msgid "Relative to"
 msgstr "相对于"
 
-#: app/tools/gimpalignoptions.c:90
+#: app/tools/gimpalignoptions.c:133
 msgid "Reference image object a layer will be aligned on"
 msgstr "为图像对象指定一个可在上面对齐的图层"
 
-#: app/tools/gimpalignoptions.c:98
+#: app/tools/gimpalignoptions.c:141
 msgid "Horizontal offset for distribution"
 msgstr "分布水平位移"
 
-#: app/tools/gimpalignoptions.c:105
+#: app/tools/gimpalignoptions.c:148
 msgid "Vertical offset for distribution"
 msgstr "分布竖直位移"
 
-#: app/tools/gimpalignoptions.c:279
+#: app/tools/gimpalignoptions.c:154
+msgid "Align or distribute selected layers"
+msgstr "对齐或分布选中图层"
+
+#: app/tools/gimpalignoptions.c:155
+msgid "Selected layers will be aligned or distributed by the tool"
+msgstr "选中的图层将通过该工具对齐或分布"
+
+#: app/tools/gimpalignoptions.c:160
+msgid "Align or distribute selected paths"
+msgstr "对齐或分布选中路径"
+
+#: app/tools/gimpalignoptions.c:161
+msgid "Selected paths will be aligned or distributed by the tool"
+msgstr "选中的路径将通过该工具对齐或分布"
+
+#: app/tools/gimpalignoptions.c:166
+msgid "Use extents of layer contents"
+msgstr "使用图层内容的范围"
+
+#: app/tools/gimpalignoptions.c:167
+msgid ""
+"Instead of aligning or distributing on layer borders, use its content "
+"bounding box"
+msgstr "在图层内容边界盒上对齐或分布对象而不是使用图层边框"
+
+#. Selected objects
+#: app/tools/gimpalignoptions.c:380
+msgid "Objects to align or distribute"
+msgstr "对齐或分布的对象"
+
+#. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
+#: app/tools/gimpalignoptions.c:405
+#, c-format
+msgid "%s-pick guides to align or distribute (%s-%s for more)"
+msgstr "%s-拾取参考线来对齐或分布（%s-%s 更多操作）"
+
+#. Align frame
+#: app/tools/gimpalignoptions.c:422
 msgid "Align"
 msgstr "对齐"
 
-#: app/tools/gimpalignoptions.c:298
+#: app/tools/gimpalignoptions.c:446
+msgid "Select the reference object"
+msgstr "选择参考对象"
+
+#: app/tools/gimpalignoptions.c:462
 msgid "Align left edge of target"
 msgstr "对齐目标的左边缘"
 
-#: app/tools/gimpalignoptions.c:302
+#: app/tools/gimpalignoptions.c:466
 msgid "Align center of target"
 msgstr "对齐目标的中心"
 
-#: app/tools/gimpalignoptions.c:306
+#: app/tools/gimpalignoptions.c:470
 msgid "Align right edge of target"
 msgstr "对齐目标的右边缘"
 
-#: app/tools/gimpalignoptions.c:314
+#: app/tools/gimpalignoptions.c:478
 msgid "Align top edge of target"
 msgstr "对齐目标的上边缘"
 
-#: app/tools/gimpalignoptions.c:318
+#: app/tools/gimpalignoptions.c:482
 msgid "Align middle of target"
 msgstr "对齐目标的中部"
 
-#: app/tools/gimpalignoptions.c:322
+#: app/tools/gimpalignoptions.c:486
 msgid "Align bottom of target"
 msgstr "对齐目标的下边缘"
 
-#: app/tools/gimpalignoptions.c:324
+#. Distribute frame
+#: app/tools/gimpalignoptions.c:489
 msgid "Distribute"
 msgstr "分布"
 
-#: app/tools/gimpalignoptions.c:338
+#: app/tools/gimpalignoptions.c:503
 msgid "Distribute left edges of targets"
 msgstr "按目标的左边缘分布"
 
-#: app/tools/gimpalignoptions.c:342
+#: app/tools/gimpalignoptions.c:507
 msgid "Distribute horizontal centers of targets"
 msgstr "按目标的水平中心分布"
 
-#: app/tools/gimpalignoptions.c:346
+#: app/tools/gimpalignoptions.c:511
 msgid "Distribute right edges of targets"
 msgstr "按目标的右边缘分布"
 
-#: app/tools/gimpalignoptions.c:350
+#: app/tools/gimpalignoptions.c:515
 msgid "Distribute targets evenly in the horizontal"
 msgstr "水平平均分布目标"
 
-#: app/tools/gimpalignoptions.c:358
+#: app/tools/gimpalignoptions.c:523
 msgid "Distribute top edges of targets"
 msgstr "按目标的上边缘分布"
 
-#: app/tools/gimpalignoptions.c:362
+#: app/tools/gimpalignoptions.c:527
 msgid "Distribute vertical centers of targets"
 msgstr "按目标的竖直中心分布"
 
-#: app/tools/gimpalignoptions.c:366
+#: app/tools/gimpalignoptions.c:531
 msgid "Distribute bottoms of targets"
 msgstr "按目标的下边缘分布"
 
-#: app/tools/gimpalignoptions.c:370
+#: app/tools/gimpalignoptions.c:535
 msgid "Distribute targets evenly in the vertical"
 msgstr "竖直平均分布目标"
 
-#: app/tools/gimpaligntool.c:124
+#: app/tools/gimpalignoptions.c:784
+#, c-format
+msgid "1 guide will be aligned or distributed"
+msgid_plural "%d guides will be aligned or distributed"
+msgstr[0] "%d 条参考线将被对齐或分布"
+
+#: app/tools/gimpalignoptions.c:810
+#, c-format
+msgid "Reference layer: %s"
+msgstr "参考图层：%s"
+
+#: app/tools/gimpalignoptions.c:813
+#, c-format
+msgid "Reference channel: %s"
+msgstr "参考通道：%s"
+
+#: app/tools/gimpalignoptions.c:816
+#, c-format
+msgid "Reference path: %s"
+msgstr "参考路径：%s"
+
+#: app/tools/gimpalignoptions.c:819
+msgid "Reference guide"
+msgstr "参考引导"
+
+#: app/tools/gimpaligntool.c:127
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "对齐工具：对齐或整理图层和其他对象"
 
-#: app/tools/gimpaligntool.c:125
+#: app/tools/gimpaligntool.c:128
 msgid "_Align"
 msgstr "对齐(_A)"
 
+#: app/tools/gimpaligntool.c:510
+msgid "Arrange Objects"
+msgstr "整理对象"
+
 #: app/tools/gimpaligntool.c:541
-msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
-msgstr "在图层，路径或参考线上单击，或单击并拖动以拾取多个图层"
+msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
+msgstr "在图层、路径或参考线上单击，或单击并拖动以拾取参考对象"
 
-#: app/tools/gimpaligntool.c:549
-msgid "Click to pick this layer as first item"
-msgstr "单击以拾取此图层作为第一项"
+#: app/tools/gimpaligntool.c:545
+msgid "Click to pick this layer as reference"
+msgstr "单击以拾取此图层作为参考"
 
-#: app/tools/gimpaligntool.c:556
-msgid "Click to add this layer to the list"
-msgstr "单击以将此图层添加到列表"
+#: app/tools/gimpaligntool.c:548
+msgid "Click to pick this guide as reference"
+msgstr "单击以拾取此参考线作为参考"
+
+#: app/tools/gimpaligntool.c:553
+msgid "Click to pick this path as reference"
+msgstr "单击以拾取此路径作为参考"
 
 #: app/tools/gimpaligntool.c:560
-msgid "Click to pick this guide as first item"
-msgstr "单击以拾取此参考线作为第一项"
+msgid ""
+"Click on a guide to add it to objects to align, click anywhere else to "
+"unselect all guides"
+msgstr ""
+"在参考线上单击将其添加到要对齐的对象中，在其它任意地方单击可取消选择所有参考"
+"线"
 
-#: app/tools/gimpaligntool.c:567
-msgid "Click to add this guide to the list"
-msgstr "单击以将此参考线添加到列表"
+#: app/tools/gimpaligntool.c:564
+msgid "Click to select this guide for alignment"
+msgstr "单击以选择此参考线用于对齐"
 
-#: app/tools/gimpaligntool.c:571
-msgid "Click to pick this path as first item"
-msgstr "单击以拾取此路径作为第一项"
-
-#: app/tools/gimpaligntool.c:578
-msgid "Click to add this path to the list"
-msgstr "单击以将此路径添加到列表"
+#: app/tools/gimpaligntool.c:569
+msgid "Click to add this guide to the list of objects to align"
+msgstr "单击以将此参考线添加到对齐的对象列表"
 
 #: app/tools/gimpbrightnesscontrasttool.c:96
 msgid "Brightness-Contrast"
@@ -22019,7 +22166,7 @@ msgstr "未选择可绘区。"
 msgid "The active layer is not visible."
 msgstr "激活图层不可见。"
 
-#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1111
+#: app/tools/gimpbucketfilltool.c:625 app/tools/gimpeditselectiontool.c:1117
 #: app/tools/gimpgradienttool.c:281 app/tools/gimpmovetool.c:349
 msgid "The selected layer's pixels are locked."
 msgstr "选中图层的像素已被锁定。"
@@ -22473,34 +22620,34 @@ msgstr "类型 (%s)"
 msgid "Move: "
 msgstr "移动："
 
-#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1195
+#: app/tools/gimpeditselectiontool.c:836 app/tools/gimpeditselectiontool.c:1198
 msgid "Move Floating Selection"
 msgstr "移动浮动选区"
 
-#: app/tools/gimpeditselectiontool.c:1081
-msgid "There is no path to move."
+#: app/tools/gimpeditselectiontool.c:1082 app/tools/gimpmovetool.c:293
+msgid "There are no paths to move."
 msgstr "没有路径可移动。"
 
-#: app/tools/gimpeditselectiontool.c:1086 app/tools/gimptransformtool.c:729
-msgid "The selected path's position is locked."
-msgstr "选中路径的位置已被锁定。"
+#: app/tools/gimpeditselectiontool.c:1090
+msgid "A selected path's position is locked."
+msgstr "一条选中路径的位置已被锁定。"
 
-#: app/tools/gimpeditselectiontool.c:1097 app/tools/gimpmovetool.c:338
+#: app/tools/gimpeditselectiontool.c:1103 app/tools/gimpmovetool.c:338
 msgid "There is no layer to move."
 msgstr "没有图层可移动。"
 
-#: app/tools/gimpeditselectiontool.c:1106
-#: app/tools/gimpeditselectiontool.c:1135 app/tools/gimpmovetool.c:347
+#: app/tools/gimpeditselectiontool.c:1112
+#: app/tools/gimpeditselectiontool.c:1139 app/tools/gimpmovetool.c:347
 msgid "The selected layer's position is locked."
 msgstr "选中图层的位置已被锁定。"
 
-#: app/tools/gimpeditselectiontool.c:1126
-msgid "All selected channels' positions or pixels are locked."
-msgstr "所有选中通道的位置或像素已被锁定。"
+#: app/tools/gimpeditselectiontool.c:1128
+msgid "A selected channel's position is locked."
+msgstr "一个选中通道的位置已被锁定。"
 
-#: app/tools/gimpeditselectiontool.c:1149
-msgid "All selected layers' positions are locked."
-msgstr "所有选中图层的位置已被锁定。"
+#: app/tools/gimpeditselectiontool.c:1150 app/tools/gimpmovetool.c:366
+msgid "A selected layer's position is locked."
+msgstr "一个选中图层的位置已被锁定。"
 
 #: app/tools/gimpellipseselecttool.c:64
 msgid "Ellipse Select"
@@ -22562,7 +22709,7 @@ msgid "A selected item's pixels are locked."
 msgstr "一个选中项目的像素已被锁定。"
 
 #: app/tools/gimpfiltertool.c:328 app/tools/gimppainttool.c:362
-#: app/tools/gimptransformtool.c:691
+#: app/tools/gimptransformtool.c:713
 msgid "A selected layer is not visible."
 msgstr "一个选中图层不可见。"
 
@@ -22930,7 +23077,7 @@ msgid "Y:"
 msgstr "Y："
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:604
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:832
 msgid "Color:"
 msgstr "颜色："
 
@@ -23400,10 +23547,6 @@ msgstr "移动工具：移动图层，选区，和其他对象"
 msgid "_Move"
 msgstr "移动(_M)"
 
-#: app/tools/gimpmovetool.c:293
-msgid "There are no paths to move."
-msgstr "没有路径可移动。"
-
 #: app/tools/gimpmovetool.c:306
 msgid "All selected path's position are locked."
 msgstr "所有选中路径的位置已被锁定。"
@@ -23411,10 +23554,6 @@ msgstr "所有选中路径的位置已被锁定。"
 #: app/tools/gimpmovetool.c:358
 msgid "A selected channel's position or pixels are locked."
 msgstr "一个选中通道的位置或像素已被锁定。"
-
-#: app/tools/gimpmovetool.c:366
-msgid "A selected layer's position is locked."
-msgstr "一个选中图层的位置已被锁定。"
 
 #: app/tools/gimpmybrushtool.c:74
 msgid "MyPaint Brush Tool: Use MyPaint brushes in GIMP"
@@ -23779,7 +23918,7 @@ msgstr "当前"
 msgid "Fixed"
 msgstr "固定"
 
-#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:565
+#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:793
 msgid "Size:"
 msgstr "大小："
 
@@ -24054,94 +24193,118 @@ msgstr "单击以涂抹"
 msgid "Click to smudge the line"
 msgstr "单击以涂抹线段"
 
-#: app/tools/gimptextoptions.c:124
+#: app/tools/gimptextoptions.c:162
 msgid "Font size unit"
 msgstr "字体大小单位"
 
-#: app/tools/gimptextoptions.c:129 app/tools/gimptextoptions.c:130
+#: app/tools/gimptextoptions.c:167 app/tools/gimptextoptions.c:168
 msgid "Font size"
 msgstr "字体大小"
 
-#: app/tools/gimptextoptions.c:143
+#: app/tools/gimptextoptions.c:181
 msgid "Hinting"
 msgstr "微调"
 
-#: app/tools/gimptextoptions.c:144
+#: app/tools/gimptextoptions.c:182
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr "微调将改变字体轮廓以产生清晰的小尺寸位图"
 
-#: app/tools/gimptextoptions.c:154
+#: app/tools/gimptextoptions.c:192
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "文本语言将影响到文字的渲染方式。"
 
-#: app/tools/gimptextoptions.c:168
+#: app/tools/gimptextoptions.c:206
 msgid "Justify"
 msgstr "对齐"
 
-#: app/tools/gimptextoptions.c:169
+#: app/tools/gimptextoptions.c:207
 msgid "Text alignment"
 msgstr "文字对齐"
 
-#: app/tools/gimptextoptions.c:176
+#: app/tools/gimptextoptions.c:214
 msgid "Indentation"
 msgstr "缩进"
 
-#: app/tools/gimptextoptions.c:177
+#: app/tools/gimptextoptions.c:215
 msgid "Indentation of the first line"
 msgstr "第一行的缩进深度"
 
-#: app/tools/gimptextoptions.c:184
+#: app/tools/gimptextoptions.c:222
 msgid "Line spacing"
 msgstr "行距"
 
-#: app/tools/gimptextoptions.c:185
+#: app/tools/gimptextoptions.c:223
 msgid "Adjust line spacing"
 msgstr "调整行距"
 
-#: app/tools/gimptextoptions.c:192
+#: app/tools/gimptextoptions.c:230
 msgid "Letter spacing"
 msgstr "字符间距"
 
-#: app/tools/gimptextoptions.c:193
+#: app/tools/gimptextoptions.c:231
 msgid "Adjust letter spacing"
 msgstr "调整字符符距"
 
-#: app/tools/gimptextoptions.c:200
+#: app/tools/gimptextoptions.c:238
 msgid "Box"
 msgstr "文字框"
 
-#: app/tools/gimptextoptions.c:201
+#: app/tools/gimptextoptions.c:239
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
 msgstr "当您按回车键时文字是进入矩形形状还是进入新行"
 
-#: app/tools/gimptextoptions.c:209
+#: app/tools/gimptextoptions.c:247
 msgid "Use editor"
 msgstr "使用编辑器"
 
-#: app/tools/gimptextoptions.c:210
+#: app/tools/gimptextoptions.c:248
 msgid "Use an external editor window for text entry"
 msgstr "为文字输入使用外置编辑器窗口"
 
-#: app/tools/gimptextoptions.c:593
+#: app/tools/gimptextoptions.c:290
+msgid "Outline width"
+msgstr "轮廓宽度"
+
+#: app/tools/gimptextoptions.c:291
+msgid "Adjust outline width"
+msgstr "调整轮廓宽度"
+
+#: app/tools/gimptextoptions.c:298
+msgid "Outline width unit"
+msgstr "轮廓宽度单位"
+
+#: app/tools/gimptextoptions.c:313
+msgid "Outline miter limit"
+msgstr "轮廓斜接限制"
+
+#: app/tools/gimptextoptions.c:821
 msgid "Hinting:"
 msgstr "微调："
 
-#: app/tools/gimptextoptions.c:597
+#: app/tools/gimptextoptions.c:825
 msgid "Text Color"
 msgstr "文字颜色"
 
-#: app/tools/gimptextoptions.c:611
+#: app/tools/gimptextoptions.c:838
+msgid "Style:"
+msgstr "样式："
+
+#: app/tools/gimptextoptions.c:842
+msgid "Outline Options"
+msgstr "轮廓选项"
+
+#: app/tools/gimptextoptions.c:862
 msgid "Justify:"
 msgstr "对齐："
 
-#: app/tools/gimptextoptions.c:641
+#: app/tools/gimptextoptions.c:892
 msgid "Box:"
 msgstr "文字框："
 
-#: app/tools/gimptextoptions.c:658
+#: app/tools/gimptextoptions.c:932
 msgid "Language:"
 msgstr "语言："
 
@@ -24194,19 +24357,19 @@ msgstr ""
 "\n"
 "您可以编辑此图层或者从它的文字属性创建新的文字图层。"
 
-#: app/tools/gimptexttool.c:2347
+#: app/tools/gimptexttool.c:2348
 msgid "Text is required."
 msgstr "需要文字。"
 
-#: app/tools/gimptexttool.c:2350
+#: app/tools/gimptexttool.c:2351
 msgid "No image."
 msgstr "无图像。"
 
-#: app/tools/gimptexttool.c:2353
+#: app/tools/gimptexttool.c:2354
 msgid "No layer."
 msgstr "无图层。"
 
-#: app/tools/gimptexttool.c:2364
+#: app/tools/gimptexttool.c:2365
 msgid "Exactly one path must be selected."
 msgstr "必须选择一个路径。"
 
@@ -24409,16 +24572,16 @@ msgstr "变换(_T)"
 msgid "Transform Step"
 msgstr "变换级别"
 
-#: app/tools/gimptransformgridtool.c:984
+#: app/tools/gimptransformgridtool.c:992
 #, c-format
 msgid "%s (Corrective)"
 msgstr "%s（矫正的）"
 
-#: app/tools/gimptransformgridtool.c:1247
+#: app/tools/gimptransformgridtool.c:1263
 msgid "Re_adjust"
 msgstr "重新调整(_A)"
 
-#: app/tools/gimptransformgridtool.c:1500
+#: app/tools/gimptransformgridtool.c:1516
 msgid "Cannot readjust the transformation"
 msgstr "无法重新调整该变换"
 
@@ -24548,35 +24711,39 @@ msgstr "变换创建了一个非常巨大的图像。"
 msgid "Applying the transformation will enlarge the image by a factor of %g."
 msgstr "应用该变换将按系数 %g 扩大图像。"
 
-#: app/tools/gimptransformtool.c:675
+#: app/tools/gimptransformtool.c:697
 msgid "There is no layer to transform."
 msgstr "没有图层可以变换。"
 
-#: app/tools/gimptransformtool.c:684
+#: app/tools/gimptransformtool.c:706
 msgid "A selected layer's position and size are locked."
 msgstr "一个选中图层的位置和大小已被锁定。"
 
-#: app/tools/gimptransformtool.c:698
+#: app/tools/gimptransformtool.c:720
 msgid "The selection does not intersect with a selected layer."
 msgstr "选区没有与选中图层相交。"
 
-#: app/tools/gimptransformtool.c:705
+#: app/tools/gimptransformtool.c:727
 msgid "There is no selection to transform."
 msgstr "没有选区可以变换。"
 
-#: app/tools/gimptransformtool.c:720
+#: app/tools/gimptransformtool.c:742
 msgid "There is no path to transform."
 msgstr "没有路径可以变换。"
 
-#: app/tools/gimptransformtool.c:727
+#: app/tools/gimptransformtool.c:749
 msgid "The selected path's strokes are locked."
 msgstr "选中路径的笔触已被锁定。"
 
-#: app/tools/gimptransformtool.c:731
+#: app/tools/gimptransformtool.c:751
+msgid "The selected path's position is locked."
+msgstr "选中路径的位置已被锁定。"
+
+#: app/tools/gimptransformtool.c:753
 msgid "The selected path has no strokes."
 msgstr "选中路径没有笔触。"
 
-#: app/tools/gimptransformtool.c:811
+#: app/tools/gimptransformtool.c:833
 msgid "The current transform is invalid"
 msgstr "当前变换是无效的"
 
@@ -25047,7 +25214,7 @@ msgstr "旋转路径"
 msgid "Transform Path"
 msgstr "变换路径"
 
-#: app/vectors/gimpvectors-export.c:89
+#: app/vectors/gimpvectors-export.c:88
 #, c-format
 msgid "Writing SVG file '%s' failed: %s"
 msgstr "写入 SVG 文件“%s” 失败：%s"
@@ -26375,7 +26542,7 @@ msgstr "锁定像素"
 msgid "Lock position and size"
 msgstr "锁定位置和大小"
 
-#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:565
+#: app/widgets/gimpdrawabletreeview.c:126 app/widgets/gimpitemtreeview.c:563
 msgid "Lock visibility"
 msgstr "锁定可见性"
 
@@ -26787,19 +26954,19 @@ msgid "Indexed color (monochrome)"
 msgid_plural "Indexed color (%d colors)"
 msgstr[0] "索引颜色（%d 个颜色）"
 
-#: app/widgets/gimpitemtreeview.c:535
+#: app/widgets/gimpitemtreeview.c:533
 msgid "Set Item Exclusive Content Lock"
 msgstr "设置项目唯一内容锁定"
 
-#: app/widgets/gimpitemtreeview.c:551
+#: app/widgets/gimpitemtreeview.c:549
 msgid "Set Item Exclusive Position Lock"
 msgstr "设置项目唯一位置锁定"
 
-#: app/widgets/gimpitemtreeview.c:566
+#: app/widgets/gimpitemtreeview.c:564
 msgid "Unlock visibility"
 msgstr "解锁可见性"
 
-#: app/widgets/gimpitemtreeview.c:567
+#: app/widgets/gimpitemtreeview.c:565
 msgid "Set Item Exclusive Visibility Lock"
 msgstr "设置项目唯一可见性锁定"
 
@@ -26811,78 +26978,78 @@ msgstr "系统语言"
 msgid "Switch to another group of modes"
 msgstr "切换到另一组模式"
 
-#: app/widgets/gimplayertreeview.c:443
+#: app/widgets/gimplayertreeview.c:441
 msgid "Select layers by patterns and store layer sets"
 msgstr "通过模式选择图层并存储图层集合"
 
-#: app/widgets/gimplayertreeview.c:487
+#: app/widgets/gimplayertreeview.c:485
 msgid "No layer set stored"
 msgstr "未存储图层集合"
 
-#: app/widgets/gimplayertreeview.c:509
+#: app/widgets/gimplayertreeview.c:507
 msgid "New layer set's name"
 msgstr "新图层集合的名字"
 
-#: app/widgets/gimplayertreeview.c:548 app/widgets/gimplayertreeview.c:551
+#: app/widgets/gimplayertreeview.c:546 app/widgets/gimplayertreeview.c:549
 msgid "Lock alpha channel"
 msgstr "锁定透明通道"
 
-#: app/widgets/gimplayertreeview.c:549
+#: app/widgets/gimplayertreeview.c:547
 msgid "Unlock alpha channel"
 msgstr "解锁透明通道"
 
-#: app/widgets/gimplayertreeview.c:550
+#: app/widgets/gimplayertreeview.c:548
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "设置项目唯一透明通道锁定"
 
-#: app/widgets/gimplayertreeview.c:1209
+#: app/widgets/gimplayertreeview.c:1207
 msgid "search"
 msgstr "搜索"
 
-#: app/widgets/gimplayertreeview.c:1210
+#: app/widgets/gimplayertreeview.c:1208
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimplayertreeview.c:1210
+#: app/widgets/gimplayertreeview.c:1208
 msgid "regexp"
 msgstr "正则"
 
-#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
+#: app/widgets/gimplayertreeview.c:1312 app/widgets/gimplayertreeview.c:1325
 msgid "Select layers by text search"
 msgstr "通过文字搜索选择图层"
 
-#: app/widgets/gimplayertreeview.c:1316 app/widgets/gimplayertreeview.c:1329
+#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
 msgid "Text search"
 msgstr "文字搜索"
 
-#: app/widgets/gimplayertreeview.c:1333
+#: app/widgets/gimplayertreeview.c:1331
 msgid "Select layers by glob patterns"
 msgstr "通过 glob 模式选择图层"
 
-#: app/widgets/gimplayertreeview.c:1335
+#: app/widgets/gimplayertreeview.c:1333
 msgid "Glob pattern search"
 msgstr "Glob 模式搜索"
 
-#: app/widgets/gimplayertreeview.c:1339
+#: app/widgets/gimplayertreeview.c:1337
 msgid "Select layers by regular expressions"
 msgstr "通过正则表达式选择图层"
 
-#: app/widgets/gimplayertreeview.c:1341
+#: app/widgets/gimplayertreeview.c:1339
 msgid "Regular Expression search"
 msgstr "正则表达式搜索"
 
-#: app/widgets/gimplayertreeview.c:1405
+#: app/widgets/gimplayertreeview.c:1403
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "无效的正则表达式：%s\n"
 
-#: app/widgets/gimplayertreeview.c:1558
+#: app/widgets/gimplayertreeview.c:1556
 msgid "Set layers mode"
 msgstr "设置图层模式"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2039
+#: app/widgets/gimplayertreeview.c:2037
 msgid "No channels to create a layer mask from."
 msgstr "没有可用于创建图层蒙版的通道。"
 
@@ -27455,11 +27622,11 @@ msgstr "从 %s 解析菜单定义时出错：%s"
 msgid "[ Base Image ]"
 msgstr "[ 原始图像 ]"
 
-#: app/widgets/gimpvectorstreeview.c:113
+#: app/widgets/gimpvectorstreeview.c:111
 msgid "Lock path strokes"
 msgstr "锁定路径笔触"
 
-#: app/widgets/gimpvectorstreeview.c:116
+#: app/widgets/gimpvectorstreeview.c:114
 msgid "Lock path position"
 msgstr "锁定路径位置"
 
@@ -27654,49 +27821,49 @@ msgctxt "tab-style"
 msgid "Status & desc"
 msgstr "状态和描述"
 
-#: app/xcf/xcf.c:119 app/xcf/xcf.c:187
+#: app/xcf/xcf.c:120 app/xcf/xcf.c:188
 msgid "GIMP XCF image"
 msgstr "GIMP XCF 图像"
 
-#: app/xcf/xcf.c:264 app/xcf/xcf.c:353
+#: app/xcf/xcf.c:265 app/xcf/xcf.c:354
 msgid "Memory Stream"
 msgstr "内存流"
 
-#: app/xcf/xcf.c:275
+#: app/xcf/xcf.c:276
 #, c-format
 msgid "Opening '%s'"
 msgstr "正在打开“%s”"
 
-#: app/xcf/xcf.c:317
+#: app/xcf/xcf.c:318
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 错误：不支持的 XCF 文件版本 %d"
 
-#: app/xcf/xcf.c:376
+#: app/xcf/xcf.c:377
 #, c-format
 msgid "Saving '%s'"
 msgstr "正在保存“%s”"
 
-#: app/xcf/xcf.c:384
+#: app/xcf/xcf.c:385
 #, c-format
 msgid "Closing '%s'"
 msgstr "正在关闭“%s”"
 
-#: app/xcf/xcf.c:402
+#: app/xcf/xcf.c:403
 #, c-format
 msgid "Error writing '%s': "
 msgstr "写入“%s”时出错："
 
-#: app/xcf/xcf.c:490
+#: app/xcf/xcf.c:491
 #, c-format
 msgid "Error creating '%s': "
 msgstr "创建“%s”时出错："
 
-#: app/xcf/xcf-load.c:252
+#: app/xcf/xcf-load.c:258
 msgid "Invalid image mode and precision combination."
 msgstr "无效的图像模式和精度组合。"
 
-#: app/xcf/xcf-load.c:459
+#: app/xcf/xcf-load.c:465
 #, c-format
 msgid ""
 "Corrupt 'exif-data' parasite discovered.\n"
@@ -27705,7 +27872,7 @@ msgstr ""
 "发现内嵌“exif-数据”已损坏。\n"
 "Exif 数据无法被迁移：%s"
 
-#: app/xcf/xcf-load.c:498
+#: app/xcf/xcf-load.c:504
 msgid ""
 "Corrupt 'gimp-metadata' parasite discovered.\n"
 "XMP data could not be migrated."
@@ -27713,7 +27880,7 @@ msgstr ""
 "发现内嵌“gimp-元数据”已损坏。\n"
 "XMP 数据无法被迁移。"
 
-#: app/xcf/xcf-load.c:522
+#: app/xcf/xcf-load.c:528
 #, c-format
 msgid ""
 "Corrupt XMP metadata saved by an older version of GIMP could not be "
@@ -27724,31 +27891,31 @@ msgstr ""
 "通过旧版本 GIMP 保存的损坏 XMP 元数据无法转换且会被忽略。\n"
 "如果您不知道 XMP 是什么，很可能您并不需要它。报告的错误：%s。"
 
-#: app/xcf/xcf-load.c:795
+#: app/xcf/xcf-load.c:865
 msgid "Linked Layers"
 msgstr "链接的图层"
 
-#: app/xcf/xcf-load.c:805
+#: app/xcf/xcf-load.c:875
 msgid "Linked Channels"
 msgstr "链接的通道"
 
-#: app/xcf/xcf-load.c:830
+#: app/xcf/xcf-load.c:900
 msgid "Linked Paths"
 msgstr "链接的路径"
 
-#: app/xcf/xcf-load.c:877
+#: app/xcf/xcf-load.c:947
 msgid ""
 "This XCF file is corrupt!  I have loaded as much of it as I can, but it is "
 "incomplete."
 msgstr "此 XCF 文件已损坏！已尽可能抢救图像数据，但抢救得到的部分不完整。"
 
-#: app/xcf/xcf-load.c:896
+#: app/xcf/xcf-load.c:966
 msgid ""
 "This XCF file is corrupt!  I could not even salvage any partial image data "
 "from it."
 msgstr "此 XCF 文件已损坏！未能抢救任何图像数据。"
 
-#: app/xcf/xcf-load.c:987
+#: app/xcf/xcf-load.c:1057
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
@@ -27783,6 +27950,54 @@ msgstr "写入 XCF 时出错：写入像素：%d 时不支持 BPC"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "GIMP 崩溃调试"
+
+#, c-format
+#~ msgid ""
+#~ "Floating Selection\n"
+#~ "(%s)"
+#~ msgstr ""
+#~ "浮动选区\n"
+#~ "(%s)"
+
+#~ msgid "Convert to Grayscale Working Space?"
+#~ msgstr "是否转换为灰度工作空间？"
+
+#~ msgid "Convert to RGB Working Space?"
+#~ msgstr "是否转换为 RGB 工作空间？"
+
+#~ msgid "Import the image from a color profile"
+#~ msgstr "从色彩配置文件中导入图像"
+
+#~ msgctxt "align-reference-type"
+#~ msgid "First item"
+#~ msgstr "第一项"
+
+#~ msgctxt "align-reference-type"
+#~ msgid "Active layer"
+#~ msgstr "激活图层"
+
+#~ msgctxt "align-reference-type"
+#~ msgid "Active channel"
+#~ msgstr "活动通道"
+
+#~ msgctxt "align-reference-type"
+#~ msgid "Active path"
+#~ msgstr "活动路径"
+
+#~ msgid "Click to add this layer to the list"
+#~ msgstr "单击以将此图层添加到列表"
+
+#~ msgid "Click to add this path to the list"
+#~ msgstr "单击以将此路径添加到列表"
+
+#~ msgid "There is no path to move."
+#~ msgstr "没有路径可移动。"
+
+#~ msgid "All selected channels' positions or pixels are locked."
+#~ msgstr "所有选中通道的位置或像素已被锁定。"
+
+#~ msgid "All selected layers' positions are locked."
+#~ msgstr "所有选中图层的位置已被锁定。"
 
 #~ msgid "Re_ndering intent:"
 #~ msgstr "渲染效果(_N)："
@@ -29534,9 +29749,6 @@ msgstr "GIMP 崩溃调试"
 #~ msgctxt "layer-mode-effects"
 #~ msgid "Anti erase"
 #~ msgstr "反擦除"
-
-#~ msgid "Convert"
-#~ msgstr "转换"
 
 #~ msgid "_Handle Transform tool"
 #~ msgstr "控制柄变换工具(_H)"
