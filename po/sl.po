@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP master\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-10-20 21:17+0000\n"
-"PO-Revision-Date: 2022-10-21 10:43+0200\n"
+"POT-Creation-Date: 2022-11-03 09:22+0000\n"
+"PO-Revision-Date: 2022-11-06 21:18+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language: sl\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
 "%100==4 ? 3 : 0);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Generator: Poedit 3.1.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: desktop/org.gimp.GIMP.appdata.xml.in.in:15
 msgid "The GIMP team"
@@ -7067,7 +7067,7 @@ msgstr "Lastnosti plasti"
 msgid "Edit Layer Attributes"
 msgstr "Uredi lastnosti plasti"
 
-#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:358
+#: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
 #: app/widgets/gimplayertreeview.c:1102
 msgid "New Layer"
 msgid_plural "New Layers"
@@ -13507,7 +13507,7 @@ msgctxt "undo-type"
 msgid "Equalize"
 msgstr "Izenači"
 
-#: app/core/gimpdrawable-floating-selection.c:203
+#: app/core/gimpdrawable-floating-selection.c:203 app/core/gimplayer.c:783
 msgid "Floating Selection"
 msgstr "Plavajoči izbor"
 
@@ -14290,7 +14290,7 @@ msgctxt "undo-type"
 msgid "Anchor Floating Selection"
 msgstr "Zasidraj plavajoči izbor"
 
-#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1046
+#: app/core/gimplayer-floating-selection.c:182 app/core/gimplayer.c:1058
 msgid ""
 "Cannot create a new layer from the floating selection because it belongs to "
 "a layer mask or channel."
@@ -14366,88 +14366,100 @@ msgstr "Plasti ni mogoče dvigniti višje."
 msgid "Layer cannot be lowered more."
 msgstr "Plasti ni mogoče bolj spustiti."
 
-#: app/core/gimplayer.c:743 app/core/gimplayer.c:2026
+#: app/core/gimplayer.c:743 app/core/gimplayer.c:2038
 #: app/core/gimplayermask.c:294
 #, c-format
 msgid "%s mask"
 msgstr "Maska %s"
 
-#: app/core/gimplayer.c:782
+#: app/core/gimplayer.c:787
+msgid "Floating Mask"
+msgstr "Plavajoča maska"
+
+#: app/core/gimplayer.c:789
+msgid "Floating Layer"
+msgstr "Plavajoča plast"
+
+#. TRANSLATORS: the first %s will be the type of floating item, i.e.
+#. * either a "Floating Layer" or "Floating Mask" usually. The second will
+#. * be a layer name.
+#.
+#: app/core/gimplayer.c:794
 #, c-format
 msgid ""
-"Floating Selection\n"
+"%s\n"
 "(%s)"
 msgstr ""
-"Plavajoči izbor\n"
+"%s\n"
 "(%s)"
 
-#: app/core/gimplayer.c:1927
+#: app/core/gimplayer.c:1939
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr "Maske plasti ni mogoče dodati, ker jo plast že ima."
 
-#: app/core/gimplayer.c:1938
+#: app/core/gimplayer.c:1950
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr "Maske drugačnih mer, kot so mere plasti, ni mogoče dodati."
 
-#: app/core/gimplayer.c:1944
+#: app/core/gimplayer.c:1956
 msgctxt "undo-type"
 msgid "Add Layer Mask"
 msgstr "Dodaj masko plasti"
 
-#: app/core/gimplayer.c:2067
+#: app/core/gimplayer.c:2079
 msgctxt "undo-type"
 msgid "Transfer Alpha to Mask"
 msgstr "Prenesi alfo v masko"
 
-#: app/core/gimplayer.c:2230
+#: app/core/gimplayer.c:2242
 msgctxt "undo-type"
 msgid "Apply Layer Mask"
 msgstr "Uporabi masko plasti"
 
-#: app/core/gimplayer.c:2231
+#: app/core/gimplayer.c:2243
 msgctxt "undo-type"
 msgid "Delete Layer Mask"
 msgstr "Izbriši masko plasti"
 
-#: app/core/gimplayer.c:2338
+#: app/core/gimplayer.c:2350
 msgctxt "undo-type"
 msgid "Enable Layer Mask"
 msgstr "Omogoči masko plasti"
 
-#: app/core/gimplayer.c:2339
+#: app/core/gimplayer.c:2351
 msgctxt "undo-type"
 msgid "Disable Layer Mask"
 msgstr "Onemogoči masko plasti"
 
-#: app/core/gimplayer.c:2420
+#: app/core/gimplayer.c:2432
 msgctxt "undo-type"
 msgid "Show Layer Mask"
 msgstr "Pokaži masko plasti"
 
-#: app/core/gimplayer.c:2499
+#: app/core/gimplayer.c:2511
 msgctxt "undo-type"
 msgid "Add Alpha Channel"
 msgstr "Dodaj kanal alfa"
 
-#: app/core/gimplayer.c:2535
+#: app/core/gimplayer.c:2547
 msgctxt "undo-type"
 msgid "Remove Alpha Channel"
 msgstr "Odstrani kanal alfa"
 
-#: app/core/gimplayer.c:2556
+#: app/core/gimplayer.c:2568
 msgctxt "undo-type"
 msgid "Layer to Image Size"
 msgstr "Plast na velikost slike"
 
-#: app/core/gimplayer.c:2739
+#: app/core/gimplayer.c:2751
 msgid "Set layer's blend space"
 msgstr "Nastavi prostor zlivanja plasti"
 
-#: app/core/gimplayer.c:2786
+#: app/core/gimplayer.c:2798
 msgid "Set layer's composite space"
 msgstr "Nastavi prostor skladanja plasti"
 
-#: app/core/gimplayer.c:2833
+#: app/core/gimplayer.c:2845
 msgid "Set layer's composite mode"
 msgstr "Nastavi način skladanja plasti"
 
@@ -15225,7 +15237,6 @@ msgstr "Pretvori sliko v barvni profil"
 #: app/dialogs/color-profile-dialog.c:155
 #: app/dialogs/color-profile-dialog.c:173
 #: app/dialogs/color-profile-dialog.c:191
-#: app/dialogs/color-profile-import-dialog.c:119
 #: app/dialogs/convert-indexed-dialog.c:143
 #: app/dialogs/convert-precision-dialog.c:147
 msgid "C_onvert"
@@ -15279,12 +15290,12 @@ msgid "Profile _details"
 msgstr "Podrobnosti pro_fila"
 
 #: app/dialogs/color-profile-dialog.c:290
-#: app/dialogs/color-profile-import-dialog.c:201
+#: app/dialogs/color-profile-import-dialog.c:195
 msgid "_Rendering Intent:"
 msgstr "_Namen upodabljanja:"
 
 #: app/dialogs/color-profile-dialog.c:306
-#: app/dialogs/color-profile-import-dialog.c:217
+#: app/dialogs/color-profile-import-dialog.c:211
 msgid "_Black Point Compensation"
 msgstr "_Kompenzacija črne točke"
 
@@ -15299,47 +15310,51 @@ msgctxt "profile"
 msgid "None"
 msgstr "Brez"
 
-#: app/dialogs/color-profile-import-dialog.c:91
-msgid "Convert to Grayscale Working Space?"
-msgstr "Želite pretvoriti sliko v sivinski delovni prostor?"
-
-#: app/dialogs/color-profile-import-dialog.c:92
+#: app/dialogs/color-profile-import-dialog.c:90
 msgid "Convert the image to the built-in grayscale color profile?"
 msgstr "Želite pretvoriti sliko v vgrajeni sivinski barvni profil?"
 
-#: app/dialogs/color-profile-import-dialog.c:100
-msgid "Convert to RGB Working Space?"
-msgstr "Želite pretvoriti sliko v delovni prostor RGB?"
-
-#: app/dialogs/color-profile-import-dialog.c:101
+#: app/dialogs/color-profile-import-dialog.c:98
 msgid "Convert the image to the built-in sRGB color profile?"
 msgstr "Želite pretvoriti sliko v vgrajeni barvni profil sRGB?"
 
-#: app/dialogs/color-profile-import-dialog.c:113
-msgid "Import the image from a color profile"
-msgstr "Uvozi sliko iz barvnega profila"
+#: app/dialogs/color-profile-import-dialog.c:107
+msgid "Keep the Embedded Working Space?"
+msgstr "Ali želite obdržati vdelani delovni prostor?"
 
-#: app/dialogs/color-profile-import-dialog.c:118
+#: app/dialogs/color-profile-import-dialog.c:110
+msgid "Keep the image's color profile"
+msgstr "Ohrani barvni profil slike"
+
+#: app/dialogs/color-profile-import-dialog.c:115
 msgid "_Keep"
 msgstr "_Ohrani"
 
-#: app/dialogs/color-profile-import-dialog.c:136
+#: app/dialogs/color-profile-import-dialog.c:116
+msgid "_Convert"
+msgstr "Pre_tvori"
+
+#: app/dialogs/color-profile-import-dialog.c:130
 #, c-format
 msgid "The image '%s' has an embedded color profile"
 msgstr "Slika ‘%s’ ima vdelan barvni profil"
 
-#: app/dialogs/color-profile-import-dialog.c:166
+#: app/dialogs/color-profile-import-dialog.c:160
 msgid "Convert the image to the preferred grayscale color profile?"
 msgstr "Ali želite pretvoriti sliko v prednostni sivinski barvni profil?"
 
-#: app/dialogs/color-profile-import-dialog.c:168
+#: app/dialogs/color-profile-import-dialog.c:162
 msgid "Convert the image to the preferred RGB color profile?"
 msgstr "Ali želite pretvoriti sliko v prednostni barvni profil RGB?"
 
-#: app/dialogs/color-profile-import-dialog.c:226
+#: app/dialogs/color-profile-import-dialog.c:220
 #: app/dialogs/metadata-rotation-import-dialog.c:218
 msgid "_Don't ask me again"
 msgstr "_Ne vprašaj več"
+
+#: app/dialogs/color-profile-import-dialog.c:222
+msgid "Your choice can later be edited in Preferences > Color Management"
+msgstr "Izbiro lahko pozneje uredite v Nastavitve > Upravljanje barv"
 
 #: app/dialogs/convert-indexed-dialog.c:134
 msgid "Indexed Color Conversion"
@@ -18449,14 +18464,14 @@ msgstr "Slikovne točke izbrane plasti so zaklenjene."
 
 #: app/display/gimpdisplayshell-dnd.c:426
 #: app/widgets/gimpdrawabletreeview.c:267
-#: app/widgets/gimpdrawabletreeview.c:385
+#: app/widgets/gimpdrawabletreeview.c:386
 msgctxt "undo-type"
 msgid "Drop pattern to layer"
 msgstr "Spusti vzorec na plast"
 
 #: app/display/gimpdisplayshell-dnd.c:448
 #: app/widgets/gimpdrawabletreeview.c:298
-#: app/widgets/gimpdrawabletreeview.c:405
+#: app/widgets/gimpdrawabletreeview.c:406
 msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Spusti barvo na plast"
