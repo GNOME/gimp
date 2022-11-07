@@ -496,7 +496,7 @@ gimp_color_history_palette_dirty (GimpColorHistory *history)
                                        GINT_TO_POINTER (i));
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (history->color_areas[i]),
-                                 &color);
+                                 &color, babl_format ("R'G'B' double"));
       if (/* Common out-of-gamut case */
           (color.r < 0.0 || color.r > 1.0 ||
            color.g < 0.0 || color.g > 1.0 ||

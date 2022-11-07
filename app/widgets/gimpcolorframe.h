@@ -19,7 +19,7 @@
 #define __GIMP_COLOR_FRAME_H__
 
 
-#define GIMP_COLOR_FRAME_ROWS 6
+#define GIMP_COLOR_FRAME_ROWS 7
 
 
 #define GIMP_TYPE_COLOR_FRAME            (gimp_color_frame_get_type ())
@@ -70,6 +70,7 @@ struct _GimpColorFrame
   GimpImage          *image;
 
   GimpColorConfig    *config;
+  GimpColorProfile   *color_profile;
   GimpColorProfile   *view_profile;
   GimpColorRenderingIntent
                       simulation_intent;

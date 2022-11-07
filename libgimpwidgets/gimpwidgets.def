@@ -38,6 +38,7 @@ EXPORTS
 	gimp_color_area_set_color
 	gimp_color_area_set_color_config
 	gimp_color_area_set_draw_border
+	gimp_color_area_set_image_space
 	gimp_color_area_set_out_of_gamut
 	gimp_color_area_set_type
 	gimp_color_area_type_get_type

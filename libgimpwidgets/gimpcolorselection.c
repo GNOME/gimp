@@ -501,7 +501,8 @@ gimp_color_selection_set_old_color (GimpColorSelection *selection,
 
   priv = GET_PRIVATE (selection);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (priv->old_color), color);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (priv->old_color), color,
+                             babl_format ("R'G'B' double"));
 }
 
 /**
@@ -814,7 +815,7 @@ gimp_color_selection_update (GimpColorSelection *selection,
                                        selection);
 
       gimp_color_area_set_color (GIMP_COLOR_AREA (priv->new_color),
-                                 &priv->rgb);
+                                 &priv->rgb, babl_format ("R'G'B' double"));
 
       g_signal_handlers_unblock_by_func (priv->new_color,
                                          gimp_color_selection_new_color_changed,

@@ -1297,7 +1297,8 @@ view_set_hint (GimpGradientEditor *editor,
                               data_editor->context, NULL,
                               xpos, FALSE, FALSE, &rgb);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &rgb);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &rgb,
+                             babl_format ("R'G'B' double"));
 
   gimp_rgb_to_hsv (&rgb, &hsv);
 
@@ -1336,7 +1337,8 @@ view_pick_color (GimpGradientEditor  *editor,
                               data_editor->context, NULL,
                               xpos, FALSE, FALSE, &color);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &color);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &color,
+                             babl_format ("R'G'B' double"));
 
   str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
                           (gint) (color.r * 255.0),

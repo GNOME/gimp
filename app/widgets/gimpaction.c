@@ -976,7 +976,9 @@ gimp_action_set_proxy (GimpAction *action,
 
           if (GIMP_IS_COLOR_AREA (proxy_image))
             {
-              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image), priv->color);
+              gimp_color_area_set_color (GIMP_COLOR_AREA (proxy_image),
+                                         priv->color,
+                                         babl_format ("R'G'B' double"));
               proxy_image = NULL;
             }
           else

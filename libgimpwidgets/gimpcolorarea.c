@@ -78,6 +78,8 @@ struct _GimpColorAreaPrivate
 
   GimpColorAreaType   type;
   GimpRGB             color;
+  const Babl         *pixel_color_space;
+  const Babl         *image_color_space;
   guint               draw_border  : 1;
   guint               needs_render : 1;
 
@@ -241,11 +243,13 @@ gimp_color_area_init (GimpColorArea *area)
 
   priv = GET_PRIVATE (area);
 
-  priv->buf         = NULL;
-  priv->width       = 0;
-  priv->height      = 0;
-  priv->rowstride   = 0;
-  priv->draw_border = FALSE;
+  priv->buf               = NULL;
+  priv->width             = 0;
+  priv->height            = 0;
+  priv->rowstride         = 0;
+  priv->draw_border       = FALSE;
+  priv->pixel_color_space = NULL;
+  priv->image_color_space = NULL;
 
   gtk_drag_dest_set (GTK_WIDGET (area),
                      GTK_DEST_DEFAULT_HIGHLIGHT |
@@ -319,7 +323,7 @@ gimp_color_area_set_property (GObject      *object,
   switch (property_id)
     {
     case PROP_COLOR:
-      gimp_color_area_set_color (area, g_value_get_boxed (value));
+      gimp_color_area_set_color (area, g_value_get_boxed (value), NULL);
       break;
 
     case PROP_TYPE:
@@ -387,7 +391,7 @@ gimp_color_area_draw (GtkWidget *widget,
   if (priv->needs_render)
     gimp_color_area_render (area);
 
-  if (! priv->transform)
+  if (! priv->transform && priv->pixel_color_space)
     gimp_color_area_create_transform (area);
 
   if (priv->transform)
@@ -401,7 +405,7 @@ gimp_color_area_draw (GtkWidget *widget,
       for (i = 0; i < priv->height; i++)
         {
           gimp_color_transform_process_pixels (priv->transform,
-                                               format, src,
+                                               priv->pixel_color_space, src,
                                                format, dest,
                                                priv->width);
 
@@ -530,7 +534,8 @@ gimp_color_area_new (const GimpRGB     *color,
  **/
 void
 gimp_color_area_set_color (GimpColorArea *area,
-                           const GimpRGB *color)
+                           const GimpRGB *color,
+                           const Babl    *pixel_space)
 {
   GimpColorAreaPrivate *priv;
 
@@ -543,6 +548,10 @@ gimp_color_area_set_color (GimpColorArea *area,
     return;
 
   priv->color = *color;
+  priv->pixel_color_space = pixel_space;
+
+  if (priv->image_color_space)
+    gimp_color_area_set_image_space (area, priv->image_color_space);
 
   priv->needs_render = TRUE;
   gtk_widget_queue_draw (GTK_WIDGET (area));
@@ -572,6 +581,40 @@ gimp_color_area_get_color (GimpColorArea *area,
   priv = GET_PRIVATE (area);
 
   *color = priv->color;
+}
+
+/**
+ * gimp_color_area_set_image_space:
+ * @area: Pointer to a #GimpColorArea.
+ * @image_space: Pointer to a #Babl format that represents the image's color space.
+ *
+ * Sets @area to a different @image_space and determines if it is out of gamut.
+ **/
+void
+gimp_color_area_set_image_space (GimpColorArea *area,
+                                 const Babl    *image_space)
+{
+  GimpColorAreaPrivate *priv;
+  gdouble               managed_color[3];
+
+  g_return_if_fail (GIMP_IS_COLOR_AREA (area));
+
+  priv = GET_PRIVATE (area);
+
+  if (priv->pixel_color_space)
+    {
+      babl_process (babl_fish (priv->pixel_color_space, image_space),
+                    &priv->color, managed_color, 1);
+
+      if (managed_color[0] < 0.0 || managed_color[0] > 1.0 ||
+          managed_color[1] < 0.0 || managed_color[1] > 1.0 ||
+          managed_color[2] < 0.0 || managed_color[2] > 1.0)
+        gimp_color_area_set_out_of_gamut (area, TRUE);
+      else
+        gimp_color_area_set_out_of_gamut (area, FALSE);
+    }
+
+  priv->image_color_space = image_space;
 }
 
 /**
@@ -979,7 +1022,7 @@ gimp_color_area_drag_data_received (GtkWidget        *widget,
                  (gdouble) vals[2] / 0xffff,
                  (gdouble) vals[3] / 0xffff);
 
-  gimp_color_area_set_color (area, &color);
+  gimp_color_area_set_color (area, &color, babl_format ("R'G'B' double"));
 }
 
 static void
@@ -1023,7 +1066,7 @@ gimp_color_area_create_transform (GimpColorArea *area)
       priv->transform = gimp_widget_get_color_transform (GTK_WIDGET (area),
                                                          priv->config,
                                                          profile,
-                                                         format,
+                                                         priv->pixel_color_space,
                                                          format,
                                                          NULL,
                                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,

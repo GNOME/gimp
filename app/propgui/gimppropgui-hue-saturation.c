@@ -69,7 +69,8 @@ hue_saturation_config_notify (GObject          *object,
 
   gimp_operation_hue_saturation_map (config, &color, range, &color);
 
-  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &color);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (color_area), &color,
+                             babl_format ("R'G'B' double"));
 }
 
 static void

@@ -28,9 +28,12 @@
 
 #include "config/gimpcoreconfig.h"
 
+#include "gegl/gimp-babl.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-color-profile.h"
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimpcolorframe.h"
@@ -432,9 +435,12 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
                                     gint                 x,
                                     gint                 y)
 {
-  GimpTool  *tool      = GIMP_TOOL (picker_tool);
-  GimpImage *image     = gimp_display_get_image (display);
-  GList     *drawables = gimp_image_get_selected_drawables (image);
+  GimpTool         *tool       = GIMP_TOOL (picker_tool);
+  GimpImage        *image      = gimp_display_get_image (display);
+  GList            *drawables  = gimp_image_get_selected_drawables (image);
+  GimpColorProfile *profile    = gimp_image_get_color_profile (image);
+  const Babl       *src_format = NULL;
+  const Babl       *space      = NULL;
 
   tool->display = display;
 
@@ -443,8 +449,18 @@ gimp_color_picker_tool_info_update (GimpColorPickerTool *picker_tool,
   gimp_tool_gui_set_viewables (picker_tool->gui, drawables);
   g_list_free (drawables);
 
+  if (profile)
+    space = gimp_color_profile_get_space (profile,
+                                          GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC,
+                                          NULL);
+
+  if (gimp_babl_format_get_base_type (sample_format) == GIMP_GRAY)
+    src_format = babl_format_with_space ("Y'A double", space);
+  else
+    src_format = babl_format_with_space ("R'G'B'A double", space);
+
   gimp_color_area_set_color (GIMP_COLOR_AREA (picker_tool->color_area),
-                             color);
+                             color, src_format);
 
   gimp_color_frame_set_color (GIMP_COLOR_FRAME (picker_tool->color_frame1),
                               sample_average, sample_format, pixel, color,

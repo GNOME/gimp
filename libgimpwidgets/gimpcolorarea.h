@@ -77,9 +77,12 @@ GtkWidget * gimp_color_area_new              (const GimpRGB     *color,
                                               GdkModifierType    drag_mask);
 
 void        gimp_color_area_set_color        (GimpColorArea     *area,
-                                              const GimpRGB     *color);
+                                              const GimpRGB     *color,
+                                              const Babl        *pixel_space);
 void        gimp_color_area_get_color        (GimpColorArea     *area,
                                               GimpRGB           *color);
+void        gimp_color_area_set_image_space  (GimpColorArea     *area,
+                                              const Babl        *image_space);
 
 gboolean    gimp_color_area_has_alpha        (GimpColorArea     *area);
 void        gimp_color_area_set_type         (GimpColorArea     *area,
