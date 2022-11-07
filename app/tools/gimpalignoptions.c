@@ -43,6 +43,12 @@
 #include "gimp-intl.h"
 
 
+#define ALIGN_VER_N_BUTTONS 3
+#define ALIGN_HOR_N_BUTTONS 3
+#define DISTR_VER_N_BUTTONS 4
+#define DISTR_HOR_N_BUTTONS 4
+
+
 enum
 {
   ALIGN_BUTTON_CLICKED,
@@ -73,7 +79,11 @@ struct _GimpAlignOptionsPrivate
   GtkWidget *reference_combo;
   GtkWidget *reference_box;
   GtkWidget *reference_label;
-  GtkWidget *button[ALIGN_OPTIONS_N_BUTTONS];
+
+  GtkWidget *align_ver_button[ALIGN_VER_N_BUTTONS];
+  GtkWidget *align_hor_button[ALIGN_HOR_N_BUTTONS];
+  GtkWidget *distr_ver_button[DISTR_VER_N_BUTTONS];
+  GtkWidget *distr_hor_button[DISTR_HOR_N_BUTTONS];
 };
 
 
@@ -457,15 +467,16 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  options->priv->button[n++] =
+  n = 0;
+  options->priv->align_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_LEFT, hbox,
                                    _("Align left edge of target"));
 
-  options->priv->button[n++] =
+  options->priv->align_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_HCENTER, hbox,
                                    _("Align center of target"));
 
-  options->priv->button[n++] =
+  options->priv->align_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_RIGHT, hbox,
                                    _("Align right edge of target"));
 
@@ -473,15 +484,16 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  options->priv->button[n++] =
+  n = 0;
+  options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_TOP, hbox,
                                    _("Align top edge of target"));
 
-  options->priv->button[n++] =
+  options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_VCENTER, hbox,
                                    _("Align middle of target"));
 
-  options->priv->button[n++] =
+  options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_BOTTOM, hbox,
                                    _("Align bottom of target"));
 
@@ -498,19 +510,20 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  options->priv->button[n++] =
+  n = 0;
+  options->priv->distr_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_LEFT, hbox,
                                    _("Distribute left edges of targets"));
 
-  options->priv->button[n++] =
+  options->priv->distr_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_HCENTER, hbox,
                                    _("Distribute horizontal centers of targets"));
 
-  options->priv->button[n++] =
+  options->priv->distr_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_RIGHT, hbox,
                                    _("Distribute right edges of targets"));
 
-  options->priv->button[n++] =
+  options->priv->distr_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_HFILL, hbox,
                                    _("Distribute targets evenly in the horizontal"));
 
@@ -518,19 +531,20 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  options->priv->button[n++] =
+  n = 0;
+  options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_TOP, hbox,
                                    _("Distribute top edges of targets"));
 
-  options->priv->button[n++] =
+  options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_VCENTER, hbox,
                                    _("Distribute vertical centers of targets"));
 
-  options->priv->button[n++] =
+  options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_BOTTOM, hbox,
                                    _("Distribute bottoms of targets"));
 
-  options->priv->button[n++] =
+  options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_VFILL, hbox,
                                    _("Distribute targets evenly in the vertical"));
 
@@ -746,8 +760,12 @@ static void
 gimp_align_options_update_area (GimpAlignOptions *options)
 {
   GimpImage *image;
-  GList     *layers  = NULL;
-  GList     *vectors = NULL;
+  GList     *layers           = NULL;
+  GList     *vectors          = NULL;
+  gboolean   enable_ver_align = FALSE;
+  gboolean   enable_hor_align = FALSE;
+  gboolean   enable_ver_distr = FALSE;
+  gboolean   enable_hor_distr = FALSE;
   gint       n_items = 0;
   gchar     *text;
 
@@ -770,11 +788,28 @@ gimp_align_options_update_area (GimpAlignOptions *options)
       n_items += g_list_length (options->priv->selected_guides);
     }
 
-  for (gint i = 0; i < ALIGN_OPTIONS_N_BUTTONS; i++)
+  if (n_items > 0)
     {
-      if (options->priv->button[i])
-        gtk_widget_set_sensitive (options->priv->button[i], n_items > 0);
+      GObject *reference;
+
+      reference = gimp_align_options_get_reference (options, FALSE);
+
+      enable_ver_align = (reference != NULL &&
+                          (! GIMP_IS_GUIDE (reference) ||
+                           gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_VERTICAL));
+      enable_hor_align = (reference != NULL &&
+                          (! GIMP_IS_GUIDE (reference) ||
+                           gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_HORIZONTAL));
+      enable_ver_distr = enable_hor_distr = (reference != NULL && ! GIMP_IS_GUIDE (reference));
     }
+  for (gint i = 0; i < ALIGN_VER_N_BUTTONS; i++)
+    gtk_widget_set_sensitive (options->priv->align_ver_button[i], enable_ver_align);
+  for (gint i = 0; i < ALIGN_HOR_N_BUTTONS; i++)
+    gtk_widget_set_sensitive (options->priv->align_hor_button[i], enable_hor_align);
+  for (gint i = 0; i < DISTR_VER_N_BUTTONS; i++)
+    gtk_widget_set_sensitive (options->priv->distr_ver_button[i], enable_ver_distr);
+  for (gint i = 0; i < DISTR_HOR_N_BUTTONS; i++)
+    gtk_widget_set_sensitive (options->priv->distr_hor_button[i], enable_hor_distr);
 
   /* Update the guide picking widgets. */
   if (options->priv->selected_guides)

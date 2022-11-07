@@ -98,6 +98,9 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ALIGN_LEFT:
     case GIMP_ALIGN_HCENTER:
     case GIMP_ALIGN_RIGHT:
+      if (GIMP_IS_GUIDE (reference) &&
+          gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_HORIZONTAL)
+        return;
       do_x = TRUE;
       compute_offsets (list, GIMP_ALIGN_TOP, align_contents);
       break;
@@ -107,6 +110,8 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ARRANGE_HCENTER:
     case GIMP_ARRANGE_RIGHT:
     case GIMP_ARRANGE_HFILL:
+      if (GIMP_IS_GUIDE (reference))
+        return;
       do_x = TRUE;
       compute_offsets (list, alignment, align_contents);
       break;
@@ -115,6 +120,9 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ALIGN_TOP:
     case GIMP_ALIGN_VCENTER:
     case GIMP_ALIGN_BOTTOM:
+      if (GIMP_IS_GUIDE (reference) &&
+          gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_VERTICAL)
+        return;
       do_y = TRUE;
       compute_offsets (list, GIMP_ALIGN_LEFT, align_contents);
       break;
@@ -124,6 +132,8 @@ gimp_image_arrange_objects (GimpImage         *image,
     case GIMP_ARRANGE_VCENTER:
     case GIMP_ARRANGE_BOTTOM:
     case GIMP_ARRANGE_VFILL:
+      if (GIMP_IS_GUIDE (reference))
+        return;
       do_y = TRUE;
       compute_offsets (list, alignment, align_contents);
       break;
