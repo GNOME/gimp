@@ -140,7 +140,9 @@ deps-debian/testing:
         libgtk2.0-bin
         libgtk2.0-dev
         libgudev-1.0-dev
+        libheif-dev
         libjson-glib-dev
+        libjxl-dev
         liblcms2-dev
         liblzma-dev
         libmng-dev
