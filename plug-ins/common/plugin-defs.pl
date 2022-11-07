@@ -39,7 +39,7 @@
     'file-heif' => { ui => 1, optional => 1, gegl => 1, libdep => 'GEXIV2:LCMS', libs => 'LIBHEIF_LIBS', cflags => 'LIBHEIF_CFLAGS' },
     'file-html-table' => { ui => 1, gegl => 1 },
     'file-jp2-load' => { ui => 1, optional => 1, gegl => 1, libs => 'OPENJPEG_LIBS', cflags => 'OPENJPEG_CFLAGS' },
-    'file-jpegxl' => { ui => 1, optional => 1, gegl => 1, libdep => 'JXL:JXL_THREADS', cflags => 'JXL_CFLAGS' },
+    'file-jpegxl' => { ui => 1, optional => 1, gegl => 1, libdep => 'GEXIV2:JXL:JXL_THREADS', cflags => 'JXL_CFLAGS' },
     'file-mng' => { ui => 1, gegl => 1, optional => 1, libs => 'MNG_LIBS', cflags => 'MNG_CFLAGS' },
     'file-pat' => { ui => 1, gegl => 1 },
     'file-pcx' => { ui => 1, gegl => 1 },
