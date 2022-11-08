@@ -102,11 +102,15 @@ static gboolean gimp_align_tool_undo           (GimpTool              *tool,
                                                 GimpDisplay           *display);
 
 static void     gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
+static void     gimp_align_tool_redraw         (GimpAlignTool         *align_tool);
 
 static void     gimp_align_tool_align          (GimpAlignTool         *align_tool,
                                                 GimpAlignmentType      align_type);
 
 static gint     gimp_align_tool_undo_idle      (gpointer               data);
+static void    gimp_align_tool_display_changed (GimpContext           *context,
+                                                GimpDisplay           *display,
+                                                GimpAlignTool         *align_tool);
 
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
@@ -179,6 +183,13 @@ gimp_align_tool_constructed (GObject *object)
   g_signal_connect_object (options, "align-button-clicked",
                            G_CALLBACK (gimp_align_tool_align),
                            align_tool, G_CONNECT_SWAPPED);
+  g_signal_connect_object (options, "notify::align-reference",
+                           G_CALLBACK (gimp_align_tool_redraw),
+                           align_tool, G_CONNECT_SWAPPED);
+  g_signal_connect_object (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
+                           "display-changed",
+                           G_CALLBACK (gimp_align_tool_display_changed),
+                           align_tool, 0);
 }
 
 static void
@@ -457,6 +468,9 @@ gimp_align_tool_oper_update (GimpTool         *tool,
     }
 
   gimp_align_tool_status_update (tool, display, state, proximity);
+
+  if (! gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
 
 static void
@@ -677,6 +691,33 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
           break;
         }
     }
+  else if (GIMP_IS_IMAGE (reference))
+    {
+      GimpImage *image  = GIMP_IMAGE (reference);
+      gint       width  = gimp_image_get_width (image);
+      gint       height = gimp_image_get_height (image);
+
+      gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                 0, 0,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_HANDLE_ANCHOR_NORTH_WEST);
+      gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                 width, 0,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_HANDLE_ANCHOR_NORTH_EAST);
+      gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                 0, height,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_HANDLE_ANCHOR_SOUTH_WEST);
+      gimp_draw_tool_add_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
+                                 width, height,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_TOOL_HANDLE_SIZE_SMALL,
+                                 GIMP_HANDLE_ANCHOR_SOUTH_EAST);
+    }
 
   /* Highlight picked guides, similarly to how they are highlighted in Move
    * tool.
@@ -699,6 +740,19 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
           gimp_canvas_item_set_highlight (item, TRUE);
         }
     }
+}
+
+static void
+gimp_align_tool_redraw (GimpAlignTool *align_tool)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (align_tool);
+
+  gimp_draw_tool_pause (draw_tool);
+
+  if (! gimp_draw_tool_is_active (draw_tool) && draw_tool->display)
+    gimp_draw_tool_start (draw_tool, draw_tool->display);
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static void
@@ -784,4 +838,25 @@ gimp_align_tool_undo_idle (gpointer data)
   gimp_draw_tool_start (draw_tool, display);
 
   return FALSE; /* remove idle */
+}
+
+static void
+gimp_align_tool_display_changed (GimpContext   *context,
+                                 GimpDisplay   *display,
+                                 GimpAlignTool *align_tool)
+{
+  GimpTool     *tool      = GIMP_TOOL (align_tool);
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (align_tool);
+
+  gimp_draw_tool_pause (draw_tool);
+
+  if (display != tool->display)
+    gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+
+  tool->display = display;
+
+  if (! gimp_draw_tool_is_active (draw_tool) && display)
+    gimp_draw_tool_start (draw_tool, display);
+
+  gimp_draw_tool_resume (draw_tool);
 }
