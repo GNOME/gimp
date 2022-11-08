@@ -174,7 +174,7 @@ gimp_modifiers_manager_deserialize (GimpConfig *config,
   guint                 scope_id;
   guint                 old_scope_id;
   gchar                *actions_key = NULL;
-  GdkModifierType       modifiers;
+  GdkModifierType       modifiers   = 0;
 
   scope_id = g_type_qname (G_TYPE_FROM_INSTANCE (config));
   old_scope_id = g_scanner_set_scope (scanner, scope_id);
@@ -456,6 +456,7 @@ gimp_modifiers_manager_set (GimpModifiersManager *manager,
 
   gimp_modifiers_manager_get_keys (device, button, modifiers,
                                    &actions_key, &buttons_key);
+  g_free (buttons_key);
 
   gimp_modifiers_manager_initialize (manager, device, button);
 
