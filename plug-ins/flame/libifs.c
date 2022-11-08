@@ -692,6 +692,8 @@ interpolate (control_point  cps[],
   int i, j, i1, i2;
   double c0, c1, t;
 
+  g_return_if_fail (ncps > 0);
+
   if (ncps == 1)
     {
       *result = cps[0];
@@ -710,12 +712,14 @@ interpolate (control_point  cps[],
   else
     {
       i1 = 0;
-      while (cps[i1].time < time)
+      while (i1 < ncps && cps[i1].time < time)
         i1++;
       i1--;
       i2 = i1 + 1;
-      if (time - cps[i1].time > -1e-7 &&
-          time - cps[i1].time < 1e-7)
+
+      if (i2 == ncps ||
+          (time - cps[i1].time > -1e-7 &&
+           time - cps[i1].time < 1e-7))
         {
           *result = cps[i1];
           return;
@@ -861,15 +865,18 @@ tokenize (char **ss,
               i++;
               state = 1;
             }
+          break;
         case 1:
           if (g_ascii_isspace (c))
             {
               *s = 0;
               state = 0;
             }
+          break;
         case 2:
           if (c == '\n')
             state = 0;
+          break;
         }
       s++;
       len--;
@@ -1373,7 +1380,8 @@ estimate_bounding_box (control_point *cp,
   int    low_target = batch * eps;
   int    high_target = batch - low_target;
   point  min, max, delta;
-  point *points = malloc (sizeof (point) * batch);
+  point *points = g_malloc0 (sizeof (point) * batch);
+
   iterate (cp, batch, 20, points);
 
   min[0] = min[1] =  1e10;
@@ -1420,6 +1428,7 @@ estimate_bounding_box (control_point *cp,
       delta[0] = delta[0] / 2.0;
       delta[1] = delta[1] / 2.0;
     }
+  g_free (points);
 }
 
 /* this has serious flaws in it */
