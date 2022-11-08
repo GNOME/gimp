@@ -54,14 +54,16 @@ GType gimp_alignment_type_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_ALIGN_LEFT,
-  GIMP_ALIGN_HCENTER,
-  GIMP_ALIGN_RIGHT,
-  GIMP_ALIGN_TOP,
-  GIMP_ALIGN_VCENTER,
-  GIMP_ALIGN_BOTTOM,
-  GIMP_ARRANGE_HFILL,
-  GIMP_ARRANGE_VFILL
+  GIMP_ALIGN_LEFT,                     /*< desc="Align to the left"                                 >*/
+  GIMP_ALIGN_HCENTER,                  /*< desc="Center horizontally"                               >*/
+  GIMP_ALIGN_RIGHT,                    /*< desc="Align to the right"                                >*/
+  GIMP_ALIGN_TOP,                      /*< desc="Align to the top"                                  >*/
+  GIMP_ALIGN_VCENTER,                  /*< desc="Center vertically"                                 >*/
+  GIMP_ALIGN_BOTTOM,                   /*< desc="Align to the bottom"                               >*/
+  GIMP_ARRANGE_HFILL,                  /*< desc="Distribute anchor points horizontally evenly"      >*/
+  GIMP_ARRANGE_VFILL,                  /*< desc="Distribute anchor points vertically evenly"        >*/
+  GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, /*< desc="Distribute horizontally with even horizontal gaps" >*/
+  GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP,   /*< desc="Distribute vertically with even vertical gaps"     >*/
 } GimpAlignmentType;
 
 

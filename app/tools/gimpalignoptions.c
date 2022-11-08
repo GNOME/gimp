@@ -46,8 +46,8 @@
 
 #define ALIGN_VER_N_BUTTONS 3
 #define ALIGN_HOR_N_BUTTONS 3
-#define DISTR_VER_N_BUTTONS 1
-#define DISTR_HOR_N_BUTTONS 1
+#define DISTR_VER_N_BUTTONS 2
+#define DISTR_HOR_N_BUTTONS 2
 
 
 enum
@@ -361,6 +361,12 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
     case GIMP_ARRANGE_VFILL:
         icon_name = GIMP_ICON_FILL_VERTICAL;
         break;
+    case GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
+        icon_name = GIMP_ICON_EVEN_HORIZONTAL_GAP;
+        break;
+    case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
+        icon_name = GIMP_ICON_EVEN_VERTICAL_GAP;
+        break;
     default:
       g_return_val_if_reached (NULL);
       break;
@@ -547,12 +553,22 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   n = 0;
   options->priv->distr_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_HFILL, hbox,
-                                   _("Distribute targets evenly in the horizontal"));
+                                   _("Distribute anchor points of targets evenly in the horizontal"));
+  options->priv->distr_ver_button[n++] =
+    gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, hbox,
+                                   _("Distribute horizontally with even horizontal gaps"));
+
+  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   n = 0;
   options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_VFILL, hbox,
-                                   _("Distribute targets evenly in the vertical"));
+                                   _("Distribute anchor points of targets evenly in the vertical"));
+  options->priv->distr_hor_button[n++] =
+    gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
+                                   _("Distribute vertically with even vertical gaps"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);

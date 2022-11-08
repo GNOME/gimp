@@ -155,6 +155,20 @@ gimp_image_arrange_objects (GimpImage         *image,
       do_y = TRUE;
       break;
 
+    case GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
+      use_obj_x_offset = TRUE;
+      do_x             = TRUE;
+    case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
+      if (GIMP_IS_GUIDE (reference) || g_list_length (list) <= 2)
+        return;
+
+      if (! do_x)
+        do_y = TRUE;
+
+      /* Gap distribution does not use the anchor point. */
+      align_x = align_y = 0.0;
+      break;
+
     default:
       g_return_if_reached ();
     }
@@ -171,22 +185,46 @@ gimp_image_arrange_objects (GimpImage         *image,
     {
       GList   *list;
       gint     n;
-      gint     distr_length  = 0;
-      gdouble  fill_offset  = 0;
+      gdouble  fill_offset = 0;
 
-      if (reference_alignment == GIMP_ARRANGE_HFILL ||
-          reference_alignment == GIMP_ARRANGE_VFILL)
+      if (reference_alignment == GIMP_ARRANGE_HFILL                  ||
+          reference_alignment == GIMP_ARRANGE_VFILL                  ||
+          reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP ||
+          reference_alignment == GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP)
         {
           /* Distribution does not use the reference. Extreme coordinate items
            * are used instead.
            */
           GList *last_object = g_list_last (object_list);
+          gint   distr_length;
 
           z0 = GPOINTER_TO_INT (g_object_get_data (object_list->data, "align-offset"));
           distr_length = GPOINTER_TO_INT (g_object_get_data (last_object->data, "align-offset")) - z0;
 
-          /* The offset parameter works as an internal margin */
-          fill_offset = (distr_length - 2 * offset) / (gdouble) (g_list_length (object_list) - 1);
+          if (reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP ||
+              reference_alignment == GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP)
+            {
+              for (list = object_list; list && list->next; list = g_list_next (list))
+                {
+                  gint obj_len;
+
+                  if (reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP)
+                    obj_len = GPOINTER_TO_INT (g_object_get_data (list->data, "align-width"));
+                  else
+                    obj_len = GPOINTER_TO_INT (g_object_get_data (list->data, "align-height"));
+                  distr_length -= obj_len;
+
+                  /* Initial offset is at end of first object. */
+                  if (list == object_list)
+                    z0 += obj_len;
+                }
+              fill_offset = distr_length / (gdouble) (g_list_length (object_list) - 1);
+            }
+          else
+            {
+              /* The offset parameter works as an internal margin */
+              fill_offset = (distr_length - 2 * offset) / (gdouble) (g_list_length (object_list) - 1);
+            }
 
           /* Removing first and last objects. These stay unmoved. */
           object_list = g_list_delete_link (object_list, last_object);
@@ -227,6 +265,24 @@ gimp_image_arrange_objects (GimpImage         *image,
           else if (reference_alignment == GIMP_ARRANGE_VFILL)
             {
               ytranslate =  ROUND (z0 - z1 + n * fill_offset);
+            }
+          else if (reference_alignment == GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP)
+            {
+              gint obj_len;
+
+              xtranslate = ROUND (z0 + fill_offset - z1);
+
+              obj_len = GPOINTER_TO_INT (g_object_get_data (target, "align-width"));
+              z0 = z0 + fill_offset + obj_len;
+            }
+          else if (reference_alignment == GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP)
+            {
+              gint obj_len;
+
+              ytranslate = ROUND (z0 + fill_offset - z1);
+
+              obj_len = GPOINTER_TO_INT (g_object_get_data (target, "align-height"));
+              z0 = z0 + fill_offset + obj_len;
             }
           else /* the normal computing, when we don't depend on the
                 * width or height of the reference object

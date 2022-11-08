@@ -106,6 +106,8 @@ gimp-detach
 gimp-device-status
 gimp-duplicate
 gimp-dynamics
+gimp-even-horizontal-gap
+gimp-even-vertical-gap
 gimp-file-manager
 gimp-floating-selection
 gimp-gegl

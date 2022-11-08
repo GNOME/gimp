@@ -53,19 +53,23 @@ gimp_alignment_type_get_type (void)
     { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", "align-bottom" },
     { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", "arrange-hfill" },
     { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", "arrange-vfill" },
+    { GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, "GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP", "distribute-even-horizontal-gap" },
+    { GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, "GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP", "distribute-even-vertical-gap" },
     { 0, NULL, NULL }
   };
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_ALIGN_LEFT, "GIMP_ALIGN_LEFT", NULL },
-    { GIMP_ALIGN_HCENTER, "GIMP_ALIGN_HCENTER", NULL },
-    { GIMP_ALIGN_RIGHT, "GIMP_ALIGN_RIGHT", NULL },
-    { GIMP_ALIGN_TOP, "GIMP_ALIGN_TOP", NULL },
-    { GIMP_ALIGN_VCENTER, "GIMP_ALIGN_VCENTER", NULL },
-    { GIMP_ALIGN_BOTTOM, "GIMP_ALIGN_BOTTOM", NULL },
-    { GIMP_ARRANGE_HFILL, "GIMP_ARRANGE_HFILL", NULL },
-    { GIMP_ARRANGE_VFILL, "GIMP_ARRANGE_VFILL", NULL },
+    { GIMP_ALIGN_LEFT, NC_("alignment-type", "Align to the left"), NULL },
+    { GIMP_ALIGN_HCENTER, NC_("alignment-type", "Center horizontally"), NULL },
+    { GIMP_ALIGN_RIGHT, NC_("alignment-type", "Align to the right"), NULL },
+    { GIMP_ALIGN_TOP, NC_("alignment-type", "Align to the top"), NULL },
+    { GIMP_ALIGN_VCENTER, NC_("alignment-type", "Center vertically"), NULL },
+    { GIMP_ALIGN_BOTTOM, NC_("alignment-type", "Align to the bottom"), NULL },
+    { GIMP_ARRANGE_HFILL, NC_("alignment-type", "Distribute anchor points horizontally evenly"), NULL },
+    { GIMP_ARRANGE_VFILL, NC_("alignment-type", "Distribute anchor points vertically evenly"), NULL },
+    { GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP, NC_("alignment-type", "Distribute horizontally with even horizontal gaps"), NULL },
+    { GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, NC_("alignment-type", "Distribute vertically with even vertical gaps"), NULL },
     { 0, NULL, NULL }
   };
 

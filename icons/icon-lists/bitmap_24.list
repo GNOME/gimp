@@ -29,6 +29,8 @@ gimp-device-status
 # Used as GimpViewableDialog icon in gimpdisplayshell-filter-dialog.c,
 # i.e. as GTK_ICON_SIZE_LARGE_TOOLBAR (24px).
 gimp-display-filter
+gimp-even-horizontal-gap
+gimp-even-vertical-gap
 gimp-floating-selection
 gimp-gegl
 gimp-gravity-east

@@ -210,6 +210,9 @@ G_BEGIN_DECLS
 #define GIMP_ICON_EDIT_REDO                 "edit-redo"
 #define GIMP_ICON_EDIT_UNDO                 "edit-undo"
 
+#define GIMP_ICON_EVEN_HORIZONTAL_GAP       "gimp-even-horizontal-gap"
+#define GIMP_ICON_EVEN_VERTICAL_GAP         "gimp-even-vertical-gap"
+
 #define GIMP_ICON_FILL_HORIZONTAL           "gimp-hfill"
 #define GIMP_ICON_FILL_VERTICAL             "gimp-vfill"
 

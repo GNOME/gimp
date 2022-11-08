@@ -783,6 +783,8 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
     case GIMP_ALIGN_TOP:
     case GIMP_ALIGN_VCENTER:
     case GIMP_ALIGN_BOTTOM:
+    case GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
+    case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
       offset = 0;
       break;
 

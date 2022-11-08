@@ -115,6 +115,8 @@ scalable_images = \
 	scalable/gimp-device-status-symbolic.svg				\
 	scalable/gimp-duplicate-symbolic.svg					\
 	scalable/gimp-dynamics-symbolic.svg					\
+	scalable/gimp-even-horizontal-gap-symbolic.svg				\
+	scalable/gimp-even-vertical-gap-symbolic.svg				\
 	scalable/gimp-file-manager-symbolic.svg					\
 	scalable/gimp-floating-selection-symbolic.svg				\
 	scalable/gimp-gegl-symbolic.svg						\
@@ -764,6 +766,8 @@ icons24_images = \
 	24/gimp-device-status-symbolic.symbolic.png				\
 	\
 	24/gimp-display-filter-symbolic.symbolic.png				\
+	24/gimp-even-horizontal-gap-symbolic.symbolic.png			\
+	24/gimp-even-vertical-gap-symbolic.symbolic.png				\
 	24/gimp-floating-selection-symbolic.symbolic.png			\
 	24/gimp-gegl-symbolic.symbolic.png					\
 	24/gimp-gravity-east-symbolic.symbolic.png				\
