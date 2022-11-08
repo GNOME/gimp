@@ -125,7 +125,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* order horizontally for horizontal arrangement */
     case GIMP_ARRANGE_HFILL:
-      if (GIMP_IS_GUIDE (reference))
+      if (GIMP_IS_GUIDE (reference) || g_list_length (list) <= 2)
         return;
       use_obj_x_offset = TRUE;
       use_ref_x_offset = TRUE;
@@ -150,7 +150,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* order vertically for vertical arrangement */
     case GIMP_ARRANGE_VFILL:
-      if (GIMP_IS_GUIDE (reference))
+      if (GIMP_IS_GUIDE (reference) || g_list_length (list) <= 2)
         return;
       do_y = TRUE;
       break;
@@ -167,39 +167,42 @@ gimp_image_arrange_objects (GimpImage         *image,
   /* now get offsets used for aligning */
   compute_offsets (list, use_obj_x_offset, align_x, align_y, align_contents);
 
-  if (reference == NULL)
-    {
-      reference = G_OBJECT (object_list->data);
-      object_list = g_list_delete_link (object_list, object_list);
-    }
-
-  /* Compute the offset for the reference (esp. for alignment. */
-  compute_offset (reference, use_ref_x_offset, reference_x, reference_y, FALSE);
-
-  z0 = GPOINTER_TO_INT (g_object_get_data (reference, "align-offset"));
-
   if (object_list)
     {
       GList   *list;
       gint     n;
-      gint     distr_width  = 0;
-      gint     distr_height = 0;
+      gint     distr_length  = 0;
       gdouble  fill_offset  = 0;
 
-      if (reference_alignment == GIMP_ARRANGE_HFILL)
+      if (reference_alignment == GIMP_ARRANGE_HFILL ||
+          reference_alignment == GIMP_ARRANGE_VFILL)
         {
-          distr_width = GPOINTER_TO_INT (g_object_get_data
-                                         (reference, "align-width"));
+          /* Distribution does not use the reference. Extreme coordinate items
+           * are used instead.
+           */
+          GList *last_object = g_list_last (object_list);
+
+          z0 = GPOINTER_TO_INT (g_object_get_data (object_list->data, "align-offset"));
+          distr_length = GPOINTER_TO_INT (g_object_get_data (last_object->data, "align-offset")) - z0;
+
           /* The offset parameter works as an internal margin */
-          fill_offset = (distr_width - 2 * offset) /
-                         (gdouble) (g_list_length (object_list) + 1);
+          fill_offset = (distr_length - 2 * offset) / (gdouble) (g_list_length (object_list) - 1);
+
+          /* Removing first and last objects. These stay unmoved. */
+          object_list = g_list_delete_link (object_list, last_object);
+          object_list = g_list_delete_link (object_list, object_list);
         }
-      else if (reference_alignment == GIMP_ARRANGE_VFILL)
+      else
         {
-          distr_height = GPOINTER_TO_INT (g_object_get_data
-                                          (reference, "align-height"));
-          fill_offset = (distr_height - 2 * offset) /
-                         (gdouble) (g_list_length (object_list) + 1);
+          if (reference == NULL)
+            {
+              reference = G_OBJECT (object_list->data);
+              object_list = g_list_delete_link (object_list, object_list);
+            }
+
+          /* Compute the offset for the reference (for alignment). */
+          compute_offset (reference, use_ref_x_offset, reference_x, reference_y, FALSE);
+          z0 = GPOINTER_TO_INT (g_object_get_data (reference, "align-offset"));
         }
 
       /* FIXME: undo group type is wrong */

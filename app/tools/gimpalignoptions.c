@@ -461,8 +461,8 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
   options->priv->selected_guides_label = widget;
 
-  /* Reference frame */
-  frame = gimp_frame_new (_("Reference"));
+  /* Align frame */
+  frame = gimp_frame_new (_("Align"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -470,6 +470,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_container_add (GTK_CONTAINER (frame), section_vbox);
   gtk_widget_show (section_vbox);
 
+  /* Align frame: reference */
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Relative to"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
@@ -494,14 +495,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
   options->priv->reference_label = widget;
 
-  /* Align frame */
-  frame = gimp_frame_new (_("Align"));
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
-  gtk_widget_show (section_vbox);
+  /* Align frame: buttons */
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
