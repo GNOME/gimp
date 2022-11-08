@@ -60,7 +60,6 @@ static gint    offset_compare  (gconstpointer      a,
  * @reference:            The #GObject to align the targets with, or %NULL.
  * @reference_alignment:  The point on the reference object to align the target item with..
  * @align_contents:       Take into account non-empty contents rather than item borders.
- * @offset:               How much to shift the target from perfect alignment..
  *
  * This function shifts the positions of a set of target objects,
  * which can be "items" or guides, to bring them into a specified type
@@ -73,11 +72,6 @@ static gint    offset_compare  (gconstpointer      a,
  * being arranged, where the order is defined by the type of alignment
  * being requested.  If the @reference argument is %NULL, then the
  * first object in the sorted list is used as reference.
- *
- * When there are multiple target objects, they are arranged so that
- * the spacing between consecutive ones is given by the argument
- * @offset but for HFILL and VFILL - in this case, @offset works as an
- * internal margin for the distribution (and it can be negative).
  */
 void
 gimp_image_arrange_objects (GimpImage         *image,
@@ -86,8 +80,7 @@ gimp_image_arrange_objects (GimpImage         *image,
                             gdouble            align_y,
                             GObject           *reference,
                             GimpAlignmentType  reference_alignment,
-                            gboolean           align_contents,
-                            gint               offset)
+                            gboolean           align_contents)
 {
   gdouble  reference_x      = 0.0;
   gdouble  reference_y      = 0.0;
@@ -222,8 +215,7 @@ gimp_image_arrange_objects (GimpImage         *image,
             }
           else
             {
-              /* The offset parameter works as an internal margin */
-              fill_offset = (distr_length - 2 * offset) / (gdouble) (g_list_length (object_list) - 1);
+              fill_offset = distr_length / (gdouble) (g_list_length (object_list) - 1);
             }
 
           /* Removing first and last objects. These stay unmoved. */
@@ -289,10 +281,10 @@ gimp_image_arrange_objects (GimpImage         *image,
                 */
             {
               if (do_x)
-                xtranslate = z0 - z1 + n * offset;
+                xtranslate = z0 - z1;
 
               if (do_y)
-                ytranslate = z0 - z1 + n * offset;
+                ytranslate = z0 - z1;
             }
 
           /* now actually align the target object */

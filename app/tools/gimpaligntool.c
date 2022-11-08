@@ -764,7 +764,6 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
   GObject          *reference_object = NULL;
   GList            *objects;
   GList            *list;
-  gint              offset = 0;
   gdouble           align_x = 0.0;
   gdouble           align_y = 0.0;
 
@@ -774,28 +773,6 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
     return;
 
   image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
-
-  switch (align_type)
-    {
-    case GIMP_ALIGN_LEFT:
-    case GIMP_ALIGN_HCENTER:
-    case GIMP_ALIGN_RIGHT:
-    case GIMP_ALIGN_TOP:
-    case GIMP_ALIGN_VCENTER:
-    case GIMP_ALIGN_BOTTOM:
-    case GIMP_DISTRIBUTE_EVEN_HORIZONTAL_GAP:
-    case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
-      offset = 0;
-      break;
-
-    case GIMP_ARRANGE_HFILL:
-      offset = options->offset_x;
-      break;
-
-    case GIMP_ARRANGE_VFILL:
-      offset = options->offset_y;
-      break;
-    }
 
   /* if only one object is selected, use the image as reference
    * if multiple objects are selected, use the first one as reference if
@@ -815,8 +792,7 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
                               align_x, align_y,
                               reference_object,
                               align_type,
-                              gimp_align_options_align_contents (options),
-                              offset);
+                              gimp_align_options_align_contents (options));
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (align_tool));
 

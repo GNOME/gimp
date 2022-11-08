@@ -39,8 +39,6 @@ struct _GimpAlignOptions
   GimpToolOptions          parent_instance;
 
   GimpAlignReferenceType   align_reference;
-  gdouble                  offset_x;
-  gdouble                  offset_y;
 
   GimpAlignOptionsPrivate *priv;
 };

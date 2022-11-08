@@ -60,8 +60,6 @@ enum
 {
   PROP_0,
   PROP_ALIGN_REFERENCE,
-  PROP_OFFSET_X,
-  PROP_OFFSET_Y,
   PROP_ALIGN_LAYERS,
   PROP_ALIGN_VECTORS,
   PROP_ALIGN_CONTENTS,
@@ -153,20 +151,6 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                          GIMP_ALIGN_REFERENCE_IMAGE,
                          GIMP_PARAM_STATIC_STRINGS);
 
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_X,
-                           "offset-x",
-                           _("Offset"),
-                           _("Horizontal offset for distribution"),
-                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                           GIMP_PARAM_STATIC_STRINGS);
-
-  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_OFFSET_Y,
-                           "offset-y",
-                           _("Offset"),
-                           _("Vertical offset for distribution"),
-                           -GIMP_MAX_IMAGE_SIZE, GIMP_MAX_IMAGE_SIZE, 0,
-                           GIMP_PARAM_STATIC_STRINGS);
-
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_LAYERS,
                             "align-layers",
                             _("Selected layers"),
@@ -234,13 +218,6 @@ gimp_align_options_set_property (GObject      *object,
       gimp_align_options_update_area (options);
       break;
 
-    case PROP_OFFSET_X:
-      options->offset_x = g_value_get_double (value);
-      break;
-    case PROP_OFFSET_Y:
-      options->offset_y = g_value_get_double (value);
-      break;
-
     case PROP_ALIGN_LAYERS:
       options->priv->align_layers = g_value_get_boolean (value);
       gimp_align_options_update_area (options);
@@ -279,13 +256,6 @@ gimp_align_options_get_property (GObject    *object,
     {
     case PROP_ALIGN_REFERENCE:
       g_value_set_enum (value, options->align_reference);
-      break;
-
-    case PROP_OFFSET_X:
-      g_value_set_double (value, options->offset_x);
-      break;
-    case PROP_OFFSET_Y:
-      g_value_set_double (value, options->offset_y);
       break;
 
     case PROP_ALIGN_LAYERS:
@@ -569,30 +539,6 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP, hbox,
                                    _("Distribute vertically with even vertical gaps"));
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Offset X:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_prop_spin_button_new (config, "offset-x",
-                                          1, 20, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
-
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Offset Y:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  spinbutton = gimp_prop_spin_button_new (config, "offset-y",
-                                          1, 20, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
   g_signal_connect (gimp_get_user_context (GIMP_CONTEXT (options)->gimp),
                     "image-changed",
