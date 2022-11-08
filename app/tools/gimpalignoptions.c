@@ -146,7 +146,7 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
   GIMP_CONFIG_PROP_ENUM (object_class, PROP_ALIGN_REFERENCE,
                          "align-reference",
                          _("Relative to"),
-                         _("Reference image object a layer will be aligned on"),
+                         _("Reference object targets will be aligned on"),
                          GIMP_TYPE_ALIGN_REFERENCE_TYPE,
                          GIMP_ALIGN_REFERENCE_IMAGE,
                          GIMP_PARAM_STATIC_STRINGS);
@@ -375,14 +375,12 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *items_grid;
   GtkWidget        *hbox;
   GtkWidget        *frame;
-  GtkWidget        *label;
-  GtkWidget        *spinbutton;
   GtkWidget        *combo;
   gchar            *text;
   gint              n = 0;
 
   /* Selected objects */
-  frame = gimp_frame_new (_("Objects to align or distribute"));
+  frame = gimp_frame_new (_("Targets"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -403,6 +401,8 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
 
   options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
+  gtk_widget_set_tooltip_text (options->priv->pivot_selector,
+                               _("Set anchor point of targets"));
   gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
                                     options->priv->pivot_x, options->priv->pivot_y);
   gtk_grid_attach (GTK_GRID (items_grid), options->priv->pivot_selector, 1, 0, 1, 2);
@@ -421,7 +421,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
 
   /* TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd. */
-  text = g_strdup_printf (_("%s-pick guides to align or distribute (%s-%s for more)"),
+  text = g_strdup_printf (_("%s-pick target guides (%s-%s to add more)"),
                           gimp_get_mod_string (GDK_MOD1_MASK),
                           gimp_get_mod_string (gimp_get_extend_selection_mask ()),
                           gimp_get_mod_string (GDK_MOD1_MASK));
@@ -480,15 +480,15 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   n = 0;
   options->priv->align_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_LEFT, hbox,
-                                   _("Align left edge of target"));
+                                   _("Align anchor points of targets on left edge of reference"));
 
   options->priv->align_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_HCENTER, hbox,
-                                   _("Align center of target"));
+                                   _("Align anchor points of targets on vertical middle of reference"));
 
   options->priv->align_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_RIGHT, hbox,
-                                   _("Align right edge of target"));
+                                   _("Align anchor points of targets on right edge of reference"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
   gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
@@ -497,15 +497,15 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   n = 0;
   options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_TOP, hbox,
-                                   _("Align top edge of target"));
+                                   _("Align anchor points of targets on top edge of reference"));
 
   options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_VCENTER, hbox,
-                                   _("Align middle of target"));
+                                   _("Align anchor points of targets on horizontal middle of reference"));
 
   options->priv->align_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ALIGN_BOTTOM, hbox,
-                                   _("Align bottom of target"));
+                                   _("Align anchor points of targets on bottom of reference"));
 
   /* Distribute frame */
   frame = gimp_frame_new (_("Distribute"));
