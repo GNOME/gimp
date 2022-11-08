@@ -35,7 +35,7 @@ struct _GimpSessionInfoDock
   gchar             *dock_type;
 
   /* What side this dock is in in single-window mode. Either
-   * GIMP_ARRANGE_LEFT, GIMP_ARRANGE_RIGHT or -1.
+   * GIMP_ALIGN_LEFT, GIMP_ALIGN_RIGHT or -1.
    */
   GimpAlignmentType  side;
 

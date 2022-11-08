@@ -765,6 +765,8 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
   GList            *objects;
   GList            *list;
   gint              offset = 0;
+  gdouble           align_x = 0.0;
+  gdouble           align_y = 0.0;
 
   /* if nothing is selected, just return */
   objects = gimp_align_options_get_objects (options);
@@ -784,16 +786,10 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
       offset = 0;
       break;
 
-    case GIMP_ARRANGE_LEFT:
-    case GIMP_ARRANGE_HCENTER:
-    case GIMP_ARRANGE_RIGHT:
     case GIMP_ARRANGE_HFILL:
       offset = options->offset_x;
       break;
 
-    case GIMP_ARRANGE_TOP:
-    case GIMP_ARRANGE_VCENTER:
-    case GIMP_ARRANGE_BOTTOM:
     case GIMP_ARRANGE_VFILL:
       offset = options->offset_y;
       break;
@@ -812,8 +808,9 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 
+  gimp_align_options_get_pivot (options, &align_x, &align_y);
   gimp_image_arrange_objects (image, list,
-                              align_type,
+                              align_x, align_y,
                               reference_object,
                               align_type,
                               gimp_align_options_align_contents (options),

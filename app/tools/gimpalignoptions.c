@@ -34,6 +34,7 @@
 
 #include "vectors/gimpvectors.h"
 
+#include "widgets/gimppivotselector.h"
 #include "widgets/gimppropwidgets.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -45,8 +46,8 @@
 
 #define ALIGN_VER_N_BUTTONS 3
 #define ALIGN_HOR_N_BUTTONS 3
-#define DISTR_VER_N_BUTTONS 4
-#define DISTR_HOR_N_BUTTONS 4
+#define DISTR_VER_N_BUTTONS 1
+#define DISTR_HOR_N_BUTTONS 1
 
 
 enum
@@ -64,6 +65,8 @@ enum
   PROP_ALIGN_LAYERS,
   PROP_ALIGN_VECTORS,
   PROP_ALIGN_CONTENTS,
+  PROP_PIVOT_X,
+  PROP_PIVOT_Y,
 };
 
 struct _GimpAlignOptionsPrivate
@@ -71,6 +74,8 @@ struct _GimpAlignOptionsPrivate
   gboolean   align_layers;
   gboolean   align_vectors;
   gboolean   align_contents;
+  gdouble    pivot_x;
+  gdouble    pivot_y;
 
   GList     *selected_guides;
   GObject   *reference;
@@ -79,6 +84,7 @@ struct _GimpAlignOptionsPrivate
   GtkWidget *reference_combo;
   GtkWidget *reference_box;
   GtkWidget *reference_label;
+  GtkWidget *pivot_selector;
 
   GtkWidget *align_ver_button[ALIGN_VER_N_BUTTONS];
   GtkWidget *align_hor_button[ALIGN_HOR_N_BUTTONS];
@@ -107,6 +113,8 @@ static void   gimp_align_options_guide_removed          (GimpImage        *image
                                                          GimpAlignOptions *options);
 static void   gimp_align_options_reference_removed      (GObject          *object,
                                                          GimpAlignOptions *options);
+static void   gimp_align_options_pivot_changed          (GimpPivotSelector *selector,
+                                                         GimpAlignOptions  *options);
 
 
 G_DEFINE_TYPE_WITH_PRIVATE (GimpAlignOptions, gimp_align_options, GIMP_TYPE_TOOL_OPTIONS)
@@ -161,13 +169,13 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
 
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_LAYERS,
                             "align-layers",
-                            _("Align or distribute selected layers"),
+                            _("Selected layers"),
                             _("Selected layers will be aligned or distributed by the tool"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_ALIGN_VECTORS,
                             "align-vectors",
-                            _("Align or distribute selected paths"),
+                            _("Selected paths"),
                             _("Selected paths will be aligned or distributed by the tool"),
                             FALSE,
                             GIMP_PARAM_STATIC_STRINGS);
@@ -177,6 +185,20 @@ gimp_align_options_class_init (GimpAlignOptionsClass *klass)
                             _("Instead of aligning or distributing on layer borders, use its content bounding box"),
                             TRUE,
                             GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIVOT_X,
+                           "pivot-x",
+                           "X position of the point to align in objects",
+                           NULL,
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_DOUBLE (object_class, PROP_PIVOT_Y,
+                           "pivot-y",
+                           "Y position of the point to align in objects",
+                           NULL,
+                           0.0, 1.0, 0.5,
+                           GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -232,6 +254,13 @@ gimp_align_options_set_property (GObject      *object,
       options->priv->align_contents = g_value_get_boolean (value);
       break;
 
+    case PROP_PIVOT_X:
+      options->priv->pivot_x = g_value_get_double (value);
+      break;
+    case PROP_PIVOT_Y:
+      options->priv->pivot_y = g_value_get_double (value);
+      break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -268,6 +297,13 @@ gimp_align_options_get_property (GObject    *object,
 
     case PROP_ALIGN_CONTENTS:
       g_value_set_boolean (value, options->priv->align_contents);
+      break;
+
+    case PROP_PIVOT_X:
+      g_value_set_double (value, options->priv->pivot_x);
+      break;
+    case PROP_PIVOT_Y:
+      g_value_set_double (value, options->priv->pivot_y);
       break;
 
     default:
@@ -319,24 +355,6 @@ gimp_align_options_button_new (GimpAlignOptions  *options,
     case GIMP_ALIGN_BOTTOM:
       icon_name = GIMP_ICON_GRAVITY_SOUTH;
       break;
-    case GIMP_ARRANGE_LEFT:
-      icon_name = GIMP_ICON_GRAVITY_WEST;
-      break;
-    case GIMP_ARRANGE_HCENTER:
-      icon_name = GIMP_ICON_CENTER_HORIZONTAL;
-      break;
-    case GIMP_ARRANGE_RIGHT:
-      icon_name = GIMP_ICON_GRAVITY_EAST;
-      break;
-    case GIMP_ARRANGE_TOP:
-      icon_name = GIMP_ICON_GRAVITY_NORTH;
-      break;
-    case GIMP_ARRANGE_VCENTER:
-      icon_name = GIMP_ICON_CENTER_VERTICAL;
-      break;
-    case GIMP_ARRANGE_BOTTOM:
-      icon_name = GIMP_ICON_GRAVITY_SOUTH;
-      break;
     case GIMP_ARRANGE_HFILL:
         icon_name = GIMP_ICON_FILL_HORIZONTAL;
         break;
@@ -377,7 +395,8 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   GimpAlignOptions *options = GIMP_ALIGN_OPTIONS (tool_options);
   GtkWidget        *vbox    = gimp_tool_options_gui (tool_options);
   GtkWidget        *widget;
-  GtkWidget        *align_vbox;
+  GtkWidget        *section_vbox;
+  GtkWidget        *items_grid;
   GtkWidget        *hbox;
   GtkWidget        *frame;
   GtkWidget        *label;
@@ -391,20 +410,34 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  align_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), align_vbox);
-  gtk_widget_show (align_vbox);
+  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
+  gtk_widget_show (section_vbox);
+
+  items_grid = gtk_grid_new ();
+  gtk_container_add (GTK_CONTAINER (section_vbox), items_grid);
+  gtk_widget_show (items_grid);
 
   widget = gimp_prop_check_button_new (config, "align-contents", NULL);
   widget = gimp_prop_expanding_frame_new (config, "align-layers",
                                           NULL, widget, NULL);
-  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 0, 1, 1);
 
   widget = gimp_prop_check_button_new (config, "align-vectors", NULL);
-  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
+  gtk_grid_attach (GTK_GRID (items_grid), widget, 0, 1, 1, 1);
+
+  options->priv->pivot_selector = gimp_pivot_selector_new (0.0, 0.0, 1.0, 1.0);
+  gimp_pivot_selector_set_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
+                                    options->priv->pivot_x, options->priv->pivot_y);
+  gtk_grid_attach (GTK_GRID (items_grid), options->priv->pivot_selector, 1, 0, 1, 2);
+  gtk_widget_show (options->priv->pivot_selector);
+
+  g_signal_connect (options->priv->pivot_selector, "changed",
+                    G_CALLBACK (gimp_align_options_pivot_changed),
+                    options);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   widget = gtk_image_new_from_icon_name (GIMP_ICON_CURSOR, GTK_ICON_SIZE_BUTTON);
@@ -424,28 +457,27 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
 
   widget = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
   options->priv->selected_guides_label = widget;
 
-  /* Align frame */
-  frame = gimp_frame_new (_("Align"));
+  /* Reference frame */
+  frame = gimp_frame_new (_("Reference"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  align_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), align_vbox);
-  gtk_widget_show (align_vbox);
+  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
+  gtk_widget_show (section_vbox);
 
   combo = gimp_prop_enum_combo_box_new (config, "align-reference", 0, 0);
   gimp_int_combo_box_set_label (GIMP_INT_COMBO_BOX (combo), _("Relative to"));
   g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
-  gtk_box_pack_start (GTK_BOX (align_vbox), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), combo, FALSE, FALSE, 0);
   options->priv->reference_combo = combo;
 
-
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
   options->priv->reference_box = hbox;
 
@@ -458,13 +490,21 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (widget);
 
   widget = gtk_label_new (NULL);
-  gtk_box_pack_start (GTK_BOX (align_vbox), widget, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), widget, FALSE, FALSE, 0);
   gtk_widget_show (widget);
   options->priv->reference_label = widget;
 
+  /* Align frame */
+  frame = gimp_frame_new (_("Align"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
+  gtk_widget_show (section_vbox);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   n = 0;
@@ -481,7 +521,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
                                    _("Align right edge of target"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   n = 0;
@@ -502,54 +542,26 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  align_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
-  gtk_container_add (GTK_CONTAINER (frame), align_vbox);
-  gtk_widget_show (align_vbox);
+  section_vbox = gtk_box_new (GTK_ORIENTATION_VERTICAL, 6);
+  gtk_container_add (GTK_CONTAINER (frame), section_vbox);
+  gtk_widget_show (section_vbox);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   n = 0;
-  options->priv->distr_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_LEFT, hbox,
-                                   _("Distribute left edges of targets"));
-
-  options->priv->distr_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_HCENTER, hbox,
-                                   _("Distribute horizontal centers of targets"));
-
-  options->priv->distr_ver_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_RIGHT, hbox,
-                                   _("Distribute right edges of targets"));
-
   options->priv->distr_ver_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_HFILL, hbox,
                                    _("Distribute targets evenly in the horizontal"));
 
-  hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   n = 0;
-  options->priv->distr_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_TOP, hbox,
-                                   _("Distribute top edges of targets"));
-
-  options->priv->distr_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_VCENTER, hbox,
-                                   _("Distribute vertical centers of targets"));
-
-  options->priv->distr_hor_button[n++] =
-    gimp_align_options_button_new (options, GIMP_ARRANGE_BOTTOM, hbox,
-                                   _("Distribute bottoms of targets"));
-
   options->priv->distr_hor_button[n++] =
     gimp_align_options_button_new (options, GIMP_ARRANGE_VFILL, hbox,
                                    _("Distribute targets evenly in the vertical"));
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Offset X:"));
@@ -561,7 +573,7 @@ gimp_align_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
 
   hbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 6);
-  gtk_box_pack_start (GTK_BOX (align_vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (section_vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Offset Y:"));
@@ -620,6 +632,15 @@ gimp_align_options_get_objects (GimpAlignOptions *options)
     }
 
   return objects;
+}
+
+void
+gimp_align_options_get_pivot (GimpAlignOptions *options,
+                              gdouble          *x,
+                              gdouble          *y)
+{
+  gimp_pivot_selector_get_position (GIMP_PIVOT_SELECTOR (options->priv->pivot_selector),
+                                    x, y);
 }
 
 void
@@ -890,4 +911,18 @@ gimp_align_options_reference_removed (GObject          *object,
 {
   if (G_OBJECT (object) == options->priv->reference)
     gimp_align_options_pick_reference (options, NULL);
+}
+
+static void
+gimp_align_options_pivot_changed (GimpPivotSelector *selector,
+                                  GimpAlignOptions  *options)
+{
+  gdouble x;
+  gdouble y;
+
+  gimp_pivot_selector_get_position (selector, &x, &y);
+  g_object_set (options,
+                "pivot-x", x,
+                "pivot-y", y,
+                NULL);
 }

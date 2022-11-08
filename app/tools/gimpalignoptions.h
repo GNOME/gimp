@@ -59,6 +59,9 @@ GType       gimp_align_options_get_type          (void) G_GNUC_CONST;
 GtkWidget * gimp_align_options_gui               (GimpToolOptions  *tool_options);
 
 GList     * gimp_align_options_get_objects       (GimpAlignOptions *options);
+void        gimp_align_options_get_pivot         (GimpAlignOptions *options,
+                                                  gdouble          *x,
+                                                  gdouble          *y);
 
 void        gimp_align_options_pick_reference    (GimpAlignOptions *options,
                                                   GObject          *object);
