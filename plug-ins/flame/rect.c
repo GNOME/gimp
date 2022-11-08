@@ -20,6 +20,7 @@
 
 #include <string.h>
 
+#include "libgimp/gimp.h"
 
 /* for batch
  *   interpolate
@@ -122,7 +123,7 @@ render_rectangle (frame_spec    *spec,
       if ((filter_width ^ oversample) & 1)
         filter_width++;
 
-      filter = malloc (sizeof (double) * filter_width * filter_width);
+      filter = g_malloc (sizeof (double) * filter_width * filter_width);
       /* fill in the coefs */
       for (i = 0; i < filter_width; i++)
         for (j = 0; j < filter_width; j++)
@@ -135,8 +136,8 @@ render_rectangle (frame_spec    *spec,
           }
       normalize_vector(filter, filter_width * filter_width);
     }
-  temporal_filter = malloc (sizeof (double) * nbatches);
-  temporal_deltas = malloc (sizeof (double) * nbatches);
+  temporal_filter = g_malloc (sizeof (double) * nbatches);
+  temporal_deltas = g_malloc (sizeof (double) * nbatches);
   if (nbatches > 1)
     {
       double t;
@@ -173,11 +174,11 @@ render_rectangle (frame_spec    *spec,
         {
           if (last_block != NULL)
             free (last_block);
-          last_block = malloc (memory_rqd);
+          last_block = g_try_malloc (memory_rqd);
           if (last_block == NULL)
             {
-              fprintf (stderr, "render_rectangle: cannot malloc %d bytes.\n",
-                       memory_rqd);
+              g_printerr ("render_rectangle: cannot malloc %d bytes.\n",
+                          memory_rqd);
               exit (1);
             }
           last_block_size = memory_rqd;
