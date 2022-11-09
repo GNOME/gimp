@@ -773,17 +773,14 @@ gimp_align_tool_align (GimpAlignTool     *align_tool,
     return;
 
   image = gimp_context_get_image (gimp_get_user_context (GIMP_CONTEXT (options)->gimp));
+  list  = objects;
 
-  /* if only one object is selected, use the image as reference
-   * if multiple objects are selected, use the first one as reference if
-   * "set_reference" is TRUE, otherwise use NULL.
-   */
-
-  list = objects;
-
-  reference_object = gimp_align_options_get_reference (options, TRUE);
-  if (! reference_object)
-    return;
+  if (align_type < GIMP_ARRANGE_HFILL)
+    {
+      reference_object = gimp_align_options_get_reference (options, TRUE);
+      if (! reference_object)
+        return;
+    }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (align_tool));
 

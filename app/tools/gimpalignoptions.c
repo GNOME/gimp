@@ -777,7 +777,7 @@ gimp_align_options_update_area (GimpAlignOptions *options)
       enable_hor_align = (reference != NULL &&
                           (! GIMP_IS_GUIDE (reference) ||
                            gimp_guide_get_orientation (GIMP_GUIDE (reference)) == GIMP_ORIENTATION_HORIZONTAL));
-      enable_ver_distr = enable_hor_distr = (reference != NULL && ! GIMP_IS_GUIDE (reference));
+      enable_ver_distr = enable_hor_distr = (n_items > 2);
     }
   for (gint i = 0; i < ALIGN_VER_N_BUTTONS; i++)
     gtk_widget_set_sensitive (options->priv->align_ver_button[i], enable_ver_align);

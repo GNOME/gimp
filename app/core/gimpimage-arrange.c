@@ -118,7 +118,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* order horizontally for horizontal arrangement */
     case GIMP_ARRANGE_HFILL:
-      if (GIMP_IS_GUIDE (reference) || g_list_length (list) <= 2)
+      if (g_list_length (list) <= 2)
         return;
       use_obj_x_offset = TRUE;
       use_ref_x_offset = TRUE;
@@ -143,7 +143,7 @@ gimp_image_arrange_objects (GimpImage         *image,
 
       /* order vertically for vertical arrangement */
     case GIMP_ARRANGE_VFILL:
-      if (GIMP_IS_GUIDE (reference) || g_list_length (list) <= 2)
+      if (g_list_length (list) <= 2)
         return;
       do_y = TRUE;
       break;
@@ -152,7 +152,7 @@ gimp_image_arrange_objects (GimpImage         *image,
       use_obj_x_offset = TRUE;
       do_x             = TRUE;
     case GIMP_DISTRIBUTE_EVEN_VERTICAL_GAP:
-      if (GIMP_IS_GUIDE (reference) || g_list_length (list) <= 2)
+      if (g_list_length (list) <= 2)
         return;
 
       if (! do_x)
