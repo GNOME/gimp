@@ -599,7 +599,7 @@ static void
 gimp_align_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (draw_tool);
-  GimpAlignOptions *options = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
+  GimpAlignOptions *options    = GIMP_ALIGN_TOOL_GET_OPTIONS (align_tool);
   GObject          *reference;
   GList            *objects;
   GList            *iter;
@@ -651,7 +651,7 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
   else if (GIMP_IS_GUIDE (reference))
     {
       GimpGuide *guide = GIMP_GUIDE (reference);
-      GimpImage *image = gimp_display_get_image (GIMP_TOOL (draw_tool)->display);
+      GimpImage *image = gimp_display_get_image (draw_tool->display);
       gint       x, y;
       gint       w, h;
 
