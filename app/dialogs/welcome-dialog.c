@@ -475,7 +475,8 @@ welcome_dialog_release_item_activated (GtkListBox    *listbox,
        * spaced-out or even on multiple lines for clarity.
        */
       dockable_id = g_strstrip (dockable_id);
-      widget_id   = g_strstrip (widget_id);
+      if (widget_id != NULL)
+        widget_id = g_strstrip (widget_id);
 
       /* All our dockable IDs start with "gimp-". This allows to write
        * shorter names in the demo script.
