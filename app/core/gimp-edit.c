@@ -47,11 +47,12 @@
 
 /*  local function protypes  */
 
-static GimpBuffer * gimp_edit_extract (GimpImage     *image,
-                                       GList         *pickables,
-                                       GimpContext   *context,
-                                       gboolean       cut_pixels,
-                                       GError       **error);
+static GimpBuffer   * gimp_edit_extract            (GimpImage     *image,
+                                                    GList         *pickables,
+                                                    GimpContext   *context,
+                                                    gboolean       cut_pixels,
+                                                    GError       **error);
+static GimpDrawable * gimp_edit_paste_get_top_item (GList         *drawables);
 
 
 /*  public functions  */
@@ -309,7 +310,7 @@ gimp_edit_paste_is_floating (GimpPasteType  paste_type,
 
 static GList *
 gimp_edit_paste_get_layers (GimpImage     *image,
-                            GimpDrawable  *drawable,
+                            GList         *drawables,
                             GimpObject    *paste,
                             GimpPasteType *paste_type)
 {
@@ -319,9 +320,9 @@ gimp_edit_paste_get_layers (GimpImage     *image,
   /*  change paste type to NEW_LAYER for cases where we can't attach a
    *  floating selection
    */
-  if (! drawable                                            ||
-      gimp_viewable_get_children (GIMP_VIEWABLE (drawable)) ||
-      gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
+  if (g_list_length (drawables) != 1               ||
+      gimp_viewable_get_children (drawables->data) ||
+      gimp_item_is_content_locked (drawables->data, NULL))
     {
       if (gimp_edit_paste_is_in_place (*paste_type))
         *paste_type = GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
@@ -332,8 +333,8 @@ gimp_edit_paste_get_layers (GimpImage     *image,
   /*  floating pastes always have the pasted-to drawable's format with
    *  alpha; if drawable == NULL, user is pasting into an empty image
    */
-  if (drawable && gimp_edit_paste_is_floating (*paste_type, drawable))
-    floating_format = gimp_drawable_get_format_with_alpha (drawable);
+  if (drawables && gimp_edit_paste_is_floating (*paste_type, drawables->data))
+    floating_format = gimp_drawable_get_format_with_alpha (drawables->data);
   else
     floating_format = gimp_image_get_layer_format (image, TRUE);
 
@@ -400,8 +401,8 @@ gimp_edit_paste_get_layers (GimpImage     *image,
                   floating_format)
                 {
                   gimp_drawable_convert_type (GIMP_DRAWABLE (iter->data), image,
-                                              gimp_drawable_get_base_type (drawable),
-                                              gimp_drawable_get_precision (drawable),
+                                              gimp_drawable_get_base_type (drawables->data),
+                                              gimp_drawable_get_precision (drawables->data),
                                               TRUE,
                                               NULL, NULL,
                                               GEGL_DITHER_NONE, GEGL_DITHER_NONE,
@@ -432,7 +433,7 @@ gimp_edit_paste_get_layers (GimpImage     *image,
 
 static void
 gimp_edit_paste_get_viewport_offset (GimpImage    *image,
-                                     GimpDrawable *drawable,
+                                     GList        *drawables,
                                      GList        *pasted_layers,
                                      gint          viewport_x,
                                      gint          viewport_y,
@@ -449,9 +450,6 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
   gboolean clamp_to_image = TRUE;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
-  g_return_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable));
-  g_return_if_fail (drawable == NULL ||
-                    gimp_item_is_attached (GIMP_ITEM (drawable)));
   g_return_if_fail (pasted_layers != NULL);
   g_return_if_fail (offset_x != NULL);
   g_return_if_fail (offset_y != NULL);
@@ -482,10 +480,11 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
       viewport_height = 0;
     }
 
-  if (drawable)
+  if (drawables)
     {
       /*  if pasting to a drawable  */
 
+      GimpDrawable  *drawable;
       GimpContainer *children;
       gint           off_x, off_y;
       gint           target_x, target_y;
@@ -493,6 +492,9 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
       gint           paste_x, paste_y;
       gint           paste_width, paste_height;
       gboolean       have_mask;
+
+      /* We paste to the top drawable. */
+      drawable = gimp_edit_paste_get_top_item (drawables);
 
       have_mask = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
@@ -581,7 +583,7 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
 
 static GList *
 gimp_edit_paste_paste (GimpImage     *image,
-                       GimpDrawable  *drawable,
+                       GList         *drawables,
                        GList         *layers,
                        GimpPasteType  paste_type,
                        gboolean       use_offset,
@@ -589,6 +591,9 @@ gimp_edit_paste_paste (GimpImage     *image,
                        gint           offset_y)
 {
   GList *iter;
+
+  g_return_val_if_fail (paste_type > GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE ||
+                        g_list_length (drawables) == 1, NULL);
 
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_PASTE,
                                C_("undo-type", "Paste"));
@@ -614,16 +619,16 @@ gimp_edit_paste_paste (GimpImage     *image,
 
         case GIMP_PASTE_TYPE_FLOATING_INTO:
         case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-          floating_sel_attach (iter->data, drawable);
+          floating_sel_attach (iter->data, drawables->data);
           break;
 
         case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
         case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
-          if (GIMP_IS_LAYER_MASK (drawable))
+          if (g_list_length (drawables) == 1 && GIMP_IS_LAYER_MASK (drawables->data))
             {
               if (! gimp_channel_is_empty (gimp_image_get_mask (image)))
                 gimp_channel_clear (gimp_image_get_mask (image), NULL, TRUE);
-              floating_sel_attach (iter->data, drawable);
+              floating_sel_attach (iter->data, drawables->data);
               break;
             }
 
@@ -638,10 +643,13 @@ gimp_edit_paste_paste (GimpImage     *image,
               /*  always add on top of a passed layer, where we would attach
                *  a floating selection
                */
-              if (GIMP_IS_LAYER (drawable))
+              if (g_list_length (drawables) > 0 && GIMP_IS_LAYER (drawables->data))
                 {
-                  parent   = gimp_layer_get_parent (GIMP_LAYER (drawable));
-                  position = gimp_item_get_index (GIMP_ITEM (drawable));
+                  GimpDrawable *top_drawable;
+
+                  top_drawable = gimp_edit_paste_get_top_item (drawables);
+                  parent   = gimp_layer_get_parent (GIMP_LAYER (top_drawable));
+                  position = gimp_item_get_index (GIMP_ITEM (top_drawable));
                 }
 
               gimp_image_add_layer (image, iter->data, parent, position, TRUE);
@@ -657,7 +665,7 @@ gimp_edit_paste_paste (GimpImage     *image,
 
 GList *
 gimp_edit_paste (GimpImage     *image,
-                 GimpDrawable  *drawable,
+                 GList         *drawables,
                  GimpObject    *paste,
                  GimpPasteType  paste_type,
                  gint           viewport_x,
@@ -671,12 +679,15 @@ gimp_edit_paste (GimpImage     *image,
   gint      offset_y   = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (drawable == NULL || GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (drawable == NULL ||
-                        gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
 
-  layers = gimp_edit_paste_get_layers (image, drawable, paste, &paste_type);
+  for (GList *iter = drawables; iter; iter = iter->next)
+    {
+      g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
+      g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), NULL);
+    }
+
+  layers = gimp_edit_paste_get_layers (image, drawables, paste, &paste_type);
 
   if (! layers)
     return NULL;
@@ -695,7 +706,7 @@ gimp_edit_paste (GimpImage     *image,
   else
     {
       use_offset = TRUE;
-      gimp_edit_paste_get_viewport_offset (image, drawable, layers,
+      gimp_edit_paste_get_viewport_offset (image, drawables, layers,
                                            viewport_x,
                                            viewport_y,
                                            viewport_width,
@@ -704,7 +715,7 @@ gimp_edit_paste (GimpImage     *image,
                                            &offset_y);
     }
 
-  return gimp_edit_paste_paste (image, drawable, layers, paste_type,
+  return gimp_edit_paste_paste (image, drawables, layers, paste_type,
                                 use_offset, offset_x, offset_y);
 }
 
@@ -895,4 +906,52 @@ gimp_edit_extract (GimpImage     *image,
     }
 
   return NULL;
+}
+
+/* Return the visually top item. */
+static GimpDrawable *
+gimp_edit_paste_get_top_item (GList *drawables)
+{
+  GList        *iter;
+  GimpDrawable *top      = NULL;
+  GList        *top_path = NULL;
+
+  for (iter = drawables; iter; iter = iter->next)
+    {
+      if (top == NULL)
+        {
+          top = iter->data;
+        }
+      else
+        {
+          GList *path = gimp_item_get_path (iter->data);
+          GList *p_iter;
+          GList *tp_iter;
+
+          for (p_iter = path, tp_iter = top_path; p_iter || tp_iter; p_iter = p_iter->next, tp_iter = tp_iter->next)
+            {
+              if (tp_iter == NULL)
+                {
+                  break;
+                }
+              else if (p_iter == NULL ||
+                       GPOINTER_TO_UINT (p_iter->data) < GPOINTER_TO_UINT (tp_iter->data))
+                {
+                  g_list_free (top_path);
+                  top_path = path;
+                  path = NULL;
+                  top = iter->data;
+                  break;
+                }
+              else if (GPOINTER_TO_UINT (p_iter->data) > GPOINTER_TO_UINT (tp_iter->data))
+                {
+                  break;
+                }
+            }
+          g_list_free (path);
+        }
+    }
+
+  g_list_free (top_path);
+  return top;
 }

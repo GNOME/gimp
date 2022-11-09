@@ -32,7 +32,7 @@ GimpBuffer  * gimp_edit_copy_visible       (GimpImage       *image,
                                             GError         **error);
 
 GList       * gimp_edit_paste              (GimpImage       *image,
-                                            GimpDrawable    *drawable,
+                                            GList           *drawables,
                                             GimpObject      *paste,
                                             GimpPasteType    paste_type,
                                             gint             viewport_x,

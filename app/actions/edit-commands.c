@@ -397,6 +397,7 @@ edit_paste_cmd_callback (GimpAction *action,
 
           edit_paste (display, converted_type, FALSE);
         }
+      g_list_free (drawables);
 
       break;
     }
@@ -631,6 +632,9 @@ edit_paste (GimpDisplay   *display,
   GimpImage  *image = gimp_display_get_image (display);
   GimpObject *paste;
 
+  g_return_if_fail (paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING &&
+                    paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE);
+
   if (try_svg)
     {
       gchar *svg;
@@ -660,33 +664,29 @@ edit_paste (GimpDisplay   *display,
     {
       GimpDisplayShell *shell     = gimp_display_get_shell (display);
       GList            *drawables = gimp_image_get_selected_drawables (image);
-      GimpDrawable     *drawable  = NULL;
       GList            *pasted_layers;
       gint              x, y;
       gint              width, height;
 
-      /* Paste on multiple selection is probably wrong right now (though
-       * I guess it can be argued). For now we just default to the same
-       * as pasting with no selected drawable, which will just create a
-       * new drawable.
-       */
-      if (g_list_length (drawables) == 1)
-        drawable = drawables->data;
-
-      g_list_free (drawables);
-
-      if (drawable                                &&
-          paste_type != GIMP_PASTE_TYPE_NEW_LAYER &&
-          paste_type != GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE)
+      if (g_list_length (drawables) != 1 ||
+          (paste_type != GIMP_PASTE_TYPE_NEW_LAYER &&
+           paste_type != GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE))
         {
-          if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
+          if (g_list_length (drawables) != 1)
+            {
+              gimp_message_literal (display->gimp, G_OBJECT (display),
+                                    GIMP_MESSAGE_INFO,
+                                    _("Pasted as new layer because the "
+                                      "target is not a single layer or layer mask."));
+            }
+          else if (gimp_viewable_get_children (GIMP_VIEWABLE (drawables->data)))
             {
               gimp_message_literal (display->gimp, G_OBJECT (display),
                                     GIMP_MESSAGE_INFO,
                                     _("Pasted as new layer because the "
                                       "target is a layer group."));
             }
-          else if (gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
+          else if (gimp_item_is_content_locked (GIMP_ITEM (drawables->data), NULL))
             {
               gimp_message_literal (display->gimp, G_OBJECT (display),
                                     GIMP_MESSAGE_INFO,
@@ -702,7 +702,7 @@ edit_paste (GimpDisplay   *display,
         ! gimp_display_shell_get_infinite_canvas (shell),
         &x, &y, &width, &height);
 
-      if ((pasted_layers = gimp_edit_paste (image, drawable, paste,
+      if ((pasted_layers = gimp_edit_paste (image, drawables, paste,
                                             paste_type, x, y, width, height)))
         {
           gimp_image_set_selected_layers (image, pasted_layers);
@@ -710,6 +710,7 @@ edit_paste (GimpDisplay   *display,
           gimp_image_flush (image);
         }
 
+      g_list_free (drawables);
       g_object_unref (paste);
     }
   else

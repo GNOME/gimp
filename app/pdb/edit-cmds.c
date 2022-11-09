@@ -266,15 +266,20 @@ edit_paste_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
+          GList *drawables = NULL;
           GList *list;
           gint   i;
 
+          if (drawable != NULL)
+            drawables = g_list_prepend (drawables, drawable);
+
           list = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                  drawable, paste,
+                                  drawables, paste,
                                   paste_into ?
                                   GIMP_PASTE_TYPE_FLOATING_INTO :
                                   GIMP_PASTE_TYPE_FLOATING,
                                   -1, -1, -1, -1);
+          g_list_free (drawables);
 
           if (! list)
             success = FALSE;
@@ -579,14 +584,20 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
                                      GIMP_PDB_ITEM_CONTENT, error) &&
           gimp_pdb_item_is_not_group (GIMP_ITEM (drawable), error))
         {
+          GList *drawables = NULL;
           GList *layers;
 
+          if (drawable != NULL)
+            drawables = g_list_prepend (drawables, drawable);
+
           layers = gimp_edit_paste (gimp_item_get_image (GIMP_ITEM (drawable)),
-                                    drawable, GIMP_OBJECT (buffer),
+                                    drawables, GIMP_OBJECT (buffer),
                                     paste_into ?
                                     GIMP_PASTE_TYPE_FLOATING_INTO :
                                     GIMP_PASTE_TYPE_FLOATING,
                                     -1, -1, -1, -1);
+          g_list_free (drawables);
+
           if (! layers)
             success = FALSE;
           else
