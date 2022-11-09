@@ -362,6 +362,9 @@ run (const gchar      *name,
           g_object_unref (file);
         }
 
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (image_ID);
+
       g_clear_object (&metadata);
     }
 #if LIBHEIF_HAVE_VERSION(1,8,0)
@@ -447,6 +450,9 @@ run (const gchar      *name,
             }
           g_object_unref (file);
         }
+
+      if (export == GIMP_EXPORT_EXPORT)
+        gimp_image_delete (image_ID);
 
       g_clear_object (&metadata);
     }
