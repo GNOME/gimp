@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ka\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-08 20:45+0000\n"
-"PO-Revision-Date: 2022-11-08 21:49+0100\n"
+"POT-Creation-Date: 2022-11-09 01:12+0000\n"
+"PO-Revision-Date: 2022-11-09 06:12+0100\n"
 "Last-Translator: Temuri Doghonadze <temuri.doghonadze@gmail.com>\n"
 "Language-Team: \n"
 "Language: ka\n"
@@ -2466,7 +2466,7 @@ msgid "240 Seconds"
 msgstr "240 წამი"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
-#: app/actions/edit-commands.c:167 app/actions/error-console-commands.c:100
+#: app/actions/edit-commands.c:168 app/actions/error-console-commands.c:100
 #: app/actions/file-commands.c:431 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
 #: app/actions/gradients-commands.c:79 app/actions/plug-in-commands.c:185
@@ -3294,7 +3294,7 @@ msgstr ""
 msgid "Clear Document History"
 msgstr "დოკუმენტის ისტორიის გასუფთავება"
 
-#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:168
+#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:169
 #: app/dialogs/preferences-dialog.c:690
 msgid "Cl_ear"
 msgstr "_გასუფთავება"
@@ -3410,28 +3410,28 @@ msgstr "_ნახატის 90°-ით მარცხნივ შებრ
 msgid "Equalize"
 msgstr "გათანაბრება"
 
-#: app/actions/drawable-commands.c:93
+#: app/actions/drawable-commands.c:94
 msgid "White Balance operates only on RGB color layers."
 msgstr "თეთრის ბალანსი მოქმედებს მხოლოდ RGB ფერის ფენებზე."
 
-#: app/actions/drawable-commands.c:102 app/core/gimpdrawable-levels.c:72
+#: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
 #: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
 msgid "Levels"
 msgstr "დონეები"
 
-#: app/actions/drawable-commands.c:242
+#: app/actions/drawable-commands.c:244
 msgid "Lock/Unlock content"
 msgstr "შიგთავსის ჩაკეტვა/გახსნა"
 
-#: app/actions/drawable-commands.c:310
+#: app/actions/drawable-commands.c:312
 msgid "Lock/Unlock position"
 msgstr "პოზიციის ჩაკეტვა/გახსნა"
 
-#: app/actions/drawable-commands.c:343
+#: app/actions/drawable-commands.c:346
 msgid "Flip Drawables"
 msgstr "მონაცემების ატრიალება"
 
-#: app/actions/drawable-commands.c:396
+#: app/actions/drawable-commands.c:400
 msgid "Rotate Drawables"
 msgstr "მონაცემების შებრუნება"
 
@@ -3729,158 +3729,134 @@ msgid ""
 "original position"
 msgstr "გაცვლის ბაფერის მონიშნულში თავდაპირველ პოზიციაზე ჩასმა"
 
-#: app/actions/edit-actions.c:197
-msgctxt "edit-action"
-msgid "New _Layer"
-msgstr "ახალი ფენა"
-
-#: app/actions/edit-actions.c:198
-msgctxt "edit-action"
-msgid "Create a new layer from the content of the clipboard"
-msgstr "ახალი ფენის შექმნა გაცვლის ბაფერის შემცველობით"
-
-#: app/actions/edit-actions.c:203
-msgctxt "edit-action"
-msgid "New Layer In _Place"
-msgstr "ახალი ფენა ძველ ადგილას"
-
-#: app/actions/edit-actions.c:205
-msgctxt "edit-action"
-msgid ""
-"Create a new layer from the content of the clipboard and place it at its "
-"original position"
-msgstr ""
-"ბაფერში არსებული მონაცემებით ახალი ფენის შექმნა და მისი საწყის მდებარეობაზე "
-"ჩასმა"
-
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "წინა ფერით შევ_სება"
 
-#: app/actions/edit-actions.c:215
+#: app/actions/edit-actions.c:201
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "მონიშნულის წინა პლანის ფერით შევსება"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:206
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "ფონი_ს ფერით შევსება"
 
-#: app/actions/edit-actions.c:221
+#: app/actions/edit-actions.c:207
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "მონიშნულის  ფონის ფერით შევსება"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:212
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "ტექსტურით შევსებ_ა"
 
-#: app/actions/edit-actions.c:227
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "მონიშნულის აქტიური ტექსტურით შევსება"
 
-#: app/actions/edit-actions.c:334 app/actions/edit-actions.c:336
+#: app/actions/edit-actions.c:320 app/actions/edit-actions.c:322
 #, c-format
 msgid "_Undo %s"
 msgstr "%s-ის _დაბრუნება"
 
-#: app/actions/edit-actions.c:340 app/actions/edit-actions.c:342
+#: app/actions/edit-actions.c:326 app/actions/edit-actions.c:328
 #, c-format
 msgid "_Redo %s"
 msgstr "%s-ის გამეორება"
 
-#: app/actions/edit-actions.c:353
+#: app/actions/edit-actions.c:339
 msgid "_Undo"
 msgstr "_დაბრუნება"
 
-#: app/actions/edit-actions.c:354
+#: app/actions/edit-actions.c:340
 msgid "_Redo"
 msgstr "_გამეორება"
 
-#: app/actions/edit-commands.c:159
+#: app/actions/edit-commands.c:160
 msgid "Clear Undo History"
 msgstr "დაბრუნების ისტორიის გაწმენდა"
 
-#: app/actions/edit-commands.c:186
+#: app/actions/edit-commands.c:187
 msgid "Really clear image's undo history?"
 msgstr "ნამდვილად გავწმინდო გამოსახულების დაბრუნების ისტორია?"
 
-#: app/actions/edit-commands.c:199
+#: app/actions/edit-commands.c:200
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr ""
 "ამ გამოსახულების დაბრუნებს ისტორიის წაშლით გაათავისუფლებთ %s მეხსიერებას."
 
-#: app/actions/edit-commands.c:243
+#: app/actions/edit-commands.c:244
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "%d ფენის გაცვლის ბაფერში ამოჭრა."
 
-#: app/actions/edit-commands.c:248
+#: app/actions/edit-commands.c:249
 msgid "Cut pixels to the clipboard."
 msgstr "პიქსელების გაცვლის ბაფერში ამოჭრა."
 
-#: app/actions/edit-commands.c:291
+#: app/actions/edit-commands.c:292
 msgid "Copied layer to the clipboard."
 msgstr "ფენა დაკოპირდა გაცვლის ბაფერში."
 
-#: app/actions/edit-commands.c:292 app/actions/edit-commands.c:324
+#: app/actions/edit-commands.c:293 app/actions/edit-commands.c:325
 msgid "Copied pixels to the clipboard."
 msgstr "პიქსელები დაკოპირდნენ გაცვლის ბაფერში."
 
-#: app/actions/edit-commands.c:403 app/actions/edit-commands.c:688
+#: app/actions/edit-commands.c:434 app/actions/edit-commands.c:719
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "გაცვლის ბაფერი ცარიელია."
 
-#: app/actions/edit-commands.c:419
+#: app/actions/edit-commands.c:450
 msgid "Cut Named"
 msgstr "დასახელებულების ამოჭრა"
 
-#: app/actions/edit-commands.c:422 app/actions/edit-commands.c:444
-#: app/actions/edit-commands.c:466
+#: app/actions/edit-commands.c:453 app/actions/edit-commands.c:475
+#: app/actions/edit-commands.c:497
 msgid "Enter a name for this buffer"
 msgstr "შეიყვანეთ სახელი ამ ბაფერისდათვის"
 
-#: app/actions/edit-commands.c:441
+#: app/actions/edit-commands.c:472
 msgid "Copy Named"
 msgstr "დასახელებულების კოპირება"
 
-#: app/actions/edit-commands.c:463
+#: app/actions/edit-commands.c:494
 msgid "Copy Visible Named"
 msgstr "სიიდან ხილულების კოპირება"
 
-#: app/actions/edit-commands.c:511
+#: app/actions/edit-commands.c:542
 msgid "Clear"
 msgstr "გაწმენდა"
 
-#: app/actions/edit-commands.c:584
+#: app/actions/edit-commands.c:615
 msgid "A selected layer's alpha channel is locked."
 msgstr "მონიშნული ფენის ალფა არხი დაბლოკილია."
 
-#: app/actions/edit-commands.c:655 app/display/gimpdisplayshell-dnd.c:497
+#: app/actions/edit-commands.c:686 app/display/gimpdisplayshell-dnd.c:497
 msgid "Pasted as new layer because the target is a layer group."
 msgstr ""
 
-#: app/actions/edit-commands.c:662 app/display/gimpdisplayshell-dnd.c:506
+#: app/actions/edit-commands.c:693 app/display/gimpdisplayshell-dnd.c:506
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 
-#: app/actions/edit-commands.c:705
+#: app/actions/edit-commands.c:736
 msgid "There are no selected layers or channels to cut from."
 msgstr "ამოსაკვეთად მზა მონიშნული ფენები ან არხები არ არსებობს."
 
-#: app/actions/edit-commands.c:710 app/actions/edit-commands.c:743
-#: app/actions/edit-commands.c:768
+#: app/actions/edit-commands.c:741 app/actions/edit-commands.c:774
+#: app/actions/edit-commands.c:799
 msgid "(Unnamed Buffer)"
 msgstr "(უსახელო ბაფერი)"
 
-#: app/actions/edit-commands.c:738
+#: app/actions/edit-commands.c:769
 msgid "There are no selected layers or channels to copy from."
 msgstr "იქ არ არის აქტიური ფენა, საიდანაც შეიძლება კოპირება."
 
@@ -11468,986 +11444,1036 @@ msgctxt "align-reference-type"
 msgid "Picked reference object"
 msgstr ""
 
-#: app/core/core-enums.c:97
+#: app/core/core-enums.c:63
+msgctxt "alignment-type"
+msgid "Align to the left"
+msgstr "მარცხნვ სწორება"
+
+#: app/core/core-enums.c:64
+msgctxt "alignment-type"
+msgid "Center horizontally"
+msgstr "ჰორიზონტალურად დაცენტრება"
+
+#: app/core/core-enums.c:65
+msgctxt "alignment-type"
+msgid "Align to the right"
+msgstr "მარჯვნივ სწორება"
+
+#: app/core/core-enums.c:66
+msgctxt "alignment-type"
+msgid "Align to the top"
+msgstr "ზემოთ სწორება"
+
+#: app/core/core-enums.c:67
+msgctxt "alignment-type"
+msgid "Center vertically"
+msgstr "ვერტიკალურად დაცენტრება"
+
+#: app/core/core-enums.c:68
+msgctxt "alignment-type"
+msgid "Align to the bottom"
+msgstr "ძირთან სწორება"
+
+#: app/core/core-enums.c:69
+msgctxt "alignment-type"
+msgid "Distribute anchor points horizontally evenly"
+msgstr "დამაგრების წერტილების ჰორიზონტალურად და თანაბრად განაწილება"
+
+#: app/core/core-enums.c:70
+msgctxt "alignment-type"
+msgid "Distribute anchor points vertically evenly"
+msgstr "მიმაგრების წერტლების ვერტიკალურად თანაბრად განაწილება"
+
+#: app/core/core-enums.c:71
+msgctxt "alignment-type"
+msgid "Distribute horizontally with even horizontal gaps"
+msgstr "ჰორიზონტალურად განაწილება ტოლი ჰორიზონტალური შუალედებით"
+
+#: app/core/core-enums.c:72
+msgctxt "alignment-type"
+msgid "Distribute vertically with even vertical gaps"
+msgstr "ვერტიკალურად განაწილება ტოლი შუალედებით"
+
+#: app/core/core-enums.c:101
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "წინა პლანის ფერით შევსება"
 
-#: app/core/core-enums.c:98
+#: app/core/core-enums.c:102
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "ფონის ფერით შევსება"
 
-#: app/core/core-enums.c:99
+#: app/core/core-enums.c:103
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "შაბლონით შევსება"
 
-#: app/core/core-enums.c:128
+#: app/core/core-enums.c:132
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "მაგარი"
 
-#: app/core/core-enums.c:129
+#: app/core/core-enums.c:133
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "რბილი"
 
-#: app/core/core-enums.c:130
+#: app/core/core-enums.c:134
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "მომრგვალებულია"
 
-#: app/core/core-enums.c:165
+#: app/core/core-enums.c:169
 msgctxt "color-pick-mode"
 msgid "Pixel"
 msgstr "პიქსელი"
 
-#: app/core/core-enums.c:166
+#: app/core/core-enums.c:170
 msgctxt "color-pick-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
-#: app/core/core-enums.c:167
+#: app/core/core-enums.c:171
 msgctxt "color-pick-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
-#: app/core/core-enums.c:168
+#: app/core/core-enums.c:172
 msgctxt "color-pick-mode"
 msgid "HSV"
 msgstr "HSV"
 
-#: app/core/core-enums.c:169
+#: app/core/core-enums.c:173
 msgctxt "color-pick-mode"
 msgid "CIE LCh"
 msgstr "CIE LCh"
 
-#: app/core/core-enums.c:170
+#: app/core/core-enums.c:174
 msgctxt "color-pick-mode"
 msgid "CIE LAB"
 msgstr "CIE LAB"
 
-#: app/core/core-enums.c:171
+#: app/core/core-enums.c:175
 msgctxt "color-pick-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: app/core/core-enums.c:172
+#: app/core/core-enums.c:176
 msgctxt "color-pick-mode"
 msgid "CIE xyY"
 msgstr "CIE xyY"
 
-#: app/core/core-enums.c:173
+#: app/core/core-enums.c:177
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
 msgstr "CIE Yu'v'"
 
-#: app/core/core-enums.c:203
+#: app/core/core-enums.c:207
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "გვკითხეთ რჩევა"
 
-#: app/core/core-enums.c:204
+#: app/core/core-enums.c:208
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "ჩაშენებული პროფილის დატოვება"
 
-#: app/core/core-enums.c:205
+#: app/core/core-enums.c:209
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "ჩაშენებულ sRGB ან შავთეთრ პროფილად გარდაქმნა"
 
-#: app/core/core-enums.c:206
+#: app/core/core-enums.c:210
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
 msgstr ""
 
-#: app/core/core-enums.c:300
+#: app/core/core-enums.c:304
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "არცერთი"
 
-#: app/core/core-enums.c:301
+#: app/core/core-enums.c:305
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
 msgstr "ფლოიდ-შტაინბერგი (ნორმალური)"
 
-#: app/core/core-enums.c:302
+#: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "ფლოიდ-შტაინბერგი (ფერების შემცირებული განღვრა)"
 
-#: app/core/core-enums.c:303
+#: app/core/core-enums.c:307
 msgctxt "convert-dither-type"
 msgid "Positioned"
 msgstr "განთავსებულია"
 
-#: app/core/core-enums.c:362
+#: app/core/core-enums.c:366
 msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "რბილი"
 
-#: app/core/core-enums.c:363
+#: app/core/core-enums.c:367
 msgctxt "curve-point-type"
 msgid "Corner"
 msgstr "კუთხე"
 
-#: app/core/core-enums.c:391
+#: app/core/core-enums.c:395
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "რბილი"
 
-#: app/core/core-enums.c:392
+#: app/core/core-enums.c:396
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "ხელით დახატული"
 
-#: app/core/core-enums.c:429
+#: app/core/core-enums.c:433
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "ხელით"
 
-#: app/core/core-enums.c:430
+#: app/core/core-enums.c:434
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "ხაზი"
 
-#: app/core/core-enums.c:431
+#: app/core/core-enums.c:435
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "გრძელი ტირეები"
 
-#: app/core/core-enums.c:432
+#: app/core/core-enums.c:436
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "საშუალო ტირეები"
 
-#: app/core/core-enums.c:433
+#: app/core/core-enums.c:437
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "მოკლე ტირეები"
 
-#: app/core/core-enums.c:434
+#: app/core/core-enums.c:438
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "მკვრივი წერტილები"
 
-#: app/core/core-enums.c:435
+#: app/core/core-enums.c:439
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "ნორმალური წეტილები"
 
-#: app/core/core-enums.c:436
+#: app/core/core-enums.c:440
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "მკვრივი წერტილები"
 
-#: app/core/core-enums.c:437
+#: app/core/core-enums.c:441
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "პუნქტირი"
 
-#: app/core/core-enums.c:438
+#: app/core/core-enums.c:442
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "ტირე, წერტილი"
 
-#: app/core/core-enums.c:439
+#: app/core/core-enums.c:443
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "ტირე, წერტილი, წერტილი"
 
-#: app/core/core-enums.c:469
+#: app/core/core-enums.c:473
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "გაფრთხილებების, კრიტიკული შეცდომების და ავარიების გარჩევა შეცდომებზე"
 
-#: app/core/core-enums.c:470
+#: app/core/core-enums.c:474
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "კრიტიკული შეცდომებისა და ავარიების გამართვა"
 
-#: app/core/core-enums.c:471
+#: app/core/core-enums.c:475
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "მხოლოდ ავარიების გამართვა"
 
-#: app/core/core-enums.c:472
+#: app/core/core-enums.c:476
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "არ სცადოთ GIMP-ის გამართვა"
 
-#: app/core/core-enums.c:558
+#: app/core/core-enums.c:562
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "_გაუმჭვირვალობა"
 
-#: app/core/core-enums.c:559
+#: app/core/core-enums.c:563
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "ზომა"
 
-#: app/core/core-enums.c:560
+#: app/core/core-enums.c:564
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "კუთხე"
 
-#: app/core/core-enums.c:561
+#: app/core/core-enums.c:565
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "ფერი"
 
-#: app/core/core-enums.c:562
+#: app/core/core-enums.c:566
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "სიმაგრე"
 
-#: app/core/core-enums.c:563
+#: app/core/core-enums.c:567
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "ძალა"
 
-#: app/core/core-enums.c:564
+#: app/core/core-enums.c:568
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "თანაფარდობა"
 
-#: app/core/core-enums.c:565
+#: app/core/core-enums.c:569
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "დაშორება"
 
-#: app/core/core-enums.c:566
+#: app/core/core-enums.c:570
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "სიხშირე"
 
-#: app/core/core-enums.c:567
+#: app/core/core-enums.c:571
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "დინება"
 
-#: app/core/core-enums.c:568
+#: app/core/core-enums.c:572
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "თრთოლა"
 
-#: app/core/core-enums.c:596
+#: app/core/core-enums.c:600
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "მუქი ფერი"
 
-#: app/core/core-enums.c:597
+#: app/core/core-enums.c:601
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "შაბლონი"
 
-#: app/core/core-enums.c:625
+#: app/core/core-enums.c:629
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "მონიშნულის შეყვანად გამოყენება"
 
-#: app/core/core-enums.c:626
+#: app/core/core-enums.c:630
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "შესაყვანად მთელი ფენის გამოყენება"
 
-#: app/core/core-enums.c:657
+#: app/core/core-enums.c:661
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "ფიქსირებული ზომა"
 
-#: app/core/core-enums.c:658
+#: app/core/core-enums.c:662
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "წინა პლანის ფერი"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: app/core/core-enums.c:661
+#: app/core/core-enums.c:665
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "წ.პ"
 
-#: app/core/core-enums.c:662
+#: app/core/core-enums.c:666
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "წინა პლანის ფერი(გამჭვირვალე)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:665
+#: app/core/core-enums.c:669
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "წ.პ.(გ)"
 
-#: app/core/core-enums.c:666
+#: app/core/core-enums.c:670
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "ფონის ფერი"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: app/core/core-enums.c:669
+#: app/core/core-enums.c:673
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "ფ"
 
-#: app/core/core-enums.c:670
+#: app/core/core-enums.c:674
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "ფონის ფერი(გამჭვირვალე)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:673
+#: app/core/core-enums.c:677
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "ფ.(გ)"
 
-#: app/core/core-enums.c:786
+#: app/core/core-enums.c:790
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "მნიშვნელობა"
 
-#: app/core/core-enums.c:787
+#: app/core/core-enums.c:791
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "წითელი"
 
-#: app/core/core-enums.c:788
+#: app/core/core-enums.c:792
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "მწვანე"
 
-#: app/core/core-enums.c:789
+#: app/core/core-enums.c:793
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "ლურჯი"
 
-#: app/core/core-enums.c:790
+#: app/core/core-enums.c:794
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "ალფა"
 
-#: app/core/core-enums.c:791
+#: app/core/core-enums.c:795
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr "სიკაშკაშე"
 
-#: app/core/core-enums.c:792
+#: app/core/core-enums.c:796
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: app/core/core-enums.c:822
+#: app/core/core-enums.c:826
 msgctxt "item-set"
 msgid "None"
 msgstr "არცერთი"
 
-#: app/core/core-enums.c:823
+#: app/core/core-enums.c:827
 msgctxt "item-set"
 msgid "All layers"
 msgstr "ყველა ფენა"
 
-#: app/core/core-enums.c:824
+#: app/core/core-enums.c:828
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "გამოსახულების ზომის ფენები"
 
-#: app/core/core-enums.c:825
+#: app/core/core-enums.c:829
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "ყველა ხილული ფენა"
 
-#: app/core/core-enums.c:853
+#: app/core/core-enums.c:857
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "ფონის გლობალური დაჩრდილვა"
 
-#: app/core/core-enums.c:854
+#: app/core/core-enums.c:858
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Matting Levin"
 
-#: app/core/core-enums.c:885
+#: app/core/core-enums.c:889
 msgctxt "message-severity"
 msgid "Message"
 msgstr "შეტყობინება"
 
-#: app/core/core-enums.c:886
+#: app/core/core-enums.c:890
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "გაფრთხილება"
 
-#: app/core/core-enums.c:887
+#: app/core/core-enums.c:891
 msgctxt "message-severity"
 msgid "Error"
 msgstr "შედომა"
 
-#: app/core/core-enums.c:888
+#: app/core/core-enums.c:892
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "გაფრთხილება"
 
-#: app/core/core-enums.c:889
+#: app/core/core-enums.c:893
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "კრიტიკული"
 
-#: app/core/core-enums.c:918
+#: app/core/core-enums.c:922
 msgctxt "metadata-rotation-policy"
 msgid "Ask what to do"
 msgstr "გვკითხეთ რჩევა"
 
-#: app/core/core-enums.c:919
+#: app/core/core-enums.c:923
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
 msgstr ""
 
-#: app/core/core-enums.c:920
+#: app/core/core-enums.c:924
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr ""
 
-#: app/core/core-enums.c:985
+#: app/core/core-enums.c:993
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "Wintab"
 
-#: app/core/core-enums.c:986
+#: app/core/core-enums.c:994
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows lnk"
 
-#: app/core/core-enums.c:1015
+#: app/core/core-enums.c:1023
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "ხატულის გარეშე"
 
-#: app/core/core-enums.c:1016
+#: app/core/core-enums.c:1024
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "ნორმალური (128x128)"
 
-#: app/core/core-enums.c:1017
+#: app/core/core-enums.c:1025
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "დიდი (256x256)"
 
-#: app/core/core-enums.c:1046
+#: app/core/core-enums.c:1054
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "ხაზოვანი"
 
-#: app/core/core-enums.c:1047
+#: app/core/core-enums.c:1055
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "არახაზოვანი"
 
-#: app/core/core-enums.c:1048
+#: app/core/core-enums.c:1056
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "აღქმული"
 
-#: app/core/core-enums.c:1247
+#: app/core/core-enums.c:1255
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<< არასწორი >>"
 
-#: app/core/core-enums.c:1248
+#: app/core/core-enums.c:1256
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "გამოსახულების მასშტაბირება"
 
-#: app/core/core-enums.c:1249
+#: app/core/core-enums.c:1257
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "გამოსახულების ზომის შეცვლა"
 
-#: app/core/core-enums.c:1250
+#: app/core/core-enums.c:1258
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "გამოსახულების გადაბრუნება"
 
-#: app/core/core-enums.c:1251
+#: app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "გამოსახულების შემობრუნება"
 
-#: app/core/core-enums.c:1252
+#: app/core/core-enums.c:1260
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "გამოსახულების გარდაქმნა"
 
-#: app/core/core-enums.c:1253
+#: app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "გამოსახულების ამოჭრა"
 
-#: app/core/core-enums.c:1254
+#: app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "გამოსახულების გარდაქმნა"
 
-#: app/core/core-enums.c:1255
+#: app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "ობიექტის წაშლა"
 
-#: app/core/core-enums.c:1256 app/core/core-enums.c:1309
+#: app/core/core-enums.c:1264 app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "ობიექტების გადალაგება"
 
-#: app/core/core-enums.c:1257
+#: app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "ფენების შერწყმა"
 
-#: app/core/core-enums.c:1258
+#: app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "კონტურების შერწყმა"
 
-#: app/core/core-enums.c:1259
+#: app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "სწრაფი ნიღაბი"
 
-#: app/core/core-enums.c:1260 app/core/core-enums.c:1299
+#: app/core/core-enums.c:1268 app/core/core-enums.c:1307
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "ბადე"
 
-#: app/core/core-enums.c:1261 app/core/core-enums.c:1303
+#: app/core/core-enums.c:1269 app/core/core-enums.c:1311
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "გიდი"
 
-#: app/core/core-enums.c:1262 app/core/core-enums.c:1304
+#: app/core/core-enums.c:1270 app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "სემპლის წერტილი"
 
-#: app/core/core-enums.c:1263 app/core/core-enums.c:1305
+#: app/core/core-enums.c:1271 app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "ფენა/არხი"
 
-#: app/core/core-enums.c:1264 app/core/core-enums.c:1306
+#: app/core/core-enums.c:1272 app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "ფენის/არხის შეცვლა"
 
-#: app/core/core-enums.c:1265 app/core/core-enums.c:1308
+#: app/core/core-enums.c:1273 app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "მონიშვნის ნიღაბი"
 
-#: app/core/core-enums.c:1266 app/core/core-enums.c:1312
+#: app/core/core-enums.c:1274 app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "ობიექტის ხილვადობა"
 
-#: app/core/core-enums.c:1267
+#: app/core/core-enums.c:1275
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "შიგთავსის ჩაკეტვა/გახსნა"
 
-#: app/core/core-enums.c:1268 app/core/core-enums.c:1315
+#: app/core/core-enums.c:1276 app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "პოზიციის ჩაკეტვა/გახსნა"
 
-#: app/core/core-enums.c:1269 app/core/core-enums.c:1316
+#: app/core/core-enums.c:1277 app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "ხილვადობის ჩაკეტვა/გახსნა"
 
-#: app/core/core-enums.c:1270
+#: app/core/core-enums.c:1278
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "ობიექტის თვისებები"
 
-#: app/core/core-enums.c:1271 app/core/core-enums.c:1311
+#: app/core/core-enums.c:1279 app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "გადაადგილება"
 
-#: app/core/core-enums.c:1272
+#: app/core/core-enums.c:1280
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "ობიექტის მასშტაბირება"
 
-#: app/core/core-enums.c:1273
+#: app/core/core-enums.c:1281
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "ობიექტის ზომის შეცვლა"
 
-#: app/core/core-enums.c:1274
+#: app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "ფენის დამატება"
 
-#: app/core/core-enums.c:1275
+#: app/core/core-enums.c:1283
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Alpha-არხის დამატება"
 
-#: app/core/core-enums.c:1276 app/core/core-enums.c:1332
+#: app/core/core-enums.c:1284 app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "ფენის ნიღბის დამატება"
 
-#: app/core/core-enums.c:1277 app/core/core-enums.c:1334
+#: app/core/core-enums.c:1285 app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "ფენის ნიღბის დადება"
 
-#: app/core/core-enums.c:1278
+#: app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "ალფა-არხის გამოღება"
 
-#: app/core/core-enums.c:1279
+#: app/core/core-enums.c:1287
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "ალფა არხის ჩაკეტვა/გახსნა"
 
-#: app/core/core-enums.c:1280
+#: app/core/core-enums.c:1288
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "ფენების გაუმჭვირვალობის დაყენება"
 
-#: app/core/core-enums.c:1281
+#: app/core/core-enums.c:1289
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "ფენების რეჟიმის დაყენება"
 
-#: app/core/core-enums.c:1282
+#: app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "არხების დამატება"
 
-#: app/core/core-enums.c:1283 app/core/core-enums.c:1342
+#: app/core/core-enums.c:1291 app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "მცურავი მონიშნულიდან ფენის შექმნა"
 
-#: app/core/core-enums.c:1284
+#: app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "მცურავი მონიშნული"
 
-#: app/core/core-enums.c:1285
+#: app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "მცურავი მონიშნულის დამაგრება"
 
-#: app/core/core-enums.c:1286 app/core/gimp-edit.c:583
+#: app/core/core-enums.c:1294 app/core/gimp-edit.c:594
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "ჩასმა"
 
-#: app/core/core-enums.c:1287 app/core/gimp-edit.c:837
+#: app/core/core-enums.c:1295 app/core/gimp-edit.c:860
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "ამოჭრა"
 
-#: app/core/core-enums.c:1288
+#: app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Text"
 msgstr "ტექსტი"
 
-#: app/core/core-enums.c:1289 app/core/gimpdrawable-transform.c:721
+#: app/core/core-enums.c:1297 app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "ტრასფორმირება"
 
-#: app/core/core-enums.c:1290 app/core/core-enums.c:1344
+#: app/core/core-enums.c:1298 app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "დახატვა"
 
-#: app/core/core-enums.c:1291 app/core/core-enums.c:1347
+#: app/core/core-enums.c:1299 app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "პარაზიტის დამატება"
 
-#: app/core/core-enums.c:1292 app/core/core-enums.c:1348
+#: app/core/core-enums.c:1300 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "პარაზიტის მოცილება"
 
-#: app/core/core-enums.c:1293
+#: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "კონტურების შემოტანა"
 
-#: app/core/core-enums.c:1294
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "დამატება"
 
-#: app/core/core-enums.c:1295
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "გამოსახულების ტიპი"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "გამოსახულების სიზუსტე"
 
-#: app/core/core-enums.c:1297
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "გამოსახულების ზომა"
 
-#: app/core/core-enums.c:1298
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "გარჩევადობის შეცვლა"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "მეტამონაცემების შეცვლა"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "ინდექსირებული პალიტრის შეცვლა"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "ფერების პროფილის ჩვენება/დამალვა"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "ფენის/არხის ფორმატი"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "ობიექტის მოცილება"
 
-#: app/core/core-enums.c:1313
+#: app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "ობიექტის ფერადი ჭდე"
 
-#: app/core/core-enums.c:1314
+#: app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "შიგთავსის ჩაკვეტვა/გახსნა"
 
-#: app/core/core-enums.c:1317
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "ახალი ფენა"
 
-#: app/core/core-enums.c:1318
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "ფენის წაშლა"
 
-#: app/core/core-enums.c:1319
+#: app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "ფენის რეჟიმის დაყენება"
 
-#: app/core/core-enums.c:1320
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "ფენის გაუმჭვირვალობის დაყენება"
 
-#: app/core/core-enums.c:1321
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "ალფა არხის ჩაკეტვა/გახსნა"
 
-#: app/core/core-enums.c:1322
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "ფენების ჯგუფის ზომის შეცვლის შეჩერება"
 
-#: app/core/core-enums.c:1323
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "ფენების ჯგუფის ზომის შეცვლის გაგრძელება"
 
-#: app/core/core-enums.c:1324
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "ჯგუფური ფენის ნიღბის შეჩერება"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "ჯგუფური ფენის ნიღბის გაგრძელება"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "ფენის ჯგუფის გარდაქმნის დაწყება"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "ფენის ჯგუფის გარდაქმნის დასასრული"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "ფენების ჯგუფის გარდაქმნა"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "ტექსტის ფენა"
 
-#: app/core/core-enums.c:1330
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "ტექსტის ფენის ჩასწორება"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "ტექსტის ფენის გარდაქმნა"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "ფენის ნიღბის წაშლა"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "ფენის ნიღბის ჩვენება"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "ახალი არხი"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "არხის წაშლა"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "არხის ფერი"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "New path"
 msgstr "ახალი კონტური"
 
-#: app/core/core-enums.c:1340
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "კონტურის წაშლა"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "კონტურის ჩასწორება"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "ბადის გარდაქმნა"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "მელანი"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "აირჩიეთ ფონი"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "დაუბრუნებადი მოქმედება"
 
-#: app/core/core-enums.c:1384
+#: app/core/core-enums.c:1392
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "პაწაწინა"
 
-#: app/core/core-enums.c:1385
+#: app/core/core-enums.c:1393
 msgctxt "view-size"
 msgid "Very small"
 msgstr "ძალიან პატარა"
 
-#: app/core/core-enums.c:1386
+#: app/core/core-enums.c:1394
 msgctxt "view-size"
 msgid "Small"
 msgstr "პატარა"
 
-#: app/core/core-enums.c:1387
+#: app/core/core-enums.c:1395
 msgctxt "view-size"
 msgid "Medium"
 msgstr "საშუალო"
 
-#: app/core/core-enums.c:1388
+#: app/core/core-enums.c:1396
 msgctxt "view-size"
 msgid "Large"
 msgstr "დიდი"
 
-#: app/core/core-enums.c:1389
+#: app/core/core-enums.c:1397
 msgctxt "view-size"
 msgid "Very large"
 msgstr "ძალიან დიდი"
 
-#: app/core/core-enums.c:1390
+#: app/core/core-enums.c:1398
 msgctxt "view-size"
 msgid "Huge"
 msgstr "უზარმაზარი"
 
-#: app/core/core-enums.c:1391
+#: app/core/core-enums.c:1399
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "უშველებელი"
 
-#: app/core/core-enums.c:1392
+#: app/core/core-enums.c:1400
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "გიგანტური"
 
-#: app/core/core-enums.c:1420
+#: app/core/core-enums.c:1428
 msgctxt "view-type"
 msgid "View as list"
 msgstr "როგორც სიის ჩვენება"
 
-#: app/core/core-enums.c:1421
+#: app/core/core-enums.c:1429
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "როგორც ბადის ჩვენება"
 
-#: app/core/core-enums.c:1450
+#: app/core/core-enums.c:1458
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "ტექსტით ძებნა"
 
-#: app/core/core-enums.c:1451
+#: app/core/core-enums.c:1459
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "გართულებული ძებნა"
 
-#: app/core/core-enums.c:1452
+#: app/core/core-enums.c:1460
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "გლობით ძებნა"
@@ -12536,17 +12562,17 @@ msgstr "ფერების ისტორია"
 msgid "Updating tag cache"
 msgstr "ჭდეების ქეშის განახლება"
 
-#: app/core/gimp-edit.c:123
+#: app/core/gimp-edit.c:124
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "%d ფენის ამოჭრა"
 
-#: app/core/gimp-edit.c:412 app/core/gimpimage-new.c:519
+#: app/core/gimp-edit.c:423 app/core/gimpimage-new.c:519
 msgid "Pasted Layer"
 msgstr "ჩასმული ფენა"
 
-#: app/core/gimp-edit.c:854
+#: app/core/gimp-edit.c:877
 msgid "Global Buffer"
 msgstr "გლობალური ბაფერი"
 
@@ -13638,42 +13664,42 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "გამოსახულებიდან პარაზიტის მოცილება"
 
-#: app/core/gimpimage.c:5383
+#: app/core/gimpimage.c:5348
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "ფენის დამატება"
 
-#: app/core/gimpimage.c:5427 app/core/gimpimage.c:5458
+#: app/core/gimpimage.c:5392 app/core/gimpimage.c:5423
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "ფენის ამოღება"
 
-#: app/core/gimpimage.c:5452
+#: app/core/gimpimage.c:5417
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "მცურავი მონიშვნის ამოღება"
 
-#: app/core/gimpimage.c:5976
+#: app/core/gimpimage.c:5941
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "არხის დამატება"
 
-#: app/core/gimpimage.c:6006 app/core/gimpimage.c:6031
+#: app/core/gimpimage.c:5971 app/core/gimpimage.c:5996
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "არხის ამოღება"
 
-#: app/core/gimpimage.c:6090
+#: app/core/gimpimage.c:6055
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "კონტურის დამატება"
 
-#: app/core/gimpimage.c:6120 app/core/gimpimage.c:6128
+#: app/core/gimpimage.c:6085 app/core/gimpimage.c:6093
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "კონტურის ამოღება"
 
-#: app/core/gimpimage-arrange.c:210
+#: app/core/gimpimage-arrange.c:240
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "ობიექტების დალაგება"
@@ -15587,11 +15613,11 @@ msgid "Height:"
 msgstr "სიმაღლე:"
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:561
+#: app/dialogs/layer-options-dialog.c:305
 msgid "Offset X:"
 msgstr "გადაწევა X-ით:"
 
-#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:573
+#: app/dialogs/layer-options-dialog.c:310
 msgid "Offset Y:"
 msgstr "გადაწევა Y-ით:"
 
@@ -17545,8 +17571,7 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:158
-#: app/tools/gimpalignoptions.c:165 app/tools/gimpgradientoptions.c:89
+#: app/dialogs/resize-dialog.c:377 app/tools/gimpgradientoptions.c:89
 #: app/tools/gimpoffsettool.c:129 app/tools/gimpoffsettool.c:473
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
 msgid "Offset"
@@ -20109,8 +20134,8 @@ msgstr "ჯერ გამოსახულების წყარო და
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr ""
 
-#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:130
-#: app/tools/gimpcloneoptions-gui.c:301 app/tools/gimphealtool.c:104
+#: app/paint/gimpsourceoptions.c:102 app/tools/gimpcloneoptions-gui.c:301
+#: app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "სწორება"
 
@@ -21740,137 +21765,145 @@ msgstr "ჰაეროვანი ფუნჯის ხელსაწყო:
 msgid "_Airbrush"
 msgstr "_აეროგრაფი"
 
-#: app/tools/gimpalignoptions.c:150 app/tools/gimpalignoptions.c:475
+#: app/tools/gimpalignoptions.c:148 app/tools/gimpalignoptions.c:451
 msgid "Relative to"
 msgstr "ორიენტრირი"
 
-#: app/tools/gimpalignoptions.c:151
-msgid "Reference image object a layer will be aligned on"
+#: app/tools/gimpalignoptions.c:149
+msgid "Reference object targets will be aligned on"
 msgstr ""
 
-#: app/tools/gimpalignoptions.c:159
-msgid "Horizontal offset for distribution"
-msgstr "გავრცელების ჰორიზონტალური გადაწევა"
-
-#: app/tools/gimpalignoptions.c:166
-msgid "Vertical offset for distribution"
-msgstr "გავრცელების ვერტიკალური გადაწევა"
-
-#: app/tools/gimpalignoptions.c:172
+#: app/tools/gimpalignoptions.c:156
 msgid "Selected layers"
 msgstr "მონიშნული ფენები"
 
-#: app/tools/gimpalignoptions.c:173
+#: app/tools/gimpalignoptions.c:157
 msgid "Selected layers will be aligned or distributed by the tool"
 msgstr ""
 
-#: app/tools/gimpalignoptions.c:178
+#: app/tools/gimpalignoptions.c:162
 msgid "Selected paths"
 msgstr "მონიშნული კონტურები"
 
-#: app/tools/gimpalignoptions.c:179
+#: app/tools/gimpalignoptions.c:163
 msgid "Selected paths will be aligned or distributed by the tool"
 msgstr ""
 
-#: app/tools/gimpalignoptions.c:184
+#: app/tools/gimpalignoptions.c:168
 msgid "Use extents of layer contents"
 msgstr "ფენის შემცველობის გამოყენება"
 
-#: app/tools/gimpalignoptions.c:185
+#: app/tools/gimpalignoptions.c:169
 msgid ""
 "Instead of aligning or distributing on layer borders, use its content "
 "bounding box"
 msgstr ""
 
 #. Selected objects
-#: app/tools/gimpalignoptions.c:409
-msgid "Objects to align or distribute"
-msgstr "გადასანაწილებელი ან გასასწორებელი ობიექტები"
+#: app/tools/gimpalignoptions.c:383
+msgid "Targets"
+msgstr "დანიშნულების წერტილები"
+
+#: app/tools/gimpalignoptions.c:405
+msgid "Set anchor point of targets"
+msgstr "არჩიეთ სამიზნეების დასამაგრებელი წერტილი"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
-#: app/tools/gimpalignoptions.c:448
+#: app/tools/gimpalignoptions.c:424
 #, c-format
-msgid "%s-pick guides to align or distribute (%s-%s for more)"
+msgid "%s-pick target guides (%s-%s to add more)"
 msgstr ""
 
 #. Align frame
-#: app/tools/gimpalignoptions.c:465
+#: app/tools/gimpalignoptions.c:441
 msgid "Align"
 msgstr "სწორება"
 
-#: app/tools/gimpalignoptions.c:489
+#: app/tools/gimpalignoptions.c:465
 msgid "Select the reference object"
 msgstr "მონიშნეთ მიმართული ობიექტი"
 
-#: app/tools/gimpalignoptions.c:507
-msgid "Align left edge of target"
-msgstr "დანიშნულების წერტილის მარცხენა ნაპირის სწორება"
+#: app/tools/gimpalignoptions.c:483
+msgid "Align anchor points of targets on left edge of reference"
+msgstr ""
 
-#: app/tools/gimpalignoptions.c:511
-msgid "Align center of target"
-msgstr "დანიშნულების წერტილის ცენტრის სწორება"
+#: app/tools/gimpalignoptions.c:487
+msgid "Align anchor points of targets on vertical middle of reference"
+msgstr ""
 
-#: app/tools/gimpalignoptions.c:515
-msgid "Align right edge of target"
-msgstr "დანიშნულების წერტილის მარჯვენა ნაპირის სწორება"
+#: app/tools/gimpalignoptions.c:491
+msgid "Align anchor points of targets on right edge of reference"
+msgstr ""
 
-#: app/tools/gimpalignoptions.c:524
-msgid "Align top edge of target"
-msgstr "დანიშნულების წერტილის ზედა ნაპირის სწორება"
+#: app/tools/gimpalignoptions.c:500
+msgid "Align anchor points of targets on top edge of reference"
+msgstr ""
 
-#: app/tools/gimpalignoptions.c:528
-msgid "Align middle of target"
-msgstr "დანიშნულების წერტილის ქვედა ნაპირის სწორება"
+#: app/tools/gimpalignoptions.c:504
+msgid "Align anchor points of targets on horizontal middle of reference"
+msgstr ""
 
-#: app/tools/gimpalignoptions.c:532
-msgid "Align bottom of target"
-msgstr "დანიშნულების წერტილის ძირის სწორება"
+#: app/tools/gimpalignoptions.c:508
+msgid "Align anchor points of targets on bottom of reference"
+msgstr ""
 
 #. Distribute frame
-#: app/tools/gimpalignoptions.c:535
+#: app/tools/gimpalignoptions.c:511
 msgid "Distribute"
 msgstr "განაწილება"
 
-#: app/tools/gimpalignoptions.c:550
-msgid "Distribute targets evenly in the horizontal"
-msgstr "დანიშნულების წერტილების ჰორიზონტალურად და თანაბრად განაწილება"
+#: app/tools/gimpalignoptions.c:526
+msgid "Distribute anchor points of targets evenly in the horizontal"
+msgstr "სამიზნის დამაგრების წერტილების ჰორიზონტალურად და თანაბრად განაწილება"
 
-#: app/tools/gimpalignoptions.c:555
-msgid "Distribute targets evenly in the vertical"
-msgstr "დანიშნულების წერტლების ვერტიკალურად თანაბრად განაწილება"
+#: app/tools/gimpalignoptions.c:529
+msgid "Distribute horizontally with even horizontal gaps"
+msgstr "ჰორიზონტალურად განაწილება ტოლი ჰორიზონტალური შუალედებით"
 
-#: app/tools/gimpalignoptions.c:834
+#: app/tools/gimpalignoptions.c:538
+msgid "Distribute anchor points of targets evenly in the vertical"
+msgstr "სამიზნის მიმაგრების წერტლების ვერტიკალურად თანაბრად განაწილება"
+
+#: app/tools/gimpalignoptions.c:541
+msgid "Distribute vertically with even vertical gaps"
+msgstr "ვერტიკალურად განაწილება ტოლი შუალედებით"
+
+#: app/tools/gimpalignoptions.c:796
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
 msgstr[0] ""
 
-#: app/tools/gimpalignoptions.c:860
+#: app/tools/gimpalignoptions.c:822
 #, c-format
 msgid "Reference layer: %s"
 msgstr "მიმართვის ფენა: %s"
 
-#: app/tools/gimpalignoptions.c:863
+#: app/tools/gimpalignoptions.c:825
 #, c-format
 msgid "Reference channel: %s"
 msgstr "მიმართვის არხი: %s"
 
-#: app/tools/gimpalignoptions.c:866
+#: app/tools/gimpalignoptions.c:828
 #, c-format
 msgid "Reference path: %s"
 msgstr "მიმართვის ბილიკი: %s"
 
-#: app/tools/gimpalignoptions.c:869
+#: app/tools/gimpalignoptions.c:831
 msgid "Reference guide"
 msgstr "მომხმარებლის სახელმძღვანელო"
+
+#: app/tools/gimpaligntool.c:130
+msgid "Align and Distribute"
+msgstr "სწორება და განაწილება"
 
 #: app/tools/gimpaligntool.c:131
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "სწორების ხელსაწყო: გაასწორეთ ან დაალაგეთ ფენები და სხვა ობიექტები"
 
 #: app/tools/gimpaligntool.c:132
-msgid "_Align"
-msgstr "_სწორება"
+msgid "_Align and Distribute"
+msgstr "_სწორება და განაწილება"
 
 #: app/tools/gimpaligntool.c:524
 msgid "Arrange Objects"
@@ -27880,23 +27913,61 @@ msgstr "შეცდომა XCF-ის ჩაწერისას: პიქ�
 msgid "GIMP Crash Debug"
 msgstr "GIMP-ის ავარიის გამოკვლევა"
 
+#~ msgctxt "edit-action"
+#~ msgid "New _Layer"
+#~ msgstr "ახალი ფენა"
+
+#~ msgctxt "edit-action"
+#~ msgid "Create a new layer from the content of the clipboard"
+#~ msgstr "ახალი ფენის შექმნა გაცვლის ბაფერის შემცველობით"
+
+#~ msgctxt "edit-action"
+#~ msgid "New Layer In _Place"
+#~ msgstr "ახალი ფენა ძველ ადგილას"
+
+#~ msgctxt "edit-action"
+#~ msgid ""
+#~ "Create a new layer from the content of the clipboard and place it at its "
+#~ "original position"
+#~ msgstr ""
+#~ "ბაფერში არსებული მონაცემებით ახალი ფენის შექმნა და მისი საწყის "
+#~ "მდებარეობაზე ჩასმა"
+
+#~ msgid "Horizontal offset for distribution"
+#~ msgstr "გავრცელების ჰორიზონტალური გადაწევა"
+
+#~ msgid "Vertical offset for distribution"
+#~ msgstr "გავრცელების ვერტიკალური გადაწევა"
+
+#~ msgid "Objects to align or distribute"
+#~ msgstr "გადასანაწილებელი ან გასასწორებელი ობიექტები"
+
+#~ msgid "Align left edge of target"
+#~ msgstr "დანიშნულების წერტილის მარცხენა ნაპირის სწორება"
+
+#~ msgid "Align right edge of target"
+#~ msgstr "დანიშნულების წერტილის მარჯვენა ნაპირის სწორება"
+
+#~ msgid "Align middle of target"
+#~ msgstr "დანიშნულების წერტილის ქვედა ნაპირის სწორება"
+
+#~ msgid "Align bottom of target"
+#~ msgstr "დანიშნულების წერტილის ძირის სწორება"
+
+#~ msgid "_Align"
+#~ msgstr "_სწორება"
+
 #~ msgid "Align or distribute selected layers"
 #~ msgstr "არჩეული ფენების სწორება ან გადანაწილება"
 
 #~ msgid "Distribute left edges of targets"
 #~ msgstr "დანიშნულების წერტილების მარცხენა ნაპირების განაწილება"
 
-#~ msgid "Distribute horizontal centers of targets"
-#~ msgstr "დანიშნულების წერტილების ჰორიზონტალური ცენტრების განაწილება"
-
 #~ msgid "Distribute right edges of targets"
 #~ msgstr "დანიშნულების წერტილების მარჯვენა ნაპირების გადანაწილება"
 
 #~ msgid "Distribute top edges of targets"
 #~ msgstr "დანიშნულების წერტილების ზედა ნაპირის განაწილება"
-
-#~ msgid "Distribute vertical centers of targets"
-#~ msgstr "დანიშნულების წერტილების ვერტიკალური ცენტრების გასწორება"
 
 #~ msgid "Distribute bottoms of targets"
 #~ msgstr "დანიშნულების წერტილების ძირებით განაწილება"
