@@ -74,6 +74,41 @@
   </provides>
 
   <releases>
+    <release version="2.99.14" date="2022-11-13" type="development">
+      <description>
+        <p>
+        GIMP 2.99.14 was released with the following noteworthy improvements:
+        </p>
+        <ul>
+          <li demo="toolbox:align,
+                    tool-options">
+          Align and Distribute tool: completely reworked usage
+          </li>
+          <li demo="toolbox:text,
+                    tool-options:outline=2,
+                    tool-options:text-outline-settings">
+          Text tool: new "Outlined" and "Outlined and filled" options
+          </li>
+
+          <li>Floating selections not created anymore when pasting new layers</li>
+          <li>New "Gray" theme based on a 18.42% luminance middle-gray background</li>
+          <li>Icon sizes can be overriden in Preferences > Themes</li>
+
+          <li>Faster save of XCF files</li>
+          <li>XCF file format improved with a proper structure for path items</li>
+
+          <li>PDF export: new "Root layers only" sub-option for "Layers as pages"</li>
+          <li>AVIF export: improved compatibility with various browsers' implementations</li>
+          <li>PSD export: CMYK support added</li>
+          <li>JPEG-XL: metadata are now imported and exported</li>
+          <li>ICNS: initial import/export support</li>
+          <li>TIFF import: new option "Show reduced images"</li>
+
+          <li>More progression for the GTK+3 port</li>
+          <li>New and modified functions or classes for the upcoming 3.0 API</li>
+        </ul>
+      </description>
+    </release>
     <release version="2.99.12" date="2022-08-21" type="development">
       <description>
         <p>

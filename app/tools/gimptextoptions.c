@@ -24,6 +24,7 @@
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
+#include "libgimpwidgets/gimpwidgets-private.h"
 
 #include "tools-types.h"
 
@@ -840,6 +841,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_size_group_add_widget (size_group, button);
 
   outline_frame = gimp_frame_new (_("Outline Options"));
+  gimp_widget_set_identifier (outline_frame, "text-outline-settings");
   gtk_box_pack_start (GTK_BOX (options_vbox), outline_frame, FALSE, FALSE, 0);
   gtk_widget_show (outline_frame);
 
