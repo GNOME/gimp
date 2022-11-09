@@ -67,6 +67,7 @@ drawable_equalize_cmd_callback (GimpAction *action,
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void
@@ -108,6 +109,7 @@ drawable_levels_stretch_cmd_callback (GimpAction *action,
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void
@@ -317,6 +319,7 @@ drawable_lock_position_cmd_callback (GimpAction *action,
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void
@@ -372,6 +375,7 @@ drawable_flip_cmd_callback (GimpAction *action,
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
+  g_list_free (drawables);
 }
 
 void
@@ -417,4 +421,5 @@ drawable_rotate_cmd_callback (GimpAction *action,
     gimp_image_undo_group_end (image);
 
   gimp_image_flush (image);
+  g_list_free (drawables);
 }

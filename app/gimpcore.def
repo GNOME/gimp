@@ -878,8 +878,6 @@ tile_swap_exit
 gimp_image_parasite_attach
 gimp_image_parasite_detach
 
-gimp_image_get_active_drawable
-
 gimp_image_get_load_proc
 
 gimp_log

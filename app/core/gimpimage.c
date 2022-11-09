@@ -4680,41 +4680,6 @@ gimp_image_get_vectors_list (GimpImage *image)
 
 /*  active drawable, layer, channel, vectors  */
 
-GimpDrawable *
-gimp_image_get_active_drawable (GimpImage *image)
-{
-  GimpImagePrivate *private;
-  GimpItem         *active_channel;
-  GimpItem         *active_layer;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  private = GIMP_IMAGE_GET_PRIVATE (image);
-
-  active_channel = gimp_item_tree_get_active_item (private->channels);
-  active_layer   = gimp_item_tree_get_active_item (private->layers);
-
-  /*  If there is an active channel (a saved selection, etc.),
-   *  we ignore the active layer
-   */
-  if (active_channel)
-    {
-      return GIMP_DRAWABLE (active_channel);
-    }
-  else if (active_layer)
-    {
-      GimpLayer     *layer = GIMP_LAYER (active_layer);
-      GimpLayerMask *mask  = gimp_layer_get_mask (layer);
-
-      if (mask && gimp_layer_get_edit_mask (layer))
-        return GIMP_DRAWABLE (mask);
-      else
-        return GIMP_DRAWABLE (layer);
-    }
-
-  return NULL;
-}
-
 GimpLayer *
 gimp_image_get_active_layer (GimpImage *image)
 {

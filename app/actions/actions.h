@@ -91,13 +91,6 @@ void               action_message          (GimpDisplay          *display,
   if (! widget) \
     return
 
-
-#define return_if_no_drawable(image,drawable,data) \
-  return_if_no_image (image,data); \
-  drawable = gimp_image_get_active_drawable (image); \
-  if (! drawable) \
-    return
-
 #define return_if_no_drawables(image,drawables,data) \
   return_if_no_image (image,data); \
   drawables = gimp_image_get_selected_drawables (image); \
