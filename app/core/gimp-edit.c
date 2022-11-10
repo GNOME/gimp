@@ -1016,13 +1016,16 @@ gimp_edit_paste_get_top_item (GList *drawables)
 
   for (iter = drawables; iter; iter = iter->next)
     {
+      GList *path = gimp_item_get_path (iter->data);
+
       if (top == NULL)
         {
-          top = iter->data;
+          top      = iter->data;
+          top_path = path;
+          path     = NULL;
         }
       else
         {
-          GList *path = gimp_item_get_path (iter->data);
           GList *p_iter;
           GList *tp_iter;
 
@@ -1046,8 +1049,8 @@ gimp_edit_paste_get_top_item (GList *drawables)
                   break;
                 }
             }
-          g_list_free (path);
         }
+      g_list_free (path);
     }
 
   g_list_free (top_path);
