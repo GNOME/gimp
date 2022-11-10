@@ -214,16 +214,10 @@ gimp_edit_copy (GimpImage     *image,
 
           for (iter = all_items; iter; iter = g_list_next (iter))
             {
-              GeglRectangle bounds;
-              gint          item_x;
-              gint          item_y;
-              gint          x, y;
+              gint item_x;
+              gint item_y;
 
               gimp_item_get_offset (GIMP_ITEM (iter->data), &item_x, &item_y);
-              bounds.x      = item_x;
-              bounds.y      = item_y;
-              bounds.width  = gimp_item_get_width (GIMP_ITEM (iter->data));
-              bounds.height = gimp_item_get_height (GIMP_ITEM (iter->data));
 
               /* Even if the original layer may not have an alpha channel, the
                * selected data must always have one. First because a selection
@@ -236,13 +230,10 @@ gimp_edit_copy (GimpImage     *image,
               gimp_layer_add_alpha (GIMP_LAYER (iter->data));
               gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
 
-              gegl_rectangle_intersect (&bounds, &bounds, &selection_bounds);
-              x = MIN (item_x - selection_bounds.x, 0.0);
-              y = MIN (item_y - selection_bounds.y, 0.0);
-
-              /* Finally shrink the copied layer to contents. */
+              /* Finally shrink the copied layer to selection bounds. */
               gimp_item_resize (iter->data, context, GIMP_FILL_TRANSPARENT,
-                                bounds.width, bounds.height, x, y);
+                                selection_bounds.width, selection_bounds.height,
+                                item_x - selection_bounds.x, item_y - selection_bounds.y);
             }
           g_list_free (all_items);
         }
