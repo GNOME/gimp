@@ -40,6 +40,7 @@
 
 #include "gimptool.h"
 #include "gimptoolcontrol.h"
+#include "gimptransformgridtool.h"
 #include "tool_manager.h"
 
 
@@ -53,6 +54,8 @@ struct _GimpToolManager
   GSList        *tool_stack;
 
   GimpToolGroup *active_tool_group;
+
+  GimpImage     *image;
 
   GQuark         image_clean_handler_id;
   GQuark         image_dirty_handler_id;
@@ -84,6 +87,11 @@ static void              tool_manager_image_saving              (GimpImage      
 static void              tool_manager_tool_ancestry_changed     (GimpToolInfo    *tool_info,
                                                                  GimpToolManager *tool_manager);
 static void              tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_image_changed             (GimpContext     *context,
+                                                                 GimpImage       *image,
+                                                                 GimpToolManager *tool_manager);
+static void              tool_manager_selected_layers_changed   (GimpImage       *image,
                                                                  GimpToolManager *tool_manager);
 
 static void              tool_manager_cast_spell                (GimpToolInfo    *tool_info);
@@ -134,6 +142,15 @@ tool_manager_init (Gimp *gimp)
   g_signal_connect (user_context, "tool-preset-changed",
                     G_CALLBACK (tool_manager_preset_changed),
                     tool_manager);
+  g_signal_connect (user_context, "image-changed",
+                    G_CALLBACK (tool_manager_image_changed),
+                    tool_manager);
+
+  tool_manager_image_changed (user_context,
+                              gimp_context_get_image (user_context),
+                              tool_manager);
+  tool_manager_selected_layers_changed (gimp_context_get_image (user_context),
+                                        tool_manager);
 
   tool_manager_tool_changed (user_context,
                              gimp_context_get_tool (user_context),
@@ -159,6 +176,9 @@ tool_manager_exit (Gimp *gimp)
                                         tool_manager);
   g_signal_handlers_disconnect_by_func (user_context,
                                         tool_manager_preset_changed,
+                                        tool_manager);
+  g_signal_handlers_disconnect_by_func (user_context,
+                                        tool_manager_image_changed,
                                         tool_manager);
 
   gimp_container_remove_handler (gimp->images,
@@ -751,6 +771,16 @@ tool_manager_tool_changed (GimpContext     *user_context,
 
   tool_manager_select_tool (tool_manager, new_tool);
 
+  /* Auto-activate any transform tools */
+  if (GIMP_IS_TRANSFORM_GRID_TOOL (new_tool))
+    {
+      GimpDisplay *new_display;
+
+      new_display = gimp_context_get_display (user_context);
+      if (new_display && gimp_display_get_image (new_display))
+        tool_manager_initialize_active (user_context->gimp, new_display);
+    }
+
   g_object_unref (new_tool);
 
   /* ??? */
@@ -891,6 +921,56 @@ tool_manager_group_active_tool_changed (GimpToolGroup   *tool_group,
 {
   gimp_context_set_tool (tool_manager->gimp->user_context,
                          gimp_tool_group_get_active_tool_info (tool_group));
+}
+
+static void
+tool_manager_image_changed (GimpContext     *context,
+                            GimpImage       *image,
+                            GimpToolManager *tool_manager)
+{
+  if (tool_manager->image)
+    {
+      g_signal_handlers_disconnect_by_func (tool_manager->image,
+                                            tool_manager_selected_layers_changed,
+                                            tool_manager);
+    }
+
+  tool_manager->image = image;
+
+  /* Re-activate transform tools when switching images */
+  if (image &&
+      GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
+    {
+      gimp_context_set_tool (context,
+                             tool_manager->active_tool->tool_info);
+
+      tool_manager_tool_changed (context,
+                                 gimp_context_get_tool (context),
+                                 tool_manager);
+    }
+
+  if (image)
+    g_signal_connect (tool_manager->image, "selected-layers-changed",
+                      G_CALLBACK (tool_manager_selected_layers_changed),
+                      tool_manager);
+}
+
+static void
+tool_manager_selected_layers_changed (GimpImage       *image,
+                                      GimpToolManager *tool_manager)
+{
+  /* Re-activate transform tools when changing selected layers */
+  if (image &&
+      GIMP_IS_TRANSFORM_GRID_TOOL (tool_manager->active_tool))
+    {
+      gimp_context_set_tool (tool_manager->gimp->user_context,
+                             tool_manager->active_tool->tool_info);
+
+      tool_manager_tool_changed (tool_manager->gimp->user_context,
+                                 gimp_context_get_tool (
+                                   tool_manager->gimp->user_context),
+                                 tool_manager);
+    }
 }
 
 static void

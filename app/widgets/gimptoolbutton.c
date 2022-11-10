@@ -144,14 +144,6 @@ static void         gimp_tool_button_icon_size_notify    (GtkToolPalette      *p
 static gboolean     gimp_tool_button_menu_leave_notify   (GtkMenu             *menu,
                                                           GdkEventCrossing    *event,
                                                           GimpToolButton      *tool_button);
-static void         gimp_tool_button_menu_popped_up      (GtkMenu             *menu,
-                                                          const GdkRectangle  *flipped_rect,
-                                                          const GdkRectangle  *final_rect,
-                                                          gboolean             flipped_x,
-                                                          gboolean             flipped_y,
-                                                          GimpToolButton      *tool_button);
-static void         gimp_tool_button_menu_deactivate     (GtkMenu             *menu,
-                                                          GimpToolButton      *tool_button);
 
 static gboolean     gimp_tool_button_menu_timeout        (GimpToolButton      *tool_button);
 
@@ -813,18 +805,6 @@ gimp_tool_button_icon_size_notify (GtkToolPalette   *palette,
   gimp_tool_button_update (tool_button);
 }
 
-static void
-gimp_tool_button_menu_popped_up (GtkMenu             *menu,
-                                 const GdkRectangle  *flipped_rect,
-                                 const GdkRectangle  *final_rect,
-                                 gboolean             flipped_x,
-                                 gboolean             flipped_y,
-                                 GimpToolButton      *tool_button)
-{
-  /* avoid initializing the selected tool */
-  tools_select_cmd_block_initialize ();
-}
-
 static gboolean
 gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
                                     GdkEventCrossing *event,
@@ -837,21 +817,6 @@ gimp_tool_button_menu_leave_notify (GtkMenu          *menu,
     }
 
   return FALSE;
-}
-
-static gboolean
-gimp_tool_button_menu_deactivate_idle (gpointer data)
-{
-  tools_select_cmd_unblock_initialize ();
-
-  return G_SOURCE_REMOVE;
-}
-
-static void
-gimp_tool_button_menu_deactivate (GtkMenu        *menu,
-                                  GimpToolButton *tool_button)
-{
-  g_idle_add (gimp_tool_button_menu_deactivate_idle, NULL);
 }
 
 static gboolean
@@ -1075,12 +1040,6 @@ gimp_tool_button_reconstruct_menu (GimpToolButton *tool_button)
 
       g_signal_connect (tool_button->priv->menu, "leave-notify-event",
                         G_CALLBACK (gimp_tool_button_menu_leave_notify),
-                        tool_button);
-      g_signal_connect (tool_button->priv->menu, "popped-up",
-                        G_CALLBACK (gimp_tool_button_menu_popped_up),
-                        tool_button);
-      g_signal_connect (tool_button->priv->menu, "deactivate",
-                        G_CALLBACK (gimp_tool_button_menu_deactivate),
                         tool_button);
 
       if (ui_manager)
