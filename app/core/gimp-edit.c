@@ -30,6 +30,7 @@
 #include "gimp-edit.h"
 #include "gimpbuffer.h"
 #include "gimpcontext.h"
+#include "gimpdrawable-edit.h"
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
@@ -183,37 +184,72 @@ gimp_edit_copy (GimpImage     *image,
   /* Only accept multiple drawables for layers. */
   g_return_val_if_fail (g_list_length (drawables) == 1 || drawables_are_layers, NULL);
 
-  if (drawables_are_layers &&
-      gimp_channel_is_empty (gimp_image_get_mask (image)))
+  if (drawables_are_layers)
     {
       /* Special-casing the 1 layer with no selection case.
        * It allows us to save the whole layer with all pixels as stored,
        * not the rendered version of it.
        */
-      GimpImage *clip_image;
+      GimpImage   *clip_image;
+      GimpChannel *clip_selection;
 
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
       gimp_set_clipboard_image (image->gimp, clip_image);
       g_object_unref (clip_image);
 
+      clip_selection = gimp_image_get_mask (clip_image);
+      if (! gimp_channel_is_empty (clip_selection))
+        {
+          GList         *all_items;
+          GeglRectangle  selection_bounds;
+
+          gimp_item_bounds (GIMP_ITEM (clip_selection),
+                            &selection_bounds.x, &selection_bounds.y,
+                            &selection_bounds.width, &selection_bounds.height);
+
+          /* Invert the selection. */
+          gimp_channel_invert (clip_selection, FALSE);
+          all_items = gimp_image_get_layer_list (clip_image);
+
+          for (iter = all_items; iter; iter = g_list_next (iter))
+            {
+              GeglRectangle bounds;
+              gint          item_x;
+              gint          item_y;
+              gint          x, y;
+
+              gimp_item_get_offset (GIMP_ITEM (iter->data), &item_x, &item_y);
+              bounds.x      = item_x;
+              bounds.y      = item_y;
+              bounds.width  = gimp_item_get_width (GIMP_ITEM (iter->data));
+              bounds.height = gimp_item_get_height (GIMP_ITEM (iter->data));
+
+              /* Even if the original layer may not have an alpha channel, the
+               * selected data must always have one. First because a selection
+               * is in some way an alpha channel when we copy (we may copy part
+               * of a pixel, i.e. with transparency). Second because the
+               * selection is not necessary rectangular, unlike layers. So when
+               * we will clear, if we hadn't added an alpha channel, we'd end up
+               * with background color all over the place.
+               */
+              gimp_layer_add_alpha (GIMP_LAYER (iter->data));
+              gimp_drawable_edit_clear (GIMP_DRAWABLE (iter->data), context);
+
+              gegl_rectangle_intersect (&bounds, &bounds, &selection_bounds);
+              x = MIN (item_x - selection_bounds.x, 0.0);
+              y = MIN (item_y - selection_bounds.y, 0.0);
+
+              /* Finally shrink the copied layer to contents. */
+              gimp_item_resize (iter->data, context, GIMP_FILL_TRANSPARENT,
+                                bounds.width, bounds.height, x, y);
+            }
+          g_list_free (all_items);
+        }
+      /* Remove selection from the clipboard image. */
+      gimp_channel_clear (clip_selection, NULL, FALSE);
+
       return GIMP_OBJECT (gimp_get_clipboard_image (image->gimp));
-    }
-  else if (drawables_are_layers)
-    {
-      /* Copying multiple layers or specific selection, we copy the
-       * composited pixels as rendered.
-       */
-      GimpImage  *clip_image;
-      GimpBuffer *buffer;
-
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE);
-      gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
-      buffer = gimp_edit_copy_visible (clip_image, context, error);
-
-      g_object_unref (clip_image);
-
-      return buffer ? GIMP_OBJECT (buffer) : NULL;
     }
   else
     {
