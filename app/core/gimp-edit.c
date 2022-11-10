@@ -432,21 +432,29 @@ gimp_edit_paste_get_layers (GimpImage     *image,
 }
 
 static void
-gimp_edit_paste_get_viewport_offset (GimpImage    *image,
-                                     GList        *drawables,
-                                     GList        *pasted_layers,
-                                     gint          viewport_x,
-                                     gint          viewport_y,
-                                     gint          viewport_width,
-                                     gint          viewport_height,
-                                     gint         *offset_x,
-                                     gint         *offset_y)
+gimp_edit_paste_get_viewport_offset (GimpImage *image,
+                                     GList     *drawables,
+                                     GList     *pasted_layers,
+                                     gint       viewport_x,
+                                     gint       viewport_y,
+                                     gint       viewport_width,
+                                     gint       viewport_height,
+                                     gint      *pasted_bbox_x,
+                                     gint      *pasted_bbox_y,
+                                     gint      *offset_x,
+                                     gint      *offset_y)
 {
   GList   *iter;
   gint     image_width;
   gint     image_height;
-  gint     width          = 0;
-  gint     height         = 0;
+  /* Source: pasted layers */
+  gint     source_width;
+  gint     source_height;
+
+  gint     x1             = G_MAXINT;
+  gint     y1             = G_MAXINT;
+  gint     x2             = G_MININT;
+  gint     y2             = G_MININT;
   gboolean clamp_to_image = TRUE;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
@@ -459,15 +467,29 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
 
   for (iter = pasted_layers; iter; iter = iter->next)
     {
+      gint layer_off_x;
+      gint layer_off_y;
       gint layer_width;
       gint layer_height;
 
       g_return_if_fail (GIMP_IS_VIEWABLE (iter->data));
+
+      gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
       gimp_viewable_get_size (iter->data, &layer_width, &layer_height);
 
-      width  = MAX (width, layer_width);
-      height = MAX (height, layer_height);
+      x1 = MIN (layer_off_x, x1);
+      y1 = MIN (layer_off_y, y1);
+      x2 = MAX (layer_off_x + layer_width, x2);
+      y2 = MAX (layer_off_y + layer_height, y2);
     }
+
+  /* Source offset and dimensions: this is the bounding box for all layers which
+   * we want to paste together, keeping their relative position to each others.
+   */
+  *pasted_bbox_x = x1;
+  *pasted_bbox_y = y1;
+  source_width = x2 - x1;
+  source_height = y2 - y1;
 
   if (viewport_width  == image_width &&
       viewport_height == image_height)
@@ -482,27 +504,32 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
 
   if (drawables)
     {
-      /*  if pasting to a drawable  */
-
-      GimpDrawable  *drawable;
-      GimpContainer *children;
-      gint           off_x, off_y;
-      gint           target_x, target_y;
-      gint           target_width, target_height;
-      gint           paste_x, paste_y;
-      gint           paste_width, paste_height;
-      gboolean       have_mask;
-
-      /* We paste to the top drawable. */
-      drawable = gimp_edit_paste_get_top_item (drawables);
+      /*  if pasting while 1 or more drawables are selected  */
+      gboolean empty_target = TRUE;
+      gint     target_x;
+      gint     target_y;
+      gint     target_width;
+      gint     target_height;
+      gint     paste_x, paste_y;
+      gint     paste_width;
+      gint     paste_height;
+      gboolean have_mask;
 
       have_mask = ! gimp_channel_is_empty (gimp_image_get_mask (image));
 
-      gimp_item_get_offset (GIMP_ITEM (drawable), &off_x, &off_y);
+      for (iter = drawables; iter; iter = iter->next)
+        {
+          GimpContainer *children;
 
-      children = gimp_viewable_get_children (GIMP_VIEWABLE (drawable));
+          children = gimp_viewable_get_children (iter->data);
+          if (! children || gimp_container_get_n_children (children) > 0)
+            {
+              empty_target = FALSE;
+              break;
+            }
+        }
 
-      if (children && gimp_container_get_n_children (children) == 0)
+      if (empty_target)
         {
           /* treat empty layer groups as image-sized, use the selection
            * as target
@@ -513,36 +540,62 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
         }
       else
         {
-          gimp_item_mask_intersect (GIMP_ITEM (drawable),
-                                    &target_x, &target_y,
-                                    &target_width, &target_height);
+          gint x1 = G_MAXINT;
+          gint y1 = G_MAXINT;
+          gint x2 = G_MININT;
+          gint y2 = G_MININT;
+
+          for (iter = drawables; iter; iter = iter->next)
+            {
+              gint layer_off_x;
+              gint layer_off_y;
+              gint mask_off_x;
+              gint mask_off_y;
+              gint mask_width;
+              gint mask_height;
+
+              gimp_item_get_offset (GIMP_ITEM (iter->data), &layer_off_x, &layer_off_y);
+              /* This is the bounds relatively to the drawable. */
+              gimp_item_mask_intersect (GIMP_ITEM (iter->data),
+                                        &mask_off_x, &mask_off_y,
+                                        &mask_width, &mask_height);
+
+              /* The bounds relatively to the image. */
+              x1 = MIN (layer_off_x + mask_off_x, x1);
+              y1 = MIN (layer_off_y + mask_off_y, y1);
+              x2 = MAX (layer_off_x + mask_off_x + mask_width, x2);
+              y2 = MAX (layer_off_y + mask_off_y + mask_height, y2);
+            }
+
+          target_x      = x1;
+          target_y      = y1;
+          target_width  = x2 - x1;
+          target_height = y2 - y1;
         }
 
       if (! have_mask         &&    /* if we have no mask */
           viewport_width  > 0 &&    /* and we have a viewport */
           viewport_height > 0 &&
-          (width  < target_width || /* and the paste is smaller than the target */
-           height < target_height) &&
+          (source_width  < target_width || /* and the paste is smaller than the target */
+           source_height < target_height) &&
 
           /* and the viewport intersects with the target */
           gimp_rectangle_intersect (viewport_x, viewport_y,
                                     viewport_width, viewport_height,
-                                    off_x, off_y, /* target_x,y are 0 */
+                                    target_x, target_x,
                                     target_width, target_height,
                                     &paste_x, &paste_y,
                                     &paste_width, &paste_height))
         {
           /*  center on the viewport  */
-
-          *offset_x = paste_x + (paste_width - width)  / 2;
-          *offset_y = paste_y + (paste_height- height) / 2;
+          *offset_x = viewport_x + (viewport_width - source_width)  / 2;
+          *offset_y = viewport_y + (viewport_height- source_height) / 2;
         }
       else
         {
           /*  otherwise center on the target  */
-
-          *offset_x = off_x + target_x + (target_width  - width)  / 2;
-          *offset_y = off_y + target_y + (target_height - height) / 2;
+          *offset_x = target_x + (target_width  - source_width)  / 2;
+          *offset_y = target_y + (target_height - source_height) / 2;
 
           /*  and keep it that way  */
           clamp_to_image = FALSE;
@@ -550,20 +603,20 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
     }
   else if (viewport_width  > 0 &&  /* if we have a viewport */
            viewport_height > 0 &&
-           (width  < image_width || /* and the paste is       */
-            height < image_height)) /* smaller than the image */
+           (source_width  < image_width || /* and the paste is       */
+            source_height < image_height)) /* smaller than the image */
     {
       /*  center on the viewport  */
 
-      *offset_x = viewport_x + (viewport_width  - width)  / 2;
-      *offset_y = viewport_y + (viewport_height - height) / 2;
+      *offset_x = viewport_x + (viewport_width  - source_width)  / 2;
+      *offset_y = viewport_y + (viewport_height - source_height) / 2;
     }
   else
     {
       /*  otherwise center on the image  */
 
-      *offset_x = (image_width  - width)  / 2;
-      *offset_y = (image_height - height) / 2;
+      *offset_x = (image_width  - source_width)  / 2;
+      *offset_y = (image_height - source_height) / 2;
 
       /*  and keep it that way  */
       clamp_to_image = FALSE;
@@ -574,8 +627,8 @@ gimp_edit_paste_get_viewport_offset (GimpImage    *image,
       /*  Ensure that the pasted layer is always within the image, if it
        *  fits and aligned at top left if it doesn't. (See bug #142944).
        */
-      *offset_x = MIN (*offset_x, image_width  - width);
-      *offset_y = MIN (*offset_y, image_height - height);
+      *offset_x = MIN (*offset_x, image_width  - source_width);
+      *offset_y = MIN (*offset_y, image_height - source_height);
       *offset_x = MAX (*offset_x, 0);
       *offset_y = MAX (*offset_y, 0);
     }
@@ -587,6 +640,8 @@ gimp_edit_paste_paste (GimpImage     *image,
                        GList         *layers,
                        GimpPasteType  paste_type,
                        gboolean       use_offset,
+                       gint           layers_bbox_x,
+                       gint           layers_bbox_y,
                        gint           offset_x,
                        gint           offset_y)
 {
@@ -602,7 +657,9 @@ gimp_edit_paste_paste (GimpImage     *image,
     {
       /* Layers for in-place paste are already translated. */
       if (use_offset)
-        gimp_item_translate (GIMP_ITEM (iter->data), offset_x, offset_y, FALSE);
+        gimp_item_translate (GIMP_ITEM (iter->data),
+                             offset_x - layers_bbox_x,
+                             offset_y - layers_bbox_y, FALSE);
 
       switch (paste_type)
         {
@@ -674,9 +731,11 @@ gimp_edit_paste (GimpImage     *image,
                  gint           viewport_height)
 {
   GList    *layers;
-  gboolean  use_offset = FALSE;
-  gint      offset_x   = 0;
-  gint      offset_y   = 0;
+  gboolean  use_offset    = FALSE;
+  gint      layers_bbox_x = 0;
+  gint      layers_bbox_y = 0;
+  gint      offset_y      = 0;
+  gint      offset_x      = 0;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_IMAGE (paste) || GIMP_IS_BUFFER (paste), NULL);
@@ -711,12 +770,15 @@ gimp_edit_paste (GimpImage     *image,
                                            viewport_y,
                                            viewport_width,
                                            viewport_height,
+                                           &layers_bbox_x,
+                                           &layers_bbox_y,
                                            &offset_x,
                                            &offset_y);
     }
 
   return gimp_edit_paste_paste (image, drawables, layers, paste_type,
-                                use_offset, offset_x, offset_y);
+                                use_offset, layers_bbox_x, layers_bbox_y,
+                                offset_x, offset_y);
 }
 
 GimpImage *
