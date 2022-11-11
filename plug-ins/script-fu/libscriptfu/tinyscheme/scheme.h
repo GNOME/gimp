@@ -167,6 +167,7 @@ pointer gensym(scheme *sc);
 pointer mk_string(scheme *sc, const char *str);
 pointer mk_counted_string(scheme *sc, const char *str, int len);
 pointer mk_empty_string(scheme *sc, int len, gunichar fill);
+pointer mk_byte (scheme *sc, guint8 b);
 pointer mk_character(scheme *sc, gunichar c);
 pointer mk_foreign_func(scheme *sc, foreign_func f);
 void    putcharacter(scheme *sc, gunichar c);
@@ -188,6 +189,7 @@ struct scheme_interface {
   pointer (*gensym)(scheme *sc);
   pointer (*mk_string)(scheme *sc, const char *str);
   pointer (*mk_counted_string)(scheme *sc, const char *str, int len);
+  pointer (*mk_byte)(scheme *sc, guint8 b);
   pointer (*mk_character)(scheme *sc, gunichar c);
   pointer (*mk_vector)(scheme *sc, int len);
   pointer (*mk_foreign_func)(scheme *sc, foreign_func f);
@@ -204,7 +206,9 @@ struct scheme_interface {
   double (*rvalue)(pointer p);
   int (*is_integer)(pointer p);
   int (*is_real)(pointer p);
+  int (*is_byte)(pointer p);
   int (*is_character)(pointer p);
+  guint8 (*bytevalue)(pointer p);
   gunichar (*charvalue)(pointer p);
   int (*is_list)(scheme *sc, pointer p);
   int (*is_vector)(pointer p);

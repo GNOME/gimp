@@ -152,9 +152,6 @@ long gensym_cnt;
 struct scheme_interface *vptr;
 void *dump_base;     /* pointer to base of allocated dump stack */
 int dump_size;       /* number of frames allocated for dump stack */
-
-gunichar backchar[2];
-int bc_flag;
 };
 
 /* operator code */
@@ -179,8 +176,10 @@ long ivalue(pointer p);
 double rvalue(pointer p);
 int is_integer(pointer p);
 int is_real(pointer p);
+int is_byte (pointer p);
 int is_character(pointer p);
 int string_length(pointer p);
+guint8 bytevalue (pointer p);
 gunichar charvalue(pointer p);
 int is_vector(pointer p);
 

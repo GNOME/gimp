@@ -157,7 +157,8 @@ enum scheme_types {
   T_MACRO=12,
   T_PROMISE=13,
   T_ENVIRONMENT=14,
-  T_LAST_SYSTEM_TYPE=14
+  T_BYTE=15,
+  T_LAST_SYSTEM_TYPE=15
 };
 
 /* ADJ is enough slack to align cells in a TYPE_BITS-bit boundary */
@@ -221,6 +222,7 @@ INTERFACE INLINE int is_real(pointer p) {
   return is_number(p) && (!(p)->_object._number.is_fixnum);
 }
 
+INTERFACE INLINE int is_byte (pointer p) { return type (p) == T_BYTE; }
 INTERFACE INLINE int is_character(pointer p) { return (type(p)==T_CHARACTER); }
 INTERFACE INLINE int string_length(pointer p) { return strlength(p); }
 INTERFACE INLINE char *string_value(pointer p) { return strvalue(p); }
@@ -231,6 +233,7 @@ INTERFACE double rvalue(pointer p)    { return (!num_is_integer(p)?(p)->_object.
 #define rvalue_unchecked(p)       ((p)->_object._number.value.rvalue)
 #define set_num_integer(p)   (p)->_object._number.is_fixnum=1;
 #define set_num_real(p)      (p)->_object._number.is_fixnum=0;
+INTERFACE guint8 bytevalue (pointer p) { return (guint8)ivalue_unchecked (p); }
 INTERFACE  gunichar charvalue(pointer p)  { return (gunichar)ivalue_unchecked(p); }
 
 INTERFACE INLINE int is_port(pointer p)     { return (type(p)==T_PORT); }
@@ -395,7 +398,9 @@ static port *port_rep_from_string(scheme *sc, char *start, char *past_the_end, i
 static void port_close(scheme *sc, pointer p, int flag);
 static void mark(pointer a);
 static void gc(scheme *sc, pointer a, pointer b);
-static gunichar basic_inchar(port *pt);
+static gint basic_inbyte (port *pt);
+static gint inbyte (scheme *sc);
+static void backbyte (scheme *sc, gint b);
 static gunichar inchar(scheme *sc);
 static void backchar(scheme *sc, gunichar c);
 static char *readstr_upto(scheme *sc, char *delim);
@@ -981,6 +986,17 @@ pointer mk_foreign_func(scheme *sc, foreign_func f) {
   typeflag(x) = (T_FOREIGN | T_ATOM);
   x->_object._ff=f;
   return (x);
+}
+
+INTERFACE pointer
+mk_byte (scheme *sc, guint8 b)
+{
+  pointer x = get_cell (sc, sc->NIL, sc->NIL);
+
+  typeflag (x) = (T_BYTE | T_ATOM);
+  ivalue_unchecked (x) = b;
+  set_num_integer (x);
+  return x;
 }
 
 INTERFACE pointer mk_character(scheme *sc, gunichar c) {
@@ -1591,132 +1607,127 @@ static void port_close(scheme *sc, pointer p, int flag) {
   }
 }
 
-/* This routine will ignore byte sequences that are not valid UTF-8 */
-static gunichar basic_inchar(port *pt) {
-  if(pt->kind & port_file) {
-    int  c;
+/* Read utf8 character from the active port. */
+static gunichar
+inchar (scheme *sc)
+{
+  gint b = inbyte (sc);
 
-    c = fgetc(pt->rep.stdio.file);
-
-    while (TRUE)
-      {
-        if (c == EOF) return EOF;
-
-        if (c <= 0x7f)
-            return (gunichar) c;
-
-        /* Is this byte an invalid lead per RFC-3629? */
-        if (c < 0xc2 || c > 0xf4)
-          {
-            /* Ignore invalid lead byte and get the next character */
-            c = fgetc(pt->rep.stdio.file);
-          }
-        else    /* Byte is valid lead */
-          {
-            unsigned char utf8[7];
-            int  len;
-            int  i;
-
-            utf8[0] = c;    /* Save the lead byte */
-
-            len = utf8_length[c & 0x3F];
-            for (i = 1; i <= len; i++)
-              {
-                c = fgetc(pt->rep.stdio.file);
-
-                /* Stop reading if this is not a continuation character */
-                if ((c & 0xc0) != 0x80)
-                    break;
-
-                utf8[i] = c;
-              }
-
-            if (i > len)    /* Read the expected number of bytes? */
-              {
-                return g_utf8_get_char_validated ((char *) utf8,
-                                                  sizeof(utf8));
-              }
-
-            /* Not enough continuation characters so ignore and restart */
-          }
-      } /* end of while (TRUE) */
-  } else {
-    gunichar c;
-    int      len;
-
-    while (TRUE)
+  while (TRUE)
     {
-      /* Found NUL or at end of input buffer? */
-      if (*pt->rep.string.curr == 0 ||
-          pt->rep.string.curr == pt->rep.string.past_the_end) {
+      if (b == EOF)
         return EOF;
-      }
 
-      len = pt->rep.string.past_the_end - pt->rep.string.curr;
-      c = g_utf8_get_char_validated(pt->rep.string.curr, len);
+      if (b <= 0x7F)
+        return b;
 
-      if (c != (gunichar) -1 &&
-          c != (gunichar) -2)   /* Valid UTF-8 character? */
-      {
-        len = g_unichar_to_utf8(c, NULL);   /* Length of UTF-8 sequence */
-        pt->rep.string.curr += len;
-        return c;
-      }
-
-      /* Look for next valid UTF-8 character in buffer */
-      pt->rep.string.curr = g_utf8_find_next_char(pt->rep.string.curr,
-                                                  pt->rep.string.past_the_end);
+      /* Is this byte an invalid lead per RFC-3629? */
+      if (b < 0xC2 || b > 0xF4)
+        {
+          /* Ignore invalid lead byte and get the next character */
+          b = inbyte (sc);
+        }
+      else
+        {
+          /* Byte is valid lead */
+          guint8 utf8[7];
+          gint   len;
+          gint   i;
+          /* Save the lead byte */
+          utf8[0] = b;
+          len     = utf8_length[b & 0x3F];
+          for (i = 1; i <= len; i++)
+            {
+              b = inbyte (sc);
+              /* Stop reading if this is not a continuation character */
+              if ((b & 0xC0) != 0x80)
+                break;
+              utf8[i] = b;
+            }
+          /* Read the expected number of bytes? */
+          if (i > len)
+            {
+              return g_utf8_get_char_validated ((char *) utf8,
+                                                sizeof (utf8));
+            }
+          /* Not enough continuation characters so ignore and restart */
+        }
     } /* end of while (TRUE) */
-  }
 }
 
-/* get new character from input file */
-static gunichar inchar(scheme *sc) {
-  gunichar c;
+/* Read a single unsigned byte from the active port. */
+static gint
+basic_inbyte (port *pt)
+{
+  if (pt->kind & port_file)
+    {
+      return fgetc (pt->rep.stdio.file);
+    }
+  else
+    {
+      if (pt->rep.string.curr == pt->rep.string.past_the_end)
+        return EOF;
+      else
+        return (guint8) *pt->rep.string.curr++;
+    }
+}
+
+/* Read a single unsigned byte from the active port. */
+static gint
+inbyte (scheme *sc)
+{
+  gint  result;
   port *pt;
 
   pt = sc->inport->_object._port;
-  if(pt->kind & port_saw_EOF)
-    { return(EOF); }
-  if(pt->kind&port_file)
-  {
-    if (sc->bc_flag)
-      c = sc->backchar[--sc->bc_flag];
-    else
-      c = basic_inchar(pt);
-  }
-  else
-    c = basic_inchar(pt);
-  if(c == EOF && sc->inport == sc->loadport) {
-    /* Instead, set port_saw_EOF */
+  if (pt->kind & port_saw_EOF)
+    return EOF;
+
+  result = basic_inbyte (pt);
+  if (result == EOF && sc->inport == sc->loadport)
     pt->kind |= port_saw_EOF;
 
-    /* file_pop(sc); */
-    return EOF;
-    /* NOTREACHED */
-  }
-  return c;
+  return result;
 }
 
-/* back character to input buffer */
-static void backchar(scheme *sc, gunichar c) {
-  port *pt;
-  gint  charlen;
+/* Write utf8 character back to the active port. */
+static void
+backchar (scheme *sc, gunichar c)
+{
+  gchar utf8buffer[6];
+  gint  byte_count;
+  gint  i;
 
-  if(c==EOF) return;
-  charlen = g_unichar_to_utf8(c, NULL);
-  pt=sc->inport->_object._port;
-  if(pt->kind&port_file) {
-    if (sc->bc_flag < 2)
-      sc->backchar[sc->bc_flag++] = c;
-  } else {
-    if(pt->rep.string.curr!=pt->rep.string.start) {
-      if(pt->rep.string.curr-pt->rep.string.start >= charlen)
-        pt->rep.string.curr -= charlen;
-      else
-        pt->rep.string.curr = pt->rep.string.start;
+  if (c == EOF)
+    return;
+  byte_count = g_unichar_to_utf8 (c, utf8buffer);
+  /* Write bytes of the utf8 character back in reverse. */
+  for (i = byte_count - 1; i > -1; i--)
+    {
+      backbyte (sc, utf8buffer[i]);
     }
-  }
+}
+
+/* Write byte back to the active port. */
+static void
+backbyte (scheme *sc, gint b)
+{
+  port *pt;
+  if (b == EOF)
+    return;
+  pt = sc->inport->_object._port;
+  if (pt->kind & port_file)
+    {
+      ungetc (b, pt->rep.stdio.file);
+    }
+  else
+    {
+      if (pt->rep.string.start != NULL &&
+          pt->rep.string.curr > pt->rep.string.start)
+        {
+          pt->rep.string.curr--;
+        }
+    }
 }
 
 static int realloc_port_string(scheme *sc, port *p)
@@ -1738,48 +1749,58 @@ static int realloc_port_string(scheme *sc, port *p)
   }
 }
 
-/* len is number of UTF-8 characters in string pointed to by chars */
-static void putchars(scheme *sc, const char *chars, int char_cnt) {
+static void
+putbytes (scheme *sc, const char *bytes, int byte_count)
+{
   int   free_bytes;     /* Space remaining in buffer (in bytes) */
   int   l;
   port *pt=sc->outport->_object._port;
 
-  if (char_cnt <= 0)
-      return;
-
-  /* Get length of 'chars' in bytes */
-  char_cnt = g_utf8_offset_to_pointer(chars, (long)char_cnt) - chars;
-
   if(pt->kind&port_file) {
 #if STANDALONE
-      fwrite(chars,1,char_cnt,pt->rep.stdio.file);
+      fwrite (bytes, 1, byte_count, pt->rep.stdio.file);
       fflush(pt->rep.stdio.file);
 #else
       /* If output is still directed to stdout (the default) it should be    */
       /* safe to redirect it to the registered output routine. */
       if (pt->rep.stdio.file == stdout)
-           ts_output_string (TS_OUTPUT_NORMAL, chars, char_cnt);
-      else {
-        fwrite(chars,1,char_cnt,pt->rep.stdio.file);
-        fflush(pt->rep.stdio.file);
-      }
+        {
+          ts_output_string (TS_OUTPUT_NORMAL, bytes, byte_count);
+        }
+      else
+        {
+          fwrite (bytes, 1, byte_count, pt->rep.stdio.file);
+          fflush (pt->rep.stdio.file);
+        }
 #endif
   } else {
     if (pt->rep.string.past_the_end != pt->rep.string.curr)
     {
        free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
-       l = min(char_cnt, free_bytes);
-       memcpy(pt->rep.string.curr, chars, l);
+       l          = min (byte_count, free_bytes);
+       memcpy (pt->rep.string.curr, bytes, l);
        pt->rep.string.curr += l;
     }
     else if(pt->kind&port_srfi6&&realloc_port_string(sc,pt))
     {
        free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
-       l = min(char_cnt, free_bytes);
-       memcpy(pt->rep.string.curr, chars, char_cnt);
+       l          = min (byte_count, free_bytes);
+       memcpy (pt->rep.string.curr, bytes, byte_count);
        pt->rep.string.curr += l;
     }
   }
+}
+
+static void
+putchars (scheme *sc, const char *chars, int char_count)
+{
+  gint byte_count;
+
+  if (char_count <= 0)
+    return;
+
+  byte_count = g_utf8_offset_to_pointer (chars, char_count) - chars;
+  putbytes (sc, chars, byte_count);
 }
 
 INTERFACE void putcharacter(scheme *sc, gunichar c) {
@@ -2112,7 +2133,7 @@ static void printatom(scheme *sc, pointer l, int f) {
   char *p;
   int len;
   atom2str(sc,l,f,&p,&len);
-  putchars(sc,p,len);
+  putbytes (sc, p, len);
 }
 
 
@@ -2175,6 +2196,23 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
                                 g_utf8_strlen(strvalue(l), -1));
                return;
           }
+       }
+     else if (is_byte (l))
+       {
+         guint8 b = bytevalue (l);
+         p        = sc->strbuff;
+         if (! f)
+           {
+             p[0]  = b;
+             p[1]  = 0;
+             *pp   = p;
+             *plen = 1;
+             return;
+           }
+         else
+           {
+             snprintf (p, STRBUFFSIZE, "%lu", ivalue_unchecked (l));
+           }
      } else if (is_character(l)) {
           gunichar c=charvalue(l);
           p = sc->strbuff;
@@ -2235,7 +2273,7 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           p = "#<ERROR>";
      }
      *pp=p;
-     *plen=g_utf8_strlen(p, -1);
+     *plen = strlen (p);
 }
 /* ========== Routines for Evaluation Cycle ========== */
 
@@ -2329,6 +2367,13 @@ int eqv(pointer a, pointer b) {
                     return num_eq(nvalue(a),nvalue(b));
           }
           return (0);
+       }
+     else if (is_byte (a))
+       {
+         if (is_byte (b))
+           return bytevalue (a) == bytevalue (b);
+         else
+           return 0;
      } else if (is_character(a)) {
           if (is_character(b))
                return charvalue(a)==charvalue(b);
@@ -3523,6 +3568,20 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
          Error_0(sc,"set-cdr!: unable to alter immutable pair");
        }
 
+    case OP_BYTE2INT: /* byte->integer */
+      {
+        guint8 b;
+        b = ivalue (car (sc->args));
+        s_return (sc, mk_integer (sc, b));
+      }
+
+    case OP_INT2BYTE: /* integer->byte */
+      {
+        guint8 b;
+        b = ivalue (car (sc->args));
+        s_return (sc, mk_byte (sc, b));
+      }
+
      case OP_CHAR2INT: { /* char->integer */
           gunichar c;
           c=ivalue(car(sc->args));
@@ -3609,11 +3668,15 @@ static pointer opexe_2(scheme *sc, enum scheme_opcodes op) {
           }
           if (pf < 0) {
             Error_1(sc, "atom->string: bad base:", y);
-          } else if(is_number(x) || is_character(x) || is_string(x) || is_symbol(x)) {
+          }
+        else if (is_number (x)    || is_byte (x)   ||
+                 is_character (x) || is_string (x) ||
+                 is_symbol (x))
+          {
             char *p;
-            int len;
-            atom2str(sc,x,(int )pf,&p,&len);
-            s_return(sc,mk_counted_string(sc,p,len));
+            int   len;
+            atom2str (sc, x, (int)pf, &p, &len);
+            s_return (sc, mk_counted_string (sc, p, len));
           } else {
             Error_1(sc, "atom->string: not an atom:", x);
           }
@@ -3966,6 +4029,8 @@ static pointer opexe_3(scheme *sc, enum scheme_opcodes op) {
           s_retbool(is_integer(car(sc->args)));
      case OP_REALP:     /* real? */
           s_retbool(is_number(car(sc->args))); /* All numbers are real */
+    case OP_BYTEP:      /* byte? */
+      s_retbool (is_byte (car (sc->args)));
      case OP_CHARP:     /* char? */
           s_retbool(is_character(car(sc->args)));
 #if USE_CHAR_CLASSIFIERS
@@ -4035,6 +4100,7 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
      case OP_WRITE:      /* write */
      case OP_DISPLAY:    /* display */
      case OP_WRITE_CHAR: /* write-char */
+     case OP_WRITE_BYTE: /* write-byte */
           if(is_pair(cdr(sc->args))) {
                if(cadr(sc->args)!=sc->outport) {
                     x=cons(sc,sc->outport,sc->NIL);
@@ -4206,9 +4272,10 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                case OP_OPEN_INOUTSTRING:  prop=port_input|port_output; break;
                default:                   break;  /* Quiet the compiler */
           }
-          p=port_from_string(sc, strvalue(car(sc->args)),
-                     g_utf8_offset_to_pointer(strvalue(car(sc->args)),
-                                              strlength(car(sc->args))), prop);
+          p = port_from_string (sc,
+                                strvalue (car (sc->args)),
+                                strvalue (car (sc->args)) + strlength (car (sc->args)),
+                                prop);
           if(p==sc->NIL) {
                s_return(sc,sc->F);
           }
@@ -4304,36 +4371,62 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
           s_save(sc,OP_SET_INPORT, x, sc->NIL);
           s_goto(sc,OP_READ_INTERNAL);
 
-     case OP_READ_CHAR: /* read-char */
-     case OP_PEEK_CHAR: /* peek-char */ {
-          gunichar c;
-          if(is_pair(sc->args)) {
-               if(car(sc->args)!=sc->inport) {
-                    x=sc->inport;
-                    x=cons(sc,x,sc->NIL);
-                    s_save(sc,OP_SET_INPORT, x, sc->NIL);
-                    sc->inport=car(sc->args);
-               }
+    case OP_READ_CHAR: /* read-char */
+    case OP_PEEK_CHAR: /* peek-char */
+      {
+        gint value;
+        if (is_pair (sc->args))
+          {
+            if (car (sc->args) != sc->inport)
+              {
+                x = sc->inport;
+                x = cons (sc, x, sc->NIL);
+                s_save (sc, OP_SET_INPORT, x, sc->NIL);
+                sc->inport = car (sc->args);
+              }
           }
-          c=inchar(sc);
-          if(c==EOF) {
-               s_return(sc,sc->EOF_OBJ);
-          }
-          if(sc->op==OP_PEEK_CHAR) {
-               backchar(sc,c);
-          }
-          s_return(sc,mk_character(sc,c));
-     }
+        value = inchar (sc);
+        if (value == EOF)
+          s_return (sc, sc->EOF_OBJ);
+        if (op == OP_PEEK_CHAR)
+          backchar (sc, value);
+        s_return (sc, mk_character (sc, value));
+      }
 
-     case OP_CHAR_READY: /* char-ready? */ {
-          pointer p=sc->inport;
-          int res;
-          if(is_pair(sc->args)) {
-               p=car(sc->args);
+    case OP_READ_BYTE: /* read-byte */
+    case OP_PEEK_BYTE: /* peek-byte */
+      {
+        gint value;
+        if (is_pair (sc->args))
+          {
+            if (car (sc->args) != sc->inport)
+              {
+                x = sc->inport;
+                x = cons (sc, x, sc->NIL);
+                s_save(sc, OP_SET_INPORT, x, sc->NIL);
+                sc->inport = car (sc->args);
+              }
           }
-          res=p->_object._port->kind&port_string;
-          s_retbool(res);
-     }
+        value = inbyte (sc);
+        if (value == EOF)
+          s_return (sc, sc->EOF_OBJ);
+        if (op == OP_PEEK_BYTE)
+          backbyte (sc, value);
+        s_return (sc, mk_byte (sc, value));
+      }
+
+    case OP_CHAR_READY: /* char-ready? */
+    case OP_BYTE_READY: /* byte-ready? */
+      {
+        pointer p = sc->inport;
+        int     res;
+        if (is_pair (sc->args))
+          {
+            p = car (sc->args);
+          }
+        res = p->_object._port->kind & port_string;
+        s_retbool (res);
+      }
 
      case OP_SET_INPORT: /* set-input-port */
           sc->inport=car(sc->args);
@@ -4669,7 +4762,8 @@ static struct {
   {is_vector, "vector"},
   {is_number, "number"},
   {is_integer, "integer"},
-  {is_nonneg, "non-negative integer"}
+  {is_nonneg, "non-negative integer"},
+  {is_byte, "byte"}
 };
 
 #define TST_NONE 0
@@ -4687,6 +4781,7 @@ static struct {
 #define TST_NUMBER "\014"
 #define TST_INTEGER "\015"
 #define TST_NATURAL "\016"
+#define TST_BYTE "\017"
 
 typedef struct {
   dispatch_func func;
@@ -4868,6 +4963,7 @@ static struct scheme_interface vtbl ={
   gensym,
   mk_string,
   mk_counted_string,
+  mk_byte,
   mk_character,
   mk_vector,
   mk_foreign_func,
@@ -4884,7 +4980,9 @@ static struct scheme_interface vtbl ={
   rvalue,
   is_integer,
   is_real,
+  is_byte,
   is_character,
+  bytevalue,
   charvalue,
   is_list,
   is_vector,
@@ -4988,7 +5086,6 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   dump_stack_initialize(sc);
   sc->code = sc->NIL;
   sc->tracing=0;
-  sc->bc_flag = 0;
 
   /* init sc->NIL */
   typeflag(sc->NIL) = (T_ATOM | MARK);
