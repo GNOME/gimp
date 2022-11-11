@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-03 09:22+0000\n"
-"PO-Revision-Date: 2022-11-03 11:35+0000\n"
+"POT-Creation-Date: 2022-11-09 16:24+0000\n"
+"PO-Revision-Date: 2022-11-11 11:52+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -21,7 +21,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.2\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Language: pt_PT\n"
 "X-Source-Language: C\n"
@@ -1083,7 +1083,7 @@ msgstr[1] "Baixar canais para o fundo"
 
 #: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:472
 #: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:259
-#: app/widgets/gimplayertreeview.c:1015
+#: app/widgets/gimplayertreeview.c:1042
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Cópia do canal %s"
@@ -2529,7 +2529,7 @@ msgid "240 Seconds"
 msgstr "240 segundos"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
-#: app/actions/edit-commands.c:167 app/actions/error-console-commands.c:100
+#: app/actions/edit-commands.c:168 app/actions/error-console-commands.c:100
 #: app/actions/file-commands.c:431 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
 #: app/actions/gradients-commands.c:79 app/actions/plug-in-commands.c:185
@@ -2631,7 +2631,7 @@ msgstr "Introduza uma descrição para o marcador"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:973
+#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:1000
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3385,7 +3385,7 @@ msgstr ""
 msgid "Clear Document History"
 msgstr "Limpar lista de imagens recentes"
 
-#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:168
+#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:169
 #: app/dialogs/preferences-dialog.c:690
 msgid "Cl_ear"
 msgstr "_Limpar"
@@ -3501,29 +3501,29 @@ msgstr "Roda o desenho 90 graus para a esquerda"
 msgid "Equalize"
 msgstr "Equalizar"
 
-#: app/actions/drawable-commands.c:93
+#: app/actions/drawable-commands.c:94
 msgid "White Balance operates only on RGB color layers."
 msgstr "Equilíbrio de brancos só opera sobre camadas do cores RGB."
 
-#: app/actions/drawable-commands.c:102 app/core/gimpdrawable-levels.c:72
+#: app/actions/drawable-commands.c:103 app/core/gimpdrawable-levels.c:72
 #: app/tools/gimpforegroundselectoptions.c:127 app/tools/gimplevelstool.c:138
 msgid "Levels"
 msgstr "Níveis"
 
-#: app/actions/drawable-commands.c:242
+#: app/actions/drawable-commands.c:244
 msgid "Lock/Unlock content"
 msgstr "Bloquear/Desbloquear conteúdo"
 
-#: app/actions/drawable-commands.c:310
+#: app/actions/drawable-commands.c:312
 msgid "Lock/Unlock position"
 msgstr "Bloquear/Desbloquear posição"
 
 # Determinar se o correto é “desenho” ou “desenhável”. Onde aparece isto?
-#: app/actions/drawable-commands.c:343
+#: app/actions/drawable-commands.c:346
 msgid "Flip Drawables"
 msgstr "Inverter desenhos"
 
-#: app/actions/drawable-commands.c:396
+#: app/actions/drawable-commands.c:400
 msgid "Rotate Drawables"
 msgstr "Rodar desenhos"
 
@@ -3838,158 +3838,141 @@ msgstr ""
 "Cola o conteúdo da área de transferência na posição original em que foi "
 "copiado"
 
-#: app/actions/edit-actions.c:197
-msgctxt "edit-action"
-msgid "New _Layer"
-msgstr "Nova _camada"
-
-#: app/actions/edit-actions.c:198
-msgctxt "edit-action"
-msgid "Create a new layer from the content of the clipboard"
-msgstr "Cria uma nova camada com o conteúdo da área de transferência"
-
-#: app/actions/edit-actions.c:203
-msgctxt "edit-action"
-msgid "New Layer In _Place"
-msgstr "Nova camada no _lugar"
-
-#: app/actions/edit-actions.c:205
-msgctxt "edit-action"
-msgid ""
-"Create a new layer from the content of the clipboard and place it at its "
-"original position"
-msgstr ""
-"Cria uma nova camada com o conteúdo da área de transferência na posição "
-"original em que foi copiado"
-
-#: app/actions/edit-actions.c:214
+#: app/actions/edit-actions.c:200
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "_Preencher com cor de 1º plano"
 
-#: app/actions/edit-actions.c:215
+#: app/actions/edit-actions.c:201
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Preenche a seleção com a cor de primeiro plano"
 
-#: app/actions/edit-actions.c:220
+#: app/actions/edit-actions.c:206
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "_Preencher com cor de fundo"
 
-#: app/actions/edit-actions.c:221
+#: app/actions/edit-actions.c:207
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Preenche a seleção com a cor de fundo"
 
-#: app/actions/edit-actions.c:226
+#: app/actions/edit-actions.c:212
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Preencher com _textura"
 
-#: app/actions/edit-actions.c:227
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Preenche a seleção com a textura ativa"
 
-#: app/actions/edit-actions.c:334 app/actions/edit-actions.c:336
+#: app/actions/edit-actions.c:320 app/actions/edit-actions.c:322
 #, c-format
 msgid "_Undo %s"
 msgstr "_Desfazer: %s"
 
-#: app/actions/edit-actions.c:340 app/actions/edit-actions.c:342
+#: app/actions/edit-actions.c:326 app/actions/edit-actions.c:328
 #, c-format
 msgid "_Redo %s"
 msgstr "_Refazer: %s"
 
-#: app/actions/edit-actions.c:353
+#: app/actions/edit-actions.c:339
 msgid "_Undo"
 msgstr "_Desfazer"
 
-#: app/actions/edit-actions.c:354
+#: app/actions/edit-actions.c:340
 msgid "_Redo"
 msgstr "_Refazer"
 
-#: app/actions/edit-commands.c:159
+#: app/actions/edit-commands.c:160
 msgid "Clear Undo History"
 msgstr "Limpar histórico de desfazer"
 
-#: app/actions/edit-commands.c:186
+#: app/actions/edit-commands.c:187
 msgid "Really clear image's undo history?"
 msgstr "Quer limpar o histórico de “Desfazer”?"
 
-#: app/actions/edit-commands.c:199
+#: app/actions/edit-commands.c:200
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Limpar o histórico de “Desfazer” desta imagem libertará %s de memória."
 
-#: app/actions/edit-commands.c:243
+#: app/actions/edit-commands.c:244
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
 msgstr[0] "Cortar camada para a área de transferência."
 msgstr[1] "Cortar %d camadas para a área de transferência."
 
-#: app/actions/edit-commands.c:248
+#: app/actions/edit-commands.c:249
 msgid "Cut pixels to the clipboard."
 msgstr "Cortar pixéis para a área de transferências."
 
-#: app/actions/edit-commands.c:291
+#: app/actions/edit-commands.c:292
 msgid "Copied layer to the clipboard."
 msgstr "Camada copiada para a área de transferência."
 
-#: app/actions/edit-commands.c:292 app/actions/edit-commands.c:324
+#: app/actions/edit-commands.c:293 app/actions/edit-commands.c:325
 msgid "Copied pixels to the clipboard."
 msgstr "Pixéis copiados para a área de transferência."
 
-#: app/actions/edit-commands.c:403 app/actions/edit-commands.c:688
+#: app/actions/edit-commands.c:435 app/actions/edit-commands.c:720
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "Não há dados de imagem na área de transferência para colar."
 
-#: app/actions/edit-commands.c:419
+#: app/actions/edit-commands.c:451
 msgid "Cut Named"
 msgstr "Cortar para a lista de cópias"
 
-#: app/actions/edit-commands.c:422 app/actions/edit-commands.c:444
-#: app/actions/edit-commands.c:466
+#: app/actions/edit-commands.c:454 app/actions/edit-commands.c:476
+#: app/actions/edit-commands.c:498
 msgid "Enter a name for this buffer"
 msgstr "Introduza um nome para esta cópia na lista de cópias"
 
-#: app/actions/edit-commands.c:441
+#: app/actions/edit-commands.c:473
 msgid "Copy Named"
 msgstr "Copiar para a lista de cópias"
 
-#: app/actions/edit-commands.c:463
+#: app/actions/edit-commands.c:495
 msgid "Copy Visible Named"
 msgstr "Cópia Visível Nomeada"
 
-#: app/actions/edit-commands.c:511
+#: app/actions/edit-commands.c:543
 msgid "Clear"
 msgstr "Limpar"
 
-#: app/actions/edit-commands.c:584
+#: app/actions/edit-commands.c:616
 msgid "A selected layer's alpha channel is locked."
 msgstr "O canal alfa de uma camada selecionada está bloqueado."
 
-#: app/actions/edit-commands.c:655 app/display/gimpdisplayshell-dnd.c:497
+#: app/actions/edit-commands.c:679
+msgid ""
+"Pasted as new layer because the target is not a single layer or layer mask."
+msgstr ""
+"Colado como nova camada porque o alvo não é uma única camada ou máscara de "
+"camada."
+
+#: app/actions/edit-commands.c:686 app/display/gimpdisplayshell-dnd.c:497
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Colado como nova camada porque o alvo é um grupo de camadas."
 
-#: app/actions/edit-commands.c:662 app/display/gimpdisplayshell-dnd.c:506
+#: app/actions/edit-commands.c:693 app/display/gimpdisplayshell-dnd.c:506
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Colado como nova camada porque os pixéis do alvo estão bloqueados."
 
-#: app/actions/edit-commands.c:705
+#: app/actions/edit-commands.c:737
 msgid "There are no selected layers or channels to cut from."
 msgstr "Não existe nenhuma camada ou canal selecionados de onde cortar."
 
-#: app/actions/edit-commands.c:710 app/actions/edit-commands.c:743
-#: app/actions/edit-commands.c:768
+#: app/actions/edit-commands.c:742 app/actions/edit-commands.c:775
+#: app/actions/edit-commands.c:800
 msgid "(Unnamed Buffer)"
 msgstr "(cópia sem nome na lista de cópias)"
 
-#: app/actions/edit-commands.c:738
+#: app/actions/edit-commands.c:770
 msgid "There are no selected layers or channels to copy from."
 msgstr "Não existe nenhuma camada ou canal selecionados de onde copiar."
 
@@ -7165,7 +7148,7 @@ msgid "Edit Layer Attributes"
 msgstr "Editar definições da camada"
 
 #: app/actions/layers-commands.c:338 app/widgets/gimpdrawabletreeview.c:359
-#: app/widgets/gimplayertreeview.c:1102
+#: app/widgets/gimplayertreeview.c:1129
 msgid "New Layer"
 msgid_plural "New Layers"
 msgstr[0] "Nova camada"
@@ -7343,7 +7326,7 @@ msgid "Empty Selection"
 msgstr "Seleção vazia"
 
 #: app/actions/layers-commands.c:1784 app/actions/layers-commands.c:1828
-#: app/widgets/gimplayertreeview.c:1613
+#: app/widgets/gimplayertreeview.c:1640
 msgid "Set layers opacity"
 msgstr "Definir opacidade das camadas"
 
@@ -10753,8 +10736,8 @@ msgstr "Caminho"
 #: app/config/gimprc-blurbs.h:13
 msgid ""
 "When enabled, an image will become the active image when its image window "
-"receives the focus. This is useful for window managers using \"click to "
-"focus\"."
+"receives the focus. This is useful for window managers using \"click to focus"
+"\"."
 msgstr ""
 "Quando ativado, uma imagem torna-se a imagem ativa quando a sua janela de "
 "imagem recebe o foco. Isto é útil para gestores de janelas que usem \"clique "
@@ -11356,8 +11339,8 @@ msgid ""
 "toggled with the \"View->Show Sample Points\" command."
 msgstr ""
 "Quando ativado, os pontos de amostragem estão visíveis por predefinição. "
-"Pode também ser alternado com o comando \"Ver → Mostrar pontos de "
-"amostragem\"."
+"Pode também ser alternado com o comando \"Ver → Mostrar pontos de amostragem"
+"\"."
 
 #: app/config/gimprc-blurbs.h:474
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -11634,8 +11617,8 @@ msgstr ""
 msgid ""
 "Sets the default 'Active group only' for the 'Merge Visible Layers' dialog."
 msgstr ""
-"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas "
-"visíveis\"."
+"Define “Apenas o grupo ativo\" predefinido no diálogo \"Unir camadas visíveis"
+"\"."
 
 # O original em inglês devia ser "Discard invisible layers" e não "Discard invisible".
 #: app/config/gimprc-blurbs.h:638
@@ -11906,991 +11889,1041 @@ msgctxt "align-reference-type"
 msgid "Picked reference object"
 msgstr "Objeto de referência escolhido"
 
-#: app/core/core-enums.c:109
+#: app/core/core-enums.c:63
+msgctxt "alignment-type"
+msgid "Align to the left"
+msgstr "Alinhar à esquerda"
+
+#: app/core/core-enums.c:64
+msgctxt "alignment-type"
+msgid "Center horizontally"
+msgstr "Centrar horizontalmente"
+
+#: app/core/core-enums.c:65
+msgctxt "alignment-type"
+msgid "Align to the right"
+msgstr "Alinhar à direita"
+
+#: app/core/core-enums.c:66
+msgctxt "alignment-type"
+msgid "Align to the top"
+msgstr "Alinhar à parte superior"
+
+#: app/core/core-enums.c:67
+msgctxt "alignment-type"
+msgid "Center vertically"
+msgstr "Centrar verticalmente"
+
+#: app/core/core-enums.c:68
+msgctxt "alignment-type"
+msgid "Align to the bottom"
+msgstr "Alinhar à parte inferior"
+
+#: app/core/core-enums.c:69
+msgctxt "alignment-type"
+msgid "Distribute anchor points horizontally evenly"
+msgstr "Distribuir pontos de ancoragem horizontalmente de forma uniforme"
+
+#: app/core/core-enums.c:70
+msgctxt "alignment-type"
+msgid "Distribute anchor points vertically evenly"
+msgstr "Distribuir pontos de ancoragem verticalmente de forma uniforme"
+
+#: app/core/core-enums.c:71
+msgctxt "alignment-type"
+msgid "Distribute horizontally with even horizontal gaps"
+msgstr "Distribuir horizontalmente, mesmo com aberturas horizontais"
+
+#: app/core/core-enums.c:72
+msgctxt "alignment-type"
+msgid "Distribute vertically with even vertical gaps"
+msgstr "Distribuir horizontalmente, mesmo com aberturas verticais"
+
+#: app/core/core-enums.c:101
 msgctxt "bucket-fill-mode"
 msgid "FG color fill"
 msgstr "Preencher com cor do 1º plano"
 
-#: app/core/core-enums.c:110
+#: app/core/core-enums.c:102
 msgctxt "bucket-fill-mode"
 msgid "BG color fill"
 msgstr "Preencher com cor do fundo"
 
-#: app/core/core-enums.c:111
+#: app/core/core-enums.c:103
 msgctxt "bucket-fill-mode"
 msgid "Pattern fill"
 msgstr "Preencher com textura"
 
-#: app/core/core-enums.c:140
+#: app/core/core-enums.c:132
 msgctxt "channel-border-style"
 msgid "Hard"
 msgstr "Margem dura"
 
-#: app/core/core-enums.c:141
+#: app/core/core-enums.c:133
 msgctxt "channel-border-style"
 msgid "Smooth"
 msgstr "Margem suave"
 
-#: app/core/core-enums.c:142
+#: app/core/core-enums.c:134
 msgctxt "channel-border-style"
 msgid "Feathered"
 msgstr "Suavizar margens"
 
-#: app/core/core-enums.c:177
+#: app/core/core-enums.c:169
 msgctxt "color-pick-mode"
 msgid "Pixel"
 msgstr "Píxel"
 
-#: app/core/core-enums.c:178
+#: app/core/core-enums.c:170
 msgctxt "color-pick-mode"
 msgid "RGB (%)"
 msgstr "RGB (%)"
 
-#: app/core/core-enums.c:179
+#: app/core/core-enums.c:171
 msgctxt "color-pick-mode"
 msgid "RGB (0..255)"
 msgstr "RGB (0..255)"
 
-#: app/core/core-enums.c:180
+#: app/core/core-enums.c:172
 msgctxt "color-pick-mode"
 msgid "HSV"
 msgstr "HSV"
 
-#: app/core/core-enums.c:181
+#: app/core/core-enums.c:173
 msgctxt "color-pick-mode"
 msgid "CIE LCh"
 msgstr "CIE LCh"
 
-#: app/core/core-enums.c:182
+#: app/core/core-enums.c:174
 msgctxt "color-pick-mode"
 msgid "CIE LAB"
 msgstr "CIE LAB"
 
-#: app/core/core-enums.c:183
+#: app/core/core-enums.c:175
 msgctxt "color-pick-mode"
 msgid "CMYK"
 msgstr "CMYK"
 
-#: app/core/core-enums.c:184
+#: app/core/core-enums.c:176
 msgctxt "color-pick-mode"
 msgid "CIE xyY"
 msgstr "CIE xyY"
 
-#: app/core/core-enums.c:185
+#: app/core/core-enums.c:177
 msgctxt "color-pick-mode"
 msgid "CIE Yu'v'"
 msgstr "CIE Yu’v’"
 
-#: app/core/core-enums.c:215
+#: app/core/core-enums.c:207
 msgctxt "color-profile-policy"
 msgid "Ask what to do"
 msgstr "Perguntar o que fazer"
 
-#: app/core/core-enums.c:216
+#: app/core/core-enums.c:208
 msgctxt "color-profile-policy"
 msgid "Keep embedded profile"
 msgstr "Manter o perfil de cor contido na imagem"
 
-#: app/core/core-enums.c:217
+#: app/core/core-enums.c:209
 msgctxt "color-profile-policy"
 msgid "Convert to built-in sRGB or grayscale profile"
 msgstr "Converter para o perfil de cor sRGB ou tons de cinzento do GIMP"
 
-#: app/core/core-enums.c:218
+#: app/core/core-enums.c:210
 msgctxt "color-profile-policy"
 msgid "Convert to preferred RGB or grayscale profile (defaulting to built-in)"
 msgstr ""
 "Converter para o perfil de cor RGB ou tons de cinzento preferido (caso "
 "contrário usar o perfil do GIMP)"
 
-#: app/core/core-enums.c:312
+#: app/core/core-enums.c:304
 msgctxt "convert-dither-type"
 msgid "None"
 msgstr "Nenhum"
 
-#: app/core/core-enums.c:313
+#: app/core/core-enums.c:305
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (normal)"
 msgstr "Floyd-Steinberg (normal)"
 
-#: app/core/core-enums.c:314
+#: app/core/core-enums.c:306
 msgctxt "convert-dither-type"
 msgid "Floyd-Steinberg (reduced color bleeding)"
 msgstr "Floyd-Steinberg (redução da mistura de cores)"
 
-#: app/core/core-enums.c:315
+#: app/core/core-enums.c:307
 msgctxt "convert-dither-type"
 msgid "Positioned"
 msgstr "Posicionada"
 
-#: app/core/core-enums.c:374
+#: app/core/core-enums.c:366
 msgctxt "curve-point-type"
 msgid "Smooth"
 msgstr "Suave"
 
-#: app/core/core-enums.c:375
+#: app/core/core-enums.c:367
 msgctxt "curve-point-type"
 msgid "Corner"
 msgstr "Canto"
 
-#: app/core/core-enums.c:403
+#: app/core/core-enums.c:395
 msgctxt "curve-type"
 msgid "Smooth"
 msgstr "Suave"
 
-#: app/core/core-enums.c:404
+#: app/core/core-enums.c:396
 msgctxt "curve-type"
 msgid "Freehand"
 msgstr "Mão livre"
 
-#: app/core/core-enums.c:441
+#: app/core/core-enums.c:433
 msgctxt "dash-preset"
 msgid "Custom"
 msgstr "Personalizado"
 
-#: app/core/core-enums.c:442
+#: app/core/core-enums.c:434
 msgctxt "dash-preset"
 msgid "Line"
 msgstr "Linha"
 
-#: app/core/core-enums.c:443
+#: app/core/core-enums.c:435
 msgctxt "dash-preset"
 msgid "Long dashes"
 msgstr "Tracejado longo"
 
-#: app/core/core-enums.c:444
+#: app/core/core-enums.c:436
 msgctxt "dash-preset"
 msgid "Medium dashes"
 msgstr "Tracejado médio"
 
-#: app/core/core-enums.c:445
+#: app/core/core-enums.c:437
 msgctxt "dash-preset"
 msgid "Short dashes"
 msgstr "Tracejado curto"
 
-#: app/core/core-enums.c:446
+#: app/core/core-enums.c:438
 msgctxt "dash-preset"
 msgid "Sparse dots"
 msgstr "Pontos esparsos"
 
-#: app/core/core-enums.c:447
+#: app/core/core-enums.c:439
 msgctxt "dash-preset"
 msgid "Normal dots"
 msgstr "Pontos normais"
 
-#: app/core/core-enums.c:448
+#: app/core/core-enums.c:440
 msgctxt "dash-preset"
 msgid "Dense dots"
 msgstr "Pontos densos"
 
-#: app/core/core-enums.c:449
+#: app/core/core-enums.c:441
 msgctxt "dash-preset"
 msgid "Stipples"
 msgstr "Furos"
 
-#: app/core/core-enums.c:450
+#: app/core/core-enums.c:442
 msgctxt "dash-preset"
 msgid "Dash, dot"
 msgstr "Traço, ponto"
 
-#: app/core/core-enums.c:451
+#: app/core/core-enums.c:443
 msgctxt "dash-preset"
 msgid "Dash, dot, dot"
 msgstr "Traço, ponto, ponto"
 
-#: app/core/core-enums.c:481
+#: app/core/core-enums.c:473
 msgctxt "debug-policy"
 msgid "Debug warnings, critical errors and crashes"
 msgstr "Depurar avisos, erros críticos e falhas de sistema"
 
-#: app/core/core-enums.c:482
+#: app/core/core-enums.c:474
 msgctxt "debug-policy"
 msgid "Debug critical errors and crashes"
 msgstr "Depurar erros críticos e falhas de sistema"
 
-#: app/core/core-enums.c:483
+#: app/core/core-enums.c:475
 msgctxt "debug-policy"
 msgid "Debug crashes only"
 msgstr "Depurar apenas falhas de sistema"
 
-#: app/core/core-enums.c:484
+#: app/core/core-enums.c:476
 msgctxt "debug-policy"
 msgid "Never debug GIMP"
 msgstr "Nunca depurar o GIMP"
 
-#: app/core/core-enums.c:570
+#: app/core/core-enums.c:562
 msgctxt "dynamics-output-type"
 msgid "Opacity"
 msgstr "Opacidade"
 
-#: app/core/core-enums.c:571
+#: app/core/core-enums.c:563
 msgctxt "dynamics-output-type"
 msgid "Size"
 msgstr "Tamanho"
 
-#: app/core/core-enums.c:572
+#: app/core/core-enums.c:564
 msgctxt "dynamics-output-type"
 msgid "Angle"
 msgstr "Ângulo"
 
-#: app/core/core-enums.c:573
+#: app/core/core-enums.c:565
 msgctxt "dynamics-output-type"
 msgid "Color"
 msgstr "Cor"
 
-#: app/core/core-enums.c:574
+#: app/core/core-enums.c:566
 msgctxt "dynamics-output-type"
 msgid "Hardness"
 msgstr "Dureza"
 
-#: app/core/core-enums.c:575
+#: app/core/core-enums.c:567
 msgctxt "dynamics-output-type"
 msgid "Force"
 msgstr "Intensidade"
 
-#: app/core/core-enums.c:576
+#: app/core/core-enums.c:568
 msgctxt "dynamics-output-type"
 msgid "Aspect ratio"
 msgstr "Proporção"
 
-#: app/core/core-enums.c:577
+#: app/core/core-enums.c:569
 msgctxt "dynamics-output-type"
 msgid "Spacing"
 msgstr "Espaçamento"
 
-#: app/core/core-enums.c:578
+#: app/core/core-enums.c:570
 msgctxt "dynamics-output-type"
 msgid "Rate"
 msgstr "Taxa"
 
-#: app/core/core-enums.c:579
+#: app/core/core-enums.c:571
 msgctxt "dynamics-output-type"
 msgid "Flow"
 msgstr "Fluir"
 
-#: app/core/core-enums.c:580
+#: app/core/core-enums.c:572
 msgctxt "dynamics-output-type"
 msgid "Jitter"
 msgstr "Espalhar"
 
-#: app/core/core-enums.c:608
+#: app/core/core-enums.c:600
 msgctxt "fill-style"
 msgid "Solid color"
 msgstr "Cor sólida"
 
-#: app/core/core-enums.c:609
+#: app/core/core-enums.c:601
 msgctxt "fill-style"
 msgid "Pattern"
 msgstr "Textura"
 
-#: app/core/core-enums.c:637
+#: app/core/core-enums.c:629
 msgctxt "filter-region"
 msgid "Use the selection as input"
 msgstr "Utilizar a seleção como entrada"
 
-#: app/core/core-enums.c:638
+#: app/core/core-enums.c:630
 msgctxt "filter-region"
 msgid "Use the entire layer as input"
 msgstr "Utilizar a camada completa como entrada"
 
-#: app/core/core-enums.c:669
+#: app/core/core-enums.c:661
 msgctxt "gradient-color"
 msgid "Fixed"
 msgstr "Fixa"
 
-#: app/core/core-enums.c:670
+#: app/core/core-enums.c:662
 msgctxt "gradient-color"
 msgid "Foreground color"
 msgstr "Cor de 1º plano"
 
 #. Translators: this is an abbreviated version of "Foreground color".
 #. Keep it short.
-#: app/core/core-enums.c:673
+#: app/core/core-enums.c:665
 msgctxt "gradient-color"
 msgid "FG"
 msgstr "1ºP"
 
-#: app/core/core-enums.c:674
+#: app/core/core-enums.c:666
 msgctxt "gradient-color"
 msgid "Foreground color (transparent)"
 msgstr "Cor de 1º plano (transparente)"
 
 #. Translators: this is an abbreviated version of "Foreground color (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:677
+#: app/core/core-enums.c:669
 msgctxt "gradient-color"
 msgid "FG (t)"
 msgstr "1ºP (t)"
 
-#: app/core/core-enums.c:678
+#: app/core/core-enums.c:670
 msgctxt "gradient-color"
 msgid "Background color"
 msgstr "Cor de fundo"
 
 #. Translators: this is an abbreviated version of "Background color".
 #. Keep it short.
-#: app/core/core-enums.c:681
+#: app/core/core-enums.c:673
 msgctxt "gradient-color"
 msgid "BG"
 msgstr "FD"
 
-#: app/core/core-enums.c:682
+#: app/core/core-enums.c:674
 msgctxt "gradient-color"
 msgid "Background color (transparent)"
 msgstr "Cor de fundo (transparente)"
 
 #. Translators: this is an abbreviated version of "Background color (transparent)".
 #. Keep it short.
-#: app/core/core-enums.c:685
+#: app/core/core-enums.c:677
 msgctxt "gradient-color"
 msgid "BG (t)"
 msgstr "FD (t)"
 
-#: app/core/core-enums.c:798
+#: app/core/core-enums.c:790
 msgctxt "histogram-channel"
 msgid "Value"
 msgstr "Valor"
 
-#: app/core/core-enums.c:799
+#: app/core/core-enums.c:791
 msgctxt "histogram-channel"
 msgid "Red"
 msgstr "Vermelho"
 
-#: app/core/core-enums.c:800
+#: app/core/core-enums.c:792
 msgctxt "histogram-channel"
 msgid "Green"
 msgstr "Verde"
 
-#: app/core/core-enums.c:801
+#: app/core/core-enums.c:793
 msgctxt "histogram-channel"
 msgid "Blue"
 msgstr "Azul"
 
-#: app/core/core-enums.c:802
+#: app/core/core-enums.c:794
 msgctxt "histogram-channel"
 msgid "Alpha"
 msgstr "Alfa"
 
-#: app/core/core-enums.c:803
+#: app/core/core-enums.c:795
 msgctxt "histogram-channel"
 msgid "Luminance"
 msgstr "Luminância"
 
-#: app/core/core-enums.c:804
+#: app/core/core-enums.c:796
 msgctxt "histogram-channel"
 msgid "RGB"
 msgstr "RGB"
 
-#: app/core/core-enums.c:834
+#: app/core/core-enums.c:826
 msgctxt "item-set"
 msgid "None"
 msgstr "Nenhum"
 
-#: app/core/core-enums.c:835
+#: app/core/core-enums.c:827
 msgctxt "item-set"
 msgid "All layers"
 msgstr "Todas as camadas"
 
-#: app/core/core-enums.c:836
+#: app/core/core-enums.c:828
 msgctxt "item-set"
 msgid "Image-sized layers"
 msgstr "Camadas do tamanho da imagem"
 
-#: app/core/core-enums.c:837
+#: app/core/core-enums.c:829
 msgctxt "item-set"
 msgid "All visible layers"
 msgstr "Todas as camadas visíveis"
 
-#: app/core/core-enums.c:865
+#: app/core/core-enums.c:857
 msgctxt "matting-engine"
 msgid "Matting Global"
 msgstr "Cobertura global"
 
-#: app/core/core-enums.c:866
+#: app/core/core-enums.c:858
 msgctxt "matting-engine"
 msgid "Matting Levin"
 msgstr "Cobertura Levin"
 
 # Isto faz parte do título no painel/diálogo da consola de erros e o traço serve para ficar menos estranho, senão aparece assim: “GIMP Mensagem”, assim como nas strings seguintes
-#: app/core/core-enums.c:897
+#: app/core/core-enums.c:889
 msgctxt "message-severity"
 msgid "Message"
 msgstr "- Mensagem"
 
-#: app/core/core-enums.c:898
+#: app/core/core-enums.c:890
 msgctxt "message-severity"
 msgid "Warning"
 msgstr "- Aviso"
 
-#: app/core/core-enums.c:899
+#: app/core/core-enums.c:891
 msgctxt "message-severity"
 msgid "Error"
 msgstr "- Erro"
 
-#: app/core/core-enums.c:900
+#: app/core/core-enums.c:892
 msgctxt "message-severity"
 msgid "WARNING"
 msgstr "- AVISO"
 
-#: app/core/core-enums.c:901
+#: app/core/core-enums.c:893
 msgctxt "message-severity"
 msgid "CRITICAL"
 msgstr "- CRÍTICO"
 
-#: app/core/core-enums.c:930
+#: app/core/core-enums.c:922
 msgctxt "metadata-rotation-policy"
 msgid "Ask what to do"
 msgstr "Perguntar o que fazer"
 
-#: app/core/core-enums.c:931
+#: app/core/core-enums.c:923
 msgctxt "metadata-rotation-policy"
 msgid "Discard metadata without rotating"
 msgstr "Descartar metadados sem rodar"
 
-#: app/core/core-enums.c:932
+#: app/core/core-enums.c:924
 msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr "Rodar a imagem e depois descartar os metadados"
 
-#: app/core/core-enums.c:997
+#: app/core/core-enums.c:993
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "Wintab"
 
-#: app/core/core-enums.c:998
+#: app/core/core-enums.c:994
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
 
-#: app/core/core-enums.c:1027
+#: app/core/core-enums.c:1023
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Sem miniaturas"
 
-#: app/core/core-enums.c:1028
+#: app/core/core-enums.c:1024
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Normal (128x128)"
 
-#: app/core/core-enums.c:1029
+#: app/core/core-enums.c:1025
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Grande (256x256)"
 
-#: app/core/core-enums.c:1058
+#: app/core/core-enums.c:1054
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Linear (usado em máquinas fotográficas digitais)"
 
-#: app/core/core-enums.c:1059
+#: app/core/core-enums.c:1055
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "Não linear"
 
-#: app/core/core-enums.c:1060
+#: app/core/core-enums.c:1056
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr ""
 "Percetual (mais usado em programas de edição e o único nos formatos JPEG, "
 "PNG, GIF)"
 
-#: app/core/core-enums.c:1259
+#: app/core/core-enums.c:1255
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<inválido>>"
 
-#: app/core/core-enums.c:1260
+#: app/core/core-enums.c:1256
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Alterar tamanho da imagem"
 
-#: app/core/core-enums.c:1261
+#: app/core/core-enums.c:1257
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Alterar tamanho da imagem"
 
-#: app/core/core-enums.c:1262
+#: app/core/core-enums.c:1258
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Inverter imagem"
 
-#: app/core/core-enums.c:1263
+#: app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Rodar imagem"
 
-#: app/core/core-enums.c:1264
+#: app/core/core-enums.c:1260
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Transformar imagem"
 
-#: app/core/core-enums.c:1265
+#: app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Recortar imagem"
 
-#: app/core/core-enums.c:1266
+#: app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Converter imagem"
 
-#: app/core/core-enums.c:1267
+#: app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Remover item"
 
-#: app/core/core-enums.c:1268 app/core/core-enums.c:1321
+#: app/core/core-enums.c:1264 app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Reordenar item"
 
-#: app/core/core-enums.c:1269
+#: app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Unir camadas"
 
-#: app/core/core-enums.c:1270
+#: app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Unir caminhos"
 
-#: app/core/core-enums.c:1271
+#: app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Máscara rápida"
 
-#: app/core/core-enums.c:1272 app/core/core-enums.c:1311
+#: app/core/core-enums.c:1268 app/core/core-enums.c:1307
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Grelha"
 
-#: app/core/core-enums.c:1273 app/core/core-enums.c:1315
+#: app/core/core-enums.c:1269 app/core/core-enums.c:1311
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Guia"
 
-#: app/core/core-enums.c:1274 app/core/core-enums.c:1316
+#: app/core/core-enums.c:1270 app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Ponto de amostragem"
 
-#: app/core/core-enums.c:1275 app/core/core-enums.c:1317
+#: app/core/core-enums.c:1271 app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Camada / canal"
 
-#: app/core/core-enums.c:1276 app/core/core-enums.c:1318
+#: app/core/core-enums.c:1272 app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Alteração de camada / canal"
 
-#: app/core/core-enums.c:1277 app/core/core-enums.c:1320
+#: app/core/core-enums.c:1273 app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Máscara de seleção"
 
-#: app/core/core-enums.c:1278 app/core/core-enums.c:1324
+#: app/core/core-enums.c:1274 app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Visibilidade do item"
 
-#: app/core/core-enums.c:1279
+#: app/core/core-enums.c:1275
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Bloquear / desbloquear conteúdos"
 
-#: app/core/core-enums.c:1280 app/core/core-enums.c:1327
+#: app/core/core-enums.c:1276 app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Bloquear / desbloquear posição"
 
-#: app/core/core-enums.c:1281 app/core/core-enums.c:1328
+#: app/core/core-enums.c:1277 app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Bloquear/desbloquear visibilidade"
 
-#: app/core/core-enums.c:1282
+#: app/core/core-enums.c:1278
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Propriedades do item"
 
-#: app/core/core-enums.c:1283 app/core/core-enums.c:1323
+#: app/core/core-enums.c:1279 app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Mover item"
 
-#: app/core/core-enums.c:1284
+#: app/core/core-enums.c:1280
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Alterar tamanho do item"
 
-#: app/core/core-enums.c:1285
+#: app/core/core-enums.c:1281
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Alterar tamanho do item"
 
-#: app/core/core-enums.c:1286
+#: app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Adicionar camada"
 
-#: app/core/core-enums.c:1287
+#: app/core/core-enums.c:1283
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Adicionar canal alfa"
 
-#: app/core/core-enums.c:1288 app/core/core-enums.c:1344
+#: app/core/core-enums.c:1284 app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Adicionar máscara à camada"
 
-#: app/core/core-enums.c:1289 app/core/core-enums.c:1346
+#: app/core/core-enums.c:1285 app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Aplicar máscara à camada"
 
-#: app/core/core-enums.c:1290
+#: app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Remover canal alfa"
 
-#: app/core/core-enums.c:1291
+#: app/core/core-enums.c:1287
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Bloquear / desbloquear canais alfa"
 
-#: app/core/core-enums.c:1292
+#: app/core/core-enums.c:1288
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Definir opacidade das camadas"
 
-#: app/core/core-enums.c:1293
+#: app/core/core-enums.c:1289
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Definir modo das camadas"
 
-#: app/core/core-enums.c:1294
+#: app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Adicionar canais"
 
-#: app/core/core-enums.c:1295 app/core/core-enums.c:1354
+#: app/core/core-enums.c:1291 app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Seleção flutuante para camada"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Flutuar seleção"
 
-#: app/core/core-enums.c:1297
+#: app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Ancorar seleção flutuante"
 
-#: app/core/core-enums.c:1298 app/core/gimp-edit.c:583
+#: app/core/core-enums.c:1294 app/core/gimp-edit.c:599
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Colar"
 
-#: app/core/core-enums.c:1299 app/core/gimp-edit.c:837
+#: app/core/core-enums.c:1295 app/core/gimp-edit.c:871
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Cortar"
 
-#: app/core/core-enums.c:1300
+#: app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Texto"
 
-#: app/core/core-enums.c:1301 app/core/gimpdrawable-transform.c:721
+#: app/core/core-enums.c:1297 app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Transformar"
 
-#: app/core/core-enums.c:1302 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1298 app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Pintar"
 
-#: app/core/core-enums.c:1303 app/core/core-enums.c:1359
+#: app/core/core-enums.c:1299 app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Anexar parasita"
 
-#: app/core/core-enums.c:1304 app/core/core-enums.c:1360
+#: app/core/core-enums.c:1300 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Remover parasita"
 
-#: app/core/core-enums.c:1305
+#: app/core/core-enums.c:1301
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Importar caminhos"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1302
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Complemento"
 
-#: app/core/core-enums.c:1307
+#: app/core/core-enums.c:1303
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Tipo de imagem"
 
-#: app/core/core-enums.c:1308
+#: app/core/core-enums.c:1304
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Precisão da imagem"
 
-#: app/core/core-enums.c:1309
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Tamanho da imagem"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Alteração da resolução da imagem"
 
-#: app/core/core-enums.c:1312
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Alterar metadados"
 
-#: app/core/core-enums.c:1313
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Alterar paleta indexada"
 
-#: app/core/core-enums.c:1314
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Ocultar / mostrar perfil de cor"
 
-#: app/core/core-enums.c:1319
+#: app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Formato camada / canal"
 
-#: app/core/core-enums.c:1322
+#: app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Renomear item"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Etiqueta de cor do item"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Bloquear / desbloquear conteúdo"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Nova camada"
 
-#: app/core/core-enums.c:1330
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Eliminar camada"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Definir modo da camada"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Definir opacidade da camada"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Bloquear / desbloquear canal alfa"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Suspender redimensionamento do grupo de camadas"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Continuar redimensionamento do grupo de camadas"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Suspender a máscara do grupo de camadas"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Continuar a máscara do grupo de camadas"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Começar a transformar o grupo de camadas"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Terminar o transformar do grupo de camadas"
 
-#: app/core/core-enums.c:1340
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Converter grupo de camadas"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Camada de texto"
 
-#: app/core/core-enums.c:1342
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Modificação em camada de texto"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Converter camada de texto"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Eliminar máscara da camada"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Mostrar máscara da camada"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Novo canal"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Eliminar canal"
 
-#: app/core/core-enums.c:1350
+#: app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Cor do canal"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Novo caminho"
 
-#: app/core/core-enums.c:1352
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Eliminar caminho"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Alteração de caminho"
 
-#: app/core/core-enums.c:1355
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Transformar grelha"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Caligrafia"
 
-#: app/core/core-enums.c:1358
+#: app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Selecionar 1º plano"
 
-#: app/core/core-enums.c:1361
+#: app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Não é possível desfazer"
 
-#: app/core/core-enums.c:1396
+#: app/core/core-enums.c:1392
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Minúscula"
 
-#: app/core/core-enums.c:1397
+#: app/core/core-enums.c:1393
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Muito pequena"
 
-#: app/core/core-enums.c:1398
+#: app/core/core-enums.c:1394
 msgctxt "view-size"
 msgid "Small"
 msgstr "Pequena"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1395
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Média"
 
-#: app/core/core-enums.c:1400
+#: app/core/core-enums.c:1396
 msgctxt "view-size"
 msgid "Large"
 msgstr "Grande"
 
-#: app/core/core-enums.c:1401
+#: app/core/core-enums.c:1397
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Muito grande"
 
-#: app/core/core-enums.c:1402
+#: app/core/core-enums.c:1398
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Enorme"
 
-#: app/core/core-enums.c:1403
+#: app/core/core-enums.c:1399
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Enormíssima"
 
-#: app/core/core-enums.c:1404
+#: app/core/core-enums.c:1400
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Gigantesca"
 
-#: app/core/core-enums.c:1432
+#: app/core/core-enums.c:1428
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Ver como lista"
 
-#: app/core/core-enums.c:1433
+#: app/core/core-enums.c:1429
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Ver como grelha"
 
-#: app/core/core-enums.c:1462
+#: app/core/core-enums.c:1458
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Seleção por pesquisa básica de texto"
 
-#: app/core/core-enums.c:1463
+#: app/core/core-enums.c:1459
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Seleção por pesquisa de expressão regular"
 
-#: app/core/core-enums.c:1464
+#: app/core/core-enums.c:1460
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Seleção por pesquisa de padrões “glob”"
@@ -12980,18 +13013,18 @@ msgstr "Histórico de cores recentes"
 msgid "Updating tag cache"
 msgstr "A atualizar a cache de etiquetas"
 
-#: app/core/gimp-edit.c:123
+#: app/core/gimp-edit.c:125
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
 msgstr[0] "Cortar camada"
 msgstr[1] "Cortar %d camadas"
 
-#: app/core/gimp-edit.c:412 app/core/gimpimage-new.c:519
+#: app/core/gimp-edit.c:424 app/core/gimpimage-new.c:519
 msgid "Pasted Layer"
 msgstr "Camada colada"
 
-#: app/core/gimp-edit.c:854
+#: app/core/gimp-edit.c:888
 msgid "Global Buffer"
 msgstr "Cópia principal"
 
@@ -13633,7 +13666,7 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: app/core/gimpcontext.c:742 app/core/gimpcontext.c:743
-#: app/tools/gimptextoptions.c:779
+#: app/tools/gimptextoptions.c:780
 msgid "Font"
 msgstr "Tipo de letra"
 
@@ -13663,7 +13696,7 @@ msgstr "copiar"
 msgid "%s copy"
 msgstr "Cópia de %s"
 
-#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:760
+#: app/core/gimpdatafactory.c:611 app/tools/gimptextoptions.c:761
 #: app/widgets/gimpfontfactoryview.c:97
 msgid "Loading fonts (this may take a while...)"
 msgstr "A carregar tipos de letra (isto pode demorar um bocado…)"
@@ -13809,7 +13842,7 @@ msgstr "Estilo"
 # Parece que o ideal é manter o mais próximo do original com "antisserrilhado" e diferenciar "antialiasing" de "feather", que apesar da similaridade são muito diferentes. Estava com "suavizar" e "desvanecer" margens  mas são demasiado vagos para se distinguirem. "Desvanecer" fica reservado para a tradução de "fade".
 #: app/core/gimpfilloptions.c:117 app/pdb/gimppdbcontext.c:101
 #: app/tools/gimpbucketfilloptions.c:186 app/tools/gimpselectionoptions.c:81
-#: app/tools/gimptextoptions.c:174
+#: app/tools/gimptextoptions.c:175
 msgid "Antialiasing"
 msgstr "Antisserrilhado"
 
@@ -14137,42 +14170,42 @@ msgctxt "undo-type"
 msgid "Remove Parasite from Image"
 msgstr "Remover parasita da imagem"
 
-#: app/core/gimpimage.c:5383
+#: app/core/gimpimage.c:5348
 msgctxt "undo-type"
 msgid "Add Layer"
 msgstr "Adicionar camada"
 
-#: app/core/gimpimage.c:5427 app/core/gimpimage.c:5458
+#: app/core/gimpimage.c:5392 app/core/gimpimage.c:5423
 msgctxt "undo-type"
 msgid "Remove Layer"
 msgstr "Remover camada"
 
-#: app/core/gimpimage.c:5452
+#: app/core/gimpimage.c:5417
 msgctxt "undo-type"
 msgid "Remove Floating Selection"
 msgstr "Remover seleção flutuante"
 
-#: app/core/gimpimage.c:5976
+#: app/core/gimpimage.c:5941
 msgctxt "undo-type"
 msgid "Add Channel"
 msgstr "Adicionar canal"
 
-#: app/core/gimpimage.c:6006 app/core/gimpimage.c:6031
+#: app/core/gimpimage.c:5971 app/core/gimpimage.c:5996
 msgctxt "undo-type"
 msgid "Remove Channel"
 msgstr "Remover canal"
 
-#: app/core/gimpimage.c:6090
+#: app/core/gimpimage.c:6055
 msgctxt "undo-type"
 msgid "Add Path"
 msgstr "Adicionar caminho"
 
-#: app/core/gimpimage.c:6120 app/core/gimpimage.c:6128
+#: app/core/gimpimage.c:6085 app/core/gimpimage.c:6093
 msgctxt "undo-type"
 msgid "Remove Path"
 msgstr "Remover caminho"
 
-#: app/core/gimpimage-arrange.c:179
+#: app/core/gimpimage-arrange.c:240
 msgctxt "undo-type"
 msgid "Arrange Objects"
 msgstr "Distribuir objetos"
@@ -14629,7 +14662,6 @@ msgstr "Camada flutuante"
 #.
 #: app/core/gimplayer.c:794
 #, c-format
-#| msgid "%s (%s)"
 msgid ""
 "%s\n"
 "(%s)"
@@ -15017,7 +15049,7 @@ msgid "Line width"
 msgstr "Espessura da linha"
 
 #: app/core/gimpstrokeoptions.c:168 app/core/gimptemplate.c:158
-#: app/tools/gimptextoptions.c:161 app/tools/gimptextoptions.c:297
+#: app/tools/gimptextoptions.c:162 app/tools/gimptextoptions.c:298
 msgid "Unit"
 msgstr "Unidade"
 
@@ -15033,7 +15065,7 @@ msgstr "Estilo da esquina"
 msgid "Miter limit"
 msgstr "Limite da meia-esquadria"
 
-#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:314
+#: app/core/gimpstrokeoptions.c:190 app/tools/gimptextoptions.c:315
 msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
@@ -16173,11 +16205,11 @@ msgid "Height:"
 msgstr "Altura:"
 
 #. The offset labels
-#: app/dialogs/layer-options-dialog.c:305 app/tools/gimpalignoptions.c:541
+#: app/dialogs/layer-options-dialog.c:305
 msgid "Offset X:"
 msgstr "Desvio X:"
 
-#: app/dialogs/layer-options-dialog.c:310 app/tools/gimpalignoptions.c:553
+#: app/dialogs/layer-options-dialog.c:310
 msgid "Offset Y:"
 msgstr "Desvio Y:"
 
@@ -16993,7 +17025,7 @@ msgstr "Interface do utilizador"
 msgid "Interface"
 msgstr "Interface"
 
-#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:191
+#: app/dialogs/preferences-dialog.c:1918 app/tools/gimptextoptions.c:192
 msgid "Language"
 msgstr "Idioma"
 
@@ -18173,8 +18205,7 @@ msgstr ""
 #. offset frame
 #. The offset frame
 #. offset frame
-#: app/dialogs/resize-dialog.c:377 app/tools/gimpalignoptions.c:140
-#: app/tools/gimpalignoptions.c:147 app/tools/gimpgradientoptions.c:89
+#: app/dialogs/resize-dialog.c:377 app/tools/gimpgradientoptions.c:89
 #: app/tools/gimpoffsettool.c:129 app/tools/gimpoffsettool.c:473
 #: app/tools/gimptransform3dtool.c:342 app/widgets/gimpgrideditor.c:210
 msgid "Offset"
@@ -18789,12 +18820,12 @@ msgid "Drop color to layer"
 msgstr "Largada cor na camada"
 
 #: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1406
-#: app/widgets/gimplayertreeview.c:964
+#: app/widgets/gimplayertreeview.c:991
 msgid "Drop layers"
 msgstr "Camadas largadas"
 
 #: app/display/gimpdisplayshell-dnd.c:743
-#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1041
+#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1068
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Cópia largada (da lista de cópias)"
@@ -20816,8 +20847,8 @@ msgstr "Primeiro tem de definir a imagem de origem."
 msgid "\"Registered\" alignment cannot paint on multiple drawables."
 msgstr "O alinhamento \"registado\" não pode pintar em vários drawables."
 
-#: app/paint/gimpsourceoptions.c:102 app/tools/gimpaligntool.c:126
-#: app/tools/gimpcloneoptions-gui.c:301 app/tools/gimphealtool.c:104
+#: app/paint/gimpsourceoptions.c:102 app/tools/gimpcloneoptions-gui.c:301
+#: app/tools/gimphealtool.c:104
 msgid "Alignment"
 msgstr "Alinhar"
 
@@ -20914,7 +20945,7 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Tolerância"
 
-#: app/pdb/edit-cmds.c:95 app/pdb/edit-cmds.c:381 app/pdb/edit-cmds.c:466
+#: app/pdb/edit-cmds.c:95 app/pdb/edit-cmds.c:386 app/pdb/edit-cmds.c:471
 msgid "All specified drawables must belong to the same image."
 msgstr "Todos os desenhos especificados têm de pertencer à mesma imagem."
 
@@ -21276,8 +21307,8 @@ msgstr ""
 #: app/pdb/gimpprocedure.c:860
 #, c-format
 msgid ""
-"Procedure '%s' has been called with a wrong value type for argument "
-"'%s' (#%d). Expected %s, got %s."
+"Procedure '%s' has been called with a wrong value type for argument '%s' (#"
+"%d). Expected %s, got %s."
 msgstr ""
 "O procedimento '%s' foi chamado com um valor de tipo incorreto para o "
 "argumento '%s' (n°%d). Esperado %s, obtido %s."
@@ -22499,47 +22530,37 @@ msgstr ""
 msgid "_Airbrush"
 msgstr "_Aerógrafo"
 
-#: app/tools/gimpalignoptions.c:132 app/tools/gimpalignoptions.c:431
+#: app/tools/gimpalignoptions.c:148 app/tools/gimpalignoptions.c:451
 msgid "Relative to"
 msgstr "Relativamente a"
 
-#: app/tools/gimpalignoptions.c:133
-msgid "Reference image object a layer will be aligned on"
-msgstr ""
-"Indicar qual o item (camada, seleção, caminho…) ao qual alinhar ou "
-"distribuir os itens"
+#: app/tools/gimpalignoptions.c:149
+msgid "Reference object targets will be aligned on"
+msgstr "Os alvos dos objetos de referência serão alinhados em"
 
-#: app/tools/gimpalignoptions.c:141
-msgid "Horizontal offset for distribution"
-msgstr "Deslocar na horizontal o resultado da distribuição"
+#: app/tools/gimpalignoptions.c:156
+msgid "Selected layers"
+msgstr "Camadas selecionadas"
 
-#: app/tools/gimpalignoptions.c:148
-msgid "Vertical offset for distribution"
-msgstr "Deslocar na vertical o resultado da distribuição"
-
-#: app/tools/gimpalignoptions.c:154
-msgid "Align or distribute selected layers"
-msgstr "Alinhar ou distribuir as camadas selecionadas"
-
-#: app/tools/gimpalignoptions.c:155
+#: app/tools/gimpalignoptions.c:157
 msgid "Selected layers will be aligned or distributed by the tool"
 msgstr ""
 "As camadas selecionadas serão alinhadas ou distribuídas pela ferramenta"
 
-#: app/tools/gimpalignoptions.c:160
-msgid "Align or distribute selected paths"
-msgstr "Alinhar ou distribuir os caminhos selecionados"
+#: app/tools/gimpalignoptions.c:162
+msgid "Selected paths"
+msgstr "Caminhos selecionados"
 
-#: app/tools/gimpalignoptions.c:161
+#: app/tools/gimpalignoptions.c:163
 msgid "Selected paths will be aligned or distributed by the tool"
 msgstr ""
 "Os caminhos selecionados serão alinhados ou distribuídos pela ferramenta"
 
-#: app/tools/gimpalignoptions.c:166
+#: app/tools/gimpalignoptions.c:168
 msgid "Use extents of layer contents"
 msgstr "Usar extensões de conteúdos em camadas"
 
-#: app/tools/gimpalignoptions.c:167
+#: app/tools/gimpalignoptions.c:169
 msgid ""
 "Instead of aligning or distributing on layer borders, use its content "
 "bounding box"
@@ -22548,143 +22569,135 @@ msgstr ""
 "delimitação de conteúdo"
 
 #. Selected objects
-#: app/tools/gimpalignoptions.c:380
-msgid "Objects to align or distribute"
-msgstr "Objetos a alinhar ou distribuir"
+#: app/tools/gimpalignoptions.c:383
+msgid "Targets"
+msgstr "Alvos"
+
+#: app/tools/gimpalignoptions.c:405
+msgid "Set anchor point of targets"
+msgstr "Definir ponto de ancoragem dos alvos"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
-#: app/tools/gimpalignoptions.c:405
+#: app/tools/gimpalignoptions.c:424
 #, c-format
-msgid "%s-pick guides to align or distribute (%s-%s for more)"
-msgstr "%s-guias de escolha para alinhar ou distribuir (%s-%s para mais)"
+msgid "%s-pick target guides (%s-%s to add more)"
+msgstr "%s-escolher guias alvo (%s-%s para adicionar mais)"
 
 #. Align frame
-#: app/tools/gimpalignoptions.c:422
+#: app/tools/gimpalignoptions.c:441
 msgid "Align"
 msgstr "Alinhar"
 
-#: app/tools/gimpalignoptions.c:446
+#: app/tools/gimpalignoptions.c:465
 msgid "Select the reference object"
 msgstr "Selecione o objeto de referência"
 
-#: app/tools/gimpalignoptions.c:462
-msgid "Align left edge of target"
-msgstr "Alinhar à margem esquerda do alvo"
+#: app/tools/gimpalignoptions.c:483
+msgid "Align anchor points of targets on left edge of reference"
+msgstr "Alinhar pontos de ancoragem dos alvos na margem esquerda de referência"
 
-#: app/tools/gimpalignoptions.c:466
-msgid "Align center of target"
-msgstr "Alinhar ao centro do alvo"
+#: app/tools/gimpalignoptions.c:487
+msgid "Align anchor points of targets on vertical middle of reference"
+msgstr "Alinhar pontos de ancoragem de alvos no centro vertical de referência"
 
-#: app/tools/gimpalignoptions.c:470
-msgid "Align right edge of target"
-msgstr "Alinhar à margem direita do alvo"
+#: app/tools/gimpalignoptions.c:491
+msgid "Align anchor points of targets on right edge of reference"
+msgstr "Alinhar pontos de ancoragem dos alvos na margem direita de referência"
 
-#: app/tools/gimpalignoptions.c:478
-msgid "Align top edge of target"
-msgstr "Alinhar à margem superior do alvo"
+#: app/tools/gimpalignoptions.c:500
+msgid "Align anchor points of targets on top edge of reference"
+msgstr "Alinhar pontos de ancoragem dos alvos na margem superior de referência"
 
-#: app/tools/gimpalignoptions.c:482
-msgid "Align middle of target"
-msgstr "Alinhar ao meio do alvo"
+#: app/tools/gimpalignoptions.c:504
+msgid "Align anchor points of targets on horizontal middle of reference"
+msgstr "Alinhar pontos de ancoragem dos alvos na margem central de referência"
 
-#: app/tools/gimpalignoptions.c:486
-msgid "Align bottom of target"
-msgstr "Alinhar à margem inferior do alvo"
+#: app/tools/gimpalignoptions.c:508
+msgid "Align anchor points of targets on bottom of reference"
+msgstr "Alinhar pontos de ancoragem dos alvos na margem inferior de referência"
 
 #. Distribute frame
-#: app/tools/gimpalignoptions.c:489
+#: app/tools/gimpalignoptions.c:511
 msgid "Distribute"
 msgstr "Distribuir"
 
-#: app/tools/gimpalignoptions.c:503
-msgid "Distribute left edges of targets"
-msgstr "Distribuir margens esquerdas dos alvos"
+#: app/tools/gimpalignoptions.c:526
+msgid "Distribute anchor points of targets evenly in the horizontal"
+msgstr "Distribuir pontos de ancoragem de alvos uniformemente na horizontal"
 
-#: app/tools/gimpalignoptions.c:507
-msgid "Distribute horizontal centers of targets"
-msgstr "Distribuir centros horizontais dos objetos"
+#: app/tools/gimpalignoptions.c:529
+msgid "Distribute horizontally with even horizontal gaps"
+msgstr "Distribuir horizontalmente, mesmo com aberturas horizontais"
 
-#: app/tools/gimpalignoptions.c:511
-msgid "Distribute right edges of targets"
-msgstr "Distribuir margens direitas dos alvos"
+#: app/tools/gimpalignoptions.c:538
+msgid "Distribute anchor points of targets evenly in the vertical"
+msgstr "Distribuir pontos de ancoragem de alvos uniformemente na vertical"
 
-#: app/tools/gimpalignoptions.c:515
-msgid "Distribute targets evenly in the horizontal"
-msgstr "Distribuir alvos uniformemente na horizontal"
+#: app/tools/gimpalignoptions.c:541
+msgid "Distribute vertically with even vertical gaps"
+msgstr "Distribuir verticalmente mesmo com aberturas verticais"
 
-#: app/tools/gimpalignoptions.c:523
-msgid "Distribute top edges of targets"
-msgstr "Distribuir margens superiores dos alvos"
-
-#: app/tools/gimpalignoptions.c:527
-msgid "Distribute vertical centers of targets"
-msgstr "Distribuir centros verticais dos alvos"
-
-#: app/tools/gimpalignoptions.c:531
-msgid "Distribute bottoms of targets"
-msgstr "Distribuir margens inferiores dos alvos"
-
-#: app/tools/gimpalignoptions.c:535
-msgid "Distribute targets evenly in the vertical"
-msgstr "Distribuir alvos uniformemente na vertical"
-
-#: app/tools/gimpalignoptions.c:784
+#: app/tools/gimpalignoptions.c:796
 #, c-format
 msgid "1 guide will be aligned or distributed"
 msgid_plural "%d guides will be aligned or distributed"
 msgstr[0] "1 guia será alinhado ou distribuído"
 msgstr[1] "%d guias serão alinhados ou distribuídos"
 
-#: app/tools/gimpalignoptions.c:810
+#: app/tools/gimpalignoptions.c:822
 #, c-format
 msgid "Reference layer: %s"
 msgstr "Camada de referência: %s"
 
-#: app/tools/gimpalignoptions.c:813
+#: app/tools/gimpalignoptions.c:825
 #, c-format
 msgid "Reference channel: %s"
 msgstr "Canal de referência: %s"
 
-#: app/tools/gimpalignoptions.c:816
+#: app/tools/gimpalignoptions.c:828
 #, c-format
 msgid "Reference path: %s"
 msgstr "Caminho de referência: %s"
 
-#: app/tools/gimpalignoptions.c:819
+#: app/tools/gimpalignoptions.c:831
 msgid "Reference guide"
 msgstr "Guia de referência"
 
-#: app/tools/gimpaligntool.c:127
+#: app/tools/gimpaligntool.c:130
+msgid "Align and Distribute"
+msgstr "Alinhar e Distribuir"
+
+#: app/tools/gimpaligntool.c:131
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Ferramenta Alinhar: alinha e distribui camadas e outros objetos"
 
-#: app/tools/gimpaligntool.c:128
-msgid "_Align"
-msgstr "_Alinhar"
+#: app/tools/gimpaligntool.c:132
+msgid "_Align and Distribute"
+msgstr "_Alinhar e Distribuir"
 
-#: app/tools/gimpaligntool.c:510
+#: app/tools/gimpaligntool.c:524
 msgid "Arrange Objects"
 msgstr "Organizar objectos"
 
-#: app/tools/gimpaligntool.c:541
+#: app/tools/gimpaligntool.c:555
 msgid "Click on a layer, path or guide, or Click-Drag to pick a reference"
 msgstr ""
 "Clique numa camada, caminho ou guia, ou Clicar-Arrastar para escolher uma "
 "referência"
 
-#: app/tools/gimpaligntool.c:545
+#: app/tools/gimpaligntool.c:559
 msgid "Click to pick this layer as reference"
 msgstr "Clique para escolher esta camada como referência"
 
-#: app/tools/gimpaligntool.c:548
+#: app/tools/gimpaligntool.c:562
 msgid "Click to pick this guide as reference"
 msgstr "Clique para escolher este guia como referência"
 
-#: app/tools/gimpaligntool.c:553
+#: app/tools/gimpaligntool.c:567
 msgid "Click to pick this path as reference"
 msgstr "Clique para escolher este caminho como referência"
 
-#: app/tools/gimpaligntool.c:560
+#: app/tools/gimpaligntool.c:574
 msgid ""
 "Click on a guide to add it to objects to align, click anywhere else to "
 "unselect all guides"
@@ -22692,11 +22705,11 @@ msgstr ""
 "Clique num guia para adicioná-lo aos objetos a alinhar, clique em qualquer "
 "outro lugar para desseleccionar todos os guias"
 
-#: app/tools/gimpaligntool.c:564
+#: app/tools/gimpaligntool.c:578
 msgid "Click to select this guide for alignment"
 msgstr "Clique para selecionar este guia para alinhamento"
 
-#: app/tools/gimpaligntool.c:569
+#: app/tools/gimpaligntool.c:583
 msgid "Click to add this guide to the list of objects to align"
 msgstr "Clique para adicionar este guia à lista de objetos para alinhar"
 
@@ -23875,7 +23888,7 @@ msgid "Y:"
 msgstr "Y:"
 
 #. the color label
-#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:832
+#: app/tools/gimpgradienttool-editor.c:1340 app/tools/gimptextoptions.c:833
 msgid "Color:"
 msgstr "Cor:"
 
@@ -24743,7 +24756,7 @@ msgstr "Atual"
 msgid "Fixed"
 msgstr "Fixar"
 
-#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:793
+#: app/tools/gimprectangleoptions.c:1010 app/tools/gimptextoptions.c:794
 msgid "Size:"
 msgstr "Tamanho:"
 
@@ -25023,19 +25036,19 @@ msgstr "[Clique] para esborratar"
 msgid "Click to smudge the line"
 msgstr "[Clique] para esborratar a linha"
 
-#: app/tools/gimptextoptions.c:162
+#: app/tools/gimptextoptions.c:163
 msgid "Font size unit"
 msgstr "Unidade de tamanho do tipo de letra"
 
-#: app/tools/gimptextoptions.c:167 app/tools/gimptextoptions.c:168
+#: app/tools/gimptextoptions.c:168 app/tools/gimptextoptions.c:169
 msgid "Font size"
 msgstr "Tamanho do tipo de letra"
 
-#: app/tools/gimptextoptions.c:181
+#: app/tools/gimptextoptions.c:182
 msgid "Hinting"
 msgstr "Otimizar"
 
-#: app/tools/gimptextoptions.c:182
+#: app/tools/gimptextoptions.c:183
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
@@ -25043,47 +25056,47 @@ msgstr ""
 "letras em tamanhos pequenos (abaixo de 10 pt) em ecrãs. Para impressão isto "
 "não é necessário"
 
-#: app/tools/gimptextoptions.c:192
+#: app/tools/gimptextoptions.c:193
 msgid "The text language may have an effect on the way the text is rendered."
 msgstr "O idioma do texto pode afetar a forma como o texto é apresentado."
 
-#: app/tools/gimptextoptions.c:206
+#: app/tools/gimptextoptions.c:207
 msgid "Justify"
 msgstr "Justificar"
 
-#: app/tools/gimptextoptions.c:207
+#: app/tools/gimptextoptions.c:208
 msgid "Text alignment"
 msgstr "Alinhamento do texto"
 
-#: app/tools/gimptextoptions.c:214
+#: app/tools/gimptextoptions.c:215
 msgid "Indentation"
 msgstr "Avanço"
 
-#: app/tools/gimptextoptions.c:215
+#: app/tools/gimptextoptions.c:216
 msgid "Indentation of the first line"
 msgstr "Avanço (indentação) da primeira linha"
 
-#: app/tools/gimptextoptions.c:222
+#: app/tools/gimptextoptions.c:223
 msgid "Line spacing"
 msgstr "Espaçamento das linhas"
 
-#: app/tools/gimptextoptions.c:223
+#: app/tools/gimptextoptions.c:224
 msgid "Adjust line spacing"
 msgstr "Ajustar espaçamento entre linhas"
 
-#: app/tools/gimptextoptions.c:230
+#: app/tools/gimptextoptions.c:231
 msgid "Letter spacing"
 msgstr "Espaçamento das letras"
 
-#: app/tools/gimptextoptions.c:231
+#: app/tools/gimptextoptions.c:232
 msgid "Adjust letter spacing"
 msgstr "Ajustar espaçamento entre letras"
 
-#: app/tools/gimptextoptions.c:238
+#: app/tools/gimptextoptions.c:239
 msgid "Box"
 msgstr "Caixa"
 
-#: app/tools/gimptextoptions.c:239
+#: app/tools/gimptextoptions.c:240
 msgid ""
 "Whether text flows into rectangular shape or moves into a new line when you "
 "press Enter"
@@ -25091,55 +25104,55 @@ msgstr ""
 "Se o texto flui dentro da caixa retangular ou se move para uma nova linha "
 "quando se prime a tecla [↵ Enter]"
 
-#: app/tools/gimptextoptions.c:247
+#: app/tools/gimptextoptions.c:248
 msgid "Use editor"
 msgstr "Usar o editor flutuante"
 
-#: app/tools/gimptextoptions.c:248
+#: app/tools/gimptextoptions.c:249
 msgid "Use an external editor window for text entry"
 msgstr "Usar uma janela flutuante dedicada para introduzir e alterar o texto"
 
-#: app/tools/gimptextoptions.c:290
+#: app/tools/gimptextoptions.c:291
 msgid "Outline width"
 msgstr "Largura do contorno"
 
-#: app/tools/gimptextoptions.c:291
+#: app/tools/gimptextoptions.c:292
 msgid "Adjust outline width"
 msgstr "Ajustar largura do contorno"
 
-#: app/tools/gimptextoptions.c:298
+#: app/tools/gimptextoptions.c:299
 msgid "Outline width unit"
 msgstr "Unidade de largura de contorno"
 
-#: app/tools/gimptextoptions.c:313
+#: app/tools/gimptextoptions.c:314
 msgid "Outline miter limit"
 msgstr "Limite da meia-esquadria de contorno"
 
-#: app/tools/gimptextoptions.c:821
+#: app/tools/gimptextoptions.c:822
 msgid "Hinting:"
 msgstr "Otimizar:"
 
-#: app/tools/gimptextoptions.c:825
+#: app/tools/gimptextoptions.c:826
 msgid "Text Color"
 msgstr "Cor do texto"
 
-#: app/tools/gimptextoptions.c:838
+#: app/tools/gimptextoptions.c:839
 msgid "Style:"
 msgstr "Estilo:"
 
-#: app/tools/gimptextoptions.c:842
+#: app/tools/gimptextoptions.c:843
 msgid "Outline Options"
 msgstr "Opções de contorno"
 
-#: app/tools/gimptextoptions.c:862
+#: app/tools/gimptextoptions.c:864
 msgid "Justify:"
 msgstr "Justificar:"
 
-#: app/tools/gimptextoptions.c:892
+#: app/tools/gimptextoptions.c:894
 msgid "Box:"
 msgstr "Caixa:"
 
-#: app/tools/gimptextoptions.c:932
+#: app/tools/gimptextoptions.c:934
 msgid "Language:"
 msgstr "Idioma:"
 
@@ -27866,78 +27879,78 @@ msgstr ""
 "profundidade de cor de 8 bits, levando a mais perda de informação nas "
 "operações de cores do que no atual"
 
-#: app/widgets/gimplayertreeview.c:441
+#: app/widgets/gimplayertreeview.c:442
 msgid "Select layers by patterns and store layer sets"
 msgstr "Selecionar camadas por padrões e armazenar conjuntos de camadas"
 
-#: app/widgets/gimplayertreeview.c:485
+#: app/widgets/gimplayertreeview.c:486
 msgid "No layer set stored"
 msgstr "Nenhuma definição de camada armazenada"
 
-#: app/widgets/gimplayertreeview.c:507
+#: app/widgets/gimplayertreeview.c:508
 msgid "New layer set's name"
 msgstr "Nome do novo conjunto de camadas"
 
-#: app/widgets/gimplayertreeview.c:546 app/widgets/gimplayertreeview.c:549
+#: app/widgets/gimplayertreeview.c:547 app/widgets/gimplayertreeview.c:550
 msgid "Lock alpha channel"
 msgstr "Bloquear canal alfa"
 
-#: app/widgets/gimplayertreeview.c:547
+#: app/widgets/gimplayertreeview.c:548
 msgid "Unlock alpha channel"
 msgstr "Desbloquear canal alfa"
 
-#: app/widgets/gimplayertreeview.c:548
+#: app/widgets/gimplayertreeview.c:549
 msgid "Set Item Exclusive Alpha Channel lock"
 msgstr "Definir bloqueio exclusivo do canal alfa do item"
 
-#: app/widgets/gimplayertreeview.c:1207
+#: app/widgets/gimplayertreeview.c:1234
 msgid "search"
 msgstr "procurar"
 
-#: app/widgets/gimplayertreeview.c:1208
+#: app/widgets/gimplayertreeview.c:1235
 msgid "glob"
 msgstr "glob"
 
-#: app/widgets/gimplayertreeview.c:1208
+#: app/widgets/gimplayertreeview.c:1235
 msgid "regexp"
 msgstr "regexp"
 
-#: app/widgets/gimplayertreeview.c:1312 app/widgets/gimplayertreeview.c:1325
+#: app/widgets/gimplayertreeview.c:1339 app/widgets/gimplayertreeview.c:1352
 msgid "Select layers by text search"
 msgstr "Selecionar camadas por pesquisa de texto"
 
-#: app/widgets/gimplayertreeview.c:1314 app/widgets/gimplayertreeview.c:1327
+#: app/widgets/gimplayertreeview.c:1341 app/widgets/gimplayertreeview.c:1354
 msgid "Text search"
 msgstr "Pesquisa de texto"
 
-#: app/widgets/gimplayertreeview.c:1331
+#: app/widgets/gimplayertreeview.c:1358
 msgid "Select layers by glob patterns"
 msgstr "Definir camadas por padrão glob"
 
-#: app/widgets/gimplayertreeview.c:1333
+#: app/widgets/gimplayertreeview.c:1360
 msgid "Glob pattern search"
 msgstr "Pesquisa padrão glob"
 
-#: app/widgets/gimplayertreeview.c:1337
+#: app/widgets/gimplayertreeview.c:1364
 msgid "Select layers by regular expressions"
 msgstr "Selecionar camadas por expressões regulares"
 
-#: app/widgets/gimplayertreeview.c:1339
+#: app/widgets/gimplayertreeview.c:1366
 msgid "Regular Expression search"
 msgstr "Pesquisa de expressão regular"
 
-#: app/widgets/gimplayertreeview.c:1403
+#: app/widgets/gimplayertreeview.c:1430
 #, c-format
 msgid "Invalid regular expression: %s\n"
 msgstr "Expressão regular inválida: %s\n"
 
-#: app/widgets/gimplayertreeview.c:1556
+#: app/widgets/gimplayertreeview.c:1583
 msgid "Set layers mode"
 msgstr "Definir modo das camadas"
 
 #. No channel. We cannot perform the add
 #. * mask action.
-#: app/widgets/gimplayertreeview.c:2037
+#: app/widgets/gimplayertreeview.c:2079
 msgid "No channels to create a layer mask from."
 msgstr "Sem canais onde criar uma máscara na camada."
 
@@ -28867,6 +28880,68 @@ msgstr "Erro ao escrever XCF: BPC não suportado ao escrever o pixel: %d"
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Depuração de falha de sistema do GIMP"
+
+#~ msgctxt "edit-action"
+#~ msgid "New _Layer"
+#~ msgstr "Nova _camada"
+
+#~ msgctxt "edit-action"
+#~ msgid "Create a new layer from the content of the clipboard"
+#~ msgstr "Cria uma nova camada com o conteúdo da área de transferência"
+
+#~ msgctxt "edit-action"
+#~ msgid "New Layer In _Place"
+#~ msgstr "Nova camada no _lugar"
+
+#~ msgctxt "edit-action"
+#~ msgid ""
+#~ "Create a new layer from the content of the clipboard and place it at its "
+#~ "original position"
+#~ msgstr ""
+#~ "Cria uma nova camada com o conteúdo da área de transferência na posição "
+#~ "original em que foi copiado"
+
+#~ msgid "Horizontal offset for distribution"
+#~ msgstr "Deslocar na horizontal o resultado da distribuição"
+
+#~ msgid "Vertical offset for distribution"
+#~ msgstr "Deslocar na vertical o resultado da distribuição"
+
+#~ msgid "Align or distribute selected layers"
+#~ msgstr "Alinhar ou distribuir as camadas selecionadas"
+
+#~ msgid "Align or distribute selected paths"
+#~ msgstr "Alinhar ou distribuir os caminhos selecionados"
+
+#~ msgid "Objects to align or distribute"
+#~ msgstr "Objetos a alinhar ou distribuir"
+
+#~ msgid "Align left edge of target"
+#~ msgstr "Alinhar à margem esquerda do alvo"
+
+#~ msgid "Align right edge of target"
+#~ msgstr "Alinhar à margem direita do alvo"
+
+#~ msgid "Align middle of target"
+#~ msgstr "Alinhar ao meio do alvo"
+
+#~ msgid "Align bottom of target"
+#~ msgstr "Alinhar à margem inferior do alvo"
+
+#~ msgid "Distribute left edges of targets"
+#~ msgstr "Distribuir margens esquerdas dos alvos"
+
+#~ msgid "Distribute right edges of targets"
+#~ msgstr "Distribuir margens direitas dos alvos"
+
+#~ msgid "Distribute top edges of targets"
+#~ msgstr "Distribuir margens superiores dos alvos"
+
+#~ msgid "Distribute bottoms of targets"
+#~ msgstr "Distribuir margens inferiores dos alvos"
+
+#~ msgid "_Align"
+#~ msgstr "_Alinhar"
 
 #, c-format
 #~ msgid ""
