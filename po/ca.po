@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-10-20 21:17+0000\n"
-"PO-Revision-Date: 2022-10-22 18:06+0100\n"
+"PO-Revision-Date: 2022-11-12 18:06+0100\n"
 "Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
@@ -18785,34 +18785,24 @@ msgid "Current Soft-Proofing Profile"
 msgstr "Seleccioneu el perfil prova en pantalla"
 
 #: app/display/gimpstatusbar.c:519
-#, fuzzy
-#| msgid "Soft-Proof Profile"
 msgid "Soft-Proofing Profile"
 msgstr "Perfil prova en pantalla"
 
 #: app/display/gimpstatusbar.c:528
-#, fuzzy
-#| msgid "_Soft-proofing profile:"
 msgid "_Soft-proofing Profile: "
 msgstr "Perfil de prova en pan_talla:"
 
 #: app/display/gimpstatusbar.c:547
-#, fuzzy
-#| msgid "_Rendering Intent:"
 msgid "_Rendering Intent: "
-msgstr "P_ropòsit de la renderització:"
+msgstr "P_ropòsit de la renderització: "
 
 #: app/display/gimpstatusbar.c:556
-#, fuzzy
-#| msgid "_Black Point Compensation"
 msgid "Use _Black Point Compensation"
-msgstr "Compensació de punt ne_gre"
+msgstr "Usa la compensació de punt ne_gre"
 
 #: app/display/gimpstatusbar.c:575
-#, fuzzy
-#| msgid "O_ptimize soft-proofing for:"
 msgid "O_ptimize soft-proofing for: "
-msgstr "O_ptimitza la prova en pantalla per a:"
+msgstr "O_ptimitza la prova en pantalla per a: "
 
 #: app/display/gimpstatusbar.c:584
 #, fuzzy
@@ -25207,7 +25197,7 @@ msgstr "Mantén la relació d'aspecte original"
 #: app/tools/gimptransformgridoptions.c:542
 #, c-format
 msgid "Around center (%s)"
-msgstr "Vores arrodonides (%s)"
+msgstr "Al voltant del centre (%s)"
 
 #: app/tools/gimptransformgridoptions.c:521
 msgid "Scale around the center point"
@@ -28132,23 +28122,16 @@ msgid "Co_lor profile:"
 msgstr "_Perfil de color:"
 
 #: app/widgets/gimptemplateeditor.c:464
-#, fuzzy
-#| msgid "Select Soft-Proofing Color Profile"
 msgid "Choose A Soft-Proofing Color Profile"
 msgstr "Seleccioneu el perfil de color de la prova en pantalla"
 
 #: app/widgets/gimptemplateeditor.c:468
-#, fuzzy
-#| msgid "_Soft-proofing profile:"
 msgid "_Soft-proofing color profile:"
-msgstr "Perfil de prova en pan_talla:"
+msgstr "_Perfil de color de la prova en pantalla:"
 
 #: app/widgets/gimptemplateeditor.c:475
-#, fuzzy
-#| msgctxt "view-action"
-#| msgid "Soft-Proofing Re_ndering Intent"
 msgid "_Soft-proofing rendering intent:"
-msgstr "_Intenció de renderització de les proves suaus"
+msgstr "_Intenció de renderització de la prova en pantalla"
 
 #: app/widgets/gimptemplateeditor.c:486
 msgid "_Use Black Point Compensation"
