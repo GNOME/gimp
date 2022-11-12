@@ -278,6 +278,7 @@ edit_paste_invoker (GimpProcedure         *procedure,
                                   paste_into ?
                                   GIMP_PASTE_TYPE_FLOATING_INTO :
                                   GIMP_PASTE_TYPE_FLOATING,
+                                  context, FALSE,
                                   -1, -1, -1, -1);
           g_list_free (drawables);
 
@@ -595,6 +596,7 @@ edit_named_paste_invoker (GimpProcedure         *procedure,
                                     paste_into ?
                                     GIMP_PASTE_TYPE_FLOATING_INTO :
                                     GIMP_PASTE_TYPE_FLOATING,
+                                    context, FALSE,
                                     -1, -1, -1, -1);
           g_list_free (drawables);
 

@@ -197,6 +197,8 @@
         <menuitem action="edit-paste-in-place" />
       </placeholder>
       <menu action="edit-paste-as-menu" name="Paste as">
+        <menuitem action="edit-paste-merged" />
+        <menuitem action="edit-paste-merged-in-place" />
         <menuitem action="edit-paste-into" />
         <menuitem action="edit-paste-into-in-place" />
         <menuitem action="edit-paste-as-new-image-short" />

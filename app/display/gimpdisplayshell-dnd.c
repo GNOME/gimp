@@ -459,6 +459,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 {
   GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (data);
   GimpImage        *image    = gimp_display_get_image (shell->display);
+  GimpContext      *context;
   GList            *drawables;
   GimpBuffer       *buffer;
   GimpPasteType     paste_type;
@@ -482,8 +483,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   paste_type = GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING;
   drawables  = gimp_image_get_selected_drawables (image);
-
-  buffer = GIMP_BUFFER (viewable);
+  context    = gimp_get_user_context (shell->display->gimp);
+  buffer     = GIMP_BUFFER (viewable);
 
   gimp_display_shell_untransform_viewport (
     shell,
@@ -493,7 +494,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
   /* FIXME: popup a menu for selecting "Paste Into" */
 
   g_list_free (gimp_edit_paste (image, drawables, GIMP_OBJECT (buffer),
-                                paste_type, x, y, width, height));
+                                paste_type, context, FALSE,
+                                x, y, width, height));
 
   g_list_free (drawables);
   gimp_display_shell_dnd_flush (shell, image);

@@ -178,6 +178,19 @@ static const GimpEnumActionEntry edit_paste_actions[] =
     GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE, FALSE,
     GIMP_HELP_EDIT_PASTE_IN_PLACE },
 
+  { "edit-paste-merged", GIMP_ICON_EDIT_PASTE,
+    NC_("edit-action", "_Paste as Single Layer"), NULL,
+    NC_("edit-action", "Paste the content of the clipboard as a single layer"),
+    GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING, FALSE,
+    GIMP_HELP_EDIT_PASTE },
+
+  { "edit-paste-merged-in-place", GIMP_ICON_EDIT_PASTE,
+    NC_("edit-action", "Paste as Single Layer In P_lace"), NULL,
+    NC_("edit-action",
+        "Paste the content of the clipboard at its original position as a single layer"),
+    GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE, FALSE,
+    GIMP_HELP_EDIT_PASTE_IN_PLACE },
+
   { "edit-paste-into", GIMP_ICON_EDIT_PASTE_INTO,
     NC_("edit-action", "Paste _Into Selection"), NULL,
     NC_("edit-action",

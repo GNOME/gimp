@@ -34,6 +34,7 @@
 #include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-duplicate.h"
+#include "gimpimage-merge.h"
 #include "gimpimage-new.h"
 #include "gimpimage-undo.h"
 #include "gimplayer-floating-selection.h"
@@ -296,12 +297,14 @@ gimp_edit_paste_is_in_place (GimpPasteType paste_type)
     case GIMP_PASTE_TYPE_FLOATING_INTO:
     case GIMP_PASTE_TYPE_NEW_LAYER:
     case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
+    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
       return FALSE;
 
     case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
     case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
     case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
     case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
       return TRUE;
     }
 
@@ -326,6 +329,8 @@ gimp_edit_paste_is_floating (GimpPasteType  paste_type,
 
     case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
     case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
+    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
       if (GIMP_IS_LAYER_MASK (drawable))
         return TRUE;
       else
@@ -775,6 +780,10 @@ gimp_edit_paste_paste (GimpImage     *image,
               gimp_image_add_layer (image, iter->data, parent, position, TRUE);
             }
           break;
+
+        case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+        case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+          g_return_val_if_reached (NULL);
         }
     }
 
@@ -788,6 +797,8 @@ gimp_edit_paste (GimpImage     *image,
                  GList         *drawables,
                  GimpObject    *paste,
                  GimpPasteType  paste_type,
+                 GimpContext   *context,
+                 gboolean       merged,
                  gint           viewport_x,
                  gint           viewport_y,
                  gint           viewport_width,
@@ -809,7 +820,51 @@ gimp_edit_paste (GimpImage     *image,
       g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (iter->data)), NULL);
     }
 
-  layers = gimp_edit_paste_get_layers (image, drawables, paste, &paste_type);
+  if (merged && GIMP_IS_IMAGE (paste))
+    {
+      GimpImage *tmp_image;
+
+      tmp_image = gimp_image_duplicate (GIMP_IMAGE (paste));
+      gimp_container_remove (image->gimp->images, GIMP_OBJECT (tmp_image));
+      gimp_image_merge_visible_layers (tmp_image, context, GIMP_EXPAND_AS_NECESSARY,
+                                       FALSE, FALSE, NULL);
+      layers = g_list_copy (gimp_image_get_layer_iter (tmp_image));
+
+      /* The merge process should ensure that we get a single non-group and
+       * no-mask layer.
+       */
+      g_return_val_if_fail (g_list_length (layers) == 1, NULL);
+
+      layers->data = gimp_item_convert (GIMP_ITEM (layers->data), image,
+                                        G_TYPE_FROM_INSTANCE (layers->data));
+
+      switch (paste_type)
+        {
+        case GIMP_PASTE_TYPE_FLOATING:
+        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+        case GIMP_PASTE_TYPE_FLOATING_INTO:
+        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+          if (gimp_drawable_get_format (GIMP_DRAWABLE (layers->data)) !=
+              gimp_drawable_get_format_with_alpha (GIMP_DRAWABLE (layers->data)))
+            {
+              gimp_drawable_convert_type (GIMP_DRAWABLE (layers->data), image,
+                                          gimp_drawable_get_base_type (layers->data),
+                                          gimp_drawable_get_precision (layers->data),
+                                          TRUE, NULL, NULL,
+                                          GEGL_DITHER_NONE, GEGL_DITHER_NONE,
+                                          FALSE, NULL);
+            }
+          break;
+
+        default:
+          break;
+        }
+      g_object_unref (tmp_image);
+    }
+  else
+    {
+      layers = gimp_edit_paste_get_layers (image, drawables, paste, &paste_type);
+    }
 
   if (! layers)
     return NULL;

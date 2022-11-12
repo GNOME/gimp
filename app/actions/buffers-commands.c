@@ -93,6 +93,7 @@ buffers_paste_cmd_callback (GimpAction *action,
           g_list_free (gimp_edit_paste (image,
                                         g_list_length (drawables) == 1 ? drawables->data : NULL,
                                         GIMP_OBJECT (buffer), paste_type,
+                                        context, FALSE,
                                         x, y, width, height));
 
           gimp_image_flush (image);

@@ -69,6 +69,7 @@ static gboolean   check_drawable_alpha               (GimpDrawable  *drawable,
                                                       gpointer       data);
 static void       edit_paste                         (GimpDisplay   *display,
                                                       GimpPasteType  paste_type,
+                                                      gboolean       merged,
                                                       gboolean       try_svg);
 static void       cut_named_buffer_callback          (GtkWidget     *widget,
                                                       const gchar   *name,
@@ -346,6 +347,7 @@ edit_paste_cmd_callback (GimpAction *action,
   GimpPasteType  paste_type = (GimpPasteType) g_variant_get_int32 (value);
   GimpPasteType  converted_type;
   GList         *drawables;
+  gboolean       merged     = FALSE;
 
   return_if_no_image (image, data);
 
@@ -367,14 +369,17 @@ edit_paste_cmd_callback (GimpAction *action,
     case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
     case GIMP_PASTE_TYPE_FLOATING_INTO:
     case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-      edit_paste (display, paste_type, TRUE);
+      edit_paste (display, paste_type, merged, TRUE);
       break;
 
     case GIMP_PASTE_TYPE_NEW_LAYER:
     case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
-      edit_paste (display, paste_type, FALSE);
+      edit_paste (display, paste_type, merged, FALSE);
       break;
 
+    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING:
+    case GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE:
+      merged = TRUE;
     case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING:
     case GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE:
       drawables = gimp_image_get_selected_drawables (image);
@@ -383,19 +388,21 @@ edit_paste_cmd_callback (GimpAction *action,
          (g_list_length (drawables) == 1) &&
           GIMP_IS_LAYER_MASK (drawables->data))
         {
-          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING) ?
+          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING ||
+                            paste_type == GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING) ?
                             GIMP_PASTE_TYPE_FLOATING :
                             GIMP_PASTE_TYPE_FLOATING_IN_PLACE;
 
-          edit_paste (display, converted_type, TRUE);
+          edit_paste (display, converted_type, merged, TRUE);
         }
       else
         {
-          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING) ?
+          converted_type = (paste_type == GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING ||
+                            paste_type == GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING) ?
                             GIMP_PASTE_TYPE_NEW_LAYER :
                             GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE;
 
-          edit_paste (display, converted_type, FALSE);
+          edit_paste (display, converted_type, merged, FALSE);
         }
       g_list_free (drawables);
 
@@ -627,13 +634,16 @@ check_drawable_alpha (GimpDrawable *drawable,
 static void
 edit_paste (GimpDisplay   *display,
             GimpPasteType  paste_type,
+            gboolean       merged,
             gboolean       try_svg)
 {
   GimpImage  *image = gimp_display_get_image (display);
   GimpObject *paste;
 
-  g_return_if_fail (paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING &&
-                    paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE);
+  g_return_if_fail (paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING          &&
+                    paste_type != GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING_IN_PLACE &&
+                    paste_type != GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING   &&
+                    paste_type != GIMP_PASTE_TYPE_NEW_MERGED_LAYER_OR_FLOATING_IN_PLACE);
 
   if (try_svg)
     {
@@ -702,8 +712,9 @@ edit_paste (GimpDisplay   *display,
         ! gimp_display_shell_get_infinite_canvas (shell),
         &x, &y, &width, &height);
 
-      if ((pasted_layers = gimp_edit_paste (image, drawables, paste,
-                                            paste_type, x, y, width, height)))
+      if ((pasted_layers = gimp_edit_paste (image, drawables, paste, paste_type,
+                                            gimp_get_user_context (display->gimp),
+                                            merged, x, y, width, height)))
         {
           gimp_image_set_selected_layers (image, pasted_layers);
           g_list_free (pasted_layers);
