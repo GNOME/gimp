@@ -459,7 +459,6 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 {
   GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (data);
   GimpImage        *image    = gimp_display_get_image (shell->display);
-  GimpDrawable     *drawable = NULL;
   GList            *drawables;
   GimpBuffer       *buffer;
   GimpPasteType     paste_type;
@@ -481,34 +480,8 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
       return;
     }
 
-  paste_type = GIMP_PASTE_TYPE_FLOATING;
-
-  drawables = gimp_image_get_selected_drawables (image);
-  if (g_list_length (drawables) == 1)
-    drawable = drawables->data;
-  g_list_free (drawables);
-
-  if (drawable)
-    {
-      if (gimp_viewable_get_children (GIMP_VIEWABLE (drawable)))
-        {
-          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                                GIMP_MESSAGE_INFO,
-                                _("Pasted as new layer because the "
-                                  "target is a layer group."));
-
-          paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
-        }
-      else if (gimp_item_is_content_locked (GIMP_ITEM (drawable), NULL))
-        {
-          gimp_message_literal (shell->display->gimp, G_OBJECT (shell->display),
-                                GIMP_MESSAGE_ERROR,
-                                _("Pasted as new layer because the "
-                                  "target's pixels are locked."));
-
-          paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
-        }
-    }
+  paste_type = GIMP_PASTE_TYPE_NEW_LAYER_OR_FLOATING;
+  drawables  = gimp_image_get_selected_drawables (image);
 
   buffer = GIMP_BUFFER (viewable);
 
@@ -519,9 +492,10 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  g_list_free (gimp_edit_paste (image, drawable, GIMP_OBJECT (buffer),
+  g_list_free (gimp_edit_paste (image, drawables, GIMP_OBJECT (buffer),
                                 paste_type, x, y, width, height));
 
+  g_list_free (drawables);
   gimp_display_shell_dnd_flush (shell, image);
 }
 
