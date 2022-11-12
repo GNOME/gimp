@@ -126,7 +126,7 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE },
 
   { "edit-paste-as-new-image-short", GIMP_ICON_EDIT_PASTE_AS_NEW,
-    NC_("edit-action", "_New Image"), NULL,
+    NC_("edit-action", "Paste as _New Image"), NULL,
     NC_("edit-action", "Create a new image from the content of the clipboard"),
     edit_paste_as_new_image_cmd_callback,
     GIMP_HELP_EDIT_PASTE_AS_NEW_IMAGE },
