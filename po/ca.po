@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
 "POT-Creation-Date: 2022-06-08 17:29+0000\n"
-"PO-Revision-Date: 2021-11-01 18:52+0100\n"
-"Last-Translator: maite guix <maite.guix@me.com>\n"
+"PO-Revision-Date: 2022-11-12 18:52+0100\n"
+"Last-Translator: Jordi Mas i Hernàndez <jmas@softcatala.org>\n"
 "Language-Team: Catalan <gnome@lists.softcatala.org>\n"
 "Language: ca\n"
 "MIME-Version: 1.0\n"
@@ -24728,7 +24728,7 @@ msgstr "Mantén la relació d'aspecte original"
 #: ../app/tools/gimptransformgridoptions.c:566
 #, c-format
 msgid "Around center (%s)"
-msgstr "Vores arrodonides (%s)"
+msgstr "Al voltant del centre (%s)"
 
 #: ../app/tools/gimptransformgridoptions.c:544
 msgid "Scale around the center point"
