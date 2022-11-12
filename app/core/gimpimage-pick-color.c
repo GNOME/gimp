@@ -115,7 +115,7 @@ gimp_image_pick_color (GimpImage   *image,
         }
       else /* length > 1 */
         {
-          pick_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+          pick_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, FALSE);
           gimp_container_remove (image->gimp->images, GIMP_OBJECT (pick_image));
 
           if (! show_all)

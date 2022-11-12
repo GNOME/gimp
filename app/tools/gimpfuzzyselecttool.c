@@ -126,7 +126,7 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
         }
       else
         {
-          select_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+          select_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, FALSE);
           gimp_container_remove (image->gimp->images, GIMP_OBJECT (select_image));
 
           pickable = GIMP_PICKABLE (select_image);

@@ -231,7 +231,7 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
                   {
                     /* A composited image of the drawables */
                     del_image = gimp_image_new_from_drawables (src_image->gimp, drawables,
-                                                               FALSE);
+                                                               FALSE, FALSE);
                     gimp_container_remove (src_image->gimp->images, GIMP_OBJECT (del_image));
 
                     src_pickable = GIMP_PICKABLE (del_image);

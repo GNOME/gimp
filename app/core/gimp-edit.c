@@ -118,7 +118,7 @@ gimp_edit_cut (GimpImage     *image,
       g_list_free (remove);
 
       /* Now copy all layers into the clipboard image. */
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
       gimp_set_clipboard_image (image->gimp, clip_image);
       g_object_unref (clip_image);
@@ -193,7 +193,7 @@ gimp_edit_copy (GimpImage     *image,
       GimpImage   *clip_image;
       GimpChannel *clip_selection;
 
-      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE);
+      clip_image = gimp_image_new_from_drawables (image->gimp, drawables, TRUE, TRUE);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (clip_image));
       gimp_set_clipboard_image (image->gimp, clip_image);
       g_object_unref (clip_image);
@@ -336,6 +336,101 @@ gimp_edit_paste_is_floating (GimpPasteType  paste_type,
 }
 
 static GList *
+gimp_edit_paste_get_tagged_layers (GimpImage         *image,
+                                   GList             *layers,
+                                   GList             *returned_layers,
+                                   const Babl        *floating_format,
+                                   GimpImageBaseType  base_type,
+                                   GimpPrecision      precision,
+                                   GimpPasteType      paste_type)
+{
+  GList *iter;
+
+  for (iter = layers; iter; iter = iter->next)
+    {
+      GimpLayer *layer;
+      GType      layer_type;
+      gboolean   copied = TRUE;
+
+      switch (paste_type)
+        {
+        case GIMP_PASTE_TYPE_FLOATING:
+        case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+        case GIMP_PASTE_TYPE_FLOATING_INTO:
+        case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+          /*  when pasting as floating make sure gimp_item_convert()
+           *  will turn group layers into normal layers, otherwise use
+           *  the same layer type so e.g. text information gets
+           *  preserved. See issue #2667.
+           */
+          if (GIMP_IS_GROUP_LAYER (iter->data))
+            layer_type = GIMP_TYPE_LAYER;
+          else
+            layer_type = G_TYPE_FROM_INSTANCE (iter->data);
+          break;
+
+        case GIMP_PASTE_TYPE_NEW_LAYER:
+        case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
+          layer_type = G_TYPE_FROM_INSTANCE (iter->data);
+          break;
+
+        default:
+          g_return_val_if_reached (NULL);
+        }
+
+      if (GIMP_IS_GROUP_LAYER (iter->data))
+        copied = (gboolean) GPOINTER_TO_INT (g_object_get_data (G_OBJECT (iter->data),
+                                                                "gimp-image-copied-layer"));
+      if (copied)
+        {
+          layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
+                                                 image, layer_type));
+          returned_layers = g_list_prepend (returned_layers, layer);
+
+          switch (paste_type)
+            {
+            case GIMP_PASTE_TYPE_FLOATING:
+            case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
+            case GIMP_PASTE_TYPE_FLOATING_INTO:
+            case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
+              /*  when pasting as floating selection, get rid of the layer mask,
+               *  and make sure the layer has the right format
+               */
+              if (gimp_layer_get_mask (iter->data))
+                gimp_layer_apply_mask (iter->data, GIMP_MASK_DISCARD, FALSE);
+
+              if (gimp_drawable_get_format (GIMP_DRAWABLE (iter->data)) !=
+                  floating_format)
+                {
+                  gimp_drawable_convert_type (GIMP_DRAWABLE (iter->data), image,
+                                              base_type, precision,
+                                              TRUE, NULL, NULL,
+                                              GEGL_DITHER_NONE, GEGL_DITHER_NONE,
+                                              FALSE, NULL);
+                }
+              break;
+
+            default:
+              break;
+            }
+        }
+      else
+        {
+          GimpContainer *container;
+
+          container = gimp_viewable_get_children (iter->data);
+          returned_layers = gimp_edit_paste_get_tagged_layers (image,
+                                                               GIMP_LIST (container)->queue->head,
+                                                               returned_layers,
+                                                               floating_format,
+                                                               base_type, precision, paste_type);
+        }
+    }
+
+  return returned_layers;
+}
+
+static GList *
 gimp_edit_paste_get_layers (GimpImage     *image,
                             GList         *drawables,
                             GimpObject    *paste,
@@ -367,9 +462,7 @@ gimp_edit_paste_get_layers (GimpImage     *image,
 
   if (GIMP_IS_IMAGE (paste))
     {
-      GList *iter;
-
-      layers = g_list_copy (gimp_image_get_layer_iter (GIMP_IMAGE (paste)));
+      layers = gimp_image_get_layer_iter (GIMP_IMAGE (paste));
 
       if (g_list_length (layers) > 1)
         {
@@ -379,68 +472,11 @@ gimp_edit_paste_get_layers (GimpImage     *image,
             *paste_type = GIMP_PASTE_TYPE_NEW_LAYER;
         }
 
-      for (iter = layers; iter; iter = iter->next)
-        {
-          GType layer_type;
-
-          switch (*paste_type)
-            {
-            case GIMP_PASTE_TYPE_FLOATING:
-            case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-            case GIMP_PASTE_TYPE_FLOATING_INTO:
-            case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-              /*  when pasting as floating make sure gimp_item_convert()
-               *  will turn group layers into normal layers, otherwise use
-               *  the same layer type so e.g. text information gets
-               *  preserved. See issue #2667.
-               */
-              if (GIMP_IS_GROUP_LAYER (iter->data))
-                layer_type = GIMP_TYPE_LAYER;
-              else
-                layer_type = G_TYPE_FROM_INSTANCE (iter->data);
-              break;
-
-            case GIMP_PASTE_TYPE_NEW_LAYER:
-            case GIMP_PASTE_TYPE_NEW_LAYER_IN_PLACE:
-              layer_type = G_TYPE_FROM_INSTANCE (iter->data);
-              break;
-
-            default:
-              g_return_val_if_reached (NULL);
-            }
-
-          iter->data = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
-                                                      image, layer_type));
-
-          switch (*paste_type)
-            {
-            case GIMP_PASTE_TYPE_FLOATING:
-            case GIMP_PASTE_TYPE_FLOATING_IN_PLACE:
-            case GIMP_PASTE_TYPE_FLOATING_INTO:
-            case GIMP_PASTE_TYPE_FLOATING_INTO_IN_PLACE:
-              /*  when pasting as floating selection, get rid of the layer mask,
-               *  and make sure the layer has the right format
-               */
-              if (gimp_layer_get_mask (iter->data))
-                gimp_layer_apply_mask (iter->data, GIMP_MASK_DISCARD, FALSE);
-
-              if (gimp_drawable_get_format (GIMP_DRAWABLE (iter->data)) !=
-                  floating_format)
-                {
-                  gimp_drawable_convert_type (GIMP_DRAWABLE (iter->data), image,
-                                              gimp_drawable_get_base_type (drawables->data),
-                                              gimp_drawable_get_precision (drawables->data),
-                                              TRUE,
-                                              NULL, NULL,
-                                              GEGL_DITHER_NONE, GEGL_DITHER_NONE,
-                                              FALSE, NULL);
-                }
-              break;
-
-            default:
-              break;
-            }
-        }
+      layers = gimp_edit_paste_get_tagged_layers (image, layers, NULL, floating_format,
+                                                  gimp_drawable_get_base_type (drawables->data),
+                                                  gimp_drawable_get_precision (drawables->data),
+                                                  *paste_type);
+      layers = g_list_reverse (layers);
     }
   else if (GIMP_IS_BUFFER (paste))
     {

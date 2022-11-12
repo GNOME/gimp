@@ -279,7 +279,7 @@ gimp_source_options_make_pickable (GimpSourceOptions *options)
            * to these drawables.
            */
           options->src_image = gimp_image_new_from_drawables (image->gimp, options->src_drawables,
-                                                                  FALSE);
+                                                              FALSE, FALSE);
           gimp_container_remove (image->gimp->images, GIMP_OBJECT (options->src_image));
 
           options->src_pickable = GIMP_PICKABLE (options->src_image);

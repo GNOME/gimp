@@ -577,7 +577,7 @@ gimp_channel_select_by_color (GimpChannel         *channel,
         }
       else
         {
-          sel_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE);
+          sel_image = gimp_image_new_from_drawables (image->gimp, drawables, FALSE, FALSE);
           gimp_container_remove (image->gimp->images, GIMP_OBJECT (sel_image));
 
           pickable = GIMP_PICKABLE (sel_image);

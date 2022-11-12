@@ -37,6 +37,7 @@
 #include "gimpchannel.h"
 #include "gimpcontext.h"
 #include "gimpdrawable-fill.h"
+#include "gimpgrouplayer.h"
 #include "gimpimage.h"
 #include "gimpimage-color-profile.h"
 #include "gimpimage-colormap.h"
@@ -246,8 +247,12 @@ gimp_image_new_from_drawable (Gimp         *gimp,
 
 /**
  * gimp_image_new_copy_drawables:
- * @image:
- * @drawables: the drawables to insert into @image.
+ * @image: the image where @drawables belong to.
+ * @drawables: the drawables to copy into @new_image.
+ * @new_image: the image to insert to.
+ * @tag_copies: tag copies of @drawable with "gimp-image-copied-layer".
+ * @copied_drawables:
+ * @tagged_drawables:
  * @parent:
  * @new_parent:
  *
@@ -259,13 +264,17 @@ gimp_image_new_from_drawable (Gimp         *gimp,
  * full opacity and default layer mode. Otherwise, visibility, opacity
  * and layer mode will be copied as-is, allowing proper compositing.
  *
- * The @parent and @new_parent arguments are only used internally for
- * recursive calls and must be set to NULL for the initial call.
+ * The @copied_drawables, @tagged_drawables, @parent and @new_parent arguments
+ * are only used internally for recursive calls and must be set to NULL for the
+ * initial call.
  */
 static void
 gimp_image_new_copy_drawables (GimpImage *image,
                                GList     *drawables,
                                GimpImage *new_image,
+                               gboolean   tag_copies,
+                               GList     *copied_drawables,
+                               GList     *tagged_drawables,
                                GimpLayer *parent,
                                GimpLayer *new_parent)
 {
@@ -277,26 +286,32 @@ gimp_image_new_copy_drawables (GimpImage *image,
   n_drawables = g_list_length (drawables);
   if (parent == NULL)
     {
-      if (n_drawables == 1)
-        {
-          layers = drawables;
-        }
-      else
-        {
-          /* Root layers. */
-          layers = gimp_image_get_layer_iter (image);
+      /* Root layers. */
+      layers = gimp_image_get_layer_iter (image);
 
-          /* Add any item parent. */
-          drawables = g_list_copy (drawables);
-          for (iter = drawables; iter; iter = iter->next)
-            {
-              GimpItem *item = iter->data;
-              while ((item = gimp_item_get_parent (item)))
-                {
-                  if (! g_list_find (drawables, item))
-                    drawables = g_list_prepend (drawables, item);
-                }
-            }
+      copied_drawables = g_list_copy (drawables);
+      for (iter = copied_drawables; iter; iter = iter->next)
+        {
+          /* Tagged drawables are the explicitly copied drawables which have no
+           * explicitly copied descendant items.
+           */
+          GList *iter2;
+
+          for (iter2 = iter; iter2; iter2 = iter2->next)
+            if (gimp_viewable_is_ancestor (iter->data, iter2->data))
+              break;
+
+          if (iter2 == NULL)
+            tagged_drawables = g_list_prepend (tagged_drawables, iter->data);
+        }
+
+      /* Add any item parent. */
+      for (iter = copied_drawables; iter; iter = iter->next)
+        {
+          GimpItem *item = iter->data;
+          while ((item = gimp_item_get_parent (item)))
+            if (! g_list_find (copied_drawables, item))
+              copied_drawables = g_list_prepend (copied_drawables, item);
         }
     }
   else
@@ -310,18 +325,31 @@ gimp_image_new_copy_drawables (GimpImage *image,
   index = 0;
   for (iter = layers; iter; iter = iter->next)
     {
-      if (g_list_find (drawables, iter->data))
+      if (g_list_find (copied_drawables, iter->data))
         {
           GimpLayer *new_layer;
           GType      new_type;
+          gboolean   is_group;
+          gboolean   is_tagged;
 
           if (GIMP_IS_LAYER (iter->data))
             new_type = G_TYPE_FROM_INSTANCE (iter->data);
           else
             new_type = GIMP_TYPE_LAYER;
 
-          new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
-                                                     new_image, new_type));
+          is_group  = (gimp_viewable_get_children (iter->data) != NULL);
+          is_tagged = (g_list_find (tagged_drawables, iter->data) != NULL);
+
+          if (is_group && ! is_tagged)
+            new_layer = gimp_group_layer_new (new_image);
+          else
+            new_layer = GIMP_LAYER (gimp_item_convert (GIMP_ITEM (iter->data),
+                                                       new_image, new_type));
+
+          if (tag_copies && is_tagged)
+            g_object_set_data (G_OBJECT (new_layer),
+                               "gimp-image-copied-layer",
+                               GINT_TO_POINTER (TRUE));
 
           gimp_object_set_name (GIMP_OBJECT (new_layer),
                                 gimp_object_get_name (iter->data));
@@ -349,19 +377,25 @@ gimp_image_new_copy_drawables (GimpImage *image,
           gimp_image_add_layer (new_image, new_layer, new_parent, index++, TRUE);
 
           /* If a group, loop through children. */
-          if (n_drawables > 1 && gimp_viewable_get_children (iter->data))
-            gimp_image_new_copy_drawables (image, drawables, new_image, iter->data, new_layer);
+          if (is_group && ! is_tagged)
+            gimp_image_new_copy_drawables (image, drawables, new_image, tag_copies,
+                                           copied_drawables, tagged_drawables,
+                                           iter->data, new_layer);
         }
     }
 
-  if (parent == NULL && n_drawables != 1)
-    g_list_free (drawables);
+  if (parent == NULL)
+    {
+      g_list_free (copied_drawables);
+      g_list_free (tagged_drawables);
+    }
 }
 
 GimpImage *
 gimp_image_new_from_drawables (Gimp     *gimp,
                                GList    *drawables,
-                               gboolean  copy_selection)
+                               gboolean  copy_selection,
+                               gboolean  tag_copies)
 {
   GimpImage         *image = NULL;
   GimpImage         *new_image;
@@ -426,7 +460,7 @@ gimp_image_new_from_drawables (Gimp     *gimp,
         }
     }
 
-  gimp_image_new_copy_drawables (image, drawables, new_image, NULL, NULL);
+  gimp_image_new_copy_drawables (image, drawables, new_image, tag_copies, NULL, NULL, NULL, NULL);
   gimp_image_undo_enable (new_image);
 
   return new_image;

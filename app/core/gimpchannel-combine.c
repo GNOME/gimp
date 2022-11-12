@@ -534,7 +534,7 @@ gimp_channel_combine_items (GimpChannel    *mask,
     {
       GList *merged_layers;
 
-      temp_image = gimp_image_new_from_drawables (image->gimp, items, FALSE);
+      temp_image = gimp_image_new_from_drawables (image->gimp, items, FALSE, FALSE);
       merged_layers = gimp_image_merge_visible_layers (temp_image,
                                                        gimp_get_user_context (temp_image->gimp),
                                                        GIMP_CLIP_TO_IMAGE,

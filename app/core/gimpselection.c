@@ -708,7 +708,7 @@ gimp_selection_extract (GimpSelection *selection,
       for (iter = pickables; iter; iter = iter->next)
         g_return_val_if_fail (GIMP_IS_DRAWABLE (iter->data), NULL);
 
-      temp_image = gimp_image_new_from_drawables (image->gimp, pickables, TRUE);
+      temp_image = gimp_image_new_from_drawables (image->gimp, pickables, TRUE, FALSE);
       selection  = GIMP_SELECTION (gimp_image_get_mask (temp_image));
 
       pickable   = GIMP_PICKABLE (temp_image);

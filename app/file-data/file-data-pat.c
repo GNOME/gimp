@@ -264,7 +264,7 @@ file_pat_image_to_pattern (GimpImage     *image,
       for (gint i = 0; i < n_drawables; i++)
         drawable_list = g_list_prepend (drawable_list, drawables[i]);
 
-      subimage = gimp_image_new_from_drawables (image->gimp, drawable_list, FALSE);
+      subimage = gimp_image_new_from_drawables (image->gimp, drawable_list, FALSE, FALSE);
       g_list_free (drawable_list);
       gimp_container_remove (image->gimp->images, GIMP_OBJECT (subimage));
       gimp_image_resize_to_layers (subimage, context,
