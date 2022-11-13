@@ -62,7 +62,7 @@ endif
 
 if directx.found()
   modules += {
-    'name': 'controller-dx-input',
+    'name': 'controller-dx-dinput',
     'srcs': [ 'controller-dx-dinput.c', 'gimpinputdevicestore-dx.c', ],
     'deps': directx,
     'link': [ controller_libs, ],
