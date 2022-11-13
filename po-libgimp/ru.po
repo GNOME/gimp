@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-05-15 14:16+0000\n"
+"POT-Creation-Date: 2022-11-13 19:52+0300\n"
 "PO-Revision-Date: 2022-05-16 22:01+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
@@ -247,7 +247,7 @@ msgstr ""
 
 #. TRANSLATORS: the %s parameter is an image format name (ex: PNG).
 #. TRANSLATORS: %s will be a format name, e.g. "PNG" or "JPEG".
-#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:388
+#: ../libgimp/gimpexport.c:1193 ../libgimp/gimpsaveproceduredialog.c:397
 #, c-format
 msgid "Export Image as %s"
 msgstr "Экспортировать изображение как %s"
@@ -260,11 +260,11 @@ msgstr "Выбор шрифта"
 msgid "Gradient Selection"
 msgstr "Выбор градиента"
 
-#: ../libgimp/gimpimagemetadata.c:311
+#: ../libgimp/gimpimagemetadata.c:306
 msgid "Background"
 msgstr "Фон"
 
-#: ../libgimp/gimpimagemetadata-save.c:643 ../modules/controller-midi.c:426
+#: ../libgimp/gimpimagemetadata-save.c:654 ../modules/controller-midi.c:426
 msgid "GIMP"
 msgstr "GIMP"
 
@@ -386,12 +386,12 @@ msgstr[0] "%d процедура совпадает с запросом"
 msgstr[1] "%d процедуры совпадают с запросом"
 msgstr[2] "%d процедур совпадает с запросом"
 
-#: ../libgimp/gimpprocedure.c:1906
+#: ../libgimp/gimpprocedure.c:1917
 #, c-format
 msgid "Procedure '%s' returned no return values"
 msgstr "Процедура '%s' не вернула никаких возвращаемых значений"
 
-#: ../libgimp/gimpprocedure.c:1997
+#: ../libgimp/gimpprocedure.c:2008
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -400,7 +400,7 @@ msgstr ""
 "Процедура '%s' вернула некорректный тип значения для возвращаемого значения "
 "'%s' (#%d). Ожидалось %s, получено %s."
 
-#: ../libgimp/gimpprocedure.c:2009
+#: ../libgimp/gimpprocedure.c:2020
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument "
@@ -409,7 +409,7 @@ msgstr ""
 "Процедура '%s' была вызвана с некорректным типом значения аргумента "
 "'%s' (#%d). Ожидалось %s, получено %s."
 
-#: ../libgimp/gimpprocedure.c:2044
+#: ../libgimp/gimpprocedure.c:2055
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -418,7 +418,7 @@ msgstr ""
 "Процедура '%s' вернула '%s' как возвращаемое значение '%s' (#%d, тип %s). "
 "Значение выходит из диапазона."
 
-#: ../libgimp/gimpprocedure.c:2058
+#: ../libgimp/gimpprocedure.c:2069
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type "
@@ -427,12 +427,12 @@ msgstr ""
 "Процедура '%s' была вызвана со значением '%s' аргумента '%s' (#%d, тип %s). "
 "Значение выходит из диапазона."
 
-#: ../libgimp/gimpprocedure.c:2103
+#: ../libgimp/gimpprocedure.c:2113
 #, c-format
 msgid "Procedure '%s' returned an invalid UTF-8 string for argument '%s'."
 msgstr "Процедура '%s' вернула недопустимую строку UTF-8 аргумента '%s'."
 
-#: ../libgimp/gimpprocedure.c:2113
+#: ../libgimp/gimpprocedure.c:2123
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid UTF-8 string for argument "
@@ -473,11 +473,11 @@ msgstr "_Сохранить настройки"
 msgid "Store current settings for later reuse"
 msgstr "Сохранить текущие настройки для последующего повторного использования"
 
-#: ../libgimp/gimpproceduredialog.c:1787
+#: ../libgimp/gimpproceduredialog.c:1964
 msgid "Reset to _Initial Values"
 msgstr "Сброс к _начальным значениям"
 
-#: ../libgimp/gimpproceduredialog.c:1796
+#: ../libgimp/gimpproceduredialog.c:1973
 msgid "Reset to _Factory Defaults"
 msgstr "Сброс к _настройкам по умолчанию"
 
@@ -533,1033 +533,1033 @@ msgstr "(редактировать)"
 msgid "percent"
 msgstr "процент"
 
-#: ../libgimpbase/gimpbaseenums.c:28
+#: ../libgimpbase/gimpbaseenums.c:31
 msgctxt "add-mask-type"
 msgid "_White (full opacity)"
 msgstr "_Белый цвет (полная непрозрачность)"
 
-#: ../libgimpbase/gimpbaseenums.c:29
+#: ../libgimpbase/gimpbaseenums.c:32
 msgctxt "add-mask-type"
 msgid "_Black (full transparency)"
 msgstr "_Черный цвет (полная прозрачность)"
 
-#: ../libgimpbase/gimpbaseenums.c:30
+#: ../libgimpbase/gimpbaseenums.c:33
 msgctxt "add-mask-type"
 msgid "Layer's _alpha channel"
 msgstr "_Альфа-канал слоя"
 
-#: ../libgimpbase/gimpbaseenums.c:31
+#: ../libgimpbase/gimpbaseenums.c:34
 msgctxt "add-mask-type"
 msgid "_Transfer layer's alpha channel"
 msgstr "_Передать альфа-канал слоя"
 
-#: ../libgimpbase/gimpbaseenums.c:32
+#: ../libgimpbase/gimpbaseenums.c:35
 msgctxt "add-mask-type"
 msgid "_Selection"
 msgstr "_Выделение"
 
-#: ../libgimpbase/gimpbaseenums.c:33
+#: ../libgimpbase/gimpbaseenums.c:36
 msgctxt "add-mask-type"
 msgid "_Grayscale copy of layer"
 msgstr "_Копия слоя в градациях серого"
 
-#: ../libgimpbase/gimpbaseenums.c:34
+#: ../libgimpbase/gimpbaseenums.c:37
 msgctxt "add-mask-type"
 msgid "C_hannel"
 msgstr "_Канал"
 
-#: ../libgimpbase/gimpbaseenums.c:64
+#: ../libgimpbase/gimpbaseenums.c:67
 msgctxt "brush-generated-shape"
 msgid "Circle"
 msgstr "Окружность"
 
-#: ../libgimpbase/gimpbaseenums.c:65
+#: ../libgimpbase/gimpbaseenums.c:68
 msgctxt "brush-generated-shape"
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpbase/gimpbaseenums.c:66
+#: ../libgimpbase/gimpbaseenums.c:69
 msgctxt "brush-generated-shape"
 msgid "Diamond"
 msgstr "Ромб"
 
-#: ../libgimpbase/gimpbaseenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:99
 msgctxt "cap-style"
 msgid "Butt"
 msgstr "Плоские"
 
-#: ../libgimpbase/gimpbaseenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:100
 msgctxt "cap-style"
 msgid "Round"
 msgstr "Круглые"
 
-#: ../libgimpbase/gimpbaseenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:101
 msgctxt "cap-style"
 msgid "Square"
 msgstr "Квадратные"
 
-#: ../libgimpbase/gimpbaseenums.c:129
+#: ../libgimpbase/gimpbaseenums.c:132
 msgctxt "channel-ops"
 msgid "Add to the current selection"
 msgstr "Добавить в текущее выделение"
 
-#: ../libgimpbase/gimpbaseenums.c:130
+#: ../libgimpbase/gimpbaseenums.c:133
 msgctxt "channel-ops"
 msgid "Subtract from the current selection"
 msgstr "Вычесть из текущего выделения"
 
-#: ../libgimpbase/gimpbaseenums.c:131
+#: ../libgimpbase/gimpbaseenums.c:134
 msgctxt "channel-ops"
 msgid "Replace the current selection"
 msgstr "Заменить текущее выделение"
 
-#: ../libgimpbase/gimpbaseenums.c:132
+#: ../libgimpbase/gimpbaseenums.c:135
 msgctxt "channel-ops"
 msgid "Intersect with the current selection"
 msgstr "Пересечь с текущим выделением"
 
-#: ../libgimpbase/gimpbaseenums.c:165
+#: ../libgimpbase/gimpbaseenums.c:168
 msgctxt "channel-type"
 msgid "Red"
 msgstr "Красный"
 
-#: ../libgimpbase/gimpbaseenums.c:166
+#: ../libgimpbase/gimpbaseenums.c:169
 msgctxt "channel-type"
 msgid "Green"
 msgstr "Зелёный"
 
-#: ../libgimpbase/gimpbaseenums.c:167
+#: ../libgimpbase/gimpbaseenums.c:170
 msgctxt "channel-type"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../libgimpbase/gimpbaseenums.c:168
+#: ../libgimpbase/gimpbaseenums.c:171
 msgctxt "channel-type"
 msgid "Gray"
 msgstr "Серый"
 
-#: ../libgimpbase/gimpbaseenums.c:169
+#: ../libgimpbase/gimpbaseenums.c:172
 msgctxt "channel-type"
 msgid "Indexed"
 msgstr "Индексированный"
 
-#: ../libgimpbase/gimpbaseenums.c:170
+#: ../libgimpbase/gimpbaseenums.c:173
 msgctxt "channel-type"
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:200
+#: ../libgimpbase/gimpbaseenums.c:203
 msgctxt "check-size"
 msgid "Small"
 msgstr "Маленький"
 
-#: ../libgimpbase/gimpbaseenums.c:201
+#: ../libgimpbase/gimpbaseenums.c:204
 msgctxt "check-size"
 msgid "Medium"
 msgstr "Средний"
 
-#: ../libgimpbase/gimpbaseenums.c:202
+#: ../libgimpbase/gimpbaseenums.c:205
 msgctxt "check-size"
 msgid "Large"
 msgstr "Большой"
 
-#: ../libgimpbase/gimpbaseenums.c:236
+#: ../libgimpbase/gimpbaseenums.c:239
 msgctxt "check-type"
 msgid "Light checks"
 msgstr "Белые клетки"
 
-#: ../libgimpbase/gimpbaseenums.c:237
+#: ../libgimpbase/gimpbaseenums.c:240
 msgctxt "check-type"
 msgid "Mid-tone checks"
 msgstr "Серые клетки"
 
-#: ../libgimpbase/gimpbaseenums.c:238
+#: ../libgimpbase/gimpbaseenums.c:241
 msgctxt "check-type"
 msgid "Dark checks"
 msgstr "Темные клетки"
 
-#: ../libgimpbase/gimpbaseenums.c:239
+#: ../libgimpbase/gimpbaseenums.c:242
 msgctxt "check-type"
 msgid "White only"
 msgstr "Только белый"
 
-#: ../libgimpbase/gimpbaseenums.c:240
+#: ../libgimpbase/gimpbaseenums.c:243
 msgctxt "check-type"
 msgid "Gray only"
 msgstr "Только серый"
 
-#: ../libgimpbase/gimpbaseenums.c:241
+#: ../libgimpbase/gimpbaseenums.c:244
 msgctxt "check-type"
 msgid "Black only"
 msgstr "Только чёрный"
 
-#: ../libgimpbase/gimpbaseenums.c:242
+#: ../libgimpbase/gimpbaseenums.c:245
 msgctxt "check-type"
 msgid "Custom checks"
 msgstr "Пользовательские клетки"
 
-#: ../libgimpbase/gimpbaseenums.c:271
+#: ../libgimpbase/gimpbaseenums.c:274
 msgctxt "clone-type"
 msgid "Image"
 msgstr "Изображение"
 
-#: ../libgimpbase/gimpbaseenums.c:272
+#: ../libgimpbase/gimpbaseenums.c:275
 msgctxt "clone-type"
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../libgimpbase/gimpbaseenums.c:308
+#: ../libgimpbase/gimpbaseenums.c:311
 msgctxt "color-tag"
 msgid "None"
 msgstr "Нет"
 
-#: ../libgimpbase/gimpbaseenums.c:309
+#: ../libgimpbase/gimpbaseenums.c:312
 msgctxt "color-tag"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../libgimpbase/gimpbaseenums.c:310
+#: ../libgimpbase/gimpbaseenums.c:313
 msgctxt "color-tag"
 msgid "Green"
 msgstr "Зелёный"
 
-#: ../libgimpbase/gimpbaseenums.c:311
+#: ../libgimpbase/gimpbaseenums.c:314
 msgctxt "color-tag"
 msgid "Yellow"
 msgstr "Жёлтый"
 
-#: ../libgimpbase/gimpbaseenums.c:312
+#: ../libgimpbase/gimpbaseenums.c:315
 msgctxt "color-tag"
 msgid "Orange"
 msgstr "Оранжевый"
 
-#: ../libgimpbase/gimpbaseenums.c:313
+#: ../libgimpbase/gimpbaseenums.c:316
 msgctxt "color-tag"
 msgid "Brown"
 msgstr "Коричневый"
 
-#: ../libgimpbase/gimpbaseenums.c:314
+#: ../libgimpbase/gimpbaseenums.c:317
 msgctxt "color-tag"
 msgid "Red"
 msgstr "Красный"
 
-#: ../libgimpbase/gimpbaseenums.c:315
+#: ../libgimpbase/gimpbaseenums.c:318
 msgctxt "color-tag"
 msgid "Violet"
 msgstr "Фиолетовый"
 
-#: ../libgimpbase/gimpbaseenums.c:316
+#: ../libgimpbase/gimpbaseenums.c:319
 msgctxt "color-tag"
 msgid "Gray"
 msgstr "Серый"
 
-#: ../libgimpbase/gimpbaseenums.c:349
+#: ../libgimpbase/gimpbaseenums.c:352
 msgctxt "component-type"
 msgid "8-bit integer"
 msgstr "8 бит целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:350
+#: ../libgimpbase/gimpbaseenums.c:353
 msgctxt "component-type"
 msgid "16-bit integer"
 msgstr "16 бит целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:351
+#: ../libgimpbase/gimpbaseenums.c:354
 msgctxt "component-type"
 msgid "32-bit integer"
 msgstr "32 бит целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:352
+#: ../libgimpbase/gimpbaseenums.c:355
 msgctxt "component-type"
 msgid "16-bit floating point"
 msgstr "16 бит с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:353
+#: ../libgimpbase/gimpbaseenums.c:356
 msgctxt "component-type"
 msgid "32-bit floating point"
 msgstr "32 бит с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:354
+#: ../libgimpbase/gimpbaseenums.c:357
 msgctxt "component-type"
 msgid "64-bit floating point"
 msgstr "64 бит с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:385
+#: ../libgimpbase/gimpbaseenums.c:388
 msgctxt "convert-palette-type"
 msgid "Generate optimum palette"
 msgstr "Создать оптимальную палитру"
 
-#: ../libgimpbase/gimpbaseenums.c:386
+#: ../libgimpbase/gimpbaseenums.c:389
 msgctxt "convert-palette-type"
 msgid "Use web-optimized palette"
 msgstr "Использовать оптимизированную для веба палитру"
 
-#: ../libgimpbase/gimpbaseenums.c:387
+#: ../libgimpbase/gimpbaseenums.c:390
 msgctxt "convert-palette-type"
 msgid "Use black and white (1-bit) palette"
 msgstr "Использовать чёрно-белую (1 бит) палитру"
 
-#: ../libgimpbase/gimpbaseenums.c:388
+#: ../libgimpbase/gimpbaseenums.c:391
 msgctxt "convert-palette-type"
 msgid "Use custom palette"
 msgstr "Использовать заказную палитру"
 
-#: ../libgimpbase/gimpbaseenums.c:417
+#: ../libgimpbase/gimpbaseenums.c:420
 msgctxt "convolve-type"
 msgid "Blur"
 msgstr "Размывание"
 
-#: ../libgimpbase/gimpbaseenums.c:418
+#: ../libgimpbase/gimpbaseenums.c:421
 msgctxt "convolve-type"
 msgid "Sharpen"
 msgstr "Резкость"
 
-#: ../libgimpbase/gimpbaseenums.c:450
+#: ../libgimpbase/gimpbaseenums.c:453
 msgctxt "desaturate-mode"
 msgid "Lightness (HSL)"
 msgstr "Освещенность (HSL)"
 
-#: ../libgimpbase/gimpbaseenums.c:451
+#: ../libgimpbase/gimpbaseenums.c:454
 msgctxt "desaturate-mode"
 msgid "Luma"
 msgstr "Яркость"
 
-#: ../libgimpbase/gimpbaseenums.c:452
+#: ../libgimpbase/gimpbaseenums.c:455
 msgctxt "desaturate-mode"
 msgid "Average (HSI Intensity)"
 msgstr "Среднее (интенсивность по HSI)"
 
-#: ../libgimpbase/gimpbaseenums.c:453
+#: ../libgimpbase/gimpbaseenums.c:456
 msgctxt "desaturate-mode"
 msgid "Luminance"
 msgstr "Светимость"
 
-#: ../libgimpbase/gimpbaseenums.c:454
+#: ../libgimpbase/gimpbaseenums.c:457
 msgctxt "desaturate-mode"
 msgid "Value (HSV)"
 msgstr "Значение (HSV)"
 
-#: ../libgimpbase/gimpbaseenums.c:483
+#: ../libgimpbase/gimpbaseenums.c:486
 msgctxt "dodge-burn-type"
 msgid "Dodge"
 msgstr "Осветлить"
 
-#: ../libgimpbase/gimpbaseenums.c:484
+#: ../libgimpbase/gimpbaseenums.c:487
 msgctxt "dodge-burn-type"
 msgid "Burn"
 msgstr "Затемнить"
 
-#: ../libgimpbase/gimpbaseenums.c:516
+#: ../libgimpbase/gimpbaseenums.c:519
 msgctxt "fill-type"
 msgid "Foreground color"
 msgstr "Цвет переднего плана"
 
-#: ../libgimpbase/gimpbaseenums.c:517
+#: ../libgimpbase/gimpbaseenums.c:520
 msgctxt "fill-type"
 msgid "Background color"
 msgstr "Цвет фона"
 
-#: ../libgimpbase/gimpbaseenums.c:518
+#: ../libgimpbase/gimpbaseenums.c:521
 msgctxt "fill-type"
 msgid "White"
 msgstr "Белый"
 
-#: ../libgimpbase/gimpbaseenums.c:519
+#: ../libgimpbase/gimpbaseenums.c:522
 msgctxt "fill-type"
 msgid "Transparency"
 msgstr "Прозрачность"
 
-#: ../libgimpbase/gimpbaseenums.c:520
+#: ../libgimpbase/gimpbaseenums.c:523
 msgctxt "fill-type"
 msgid "Pattern"
 msgstr "Текстура"
 
-#: ../libgimpbase/gimpbaseenums.c:578
+#: ../libgimpbase/gimpbaseenums.c:581
 msgctxt "gradient-blend-color-space"
 msgid "Perceptual RGB"
 msgstr "Нелинейное, RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:579
+#: ../libgimpbase/gimpbaseenums.c:582
 msgctxt "gradient-blend-color-space"
 msgid "Linear RGB"
 msgstr "Линейное, RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:580
+#: ../libgimpbase/gimpbaseenums.c:583
 msgctxt "gradient-blend-color-space"
 msgid "CIE Lab"
 msgstr "CIE LAB"
 
-#: ../libgimpbase/gimpbaseenums.c:610
+#: ../libgimpbase/gimpbaseenums.c:613
 msgctxt "gradient-segment-color"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:611
+#: ../libgimpbase/gimpbaseenums.c:614
 msgctxt "gradient-segment-color"
 msgid "HSV (counter-clockwise hue)"
 msgstr "HSV (тон против часовой стрелки)"
 
 #. Translators: this is an abbreviated version of "HSV (counter-clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:614
+#: ../libgimpbase/gimpbaseenums.c:617
 msgctxt "gradient-segment-color"
 msgid "HSV (ccw)"
 msgstr "HSV (против часовой стрелки)"
 
-#: ../libgimpbase/gimpbaseenums.c:615
+#: ../libgimpbase/gimpbaseenums.c:618
 msgctxt "gradient-segment-color"
 msgid "HSV (clockwise hue)"
 msgstr "HSV (тон по часовой стрелке)"
 
 #. Translators: this is an abbreviated version of "HSV (clockwise hue)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:618
+#: ../libgimpbase/gimpbaseenums.c:621
 msgctxt "gradient-segment-color"
 msgid "HSV (cw)"
 msgstr "HSV (по часовой стрелке)"
 
-#: ../libgimpbase/gimpbaseenums.c:651
+#: ../libgimpbase/gimpbaseenums.c:654
 msgctxt "gradient-segment-type"
 msgid "Linear"
 msgstr "Линейное"
 
-#: ../libgimpbase/gimpbaseenums.c:652
+#: ../libgimpbase/gimpbaseenums.c:655
 msgctxt "gradient-segment-type"
 msgid "Curved"
 msgstr "Криволинейное"
 
-#: ../libgimpbase/gimpbaseenums.c:653
+#: ../libgimpbase/gimpbaseenums.c:656
 msgctxt "gradient-segment-type"
 msgid "Sinusoidal"
 msgstr "По синусоиде"
 
-#: ../libgimpbase/gimpbaseenums.c:654
+#: ../libgimpbase/gimpbaseenums.c:657
 msgctxt "gradient-segment-type"
 msgid "Spherical (increasing)"
 msgstr "Cферическое (нарастание)"
 
 #. Translators: this is an abbreviated version of "Spherical (increasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:657
+#: ../libgimpbase/gimpbaseenums.c:660
 msgctxt "gradient-segment-type"
 msgid "Spherical (inc)"
 msgstr "Cферическое (нараст.)"
 
-#: ../libgimpbase/gimpbaseenums.c:658
+#: ../libgimpbase/gimpbaseenums.c:661
 msgctxt "gradient-segment-type"
 msgid "Spherical (decreasing)"
 msgstr "Cферическое (сокращение)"
 
 #. Translators: this is an abbreviated version of "Spherical (decreasing)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:661
+#: ../libgimpbase/gimpbaseenums.c:664
 msgctxt "gradient-segment-type"
 msgid "Spherical (dec)"
 msgstr "Cферическое (сокр.)"
 
-#: ../libgimpbase/gimpbaseenums.c:662
+#: ../libgimpbase/gimpbaseenums.c:665
 msgctxt "gradient-segment-type"
 msgid "Step"
 msgstr "Ступенька"
 
-#: ../libgimpbase/gimpbaseenums.c:700
+#: ../libgimpbase/gimpbaseenums.c:703
 msgctxt "gradient-type"
 msgid "Linear"
 msgstr "Линейная"
 
-#: ../libgimpbase/gimpbaseenums.c:701
+#: ../libgimpbase/gimpbaseenums.c:704
 msgctxt "gradient-type"
 msgid "Bi-linear"
 msgstr "Билинейная"
 
-#: ../libgimpbase/gimpbaseenums.c:702
+#: ../libgimpbase/gimpbaseenums.c:705
 msgctxt "gradient-type"
 msgid "Radial"
 msgstr "Радиальная"
 
-#: ../libgimpbase/gimpbaseenums.c:703
+#: ../libgimpbase/gimpbaseenums.c:706
 msgctxt "gradient-type"
 msgid "Square"
 msgstr "Квадратная"
 
-#: ../libgimpbase/gimpbaseenums.c:704
+#: ../libgimpbase/gimpbaseenums.c:707
 msgctxt "gradient-type"
 msgid "Conical (symmetric)"
 msgstr "Коническая (симметричная)"
 
 #. Translators: this is an abbreviated version of "Conical (symmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:707
+#: ../libgimpbase/gimpbaseenums.c:710
 msgctxt "gradient-type"
 msgid "Conical (sym)"
 msgstr "Коническая (симм.)"
 
-#: ../libgimpbase/gimpbaseenums.c:708
+#: ../libgimpbase/gimpbaseenums.c:711
 msgctxt "gradient-type"
 msgid "Conical (asymmetric)"
 msgstr "Коническая (асимметричная)"
 
 #. Translators: this is an abbreviated version of "Conical (asymmetric)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:711
+#: ../libgimpbase/gimpbaseenums.c:714
 msgctxt "gradient-type"
 msgid "Conical (asym)"
 msgstr "Коническая (асимм.)"
 
-#: ../libgimpbase/gimpbaseenums.c:712
+#: ../libgimpbase/gimpbaseenums.c:715
 msgctxt "gradient-type"
 msgid "Shaped (angular)"
 msgstr "Очертания (угловая)"
 
-#: ../libgimpbase/gimpbaseenums.c:713
+#: ../libgimpbase/gimpbaseenums.c:716
 msgctxt "gradient-type"
 msgid "Shaped (spherical)"
 msgstr "Очертания (сфера)"
 
-#: ../libgimpbase/gimpbaseenums.c:714
+#: ../libgimpbase/gimpbaseenums.c:717
 msgctxt "gradient-type"
 msgid "Shaped (dimpled)"
 msgstr "Очертания (рябь)"
 
-#: ../libgimpbase/gimpbaseenums.c:715
+#: ../libgimpbase/gimpbaseenums.c:718
 msgctxt "gradient-type"
 msgid "Spiral (clockwise)"
 msgstr "Спираль (по часовой стрелке)"
 
 #. Translators: this is an abbreviated version of "Spiral (clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:718
+#: ../libgimpbase/gimpbaseenums.c:721
 msgctxt "gradient-type"
 msgid "Spiral (cw)"
 msgstr "Спираль (по ЧС)"
 
-#: ../libgimpbase/gimpbaseenums.c:719
+#: ../libgimpbase/gimpbaseenums.c:722
 msgctxt "gradient-type"
 msgid "Spiral (counter-clockwise)"
 msgstr "Спираль (против часовой стрелки)"
 
 #. Translators: this is an abbreviated version of "Spiral (counter-clockwise)".
 #. Keep it short.
-#: ../libgimpbase/gimpbaseenums.c:722
+#: ../libgimpbase/gimpbaseenums.c:725
 msgctxt "gradient-type"
 msgid "Spiral (ccw)"
 msgstr "Спираль (пр. ЧС)"
 
-#: ../libgimpbase/gimpbaseenums.c:754
+#: ../libgimpbase/gimpbaseenums.c:757
 msgctxt "grid-style"
 msgid "Intersections (dots)"
 msgstr "Пересечения (точки)"
 
-#: ../libgimpbase/gimpbaseenums.c:755
+#: ../libgimpbase/gimpbaseenums.c:758
 msgctxt "grid-style"
 msgid "Intersections (crosshairs)"
 msgstr "Пересечения (перекрестья)"
 
-#: ../libgimpbase/gimpbaseenums.c:756
+#: ../libgimpbase/gimpbaseenums.c:759
 msgctxt "grid-style"
 msgid "Dashed"
 msgstr "Пунктир"
 
-#: ../libgimpbase/gimpbaseenums.c:757
+#: ../libgimpbase/gimpbaseenums.c:760
 msgctxt "grid-style"
 msgid "Double dashed"
 msgstr "Двойной пунктир"
 
-#: ../libgimpbase/gimpbaseenums.c:758
+#: ../libgimpbase/gimpbaseenums.c:761
 msgctxt "grid-style"
 msgid "Solid"
 msgstr "Цельная линия"
 
-#: ../libgimpbase/gimpbaseenums.c:828
+#: ../libgimpbase/gimpbaseenums.c:831
 msgctxt "icon-type"
 msgid "Icon name"
 msgstr "Название значка"
 
-#: ../libgimpbase/gimpbaseenums.c:829
+#: ../libgimpbase/gimpbaseenums.c:832
 msgctxt "icon-type"
 msgid "Pixbuf"
 msgstr "Pixbuf"
 
-#: ../libgimpbase/gimpbaseenums.c:830
+#: ../libgimpbase/gimpbaseenums.c:833
 msgctxt "icon-type"
 msgid "Image file"
 msgstr "Файл изображения"
 
-#: ../libgimpbase/gimpbaseenums.c:860
+#: ../libgimpbase/gimpbaseenums.c:863
 msgctxt "image-base-type"
 msgid "RGB color"
 msgstr "Цвета RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:861
+#: ../libgimpbase/gimpbaseenums.c:864
 msgctxt "image-base-type"
 msgid "Grayscale"
 msgstr "Градации серого"
 
-#: ../libgimpbase/gimpbaseenums.c:862
+#: ../libgimpbase/gimpbaseenums.c:865
 msgctxt "image-base-type"
 msgid "Indexed color"
 msgstr "Индексированный цвет"
 
-#: ../libgimpbase/gimpbaseenums.c:895
+#: ../libgimpbase/gimpbaseenums.c:898
 msgctxt "image-type"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpbase/gimpbaseenums.c:896
+#: ../libgimpbase/gimpbaseenums.c:899
 msgctxt "image-type"
 msgid "RGB-alpha"
 msgstr "RGB + альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:897
+#: ../libgimpbase/gimpbaseenums.c:900
 msgctxt "image-type"
 msgid "Grayscale"
 msgstr "Градации серого"
 
-#: ../libgimpbase/gimpbaseenums.c:898
+#: ../libgimpbase/gimpbaseenums.c:901
 msgctxt "image-type"
 msgid "Grayscale-alpha"
 msgstr "Градации серого + альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:899
+#: ../libgimpbase/gimpbaseenums.c:902
 msgctxt "image-type"
 msgid "Indexed"
 msgstr "Индексированный"
 
-#: ../libgimpbase/gimpbaseenums.c:900
+#: ../libgimpbase/gimpbaseenums.c:903
 msgctxt "image-type"
 msgid "Indexed-alpha"
 msgstr "Индексированный + альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:930
+#: ../libgimpbase/gimpbaseenums.c:933
 msgctxt "ink-blob-type"
 msgid "Circle"
 msgstr "Окружность"
 
-#: ../libgimpbase/gimpbaseenums.c:931
+#: ../libgimpbase/gimpbaseenums.c:934
 msgctxt "ink-blob-type"
 msgid "Square"
 msgstr "Квадратная"
 
-#: ../libgimpbase/gimpbaseenums.c:932
+#: ../libgimpbase/gimpbaseenums.c:935
 msgctxt "ink-blob-type"
 msgid "Diamond"
 msgstr "Ромб"
 
-#: ../libgimpbase/gimpbaseenums.c:964
+#: ../libgimpbase/gimpbaseenums.c:967
 msgctxt "interpolation-type"
 msgid "None"
 msgstr "Нет"
 
-#: ../libgimpbase/gimpbaseenums.c:965
+#: ../libgimpbase/gimpbaseenums.c:968
 msgctxt "interpolation-type"
 msgid "Linear"
 msgstr "Линейная"
 
-#: ../libgimpbase/gimpbaseenums.c:966
+#: ../libgimpbase/gimpbaseenums.c:969
 msgctxt "interpolation-type"
 msgid "Cubic"
 msgstr "Кубическая"
 
-#: ../libgimpbase/gimpbaseenums.c:967
+#: ../libgimpbase/gimpbaseenums.c:970
 msgctxt "interpolation-type"
 msgid "NoHalo"
 msgstr "Без гало"
 
-#: ../libgimpbase/gimpbaseenums.c:968
+#: ../libgimpbase/gimpbaseenums.c:971
 msgctxt "interpolation-type"
 msgid "LoHalo"
 msgstr "Мало гало"
 
-#: ../libgimpbase/gimpbaseenums.c:998
+#: ../libgimpbase/gimpbaseenums.c:1001
 msgctxt "join-style"
 msgid "Miter"
 msgstr "Острое"
 
-#: ../libgimpbase/gimpbaseenums.c:999
+#: ../libgimpbase/gimpbaseenums.c:1002
 msgctxt "join-style"
 msgid "Round"
 msgstr "Скругленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1000
+#: ../libgimpbase/gimpbaseenums.c:1003
 msgctxt "join-style"
 msgid "Bevel"
 msgstr "С фаской"
 
-#: ../libgimpbase/gimpbaseenums.c:1061
+#: ../libgimpbase/gimpbaseenums.c:1064
 msgctxt "merge-type"
 msgid "Expanded as necessary"
 msgstr "Расширен при необходимости"
 
-#: ../libgimpbase/gimpbaseenums.c:1062
+#: ../libgimpbase/gimpbaseenums.c:1065
 msgctxt "merge-type"
 msgid "Clipped to image"
 msgstr "Обрезан до размера изображения"
 
-#: ../libgimpbase/gimpbaseenums.c:1063
+#: ../libgimpbase/gimpbaseenums.c:1066
 msgctxt "merge-type"
 msgid "Clipped to bottom layer"
 msgstr "Обрезан до размера нижнего слоя"
 
-#: ../libgimpbase/gimpbaseenums.c:1064
+#: ../libgimpbase/gimpbaseenums.c:1067
 msgctxt "merge-type"
 msgid "Flatten"
 msgstr "Сведение"
 
-#: ../libgimpbase/gimpbaseenums.c:1158
+#: ../libgimpbase/gimpbaseenums.c:1161
 msgctxt "orientation-type"
 msgid "Horizontal"
 msgstr "По горизонтали"
 
-#: ../libgimpbase/gimpbaseenums.c:1159
+#: ../libgimpbase/gimpbaseenums.c:1162
 msgctxt "orientation-type"
 msgid "Vertical"
 msgstr "По вертикали"
 
-#: ../libgimpbase/gimpbaseenums.c:1160
+#: ../libgimpbase/gimpbaseenums.c:1163
 msgctxt "orientation-type"
 msgid "Unknown"
 msgstr "Неизвестно"
 
-#: ../libgimpbase/gimpbaseenums.c:1189
+#: ../libgimpbase/gimpbaseenums.c:1192
 msgctxt "paint-application-mode"
 msgid "Constant"
 msgstr "Константа"
 
-#: ../libgimpbase/gimpbaseenums.c:1190
+#: ../libgimpbase/gimpbaseenums.c:1193
 msgctxt "paint-application-mode"
 msgid "Incremental"
 msgstr "Постепенная"
 
-#: ../libgimpbase/gimpbaseenums.c:1251
+#: ../libgimpbase/gimpbaseenums.c:1254
 msgctxt "pdb-proc-type"
 msgid "Internal GIMP procedure"
 msgstr "Внутренняя процедура GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:1252
+#: ../libgimpbase/gimpbaseenums.c:1255
 msgctxt "pdb-proc-type"
 msgid "GIMP Plug-In"
 msgstr "Модуль GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:1253
+#: ../libgimpbase/gimpbaseenums.c:1256
 msgctxt "pdb-proc-type"
 msgid "GIMP Extension"
 msgstr "Расширение GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:1254
+#: ../libgimpbase/gimpbaseenums.c:1257
 msgctxt "pdb-proc-type"
 msgid "Temporary Procedure"
 msgstr "Временная процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:1341
+#: ../libgimpbase/gimpbaseenums.c:1344
 msgctxt "precision"
 msgid "8-bit linear integer"
 msgstr "8 бит, линейное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1342
+#: ../libgimpbase/gimpbaseenums.c:1345
 msgctxt "precision"
 msgid "8-bit non-linear integer"
 msgstr "8 бит, нелинейное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1343
+#: ../libgimpbase/gimpbaseenums.c:1346
 msgctxt "precision"
 msgid "8-bit perceptual integer"
 msgstr "8 бит, перцептивное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1344
+#: ../libgimpbase/gimpbaseenums.c:1347
 msgctxt "precision"
 msgid "16-bit linear integer"
 msgstr "16 бит, линейное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1345
+#: ../libgimpbase/gimpbaseenums.c:1348
 msgctxt "precision"
 msgid "16-bit non-linear integer"
 msgstr "16 бит, нелинейное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1346
+#: ../libgimpbase/gimpbaseenums.c:1349
 msgctxt "precision"
 msgid "16-bit perceptual integer"
 msgstr "16 бит, перцептивное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1347
+#: ../libgimpbase/gimpbaseenums.c:1350
 msgctxt "precision"
 msgid "32-bit linear integer"
 msgstr "32 бита, линейное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1348
+#: ../libgimpbase/gimpbaseenums.c:1351
 msgctxt "precision"
 msgid "32-bit non-linear integer"
 msgstr "32 бита, нелинейное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1349
+#: ../libgimpbase/gimpbaseenums.c:1352
 msgctxt "precision"
 msgid "32-bit perceptual integer"
 msgstr "32 бита, перцептивное целочисленное"
 
-#: ../libgimpbase/gimpbaseenums.c:1350
+#: ../libgimpbase/gimpbaseenums.c:1353
 msgctxt "precision"
 msgid "16-bit linear floating point"
 msgstr "16 бит, линейное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1351
+#: ../libgimpbase/gimpbaseenums.c:1354
 msgctxt "precision"
 msgid "16-bit non-linear floating point"
 msgstr "16 бит, нелинейное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1352
+#: ../libgimpbase/gimpbaseenums.c:1355
 msgctxt "precision"
 msgid "16-bit perceptual floating point"
 msgstr "16 бит, перцептивное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1353
+#: ../libgimpbase/gimpbaseenums.c:1356
 msgctxt "precision"
 msgid "32-bit linear floating point"
 msgstr "32 бита, линейное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1354
+#: ../libgimpbase/gimpbaseenums.c:1357
 msgctxt "precision"
 msgid "32-bit non-linear floating point"
 msgstr "32 бита, нелинейное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1355
+#: ../libgimpbase/gimpbaseenums.c:1358
 msgctxt "precision"
 msgid "32-bit perceptual floating point"
 msgstr "32 бита, перцептивное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1356
+#: ../libgimpbase/gimpbaseenums.c:1359
 msgctxt "precision"
 msgid "64-bit linear floating point"
 msgstr "64 бита, линейное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1357
+#: ../libgimpbase/gimpbaseenums.c:1360
 msgctxt "precision"
 msgid "64-bit non-linear floating point"
 msgstr "64 бита, нелинейное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1358
+#: ../libgimpbase/gimpbaseenums.c:1361
 msgctxt "precision"
 msgid "64-bit perceptual floating point"
 msgstr "64 бита, перцептивное с плавающей точкой"
 
-#: ../libgimpbase/gimpbaseenums.c:1469
+#: ../libgimpbase/gimpbaseenums.c:1472
 msgctxt "repeat-mode"
 msgid "None (extend)"
 msgstr "Нет, расширить"
 
-#: ../libgimpbase/gimpbaseenums.c:1470
+#: ../libgimpbase/gimpbaseenums.c:1473
 msgctxt "repeat-mode"
 msgid "Sawtooth wave"
 msgstr "Зубцевидная волна"
 
-#: ../libgimpbase/gimpbaseenums.c:1471
+#: ../libgimpbase/gimpbaseenums.c:1474
 msgctxt "repeat-mode"
 msgid "Triangular wave"
 msgstr "Треугольная волна"
 
-#: ../libgimpbase/gimpbaseenums.c:1472
+#: ../libgimpbase/gimpbaseenums.c:1475
 msgctxt "repeat-mode"
 msgid "Truncate"
 msgstr "Обрезать"
 
-#: ../libgimpbase/gimpbaseenums.c:1534
+#: ../libgimpbase/gimpbaseenums.c:1537
 msgctxt "run-mode"
 msgid "Run interactively"
 msgstr "Запустить интерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:1535
+#: ../libgimpbase/gimpbaseenums.c:1538
 msgctxt "run-mode"
 msgid "Run non-interactively"
 msgstr "Запустить неинтерактивно"
 
-#: ../libgimpbase/gimpbaseenums.c:1536
+#: ../libgimpbase/gimpbaseenums.c:1539
 msgctxt "run-mode"
 msgid "Run with last used values"
 msgstr "Запустить с последними введёнными значениями"
 
-#: ../libgimpbase/gimpbaseenums.c:1574
+#: ../libgimpbase/gimpbaseenums.c:1577
 msgctxt "select-criterion"
 msgid "Composite"
 msgstr "Композитный цвет"
 
-#: ../libgimpbase/gimpbaseenums.c:1575
+#: ../libgimpbase/gimpbaseenums.c:1578
 msgctxt "select-criterion"
 msgid "Red"
 msgstr "Красный"
 
-#: ../libgimpbase/gimpbaseenums.c:1576
+#: ../libgimpbase/gimpbaseenums.c:1579
 msgctxt "select-criterion"
 msgid "Green"
 msgstr "Зелёный"
 
-#: ../libgimpbase/gimpbaseenums.c:1577
+#: ../libgimpbase/gimpbaseenums.c:1580
 msgctxt "select-criterion"
 msgid "Blue"
 msgstr "Синий"
 
-#: ../libgimpbase/gimpbaseenums.c:1578
+#: ../libgimpbase/gimpbaseenums.c:1581
 msgctxt "select-criterion"
 msgid "HSV Hue"
 msgstr "Тон в HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1579
+#: ../libgimpbase/gimpbaseenums.c:1582
 msgctxt "select-criterion"
 msgid "HSV Saturation"
 msgstr "Насыщенность в HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1580
+#: ../libgimpbase/gimpbaseenums.c:1583
 msgctxt "select-criterion"
 msgid "HSV Value"
 msgstr "Значение в HSV"
 
-#: ../libgimpbase/gimpbaseenums.c:1581
+#: ../libgimpbase/gimpbaseenums.c:1584
 msgctxt "select-criterion"
 msgid "LCh Lightness"
 msgstr "Светлота LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1582
+#: ../libgimpbase/gimpbaseenums.c:1585
 msgctxt "select-criterion"
 msgid "LCh Chroma"
 msgstr "Цветность LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1583
+#: ../libgimpbase/gimpbaseenums.c:1586
 msgctxt "select-criterion"
 msgid "LCh Hue"
 msgstr "Тон LCh"
 
-#: ../libgimpbase/gimpbaseenums.c:1584
+#: ../libgimpbase/gimpbaseenums.c:1587
 msgctxt "select-criterion"
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../libgimpbase/gimpbaseenums.c:1613
+#: ../libgimpbase/gimpbaseenums.c:1616
 msgctxt "size-type"
 msgid "Pixels"
 msgstr "Точек растра"
 
-#: ../libgimpbase/gimpbaseenums.c:1614
+#: ../libgimpbase/gimpbaseenums.c:1617
 msgctxt "size-type"
 msgid "Points"
 msgstr "Пунктов"
 
-#: ../libgimpbase/gimpbaseenums.c:1675
+#: ../libgimpbase/gimpbaseenums.c:1678
 msgctxt "stroke-method"
 msgid "Stroke line"
 msgstr "Обвести линией"
 
-#: ../libgimpbase/gimpbaseenums.c:1676
+#: ../libgimpbase/gimpbaseenums.c:1679
 msgctxt "stroke-method"
 msgid "Stroke with a paint tool"
 msgstr "Обвести рисующим инструментом"
 
-#: ../libgimpbase/gimpbaseenums.c:1709
+#: ../libgimpbase/gimpbaseenums.c:1712
 msgctxt "text-direction"
 msgid "From left to right"
 msgstr "Слева направо"
 
-#: ../libgimpbase/gimpbaseenums.c:1710
+#: ../libgimpbase/gimpbaseenums.c:1713
 msgctxt "text-direction"
 msgid "From right to left"
 msgstr "Справа налево"
 
-#: ../libgimpbase/gimpbaseenums.c:1711
+#: ../libgimpbase/gimpbaseenums.c:1714
 msgctxt "text-direction"
 msgid "Vertical, right to left (mixed orientation)"
 msgstr "По вертикали, справа налево (комбинированное отображение)"
 
-#: ../libgimpbase/gimpbaseenums.c:1712
+#: ../libgimpbase/gimpbaseenums.c:1715
 msgctxt "text-direction"
 msgid "Vertical, right to left (upright orientation)"
 msgstr "По вертикали, справа налево (прямое отображение)"
 
-#: ../libgimpbase/gimpbaseenums.c:1713
+#: ../libgimpbase/gimpbaseenums.c:1716
 msgctxt "text-direction"
 msgid "Vertical, left to right (mixed orientation)"
 msgstr "По вертикали, слева направо (комбинированное отображение)"
 
-#: ../libgimpbase/gimpbaseenums.c:1714
+#: ../libgimpbase/gimpbaseenums.c:1717
 msgctxt "text-direction"
 msgid "Vertical, left to right (upright orientation)"
 msgstr "По вертикали, слева направо (прямое отображение)"
 
-#: ../libgimpbase/gimpbaseenums.c:1745
+#: ../libgimpbase/gimpbaseenums.c:1748
 msgctxt "text-hint-style"
 msgid "None"
 msgstr "Без"
 
-#: ../libgimpbase/gimpbaseenums.c:1746
+#: ../libgimpbase/gimpbaseenums.c:1749
 msgctxt "text-hint-style"
 msgid "Slight"
 msgstr "Слабое"
 
-#: ../libgimpbase/gimpbaseenums.c:1747
+#: ../libgimpbase/gimpbaseenums.c:1750
 msgctxt "text-hint-style"
 msgid "Medium"
 msgstr "Среднее"
 
-#: ../libgimpbase/gimpbaseenums.c:1748
+#: ../libgimpbase/gimpbaseenums.c:1751
 msgctxt "text-hint-style"
 msgid "Full"
 msgstr "Полное"
 
-#: ../libgimpbase/gimpbaseenums.c:1779
+#: ../libgimpbase/gimpbaseenums.c:1782
 msgctxt "text-justification"
 msgid "Left justified"
 msgstr "Выключка влево"
 
-#: ../libgimpbase/gimpbaseenums.c:1780
+#: ../libgimpbase/gimpbaseenums.c:1783
 msgctxt "text-justification"
 msgid "Right justified"
 msgstr "Выключка вправо"
 
-#: ../libgimpbase/gimpbaseenums.c:1781
+#: ../libgimpbase/gimpbaseenums.c:1784
 msgctxt "text-justification"
 msgid "Centered"
 msgstr "Выключка по центру"
 
-#: ../libgimpbase/gimpbaseenums.c:1782
+#: ../libgimpbase/gimpbaseenums.c:1785
 msgctxt "text-justification"
 msgid "Filled"
 msgstr "Полная выключка"
 
-#: ../libgimpbase/gimpbaseenums.c:1812
+#: ../libgimpbase/gimpbaseenums.c:1815
 msgctxt "transfer-mode"
 msgid "Shadows"
 msgstr "Тени"
 
-#: ../libgimpbase/gimpbaseenums.c:1813
+#: ../libgimpbase/gimpbaseenums.c:1816
 msgctxt "transfer-mode"
 msgid "Midtones"
 msgstr "Полутона"
 
-#: ../libgimpbase/gimpbaseenums.c:1814
+#: ../libgimpbase/gimpbaseenums.c:1817
 msgctxt "transfer-mode"
 msgid "Highlights"
 msgstr "Светлые части"
 
-#: ../libgimpbase/gimpbaseenums.c:1843
+#: ../libgimpbase/gimpbaseenums.c:1846
 msgctxt "transform-direction"
 msgid "Normal (Forward)"
 msgstr "Обычное (вперед)"
 
-#: ../libgimpbase/gimpbaseenums.c:1844
+#: ../libgimpbase/gimpbaseenums.c:1847
 msgctxt "transform-direction"
 msgid "Corrective (Backward)"
 msgstr "Корректирующее (назад)"
 
-#: ../libgimpbase/gimpbaseenums.c:1875
+#: ../libgimpbase/gimpbaseenums.c:1878
 msgctxt "transform-resize"
 msgid "Adjust"
 msgstr "С полями"
 
-#: ../libgimpbase/gimpbaseenums.c:1876
+#: ../libgimpbase/gimpbaseenums.c:1879
 msgctxt "transform-resize"
 msgid "Clip"
 msgstr "Без полей"
 
-#: ../libgimpbase/gimpbaseenums.c:1877
+#: ../libgimpbase/gimpbaseenums.c:1880
 msgctxt "transform-resize"
 msgid "Crop to result"
 msgstr "В прямоугольник"
 
-#: ../libgimpbase/gimpbaseenums.c:1878
+#: ../libgimpbase/gimpbaseenums.c:1881
 msgctxt "transform-resize"
 msgid "Crop with aspect"
 msgstr "Пропорциональная"
@@ -1657,37 +1657,37 @@ msgstr "Производитель: %s"
 msgid "Copyright: %s"
 msgstr "Авторские права: %s"
 
-#: ../libgimpconfig/gimpconfigenums.c:24
+#: ../libgimpconfig/gimpconfigenums.c:25
 msgctxt "color-management-mode"
 msgid "No color management"
 msgstr "Без управления цветом"
 
-#: ../libgimpconfig/gimpconfigenums.c:25
+#: ../libgimpconfig/gimpconfigenums.c:26
 msgctxt "color-management-mode"
 msgid "Color-managed display"
 msgstr "Цветоуправляемый монитор"
 
-#: ../libgimpconfig/gimpconfigenums.c:26
+#: ../libgimpconfig/gimpconfigenums.c:27
 msgctxt "color-management-mode"
 msgid "Soft-proofing"
 msgstr "Цветопроба"
 
-#: ../libgimpconfig/gimpconfigenums.c:57
+#: ../libgimpconfig/gimpconfigenums.c:58
 msgctxt "color-rendering-intent"
 msgid "Perceptual"
 msgstr "Воспринимаемая"
 
-#: ../libgimpconfig/gimpconfigenums.c:58
+#: ../libgimpconfig/gimpconfigenums.c:59
 msgctxt "color-rendering-intent"
 msgid "Relative colorimetric"
 msgstr "Относительная колориметрическая"
 
-#: ../libgimpconfig/gimpconfigenums.c:59
+#: ../libgimpconfig/gimpconfigenums.c:60
 msgctxt "color-rendering-intent"
 msgid "Saturation"
 msgstr "Насыщенная"
 
-#: ../libgimpconfig/gimpconfigenums.c:60
+#: ../libgimpconfig/gimpconfigenums.c:61
 msgctxt "color-rendering-intent"
 msgid "Absolute colorimetric"
 msgstr "Абсолютная колориметрическая"
@@ -1921,7 +1921,7 @@ msgstr "при синтаксическом разборе маркёра '%s': 
 #: ../libgimpconfig/gimpconfig-iface.c:664
 #: ../libgimpconfig/gimpconfig-iface.c:677 ../libgimpconfig/gimpscanner.c:774
 #: ../libgimpconfig/gimpscanner.c:856
-#: ../libgimpwidgets/gimpcolorprofilestore.c:682
+#: ../libgimpwidgets/gimpcolorprofilestore.c:761
 msgid "fatal parse error"
 msgstr "критическая ошибка при синтаксическом разборе"
 
@@ -2070,11 +2070,11 @@ msgstr "Папка"
 msgid "Not a regular file."
 msgstr "Это не обычный файл профиля."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:158
+#: ../libgimpwidgets/gimpcolorprofilestore.c:160
 msgid "Select color profile from disk..."
 msgstr "Выберите цветовой профиль с диска..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:287
+#: ../libgimpwidgets/gimpcolorprofilestore.c:289
 msgctxt "profile"
 msgid "None"
 msgstr "Нет"
@@ -2232,7 +2232,7 @@ msgstr "Удалить выбранную папку из списка"
 msgid "Writable"
 msgstr "Запись"
 
-#: ../libgimpwidgets/gimppickbutton.c:116
+#: ../libgimpwidgets/gimppickbutton.c:123
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
@@ -2260,7 +2260,7 @@ msgstr "Пользовательские цветные клетки 1"
 msgid "Custom Checks Color 2"
 msgstr "Пользовательские цветные клетки 2"
 
-#: ../libgimpwidgets/gimppropwidgets.c:2533
+#: ../libgimpwidgets/gimppropwidgets.c:2475
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -2304,207 +2304,207 @@ msgctxt "input-mode"
 msgid "Window"
 msgstr "Окно"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:24
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
 msgctxt "aspect-type"
 msgid "Square"
 msgstr "Квадрат"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
 msgctxt "aspect-type"
 msgid "Portrait"
 msgstr "Портрет"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:26
+#: ../libgimpwidgets/gimpwidgetsenums.c:27
 msgctxt "aspect-type"
 msgid "Landscape"
 msgstr "Альбом"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgctxt "color-selector-channel"
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:129
+#: ../libgimpwidgets/gimpwidgetsenums.c:130
 msgid "HSV Hue"
 msgstr "Тон в HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgctxt "color-selector-channel"
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:130
+#: ../libgimpwidgets/gimpwidgetsenums.c:131
 msgid "HSV Saturation"
 msgstr "Насыщенность в HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgctxt "color-selector-channel"
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:131
+#: ../libgimpwidgets/gimpwidgetsenums.c:132
 msgid "HSV Value"
 msgstr "Значение в HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
 msgctxt "color-selector-channel"
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:132
+#: ../libgimpwidgets/gimpwidgetsenums.c:133
 msgid "Red"
 msgstr "Красный"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
 msgctxt "color-selector-channel"
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:133
+#: ../libgimpwidgets/gimpwidgetsenums.c:134
 msgid "Green"
 msgstr "Зелёный"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
 msgctxt "color-selector-channel"
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:134
+#: ../libgimpwidgets/gimpwidgetsenums.c:135
 msgid "Blue"
 msgstr "Синий"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
 msgctxt "color-selector-channel"
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:135
+#: ../libgimpwidgets/gimpwidgetsenums.c:136
 msgid "Alpha"
 msgstr "Альфа"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgctxt "color-selector-channel"
 msgid "_L"
 msgstr "_L"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:136
+#: ../libgimpwidgets/gimpwidgetsenums.c:137
 msgid "LCh Lightness"
 msgstr "Светлота LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgctxt "color-selector-channel"
 msgid "_C"
 msgstr "_C"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:137
+#: ../libgimpwidgets/gimpwidgetsenums.c:138
 msgid "LCh Chroma"
 msgstr "Цветность LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libgimpwidgets/gimpwidgetsenums.c:139
 msgctxt "color-selector-channel"
 msgid "_h"
 msgstr "_h"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:138
+#: ../libgimpwidgets/gimpwidgetsenums.c:139
 msgid "LCh Hue"
 msgstr "Тон LCh"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
 msgctxt "color-selector-model"
 msgid "RGB"
 msgstr "RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:168
+#: ../libgimpwidgets/gimpwidgetsenums.c:169
 msgid "RGB color model"
 msgstr "Цветовая модель RGB"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgctxt "color-selector-model"
 msgid "LCH"
 msgstr "LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:169
+#: ../libgimpwidgets/gimpwidgetsenums.c:170
 msgid "CIE LCh color model"
 msgstr "Цветовая модель CIE LCH"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: ../libgimpwidgets/gimpwidgetsenums.c:171
 msgctxt "color-selector-model"
 msgid "HSV"
 msgstr "HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:170
+#: ../libgimpwidgets/gimpwidgetsenums.c:171
 msgid "HSV color model"
 msgstr "Цветовая модель HSV"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:231
+#: ../libgimpwidgets/gimpwidgetsenums.c:232
 msgctxt "page-selector-target"
 msgid "Layers"
 msgstr "Слои"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:232
+#: ../libgimpwidgets/gimpwidgetsenums.c:233
 msgctxt "page-selector-target"
 msgid "Images"
 msgstr "Изображения"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:293
+#: ../libgimpwidgets/gimpwidgetsenums.c:294
 msgctxt "zoom-type"
 msgid "Zoom in"
 msgstr "Приблизить"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:294
+#: ../libgimpwidgets/gimpwidgetsenums.c:295
 msgctxt "zoom-type"
 msgid "Zoom out"
 msgstr "Отдалить"
 
-#: ../modules/color-selector-cmyk.c:82
+#: ../modules/color-selector-cmyk.c:87
 msgid "CMYK color selector (using color profile)"
 msgstr "Цветоуправляемый выбор цвета в модели CMYK"
 
-#: ../modules/color-selector-cmyk.c:116
+#: ../modules/color-selector-cmyk.c:121
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/color-selector-cmyk.c:139
+#: ../modules/color-selector-cmyk.c:145
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/color-selector-cmyk.c:141
+#: ../modules/color-selector-cmyk.c:147
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/color-selector-cmyk.c:143
+#: ../modules/color-selector-cmyk.c:149
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/color-selector-cmyk.c:145
+#: ../modules/color-selector-cmyk.c:151
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/color-selector-cmyk.c:149
+#: ../modules/color-selector-cmyk.c:155
 msgid "Cyan"
 msgstr "Голубой"
 
-#: ../modules/color-selector-cmyk.c:150
+#: ../modules/color-selector-cmyk.c:156
 msgid "Magenta"
 msgstr "Пурпурный"
 
-#: ../modules/color-selector-cmyk.c:151
+#: ../modules/color-selector-cmyk.c:157
 msgid "Yellow"
 msgstr "Желтый"
 
-#: ../modules/color-selector-cmyk.c:152
+#: ../modules/color-selector-cmyk.c:158
 msgid "Black"
 msgstr "Черный"
 
-#: ../modules/color-selector-cmyk.c:368
+#: ../modules/color-selector-cmyk.c:296 ../modules/color-selector-cmyk.c:382
 msgid "Profile: (none)"
 msgstr "Профиль: (нет)"
 
-#: ../modules/color-selector-cmyk.c:380
+#: ../modules/color-selector-cmyk.c:309 ../modules/color-selector-cmyk.c:400
 #, c-format
 msgid "Profile: %s"
 msgstr "Профиль: %s"

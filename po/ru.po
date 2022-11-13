@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.10\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-10 12:41+0300\n"
-"PO-Revision-Date: 2022-11-10 14:48+0300\n"
+"POT-Creation-Date: 2022-11-13 19:52+0300\n"
+"PO-Revision-Date: 2022-11-13 19:55+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@lists.gnome.org>\n"
 "Language: ru\n"
@@ -1020,8 +1020,8 @@ msgstr[0] "Опустить канал в самый низ"
 msgstr[1] "Опустить каналы в самый низ"
 msgstr[2] "Опустить каналы в самый низ"
 
-#: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:472
-#: ../app/display/gimpdisplayshell-dnd.c:707
+#: ../app/actions/channels-commands.c:375 ../app/core/gimpimage-new.c:506
+#: ../app/display/gimpdisplayshell-dnd.c:683
 #: ../app/widgets/gimpchanneltreeview.c:259
 #: ../app/widgets/gimplayertreeview.c:1042
 #, c-format
@@ -2469,7 +2469,7 @@ msgid "240 Seconds"
 msgstr "240 секунд"
 
 #: ../app/actions/dashboard-commands.c:118
-#: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:168
+#: ../app/actions/documents-commands.c:237 ../app/actions/edit-commands.c:169
 #: ../app/actions/error-console-commands.c:100
 #: ../app/actions/file-commands.c:431
 #: ../app/actions/gradient-editor-commands.c:409
@@ -2585,7 +2585,7 @@ msgstr "Введите описание маркера"
 #: ../app/dialogs/file-open-dialog.c:269
 #: ../app/dialogs/file-open-location-dialog.c:217
 #: ../app/dialogs/file-open-location-dialog.c:233
-#: ../app/display/gimpdisplayshell-dnd.c:650
+#: ../app/display/gimpdisplayshell-dnd.c:626
 #: ../app/widgets/gimplayertreeview.c:1000 ../app/widgets/gimptoolbox.c:750
 #: ../app/widgets/gimptoolbox-dnd.c:178
 #, c-format
@@ -3312,7 +3312,7 @@ msgstr "Удалить записи, файлы для которых уже н�
 msgid "Clear Document History"
 msgstr "Очистить историю документов"
 
-#: ../app/actions/documents-commands.c:238 ../app/actions/edit-commands.c:169
+#: ../app/actions/documents-commands.c:238 ../app/actions/edit-commands.c:170
 #: ../app/dialogs/preferences-dialog.c:690
 msgid "Cl_ear"
 msgstr "О_чистить"
@@ -3657,8 +3657,8 @@ msgstr "Создать новое изображение из содержимо
 
 #: ../app/actions/edit-actions.c:129
 msgctxt "edit-action"
-msgid "_New Image"
-msgstr "Новое _изображение"
+msgid "Paste as _New Image"
+msgstr "Вставить как _новое изображение"
 
 #: ../app/actions/edit-actions.c:135
 msgctxt "edit-action"
@@ -3733,20 +3733,42 @@ msgstr "Вставить содержимое буфера обмена в ег�
 
 #: ../app/actions/edit-actions.c:182
 msgctxt "edit-action"
+msgid "_Paste as Single Layer"
+msgstr "Вставить как _один слой"
+
+#: ../app/actions/edit-actions.c:183
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard as a single layer"
+msgstr "Вставить содержимое буфера обмена как одиночный слой"
+
+#: ../app/actions/edit-actions.c:188
+msgctxt "edit-action"
+msgid "Paste as Single Layer In P_lace"
+msgstr "Вставить как один слой на _место"
+
+#: ../app/actions/edit-actions.c:190
+msgctxt "edit-action"
+msgid ""
+"Paste the content of the clipboard at its original position as a single layer"
+msgstr ""
+"Вставить содержимое буфера обмена в его исходную позицию как одиночный слой"
+
+#: ../app/actions/edit-actions.c:195
+msgctxt "edit-action"
 msgid "Paste _Into Selection"
 msgstr "Вставить в в_ыделение"
 
-#: ../app/actions/edit-actions.c:184
+#: ../app/actions/edit-actions.c:197
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Вставить содержимое буфера в текущее выделение"
 
-#: ../app/actions/edit-actions.c:189
+#: ../app/actions/edit-actions.c:202
 msgctxt "edit-action"
 msgid "Paste Int_o Selection In Place"
 msgstr "Вставить в выделение на м_есто"
 
-#: ../app/actions/edit-actions.c:191
+#: ../app/actions/edit-actions.c:204
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
@@ -3755,68 +3777,68 @@ msgstr ""
 "Вставить содержимое буфера в выделенную область на его исходное "
 "местоположение"
 
-#: ../app/actions/edit-actions.c:200
+#: ../app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Залить цветом _переднего плана"
 
-#: ../app/actions/edit-actions.c:201
+#: ../app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Залить выделенную область цветом переднего плана"
 
-#: ../app/actions/edit-actions.c:206
+#: ../app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Залить цветом _фона"
 
-#: ../app/actions/edit-actions.c:207
+#: ../app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Залить выделенную область цветом фона"
 
-#: ../app/actions/edit-actions.c:212
+#: ../app/actions/edit-actions.c:225
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "_Залить текстурой"
 
-#: ../app/actions/edit-actions.c:213
+#: ../app/actions/edit-actions.c:226
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Залить выделенную область активной текстурой"
 
-#: ../app/actions/edit-actions.c:320 ../app/actions/edit-actions.c:322
+#: ../app/actions/edit-actions.c:333 ../app/actions/edit-actions.c:335
 #, c-format
 msgid "_Undo %s"
 msgstr "О_тменить действие «%s»"
 
-#: ../app/actions/edit-actions.c:326 ../app/actions/edit-actions.c:328
+#: ../app/actions/edit-actions.c:339 ../app/actions/edit-actions.c:341
 #, c-format
 msgid "_Redo %s"
 msgstr "По_вторить действие «%s»"
 
-#: ../app/actions/edit-actions.c:339
+#: ../app/actions/edit-actions.c:352
 msgid "_Undo"
 msgstr "_Отменить"
 
-#: ../app/actions/edit-actions.c:340
+#: ../app/actions/edit-actions.c:353
 msgid "_Redo"
 msgstr "Ве_рнуть"
 
-#: ../app/actions/edit-commands.c:160
+#: ../app/actions/edit-commands.c:161
 msgid "Clear Undo History"
 msgstr "Очистить историю действий"
 
-#: ../app/actions/edit-commands.c:187
+#: ../app/actions/edit-commands.c:188
 msgid "Really clear image's undo history?"
 msgstr "Действительно очистить историю действий?"
 
-#: ../app/actions/edit-commands.c:200
+#: ../app/actions/edit-commands.c:201
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Очистка истории действий для этого изображения освободит %s памяти."
 
-#: ../app/actions/edit-commands.c:244
+#: ../app/actions/edit-commands.c:245
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
@@ -3824,75 +3846,75 @@ msgstr[0] "Вырезать %d слой в буфер обмена."
 msgstr[1] "Вырезать %d слоя в буфер обмена."
 msgstr[2] "Вырезать %d слоёв в буфер обмена."
 
-#: ../app/actions/edit-commands.c:249
+#: ../app/actions/edit-commands.c:250
 msgid "Cut pixels to the clipboard."
 msgstr "Вырезать пиксели в буфер обмена."
 
-#: ../app/actions/edit-commands.c:292
+#: ../app/actions/edit-commands.c:293
 msgid "Copied layer to the clipboard."
 msgstr "Слой скопирован в буфер обмена."
 
-#: ../app/actions/edit-commands.c:293 ../app/actions/edit-commands.c:325
+#: ../app/actions/edit-commands.c:294 ../app/actions/edit-commands.c:326
 msgid "Copied pixels to the clipboard."
 msgstr "Пиксели скопированы в буфер обмена."
 
-#: ../app/actions/edit-commands.c:435 ../app/actions/edit-commands.c:720
+#: ../app/actions/edit-commands.c:442 ../app/actions/edit-commands.c:731
 #: ../app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "В буфере обмена ничего нет."
 
-#: ../app/actions/edit-commands.c:451
+#: ../app/actions/edit-commands.c:458
 msgid "Cut Named"
 msgstr "Вырезать в буфер с именем"
 
-#: ../app/actions/edit-commands.c:454 ../app/actions/edit-commands.c:476
-#: ../app/actions/edit-commands.c:498
+#: ../app/actions/edit-commands.c:461 ../app/actions/edit-commands.c:483
+#: ../app/actions/edit-commands.c:505
 msgid "Enter a name for this buffer"
 msgstr "Введите имя для этого буфера"
 
-#: ../app/actions/edit-commands.c:473
+#: ../app/actions/edit-commands.c:480
 msgid "Copy Named"
 msgstr "Скопировать из буфера с именем"
 
-#: ../app/actions/edit-commands.c:495
+#: ../app/actions/edit-commands.c:502
 msgid "Copy Visible Named"
 msgstr "Скопировать видимое с именем"
 
-#: ../app/actions/edit-commands.c:543
+#: ../app/actions/edit-commands.c:550
 msgid "Clear"
 msgstr "Очистить"
 
-#: ../app/actions/edit-commands.c:616
+#: ../app/actions/edit-commands.c:623
 msgid "A selected layer's alpha channel is locked."
 msgstr "Изменения альфа-канала выбранного слоя запрещены."
 
-#: ../app/actions/edit-commands.c:679
+#: ../app/actions/edit-commands.c:689
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Вставлено как новый слой, потому что цель — не одиночный слой и не маска "
 "слоя."
 
-#: ../app/actions/edit-commands.c:686 ../app/display/gimpdisplayshell-dnd.c:497
+#: ../app/actions/edit-commands.c:696
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено как новый слой, потому что цель — группа слоёв."
 
-#: ../app/actions/edit-commands.c:693 ../app/display/gimpdisplayshell-dnd.c:506
+#: ../app/actions/edit-commands.c:703
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr ""
 "Вставлено как новый слой, так как изменение пикселей активного слоя "
 "запрещено."
 
-#: ../app/actions/edit-commands.c:737
+#: ../app/actions/edit-commands.c:748
 msgid "There are no selected layers or channels to cut from."
 msgstr "Нет активных слоёв или каналов, из которых можно вырезать."
 
-#: ../app/actions/edit-commands.c:742 ../app/actions/edit-commands.c:775
-#: ../app/actions/edit-commands.c:800
+#: ../app/actions/edit-commands.c:753 ../app/actions/edit-commands.c:786
+#: ../app/actions/edit-commands.c:811
 msgid "(Unnamed Buffer)"
 msgstr "(Безымянный буфер)"
 
-#: ../app/actions/edit-commands.c:770
+#: ../app/actions/edit-commands.c:781
 msgid "There are no selected layers or channels to copy from."
 msgstr "Нет активных слоёв или каналов для копирования."
 
@@ -12192,545 +12214,545 @@ msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr "Выполнить вращение изображения, затем отбросить метаданные"
 
-#: ../app/core/core-enums.c:993
+#: ../app/core/core-enums.c:997
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "Wintab"
 
-#: ../app/core/core-enums.c:994
+#: ../app/core/core-enums.c:998
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
 
-#: ../app/core/core-enums.c:1023
+#: ../app/core/core-enums.c:1027
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Без миниатюр"
 
-#: ../app/core/core-enums.c:1024
+#: ../app/core/core-enums.c:1028
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Обычный (128×128)"
 
-#: ../app/core/core-enums.c:1025
+#: ../app/core/core-enums.c:1029
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Большой (256×256)"
 
-#: ../app/core/core-enums.c:1054
+#: ../app/core/core-enums.c:1058
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Линейный"
 
-#: ../app/core/core-enums.c:1055
+#: ../app/core/core-enums.c:1059
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "Нелинейный"
 
-#: ../app/core/core-enums.c:1056
+#: ../app/core/core-enums.c:1060
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Воспринимаемый"
 
-#: ../app/core/core-enums.c:1255
+#: ../app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
-#: ../app/core/core-enums.c:1256
+#: ../app/core/core-enums.c:1260
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Масштабирование изображения"
 
-#: ../app/core/core-enums.c:1257
+#: ../app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Изменить размер изображения"
 
-#: ../app/core/core-enums.c:1258
+#: ../app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Зеркально отобразить изображение"
 
-#: ../app/core/core-enums.c:1259
+#: ../app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Повернуть изображение"
 
-#: ../app/core/core-enums.c:1260
+#: ../app/core/core-enums.c:1264
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Преобразование изображения"
 
-#: ../app/core/core-enums.c:1261
+#: ../app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Кадрировать изображение"
 
-#: ../app/core/core-enums.c:1262
+#: ../app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Преобразовать изображение"
 
-#: ../app/core/core-enums.c:1263
+#: ../app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Удалить объект"
 
-#: ../app/core/core-enums.c:1264 ../app/core/core-enums.c:1317
+#: ../app/core/core-enums.c:1268 ../app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Реорганизация элемента"
 
-#: ../app/core/core-enums.c:1265
+#: ../app/core/core-enums.c:1269
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Объединить слои"
 
-#: ../app/core/core-enums.c:1266
+#: ../app/core/core-enums.c:1270
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Объединить контуры"
 
-#: ../app/core/core-enums.c:1267
+#: ../app/core/core-enums.c:1271
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Быстрая маска"
 
-#: ../app/core/core-enums.c:1268 ../app/core/core-enums.c:1307
+#: ../app/core/core-enums.c:1272 ../app/core/core-enums.c:1311
 #: ../app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Сетка"
 
-#: ../app/core/core-enums.c:1269 ../app/core/core-enums.c:1311
+#: ../app/core/core-enums.c:1273 ../app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Направляющая"
 
-#: ../app/core/core-enums.c:1270 ../app/core/core-enums.c:1312
+#: ../app/core/core-enums.c:1274 ../app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Выборочная точка"
 
-#: ../app/core/core-enums.c:1271 ../app/core/core-enums.c:1313
+#: ../app/core/core-enums.c:1275 ../app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Слой/канал"
 
-#: ../app/core/core-enums.c:1272 ../app/core/core-enums.c:1314
+#: ../app/core/core-enums.c:1276 ../app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Изменение слоя/канала"
 
-#: ../app/core/core-enums.c:1273 ../app/core/core-enums.c:1316
+#: ../app/core/core-enums.c:1277 ../app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Маска выделения"
 
-#: ../app/core/core-enums.c:1274 ../app/core/core-enums.c:1320
+#: ../app/core/core-enums.c:1278 ../app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Видимость объекта"
 
-#: ../app/core/core-enums.c:1275
+#: ../app/core/core-enums.c:1279
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Запретить/разрешить изменения содержимого"
 
-#: ../app/core/core-enums.c:1276 ../app/core/core-enums.c:1323
+#: ../app/core/core-enums.c:1280 ../app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Запретить/разрешить изменения местоположения"
 
-#: ../app/core/core-enums.c:1277 ../app/core/core-enums.c:1324
+#: ../app/core/core-enums.c:1281 ../app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Блокировка/Разблокировка видимости"
 
-#: ../app/core/core-enums.c:1278
+#: ../app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Свойства элемента"
 
-#: ../app/core/core-enums.c:1279 ../app/core/core-enums.c:1319
+#: ../app/core/core-enums.c:1283 ../app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Перемещение объекта"
 
-#: ../app/core/core-enums.c:1280
+#: ../app/core/core-enums.c:1284
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Масштабирование объекта"
 
-#: ../app/core/core-enums.c:1281
+#: ../app/core/core-enums.c:1285
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Смена размера объекта"
 
-#: ../app/core/core-enums.c:1282
+#: ../app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Добавление слоя"
 
-#: ../app/core/core-enums.c:1283
+#: ../app/core/core-enums.c:1287
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Добавление альфа-канала"
 
-#: ../app/core/core-enums.c:1284 ../app/core/core-enums.c:1340
+#: ../app/core/core-enums.c:1288 ../app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Добавить маску слоя"
 
-#: ../app/core/core-enums.c:1285 ../app/core/core-enums.c:1342
+#: ../app/core/core-enums.c:1289 ../app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Применение маски слоя"
 
-#: ../app/core/core-enums.c:1286
+#: ../app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Удаление альфа-канала"
 
-#: ../app/core/core-enums.c:1287
+#: ../app/core/core-enums.c:1291
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Запретить/разрешить изменения альфа-каналов"
 
-#: ../app/core/core-enums.c:1288
+#: ../app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Смена непрозрачности слоя"
 
-#: ../app/core/core-enums.c:1289
+#: ../app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Смена режима слоёв"
 
-#: ../app/core/core-enums.c:1290
+#: ../app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Добавить каналы"
 
-#: ../app/core/core-enums.c:1291 ../app/core/core-enums.c:1350
+#: ../app/core/core-enums.c:1295 ../app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Плавающее выделение в слой"
 
-#: ../app/core/core-enums.c:1292
+#: ../app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Плавающее выделение"
 
-#: ../app/core/core-enums.c:1293
+#: ../app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прикрепить плавающее выделение"
 
-#: ../app/core/core-enums.c:1294 ../app/core/gimp-edit.c:599
+#: ../app/core/core-enums.c:1298 ../app/core/gimp-edit.c:722
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставка"
 
-#: ../app/core/core-enums.c:1295 ../app/core/gimp-edit.c:871
+#: ../app/core/core-enums.c:1299 ../app/core/gimp-edit.c:1051
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вырезать"
 
-#: ../app/core/core-enums.c:1296
+#: ../app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Текст"
 
-#: ../app/core/core-enums.c:1297 ../app/core/gimpdrawable-transform.c:721
+#: ../app/core/core-enums.c:1301 ../app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Преобразование"
 
-#: ../app/core/core-enums.c:1298 ../app/core/core-enums.c:1352
+#: ../app/core/core-enums.c:1302 ../app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Рисование"
 
-#: ../app/core/core-enums.c:1299 ../app/core/core-enums.c:1355
+#: ../app/core/core-enums.c:1303 ../app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Присоединить паразитный компонент"
 
-#: ../app/core/core-enums.c:1300 ../app/core/core-enums.c:1356
+#: ../app/core/core-enums.c:1304 ../app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Удалить паразитный компонент"
 
-#: ../app/core/core-enums.c:1301
+#: ../app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Импортировать контуры"
 
-#: ../app/core/core-enums.c:1302
+#: ../app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Расширение"
 
-#: ../app/core/core-enums.c:1303
+#: ../app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Тип изображения"
 
-#: ../app/core/core-enums.c:1304
+#: ../app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Точность изображения"
 
-#: ../app/core/core-enums.c:1305
+#: ../app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Размер изображения"
 
-#: ../app/core/core-enums.c:1306
+#: ../app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Смена разрешения изображения"
 
-#: ../app/core/core-enums.c:1308
+#: ../app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Изменение метаданных"
 
-#: ../app/core/core-enums.c:1309
+#: ../app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Сменить индексированную палитру"
 
-#: ../app/core/core-enums.c:1310
+#: ../app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Показать/спрятать цветовой профиль"
 
-#: ../app/core/core-enums.c:1315
+#: ../app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Формат слоя/канала"
 
-#: ../app/core/core-enums.c:1318
+#: ../app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Переименование элемента"
 
-#: ../app/core/core-enums.c:1321
+#: ../app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Цветовая метка объекта"
 
-#: ../app/core/core-enums.c:1322
+#: ../app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Запретить/разрешить изменения содержимого"
 
-#: ../app/core/core-enums.c:1325
+#: ../app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Новый слой"
 
-#: ../app/core/core-enums.c:1326
+#: ../app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Удаление слоя"
 
-#: ../app/core/core-enums.c:1327
+#: ../app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Смена режима слоя"
 
-#: ../app/core/core-enums.c:1328
+#: ../app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Смена непрозрачности слоя"
 
-#: ../app/core/core-enums.c:1329
+#: ../app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Запретить/разрешить изменения альфа-канала"
 
-#: ../app/core/core-enums.c:1330
+#: ../app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Приостановить изменение размера слоя группы"
 
-#: ../app/core/core-enums.c:1331
+#: ../app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Возобновить изменения размера группы слоев"
 
 # https://gitlab.gnome.org/GNOME/gimp/commit/76a88cc60ad76982fadb91f30c2fbdcaa6ac32fc
 # ЮДр
-#: ../app/core/core-enums.c:1332
+#: ../app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Приостановить действие маски слоя группы"
 
-#: ../app/core/core-enums.c:1333
+#: ../app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Возобновить действие маски слоя группы"
 
-#: ../app/core/core-enums.c:1334
+#: ../app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Начать трансформацию слоя группы"
 
-#: ../app/core/core-enums.c:1335
+#: ../app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Завершить трансформацию слоя группы"
 
-#: ../app/core/core-enums.c:1336
+#: ../app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Преобразование слоя группы"
 
-#: ../app/core/core-enums.c:1337
+#: ../app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Текстовый слой"
 
-#: ../app/core/core-enums.c:1338
+#: ../app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Изменение текстового слоя"
 
-#: ../app/core/core-enums.c:1339
+#: ../app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Преобразование текстового слоя"
 
-#: ../app/core/core-enums.c:1341
+#: ../app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Удалить маску слоя"
 
-#: ../app/core/core-enums.c:1343
+#: ../app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Показать маску слоя"
 
-#: ../app/core/core-enums.c:1344
+#: ../app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Новый канал"
 
-#: ../app/core/core-enums.c:1345
+#: ../app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Удаление канала"
 
-#: ../app/core/core-enums.c:1346
+#: ../app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Цвет канала"
 
-#: ../app/core/core-enums.c:1347
+#: ../app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Новый контур"
 
-#: ../app/core/core-enums.c:1348
+#: ../app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Удалить контур"
 
-#: ../app/core/core-enums.c:1349
+#: ../app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Изменение контура"
 
-#: ../app/core/core-enums.c:1351
+#: ../app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Преобразование сетки"
 
-#: ../app/core/core-enums.c:1353
+#: ../app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Перо"
 
-#: ../app/core/core-enums.c:1354
+#: ../app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Выбрать цвет переднего плана"
 
-#: ../app/core/core-enums.c:1357
+#: ../app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Действие нельзя отменить"
 
-#: ../app/core/core-enums.c:1392
+#: ../app/core/core-enums.c:1396
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Крошечный"
 
-#: ../app/core/core-enums.c:1393
+#: ../app/core/core-enums.c:1397
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Очень маленький"
 
-#: ../app/core/core-enums.c:1394
+#: ../app/core/core-enums.c:1398
 msgctxt "view-size"
 msgid "Small"
 msgstr "Маленький"
 
-#: ../app/core/core-enums.c:1395
+#: ../app/core/core-enums.c:1399
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Средний"
 
-#: ../app/core/core-enums.c:1396
+#: ../app/core/core-enums.c:1400
 msgctxt "view-size"
 msgid "Large"
 msgstr "Большой"
 
-#: ../app/core/core-enums.c:1397
+#: ../app/core/core-enums.c:1401
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Очень большой"
 
-#: ../app/core/core-enums.c:1398
+#: ../app/core/core-enums.c:1402
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Огромный"
 
-#: ../app/core/core-enums.c:1399
+#: ../app/core/core-enums.c:1403
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Громадный"
 
-#: ../app/core/core-enums.c:1400
+#: ../app/core/core-enums.c:1404
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Гигантский"
 
-#: ../app/core/core-enums.c:1428
+#: ../app/core/core-enums.c:1432
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Просмотр в виде списка"
 
-#: ../app/core/core-enums.c:1429
+#: ../app/core/core-enums.c:1433
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Просмотр в виде таблицы"
 
-#: ../app/core/core-enums.c:1458
+#: ../app/core/core-enums.c:1462
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Выбор с помощью простого текстового поиска"
 
-#: ../app/core/core-enums.c:1459
+#: ../app/core/core-enums.c:1463
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Выбор с помощью поиска по регулярному выражению"
 
-#: ../app/core/core-enums.c:1460
+#: ../app/core/core-enums.c:1464
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Выделение поиска шаблона glob"
@@ -12825,7 +12847,7 @@ msgstr "Предыдущие цвета"
 msgid "Updating tag cache"
 msgstr "Обновляется кэш меток"
 
-#: ../app/core/gimp-edit.c:125
+#: ../app/core/gimp-edit.c:127
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
@@ -12833,11 +12855,11 @@ msgstr[0] "Вырезать %d слой"
 msgstr[1] "Вырезать %d слоя"
 msgstr[2] "Вырезать %d слоёв"
 
-#: ../app/core/gimp-edit.c:424 ../app/core/gimpimage-new.c:519
+#: ../app/core/gimp-edit.c:492 ../app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Вставленный слой"
 
-#: ../app/core/gimp-edit.c:888
+#: ../app/core/gimp-edit.c:1068
 msgid "Global Buffer"
 msgstr "Глобальный буфер"
 
@@ -13431,7 +13453,7 @@ msgstr "Передний план"
 msgid "Foreground color"
 msgstr "Цвет переднего плана"
 
-#: ../app/core/gimpcontext.c:676 ../app/core/gimpimage-new.c:161
+#: ../app/core/gimpcontext.c:676 ../app/core/gimpimage-new.c:162
 msgid "Background"
 msgstr "Фон"
 
@@ -18612,8 +18634,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Это изображение экспортировано в '%s'."
 
 #: ../app/display/gimpdisplayshell-dnd.c:249
-#: ../app/display/gimpdisplayshell-dnd.c:710
-#: ../app/display/gimpdisplayshell-dnd.c:769
+#: ../app/display/gimpdisplayshell-dnd.c:686
+#: ../app/display/gimpdisplayshell-dnd.c:745
 msgid "Drop New Layer"
 msgstr "Новый слой извне"
 
@@ -18648,14 +18670,14 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Заливка слоя цветом"
 
-#: ../app/display/gimpdisplayshell-dnd.c:600
+#: ../app/display/gimpdisplayshell-dnd.c:576
 #: ../app/widgets/gimpitemtreeview.c:1406
 #: ../app/widgets/gimplayertreeview.c:991
 msgid "Drop layers"
 msgstr "Новые слои извне"
 
-#: ../app/display/gimpdisplayshell-dnd.c:743
-#: ../app/display/gimpdisplayshell-dnd.c:760
+#: ../app/display/gimpdisplayshell-dnd.c:719
+#: ../app/display/gimpdisplayshell-dnd.c:736
 #: ../app/widgets/gimplayertreeview.c:1068 ../app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Перемещенный буфер"
@@ -20802,8 +20824,8 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Порог"
 
-#: ../app/pdb/edit-cmds.c:95 ../app/pdb/edit-cmds.c:386
-#: ../app/pdb/edit-cmds.c:471
+#: ../app/pdb/edit-cmds.c:95 ../app/pdb/edit-cmds.c:387
+#: ../app/pdb/edit-cmds.c:472
 msgid "All specified drawables must belong to the same image."
 msgstr ""
 "Все указанные области рисования должны принадлежать одному изображению."
@@ -28768,6 +28790,10 @@ msgstr ""
 #: ../app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Отладка сбоев GIMP"
+
+#~ msgctxt "edit-action"
+#~ msgid "_New Image"
+#~ msgstr "Новое _изображение"
 
 #~ msgctxt "edit-action"
 #~ msgid "New _Layer"
