@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-11-09 16:24+0000\n"
-"PO-Revision-Date: 2022-11-10 11:19+0200\n"
+"POT-Creation-Date: 2022-11-12 21:36+0000\n"
+"PO-Revision-Date: 2022-11-14 00:59+0200\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>\n"
 "Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
 "Language: uk\n"
@@ -1073,8 +1073,8 @@ msgstr[1] "Опустити канали додолу"
 msgstr[2] "Опустити канали додолу"
 msgstr[3] "Опустити канал додолу"
 
-#: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:472
-#: app/display/gimpdisplayshell-dnd.c:707 app/widgets/gimpchanneltreeview.c:259
+#: app/actions/channels-commands.c:375 app/core/gimpimage-new.c:506
+#: app/display/gimpdisplayshell-dnd.c:683 app/widgets/gimpchanneltreeview.c:259
 #: app/widgets/gimplayertreeview.c:1042
 #, c-format
 msgid "%s Channel Copy"
@@ -2521,7 +2521,7 @@ msgid "240 Seconds"
 msgstr "240 секунд"
 
 #: app/actions/dashboard-commands.c:118 app/actions/documents-commands.c:237
-#: app/actions/edit-commands.c:168 app/actions/error-console-commands.c:100
+#: app/actions/edit-commands.c:169 app/actions/error-console-commands.c:100
 #: app/actions/file-commands.c:431 app/actions/gradient-editor-commands.c:409
 #: app/actions/gradient-editor-commands.c:520
 #: app/actions/gradients-commands.c:79 app/actions/plug-in-commands.c:185
@@ -2623,7 +2623,7 @@ msgstr "Введіть опис позначки"
 #: app/dialogs/file-open-dialog.c:269
 #: app/dialogs/file-open-location-dialog.c:217
 #: app/dialogs/file-open-location-dialog.c:233
-#: app/display/gimpdisplayshell-dnd.c:650 app/widgets/gimplayertreeview.c:1000
+#: app/display/gimpdisplayshell-dnd.c:626 app/widgets/gimplayertreeview.c:1000
 #: app/widgets/gimptoolbox.c:750 app/widgets/gimptoolbox-dnd.c:178
 #, c-format
 msgid ""
@@ -3349,7 +3349,7 @@ msgstr "Вилучити записи про файли, які вже недо�
 msgid "Clear Document History"
 msgstr "Забути відриті раніше документи"
 
-#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:169
+#: app/actions/documents-commands.c:238 app/actions/edit-commands.c:170
 #: app/dialogs/preferences-dialog.c:690
 msgid "Cl_ear"
 msgstr "О_чистити"
@@ -3690,9 +3690,11 @@ msgid "Create a new image from the content of the clipboard"
 msgstr "Створити нове зображення із вмісту буфера обміну"
 
 #: app/actions/edit-actions.c:129
+#| msgctxt "buffers-action"
+#| msgid "Paste Buffer as _New Image"
 msgctxt "edit-action"
-msgid "_New Image"
-msgstr "_Нове зображення"
+msgid "Paste as _New Image"
+msgstr "Вставити як _нове зображення"
 
 #: app/actions/edit-actions.c:135
 msgctxt "edit-action"
@@ -3766,21 +3768,50 @@ msgid "Paste the content of the clipboard at its original position"
 msgstr "Вставити вміст буфера обміну на його початкове місце"
 
 #: app/actions/edit-actions.c:182
+#| msgctxt "buffers-action"
+#| msgid "Paste Buffer as New _Layer"
+msgctxt "edit-action"
+msgid "_Paste as Single Layer"
+msgstr "Вставити як окремий шар"
+
+#: app/actions/edit-actions.c:183
+#| msgctxt "edit-action"
+#| msgid "Paste the content of the clipboard"
+msgctxt "edit-action"
+msgid "Paste the content of the clipboard as a single layer"
+msgstr "Вставити вміст буфера обміну даними як окремий шар"
+
+#: app/actions/edit-actions.c:188
+#| msgctxt "buffers-action"
+#| msgid "Paste Buffer as New Layer in Place"
+msgctxt "edit-action"
+msgid "Paste as Single Layer In P_lace"
+msgstr "Вставити як окремий на міс_це"
+
+#: app/actions/edit-actions.c:190
+#| msgctxt "edit-action"
+#| msgid "Paste the content of the clipboard at its original position"
+msgctxt "edit-action"
+msgid ""
+"Paste the content of the clipboard at its original position as a single layer"
+msgstr "Вставити вміст буфера обміну на його початкове місце як окремий шар"
+
+#: app/actions/edit-actions.c:195
 msgctxt "edit-action"
 msgid "Paste _Into Selection"
 msgstr "Вставити _до позначеного"
 
-#: app/actions/edit-actions.c:184
+#: app/actions/edit-actions.c:197
 msgctxt "edit-action"
 msgid "Paste the content of the clipboard into the current selection"
 msgstr "Вставити вміст буфера обміну у позначену ділянку"
 
-#: app/actions/edit-actions.c:189
+#: app/actions/edit-actions.c:202
 msgctxt "edit-action"
 msgid "Paste Int_o Selection In Place"
 msgstr "Вставити д_о позначеного на місце"
 
-#: app/actions/edit-actions.c:191
+#: app/actions/edit-actions.c:204
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard into the current selection at its "
@@ -3788,68 +3819,68 @@ msgid ""
 msgstr ""
 "Вставити вміст буфера обміну у позначену ділянку на його початковому місці"
 
-#: app/actions/edit-actions.c:200
+#: app/actions/edit-actions.c:213
 msgctxt "edit-action"
 msgid "Fill with _FG Color"
 msgstr "Заповнення кольором _переднього плану"
 
-#: app/actions/edit-actions.c:201
+#: app/actions/edit-actions.c:214
 msgctxt "edit-action"
 msgid "Fill the selection using the foreground color"
 msgstr "Заповнити позначену ділянку кольором переднього плану"
 
-#: app/actions/edit-actions.c:206
+#: app/actions/edit-actions.c:219
 msgctxt "edit-action"
 msgid "Fill with B_G Color"
 msgstr "Заповнення кольором _тла"
 
-#: app/actions/edit-actions.c:207
+#: app/actions/edit-actions.c:220
 msgctxt "edit-action"
 msgid "Fill the selection using the background color"
 msgstr "Заповнити позначену ділянку кольором тла"
 
-#: app/actions/edit-actions.c:212
+#: app/actions/edit-actions.c:225
 msgctxt "edit-action"
 msgid "Fill _with Pattern"
 msgstr "Заповнення _текстурою"
 
-#: app/actions/edit-actions.c:213
+#: app/actions/edit-actions.c:226
 msgctxt "edit-action"
 msgid "Fill the selection using the active pattern"
 msgstr "Заповнити позначену ділянку активною текстурою"
 
-#: app/actions/edit-actions.c:320 app/actions/edit-actions.c:322
+#: app/actions/edit-actions.c:333 app/actions/edit-actions.c:335
 #, c-format
 msgid "_Undo %s"
 msgstr "_Скасувати «%s»"
 
-#: app/actions/edit-actions.c:326 app/actions/edit-actions.c:328
+#: app/actions/edit-actions.c:339 app/actions/edit-actions.c:341
 #, c-format
 msgid "_Redo %s"
 msgstr "Пове_рнути «%s»"
 
-#: app/actions/edit-actions.c:339
+#: app/actions/edit-actions.c:352
 msgid "_Undo"
 msgstr "_Скасувати"
 
-#: app/actions/edit-actions.c:340
+#: app/actions/edit-actions.c:353
 msgid "_Redo"
 msgstr "Пове_рнути"
 
-#: app/actions/edit-commands.c:160
+#: app/actions/edit-commands.c:161
 msgid "Clear Undo History"
 msgstr "Спорожнити журнал дій"
 
-#: app/actions/edit-commands.c:187
+#: app/actions/edit-commands.c:188
 msgid "Really clear image's undo history?"
 msgstr "Справді хочете спорожнити журнал скасувань дій?"
 
-#: app/actions/edit-commands.c:200
+#: app/actions/edit-commands.c:201
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
 msgstr "Спорожнення журналу дій із цим зображенням звільнить %s пам'яті."
 
-#: app/actions/edit-commands.c:244
+#: app/actions/edit-commands.c:245
 #, c-format
 msgid "Cut layer to the clipboard."
 msgid_plural "Cut %d layers to the clipboard."
@@ -3858,73 +3889,72 @@ msgstr[1] "Вирізати %d шари у буфер обміну."
 msgstr[2] "Вирізати %d шарів у буфер обміну."
 msgstr[3] "Вирізати шар у буфер обміну."
 
-#: app/actions/edit-commands.c:249
+#: app/actions/edit-commands.c:250
 msgid "Cut pixels to the clipboard."
 msgstr "Вирізати пікселі в буфер обміну."
 
-#: app/actions/edit-commands.c:292
+#: app/actions/edit-commands.c:293
 msgid "Copied layer to the clipboard."
 msgstr "Шар скопійовано в буфер обміну."
 
-#: app/actions/edit-commands.c:293 app/actions/edit-commands.c:325
+#: app/actions/edit-commands.c:294 app/actions/edit-commands.c:326
 msgid "Copied pixels to the clipboard."
 msgstr "Пікселі скопійовано в буфер обміну."
 
-#: app/actions/edit-commands.c:435 app/actions/edit-commands.c:720
+#: app/actions/edit-commands.c:442 app/actions/edit-commands.c:731
 #: app/tools/gimpseamlessclonetool.c:303
 msgid "There is no image data in the clipboard to paste."
 msgstr "У буфері обміну нічого немає."
 
-#: app/actions/edit-commands.c:451
+#: app/actions/edit-commands.c:458
 msgid "Cut Named"
 msgstr "Вирізання в буфер з назвою"
 
-#: app/actions/edit-commands.c:454 app/actions/edit-commands.c:476
-#: app/actions/edit-commands.c:498
+#: app/actions/edit-commands.c:461 app/actions/edit-commands.c:483
+#: app/actions/edit-commands.c:505
 msgid "Enter a name for this buffer"
 msgstr "Введіть назву цього буфера"
 
-#: app/actions/edit-commands.c:473
+#: app/actions/edit-commands.c:480
 msgid "Copy Named"
 msgstr "Копіювання з буфера з назвою"
 
-#: app/actions/edit-commands.c:495
+#: app/actions/edit-commands.c:502
 msgid "Copy Visible Named"
 msgstr "Копіювати видиме з назвою"
 
-#: app/actions/edit-commands.c:543
+#: app/actions/edit-commands.c:550
 msgid "Clear"
 msgstr "Очистити"
 
-#: app/actions/edit-commands.c:616
+#: app/actions/edit-commands.c:623
 msgid "A selected layer's alpha channel is locked."
 msgstr "Канал прозорості позначеного шару заблоковано."
 
-#: app/actions/edit-commands.c:679
-#| msgid "Pasted as new layer because the target is a layer group."
+#: app/actions/edit-commands.c:689
 msgid ""
 "Pasted as new layer because the target is not a single layer or layer mask."
 msgstr ""
 "Вставлено як новий шар, оскільки ціль не є окремим шаром або маскою шарів."
 
-#: app/actions/edit-commands.c:686 app/display/gimpdisplayshell-dnd.c:497
+#: app/actions/edit-commands.c:696
 msgid "Pasted as new layer because the target is a layer group."
 msgstr "Вставлено як новий шар, тому що ціль є групою шарів."
 
-#: app/actions/edit-commands.c:693 app/display/gimpdisplayshell-dnd.c:506
+#: app/actions/edit-commands.c:703
 msgid "Pasted as new layer because the target's pixels are locked."
 msgstr "Вставлено як новий шар, бо цільові пікселі заблоковано."
 
-#: app/actions/edit-commands.c:737
+#: app/actions/edit-commands.c:748
 msgid "There are no selected layers or channels to cut from."
 msgstr "Немає позначених шарів або каналів для вирізання."
 
-#: app/actions/edit-commands.c:742 app/actions/edit-commands.c:775
-#: app/actions/edit-commands.c:800
+#: app/actions/edit-commands.c:753 app/actions/edit-commands.c:786
+#: app/actions/edit-commands.c:811
 msgid "(Unnamed Buffer)"
 msgstr "(Буфер без назви)"
 
-#: app/actions/edit-commands.c:770
+#: app/actions/edit-commands.c:781
 msgid "There are no selected layers or channels to copy from."
 msgstr "Немає позначених шарів або каналів для копіювання."
 
@@ -11709,63 +11739,51 @@ msgid "Picked reference object"
 msgstr "Вибрано еталонний об'єкт"
 
 #: app/core/core-enums.c:63
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the left"
 msgstr "Вирівняти ліворуч"
 
 #: app/core/core-enums.c:64
-#| msgctxt "undo-type"
-#| msgid "Flip horizontally"
 msgctxt "alignment-type"
 msgid "Center horizontally"
 msgstr "За центром горизонтально"
 
 #: app/core/core-enums.c:65
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the right"
 msgstr "Вирівняти праворуч"
 
 #: app/core/core-enums.c:66
-#| msgid "Align center of target"
 msgctxt "alignment-type"
 msgid "Align to the top"
 msgstr "Вирівняти вгору"
 
 #: app/core/core-enums.c:67
-#| msgctxt "undo-type"
-#| msgid "Flip vertically"
 msgctxt "alignment-type"
 msgid "Center vertically"
 msgstr "За центром вертикально"
 
 #: app/core/core-enums.c:68
-#| msgid "Align top edge of target"
 msgctxt "alignment-type"
 msgid "Align to the bottom"
 msgstr "Вирівняти за низом"
 
 #: app/core/core-enums.c:69
-#| msgid "Distribute targets evenly in the horizontal"
 msgctxt "alignment-type"
 msgid "Distribute anchor points horizontally evenly"
 msgstr "Розподілити точки прив'язки рівномірно горизонтально"
 
 #: app/core/core-enums.c:70
-#| msgid "Distribute targets evenly in the vertical"
 msgctxt "alignment-type"
 msgid "Distribute anchor points vertically evenly"
 msgstr "Розподілити точки прив'язки рівномірно вертикально"
 
 #: app/core/core-enums.c:71
-#| msgid "Distribute horizontal centers of targets"
 msgctxt "alignment-type"
 msgid "Distribute horizontally with even horizontal gaps"
 msgstr "Розподілити горизонтально із однаковими горизонтальними прогалинами"
 
 #: app/core/core-enums.c:72
-#| msgid "Distribute vertical centers of targets"
 msgctxt "alignment-type"
 msgid "Distribute vertically with even vertical gaps"
 msgstr "Розподілити вертикально із однаковими вертикальними прогалинами"
@@ -12215,543 +12233,543 @@ msgctxt "metadata-rotation-policy"
 msgid "Rotate the image then discard metadata"
 msgstr "Обернути зображення, потім відкинути метадані"
 
-#: app/core/core-enums.c:993
+#: app/core/core-enums.c:997
 msgctxt "win32-pointer-input-api"
 msgid "Wintab"
 msgstr "WinTab"
 
-#: app/core/core-enums.c:994
+#: app/core/core-enums.c:998
 msgctxt "win32-pointer-input-api"
 msgid "Windows Ink"
 msgstr "Windows Ink"
 
-#: app/core/core-enums.c:1023
+#: app/core/core-enums.c:1027
 msgctxt "thumbnail-size"
 msgid "No thumbnails"
 msgstr "Без мініатюр"
 
-#: app/core/core-enums.c:1024
+#: app/core/core-enums.c:1028
 msgctxt "thumbnail-size"
 msgid "Normal (128x128)"
 msgstr "Звичайний (128x128)"
 
-#: app/core/core-enums.c:1025
+#: app/core/core-enums.c:1029
 msgctxt "thumbnail-size"
 msgid "Large (256x256)"
 msgstr "Великий (256x256)"
 
-#: app/core/core-enums.c:1054
+#: app/core/core-enums.c:1058
 msgctxt "trc-type"
 msgid "Linear"
 msgstr "Лінійне"
 
-#: app/core/core-enums.c:1055
+#: app/core/core-enums.c:1059
 msgctxt "trc-type"
 msgid "Non-Linear"
 msgstr "Нелінійне"
 
-#: app/core/core-enums.c:1056
+#: app/core/core-enums.c:1060
 msgctxt "trc-type"
 msgid "Perceptual"
 msgstr "Придатне до сприйняття"
 
-#: app/core/core-enums.c:1255
+#: app/core/core-enums.c:1259
 msgctxt "undo-type"
 msgid "<<invalid>>"
 msgstr "<<неправильно>>"
 
-#: app/core/core-enums.c:1256
+#: app/core/core-enums.c:1260
 msgctxt "undo-type"
 msgid "Scale image"
 msgstr "Зміна розміру зображення"
 
-#: app/core/core-enums.c:1257
+#: app/core/core-enums.c:1261
 msgctxt "undo-type"
 msgid "Resize image"
 msgstr "Зміна розміру зображення"
 
-#: app/core/core-enums.c:1258
+#: app/core/core-enums.c:1262
 msgctxt "undo-type"
 msgid "Flip image"
 msgstr "Віддзеркалення зображення"
 
-#: app/core/core-enums.c:1259
+#: app/core/core-enums.c:1263
 msgctxt "undo-type"
 msgid "Rotate image"
 msgstr "Обертання зображення"
 
-#: app/core/core-enums.c:1260
+#: app/core/core-enums.c:1264
 msgctxt "undo-type"
 msgid "Transform image"
 msgstr "Перетворення зображення"
 
-#: app/core/core-enums.c:1261
+#: app/core/core-enums.c:1265
 msgctxt "undo-type"
 msgid "Crop image"
 msgstr "Кадрування зображення"
 
-#: app/core/core-enums.c:1262
+#: app/core/core-enums.c:1266
 msgctxt "undo-type"
 msgid "Convert image"
 msgstr "Перетворення зображення"
 
-#: app/core/core-enums.c:1263
+#: app/core/core-enums.c:1267
 msgctxt "undo-type"
 msgid "Remove item"
 msgstr "Вилучити об'єкт"
 
-#: app/core/core-enums.c:1264 app/core/core-enums.c:1317
+#: app/core/core-enums.c:1268 app/core/core-enums.c:1321
 msgctxt "undo-type"
 msgid "Reorder item"
 msgstr "Перевпорядкувати об'єкт"
 
-#: app/core/core-enums.c:1265
+#: app/core/core-enums.c:1269
 msgctxt "undo-type"
 msgid "Merge layers"
 msgstr "Об'єднання шарів"
 
-#: app/core/core-enums.c:1266
+#: app/core/core-enums.c:1270
 msgctxt "undo-type"
 msgid "Merge paths"
 msgstr "Об'єднання контурів"
 
-#: app/core/core-enums.c:1267
+#: app/core/core-enums.c:1271
 msgctxt "undo-type"
 msgid "Quick Mask"
 msgstr "Швидка маска"
 
-#: app/core/core-enums.c:1268 app/core/core-enums.c:1307
+#: app/core/core-enums.c:1272 app/core/core-enums.c:1311
 #: app/core/gimpimage-grid.c:64
 msgctxt "undo-type"
 msgid "Grid"
 msgstr "Сітка"
 
-#: app/core/core-enums.c:1269 app/core/core-enums.c:1311
+#: app/core/core-enums.c:1273 app/core/core-enums.c:1315
 msgctxt "undo-type"
 msgid "Guide"
 msgstr "Напрямна"
 
-#: app/core/core-enums.c:1270 app/core/core-enums.c:1312
+#: app/core/core-enums.c:1274 app/core/core-enums.c:1316
 msgctxt "undo-type"
 msgid "Sample Point"
 msgstr "Зразкова точка"
 
-#: app/core/core-enums.c:1271 app/core/core-enums.c:1313
+#: app/core/core-enums.c:1275 app/core/core-enums.c:1317
 msgctxt "undo-type"
 msgid "Layer/Channel"
 msgstr "Шар/Канал"
 
-#: app/core/core-enums.c:1272 app/core/core-enums.c:1314
+#: app/core/core-enums.c:1276 app/core/core-enums.c:1318
 msgctxt "undo-type"
 msgid "Layer/Channel modification"
 msgstr "Зміна шару/каналу"
 
-#: app/core/core-enums.c:1273 app/core/core-enums.c:1316
+#: app/core/core-enums.c:1277 app/core/core-enums.c:1320
 msgctxt "undo-type"
 msgid "Selection mask"
 msgstr "Маска позначеної ділянки"
 
-#: app/core/core-enums.c:1274 app/core/core-enums.c:1320
+#: app/core/core-enums.c:1278 app/core/core-enums.c:1324
 msgctxt "undo-type"
 msgid "Item visibility"
 msgstr "Видимість елемента"
 
-#: app/core/core-enums.c:1275
+#: app/core/core-enums.c:1279
 msgctxt "undo-type"
 msgid "Lock/Unlock contents"
 msgstr "Заблокувати/розблокувати вміст"
 
-#: app/core/core-enums.c:1276 app/core/core-enums.c:1323
+#: app/core/core-enums.c:1280 app/core/core-enums.c:1327
 msgctxt "undo-type"
 msgid "Lock/Unlock position"
 msgstr "Заблокувати/розблокувати позицію"
 
-#: app/core/core-enums.c:1277 app/core/core-enums.c:1324
+#: app/core/core-enums.c:1281 app/core/core-enums.c:1328
 msgctxt "undo-type"
 msgid "Lock/Unlock visibility"
 msgstr "Заблокувати/розблокувати видимість"
 
-#: app/core/core-enums.c:1278
+#: app/core/core-enums.c:1282
 msgctxt "undo-type"
 msgid "Item properties"
 msgstr "Властивості елемента"
 
-#: app/core/core-enums.c:1279 app/core/core-enums.c:1319
+#: app/core/core-enums.c:1283 app/core/core-enums.c:1323
 msgctxt "undo-type"
 msgid "Move item"
 msgstr "Переміщення елемента"
 
-#: app/core/core-enums.c:1280
+#: app/core/core-enums.c:1284
 msgctxt "undo-type"
 msgid "Scale item"
 msgstr "Зміна масштабу елемента"
 
-#: app/core/core-enums.c:1281
+#: app/core/core-enums.c:1285
 msgctxt "undo-type"
 msgid "Resize item"
 msgstr "Зміна розміру елемента"
 
-#: app/core/core-enums.c:1282
+#: app/core/core-enums.c:1286
 msgctxt "undo-type"
 msgid "Add layer"
 msgstr "Додавання шару"
 
-#: app/core/core-enums.c:1283
+#: app/core/core-enums.c:1287
 msgctxt "undo-type"
 msgid "Add alpha channel"
 msgstr "Додавання каналу альфи"
 
-#: app/core/core-enums.c:1284 app/core/core-enums.c:1340
+#: app/core/core-enums.c:1288 app/core/core-enums.c:1344
 msgctxt "undo-type"
 msgid "Add layer mask"
 msgstr "Додавання маски шару"
 
-#: app/core/core-enums.c:1285 app/core/core-enums.c:1342
+#: app/core/core-enums.c:1289 app/core/core-enums.c:1346
 msgctxt "undo-type"
 msgid "Apply layer mask"
 msgstr "Застосування маски шару"
 
-#: app/core/core-enums.c:1286
+#: app/core/core-enums.c:1290
 msgctxt "undo-type"
 msgid "Remove alpha channel"
 msgstr "Вилучення каналу альфи"
 
-#: app/core/core-enums.c:1287
+#: app/core/core-enums.c:1291
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channels"
 msgstr "Заблокувати/розблокувати альфа-канали"
 
-#: app/core/core-enums.c:1288
+#: app/core/core-enums.c:1292
 msgctxt "undo-type"
 msgid "Set layers opacity"
 msgstr "Зміна непрозорості шарів"
 
-#: app/core/core-enums.c:1289
+#: app/core/core-enums.c:1293
 msgctxt "undo-type"
 msgid "Set layers mode"
 msgstr "Встановлення режиму шарів"
 
-#: app/core/core-enums.c:1290
+#: app/core/core-enums.c:1294
 msgctxt "undo-type"
 msgid "Add channels"
 msgstr "Додавання каналів"
 
-#: app/core/core-enums.c:1291 app/core/core-enums.c:1350
+#: app/core/core-enums.c:1295 app/core/core-enums.c:1354
 msgctxt "undo-type"
 msgid "Floating selection to layer"
 msgstr "Рухомий вибір у шарі"
 
-#: app/core/core-enums.c:1292
+#: app/core/core-enums.c:1296
 msgctxt "undo-type"
 msgid "Float selection"
 msgstr "Рухомий вибір"
 
-#: app/core/core-enums.c:1293
+#: app/core/core-enums.c:1297
 msgctxt "undo-type"
 msgid "Anchor floating selection"
 msgstr "Прикріплення рухомого вибору"
 
-#: app/core/core-enums.c:1294 app/core/gimp-edit.c:599
+#: app/core/core-enums.c:1298 app/core/gimp-edit.c:722
 msgctxt "undo-type"
 msgid "Paste"
 msgstr "Вставити"
 
-#: app/core/core-enums.c:1295 app/core/gimp-edit.c:871
+#: app/core/core-enums.c:1299 app/core/gimp-edit.c:1051
 msgctxt "undo-type"
 msgid "Cut"
 msgstr "Вирізати"
 
-#: app/core/core-enums.c:1296
+#: app/core/core-enums.c:1300
 msgctxt "undo-type"
 msgid "Text"
 msgstr "Текст"
 
-#: app/core/core-enums.c:1297 app/core/gimpdrawable-transform.c:721
+#: app/core/core-enums.c:1301 app/core/gimpdrawable-transform.c:721
 msgctxt "undo-type"
 msgid "Transform"
 msgstr "Перетворення"
 
-#: app/core/core-enums.c:1298 app/core/core-enums.c:1352
+#: app/core/core-enums.c:1302 app/core/core-enums.c:1356
 msgctxt "undo-type"
 msgid "Paint"
 msgstr "Малювання"
 
-#: app/core/core-enums.c:1299 app/core/core-enums.c:1355
+#: app/core/core-enums.c:1303 app/core/core-enums.c:1359
 msgctxt "undo-type"
 msgid "Attach parasite"
 msgstr "Додавання паразита"
 
-#: app/core/core-enums.c:1300 app/core/core-enums.c:1356
+#: app/core/core-enums.c:1304 app/core/core-enums.c:1360
 msgctxt "undo-type"
 msgid "Remove parasite"
 msgstr "Вилучити шум"
 
-#: app/core/core-enums.c:1301
+#: app/core/core-enums.c:1305
 msgctxt "undo-type"
 msgid "Import paths"
 msgstr "Імпортувати контур"
 
-#: app/core/core-enums.c:1302
+#: app/core/core-enums.c:1306
 msgctxt "undo-type"
 msgid "Plug-In"
 msgstr "Додаток"
 
-#: app/core/core-enums.c:1303
+#: app/core/core-enums.c:1307
 msgctxt "undo-type"
 msgid "Image type"
 msgstr "Тип зображення"
 
-#: app/core/core-enums.c:1304
+#: app/core/core-enums.c:1308
 msgctxt "undo-type"
 msgid "Image precision"
 msgstr "Точність зображення"
 
-#: app/core/core-enums.c:1305
+#: app/core/core-enums.c:1309
 msgctxt "undo-type"
 msgid "Image size"
 msgstr "Розмір зображення"
 
-#: app/core/core-enums.c:1306
+#: app/core/core-enums.c:1310
 msgctxt "undo-type"
 msgid "Image resolution change"
 msgstr "Зміна роздільності зображення"
 
-#: app/core/core-enums.c:1308
+#: app/core/core-enums.c:1312
 msgctxt "undo-type"
 msgid "Change metadata"
 msgstr "Змінити метадані"
 
-#: app/core/core-enums.c:1309
+#: app/core/core-enums.c:1313
 msgctxt "undo-type"
 msgid "Change indexed palette"
 msgstr "Зміна індексованої палітри"
 
-#: app/core/core-enums.c:1310
+#: app/core/core-enums.c:1314
 msgctxt "undo-type"
 msgid "Hide/Unhide color profile"
 msgstr "Приховати або показати колірний профіль"
 
-#: app/core/core-enums.c:1315
+#: app/core/core-enums.c:1319
 msgctxt "undo-type"
 msgid "Layer/Channel format"
 msgstr "Формат шарів/каналів"
 
-#: app/core/core-enums.c:1318
+#: app/core/core-enums.c:1322
 msgctxt "undo-type"
 msgid "Rename item"
 msgstr "Перейменування запису"
 
-#: app/core/core-enums.c:1321
+#: app/core/core-enums.c:1325
 msgctxt "undo-type"
 msgid "Item color tag"
 msgstr "Тег кольору елемента"
 
-#: app/core/core-enums.c:1322
+#: app/core/core-enums.c:1326
 msgctxt "undo-type"
 msgid "Lock/Unlock content"
 msgstr "Заблокувати/розблокувати вміст"
 
-#: app/core/core-enums.c:1325
+#: app/core/core-enums.c:1329
 msgctxt "undo-type"
 msgid "New layer"
 msgstr "Створити шар"
 
-#: app/core/core-enums.c:1326
+#: app/core/core-enums.c:1330
 msgctxt "undo-type"
 msgid "Delete layer"
 msgstr "Вилучити шар"
 
-#: app/core/core-enums.c:1327
+#: app/core/core-enums.c:1331
 msgctxt "undo-type"
 msgid "Set layer mode"
 msgstr "Зміна режиму шару"
 
-#: app/core/core-enums.c:1328
+#: app/core/core-enums.c:1332
 msgctxt "undo-type"
 msgid "Set layer opacity"
 msgstr "Зміна непрозорості шару"
 
-#: app/core/core-enums.c:1329
+#: app/core/core-enums.c:1333
 msgctxt "undo-type"
 msgid "Lock/Unlock alpha channel"
 msgstr "Заблокувати/розблокувати альфа-канал"
 
-#: app/core/core-enums.c:1330
+#: app/core/core-enums.c:1334
 msgctxt "undo-type"
 msgid "Suspend group layer resize"
 msgstr "Зупинити зміну розміру групового шару"
 
-#: app/core/core-enums.c:1331
+#: app/core/core-enums.c:1335
 msgctxt "undo-type"
 msgid "Resume group layer resize"
 msgstr "Відновити зміну розміру групи шарів"
 
-#: app/core/core-enums.c:1332
+#: app/core/core-enums.c:1336
 msgctxt "undo-type"
 msgid "Suspend group layer mask"
 msgstr "Призупинити маскування групового шару"
 
-#: app/core/core-enums.c:1333
+#: app/core/core-enums.c:1337
 msgctxt "undo-type"
 msgid "Resume group layer mask"
 msgstr "Відновити маскування групового шару"
 
-#: app/core/core-enums.c:1334
+#: app/core/core-enums.c:1338
 msgctxt "undo-type"
 msgid "Start transforming group layer"
 msgstr "Початок перетворення групи шарів"
 
-#: app/core/core-enums.c:1335
+#: app/core/core-enums.c:1339
 msgctxt "undo-type"
 msgid "End transforming group layer"
 msgstr "Кінець перетворення групи шарів"
 
-#: app/core/core-enums.c:1336
+#: app/core/core-enums.c:1340
 msgctxt "undo-type"
 msgid "Convert group layer"
 msgstr "Перетворення групи шарів"
 
-#: app/core/core-enums.c:1337
+#: app/core/core-enums.c:1341
 msgctxt "undo-type"
 msgid "Text layer"
 msgstr "Текстовий шар"
 
-#: app/core/core-enums.c:1338
+#: app/core/core-enums.c:1342
 msgctxt "undo-type"
 msgid "Text layer modification"
 msgstr "Зміна текстового шару"
 
-#: app/core/core-enums.c:1339
+#: app/core/core-enums.c:1343
 msgctxt "undo-type"
 msgid "Convert text layer"
 msgstr "Перетворити текстовий шар"
 
-#: app/core/core-enums.c:1341
+#: app/core/core-enums.c:1345
 msgctxt "undo-type"
 msgid "Delete layer mask"
 msgstr "Вилучити маску шару"
 
-#: app/core/core-enums.c:1343
+#: app/core/core-enums.c:1347
 msgctxt "undo-type"
 msgid "Show layer mask"
 msgstr "Показати маску шару"
 
-#: app/core/core-enums.c:1344
+#: app/core/core-enums.c:1348
 msgctxt "undo-type"
 msgid "New channel"
 msgstr "Створити канал"
 
-#: app/core/core-enums.c:1345
+#: app/core/core-enums.c:1349
 msgctxt "undo-type"
 msgid "Delete channel"
 msgstr "Вилучити канал"
 
-#: app/core/core-enums.c:1346
+#: app/core/core-enums.c:1350
 msgctxt "undo-type"
 msgid "Channel color"
 msgstr "Колір каналу"
 
-#: app/core/core-enums.c:1347
+#: app/core/core-enums.c:1351
 msgctxt "undo-type"
 msgid "New path"
 msgstr "Новий контур"
 
-#: app/core/core-enums.c:1348
+#: app/core/core-enums.c:1352
 msgctxt "undo-type"
 msgid "Delete path"
 msgstr "Вилучити контур"
 
-#: app/core/core-enums.c:1349
+#: app/core/core-enums.c:1353
 msgctxt "undo-type"
 msgid "Path modification"
 msgstr "Зміна контуру"
 
-#: app/core/core-enums.c:1351
+#: app/core/core-enums.c:1355
 msgctxt "undo-type"
 msgid "Transform grid"
 msgstr "Перетворення ґратки"
 
-#: app/core/core-enums.c:1353
+#: app/core/core-enums.c:1357
 msgctxt "undo-type"
 msgid "Ink"
 msgstr "Перо"
 
-#: app/core/core-enums.c:1354
+#: app/core/core-enums.c:1358
 msgctxt "undo-type"
 msgid "Select foreground"
 msgstr "Обрати колір переднього плану"
 
-#: app/core/core-enums.c:1357
+#: app/core/core-enums.c:1361
 msgctxt "undo-type"
 msgid "Not undoable"
 msgstr "Дію неможливо скасувати"
 
-#: app/core/core-enums.c:1392
+#: app/core/core-enums.c:1396
 msgctxt "view-size"
 msgid "Tiny"
 msgstr "Крихітний"
 
-#: app/core/core-enums.c:1393
+#: app/core/core-enums.c:1397
 msgctxt "view-size"
 msgid "Very small"
 msgstr "Дуже малий"
 
-#: app/core/core-enums.c:1394
+#: app/core/core-enums.c:1398
 msgctxt "view-size"
 msgid "Small"
 msgstr "Малий"
 
-#: app/core/core-enums.c:1395
+#: app/core/core-enums.c:1399
 msgctxt "view-size"
 msgid "Medium"
 msgstr "Середній"
 
-#: app/core/core-enums.c:1396
+#: app/core/core-enums.c:1400
 msgctxt "view-size"
 msgid "Large"
 msgstr "Великий"
 
-#: app/core/core-enums.c:1397
+#: app/core/core-enums.c:1401
 msgctxt "view-size"
 msgid "Very large"
 msgstr "Дуже великий"
 
-#: app/core/core-enums.c:1398
+#: app/core/core-enums.c:1402
 msgctxt "view-size"
 msgid "Huge"
 msgstr "Величезний"
 
-#: app/core/core-enums.c:1399
+#: app/core/core-enums.c:1403
 msgctxt "view-size"
 msgid "Enormous"
 msgstr "Гігантський"
 
-#: app/core/core-enums.c:1400
+#: app/core/core-enums.c:1404
 msgctxt "view-size"
 msgid "Gigantic"
 msgstr "Колосальний"
 
-#: app/core/core-enums.c:1428
+#: app/core/core-enums.c:1432
 msgctxt "view-type"
 msgid "View as list"
 msgstr "Перегляд списком"
 
-#: app/core/core-enums.c:1429
+#: app/core/core-enums.c:1433
 msgctxt "view-type"
 msgid "View as grid"
 msgstr "Перегляд таблицею"
 
-#: app/core/core-enums.c:1458
+#: app/core/core-enums.c:1462
 msgctxt "select-method"
 msgid "Selection by basic text search"
 msgstr "Позначення за базовим текстовим пошуком"
 
-#: app/core/core-enums.c:1459
+#: app/core/core-enums.c:1463
 msgctxt "select-method"
 msgid "Selection by regular expression search"
 msgstr "Позначення за пошуком за формальним виразом"
 
-#: app/core/core-enums.c:1460
+#: app/core/core-enums.c:1464
 msgctxt "select-method"
 msgid "Selection by glob pattern search"
 msgstr "Позначення за пошуком за взірцем із замінниками"
@@ -12845,7 +12863,7 @@ msgstr "Історія кольору"
 msgid "Updating tag cache"
 msgstr "Оновлюється кеш позначок"
 
-#: app/core/gimp-edit.c:125
+#: app/core/gimp-edit.c:127
 #, c-format
 msgid "Cut Layer"
 msgid_plural "Cut %d Layers"
@@ -12854,11 +12872,11 @@ msgstr[1] "Вирізати %d шари"
 msgstr[2] "Вирізати %d шарів"
 msgstr[3] "Вирізати шар"
 
-#: app/core/gimp-edit.c:424 app/core/gimpimage-new.c:519
+#: app/core/gimp-edit.c:492 app/core/gimpimage-new.c:553
 msgid "Pasted Layer"
 msgstr "Вставлений шар"
 
-#: app/core/gimp-edit.c:888
+#: app/core/gimp-edit.c:1068
 msgid "Global Buffer"
 msgstr "Глобальний буфер"
 
@@ -13431,7 +13449,7 @@ msgstr "Передній план"
 msgid "Foreground color"
 msgstr "Колір переднього плану"
 
-#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:161
+#: app/core/gimpcontext.c:676 app/core/gimpimage-new.c:162
 msgid "Background"
 msgstr "Тло"
 
@@ -18551,8 +18569,8 @@ msgid "The image has been exported to '%s'."
 msgstr "Зображення експортовано у «%s»."
 
 #: app/display/gimpdisplayshell-dnd.c:249
-#: app/display/gimpdisplayshell-dnd.c:710
-#: app/display/gimpdisplayshell-dnd.c:769
+#: app/display/gimpdisplayshell-dnd.c:686
+#: app/display/gimpdisplayshell-dnd.c:745
 msgid "Drop New Layer"
 msgstr "Опускання нового шару"
 
@@ -18584,13 +18602,13 @@ msgctxt "undo-type"
 msgid "Drop color to layer"
 msgstr "Опустити колір на шар"
 
-#: app/display/gimpdisplayshell-dnd.c:600 app/widgets/gimpitemtreeview.c:1406
+#: app/display/gimpdisplayshell-dnd.c:576 app/widgets/gimpitemtreeview.c:1406
 #: app/widgets/gimplayertreeview.c:991
 msgid "Drop layers"
 msgstr "Перемістити шари"
 
-#: app/display/gimpdisplayshell-dnd.c:743
-#: app/display/gimpdisplayshell-dnd.c:760 app/widgets/gimplayertreeview.c:1068
+#: app/display/gimpdisplayshell-dnd.c:719
+#: app/display/gimpdisplayshell-dnd.c:736 app/widgets/gimplayertreeview.c:1068
 #: app/widgets/gimptoolbox-dnd.c:277
 msgid "Dropped Buffer"
 msgstr "Переміщений буфер"
@@ -20685,7 +20703,7 @@ msgctxt "undo-type"
 msgid "Threshold"
 msgstr "Поріг"
 
-#: app/pdb/edit-cmds.c:95 app/pdb/edit-cmds.c:386 app/pdb/edit-cmds.c:471
+#: app/pdb/edit-cmds.c:95 app/pdb/edit-cmds.c:387 app/pdb/edit-cmds.c:472
 msgid "All specified drawables must belong to the same image."
 msgstr "Усі вказані об'єкти малювання мають належати одному зображенню."
 
@@ -22262,13 +22280,10 @@ msgid "Relative to"
 msgstr "Відносно"
 
 #: app/tools/gimpalignoptions.c:149
-#| msgid "Reference image object a layer will be aligned on"
 msgid "Reference object targets will be aligned on"
 msgstr "Еталонний об'єкт, до якого буде вирівняно цілі"
 
 #: app/tools/gimpalignoptions.c:156
-#| msgctxt "line-art-source"
-#| msgid "Selected layer"
 msgid "Selected layers"
 msgstr "Позначені шари"
 
@@ -22277,8 +22292,6 @@ msgid "Selected layers will be aligned or distributed by the tool"
 msgstr "Позначені шари буде вирівняно або розподілено інструментом"
 
 #: app/tools/gimpalignoptions.c:162
-#| msgctxt "undo-type"
-#| msgid "Delete path"
 msgid "Selected paths"
 msgstr "Позначені контури"
 
@@ -22300,20 +22313,16 @@ msgstr ""
 
 #. Selected objects
 #: app/tools/gimpalignoptions.c:383
-#| msgid "Pick Target"
 msgid "Targets"
 msgstr "Цілі"
 
 #: app/tools/gimpalignoptions.c:405
-#| msgctxt "image-action"
-#| msgid "Set a color profile on the image"
 msgid "Set anchor point of targets"
 msgstr "Встановити точки прив'язки цілей"
 
 #. TRANSLATORS: the %s strings are modifiers such as Shift, Alt or Cmd.
 #: app/tools/gimpalignoptions.c:424
 #, c-format
-#| msgid "%s-pick guides to align or distribute (%s-%s for more)"
 msgid "%s-pick target guides (%s-%s to add more)"
 msgstr "%s-захопіть напрямні цілей (%s-%s — ширші можливості)"
 
@@ -22331,7 +22340,6 @@ msgid "Align anchor points of targets on left edge of reference"
 msgstr "Вирівняти точки прив'язки цілей за еталонним лівим краєм"
 
 #: app/tools/gimpalignoptions.c:487
-#| msgid "Transform in the local frame of reference"
 msgid "Align anchor points of targets on vertical middle of reference"
 msgstr "Вирівняти точки прив'язки цілей за еталонною серединою за вертикаллю"
 
@@ -22358,22 +22366,18 @@ msgid "Distribute"
 msgstr "Розташувати"
 
 #: app/tools/gimpalignoptions.c:526
-#| msgid "Distribute targets evenly in the horizontal"
 msgid "Distribute anchor points of targets evenly in the horizontal"
 msgstr "Розподілити точки прив'язки цілей рівномірно за горизонталлю"
 
 #: app/tools/gimpalignoptions.c:529
-#| msgid "Distribute horizontal centers of targets"
 msgid "Distribute horizontally with even horizontal gaps"
 msgstr "Розподілити горизонтально із однаковими горизонтальними прогалинами"
 
 #: app/tools/gimpalignoptions.c:538
-#| msgid "Distribute targets evenly in the vertical"
 msgid "Distribute anchor points of targets evenly in the vertical"
 msgstr "Розподілити точки прив'язки цілей рівномірно за вертикаллю"
 
 #: app/tools/gimpalignoptions.c:541
-#| msgid "Distribute vertical centers of targets"
 msgid "Distribute vertically with even vertical gaps"
 msgstr "Розподілити вертикально із однаковими вертикальними прогалинами"
 
@@ -22406,7 +22410,6 @@ msgid "Reference guide"
 msgstr "Еталонна напрямна"
 
 #: app/tools/gimpaligntool.c:130
-#| msgid "Distribute"
 msgid "Align and Distribute"
 msgstr "Вирівняти і розподілити"
 
@@ -22415,7 +22418,6 @@ msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Вирівнювання: вирівнювання чи розстановка шарів та інших областей"
 
 #: app/tools/gimpaligntool.c:132
-#| msgid "Distribute"
 msgid "_Align and Distribute"
 msgstr "Вирів_няти та розподілити"
 
@@ -28570,6 +28572,10 @@ msgstr ""
 #: app-tools/gimp-debug-tool.c:87
 msgid "GIMP Crash Debug"
 msgstr "Діагностика аварій GIMP"
+
+#~ msgctxt "edit-action"
+#~ msgid "_New Image"
+#~ msgstr "_Нове зображення"
 
 #~ msgctxt "edit-action"
 #~ msgid "New _Layer"
