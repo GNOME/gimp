@@ -185,6 +185,10 @@ Build:
     --output-dll-list option.
   - babl requirement bumped to babl 0.1.98.
   - GEGL requirement bumped to GEGL 0.4.40.
+  - GIMP macOS builds (gimp-macos-build repository) was moved to using MacPorts
+    in order to take advantage of a bigger community to maintain our
+    dependencies.
+  - GIMP now has an Apple Silicon build.
 
 
 Overview of Changes from GIMP 2.99.10 to GIMP 2.99.12
