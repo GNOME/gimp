@@ -339,7 +339,7 @@ winsock           = platform_windows ? cc.find_library('ws2_32') : no_dep
 mscms             = platform_windows ? cc.find_library('mscms') : no_dep
 atk_minver        = '2.4.0'
 atk               = dependency('atk',                version: '>='+atk_minver)
-babl_minver       = '0.1.78'
+babl_minver       = '0.1.98'
 babl              = dependency('babl',               version: '>='+babl_minver)
 cairo_minver      = '1.12.2'
 cairo             = dependency('cairo',              version: '>='+cairo_minver)
