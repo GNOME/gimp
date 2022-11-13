@@ -30,6 +30,27 @@ Core:
     tags and several selected paths.
   - XCF saving with RLE and zlib encoding are now multi-threaded and therefore
     much faster in most cases.
+  - Pasting an image now creates a new layer by default (not a Floating Layer
+    anymore). The only 3 cases where we still have floating items are:
+    * when pasting into a layer mask;
+    * when doing quick copy/cut paste on-canvas with the Alt modifiers;
+    * when floating layers explicitly with the "Float" action.
+  - Copy-paste code was deeply reviewed and re-specified in the light of
+    multi-item selection; it's still a WIP:
+    * When pasting several drawables, we currently paste them over the top
+      selected layer (visually in Layers dockable).
+    * Pasted data position was rewritten, based on existing logic, but taking
+      into account the multiple selected items.
+    * Pasting a selected area from multiple layers still creates multiple
+      layers, not merged pixel contents as a single layer.
+    * New layers created when copying from a selection are consistently the
+      offset and dimensions of the bounding box of the dimension.
+    * When a layer and one of its group layer parent are selected, it is
+      equivalent to have only the child layer selected.
+  - 2 new actions were added: "Paste as Single Layer" and "Paste as Single Layer
+    in Place" under the "Paste as" submenu of Edit menu. These paste the copied
+    layers as a single merged layer, instead of as several layers (as "Paste"
+    and "Paste in Place" do).
 
 Graphical User Interface:
 
@@ -55,12 +76,8 @@ Graphical User Interface:
   - "Floating Masks" are now drawn above the layer mask in the Layers dockable,
     making the fact that they would anchor to the below layer mask (not the
     layer) much more obvious.
-  - Pasting an image now creates a new layer by default (not a Floating Layer
-    anymore). The only 3 cases where we still have floating items are:
-    * when pasting into a layer mask;
-    * when doing quick copy/cut paste on-canvas with the Alt modifiers;
-    * when floating layers explicitly with the "Float" action.
-
+  - "Paste into Selection" and "Paste into Selection in Place" were moved under
+    the "Paste as" submenu of Edit menu.
 
 Tools:
 
@@ -95,6 +112,8 @@ Tools:
       which distribute by keeping a common gap between objects instead of
       between anchor points.
     * Offset settings have been removed.
+  - Transform tools are now auto-activated on selection (and when switching
+    images or item selection).
 
 Plug-ins:
 
@@ -164,6 +183,8 @@ Build:
   - Improved Clang 15.0.0 support.
   - "win*-nightly" jobs were added back and are now more efficient with the
     --output-dll-list option.
+  - babl requirement bumped to babl 0.1.98.
+  - GEGL requirement bumped to GEGL 0.4.40.
 
 
 Overview of Changes from GIMP 2.99.10 to GIMP 2.99.12
