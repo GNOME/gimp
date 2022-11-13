@@ -566,6 +566,11 @@ Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\py-slice.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-eval.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\pyconsole.py"
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\python-console\python-console.py"
+;<2.99.14 plug-ins and modules
+Type: files; Name: "{app}\lib\gimp\2.99\plug-ins\py-slice\py-slice.py"
+Type: files; Name: "{app}\lib\gimp\2.99\plug-ins\benchmark-foreground-extract\benchmark-foreground-extract.py"
+;Some typo in meson which we used for GIMP 2.99.12 installer.
+Type: files; Name: "{app}\lib\gimp\2.99\modules\libcontroller-dx-input.dll"
 ;DLLs in plug-ins directory (see bug 796225)
 Type: files; Name: "{app}\lib\gimp\2.0\plug-ins\*.dll"
 ;gegl 0.2
