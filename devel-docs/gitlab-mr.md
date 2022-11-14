@@ -74,7 +74,7 @@ Edit your `.git/config` by adding a second "fetch =" rule to the
 [remote "origin"]
 	fetch = +refs/heads/*:refs/remotes/origin/*
 	fetch = +refs/merge-requests/*/head:refs/remotes/origin/merge-requests/*
-	url = git@gitlab.gnome.org:GNOME/gimp.git
+	url = git@ssh.gitlab.gnome.org:GNOME/gimp.git
 ```
 
 From now on, when you `git pull` or `git fetch` the origin remote, any
@@ -105,7 +105,7 @@ So we will fetch the remote yet without naming the remote:
   their own remote, you would run:
 
 ```
-git fetch "git@gitlab.gnome.org:xyz/gimp.git" 'fix-bug-123'
+git fetch "git@ssh.gitlab.gnome.org:xyz/gimp.git" 'fix-bug-123'
 git checkout -b 'xyz/fix-bug-123' FETCH_HEAD
 ```
 
@@ -115,7 +115,7 @@ git checkout -b 'xyz/fix-bug-123' FETCH_HEAD
 - Finally push to the contributor's own remote with the call:
 
 ```
-git push git@gitlab.gnome.org:xyz/gimp.git xyz/fix-bug-123:fix-bug-123
+git push git@ssh.gitlab.gnome.org:xyz/gimp.git xyz/fix-bug-123:fix-bug-123
 ```
 
   This assumes that the contributor checked the option "*Allow commits

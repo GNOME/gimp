@@ -64,8 +64,7 @@
 
  ( ) Check if NEWS, authors.xml (and the generated AUTHORS), README or
      INSTALL need to be updated, as well as any release notes on
-     gimp.org. Don't forget to add any "Index of new symbols in GIMP
-     3.x" to the gtk-doc generated devel-docs.
+     gimp.org.
 
  ( ) Does the splash screen need to be changed?
 
@@ -105,20 +104,25 @@
          tag, which is characteristical of a release).
 
      [ ] The following jobs should be triggered:
-         build-image, deps-debian, gimp-distcheck-debian, sources,
-         deps-win32-native, gimp-win32-native, packaging-win32-native,
-         deps-win64-native, gimp-win64-native, packaging-win64-native
-         and win-installer-nightly.
+         build-image deps-debian       gimp-distcheck-debian                        sources-autotools
+                                       gimp-meson-debian                            sources-meson
+                                                                                    dev-docs
+                     deps-win32-native gimp-win32-native     packaging-win32-native
+                     deps-win64-native gimp-win64-native     packaging-win64-native win-installer-nightly
 
      [ ] Check in particular:
          * the job `win-installer-nightly` should contain a working
            Windows installer and 2 checksum files;
-         * the job `sources` should contain a tar.bz2 tarball and 2
+         * the job `sources-autotools` should contain a tar.bz2 tarball and 2
+           checksum files.
+         * the job `sources-meson` should contain a tar.xz tarball and 2
+           checksum files.
+         * the job `dev-docs` should contain a tar.xz tarball and 2
            checksum files.
 
      If these steps work fine, we are ready to tag and publish.
 
-     Note: the test build will likely take up to 2 hours, especially
+     Note: the test build will likely take up to 1 hour, especially
      because of the Windows installer step. And of course, if you ever
      discover any build or run into issues, the time will be multiplied.
      It is advised to take this in consideration. This test step could
