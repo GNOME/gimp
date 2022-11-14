@@ -11,11 +11,11 @@ AC_PREREQ(2.54)
 
 m4_define([gimp_major_version], [2])
 m4_define([gimp_minor_version], [99])
-m4_define([gimp_micro_version], [14])
+m4_define([gimp_micro_version], [15])
 m4_define([gimp_real_version],
           [gimp_major_version.gimp_minor_version.gimp_micro_version])
 m4_define([gimp_version], [gimp_real_version])
-m4_define([gimp_interface_age], [14])
+m4_define([gimp_interface_age], [15])
 m4_define([gimp_binary_age],
           [m4_eval(100 * gimp_minor_version + gimp_micro_version)])
 
