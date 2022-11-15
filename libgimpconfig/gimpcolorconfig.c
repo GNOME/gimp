@@ -110,6 +110,13 @@
 #define OUT_OF_GAMUT_COLOR_BLURB \
   _("The color to use for marking colors which are out of gamut.")
 
+#define SHOW_RGB_U8_BLURB \
+  _("When enabled, set the color scales to display 0...255 instead " \
+    "of percentages")
+
+#define SHOW_HSV_BLURB \
+  _("When enabled, set the color scales to display HSV blend mode instead " \
+    "of LCh")
 
 enum
 {
@@ -128,7 +135,9 @@ enum
   PROP_SIMULATION_USE_BPC,
   PROP_SIMULATION_OPTIMIZE,
   PROP_SIMULATION_GAMUT_CHECK,
-  PROP_OUT_OF_GAMUT_COLOR
+  PROP_OUT_OF_GAMUT_COLOR,
+  PROP_SHOW_RGB_U8,
+  PROP_SHOW_HSV
 };
 
 
@@ -152,6 +161,9 @@ struct _GimpColorConfigPrivate
   gboolean                  simulation_optimize;
   gboolean                  simulation_gamut_check;
   GimpRGB                   out_of_gamut_color;
+
+  gboolean                  show_rgb_u8;
+  gboolean                  show_hsv;
 };
 
 #define GET_PRIVATE(obj) (((GimpColorConfig *) (obj))->priv)
@@ -312,6 +324,20 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                         OUT_OF_GAMUT_COLOR_BLURB,
                         FALSE, &color,
                         GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_RGB_U8,
+                            "show-rgb-u8",
+                            "Show RGB 0..255",
+                            _("Show RGB 0..255 scales"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
+
+  GIMP_CONFIG_PROP_BOOLEAN (object_class, PROP_SHOW_HSV,
+                            "show-hsv",
+                            "Show HSV",
+                            _("Show HSV instead of LCH"),
+                            FALSE,
+                            GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -401,6 +427,12 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_OUT_OF_GAMUT_COLOR:
       priv->out_of_gamut_color = *(GimpRGB *) g_value_get_boxed (value);
       break;
+    case PROP_SHOW_RGB_U8:
+      priv->show_rgb_u8 = g_value_get_boolean (value);
+      break;
+    case PROP_SHOW_HSV:
+      priv->show_hsv = g_value_get_boolean (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -468,6 +500,12 @@ gimp_color_config_get_property (GObject    *object,
       break;
     case PROP_OUT_OF_GAMUT_COLOR:
       g_value_set_boxed (value, &priv->out_of_gamut_color);
+      break;
+    case PROP_SHOW_RGB_U8:
+      g_value_set_boolean (value, priv->show_rgb_u8);
+      break;
+    case PROP_SHOW_HSV:
+      g_value_set_boolean (value, priv->show_hsv);
       break;
 
     default:
