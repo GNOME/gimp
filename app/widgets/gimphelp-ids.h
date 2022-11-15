@@ -162,6 +162,7 @@
 #define GIMP_HELP_IMAGE_ROTATE_270                "gimp-image-rotate-270"
 #define GIMP_HELP_IMAGE_RESIZE                    "gimp-image-resize"
 #define GIMP_HELP_IMAGE_RESIZE_TO_LAYERS          "gimp-image-resize-to-layers"
+#define GIMP_HELP_IMAGE_RESIZE_TO_VISIBLE_LAYERS  "gimp-image-resize-to-visible_layers"
 #define GIMP_HELP_IMAGE_RESIZE_TO_SELECTION       "gimp-image-resize-to-selection"
 #define GIMP_HELP_IMAGE_PRINT_SIZE                "gimp-image-print-size"
 #define GIMP_HELP_IMAGE_SCALE                     "gimp-image-scale"

@@ -57,6 +57,9 @@ void   image_resize_cmd_callback                   (GimpAction *action,
 void   image_resize_to_layers_cmd_callback         (GimpAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);
+void   image_resize_to_visible_layers_cmd_callback (GimpAction *action,
+                                                    GVariant   *value,
+                                                    gpointer    data);
 void   image_resize_to_selection_cmd_callback      (GimpAction *action,
                                                     GVariant   *value,
                                                     gpointer    data);

@@ -83,6 +83,33 @@ CODE
     );
 }
 
+sub image_resize_to_visible_layers {
+    $blurb = 'Resize the image to fit all layers.';
+
+    $help = <<'HELP';
+This procedure resizes the image to the bounding box of all visible
+layers of the image. All channels within the image are resized to the
+new size; this includes the image selection mask. All layers within
+the image are repositioned to the new image area.
+HELP
+
+    &schumaml_pdb_misc('2022', '2.10');
+
+    @inargs = (
+        { name => 'image', type => 'image',
+          desc => 'The image' }
+    );
+
+    %invoke = (
+        headers => [ qw("core/gimpimage-resize.h") ],
+        code => <<'CODE'
+{
+  gimp_image_resize_to_visible_layers (image, context, NULL, NULL, NULL, NULL, NULL);
+}
+CODE
+    );
+}
+
 sub image_scale {
     $blurb = 'Scale the image using the default interpolation method.';
 

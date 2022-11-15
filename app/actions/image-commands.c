@@ -706,6 +706,31 @@ image_resize_to_layers_cmd_callback (GimpAction *action,
 }
 
 void
+image_resize_to_visible_layers_cmd_callback (GimpAction *action,
+                                     GVariant   *value,
+                                     gpointer    data)
+{
+  GimpDisplay  *display;
+  GimpImage    *image;
+  GimpProgress *progress;
+  return_if_no_display (display, data);
+
+  image = gimp_display_get_image (display);
+
+  progress = gimp_progress_start (GIMP_PROGRESS (display), FALSE,
+                                  _("Resizing"));
+
+  gimp_image_resize_to_visible_layers (image,
+                               action_data_get_context (data),
+                               NULL, NULL, NULL, NULL, progress);
+
+  if (progress)
+    gimp_progress_end (progress);
+
+  gimp_image_flush (image);
+}
+
+void
 image_resize_to_selection_cmd_callback (GimpAction *action,
                                         GVariant   *value,
                                         gpointer    data)

@@ -382,6 +382,7 @@
         </submenu>
         <item><attribute name="action">app.image-resize</attribute></item>
         <item><attribute name="action">app.image-resize-to-layers</attribute></item>
+	<item><attribute name="action">app.image-resize-to-visible-layers</attribute></item>
         <item><attribute name="action">app.image-resize-to-selection</attribute></item>
         <item><attribute name="action">app.image-print-size</attribute></item>
         <item><attribute name="action">app.image-scale</attribute></item>

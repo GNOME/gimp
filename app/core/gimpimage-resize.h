@@ -44,6 +44,13 @@ void   gimp_image_resize_to_layers    (GimpImage    *image,
                                        gint         *new_width,
                                        gint         *new_height,
                                        GimpProgress *progress);
+void   gimp_image_resize_to_visible_layers    (GimpImage    *image,
+                                       GimpContext  *context,
+                                       gint         *offset_x,
+                                       gint         *offset_y,
+                                       gint         *new_width,
+                                       gint         *new_height,
+                                       GimpProgress *progress);
 void   gimp_image_resize_to_selection (GimpImage    *image,
                                        GimpContext  *context,
                                        GimpProgress *progress);

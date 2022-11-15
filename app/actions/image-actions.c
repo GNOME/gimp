@@ -105,6 +105,12 @@ static const GimpActionEntry image_actions[] =
     image_resize_to_layers_cmd_callback,
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
+  { "image-resize-to-visible-layers", NULL,
+    NC_("image-action", "Fit Canvas to v_isible Layers"), NULL,
+    NC_("image-action", "Resize the image to enclose all visible layers"),
+    image_resize_to_visible_layers_cmd_callback,
+    GIMP_HELP_IMAGE_RESIZE_TO_VISIBLE_LAYERS },
+
   { "image-resize-to-selection", NULL,
     NC_("image-action", "F_it Canvas to Selection"), NULL, { NULL },
     NC_("image-action", "Resize the image to the extents of the selection"),
@@ -571,6 +577,7 @@ image_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("image-resize",              image);
   SET_SENSITIVE ("image-resize-to-layers",    image);
+  SET_SENSITIVE ("image-resize-to-visible-layers",    image);
   SET_SENSITIVE ("image-resize-to-selection", image && sel);
   SET_SENSITIVE ("image-print-size",          image);
   SET_SENSITIVE ("image-scale",               image);
