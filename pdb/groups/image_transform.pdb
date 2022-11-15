@@ -84,7 +84,7 @@ CODE
 }
 
 sub image_resize_to_visible_layers {
-    $blurb = 'Resize the image to fit all layers.';
+    $blurb = 'Resize the image to fit all visible layers.';
 
     $help = <<'HELP';
 This procedure resizes the image to the bounding box of all visible
@@ -93,7 +93,10 @@ new size; this includes the image selection mask. All layers within
 the image are repositioned to the new image area.
 HELP
 
-    &schumaml_pdb_misc('2022', '2.10');
+    $author    = 'Michael Schumacher <schumaml@gmx.de>';
+    $copyright = 'Michael Schumacher';
+    $date      = '2022';
+    $since     = '2.10';
 
     @inargs = (
         { name => 'image', type => 'image',
@@ -104,7 +107,8 @@ HELP
         headers => [ qw("core/gimpimage-resize.h") ],
         code => <<'CODE'
 {
-  gimp_image_resize_to_visible_layers (image, context, NULL, NULL, NULL, NULL, NULL);
+  gimp_image_resize_to_visible_layers (image, context,
+                                       NULL, NULL, NULL, NULL, NULL);
 }
 CODE
     );
@@ -258,7 +262,9 @@ CODE
               "gimppdbcontext.h"
               "gimp-intl.h");
 
-@procs = qw(image_resize image_resize_to_layers
+@procs = qw(image_resize
+            image_resize_to_layers
+            image_resize_to_visible_layers
             image_scale
             image_crop image_flip image_rotate);
 

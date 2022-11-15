@@ -537,6 +537,7 @@ EXPORTS
 	gimp_image_reorder_item
 	gimp_image_resize
 	gimp_image_resize_to_layers
+	gimp_image_resize_to_visible_layers
 	gimp_image_rotate
 	gimp_image_scale
 	gimp_image_select_color

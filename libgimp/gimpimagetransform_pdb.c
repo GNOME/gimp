@@ -126,6 +126,44 @@ gimp_image_resize_to_layers (GimpImage *image)
 }
 
 /**
+ * gimp_image_resize_to_visible_layers:
+ * @image: The image.
+ *
+ * Resize the image to fit all visible layers.
+ *
+ * This procedure resizes the image to the bounding box of all visible
+ * layers of the image. All channels within the image are resized to
+ * the new size; this includes the image selection mask. All layers
+ * within the image are repositioned to the new image area.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: 2.10
+ **/
+gboolean
+gimp_image_resize_to_visible_layers (GimpImage *image)
+{
+  GimpValueArray *args;
+  GimpValueArray *return_vals;
+  gboolean success = TRUE;
+
+  args = gimp_value_array_new_from_types (NULL,
+                                          GIMP_TYPE_IMAGE, image,
+                                          G_TYPE_NONE);
+
+  return_vals = gimp_pdb_run_procedure_array (gimp_get_pdb (),
+                                              "gimp-image-resize-to-visible-layers",
+                                              args);
+  gimp_value_array_unref (args);
+
+  success = GIMP_VALUES_GET_ENUM (return_vals, 0) == GIMP_PDB_SUCCESS;
+
+  gimp_value_array_unref (return_vals);
+
+  return success;
+}
+
+/**
  * gimp_image_scale:
  * @image: The image.
  * @new_width: New image width.

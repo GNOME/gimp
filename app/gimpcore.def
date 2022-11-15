@@ -652,6 +652,7 @@ gimp_image_get_resolution
 gimp_image_get_unit
 gimp_image_parasite_find
 gimp_image_resize_to_layers
+gimp_image_resize_to_visible_layers
 gimp_imagefile_create_thumbnail_weak
 gimp_marshal_VOID__BOXED_ENUM
 gimp_progress_cancel

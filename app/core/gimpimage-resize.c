@@ -312,12 +312,12 @@ gimp_image_resize_to_layers (GimpImage    *image,
 
 void
 gimp_image_resize_to_visible_layers (GimpImage    *image,
-                             GimpContext  *context,
-                             gint         *offset_x,
-                             gint         *offset_y,
-                             gint         *new_width,
-                             gint         *new_height,
-                             GimpProgress *progress)
+                                     GimpContext  *context,
+                                     gint         *offset_x,
+                                     gint         *offset_y,
+                                     gint         *new_width,
+                                     gint         *new_height,
+                                     GimpProgress *progress)
 {
   GList    *list;
   GimpItem *item;
