@@ -96,7 +96,7 @@ HELP
     $author    = 'Michael Schumacher <schumaml@gmx.de>';
     $copyright = 'Michael Schumacher';
     $date      = '2022';
-    $since     = '2.10';
+    $since     = '2.99';
 
     @inargs = (
         { name => 'image', type => 'image',
