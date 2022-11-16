@@ -367,8 +367,10 @@ icns_save_dialog (IcnsSaveInfo *info,
            iter = g_list_next (iter), j++)
         {
           /* Put the icons in order in dialog */
+          gint width  = gimp_drawable_get_width (iter->data);
           gint height = gimp_drawable_get_height (iter->data);
-          if (height != ordered[i])
+
+          if (height != ordered[i] || ! icns_check_dimensions (width, height))
             continue;
 
           icns_dialog_add_icon (dialog, iter->data, i, duplicates);
