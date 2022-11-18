@@ -31,7 +31,26 @@ The latest version of GIMP can be found at:
 	https://www.gimp.org/downloads/
 
 
-2. Discussion Channels
+2. Contributing
+===============
+
+GIMP source code can be found at:
+
+	https://gitlab.gnome.org/GNOME/gimp/
+
+Resources for contributors:
+
+        https://developer.gimp.org/
+
+In particular, you may want to look in the "Core Development" section. Some
+articles of particular interest for newcomers could be:
+
+* Setting up your developer environment: https://developer.gimp.org/core/setup/
+* GIMP Coding Style: https://developer.gimp.org/core/coding_style/
+* Submit your first patch: https://developer.gimp.org/core/submit-patch/
+
+
+3. Discussion Channels
 ======================
 
 We have several discussion channels dedicated to GIMP user and
@@ -62,7 +81,7 @@ Many of the developers hang out there. Some of the GIMPNet servers are:
 	irc.eu.gimp.org:6667
 
 
-3. Customizing
+4. Customizing
 ==============
 
 The look of GIMP's interface can be customized like any other GTK+ app
