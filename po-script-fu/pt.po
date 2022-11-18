@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gimp/issues\n"
-"POT-Creation-Date: 2022-07-07 18:06+0000\n"
-"PO-Revision-Date: 2022-07-08 14:36+0100\n"
+"POT-Creation-Date: 2022-11-12 21:38+0000\n"
+"PO-Revision-Date: 2022-11-18 14:07+0000\n"
 "Last-Translator: Hugo Carvalho <hugokarvalho@hotmail.com>\n"
 "Language-Team: Português <https://l10n.gnome.org/teams/pt/>\n"
 "Language: pt\n"
@@ -23,7 +23,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.1\n"
+"X-Generator: Poedit 3.2\n"
 
 #: plug-ins/script-fu/script-fu.c:122
 msgid "Script-Fu _Console"
@@ -134,7 +134,7 @@ msgstr "Guardar saída da consola Script-Fu"
 
 #: plug-ins/script-fu/script-fu-console.c:280
 #: plug-ins/script-fu/server/script-fu-server.c:884
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
 msgid "_Cancel"
 msgstr "_Cancelar"
 
@@ -192,78 +192,74 @@ msgstr "_Iniciar servidor..."
 msgid "Server for remote Script-Fu operation"
 msgstr "Servidor para operação remota do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:203
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:202
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "O Script-Fu não pode processar dois scripts ao mesmo tempo."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:205
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:204
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Já está a executar o script \"%s\"."
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:229
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:228
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:236
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:235
 msgid "_Reset"
 msgstr "_Repor"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:238
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:237
 msgid "_OK"
 msgstr "_OK"
 
 #. we add a colon after the label;
 #. *  some languages want an extra space here
 #.
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:292
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:291
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:342
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:341
 msgid "Script-Fu Color Selection"
 msgstr "Seleção de cores do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:461
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:468
 msgid "Script-Fu File Selection"
 msgstr "Seleção de ficheiros Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:464
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:471
 msgid "Script-Fu Folder Selection"
 msgstr "Seleção de pastas Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:477
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:484
 msgid "Script-Fu Font Selection"
 msgstr "Seleção de tipo de letra do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:485
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:492
 msgid "Script-Fu Palette Selection"
 msgstr "Seleção de paleta do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:494
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:501
 msgid "Script-Fu Pattern Selection"
 msgstr "Seleção de textura do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:503
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:510
 msgid "Script-Fu Gradient Selection"
 msgstr "Seleção de gradiente do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:512
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:519
 msgid "Script-Fu Brush Selection"
 msgstr "Seleção de pincel do Script-Fu"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:891
+#: plug-ins/script-fu/libscriptfu/script-fu-interface.c:898
 #, c-format
 msgid "Error while executing %s:"
 msgstr "Erro ao executar %s:"
 
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:178
-msgid "Too few arguments to 'script-fu-register' call"
-msgstr "Poucos argumentos para a chamada a \"script-fu-register\""
-
-#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:680
+#: plug-ins/script-fu/libscriptfu/script-fu-scripts.c:357
 #, c-format
 msgid "Error while loading %s:"
 msgstr "Erro ao carregar %s:"
@@ -1051,11 +1047,11 @@ msgstr "Gradiente"
 msgid "Use current gradient"
 msgstr "Usar o gradiente atual"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:108
+#: plug-ins/script-fu/scripts/line-nova.scm:106
 msgid "Line _Nova..."
 msgstr "E_xplosão de linhas..."
 
-#: plug-ins/script-fu/scripts/line-nova.scm:109
+#: plug-ins/script-fu/scripts/line-nova.scm:107
 msgid ""
 "Fill a layer with rays emanating outward from its center using the "
 "foreground color"
@@ -1063,19 +1059,19 @@ msgstr ""
 "Preencher a camada com raios provenientes do centro, usando a cor de 1º "
 "plano nos raios"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:116
+#: plug-ins/script-fu/scripts/line-nova.scm:114
 msgid "Number of lines"
 msgstr "Número de linhas"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:117
+#: plug-ins/script-fu/scripts/line-nova.scm:115
 msgid "Sharpness (degrees)"
 msgstr "Nitidez (graus)"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:118
+#: plug-ins/script-fu/scripts/line-nova.scm:116
 msgid "Offset radius"
 msgstr "Raio de deslocamento"
 
-#: plug-ins/script-fu/scripts/line-nova.scm:119
+#: plug-ins/script-fu/scripts/line-nova.scm:117
 msgid "Randomness"
 msgstr "Aleatório"
 
@@ -1212,8 +1208,8 @@ msgid "There is no image data in the clipboard to paste."
 msgstr "Não há dados de imagem na área de transferência para colar."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:64
-msgid "New _Brush..."
-msgstr "Novo pinc_el..."
+msgid "Paste as New _Brush..."
+msgstr "Colar como Novo pinc_el..."
 
 #: plug-ins/script-fu/scripts/paste-as-brush.scm:65
 msgid "Paste the clipboard contents into a new brush"
@@ -1237,8 +1233,8 @@ msgid "_Spacing"
 msgstr "_Espaçamento"
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:52
-msgid "New _Pattern..."
-msgstr "Nova _textura..."
+msgid "Paste as New _Pattern..."
+msgstr "Colar como Nova _textura..."
 
 #: plug-ins/script-fu/scripts/paste-as-pattern.scm:53
 msgid "Paste the clipboard contents into a new pattern"
@@ -1632,6 +1628,9 @@ msgstr "Deslocamento X da sombra projetada"
 #: plug-ins/script-fu/scripts/xach-effect.scm:137
 msgid "Drop shadow Y offset"
 msgstr "Deslocamento Y da sombra projetada"
+
+#~ msgid "Too few arguments to 'script-fu-register' call"
+#~ msgstr "Poucos argumentos para a chamada a \"script-fu-register\""
 
 #~ msgid "_Console"
 #~ msgstr "_Consola"
