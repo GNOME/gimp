@@ -199,7 +199,9 @@
                 "-DENABLE_GOBJECT_INTROSPECTION=OFF",
                 "-DENABLE_CPP=OFF",
                 "-DOpenJPEG_DIR=/usr/lib64/openjpeg-2.3",
-                "-DENABLE_BOOST=OFF"
+                "-DENABLE_BOOST=OFF",
+                "-DWITH_NSS3:BOOL=OFF",
+                "-DENABLE_QT5:BOOL=OFF"
             ],
             "cleanup": [
                 "/bin",
@@ -210,8 +212,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://poppler.freedesktop.org/poppler-22.03.0.tar.xz",
-                    "sha256": "728c78ba94d75a55f6b6355d4fbdaa6f49934d9616be58e5e679a9cfd0980e1e",
+                    "url": "https://poppler.freedesktop.org/poppler-22.09.0.tar.xz",
+                    "sha256": "d7a8f748211359cadb774ba3e18ecda6464b34027045c0648eb30d5852a41e2e",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 3686,
@@ -224,7 +226,8 @@
         {
             "name": "aalib",
             "config-opts": [
-                "--disable-static"
+                "--disable-static",
+                "--with-slang-driver=no"
             ],
             "cleanup": [
                 "/bin",
@@ -274,8 +277,14 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://src.fedoraproject.org/repo/pkgs/rpms/libwmf/v0.2.12.tar.gz/sha512/9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab/v0.2.12.tar.gz",
-                    "sha512": "9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab"
+                    "url": "https://github.com/caolanm/libwmf/archive/refs/tags/v0.2.12.tar.gz",
+                    "sha512": "9280851e560becc91546906b911e0c59a1abd690e10680f6d94a335d66aeaec5eb12ccf2214ee7af2a15729a7b5f8b906022822399b4e2bc12c75a2d75748cab",
+                    "x-checker-data": {
+                        "type": "anitya",
+                        "project-id": 230209,
+                        "stable-only": true,
+                        "url-template": "https://github.com/caolanm/libwmf/archive/refs/tags/v$version.tar.gz"
+                    }
                 },
                 {
                     "type": "patch",
@@ -311,8 +320,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs9550/ghostscript-9.55.0.tar.gz",
-                    "sha256": "31e2064be67e15b478a8da007d96d6cd4d2bee253e5be220703a225f7f79a70b",
+                    "url": "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs1000/ghostscript-10.0.0.tar.gz",
+                    "sha512": "9aa5f310c250584312205b479ab9137d0fca56be214626782a1ba94b4b4ee15249b3eae703d08f48eb3cc06d71a2fae671d3570284b3fa9254ea3c1193ebc15b",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 1157,
@@ -359,9 +368,14 @@
                     "buildsystem": "cmake-ninja",
                     "sources": [
                         {
-                            "type": "archive",
-                            "url": "https://github.com/json-c/json-c/archive/json-c-0.15-20200726.tar.gz",
-                            "sha256": "4ba9a090a42cf1e12b84c64e4464bb6fb893666841d5843cc5bef90774028882"
+                            "type": "git",
+                            "url": "https://github.com/json-c/json-c.git",
+                            "tag": "json-c-0.16-20220414",
+                            "commit": "2f2ddc1f2dbca56c874e8f9c31b5b963202d80e7",
+                            "x-checker-data": {
+                                "type": "git",
+                                "tag-pattern": "^json-c-([\\d.]+)-[\\d]+$"
+                            }
                         }
                     ]
                 },
@@ -425,8 +439,8 @@
             "sources": [
                 {
                     "type": "archive",
-                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.11.0.tar.gz",
-                    "sha256": "fdd957ed06019465f7de73ce931afaf5d40e96e14ae57d91f60868b8c123c4c8",
+                    "url": "https://github.com/DrTimothyAldenDavis/SuiteSparse/archive/v5.13.0.tar.gz",
+                    "sha256": "59c6ca2959623f0c69226cf9afb9a018d12a37fab3a8869db5f6d7f83b6b147d",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 4908,
@@ -456,8 +470,8 @@
                     "sources": [
                         {
                             "type": "archive",
-                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.20.tar.gz",
-                            "sha256": "8495c9affc536253648e942908e88e097f2ec7753ede55aca52e5dead3029e3c",
+                            "url": "https://github.com/xianyi/OpenBLAS/archive/v0.3.21.tar.gz",
+                            "sha256": "f36ba3d7a60e7c8bcc54cd9aaa9b1223dd42eaf02c811791c37e8ca707c241ca",
                             "x-checker-data": {
                                 "type": "anitya",
                                 "project-id": 2540,
@@ -600,9 +614,9 @@
             ],
             "sources": [
                 {
+                    "type": "archive",
                     "url": "https://github.com/strukturag/libheif/releases/download/v1.13.0/libheif-1.13.0.tar.gz",
                     "sha256": "c20ae01bace39e89298f6352f1ff4a54b415b33b9743902da798e8a1e51d7ca1",
-                    "type": "archive",
                     "x-checker-data": {
                         "type": "anitya",
                         "project-id": 64439,
