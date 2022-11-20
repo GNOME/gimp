@@ -380,6 +380,14 @@ gimp_macos_setenv (const char * progname)
           need_pythonhome = FALSE;
         }
       g_free (tmp);
+      /* Detect we were built in MacPorts for MacOS */
+      tmp = g_strdup_printf ("%s/Library/Frameworks/Python.framework", res_dir);
+      if (tmp && !stat (tmp, &sb) && S_ISDIR (sb.st_mode))
+        {
+          g_print ("GIMP was built with MacPorts\n");
+          need_pythonhome = FALSE;
+        }
+      g_free (tmp);
 
       path_len = strlen (g_getenv ("PATH") ? g_getenv ("PATH") : "") + strlen (app_dir) + 2;
       path = g_try_malloc (path_len);
