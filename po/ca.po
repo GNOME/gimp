@@ -3791,22 +3791,18 @@ msgid "Paste the content of the clipboard as a single layer"
 msgstr "Enganxa el contingut del porta-retalls com a una única capa"
 
 #: app/actions/edit-actions.c:188
-#, fuzzy
-#| msgctxt "buffers-action"
-#| msgid "Paste Buffer as New Layer in Place"
 msgctxt "edit-action"
 msgid "Paste as Single Layer In P_lace"
-msgstr "Enganxa la memòria intermèdia com a nova capa al lloc"
+msgstr "_Enganxa com una única capa al lloc"
 
 #: app/actions/edit-actions.c:190
-#, fuzzy
-#| msgctxt "edit-action"
-#| msgid "Paste the content of the clipboard at its original position"
 msgctxt "edit-action"
 msgid ""
 "Paste the content of the clipboard at its original position as a single "
 "layer"
-msgstr "Enganxa el contingut del porta-retalls a la posició original"
+msgstr ""
+"Enganxa el contingut del porta-retalls a la posició original a una única "
+"capa"
 
 #: app/actions/edit-actions.c:195
 msgctxt "edit-action"
