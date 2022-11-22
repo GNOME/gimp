@@ -66,6 +66,7 @@ foreach test_name : app_tests
       'UI_TEST=yes',
     ],
     suite: 'app',
+    timeout: 60,
   )
 
 endforeach
